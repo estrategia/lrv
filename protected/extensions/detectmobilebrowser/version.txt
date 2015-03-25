@@ -1,0 +1,2 @@
+yii-detectmobilebrowser 1.1 r11
+Released on Dec 10, 2012; downloaded 1,061 times. 
