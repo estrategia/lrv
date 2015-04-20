@@ -43,6 +43,8 @@
  */
 class Producto extends CActiveRecord {
 
+    private $objPrecio = false;
+
     /**
      * @return string the associated database table name
      */
@@ -87,6 +89,7 @@ class Producto extends CActiveRecord {
             'listCalificaciones' => array(self::HAS_MANY, 'ProductosCalificaciones', 'codigoProducto'),
             'listSaldos' => array(self::HAS_MANY, 'ProductosSaldos', 'codigoProducto'),
             'listPrecios' => array(self::HAS_MANY, 'ProductosPrecios', 'codigoProducto'),
+            'listSaldosTerceros' => array(self::HAS_MANY, 'ProductosSaldosTerceros', 'codigoProducto'),
             'listDescuentosPerfiles' => array(self::HAS_MANY, 'ProductosDescuentosPerfiles', 'codigoProducto'),
             //'listPerfiles' => array(self::MANY_MANY, 'Perfil', 't_ProductosDescuentosPerfiles(codigoProducto, codigoPerfil)'),
             'listAtributos' => array(self::MANY_MANY, 'Atributo', 't_ProductosAtributos(codigoProducto, idAtributo)'),
@@ -153,7 +156,7 @@ class Producto extends CActiveRecord {
         $criteria->compare('codigoBarras', $this->codigoBarras, true);
         $criteria->compare('descripcionProducto', $this->descripcionProducto, true);
         $criteria->compare('presentacionProducto', $this->presentacionProducto, true);
-        $criteria->compare('idMarca',$this->idMarca);
+        $criteria->compare('idMarca', $this->idMarca);
         $criteria->compare('codigoProveedor', $this->codigoProveedor, true);
         $criteria->compare('codigoImpuesto', $this->codigoImpuesto);
         $criteria->compare('idCategorizacion', $this->idCategorizacion);
@@ -201,14 +204,14 @@ class Producto extends CActiveRecord {
         $obj = null;
 
         foreach ($this->listImagenes as $imagen) {
-            if ($imagen->tipoImagen == $tipo && $imagen->estadoImagen==1) {
+            if ($imagen->tipoImagen == $tipo && $imagen->estadoImagen == 1) {
                 $obj = $imagen;
                 break;
             }
         }
         return $obj;
     }
-    
+
     /**
      * Retorna lista del tipo de imagen de un producto, si no se detecta
      * @param int tipo de imagen
@@ -218,7 +221,7 @@ class Producto extends CActiveRecord {
         $list = array();
 
         foreach ($this->listImagenes as $imagen) {
-            if ($imagen->tipoImagen == $tipo && $imagen->estadoImagen==1) {
+            if ($imagen->tipoImagen == $tipo && $imagen->estadoImagen == 1) {
                 $list[] = $imagen;
             }
         }
@@ -242,29 +245,42 @@ class Producto extends CActiveRecord {
         return $calificacion;
     }
 
-    public function getPrecio($codigoCiudad, $codigoSector, $codigoPerfil) {
-        $objPrecio = new Precio;
-        
-        foreach ($this->listPrecios as $objProductoPrecio) {
-            if ($objProductoPrecio->codigoCiudad == $codigoCiudad && $objProductoPrecio->codigoSector == $codigoSector) {
-                $objPrecio->precioUnidad = $objProductoPrecio->precioUnidad;
-                
-                if ($this->fraccionado == 1){
-                    $objPrecio->precioFraccion = $objProductoPrecio->precioFraccion;
-                    $objPrecio->unidadFraccionamiento = $this->unidadFraccionamiento;
-                }
+    public function getSaldo($codigoCiudad, $codigoSector) {
+        foreach ($this->listSaldos as $objSaldo) {
+            if ($objSaldo->codigoCiudad == $codigoCiudad && $objSaldo->codigoSector == $codigoSector) {
+                return $objSaldo;
+            }
+        }
 
-                break;
-            }
-        }
-        
-        foreach ($this->listDescuentosPerfiles as $objDescuentoPerfil) {
-            if ($objDescuentoPerfil->codigoPerfil == $codigoPerfil) {
-                $objPrecio->porcentajeDescuentoPerfil = $objDescuentoPerfil->descuentoPerfil;
-                break;
-            }
-        }
-        
-        return $objPrecio;
+        return null;
     }
+
+    public function getPrecio($codigoCiudad, $codigoSector, $codigoPerfil, $forzar = false) {
+        if (!$this->objPrecio || $forzar) {
+            $this->objPrecio = new Precio;
+            
+            foreach ($this->listPrecios as $objProductoPrecio) {
+                if ($objProductoPrecio->codigoCiudad == $codigoCiudad && $objProductoPrecio->codigoSector == $codigoSector) {
+                    $this->objPrecio->precioUnidad = $objProductoPrecio->precioUnidad;
+
+                    //if ($this->fraccionado == 1){
+                    $this->objPrecio->precioFraccion = $objProductoPrecio->precioFraccion;
+                    $this->objPrecio->unidadFraccionamiento = $this->unidadFraccionamiento;
+                    //}
+
+                    break;
+                }
+            }
+
+            foreach ($this->listDescuentosPerfiles as $objDescuentoPerfil) {
+                if ($objDescuentoPerfil->codigoPerfil == $codigoPerfil) {
+                    $this->objPrecio->porcentajeDescuentoPerfil = $objDescuentoPerfil->descuentoPerfil;
+                    break;
+                }
+            }
+        }
+
+        return $this->objPrecio;
+    }
+
 }

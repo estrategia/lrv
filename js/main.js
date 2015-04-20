@@ -167,6 +167,98 @@ function subtotalParcialProductoFraccion(codigo, numeroFracciones, unidadFraccio
     });
 }
 
+function subtotalProductoBodega(codigo) {
+    var cantidadUbicacion = parseInt($('#cantidad-producto-ubicacion-' + codigo).val());
+
+    if (isNaN(cantidadUbicacion)) {
+        cantidadUbicacion = 0;
+    }
+
+    if (cantidadUbicacion < 0) {
+        cantidadUbicacion = 0;
+    }
+
+    var cantidadBodega = $('#cantidad-producto-bodega-' + codigo).val();
+    cantidadBodega = parseInt(cantidadBodega);
+    if (isNaN(cantidadBodega)) {
+        cantidadBodega = 0;
+    }
+
+    if (cantidadBodega < 0) {
+        cantidadBodega = 0;
+    }
+
+    $('#cantidad-producto-ubicacion-' + codigo).val(cantidadUbicacion);
+    $('#cantidad-producto-bodega-' + codigo).val(cantidadBodega);
+
+    $.ajax({
+        type: 'POST',
+        dataType: 'json',
+        async: true,
+        url: requestUrl + '/catalogo/subtotalBodega',
+        data: {codigo: codigo, bodega: cantidadBodega, ubicacion: cantidadUbicacion},
+        beforeSend: function() {
+            $.mobile.loading('show');
+        },
+        complete: function() {
+            $.mobile.loading('hide');
+        },
+        success: function(data) {
+            if (data.result == 'ok') {
+                $('#subtotal-producto-bodega-' + codigo).html(data.response.valorBodegaFormato);
+                $('#subtotal-producto-ubicacion-' + codigo).html(data.response.valorUbicacionFormato);
+                $('#total-producto-' + codigo).html(data.response.valorTotalFormato);
+            } else {
+                alert(data.response);
+            }
+        },
+        error: function(jqXHR, textStatus, errorThrown) {
+            alert('Error: ' + errorThrown);
+        }
+    });
+}
+
+function subtotalCombo(codigo) {
+    var cantidad = $('#cantidad-combo-' + codigo).val();
+    cantidad = parseInt(cantidad);
+
+    if (isNaN(cantidad)) {
+        cantidad = 1;
+    }
+
+    if (cantidad <= 1) {
+        cantidad = 1;
+    }
+
+    $('#cantidad-combo-' + codigo).val(cantidad);
+
+    $.ajax({
+        type: 'POST',
+        dataType: 'json',
+        async: true,
+        url: requestUrl + '/catalogo/subtotalCombo',
+        data: {codigo: codigo, cantidad: cantidad},
+        beforeSend: function() {
+            $.mobile.loading('show');
+        },
+        complete: function() {
+            $.mobile.loading('hide');
+        },
+        success: function(data) {
+            if (data.result == 'ok') {
+                $('#subtotal-combo-' + codigo).html(data.response.valorFormato);
+            } else {
+                alert(data.response);
+            }
+            //$.mobile.loading('hide');
+        },
+        error: function(jqXHR, textStatus, errorThrown) {
+            //$.mobile.loading('hide');
+            alert('Error: ' + errorThrown);
+        }
+    });
+}
+
 function subtotalProductoCarro(id) {
     var cantidad = $('#cantidad-producto-' + id).val();
     cantidad = parseInt(cantidad);
@@ -281,11 +373,19 @@ $(document).on("pagecreate", function(event) {
         singleItem: true,
         autoPlay: 3000
     });
-    $("#popup-carro-especial").bind({
-        popupafterclose: function(event, ui) {
-            $("#popup-carro-especial [data-role='content']").html("");
-        }
+
+    $("#slide-relacionados").owlCarousel({
+        slideSpeed: 300,
+        paginationSpeed: 400,
+        autoPlay: 3000,
+        items: 4, //10 items above 1000px browser width
+        itemsDesktop: [1000, 5], //5 items between 1000px and 901px
+        itemsDesktopSmall: [900, 3], // betweem 900px and 601px
+        itemsTablet: [600, 2], //2 items between 600 and 0
+        itemsMobile: [300, 2] // itemsMobile disabled - inherit from itemsTablet option
     });
+
+    pagoCredirebaja();
     //$('[data-role=main]:visible').css('margin-top',($(window).height() - $('[data-role=header]:visible').height() - $('[data-role=footer]:visible').height() - $('[data-role=main]:visible').outerHeight())/2);
 
 });
@@ -330,12 +430,6 @@ function calificarProducto(codigo) {
             alert('Error: ' + errorThrown);
         }
     });
-}
-
-function carroPopupEspecial(codigoProducto, codigoEspecial) {
-    $("#popup-carro-especial [data-cargar='1']").attr('data-producto', codigoProducto);
-    $("#popup-carro-especial [data-role='content']").html($("#popup-especial-" + codigoEspecial + " [data-role='content']").html());
-    $("#popup-carro-especial").popup("open");
 }
 
 $(document).on('change', "input[id^='FiltroForm_listMarcas_'], input[id^='FiltroForm_listAtributos_']", function() {
@@ -418,12 +512,194 @@ $(document).on('click', "a[data-cargar='1']", function() {
         },
         success: function(data) {
             if (data.result === "ok") {
-                $("#popup-carro-especial").popup("close");
-                $('#panel-carro-canasta').html(data.canasta);
+                $('#panel-carro-canasta').html(data.response.canastaHTML);
                 $('#panel-carro-canasta').trigger("create");
-                alert(data.response);
+                $('<div>').mdialog({
+                    content: data.response.mensajeHTML
+                });
             } else {
-                alert("Error: " + data.response);
+                $('<div>').mdialog({
+                    content: "<div data-role='main'><div class='ui-content' data-role='content' role='main'>" + data.response + "<a class='ui-btn ui-btn-r ui-corner-all ui-shadow' data-rel='back' href='#'>Aceptar</a></div></div>"
+                });
+            }
+
+        },
+        error: function(jqXHR, textStatus, errorThrown) {
+            alert('Error: ' + errorThrown);
+        }
+    });
+});
+
+$(document).on('change', "input[data-modificar='1'], input[data-modificar='2'], input[data-modificar='3']", function() {
+    var position = $(this).attr('data-position');
+    var modificar = $(this).attr('data-modificar');
+    var data = {
+        modificar: modificar,
+        position: position
+    };
+
+    if (modificar == 1) {
+        var cantidadU = parseInt($('#cantidad-producto-unidad-' + position).val());
+
+        if (isNaN(cantidadU)) {
+            cantidadU = 0;
+        }
+
+        var cantidadF = parseInt($('#cantidad-producto-fraccion-' + position).val());
+        if (isNaN(cantidadF)) {
+            cantidadF = -1;
+        }
+
+        if (cantidadF > 0) {
+            var numeroFracciones = parseInt($(this).attr('data-nfracciones'));
+            var unidadFraccionamiento = parseInt($(this).attr('data-ufraccionamiento'));
+            var fraccionesMaximas = Math.floor(numeroFracciones / unidadFraccionamiento);
+
+            if (cantidadF >= fraccionesMaximas) {
+                var unidades = Math.floor(cantidadF / fraccionesMaximas);
+                var fracciones = cantidadF % fraccionesMaximas;
+                cantidadU += unidades;
+                cantidadF = fracciones;
+            }
+        }
+
+        data['cantidadU'] = cantidadU;
+        data['cantidadF'] = cantidadF;
+    } else if (modificar == 2) {
+        var cantidad = parseInt($('#cantidad-producto-' + position).val());
+        if (isNaN(cantidad)) {
+            cantidad = -1;
+        }
+        data['cantidad'] = cantidad;
+    } else if (modificar == 3) {
+        var cantidad = parseInt($('#cantidad-producto-bodega-' + position).val());
+        if (isNaN(cantidad)) {
+            cantidad = -1;
+        }
+        data['cantidad'] = cantidad;
+    }
+
+    $.ajax({
+        type: 'POST',
+        dataType: 'json',
+        async: true,
+        url: requestUrl + '/carro/modificar',
+        data: data,
+        beforeSend: function() {
+            $.mobile.loading('show');
+        },
+        complete: function() {
+            $.mobile.loading('hide');
+        },
+        success: function(data) {
+            if (data.result === "ok") {
+                $('#div-carro').html(data.response.carroHTML);
+                $('#div-carro').trigger("create");
+
+                if (data.response.canastaHTML) {
+                    $('#panel-carro-canasta').html(data.response.canastaHTML);
+                    $('#panel-carro-canasta').trigger("create");
+                }
+
+                if (data.response.mensajeHTML) {
+                    $('<div>').mdialog({
+                        content: data.response.mensajeHTML
+                    });
+                }
+            } else {
+                $('#div-carro').html(data.response.carroHTML);
+                $('#div-carro').trigger("create");
+                $('<div>').mdialog({
+                    content: "<div data-role='main'><div class='ui-content' data-role='content' role='main'>" + data.response.message + "<a class='ui-btn ui-btn-r ui-corner-all ui-shadow' data-rel='back' href='#'>Aceptar</a></div></div>"
+                });
+            }
+
+        },
+        error: function(jqXHR, textStatus, errorThrown) {
+            alert('Error: ' + errorThrown);
+        }
+    });
+});
+
+$(document).on('click', "a[data-cargar='2']", function() {
+    var combo = $(this).attr('data-combo');
+
+    var cantidad = $('#cantidad-combo-' + combo).val();
+    cantidad = parseInt(cantidad);
+    if (isNaN(cantidad)) {
+        cantidad = 0;
+    }
+
+    $.ajax({
+        type: 'POST',
+        dataType: 'json',
+        async: true,
+        url: requestUrl + '/carro/agregarCombo',
+        data: {combo: combo, cantidad: cantidad},
+        beforeSend: function() {
+            $.mobile.loading('show');
+        },
+        complete: function() {
+            $.mobile.loading('hide');
+        },
+        success: function(data) {
+            if (data.result === "ok") {
+                $('#panel-carro-canasta').html(data.response.canastaHTML);
+                $('#panel-carro-canasta').trigger("create");
+                $('<div>').mdialog({
+                    content: data.response.mensajeHTML
+                });
+            } else {
+                $('<div>').mdialog({
+                    content: "<div data-role='main'><div class='ui-content' data-role='content' role='main'>" + data.response + "<a class='ui-btn ui-btn-r ui-corner-all ui-shadow' data-rel='back' href='#'>Aceptar</a></div></div>"
+                });
+            }
+
+        },
+        error: function(jqXHR, textStatus, errorThrown) {
+            alert('Error: ' + errorThrown);
+        }
+    });
+});
+
+$(document).on('click', "a[data-cargar='3']", function() {
+    var producto = $(this).attr('data-producto');
+
+    var cantidadUbicacion = $('#cantidad-producto-ubicacion-' + producto).val();
+    cantidadUbicacion = parseInt(cantidadUbicacion);
+    if (isNaN(cantidadUbicacion)) {
+        cantidadUbicacion = 0;
+    }
+
+    var cantidadBodega = parseInt($('#cantidad-producto-bodega-' + producto).val());
+    cantidadBodega = parseInt(cantidadBodega);
+    if (isNaN(cantidadBodega)) {
+        cantidadBodega = 0;
+    }
+
+    $.ajax({
+        type: 'POST',
+        dataType: 'json',
+        async: true,
+        url: requestUrl + '/carro/agregarBodega',
+        data: {producto: producto, cantidadU: cantidadUbicacion, cantidadB: cantidadBodega},
+        beforeSend: function() {
+            $.mobile.loading('show');
+        },
+        complete: function() {
+            $.mobile.loading('hide');
+        },
+        success: function(data) {
+            if (data.result === "ok") {
+                $('#panel-carro-canasta').html(data.response.canastaHTML);
+                $('#panel-carro-canasta').trigger("create");
+                $('<div>').mdialog({
+                    content: data.response.mensajeHTML
+                });
+            } else {
+                $('<div>').mdialog({
+                    content: "<div data-role='main'><div class='ui-content' data-role='content' role='main'>" + data.response + "<a class='ui-btn ui-btn-r ui-corner-all ui-shadow' data-rel='back' href='#'>Aceptar</a></div></div>"
+                });
             }
 
         },
@@ -542,11 +818,122 @@ function pasoDespacho(actual, siguiente) {
         type: 'POST',
         //dataType: 'json',
         async: true,
-        url: requestUrl + '/carro/pagar/paso/' + actual + '/ajax/true',
+        url: requestUrl + '/carro/pagar/paso/' + actual + '/post/true',
         data: {
             siguiente: siguiente,
             direccion: $('input[name="FormaPagoForm[idDireccionDespacho]"]:checked').val()
         },
+        beforeSend: function() {
+            $('div[id^="FormaPagoForm_"].has-error').html('');
+            $('div[id^="FormaPagoForm_"].has-error').css('display', 'none');
+            $.mobile.loading('show');
+        },
+        complete: function() {
+            $.mobile.loading('hide');
+        },
+        success: function(data) {
+            var obj = $.parseJSON(data);
+
+            if (obj.result === 'ok') {
+                window.location.replace(obj.redirect);
+            } else if (obj.result === 'error') {
+                alert(obj.response);
+            } else {
+                $.each(obj, function(element, error) {
+                    $('#' + element + '_em_').html(error);
+                    $('#' + element + '_em_').css('display', 'block');
+                });
+            }
+        },
+        error: function(jqXHR, textStatus, errorThrown) {
+            alert('Error: ' + errorThrown);
+        }
+    });
+}
+
+function pasoEntrega(actual, siguiente) {
+    var data = {siguiente: siguiente};
+
+    $.ajax({
+        type: 'POST',
+        //dataType: 'json',
+        async: true,
+        url: requestUrl + '/carro/pagar/paso/' + actual + '/post/true',
+        data: $.param(data) + '&' + $('#form-pago-entrega').serialize(),
+        beforeSend: function() {
+            $('div[id^="FormaPagoForm_"].has-error').html('');
+            $('div[id^="FormaPagoForm_"].has-error').css('display', 'none');
+            $.mobile.loading('show');
+        },
+        complete: function() {
+            $.mobile.loading('hide');
+        },
+        success: function(data) {
+            var obj = $.parseJSON(data);
+
+            if (obj.result === 'ok') {
+                window.location.replace(obj.redirect);
+            } else if (obj.result === 'error') {
+                alert(obj.response);
+            } else {
+                $.each(obj, function(element, error) {
+                    $('#' + element + '_em_').html(error);
+                    $('#' + element + '_em_').css('display', 'block');
+                });
+            }
+        },
+        error: function(jqXHR, textStatus, errorThrown) {
+            alert('Error: ' + errorThrown);
+        }
+    });
+}
+
+function pasoPago(actual, siguiente) {
+    var data = {siguiente: siguiente};
+
+    $.ajax({
+        type: 'POST',
+        //dataType: 'json',
+        async: true,
+        url: requestUrl + '/carro/pagar/paso/' + actual + '/post/true',
+        data: $.param(data) + '&' + $('#form-pago-pago').serialize(),
+        beforeSend: function() {
+            $('div[id^="FormaPagoForm_"].has-error').html('');
+            $('div[id^="FormaPagoForm_"].has-error').css('display', 'none');
+            $.mobile.loading('show');
+        },
+        complete: function() {
+            $.mobile.loading('hide');
+        },
+        success: function(data) {
+            var obj = $.parseJSON(data);
+
+            if (obj.result === 'ok') {
+                window.location.replace(obj.redirect);
+            } else if (obj.result === 'error') {
+                alert(obj.response);
+            } else {
+                $.each(obj, function(element, error) {
+                    $('#' + element + '_em_').html(error);
+                    $('#' + element + '_em_').css('display', 'block');
+                });
+            }
+        },
+        error: function(jqXHR, textStatus, errorThrown) {
+            alert('Error: ' + errorThrown);
+        }
+    });
+}
+
+function pasoConfirmacion(actual, siguiente) {
+    var data = {siguiente: siguiente};
+
+    $.ajax({
+        type: 'POST',
+        //dataType: 'json',
+        async: true,
+        url: requestUrl + '/carro/pagar/paso/' + actual + '/post/true',
+        data: $.param(data) + '&' + $('#form-pago-confirmacion').serialize(),
         beforeSend: function() {
             $.mobile.loading('show');
         },
@@ -555,11 +942,11 @@ function pasoDespacho(actual, siguiente) {
         },
         success: function(data) {
             var obj = $.parseJSON(data);
-            
+
             if (obj.result === 'ok') {
                 window.location.replace(obj.redirect);
-            }else if (data.result === 'error') {
-                alert(data.response);
+            } else if (obj.result === 'error') {
+                alert(obj.response);
             } else {
                 $.each(obj, function(element, error) {
                     $('#' + element + '_em_').html(error);
@@ -574,23 +961,49 @@ function pasoDespacho(actual, siguiente) {
 }
 
 
-$(document).on('click', "input[id='btn-carropagar-siguiente']", function() {
+$(document).on('click', "input[id='btn-carropagar-siguiente'], input[id='btn-carropagar-anterior']", function() {
     var actual = $(this).attr('data-origin');
     var siguiente = $(this).attr('data-redirect');
 
     if (actual === 'despacho') {
         pasoDespacho(actual, siguiente);
     } else if (actual === 'entrega') {
-
+        pasoEntrega(actual, siguiente);
     } else if (actual === 'pago') {
-
+        pasoPago(actual, siguiente);
     } else if (actual === 'confirmacion') {
-
+        pasoConfirmacion(actual, siguiente);
     }
 
     return false;
 });
 
+$(document).on('change', 'input[name="FormaPagoForm[idFormaPago]"]:radio', function(e) {
+    $('[id="div-credirebaja"] input').val('');
+    pagoCredirebaja();
+});
+
+function pagoCredirebaja() {
+    if ($('#form-pago-pago').length) {
+        //$('[id="div-credirebaja"] input').val('');
+        var formaPago = $('input[name="FormaPagoForm[idFormaPago]"]:checked').val();
+        if (formaPago == undefined || $('#FormaPagoForm_idFormaPago_' + formaPago).attr('data-credirebaja') == 0) {
+            $('[id="div-credirebaja"] input').attr('disabled', 'disabled');
+            $('[id="div-credirebaja"] select').attr('disabled', 'disabled');
+        } else {
+            $('[id="div-credirebaja"] input').removeAttr('disabled');
+            $('[id="div-credirebaja"] select').removeAttr('disabled');
+        }
+    }
+}
+
+$(document).on('change', "#FormaPagoForm_tarjetaTipo, #FormaPagoForm_tarjetaNumero, #FormaPagoForm_tarjetaVerificacion", function() {
+    var cantidad = $(this).val();
+    cantidad = parseInt(cantidad);
+    if (isNaN(cantidad)) {
+        $(this).val('');
+    }
+});
 
 /*
  $(window).on("navigate", function(event, data) {

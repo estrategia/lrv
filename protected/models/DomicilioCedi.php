@@ -1,24 +1,25 @@
 <?php
 
 /**
- * This is the model class for table "m_Ciudad".
+ * This is the model class for table "t_DomicilioCedi".
  *
- * The followings are the available columns in table 'm_Ciudad':
+ * The followings are the available columns in table 't_DomicilioCedi':
+ * @property integer $idDomicilioCedi
+ * @property integer $codigoCedi
  * @property string $codigoCiudad
- * @property string $nombreCiudad
- * @property string $estadoCiudad
- * @property integer $excentoImpuestos
- * @property integer $orden
- * @property integer $codigoSucursal
+ * @property integer $tiempoDomicilio
+ * @property integer $valorDomicilio
+ *
+ * The followings are the available model relations:
+ * @property MCiudad $codigoCiudad0
  */
-class Ciudad extends CActiveRecord {
-    protected $objDomicilioCedi = false;
+class DomicilioCedi extends CActiveRecord {
 
     /**
      * @return string the associated database table name
      */
     public function tableName() {
-        return 'm_Ciudad';
+        return 't_DomicilioCedi';
     }
 
     /**
@@ -28,14 +29,12 @@ class Ciudad extends CActiveRecord {
         // NOTE: you should only define rules for those attributes that
         // will receive user inputs.
         return array(
-            array('codigoCiudad, nombreCiudad', 'required'),
-            array('excentoImpuestos, orden, codigoSucursal', 'numerical', 'integerOnly' => true),
+            array('codigoCedi, codigoCiudad, tiempoDomicilio', 'required'),
+            array('codigoCedi, tiempoDomicilio, valorDomicilio', 'numerical', 'integerOnly' => true),
             array('codigoCiudad', 'length', 'max' => 10),
-            array('nombreCiudad', 'length', 'max' => 100),
-            array('estadoCiudad', 'length', 'max' => 1),
             // The following rule is used by search().
             // @todo Please remove those attributes that should not be searched.
-            array('codigoCiudad, nombreCiudad, estadoCiudad, excentoImpuestos, orden, codigoSucursal', 'safe', 'on' => 'search'),
+            array('idDomicilioCedi, codigoCedi, codigoCiudad, tiempoDomicilio, valorDomicilio', 'safe', 'on' => 'search'),
         );
     }
 
@@ -46,8 +45,7 @@ class Ciudad extends CActiveRecord {
         // NOTE: you may need to adjust the relation name and the related
         // class name for the relations automatically generated below.
         return array(
-            'listSectores' => array(self::MANY_MANY, 'Sector', 'm_SectorCiudad(codigoCiudad, codigoSector)'),
-            'listSubSectores' => array(self::HAS_MANY, 'SubSector', 'codigoCiudad'),
+            'codigoCiudad0' => array(self::BELONGS_TO, 'MCiudad', 'codigoCiudad'),
         );
     }
 
@@ -56,12 +54,11 @@ class Ciudad extends CActiveRecord {
      */
     public function attributeLabels() {
         return array(
+            'idDomicilioCedi' => 'Id Domicilio Cedi',
+            'codigoCedi' => 'Codigo Cedi',
             'codigoCiudad' => 'Codigo Ciudad',
-            'nombreCiudad' => 'Nombre Ciudad',
-            'estadoCiudad' => 'Estado Ciudad',
-            'excentoImpuestos' => 'Excento Impuestos',
-            'orden' => 'Orden',
-            'codigoSucursal' => 'Codigo Sucursal',
+            'tiempoDomicilio' => 'Tiempo Domicilio',
+            'valorDomicilio' => 'Valor Domicilio',
         );
     }
 
@@ -82,12 +79,11 @@ class Ciudad extends CActiveRecord {
 
         $criteria = new CDbCriteria;
 
+        $criteria->compare('idDomicilioCedi', $this->idDomicilioCedi);
+        $criteria->compare('codigoCedi', $this->codigoCedi);
         $criteria->compare('codigoCiudad', $this->codigoCiudad, true);
-        $criteria->compare('nombreCiudad', $this->nombreCiudad, true);
-        $criteria->compare('estadoCiudad', $this->estadoCiudad, true);
-        $criteria->compare('excentoImpuestos', $this->excentoImpuestos);
-        $criteria->compare('orden', $this->orden);
-        $criteria->compare('codigoSucursal', $this->codigoSucursal);
+        $criteria->compare('tiempoDomicilio', $this->tiempoDomicilio);
+        $criteria->compare('valorDomicilio', $this->valorDomicilio);
 
         return new CActiveDataProvider($this, array(
             'criteria' => $criteria,
@@ -98,24 +94,10 @@ class Ciudad extends CActiveRecord {
      * Returns the static model of the specified AR class.
      * Please note that you should have this exact method in all your CActiveRecord descendants!
      * @param string $className active record class name.
-     * @return Ciudad the static model class
+     * @return DomicilioCedi the static model class
      */
     public static function model($className = __CLASS__) {
         return parent::model($className);
-    }
-    
-    public function getDomicilio(){
-        if($this->objDomicilioCedi == false){
-            $this->objDomicilioCedi = DomicilioCedi::model()->find(array(
-                'condition' => 'codigoCedi=:cedi AND codigoCiudad=:ciudad',
-                'params' => array(
-                    ':cedi'=>  $this->codigoSucursal,
-                    ':ciudad' => $this->codigoCiudad,
-                )
-            ));
-        }
-        
-        return $this->objDomicilioCedi;
     }
 
 }

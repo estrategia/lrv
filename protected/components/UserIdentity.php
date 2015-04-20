@@ -99,6 +99,7 @@ class UserIdentity extends CUserIdentity {
                     $usuario->save(); //para actualizar hora de ultimo acceso
                     Yii::app()->session[Yii::app()->params->usuario['sesion']] = $usuario;
                     Yii::app()->shoppingCart->setCodigoPerfil($usuario->codigoPerfil);
+                    Yii::app()->shoppingCart->CalculateShipping();
                 } catch (Exception $exc) {
                     $this->errorCode = self::ERROR_USER_ACCESS;
                     Yii::log($exc->getTraceAsString(), CLogger::LEVEL_ERROR, 'application');

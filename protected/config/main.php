@@ -33,7 +33,7 @@ return array(
     // application components
     'components' => array(
         'user' => array(
-            // enable cookie-based authentication
+// enable cookie-based authentication
             'loginUrl' => array('usuario/autenticar'),
             'allowAutoLogin' => true,
         ),
@@ -50,7 +50,7 @@ return array(
           'password' => 'T3mp0r4l',
           'charset' => 'utf8',
           ), */
-        //CONEXION SERVIDOR REMOTO
+//CONEXION SERVIDOR REMOTO
         /* 'db' => array(
           'connectionString' => 'mysql:host=66.147.244.236;port=3306;dbname=promarca_lrvmovil',
           'emulatePrepare' => true,
@@ -58,7 +58,7 @@ return array(
           'password' => 'T3mp0r4l',
           'charset' => 'utf8',
           ), */
-        //CONEXION MIGUEL
+//CONEXION MIGUEL
         'db' => array(
             'connectionString' => 'mysql:host=localhost;port=3306;dbname=lrvmovil',
             'emulatePrepare' => true,
@@ -66,7 +66,7 @@ return array(
             'charset' => 'utf8',
         ),
         'errorHandler' => array(
-            // use 'site/error' action to display errors
+// use 'site/error' action to display errors
             'errorAction' => 'sitio/error',
         ),
         'detectMobileBrowser' => array(
@@ -114,7 +114,7 @@ return array(
         'urlSitio' => 'www.larebajavirtual.com',
         'clienteFiel' => array('correo' => 'cliente_fiel@copservir.com', 'telefono' => '01 8000 93 99 00'),
         'usuario' => array(
-            'perfilDefecto' => 1,
+            //'perfilDefecto' => 1,
             'sesion' => 'larebaja.online.usuario',
             'estado' => array('activo' => 1, 'inactivo' => 0),
             'estadoNombre' => array(0 => 'Inactivo', 1 => 'Activo'),
@@ -161,10 +161,14 @@ return array(
             ),
             'pasosDisponibles' => array('despacho', 'entrega', 'pago', 'confirmacion'),
         ),
+        'formaPago' => array(
+            'idCredirebaja' => 2,
+        ),
         'carpetaImagen' => array(
             'categorias' => '/images/menu/',
             'codigoEspecial' => '/images/codigoespecial/',
             'productos' => array(1 => '/images/productos/thumb/', 2 => '/images/productos/'),
+            'combos' => array(1 => '/images/combos/thumb/', 2 => '/images/combos/'),
         ),
         'busqueda' => array(
             'tipo' => array(
@@ -175,6 +179,16 @@ return array(
                 'noExito' => '/images/sin_resultado.png',
                 'noExacta' => '/images/conicidedencias-no-exactas.jpg',
             ),
+        ),
+        'ciudad' => array(
+            '*' => 99999
+        ),
+        'sector' => array(
+            '*' => 99
+        ),
+        'perfil' => array(
+            'defecto' => 1,
+            '*' => 99
         ),
         'servicioVentaControlada' => 17,
         'asuntoRecordatorioClave' => 'Clave de Ingreso',

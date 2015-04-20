@@ -14,8 +14,8 @@
 class Precio {
 
     //put your code here
-    public $precioUnidad = null;
-    public $precioFraccion = null;
+    public $precioUnidad = 0;
+    public $precioFraccion = 0;
     public $unidadFraccionamiento = 0;
     public $porcentajeDescuentoPerfil = 0;
 
@@ -24,21 +24,21 @@ class Precio {
 
     public function getPrecio($tipo, $descuento = true) {
         if ($tipo == self::PRECIO_UNIDAD) {
-            if ($this->precioUnidad != null) {
+            //if ($this->precioUnidad != null) {
                 if ($descuento)
                     return $this->precioUnidad * (1 - ( $this->porcentajeDescuentoPerfil / 100));
                 else
                     return $this->precioUnidad;
-            } else
-                return null;
+            //} else
+                //return null;
         }else if ($tipo == self::PRECIO_FRACCION) {
-            if ($this->precioFraccion != null){
+            //if ($this->precioFraccion != null){
                 if ($descuento)
                     return $this->precioFraccion * $this->unidadFraccionamiento * (1 - ($this->porcentajeDescuentoPerfil / 100));
                 else
-                    $this->precioFraccion * $this->unidadFraccionamiento;
-            }else
-                return null;
+                    return $this->precioFraccion * $this->unidadFraccionamiento;
+            //}else
+                //return null;
         }else {
             throw new Exception("Tipo precio indefinido");
         }
@@ -46,15 +46,15 @@ class Precio {
 
     public function getAhorro($tipo) {
         if ($tipo == self::PRECIO_UNIDAD) {
-            if ($this->precioUnidad != null)
+            //if ($this->precioUnidad != null)
                 return $this->precioUnidad * ($this->porcentajeDescuentoPerfil / 100);
-            else
-                return null;
+            //else
+                //return null;
         }else if ($tipo == self::PRECIO_FRACCION) {
-            if ($this->precioFraccion != null)
+            //if ($this->precioFraccion != null)
                 return $this->precioFraccion * $this->unidadFraccionamiento * ($this->porcentajeDescuentoPerfil / 100);
-            else
-                return null;
+            //else
+                //return null;
         }else {
             throw new Exception("Tipo precio indefinido");
         }

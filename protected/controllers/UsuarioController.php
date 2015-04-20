@@ -113,7 +113,7 @@ class UsuarioController extends Controller {
                     $perfilEspecial = PerfilesEspeciales::model()->find('identificacionUsuario=:cedula', array(':cedula' => $usuario->identificacionUsuario));
 
                     if ($perfilEspecial === null) {
-                        $usuario->codigoPerfil = Yii::app()->params->usuario['perfilDefecto'];
+                        $usuario->codigoPerfil = Yii::app()->params->perfil['defecto'];
                     } else {
                         $usuario->codigoPerfil = $perfilEspecial->codigoPerfil;
                     }

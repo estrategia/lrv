@@ -23,6 +23,8 @@ class EShoppingCart extends CMap {
     public $codigoPerfil = null;
     public $objSectorCiudad = null;
     protected $shipping = 0;
+    protected $shippingStored = 0;
+    protected $deliveryStored = 0;
 
     public function init() {
         $this->restoreFromSession();
@@ -41,8 +43,57 @@ class EShoppingCart extends CMap {
         $this->saveStateAttributes();
     }
 
+    public function CalculateShipping() {
+        if ($this->objSectorCiudad !== null && $this->objSectorCiudad instanceof SectorCiudad) {
+
+            $objDomicilio = Domicilio::model()->find(array(
+                'condition' => 'codigoCiudad=:ciudad AND codigoSector=:sector AND codigoPerfil=:perfil',
+                'params' => array(
+                    ':ciudad' => $this->objSectorCiudad->codigoCiudad,
+                    ':sector' => $this->objSectorCiudad->codigoSector,
+                    ':perfil' => $this->codigoPerfil,
+                )
+            ));
+
+            if ($objDomicilio === null) {
+                $objDomicilio = Domicilio::model()->find(array(
+                    'condition' => 'codigoCiudad=:ciudad AND codigoSector=:sector AND codigoPerfil=:perfil',
+                    'params' => array(
+                        ':ciudad' => $this->objSectorCiudad->codigoCiudad,
+                        ':sector' => $this->objSectorCiudad->codigoSector,
+                        ':perfil' => Yii::app()->params->perfil['*'],
+                    )
+                ));
+            }
+
+            if ($objDomicilio === null) {
+                $objDomicilio = Domicilio::model()->find(array(
+                    'condition' => 'codigoCiudad=:ciudad AND codigoSector=:sector AND codigoPerfil=:perfil',
+                    'params' => array(
+                        ':ciudad' => Yii::app()->params->ciudad['*'],
+                        ':sector' => Yii::app()->params->sector['*'],
+                        ':perfil' => Yii::app()->params->perfil['*'],
+                    )
+                ));
+            }
+
+            if ($objDomicilio !== null)
+                $this->shipping = $objDomicilio->valorDomicilio;
+
+            $this->saveStateAttributes();
+        }
+    }
+
     public function getShipping() {
         return $this->shipping;
+    }
+
+    public function getShippingStored() {
+        return $this->shippingStored;
+    }
+
+    public function getDeliveryStored() {
+        return $this->deliveryStored;
     }
 
     public function setCodigoPerfil($codigoPerfil) {
@@ -76,11 +127,23 @@ class EShoppingCart extends CMap {
     public function restoreFromSession() {
         $data = Yii::app()->getUser()->getState(__CLASS__);
 
-        if (isset(Yii::app()->session[Yii::app()->params->sesion['sectorCiudadEntrega']]))
+        if (isset(Yii::app()->session[Yii::app()->params->sesion['sectorCiudadEntrega']])) {
             $this->objSectorCiudad = Yii::app()->session[Yii::app()->params->sesion['sectorCiudadEntrega']];
+            
+            if ($this->objSectorCiudad->objCiudad->getDomicilio() != null) {
+                $this->shippingStored = $this->objSectorCiudad->objCiudad->getDomicilio()->valorDomicilio;
+                $this->deliveryStored = $this->objSectorCiudad->objCiudad->getDomicilio()->tiempoDomicilio;
+            }
+        }
 
         //$this->objSectorCiudad = Yii::app()->getUser()->getState('SectorCiudad');
         $this->codigoPerfil = Yii::app()->getUser()->getState(__CLASS__ . '_CodigoPerfil');
+        $this->shipping = Yii::app()->getUser()->getState(__CLASS__ . '_Shipping');
+
+        if ($this->codigoPerfil == null) {
+            $this->codigoPerfil = Yii::app()->params->perfil['defecto'];
+            $this->CalculateShipping();
+        }
 
         if (is_array($data) || $data instanceof Traversable)
             foreach ($data as $key => $product)
@@ -92,17 +155,40 @@ class EShoppingCart extends CMap {
      * If the position was previously added to the cart,
      * then information of it is updated, and count increases by $quantity
      * @param IECartPosition $position
-     * @param int count of elements positions
+     * @param int $quantity count of elements positions
+     * @param bool $fraction adding fraction or not
      */
-    public function put(IECartPosition $position, $quantity = 1) {
+    public function put(IECartPosition $position, $fraction, $quantity = 1) {
         $key = $position->getId();
         if ($this->itemAt($key) instanceof IECartPosition) {
             $position = $this->itemAt($key);
-            $oldQuantity = $position->getQuantity();
+            $oldQuantity = $position->getQuantity($fraction);
+            $quantity += $oldQuantity;
+
+            if (!$fraction) {
+                $quantity -= $position->getQuantityStored();
+            }
+        }
+
+        $this->update($position, $fraction, $quantity);
+    }
+
+    /**
+     * Add item to the shopping cart
+     * If the position was previously added to the cart,
+     * then information of it is updated, and count increases by $quantity
+     * @param IECartPosition $position
+     * @param int $quantity count of elements positions
+     */
+    public function putStored(IECartPosition $position, $quantity = 1) {
+        $key = $position->getId();
+        if ($this->itemAt($key) instanceof IECartPosition) {
+            $position = $this->itemAt($key);
+            $oldQuantity = $position->getQuantityStored();
             $quantity += $oldQuantity;
         }
 
-        $this->update($position, $quantity);
+        $this->updateStored($position, $quantity);
     }
 
     /**
@@ -132,12 +218,13 @@ class EShoppingCart extends CMap {
      *
      * @param IECartPosition $position
      * @param int $quantity
+     * @param bool $fraction adding fraction or not
      */
-    public function update(IECartPosition $position, $quantity) {
+    public function update(IECartPosition $position, $fraction, $quantity) {
         if ($this->objSectorCiudad !== null) {
 
-            if ($this->codigoPerfil == null)
-                $this->codigoPerfil = Yii::app()->params->usuario['perfilDefecto'];
+            //if ($this->codigoPerfil == null)
+            //$this->codigoPerfil = Yii::app()->params->perfil['defecto'];
 
             $key = $position->getId();
 
@@ -148,9 +235,43 @@ class EShoppingCart extends CMap {
 
             //$position->attachBehavior("CartPosition", new ECartPositionBehaviour());
 
-            $position->setQuantity($quantity);
+            $position->setQuantity($quantity, $fraction);
 
-            if ($position->getQuantity() < 1)
+            if ($position->getQuantity(true) + $position->getQuantity(false) < 1)
+                $this->remove($key);
+            else
+                parent::add($key, $position);
+
+            $this->applyDiscounts();
+            $this->onUpdatePoistion(new CEvent($this));
+            $this->saveState();
+            return true;
+        }
+        return false;
+    }
+
+    /**
+     * Updates the position in the shopping cart
+     * If the position was previously added, then it will be updated in shopping cart,
+     * if the position was not previously in the cart, it will be added there.
+     * If the count of less than 1, the position will be deleted.
+     *
+     * @param IECartPosition $position
+     * @param int $quantity
+     */
+    public function updateStored(IECartPosition $position, $quantity) {
+        if ($this->objSectorCiudad !== null) {
+
+            $key = $position->getId();
+
+            $position->generate(array(
+                'objSectorCiudad' => $this->objSectorCiudad,
+                'codigoPerfil' => $this->codigoPerfil
+            ));
+
+            $position->setQuantityStored($quantity);
+
+            if ($position->getQuantity(true) + $position->getQuantity(false) < 1)
                 $this->remove($key);
             else
                 parent::add($key, $position);
@@ -175,6 +296,7 @@ class EShoppingCart extends CMap {
     protected function saveStateAttributes() {
         //Yii::app()->getUser()->setState('SectorCiudad', $this->objSectorCiudad);
         Yii::app()->getUser()->setState(__CLASS__ . '_CodigoPerfil', $this->codigoPerfil);
+        Yii::app()->getUser()->setState(__CLASS__ . '_Shipping', $this->shipping);
     }
 
     /**
@@ -184,7 +306,7 @@ class EShoppingCart extends CMap {
     public function getItemsCount() {
         $count = 0;
         foreach ($this as $position) {
-            $count += $position->getQuantity();
+            $count += $position->getQuantity() + $position->getQuantity(true);
         }
 
         return $count;
@@ -215,6 +337,7 @@ class EShoppingCart extends CMap {
         }
 
         $price -= $this->discountPrice;
+        $price += $this->shipping + $this->shippingStored;
 
         return $price;
     }
@@ -224,6 +347,7 @@ class EShoppingCart extends CMap {
         foreach ($this as $position) {
             $shipping += $position->getShipping();
         }
+        $shipping += $this->shippingStored;
         return $shipping;
     }
 
@@ -281,12 +405,12 @@ class EShoppingCart extends CMap {
         if ($total) {
             $discount = 0.0;
             foreach ($this as $position) {
-                $discount += $position->getDiscountPrice(true)*$position->getQuantity();
-                $discount -= $position->getShipping();
+                $discount += $position->getDiscountPrice() * $position->getQuantity() + $position->getDiscountPrice(true) * $position->getQuantity(true);
+                //$discount -= $position->getShipping();
             }
             $discount += $this->discountPrice;
-            $discount -= $this->shipping;
-            
+            //$discount -= $this->shipping;
+
             return $discount;
         } else
             return $this->discountPrice;

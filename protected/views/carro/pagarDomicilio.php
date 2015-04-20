@@ -3,12 +3,13 @@
 <p>paso 3</p>
 <p>paso 4</p>
 
+
 <div>
     <?php $this->renderPartial('_paso' . Yii::app()->params->pagar['pasos'][$paso], $parametros); ?>
 </div>
 
 <?php if ($pasoAnterior !== null): ?>
-    <div class="ui-input-btn ui-btn ui-corner-all ui-shadow ui-btn-r">
+    <div class="ui-input-btn ui-btn ui-corner-all ui-shadow ui-btn-n">
         Atrás
         <input type="button" data-enhanced="true" value="Atras" id="btn-carropagar-anterior" data-origin="<?php echo $paso ?>" data-redirect="<?php echo $pasoAnterior ?>">
     </div>

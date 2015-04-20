@@ -158,12 +158,15 @@ class SitioController extends Controller {
 
         $objSubSector = $subsector != null ? SubSector::model()->findByPk(array('codigoCiudad' => $ciudad, 'codigoSubSector' => $sector)) : null;
 
+        $objSectorCiudad->objCiudad->getDomicilio();
         Yii::app()->session[Yii::app()->params->sesion['sectorCiudadEntrega']] = $objSectorCiudad;
         Yii::app()->session[Yii::app()->params->sesion['subSectorCiudadEntrega']] = $objSubSector;
         
         
         if($objSectorCiudadOld !=null && $objSectorCiudadOld->codigoCiudad != $objSectorCiudad->codigoCiudad && $objSectorCiudadOld->codigoSector != $objSectorCiudad->codigoSector)
             Yii::app()->shoppingCart->clear();
+        
+        Yii::app()->shoppingCart->CalculateShipping();
 
         if (Yii::app()->session[Yii::app()->params->sesion['redireccionUbicacion']] == 'null') {
             $this->redirect($this->createUrl('/sitio/inicio'));

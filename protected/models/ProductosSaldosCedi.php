@@ -1,21 +1,24 @@
 <?php
 
 /**
- * This is the model class for table "m_CodigoEspecial".
+ * This is the model class for table "t_ProductosSaldosCedi".
  *
- * The followings are the available columns in table 'm_CodigoEspecial':
- * @property integer $codigoEspecial
- * @property string $descripcion
- * @property string $rutaIcono
- * @property string $confirmacionCompra
+ * The followings are the available columns in table 't_ProductosSaldosCedi':
+ * @property integer $idProductosSaldosCedi
+ * @property string $codigoProducto
+ * @property integer $codigoCedi
+ * @property integer $saldoUnidad
+ *
+ * The followings are the available model relations:
+ * @property MProducto $codigoProducto0
  */
-class CodigoEspecial extends CActiveRecord {
+class ProductosSaldosCedi extends CActiveRecord {
 
     /**
      * @return string the associated database table name
      */
     public function tableName() {
-        return 'm_CodigoEspecial';
+        return 't_ProductosSaldosCedi';
     }
 
     /**
@@ -25,14 +28,12 @@ class CodigoEspecial extends CActiveRecord {
         // NOTE: you should only define rules for those attributes that
         // will receive user inputs.
         return array(
-            array('rutaIcono', 'required'),
-            array('codigoEspecial', 'numerical', 'integerOnly' => true),
-            array('descripcion', 'length', 'max' => 500),
-            array('rutaIcono', 'length', 'max' => 100),
-            array('confirmacionCompra', 'length', 'max' => 2),
+            array('codigoProducto, codigoCedi', 'required'),
+            array('codigoCedi, saldoUnidad', 'numerical', 'integerOnly' => true),
+            array('codigoProducto', 'length', 'max' => 10),
             // The following rule is used by search().
             // @todo Please remove those attributes that should not be searched.
-            array('codigoEspecial, descripcion, rutaIcono, confirmacionCompra', 'safe', 'on' => 'search'),
+            array('idProductosSaldosCedi, codigoProducto, codigoCedi, saldoUnidad', 'safe', 'on' => 'search'),
         );
     }
 
@@ -43,6 +44,7 @@ class CodigoEspecial extends CActiveRecord {
         // NOTE: you may need to adjust the relation name and the related
         // class name for the relations automatically generated below.
         return array(
+            'codigoProducto0' => array(self::BELONGS_TO, 'MProducto', 'codigoProducto'),
         );
     }
 
@@ -51,10 +53,10 @@ class CodigoEspecial extends CActiveRecord {
      */
     public function attributeLabels() {
         return array(
-            'codigoEspecial' => 'Codigo Especial',
-            'descripcion' => 'Descripcion',
-            'rutaIcono' => 'Ruta Icono',
-            'confirmacionCompra' => 'Confirmacion Compra',
+            'idProductosSaldosCedi' => 'Id Productos Saldos Cedi',
+            'codigoProducto' => 'Codigo Producto',
+            'codigoCedi' => 'Codigo Cedi',
+            'saldoUnidad' => 'Saldo Unidad',
         );
     }
 
@@ -75,10 +77,10 @@ class CodigoEspecial extends CActiveRecord {
 
         $criteria = new CDbCriteria;
 
-        $criteria->compare('codigoEspecial', $this->codigoEspecial);
-        $criteria->compare('descripcion', $this->descripcion, true);
-        $criteria->compare('rutaIcono', $this->rutaIcono, true);
-        $criteria->compare('confirmacionCompra', $this->confirmacionCompra, true);
+        $criteria->compare('idProductosSaldosCedi', $this->idProductosSaldosCedi);
+        $criteria->compare('codigoProducto', $this->codigoProducto, true);
+        $criteria->compare('codigoCedi', $this->codigoCedi);
+        $criteria->compare('saldoUnidad', $this->saldoUnidad);
 
         return new CActiveDataProvider($this, array(
             'criteria' => $criteria,
@@ -89,7 +91,7 @@ class CodigoEspecial extends CActiveRecord {
      * Returns the static model of the specified AR class.
      * Please note that you should have this exact method in all your CActiveRecord descendants!
      * @param string $className active record class name.
-     * @return CodigoEspecial the static model class
+     * @return ProductosSaldosCedi the static model class
      */
     public static function model($className = __CLASS__) {
         return parent::model($className);

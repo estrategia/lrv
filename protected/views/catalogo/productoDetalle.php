@@ -64,7 +64,7 @@
                         <td style="text-align:right;">Ahorro</td>
                     </tr>
                     <tr>
-                        <td class="txt_pre_lst"><?php echo Yii::app()->numberFormatter->format(Yii::app()->params->formatoMoneda['patron'], $objPrecio->precioUnidad, Yii::app()->params->formatoMoneda['moneda']); ?></td>
+                        <td class="txt_pre_lst"><?php echo Yii::app()->numberFormatter->format(Yii::app()->params->formatoMoneda['patron'], $objPrecio->getPrecio(Precio::PRECIO_UNIDAD, false), Yii::app()->params->formatoMoneda['moneda']); ?></td>
                         <td class="txt_pre"><?php echo Yii::app()->numberFormatter->format(Yii::app()->params->formatoMoneda['patron'], $objPrecio->getPrecio(Precio::PRECIO_UNIDAD), Yii::app()->params->formatoMoneda['moneda']); ?></td>
                         <td class="txt_ahor"><?php echo Yii::app()->numberFormatter->format(Yii::app()->params->formatoMoneda['patron'], $objPrecio->getAhorro(Precio::PRECIO_UNIDAD), Yii::app()->params->formatoMoneda['moneda']); ?></td>
                     </tr>
@@ -98,7 +98,7 @@
                         <td style="text-align:right;">Ahorro</td>
                     </tr>
                     <tr>
-                        <td class="txt_pre_lst"><?php echo Yii::app()->numberFormatter->format(Yii::app()->params->formatoMoneda['patron'], $objPrecio->precioFraccion, Yii::app()->params->formatoMoneda['moneda']); ?></td>
+                        <td class="txt_pre_lst"><?php echo Yii::app()->numberFormatter->format(Yii::app()->params->formatoMoneda['patron'], $objPrecio->getPrecio(Precio::PRECIO_FRACCION, false), Yii::app()->params->formatoMoneda['moneda']); ?></td>
                         <td class="txt_pre"><?php echo Yii::app()->numberFormatter->format(Yii::app()->params->formatoMoneda['patron'], $objPrecio->getPrecio(Precio::PRECIO_FRACCION), Yii::app()->params->formatoMoneda['moneda']); ?></td>
                         <td class="txt_ahor"><?php echo Yii::app()->numberFormatter->format(Yii::app()->params->formatoMoneda['patron'], $objPrecio->getAhorro(Precio::PRECIO_FRACCION), Yii::app()->params->formatoMoneda['moneda']); ?></td>
                     </tr>
@@ -111,7 +111,7 @@
             <div class="ccont_dtl_prod">
                 <div class="cdtl_prod_pr">
                     <?php if ($objProducto->mostrarAhorroVirtual == 1 && $objPrecio->porcentajeDescuentoPerfil > 0): ?>
-                        <div class="cdt_txt_alg cdt_pre_ant"><span class="ctxt_min">Precio de lista</span><br> <span> <?php echo Yii::app()->numberFormatter->format(Yii::app()->params->formatoMoneda['patron'], $objPrecio->precioUnidad, Yii::app()->params->formatoMoneda['moneda']); ?></span></div>
+                        <div class="cdt_txt_alg cdt_pre_ant"><span class="ctxt_min">Precio de lista</span><br> <span> <?php echo Yii::app()->numberFormatter->format(Yii::app()->params->formatoMoneda['patron'], $objPrecio->getPrecio(Precio::PRECIO_UNIDAD, false), Yii::app()->params->formatoMoneda['moneda']); ?></span></div>
                         <div class="cdt_txt_alg cdt_pre_act"><span>Precio</span><br> <?php echo Yii::app()->numberFormatter->format(Yii::app()->params->formatoMoneda['patron'], $objPrecio->getPrecio(Precio::PRECIO_UNIDAD), Yii::app()->params->formatoMoneda['moneda']); ?> </div>
                         <div class="cdt_txt_alg cdt_pre_aho"><span>Ahorro</span><br> <?php echo Yii::app()->numberFormatter->format(Yii::app()->params->formatoMoneda['patron'], $objPrecio->getAhorro(Precio::PRECIO_UNIDAD), Yii::app()->params->formatoMoneda['moneda']); ?></div>
                     <?php else: ?>
@@ -122,7 +122,7 @@
                     <div class="cbtn_prod_cant_02"><input type="number" placeholder="0" value="1" id="cantidad-producto-unidad-<?php echo $objProducto->codigoProducto ?>" onchange="subtotalUnidadProducto(<?php echo $objProducto->codigoProducto ?>);"></div>
                     <div class="cpro_total_02"><span class="txt_cant_total">Total</span> <span id="subtotal-producto-unidad-<?php echo $objProducto->codigoProducto ?>"><?php echo Yii::app()->numberFormatter->format(Yii::app()->params->formatoMoneda['patron'], $objPrecio->getPrecio(Precio::PRECIO_UNIDAD), Yii::app()->params->formatoMoneda['moneda']); ?></span></div>
                     <?php if ($objProducto->objImpuesto != null && $objProducto->objImpuesto->codigoImpuesto != 0 && $objProducto->objImpuesto->codigoImpuesto != 20): ?>
-                        <?php if ($objSectorCiudad==null || ($objSectorCiudad != null && $objSectorCiudad->objCiudad->excentoImpuestos==0)): ?>
+                        <?php if ($objSectorCiudad == null || ($objSectorCiudad != null && $objSectorCiudad->objCiudad->excentoImpuestos == 0)): ?>
                             <p class="txt_cant_incl">Incluye <?php echo Yii::app()->numberFormatter->formatPercentage($objProducto->objImpuesto->porcentaje) ?> de impuestos</p>
                         <?php endif; ?>
                     <?php endif; ?>
@@ -202,7 +202,7 @@
                 <button data-role="calificacion" class="ui-btn ui-corner-all ui-shadow cdtl_button_calf" onclick='calificarProducto("<?php echo $objProducto->codigoProducto ?>");
                         return false;'>Calificar</button>
             </form>
-    <?php else: ?>
+        <?php else: ?>
             <table class="ui-responsive">
                 <tr>
                     <td>Tu calificación:</td>
@@ -213,5 +213,19 @@
                 </tr>
             </table>
         <?php endif; ?>
-<?php endif; ?>
+    <?php endif; ?>
+    <?php if (!empty($listRelacionados)): ?>
+        <div>Productos Relacionados</div>
+        <div id="slide-relacionados" class="owl-carousel owl-theme">
+            <?php foreach ($listRelacionados as $objRelacionado): ?>
+                <div class="item"><?php
+                    $this->renderPartial('_productoSlide', array(
+                        'objProducto' => $objRelacionado->objProductoRelacionado,
+                        'objSectorCiudad' => $objSectorCiudad,
+                        'codigoPerfil' => $codigoPerfil
+                    ));
+                    ?></div>
+            <?php endforeach; ?>
+        </div>
+    <?php endif; ?>
 </div>

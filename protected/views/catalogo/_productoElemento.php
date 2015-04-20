@@ -36,9 +36,11 @@
     <?php endif; ?>
 
     <!-- producto seleccionado -->
-    <a href="" class="clst_slct_prod">
-        <img src="<?php echo Yii::app()->request->baseUrl ?>/images/iconos/icon_seleccionado.png">
-    </a>
+    <?php if (Yii::app()->shoppingCart->contains($objProducto->codigoProducto)): ?>
+        <a href="" class="clst_slct_prod">
+            <img src="<?php echo Yii::app()->request->baseUrl ?>/images/iconos/icon_seleccionado.png">
+        </a>
+    <?php endif; ?>
     <!-- producto seleccionado -->
 
     <div class="clst_cont_pr_prod">
@@ -48,7 +50,7 @@
         <?php if ($objSectorCiudad != null): ?>
             <?php $objPrecio = $objProducto->getPrecio($objSectorCiudad->codigoCiudad, $objSectorCiudad->codigoSector, $codigoPerfil); ?>
             <?php if ($objProducto->mostrarAhorroVirtual == 1 && $objPrecio->getAhorro(Precio::PRECIO_UNIDAD) > 0): ?>
-                <div class="clst_pre_ant"><?php echo Yii::app()->numberFormatter->format(Yii::app()->params->formatoMoneda['patron'], $objPrecio->precioUnidad, Yii::app()->params->formatoMoneda['moneda']); ?></div>
+                <div class="clst_pre_ant"><?php echo Yii::app()->numberFormatter->format(Yii::app()->params->formatoMoneda['patron'], $objPrecio->getPrecio(Precio::PRECIO_UNIDAD, false), Yii::app()->params->formatoMoneda['moneda']); ?></div>
                 <div class="clst_pre_act"><?php echo Yii::app()->numberFormatter->format(Yii::app()->params->formatoMoneda['patron'], $objPrecio->getPrecio(Precio::PRECIO_UNIDAD), Yii::app()->params->formatoMoneda['moneda']); ?>  <span>[Ahorro <?php echo Yii::app()->numberFormatter->format(Yii::app()->params->formatoMoneda['patron'], $objPrecio->getAhorro(Precio::PRECIO_UNIDAD), Yii::app()->params->formatoMoneda['moneda']); ?>]</span></div>
             <?php else: ?>
                 <div class="clst_pre_act" style="padding-bottom:1em;"><?php echo Yii::app()->numberFormatter->format(Yii::app()->params->formatoMoneda['patron'], $objPrecio->getPrecio(Precio::PRECIO_UNIDAD), Yii::app()->params->formatoMoneda['moneda']); ?> </div>
@@ -56,27 +58,6 @@
         <?php endif; ?>
     </div>
 </div>
-
-<!--
-<div class="clst_prod_subt">
-    <input type="number" placeholder="0" id="cantidad-producto-unidad-<?php echo $objProducto->codigoProducto ?>" class="cbtn_cant" onchange="subtotalUnidadProducto(<?php echo $objProducto->codigoProducto ?>);">
-    <div class="csubt_prod">
-        <p>Subtotal</p>
-        <p id="subtotal-producto-unidad-<?php echo $objProducto->codigoProducto ?>">$0</p>
-    </div>
-    <div class="csubt_btn_add_car">
-<?php if ($objSectorCiudad != null): ?>
-    <?php if ($objProducto->ventaVirtual == 0): ?>
-        <?php echo CHtml::link('Añadir al carro 1', '#popup-carro-controlada', array('class' => 'ui-btn ui-corner-all ui-shadow ui-btn-inline ui-btn-r', 'data-rel' => 'popup')); ?>
-    <?php elseif ($objProducto->codigoEspecial == 0): ?>
-        <?php echo CHtml::link('Añadir al carro 2', '#', array('data-producto' => $objProducto->codigoProducto, 'data-cargar' => 1, 'class' => 'ui-btn ui-corner-all ui-shadow ui-btn-inline ui-btn-r')); ?>
-    <?php else: ?>
-        <?php echo CHtml::link('Añadir al carro 3', "#", array('class' => 'ui-btn ui-corner-all ui-shadow ui-btn-inline ui-btn-r', 'onclick' => "carroPopupEspecial($objProducto->codigoProducto,$objProducto->codigoEspecial);")); ?>
-    <?php endif; ?>
-<?php endif; ?>
-    </div>
-</div>
--->
 
 <?php if ($objSectorCiudad != null): ?>
     <?php $objPrecio = $objProducto->getPrecio($objSectorCiudad->codigoCiudad, $objSectorCiudad->codigoSector, $codigoPerfil); ?>
@@ -92,11 +73,9 @@
                 </td>
                 <td class="ctd_03">
                     <?php if ($objProducto->ventaVirtual == 0): ?>
-                        <?php echo CHtml::link('Añadir al carro', '#popup-carro-controlada', array('class' => 'ui-btn ui-corner-all ui-shadow ui-btn-inline ui-btn-r', 'data-rel' => 'popup', 'data-mini' => 'true')); ?>
-                    <?php elseif ($objProducto->codigoEspecial == 0): ?>
-                        <?php echo CHtml::link('Añadir al carro', '#', array('data-producto' => $objProducto->codigoProducto, 'data-cargar' => 1, 'class' => 'ui-btn ui-corner-all ui-shadow ui-btn-inline ui-btn-r', 'data-mini' => 'true')); ?>
+                        <?php echo CHtml::link('Añadir al carro', "#popup-carro-controlada-$objProducto->codigoProducto", array('class' => 'ui-btn ui-corner-all ui-shadow ui-btn-inline ui-btn-r', 'data-rel' => 'popup', 'data-mini' => 'true')); ?>
                     <?php else: ?>
-                        <?php echo CHtml::link('Añadir al carro', "#", array('class' => 'ui-btn ui-corner-all ui-shadow ui-btn-inline ui-btn-r', 'onclick' => "carroPopupEspecial($objProducto->codigoProducto,$objProducto->codigoEspecial);", 'data-mini' => 'true')); ?>
+                        <?php echo CHtml::link('Añadir al carro', '#', array('data-producto' => $objProducto->codigoProducto, 'data-cargar' => 1, 'class' => 'ui-btn ui-corner-all ui-shadow ui-btn-inline ui-btn-r', 'data-mini' => 'true')); ?>
                     <?php endif; ?>
                 </td>
             </tr>

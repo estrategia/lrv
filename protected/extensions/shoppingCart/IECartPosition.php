@@ -9,9 +9,13 @@
  */
 abstract class IECartPosition {
 
-    protected $price = 0;
-    protected $quantity = 0;
-    protected $discountPrice = 0.0;
+    protected $priceUnit = 0;
+    protected $priceFraction = 0;
+    protected $quantityUnit = 0;
+    protected $quantityStored = 0;
+    protected $quantityFraction = 0;
+    protected $discountPriceUnit = 0.0;
+    protected $discountPriceFraction = 0.0;
     protected $shipping = 0;
     protected $tax = 0.0;
 
@@ -21,23 +25,40 @@ abstract class IECartPosition {
      * @return float
      *
      */
-    public function getSumPrice($withDiscount = true) {
+    public function getSumPrice($withStored = true, $withDiscount = true) {
         /* $fullSum = $this->getPrice() * $this->quantity;
 
           if($withDiscount){
           $fullSum -=  $this->discountPrice * $this->quantity;
           }
           return $fullSum; */
-
-        return $this->getPrice($withDiscount) * $this->quantity;
+        return $this->getPrice(false, $withDiscount) * ($this->quantityUnit+ ($withStored ? $this->quantityStored : 0)) + $this->getPrice(true, $withDiscount) * $this->quantityFraction;
+    }
+    
+    /**
+     * Returns total price for all units of the position
+     * @param bool $withDiscount
+     * @return float
+     *
+     */
+    public function getSumPriceStored($withDiscount = true) {
+        return $this->getPrice(false, $withDiscount) * $this->quantityStored;
     }
 
     /**
      * Returns quantity.
      * @return int
      */
-    public function getQuantity() {
-        return $this->quantity;
+    public function getQuantity($fraction = false) {
+        return ($fraction ? $this->quantityFraction : ($this->quantityUnit+$this->quantityStored));
+    }
+
+    /**
+     * Returns quantity.
+     * @return int
+     */
+    public function getQuantityStored() {
+        return $this->quantityStored;
     }
 
     /**
@@ -45,8 +66,21 @@ abstract class IECartPosition {
      *
      * @param int quantity
      */
-    public function setQuantity($newVal) {
-        $this->quantity = $newVal;
+    public function setQuantity($newVal, $fraction = false) {
+        if ($fraction) {
+            $this->quantityFraction = $newVal;
+        } else {
+            $this->quantityUnit = $newVal;
+        }
+    }
+
+    /**
+     * Updates quantity.
+     *
+     * @param int quantity
+     */
+    public function setQuantityStored($newVal) {
+        $this->quantityStored = $newVal;
     }
 
     public function setShipping($newVal) {
@@ -67,7 +101,7 @@ abstract class IECartPosition {
 
     public function getTaxPrice($total = false) {
         if ($total)
-            return $this->getPrice() * $this->tax * $this->quantity;
+            return ($this->getPrice(true) * $this->tax * $this->quantityFraction) + ($this->getPrice() * $this->tax * ($this->quantityUnit+$this->quantityStored));
         else
             return $this->getPrice() * $this->tax;
     }
@@ -77,22 +111,24 @@ abstract class IECartPosition {
      * @param  $newVal
      * @return void
      */
-    public function setDiscountPrice($newVal) {
-        $this->discountPrice = $newVal;
-    }
+    /* public function setDiscountPrice($newVal) {
+      $this->discountPrice = $newVal;
+      } */
 
-    public function getDiscountPrice() {
-        return $this->discountPrice;
+    public function getDiscountPrice($fraction = false) {
+        return ($fraction ? $this->discountPriceFraction : $this->discountPriceUnit);
     }
 
     /**
      * @return float price
      */
-    public function getPrice($withDiscount = true) {
+    public function getPrice($fraction = false, $withDiscount = true) {
+        $price = ($fraction ? $this->priceFraction : $this->priceUnit);
+
         if ($withDiscount)
-            return $this->price - $this->discountPrice;
-        else
-            return $this->price;
+            $price -= ($fraction ? $this->discountPriceFraction : $this->discountPriceUnit);
+
+        return $price;
     }
 
     public function getTotalPrice() {
@@ -109,10 +145,6 @@ abstract class IECartPosition {
      * @return mixed id
      */
     public function getId() {
-        
-    }
-
-    public function getCode() {
         
     }
 
