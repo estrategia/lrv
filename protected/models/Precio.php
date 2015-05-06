@@ -11,53 +11,53 @@
  *
  * @author miguel.sanchez
  */
-class Precio {
+abstract class Precio {
 
-    //put your code here
-    public $precioUnidad = 0;
-    public $precioFraccion = 0;
-    public $unidadFraccionamiento = 0;
-    public $porcentajeDescuentoPerfil = 0;
+    protected $porcentajeDescuentoPerfil = 0;
+    protected $porcentajeDescuentoBeneficio = 0;
+    protected $inicializado = false;
+    protected $listBeneficios = array();
+    protected $flete = 0;
+    protected $tiempoEntrega = 0;
 
     const PRECIO_UNIDAD = 1;
     const PRECIO_FRACCION = 2;
-
-    public function getPrecio($tipo, $descuento = true) {
-        if ($tipo == self::PRECIO_UNIDAD) {
-            //if ($this->precioUnidad != null) {
-                if ($descuento)
-                    return $this->precioUnidad * (1 - ( $this->porcentajeDescuentoPerfil / 100));
-                else
-                    return $this->precioUnidad;
-            //} else
-                //return null;
-        }else if ($tipo == self::PRECIO_FRACCION) {
-            //if ($this->precioFraccion != null){
-                if ($descuento)
-                    return $this->precioFraccion * $this->unidadFraccionamiento * (1 - ($this->porcentajeDescuentoPerfil / 100));
-                else
-                    return $this->precioFraccion * $this->unidadFraccionamiento;
-            //}else
-                //return null;
-        }else {
-            throw new Exception("Tipo precio indefinido");
-        }
+    const DESCUENTO_PERFIL = 1;
+    const DESCUENTO_BENEFICIO = 2;
+    const DESCUENTO_COMPLETO = 9;
+    
+    abstract public function getPrecio();
+    
+    abstract public function getAhorro();
+    
+    public function getFlete(){
+        return $this->flete;
+    }
+    
+    public function getTiempoEntrega(){
+        return $this->tiempoEntrega;
     }
 
-    public function getAhorro($tipo) {
-        if ($tipo == self::PRECIO_UNIDAD) {
-            //if ($this->precioUnidad != null)
-                return $this->precioUnidad * ($this->porcentajeDescuentoPerfil / 100);
-            //else
-                //return null;
-        }else if ($tipo == self::PRECIO_FRACCION) {
-            //if ($this->precioFraccion != null)
-                return $this->precioFraccion * $this->unidadFraccionamiento * ($this->porcentajeDescuentoPerfil / 100);
-            //else
-                //return null;
-        }else {
-            throw new Exception("Tipo precio indefinido");
-        }
+    public function tieneBeneficio() {
+        return !empty($this->listBeneficios);
     }
-
+    
+    public function getBeneficios() {
+        return $this->listBeneficios;
+    }
+    
+    public function inicializado() {
+        return $this->inicializado;
+    }
+    
+    public function getPorcentajeDescuento($tipo = self::DESCUENTO_COMPLETO) {
+        if ($tipo == self::DESCUENTO_COMPLETO)
+            return $this->porcentajeDescuentoBeneficio + $this->porcentajeDescuentoPerfil;
+        else if ($tipo == self::DESCUENTO_PERFIL)
+            return $this->porcentajeDescuentoPerfil;
+        else if ($tipo == self::DESCUENTO_BENEFICIO)
+            return $this->porcentajeDescuentoBeneficio;
+        else
+            throw new Exception("Tipo porcentaje indefinido");
+    }
 }

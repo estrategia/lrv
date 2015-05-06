@@ -12,17 +12,17 @@ class SitioController extends Controller {
         if (!isset(Yii::app()->session[Yii::app()->params->sesion['redireccionEntrega']])) {
             Yii::app()->session[Yii::app()->params->sesion['redireccionEntrega']] = 'null';
         }
-        
+
         $redireccionNormal = false;
-        
+
         if (Yii::app()->request->urlReferrer == ($this->createAbsoluteUrl('/') . "/") || Yii::app()->request->urlReferrer == $this->createAbsoluteUrl('/sitio') || Yii::app()->request->urlReferrer == $this->createAbsoluteUrl('/sitio/index')) {
             $redireccionNormal = true;
         }
-        
+
         if (Yii::app()->request->urlReferrer == ($this->createAbsoluteUrl('/') . "/") || Yii::app()->request->urlReferrer == $this->createAbsoluteUrl('/sitio') || Yii::app()->request->urlReferrer == $this->createAbsoluteUrl('/sitio/index')) {
             $redireccionNormal = true;
         }
-        
+
         if (Yii::app()->request->urlReferrer == $this->createAbsoluteUrl('/usuario/autenticar') || Yii::app()->request->urlReferrer == $this->createAbsoluteUrl('/usuario/registro')) {
             $redireccionNormal = true;
         }
@@ -54,6 +54,10 @@ class SitioController extends Controller {
         if (Yii::app()->session[Yii::app()->params->sesion['redireccionEntrega']] == 'null') {
             $this->redirect($this->createUrl('/sitio/ubicacion/'));
         } else {
+            if (strpos(Yii::app()->session[Yii::app()->params->sesion['redireccionEntrega']], "carro/pagar")) {
+                $this->redirect($this->createUrl('/carro/pagar/'));
+            }
+
             $this->redirect(Yii::app()->session[Yii::app()->params->sesion['redireccionEntrega']]);
         }
     }
@@ -161,11 +165,11 @@ class SitioController extends Controller {
         $objSectorCiudad->objCiudad->getDomicilio();
         Yii::app()->session[Yii::app()->params->sesion['sectorCiudadEntrega']] = $objSectorCiudad;
         Yii::app()->session[Yii::app()->params->sesion['subSectorCiudadEntrega']] = $objSubSector;
-        
-        
-        if($objSectorCiudadOld !=null && $objSectorCiudadOld->codigoCiudad != $objSectorCiudad->codigoCiudad && $objSectorCiudadOld->codigoSector != $objSectorCiudad->codigoSector)
+
+
+        if ($objSectorCiudadOld != null && $objSectorCiudadOld->codigoCiudad != $objSectorCiudad->codigoCiudad && $objSectorCiudadOld->codigoSector != $objSectorCiudad->codigoSector)
             Yii::app()->shoppingCart->clear();
-        
+
         Yii::app()->shoppingCart->CalculateShipping();
 
         if (Yii::app()->session[Yii::app()->params->sesion['redireccionUbicacion']] == 'null') {

@@ -18,7 +18,11 @@
     <div class="clst_cont_pr_prod">
         <h2><a href="<?php echo CController::createUrl('/catalogo/combo', array('combo' => $position->objCombo->idCombo)) ?>" data-ajax="false"><?php echo $position->objCombo->descripcionCombo ?></a></h2>
         <div class="clst_pre_act"><?php echo Yii::app()->numberFormatter->format(Yii::app()->params->formatoMoneda['patron'], $position->getPrice(), Yii::app()->params->formatoMoneda['moneda']); ?> </div>
-        <div class="clst_pre_act"><span>[Flete <?php echo Yii::app()->numberFormatter->format(Yii::app()->params->formatoMoneda['patron'], $position->getShipping(), Yii::app()->params->formatoMoneda['moneda']); ?>]</span></div>
+
+        <?php if ($position->getShipping() > 0): ?>
+            <div class="clst_pre_act"><span>[Flete <?php echo Yii::app()->numberFormatter->format(Yii::app()->params->formatoMoneda['patron'], $position->getShipping(), Yii::app()->params->formatoMoneda['moneda']); ?>]</span></div>
+        <?php endif; ?>
+
         <?php if (Yii::app()->shoppingCart->getObjCiudad()->excentoImpuestos == 0 && $position->getTax() > 0): ?>
             <div class="clst_pre_act"><span>Incluye <?php echo Yii::app()->numberFormatter->formatPercentage($position->getTax()) ?> de impuestos [<?php echo Yii::app()->numberFormatter->format(Yii::app()->params->formatoMoneda['patron'], $position->getTaxPrice(), Yii::app()->params->formatoMoneda['moneda']); ?>]</span></div>
         <?php endif; ?>
@@ -36,8 +40,8 @@
                 <p id="subtotal-producto-<?php echo $position->getId(); ?>" style="font-size:medium;"><?php echo Yii::app()->numberFormatter->format(Yii::app()->params->formatoMoneda['patron'], $position->getSumPrice(), Yii::app()->params->formatoMoneda['moneda']); ?></p>
             </td>
             <td class="ctd_03">
-                <?php echo CHtml::link('Guardar en lista personal', '#', array('class' => 'ui-btn ui-corner-all ui-shadow ui-btn-inline ui-btn-n', 'data-mini' => 'true')); ?>
-                <?php echo CHtml::link('Eliminar', '#', array('onclick' => "eliminarProductoCarro('" . $position->getId() . "');", 'class' => 'ui-btn ui-corner-all ui-shadow ui-btn-inline ui-btn-a', 'data-mini' => 'true')); ?>
+                <?php //echo CHtml::link('Guardar en lista personal', '#', array('class' => 'ui-btn ui-corner-all ui-shadow ui-btn-inline ui-btn-n', 'data-mini' => 'true')); ?>
+                <?php echo CHtml::link('Eliminar', '#', array('data-eliminar'=>1, 'data-position'=>$position->getId(), 'class' => 'ui-btn ui-corner-all ui-shadow ui-btn-inline ui-btn-a', 'data-mini' => 'true')); ?>
             </td>
         </tr>
     </tbody>

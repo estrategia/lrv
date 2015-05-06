@@ -1,3 +1,8 @@
+<div class="cdiv_prod_desc">
+    <div class="c_prod_desc">
+        <p>Combo <span></span></p>
+    </div>
+</div>
 
 <div class="clst_cont_top">
     <?php $imagen = $objCombo->objImagen(YII::app()->params->producto['tipoImagen']['mini']); ?>
@@ -24,7 +29,7 @@
 
     <div class="clst_cont_pr_prod">
         <h2><a href="<?php echo CController::createUrl('/catalogo/combo', array('combo' => $objCombo->idCombo)) ?>" data-ajax="false"><?php echo $objCombo->descripcionCombo ?></a></h2>
-        <div class="clst_pre_act" style="padding-bottom:1em;"><?php echo Yii::app()->numberFormatter->format(Yii::app()->params->formatoMoneda['patron'], $objCombo->getPrecio(), Yii::app()->params->formatoMoneda['moneda']); ?> </div>
+        <div class="clst_pre_act" style="padding-bottom:1em;"><?php echo Yii::app()->numberFormatter->format(Yii::app()->params->formatoMoneda['patron'], $objPrecio->getPrecio(), Yii::app()->params->formatoMoneda['moneda']); ?> </div>
     </div>
 </div>
 
@@ -37,7 +42,7 @@
             </td>
             <td class="ctd_02">
                 <p>Subtotal</p>
-                <p id="subtotal-combo-<?php echo $objCombo->idCombo ?>" style="font-size:medium;"><?php echo Yii::app()->numberFormatter->format(Yii::app()->params->formatoMoneda['patron'], $objCombo->getPrecio(), Yii::app()->params->formatoMoneda['moneda']); ?></p>
+                <p id="subtotal-combo-<?php echo $objCombo->idCombo ?>" style="font-size:medium;"><?php echo Yii::app()->numberFormatter->format(Yii::app()->params->formatoMoneda['patron'], $objPrecio->getPrecio(), Yii::app()->params->formatoMoneda['moneda']); ?></p>
             </td>
             <td class="ctd_03">
                 <?php echo CHtml::link('Añadir al carro', '#', array('data-combo' => $objCombo->idCombo, 'data-cargar' => 2, 'class' => 'ui-btn ui-corner-all ui-shadow ui-btn-inline ui-btn-r', 'data-mini' => 'true')); ?>

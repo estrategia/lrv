@@ -24,7 +24,8 @@ $form = $this->beginWidget('CActiveForm', array(
     <div class="space-2"></div>
     <div class="ui-field-container ui-bar ui-bar-a ui-corner-all">
         <?php echo $form->labelEx($modelPago, 'comentario', array()); ?>
-        <?php echo $form->textArea($modelPago, 'comentario', array('maxlength'=>250, 'placeholder' => $modelPago->getAttributeLabel('comentario'))); ?>
+        <?php echo $form->textArea($modelPago, 'comentario', array('onkeyup'=>'countChar($(this),"div-comentario-contador")', 'maxlength'=>250, 'placeholder' => $modelPago->getAttributeLabel('comentario'))); ?>
+        <div>[Máximo 250 caracteres] <span id="div-comentario-contador"></span></div>
         <?php echo $form->error($modelPago, 'comentario'); ?>
     </div>
 </fieldset>

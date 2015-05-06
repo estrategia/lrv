@@ -32,6 +32,7 @@
  * @property integer $orden
  * @property integer $ventaVirtual
  * @property integer $mostrarAhorroVirtual
+ * @property string $tercero
  *
  * The followings are the available model relations:
  * @property Proveedor $objProveedor
@@ -42,8 +43,6 @@
  * @property Marca $objMarca
  */
 class Producto extends CActiveRecord {
-
-    private $objPrecio = false;
 
     /**
      * @return string the associated database table name
@@ -65,10 +64,10 @@ class Producto extends CActiveRecord {
             array('codigoBarras', 'length', 'max' => 50),
             array('descripcionProducto, presentacionProducto', 'length', 'max' => 100),
             array('codigoProveedor, numeroFracciones, unidadFraccionamiento, codigoUnidadMedida', 'length', 'max' => 5),
-            array('indicadorOferta, fraccionado', 'length', 'max' => 1),
+            array('indicadorOferta, fraccionado, tercero', 'length', 'max' => 1),
             // The following rule is used by search().
             // @todo Please remove those attributes that should not be searched.
-            array('codigoProducto, codigoExtendido, codigoBarras, idMarca, descripcionProducto, presentacionProducto, codigoProveedor, codigoImpuesto, idCategorizacion, unidadNegocio, division, idCategoriaBI, activo, codigoEspecial, indicadorOferta, indicadorPerenne, frecuenciaPerenne, indicadorMarcaPropia, fraccionado, numeroFracciones, codigoMedidaFraccion, unidadFraccionamiento, codigoUnidadMedida, cantidadUnidadMedida, fechaCreacion, orden, ventaVirtual, mostrarAhorroVirtual', 'safe', 'on' => 'search'),
+            array('codigoProducto, codigoExtendido, codigoBarras, idMarca, descripcionProducto, presentacionProducto, codigoProveedor, codigoImpuesto, idCategorizacion, unidadNegocio, division, idCategoriaBI, activo, codigoEspecial, indicadorOferta, indicadorPerenne, frecuenciaPerenne, indicadorMarcaPropia, fraccionado, tercero, numeroFracciones, codigoMedidaFraccion, unidadFraccionamiento, codigoUnidadMedida, cantidadUnidadMedida, fechaCreacion, orden, ventaVirtual, mostrarAhorroVirtual', 'safe', 'on' => 'search'),
         );
     }
 
@@ -91,6 +90,7 @@ class Producto extends CActiveRecord {
             'listPrecios' => array(self::HAS_MANY, 'ProductosPrecios', 'codigoProducto'),
             'listSaldosTerceros' => array(self::HAS_MANY, 'ProductosSaldosTerceros', 'codigoProducto'),
             'listDescuentosPerfiles' => array(self::HAS_MANY, 'ProductosDescuentosPerfiles', 'codigoProducto'),
+            'listDescuentosEspeciales' => array(self::HAS_MANY, 'ProductosDescuentosEspeciales', 'codigoProducto'),
             //'listPerfiles' => array(self::MANY_MANY, 'Perfil', 't_ProductosDescuentosPerfiles(codigoProducto, codigoPerfil)'),
             'listAtributos' => array(self::MANY_MANY, 'Atributo', 't_ProductosAtributos(codigoProducto, idAtributo)'),
             'objMarca' => array(self::BELONGS_TO, 'Marca', 'idMarca'),
@@ -131,6 +131,7 @@ class Producto extends CActiveRecord {
             'orden' => 'Orden',
             'ventaVirtual' => 'Venta Virtual',
             'mostrarAhorroVirtual' => 'Mostrar Descuento Virtual',
+            'tercero' => 'Tercero',
         );
     }
 
@@ -169,7 +170,7 @@ class Producto extends CActiveRecord {
         $criteria->compare('indicadorPerenne', $this->indicadorPerenne);
         $criteria->compare('frecuenciaPerenne', $this->frecuenciaPerenne);
         $criteria->compare('indicadorMarcaPropia', $this->indicadorMarcaPropia);
-        $criteria->compare('fraccionado', $this->fraccionado, true);
+        $criteria->compare('fraccionado', $this->fraccionado);
         $criteria->compare('numeroFracciones', $this->numeroFracciones, true);
         $criteria->compare('codigoMedidaFraccion', $this->codigoMedidaFraccion);
         $criteria->compare('unidadFraccionamiento', $this->unidadFraccionamiento, true);
@@ -179,6 +180,7 @@ class Producto extends CActiveRecord {
         $criteria->compare('orden', $this->orden);
         $criteria->compare('ventaVirtual', $this->ventaVirtual);
         $criteria->compare('mostrarAhorroVirtual', $this->mostrarAhorroVirtual);
+        $criteria->compare('tercero', $this->tercero);
 
         return new CActiveDataProvider($this, array(
             'criteria' => $criteria,
@@ -246,41 +248,20 @@ class Producto extends CActiveRecord {
     }
 
     public function getSaldo($codigoCiudad, $codigoSector) {
-        foreach ($this->listSaldos as $objSaldo) {
-            if ($objSaldo->codigoCiudad == $codigoCiudad && $objSaldo->codigoSector == $codigoSector) {
-                return $objSaldo;
+        if ($this->tercero == 1) {
+            foreach ($this->listSaldosTerceros as $objProductoSaldoTercero) {
+                if ($objProductoSaldoTercero->codigoCiudad == $codigoCiudad && $objProductoSaldoTercero->codigoSector == $codigoSector) {
+                    return $objProductoSaldoTercero;
+                }
+            }
+        } else {
+            foreach ($this->listSaldos as $objSaldo) {
+                if ($objSaldo->codigoCiudad == $codigoCiudad && $objSaldo->codigoSector == $codigoSector) {
+                    return $objSaldo;
+                }
             }
         }
 
         return null;
     }
-
-    public function getPrecio($codigoCiudad, $codigoSector, $codigoPerfil, $forzar = false) {
-        if (!$this->objPrecio || $forzar) {
-            $this->objPrecio = new Precio;
-            
-            foreach ($this->listPrecios as $objProductoPrecio) {
-                if ($objProductoPrecio->codigoCiudad == $codigoCiudad && $objProductoPrecio->codigoSector == $codigoSector) {
-                    $this->objPrecio->precioUnidad = $objProductoPrecio->precioUnidad;
-
-                    //if ($this->fraccionado == 1){
-                    $this->objPrecio->precioFraccion = $objProductoPrecio->precioFraccion;
-                    $this->objPrecio->unidadFraccionamiento = $this->unidadFraccionamiento;
-                    //}
-
-                    break;
-                }
-            }
-
-            foreach ($this->listDescuentosPerfiles as $objDescuentoPerfil) {
-                if ($objDescuentoPerfil->codigoPerfil == $codigoPerfil) {
-                    $this->objPrecio->porcentajeDescuentoPerfil = $objDescuentoPerfil->descuentoPerfil;
-                    break;
-                }
-            }
-        }
-
-        return $this->objPrecio;
-    }
-
 }

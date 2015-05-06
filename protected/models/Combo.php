@@ -5,17 +5,14 @@
  *
  * The followings are the available columns in table 'm_Combo':
  * @property integer $idCombo
- * @property string $codigoSector
- * @property string $codigoCiudad
+ * @property string $descripcionCombo
  * @property string $fechaInicio
  * @property string $fechaFin
  * @property integer $estadoCombo
- * @property integer $saldo
  *
  * The followings are the available model relations:
- * @property Ciudad objCiudad
- * @property Sector $objSector
- * @property Producto[] $listProductos
+ * @property ComboProducto[] $listProductosCombo
+ * @property ComboSectorCiudad[] $listComboSectorCiudad
  * @property ImagenCombo[] $listImagenes
  */
 class Combo extends CActiveRecord {
@@ -34,13 +31,12 @@ class Combo extends CActiveRecord {
         // NOTE: you should only define rules for those attributes that
         // will receive user inputs.
         return array(
-            array('descripcionCombo, codigoSector, codigoCiudad, fechaInicio, fechaFin', 'required'),
-            array('estadoCombo, saldo', 'numerical', 'integerOnly' => true),
+            array('descripcionCombo, fechaInicio, fechaFin', 'required'),
+            array('estadoCombo', 'numerical', 'integerOnly' => true),
             array('descripcionCombo', 'length', 'max' => 100),
-            array('codigoSector, codigoCiudad', 'length', 'max' => 10),
             // The following rule is used by search().
             // @todo Please remove those attributes that should not be searched.
-            array('idCombo, descripcionCombo, codigoSector, codigoCiudad, fechaInicio, fechaFin, estadoCombo, saldo', 'safe', 'on' => 'search'),
+            array('idCombo, descripcionCombo, fechaInicio, fechaFin, estadoCombo', 'safe', 'on' => 'search'),
         );
     }
 
@@ -51,10 +47,9 @@ class Combo extends CActiveRecord {
         // NOTE: you may need to adjust the relation name and the related
         // class name for the relations automatically generated below.
         return array(
-            'objCiudad' => array(self::BELONGS_TO, 'Ciudad', 'codigoCiudad'),
-            'objSector' => array(self::BELONGS_TO, 'Sector', 'codigoSector'),
             'listProductosCombo' => array(self::HAS_MANY, 'ComboProducto', 'idCombo'),
             'listProductos' => array(self::MANY_MANY, 'Producto', 'm_ComboProducto(idCombo, codigoProducto)'),
+            'listComboSectorCiudad' => array(self::HAS_MANY, 'ComboSectorCiudad', 'idCombo'),
             'listImagenes' => array(self::HAS_MANY, 'ImagenCombo', 'idCombo'),
         );
     }
@@ -66,12 +61,9 @@ class Combo extends CActiveRecord {
         return array(
             'idCombo' => 'Id Combo',
             'descripcionCombo' => 'Descripcion Combo',
-            'codigoSector' => 'Codigo Sector',
-            'codigoCiudad' => 'Codigo Ciudad',
             'fechaInicio' => 'Fecha Inicio',
             'fechaFin' => 'Fecha Fin',
             'estadoCombo' => 'Estado Combo',
-            'saldo' => 'Saldo',
         );
     }
 
@@ -94,12 +86,9 @@ class Combo extends CActiveRecord {
 
         $criteria->compare('idCombo', $this->idCombo);
         $criteria->compare('descripcionCombo', $this->descripcionCombo, true);
-        $criteria->compare('codigoSector', $this->codigoSector, true);
-        $criteria->compare('codigoCiudad', $this->codigoCiudad, true);
         $criteria->compare('fechaInicio', $this->fechaInicio, true);
         $criteria->compare('fechaFin', $this->fechaFin, true);
         $criteria->compare('estadoCombo', $this->estadoCombo);
-        $criteria->compare('saldo', $this->saldo);
 
         return new CActiveDataProvider($this, array(
             'criteria' => $criteria,
@@ -110,12 +99,12 @@ class Combo extends CActiveRecord {
      * Returns the static model of the specified AR class.
      * Please note that you should have this exact method in all your CActiveRecord descendants!
      * @param string $className active record class name.
-     * @return MCombo the static model class
+     * @return Combo the static model class
      */
     public static function model($className = __CLASS__) {
         return parent::model($className);
     }
-    
+
     /**
      * Retorna el tipo de imagen de un producto, si no se detecta, retorna null
      * @param int tipo de imagen
@@ -125,14 +114,14 @@ class Combo extends CActiveRecord {
         $obj = null;
 
         foreach ($this->listImagenes as $imagen) {
-            if ($imagen->tipoImagen == $tipo && $imagen->estadoImagen==1) {
+            if ($imagen->tipoImagen == $tipo && $imagen->estadoImagen == 1) {
                 $obj = $imagen;
                 break;
             }
         }
         return $obj;
     }
-    
+
     /**
      * Retorna lista del tipo de imagen de un producto, si no se detecta
      * @param int tipo de imagen
@@ -142,24 +131,24 @@ class Combo extends CActiveRecord {
         $list = array();
 
         foreach ($this->listImagenes as $imagen) {
-            if ($imagen->tipoImagen == $tipo && $imagen->estadoImagen==1) {
+            if ($imagen->tipoImagen == $tipo && $imagen->estadoImagen == 1) {
                 $list[] = $imagen;
             }
         }
         return $list;
     }
-    
-    public function getPrecio(){
-        $precio = 0;
-        
-        foreach($this->listProductosCombo as $objProductoCombo){
-            $precio += $objProductoCombo->precio;
+
+    public function getSaldo($codigoCiudad, $codigoSector) {
+        foreach ($this->listComboSectorCiudad as $objSaldo) {
+            if ($objSaldo->codigoCiudad == $codigoCiudad && $objSaldo->codigoSector == $codigoSector) {
+                return $objSaldo;
+            }
         }
-        
-        return $precio;
+
+        return null;
     }
-    
-    public function getCodigo(){
+
+    public function getCodigo() {
         return "C-$this->idCombo";
     }
 

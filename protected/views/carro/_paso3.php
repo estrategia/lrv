@@ -24,7 +24,7 @@ $form = $this->beginWidget('CActiveForm', array(
                 <div id="div-credirebaja">
                     <div class="ui-field-container ui-bar ui-bar-a ui-corner-all">
                         <?php echo $form->labelEx($modelPago, 'tarjetaNumero'); ?>
-                        <?php echo $form->numberField($modelPago, 'tarjetaNumero', array('placeholder' => '000000000000', 'maxlength'=>12)); ?>
+                        <?php echo $form->numberField($modelPago, 'tarjetaNumero', array('placeholder' => '000000000000', 'maxlength' => 12)); ?>
                         <?php echo $form->error($modelPago, 'tarjetaNumero'); ?>
                         <?php echo $form->labelEx($modelPago, 'numeroCuotas'); ?>
                         <?php echo $form->dropDownList($modelPago, 'numeroCuotas', FormaPagoForm::listDataCuotas(), array('placeholder' => '0')); ?>
@@ -38,17 +38,27 @@ $form = $this->beginWidget('CActiveForm', array(
         <?php echo $form->error($modelPago, 'idFormaPago'); ?>
     </div>
     <div class="space-2"></div>
-    <div class="ui-field-container ui-bar ui-bar-a ui-corner-all">
-        <?php echo $form->labelEx($modelPago, 'codigoCliente', array()); ?>
-        <?php echo $form->textField($modelPago, 'codigoCliente', array('placeholder' => $modelPago->getAttributeLabel('codigoCliente'))); ?>
-        <?php echo $form->error($modelPago, 'codigoCliente'); ?>
-    </div>
-    <div class="space-2"></div>
-    <div class="ui-field-container ui-bar ui-bar-a ui-corner-all">
-        <?php echo $form->labelEx($modelPago, 'codigoPromocion', array()); ?>
-        <?php echo $form->textField($modelPago, 'codigoPromocion', array('placeholder' => $modelPago->getAttributeLabel('codigoPromocion'))); ?>
-        <?php echo $form->error($modelPago, 'codigoPromocion'); ?>
-    </div>
+
+    <?php if ($modelPago->bono !== null): ?>
+        <div class="ui-field-container ui-bar ui-bar-a ui-corner-all">
+            <?php echo $form->labelEx($modelPago, 'usoBono', array()); ?>
+
+            <div>
+                <div>Nombre o tipo de bono: Bono Cliente Fiel</div>
+                <div>Valor del bono: <?php echo Yii::app()->numberFormatter->format(Yii::app()->params->formatoMoneda['patron'], $modelPago->bono['valor'], Yii::app()->params->formatoMoneda['moneda']);?></div>
+                <div>Vigendia del bono: <?php echo $modelPago->bono['vigencia']->format('Y-m-d') ?></div>
+                <div>¿Desea utilizar este bono?</div>
+                <?php //echo $form->radioButton($modelPago, 'usoBono', array('value' => '1', 'data-role' => 'none')) . 'Si'; ?>
+                <?php //echo $form->radioButton($modelPago, 'usoBono', array('value' => '0', 'data-role' => 'none')) . 'No'; ?>
+                <input type="radio" data-role="none" id="FormaPagoForm_usoBono_1" name="FormaPagoForm[usoBono]" value="1" <?php echo ($modelPago->usoBono==1 ? "checked" : "") ?>> Si
+                <input type="radio" data-role="none" id="FormaPagoForm_usoBono_0" name="FormaPagoForm[usoBono]" value="0" <?php echo ($modelPago->usoBono!=1 ? "checked" : "") ?>> No
+
+                <?php echo $form->error($modelPago, 'usoBono'); ?>
+            </div>
+
+        </div>
+    <?php endif; ?>
+
 </fieldset>
 
 <?php $this->endWidget(); ?>

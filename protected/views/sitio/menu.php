@@ -1,5 +1,3 @@
-<!-- class="cpanel_menu_ppal" -->
-<!--  data-theme="a" -->
 <ul data-role="listview" data-inset="true" class="cpanel_menu_ppal ui-nodisc-icon ui-alt-icon" >
     <?php if (Yii::app()->user->isGuest): ?>
         <li>

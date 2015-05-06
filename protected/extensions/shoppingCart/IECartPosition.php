@@ -17,7 +17,17 @@ abstract class IECartPosition {
     protected $discountPriceUnit = 0.0;
     protected $discountPriceFraction = 0.0;
     protected $shipping = 0;
+    protected $delivery = 0;
     protected $tax = 0.0;
+    protected $listBeneficios = array();
+    
+    public function getBeneficios(){
+        return $this->listBeneficios;
+    }
+    
+    public function getDelivery() {
+        return $this->delivery;
+    }
 
     /**
      * Returns total price for all units of the position
@@ -33,6 +43,14 @@ abstract class IECartPosition {
           }
           return $fullSum; */
         return $this->getPrice(false, $withDiscount) * ($this->quantityUnit+ ($withStored ? $this->quantityStored : 0)) + $this->getPrice(true, $withDiscount) * $this->quantityFraction;
+    }
+    
+    public function getSumPriceUnit($withStored = true, $withDiscount = true){
+        return $this->getPrice(false, $withDiscount) * ($this->quantityUnit+ ($withStored ? $this->quantityStored : 0));
+    }
+    
+    public function getSumPriceFraction($withDiscount = true){
+        return $this->getPrice(true, $withDiscount) * $this->quantityFraction;
     }
     
     /**
@@ -137,15 +155,11 @@ abstract class IECartPosition {
         return $price;
     }
 
-    public function generate($params) {
-        
-    }
+    abstract public function generate($params);
 
     /**
      * @return mixed id
      */
-    public function getId() {
-        
-    }
+    abstract public function getId();
 
 }

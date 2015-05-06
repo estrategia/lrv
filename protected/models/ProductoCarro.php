@@ -33,15 +33,20 @@ class ProductoCarro extends IECartPosition {
     
     public function generate($params) {
         if ($this->isProduct()) {
-            $objprecio = $this->objProducto->getPrecio($params['objSectorCiudad']->codigoCiudad, $params['objSectorCiudad']->codigoSector, $params['codigoPerfil']);
+            $objprecio = new PrecioProducto($this->objProducto, $params['objSectorCiudad'], $params['codigoPerfil']);
+            $this->listBeneficios = $objprecio->getBeneficios();
+            
             $this->priceUnit = $objprecio->getPrecio(Precio::PRECIO_UNIDAD, false);
             $this->priceFraction = $objprecio->getPrecio(Precio::PRECIO_FRACCION, false);
 
             $this->discountPriceUnit = $objprecio->getAhorro(Precio::PRECIO_UNIDAD);
             $this->discountPriceFraction = $objprecio->getAhorro(Precio::PRECIO_FRACCION);
             $this->tax = $this->objProducto->objImpuesto->porcentaje;
+            $this->shipping = $objprecio->getFlete();
+            $this->delivery = $objprecio->getTiempoEntrega();
         }else if($this->isCombo()){
-            $this->priceUnit = $this->objCombo->getPrecio();
+            $objprecio = new PrecioCombo($this->objCombo);
+            $this->priceUnit = $objprecio->getPrecio();
         }
     }
     

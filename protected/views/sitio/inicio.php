@@ -1,7 +1,3 @@
-<!--
-<h1 class="center"><img src="<?php echo Yii::app()->request->baseUrl; ?>/images/banner/banner_inicio1.jpg" style="width:90%; margin:auto;"></h1>
--->
-
 <div id="owl-productodetalle-inicio" class="owl-carousel owl-theme owl-productodetalle">
     <div class="item"><a href="<?php echo CController::createUrl('/sitio') ?>" ><img src="<?php echo Yii::app()->request->baseUrl; ?>/images/banner/banner_inicio1.jpg" alt=""></a></div>
     <div class="item"><a href="<?php echo CController::createUrl('/sitio') ?>" ><img src="<?php echo Yii::app()->request->baseUrl; ?>/images/banner/banner_inicio2.jpg" alt=""></a></div>

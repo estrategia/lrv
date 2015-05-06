@@ -21,11 +21,13 @@ class FormaPagoForm extends CFormModel {
     public $idFormaPago;
     public $tarjetaNumero;
     public $numeroCuotas;
-    public $codigoCliente;
-    public $codigoPromocion;
+    public $bono;
+    public $usoBono = 0;
     public $confirmacion;
     public $listCodigoEspecial = array();
     public $pasoValidado = array();
+    public $listPuntosVenta = array(0 => 0, 1 => 'No consultado');
+    public $indicePuntoVenta;
 
     /**
      * Declares the validation rules.
@@ -40,12 +42,13 @@ class FormaPagoForm extends CFormModel {
             array('fechaEntrega', 'required', 'on' => 'entrega, finalizar', 'message' => '{attribute} no puede estar vacío'),
             array('comentario', 'length', 'max' => 250, 'on' => 'entrega, finalizar', 'message' => '{attribute} no puede estar vacío'),
             array('idFormaPago', 'required', 'on' => 'pago, finalizar', 'message' => '{attribute} no puede estar vacío'),
-            array('tarjetaNumero, numeroCuotas, codigoCliente, codigoPromocion', 'safe'),
-            array('comentario, tarjetaNumero, numeroCuotas, codigoCliente, codigoPromocion', 'default', 'value' => null),
+            array('tarjetaNumero, numeroCuotas', 'safe'),
+            array('comentario, tarjetaNumero, numeroCuotas, usoBono', 'default', 'value' => null),
             array('idFormaPago', 'pagoValidate', 'on' => 'pago, finalizar'),
-            array('codigoCliente', 'clienteFielValidate', 'on' => 'pago, finalizar'),
-            array('codigoPromocion', 'promocionValidate', 'on' => 'pago, finalizar'),
-            array('confirmacion', 'compare', 'compareValue'=>1, 'on'=>'confirmacion', 'message'=>'Aceptar términos y condiciones'),
+            array('usoBono', 'bonoValidate', 'on' => 'pago, finalizar'),
+            //array('clienteFielValidate', 'on' => 'pago, finalizar'),
+            //array('codigoPromocion', 'promocionValidate', 'on' => 'pago, finalizar'),
+            array('confirmacion', 'compare', 'compareValue' => 1, 'on' => 'confirmacion', 'message' => 'Aceptar términos y condiciones'),
         );
     }
 
@@ -61,25 +64,24 @@ class FormaPagoForm extends CFormModel {
             'idFormaPago' => 'Forma de pago',
             'tarjetaNumero' => 'Número tarjeta',
             'numeroCuotas' => 'Cuotas',
-            'codigoCliente' => 'Código cliente fiel',
-            'codigoPromocion' => 'Código promoción',
-            'confirmacion' => 'Acepto términos y condiciones'
+            'confirmacion' => 'Acepto términos y condiciones',
+            'usoBono' => 'Bono'
         );
     }
-    
-    public function calcularConfirmacion($positions){
-        $this->confirmacion=null;
+
+    public function calcularConfirmacion($positions) {
+        $this->confirmacion = null;
         $this->listCodigoEspecial = array();
-        foreach($positions as $position){
-            if($position->isProduct()){
-                if($position->objProducto->objCodigoEspecial->confirmacionCompra == "SI"){
+        foreach ($positions as $position) {
+            if ($position->isProduct()) {
+                if ($position->objProducto->objCodigoEspecial->confirmacionCompra == "SI") {
                     $this->listCodigoEspecial[$position->objProducto->objCodigoEspecial->codigoEspecial] = $position->objProducto->objCodigoEspecial;
                 }
             }
         }
-        
-        if(empty($this->listCodigoEspecial)){
-            $this->confirmacion=1;
+
+        if (empty($this->listCodigoEspecial)) {
+            $this->confirmacion = 1;
         }
     }
 
@@ -94,7 +96,7 @@ class FormaPagoForm extends CFormModel {
             } else {
                 $this->tarjetaNumero = trim($this->tarjetaNumero);
 
-                if (strlen($this->tarjetaNumero) != 12  ) {
+                if (strlen($this->tarjetaNumero) != 12) {
                     $this->addError('tarjetaNumero', $this->getAttributeLabel('tarjetaNumero') . " debe tener 12 dígitos");
                 }
             }
@@ -103,7 +105,7 @@ class FormaPagoForm extends CFormModel {
                 $this->addError('numeroCuotas', $this->getAttributeLabel('numeroCuotas') . " no puede estar vacío");
             } else {
                 $int = intval($this->numeroCuotas);
-                if ($int <= 0 || $int>6) {
+                if ($int <= 0 || $int > 6) {
                     $this->addError('numeroCuotas', $this->getAttributeLabel('numeroCuotas') . " debe ser número entre 1 y 6");
                 }
             }
@@ -113,20 +115,176 @@ class FormaPagoForm extends CFormModel {
         }
     }
 
-    public function clienteFielValidate($attribute, $params) {
-        if (!$this->hasErrors()) {
-            //validar numero tarjeta
+    public function bonoValidate($attribute, $params) {
+        if ($this->bono !== null) {
+            if ($this->usoBono == null) {
+                $this->addError('usoBono', $this->getAttributeLabel('usoBono') . " no puede estar vacío");
+            } else if (!in_array($this->usoBono, array(1, 0))) {
+                $this->addError('usoBono', $this->getAttributeLabel('usoBono') . " inválido");
+            }
         }
     }
 
-    public function promocionValidate($attribute, $params) {
-        if (!$this->hasErrors()) {
-            //validar numero tarjeta
+    public function consultarBono($total) {
+        $this->bono = null;
+
+        if (true) {
+            $this->bono = array(
+                'valor' => 2000,
+                'vigencia' => DateTime::createFromFormat('Y-m-d', '2015-06-01')
+            );
+
+            /*if ($this->bono['valor'] > $total) {
+                $this->bono = null;
+            }*/
         }
     }
-    
-    public static function listDataCuotas(){
-        return array('1'=>1,'2'=>2,'3'=>3,'4'=>4,'5'=>5,'6'=>6);
+
+    public function consultarDisponibilidad($positions) {
+        $this->listPuntosVenta = array(0 => 0, 1 => 'Consulta no exitosa');
+
+        if (rand(0, 9) > -1) {
+            $this->listPuntosVenta = array(
+                0 => 1,
+                1 => array(//lista pdvs
+                    0 => array(
+                        0 => 1,
+                        1 => '427',
+                        2 => 'Rebaja plus no 1 ciudad jardin',
+                        3 => 'Direccion xxx 1',
+                        4 => array(//lista productos de pdv
+                            0 => array(
+                                'CODIGO_PRODUCTO' => 30128,
+                                'ID_PRODUCTO' => 30128,
+                                'CANTIDAD' => 1.2,
+                                'DESCRIPCION' => 'DOLEX GRIPA',
+                                'SALDO' => 1.0,
+                            ),
+                            1 => array(
+                                'CODIGO_PRODUCTO' => 41076,
+                                'ID_PRODUCTO' => 41076,
+                                'CANTIDAD' => 2,
+                                'DESCRIPCION' => 'PAPAS MARGARITA LIMON FAMILIAR',
+                                'SALDO' => 1,
+                            )
+                        ),
+                        5 => 80
+                    ),
+                    1 => array(
+                        0 => 1,
+                        1 => '4A1',
+                        2 => 'Rebaja plus no 4 jardin plaza',
+                        3 => 'Direccion xxx 2',
+                        4 => array(//lista productos de pdv
+                            0 => array(
+                                'CODIGO_PRODUCTO' => 30128,
+                                'ID_PRODUCTO' => 30128,
+                                'CANTIDAD' => 2.5,
+                                'DESCRIPCION' => 'DOLEX GRIPA',
+                                'SALDO' => 1.0,
+                            ),
+                            1 => array(
+                                'CODIGO_PRODUCTO' => 41076,
+                                'ID_PRODUCTO' => 41076,
+                                'CANTIDAD' => 3,
+                                'DESCRIPCION' => 'PAPAS MARGARITA LIMON FAMILIAR',
+                                'SALDO' => 1,
+                            )
+                        ),
+                        5 => 60
+                    ),
+                    2 => array(
+                        0 => 1,
+                        1 => '405',
+                        2 => 'Rebaja no 5 ciudadela comfandi',
+                        3 => 'Direccion xxx 3',
+                        4 => array(//lista productos de pdv
+                            0 => array(
+                                'CODIGO_PRODUCTO' => 30128,
+                                'ID_PRODUCTO' => 30128,
+                                'CANTIDAD' => 2.5,
+                                'DESCRIPCION' => 'DOLEX GRIPA',
+                                'SALDO' => 2.5,
+                            ),
+                            1 => array(
+                                'CODIGO_PRODUCTO' => 41076,
+                                'ID_PRODUCTO' => 41076,
+                                'CANTIDAD' => 3,
+                                'DESCRIPCION' => 'PAPAS MARGARITA LIMON FAMILIAR',
+                                'SALDO' => 3,
+                            )
+                        ),
+                        5 => 90
+                    ),
+                    3 => array(
+                        0 => 0,
+                        1 => -1,
+                        2 => 'SIN NOMBRE',
+                        3 => 'NO EXISTE',
+                        4 => array(),
+                        5 => 0
+                    ),
+                    4 => array(
+                        0 => 0,
+                        1 => -1,
+                        2 => 'SIN NOMBRE',
+                        3 => 'NO EXISTE',
+                        4 => array(),
+                        5 => 0
+                    )
+                ),
+                2 => '427'
+            );
+
+            $this->listPuntosVenta[3] = 0;
+
+            //recorrer lista para eliminar pdvs no encontrados 
+            //recalcular cantidades y saldos teniendo en cuenta fracciones
+            //y definir si alguno tiene 100% en pos 3 0:no, 1:si
+            if ($this->listPuntosVenta[0] == 1) {
+                foreach ($this->listPuntosVenta[1] as $indicePdv => $pdv) {
+                    if ($pdv[0] == 1) {
+                        if ($pdv[5] == 100) {
+                            $this->listPuntosVenta[3] = 1;
+                        }
+
+                        if (empty($pdv[4])) {
+                            unset($this->listPuntosVenta[1][$indicePdv]);
+                        } else {
+                            foreach ($pdv[4] as $indiceProd => $producto) {
+
+                                $arrSaldo = $this->decimalToUnidFracc($producto['SALDO']);
+
+                                if ($arrSaldo['UNIDAD'] <= 0 && $arrSaldo['FRACCION'] <= 0) {
+                                    unset($this->listPuntosVenta[1][$indicePdv][4][$indiceProd]);
+                                } else {
+                                    $arrCantidad = $this->decimalToUnidFracc($producto['CANTIDAD']);
+                                    $this->listPuntosVenta[1][$indicePdv][4][$indiceProd]['CANTIDAD_UNIDAD'] = $arrCantidad['UNIDAD'];
+                                    $this->listPuntosVenta[1][$indicePdv][4][$indiceProd]['CANTIDAD_FRACCION'] = $arrCantidad['FRACCION'];
+                                    $this->listPuntosVenta[1][$indicePdv][4][$indiceProd]['SALDO_UNIDAD'] = $arrSaldo['UNIDAD'];
+                                    $this->listPuntosVenta[1][$indicePdv][4][$indiceProd]['SALDO_FRACCION'] = $arrSaldo['FRACCION'];
+                                }
+                            }
+                        }
+                    } else {
+                        unset($this->listPuntosVenta[1][$indicePdv]);
+                    }
+                }
+            }
+        }
+    }
+
+    private function decimalToUnidFracc($n) {
+        $aux = (string) $n;
+        $n = explode(".", $aux);
+        return array(
+            'UNIDAD' => isset($n[0]) ? $n[0] : 0,
+            'FRACCION' => isset($n[1]) ? $n[1] : 0
+        );
+    }
+
+    public static function listDataCuotas() {
+        return array('1' => 1, '2' => 2, '3' => 3, '4' => 4, '5' => 5, '6' => 6);
     }
 
     public static function listDataHoras($horaIniServicio = "07:00:00", $horaFinServicio = "23:00:00", $deltaHorario = "0 1:00:0.000000") {

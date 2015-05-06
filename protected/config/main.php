@@ -135,7 +135,7 @@ return array(
             'carroPagarForm' => 'larebaja.online.carro.pagar.form',
         ),
         'entrega' => array(
-            'tipo' => array('presencial' => 1, 'domicilio' => 2),
+            'tipo' => array('presencial' => 1, 'domicilio' => 2, 2 => 'DOMICILIO', 1=>'PRESENCIAL'),
             'sesion' => 'larebaja.online.entrega.tipoEntrega',
         ),
         'generos' => array(1 => 'Femenino', 2 => 'Masculino'),
@@ -188,7 +188,14 @@ return array(
         ),
         'perfil' => array(
             'defecto' => 1,
+            'clienteFiel' => 2,
             '*' => 99
+        ),
+        'beneficios' => array(
+            'lrv' => array(21, 22, 23, 24),
+            'recambios' => array(1, 10),
+            'recambio' => 1,
+            'recambioCruzado' => 10
         ),
         'servicioVentaControlada' => 17,
         'asuntoRecordatorioClave' => 'Clave de Ingreso',

@@ -1,9 +1,11 @@
 <!-- descuento -->
-<!-- <div class="cdiv_prod_desc">
-    <div class="c_prod_desc">
-        <p>10% <span>dcto</span></p>
+<?php if ($objPrecio->tieneBeneficio()): ?>
+    <div class="cdiv_prod_desc">
+        <div class="c_prod_desc">
+            <p><?php echo $objPrecio->getPorcentajeDescuento() ?> % <span>dcto</span></p>
+        </div>
     </div>
-</div> -->
+<?php endif; ?>
 
 <?php if ($objProducto->fraccionado == 1): ?>
     <div class="cdiv_prod_frc">
@@ -47,20 +49,28 @@
         <h2><a href="<?php echo CController::createUrl('/catalogo/producto', array('producto' => $objProducto->codigoProducto)) ?>" data-ajax="false"><?php echo $objProducto->descripcionProducto ?></a></h2>
         <p><?php echo $objProducto->presentacionProducto ?></p>
         <div id="raty-lectura-producto-<?php echo $objProducto->codigoProducto ?>" data-role="raty" data-readonly="true" data-score="<?php echo $objProducto->getCalificacion() ?>" class="clst_cal_str"></div>
-        <?php if ($objSectorCiudad != null): ?>
-            <?php $objPrecio = $objProducto->getPrecio($objSectorCiudad->codigoCiudad, $objSectorCiudad->codigoSector, $codigoPerfil); ?>
+        <?php if ($objPrecio->inicializado()): ?>
             <?php if ($objProducto->mostrarAhorroVirtual == 1 && $objPrecio->getAhorro(Precio::PRECIO_UNIDAD) > 0): ?>
                 <div class="clst_pre_ant"><?php echo Yii::app()->numberFormatter->format(Yii::app()->params->formatoMoneda['patron'], $objPrecio->getPrecio(Precio::PRECIO_UNIDAD, false), Yii::app()->params->formatoMoneda['moneda']); ?></div>
                 <div class="clst_pre_act"><?php echo Yii::app()->numberFormatter->format(Yii::app()->params->formatoMoneda['patron'], $objPrecio->getPrecio(Precio::PRECIO_UNIDAD), Yii::app()->params->formatoMoneda['moneda']); ?>  <span>[Ahorro <?php echo Yii::app()->numberFormatter->format(Yii::app()->params->formatoMoneda['patron'], $objPrecio->getAhorro(Precio::PRECIO_UNIDAD), Yii::app()->params->formatoMoneda['moneda']); ?>]</span></div>
             <?php else: ?>
                 <div class="clst_pre_act" style="padding-bottom:1em;"><?php echo Yii::app()->numberFormatter->format(Yii::app()->params->formatoMoneda['patron'], $objPrecio->getPrecio(Precio::PRECIO_UNIDAD), Yii::app()->params->formatoMoneda['moneda']); ?> </div>
             <?php endif; ?>
+
+            <?php if ($objPrecio->getFlete() > 0): ?>
+                <div>[Flete <?php echo Yii::app()->numberFormatter->format(Yii::app()->params->formatoMoneda['patron'], $objPrecio->getFlete(), Yii::app()->params->formatoMoneda['moneda']); ?>]</div>
+            <?php endif; ?>
+                <?php if ($objPrecio->getTiempoEntrega() > 0): ?>
+                <div>[Tiempo de entrega <?php echo $objPrecio->getTiempoEntrega() ?> horas]</div>
+            <?php endif; ?>
+                
+                
+
         <?php endif; ?>
     </div>
 </div>
 
-<?php if ($objSectorCiudad != null): ?>
-    <?php $objPrecio = $objProducto->getPrecio($objSectorCiudad->codigoCiudad, $objSectorCiudad->codigoSector, $codigoPerfil); ?>
+<?php if ($objPrecio->inicializado()): ?>
     <table class="ui-responsive ctable_list_prod">
         <tbody>
             <tr>

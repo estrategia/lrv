@@ -14,6 +14,7 @@
  * @property string $saldoFraccion
  * @property integer $costo
  * @property integer $flete
+ * @property integer $tiempoDomicilio
  *
  * The followings are the available model relations:
  * @property MProducto $codigoProducto0
@@ -39,11 +40,11 @@ class ProductosSaldosTerceros extends CActiveRecord
 		// will receive user inputs.
 		return array(
 			array('codigoProducto', 'required'),
-			array('costo, flete', 'numerical', 'integerOnly'=>true),
+			array('costo, flete, tiempoDomicilio', 'numerical', 'integerOnly'=>true),
 			array('codigoProducto, codigoCiudad, codigoSector, precioUnidad, precioFraccion, saldoUnidad, saldoFraccion', 'length', 'max'=>10),
 			// The following rule is used by search().
 			// @todo Please remove those attributes that should not be searched.
-			array('idProductoSaldo, codigoProducto, codigoCiudad, codigoSector, precioUnidad, precioFraccion, saldoUnidad, saldoFraccion, costo, flete', 'safe', 'on'=>'search'),
+			array('idProductoSaldo, codigoProducto, codigoCiudad, codigoSector, precioUnidad, precioFraccion, saldoUnidad, saldoFraccion, costo, flete, tiempoDomicilio', 'safe', 'on'=>'search'),
 		);
 	}
 
@@ -77,6 +78,7 @@ class ProductosSaldosTerceros extends CActiveRecord
 			'saldoFraccion' => 'Saldo Fraccion',
 			'costo' => 'Costo',
 			'flete' => 'Flete',
+			'tiempoDomicilio' => 'Tiempo Domicilio',
 		);
 	}
 
@@ -108,6 +110,7 @@ class ProductosSaldosTerceros extends CActiveRecord
 		$criteria->compare('saldoFraccion',$this->saldoFraccion,true);
 		$criteria->compare('costo',$this->costo);
 		$criteria->compare('flete',$this->flete);
+		$criteria->compare('tiempoDomicilio',$this->tiempoDomicilio);
 
 		return new CActiveDataProvider($this, array(
 			'criteria'=>$criteria,

@@ -3,7 +3,7 @@
     $form = $this->beginWidget('CActiveForm', array(
         'enableClientValidation' => true,
         'htmlOptions' => array(
-            'id' => "form-ordenamiento", 'class' => "ui-bar ui-bar-a", 'data-ajax'=>"false"
+            'id' => "form-ordenamiento", 'class' => "ui-bar ui-bar-a", 'data-ajax' => "false"
         ),
         'errorMessageCssClass' => 'has-error',
         'clientOptions' => array(
@@ -23,7 +23,12 @@
         <?php endforeach; ?>
     </fieldset>
 
-
-    <?php echo CHtml::submitButton('Ordenar', array('data-mini'=>true, 'class' => 'cfil_btn')); ?>
+    <!--
+    <?php echo CHtml::submitButton('Ordenar', array('data-mini' => true, 'class' => 'cfil_btn')); ?>
+    -->
+    <div class="ui-input-btn ui-btn ui-corner-all ui-shadow ui-btn-n ui-mini">
+        Ordenar
+        <input type="submit" data-enhanced="true" value="Ordenar">
+    </div>
     <?php $this->endWidget(); ?>
 </div>

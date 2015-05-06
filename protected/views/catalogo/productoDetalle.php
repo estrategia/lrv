@@ -2,6 +2,12 @@
     <h2><?php echo $objProducto->descripcionProducto ?></h2>
     <h3><?php echo $objProducto->presentacionProducto ?></h3>
     <h3 class="cdt_prod_spc">Código: <?php echo $objProducto->codigoProducto ?></h3>
+    <?php if ($objPrecio->getFlete() > 0): ?>
+        <h3>Flete: <?php echo Yii::app()->numberFormatter->format(Yii::app()->params->formatoMoneda['patron'], $objPrecio->getFlete(), Yii::app()->params->formatoMoneda['moneda']); ?></h3>
+    <?php endif; ?>
+    <?php if ($objPrecio->getTiempoEntrega() > 0): ?>
+        <h3>Tiempo de entrega: <?php echo $objPrecio->getTiempoEntrega() ?> horas</h3>
+    <?php endif; ?>
 
     <?php if ($objProducto->codigoEspecial !== null && $objProducto->codigoEspecial != 0): ?>
         <div class="cdt_line_spc"><span></span></div>
@@ -32,10 +38,7 @@
         <p class="txt_inise_cal_stars">Iniciar sesión para calificar este producto</p>
     <?php endif; ?>
 
-    <?php if ($objSectorCiudad != null): ?>
-        <?php $objPrecio = $objProducto->getPrecio($objSectorCiudad->codigoCiudad, $objSectorCiudad->codigoSector, $codigoPerfil); ?>
-
-
+    <?php if ($objPrecio->inicializado()): ?>
         <?php if ($objProducto->fraccionado == 1): ?>
             <table  class="ui-responsive ctbl_prod_frc">
                 <thead class="ctbl_head">
@@ -110,10 +113,21 @@
         <?php else: ?>
             <div class="ccont_dtl_prod">
                 <div class="cdtl_prod_pr">
-                    <?php if ($objProducto->mostrarAhorroVirtual == 1 && $objPrecio->porcentajeDescuentoPerfil > 0): ?>
-                        <div class="cdt_txt_alg cdt_pre_ant"><span class="ctxt_min">Precio de lista</span><br> <span> <?php echo Yii::app()->numberFormatter->format(Yii::app()->params->formatoMoneda['patron'], $objPrecio->getPrecio(Precio::PRECIO_UNIDAD, false), Yii::app()->params->formatoMoneda['moneda']); ?></span></div>
-                        <div class="cdt_txt_alg cdt_pre_act"><span>Precio</span><br> <?php echo Yii::app()->numberFormatter->format(Yii::app()->params->formatoMoneda['patron'], $objPrecio->getPrecio(Precio::PRECIO_UNIDAD), Yii::app()->params->formatoMoneda['moneda']); ?> </div>
-                        <div class="cdt_txt_alg cdt_pre_aho"><span>Ahorro</span><br> <?php echo Yii::app()->numberFormatter->format(Yii::app()->params->formatoMoneda['patron'], $objPrecio->getAhorro(Precio::PRECIO_UNIDAD), Yii::app()->params->formatoMoneda['moneda']); ?></div>
+                    <?php if ($objProducto->mostrarAhorroVirtual == 1 && $objPrecio->getPorcentajeDescuento() > 0): ?>
+                        <table class="ui-responsive ctbl_prod_frc table-precios">
+                            <tbody>
+                                <tr class="ctbl_tl">
+                                    <td style="text-align:left;">Precio de lista</td>
+                                    <td><span>Precio</span></td>
+                                    <td style="text-align:right;">Ahorro</td>
+                                </tr>
+                                <tr>
+                                    <td class="txt_pre_lst"><?php echo Yii::app()->numberFormatter->format(Yii::app()->params->formatoMoneda['patron'], $objPrecio->getPrecio(Precio::PRECIO_UNIDAD, false), Yii::app()->params->formatoMoneda['moneda']); ?></td>
+                                    <td class="txt_pre"><?php echo Yii::app()->numberFormatter->format(Yii::app()->params->formatoMoneda['patron'], $objPrecio->getPrecio(Precio::PRECIO_UNIDAD), Yii::app()->params->formatoMoneda['moneda']); ?></td>
+                                    <td class="txt_ahor"><?php echo Yii::app()->numberFormatter->format(Yii::app()->params->formatoMoneda['patron'], $objPrecio->getAhorro(Precio::PRECIO_UNIDAD), Yii::app()->params->formatoMoneda['moneda']); ?></td>
+                                </tr>
+                            </tbody>
+                        </table>
                     <?php else: ?>
                         <div class="cdt_txt_alg">Precio: <?php echo Yii::app()->numberFormatter->format(Yii::app()->params->formatoMoneda['patron'], $objPrecio->getPrecio(Precio::PRECIO_UNIDAD), Yii::app()->params->formatoMoneda['moneda']); ?> </div>
                     <?php endif; ?>
@@ -121,13 +135,13 @@
                 <div class="cdtl_pro_cant">
                     <div class="cbtn_prod_cant_02"><input type="number" placeholder="0" value="1" id="cantidad-producto-unidad-<?php echo $objProducto->codigoProducto ?>" onchange="subtotalUnidadProducto(<?php echo $objProducto->codigoProducto ?>);"></div>
                     <div class="cpro_total_02"><span class="txt_cant_total">Total</span> <span id="subtotal-producto-unidad-<?php echo $objProducto->codigoProducto ?>"><?php echo Yii::app()->numberFormatter->format(Yii::app()->params->formatoMoneda['patron'], $objPrecio->getPrecio(Precio::PRECIO_UNIDAD), Yii::app()->params->formatoMoneda['moneda']); ?></span></div>
-                    <?php if ($objProducto->objImpuesto != null && $objProducto->objImpuesto->codigoImpuesto != 0 && $objProducto->objImpuesto->codigoImpuesto != 20): ?>
-                        <?php if ($objSectorCiudad == null || ($objSectorCiudad != null && $objSectorCiudad->objCiudad->excentoImpuestos == 0)): ?>
-                            <p class="txt_cant_incl">Incluye <?php echo Yii::app()->numberFormatter->formatPercentage($objProducto->objImpuesto->porcentaje) ?> de impuestos</p>
-                        <?php endif; ?>
-                    <?php endif; ?>
                 </div>
             </div>
+            <?php if ($objProducto->objImpuesto != null && $objProducto->objImpuesto->codigoImpuesto != 0 && $objProducto->objImpuesto->codigoImpuesto != 20): ?>
+                <?php if ($objSectorCiudad == null || ($objSectorCiudad != null && $objSectorCiudad->objCiudad->excentoImpuestos == 0)): ?>
+                    <p class="txt_cant_incl">Incluye <?php echo Yii::app()->numberFormatter->formatPercentage($objProducto->objImpuesto->porcentaje) ?> de impuestos</p>
+                <?php endif; ?>
+            <?php endif; ?>
         <?php endif; ?>
     <?php endif; ?>
 
@@ -202,7 +216,7 @@
                 <button data-role="calificacion" class="ui-btn ui-corner-all ui-shadow cdtl_button_calf" onclick='calificarProducto("<?php echo $objProducto->codigoProducto ?>");
                         return false;'>Calificar</button>
             </form>
-        <?php else: ?>
+    <?php else: ?>
             <table class="ui-responsive">
                 <tr>
                     <td>Tu calificación:</td>
@@ -214,18 +228,19 @@
             </table>
         <?php endif; ?>
     <?php endif; ?>
-    <?php if (!empty($listRelacionados)): ?>
+<?php if (!empty($listRelacionados)): ?>
         <div>Productos Relacionados</div>
         <div id="slide-relacionados" class="owl-carousel owl-theme">
-            <?php foreach ($listRelacionados as $objRelacionado): ?>
+                <?php foreach ($listRelacionados as $objRelacionado): ?>
                 <div class="item"><?php
                     $this->renderPartial('_productoSlide', array(
                         'objProducto' => $objRelacionado->objProductoRelacionado,
-                        'objSectorCiudad' => $objSectorCiudad,
-                        'codigoPerfil' => $codigoPerfil
+                        'objPrecio' => new PrecioProducto($objRelacionado->objProductoRelacionado, $objSectorCiudad, $codigoPerfil),
+                            //'objSectorCiudad' => $objSectorCiudad,
+                            //'codigoPerfil' => $codigoPerfil
                     ));
                     ?></div>
-            <?php endforeach; ?>
+        <?php endforeach; ?>
         </div>
-    <?php endif; ?>
+<?php endif; ?>
 </div>

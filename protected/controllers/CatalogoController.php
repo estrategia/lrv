@@ -22,12 +22,12 @@ class CatalogoController extends Controller {
                 ':categoria' => $categoria
             ),
         ));
-
+        
         $listIdsCategoriaBI = array();
 
         if ($objCategoria != null) {
-            foreach ($objCategoria->listCategoriasBI as $objCategoria) {
-                $listIdsCategoriaBI[] = $objCategoria->idCategoriaBI;
+            foreach ($objCategoria->listCategoriasBI as $objCategoriaBI) {
+                $listIdsCategoriaBI[] = $objCategoriaBI->idCategoriaBI;
             }
         }
 
@@ -54,6 +54,7 @@ class CatalogoController extends Controller {
                 'imagenBusqueda' => Yii::app()->params->busqueda['imagen']['noExito'],
                 'objSectorCiudad' => $objSectorCiudad,
                 'codigoPerfil' => $codigoPerfil,
+                'nombreBusqueda' => 'NA',
             ));
 
             Yii::app()->end();
@@ -131,8 +132,8 @@ class CatalogoController extends Controller {
             $fecha = new DateTime;
 
             $listCombos = Combo::model()->findAll(array(
-                'with' => array('listProductos' => array('condition' => 'listProductos.idCategoriaBI IN (' . implode(",", $listIdsCategoriaBI) . ')')),
-                'condition' => 't.estadoCombo=:estado AND t.fechaInicio<=:fecha AND t.fechaFin>=:fecha AND t.saldo>:saldo AND t.codigoCiudad=:ciudad AND t.codigoSector=:sector',
+                'with' => array('listComboSectorCiudad', 'listProductos' => array('condition' => 'listProductos.idCategoriaBI IN (' . implode(",", $listIdsCategoriaBI) . ')')),
+                'condition' => 't.estadoCombo=:estado AND t.fechaInicio<=:fecha AND t.fechaFin>=:fecha AND listComboSectorCiudad.saldo>:saldo AND listComboSectorCiudad.codigoCiudad=:ciudad AND listComboSectorCiudad.codigoSector=:sector',
                 'params' => array(
                     ':estado' => 1,
                     ':fecha' => $fecha->format('Y-m-d H:i:s'),
@@ -199,6 +200,7 @@ class CatalogoController extends Controller {
             'objSectorCiudad' => $objSectorCiudad,
             'codigoPerfil' => $codigoPerfil,
             'tipoBusqueda' => Yii::app()->params->busqueda['tipo']['categoria'],
+            'nombreBusqueda' => $objCategoria->nombreCategoriaTienda,
         );
 
         $imagenBusqueda = null;
@@ -272,10 +274,11 @@ class CatalogoController extends Controller {
             $parametrosProductos = array(
                 'with' => array(
                     'listImagenes', 'objCodigoEspecial', 'listCalificaciones', 'objMarca', 'listAtributos',
-                    'listSaldos' => array('condition' => 'listSaldos.saldoUnidad>:saldo AND listSaldos.codigoCiudad=:ciudad AND listSaldos.codigoSector=:sector'),
-                    'listPrecios' => array('condition' => 'listPrecios.codigoCiudad=:ciudad AND listPrecios.codigoSector=:sector')
+                    'listSaldos' => array('condition' => '(listSaldos.saldoUnidad>:saldo AND listSaldos.codigoCiudad=:ciudad AND listSaldos.codigoSector=:sector) OR (listSaldos.saldoUnidad IS NULL AND listSaldos.codigoCiudad IS NULL AND listSaldos.codigoSector IS NULL)'),
+                    'listPrecios' => array('condition' => '(listPrecios.codigoCiudad=:ciudad AND listPrecios.codigoSector=:sector) OR (listPrecios.codigoCiudad IS NULL AND listPrecios.codigoSector IS NULL)'),
+                    'listSaldosTerceros' => array('condition' => '(listSaldosTerceros.codigoCiudad=:ciudad AND listSaldosTerceros.codigoSector=:sector) OR (listSaldosTerceros.codigoCiudad IS NULL AND listSaldosTerceros.codigoSector IS NULL)')
                 ),
-                'condition' => 't.activo=:activo AND t.idCategoriaBI IN (' . implode(",", $listIdsCategoriaBI) . ')',
+                'condition' => 't.activo=:activo AND t.idCategoriaBI IN (' . implode(",", $listIdsCategoriaBI) . ') AND ( (listSaldos.saldoUnidad IS NOT NULL AND listPrecios.codigoCiudad IS NOT NULL) OR listSaldosTerceros.codigoCiudad IS NOT NULL)',
                 'params' => array(
                     ':activo' => 1,
                     ':saldo' => 0,
@@ -364,10 +367,11 @@ class CatalogoController extends Controller {
             } else {
                 $listProductos = Producto::model()->findAll(array(
                     'with' => array('listImagenes', 'objCodigoEspecial', 'listCalificaciones', 'objCategoriaBI',
-                        'listSaldos' => array('condition' => 'listSaldos.saldoUnidad>:saldo AND listSaldos.codigoCiudad=:ciudad AND listSaldos.codigoSector=:sector'),
-                        'listPrecios' => array('condition' => 'listPrecios.codigoCiudad=:ciudad AND listPrecios.codigoSector=:sector'),
+                        'listSaldos' => array('condition' => '(listSaldos.saldoUnidad>:saldo AND listSaldos.codigoCiudad=:ciudad AND listSaldos.codigoSector=:sector) OR (listSaldos.saldoUnidad IS NULL AND listSaldos.codigoCiudad IS NULL AND listSaldos.codigoSector IS NULL)'),
+                        'listPrecios' => array('condition' => '(listPrecios.codigoCiudad=:ciudad AND listPrecios.codigoSector=:sector) OR (listPrecios.codigoCiudad IS NULL AND listPrecios.codigoSector IS NULL)'),
+                        'listSaldosTerceros' => array('condition' => '(listSaldosTerceros.codigoCiudad=:ciudad AND listSaldosTerceros.codigoSector=:sector) OR (listSaldosTerceros.codigoCiudad IS NULL AND listSaldosTerceros.codigoSector IS NULL)')
                     ),
-                    'condition' => "t.activo=:activo AND t.codigoProducto IN ($codigosStr)",
+                    'condition' => "t.activo=:activo AND t.codigoProducto IN ($codigosStr) AND ( (listSaldos.saldoUnidad IS NOT NULL AND listPrecios.codigoCiudad IS NOT NULL) OR listSaldosTerceros.codigoCiudad IS NOT NULL)",
                     'params' => array(
                         ':activo' => 1,
                         ':saldo' => 0,
@@ -378,8 +382,8 @@ class CatalogoController extends Controller {
 
                 $fecha = new DateTime;
                 $listCombos = Combo::model()->findAll(array(
-                    'with' => array('listProductos' => array('condition' => "listProductos.codigoProducto IN ($codigosStr)")),
-                    'condition' => 't.estadoCombo=:estado AND t.fechaInicio<=:fecha AND t.fechaFin>=:fecha AND t.saldo>:saldo AND t.codigoCiudad=:ciudad AND t.codigoSector=:sector',
+                    'with' => array('listComboSectorCiudad', 'listProductos' => array('condition' => "listProductos.codigoProducto IN ($codigosStr)")),
+                    'condition' => 't.estadoCombo=:estado AND t.fechaInicio<=:fecha AND t.fechaFin>=:fecha AND listComboSectorCiudad.saldo>:saldo AND listComboSectorCiudad.codigoCiudad=:ciudad AND listComboSectorCiudad.codigoSector=:sector',
                     'params' => array(
                         ':estado' => 1,
                         ':fecha' => $fecha->format('Y-m-d H:i:s'),
@@ -448,6 +452,7 @@ class CatalogoController extends Controller {
             'codigoPerfil' => $codigoPerfil,
             'formFiltro' => $formFiltro,
             'tipoBusqueda' => Yii::app()->params->busqueda['tipo']['buscador'],
+            'nombreBusqueda' => $term,
         ));
     }
 
@@ -472,10 +477,11 @@ class CatalogoController extends Controller {
                     'objDetalle',
                     'objCodigoEspecial',
                     'listCalificaciones' => array('with' => 'objUsuario'),
-                    'listSaldos' => array('condition' => 'listSaldos.saldoUnidad>:saldo AND listSaldos.codigoCiudad=:ciudad AND listSaldos.codigoSector=:sector'),
-                    'listPrecios' => array('condition' => 'listPrecios.codigoCiudad=:ciudad AND listPrecios.codigoSector=:sector'),
+                    'listSaldos' => array('condition' => '(listSaldos.saldoUnidad>:saldo AND listSaldos.codigoCiudad=:ciudad AND listSaldos.codigoSector=:sector) OR (listSaldos.saldoUnidad IS NULL AND listSaldos.codigoCiudad IS NULL AND listSaldos.codigoSector IS NULL)'),
+                    'listPrecios' => array('condition' => '(listPrecios.codigoCiudad=:ciudad AND listPrecios.codigoSector=:sector) OR (listPrecios.codigoCiudad IS NULL AND listPrecios.codigoSector IS NULL)'),
+                    'listSaldosTerceros' => array('condition' => '(listSaldosTerceros.codigoCiudad=:ciudad AND listSaldosTerceros.codigoSector=:sector) OR (listSaldosTerceros.codigoCiudad IS NULL AND listSaldosTerceros.codigoSector IS NULL)')
                 ),
-                'condition' => 't.activo=:activo AND t.codigoProducto=:codigo',
+                'condition' => 't.activo=:activo AND t.codigoProducto=:codigo AND ( (listSaldos.saldoUnidad IS NOT NULL AND listPrecios.codigoCiudad IS NOT NULL) OR listSaldosTerceros.codigoCiudad IS NOT NULL)',
                 'params' => array(
                     ':activo' => 1,
                     ':codigo' => $producto,
@@ -536,6 +542,7 @@ class CatalogoController extends Controller {
 
         $this->render('productoDetalle', array(
             'objProducto' => $objProducto,
+            'objPrecio' => new PrecioProducto($objProducto, $objSectorCiudad, $codigoPerfil),
             'objSectorCiudad' => $objSectorCiudad,
             'codigoPerfil' => $codigoPerfil,
             'listaPuntoVenta' => $listaPuntoVenta,
@@ -554,6 +561,14 @@ class CatalogoController extends Controller {
         if ($objSectorCiudad == null) {
             throw new CHttpException(404, 'Solicitud inválida.');
         }
+        
+        if($ubicacion<0){
+            $ubicacion=0;
+        }
+        
+        if($bodega<0){
+            $bodega=0;
+        }
 
         $objProducto = Producto::model()->find(array(
             'with' => array(
@@ -561,10 +576,11 @@ class CatalogoController extends Controller {
                 'objDetalle',
                 'objCodigoEspecial',
                 'listCalificaciones' => array('with' => 'objUsuario'),
-                'listSaldos' => array('condition' => 'listSaldos.saldoUnidad>:saldo AND listSaldos.codigoCiudad=:ciudad AND listSaldos.codigoSector=:sector'),
-                'listPrecios' => array('condition' => 'listPrecios.codigoCiudad=:ciudad AND listPrecios.codigoSector=:sector'),
+                'listSaldos' => array('condition' => '(listSaldos.saldoUnidad>:saldo AND listSaldos.codigoCiudad=:ciudad AND listSaldos.codigoSector=:sector) OR (listSaldos.saldoUnidad IS NULL AND listSaldos.codigoCiudad IS NULL AND listSaldos.codigoSector IS NULL)'),
+                'listPrecios' => array('condition' => '(listPrecios.codigoCiudad=:ciudad AND listPrecios.codigoSector=:sector) OR (listPrecios.codigoCiudad IS NULL AND listPrecios.codigoSector IS NULL)'),
+                'listSaldosTerceros' => array('condition' => '(listSaldosTerceros.codigoCiudad=:ciudad AND listSaldosTerceros.codigoSector=:sector) OR (listSaldosTerceros.codigoCiudad IS NULL AND listSaldosTerceros.codigoSector IS NULL)')
             ),
-            'condition' => 't.ventaVirtual=:venta AND t.activo=:activo AND t.codigoProducto=:codigo',
+            'condition' => 't.ventaVirtual=:venta AND t.activo=:activo AND t.codigoProducto=:codigo  AND ( (listSaldos.saldoUnidad IS NOT NULL AND listPrecios.codigoCiudad IS NOT NULL) OR listSaldosTerceros.codigoCiudad IS NOT NULL)',
             'params' => array(
                 ':venta' => 1,
                 ':activo' => 1,
@@ -588,8 +604,7 @@ class CatalogoController extends Controller {
 
         $this->render('bodegaDetalle', array(
             'objProducto' => $objProducto,
-            'objSectorCiudad' => $objSectorCiudad,
-            'codigoPerfil' => $codigoPerfil,
+            'objPrecio' => new PrecioProducto($objProducto, $objSectorCiudad, $codigoPerfil),
             'cantidadUbicacion' => $ubicacion,
             'cantidadBodega' => $bodega
         ));
@@ -605,17 +620,31 @@ class CatalogoController extends Controller {
         }
 
         $fecha = new DateTime;
+
         $objCombo = Combo::model()->find(array(
-            'with' => array('listProductos', 'listImagenes', 'listProductosCombo'),
-            'condition' => 't.estadoCombo=:estado AND t.fechaInicio<=:fecha AND t.fechaFin>=:fecha AND t.saldo>:saldo AND t.codigoCiudad=:ciudad AND t.codigoSector=:sector',
+            'with' => array('listProductos', 'listImagenes', 'listProductosCombo', 'listComboSectorCiudad'),
+            'condition' => 't.idCombo=:combo AND t.estadoCombo=:estado AND t.fechaInicio<=:fecha AND t.fechaFin>=:fecha AND listComboSectorCiudad.saldo>:saldo AND listComboSectorCiudad.codigoCiudad=:ciudad AND listComboSectorCiudad.codigoSector=:sector',
             'params' => array(
+                ':combo' => $combo,
                 ':estado' => 1,
                 ':fecha' => $fecha->format('Y-m-d H:i:s'),
-                'saldo' => 0,
+                ':saldo' => 0,
                 ':ciudad' => $objSectorCiudad->codigoCiudad,
                 ':sector' => $objSectorCiudad->codigoSector,
             )
         ));
+
+        /* $objCombo = Combo::model()->find(array(
+          'with' => array('listProductos', 'listImagenes', 'listProductosCombo'),
+          'condition' => 't.estadoCombo=:estado AND t.fechaInicio<=:fecha AND t.fechaFin>=:fecha AND t.saldo>:saldo AND t.codigoCiudad=:ciudad AND t.codigoSector=:sector',
+          'params' => array(
+          ':estado' => 1,
+          ':fecha' => $fecha->format('Y-m-d H:i:s'),
+          'saldo' => 0,
+          ':ciudad' => $objSectorCiudad->codigoCiudad,
+          ':sector' => $objSectorCiudad->codigoSector,
+          )
+          )); */
 
         if ($objCombo == null) {
             throw new CHttpException(404, 'Producto no existe.');
@@ -623,6 +652,7 @@ class CatalogoController extends Controller {
 
         $this->render('comboDetalle', array(
             'objCombo' => $objCombo,
+            'objPrecio' => new PrecioCombo($objCombo),
         ));
     }
 
@@ -652,10 +682,11 @@ class CatalogoController extends Controller {
 
         $objProducto = Producto::model()->find(array(
             'with' => array(
-                'listSaldos' => array('condition' => 'listSaldos.saldoUnidad>:saldo AND listSaldos.codigoCiudad=:ciudad AND listSaldos.codigoSector=:sector'),
-                'listPrecios' => array('condition' => 'listPrecios.codigoCiudad=:ciudad AND listPrecios.codigoSector=:sector')
+                'listSaldos' => array('condition' => '(listSaldos.saldoUnidad>:saldo AND listSaldos.codigoCiudad=:ciudad AND listSaldos.codigoSector=:sector) OR (listSaldos.saldoUnidad IS NULL AND listSaldos.codigoCiudad IS NULL AND listSaldos.codigoSector IS NULL)'),
+                'listPrecios' => array('condition' => '(listPrecios.codigoCiudad=:ciudad AND listPrecios.codigoSector=:sector) OR (listPrecios.codigoCiudad IS NULL AND listPrecios.codigoSector IS NULL)'),
+                'listSaldosTerceros' => array('condition' => '(listSaldosTerceros.codigoCiudad=:ciudad AND listSaldosTerceros.codigoSector=:sector) OR (listSaldosTerceros.codigoCiudad IS NULL AND listSaldosTerceros.codigoSector IS NULL)')
             ),
-            'condition' => 't.activo=:activo AND t.codigoProducto=:codigo',
+            'condition' => 't.activo=:activo AND t.codigoProducto=:codigo AND ( (listSaldos.saldoUnidad IS NOT NULL AND listPrecios.codigoCiudad IS NOT NULL) OR listSaldosTerceros.codigoCiudad IS NOT NULL)',
             'params' => array(
                 ':activo' => 1,
                 ':codigo' => $codigoProducto,
@@ -677,7 +708,7 @@ class CatalogoController extends Controller {
             $codigoPerfil = $usuario->objPerfil->codigoPerfil;
         }
 
-        $objPrecio = $objProducto->getPrecio($objSectorCiudad->codigoCiudad, $objSectorCiudad->codigoSector, $codigoPerfil);
+        $objPrecio = new PrecioProducto($objProducto, $objSectorCiudad, $codigoPerfil);
         $valor = $objPrecio->getPrecio(Precio::PRECIO_UNIDAD) * $cantidad;
         $valorFormato = Yii::app()->numberFormatter->format(Yii::app()->params->formatoMoneda['patron'], $valor, Yii::app()->params->formatoMoneda['moneda']);
 
@@ -717,10 +748,11 @@ class CatalogoController extends Controller {
 
         $objProducto = Producto::model()->find(array(
             'with' => array(
-                'listSaldos' => array('condition' => 'listSaldos.saldoUnidad>:saldo AND listSaldos.codigoCiudad=:ciudad AND listSaldos.codigoSector=:sector'),
-                'listPrecios' => array('condition' => 'listPrecios.codigoCiudad=:ciudad AND listPrecios.codigoSector=:sector')
+                'listSaldos' => array('condition' => '(listSaldos.saldoUnidad>:saldo AND listSaldos.codigoCiudad=:ciudad AND listSaldos.codigoSector=:sector) OR (listSaldos.saldoUnidad IS NULL AND listSaldos.codigoCiudad IS NULL AND listSaldos.codigoSector IS NULL)'),
+                'listPrecios' => array('condition' => '(listPrecios.codigoCiudad=:ciudad AND listPrecios.codigoSector=:sector) OR (listPrecios.codigoCiudad IS NULL AND listPrecios.codigoSector IS NULL)'),
+                'listSaldosTerceros' => array('condition' => '(listSaldosTerceros.codigoCiudad=:ciudad AND listSaldosTerceros.codigoSector=:sector) OR (listSaldosTerceros.codigoCiudad IS NULL AND listSaldosTerceros.codigoSector IS NULL)')
             ),
-            'condition' => 't.activo=:activo AND t.codigoProducto=:codigo',
+            'condition' => 't.activo=:activo AND t.codigoProducto=:codigo AND ( (listSaldos.saldoUnidad IS NOT NULL AND listPrecios.codigoCiudad IS NOT NULL) OR listSaldosTerceros.codigoCiudad IS NOT NULL)',
             'params' => array(
                 ':activo' => 1,
                 ':codigo' => $codigoProducto,
@@ -742,7 +774,7 @@ class CatalogoController extends Controller {
             $codigoPerfil = $usuario->objPerfil->codigoPerfil;
         }
 
-        $objPrecio = $objProducto->getPrecio($objSectorCiudad->codigoCiudad, $objSectorCiudad->codigoSector, $codigoPerfil);
+        $objPrecio = new PrecioProducto($objProducto, $objSectorCiudad, $codigoPerfil);
         $valorUnidad = $objPrecio->getPrecio(Precio::PRECIO_UNIDAD) * $cantidadUnidad;
         $valorFraccion = $objPrecio->getPrecio(Precio::PRECIO_FRACCION) * $cantidadFraccion;
         $valorTotal = $valorUnidad + $valorFraccion;
@@ -766,10 +798,10 @@ class CatalogoController extends Controller {
     }
 
     public function actionSubtotalCombo() {
-        $codigoCombo = Yii::app()->getRequest()->getPost('codigo');
+        $combo = Yii::app()->getRequest()->getPost('codigo');
         $cantidad = Yii::app()->getRequest()->getPost('cantidad');
 
-        if ($codigoCombo == null) {
+        if ($combo == null) {
             echo CJSON::encode(array('result' => 'error', 'response' => 'No se detecta producto'));
             Yii::app()->end();
         }
@@ -791,12 +823,13 @@ class CatalogoController extends Controller {
 
         $fecha = new DateTime;
         $objCombo = Combo::model()->find(array(
-            'with' => array('listProductos', 'listProductosCombo'),
-            'condition' => 't.estadoCombo=:estado AND t.fechaInicio<=:fecha AND t.fechaFin>=:fecha AND t.saldo>:saldo AND t.codigoCiudad=:ciudad AND t.codigoSector=:sector',
+            'with' => array('listProductos', 'listProductosCombo', 'listComboSectorCiudad'),
+            'condition' => 't.idCombo=:combo AND t.estadoCombo=:estado AND t.fechaInicio<=:fecha AND t.fechaFin>=:fecha AND listComboSectorCiudad.saldo>:saldo AND listComboSectorCiudad.codigoCiudad=:ciudad AND listComboSectorCiudad.codigoSector=:sector',
             'params' => array(
+                ':combo' => $combo,
                 ':estado' => 1,
                 ':fecha' => $fecha->format('Y-m-d H:i:s'),
-                'saldo' => 0,
+                ':saldo' => 0,
                 ':ciudad' => $objSectorCiudad->codigoCiudad,
                 ':sector' => $objSectorCiudad->codigoSector,
             )
@@ -807,7 +840,8 @@ class CatalogoController extends Controller {
             Yii::app()->end();
         }
 
-        $valor = $objCombo->getPrecio() * $cantidad;
+        $objPrecio = new PrecioCombo($objCombo);
+        $valor = $objPrecio->getPrecio() * $cantidad;
         $valorFormato = Yii::app()->numberFormatter->format(Yii::app()->params->formatoMoneda['patron'], $valor, Yii::app()->params->formatoMoneda['moneda']);
 
         echo CJSON::encode(array('result' => 'ok', 'response' => array('valor' => $valor, 'valorFormato' => $valorFormato)));
@@ -841,10 +875,11 @@ class CatalogoController extends Controller {
 
         $objProducto = Producto::model()->find(array(
             'with' => array(
-                'listSaldos' => array('condition' => 'listSaldos.codigoCiudad=:ciudad AND listSaldos.codigoSector=:sector'),
-                'listPrecios' => array('condition' => 'listPrecios.codigoCiudad=:ciudad AND listPrecios.codigoSector=:sector')
+                'listSaldos' => array('condition' => '(listSaldos.codigoCiudad=:ciudad AND listSaldos.codigoSector=:sector) OR (listSaldos.saldoUnidad IS NULL AND listSaldos.codigoCiudad IS NULL AND listSaldos.codigoSector IS NULL)'),
+                'listPrecios' => array('condition' => '(listPrecios.codigoCiudad=:ciudad AND listPrecios.codigoSector=:sector) OR (listPrecios.codigoCiudad IS NULL AND listPrecios.codigoSector IS NULL)'),
+                'listSaldosTerceros' => array('condition' => '(listSaldosTerceros.codigoCiudad=:ciudad AND listSaldosTerceros.codigoSector=:sector) OR (listSaldosTerceros.codigoCiudad IS NULL AND listSaldosTerceros.codigoSector IS NULL)')
             ),
-            'condition' => 't.ventaVirtual=:venta AND t.activo=:activo AND t.codigoProducto=:codigo',
+            'condition' => 't.ventaVirtual=:venta AND t.activo=:activo AND t.codigoProducto=:codigo AND ( (listSaldos.saldoUnidad IS NOT NULL AND listPrecios.codigoCiudad IS NOT NULL) OR listSaldosTerceros.codigoCiudad IS NOT NULL)',
             'params' => array(
                 ':venta' => 1,
                 ':activo' => 1,
@@ -866,7 +901,7 @@ class CatalogoController extends Controller {
             $codigoPerfil = $usuario->objPerfil->codigoPerfil;
         }
 
-        $objPrecio = $objProducto->getPrecio($objSectorCiudad->codigoCiudad, $objSectorCiudad->codigoSector, $codigoPerfil);
+        $objPrecio = new PrecioProducto($objProducto, $objSectorCiudad, $codigoPerfil);
         $valorBodega = $objPrecio->getPrecio(Precio::PRECIO_UNIDAD) * $cantidadBodega;
         $valorUbicacion = $objPrecio->getPrecio(Precio::PRECIO_UNIDAD) * $cantidadUbicacion;
         $valorTotal = $valorBodega + $valorUbicacion;

@@ -17,7 +17,7 @@ function sendHtmlEmail($toStr, $subject, $content, $ccStr = null) {
       $mail->Port = 25;
       $mail->SMTPAuth = false;
       $mail->isHTML(true); */
-
+    
     Yii::import('application.extensions.phpmailer.JPhpMailer');
     $mail = new JPhpMailer;
     $mail->isSMTP();
@@ -29,10 +29,10 @@ function sendHtmlEmail($toStr, $subject, $content, $ccStr = null) {
     $mail->SMTPSecure = 'tls';
     $mail->Port = 587;
     $mail->isHTML(true);
-
+    
     $mail->From = Yii::app()->params->correoAdmin;
     $mail->FromName = Yii::app()->name;
-
+    
     if ($toStr === null) {
         throw new Exception("email receiver is empty");
     }
@@ -84,7 +84,7 @@ function distanciaCoordenadas($lat1, $lon1, $lat2, $lon2, $unit = 'K') {
     }
 }
 
-function GSASearch($term) {
+function GSASearch(&$term) {
     $codigosArray = array();
     
     if ($term != "") {
@@ -100,8 +100,8 @@ function GSASearch($term) {
             
             //Si hay una palabra sugerida se realiza de nuevo busqueda con sugerencia
             if (isset($array["GSP"]) && isset($array["GSP"]["Spelling"]["Suggestion"]) && $array["GSP"]["Spelling"]["Suggestion"] != "") {
-                $sugerencia = $array["GSP"]["Spelling"]["Suggestion"]["@attributes"]["q"];
-                GSAResult($sugerencia, $result);
+                $term = $array["GSP"]["Spelling"]["Suggestion"]["@attributes"]["q"];
+                GSAResult($term, $result);
                 if ($result !== false) {
                     $dom = new DOMDocument('1.0', 'utf-8');
                     $dom->loadXML($result);

@@ -1,21 +1,22 @@
 <div class="ccont_filtro">
     <?php if (isset($formFiltro)): ?>
         <a href="#panel-filtro">
-            <img src="<?php echo Yii::app()->request->baseUrl ?>/images/iconos/icon_filtrar.png" onmouseover="this.src = '<?php echo Yii::app()->request->baseUrl ?>/images/iconos/icon_filtrar_activo.png'" onmouseout="this.src = '<?php echo Yii::app()->request->baseUrl ?>/images/iconos/icon_filtrar.png'" >
+            <!--<img src="<?php echo Yii::app()->request->baseUrl ?>/images/iconos/icon_filtrar.png" onmouseover="this.src = '<?php echo Yii::app()->request->baseUrl ?>/images/iconos/icon_filtrar_activo.png'" onmouseout="this.src = '<?php echo Yii::app()->request->baseUrl ?>/images/iconos/icon_filtrar.png'" >-->
+            <img src="<?php echo Yii::app()->request->baseUrl ?>/images/iconos/icon_filtrar.png" alt="Filtrar" >
         </a>
     <?php endif; ?>
 
     <?php if (isset($formOrdenamiento)): ?>
         <a href="#panel-ordenamiento">
-            <img src="<?php echo Yii::app()->request->baseUrl ?>/images/iconos/icon_ordenar.png" onmouseover="this.src = '<?php echo Yii::app()->request->baseUrl ?>/images/iconos/icon_ordenar_activo.png'" onmouseout="this.src = '<?php echo Yii::app()->request->baseUrl ?>/images/iconos/icon_ordenar.png'">
+            <!--<img src="<?php echo Yii::app()->request->baseUrl ?>/images/iconos/icon_ordenar.png" onmouseover="this.src = '<?php echo Yii::app()->request->baseUrl ?>/images/iconos/icon_ordenar_activo.png'" onmouseout="this.src = '<?php echo Yii::app()->request->baseUrl ?>/images/iconos/icon_ordenar.png'">-->
+            <img src="<?php echo Yii::app()->request->baseUrl ?>/images/iconos/icon_ordenar.png" alt="Ordenar">
         </a>
     <?php endif; ?>
 </div>
 
 <div class="ui-content">
-    <!-- <img src="<?php echo Yii::app()->request->baseUrl . $imagenBusqueda; ?>" class="center" style="display: block;width: 80%;height: auto;"> -->
     <div>
-        <h3 class="ct_result" style="color:#b40000; font-weight: 700;">Resultados de búsqueda</h3>
+        <h1 class="ct_result">Resultados de búsqueda: <?php echo $nombreBusqueda ?></h1>
         <p class="cp_result"><?= count($listProductos) + count($listCombos) ?> resultados</p>
     </div>
 
@@ -30,6 +31,7 @@
                     <?php
                     $this->renderPartial('_comboElemento', array(
                         'objCombo' => $objCombo,
+                        'objPrecio' => new PrecioCombo($objCombo),
                     ));
                     ?>
                 </div>
@@ -41,8 +43,7 @@
                     <?php
                     $this->renderPartial('_productoElemento', array(
                         'objProducto' => $objProducto,
-                        'objSectorCiudad' => $objSectorCiudad,
-                        'codigoPerfil' => $codigoPerfil,
+                        'objPrecio' => new PrecioProducto($objProducto, $objSectorCiudad, $codigoPerfil),
                     ));
                     ?>
                 </div>
@@ -86,7 +87,6 @@
                 <img src="<?php echo Yii::app()->request->baseUrl . Yii::app()->params->carpetaImagen['codigoEspecial'] . $especial->rutaIcono; ?>" >
                 <p><?php echo $especial->descripcion ?></p>
             </div>
-            <!-- <a href="#" data-rel="back">Cerrar</a> -->
         </div>
         <div data-role="footer">
             <a href="#" data-rel="back">Cerrar</a>

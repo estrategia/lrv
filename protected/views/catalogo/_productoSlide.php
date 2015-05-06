@@ -17,8 +17,7 @@
 <div>
     <p><?php echo $objProducto->descripcionProducto ?></p>
     <p><?php echo $objProducto->presentacionProducto ?></p>
-    <?php if ($objSectorCiudad != null): ?>
-        <?php $objPrecio = $objProducto->getPrecio($objSectorCiudad->codigoCiudad, $objSectorCiudad->codigoSector, $codigoPerfil); ?>
+    <?php if ($objPrecio->inicializado()): ?>
         <p><?php echo Yii::app()->numberFormatter->format(Yii::app()->params->formatoMoneda['patron'], $objPrecio->getPrecio(Precio::PRECIO_UNIDAD), Yii::app()->params->formatoMoneda['moneda']); ?> </p>
     <?php endif; ?>
 </div>

@@ -301,13 +301,16 @@ function subtotalProductoCarro(id) {
     });
 }
 
-function eliminarProductoCarro(id) {
+$(document).on('click', "a[data-eliminar='1'], a[data-eliminar='2'], a[data-eliminar='3']", function() {
+    var position = $(this).attr('data-position');
+    var eliminar = $(this).attr('data-eliminar');
+
     $.ajax({
         type: 'POST',
         dataType: 'json',
         async: true,
         url: requestUrl + '/carro/eliminar',
-        data: {id: id},
+        data: {id: position, eliminar: eliminar},
         beforeSend: function() {
             $.mobile.loading('show');
         },
@@ -321,14 +324,17 @@ function eliminarProductoCarro(id) {
                 $('#panel-carro-canasta').html(data.canasta);
                 $('#panel-carro-canasta').trigger("create");
             } else {
-                alert(data.response);
+                $('<div>').mdialog({
+                    content: "<div data-role='main'><div class='ui-content' data-role='content' role='main'>" + data.response + "<a class='ui-btn ui-btn-r ui-corner-all ui-shadow' data-rel='back' href='#'>Aceptar</a></div></div>"
+                });
             }
         },
         error: function(jqXHR, textStatus, errorThrown) {
             alert('Error: ' + errorThrown);
         }
     });
-}
+
+});
 
 $(document).on("pagecreate", function(event) {
     $(function() {
@@ -387,7 +393,12 @@ $(document).on("pagecreate", function(event) {
 
     pagoCredirebaja();
     //$('[data-role=main]:visible').css('margin-top',($(window).height() - $('[data-role=header]:visible').height() - $('[data-role=footer]:visible').height() - $('[data-role=main]:visible').outerHeight())/2);
-
+    $(function() {
+        var elementArea = $('#FormaPagoForm_comentario');
+        if(elementArea.length){
+            countChar(elementArea,'div-comentario-contador');
+        }
+    });
 });
 
 function ratyclic(score, evt) {
@@ -539,15 +550,21 @@ $(document).on('change', "input[data-modificar='1'], input[data-modificar='2'], 
     };
 
     if (modificar == 1) {
-        var cantidadU = parseInt($('#cantidad-producto-unidad-' + position).val());
-
-        if (isNaN(cantidadU)) {
-            cantidadU = 0;
-        }
-
         var cantidadF = parseInt($('#cantidad-producto-fraccion-' + position).val());
         if (isNaN(cantidadF)) {
             cantidadF = -1;
+        } else if (cantidadF < 1) {
+            cantidadF = 1;
+        }
+
+        var cantidadU = parseInt($('#cantidad-producto-unidad-' + position).val());
+
+        if (isNaN(cantidadU) || cantidadU < 1) {
+            //if(cantidadF==-1){
+            cantidadU = 1;
+            //}else{
+            //cantidadU = 0;
+            //}
         }
 
         if (cantidadF > 0) {
@@ -567,17 +584,19 @@ $(document).on('change', "input[data-modificar='1'], input[data-modificar='2'], 
         data['cantidadF'] = cantidadF;
     } else if (modificar == 2) {
         var cantidad = parseInt($('#cantidad-producto-' + position).val());
-        if (isNaN(cantidad)) {
-            cantidad = -1;
+        if (isNaN(cantidad) || cantidad < 1) {
+            cantidad = 1;
         }
         data['cantidad'] = cantidad;
     } else if (modificar == 3) {
         var cantidad = parseInt($('#cantidad-producto-bodega-' + position).val());
-        if (isNaN(cantidad)) {
-            cantidad = -1;
+        if (isNaN(cantidad) || cantidad < 1) {
+            cantidad = 1;
         }
         data['cantidad'] = cantidad;
     }
+
+    console.log(data);
 
     $.ajax({
         type: 'POST',
@@ -863,6 +882,7 @@ function pasoEntrega(actual, siguiente) {
         beforeSend: function() {
             $('div[id^="FormaPagoForm_"].has-error').html('');
             $('div[id^="FormaPagoForm_"].has-error').css('display', 'none');
+            $('#form-pago-entrega').trigger("create");
             $.mobile.loading('show');
         },
         complete: function() {
@@ -876,10 +896,12 @@ function pasoEntrega(actual, siguiente) {
             } else if (obj.result === 'error') {
                 alert(obj.response);
             } else {
+                
                 $.each(obj, function(element, error) {
                     $('#' + element + '_em_').html(error);
                     $('#' + element + '_em_').css('display', 'block');
                 });
+                
             }
         },
         error: function(jqXHR, textStatus, errorThrown) {
@@ -1004,6 +1026,10 @@ $(document).on('change', "#FormaPagoForm_tarjetaTipo, #FormaPagoForm_tarjetaNume
         $(this).val('');
     }
 });
+
+function countChar(element, idContador) {
+    $('#'+idContador).text(element.val().length);
+}
 
 /*
  $(window).on("navigate", function(event, data) {

@@ -29,9 +29,6 @@
 
     <div id="raty-lectura-producto-<?php echo $objProducto->codigoProducto ?>" data-role="raty" data-readonly="true" data-score="<?php echo $objProducto->getCalificacion() ?>" class="clst_cal_str"></div>
 
-    <?php $objPrecio = $objProducto->getPrecio($objSectorCiudad->codigoCiudad, $objSectorCiudad->codigoSector, $codigoPerfil); ?>
-
-
     <table  class="ui-responsive ctbl_prod_frc">
         <thead class="ctbl_head">
             <tr>

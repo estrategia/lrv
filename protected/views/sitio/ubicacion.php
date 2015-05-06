@@ -9,13 +9,13 @@
 <div class="ui-content">
     <?php echo CHtml::htmlButton('Usar la ubicación de tu dispositivo', array('class' => 'ui-btn ui-corner-all ui-btn-icon-left ui-icon-ubi ui-alt-icon c_btn_ub', 'onclick' => 'ubicacionGPS();')); ?>
     <h3 class="center" style="font-weight:bold;">ó</h3>
-    
+
     <div data-role="collapsible" data-theme="n" data-collapsed-icon="carat-d" data-expanded-icon="carat-u" class="ui-nodisc-icon cbtn_ub_ciudad">
         <h1 class="cbtn_ubcd_titulo">Seleccionar ciudad</h1>
         <form class="btn_src_bsq_ubi">
-            <input data-type="search" id="filtro-ciudad" placeholder="Buscar ciudad ..." class="c_btn_sr_ubi">
+            <input type="search" class="c_btn_sr_ubi"  name="password" id="filtro-ciudad" value="" placeholder="Buscar ciudad ...">
         </form>
-        <div data-role="collapsibleset" data-filter="true" data-inset="true" data-mini="true" id="ubicaciones-set" data-input="#filtro-ciudad" class="ui-nodisc-icon ui-alt-icon">
+        <div data-role="collapsibleset" data-filter="true" data-inset="true" id="ubicaciones-set" data-input="#filtro-ciudad" class="ui-nodisc-icon ui-alt-icon">
             <?php foreach ($listCiudadesSectores as $ciudad): ?>
                 <?php if (!empty($ciudad->listSectores)): ?>
                     <?php if (isset($idxCiudadesSubSectores[$ciudad->codigoCiudad])): ?>

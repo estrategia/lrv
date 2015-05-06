@@ -23,8 +23,8 @@ class EShoppingCart extends CMap {
     public $codigoPerfil = null;
     public $objSectorCiudad = null;
     protected $shipping = 0;
-    protected $shippingStored = 0;
-    protected $deliveryStored = 0;
+    protected $shippingStored = 0;//valor envio bodega
+    protected $deliveryStored = 0;//tiempo entrega bodega
 
     public function init() {
         $this->restoreFromSession();
@@ -54,8 +54,30 @@ class EShoppingCart extends CMap {
                     ':perfil' => $this->codigoPerfil,
                 )
             ));
-
+            
             if ($objDomicilio === null) {
+                $objDomicilio = Domicilio::model()->find(array(
+                    'condition' => 'codigoCiudad=:ciudad AND codigoSector=:sector AND codigoPerfil=:perfil',
+                    'params' => array(
+                        ':ciudad' => $this->objSectorCiudad->codigoCiudad,
+                        ':sector' => Yii::app()->params->sector['*'],
+                        ':perfil' => $this->codigoPerfil,
+                    )
+                ));
+            }
+            
+            if ($objDomicilio === null) {
+                $objDomicilio = Domicilio::model()->find(array(
+                    'condition' => 'codigoCiudad=:ciudad AND codigoSector=:sector AND codigoPerfil=:perfil',
+                    'params' => array(
+                        ':ciudad' => Yii::app()->params->ciudad['*'],
+                        ':sector' => Yii::app()->params->sector['*'],
+                        ':perfil' => $this->codigoPerfil,
+                    )
+                ));
+            }
+
+            /*if ($objDomicilio === null) {
                 $objDomicilio = Domicilio::model()->find(array(
                     'condition' => 'codigoCiudad=:ciudad AND codigoSector=:sector AND codigoPerfil=:perfil',
                     'params' => array(
@@ -64,7 +86,7 @@ class EShoppingCart extends CMap {
                         ':perfil' => Yii::app()->params->perfil['*'],
                     )
                 ));
-            }
+            }*/
 
             if ($objDomicilio === null) {
                 $objDomicilio = Domicilio::model()->find(array(
@@ -374,6 +396,8 @@ class EShoppingCart extends CMap {
                 $tax += $position->getTaxPrice(true);
             }
         }
+        
+        $tax = ceil($tax);
         return $tax;
     }
 
