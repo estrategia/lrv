@@ -89,7 +89,8 @@
             </div>
         </div>
         <div data-role="footer">
-            <a href="#" data-rel="back">Cerrar</a>
+            <!-- <a href="#" class="ui-btn ui-corner-all ui-shadow ui-btn-inline ui-btn-r" data-rel="back">Cerrar</a> -->
+            <?php echo CHtml::link('Cerrar', '#', array('class' => 'ui-btn ui-corner-all ui-shadow ui-btn-inline ui-btn-r', 'data-mini' => 'true', 'data-rel'=>'back')); ?>
         </div>
     </div>
 <?php endforeach; ?>

@@ -37,13 +37,14 @@
             <div class="clst_pre_act"><span>Tiempo de entrega: <?php echo $position->getDelivery() ?> hora(s)</span></div>
         <?php endif; ?>
     </div>
+	<div class="clear"></div>
 </div>
 
-<table class="ui-responsive ctable_list_prod">
+<table class="ui-responsive ctable_list_prod" cellspacing="0">
     <tbody>
 
         <?php if ($position->objProducto->fraccionado == 1): ?>
-            <tr>
+            <tr class="detalleFraccionado">
                 <td colspan="3">
                     <?php echo $position->objProducto->presentacionProducto ?>
                 </td>
@@ -64,7 +65,7 @@
         </tr>
 
         <?php if ($position->objProducto->fraccionado == 1): ?>
-            <tr>
+            <tr  class="detalleFraccionado">
                 <td colspan="3">
                     <?php echo $position->objProducto->objMedidaFraccion->descripcionMedidaFraccion ?> X <?php echo $position->objProducto->unidadFraccionamiento ?>
                 </td>

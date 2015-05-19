@@ -25,31 +25,31 @@ abstract class Precio {
     const DESCUENTO_PERFIL = 1;
     const DESCUENTO_BENEFICIO = 2;
     const DESCUENTO_COMPLETO = 9;
-    
+
     abstract public function getPrecio();
-    
+
     abstract public function getAhorro();
-    
-    public function getFlete(){
+
+    public function getFlete() {
         return $this->flete;
     }
-    
-    public function getTiempoEntrega(){
+
+    public function getTiempoEntrega() {
         return $this->tiempoEntrega;
     }
 
     public function tieneBeneficio() {
         return !empty($this->listBeneficios);
     }
-    
+
     public function getBeneficios() {
         return $this->listBeneficios;
     }
-    
+
     public function inicializado() {
         return $this->inicializado;
     }
-    
+
     public function getPorcentajeDescuento($tipo = self::DESCUENTO_COMPLETO) {
         if ($tipo == self::DESCUENTO_COMPLETO)
             return $this->porcentajeDescuentoBeneficio + $this->porcentajeDescuentoPerfil;
@@ -60,4 +60,27 @@ abstract class Precio {
         else
             throw new Exception("Tipo porcentaje indefinido");
     }
+
+    /*
+     * valor: valor
+     * tipo: 1: arriba, <>1: abajo
+     */
+
+    public static function redondear($valor, $tipo) {
+        $multiplo = 50;
+
+        if ($valor > 0) {
+            $modulo = $valor % $multiplo;
+            if ($modulo > 0) {
+                if ($tipo == 1) {
+                    $valor += $multiplo - ($modulo);
+                } else {
+                    $valor -= $modulo;
+                }
+            }
+        }
+
+        return $valor;
+    }
+
 }

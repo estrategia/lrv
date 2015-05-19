@@ -34,9 +34,10 @@
         <?php endif; ?>
         <div class="clst_pre_act"><span>Tiempo de entrega: <?php echo Yii::app()->shoppingCart->getDeliveryStored() ?> hora(s)</span></div>
     </div>
+	<div class="clear"></div>
 </div>
 
-<table class="ui-responsive ctable_list_prod">
+<table class="ui-responsive ctable_list_prod" cellspacing="0">
     <tbody>
         <tr>
             <td class="ctd_01">

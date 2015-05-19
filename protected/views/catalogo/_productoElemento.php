@@ -14,7 +14,7 @@
         </div>
     </div>
 <?php endif; ?>
-
+<div style="clear:both;"></div>
 <div class="clst_cont_top">
     <?php $imagen = $objProducto->objImagen(YII::app()->params->producto['tipoImagen']['mini']); ?>
 
@@ -63,11 +63,9 @@
                 <?php if ($objPrecio->getTiempoEntrega() > 0): ?>
                 <div>[Tiempo de entrega <?php echo $objPrecio->getTiempoEntrega() ?> horas]</div>
             <?php endif; ?>
-                
-                
-
         <?php endif; ?>
     </div>
+	<div class="clear"></div>
 </div>
 
 <?php if ($objPrecio->inicializado()): ?>

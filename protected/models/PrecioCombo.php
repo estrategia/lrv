@@ -29,7 +29,7 @@ class PrecioCombo extends Precio {
                     }
                 }*/
         }
-        
+        $this->precio = $this->redondear($this->precio,1);
         $this->inicializado = true;
     }
 

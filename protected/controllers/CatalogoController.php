@@ -601,12 +601,21 @@ class CatalogoController extends Controller {
             $usuario = Yii::app()->session[Yii::app()->params->usuario['sesion']];
             $codigoPerfil = $usuario->objPerfil->codigoPerfil;
         }
+        
+        $cantidadCarro = 0;
+        
+        $position = Yii::app()->shoppingCart->itemAt($producto);
+        
+        if($position!=null){
+            $cantidadCarro = $position->getQuantity();
+        }
 
         $this->render('bodegaDetalle', array(
             'objProducto' => $objProducto,
             'objPrecio' => new PrecioProducto($objProducto, $objSectorCiudad, $codigoPerfil),
             'cantidadUbicacion' => $ubicacion,
-            'cantidadBodega' => $bodega
+            'cantidadBodega' => $bodega,
+            'cantidadCarro' => $cantidadCarro
         ));
     }
 
@@ -949,7 +958,7 @@ class CatalogoController extends Controller {
         }
 
         if ($calificacion == null || empty($calificacion) || $calificacion == 0) {
-            echo CJSON::encode(array('result' => 'error', 'response' => 'No se detecta calificación.'));
+            echo CJSON::encode(array('result' => 'error', 'response' => 'Por favor selecciona el número de estrellas con el que quieres calificar este producto.'));
             Yii::app()->end();
         }
 

@@ -44,7 +44,7 @@ return array(
         ),
         //CONEXION SERVIDOR LOCAL
         /* 'db' => array(
-          'connectionString' => 'mysql:host=localhost;port=3306;dbname=promarca_lrvmovil',
+          'connectionString' => 'mysql:host=localhost;port=3306;dbname=promarca_tmp_lrvmovil',
           'emulatePrepare' => true,
           'username' => 'promarca_tmp',
           'password' => 'T3mp0r4l',
@@ -52,7 +52,7 @@ return array(
           ), */
 //CONEXION SERVIDOR REMOTO
         /* 'db' => array(
-          'connectionString' => 'mysql:host=66.147.244.236;port=3306;dbname=promarca_lrvmovil',
+          'connectionString' => 'mysql:host=66.147.244.236;port=3306;dbname=promarca_tmp_lrvmovil',
           'emulatePrepare' => true,
           'username' => 'promarca_tmp',
           'password' => 'T3mp0r4l',
@@ -63,6 +63,7 @@ return array(
             'connectionString' => 'mysql:host=localhost;port=3306;dbname=lrvmovil',
             'emulatePrepare' => true,
             'username' => 'root',
+            'password' => '4dm1n*-*',
             'charset' => 'utf8',
         ),
         'errorHandler' => array(
@@ -198,6 +199,11 @@ return array(
             'recambioCruzado' => 10
         ),
         'servicioVentaControlada' => 17,
+        'asunto' => array(
+            'recordatorioClave' => 'La Rebaja Virtual: Clave de ingreso',
+            'bienvenida' => 'La Rebaja Virtual: Bienvenido(a)',
+            'pedidoRealizado' => 'La Rebaja Virtual: Pedido realizado',
+        ),
         'asuntoRecordatorioClave' => 'Clave de Ingreso',
         'asuntoBienvenida' => 'La Rebaja te da la bienvenida',
         'formatoMoneda' => array('patron' => "¤#,##0;(¤#,##0)", 'moneda' => '$'),

@@ -1,7 +1,7 @@
 <div class="ui-content c_cont_detail_prod">
-    <h2><?php echo $objProducto->descripcionProducto ?></h2>
-    <h3><?php echo $objProducto->presentacionProducto ?></h3>
-    <h3 class="cdt_prod_spc">Código: <?php echo $objProducto->codigoProducto ?></h3>
+    <h1><?php echo $objProducto->descripcionProducto ?></h1>
+    <h2><?php echo $objProducto->presentacionProducto ?></h2>
+    <h2 class="cdt_prod_spc">Código: <?php echo $objProducto->codigoProducto ?></h2>
     <?php if ($objPrecio->getFlete() > 0): ?>
         <h3>Flete: <?php echo Yii::app()->numberFormatter->format(Yii::app()->params->formatoMoneda['patron'], $objPrecio->getFlete(), Yii::app()->params->formatoMoneda['moneda']); ?></h3>
     <?php endif; ?>
@@ -9,15 +9,7 @@
         <h3>Tiempo de entrega: <?php echo $objPrecio->getTiempoEntrega() ?> horas</h3>
     <?php endif; ?>
 
-    <?php if ($objProducto->codigoEspecial !== null && $objProducto->codigoEspecial != 0): ?>
-        <div class="cdt_line_spc"><span></span></div>
-        <p class="cdtl_prod_txt_ley">
-            <img src="<?php echo Yii::app()->request->baseUrl . Yii::app()->params->carpetaImagen['codigoEspecial'] . $objProducto->objCodigoEspecial->rutaIcono; ?>" >
-            <?php echo $objProducto->objCodigoEspecial->descripcion ?>
-        </p>
-    <?php endif; ?>
-
-    <div class="cdt_line_spc"><span></span></div>
+    <!-- <div class="cdt_line_spc"><span></span></div>-->
 
     <?php $listImagen = $objProducto->listImagen(YII::app()->params->producto['tipoImagen']['grande']); ?>
 
@@ -48,7 +40,7 @@
                     <label data-icon="false" class="ctbl_chk_lb"><?php echo $objProducto->presentacionProducto ?></label>
                 </div>
                 </th>
-                <th>
+                <th align="right">
                 <div class="frc_btn_cant">
                     <input type="number" placeholder="0" value="0" id="cantidad-producto-unidad-<?php echo $objProducto->codigoProducto ?>" onchange="subtotalParcialProductoFraccion(<?php echo $objProducto->codigoProducto ?>,<?php echo $objProducto->numeroFracciones ?>,<?php echo $objProducto->unidadFraccionamiento ?>);" class="dtl_cant_prod_01">
                 </div>
@@ -62,14 +54,15 @@
                 </thead>
                 <tbody>
                     <tr class="ctbl_tl">
-                        <td style="text-align:left;">Precio de lista</td>
-                        <td><span>Precio</span></td>
-                        <td style="text-align:right;">Ahorro</td>
+                        <td style="text-align:left;">Precio regular</td>
+                        <td>Ahorro</td>
+                        <td style="text-align:right;"><span>Precio</span></td>
                     </tr>
                     <tr>
                         <td class="txt_pre_lst"><?php echo Yii::app()->numberFormatter->format(Yii::app()->params->formatoMoneda['patron'], $objPrecio->getPrecio(Precio::PRECIO_UNIDAD, false), Yii::app()->params->formatoMoneda['moneda']); ?></td>
-                        <td class="txt_pre"><?php echo Yii::app()->numberFormatter->format(Yii::app()->params->formatoMoneda['patron'], $objPrecio->getPrecio(Precio::PRECIO_UNIDAD), Yii::app()->params->formatoMoneda['moneda']); ?></td>
                         <td class="txt_ahor"><?php echo Yii::app()->numberFormatter->format(Yii::app()->params->formatoMoneda['patron'], $objPrecio->getAhorro(Precio::PRECIO_UNIDAD), Yii::app()->params->formatoMoneda['moneda']); ?></td>
+                        <td class="txt_pre" align="right"><?php echo Yii::app()->numberFormatter->format(Yii::app()->params->formatoMoneda['patron'], $objPrecio->getPrecio(Precio::PRECIO_UNIDAD), Yii::app()->params->formatoMoneda['moneda']); ?></td>
+                        
                     </tr>
                 </tbody>
             </table>
@@ -82,7 +75,7 @@
                     <label data-icon="false" class="ctbl_chk_lb"><?php echo $objProducto->objMedidaFraccion->descripcionMedidaFraccion ?> X <?php echo $objProducto->unidadFraccionamiento ?></label>                            
                 </div>
                 </th>
-                <th>
+                <th  align="right">
                 <div class="frc_btn_cant">
                     <input type="number" placeholder="0" value="0" id="cantidad-producto-fraccion-<?php echo $objProducto->codigoProducto ?>" onchange="subtotalParcialProductoFraccion(<?php echo $objProducto->codigoProducto ?>,<?php echo $objProducto->numeroFracciones ?>,<?php echo $objProducto->unidadFraccionamiento ?>);">
                 </div>
@@ -96,14 +89,14 @@
                 </thead>
                 <tbody>
                     <tr class="ctbl_tl">
-                        <td style="text-align:left;">Precio de lista</td>
-                        <td><span>Precio</span></td>
-                        <td style="text-align:right;">Ahorro</td>
+                        <td style="text-align:left;">Precio regular</td>
+                        <td>Ahorro</td>
+                        <td style="text-align:right;"><span>Precio</span></td>
                     </tr>
                     <tr>
                         <td class="txt_pre_lst"><?php echo Yii::app()->numberFormatter->format(Yii::app()->params->formatoMoneda['patron'], $objPrecio->getPrecio(Precio::PRECIO_FRACCION, false), Yii::app()->params->formatoMoneda['moneda']); ?></td>
-                        <td class="txt_pre"><?php echo Yii::app()->numberFormatter->format(Yii::app()->params->formatoMoneda['patron'], $objPrecio->getPrecio(Precio::PRECIO_FRACCION), Yii::app()->params->formatoMoneda['moneda']); ?></td>
                         <td class="txt_ahor"><?php echo Yii::app()->numberFormatter->format(Yii::app()->params->formatoMoneda['patron'], $objPrecio->getAhorro(Precio::PRECIO_FRACCION), Yii::app()->params->formatoMoneda['moneda']); ?></td>
+                        <td class="txt_pre" align="right"><?php echo Yii::app()->numberFormatter->format(Yii::app()->params->formatoMoneda['patron'], $objPrecio->getPrecio(Precio::PRECIO_FRACCION), Yii::app()->params->formatoMoneda['moneda']); ?></td>
                     </tr>
                 </tbody>
             </table>
@@ -117,14 +110,14 @@
                         <table class="ui-responsive ctbl_prod_frc table-precios">
                             <tbody>
                                 <tr class="ctbl_tl">
-                                    <td style="text-align:left;">Precio de lista</td>
-                                    <td><span>Precio</span></td>
-                                    <td style="text-align:right;">Ahorro</td>
+                                    <td style="text-align:left;">Precio regular</td>
+                                    <td>Ahorro</td>
+                                    <td style="text-align:right;"><span>Precio</span></td>
                                 </tr>
                                 <tr>
                                     <td class="txt_pre_lst"><?php echo Yii::app()->numberFormatter->format(Yii::app()->params->formatoMoneda['patron'], $objPrecio->getPrecio(Precio::PRECIO_UNIDAD, false), Yii::app()->params->formatoMoneda['moneda']); ?></td>
-                                    <td class="txt_pre"><?php echo Yii::app()->numberFormatter->format(Yii::app()->params->formatoMoneda['patron'], $objPrecio->getPrecio(Precio::PRECIO_UNIDAD), Yii::app()->params->formatoMoneda['moneda']); ?></td>
                                     <td class="txt_ahor"><?php echo Yii::app()->numberFormatter->format(Yii::app()->params->formatoMoneda['patron'], $objPrecio->getAhorro(Precio::PRECIO_UNIDAD), Yii::app()->params->formatoMoneda['moneda']); ?></td>
+                                    <td class="txt_pre" align="right"><?php echo Yii::app()->numberFormatter->format(Yii::app()->params->formatoMoneda['patron'], $objPrecio->getPrecio(Precio::PRECIO_UNIDAD), Yii::app()->params->formatoMoneda['moneda']); ?></td>
                                 </tr>
                             </tbody>
                         </table>
@@ -135,13 +128,14 @@
                 <div class="cdtl_pro_cant">
                     <div class="cbtn_prod_cant_02"><input type="number" placeholder="0" value="1" id="cantidad-producto-unidad-<?php echo $objProducto->codigoProducto ?>" onchange="subtotalUnidadProducto(<?php echo $objProducto->codigoProducto ?>);"></div>
                     <div class="cpro_total_02"><span class="txt_cant_total">Total</span> <span id="subtotal-producto-unidad-<?php echo $objProducto->codigoProducto ?>"><?php echo Yii::app()->numberFormatter->format(Yii::app()->params->formatoMoneda['patron'], $objPrecio->getPrecio(Precio::PRECIO_UNIDAD), Yii::app()->params->formatoMoneda['moneda']); ?></span></div>
+					<?php if ($objProducto->objImpuesto != null && $objProducto->objImpuesto->codigoImpuesto != 0 && $objProducto->objImpuesto->codigoImpuesto != 20): ?>
+						<?php if ($objSectorCiudad == null || ($objSectorCiudad != null && $objSectorCiudad->objCiudad->excentoImpuestos == 0)): ?>
+							<p class="txt_cant_incl">Incluye <?php echo Yii::app()->numberFormatter->formatPercentage($objProducto->objImpuesto->porcentaje) ?> de impuestos</p>
+						<?php endif; ?>
+					<?php endif; ?>
+					<div class="clear"></div>
                 </div>
             </div>
-            <?php if ($objProducto->objImpuesto != null && $objProducto->objImpuesto->codigoImpuesto != 0 && $objProducto->objImpuesto->codigoImpuesto != 20): ?>
-                <?php if ($objSectorCiudad == null || ($objSectorCiudad != null && $objSectorCiudad->objCiudad->excentoImpuestos == 0)): ?>
-                    <p class="txt_cant_incl">Incluye <?php echo Yii::app()->numberFormatter->formatPercentage($objProducto->objImpuesto->porcentaje) ?> de impuestos</p>
-                <?php endif; ?>
-            <?php endif; ?>
         <?php endif; ?>
     <?php endif; ?>
 
@@ -214,9 +208,9 @@
                 <textarea data-role="calificacion" id="calificacion-comentario-<?php echo $objProducto->codigoProducto ?>" placeholder="Comentario" class="cdtl_textarea_coment" style="border:1px solid #e4e4e4;"></textarea>
                 <div id="calificacion-raty-<?php echo $objProducto->codigoProducto ?>" data-role="raty" data-readonly="false" data-score="0" class="clst_cal_str"></div>
                 <button data-role="calificacion" class="ui-btn ui-corner-all ui-shadow cdtl_button_calf" onclick='calificarProducto("<?php echo $objProducto->codigoProducto ?>");
-                        return false;'>Calificar</button>
+                                return false;'>Agregar un comentario</button>
             </form>
-    <?php else: ?>
+        <?php else: ?>
             <table class="ui-responsive">
                 <tr>
                     <td>Tu calificación:</td>
@@ -228,19 +222,31 @@
             </table>
         <?php endif; ?>
     <?php endif; ?>
-<?php if (!empty($listRelacionados)): ?>
-        <div>Productos Relacionados</div>
-        <div id="slide-relacionados" class="owl-carousel owl-theme">
-                <?php foreach ($listRelacionados as $objRelacionado): ?>
-                <div class="item"><?php
-                    $this->renderPartial('_productoSlide', array(
-                        'objProducto' => $objRelacionado->objProductoRelacionado,
-                        'objPrecio' => new PrecioProducto($objRelacionado->objProductoRelacionado, $objSectorCiudad, $codigoPerfil),
-                            //'objSectorCiudad' => $objSectorCiudad,
-                            //'codigoPerfil' => $codigoPerfil
-                    ));
-                    ?></div>
-        <?php endforeach; ?>
-        </div>
-<?php endif; ?>
+
+    <?php if ($objProducto->codigoEspecial !== null && $objProducto->codigoEspecial != 0): ?>
+        <div class="cdt_line_spc"><span></span></div>
+        <p class="cdtl_prod_txt_ley">
+            <img src="<?php echo Yii::app()->request->baseUrl . Yii::app()->params->carpetaImagen['codigoEspecial'] . $objProducto->objCodigoEspecial->rutaIcono; ?>" >
+            <?php echo $objProducto->objCodigoEspecial->descripcion ?>
+        </p>
+    <?php endif; ?>
 </div>
+    <?php if (!empty($listRelacionados)): ?>
+        <div class="productosRelacionados ui-content">
+            <h2>Productos Relacionados</h2>
+            <div id="slide-relacionados" class="owl-carousel owl-theme">
+                <?php foreach ($listRelacionados as $objRelacionado): ?>
+					<div class="item"><?php
+						$this->renderPartial('_productoSlide', array(
+							'objProducto' => $objRelacionado->objProductoRelacionado,
+							'objPrecio' => new PrecioProducto($objRelacionado->objProductoRelacionado, $objSectorCiudad, $codigoPerfil),
+								//'objSectorCiudad' => $objSectorCiudad,
+								//'codigoPerfil' => $codigoPerfil
+						));
+						?>
+					</div>
+				<?php endforeach; ?>
+            </div>
+        </div>
+    <?php endif; ?>
+

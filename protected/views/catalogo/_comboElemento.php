@@ -22,7 +22,7 @@
     <?php endif; ?>
 
     <?php if (Yii::app()->shoppingCart->contains($objCombo->getCodigo())): ?>
-        <a href="" class="clst_slct_prod">
+        <a href="" class="clst_slct_prod incombo">
             <img src="<?php echo Yii::app()->request->baseUrl ?>/images/iconos/icon_seleccionado.png">
         </a>
     <?php endif; ?>
@@ -31,6 +31,7 @@
         <h2><a href="<?php echo CController::createUrl('/catalogo/combo', array('combo' => $objCombo->idCombo)) ?>" data-ajax="false"><?php echo $objCombo->descripcionCombo ?></a></h2>
         <div class="clst_pre_act" style="padding-bottom:1em;"><?php echo Yii::app()->numberFormatter->format(Yii::app()->params->formatoMoneda['patron'], $objPrecio->getPrecio(), Yii::app()->params->formatoMoneda['moneda']); ?> </div>
     </div>
+	<div class="clear"></div>
 </div>
 
 

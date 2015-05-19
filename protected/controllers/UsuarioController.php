@@ -512,6 +512,17 @@ class UsuarioController extends Controller {
                     echo CJSON::encode(array('result' => 'error', 'response' => 'Error al guardar dirección, por favor intente de nuevo'));
                     Yii::app()->end();
                 }
+                
+                $modelPago = null;
+
+                if (isset(Yii::app()->session[Yii::app()->params->sesion['carroPagarForm']]))
+                    $modelPago = Yii::app()->session[Yii::app()->params->sesion['carroPagarForm']];
+                
+                if($modelPago!=null){
+                    $modelPago->idDireccionDespacho = $model->idDireccionDespacho;
+                    Yii::app()->session[Yii::app()->params->sesion['carroPagarForm']] = $modelPago;
+                }
+                
                 echo CJSON::encode(array('result' => 'ok', 'response' => 'Informaci&oacute;n guardada'));
                 Yii::app()->end();
             } else {

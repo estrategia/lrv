@@ -28,6 +28,7 @@ class FormaPagoForm extends CFormModel {
     public $pasoValidado = array();
     public $listPuntosVenta = array(0 => 0, 1 => 'No consultado');
     public $indicePuntoVenta;
+    public $objHorarioCiudadSector = null;
 
     /**
      * Declares the validation rules.
@@ -41,6 +42,7 @@ class FormaPagoForm extends CFormModel {
             array('idDireccionDespacho', 'required', 'on' => 'despacho, finalizar', 'message' => '{attribute} no puede estar vacío'),
             array('fechaEntrega', 'required', 'on' => 'entrega, finalizar', 'message' => '{attribute} no puede estar vacío'),
             array('comentario', 'length', 'max' => 250, 'on' => 'entrega, finalizar', 'message' => '{attribute} no puede estar vacío'),
+            array('fechaEntrega', 'fechaValidate', 'on' => 'entrega, finalizar'),
             array('idFormaPago', 'required', 'on' => 'pago, finalizar', 'message' => '{attribute} no puede estar vacío'),
             array('tarjetaNumero, numeroCuotas', 'safe'),
             array('comentario, tarjetaNumero, numeroCuotas, usoBono', 'default', 'value' => null),
@@ -130,14 +132,25 @@ class FormaPagoForm extends CFormModel {
 
         if (true) {
             $this->bono = array(
-                'valor' => 2000,
+                'valor' => 5000,
                 'vigencia' => DateTime::createFromFormat('Y-m-d', '2015-06-01')
             );
 
-            /*if ($this->bono['valor'] > $total) {
+            if ($this->bono['valor'] > $total) {
                 $this->bono = null;
-            }*/
+            }
         }
+    }
+
+    public function consultarHorario($objSectorCiudad) {
+        $this->objHorarioCiudadSector = HorariosCiudadSector::model()->find(array(
+            'condition' => 'codigoCiudad=:ciudad AND codigoSector=:sector AND estadoCiudadSector=:estado',
+            'params' => array(
+                ':estado' => 1,
+                ':ciudad' => $objSectorCiudad->codigoCiudad,
+                ':sector' => $objSectorCiudad->codigoSector
+            )
+        ));
     }
 
     public function consultarDisponibilidad($positions) {
@@ -287,7 +300,15 @@ class FormaPagoForm extends CFormModel {
         return array('1' => 1, '2' => 2, '3' => 3, '4' => 4, '5' => 5, '6' => 6);
     }
 
-    public static function listDataHoras($horaIniServicio = "07:00:00", $horaFinServicio = "23:00:00", $deltaHorario = "0 1:00:0.000000") {
+    public function listDataHoras($deltaHorario = "0 1:00:0.000000") {
+        $horaIniServicio = "07:00:00";
+        $horaFinServicio = "23:00:00";
+        
+        if($this->objHorarioCiudadSector != null){
+            $horaIniServicio = $this->objHorarioCiudadSector->horaInicio;
+            $horaFinServicio = $this->objHorarioCiudadSector->horaFin;
+        }
+        
         $sql = "SELECT idHorario, concat('Hoy a las ', DATE_FORMAT(hora, '%h:%i %p')) as etiqueta, concat(curdate(), ' ', DATE_FORMAT(hora, '%H:%i:%s')) as fecha, hora
              FROM   m_Horario
              WHERE  hora between ADDTIME('" . $horaIniServicio . "', '" . $deltaHorario . "') and '" . $horaFinServicio . "' and (hora >= ADDTIME(CURTIME(), '" . $deltaHorario . "'))
@@ -314,6 +335,23 @@ class FormaPagoForm extends CFormModel {
           } */
 
         return $rows;
+    }
+    
+    public function fechaValidate($attribute, $params) {
+        $listHoras = $this->listDataHoras();
+        $valido = false;
+        
+        foreach($listHoras as $hora){
+            if($hora['fecha']==$this->fechaEntrega){
+                $valido = true;
+                break;
+            }
+        }
+        
+        if(!$valido){
+            $this->addError('fechaEntrega', $this->getAttributeLabel('fechaEntrega') . " no disponible");
+        }
+        
     }
 
 }

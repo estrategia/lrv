@@ -40,7 +40,7 @@ class DireccionesDespacho extends CActiveRecord {
         return array(
             array('idDireccionDespacho', 'required', 'on' => 'update', 'message' => '{attribute} no puede estar vacío'),
             array('identificacionUsuario, descripcion, nombre, direccion, barrio, telefono, codigoCiudad, codigoSector', 'required', 'message' => '{attribute} no puede estar vacío'),
-            array('activo, extension', 'numerical', 'integerOnly' => true),
+            array('activo, extension, telefono, celular', 'numerical', 'integerOnly' => true),
             array('identificacionUsuario, direccion', 'length', 'min'=> 5, 'max' => 100),
             array('descripcion', 'length', 'min'=> 3, 'max' => 50),
             array('nombre, barrio', 'length', 'min'=> 5, 'max' => 50),

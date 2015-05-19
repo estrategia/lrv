@@ -29,7 +29,9 @@ function obtenerPosicion(pos) {
                 //$('[data-role= \"main\"]').html(data.response);
                 //window.location.href = data.response;
             } else {
-                alert(data.response);
+                $('<div>').mdialog({
+                    content: "<div data-role='main'><div class='ui-content' data-role='content' role='main'>" + data.response + "<a class='ui-btn ui-btn-r ui-corner-all ui-shadow' data-rel='back' href='#'>Aceptar</a></div></div>"
+                });
             }
             $.mobile.loading('hide');
         },
@@ -92,7 +94,9 @@ function subtotalUnidadProducto(codigo) {
             if (data.result == 'ok') {
                 $('#subtotal-producto-unidad-' + codigo).html(data.response.valorFormato);
             } else {
-                alert(data.response);
+                $('<div>').mdialog({
+                    content: "<div data-role='main'><div class='ui-content' data-role='content' role='main'>" + data.response + "<a class='ui-btn ui-btn-r ui-corner-all ui-shadow' data-rel='back' href='#'>Aceptar</a></div></div>"
+                });
             }
             //$.mobile.loading('hide');
         },
@@ -157,7 +161,9 @@ function subtotalParcialProductoFraccion(codigo, numeroFracciones, unidadFraccio
                 $('#subtotal-producto-fraccion-' + codigo).html(data.response.valorFraccionFormato);
                 $('#total-producto-' + codigo).html(data.response.valorTotalFormato);
             } else {
-                alert(data.response);
+                $('<div>').mdialog({
+                    content: "<div data-role='main'><div class='ui-content' data-role='content' role='main'>" + data.response + "<a class='ui-btn ui-btn-r ui-corner-all ui-shadow' data-rel='back' href='#'>Aceptar</a></div></div>"
+                });
             }
         },
         error: function(jqXHR, textStatus, errorThrown) {
@@ -209,7 +215,9 @@ function subtotalProductoBodega(codigo) {
                 $('#subtotal-producto-ubicacion-' + codigo).html(data.response.valorUbicacionFormato);
                 $('#total-producto-' + codigo).html(data.response.valorTotalFormato);
             } else {
-                alert(data.response);
+                $('<div>').mdialog({
+                    content: "<div data-role='main'><div class='ui-content' data-role='content' role='main'>" + data.response + "<a class='ui-btn ui-btn-r ui-corner-all ui-shadow' data-rel='back' href='#'>Aceptar</a></div></div>"
+                });
             }
         },
         error: function(jqXHR, textStatus, errorThrown) {
@@ -248,7 +256,9 @@ function subtotalCombo(codigo) {
             if (data.result == 'ok') {
                 $('#subtotal-combo-' + codigo).html(data.response.valorFormato);
             } else {
-                alert(data.response);
+                $('<div>').mdialog({
+                    content: "<div data-role='main'><div class='ui-content' data-role='content' role='main'>" + data.response + "<a class='ui-btn ui-btn-r ui-corner-all ui-shadow' data-rel='back' href='#'>Aceptar</a></div></div>"
+                });
             }
             //$.mobile.loading('hide');
         },
@@ -292,7 +302,9 @@ function subtotalProductoCarro(id) {
                 $('#panel-carro-canasta').html(data.canasta);
                 $('#panel-carro-canasta').trigger("create");
             } else {
-                alert(data.response);
+                $('<div>').mdialog({
+                    content: "<div data-role='main'><div class='ui-content' data-role='content' role='main'>" + data.response + "<a class='ui-btn ui-btn-r ui-corner-all ui-shadow' data-rel='back' href='#'>Aceptar</a></div></div>"
+                });
             }
         },
         error: function(jqXHR, textStatus, errorThrown) {
@@ -395,8 +407,8 @@ $(document).on("pagecreate", function(event) {
     //$('[data-role=main]:visible').css('margin-top',($(window).height() - $('[data-role=header]:visible').height() - $('[data-role=footer]:visible').height() - $('[data-role=main]:visible').outerHeight())/2);
     $(function() {
         var elementArea = $('#FormaPagoForm_comentario');
-        if(elementArea.length){
-            countChar(elementArea,'div-comentario-contador');
+        if (elementArea.length) {
+            countChar(elementArea, 'div-comentario-contador');
         }
     });
 });
@@ -432,9 +444,13 @@ function calificarProducto(codigo) {
             if (data.result === 'ok') {
                 $("[data-role='calificacion']").remove();
                 $('#calificacion-raty-' + codigo).raty('readOnly', true);
-                alert(data.response);
+                $('<div>').mdialog({
+                    content: "<div data-role='main'><div class='ui-content' data-role='content' role='main'>" + data.response + "<a class='ui-btn ui-btn-r ui-corner-all ui-shadow' data-rel='back' href='#'>Aceptar</a></div></div>"
+                });
             } else {
-                alert(data.response);
+                $('<div>').mdialog({
+                    content: "<div data-role='main'><div class='ui-content' data-role='content' role='main'>" + data.response + "<a class='ui-btn ui-btn-r ui-corner-all ui-shadow' data-rel='back' href='#'>Aceptar</a></div></div>"
+                });
             }
         },
         error: function(jqXHR, textStatus, errorThrown) {
@@ -525,9 +541,16 @@ $(document).on('click', "a[data-cargar='1']", function() {
             if (data.result === "ok") {
                 $('#panel-carro-canasta').html(data.response.canastaHTML);
                 $('#panel-carro-canasta').trigger("create");
-                $('<div>').mdialog({
-                    content: data.response.mensajeHTML
-                });
+                
+                if(data.response.mensajeHTML){
+                    dialogoAnimado(data.response.mensajeHTML);
+                }
+                
+                if(data.response.dialogoHTML){
+                    $('<div>').mdialog({
+                        content: data.response.dialogoHTML
+                    });
+                }
             } else {
                 $('<div>').mdialog({
                     content: "<div data-role='main'><div class='ui-content' data-role='content' role='main'>" + data.response + "<a class='ui-btn ui-btn-r ui-corner-all ui-shadow' data-rel='back' href='#'>Aceptar</a></div></div>"
@@ -540,6 +563,31 @@ $(document).on('click', "a[data-cargar='1']", function() {
         }
     });
 });
+
+function dialogoAnimado(texto) {
+    var id = 'dialogo-carro-'+uniqueId();
+    $("<div class='carro-agregar' id='"+id+"'>" + texto + "</div>").appendTo('body');
+
+    $("#"+id).animate({
+        opacity: 1,
+        bottom: '+=8%'
+    }, 400, function() {
+        setTimeout(function() {
+            $("#"+id).animate({
+                opacity: 0,
+                bottom: '-=8%'
+            }, 400, function() {
+                $("#"+id).remove();
+            });
+        }, 800);
+    });
+}
+
+function uniqueId() {
+  var time = new Date().getTime();
+  while (time == new Date().getTime());
+  return new Date().getTime();
+}
 
 $(document).on('change', "input[data-modificar='1'], input[data-modificar='2'], input[data-modificar='3']", function() {
     var position = $(this).attr('data-position');
@@ -596,7 +644,7 @@ $(document).on('change', "input[data-modificar='1'], input[data-modificar='2'], 
         data['cantidad'] = cantidad;
     }
 
-    console.log(data);
+    //console.log(data);
 
     $.ajax({
         type: 'POST',
@@ -619,10 +667,14 @@ $(document).on('change', "input[data-modificar='1'], input[data-modificar='2'], 
                     $('#panel-carro-canasta').html(data.response.canastaHTML);
                     $('#panel-carro-canasta').trigger("create");
                 }
-
-                if (data.response.mensajeHTML) {
+                
+                if(data.response.mensajeHTML){
+                    dialogoAnimado(data.response.mensajeHTML);
+                }
+                
+                if(data.response.dialogoHTML){
                     $('<div>').mdialog({
-                        content: data.response.mensajeHTML
+                        content: data.response.dialogoHTML
                     });
                 }
             } else {
@@ -665,13 +717,20 @@ $(document).on('click', "a[data-cargar='2']", function() {
             if (data.result === "ok") {
                 $('#panel-carro-canasta').html(data.response.canastaHTML);
                 $('#panel-carro-canasta').trigger("create");
-                $('<div>').mdialog({
-                    content: data.response.mensajeHTML
-                });
+                
+                if(data.response.mensajeHTML){
+                    dialogoAnimado(data.response.mensajeHTML);
+                }
+                
+                if(data.response.dialogoHTML){
+                    $('<div>').mdialog({
+                        content: data.response.dialogoHTML
+                    });
+                }
             } else {
                 $('<div>').mdialog({
-                    content: "<div data-role='main'><div class='ui-content' data-role='content' role='main'>" + data.response + "<a class='ui-btn ui-btn-r ui-corner-all ui-shadow' data-rel='back' href='#'>Aceptar</a></div></div>"
-                });
+                 content: "<div data-role='main'><div class='ui-content' data-role='content' role='main'>" + data.response + "<a class='ui-btn ui-btn-r ui-corner-all ui-shadow' data-rel='back' href='#'>Aceptar</a></div></div>"
+                 });
             }
 
         },
@@ -712,9 +771,15 @@ $(document).on('click', "a[data-cargar='3']", function() {
             if (data.result === "ok") {
                 $('#panel-carro-canasta').html(data.response.canastaHTML);
                 $('#panel-carro-canasta').trigger("create");
-                $('<div>').mdialog({
-                    content: data.response.mensajeHTML
-                });
+                if(data.response.mensajeHTML){
+                    dialogoAnimado(data.response.mensajeHTML);
+                }
+                
+                if(data.response.dialogoHTML){
+                    $('<div>').mdialog({
+                        content: data.response.dialogoHTML
+                    });
+                }
             } else {
                 $('<div>').mdialog({
                     content: "<div data-role='main'><div class='ui-content' data-role='content' role='main'>" + data.response + "<a class='ui-btn ui-btn-r ui-corner-all ui-shadow' data-rel='back' href='#'>Aceptar</a></div></div>"
@@ -765,7 +830,7 @@ $(document).on('click', "input[id^='btn-direccion-actualizar-']", function() {
 
 });
 
-$(document).on('click', "input[id='btn-direccion-crear']", function() {
+$(document).on('click', "input[id^='btn-direccion-crear-']", function() {
     var form = $(this).parents("form");
     $.ajax({
         type: 'POST',
@@ -817,11 +882,12 @@ $(document).on('click', "input[id^='btn-direccion-eliminar-']", function() {
         },
         success: function(data) {
             if (data.result === 'ok') {
-                console.log('eliminando: ' + '#collapsible-direccion-' + direccion);
                 $('#collapsible-direccion-' + direccion).remove();
                 $('#collapsibleset-direcciones').collapsibleset("refresh");
             } else if (data.result === 'error') {
-                alert(data.response);
+                $('<div>').mdialog({
+                    content: "<div data-role='main'><div class='ui-content' data-role='content' role='main'>" + data.response + "<a class='ui-btn ui-btn-r ui-corner-all ui-shadow' data-rel='back' href='#'>Aceptar</a></div></div>"
+                });
             }
         },
         error: function(jqXHR, textStatus, errorThrown) {
@@ -896,12 +962,12 @@ function pasoEntrega(actual, siguiente) {
             } else if (obj.result === 'error') {
                 alert(obj.response);
             } else {
-                
+
                 $.each(obj, function(element, error) {
                     $('#' + element + '_em_').html(error);
                     $('#' + element + '_em_').css('display', 'block');
                 });
-                
+
             }
         },
         error: function(jqXHR, textStatus, errorThrown) {
@@ -1012,9 +1078,11 @@ function pagoCredirebaja() {
         if (formaPago == undefined || $('#FormaPagoForm_idFormaPago_' + formaPago).attr('data-credirebaja') == 0) {
             $('[id="div-credirebaja"] input').attr('disabled', 'disabled');
             $('[id="div-credirebaja"] select').attr('disabled', 'disabled');
+            $('#div-credirebaja').css('display', 'none');
         } else {
             $('[id="div-credirebaja"] input').removeAttr('disabled');
             $('[id="div-credirebaja"] select').removeAttr('disabled');
+            $('#div-credirebaja').css('display', 'block');
         }
     }
 }
@@ -1028,7 +1096,7 @@ $(document).on('change', "#FormaPagoForm_tarjetaTipo, #FormaPagoForm_tarjetaNume
 });
 
 function countChar(element, idContador) {
-    $('#'+idContador).text(element.val().length);
+    $('#' + idContador).text(element.val().length);
 }
 
 /*

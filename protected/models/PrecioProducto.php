@@ -16,6 +16,9 @@ class PrecioProducto extends Precio {
     protected $precioUnidad = 0;
     protected $precioFraccion = 0;
     protected $unidadFraccionamiento = 0;
+    protected $precioFraccionTotal = 0;
+    protected $ahorroUnidad = 0;
+    protected $ahorroFraccion = 0;
 
     function __construct(Producto &$objProducto, &$objCiudadSector, $codigoPerfil) {
         if ($objCiudadSector != null) {
@@ -143,6 +146,14 @@ class PrecioProducto extends Precio {
                 $this->porcentajeDescuentoBeneficio = 0;
                 $this->listBeneficios = array();
             }
+            
+            $this->precioFraccionTotal = $this->precioFraccion * $this->unidadFraccionamiento;
+            $this->precioUnidad = self::redondear($this->precioUnidad,1);
+            $this->precioFraccionTotal = self::redondear($this->precioFraccionTotal,1);
+            $this->ahorroUnidad = floor($this->precioUnidad * ($this->getPorcentajeDescuento() / 100));
+            $this->ahorroFraccion=  floor($this->precioFraccionTotal * ($this->getPorcentajeDescuento() / 100));
+            $this->ahorroUnidad = self::redondear($this->ahorroUnidad, 0);
+            $this->ahorroFraccion = self::redondear($this->ahorroFraccion, 0);
 
             $this->inicializado = true;
         }
@@ -156,14 +167,14 @@ class PrecioProducto extends Precio {
 
         if ($tipo == self::PRECIO_UNIDAD) {
             if ($descuento)
-                return $this->precioUnidad * (1 - ( $this->getPorcentajeDescuento() / 100));
+                return $this->precioUnidad - $this->ahorroUnidad;
             else
                 return $this->precioUnidad;
         }else if ($tipo == self::PRECIO_FRACCION) {
             if ($descuento == true)
-                return $this->precioFraccion * $this->unidadFraccionamiento * (1 - ($this->getPorcentajeDescuento() / 100));
+                return $this->precioFraccionTotal - $this->ahorroFraccion;
             else
-                return $this->precioFraccion * $this->unidadFraccionamiento;
+                return $this->precioFraccionTotal;
         }else {
             throw new Exception("Tipo precio indefinido");
         }
@@ -174,9 +185,9 @@ class PrecioProducto extends Precio {
         $tipo = isset($params[0]) ? $params[0] : -1;
 
         if ($tipo == self::PRECIO_UNIDAD) {
-            return $this->precioUnidad * ($this->getPorcentajeDescuento() / 100);
+            return $this->ahorroUnidad;
         } else if ($tipo == self::PRECIO_FRACCION) {
-            return $this->precioFraccion * $this->unidadFraccionamiento * ($this->getPorcentajeDescuento() / 100);
+            return $this->ahorroFraccion;
         } else {
             throw new Exception("Tipo precio indefinido");
         }

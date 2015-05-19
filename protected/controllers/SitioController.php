@@ -51,6 +51,7 @@ class SitioController extends Controller {
         Yii::app()->session[Yii::app()->params->sesion['tipoEntrega']] = $tipo;
         //echo "--redireccionEntrega: " . Yii::app()->session[Yii::app()->params->sesion['redireccionEntrega']];
 
+        Yii::app()->session[Yii::app()->params->sesion['carroPagarForm']] = null;
         if (Yii::app()->session[Yii::app()->params->sesion['redireccionEntrega']] == 'null') {
             $this->redirect($this->createUrl('/sitio/ubicacion/'));
         } else {
@@ -167,8 +168,10 @@ class SitioController extends Controller {
         Yii::app()->session[Yii::app()->params->sesion['subSectorCiudadEntrega']] = $objSubSector;
 
 
-        if ($objSectorCiudadOld != null && $objSectorCiudadOld->codigoCiudad != $objSectorCiudad->codigoCiudad && $objSectorCiudadOld->codigoSector != $objSectorCiudad->codigoSector)
+        if ($objSectorCiudadOld != null && $objSectorCiudadOld->codigoCiudad != $objSectorCiudad->codigoCiudad && $objSectorCiudadOld->codigoSector != $objSectorCiudad->codigoSector){
             Yii::app()->shoppingCart->clear();
+            Yii::app()->session[Yii::app()->params->sesion['carroPagarForm']] = null;
+        }
 
         Yii::app()->shoppingCart->CalculateShipping();
 

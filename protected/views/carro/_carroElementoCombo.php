@@ -10,7 +10,7 @@
     <?php else: ?>
         <div class="clst_pro_img">
             <a href="<?php echo CController::createUrl('/catalogo/combo', array('combo' => $position->objCombo->idCombo)) ?>" data-ajax="false">
-                <img src="<?php echo Yii::app()->request->baseUrl . Yii::app()->params->carpetaImagen['productos'][YII::app()->params->producto['tipoImagen']['mini']] . $imagen->rutaImagen; ?>" class="ui-li-thumb">
+                <img src="<?php echo Yii::app()->request->baseUrl . Yii::app()->params->carpetaImagen['combos'][YII::app()->params->producto['tipoImagen']['mini']] . $imagen->rutaImagen; ?>" class="ui-li-thumb">
             </a>
         </div>
     <?php endif; ?>
@@ -26,10 +26,15 @@
         <?php if (Yii::app()->shoppingCart->getObjCiudad()->excentoImpuestos == 0 && $position->getTax() > 0): ?>
             <div class="clst_pre_act"><span>Incluye <?php echo Yii::app()->numberFormatter->formatPercentage($position->getTax()) ?> de impuestos [<?php echo Yii::app()->numberFormatter->format(Yii::app()->params->formatoMoneda['patron'], $position->getTaxPrice(), Yii::app()->params->formatoMoneda['moneda']); ?>]</span></div>
         <?php endif; ?>
+
+        <?php if ($position->getDelivery() > 0): ?>
+            <div class="clst_pre_act"><span>Tiempo de entrega: <?php echo $position->getDelivery() ?> hora(s)</span></div>
+        <?php endif; ?>
     </div>
+	<div class="clear"></div>
 </div>
 
-<table class="ui-responsive ctable_list_prod">
+<table class="ui-responsive ctable_list_prod"  cellspacing="0">
     <tbody>
         <tr>
             <td class="ctd_01">
@@ -41,7 +46,7 @@
             </td>
             <td class="ctd_03">
                 <?php //echo CHtml::link('Guardar en lista personal', '#', array('class' => 'ui-btn ui-corner-all ui-shadow ui-btn-inline ui-btn-n', 'data-mini' => 'true')); ?>
-                <?php echo CHtml::link('Eliminar', '#', array('data-eliminar'=>1, 'data-position'=>$position->getId(), 'class' => 'ui-btn ui-corner-all ui-shadow ui-btn-inline ui-btn-a', 'data-mini' => 'true')); ?>
+                <?php echo CHtml::link('Eliminar', '#', array('data-eliminar' => 1, 'data-position' => $position->getId(), 'class' => 'ui-btn ui-corner-all ui-shadow ui-btn-inline ui-btn-a', 'data-mini' => 'true')); ?>
             </td>
         </tr>
     </tbody>

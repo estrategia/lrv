@@ -38,7 +38,7 @@
         <?php else: ?>
             <div class="clst_pro_img">
                 <a href="<?php echo CController::createUrl('/catalogo/combo', array('combo' => $position->objCombo->idCombo)) ?>" data-ajax="false">
-                    <img src="<?php echo Yii::app()->request->baseUrl . Yii::app()->params->carpetaImagen['productos'][YII::app()->params->producto['tipoImagen']['mini']] . $imagen->rutaImagen; ?>" class="ui-li-thumb">
+                    <img src="<?php echo Yii::app()->request->baseUrl . Yii::app()->params->carpetaImagen['combos'][YII::app()->params->producto['tipoImagen']['mini']] . $imagen->rutaImagen; ?>" class="ui-li-thumb">
                 </a>
             </div>
         <?php endif; ?>
@@ -50,4 +50,5 @@
             <div class="clst_pre_act"><?php echo Yii::app()->numberFormatter->format(Yii::app()->params->formatoMoneda['patron'], $position->getSumPrice(), Yii::app()->params->formatoMoneda['moneda']); ?> </div>
         </div>
     <?php endif; ?>
+	<div class="clear"></div>
 </div>

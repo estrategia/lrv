@@ -56,24 +56,24 @@ $form = $this->beginWidget('CActiveForm', array(
         <?php echo $form->textField($model, 'celular', array('placeholder' => $model->getAttributeLabel('celular'))); ?>
         <?php echo $form->error($model, 'celular'); ?>
     </div>
-    <?php if (!$model->isNewRecord && $modelPago!=null): ?>
+    <?php if (!$model->isNewRecord && $modelPago==null): ?>
         <div class="ui-field-container">
             <?php /* echo $form->labelEx($model, 'codigoCiudad', array('class' => 'ui-hidden-accessible')); */ ?>
-            <?php echo $form->dropDownList($model, 'codigoCiudad', CHtml::listData($listUbicacion, 'value', 'label', 'group'), array('prompt' => 'Seleccione ubicación', 'data-native-menu' => "false", 'placeholder' => $model->getAttributeLabel('codigoCiudad'))); ?>
+            <?php echo $form->dropDownList($model, 'codigoCiudad', CHtml::listData($listUbicacion, 'value', 'label', 'group'), array('id' =>  uniqid(), 'prompt' => 'Seleccione ubicación', 'data-native-menu' => "false", 'placeholder' => $model->getAttributeLabel('codigoCiudad'))); ?>
             <?php echo $form->error($model, 'codigoCiudad'); ?>
         </div>
     <?php endif; ?>
 </fieldset>
-
+<div class="btnsDirecciones">
 <?php if ($model->isNewRecord): ?>
     <div class="ui-input-btn ui-btn ui-corner-all ui-shadow ui-btn-r">
         Guardar
-        <input type="button" data-enhanced="true" value="Guardar" id="btn-direccion-crear">
+        <input type="button" data-enhanced="true" value="Guardar" id="btn-direccion-crear-<?php echo uniqid() ?>">
     </div>
 <?php else: ?>
     <div class="ui-input-btn ui-btn ui-corner-all ui-shadow ui-btn-r">
-        Actulizar
-        <input type="button" data-enhanced="true" value="Actulizar" id="btn-direccion-actualizar-<?php echo uniqid() ?>">
+        Actualizar
+        <input type="button" data-enhanced="true" value="Actualizar" id="btn-direccion-actualizar-<?php echo uniqid() ?>">
     </div>
 <?php endif; ?>
 
@@ -84,4 +84,5 @@ $form = $this->beginWidget('CActiveForm', array(
         <input type="button" data-enhanced="true" value="Eliminar" data-direccion="<?php echo $model->idDireccionDespacho ?>" id="btn-direccion-eliminar-<?php echo uniqid() ?>">
     </div>
 <?php endif; ?>
+</div>
 <?php $this->endWidget(); ?>

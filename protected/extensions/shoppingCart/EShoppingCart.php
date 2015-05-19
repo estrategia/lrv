@@ -25,9 +25,18 @@ class EShoppingCart extends CMap {
     protected $shipping = 0;
     protected $shippingStored = 0;//valor envio bodega
     protected $deliveryStored = 0;//tiempo entrega bodega
+    protected $bonoValue = 0;
 
     public function init() {
         $this->restoreFromSession();
+    }
+    
+    public function setBono($newVal){
+        $this->bonoValue = $newVal;
+    }
+    
+    public function getBono(){
+        return $this->bonoValue;
     }
 
     /* public function setUbicacion($objSectorCiudad) {
@@ -360,6 +369,7 @@ class EShoppingCart extends CMap {
 
         $price -= $this->discountPrice;
         $price += $this->shipping + $this->shippingStored;
+        $price -= $this->bonoValue;
 
         return $price;
     }
