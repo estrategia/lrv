@@ -3,7 +3,7 @@
 /**
  * This is the model class for table "m_Domicilio".
  *
- * The followings are the available columns in table 'm_Domicilio':
+ * The followings are the available columns in table 't_Domicilio':
  * @property integer $idDomicilio
  * @property integer $valorDomicilio
  * @property string $fechaInicio

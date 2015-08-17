@@ -96,7 +96,7 @@
                     <?php foreach ($modelPago->listCodigoEspecial as $objEspecial): ?>
                         <tr>
                             <td></td>
-                            <td><img align="left" class="iconConfirmacion" src="<?php echo Yii::app()->request->baseUrl . Yii::app()->params->carpetaImagen['codigoEspecial'] . $objEspecial->rutaIcono; ?>" ><?php echo $objEspecial->descripcion ?></td>
+                            <td><img align="left" class="iconConfirmacion" src="<?php echo Yii::app()->request->baseUrl . Yii::app()->params->carpetaImagen['codigoEspecial'] . $objEspecial->rutaIcono; ?>" ><?php echo $objEspecial->condicionCompra ?></td>
                         </tr>
                     <?php endforeach; ?>
                 </tbody>

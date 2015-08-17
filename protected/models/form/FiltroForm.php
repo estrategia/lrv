@@ -6,15 +6,15 @@
  * user login form data. It is used by the 'login' action of 'SiteController'.
  */
 class FiltroForm extends CFormModel {
-
     public $proveedor;
     public $nombre;
     public $listMarcas;
     public $listMarcasCheck = array();
-    public $listAtributosCheck = array();
-    public $listAtributos;
+    public $listFiltrosCheck = array();
+    public $listFiltros;
     public $listCategoriasTienda = array();
-
+    public $listCategoriasTiendaCheck = array();
+    
     /**
      * Declares the validation rules.
      * The rules state that username and password are required,
@@ -23,7 +23,7 @@ class FiltroForm extends CFormModel {
     public function rules() {
         return array(
             // username and password are required
-            array('listMarcas, nombre, listAtributos', 'safe'),
+            array('listMarcas, nombre, listFiltros, listCategoriasTienda', 'safe'),
             array('listMarcas, nombre', 'default', 'value' => null),
         );
     }
@@ -35,7 +35,8 @@ class FiltroForm extends CFormModel {
         return array(
             'listMarcas' => 'Marcas',
             'nombre' => 'Nombre',
-            'listAtributos' => 'Atributos'
+            'listFiltros' => 'Filtros',
+            'listCategoriasTienda' => 'Categorías'
         );
     }
 

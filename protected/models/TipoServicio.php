@@ -5,10 +5,11 @@
  *
  * The followings are the available columns in table 'm_TipoServicio':
  * @property integer $idTipoServicio
+ * @property integer $idCategoriaTipoServicio
  * @property string $nombreTipoServicio
  *
  * The followings are the available model relations:
- * @property MPuntoVenta[] $mPuntoVentas
+ * @property PuntoVenta[] $listPuntoVentas
  */
 class TipoServicio extends CActiveRecord {
 
@@ -26,11 +27,12 @@ class TipoServicio extends CActiveRecord {
         // NOTE: you should only define rules for those attributes that
         // will receive user inputs.
         return array(
-            array('nombreTipoServicio', 'required'),
+            array('idCategoriaTipoServicio, nombreTipoServicio', 'required'),
+            array('idCategoriaTipoServicio', 'numerical', 'integerOnly' => true),
             array('nombreTipoServicio', 'length', 'max' => 100),
             // The following rule is used by search().
             // @todo Please remove those attributes that should not be searched.
-            array('idTipoServicio, nombreTipoServicio', 'safe', 'on' => 'search'),
+            array('idTipoServicio, idCategoriaTipoServicio, nombreTipoServicio', 'safe', 'on' => 'search'),
         );
     }
 
@@ -41,7 +43,7 @@ class TipoServicio extends CActiveRecord {
         // NOTE: you may need to adjust the relation name and the related
         // class name for the relations automatically generated below.
         return array(
-            'listPuntoVentas' => array(self::MANY_MANY, 'MPuntoVenta', 't_ServiciosPuntoVenta(idTipoServicio, idPuntoDeVenta)'),
+            'listPuntoVentas' => array(self::MANY_MANY, 'PuntoVenta', 't_ServiciosPuntoVenta(idTipoServicio, idPuntoDeVenta)'),
         );
     }
 
@@ -51,6 +53,7 @@ class TipoServicio extends CActiveRecord {
     public function attributeLabels() {
         return array(
             'idTipoServicio' => 'Id Tipo Servicio',
+            'idCategoriaTipoServicio' => 'Idcategoria Tipo Servicio',
             'nombreTipoServicio' => 'Nombre Tipo Servicio',
         );
     }
@@ -73,6 +76,7 @@ class TipoServicio extends CActiveRecord {
         $criteria = new CDbCriteria;
 
         $criteria->compare('idTipoServicio', $this->idTipoServicio);
+        $criteria->compare('idCategoriaTipoServicio', $this->idCategoriaTipoServicio);
         $criteria->compare('nombreTipoServicio', $this->nombreTipoServicio, true);
 
         return new CActiveDataProvider($this, array(

@@ -11,22 +11,27 @@
         </a>
     </li>
     <li>
+        <a href="<?php echo CController::createUrl('/usuario/contrasena') ?>" data-ajax="false">
+            <h2>Cambiar contraseña</h2>
+        </a>
+    </li>
+    <li>
         <a href="<?php echo CController::createUrl('/usuario/direcciones') ?>" data-ajax="false">
             <h2>Direcciones de despacho</h2>
         </a>
     </li>
     <li>
-        <a href="#" >
+        <a href="<?php echo CController::createUrl('/usuario/listapedidos') ?>" data-ajax="false">
             <h2>Listado de pedidos</h2>
         </a>
     </li>
     <li>
-        <a href="#" >
+        <a href="<?php echo CController::createUrl('/usuario/listapersonal') ?>" data-ajax="false">
             <h2>Listas personales</h2>
         </a>
     </li>
     <li>
-        <a href="#" >
+        <a href="<?php echo CController::createUrl('/usuario/pagoexpress') ?>" data-ajax="false">
             <h2>Pago express</h2>
         </a>
     </li>

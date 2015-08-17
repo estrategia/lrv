@@ -6,10 +6,15 @@
  * The followings are the available columns in table 'm_Impuesto':
  * @property integer $codigoImpuesto
  * @property string $nombreImpuesto
- * @property double $porcentaje
  * @property double $valor
  */
 class Impuesto extends CActiveRecord {
+
+    private $_porcentaje;
+
+    public function getPorcentaje() {
+        return $this->_porcentaje;
+    }
 
     /**
      * @return string the associated database table name
@@ -27,11 +32,11 @@ class Impuesto extends CActiveRecord {
         return array(
             array('codigoImpuesto', 'required'),
             array('codigoImpuesto', 'numerical', 'integerOnly' => true),
-            array('porcentaje, valor', 'numerical'),
+            array('valor', 'numerical'),
             array('nombreImpuesto', 'length', 'max' => 20),
             // The following rule is used by search().
             // @todo Please remove those attributes that should not be searched.
-            array('codigoImpuesto, nombreImpuesto, porcentaje, valor', 'safe', 'on' => 'search'),
+            array('codigoImpuesto, nombreImpuesto, valor', 'safe', 'on' => 'search'),
         );
     }
 
@@ -52,7 +57,6 @@ class Impuesto extends CActiveRecord {
         return array(
             'codigoImpuesto' => 'Codigo Impuesto',
             'nombreImpuesto' => 'Nombre Impuesto',
-            'porcentaje' => 'Porcentaje',
             'valor' => 'Valor',
         );
     }
@@ -76,7 +80,6 @@ class Impuesto extends CActiveRecord {
 
         $criteria->compare('codigoImpuesto', $this->codigoImpuesto);
         $criteria->compare('nombreImpuesto', $this->nombreImpuesto, true);
-        $criteria->compare('porcentaje', $this->porcentaje);
         $criteria->compare('valor', $this->valor);
 
         return new CActiveDataProvider($this, array(
@@ -92,6 +95,16 @@ class Impuesto extends CActiveRecord {
      */
     public static function model($className = __CLASS__) {
         return parent::model($className);
+    }
+
+    public function afterFind() {
+        $this->_porcentaje = $this->valor / 100;
+        return parent::afterFind();
+    }
+
+    public function afterSave() {
+        $this->_porcentaje = $this->valor / 100;
+        return parent::afterSave();
     }
 
 }

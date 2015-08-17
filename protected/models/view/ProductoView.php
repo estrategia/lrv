@@ -16,16 +16,13 @@ class ProductoView {
     public static function generarDetalle($objDetalle) {
         if ($objDetalle != null) {
             self::generarElementoDetalle($objDetalle->mostrarDescripcion, "Descripción", $objDetalle->descripcionCorta);
-            
             self::generarElementoDetalle($objDetalle->mostrarCaracteristicas, "Características", $objDetalle->caracteristicas);
             self::generarElementoDetalle($objDetalle->mostrarAtributo, "Atributo", $objDetalle->atributo);
             self::generarElementoDetalle($objDetalle->mostrarTamano, "Tamaño", $objDetalle->tamano);
             self::generarElementoDetalle($objDetalle->mostrarPeso, "Peso", $objDetalle->peso);
             self::generarElementoDetalle($objDetalle->mostrarMedida, "Medida", $objDetalle->medida);
-            self::generarElementoDetalle($objDetalle->mostrarNaturalez, "Naturaleza", $objDetalle->naturaleza);
+            self::generarElementoDetalle($objDetalle->mostrarNaturaleza, "Naturaleza", $objDetalle->naturaleza);
             self::generarElementoDetalle($objDetalle->mostrarMaterial, "Material", $objDetalle->material);
-            
-            
             self::generarElementoDetalle($objDetalle->mostrarIdoneidad, "Idoneidad", $objDetalle->idoneidad);
             self::generarElementoDetalle($objDetalle->mostrarCalidad, "Calidad", $objDetalle->calidad);
             self::generarElementoDetalle($objDetalle->mostrarIngredientes, "Ingredientes", $objDetalle->ingredientes);
@@ -43,8 +40,6 @@ class ProductoView {
             self::generarElementoDetalle($objDetalle->mostrarReglamentos, "Reglamentos", $objDetalle->reglamentos);
             self::generarElementoDetalle($objDetalle->mostrarAdvertencias, "Advertencias", $objDetalle->advertencias);
             self::generarElementoDetalle($objDetalle->mostrarPosologia, "Posología", $objDetalle->posologia);
-            
-            
         }
     }
 

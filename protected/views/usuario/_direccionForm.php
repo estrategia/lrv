@@ -1,3 +1,8 @@
+
+<?php if ($model->isNewRecord): ?>
+<h2>Esta dirección de despacho estará asociada a la ubicación <span style="text-transform: capitalize;"><?php echo strtolower($this->sectorName) ?></span></h2>
+<?php endif;?>
+
 <?php
 $form = $this->beginWidget('CActiveForm', array(
     'enableClientValidation' => true,
@@ -21,44 +26,44 @@ $form = $this->beginWidget('CActiveForm', array(
     <?php endif; ?>
 
     <div class="ui-field-container">
-        <?php echo $form->labelEx($model, 'descripcion', array('class' => 'ui-hidden-accessible')); ?>
-        <?php echo $form->textField($model, 'descripcion', array('placeholder' => $model->getAttributeLabel('descripcion'))); ?>
+        <?php echo $form->labelEx($model, 'descripcion', array('class' => '')); ?>
+        <?php echo $form->textField($model, 'descripcion', array('maxlength'=>50, 'placeholder' => $model->getAttributeLabel('descripcion'))); ?>
         <?php echo $form->error($model, 'descripcion'); ?>
     </div>
     <div class="ui-field-container">
-        <?php echo $form->labelEx($model, 'nombre', array('class' => 'ui-hidden-accessible')); ?>
-        <?php echo $form->textField($model, 'nombre', array('placeholder' => $model->getAttributeLabel('nombre'))); ?>
+        <?php echo $form->labelEx($model, 'nombre', array('class' => '')); ?>
+        <?php echo $form->textField($model, 'nombre', array('maxlength'=>50,'placeholder' => $model->getAttributeLabel('nombre'))); ?>
         <?php echo $form->error($model, 'nombre'); ?>
     </div>
     <div class="ui-field-container">
-        <?php echo $form->labelEx($model, 'direccion', array('class' => 'ui-hidden-accessible')); ?>
-        <?php echo $form->textField($model, 'direccion', array('placeholder' => $model->getAttributeLabel('direccion'))); ?>
+        <?php echo $form->labelEx($model, 'direccion', array('class' => '')); ?>
+        <?php echo $form->textField($model, 'direccion', array('maxlength'=>100,'placeholder' => $model->getAttributeLabel('direccion'))); ?>
         <?php echo $form->error($model, 'direccion'); ?>
     </div>
 
     <div class="ui-field-container">
-        <?php echo $form->labelEx($model, 'barrio', array('class' => 'ui-hidden-accessible')); ?>
-        <?php echo $form->textField($model, 'barrio', array('placeholder' => $model->getAttributeLabel('barrio'))); ?>
+        <?php echo $form->labelEx($model, 'barrio', array('class' => '')); ?>
+        <?php echo $form->textField($model, 'barrio', array('maxlength'=>50,'placeholder' => $model->getAttributeLabel('barrio'))); ?>
         <?php echo $form->error($model, 'barrio'); ?>
     </div>
     <div class="ui-field-container">
-        <?php echo $form->labelEx($model, 'telefono', array('class' => 'ui-hidden-accessible')); ?>
-        <?php echo $form->textField($model, 'telefono', array('placeholder' => $model->getAttributeLabel('telefono'))); ?>
+        <?php echo $form->labelEx($model, 'telefono', array('class' => '')); ?>
+        <?php echo $form->numberField($model, 'telefono', array('maxlength'=>11,'placeholder' => $model->getAttributeLabel('telefono'))); ?>
         <?php echo $form->error($model, 'telefono'); ?>
     </div>
     <div class="ui-field-container">
-        <?php echo $form->labelEx($model, 'extension', array('class' => 'ui-hidden-accessible')); ?>
-        <?php echo $form->textField($model, 'extension', array('placeholder' => $model->getAttributeLabel('extension'))); ?>
+        <?php echo $form->labelEx($model, 'extension', array('class' => '')); ?>
+        <?php echo $form->numberField($model, 'extension', array('maxlength'=>5, 'placeholder' => $model->getAttributeLabel('extension'))); ?>
         <?php echo $form->error($model, 'extension'); ?>
     </div>
     <div class="ui-field-container">
-        <?php echo $form->labelEx($model, 'celular', array('class' => 'ui-hidden-accessible')); ?>
-        <?php echo $form->textField($model, 'celular', array('placeholder' => $model->getAttributeLabel('celular'))); ?>
+        <?php echo $form->labelEx($model, 'celular', array('class' => '')); ?>
+        <?php echo $form->numberField($model, 'celular', array('maxlength'=>20,'placeholder' => $model->getAttributeLabel('celular'))); ?>
         <?php echo $form->error($model, 'celular'); ?>
     </div>
     <?php if (!$model->isNewRecord && $modelPago==null): ?>
         <div class="ui-field-container">
-            <?php /* echo $form->labelEx($model, 'codigoCiudad', array('class' => 'ui-hidden-accessible')); */ ?>
+            <?php /* echo $form->labelEx($model, 'codigoCiudad', array('class' => '')); */ ?>
             <?php echo $form->dropDownList($model, 'codigoCiudad', CHtml::listData($listUbicacion, 'value', 'label', 'group'), array('id' =>  uniqid(), 'prompt' => 'Seleccione ubicación', 'data-native-menu' => "false", 'placeholder' => $model->getAttributeLabel('codigoCiudad'))); ?>
             <?php echo $form->error($model, 'codigoCiudad'); ?>
         </div>

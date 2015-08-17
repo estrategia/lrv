@@ -23,29 +23,13 @@
         </a>
     </li>
     <li>
-        <a href="#" >
-            <h2>Descuentos</h2>
-        </a>
-    </li>
-
-    <li>
-        <a href="#" >
-            <h2>Puntos de venta</h2>
-        </a>
-    </li>
-    <li>
         <a href="<?php echo CController::createUrl('/sitio/index') ?>" data-ajax="false" >
             <h2>Modificar tipo de entrega</h2>
         </a>
     </li>
     <li>
-        <a href="<?php echo CController::createUrl('/sitio/ubicacion') ?>" data-ajax="false" >
+        <a href="#" data-role="cambioubicacion">
             <h2>Modificar ubicación</h2>
-        </a>
-    </li>
-    <li>
-        <a href="#" >
-            <h2>Carro de compras</h2>
         </a>
     </li>
 </ul>

@@ -1,19 +1,22 @@
 <?php
 
 /**
- * This is the model class for table "m_SectorPuntoReferencia1".
+ * This is the model class for table "m_SectorPuntoReferencia".
  *
- * The followings are the available columns in table 'm_SectorPuntoReferencia1':
- * @property integer $codigoPuntoReferencia
+ * The followings are the available columns in table 'm_SectorPuntoReferencia':
+ * @property integer $idSectorPuntoReferencia
  * @property integer $codigoSubSector
  * @property string $codigoCiudad
  * @property string $codigoSector
+ * @property string $nombreSector
+ * @property integer $estadoSectorReferencia
  *
  * The followings are the available model relations:
- * @property MPuntoReferencia1 $codigoPuntoReferencia0
- * @property MPuntoReferencia1 $codigoSubSector0
- * @property MSectorCiudad $codigoCiudad0
- * @property MSectorCiudad $codigoSector0
+ * @property SectorCiudad $objSectorCiudad
+ * @property Ciudad $objCiudad
+ * @property Sector $objSector
+ * @property SubSector $objSubsector
+ * @property PuntoReferencia[] $listPuntoReferencias
  */
 class SectorPuntoReferencia extends CActiveRecord {
 
@@ -31,12 +34,13 @@ class SectorPuntoReferencia extends CActiveRecord {
         // NOTE: you should only define rules for those attributes that
         // will receive user inputs.
         return array(
-            array('codigoPuntoReferencia, codigoSubSector, codigoCiudad, codigoSector', 'required'),
-            array('codigoPuntoReferencia, codigoSubSector', 'numerical', 'integerOnly' => true),
+            array('codigoSubSector, codigoCiudad, codigoSector, estadoSectorReferencia', 'required'),
+            array('codigoSubSector, estadoSectorReferencia', 'numerical', 'integerOnly' => true),
             array('codigoCiudad, codigoSector', 'length', 'max' => 10),
+            array('nombreSector', 'length', 'max' => 45),
             // The following rule is used by search().
             // @todo Please remove those attributes that should not be searched.
-            array('codigoPuntoReferencia, codigoSubSector, codigoCiudad, codigoSector', 'safe', 'on' => 'search'),
+            array('idSectorPuntoReferencia, codigoSubSector, codigoCiudad, codigoSector, nombreSector, estadoSectorReferencia', 'safe', 'on' => 'search'),
         );
     }
 
@@ -47,14 +51,11 @@ class SectorPuntoReferencia extends CActiveRecord {
         // NOTE: you may need to adjust the relation name and the related
         // class name for the relations automatically generated below.
         return array(
-            /*'codigoPuntoReferencia0' => array(self::BELONGS_TO, 'MPuntoReferencia', 'codigoPuntoReferencia'),
-            'codigoSubSector0' => array(self::BELONGS_TO, 'MPuntoReferencia', 'codigoSubSector'),
-            'codigoCiudad0' => array(self::BELONGS_TO, 'MSectorCiudad', 'codigoCiudad'),
-            'codigoSector0' => array(self::BELONGS_TO, 'MSectorCiudad', 'codigoSector'),*/
-            
-            'objSector' => array(self::BELONGS_TO, 'SectorCiudad', array('codigoCiudad', 'codigoSector')),
+            'objSectorCiudad' => array(self::BELONGS_TO, 'SectorCiudad', array('codigoCiudad', 'codigoSector')),
             'objCiudad' => array(self::BELONGS_TO, 'Ciudad', 'codigoCiudad'),
             'objSector' => array(self::BELONGS_TO, 'Sector', 'codigoSector'),
+            'objSubsector' => array(self::BELONGS_TO, 'SubSector', array('codigoSubSector', 'codigoCiudad')),
+            'listPuntoReferencias' => array(self::HAS_MANY, 'PuntoReferencia', 'idSectorPuntoReferencia'),
         );
     }
 
@@ -63,10 +64,12 @@ class SectorPuntoReferencia extends CActiveRecord {
      */
     public function attributeLabels() {
         return array(
-            'codigoPuntoReferencia' => 'Codigo Punto Referencia',
+            'idSectorPuntoReferencia' => 'Id Sector Punto Referencia',
             'codigoSubSector' => 'Codigo Sub Sector',
             'codigoCiudad' => 'Codigo Ciudad',
             'codigoSector' => 'Codigo Sector',
+            'nombreSector' => 'Nombre Sector',
+            'estadoSectorReferencia' => 'Estado Sector Referencia',
         );
     }
 
@@ -87,10 +90,12 @@ class SectorPuntoReferencia extends CActiveRecord {
 
         $criteria = new CDbCriteria;
 
-        $criteria->compare('codigoPuntoReferencia', $this->codigoPuntoReferencia);
+        $criteria->compare('idSectorPuntoReferencia', $this->idSectorPuntoReferencia);
         $criteria->compare('codigoSubSector', $this->codigoSubSector);
         $criteria->compare('codigoCiudad', $this->codigoCiudad, true);
         $criteria->compare('codigoSector', $this->codigoSector, true);
+        $criteria->compare('nombreSector', $this->nombreSector, true);
+        $criteria->compare('estadoSectorReferencia', $this->estadoSectorReferencia);
 
         return new CActiveDataProvider($this, array(
             'criteria' => $criteria,
@@ -101,10 +106,17 @@ class SectorPuntoReferencia extends CActiveRecord {
      * Returns the static model of the specified AR class.
      * Please note that you should have this exact method in all your CActiveRecord descendants!
      * @param string $className active record class name.
-     * @return SectorPuntoReferencia1 the static model class
+     * @return SectorPuntoReferencia the static model class
      */
     public static function model($className = __CLASS__) {
         return parent::model($className);
+    }
+    
+    public function getNombreSector(){
+        if($this->nombreSector !== null)
+            return $this->nombreSector;
+        
+        return $this->objSector->nombreSector;
     }
 
 }

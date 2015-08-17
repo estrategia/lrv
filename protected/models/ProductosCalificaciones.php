@@ -33,11 +33,13 @@ class ProductosCalificaciones extends CActiveRecord {
         // NOTE: you should only define rules for those attributes that
         // will receive user inputs.
         return array(
-            array('codigoProducto, identificacionUsuario, fecha, aprobado', 'required'),
+            array('codigoProducto, identificacionUsuario, aprobado,calificacion, titulo, comentario', 'required'),
             array('calificacion, aprobado', 'numerical', 'integerOnly' => true),
             array('codigoProducto', 'length', 'max' => 10),
-            array('identificacionUsuario', 'length', 'max' => 100),
-            array('titulo, comentario', 'safe'),
+            array('identificacionUsuario', 'length', 'max' => 10),
+            array('titulo', 'length', 'max' => 100),
+            array('comentario', 'length', 'max' => 500),
+            array('fecha', 'safe'),
             // The following rule is used by search().
             // @todo Please remove those attributes that should not be searched.
             array('idCalificacion, codigoProducto, identificacionUsuario, calificacion, titulo, comentario, fecha, aprobado', 'safe', 'on' => 'search'),
@@ -125,6 +127,27 @@ class ProductosCalificaciones extends CActiveRecord {
         }
 
         return $diff;
+    }
+    
+    public function beforeSave() {
+        if($this->isNewRecord){
+            //$this->fecha = new CDbExpression('NOW()');
+            $this->fecha = date('Y-m-d H:i:s');
+        }
+        return parent::beforeSave();
+    }
+    
+    /**
+     * Metodo que hereda comportamiento de ValidateModelBehavior
+     * @return void
+     */
+    public function behaviors() {
+        return array(
+            'ValidateModelBehavior' => array(
+                'class' => 'application.components.behaviors.ValidateModelBehavior',
+                'model' => $this
+            ),
+        );
     }
 
 }

@@ -28,10 +28,11 @@ class Busquedas extends CActiveRecord {
         // NOTE: you should only define rules for those attributes that
         // will receive user inputs.
         return array(
-            array('tipoBusqueda, busqueda, fecha, codigoSector', 'required'),
+            array('tipoBusqueda, busqueda, fecha', 'required'),
             array('identificacionUsuario, busqueda', 'length', 'max' => 100),
             array('tipoBusqueda', 'length', 'max' => 2),
             array('codigoCiudad, codigoSector', 'length', 'max' => 10),
+            array('codigoCiudad, codigoSector', 'default', 'value' => null),
             // The following rule is used by search().
             // @todo Please remove those attributes that should not be searched.
             array('idBusqueda, identificacionUsuario, tipoBusqueda, busqueda, fecha, codigoCiudad, codigoSector', 'safe', 'on' => 'search'),

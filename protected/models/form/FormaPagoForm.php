@@ -29,6 +29,7 @@ class FormaPagoForm extends CFormModel {
     public $listPuntosVenta = array(0 => 0, 1 => 'No consultado');
     public $indicePuntoVenta;
     public $objHorarioCiudadSector = null;
+    public $pagoExpress = false;
 
     /**
      * Declares the validation rules.
@@ -76,7 +77,7 @@ class FormaPagoForm extends CFormModel {
         $this->listCodigoEspecial = array();
         foreach ($positions as $position) {
             if ($position->isProduct()) {
-                if ($position->objProducto->objCodigoEspecial->confirmacionCompra == "SI") {
+                if ($position->objProducto->objCodigoEspecial->confirmacionCompra == 1) {
                     $this->listCodigoEspecial[$position->objProducto->objCodigoEspecial->codigoEspecial] = $position->objProducto->objCodigoEspecial;
                 }
             }
@@ -130,15 +131,18 @@ class FormaPagoForm extends CFormModel {
     public function consultarBono($total) {
         $this->bono = null;
 
-        if (true) {
+        $client = new SoapClient(null, array(
+            'location' => Yii::app()->params->webServiceUrl['crmLrv'],
+            'uri' => "",
+            'trace' => 1
+        ));
+        $result = $client->__soapCall("ConsultarBono", array('identificacion' => $this->identificacionUsuario));
+
+        if (!empty($result) && $result[0]->ESTADO == 1 && $result[0]->VALOR_BONO > 0 && $result[0]->VALOR_BONO <= $total) {
             $this->bono = array(
-                'valor' => 5000,
+                'valor' => $result[0]->VALOR_BONO,
                 'vigencia' => DateTime::createFromFormat('Y-m-d', '2015-06-01')
             );
-
-            if ($this->bono['valor'] > $total) {
-                $this->bono = null;
-            }
         }
     }
 
@@ -153,169 +157,131 @@ class FormaPagoForm extends CFormModel {
         ));
     }
 
-    public function consultarDisponibilidad($positions) {
+    public function consultarDisponibilidad($shoppingCart) {
+        //$positions = $shoppingCart->getPositions();
         $this->listPuntosVenta = array(0 => 0, 1 => 'Consulta no exitosa');
 
-        if (rand(0, 9) > -1) {
-            $this->listPuntosVenta = array(
-                0 => 1,
-                1 => array(//lista pdvs
-                    0 => array(
-                        0 => 1,
-                        1 => '427',
-                        2 => 'Rebaja plus no 1 ciudad jardin',
-                        3 => 'Direccion xxx 1',
-                        4 => array(//lista productos de pdv
-                            0 => array(
-                                'CODIGO_PRODUCTO' => 30128,
-                                'ID_PRODUCTO' => 30128,
-                                'CANTIDAD' => 1.2,
-                                'DESCRIPCION' => 'DOLEX GRIPA',
-                                'SALDO' => 1.0,
-                            ),
-                            1 => array(
-                                'CODIGO_PRODUCTO' => 41076,
-                                'ID_PRODUCTO' => 41076,
-                                'CANTIDAD' => 2,
-                                'DESCRIPCION' => 'PAPAS MARGARITA LIMON FAMILIAR',
-                                'SALDO' => 1,
-                            )
-                        ),
-                        5 => 80
-                    ),
-                    1 => array(
-                        0 => 1,
-                        1 => '4A1',
-                        2 => 'Rebaja plus no 4 jardin plaza',
-                        3 => 'Direccion xxx 2',
-                        4 => array(//lista productos de pdv
-                            0 => array(
-                                'CODIGO_PRODUCTO' => 30128,
-                                'ID_PRODUCTO' => 30128,
-                                'CANTIDAD' => 2.5,
-                                'DESCRIPCION' => 'DOLEX GRIPA',
-                                'SALDO' => 1.0,
-                            ),
-                            1 => array(
-                                'CODIGO_PRODUCTO' => 41076,
-                                'ID_PRODUCTO' => 41076,
-                                'CANTIDAD' => 3,
-                                'DESCRIPCION' => 'PAPAS MARGARITA LIMON FAMILIAR',
-                                'SALDO' => 1,
-                            )
-                        ),
-                        5 => 60
-                    ),
-                    2 => array(
-                        0 => 1,
-                        1 => '405',
-                        2 => 'Rebaja no 5 ciudadela comfandi',
-                        3 => 'Direccion xxx 3',
-                        4 => array(//lista productos de pdv
-                            0 => array(
-                                'CODIGO_PRODUCTO' => 30128,
-                                'ID_PRODUCTO' => 30128,
-                                'CANTIDAD' => 2.5,
-                                'DESCRIPCION' => 'DOLEX GRIPA',
-                                'SALDO' => 2.5,
-                            ),
-                            1 => array(
-                                'CODIGO_PRODUCTO' => 41076,
-                                'ID_PRODUCTO' => 41076,
-                                'CANTIDAD' => 3,
-                                'DESCRIPCION' => 'PAPAS MARGARITA LIMON FAMILIAR',
-                                'SALDO' => 3,
-                            )
-                        ),
-                        5 => 90
-                    ),
-                    3 => array(
-                        0 => 0,
-                        1 => -1,
-                        2 => 'SIN NOMBRE',
-                        3 => 'NO EXISTE',
-                        4 => array(),
-                        5 => 0
-                    ),
-                    4 => array(
-                        0 => 0,
-                        1 => -1,
-                        2 => 'SIN NOMBRE',
-                        3 => 'NO EXISTE',
-                        4 => array(),
-                        5 => 0
-                    )
-                ),
-                2 => '427'
-            );
+        $productos = array();
+        foreach ($shoppingCart->getPositions() as $position) {
+            if ($position->isProduct()) {
+                $productos[] = array(
+                    "CODIGO_PRODUCTO" => $position->objProducto->codigoProducto,
+                    "ID_PRODUCTO" => $position->objProducto->codigoProducto,
+                    "CANTIDAD" => $position->getQuantityUnit(),
+                    "DESCRIPCION" => $position->objProducto->descripcionProducto,
+                );
+            }
+        }
+        
+        /*CVarDumper::dump($productos,10,true);
+        echo "<br/>";
+        echo "<br/>";*/
+        
+        $client = new SoapClient(null, array(
+            'location' => Yii::app()->params->webServiceUrl['serverLRV'],
+            'uri' => "",
+            'trace' => 1
+        ));
+        $this->listPuntosVenta = $client->__soapCall("LRVConsultarSaldoMovil", array(
+            'productos' => $productos,
+            'ciudad' => $shoppingCart->getCodigoCiudad(),
+            'sector' => $shoppingCart->getCodigoSector()
+        ));
+        
+        if(empty($this->listPuntosVenta)){
+            $this->listPuntosVenta = array(0 => 0, 1 => 'No hay disponibilidad de productos');
+        }
+        
+        //CVarDumper::dump($this->listPuntosVenta,10,true);
+        //exit();
+        
 
-            $this->listPuntosVenta[3] = 0;
+        $this->listPuntosVenta[3] = 0;
 
-            //recorrer lista para eliminar pdvs no encontrados 
-            //recalcular cantidades y saldos teniendo en cuenta fracciones
-            //y definir si alguno tiene 100% en pos 3 0:no, 1:si
-            if ($this->listPuntosVenta[0] == 1) {
-                foreach ($this->listPuntosVenta[1] as $indicePdv => $pdv) {
-                    if ($pdv[0] == 1) {
-                        if ($pdv[5] == 100) {
-                            $this->listPuntosVenta[3] = 1;
-                        }
-
-                        if (empty($pdv[4])) {
-                            unset($this->listPuntosVenta[1][$indicePdv]);
-                        } else {
-                            foreach ($pdv[4] as $indiceProd => $producto) {
-
-                                $arrSaldo = $this->decimalToUnidFracc($producto['SALDO']);
-
-                                if ($arrSaldo['UNIDAD'] <= 0 && $arrSaldo['FRACCION'] <= 0) {
-                                    unset($this->listPuntosVenta[1][$indicePdv][4][$indiceProd]);
-                                } else {
-                                    $arrCantidad = $this->decimalToUnidFracc($producto['CANTIDAD']);
-                                    $this->listPuntosVenta[1][$indicePdv][4][$indiceProd]['CANTIDAD_UNIDAD'] = $arrCantidad['UNIDAD'];
-                                    $this->listPuntosVenta[1][$indicePdv][4][$indiceProd]['CANTIDAD_FRACCION'] = $arrCantidad['FRACCION'];
-                                    $this->listPuntosVenta[1][$indicePdv][4][$indiceProd]['SALDO_UNIDAD'] = $arrSaldo['UNIDAD'];
-                                    $this->listPuntosVenta[1][$indicePdv][4][$indiceProd]['SALDO_FRACCION'] = $arrSaldo['FRACCION'];
-                                }
-                            }
-                        }
-                    } else {
-                        unset($this->listPuntosVenta[1][$indicePdv]);
+        //recorrer lista para eliminar pdvs no encontrados 
+        //recalcular cantidades y saldos teniendo en cuenta fracciones
+        //y definir si alguno tiene 100% en pos 3 0:no, 1:si
+        if ($this->listPuntosVenta[0] == 1) {
+            foreach ($this->listPuntosVenta[1] as $indicePdv => $pdv) {
+                if ($pdv[0] == 1 && !empty($pdv[4])) {
+                    if ($pdv[5] == 100) {
+                        $this->listPuntosVenta[3] = 1;
                     }
+                    
+                    foreach ($pdv[4] as $indiceProd => $producto) {
+                        $arrSaldo = $this->decimalToUnidFracc($producto->SALDO);
+                        if ($arrSaldo['UNIDAD'] <= 0 && $arrSaldo['FRACCION'] <= 0) {
+                            unset($this->listPuntosVenta[1][$indicePdv][4][$indiceProd]);
+                        } else {
+                            $arrCantidad = $this->decimalToUnidFracc($producto->CANTIDAD);
+                            $this->listPuntosVenta[1][$indicePdv][4][$indiceProd]->CANTIDAD_UNIDAD = $arrCantidad['UNIDAD'];
+                            $this->listPuntosVenta[1][$indicePdv][4][$indiceProd]->CANTIDAD_FRACCION = $arrCantidad['FRACCION'];
+                            $this->listPuntosVenta[1][$indicePdv][4][$indiceProd]->SALDO_UNIDAD = $arrSaldo['UNIDAD'];
+                            $this->listPuntosVenta[1][$indicePdv][4][$indiceProd]->SALDO_FRACCION = $arrSaldo['FRACCION'];
+                        }
+                    }
+                } else {
+                    unset($this->listPuntosVenta[1][$indicePdv]);
                 }
             }
         }
     }
 
     private function decimalToUnidFracc($n) {
-        $aux = (string) $n;
+        /*$aux = (string) $n;
         $n = explode(".", $aux);
         return array(
             'UNIDAD' => isset($n[0]) ? $n[0] : 0,
             'FRACCION' => isset($n[1]) ? $n[1] : 0
+        );*/
+        
+        return array(
+            'UNIDAD' => $n,
+            'FRACCION' => 0
         );
     }
 
-    public static function listDataCuotas() {
+    public static function
+
+    listDataCuotas() {
         return array('1' => 1, '2' => 2, '3' => 3, '4' => 4, '5' => 5, '6' => 6);
     }
 
-    public function listDataHoras($deltaHorario = "0 1:00:0.000000") {
+    public function
+
+    listDataHoras($deltaHorario = "0 1:00:0.000000") {
+        $horariosDia = array(
+            '0' => array('inicio' => 'horaInicioDomingoFestivo', 'fin' => 'horaFinDomingoFestivo'),
+            '1' => array('inicio' => 'horaInicioLunesASabado', 'fin' => 'horaFinLunesASabado'),
+            '2' => array('inicio' => 'horaInicioLunesASabado', 'fin' => 'horaFinLunesASabado'),
+            '3' => array('inicio' => 'horaInicioLunesASabado', 'fin' => 'horaFinLunesASabado'),
+            '4' => array('inicio' => 'horaInicioLunesASabado', 'fin' => 'horaFinLunesASabado'),
+            '5' => array('inicio' => 'horaInicioLunesASabado', 'fin' => 'horaFinLunesASabado'),
+            '6' => array('inicio' => 'horaInicioLunesASabado', 'fin' => 'horaFinLunesASabado'),
+            'festivo' => array('inicio' => 'horaInicioDomingoFestivo', 'fin' => 'horaFinDomingoFestivo')
+        );
+        
         $horaIniServicio = "07:00:00";
         $horaFinServicio = "23:00:00";
-        
-        if($this->objHorarioCiudadSector != null){
-            $horaIniServicio = $this->objHorarioCiudadSector->horaInicio;
-            $horaFinServicio = $this->objHorarioCiudadSector->horaFin;
+
+        if ($this->objHorarioCiudadSector != null) {
+            $dia = 'festivo';
+            $ahora = new DateTime;
+            //si no es festivo, se verifica el dia de la semana
+            if (!DiasFestivos::esFestivo($ahora)) {
+                $dia = $ahora->format('w');
+            }
+            $horaIniServicio = $this->objHorarioCiudadSector->$horariosDia[$dia]['inicio'];
+            $horaFinServicio = $this->objHorarioCiudadSector->$horariosDia[$dia]['fin'];
         }
-        
+
         $sql = "SELECT idHorario, concat('Hoy a las ', DATE_FORMAT(hora, '%h:%i %p')) as etiqueta, concat(curdate(), ' ', DATE_FORMAT(hora, '%H:%i:%s')) as fecha, hora
              FROM   m_Horario
              WHERE  hora between ADDTIME('" . $horaIniServicio . "', '" . $deltaHorario . "') and '" . $horaFinServicio . "' and (hora >= ADDTIME(CURTIME(), '" . $deltaHorario . "'))
              UNION
              SELECT idHorario, concat('Ma&ntilde;ana a las ', DATE_FORMAT(hora, '%h:%i %p')) as etiqueta, concat(DATE_ADD(CURDATE(), INTERVAL 1 DAY), ' ', DATE_FORMAT(hora, '%H:%i:%s')) as fecha, hora
              FROM m_Horario
-             WHERE (hora between ADDTIME('" . $horaIniServicio . "', '" . $deltaHorario . "') and '12:00')";
+             WHERE (hora between ADDTIME('" . $horaIniServicio . "', '" . $deltaHorario . "') and '12:00') ORDER BY fecha";
 
         $connection = Yii::app()->db;
         $command = $connection->createCommand($sql);
@@ -336,22 +302,22 @@ class FormaPagoForm extends CFormModel {
 
         return $rows;
     }
-    
-    public function fechaValidate($attribute, $params) {
+
+    public
+            function fechaValidate($attribute, $params) {
         $listHoras = $this->listDataHoras();
         $valido = false;
-        
-        foreach($listHoras as $hora){
-            if($hora['fecha']==$this->fechaEntrega){
+
+        foreach ($listHoras as $hora) {
+            if ($hora['fecha'] == $this->fechaEntrega) {
                 $valido = true;
                 break;
             }
         }
-        
-        if(!$valido){
+
+        if (!$valido) {
             $this->addError('fechaEntrega', $this->getAttributeLabel('fechaEntrega') . " no disponible");
         }
-        
     }
 
 }

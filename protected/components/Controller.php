@@ -27,7 +27,7 @@ class Controller extends CController {
     public $showSeeker = true;
     public $showHeaderIcons = true;
     public $logoLinkMenu = true;
-    public $fixedFooter = false;
+    public $fixedFooter = true;
     public $extraContentList = array();
     public $extraPageList = array();
     public $sectorName = "";
@@ -49,13 +49,13 @@ class Controller extends CController {
 
     public function getSectorName() {
         if (isset(Yii::app()->session[Yii::app()->params->sesion['sectorCiudadEntrega']]) && Yii::app()->session[Yii::app()->params->sesion['sectorCiudadEntrega']] != null) {
-            $sectorCiudad = Yii::app()->session[Yii::app()->params->sesion['sectorCiudadEntrega']];
-            $subSector = Yii::app()->session[Yii::app()->params->sesion['subSectorCiudadEntrega']];
-            $this->sectorName = $sectorCiudad->objCiudad->nombreCiudad;
-            if ($subSector != null)
-                $this->sectorName .= " - " . $subSector->nombreSubSector;
-            else if ($sectorCiudad->objSector->codigoSector != 0)
-                $this->sectorName .= " - " . $sectorCiudad->objSector->nombreSector;
+            $objSectorCiudad = Yii::app()->session[Yii::app()->params->sesion['sectorCiudadEntrega']];
+            $objSubSector = Yii::app()->session[Yii::app()->params->sesion['subSectorCiudadEntrega']];
+            $this->sectorName = $objSectorCiudad->objCiudad->nombreCiudad;
+            if ($objSubSector != null)
+                $this->sectorName .= " - " . $objSubSector->nombreSubSector;
+            else if ($objSectorCiudad->objSector->codigoSector != 0)
+                $this->sectorName .= " - " . $objSectorCiudad->objSector->nombreSector;
         }else{
             $this->sectorName = "Seleccionar ubicación";
         }
@@ -76,9 +76,13 @@ class Controller extends CController {
             Yii::app()->getClientScript()->registerScriptFile(Yii::app()->request->baseUrl . "/libs/raty/jquery.raty.js", CClientScript::POS_HEAD);
             Yii::app()->getClientScript()->registerScriptFile(Yii::app()->request->baseUrl . "/libs/owl-carousel/owl.carousel.min.js", CClientScript::POS_HEAD);
             Yii::app()->getClientScript()->registerScriptFile(Yii::app()->request->baseUrl . "/libs/jquerymobile-windows/jqm-windows.mdialog.js", CClientScript::POS_HEAD);
-            Yii::app()->getClientScript()->registerScriptFile(Yii::app()->request->baseUrl . "/js/main.js", CClientScript::POS_HEAD);
+            Yii::app()->getClientScript()->registerScriptFile(Yii::app()->request->baseUrl . "/js/mobile.js", CClientScript::POS_HEAD);
         } else {
-            
+            Yii::app()->getClientScript()->registerScriptFile(Yii::app()->request->baseUrl . "/libs/bootstrap/js/bootstrap.min.js", CClientScript::POS_HEAD);
+            Yii::app()->getClientScript()->registerScriptFile(Yii::app()->request->baseUrl . "/js/main.js", CClientScript::POS_HEAD);
+            Yii::app()->getClientScript()->registerScriptFile(Yii::app()->request->baseUrl . "/libs/jquery-ui/jquery-ui.min.js", CClientScript::POS_HEAD);
+            Yii::app()->getClientScript()->registerScriptFile(Yii::app()->request->baseUrl . "/libs/select2/select2.min.js", CClientScript::POS_HEAD);
+            Yii::app()->getClientScript()->registerScriptFile(Yii::app()->request->baseUrl . "/libs/bootstrap/js/dropdown.js", CClientScript::POS_HEAD);
         }
     }
 
@@ -89,9 +93,14 @@ class Controller extends CController {
             Yii::app()->getClientScript()->registerCssFile(Yii::app()->request->baseUrl . "/libs/raty/jquery.raty.css");
             Yii::app()->getClientScript()->registerCssFile(Yii::app()->request->baseUrl . "/libs/owl-carousel/owl.carousel.css");
             Yii::app()->getClientScript()->registerCssFile(Yii::app()->request->baseUrl . "/libs/owl-carousel/owl.theme.css");
-            Yii::app()->getClientScript()->registerCssFile(Yii::app()->request->baseUrl . "/css/main.css");
+            //Yii::app()->getClientScript()->registerCssFile(Yii::app()->request->baseUrl . "/css/mobile.css");
         } else {
-            
+            Yii::app()->getClientScript()->registerCssFile(Yii::app()->request->baseUrl . "/css/main.css");
+            Yii::app()->getClientScript()->registerCssFile(Yii::app()->request->baseUrl . "/libs/bootstrap/css/bootstrap.min.css");
+            Yii::app()->getClientScript()->registerCssFile(Yii::app()->request->baseUrl . "/libs/bootstrap/css/bootstrap-responsive.min.css");
+            Yii::app()->getClientScript()->registerCssFile(Yii::app()->request->baseUrl . "/libs/jquery-ui/jquery-ui.min.css");
+            Yii::app()->getClientScript()->registerCssFile(Yii::app()->request->baseUrl . "/libs/select2/select2.min.css");
+            Yii::app()->getClientScript()->registerCssFile(Yii::app()->request->baseUrl . "/libs/bootstrap/css/dropdown.css");
         }
     }
 

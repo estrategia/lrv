@@ -11,7 +11,7 @@
  * @property integer $valorDomicilio
  *
  * The followings are the available model relations:
- * @property MCiudad $codigoCiudad0
+ * @property Ciudad $objCiudad
  */
 class DomicilioCedi extends CActiveRecord {
 
@@ -45,7 +45,7 @@ class DomicilioCedi extends CActiveRecord {
         // NOTE: you may need to adjust the relation name and the related
         // class name for the relations automatically generated below.
         return array(
-            'codigoCiudad0' => array(self::BELONGS_TO, 'MCiudad', 'codigoCiudad'),
+            'objCiudad' => array(self::BELONGS_TO, 'Ciudad', 'codigoCiudad'),
         );
     }
 

@@ -25,9 +25,14 @@
 
     <div class="cdt_line_spc"><span></span></div>
 
-    <div id="raty-lectura-producto-<?php echo $objProducto->codigoProducto ?>" data-role="raty" data-readonly="true" data-score="<?php echo $objProducto->getCalificacion() ?>" class="clst_cal_str"></div>
-    <?php if (Yii::app()->user->isGuest): ?>
-        <p class="txt_inise_cal_stars">Iniciar sesión para calificar este producto</p>
+    <?php if(!in_array($objProducto->idCategoriaBI, Yii::app()->params->calificacion['categoriasNoCalificacion'])): ?>
+        <div id="raty-lectura-producto-<?php echo $objProducto->codigoProducto ?>" data-role="raty" data-readonly="true" data-score="<?php echo $objProducto->getCalificacion() ?>" class="clst_cal_str"></div>
+        <?php $calificacion = $objProducto->getCalificacion(true) ?>
+        <div><strong>Total votos:</strong> <?php echo $calificacion['votos'] ?></div>
+        <div><strong>Votación:</strong> <?php echo $calificacion['calificacion'] ?></div>
+        <?php if (Yii::app()->user->isGuest): ?>
+            <p class="txt_inise_cal_stars">Iniciar sesión para calificar este producto</p>
+        <?php endif; ?>
     <?php endif; ?>
 
     <?php if ($objPrecio->inicializado()): ?>
@@ -62,7 +67,6 @@
                         <td class="txt_pre_lst"><?php echo Yii::app()->numberFormatter->format(Yii::app()->params->formatoMoneda['patron'], $objPrecio->getPrecio(Precio::PRECIO_UNIDAD, false), Yii::app()->params->formatoMoneda['moneda']); ?></td>
                         <td class="txt_ahor"><?php echo Yii::app()->numberFormatter->format(Yii::app()->params->formatoMoneda['patron'], $objPrecio->getAhorro(Precio::PRECIO_UNIDAD), Yii::app()->params->formatoMoneda['moneda']); ?></td>
                         <td class="txt_pre" align="right"><?php echo Yii::app()->numberFormatter->format(Yii::app()->params->formatoMoneda['patron'], $objPrecio->getPrecio(Precio::PRECIO_UNIDAD), Yii::app()->params->formatoMoneda['moneda']); ?></td>
-                        
                     </tr>
                 </tbody>
             </table>
@@ -128,20 +132,27 @@
                 <div class="cdtl_pro_cant">
                     <div class="cbtn_prod_cant_02"><input type="number" placeholder="0" value="1" id="cantidad-producto-unidad-<?php echo $objProducto->codigoProducto ?>" onchange="subtotalUnidadProducto(<?php echo $objProducto->codigoProducto ?>);"></div>
                     <div class="cpro_total_02"><span class="txt_cant_total">Total</span> <span id="subtotal-producto-unidad-<?php echo $objProducto->codigoProducto ?>"><?php echo Yii::app()->numberFormatter->format(Yii::app()->params->formatoMoneda['patron'], $objPrecio->getPrecio(Precio::PRECIO_UNIDAD), Yii::app()->params->formatoMoneda['moneda']); ?></span></div>
-					<?php if ($objProducto->objImpuesto != null && $objProducto->objImpuesto->codigoImpuesto != 0 && $objProducto->objImpuesto->codigoImpuesto != 20): ?>
-						<?php if ($objSectorCiudad == null || ($objSectorCiudad != null && $objSectorCiudad->objCiudad->excentoImpuestos == 0)): ?>
-							<p class="txt_cant_incl">Incluye <?php echo Yii::app()->numberFormatter->formatPercentage($objProducto->objImpuesto->porcentaje) ?> de impuestos</p>
-						<?php endif; ?>
-					<?php endif; ?>
-					<div class="clear"></div>
+                    <?php if ($objProducto->objImpuesto != null && $objProducto->objImpuesto->codigoImpuesto != 0 && $objProducto->objImpuesto->codigoImpuesto != 20): ?>
+                        <?php if ($objSectorCiudad == null || ($objSectorCiudad != null && $objSectorCiudad->objCiudad->excentoImpuestos == 0)): ?>
+                            <p class="txt_cant_incl">Incluye <?php echo Yii::app()->numberFormatter->formatPercentage($objProducto->objImpuesto->porcentaje) ?> de impuestos</p>
+                        <?php endif; ?>
+                    <?php endif; ?>
+                    <div class="clear"></div>
                 </div>
             </div>
         <?php endif; ?>
     <?php endif; ?>
 
     <?php if ($objProducto->ventaVirtual == 1): ?>
-        <?php echo CHtml::link('Añadir al carro', '#', array('data-producto' => $objProducto->codigoProducto, 'data-cargar' => 1, 'class' => 'ui-btn ui-corner-all ui-shadow ui-btn-r btn_frc_add_car')); ?>
-        <?php echo CHtml::link('Guardar en la lista personal', '#', array('class' => 'ui-btn ui-corner-all ui-shadow ui-btn-n btn_add_lst_pr')); ?>
+        <?php if ($objSectorCiudad == null): ?>
+            <?php echo CHtml::link('Consultar precio', '#popup-consultarprecio', array('data-rel' => "popup", 'class' => 'ui-btn ui-corner-all ui-shadow ui-btn-r')); ?>
+        <?php else: ?>
+            <?php echo CHtml::link('Añadir al carro', '#', array('data-producto' => $objProducto->codigoProducto, 'data-cargar' => 1, 'class' => 'ui-btn ui-corner-all ui-shadow ui-btn-r btn_frc_add_car')); ?>
+        <?php endif; ?>
+
+        <?php if (!Yii::app()->user->isGuest): ?>
+            <?php echo CHtml::link('Guardar en la lista personal', '#', array('data-role' => 'lstpersonalguardar', 'data-tipo' => 1, 'data-codigo' => $objProducto->codigoProducto, 'class' => 'ui-btn ui-corner-all ui-shadow ui-btn-n btn_add_lst_pr')); ?>
+        <?php endif; ?>
     <?php else: ?>
         <div>Este producto lo puede adquirir en nuestros puntos de venta autorizados.</div>
     <?php endif; ?>
@@ -170,56 +181,72 @@
 
     <div class="cdtl_div_ln"></div>
 
-    <div data-role="collapsible" data-iconpos="right" data-collapsed-icon="carat-d" data-expanded-icon="carat-u" class="c_cont_com_prod ui-nodisc-icon ui-alt-icon">
-        <h3>Comentarios del producto</h3>
-        <ul data-role="listview" data-inset="false" data-icon="false">
-            <?php $contadorCalificacion = 0; ?>
-            <?php foreach ($objProducto->listCalificaciones as $objComentario): ?>
-                <?php if ($objComentario->aprobado == 1): ?>
-                    <?php $contadorCalificacion++; ?>
+    <?php if(!in_array($objProducto->idCategoriaBI, Yii::app()->params->calificacion['categoriasNoCalificacion'])): ?>
+        <div data-role="collapsible" data-iconpos="right" data-collapsed-icon="carat-d" data-expanded-icon="carat-u" class="c_cont_com_prod ui-nodisc-icon ui-alt-icon">
+            <h3>Comentarios del producto</h3>
+            <ul data-role="listview" data-inset="false" data-icon="false">
+                <?php $contadorCalificacion = 0; ?>
+                <?php foreach ($objProducto->listCalificaciones as $objComentario): ?>
+                    <?php if ($objComentario->aprobado == 1): ?>
+                        <?php $contadorCalificacion++; ?>
+                        <li class="cdtl_coment">
+                            <h3><?php echo $objComentario->objUsuario->nombre ?></h3>
+                            <div class="cdtl_coment_img">
+                                <img src="<?php echo Yii::app()->request->baseUrl; ?>/images/iconos/icons_comments.png">
+                            </div>
+                            <div class="cdtl_coment_txt">                            
+                                <p> 
+                                    <?php echo $objComentario->comentario ?>
+                                </p>
+                            </div>
+                        </li>
+                    <?php elseif($objComentario->aprobado == 0 && $objComentario->identificacionUsuario==Yii::app()->user->name): ?>
+                        <?php $contadorCalificacion++; ?>
+                        <li class="cdtl_coment">
+                            <h3><?php echo $objComentario->objUsuario->nombre ?> <strong>(Pendiente de revisión)</strong></h3>
+                            <div class="cdtl_coment_img">
+                                <img src="<?php echo Yii::app()->request->baseUrl; ?>/images/iconos/icons_comments.png">
+                            </div>
+                            <div class="cdtl_coment_txt">                            
+                                <p> 
+                                    <?php echo $objComentario->comentario ?>
+                                </p>
+                            </div>
+                        </li>
+                    <?php endif; ?>
+                <?php endforeach; ?>
+                <?php if ($contadorCalificacion <= 0): ?>
                     <li class="cdtl_coment">
-                        <h3><?php echo $objComentario->objUsuario->nombre ?></h3>
-                        <div class="cdtl_coment_img">
-                            <img src="<?php echo Yii::app()->request->baseUrl; ?>/images/iconos/icons_comments.png">
-                        </div>
-                        <div class="cdtl_coment_txt">                            
-                            <p> 
-                                <?php echo $objComentario->comentario ?>
-                            </p>
-                        </div>
+                        <p> 
+                            Nadie ha calificado este producto aún
+                        </p>
                     </li>
                 <?php endif; ?>
-            <?php endforeach; ?>
-            <?php if ($contadorCalificacion <= 0): ?>
-                <li class="cdtl_coment">
-                    <p> 
-                        Nadie ha calificado este producto aún
-                    </p>
-                </li>
+            </ul>
+        </div>
+
+        <?php if (!Yii::app()->user->isGuest): ?>
+            <?php if ($objCalificacion == null): ?>
+                <form id="form-calificacion-producto-<?php echo $objProducto->codigoProducto ?>">
+                    <label for="calificacion-titulo-<?php echo $objProducto->codigoProducto ?>" class="ui-hidden-accessible cdtl_coment_titulo">Título:</label>
+                    <input type="text" id="calificacion-titulo-<?php echo $objProducto->codigoProducto ?>" placeholder="Título" class="cdtl_input_titulo" maxlength="70">
+                    <label for="calificacion-comentario-<?php echo $objProducto->codigoProducto ?>" class="ui-hidden-accessible">Comentario:</label>
+                    <textarea data-countchar='div-comentario-contador' id="calificacion-comentario-<?php echo $objProducto->codigoProducto ?>" placeholder="Comentario" maxlength="250" class="cdtl_textarea_coment" style="border:1px solid #e4e4e4;"></textarea>
+                    <div class="maxCaract">[Máximo 250 caracteres] <span id="div-comentario-contador"></span></div>
+                    <div id="calificacion-raty-<?php echo $objProducto->codigoProducto ?>" data-role="raty" data-readonly="false" data-score="0" class="clst_cal_str"></div>
+                    <button data-role="calificacion" data-producto="<?php echo $objProducto->codigoProducto ?>" class="ui-btn ui-corner-all ui-shadow cdtl_button_calf">Agregar comentario</button>
+                </form>
+            <?php else: ?>
+                <table class="ui-responsive">
+                    <tr>
+                        <td>Tu calificación:</td>
+                        <td><div id="calificacion-raty-<?php echo $objProducto->codigoProducto ?>" data-role="raty" data-readonly="true" data-score="<?php echo $objCalificacion->calificacion ?>"></div></td>
+                    </tr>
+                    <tr>
+                        <td colspan="2">Puedes volver a calificar dentro de <?php echo $objCalificacion->getDiferencia()->format('%h horas y %i minutos'); ?></td>
+                    </tr>
+                </table>
             <?php endif; ?>
-        </ul>
-    </div>
-    <?php if (!Yii::app()->user->isGuest): ?>
-        <?php if ($objCalificacion == null): ?>
-            <form id="form-calificacion-producto-<?php echo $objProducto->codigoProducto ?>">
-                <label data-role="calificacion" for="calificacion-titulo-<?php echo $objProducto->codigoProducto ?>" class="ui-hidden-accessible cdtl_coment_titulo">Título:</label>
-                <input data-role="calificacion" type="text" id="calificacion-titulo-<?php echo $objProducto->codigoProducto ?>" placeholder="Título" class="cdtl_input_titulo">
-                <label data-role="calificacion" for="calificacion-comentario-<?php echo $objProducto->codigoProducto ?>" class="ui-hidden-accessible">Comentario:</label>
-                <textarea data-role="calificacion" id="calificacion-comentario-<?php echo $objProducto->codigoProducto ?>" placeholder="Comentario" class="cdtl_textarea_coment" style="border:1px solid #e4e4e4;"></textarea>
-                <div id="calificacion-raty-<?php echo $objProducto->codigoProducto ?>" data-role="raty" data-readonly="false" data-score="0" class="clst_cal_str"></div>
-                <button data-role="calificacion" class="ui-btn ui-corner-all ui-shadow cdtl_button_calf" onclick='calificarProducto("<?php echo $objProducto->codigoProducto ?>");
-                                return false;'>Agregar un comentario</button>
-            </form>
-        <?php else: ?>
-            <table class="ui-responsive">
-                <tr>
-                    <td>Tu calificación:</td>
-                    <td><div id="calificacion-raty-<?php echo $objProducto->codigoProducto ?>" data-role="raty" data-readonly="true" data-score="<?php echo $objCalificacion->calificacion ?>"></div></td>
-                </tr>
-                <tr>
-                    <td colspan="2">Puedes volver a calificar dentro de <?php echo $objCalificacion->getDiferencia()->format('%h horas y %i minutos'); ?></td>
-                </tr>
-            </table>
         <?php endif; ?>
     <?php endif; ?>
 
@@ -231,22 +258,36 @@
         </p>
     <?php endif; ?>
 </div>
-    <?php if (!empty($listRelacionados)): ?>
-        <div class="productosRelacionados ui-content">
-            <h2>Productos Relacionados</h2>
-            <div id="slide-relacionados" class="owl-carousel owl-theme">
-                <?php foreach ($listRelacionados as $objRelacionado): ?>
-					<div class="item"><?php
-						$this->renderPartial('_productoSlide', array(
-							'objProducto' => $objRelacionado->objProductoRelacionado,
-							'objPrecio' => new PrecioProducto($objRelacionado->objProductoRelacionado, $objSectorCiudad, $codigoPerfil),
-								//'objSectorCiudad' => $objSectorCiudad,
-								//'codigoPerfil' => $codigoPerfil
-						));
-						?>
-					</div>
-				<?php endforeach; ?>
+<?php if (!empty($listRelacionados)): ?>
+    <div class="productosRelacionados ui-content">
+        <h2>Productos Relacionados</h2>
+        <div id="slide-relacionados" class="owl-carousel owl-theme">
+            <?php foreach ($listRelacionados as $objRelacionado): ?>
+                <div class="item"><?php
+                    $this->renderPartial('_productoSlide', array(
+                        'objProducto' => $objRelacionado->objProductoRelacionado,
+                        'objPrecio' => new PrecioProducto($objRelacionado->objProductoRelacionado, $objSectorCiudad, $codigoPerfil),
+                            //'objSectorCiudad' => $objSectorCiudad,
+                            //'codigoPerfil' => $codigoPerfil
+                    ));
+                    ?>
+                </div>
+            <?php endforeach; ?>
+        </div>
+    </div>
+<?php endif; ?>
+
+<?php if ($objSectorCiudad == null): ?>
+    <div data-role="popup" id="popup-consultarprecio" data-dismissible="false" data-theme="a" data-position-to="window" class="c_lst_pop_cont">
+        <a href="#" data-rel="back" class="ui-btn ui-corner-all ui-shadow ui-btn ui-icon-delete ui-btn-icon-notext ui-btn-right">Close</a>
+        <div data-role="main">
+            <div data-role="content">
+                <h2>Seleccionar ubicación para consultar precio</h2>
+                <?php echo CHtml::link('Seleccionar ubicación', $this->createUrl('/sitio/ubicacion'), array('class' => 'ui-btn ui-corner-all ui-shadow ui-btn-n', 'data-mini' => 'true', 'data-ajax' => 'false')); ?>
+                <?php echo CHtml::link('Cerrar', '#', array('class' => 'ui-btn ui-corner-all ui-shadow ui-btn-r', 'data-mini' => 'true', 'data-rel' => 'back')); ?>
             </div>
         </div>
-    <?php endif; ?>
+    </div>
+<?php endif; ?>
+
 

@@ -10,8 +10,8 @@
  * @property integer $orden
  *
  * The followings are the available model relations:
- * @property MProducto $codigoProducto0
- * @property MProducto $codigoRelacionado0
+ * @property Producto $objProducto
+ * @property Producto $objProductoRelacionado
  */
 class ProductosRelacionados extends CActiveRecord {
 

@@ -20,10 +20,25 @@ class PrecioProducto extends Precio {
     protected $ahorroUnidad = 0;
     protected $ahorroFraccion = 0;
 
-    function __construct(Producto &$objProducto, &$objCiudadSector, $codigoPerfil) {
+    function __construct(Producto &$objProducto, &$objCiudadSector, $codigoPerfil, $consultaPrecio=false) {
         if ($objCiudadSector != null) {
             if ($objProducto->tercero == 1) {
-                foreach ($objProducto->listSaldosTerceros as $objProductoSaldoTercero) {
+                $listSaldosTerceros = array();
+                
+                if($consultaPrecio){
+                    $listSaldosTerceros = ProductosSaldosTerceros::model()->findAll(array(
+                        'condition' => '(codigoProducto=:producto AND codigoCiudad=:ciudad AND codigoSector=:sector)',
+                        'params' => array(
+                            ':producto' => $objProducto->codigoProducto,
+                            ':ciudad' => $objCiudadSector->codigoCiudad,
+                            ':sector' => $objCiudadSector->codigoSector,
+                        ),
+                    ));
+                }else{
+                    $listSaldosTerceros = $objProducto->listSaldosTerceros;
+                }
+                
+                foreach ($listSaldosTerceros as $objProductoSaldoTercero) {
                     if ($objProductoSaldoTercero->codigoCiudad == $objCiudadSector->codigoCiudad && $objProductoSaldoTercero->codigoSector == $objCiudadSector->codigoSector) {
                         $this->precioUnidad = $objProductoSaldoTercero->precioUnidad;
                         $this->precioFraccion = $objProductoSaldoTercero->precioFraccion;
@@ -34,7 +49,22 @@ class PrecioProducto extends Precio {
                     }
                 }
             } else {
-                foreach ($objProducto->listPrecios as $objProductoPrecio) {
+                $listPrecios = array();
+                
+                if($consultaPrecio){
+                    $listPrecios = ProductosPrecios::model()->findAll(array(
+                        'condition' => '(codigoProducto=:producto AND codigoCiudad=:ciudad AND codigoSector=:sector)',
+                        'params' => array(
+                            ':producto' => $objProducto->codigoProducto,
+                            ':ciudad' => $objCiudadSector->codigoCiudad,
+                            ':sector' => $objCiudadSector->codigoSector,
+                        ),
+                    ));
+                }else{
+                    $listPrecios = $objProducto->listPrecios;
+                }
+                
+                foreach ($listPrecios as $objProductoPrecio) {
                     if ($objProductoPrecio->codigoCiudad == $objCiudadSector->codigoCiudad && $objProductoPrecio->codigoSector == $objCiudadSector->codigoSector) {
                         $this->precioUnidad = $objProductoPrecio->precioUnidad;
                         $this->precioFraccion = $objProductoPrecio->precioFraccion;
@@ -152,8 +182,8 @@ class PrecioProducto extends Precio {
             $this->precioFraccionTotal = self::redondear($this->precioFraccionTotal,1);
             $this->ahorroUnidad = floor($this->precioUnidad * ($this->getPorcentajeDescuento() / 100));
             $this->ahorroFraccion=  floor($this->precioFraccionTotal * ($this->getPorcentajeDescuento() / 100));
-            $this->ahorroUnidad = self::redondear($this->ahorroUnidad, 0);
-            $this->ahorroFraccion = self::redondear($this->ahorroFraccion, 0);
+            $this->ahorroUnidad = self::redondear($this->ahorroUnidad, 1);
+            $this->ahorroFraccion = self::redondear($this->ahorroFraccion, 1);
 
             $this->inicializado = true;
         }

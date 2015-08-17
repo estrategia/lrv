@@ -12,7 +12,6 @@
  * @property Perfil $objPerfil
  */
 class PerfilesEspeciales extends CActiveRecord {
-
     /**
      * @return string the associated database table name
      */

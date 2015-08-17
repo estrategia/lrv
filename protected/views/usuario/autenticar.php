@@ -3,6 +3,7 @@
     <?php
     $form = $this->beginWidget('CActiveForm', array(
         'enableClientValidation' => true,
+        'action' => Yii::app()->createUrl('/usuario/autenticar'),
         'htmlOptions' => array(
             'id' => "form-autenticar", 'class' => "ui-bar ui-bar-c ui-corner-all", 'data-ajax'=>"false"
         ),

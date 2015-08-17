@@ -12,6 +12,8 @@
         <script>requestUrl = "<?php echo Yii::app()->request->baseUrl; ?>";</script>
         <link rel="shortcut icon" href="<?php echo Yii::app()->request->baseUrl; ?>/images/favicon_16.ico" type="image/x-icon" />  
         <title><?php echo CHtml::encode($this->pageTitle); ?></title>
+
+        <?php Yii::app()->getClientScript()->registerCssFile(Yii::app()->request->baseUrl . "/css/mobile.css"); ?>
     </head>
 
     <body>
@@ -27,17 +29,17 @@
                         <?php else: ?>
                             <div class="c_icon c_icon_user"><a href="#panel-menu-usuario"><img src="<?php echo Yii::app()->request->baseUrl; ?>/images/iconos/icon_user.png"></a></div>
                         <?php endif; ?>
-                            <div class="c_icon c_icon_ub"><a href="#" onclick="verUbicacion();"><img src="<?php echo Yii::app()->request->baseUrl; ?>/images/iconos/icon_ub.png"></a></div>                            
+                        <div class="c_icon c_icon_ub"><a href="#" onclick="verUbicacion();"><img src="<?php echo Yii::app()->request->baseUrl; ?>/images/iconos/icon_ub.png"></a></div>                            
                     <?php endif; ?>  
-                    <a href="<?php echo $this->createUrl('/') ?>" class="<?php if ($this->showHeaderIcons): echo 'logo-main'; else: echo 'logo-home'; endif; ?>" data-ajax="false"><img src="<?php echo Yii::app()->request->baseUrl; ?>/images/logotop.png" alt="logo - La Rebaja" title="<?php echo CHtml::encode(Yii::app()->name) ?>"></a>                 
+                    <a href="<?php echo ($this->showHeaderIcons ? $this->createUrl('/sitio/inicio') : $this->createUrl('/')) ?>" class="<?php echo ($this->showHeaderIcons ? "logo-main" : "logo-home") ?>" data-ajax="false"><img src="<?php echo Yii::app()->request->baseUrl; ?>/images/logotop.png" alt="logo - La Rebaja" title="<?php echo CHtml::encode(Yii::app()->name) ?>"></a>                 
                 </div>
 
                 <?php if ($this->showHeaderIcons): ?>
-                <div id="ubicacion-info" class=" hide" data-active="0">                            
-                    <a href="<?php echo CController::createUrl('/sitio/ubicacion') ?>" data-ajax="false" class="title_h">
-                        <?php echo $this->sectorName ?>
-                    </a>
-                </div>
+                    <div id="ubicacion-info" class=" hide" data-active="0"> 
+                        <a href="#" data-role="cambioubicacion" class="title_h">
+                            <?php echo $this->sectorName ?>
+                        </a>
+                    </div>
                 <?php endif; ?>  
                 <?php if ($this->showSeeker): ?>
                     <div class="ui-content search-bar">
@@ -53,15 +55,27 @@
             <!-- Fin header -->
 
             <div data-role="main" id="main-content">
-		<a href="#" class="scroll-top">Ir Arriba</a>
+                <a href="#" class="scroll-top">Ir Arriba</a>
                 <?php echo $content; ?>
+
+                <div data-role="popup" id="popup-cambioubicacion" data-dismissible="false" data-theme="a" data-position-to="window" class="c_lst_pop_cont">
+                    <a href="#" data-rel="back" class="ui-btn ui-corner-all ui-shadow ui-btn ui-icon-delete ui-btn-icon-notext ui-btn-right">Close</a>
+                    <div data-role="main">
+                        <div data-role="content">
+                            <h2>Tienes productos en el carrito, al cambiar la ubicación se borrarán.</h2>
+                            <?php echo CHtml::link('Seleccionar ubicación', $this->createUrl('/sitio/ubicacion'), array('class' => 'ui-btn ui-corner-all ui-shadow ui-btn-n', 'data-mini' => 'true', 'data-ajax' => 'false')); ?>
+                            <?php echo CHtml::link('Cerrar', '#', array('class' => 'ui-btn ui-corner-all ui-shadow ui-btn-r', 'data-mini' => 'true', 'data-rel' => 'back')); ?>
+                        </div>
+                    </div>
+                </div>
+
             </div>
             <!-- Fin main content -->
 
             <div data-role="panel" id="panel-menu-ppal" data-display="overlay" data-position="right" data-position-fixed="false">
                 <?php $this->renderPartial('/sitio/menu'); ?>
             </div>
-            
+
             <div data-role="panel" id="panel-carro-canasta" data-display="overlay" data-position="right" data-position-fixed="false">
                 <?php $this->renderPartial('/carro/canasta'); ?>
             </div>
@@ -76,26 +90,26 @@
                 <?php echo $content; ?>
             <?php endforeach; ?>
 
-            <div data-role="footer" data-theme="f" <?php echo ($this->fixedFooter ? 'data-position="fixed" data-visible-on-page-show="false" data-tap-toggle="false"' : "")?> >
+            <div data-role="footer" data-theme="f" <?php echo ($this->fixedFooter ? 'data-position="fixed" data-visible-on-page-show="false" data-tap-toggle="false"' : "") ?> >
                 <div class="f_redes_sociales ui-content">
                     <a href="#" class="ui-btn ui-btn-inline ui-icon-tw ui-btn-icon-notext ui-corner-all ui-shadow ui-nodisc-icon ui-alt-icon">Twitter</a>
                     <a href="#" class="ui-btn ui-btn-inline ui-icon-yt ui-btn-icon-notext ui-corner-all ui-shadow ui-nodisc-icon ui-alt-icon">YouTube</a>
                     <a href="#" class="ui-btn ui-btn-inline ui-icon-fb ui-btn-icon-notext ui-corner-all ui-shadow ui-nodisc-icon ui-alt-icon">Facebook</a>
 
                     <div class="cont_call">                        
-                        <p><strong>Call Center</strong> 01 8000 939 900<br><span>&copy; 2015 Copservir Ltda | Colombia</span></p>
+                        <p>
+                            <strong>Call Center</strong> 01 8000 939 900
+                            <br>
+                            <span>Calle 13 No. 42 - 10 Bogotá, Colombia</span>
+                            <br>
+                            <span>&copy; 2015 Copservir Ltda | Colombia</span>
+                        </p>
                     </div>
                 </div>
-               <!-- <div class="f_copy">
-                    <div class="copyright">
-                        <p></p>
-                    </div>
-                </div>-->
                 <div class="f_sic ui-content">
-                    <p> SIC - Superintendencia de Industria y Comercio </p>
+                    <a href="http://www.sic.gov.co/es/" target="_blank">SIC - Superintendencia de Industria y Comercio</a>
                 </div>
                 <div class="barraf"></div>
-
             </div>
             <!-- Fin footer -->
         </div>

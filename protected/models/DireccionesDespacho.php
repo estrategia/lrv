@@ -7,7 +7,6 @@
  * @property integer $idDireccionDespacho
  * @property string $identificacionUsuario
  * @property string $descripcion
- * @property string $identificacionBeneficiario
  * @property string $nombre
  * @property string $direccion
  * @property string $barrio
@@ -20,7 +19,9 @@
  * @property string $pdvAsignado
  *
  * The followings are the available model relations:
- * @property MUsuario $identificacionUsuario0
+ * @property Usuario $objUsuario
+ * @property Ciudad $objCiudad
+ * @property Sector $objSector
  */
 class DireccionesDespacho extends CActiveRecord {
 
@@ -38,21 +39,53 @@ class DireccionesDespacho extends CActiveRecord {
         // NOTE: you should only define rules for those attributes that
         // will receive user inputs.
         return array(
+            array('descripcion, nombre, direccion, barrio, telefono, extension, celular', 'attributeTrim'),
             array('idDireccionDespacho', 'required', 'on' => 'update', 'message' => '{attribute} no puede estar vacío'),
             array('identificacionUsuario, descripcion, nombre, direccion, barrio, telefono, codigoCiudad, codigoSector', 'required', 'message' => '{attribute} no puede estar vacío'),
-            array('activo, extension, telefono, celular', 'numerical', 'integerOnly' => true),
-            array('identificacionUsuario, direccion', 'length', 'min'=> 5, 'max' => 100),
-            array('descripcion', 'length', 'min'=> 3, 'max' => 50),
-            array('nombre, barrio', 'length', 'min'=> 5, 'max' => 50),
-            array('identificacionBeneficiario, celular', 'length', 'min'=> 5, 'max' => 20),
-            array('telefono', 'length', 'min'=> 5, 'max' => 11),
+            array('activo, extension, telefono, celular', 'numerical', 'integerOnly' => true, 'message'=>'{attribute} deber ser número'),
+            array('identificacionUsuario, direccion', 'length', 'min' => 5, 'max' => 100),
+            array('descripcion', 'length', 'min' => 3, 'max' => 50),
+            array('nombre, barrio', 'length', 'min' => 5, 'max' => 50),
+            array('celular', 'length', 'min' => 5, 'max' => 20),
+            array('telefono', 'length', 'min' => 5, 'max' => 11),
+            array('extension', 'length', 'max' => 5),
             array('codigoCiudad, codigoSector', 'length', 'max' => 10),
             array('pdvAsignado', 'length', 'max' => 3),
-            array('identificacionBeneficiario, celular, extension, pdvAsignado','default','value'=>null),
+            array('celular, extension, pdvAsignado', 'default', 'value' => null),
+            array('codigoCiudad', 'validarCiudadSector'),
             // The following rule is used by search().
             // @todo Please remove those attributes that should not be searched.
-            array('idDireccionDespacho, identificacionUsuario, descripcion, identificacionBeneficiario, nombre, direccion, barrio, telefono, celular, codigoCiudad, codigoSector, activo, extension, pdvAsignado', 'safe', 'on' => 'search'),
+            array('idDireccionDespacho, identificacionUsuario, descripcion, nombre, direccion, barrio, telefono, celular, codigoCiudad, codigoSector, activo, extension, pdvAsignado', 'safe', 'on' => 'search'),
         );
+    }
+    
+    /**
+     * Valida que exista empleado con cedula indicada y que este activo.
+     * Este es un validador declarado en rules().
+     */
+    public function attributeTrim($attribute, $params) {
+        if($this->$attribute != null && gettype($this->$attribute)=="string"){
+            $this->$attribute = trim($this->$attribute);
+        }
+    }
+
+    /**
+     * Valida existencia de sector
+     */
+    public function validarCiudadSector($attribute, $params) {
+        if (!$this->hasErrors()) {
+            $objSectorCiudad = SectorCiudad::model()->find(array(
+                'condition' => 'codigoCiudad=:ciudad AND codigoSector=:sector',
+                'params' => array(
+                    ':ciudad' => $this->codigoCiudad,
+                    ':sector' => $this->codigoSector,
+                )
+            ));
+
+            if ($objSectorCiudad === null) {
+                $this->addError('codigoCiudad', $this->getAttributeLabel($attribute) . ' no existente');
+            }
+        }
     }
 
     /**
@@ -62,7 +95,9 @@ class DireccionesDespacho extends CActiveRecord {
         // NOTE: you may need to adjust the relation name and the related
         // class name for the relations automatically generated below.
         return array(
-            'identificacionUsuario0' => array(self::BELONGS_TO, 'MUsuario', 'identificacionUsuario'),
+            'objUsuario' => array(self::BELONGS_TO, 'Usuario', 'identificacionUsuario'),
+            'objCiudad' => array(self::BELONGS_TO, 'Ciudad', 'codigoCiudad'),
+            'objSector' => array(self::BELONGS_TO, 'Sector', 'codigoSector'),
         );
     }
 
@@ -74,7 +109,6 @@ class DireccionesDespacho extends CActiveRecord {
             'idDireccionDespacho' => 'Id Direccion Despacho',
             'identificacionUsuario' => 'Identificación usuario',
             'descripcion' => 'Descripción',
-            'identificacionBeneficiario' => 'Identificación beneficiario',
             'nombre' => 'Nombre',
             'direccion' => 'Dirección',
             'barrio' => 'Barrio',
@@ -108,7 +142,6 @@ class DireccionesDespacho extends CActiveRecord {
         $criteria->compare('idDireccionDespacho', $this->idDireccionDespacho);
         $criteria->compare('identificacionUsuario', $this->identificacionUsuario, true);
         $criteria->compare('descripcion', $this->descripcion, true);
-        $criteria->compare('identificacionBeneficiario', $this->identificacionBeneficiario, true);
         $criteria->compare('nombre', $this->nombre, true);
         $criteria->compare('direccion', $this->direccion, true);
         $criteria->compare('barrio', $this->barrio, true);
@@ -133,6 +166,19 @@ class DireccionesDespacho extends CActiveRecord {
      */
     public static function model($className = __CLASS__) {
         return parent::model($className);
+    }
+
+    /**
+     * Metodo que hereda comportamiento de ValidateModelBehavior
+     * @return void
+     */
+    public function behaviors() {
+        return array(
+            'ValidateModelBehavior' => array(
+                'class' => 'application.components.behaviors.ValidateModelBehavior',
+                'model' => $this
+            ),
+        );
     }
 
 }

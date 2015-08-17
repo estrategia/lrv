@@ -8,9 +8,7 @@
  * @property string $genero
  * @property string $fechaNacimiento
  * @property string $fechaRegistro
- * @property string $profesion
- * @property integer $codigoCiudad
- * @property integer $codigoSector
+ * @property string $codigoProfesion
  * @property string $recuperacionFecha
  * @property string $recuperacionCodigo
  *
@@ -33,15 +31,15 @@ class UsuarioExtendida extends CActiveRecord {
         // NOTE: you should only define rules for those attributes that
         // will receive user inputs.
         return array(
-            array('fechaRegistro', 'required'),
-            array('codigoCiudad, codigoSector', 'numerical', 'integerOnly' => true),
-            array('identificacionUsuario, profesion', 'length', 'max' => 100),
+            array('fechaRegistro', 'safe'),
+            array('identificacionUsuario', 'length', 'max' => 100),
+            array('codigoProfesion', 'length', 'max' => 255),
             array('genero', 'in', 'range' => array(1, 2), 'allowEmpty' => true),
             array('fechaNacimiento', 'date', 'format' => 'yyyy-M-d', 'allowEmpty' => true),
             array('genero, fechaNacimiento, recuperacionFecha, recuperacionCodigo', 'default', 'value' => null),
             // The following rule is used by search().
             // @todo Please remove those attributes that should not be searched.
-            array('identificacionUsuario, genero, fechaNacimiento, fechaRegistro, profesion, codigoCiudad, codigoSector, recuperacionFecha, recuperacionCodigo', 'safe', 'on' => 'search'),
+            array('identificacionUsuario, genero, fechaNacimiento, fechaRegistro, codigoProfesion, recuperacionFecha, recuperacionCodigo', 'safe', 'on' => 'search'),
         );
     }
 
@@ -53,6 +51,7 @@ class UsuarioExtendida extends CActiveRecord {
         // class name for the relations automatically generated below.
         return array(
             'ObjUsuario' => array(self::BELONGS_TO, 'Usuario', 'identificacionUsuario'),
+            'ObjProfesion' => array(self::BELONGS_TO, 'ProfesionCliente', 'codigoProfesion'),
         );
     }
 
@@ -65,9 +64,7 @@ class UsuarioExtendida extends CActiveRecord {
             'genero' => 'Género',
             'fechaNacimiento' => 'Fecha de nacimiento',
             'fechaRegistro' => 'Fecha de registro',
-            'profesion' => 'Profesión',
-            'codigoCiudad' => 'Codigo ciudad',
-            'codigoSector' => 'Codigo sector',
+            'codigoProfesion' => 'Profesión',
         );
     }
 
@@ -88,13 +85,11 @@ class UsuarioExtendida extends CActiveRecord {
 
         $criteria = new CDbCriteria;
 
-        $criteria->compare('identificacionUsuario', $this->identificacionUsuario, true);
+        $criteria->compare('identificacionUsuario', $this->identificacionUsuario);
         $criteria->compare('genero', $this->genero, true);
         $criteria->compare('fechaNacimiento', $this->fechaNacimiento, true);
         $criteria->compare('fechaRegistro', $this->fechaRegistro, true);
-        $criteria->compare('profesion', $this->profesion, true);
-        $criteria->compare('codigoCiudad', $this->codigoCiudad);
-        $criteria->compare('codigoSector', $this->codigoSector);
+        $criteria->compare('codigoProfesion', $this->codigoProfesion);
 
         return new CActiveDataProvider($this, array(
             'criteria' => $criteria,
@@ -109,6 +104,14 @@ class UsuarioExtendida extends CActiveRecord {
      */
     public static function model($className = __CLASS__) {
         return parent::model($className);
+    }
+    
+    public function beforeSave() {
+        if($this->isNewRecord){
+            //$this->fechaRegistro = new CDbExpression('NOW()');
+            $this->fechaRegistro = date('Y-m-d H:i:s');
+        }
+        return parent::beforeSave();
     }
 
 }

@@ -7,7 +7,8 @@
  * @property integer $codigoEspecial
  * @property string $descripcion
  * @property string $rutaIcono
- * @property string $confirmacionCompra
+ * @property integer $confirmacionCompra
+ * @property integer $condicionCompra
  */
 class CodigoEspecial extends CActiveRecord {
 
@@ -25,14 +26,14 @@ class CodigoEspecial extends CActiveRecord {
         // NOTE: you should only define rules for those attributes that
         // will receive user inputs.
         return array(
-            array('rutaIcono', 'required'),
-            array('codigoEspecial', 'numerical', 'integerOnly' => true),
+            array('rutaIcono, confirmacionCompra', 'required'),
+            array('codigoEspecial, confirmacionCompra', 'numerical', 'integerOnly' => true),
             array('descripcion', 'length', 'max' => 500),
             array('rutaIcono', 'length', 'max' => 100),
-            array('confirmacionCompra', 'length', 'max' => 2),
+            array('condicionCompra', 'length', 'max' => 200),
             // The following rule is used by search().
             // @todo Please remove those attributes that should not be searched.
-            array('codigoEspecial, descripcion, rutaIcono, confirmacionCompra', 'safe', 'on' => 'search'),
+            array('codigoEspecial, descripcion, rutaIcono, confirmacionCompra, condicionCompra', 'safe', 'on' => 'search'),
         );
     }
 
@@ -54,7 +55,8 @@ class CodigoEspecial extends CActiveRecord {
             'codigoEspecial' => 'Codigo Especial',
             'descripcion' => 'Descripcion',
             'rutaIcono' => 'Ruta Icono',
-            'confirmacionCompra' => 'Confirmacion Compra',
+            'confirmacionCompra' => 'Confirmación Compra',
+            'condicionCompra' => 'Condición Compra',
         );
     }
 
@@ -78,7 +80,8 @@ class CodigoEspecial extends CActiveRecord {
         $criteria->compare('codigoEspecial', $this->codigoEspecial);
         $criteria->compare('descripcion', $this->descripcion, true);
         $criteria->compare('rutaIcono', $this->rutaIcono, true);
-        $criteria->compare('confirmacionCompra', $this->confirmacionCompra, true);
+        $criteria->compare('confirmacionCompra', $this->confirmacionCompra);
+        $criteria->compare('condicionCompra', $this->condicionCompra);
 
         return new CActiveDataProvider($this, array(
             'criteria' => $criteria,

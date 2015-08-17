@@ -24,7 +24,7 @@
                             <ul data-role="listview" data-inset="false" class="list_ciud">
                                 <?php foreach ($listCiudadesSubsectores[$idxCiudadesSubSectores[$ciudad->codigoCiudad]]->listSubSectores as $subSector): ?>
                                     <li>
-                                        <a href="#subsector-panel-<?php echo $subSector->codigoSubSector ?>" class="ui-btn ui-btn-inline ui-corner-all ui-icon-carat-r ui-btn-icon-right c_btn_sel"><?php echo $subSector->nombreSubSector ?></a>
+                                        <a href="#subsector-panel-<?php echo $subSector->codigoCiudad . $subSector->codigoSubSector ?>" class="ui-btn ui-btn-inline ui-corner-all ui-icon-carat-r ui-btn-icon-right c_btn_sel"><?php echo $subSector->nombreSubSector ?></a>
                                     </li>
                                 <?php endforeach; ?>
                             </ul>
@@ -54,6 +54,10 @@
             <?php endforeach; ?>
         </div>
     </div>
+    
+    <?php if($objSectorCiudad!=null):?>
+        <?php echo CHtml::link('Continuar en ' . $this->sectorName, $this->createUrl('/sitio/inicio'), array('class' => 'ui-btn ui-corner-all ui-shadow ui-btn-n btn_add_lst_pr', 'data-mini' => 'true', 'data-ajax' => 'false')); ?>
+    <?php endif;?>
 </div>
 
 <div data-role="popup" id="popup-ubicacion-gps" data-dismissible="false" data-position-to="window" data-theme="a">
@@ -61,7 +65,8 @@
     <div data-role="main">
         <div data-role="content">
             <h2></h2>
-            <a href="#" class="ui-btn ui-corner-all ui-shadow ui-btn-r">Usar esta ubicación</a>
+            <a href="#" class="ui-btn ui-corner-all ui-shadow ui-btn-r" data-ajax='false'>Usar esta ubicación</a>
+            <a href="#" class="ui-btn ui-corner-all ui-shadow ui-btn-n" data-rel='back'>Cerrar</a>
         </div>
     </div>
 </div>

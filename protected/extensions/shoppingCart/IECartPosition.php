@@ -8,7 +8,6 @@
  * @package ShoppingCart
  */
 abstract class IECartPosition {
-
     protected $priceUnit = 0;
     protected $priceFraction = 0;
     protected $quantityUnit = 0;
@@ -69,6 +68,14 @@ abstract class IECartPosition {
      */
     public function getQuantity($fraction = false) {
         return ($fraction ? $this->quantityFraction : ($this->quantityUnit+$this->quantityStored));
+    }
+    
+    /**
+     * Returns quantity.
+     * @return int
+     */
+    public function getQuantityUnit() {
+        return $this->quantityUnit;
     }
 
     /**

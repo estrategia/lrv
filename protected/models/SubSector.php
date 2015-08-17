@@ -1,18 +1,17 @@
 <?php
 
 /**
- * This is the model class for table "m_SubSector1".
+ * This is the model class for table "m_SubSector".
  *
- * The followings are the available columns in table 'm_SubSector1':
+ * The followings are the available columns in table 'm_SubSector':
  * @property integer $codigoSubSector
  * @property string $codigoCiudad
  * @property string $nombreSubSector
  * @property integer $estadoSubSector
  *
  * The followings are the available model relations:
- * @property MPuntoReferencia1[] $mPuntoReferencia1s
- * @property MPuntoReferencia1[] $mPuntoReferencia1s1
- * @property MCiudad $codigoCiudad0
+ * @property SectorPuntoReferencia[] $listSectorReferencias
+ * @property Ciudad $objCiudad
  */
 class SubSector extends CActiveRecord {
 
@@ -47,10 +46,8 @@ class SubSector extends CActiveRecord {
         // NOTE: you may need to adjust the relation name and the related
         // class name for the relations automatically generated below.
         return array(
-            //'mPuntoReferencia1s' => array(self::HAS_MANY, 'PuntoReferencia1', 'codigoSubSector'),
-            //'mPuntoReferencia1s1' => array(self::HAS_MANY, 'PuntoReferencia1', 'codigoCiudad'),
+            'listSectorReferencias' => array(self::HAS_MANY, 'SectorPuntoReferencia', array('codigoSubSector','codigoCiudad')),
             'objCiudad' => array(self::BELONGS_TO, 'Ciudad', 'codigoCiudad'),
-            'listReferencias' => array(self::HAS_MANY, 'PuntoReferencia', array('codigoSubSector','codigoCiudad')),
         );
     }
 
@@ -97,7 +94,7 @@ class SubSector extends CActiveRecord {
      * Returns the static model of the specified AR class.
      * Please note that you should have this exact method in all your CActiveRecord descendants!
      * @param string $className active record class name.
-     * @return SubSector1 the static model class
+     * @return SubSector the static model class
      */
     public static function model($className = __CLASS__) {
         return parent::model($className);

@@ -42,7 +42,7 @@ class Categoria extends CActiveRecord {
         // NOTE: you may need to adjust the relation name and the related
         // class name for the relations automatically generated below.
         return array(
-            'listCategoriasTienda' => array(self::MANY_MANY, 'CategoriaTienda', 't_CategoriasCategoriaTienda(idCategoriaTienda, idCategoriaBI)'),
+            'listCategoriasTienda' => array(self::MANY_MANY, 'CategoriaTienda', 'm_CategoriasCategoriaTienda(idCategoriaTienda, idCategoriaBI)'),
         );
     }
 

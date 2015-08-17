@@ -1,0 +1,1 @@
+<div class='center'><strong><?php echo $mensaje ?></strong></div>

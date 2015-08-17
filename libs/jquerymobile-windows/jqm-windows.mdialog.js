@@ -9,6 +9,7 @@
   $.widget( "mobile.mdialog", $.mobile.widget, {
 	options: {
 		version: "1.4.4-2014091400", // jQueryMobile-YrMoDaySerial
+                id: false,
 		
 		useMenuMode: false,
 		
@@ -51,6 +52,8 @@
 			basePop = $("<div data-role='popup' data-theme='" + theme + "'></div>");
 			
 		self.internalID = new Date().getTime();
+                
+                
 		
 		if ( o.containerTheme !== false ) { basePop.attr("data-theme", o.containerTheme); }
 		
@@ -185,7 +188,9 @@
 			afteropen: funcs.open,
 			afterclose: funcs.close
 		});
-		
+                
+                
+		if(o.id !== false) { basePop.attr("id", o.id); }
 		basePop.popup("open", funcs.openext);
 	},
 	_appendInput: function(start) {

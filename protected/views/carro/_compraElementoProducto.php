@@ -24,7 +24,7 @@
 
         <div class="clst_pre_cantidad">Cantidad: <span><?php echo $position->getQuantity() - $position->getQuantityStored() ?></span></div>
         <?php if ($position->getQuantity(true) > 0): ?>
-            <div class="clst_pre_act">U.M.V: <?php echo $position->getQuantity(true) ?></div>
+            <div class="clst_pre_cantidad">U.M.V: <?php echo $position->getQuantity(true) ?></div>
         <?php endif; ?>
 
         <p style="font-size:medium;">Subtotal <?php echo Yii::app()->numberFormatter->format(Yii::app()->params->formatoMoneda['patron'], $position->getSumPrice(false, true), Yii::app()->params->formatoMoneda['moneda']); ?></p>

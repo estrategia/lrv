@@ -16,8 +16,10 @@ function sendHtmlEmail($toStr, $subject, $content, $ccStr = null) {
       $mail->Host = 'mailserver.copservir.com';
       $mail->Port = 25;
       $mail->SMTPAuth = false;
-      $mail->isHTML(true); */
-    
+      $mail->isHTML(true); 
+      $mail->CharSet = "UTF-8";
+     */
+
     Yii::import('application.extensions.phpmailer.JPhpMailer');
     $mail = new JPhpMailer;
     $mail->isSMTP();
@@ -29,10 +31,11 @@ function sendHtmlEmail($toStr, $subject, $content, $ccStr = null) {
     $mail->SMTPSecure = 'tls';
     $mail->Port = 587;
     $mail->isHTML(true);
-    
+    $mail->CharSet = "UTF-8";
+
     $mail->From = Yii::app()->params->correoAdmin;
     $mail->FromName = Yii::app()->name;
-    
+
     if ($toStr === null) {
         throw new Exception("email receiver is empty");
     }
@@ -86,18 +89,18 @@ function distanciaCoordenadas($lat1, $lon1, $lat2, $lon2, $unit = 'K') {
 
 function GSASearch(&$term) {
     $codigosArray = array();
-    
+
     if ($term != "") {
         GSAResult($term, $result);
 
         if ($result !== false) {
-            require_once (Yii::app()->basePath . DS . 'vendor' . DS . 'XML2Array.php'); //Libreria que convierte el xml a array
+            require_once (Yii::app()->basePath . DS . 'vendors' . DS . 'XML2Array.php'); //Libreria que convierte el xml a array
             //Se procesa el XML para cambiarle el formato
             $dom = new DOMDocument('1.0', 'utf-8');
             $dom->loadXML($result);
 
             $array = XML2Array::createArray($dom);
-            
+
             //Si hay una palabra sugerida se realiza de nuevo busqueda con sugerencia
             if (isset($array["GSP"]) && isset($array["GSP"]["Spelling"]["Suggestion"]) && $array["GSP"]["Spelling"]["Suggestion"] != "") {
                 $term = $array["GSP"]["Spelling"]["Suggestion"]["@attributes"]["q"];
@@ -106,7 +109,7 @@ function GSASearch(&$term) {
                     $dom = new DOMDocument('1.0', 'utf-8');
                     $dom->loadXML($result);
                     $array = XML2Array::createArray($dom);
-                }else{
+                } else {
                     $array = array();
                 }
             }

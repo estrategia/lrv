@@ -1,19 +1,12 @@
 <?php
 
-//'with' => array('listImagenes', 'objDetalle', 'objCodigoEspecial', 'listCalificaciones' => array('with' => 'objUsuario'), 'listSaldos' => array('condition' => 'listSaldos.saldoUnidad>:saldo AND listSaldos.codigoCiudad=:ciudad AND listSaldos.codigoSector=:sector'), 'listPrecios' => array('condition' => 'listPrecios.codigoCiudad=:ciudad AND listPrecios.codigoSector=:sector')),
 class CatalogoController extends Controller {
-
     public function actionCategoria($categoria) {
         $objSectorCiudad = null;
         if (isset(Yii::app()->session[Yii::app()->params->sesion['sectorCiudadEntrega']]))
             $objSectorCiudad = Yii::app()->session[Yii::app()->params->sesion['sectorCiudadEntrega']];
 
-        $codigoPerfil = Yii::app()->params->perfil['defecto'];
-
-        if (!Yii::app()->user->isGuest) {
-            $usuario = Yii::app()->session[Yii::app()->params->usuario['sesion']];
-            $codigoPerfil = $usuario->objPerfil->codigoPerfil;
-        }
+        $codigoPerfil = Yii::app()->shoppingCart->getCodigoPerfil();
 
         $objCategoria = CategoriaTienda::model()->find(array(
             'with' => 'listCategoriasBI',
@@ -32,18 +25,16 @@ class CatalogoController extends Controller {
         }
 
         if ($objCategoria == null || empty($listIdsCategoriaBI)) {
-            if ($objSectorCiudad != null) {
-                try {
-                    Busquedas::registrarBusqueda(array(
-                        'idenficacionUsuario' => Yii::app()->user->isGuest ? null : Yii::app()->user->name,
-                        'tipoBusqueda' => Yii::app()->params->busqueda['tipo']['categoria'],
-                        'msgBusqueda' => $objCategoria == null ? "Categoria tienda: $categoria. No existe" : "Categoria tienda: $categoria - $objCategoria->nombreCategoriaTienda",
-                        'codigoCiudad' => $objSectorCiudad->codigoCiudad,
-                        'codigoSector' => $objSectorCiudad->codigoSector,
-                    ));
-                } catch (Exception $exc) {
-                    Yii::log($exc->getMessage() . "\n" . $exc->getTraceAsString(), CLogger::LEVEL_ERROR, 'application');
-                }
+            try {
+                Busquedas::registrarBusqueda(array(
+                    'idenficacionUsuario' => Yii::app()->user->isGuest ? null : Yii::app()->user->name,
+                    'tipoBusqueda' => Yii::app()->params->busqueda['tipo']['categoria'],
+                    'msgBusqueda' => $objCategoria == null ? "Categoria tienda: $categoria. No existe" : "Categoria tienda: $categoria - $objCategoria->nombreCategoriaTienda",
+                    'codigoCiudad' => $objSectorCiudad == null ? null : $objSectorCiudad->codigoCiudad,
+                    'codigoSector' => $objSectorCiudad == null ? null : $objSectorCiudad->codigoSector,
+                ));
+            } catch (Exception $exc) {
+                Yii::log($exc->getMessage() . "\n" . $exc->getTraceAsString(), CLogger::LEVEL_ERROR, 'application');
             }
 
             $this->render('listaProductos', array(
@@ -77,10 +68,8 @@ class CatalogoController extends Controller {
 
         Yii::app()->session[Yii::app()->params->sesion['productosBusquedaCategoria']] = $categoria;
 
-        //echo "Categoria: $categoriaSesion";
-
-
         $formOrdenamiento = new OrdenamientoForm;
+        $formFiltro = new FiltroForm;
 
         if (isset($_POST['OrdenamientoForm'])) {
             $formOrdenamiento->attributes = $_POST['OrdenamientoForm'];
@@ -90,23 +79,29 @@ class CatalogoController extends Controller {
                 $formFiltro = Yii::app()->session[Yii::app()->params->sesion['productosBusquedaFiltro']];
             }
         }
-
-        $formFiltro = new FiltroForm;
+        
         if (isset($_POST['FiltroForm'])) {
             $formFiltro->attributes = $_POST['FiltroForm'];
+            $formFiltro->listMarcasCheck = $formFiltro->listMarcas;
+            $formFiltro->listFiltrosCheck = $formFiltro->listFiltros;
             Yii::app()->session[Yii::app()->params->sesion['productosBusquedaFiltro']] = $formFiltro;
 
             if (Yii::app()->session[Yii::app()->params->sesion['productosBusquedaOrden']] != null) {
                 $formOrdenamiento = Yii::app()->session[Yii::app()->params->sesion['productosBusquedaOrden']];
             }
         }
+        
+       /* CVarDumper::dump($formOrdenamiento);
+        echo "<br/><br/><br/>";
+        CVarDumper::dump($formFiltro);*/
 
         $parametrosProductos = array();
         $listCombos = array();
 
         if ($objSectorCiudad == null) {
             $parametrosProductos = array(
-                'with' => array('listImagenes', 'objCodigoEspecial', 'listCalificaciones', 'objMarca', 'listAtributos'),
+                'order'=>'t.orden',
+                'with' => array('listImagenes', 'objCodigoEspecial', 'listCalificaciones', 'objMarca', 'listFiltros'),
                 'condition' => 't.activo=:activo AND t.idCategoriaBI IN (' . implode(",", $listIdsCategoriaBI) . ')',
                 'params' => array(
                     ':activo' => 1,
@@ -114,8 +109,9 @@ class CatalogoController extends Controller {
             );
         } else {
             $parametrosProductos = array(
+                'order'=>'t.orden',
                 'with' => array(
-                    'listImagenes', 'objCodigoEspecial', 'listCalificaciones', 'objMarca', 'listAtributos',
+                    'listImagenes', 'objCodigoEspecial', 'listCalificaciones', 'objMarca', 'listFiltros',
                     'listSaldos' => array('condition' => '(listSaldos.saldoUnidad>:saldo AND listSaldos.codigoCiudad=:ciudad AND listSaldos.codigoSector=:sector) OR (listSaldos.saldoUnidad IS NULL AND listSaldos.codigoCiudad IS NULL AND listSaldos.codigoSector IS NULL)'),
                     'listPrecios' => array('condition' => '(listPrecios.codigoCiudad=:ciudad AND listPrecios.codigoSector=:sector) OR (listPrecios.codigoCiudad IS NULL AND listPrecios.codigoSector IS NULL)'),
                     'listSaldosTerceros' => array('condition' => '(listSaldosTerceros.codigoCiudad=:ciudad AND listSaldosTerceros.codigoSector=:sector) OR (listSaldosTerceros.codigoCiudad IS NULL AND listSaldosTerceros.codigoSector IS NULL)')
@@ -146,9 +142,9 @@ class CatalogoController extends Controller {
 
         if ($formOrdenamiento->orden != null) {
             if ($formOrdenamiento->orden == 1) {
-                $parametrosProductos['order'] = "listPrecios.precioUnidad ASC";
+                $parametrosProductos['order'] = "((CASE WHEN listPrecios.precioUnidad IS NULL THEN 0 ELSE listPrecios.precioUnidad END) + (CASE WHEN listSaldosTerceros.precioUnidad IS NULL THEN 0 ELSE listSaldosTerceros.precioUnidad END)) ASC";
             } else if ($formOrdenamiento->orden == 2) {
-                $parametrosProductos['order'] = "listPrecios.precioUnidad DESC";
+                $parametrosProductos['order'] = "((CASE WHEN listPrecios.precioUnidad IS NULL THEN 0 ELSE listPrecios.precioUnidad END) + (CASE WHEN listSaldosTerceros.precioUnidad IS NULL THEN 0 ELSE listSaldosTerceros.precioUnidad END)) DESC";
             } else if ($formOrdenamiento->orden == 3) {
                 $parametrosProductos['order'] = "t.descripcionProducto";
             } else if ($formOrdenamiento->orden == 4) {
@@ -160,16 +156,15 @@ class CatalogoController extends Controller {
             $parametrosProductos['condition'] = $parametrosProductos['condition'] . " AND t.descripcionProducto LIKE '%$formFiltro->nombre%'";
         }
 
-        if ($formFiltro->listMarcas != null) {
-            $formFiltro->listMarcasCheck = $formFiltro->listMarcas;
-            $codigosMarcas = implode(",", $formFiltro->listMarcas);
+        if ($formFiltro->listMarcasCheck != null && !empty($formFiltro->listMarcasCheck)) {
+            $codigosMarcas = implode(",", $formFiltro->listMarcasCheck);
             $parametrosProductos['condition'] = $parametrosProductos['condition'] . " AND t.idMarca IN ($codigosMarcas)";
         }
-
-        if ($formFiltro->listAtributos != null) {
-            $formFiltro->listAtributosCheck = $formFiltro->listAtributos;
-            $codigosAtributos = implode(",", $formFiltro->listAtributos);
-            $parametrosProductos['condition'] = $parametrosProductos['condition'] . " AND listAtributos.idAtributo IN ($codigosAtributos)";
+        
+        if ($formFiltro->listFiltrosCheck != null && !empty($formFiltro->listFiltrosCheck)) {
+            //$formFiltro->listFiltrosCheck = $formFiltro->listFiltros;
+            $codigosAtributos = implode(",", $formFiltro->listFiltrosCheck);
+            $parametrosProductos['condition'] = $parametrosProductos['condition'] . " AND listFiltros.idFiltroDetalle IN ($codigosAtributos)";
         }
 
         $listProductos = Producto::model()->findAll($parametrosProductos);
@@ -180,17 +175,26 @@ class CatalogoController extends Controller {
 
         $msgCodigoEspecial = array();
         $formFiltro->listMarcas = array();
-        $formFiltro->listAtributos = array();
+        $formFiltro->listFiltros = array();
         foreach ($listProductos as $objProducto) {
             if ($objProducto->codigoEspecial != null && $objProducto->codigoEspecial != 0) {
                 $msgCodigoEspecial[$objProducto->codigoEspecial] = $objProducto->objCodigoEspecial;
             }
             $formFiltro->listMarcas[$objProducto->idMarca] = $objProducto->objMarca->nombreMarca;
 
-            foreach ($objProducto->listAtributos as $objAtributo) {
-                $formFiltro->listAtributos[$objAtributo->idAtributo] = $objAtributo->nombreAtributo;
+            foreach ($objProducto->listFiltros as $objFiltro) {
+                if(!isset($formFiltro->listFiltros[$objFiltro->idFiltro])){
+                    $formFiltro->listFiltros[$objFiltro->idFiltro] = array(
+                        'nombreFiltro' => $objFiltro->objFiltro->nombreFiltro,
+                        'listFiltros' => array()
+                    );
+                }
+                $formFiltro->listFiltros[$objFiltro->idFiltro]['listFiltros'][$objFiltro->idFiltroDetalle] = $objFiltro->nombreDetalle;
             }
         }
+        
+        /*CVarDumper::dump($formFiltro->listFiltros, 10, true);
+        exit();*/
 
         $parametrosVista = array(
             'listProductos' => $listProductos,
@@ -206,19 +210,16 @@ class CatalogoController extends Controller {
         $imagenBusqueda = null;
         if (empty($listProductos)) {
             $imagenBusqueda = Yii::app()->params->busqueda['imagen']['noExito'];
-
-            if ($objSectorCiudad != null) {
-                try {
-                    Busquedas::registrarBusqueda(array(
-                        'idenficacionUsuario' => Yii::app()->user->isGuest ? null : Yii::app()->user->name,
-                        'tipoBusqueda' => Yii::app()->params->busqueda['tipo']['categoria'],
-                        'msgBusqueda' => $objCategoria == null ? "Categoria tienda: $categoria. No tiene productos" : "Categoria tienda: $categoria - $objCategoria->nombreCategoriaTienda",
-                        'codigoCiudad' => $objSectorCiudad->codigoCiudad,
-                        'codigoSector' => $objSectorCiudad->codigoSector,
-                    ));
-                } catch (Exception $exc) {
-                    Yii::log($exc->getMessage() . "\n" . $exc->getTraceAsString(), CLogger::LEVEL_ERROR, 'application');
-                }
+            try {
+                Busquedas::registrarBusqueda(array(
+                    'idenficacionUsuario' => Yii::app()->user->isGuest ? null : Yii::app()->user->name,
+                    'tipoBusqueda' => Yii::app()->params->busqueda['tipo']['categoria'],
+                    'msgBusqueda' => $objCategoria == null ? "Categoria tienda: $categoria. No tiene productos" : "Categoria tienda: $categoria - $objCategoria->nombreCategoriaTienda",
+                    'codigoCiudad' => $objSectorCiudad == null ? null : $objSectorCiudad->codigoCiudad,
+                    'codigoSector' => $objSectorCiudad == null ? null : $objSectorCiudad->codigoSector,
+                ));
+            } catch (Exception $exc) {
+                Yii::log($exc->getMessage() . "\n" . $exc->getTraceAsString(), CLogger::LEVEL_ERROR, 'application');
             }
         } else {
             $parametrosVista['formOrdenamiento'] = $formOrdenamiento;
@@ -226,9 +227,6 @@ class CatalogoController extends Controller {
         }
 
         $parametrosVista['imagenBusqueda'] = $imagenBusqueda;
-
-
-
         $this->render('listaProductos', $parametrosVista);
     }
 
@@ -238,7 +236,7 @@ class CatalogoController extends Controller {
             $objSectorCiudad = Yii::app()->session[Yii::app()->params->sesion['sectorCiudadEntrega']];
 
         $listMarcas = Yii::app()->getRequest()->getPost('marcas', array());
-        $listAtributos = Yii::app()->getRequest()->getPost('atributos', array());
+        $listFiltros = Yii::app()->getRequest()->getPost('atributos', array());
         $categoria = Yii::app()->session[Yii::app()->params->sesion['productosBusquedaCategoria']];
 
         $objCategoria = CategoriaTienda::model()->find(array(
@@ -259,12 +257,12 @@ class CatalogoController extends Controller {
 
         $formFiltro = new FiltroForm;
         $formFiltro->listMarcas = $listMarcas;
-        $formFiltro->listAtributos = $listAtributos;
+        $formFiltro->listFiltros = $listFiltros;
         $parametrosProductos = array();
 
         if ($objSectorCiudad == null) {
             $parametrosProductos = array(
-                'with' => array('listImagenes', 'objCodigoEspecial', 'listCalificaciones', 'objMarca', 'listAtributos'),
+                'with' => array('listImagenes', 'objCodigoEspecial', 'listCalificaciones', 'objMarca', 'listFiltros'),
                 'condition' => 't.activo=:activo AND t.idCategoriaBI IN (' . implode(",", $listIdsCategoriaBI) . ')',
                 'params' => array(
                     ':activo' => 1,
@@ -273,7 +271,7 @@ class CatalogoController extends Controller {
         } else {
             $parametrosProductos = array(
                 'with' => array(
-                    'listImagenes', 'objCodigoEspecial', 'listCalificaciones', 'objMarca', 'listAtributos',
+                    'listImagenes', 'objCodigoEspecial', 'listCalificaciones', 'objMarca', 'listFiltros',
                     'listSaldos' => array('condition' => '(listSaldos.saldoUnidad>:saldo AND listSaldos.codigoCiudad=:ciudad AND listSaldos.codigoSector=:sector) OR (listSaldos.saldoUnidad IS NULL AND listSaldos.codigoCiudad IS NULL AND listSaldos.codigoSector IS NULL)'),
                     'listPrecios' => array('condition' => '(listPrecios.codigoCiudad=:ciudad AND listPrecios.codigoSector=:sector) OR (listPrecios.codigoCiudad IS NULL AND listPrecios.codigoSector IS NULL)'),
                     'listSaldosTerceros' => array('condition' => '(listSaldosTerceros.codigoCiudad=:ciudad AND listSaldosTerceros.codigoSector=:sector) OR (listSaldosTerceros.codigoCiudad IS NULL AND listSaldosTerceros.codigoSector IS NULL)')
@@ -297,9 +295,9 @@ class CatalogoController extends Controller {
             $parametrosProductos['condition'] = $parametrosProductos['condition'] . " AND t.idMarca IN ($codigosMarcas)";
         }
 
-        if (!empty($formFiltro->listAtributos)) {
-            $codigosAtributos = implode(",", $formFiltro->listAtributos);
-            $parametrosProductos['condition'] = $parametrosProductos['condition'] . " AND listAtributos.idAtributo IN ($codigosAtributos)";
+        if (!empty($formFiltro->listFiltros)) {
+            $codigosAtributos = implode(",", $formFiltro->listFiltros);
+            $parametrosProductos['condition'] = $parametrosProductos['condition'] . " AND listFiltros.idFiltroDetalle IN ($codigosAtributos)";
         }
 
         if (isset(Yii::app()->session[Yii::app()->params->sesion['productosBusquedaFiltro']])) {
@@ -315,26 +313,31 @@ class CatalogoController extends Controller {
             $formFiltro->listMarcasCheck[$idMarca] = $idMarca;
         }
 
-        $formFiltro->listAtributosCheck = array();
-        foreach ($formFiltro->listAtributos as $idMarca) {
-            $formFiltro->listAtributosCheck[$idMarca] = $idMarca;
+        $formFiltro->listFiltrosCheck = array();
+        foreach ($formFiltro->listFiltros as $idFiltroDetalle) {
+            $formFiltro->listFiltrosCheck[$idFiltroDetalle] = $idFiltroDetalle;
         }
 
         $listProductos = Producto::model()->findAll($parametrosProductos);
 
         $formFiltro->listMarcas = array();
-        $formFiltro->listAtributos = array();
+        $formFiltro->listFiltros = array();
 
         foreach ($listProductos as $objProducto) {
             $formFiltro->listMarcas[$objProducto->idMarca] = $objProducto->objMarca->nombreMarca;
-
-            foreach ($objProducto->listAtributos as $objAtributo) {
-                $formFiltro->listAtributos[$objAtributo->idAtributo] = $objAtributo->nombreAtributo;
+            
+            foreach ($objProducto->listFiltros as $objFiltro) {
+                if(!isset($formFiltro->listFiltros[$objFiltro->idFiltro])){
+                    $formFiltro->listFiltros[$objFiltro->idFiltro] = array(
+                        'nombreFiltro' => $objFiltro->objFiltro->nombreFiltro,
+                        'listFiltros' => array()
+                    );
+                }
+                $formFiltro->listFiltros[$objFiltro->idFiltro]['listFiltros'][$objFiltro->idFiltroDetalle] = $objFiltro->nombreDetalle;
             }
         }
 
         echo CJSON::encode(array(
-            //'form' => CVarDumper::dumpAsString($formFiltro),
             'marcas' => $this->renderPartial('_formFiltroMarcas', array('formFiltro' => $formFiltro), true),
             'atributos' => $this->renderPartial('_formFiltroAtributos', array('formFiltro' => $formFiltro), true)
         ));
@@ -351,109 +354,163 @@ class CatalogoController extends Controller {
         $objSectorCiudad = null;
         if (isset(Yii::app()->session[Yii::app()->params->sesion['sectorCiudadEntrega']]))
             $objSectorCiudad = Yii::app()->session[Yii::app()->params->sesion['sectorCiudadEntrega']];
+        
+        $codigoPerfil = Yii::app()->shoppingCart->getCodigoPerfil();
+        
+        if (empty($codigosArray)) {
+            try {
+                Busquedas::registrarBusqueda(array(
+                    'idenficacionUsuario' => Yii::app()->user->isGuest ? null : Yii::app()->user->name,
+                    'tipoBusqueda' => Yii::app()->params->busqueda['tipo']['buscador'],
+                    'msgBusqueda' => "$term: busqueda GSA",
+                    'codigoCiudad' => $objSectorCiudad == null ? null : $objSectorCiudad->codigoCiudad,
+                    'codigoSector' => $objSectorCiudad == null ? null : $objSectorCiudad->codigoSector,
+                ));
+            } catch (Exception $exc) {
+                Yii::log($exc->getMessage() . "\n" . $exc->getTraceAsString(), CLogger::LEVEL_ERROR, 'application');
+            }
 
-        $listProductos = array();
+            $this->render('listaProductos', array(
+                'listProductos' => array(),
+                'listCombos' => array(),
+                'msgCodigoEspecial' => array(),
+                'listCodigoEspecial' => array(),
+                'imagenBusqueda' => Yii::app()->params->busqueda['imagen']['noExito'],
+                'objSectorCiudad' => $objSectorCiudad,
+                'codigoPerfil' => $codigoPerfil,
+                'nombreBusqueda' => $term,
+            ));
+
+            Yii::app()->end();
+        }
+        
+        $formFiltro = new FiltroForm;
+        $formOrdenamiento = new OrdenamientoForm;
+        
+        if (isset($_POST['OrdenamientoForm'])) {
+            $formOrdenamiento->attributes = $_POST['OrdenamientoForm'];
+        }
+        
+        if (isset($_POST['FiltroForm'])) {
+            $formFiltro->attributes = $_POST['FiltroForm'];
+            $formFiltro->listCategoriasTiendaCheck = $formFiltro->listCategoriasTienda;
+        }
+        
+        $parametrosProductos = array();
         $listCombos = array();
+        
+        if ($objSectorCiudad == null) {
+            $parametrosProductos = array(
+                'order'=>'t.orden',
+                'with' => array('listImagenes', 'objCodigoEspecial', 'listCalificaciones',
+                    'objCategoriaBI' => array('with'=>'listCategoriasTienda'),
+                ),
+                'condition' => "t.activo=:activo AND t.codigoProducto IN ($codigosStr)",
+                'params' => array(
+                    ':activo' => 1,
+                )
+            );
+        } else {
+            $parametrosProductos = array(
+                'order'=>'t.orden',
+                'with' => array('listImagenes', 'objCodigoEspecial', 'listCalificaciones', 
+                    'objCategoriaBI' => array('with'=>'listCategoriasTienda'),
+                    'listSaldos' => array('condition' => '(listSaldos.saldoUnidad>:saldo AND listSaldos.codigoCiudad=:ciudad AND listSaldos.codigoSector=:sector) OR (listSaldos.saldoUnidad IS NULL AND listSaldos.codigoCiudad IS NULL AND listSaldos.codigoSector IS NULL)'),
+                    'listPrecios' => array('condition' => '(listPrecios.codigoCiudad=:ciudad AND listPrecios.codigoSector=:sector) OR (listPrecios.codigoCiudad IS NULL AND listPrecios.codigoSector IS NULL)'),
+                    'listSaldosTerceros' => array('condition' => '(listSaldosTerceros.codigoCiudad=:ciudad AND listSaldosTerceros.codigoSector=:sector) OR (listSaldosTerceros.codigoCiudad IS NULL AND listSaldosTerceros.codigoSector IS NULL)')
+                ),
+                'condition' => "t.activo=:activo AND t.codigoProducto IN ($codigosStr) AND ( (listSaldos.saldoUnidad IS NOT NULL AND listPrecios.codigoCiudad IS NOT NULL) OR listSaldosTerceros.codigoCiudad IS NOT NULL)",
+                'params' => array(
+                    ':activo' => 1,
+                    ':saldo' => 0,
+                    ':ciudad' => $objSectorCiudad->codigoCiudad,
+                    ':sector' => $objSectorCiudad->codigoSector,
+                )
+            );
 
-        if (!empty($codigosArray)) {
-            if ($objSectorCiudad == null) {
-                $listProductos = Producto::model()->findAll(array(
-                    'with' => array('listImagenes', 'objCodigoEspecial', 'listCalificaciones', 'objCategoriaBI'),
-                    'condition' => "t.activo=:activo AND t.codigoProducto IN ($codigosStr)",
-                    'params' => array(
-                        ':activo' => 1,
-                    )
-                ));
-            } else {
-                $listProductos = Producto::model()->findAll(array(
-                    'with' => array('listImagenes', 'objCodigoEspecial', 'listCalificaciones', 'objCategoriaBI',
-                        'listSaldos' => array('condition' => '(listSaldos.saldoUnidad>:saldo AND listSaldos.codigoCiudad=:ciudad AND listSaldos.codigoSector=:sector) OR (listSaldos.saldoUnidad IS NULL AND listSaldos.codigoCiudad IS NULL AND listSaldos.codigoSector IS NULL)'),
-                        'listPrecios' => array('condition' => '(listPrecios.codigoCiudad=:ciudad AND listPrecios.codigoSector=:sector) OR (listPrecios.codigoCiudad IS NULL AND listPrecios.codigoSector IS NULL)'),
-                        'listSaldosTerceros' => array('condition' => '(listSaldosTerceros.codigoCiudad=:ciudad AND listSaldosTerceros.codigoSector=:sector) OR (listSaldosTerceros.codigoCiudad IS NULL AND listSaldosTerceros.codigoSector IS NULL)')
-                    ),
-                    'condition' => "t.activo=:activo AND t.codigoProducto IN ($codigosStr) AND ( (listSaldos.saldoUnidad IS NOT NULL AND listPrecios.codigoCiudad IS NOT NULL) OR listSaldosTerceros.codigoCiudad IS NOT NULL)",
-                    'params' => array(
-                        ':activo' => 1,
-                        ':saldo' => 0,
-                        ':ciudad' => $objSectorCiudad->codigoCiudad,
-                        ':sector' => $objSectorCiudad->codigoSector,
-                    )
-                ));
-
-                $fecha = new DateTime;
-                $listCombos = Combo::model()->findAll(array(
-                    'with' => array('listComboSectorCiudad', 'listProductos' => array('condition' => "listProductos.codigoProducto IN ($codigosStr)")),
-                    'condition' => 't.estadoCombo=:estado AND t.fechaInicio<=:fecha AND t.fechaFin>=:fecha AND listComboSectorCiudad.saldo>:saldo AND listComboSectorCiudad.codigoCiudad=:ciudad AND listComboSectorCiudad.codigoSector=:sector',
-                    'params' => array(
-                        ':estado' => 1,
-                        ':fecha' => $fecha->format('Y-m-d H:i:s'),
-                        'saldo' => 0,
-                        ':ciudad' => $objSectorCiudad->codigoCiudad,
-                        ':sector' => $objSectorCiudad->codigoSector,
-                    )
-                ));
+            $fecha = new DateTime;
+            $listCombos = Combo::model()->findAll(array(
+                'with' => array('listComboSectorCiudad', 'listProductos' => array('condition' => "listProductos.codigoProducto IN ($codigosStr)")),
+                'condition' => 't.estadoCombo=:estado AND t.fechaInicio<=:fecha AND t.fechaFin>=:fecha AND listComboSectorCiudad.saldo>:saldo AND listComboSectorCiudad.codigoCiudad=:ciudad AND listComboSectorCiudad.codigoSector=:sector',
+                'params' => array(
+                    ':estado' => 1,
+                    ':fecha' => $fecha->format('Y-m-d H:i:s'),
+                    'saldo' => 0,
+                    ':ciudad' => $objSectorCiudad->codigoCiudad,
+                    ':sector' => $objSectorCiudad->codigoSector,
+                )
+            ));
+        }
+        
+        if ($formOrdenamiento->orden != null) {
+            if ($formOrdenamiento->orden == 1) {
+                $parametrosProductos['order'] = "((CASE WHEN listPrecios.precioUnidad IS NULL THEN 0 ELSE listPrecios.precioUnidad END) + (CASE WHEN listSaldosTerceros.precioUnidad IS NULL THEN 0 ELSE listSaldosTerceros.precioUnidad END)) ASC";
+            } else if ($formOrdenamiento->orden == 2) {
+                $parametrosProductos['order'] = "((CASE WHEN listPrecios.precioUnidad IS NULL THEN 0 ELSE listPrecios.precioUnidad END) + (CASE WHEN listSaldosTerceros.precioUnidad IS NULL THEN 0 ELSE listSaldosTerceros.precioUnidad END)) DESC";
+            } else if ($formOrdenamiento->orden == 3) {
+                $parametrosProductos['order'] = "t.descripcionProducto";
+            } else if ($formOrdenamiento->orden == 4) {
+                $parametrosProductos['order'] = "t.presentacionProducto";
             }
         }
+        
+        if ($formFiltro->listCategoriasTiendaCheck != null && !empty($formFiltro->listCategoriasTiendaCheck)) {
+            $codigosCategorias = implode(",", $formFiltro->listCategoriasTiendaCheck);
+            $parametrosProductos['condition'] = $parametrosProductos['condition'] . " AND listCategoriasTienda.idCategoriaTienda IN ($codigosCategorias)";
+        }
+        
+        $listProductos = Producto::model()->findAll($parametrosProductos);
 
         $listCodigoEspecial = CodigoEspecial::model()->findAll(array(
             'condition' => 'codigoEspecial<>0'
         ));
 
-        $formFiltro = new FiltroForm;
-
         $msgCodigoEspecial = array();
+        $formFiltro->listCategoriasTienda = array();
         foreach ($listProductos as $objProducto) {
             if ($objProducto->codigoEspecial != null && $objProducto->codigoEspecial != 0) {
                 $msgCodigoEspecial[$objProducto->codigoEspecial] = $objProducto->objCodigoEspecial;
             }
-
+            
             foreach ($objProducto->objCategoriaBI->listCategoriasTienda as $objCategoriaTienda) {
-                $formFiltro->listCategoriasTienda[$objCategoriaTienda->idCategoriaTienda] = $objCategoriaTienda;
+                $formFiltro->listCategoriasTienda[$objCategoriaTienda->idCategoriaTienda] = $objCategoriaTienda->nombreCategoriaTienda;
             }
         }
-
-        $imagenBusqueda = null;
-        if (empty($listProductos)) {
-            $imagenBusqueda = Yii::app()->params->busqueda['imagen']['noExito'];
-
-            if ($objSectorCiudad != null) {
-                try {
-                    $busqueda = new Busquedas;
-
-                    if (!Yii::app()->user->isGuest)
-                        $busqueda->identificacionUsuario = Yii::app()->user->name;
-
-                    $busqueda->tipoBusqueda = Yii::app()->params->busqueda['tipo']['buscador'];
-                    $busqueda->busqueda = $term;
-                    $busqueda->fecha = new CDbExpression('NOW()');
-                    $busqueda->codigoCiudad = $objSectorCiudad->codigoCiudad;
-                    $busqueda->codigoSector = $objSectorCiudad->codigoSector;
-                    $busqueda->save();
-                } catch (Exception $exc) {
-                    Yii::log($exc->getMessage() . "\n" . $exc->getTraceAsString(), CLogger::LEVEL_ERROR, 'application');
-                }
-            }
-        }
-
-        $codigoPerfil = Yii::app()->params->perfil['defecto'];
-
-        if (!Yii::app()->user->isGuest) {
-            $usuario = Yii::app()->session[Yii::app()->params->usuario['sesion']];
-            $codigoPerfil = $usuario->objPerfil->codigoPerfil;
-        }
-
-        $this->render('listaProductos', array(
+        
+        $parametrosVista = array(
             'listProductos' => $listProductos,
             'listCombos' => $listCombos,
             'msgCodigoEspecial' => $msgCodigoEspecial,
             'listCodigoEspecial' => $listCodigoEspecial,
-            'imagenBusqueda' => $imagenBusqueda,
             'objSectorCiudad' => $objSectorCiudad,
             'codigoPerfil' => $codigoPerfil,
             'formFiltro' => $formFiltro,
             'tipoBusqueda' => Yii::app()->params->busqueda['tipo']['buscador'],
             'nombreBusqueda' => $term,
-        ));
+        );
+
+        $imagenBusqueda = null;
+        if (empty($listProductos)) {
+            $imagenBusqueda = Yii::app()->params->busqueda['imagen']['noExito'];
+            if ($objSectorCiudad != null) {
+                try {
+                    Busquedas::registrarBusqueda(array(
+                        'idenficacionUsuario' => Yii::app()->user->isGuest ? null : Yii::app()->user->name,
+                        'tipoBusqueda' => Yii::app()->params->busqueda['tipo']['buscador'],
+                        'msgBusqueda' => "$term: busqueda local",
+                        'codigoCiudad' => $objSectorCiudad == null ? null : $objSectorCiudad->codigoCiudad,
+                        'codigoSector' => $objSectorCiudad == null ? null : $objSectorCiudad->codigoSector,
+                    ));
+                } catch (Exception $exc) {
+                    Yii::log($exc->getMessage() . "\n" . $exc->getTraceAsString(), CLogger::LEVEL_ERROR, 'application');
+                }
+            }
+        }else{
+            $parametrosVista['formOrdenamiento'] = $formOrdenamiento;
+        }
+
+        $parametrosVista['imagenBusqueda'] = $imagenBusqueda;
+        $this->render('listaProductos', $parametrosVista);
     }
 
     public function actionProducto($producto) {
@@ -496,13 +553,10 @@ class CatalogoController extends Controller {
             throw new CHttpException(404, 'Producto no existe.');
         }
 
-        $codigoPerfil = Yii::app()->params->perfil['defecto'];
+        $codigoPerfil = Yii::app()->shoppingCart->getCodigoPerfil();
         $objCalificacion = null;
 
         if (!Yii::app()->user->isGuest) {
-            $usuario = Yii::app()->session[Yii::app()->params->usuario['sesion']];
-            $codigoPerfil = $usuario->objPerfil->codigoPerfil;
-
             $fecha = new DateTime();
             $fecha->modify("-1 day");
 
@@ -595,15 +649,8 @@ class CatalogoController extends Controller {
             throw new CHttpException(404, 'Producto no disponible.');
         }
 
-        $codigoPerfil = Yii::app()->params->perfil['defecto'];
-
-        if (!Yii::app()->user->isGuest) {
-            $usuario = Yii::app()->session[Yii::app()->params->usuario['sesion']];
-            $codigoPerfil = $usuario->objPerfil->codigoPerfil;
-        }
-        
+        $codigoPerfil = Yii::app()->shoppingCart->getCodigoPerfil();
         $cantidadCarro = 0;
-        
         $position = Yii::app()->shoppingCart->itemAt($producto);
         
         if($position!=null){
@@ -710,13 +757,7 @@ class CatalogoController extends Controller {
             Yii::app()->end();
         }
 
-        $codigoPerfil = Yii::app()->params->perfil['defecto'];
-
-        if (!Yii::app()->user->isGuest) {
-            $usuario = Yii::app()->session[Yii::app()->params->usuario['sesion']];
-            $codigoPerfil = $usuario->objPerfil->codigoPerfil;
-        }
-
+        $codigoPerfil = Yii::app()->shoppingCart->getCodigoPerfil();
         $objPrecio = new PrecioProducto($objProducto, $objSectorCiudad, $codigoPerfil);
         $valor = $objPrecio->getPrecio(Precio::PRECIO_UNIDAD) * $cantidad;
         $valorFormato = Yii::app()->numberFormatter->format(Yii::app()->params->formatoMoneda['patron'], $valor, Yii::app()->params->formatoMoneda['moneda']);
@@ -776,13 +817,7 @@ class CatalogoController extends Controller {
             Yii::app()->end();
         }
 
-        $codigoPerfil = Yii::app()->params->perfil['defecto'];
-
-        if (!Yii::app()->user->isGuest) {
-            $usuario = Yii::app()->session[Yii::app()->params->usuario['sesion']];
-            $codigoPerfil = $usuario->objPerfil->codigoPerfil;
-        }
-
+        $codigoPerfil = Yii::app()->shoppingCart->getCodigoPerfil();
         $objPrecio = new PrecioProducto($objProducto, $objSectorCiudad, $codigoPerfil);
         $valorUnidad = $objPrecio->getPrecio(Precio::PRECIO_UNIDAD) * $cantidadUnidad;
         $valorFraccion = $objPrecio->getPrecio(Precio::PRECIO_FRACCION) * $cantidadFraccion;
@@ -903,13 +938,7 @@ class CatalogoController extends Controller {
             Yii::app()->end();
         }
 
-        $codigoPerfil = Yii::app()->params->perfil['defecto'];
-
-        if (!Yii::app()->user->isGuest) {
-            $usuario = Yii::app()->session[Yii::app()->params->usuario['sesion']];
-            $codigoPerfil = $usuario->objPerfil->codigoPerfil;
-        }
-
+        $codigoPerfil = Yii::app()->shoppingCart->getCodigoPerfil();
         $objPrecio = new PrecioProducto($objProducto, $objSectorCiudad, $codigoPerfil);
         $valorBodega = $objPrecio->getPrecio(Precio::PRECIO_UNIDAD) * $cantidadBodega;
         $valorUbicacion = $objPrecio->getPrecio(Precio::PRECIO_UNIDAD) * $cantidadUbicacion;
@@ -987,16 +1016,15 @@ class CatalogoController extends Controller {
             $objCalificacion->titulo = $titulo;
             $objCalificacion->comentario = $comentario;
 
-            $fechaCalificacion = new DateTime();
-            $objCalificacion->fecha = new CDbExpression('NOW()');
+            //$fechaCalificacion = new DateTime();
             $objCalificacion->aprobado = 0;
 
             if ($objCalificacion->save()) {
-//$objCalificacion->refresh();
-                echo CJSON::encode(array('result' => 'ok', 'response' => 'Calificación exitosa'));
+                //$objCalificacion->refresh();
+                echo CJSON::encode(array('result' => 'ok', 'response' => 'Gracias por tu comentario'));
                 Yii::app()->end();
             } else {
-                echo CJSON::encode(array('result' => 'error', 'response' => 'Error al guardar calificación. Intente de nuevo.'));
+                echo CJSON::encode(array('result' => 'error', 'response' => 'Error al guardar calificación. ' . $objCalificacion->validateErrorsResponse()));
                 Yii::app()->end();
             }
         } catch (Exception $exc) {

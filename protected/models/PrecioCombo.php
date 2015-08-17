@@ -15,19 +15,12 @@ class PrecioCombo extends Precio {
     protected $precio = 0;
     protected $ahorro = 0;
     
-    function __construct(Combo &$objCombo/*, SectorCiudad $objCiudadSector = null*/) {
+    function __construct(Combo &$objCombo) {
         $this->precio = 0;
         $this->ahorro = 0;
 
         foreach ($objCombo->listProductosCombo as $objProductoCombo) {
             $this->precio += $objProductoCombo->precio;
-            
-                /*foreach ($objProductoCombo->objProducto->objProducto->listPrecios as $objProductoPrecio) {
-                    if ($objProductoPrecio->codigoCiudad == $objCiudadSector->codigoCiudad && $objProductoPrecio->codigoSector == $objCiudadSector->codigoSector) {
-                        $this->ahorro += $objProductoPrecio->precioUnidad - $objProductoCombo->precio;
-                        break;
-                    }
-                }*/
         }
         $this->precio = $this->redondear($this->precio,1);
         $this->inicializado = true;

@@ -121,6 +121,14 @@ class Combo extends CActiveRecord {
         }
         return $obj;
     }
+    
+    public function rutaImagen(){
+        $objImagen = $this->objImagen(YII::app()->params->producto['tipoImagen']['mini']);
+        if($objImagen == null)
+            return Yii::app()->params->producto['noImagen']['mini'];
+        
+        return Yii::app()->params->carpetaImagen['combos'][YII::app()->params->producto['tipoImagen']['mini']] . $objImagen->rutaImagen;
+    }
 
     /**
      * Retorna lista del tipo de imagen de un producto, si no se detecta

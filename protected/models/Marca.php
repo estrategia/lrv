@@ -6,6 +6,12 @@
  * The followings are the available columns in table 'm_Marca':
  * @property integer $idMarca
  * @property string $nombreMarca
+ * @property string $codigoProveedor
+ * 
+ * The followings are the available model relations:
+ * @property Proveedor $objProveedor
+ * @property Producto[] $listProductos
+ * @property Puntos[] $listPuntos
  */
 class Marca extends CActiveRecord {
 
@@ -23,11 +29,12 @@ class Marca extends CActiveRecord {
         // NOTE: you should only define rules for those attributes that
         // will receive user inputs.
         return array(
-            array('nombreMarca', 'required'),
+            array('nombreMarca, codigoProveedor', 'required'),
             array('nombreMarca', 'length', 'max' => 255),
+            array('codigoProveedor', 'length', 'max' => 10),
             // The following rule is used by search().
             // @todo Please remove those attributes that should not be searched.
-            array('idMarca, nombreMarca', 'safe', 'on' => 'search'),
+            array('idMarca, nombreMarca, codigoProveedor', 'safe', 'on' => 'search'),
         );
     }
 
@@ -38,6 +45,9 @@ class Marca extends CActiveRecord {
         // NOTE: you may need to adjust the relation name and the related
         // class name for the relations automatically generated below.
         return array(
+            'objProveedor' => array(self::BELONGS_TO, 'Proveedor', 'codigoProveedor'),
+            'listProductos' => array(self::HAS_MANY, 'Producto', 'idMarca'),
+            'listPuntos' => array(self::MANY_MANY, 'Puntos', 't_PuntosMarcas(idMarca, idPunto)'),
         );
     }
 
@@ -48,6 +58,7 @@ class Marca extends CActiveRecord {
         return array(
             'idMarca' => 'Id Marca',
             'nombreMarca' => 'Nombre Marca',
+            'codigoProveedor' => 'Codigo Proveedor',
         );
     }
 
@@ -70,6 +81,7 @@ class Marca extends CActiveRecord {
 
         $criteria->compare('idMarca', $this->idMarca);
         $criteria->compare('nombreMarca', $this->nombreMarca, true);
+        $criteria->compare('codigoProveedor',$this->codigoProveedor,true);
 
         return new CActiveDataProvider($this, array(
             'criteria' => $criteria,

@@ -12,7 +12,7 @@
  * @property integer $codigoSucursal
  */
 class Ciudad extends CActiveRecord {
-    protected $objDomicilioCedi = false;
+    public $objDomicilioCedi = false;
 
     /**
      * @return string the associated database table name
@@ -47,6 +47,7 @@ class Ciudad extends CActiveRecord {
         // class name for the relations automatically generated below.
         return array(
             'listSectores' => array(self::MANY_MANY, 'Sector', 'm_SectorCiudad(codigoCiudad, codigoSector)'),
+            //'listSubSectores' => array(self::HAS_MANY, 'SubSector', 'codigoCiudad', 'condition' => 'listSubSectores.estadoSubSector=1', 'order' => 'listSubSectores.nombreSubSector ASC'),
             'listSubSectores' => array(self::HAS_MANY, 'SubSector', 'codigoCiudad'),
         );
     }
@@ -105,7 +106,7 @@ class Ciudad extends CActiveRecord {
     }
     
     public function getDomicilio(){
-        if($this->objDomicilioCedi == false){
+        if($this->objDomicilioCedi === false){
             $this->objDomicilioCedi = DomicilioCedi::model()->find(array(
                 'condition' => 'codigoCedi=:cedi AND codigoCiudad=:ciudad',
                 'params' => array(

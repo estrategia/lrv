@@ -14,5 +14,5 @@
             <li><a href="#" class="ui-btn ui-icon-carat-r ui-btn-icon-left ui-nodisc-icon ui-alt-icon c_listvn_a">Paga tus pedidos en efectivo</a></li>
         </ul>
     </div>    
-    <?php echo CHtml::link('Continuar', $url, array('class' => 'ui-btn ui-corner-all ui-shadow ui-btn-r')); ?>
+    <?php echo CHtml::link('Continuar', $url, array('class' => 'ui-btn ui-corner-all ui-shadow ui-btn-r', 'data-ajax'=>'false')); ?>
 </div>

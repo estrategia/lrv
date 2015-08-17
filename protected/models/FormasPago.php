@@ -7,16 +7,13 @@
  * @property integer $idCompra
  * @property integer $idFormaPago
  * @property integer $valor
- * @property string $tipoTarjeta
  * @property string $numeroTarjeta
- * @property string $digitoVerificacionTarjeta
  * @property integer $cuotasTarjeta
- * @property string $aprobacionTarjeta
  * @property integer $valorBono
  *
  * The followings are the available model relations:
- * @property MFormapago $idFormaPago0
- * @property TCompras $idCompra0
+ * @property Formapago $objFormaPago
+ * @property Compras $objCompra
  */
 class FormasPago extends CActiveRecord {
 
@@ -36,11 +33,10 @@ class FormasPago extends CActiveRecord {
         return array(
             array('idFormaPago', 'required'),
             array('idCompra, idFormaPago, valor, cuotasTarjeta, valorBono', 'numerical', 'integerOnly' => true),
-            array('tipoTarjeta, digitoVerificacionTarjeta', 'length', 'max' => 10),
-            array('numeroTarjeta, aprobacionTarjeta', 'length', 'max' => 20),
+            array('numeroTarjeta', 'length', 'max' => 20),
             // The following rule is used by search().
             // @todo Please remove those attributes that should not be searched.
-            array('idCompra, idFormaPago, valor, tipoTarjeta, numeroTarjeta, digitoVerificacionTarjeta, cuotasTarjeta, aprobacionTarjeta, valorBono', 'safe', 'on' => 'search'),
+            array('idCompra, idFormaPago, valor, numeroTarjeta, cuotasTarjeta, valorBono', 'safe', 'on' => 'search'),
         );
     }
 
@@ -51,8 +47,8 @@ class FormasPago extends CActiveRecord {
         // NOTE: you may need to adjust the relation name and the related
         // class name for the relations automatically generated below.
         return array(
-            'idFormaPago0' => array(self::BELONGS_TO, 'MFormapago', 'idFormaPago'),
-            'idCompra0' => array(self::BELONGS_TO, 'TCompras', 'idCompra'),
+            'objFormaPago' => array(self::BELONGS_TO, 'FormaPago', 'idFormaPago'),
+            'objCompra' => array(self::BELONGS_TO, 'Compras', 'idCompra'),
         );
     }
 
@@ -64,11 +60,8 @@ class FormasPago extends CActiveRecord {
             'idCompra' => 'Id Compra',
             'idFormaPago' => 'Id Forma Pago',
             'valor' => 'Valor',
-            'tipoTarjeta' => 'Tipo Tarjeta',
             'numeroTarjeta' => 'Numero Tarjeta',
-            'digitoVerificacionTarjeta' => 'Digito Verificacion Tarjeta',
             'cuotasTarjeta' => 'Cuotas Tarjeta',
-            'aprobacionTarjeta' => 'Aprobacion Tarjeta',
             'valorBono' => 'Valor Bono',
         );
     }
@@ -93,11 +86,8 @@ class FormasPago extends CActiveRecord {
         $criteria->compare('idCompra', $this->idCompra);
         $criteria->compare('idFormaPago', $this->idFormaPago);
         $criteria->compare('valor', $this->valor);
-        $criteria->compare('tipoTarjeta', $this->tipoTarjeta, true);
         $criteria->compare('numeroTarjeta', $this->numeroTarjeta, true);
-        $criteria->compare('digitoVerificacionTarjeta', $this->digitoVerificacionTarjeta, true);
         $criteria->compare('cuotasTarjeta', $this->cuotasTarjeta);
-        $criteria->compare('aprobacionTarjeta', $this->aprobacionTarjeta, true);
         $criteria->compare('valorBono', $this->valorBono);
 
         return new CActiveDataProvider($this, array(
@@ -113,6 +103,19 @@ class FormasPago extends CActiveRecord {
      */
     public static function model($className = __CLASS__) {
         return parent::model($className);
+    }
+    
+    /**
+     * Metodo que hereda comportamiento de ValidateModelBehavior
+     * @return void
+     */
+    public function behaviors() {
+        return array(
+            'ValidateModelBehavior' => array(
+                'class' => 'application.components.behaviors.ValidateModelBehavior',
+                'model' => $this
+            ),
+        );
     }
 
 }

@@ -47,7 +47,7 @@ class CategoriaTienda extends CActiveRecord {
         // NOTE: you may need to adjust the relation name and the related
         // class name for the relations automatically generated below.
         return array(
-            'listCategoriasBI' => array(self::MANY_MANY, 'Categoria', 't_CategoriasCategoriaTienda(idCategoriaTienda, idCategoriaBI)'),
+            'listCategoriasBI' => array(self::MANY_MANY, 'Categoria', 'm_CategoriasCategoriaTienda(idCategoriaTienda, idCategoriaBI)'),
             'objCategoriaPadre' => array(self::BELONGS_TO, 'CategoriaTienda', 'idCategoriaPadre'),
             'listCategoriasHijas' => array(self::HAS_MANY, 'CategoriaTienda', 'idCategoriaPadre'),
             'listCategoriasHijasMenu' => array(self::HAS_MANY, 'CategoriaTienda', 'idCategoriaPadre', 'condition' => 'listCategoriasHijasMenu.visible=1', 'order' => 'listCategoriasHijasMenu.orden ASC'),

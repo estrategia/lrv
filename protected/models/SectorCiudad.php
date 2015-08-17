@@ -7,7 +7,6 @@
  * @property string $codigoCiudad
  * @property string $codigoSector
  * @property string $estadoCiudadSector
- * @property string $horaFin
  */
 class SectorCiudad extends CActiveRecord {
 
@@ -27,10 +26,9 @@ class SectorCiudad extends CActiveRecord {
         return array(
             array('codigoCiudad, codigoSector', 'required'),
             array('codigoCiudad, codigoSector, estadoCiudadSector', 'length', 'max' => 10),
-            array('horaFin', 'safe'),
             // The following rule is used by search().
             // @todo Please remove those attributes that should not be searched.
-            array('codigoCiudad, codigoSector, estadoCiudadSector, horaFin', 'safe', 'on' => 'search'),
+            array('codigoCiudad, codigoSector, estadoCiudadSector', 'safe', 'on' => 'search'),
         );
     }
 
@@ -54,7 +52,6 @@ class SectorCiudad extends CActiveRecord {
             'codigoCiudad' => 'Codigo Ciudad',
             'codigoSector' => 'Codigo Sector',
             'estadoCiudadSector' => 'Estado Ciudad Sector',
-            'horaFin' => 'Hora Fin',
         );
     }
 
@@ -78,7 +75,6 @@ class SectorCiudad extends CActiveRecord {
         $criteria->compare('codigoCiudad', $this->codigoCiudad, true);
         $criteria->compare('codigoSector', $this->codigoSector, true);
         $criteria->compare('estadoCiudadSector', $this->estadoCiudadSector, true);
-        $criteria->compare('horaFin', $this->horaFin, true);
 
         return new CActiveDataProvider($this, array(
             'criteria' => $criteria,
@@ -94,8 +90,8 @@ class SectorCiudad extends CActiveRecord {
     public static function model($className = __CLASS__) {
         return parent::model($className);
     }
-    
-    public static function listDataSubsector_old(){
+
+    public static function listDataSubsector_old() {
         $listCiudadesSectores = Ciudad::model()->findAll(array(
             'with' => array('listSectores'),
             'order' => 't.orden',
@@ -164,11 +160,11 @@ class SectorCiudad extends CActiveRecord {
                 }
             }
         }
-        
+
         return $listUbicacion;
     }
-    
-    public static function listDataSubsector(){
+
+    public static function listDataSubsector() {
         $listCiudadesSectores = Ciudad::model()->findAll(array(
             'with' => array('listSectores'),
             'order' => 't.orden',
@@ -186,13 +182,19 @@ class SectorCiudad extends CActiveRecord {
                     'condition' => 'listSubSectores.estadoSubSector=1',
                     'order' => 'listSubSectores.nombreSubSector',
                     'with' => array(
-                        'listReferencias' => array(
-                            'condition' => 'listReferencias.estadoReferencia=1',
-                            'order' => 'listReferencias.nombreReferencia',
+                        'listSectorReferencias' => array(
+                            'condition' => 'listSectorReferencias.estadoSectorReferencia=1',
+                            //'order' => 'listReferencias.nombreReferencia',
                             'with' => array(
-                                'listSectores' => array(
-                                    'order' => 'listSectores.nombreSector'
-                                )))))),
+                                'objSectorCiudad' => array(
+                                    'condition' => 'objSectorCiudad.estadoCiudadSector=1',
+                                    'with' => array(
+                                        'objSector' => array(
+                                            'condition' => 'objSector.estadoSector=1',
+                                            'order' => 'objSector.nombreSector',
+                                        ))),
+                                'listPuntoReferencias' => array('condition' => 'listPuntoReferencias.estadoReferencia=1', 'order' => 'listPuntoReferencias.nombreReferencia')
+                            ))))),
         ));
 
         $idxCiudadesSubSectores = array();
@@ -207,14 +209,19 @@ class SectorCiudad extends CActiveRecord {
                 if (isset($idxCiudadesSubSectores[$ciudad->codigoCiudad])) {
                     foreach ($listCiudadesSubsectores[$idxCiudadesSubSectores[$ciudad->codigoCiudad]]->listSubSectores as $subSector) {
                         $group = "$ciudad->nombreCiudad - $subSector->nombreSubSector";
-                        foreach ($subSector->listReferencias as $referencia) {
-                            foreach ($referencia->listSectores as $sector) {
-                                $listUbicacion[] = array(
-                                    'label' => $sector->nombreSector,
-                                    'value' => "$referencia->codigoCiudad-$sector->codigoSector",
-                                    'group' => $group,
-                                );
-                            }
+                        foreach ($subSector->listSectorReferencias as $sectorReferencia) {
+                            /* foreach ($sectorReferencia->listPuntoReferencias as $pReferencia) {
+                              $listUbicacion[] = array(
+                              'label' => $pReferencia->nombreReferencia,
+                              'value' => "$sectorReferencia->codigoCiudad-$sectorReferencia->codigoSector",
+                              'group' => $group,
+                              );
+                              } */
+                            $listUbicacion[] = array(
+                                'label' => strtolower($sectorReferencia->getNombreSector()),
+                                'value' => "$sectorReferencia->codigoCiudad-$sectorReferencia->codigoSector",
+                                'group' => $group,
+                            );
                         }
                     }
                 } else if ($ciudad->listSectores[0]->codigoSector == 0) {
@@ -234,7 +241,7 @@ class SectorCiudad extends CActiveRecord {
                 }
             }
         }
-        
+
         return $listUbicacion;
     }
 

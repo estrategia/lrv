@@ -45,20 +45,20 @@ class CategoriaView {
                 if ($nivel == 1) {
                     $clase = "";
                     
-                    if($indice == 0)
+                    /*if($indice == 0)
                         $clase = "ui-first-child";
                     if($indice == ($cantidad -1))
-                        $clase = "ui-last-child";
+                        $clase = "ui-last-child";*/
                     
                     //echo "<div data-role='collapsible' data-iconpos='right' data-collapsed-icon='carat-d' data-expanded-icon='carat-u' class='ui-nodisc-icon ui-alt-icon cbtn_catg_contdiv'></div>";
-                    echo "<a class='ui-collapsible-inset ui-corner-all ui-btn ui-btn-icon-right ui-btn-inherit ui-icon-carat-r align-left $clase c_btn_catg $claseCategoria' href='" . CController::createUrl('/catalogo/categoria', array('categoria' => $categoria->idCategoriaTienda)) . "' data-ajax='false'>";
+                    echo "<a class='ui-collapsible-inset ui-corner-all ui-btn ui-btn-icon-right ui-btn-inherit ui-icon-carat-r align-left $clase c_btn_catg $claseCategoria' href='" . Yii::app()->createUrl('/catalogo/categoria', array('categoria' => $categoria->idCategoriaTienda)) . "' data-ajax='false'>";
                     echo "<img src='" . Yii::app()->request->baseUrl . Yii::app()->params->carpetaImagen['categorias'] . $categoria->rutaImagen . "' class='ui-li-icon'>";
                     echo "<span>";
                     echo "$categoria->nombreCategoriaTienda";
                     echo "</span>";
                     echo "</a>";
                 } else if ($nivel == 2) {                    
-                    echo "<a class='ui-collapsible-inset ui-corner-all ui-collapsible-themed-content ui-collapsible-collapsed ui-btn ui-btn-icon-right ui-icon-carat-r align-left c_btn_catg_02 $claseCategoria' href='" . CController::createUrl('/catalogo/categoria', array('categoria' => $categoria->idCategoriaTienda)) . "' data-ajax='false'>$categoria->nombreCategoriaTienda</a>";
+                    echo "<a class='ui-collapsible-inset ui-corner-all ui-collapsible-themed-content ui-collapsible-collapsed ui-btn ui-btn-icon-right ui-icon-carat-r align-left c_btn_catg_02 $claseCategoria' href='" . Yii::app()->createUrl('/catalogo/categoria', array('categoria' => $categoria->idCategoriaTienda)) . "' data-ajax='false'>$categoria->nombreCategoriaTienda</a>";
                 }
             } else {
                 echo "<div data-role='collapsible' data-iconpos='right' data-collapsed-icon='carat-d' data-expanded-icon='carat-u' class='ui-nodisc-icon ui-alt-icon  cbtn_catg_contdiv $claseCategoria'>";
@@ -82,7 +82,7 @@ class CategoriaView {
     private static function generarSubMenuItem(&$categorias, $nivel) {
         echo "<ul data-role='listview'>";
         foreach ($categorias as $categoria) {
-            echo "<li><a href='" . CController::createUrl('/catalogo/categoria', array('categoria' => $categoria->idCategoriaTienda)) . "' data-ajax='false'>$categoria->nombreCategoriaTienda</a></li>";
+            echo "<li><a href='" . Yii::app()->createUrl('/catalogo/categoria', array('categoria' => $categoria->idCategoriaTienda)) . "' data-ajax='false'>$categoria->nombreCategoriaTienda</a></li>";
         }
         echo "</ul>";
     }

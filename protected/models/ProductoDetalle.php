@@ -51,7 +51,7 @@
  * @property string $peso
  * @property integer $mostrarMedida
  * @property string $medida
- * @property integer $mostrarNaturalez
+ * @property integer $mostrarNaturaleza
  * @property string $naturaleza
  * @property integer $mostrarMaterial
  * @property string $material
@@ -75,14 +75,14 @@ class ProductoDetalle extends CActiveRecord {
         // NOTE: you should only define rules for those attributes that
         // will receive user inputs.
         return array(
-            array('mostrarDescripcion, mostrarIdoneidad, mostrarCalidad, mostrarIngredientes, mostrarUsos, mostrarPrecauciones, mostrarInformacionNutricional, mostrarModoFabricacion, mostrarOrigen, mostrarComposicion, mostrarFormaEmpleo, mostrarViaAdministracion, mostrarContraindicaciones, mostrarRestricciones, mostrarProhibiciones, mostrarReglamentos, mostrarAdvertencias, mostrarPosologia, mostrarCaracteristicas, mostrarAtributo, mostrarTamano, mostrarPeso, mostrarMedida, mostrarNaturalez, mostrarMaterial', 'required'),
-            array('mostrarDescripcion, mostrarIdoneidad, mostrarCalidad, mostrarIngredientes, mostrarUsos, mostrarPrecauciones, mostrarInformacionNutricional, mostrarModoFabricacion, mostrarOrigen, mostrarComposicion, mostrarFormaEmpleo, mostrarViaAdministracion, mostrarContraindicaciones, mostrarRestricciones, mostrarProhibiciones, mostrarReglamentos, mostrarAdvertencias, mostrarPosologia, mostrarCaracteristicas, mostrarAtributo, mostrarTamano, mostrarPeso, mostrarMedida, mostrarNaturalez, mostrarMaterial', 'numerical', 'integerOnly' => true),
+            array('mostrarDescripcion, mostrarIdoneidad, mostrarCalidad, mostrarIngredientes, mostrarUsos, mostrarPrecauciones, mostrarInformacionNutricional, mostrarModoFabricacion, mostrarOrigen, mostrarComposicion, mostrarFormaEmpleo, mostrarViaAdministracion, mostrarContraindicaciones, mostrarRestricciones, mostrarProhibiciones, mostrarReglamentos, mostrarAdvertencias, mostrarPosologia, mostrarCaracteristicas, mostrarAtributo, mostrarTamano, mostrarPeso, mostrarMedida, mostrarNaturaleza, mostrarMaterial', 'required'),
+            array('mostrarDescripcion, mostrarIdoneidad, mostrarCalidad, mostrarIngredientes, mostrarUsos, mostrarPrecauciones, mostrarInformacionNutricional, mostrarModoFabricacion, mostrarOrigen, mostrarComposicion, mostrarFormaEmpleo, mostrarViaAdministracion, mostrarContraindicaciones, mostrarRestricciones, mostrarProhibiciones, mostrarReglamentos, mostrarAdvertencias, mostrarPosologia, mostrarCaracteristicas, mostrarAtributo, mostrarTamano, mostrarPeso, mostrarMedida, mostrarNaturaleza, mostrarMaterial', 'numerical', 'integerOnly' => true),
             array('codigoProducto', 'length', 'max' => 10),
             array('descripcionCorta', 'length', 'max' => 200),
             array('idoneidad, calidad, ingredientes, usos, precauciones, informacionNutricional, modoFabricacion, origen, composicion, formaEmpleo, viaAdministracion, contraindicaciones, restricciones, prohibiciones, reglamentos, advertencias, posologia, caracteristicas, atributo, tamano, peso, medida, naturaleza, material', 'safe'),
             // The following rule is used by search().
             // @todo Please remove those attributes that should not be searched.
-            array('codigoProducto, mostrarDescripcion, descripcionCorta, mostrarIdoneidad, idoneidad, mostrarCalidad, calidad, mostrarIngredientes, ingredientes, mostrarUsos, usos, mostrarPrecauciones, precauciones, mostrarInformacionNutricional, informacionNutricional, mostrarModoFabricacion, modoFabricacion, mostrarOrigen, origen, mostrarComposicion, composicion, mostrarFormaEmpleo, formaEmpleo, mostrarViaAdministracion, viaAdministracion, mostrarContraindicaciones, contraindicaciones, mostrarRestricciones, restricciones, mostrarProhibiciones, prohibiciones, mostrarReglamentos, reglamentos, mostrarAdvertencias, advertencias, mostrarPosologia, posologia, mostrarCaracteristicas, caracteristicas, mostrarAtributo, atributo, mostrarTamano, tamano, mostrarPeso, peso, mostrarMedida, medida, mostrarNaturalez, naturaleza, mostrarMaterial, material', 'safe', 'on' => 'search'),
+            array('codigoProducto, mostrarDescripcion, descripcionCorta, mostrarIdoneidad, idoneidad, mostrarCalidad, calidad, mostrarIngredientes, ingredientes, mostrarUsos, usos, mostrarPrecauciones, precauciones, mostrarInformacionNutricional, informacionNutricional, mostrarModoFabricacion, modoFabricacion, mostrarOrigen, origen, mostrarComposicion, composicion, mostrarFormaEmpleo, formaEmpleo, mostrarViaAdministracion, viaAdministracion, mostrarContraindicaciones, contraindicaciones, mostrarRestricciones, restricciones, mostrarProhibiciones, prohibiciones, mostrarReglamentos, reglamentos, mostrarAdvertencias, advertencias, mostrarPosologia, posologia, mostrarCaracteristicas, caracteristicas, mostrarAtributo, atributo, mostrarTamano, tamano, mostrarPeso, peso, mostrarMedida, medida, mostrarNaturaleza, naturaleza, mostrarMaterial, material', 'safe', 'on' => 'search'),
         );
     }
 
@@ -149,7 +149,7 @@ class ProductoDetalle extends CActiveRecord {
             'peso' => 'Peso',
             'mostrarMedida' => 'Mostrar Medida',
             'medida' => 'Medida',
-            'mostrarNaturalez' => 'Mostrar Naturalez',
+            'mostrarNaturaleza' => 'Mostrar Naturaleza',
             'naturaleza' => 'Naturaleza',
             'mostrarMaterial' => 'Mostrar Material',
             'material' => 'Material',
@@ -220,7 +220,7 @@ class ProductoDetalle extends CActiveRecord {
         $criteria->compare('peso', $this->peso, true);
         $criteria->compare('mostrarMedida', $this->mostrarMedida);
         $criteria->compare('medida', $this->medida, true);
-        $criteria->compare('mostrarNaturalez', $this->mostrarNaturalez);
+        $criteria->compare('mostrarNaturaleza', $this->mostrarNaturaleza);
         $criteria->compare('naturaleza', $this->naturaleza, true);
         $criteria->compare('mostrarMaterial', $this->mostrarMaterial);
         $criteria->compare('material', $this->material, true);

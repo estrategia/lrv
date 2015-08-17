@@ -13,6 +13,7 @@
  * @property string $fechaUltimoAcceso
  * @property string $correoElectronico
  * @property integer $invitado
+ * @property integer $esClienteFiel
  *
  * The followings are the available model relations:
  * @property Perfilcompras $objPerfilCompras
@@ -34,12 +35,12 @@ class Usuario extends CActiveRecord {
         // will receive user inputs.
         return array(
             array('clave', 'required'),
-            array('codigoPerfil, activo, invitado', 'numerical', 'integerOnly' => true),
+            array('codigoPerfil, activo, invitado, esClienteFiel', 'numerical', 'integerOnly' => true),
             array('identificacionUsuario, clave, nombre, apellido, correoElectronico', 'length', 'max' => 100),
-            array('fechaUltimoAcceso', 'safe'),
+            array('fechaUltimoAcceso, esClienteFiel', 'safe'),
             // The following rule is used by search().
             // @todo Please remove those attributes that should not be searched.
-            array('identificacionUsuario, clave, nombre, apellido, codigoPerfil, activo, fechaUltimoAcceso, correoElectronico, invitado', 'safe', 'on' => 'search'),
+            array('identificacionUsuario, clave, nombre, apellido, codigoPerfil, activo, fechaUltimoAcceso, correoElectronico, invitado, esClienteFiel', 'safe', 'on' => 'search'),
         );
     }
 
@@ -69,6 +70,7 @@ class Usuario extends CActiveRecord {
             'fechaUltimoAcceso' => 'Fecha Ultimo Acceso',
             'correoElectronico' => 'Correo Electronico',
             'invitado' => 'Invitado',
+            'esClienteFiel' => 'Cliente Fiel',
         );
     }
 
@@ -98,6 +100,7 @@ class Usuario extends CActiveRecord {
         $criteria->compare('fechaUltimoAcceso', $this->fechaUltimoAcceso, true);
         $criteria->compare('correoElectronico', $this->correoElectronico, true);
         $criteria->compare('invitado', $this->invitado);
+        $criteria->compare('esClienteFiel', $this->esClienteFiel);
 
         return new CActiveDataProvider($this, array(
             'criteria' => $criteria,
@@ -124,6 +127,21 @@ class Usuario extends CActiveRecord {
 
     public function hash($contrasena) {
         return md5($contrasena);
+    }
+    
+    public function beforeSave() {
+        if($this->isNewRecord){
+            $this->esClienteFiel = 1;
+        }
+        return parent::beforeSave();
+    }
+    
+    public function getCodigoPerfil(){
+        if($this->codigoPerfil == 1 && $this->esClienteFiel == 1 && in_array(date('j'), Yii::app()->params->clienteFiel['dias']) && $this->invitado==0){
+            return 3;
+        } 
+        
+        return $this->codigoPerfil;
     }
 
 }

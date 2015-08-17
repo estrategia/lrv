@@ -5,23 +5,15 @@
  *
  * The followings are the available columns in table 'm_Producto':
  * @property string $codigoProducto
- * @property integer $codigoExtendido
  * @property string $codigoBarras
  * @property string $descripcionProducto
  * @property string $presentacionProducto
  * @property integer $idMarca
  * @property string $codigoProveedor
  * @property integer $codigoImpuesto
- * @property integer $idCategorizacion
- * @property integer $unidadNegocio
- * @property integer $division
  * @property integer $idCategoriaBI
  * @property integer $activo
  * @property integer $codigoEspecial
- * @property string $indicadorOferta
- * @property integer $indicadorPerenne
- * @property integer $frecuenciaPerenne
- * @property integer $indicadorMarcaPropia
  * @property string $fraccionado
  * @property string $numeroFracciones
  * @property integer $codigoMedidaFraccion
@@ -29,10 +21,10 @@
  * @property string $codigoUnidadMedida
  * @property string $cantidadUnidadMedida
  * @property string $fechaCreacion
- * @property integer $orden
  * @property integer $ventaVirtual
  * @property integer $mostrarAhorroVirtual
  * @property string $tercero
+ * @property string $orden
  *
  * The followings are the available model relations:
  * @property Proveedor $objProveedor
@@ -50,7 +42,7 @@ class Producto extends CActiveRecord {
     public function tableName() {
         return 'm_Producto';
     }
-
+    
     /**
      * @return array validation rules for model attributes.
      */
@@ -58,16 +50,16 @@ class Producto extends CActiveRecord {
         // NOTE: you should only define rules for those attributes that
         // will receive user inputs.
         return array(
-            array('descripcionProducto, presentacionProducto, idMarca, codigoProveedor, idCategorizacion, codigoUnidadMedida, cantidadUnidadMedida, fechaCreacion, orden', 'required'),
-            array('codigoExtendido, codigoImpuesto, idCategorizacion, idMarca, unidadNegocio, division, idCategoriaBI, activo, codigoEspecial, indicadorPerenne, frecuenciaPerenne, indicadorMarcaPropia, codigoMedidaFraccion, orden, ventaVirtual, mostrarAhorroVirtual', 'numerical', 'integerOnly' => true),
+            array('descripcionProducto, presentacionProducto, idMarca, codigoProveedor, codigoUnidadMedida, cantidadUnidadMedida, fechaCreacion', 'required'),
+            array('codigoImpuesto, idMarca, idCategoriaBI, activo, codigoEspecial, codigoMedidaFraccion, ventaVirtual, mostrarAhorroVirtual', 'numerical', 'integerOnly' => true),
             array('codigoProducto, cantidadUnidadMedida', 'length', 'max' => 10),
             array('codigoBarras', 'length', 'max' => 50),
-            array('descripcionProducto, presentacionProducto', 'length', 'max' => 100),
+            array('descripcionProducto, presentacionProducto', 'length', 'max' => 200),
             array('codigoProveedor, numeroFracciones, unidadFraccionamiento, codigoUnidadMedida', 'length', 'max' => 5),
-            array('indicadorOferta, fraccionado, tercero', 'length', 'max' => 1),
+            array('fraccionado, tercero, orden', 'length', 'max' => 1),
             // The following rule is used by search().
             // @todo Please remove those attributes that should not be searched.
-            array('codigoProducto, codigoExtendido, codigoBarras, idMarca, descripcionProducto, presentacionProducto, codigoProveedor, codigoImpuesto, idCategorizacion, unidadNegocio, division, idCategoriaBI, activo, codigoEspecial, indicadorOferta, indicadorPerenne, frecuenciaPerenne, indicadorMarcaPropia, fraccionado, tercero, numeroFracciones, codigoMedidaFraccion, unidadFraccionamiento, codigoUnidadMedida, cantidadUnidadMedida, fechaCreacion, orden, ventaVirtual, mostrarAhorroVirtual', 'safe', 'on' => 'search'),
+            array('codigoProducto, codigoBarras, idMarca, descripcionProducto, presentacionProducto, codigoProveedor, codigoImpuesto, idCategoriaBI, activo, codigoEspecial, fraccionado, tercero, orden, numeroFracciones, codigoMedidaFraccion, unidadFraccionamiento, codigoUnidadMedida, cantidadUnidadMedida, fechaCreacion, ventaVirtual, mostrarAhorroVirtual', 'safe', 'on' => 'search'),
         );
     }
 
@@ -92,9 +84,13 @@ class Producto extends CActiveRecord {
             'listDescuentosPerfiles' => array(self::HAS_MANY, 'ProductosDescuentosPerfiles', 'codigoProducto'),
             'listDescuentosEspeciales' => array(self::HAS_MANY, 'ProductosDescuentosEspeciales', 'codigoProducto'),
             //'listPerfiles' => array(self::MANY_MANY, 'Perfil', 't_ProductosDescuentosPerfiles(codigoProducto, codigoPerfil)'),
-            'listAtributos' => array(self::MANY_MANY, 'Atributo', 't_ProductosAtributos(codigoProducto, idAtributo)'),
+            'listFiltros' => array(self::MANY_MANY, 'FiltroDetalle', 't_ProductosFiltros(codigoProducto, idFiltroDetalle)'),
             'objMarca' => array(self::BELONGS_TO, 'Marca', 'idMarca'),
             'objCategoriaBI' => array(self::BELONGS_TO, 'Categoria', 'idCategoriaBI'),
+            
+            
+            //'listCategoriasTienda' => array(self::MANY_MANY, 'CategoriaTienda', '', 'through' => 'CategoriasCategoriaTienda', 'condition' => 'CategoriasCategoriaTienda.idCategoriaBI=106'),
+            //'listCategoriasCategoriaTienda' => array(self::HAS_MANY, 'CategoriasCategoriaTienda', 'idCategoriaBI'),
         );
     }
 
@@ -104,23 +100,15 @@ class Producto extends CActiveRecord {
     public function attributeLabels() {
         return array(
             'codigoProducto' => 'Codigo Producto',
-            'codigoExtendido' => 'Codigo Extendido',
             'codigoBarras' => 'Codigo Barras',
             'descripcionProducto' => 'Descripcion Producto',
             'presentacionProducto' => 'Presentacion Producto',
             'idMarca' => 'Id Marca',
             'codigoProveedor' => 'Codigo Proveedor',
             'codigoImpuesto' => 'Codigo Impuesto',
-            'idCategorizacion' => 'Id Categorizacion',
-            'unidadNegocio' => 'Unidad Negocio',
-            'division' => 'Division',
             'idCategoriaBI' => 'Categoria',
             'activo' => 'Activo',
             'codigoEspecial' => 'Codigo Especial',
-            'indicadorOferta' => 'Indicador Oferta',
-            'indicadorPerenne' => 'Indicador Perenne',
-            'frecuenciaPerenne' => 'Frecuencia Perenne',
-            'indicadorMarcaPropia' => 'Indicador Marca Propia',
             'fraccionado' => 'Fraccionado',
             'numeroFracciones' => 'Numero Fracciones',
             'codigoMedidaFraccion' => 'Codigo Medida Fraccion',
@@ -128,10 +116,10 @@ class Producto extends CActiveRecord {
             'codigoUnidadMedida' => 'Codigo Unidad Medida',
             'cantidadUnidadMedida' => 'Cantidad Unidad Medida',
             'fechaCreacion' => 'Fecha Creacion',
-            'orden' => 'Orden',
             'ventaVirtual' => 'Venta Virtual',
             'mostrarAhorroVirtual' => 'Mostrar Descuento Virtual',
             'tercero' => 'Tercero',
+            'orden' => 'Orden',
         );
     }
 
@@ -153,23 +141,15 @@ class Producto extends CActiveRecord {
         $criteria = new CDbCriteria;
 
         $criteria->compare('codigoProducto', $this->codigoProducto, true);
-        $criteria->compare('codigoExtendido', $this->codigoExtendido);
         $criteria->compare('codigoBarras', $this->codigoBarras, true);
         $criteria->compare('descripcionProducto', $this->descripcionProducto, true);
         $criteria->compare('presentacionProducto', $this->presentacionProducto, true);
         $criteria->compare('idMarca', $this->idMarca);
         $criteria->compare('codigoProveedor', $this->codigoProveedor, true);
         $criteria->compare('codigoImpuesto', $this->codigoImpuesto);
-        $criteria->compare('idCategorizacion', $this->idCategorizacion);
-        $criteria->compare('unidadNegocio', $this->unidadNegocio);
-        $criteria->compare('division', $this->division);
         $criteria->compare('idCategoriaBI', $this->idCategoriaBI);
         $criteria->compare('activo', $this->activo);
         $criteria->compare('codigoEspecial', $this->codigoEspecial);
-        $criteria->compare('indicadorOferta', $this->indicadorOferta, true);
-        $criteria->compare('indicadorPerenne', $this->indicadorPerenne);
-        $criteria->compare('frecuenciaPerenne', $this->frecuenciaPerenne);
-        $criteria->compare('indicadorMarcaPropia', $this->indicadorMarcaPropia);
         $criteria->compare('fraccionado', $this->fraccionado);
         $criteria->compare('numeroFracciones', $this->numeroFracciones, true);
         $criteria->compare('codigoMedidaFraccion', $this->codigoMedidaFraccion);
@@ -177,10 +157,10 @@ class Producto extends CActiveRecord {
         $criteria->compare('codigoUnidadMedida', $this->codigoUnidadMedida, true);
         $criteria->compare('cantidadUnidadMedida', $this->cantidadUnidadMedida, true);
         $criteria->compare('fechaCreacion', $this->fechaCreacion, true);
-        $criteria->compare('orden', $this->orden);
         $criteria->compare('ventaVirtual', $this->ventaVirtual);
         $criteria->compare('mostrarAhorroVirtual', $this->mostrarAhorroVirtual);
         $criteria->compare('tercero', $this->tercero);
+        $criteria->compare('orden', $this->orden);
 
         return new CActiveDataProvider($this, array(
             'criteria' => $criteria,
@@ -213,6 +193,14 @@ class Producto extends CActiveRecord {
         }
         return $obj;
     }
+    
+    public function rutaImagen(){
+        $objImagen = $this->objImagen(YII::app()->params->producto['tipoImagen']['mini']);
+        if($objImagen == null)
+            return Yii::app()->params->producto['noImagen']['mini'];
+        
+        return Yii::app()->params->carpetaImagen['productos'][YII::app()->params->producto['tipoImagen']['mini']] . $objImagen->rutaImagen;
+    }
 
     /**
      * Retorna lista del tipo de imagen de un producto, si no se detecta
@@ -230,19 +218,28 @@ class Producto extends CActiveRecord {
         return $list;
     }
 
-    public function getCalificacion() {
+    public function getCalificacion($arreglo = false) {
         $calificacion = 0;
-        $cont = 0;
+        $votos = 0;
 
         foreach ($this->listCalificaciones as $objCalificacion) {
             if ($objCalificacion->aprobado == 1) {
                 $calificacion += $objCalificacion->calificacion;
-                $cont++;
+                $votos++;
             }
         }
 
-        if ($cont > 0)
-            $calificacion = $calificacion / $cont;
+        if ($votos > 0)
+            $calificacion = $calificacion / $votos;
+        
+        $calificacion = round($calificacion, 1);
+        
+        if($arreglo){
+            return array(
+                'calificacion' => $calificacion,
+                'votos' => $votos
+            );
+        }
 
         return $calificacion;
     }

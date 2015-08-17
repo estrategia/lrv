@@ -5,6 +5,7 @@
  *
  * The followings are the available columns in table 't_Beneficios':
  * @property integer $idBeneficio
+ * @property integer $idBeneficioSincronizado
  * @property integer $tipo
  * @property string $fechaIni
  * @property string $fechaFin
@@ -21,11 +22,12 @@
  * @property string $nitProv
  * @property integer $porcProv
  * @property integer $promoFiel
+ * @property string $mensaje
  * @property integer $swobligaCli
  * @property string $fechaCreacionBeneficio
  *
  * The followings are the available model relations:
- * @property MBeneficio $objBeneficio
+ * @property BeneficioTipo $objBeneficioTipo
  */
 class Beneficios extends CActiveRecord {
 
@@ -43,12 +45,13 @@ class Beneficios extends CActiveRecord {
         // NOTE: you should only define rules for those attributes that
         // will receive user inputs.
         return array(
-            array('tipo, fechaIni, fechaFin, fechaCreacionBeneficio', 'required'),
-            array('tipo, dsctoUnid, dsctoFrac, vtaUnid, vtaFrac, pagoUnid, pagoFrac, cuentaCop, nitCop, porcCop, cuentaProv, porcProv, promoFiel, swobligaCli', 'numerical', 'integerOnly' => true),
+            array('tipo, idBeneficioSincronizado, fechaIni, fechaFin, fechaCreacionBeneficio', 'required'),
+            array('tipo, idBeneficioSincronizado, dsctoUnid, dsctoFrac, vtaUnid, vtaFrac, pagoUnid, pagoFrac, cuentaCop, nitCop, porcCop, cuentaProv, porcProv, promoFiel, swobligaCli', 'numerical', 'integerOnly' => true),
             array('nitProv', 'length', 'max' => 45),
+            array('mensaje', 'length', 'max'=>140),
             // The following rule is used by search().
             // @todo Please remove those attributes that should not be searched.
-            array('idBeneficio, tipo, fechaIni, fechaFin, dsctoUnid, dsctoFrac, vtaUnid, vtaFrac, pagoUnid, pagoFrac, cuentaCop, nitCop, porcCop, cuentaProv, nitProv, porcProv, promoFiel, swobligaCli, fechaCreacionBeneficio', 'safe', 'on' => 'search'),
+            array('idBeneficio, idBeneficioSincronizado, tipo, fechaIni, fechaFin, dsctoUnid, dsctoFrac, vtaUnid, vtaFrac, pagoUnid, pagoFrac, cuentaCop, nitCop, porcCop, cuentaProv, nitProv, porcProv, promoFiel, mensaje, swobligaCli, fechaCreacionBeneficio', 'safe', 'on' => 'search'),
         );
     }
 
@@ -71,6 +74,7 @@ class Beneficios extends CActiveRecord {
     public function attributeLabels() {
         return array(
             'idBeneficio' => 'Id Beneficio Producto',
+            'idBeneficioSincronizado' => 'Id Beneficio Sincronizado',
             'tipo' => 'Tipo',
             'fechaIni' => 'Fecha Ini',
             'fechaFin' => 'Fecha Fin',
@@ -87,6 +91,7 @@ class Beneficios extends CActiveRecord {
             'nitProv' => 'Nit Prov',
             'porcProv' => 'Porc Prov',
             'promoFiel' => 'Promo Fiel',
+            'mensaje' => 'Mensaje',
             'swobligaCli' => 'Swobliga Cli',
             'fechaCreacionBeneficio' => 'Fecha Creacion Beneficio',
         );
@@ -110,6 +115,7 @@ class Beneficios extends CActiveRecord {
         $criteria = new CDbCriteria;
 
         $criteria->compare('idBeneficio', $this->idBeneficio);
+        $criteria->compare('idBeneficioSincronizado', $this->idBeneficioSincronizado);
         $criteria->compare('tipo', $this->tipo);
         $criteria->compare('fechaIni', $this->fechaIni, true);
         $criteria->compare('fechaFin', $this->fechaFin, true);
@@ -126,6 +132,7 @@ class Beneficios extends CActiveRecord {
         $criteria->compare('nitProv', $this->nitProv, true);
         $criteria->compare('porcProv', $this->porcProv);
         $criteria->compare('promoFiel', $this->promoFiel);
+        $criteria->compare('mensaje',$this->mensaje,true);
         $criteria->compare('swobligaCli', $this->swobligaCli);
         $criteria->compare('fechaCreacionBeneficio', $this->fechaCreacionBeneficio, true);
 
@@ -143,5 +150,5 @@ class Beneficios extends CActiveRecord {
     public static function model($className = __CLASS__) {
         return parent::model($className);
     }
-
+    
 }

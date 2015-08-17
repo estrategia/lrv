@@ -7,8 +7,8 @@
  * @property string $codigoCiudad
  * @property string $codigoSector
  * @property string $estadoCiudadSector
- * @property string $horaInicio
- * @property string $horaFin
+ * @property string $horaInicioLunesASabado
+ * @property string $horaFinLunesASabado
  * @property string $sadCiudadSector
  */
 class HorariosCiudadSector extends CActiveRecord {
@@ -29,10 +29,10 @@ class HorariosCiudadSector extends CActiveRecord {
         return array(
             array('codigoCiudad, codigoSector', 'required'),
             array('codigoCiudad, codigoSector, estadoCiudadSector, sadCiudadSector', 'length', 'max' => 10),
-            array('horaInicio, horaFin', 'safe'),
+            array('horaInicioLunesASabado, horaFinLunesASabado', 'safe'),
             // The following rule is used by search().
             // @todo Please remove those attributes that should not be searched.
-            array('codigoCiudad, codigoSector, estadoCiudadSector, horaInicio, horaFin, sadCiudadSector', 'safe', 'on' => 'search'),
+            array('codigoCiudad, codigoSector, estadoCiudadSector, horaInicioLunesASabado, horaFinLunesASabado, sadCiudadSector', 'safe', 'on' => 'search'),
         );
     }
 
@@ -54,8 +54,8 @@ class HorariosCiudadSector extends CActiveRecord {
             'codigoCiudad' => 'Codigo Ciudad',
             'codigoSector' => 'Codigo Sector',
             'estadoCiudadSector' => 'Estado Ciudad Sector',
-            'horaInicio' => 'Hora Inicio',
-            'horaFin' => 'Hora Fin',
+            'horaInicioLunesASabado' => 'Hora Inicio',
+            'horaFinLunesASabado' => 'Hora Fin',
             'sadCiudadSector' => 'Sad Ciudad Sector',
         );
     }
@@ -80,8 +80,8 @@ class HorariosCiudadSector extends CActiveRecord {
         $criteria->compare('codigoCiudad', $this->codigoCiudad, true);
         $criteria->compare('codigoSector', $this->codigoSector, true);
         $criteria->compare('estadoCiudadSector', $this->estadoCiudadSector, true);
-        $criteria->compare('horaInicio', $this->horaInicio, true);
-        $criteria->compare('horaFin', $this->horaFin, true);
+        $criteria->compare('horaInicioLunesASabado', $this->horaInicioLunesASabado, true);
+        $criteria->compare('horaFinLunesASabado', $this->horaFinLunesASabado, true);
         $criteria->compare('sadCiudadSector', $this->sadCiudadSector, true);
 
         return new CActiveDataProvider($this, array(
