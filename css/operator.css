@@ -1,0 +1,52 @@
+.navbar-brand img {
+    float: left;
+    height: 40px;
+    margin-right: 5px;
+    width: 180px;
+}
+
+.grid-view table.items tr.odd.seguimiento{
+    background: #F5A9A9 none repeat scroll 0 0;
+}
+
+.grid-view table.items tr.even.seguimiento{
+    background: #F6CECE none repeat scroll 0 0;
+}
+
+.center{
+    text-align: center;
+}
+
+.vertical-center{
+    vertical-align: middle;
+}
+
+img.center{
+    display: block;
+    margin-left: auto;
+    margin-right: auto 
+}
+
+
+#div-admin-pedido {
+    border: 1px solid #dddddd !important;
+    border-radius: 6px;
+    padding: 2%;
+}
+
+.inputmini {
+    text-align: center;
+    width: 20px;
+}
+
+.border {
+    border: 1px solid #dddddd !important;
+    border-radius: 6px;
+    margin: 10px;
+}
+
+.modal-body.body-scroll {
+    max-height: 400px;
+    overflow-y: auto;
+    padding: 15px;
+}
