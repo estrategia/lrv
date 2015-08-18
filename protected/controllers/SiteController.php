@@ -4,6 +4,7 @@ class SiteController extends Controller
 {
     public function actionPrueba(){
         echo "Prueba 2";
+        echo "prueba 3";
     }
 	/**
 	 * Declares class-based actions.
