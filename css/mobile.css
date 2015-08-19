@@ -153,8 +153,8 @@ ul.ui-listview.ui-listview-inset.ui-corner-all.ui-shadow li a.ui-btn.ui-icon-car
 }
 .ui-body-c form{ background-color: #f4f4f4; border:1px solid #e4e4e4; }
 .ui-body-c .ui-input-text input, .ui-input-password input{
-    border: 1px solid #e4e4e4; 
-    color: #909090;
+    border: 1px solid #e4e4e4;
+    color: #111;
     /* border-radius: .6em;
      webkit-border-radius: .6em;
      padding-left: .8em;*/
@@ -337,13 +337,14 @@ div.c_src_page div.ui-btn.ui-input-btn.ui-corner-all.ui-shadow.ui-btn-inline{
     border-radius: 0 0.3125em 0.3125em 0;
     -moz-border-radius: 0 0.3125em 0.3125em 0;
     -webkit-border-radius: 0 0.3125em 0.3125em 0;
-    background: #ff0000; /* Old browsers */
-    background: -moz-linear-gradient(top,  #ff0000 0%, #ab0000 100%); /* FF3.6+ */
-    background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,#ff0000), color-stop(100%,#ab0000)); /* Chrome,Safari4+ */
-    background: -webkit-linear-gradient(top,  #ff0000 0%,#ab0000 100%); /* Chrome10+,Safari5.1+ */
-    background: -o-linear-gradient(top,  #ff0000 0%,#ab0000 100%); /* Opera 11.10+ */
-    background: -ms-linear-gradient(top,  #ff0000 0%,#ab0000 100%); /* IE10+ */
-    background: linear-gradient(to bottom,  #ff0000 0%,#ab0000 100%); /* W3C */
+    background:#b10000;
+    /* background: #ff0000; /* Old browsers
+    background: -moz-linear-gradient(top,  #ff0000 0%, #ab0000 100%); /* FF3.6+
+    background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,#ff0000), color-stop(100%,#ab0000)); /* Chrome,Safari4+ 
+    background: -webkit-linear-gradient(top,  #ff0000 0%,#ab0000 100%); /* Chrome10+,Safari5.1+ 
+    background: -o-linear-gradient(top,  #ff0000 0%,#ab0000 100%); /* Opera 11.10+ 
+    background: -ms-linear-gradient(top,  #ff0000 0%,#ab0000 100%); /* IE10+ 
+    background: linear-gradient(to bottom,  #ff0000 0%,#ab0000 100%); /* W3C 
     filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#ff0000', endColorstr='#ab0000',GradientType=0 ); /* IE6-9 */
     color: #fff;
 }
@@ -683,7 +684,7 @@ a.ui-collapsible-inset.ui-corner-all.ui-collapsible-themed-content.ui-collapsibl
     color: #505050;
     border-color: #ccc;
 }
-.ui-collapsible-content>.ui-listview li a:hover{ background-color: #e4e4e4; }
+.ui-collapsible-content>.ui-listview li a:hover, a.ui-btn-active2{ background-color: #e4e4e4; }
 
 .ui-collapsible-content>.ui-listview li.ui-last-child a{
     border-bottom-left-radius:0;
@@ -918,7 +919,7 @@ h3.ui-collapsible-heading a{
 /*.list_ciud.ui-listview li.ui-first-child a.ui-btn{ padding: 1.1em 1em; }
 .list_ciud.ui-listview li.ui-last-child a.ui-btn{ padding: 1.1em 1em; }*/
 .list_ciud.ui-listview li a.ui-btn{/* padding: 1.1em 1em;*/text-transform: uppercase; }
-.list_ciud.ui-listview li:hover{ border-left: 7px solid #b10000; }
+.list_ciud.ui-listview li:hover, li.active2{ border-left: 7px solid #b10000; }
 .list_ciud.ui-listview li:hover  a.ui-btn{ padding-left: .6em; }
 
 .ui-collapsible-content>.ui-listview li .c_btn_sel{ border-radius: 0 !important;   /* padding: 1.1em 1em;*/ }
@@ -1126,7 +1127,7 @@ div.clst_cont_top {
     padding: 1em;
 }
 
-div.ccont_filtro{border-top: 1px solid #ccc; margin: 0;}
+div.ccont_filtro{border-top: 1px solid #ccc; margin: 0 0 40px;}
 div.ccont_filtro .right{float: right; text-align: right; border: 0; margin: 0; width: 50%;}
 div.ccont_filtro .left{float: left; border: 0; margin: 0; width: 50%;}
 
@@ -1140,7 +1141,7 @@ div.ccont_filtro a.ui-link img:hover , div.ccont_filtro a.ui-link img:active , d
 }
 /*
 li.c_list_prod.ui-li-static.ui-body-inherit div.cdiv_prod_frc{ position: absolute; top: 0; width: 100%; min-height: 2em; }*/
-li.c_list_prod.ui-li-static.ui-body-inherit div.cdiv_prod_frc{ float: left;}
+li.c_list_prod.ui-li-static.ui-body-inherit div.cdiv_prod_frc, div.cdiv_prod_frc{ float: left;}
 /*
 li.c_list_prod.ui-li-static.ui-body-inherit div.cdiv_prod_frc div.c_prod_frc {
     background: url("../images/iconos/etiqueta_fraccionados.png") no-repeat scroll left top rgba(0, 0, 0, 0);
@@ -1151,7 +1152,7 @@ li.c_list_prod.ui-li-static.ui-body-inherit div.cdiv_prod_frc div.c_prod_frc {
     width: 130px;
 }
 */
-li.c_list_prod.ui-li-static.ui-body-inherit div.cdiv_prod_frc div.c_prod_frc {
+li.c_list_prod.ui-li-static.ui-body-inherit div.cdiv_prod_frc div.c_prod_frc, div.cdiv_prod_frc div.c_prod_frc {
     background: none repeat scroll 0 0 #919191;
     border-radius: 0.3em 0;
     float: left;
@@ -1159,10 +1160,10 @@ li.c_list_prod.ui-li-static.ui-body-inherit div.cdiv_prod_frc div.c_prod_frc {
     position: relative;
     vertical-align: top;
 }
-li.c_list_prod.ui-li-static.ui-body-inherit div.cdiv_prod_frc div.c_prod_frc p{ color: #FFF; text-transform: capitalize; /*font-size: .75em;*/ }
+li.c_list_prod.ui-li-static.ui-body-inherit div.cdiv_prod_frc div.c_prod_frc p,  div.c_prod_frc p{ color: #FFF; text-transform: capitalize; /*font-size: .75em;*/ }
 /*
 li.c_list_prod.ui-li-static.ui-body-inherit div.cdiv_prod_desc{ position: relative; width: 100%; min-height: 2em; }*/
-li.c_list_prod.ui-li-static.ui-body-inherit div.cdiv_prod_desc{ float: right;}
+li.c_list_prod.ui-li-static.ui-body-inherit div.cdiv_prod_desc, div.cdiv_prod_desc{ float: right;}
 /*li.c_list_prod.ui-li-static.ui-body-inherit div.cdiv_prod_desc div.c_prod_desc {
     position: relative;
     float: right;
@@ -1179,7 +1180,7 @@ li.c_list_prod.ui-li-static.ui-body-inherit div.cdiv_prod_desc{ float: right;}
     width: 132px;/*165px;
 }
 */
-li.c_list_prod.ui-li-static.ui-body-inherit div.cdiv_prod_desc div.c_prod_desc {
+li.c_list_prod.ui-li-static.ui-body-inherit div.cdiv_prod_desc div.c_prod_desc, div.c_prod_desc {
     background: url("../images/iconos/etiqueta_descuentos.png") no-repeat scroll right top / auto 100% rgba(0, 0, 0, 0);
     float: right;
     height: 50px;
@@ -1189,7 +1190,7 @@ li.c_list_prod.ui-li-static.ui-body-inherit div.cdiv_prod_desc div.c_prod_desc {
     vertical-align: top;
     width: 132px;
 }
-li.c_list_prod.ui-li-static.ui-body-inherit div.cdiv_prod_desc div.c_prod_desc p {
+li.c_list_prod.ui-li-static.ui-body-inherit div.cdiv_prod_desc div.c_prod_desc p, div.c_prod_desc p {
     color: yellow;
     font-size: large;
     font-weight: bold;
@@ -1198,7 +1199,7 @@ li.c_list_prod.ui-li-static.ui-body-inherit div.cdiv_prod_desc div.c_prod_desc p
     text-align: right;
 }
 
-li.c_list_prod.ui-li-static.ui-body-inherit div.cdiv_prod_desc div.c_prod_desc p span {
+li.c_list_prod.ui-li-static.ui-body-inherit div.cdiv_prod_desc div.c_prod_desc p span, div.c_prod_desc p span {
     font-size: small;
     font-weight: normal;
 }
@@ -1230,7 +1231,6 @@ fieldset.cbnt_filprov.ui-collapsible div.ui-collapsible-heading a.ui-btn{
     border: none;
     color: #fff;
     text-shadow: none;
-    font-weight: 100;
     margin-top: 1px;
 }
 fieldset.cbnt_filprov.ui-collapsible div.ui-collapsible-heading a.ui-btn:hover{ background-color: #505050; }
@@ -2474,4 +2474,15 @@ ul.yiiPager .selected a {
 .grid-view .pager {
     margin: 5px 0 0;
     text-align: center;
+}
+.codEspecial .icon_codigo_especial {
+    width: 30px;
+}
+.resultado_bus > p {
+    color: #505050;
+    font-size: 15px;
+}
+.c_cont_catg_prod .ui-listview li a {
+    background-color: #f6f6f6;
+    padding-left: 30px;
 }
