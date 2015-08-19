@@ -98,7 +98,7 @@ class Compras extends CActiveRecord {
             'objCiudad' => array(self::BELONGS_TO, 'Ciudad', 'codigoCiudad'),
             'objSector' => array(self::BELONGS_TO, 'Sector', 'codigoSector'),
             'listItems' => array(self::HAS_MANY, 'ComprasItems', 'idCompra'),
-            'objPuntoVenta' => array(self::BELONGS_TO, 'PuntoVenta', 'idComercial'),
+            'objPuntoVenta' => array(self::BELONGS_TO, 'PuntoVenta', '','on' => 't.idComercial=objPuntoVenta.idComercial'),
             'objCompraDireccion' => array(self::HAS_ONE, 'ComprasDireccionesDespacho', 'idCompra'),
             'objFormaPago' => array(self::HAS_ONE, 'FormasPago', 'idCompra'),
             'objUsuario' => array(self::BELONGS_TO, 'Usuario', 'identificacionUsuario'),
@@ -248,7 +248,7 @@ class Compras extends CActiveRecord {
 
     public function searchAnteriores() {
         $criteria = new CDbCriteria;
-
+        $criteria->with="objPuntoVenta";
         $criteria->condition = "t.tipoEntrega=:tipoEntrega AND t.identificacionUsuario=:usuario AND t.idComercial IS NOT NULL";
         $criteria->params = array(
             ':usuario' => $this->identificacionUsuario,
@@ -395,7 +395,7 @@ class Compras extends CActiveRecord {
 
             $objSaldo = $objCombo->getSaldo($this->codigoCiudad, $this->codigoSector);
             
-            if ($objSaldo === nullo) {
+            if ($objSaldo === null) {
                 throw new Exception("La cantidad solicitada no está disponible en este momento. No hay unidades disponibles");
             }
 

@@ -371,7 +371,7 @@ class AdminController extends ControllerOperator {
             Yii::app()->end();
         }
 
-        $objCompra = Compras::model()->findByPk($compra);
+        $objCompra = Compras::model()->findByPk($compra,array("with"=>"objPuntoVenta"));
 
         if ($objCompra === null) {
             echo CJSON::encode(array('result' => 'error', 'response' => 'Compra no existente.'));

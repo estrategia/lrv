@@ -1,5 +1,5 @@
-<?php if ($saldosPdv != null): ?>
-    <table class="table table-bordered table-hover table-striped">
+<?php /*if ($saldosPdv != null): ?>
+   <table class="table table-bordered table-hover table-striped">
         <tbody><tr>
                 <th> CODIGO</th> 
                 <th> DESCRIPCION</th> 
@@ -31,5 +31,7 @@
                 <td><i class="glyphicon glyphicon-remove"></i> (-1)</td>
             </tr>
         </tbody>
-    </table>
-<?php endif; ?>
+    </table> 
+
+<?php endif; ?> */
+

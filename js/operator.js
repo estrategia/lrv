@@ -96,6 +96,34 @@ $(document).on('click', 'button[data-action="asignar-pdv"]', function() {
 
 });
 
+$(document).on('click', 'button[data-action="saldo-pdv"]', function() {
+    $.ajax({
+        type: 'POST',
+        dataType: 'json',
+        async: true,
+        url: requestUrl + '/callcenter/pedido/buscarsaldo',
+        data: {idCompra: $(this).attr('data-compra'), pdv: $('#select-pdv-saldo').val()},
+        beforeSend: function() {
+            Loading.show();
+        },
+        complete: function() {
+            Loading.hide();
+        },
+        success: function(data) {
+            if (data.result == 'ok') {
+                $('#div-saldos-pdv').html(data.response.htmlSaldo);
+            } else {
+                bootbox.alert(data.response);
+            }
+        },
+        error: function(jqXHR, textStatus, errorThrown) {
+            Loading.hide();
+            bootbox.alert('Error: ' + errorThrown);
+        }
+    });
+
+});
+
 $(document).on('click', "button[data-role='modificarpedido']", function() {
     var action = $(this).attr('data-action');
     var data = {accion: action};
@@ -106,7 +134,7 @@ $(document).on('click', "button[data-role='modificarpedido']", function() {
         if (isNaN(cantidadU)) {
             cantidadU = -1;
         } else if (cantidadU < 0) {
-            cantidadU = 0;
+           // cantidadU = 0;
         }
         data['cantidad'] = cantidadU;
         data['item'] = item;
@@ -116,7 +144,7 @@ $(document).on('click', "button[data-role='modificarpedido']", function() {
         if (isNaN(cantidadF)) {
             cantidadF = -1;
         } else if (cantidadF < 0) {
-            cantidadF = 0;
+         //   cantidadF = 0;
         }
         data['cantidad'] = cantidadF;
         data['item'] = item;

@@ -14,8 +14,10 @@
                             <th class="center vertical-center">Fecha Fin</th>
                             <th class="center vertical-center">Descuento Unidad</th>
                             <th class="center vertical-center">Descuento Fracción</th>
-                            <th class="center vertical-center">Nit Proveedor</th>
-                            <th class="center vertical-center"># Promo Fiel</th>
+                            <th class="center vertical-center">Precio Descuento Unidad</th>
+                            <th class="center vertical-center">Precio Descuento Fracción</th>
+                         <!--   <th class="center vertical-center">Nit Proveedor</th>
+                            <th class="center vertical-center"># Promo Fiel</th>-->
                             <th class="center vertical-center">Cliente</th>
                         </tr>
                         <?php foreach ($objItem->listBeneficios as $objBeneficio): ?>
@@ -25,8 +27,10 @@
                                 <td class="center vertical-center"><?php echo $objBeneficio->fechaFin ?></td>
                                 <td class="center vertical-center"><?php echo $objBeneficio->dsctoUnid ?>%</td>
                                 <td class="center vertical-center"><?php echo $objBeneficio->dsctoFrac ?>%</td>
-                                <td class="center vertical-center"><?php echo $objBeneficio->nitProv ?></td>
-                                <td class="center vertical-center"><?php echo $objBeneficio->promoFiel ?></td>
+                                <td class="center vertical-center"><?php echo Yii::app()->numberFormatter->format(Yii::app()->params->formatoMoneda['patron'], Precio::redondear($objItem->precioBaseUnidad*$objBeneficio->dsctoUnid/100, 1), Yii::app()->params->formatoMoneda['moneda']) ?></td>
+                                <td class="center vertical-center"><?php echo Yii::app()->numberFormatter->format(Yii::app()->params->formatoMoneda['patron'], Precio::redondear($objItem->precioBaseFraccion*$objBeneficio->dsctoFrac/100, 1), Yii::app()->params->formatoMoneda['moneda']) ?></td>
+                             <!--   <td class="center vertical-center"><?php echo $objBeneficio->nitProv ?></td>
+                                <td class="center vertical-center"><?php echo $objBeneficio->promoFiel ?></td> -->
                                 <td class="center vertical-center"><?php echo Yii::app()->params->beneficios['swobligaCli'][$objBeneficio->swobligaCli] ?></td>
                             </tr>
                         <?php endforeach; ?>
