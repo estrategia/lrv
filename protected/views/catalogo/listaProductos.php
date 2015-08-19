@@ -1,4 +1,8 @@
-<div class="ui-content no-padding-top" style="">
+<div class="ui-content no-padding-bottom no-padding-top">
+    <h1 class="ct_result"><?= count($listProductos) + count($listCombos) ?> resultados para <?= $nombreBusqueda ?></h1>
+</div>
+
+<div class="ui-content no-padding-top" style="margin-top: -5px">
     <?php //if(isset($formFiltro) || isset($formOrdenamiento)):?>
         <div class="ccont_filtro">
             <div class="left">
@@ -19,12 +23,8 @@
                     </a>
                 <?php endif; ?>
             </div>
-            <div class="clear"></div>
         </div>
-        <div class="resultado_bus">
-            <h1 class="ct_result">Resultados de b&uacute;squeda para <?= $nombreBusqueda ?></h1>
-            <p><?= count($listProductos) + count($listCombos) ?> resultados</p>
-        </div>
+        
         <div class="clear"></div>
     <?php //endif;?>
     <?php if ($imagenBusqueda != null): ?>
