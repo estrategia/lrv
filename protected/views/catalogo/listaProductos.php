@@ -1,9 +1,4 @@
-<div class="ui-content no-padding-bottom no-padding-top">
-    <h1 class="ct_result"><?= count($listProductos) + count($listCombos) ?> resultados para <?= $nombreBusqueda ?></h1>
-</div>
-
-<div class="ui-content no-padding-top" style="margin-top: -5px">
-    
+<div class="ui-content no-padding-top" style="">
     <?php //if(isset($formFiltro) || isset($formOrdenamiento)):?>
         <div class="ccont_filtro">
             <div class="left">
@@ -24,6 +19,11 @@
                     </a>
                 <?php endif; ?>
             </div>
+            <div class="clear"></div>
+        </div>
+        <div class="resultado_bus">
+            <h1 class="ct_result">Resultados de b&uacute;squeda para <?= $nombreBusqueda ?></h1>
+            <p><?= count($listProductos) + count($listCombos) ?> resultados</p>
         </div>
         <div class="clear"></div>
     <?php //endif;?>
@@ -72,11 +72,11 @@
     </ul>
 
     <?php if (!empty($msgCodigoEspecial)): ?>
-        <table>
+        <table class="codEspecial">
             <tbody>
                 <?php foreach ($msgCodigoEspecial as $especial): ?>
                     <tr>
-                        <td><img src="<?php echo Yii::app()->request->baseUrl . Yii::app()->params->carpetaImagen['codigoEspecial'] . $especial->rutaIcono; ?>" ></td>
+                        <td><img class="icon_codigo_especial" src="<?php echo Yii::app()->request->baseUrl . Yii::app()->params->carpetaImagen['codigoEspecial'] . $especial->rutaIcono; ?>" ></td>
                         <td><?php echo $especial->descripcion ?></td>
                     </tr>
                 <?php endforeach; ?>

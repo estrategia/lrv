@@ -1555,7 +1555,19 @@ $(document).on('keyup', "input[type='number']", function() {
         $(this).val('');
     }
 });
+$( document ).ready(function() {
+    $('.lst_ub_cdd .ui-collapsible-heading-toggle').click(function(){
+        $('li a.c_btn_sel').removeClass('ui-btn-active2');
+        $('.list_ciud.ui-listview li').removeClass('active2');
+    });
+    $('a.c_btn_sel').click(function(){
+        $('li a.c_btn_sel').removeClass('ui-btn-active2');
+        $('.list_ciud.ui-listview li').removeClass('active2');
+        $(this).addClass('ui-btn-active2');
+        $(this).parent('li').addClass('active2');
 
+    });
+});
 /*
  $(window).on("navigate", function(event, data) {
  console.log(data.state.info);
