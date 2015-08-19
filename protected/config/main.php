@@ -50,7 +50,7 @@ return array(
             'showScriptName' => false,
             'caseSensitive' => true,
         ),
-        /*'db' => array(
+        'db' => array(
             'connectionString' => 'mysql:host=localhost;port=3306;dbname=lrvmovil',
             'emulatePrepare' => true,
             'username' => 'root',
@@ -58,8 +58,8 @@ return array(
             'charset' => 'utf8',
             'enableProfiling' => true,
             'enableParamLogging' => true,
-        ),*/
-        'db' => array(
+        ),
+        /*'db' => array(
             'connectionString' => 'mysql:host=66.147.244.236;port=3306;dbname=promarca_tmp_lrvmovil',
             'emulatePrepare' => true,
             'username' => 'promarca_tmp',
@@ -67,7 +67,7 @@ return array(
             'charset' => 'utf8',
             'enableProfiling' => true,
             'enableParamLogging' => true,
-        ),
+        ),*/
         'errorHandler' => array(
             'errorAction' => 'sitio/error',
         ),

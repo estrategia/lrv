@@ -8,7 +8,7 @@
     <li class="c_listini_first">
         <a href="<?php echo CController::createUrl('/sitio/categorias') ?>" data-ajax="false" class=" ui-nodisc-icon ui-alt-icon cbtn_menu_inicio">
             <img src="<?php echo Yii::app()->request->baseUrl; ?>/images/inicio/icon_categorias.png">
-            <h2>Categorías de producos</h2>
+            <h2>Categorías de productos</h2>
             <p>Conozca nuestra oferta completa.</p>
         </a>
     </li>

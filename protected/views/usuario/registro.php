@@ -105,7 +105,7 @@
 
                 <div class="ui-field-container">
                     <?php echo $form->labelEx($model, 'fechaNacimiento'); ?>
-                    <?php echo $form->dateField($model, 'fechaNacimiento', array()); ?>
+                    <?php echo $form->dateField($model, 'fechaNacimiento', array('placeholder'=>'yyyy-mm-dd')); ?>
                     <?php echo $form->error($model, 'fechaNacimiento'); ?>
                 </div>
             <?php endif; ?>

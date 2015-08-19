@@ -24,10 +24,9 @@ function sendHtmlEmail($toStr, $subject, $content, $ccStr = null) {
     $mail = new JPhpMailer;
     $mail->isSMTP();
     $mail->Host = 'smtp.gmail.com';
-    $mail->Port = 25;
     $mail->SMTPAuth = true;
-    $mail->Username = 'miguel.sanchez@eiso.com.co';
-    $mail->Password = 'ms4nch3z31s0';
+    $mail->Username = 'servidor.correo.msanchez@gmail.com';
+    $mail->Password = 'c0rr30*-*';
     $mail->SMTPSecure = 'tls';
     $mail->Port = 587;
     $mail->isHTML(true);

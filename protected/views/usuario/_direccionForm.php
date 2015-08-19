@@ -1,4 +1,7 @@
-
+<?php if(isset($modal)): ?>
+    <div class="c_form_rgs ui-body-c">
+<?php endif;?>
+    
 <?php if ($model->isNewRecord): ?>
 <h2>Esta dirección de despacho estará asociada a la ubicación <span style="text-transform: capitalize;"><?php echo strtolower($this->sectorName) ?></span></h2>
 <?php endif;?>
@@ -61,20 +64,27 @@ $form = $this->beginWidget('CActiveForm', array(
         <?php echo $form->numberField($model, 'celular', array('maxlength'=>20,'placeholder' => $model->getAttributeLabel('celular'))); ?>
         <?php echo $form->error($model, 'celular'); ?>
     </div>
-    <?php if (!$model->isNewRecord && $modelPago==null): ?>
+    <?php if (!$model->isNewRecord): ?>
         <div class="ui-field-container">
-            <?php /* echo $form->labelEx($model, 'codigoCiudad', array('class' => '')); */ ?>
-            <?php echo $form->dropDownList($model, 'codigoCiudad', CHtml::listData($listUbicacion, 'value', 'label', 'group'), array('id' =>  uniqid(), 'prompt' => 'Seleccione ubicación', 'data-native-menu' => "false", 'placeholder' => $model->getAttributeLabel('codigoCiudad'))); ?>
-            <?php echo $form->error($model, 'codigoCiudad'); ?>
+            <label class="">Ubicación</label>
+            <input type="text" disabled="disabled" value="<?php echo $model->objCiudad->nombreCiudad . (($model->codigoSector !=0) ? (" - " . $model->objSector->nombreSector) : "") ?>">
         </div>
     <?php endif; ?>
 </fieldset>
 <div class="btnsDirecciones">
 <?php if ($model->isNewRecord): ?>
-    <div class="ui-input-btn ui-btn ui-corner-all ui-shadow ui-btn-r">
-        Guardar
-        <input type="button" data-enhanced="true" value="Guardar" id="btn-direccion-crear-<?php echo uniqid() ?>">
-    </div>
+    
+    <?php if(isset($modal)): ?>
+        <div class="ui-input-btn ui-btn ui-corner-all ui-shadow ui-btn-r">
+            Guardar
+            <input type="button" data-enhanced="true" value="Guardar" data-role="direccion-adicionar" data-modal=1>
+        </div>
+    <?php else: ?>
+        <div class="ui-input-btn ui-btn ui-corner-all ui-shadow ui-btn-r">
+            Guardar
+            <input type="button" data-enhanced="true" value="Guardar" data-role="direccion-adicionar" data-modal=0>
+        </div>
+    <?php endif;?>
 <?php else: ?>
     <div class="ui-input-btn ui-btn ui-corner-all ui-shadow ui-btn-r">
         Actualizar
@@ -91,3 +101,7 @@ $form = $this->beginWidget('CActiveForm', array(
 <?php endif; ?>
 </div>
 <?php $this->endWidget(); ?>
+
+<?php if(isset($modal)): ?>
+    </div>
+<?php endif;?>

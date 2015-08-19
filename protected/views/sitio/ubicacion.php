@@ -33,7 +33,7 @@
                         <div data-role="collapsible"  data-icon="false" data-filtertext="<?php echo $ciudad->nombreCiudad ?>" data-enhanced="true" class="ui-collapsible ui-collapsible-inset ui-corner-all ui-collapsible-collapsed lst_ub_cdd">
                             <!-- class = ui-collapsible-heading -->
                             <h3 class="ubicacion-collapsible-heading ui-collapsible-heading-collapsed">
-                                <a href="<?php echo CController::createUrl('/sitio/ubicacionSeleccion', array('ciudad' => $ciudad->codigoCiudad, 'sector' => 0)) ?>" data-ajax="false" class="ui-collapsible-heading-toggle ui-btn ui-btn-icon-false">
+                                <a href="#" data-ubicacion="verificacion-domicilio" data-ciudad="<?php echo $ciudad->codigoCiudad ?>" data-sector="0" class="ui-collapsible-heading-toggle ui-btn ui-btn-icon-false">
                                     <?php echo $ciudad->nombreCiudad ?>
                                 </a>
                             </h3>
@@ -44,7 +44,7 @@
                             <ul data-role="listview" data-inset="false" class="list_ciud">
                                 <?php foreach ($ciudad->listSectores as $sector): ?>
                                     <li data-icon="false">
-                                        <a href="<?php echo CController::createUrl('/sitio/ubicacionSeleccion', array('ciudad' => $ciudad->codigoCiudad, 'sector' => $sector->codigoSector)) ?>" data-ajax="false"><?php echo $sector->nombreSector ?></a>
+                                        <a href="#" data-ubicacion="verificacion-domicilio" data-ciudad="<?php echo $ciudad->codigoCiudad ?>" data-sector="<?php echo $sector->codigoSector ?>" ><?php echo $sector->nombreSector ?></a>
                                     </li>
                                 <?php endforeach; ?>
                             </ul>
@@ -64,7 +64,7 @@
     <a href="#" data-rel="back" class="ui-btn ui-corner-all ui-shadow ui-btn ui-icon-delete ui-btn-icon-notext ui-btn-right">Close</a>
     <div data-role="main">
         <div data-role="content">
-            <h2></h2>
+            <div class="center"></div>
             <a href="#" class="ui-btn ui-corner-all ui-shadow ui-btn-r" data-ajax='false'>Usar esta ubicación</a>
             <a href="#" class="ui-btn ui-corner-all ui-shadow ui-btn-n" data-rel='back'>Cerrar</a>
         </div>

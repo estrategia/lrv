@@ -1014,7 +1014,6 @@ class CarroController extends Controller {
         ));
         Yii::app()->end();
     }
-    
 
     public function actionPagoexpress() {
         $objSectorCiudad = null;
@@ -1082,6 +1081,23 @@ class CarroController extends Controller {
         }
     }
 
+    public function verficiarDomicilio($objSectorCiudad, $itpoEntrega){
+         if ($itpoEntrega != Yii::app()->params->entrega['tipo']['presencial']) {
+            $objHorarioSecCiud = HorariosCiudadSector::model()->find(array(
+                'condition' => 'codigoCiudad=:ciudad AND codigoSector=:sector',
+                'params' => array(
+                    ':ciudad' => $objSectorCiudad->codigoCiudad,
+                    ':sector' => $objSectorCiudad->codigoSector,
+                )
+            ));
+
+            if($objHorarioSecCiud!=null && $objHorarioSecCiud->sadCiudadSector==0){
+                Yii::app()->session[Yii::app()->params->sesion['tipoEntrega']] = Yii::app()->params->entrega['tipo']['presencial'];
+                Yii::app()->session[Yii::app()->params->sesion['carroPagarForm']] = null;
+            }
+        }
+    }
+    
     public function actionPagar($paso = null, $post = false, $cambio = false) {
         $objSectorCiudad = null;
         if (isset(Yii::app()->session[Yii::app()->params->sesion['sectorCiudadEntrega']]))
@@ -1114,6 +1130,8 @@ class CarroController extends Controller {
 
         if (isset(Yii::app()->session[Yii::app()->params->sesion['tipoEntrega']]) && Yii::app()->session[Yii::app()->params->sesion['tipoEntrega']] != null)
             $tipoEntrega = Yii::app()->session[Yii::app()->params->sesion['tipoEntrega']];
+        
+        $this->verficiarDomicilio($objSectorCiudad, $tipoEntrega);
 
         if ($tipoEntrega == Yii::app()->params->entrega['tipo']['domicilio']) {
             $this->pagarDomicilio($paso, $post);
@@ -1289,11 +1307,6 @@ class CarroController extends Controller {
                     ));
 
                     $params['parametros']['listDirecciones'] = $listDirecciones;
-                    foreach ($listDirecciones as $model) {
-                        $model->codigoCiudad = "$model->codigoCiudad-$model->codigoSector";
-                    }
-
-                    $params['parametros']['listUbicacion'] = array();
                     break;
                 case Yii::app()->params->pagar['pasos'][2]:
                     $params['parametros']['listHorarios'] = $modelPago->listDataHoras();

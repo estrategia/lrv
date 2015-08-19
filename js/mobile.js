@@ -23,7 +23,7 @@ function obtenerPosicion(pos) {
         data: {lat: lat, lon: lon},
         success: function(data) {
             if (data.result == 'ok') {
-                $("#popup-ubicacion-gps [data-role='content'] h2").html(data.response.ubicacion);
+                $("#popup-ubicacion-gps [data-role='content'] div").html(data.response.ubicacion);
                 $("#popup-ubicacion-gps [data-role='content'] a").attr('href', data.response.url);
                 $("#popup-ubicacion-gps").popup("open");
                 //$('[data-role= \"main\"]').html(data.response);
@@ -63,6 +63,41 @@ function errorPosicion(error) {
 
     alert(mensaje);
 }
+
+$(document).on('click', "a[data-ubicacion='verificacion-domicilio']", function() {
+    $.ajax({
+        type: 'POST',
+        dataType: 'json',
+        async: true,
+        url: requestUrl + '/sitio/ubicacionVerificacion',
+        data: {ciudad: $(this).attr('data-ciudad'), sector: $(this).attr('data-sector')},
+        beforeSend: function() {
+            $.mobile.loading('show');
+        },
+        complete: function() {
+            $.mobile.loading('hide');
+        },
+        success: function(data) {
+            if (data.result == "ok") {
+                if(data.response.domicilio){
+                    window.location.replace(data.response.url);
+                }else{
+                    $("#popup-ubicacion-gps [data-role='content'] div").html(data.response.mensaje);
+                    $("#popup-ubicacion-gps [data-role='content'] a").attr('href', data.response.url);
+                    $("#popup-ubicacion-gps").popup("open");
+                }
+            } else {
+                $('<div>').mdialog({
+                    content: "<div data-role='main'><div class='ui-content' data-role='content' role='main'>" + data.response + "<a class='ui-btn ui-btn-r ui-corner-all ui-shadow' data-rel='back' href='#'>Aceptar</a></div></div>"
+                });
+            }
+        },
+        error: function(jqXHR, textStatus, errorThrown) {
+            $.mobile.loading('hide');
+            alert('Error: ' + errorThrown);
+        }
+    });
+});
 
 function subtotalUnidadProducto(codigo) {
     var cantidad = $('#cantidad-producto-unidad-' + codigo).val();
@@ -447,6 +482,12 @@ $(document).on("pagecreate", function(event) {
             countChar(elementArea, elementArea.attr('data-countchar'));
         }
     });
+    
+    $("div[id^='collapsible-direccion-ciudad-']").on( "collapsiblecollapse", function( event, ui ) {
+        $("div[id^='div-direccion-form-']").css('display', 'none');
+        $("input[id^='DireccionesDespacho_idDireccionDespacho_']").removeAttr("checked");
+        $("input[id^='DireccionesDespacho_idDireccionDespacho_']").checkboxradio("refresh");
+    } );
 });
 
 $(document).on('keyup', "textarea[data-countchar]", function() {
@@ -839,6 +880,15 @@ $(document).on('change', "input[data-modificar='1'], input[data-modificar='2'], 
     });
 });
 
+$(document).on('change', 'input[name="DireccionesDespacho[idDireccionDespacho]"]:radio', function(e) {
+    var direccion = $('input[name="DireccionesDespacho[idDireccionDespacho]"]:checked').val();
+    $("div[id^='div-direccion-form-']").css('display', 'none');
+    $('#div-direccion-form-'+direccion).css('display', 'block');
+    $('html,body').animate({
+        scrollTop: $('#div-direccion-form-'+direccion).offset().top
+    }, 200);
+});
+
 $(document).on('click', "input[id^='btn-direccion-actualizar-']", function() {
     var form = $(this).parents("form");
     $.ajax({
@@ -876,13 +926,14 @@ $(document).on('click', "input[id^='btn-direccion-actualizar-']", function() {
 
 });
 
-$(document).on('click', "input[id^='btn-direccion-crear-']", function() {
-    var form = $(this).parents("form");
+
+$(document).on('click', "a[data-role='direccion-adicionar-modal']", function() {
     $.ajax({
         type: 'POST',
+        dataType: 'json',
         async: true,
         url: requestUrl + '/usuario/direccionCrear',
-        data: form.serialize(),
+        data: {render: true},
         beforeSend: function() {
             $.mobile.loading('show');
         },
@@ -890,14 +941,51 @@ $(document).on('click', "input[id^='btn-direccion-crear-']", function() {
             $.mobile.loading('hide');
         },
         success: function(data) {
-            var obj = $.parseJSON(data);
+                var id = "page-direccion-crear-" + uniqueId();
+                var page = "<div data-role='page' id='" + id + "'><div data-role='main' class='ui-content'>" + data.response.dialogoHTML + "<a href='#' class='ui-btn ui-btn-n ui-corner-all ui-shadow' data-rel='back'>Cerrar</a></div></div>";
+                $('body').append(page);
+                $.mobile.changePage('#' + id, {transition: "pop", role: "dialog", reverse: false});
+        },
+        error: function(jqXHR, textStatus, errorThrown) {
+            $.mobile.loading('hide');
+            alert('Error: ' + errorThrown);
+        }
+    });
+});
 
-            if (obj.result === 'ok') {
-                location.reload();
-            } else if (obj.result === 'error') {
-                alert(obj.response);
+$(document).on('click', "input[data-role='direccion-adicionar']", function() {
+    var form = $(this).parents("form");
+    var modal = $(this).attr("data-modal");
+    var data = {modal: modal};
+    
+    $.ajax({
+        type: 'POST',
+        async: true,
+        url: requestUrl + '/usuario/direccionCrear',
+        data:  $.param(data) + '&' + form.serialize(),
+        beforeSend: function() {
+            $.mobile.loading('show');
+        },
+        complete: function() {
+            $.mobile.loading('hide');
+        },
+        success: function(data) {
+            var data = $.parseJSON(data);
+            if (data.result === 'ok') {
+                if(modal==1){
+                    $('#div-direcciones-lista').html(data.response.direccionesHTML);
+                    $('#div-direcciones-lista').trigger("create");
+                    $("div[id^='page-direccion-crear-']").dialog("close");
+                    dialogoAnimado(data.response.mensaje);
+                }else{
+                    location.reload();
+                }
+            } else if (data.result === 'error') {
+                $('<div>').mdialog({
+                    content: "<div data-role='main'><div class='ui-content' data-role='content' role='main'>" + data.response + "<a class='ui-btn ui-btn-r ui-corner-all ui-shadow' data-rel='back' href='#'>Aceptar</a></div></div>"
+                });
             } else {
-                $.each(obj, function(element, error) {
+                $.each(data, function(element, error) {
                     $('#' + form.attr('id') + ' #' + element + '_em_').html(error);
                     $('#' + form.attr('id') + ' #' + element + '_em_').css('display', 'block');
                 });
@@ -928,8 +1016,7 @@ $(document).on('click', "input[id^='btn-direccion-eliminar-']", function() {
         },
         success: function(data) {
             if (data.result === 'ok') {
-                $('#collapsible-direccion-' + direccion).remove();
-                $('#collapsibleset-direcciones').collapsibleset("refresh");
+                $('#div-direccion-radio-' + direccion).remove();
             } else if (data.result === 'error') {
                 $('<div>').mdialog({
                     content: "<div data-role='main'><div class='ui-content' data-role='content' role='main'>" + data.response + "<a class='ui-btn ui-btn-r ui-corner-all ui-shadow' data-rel='back' href='#'>Aceptar</a></div></div>"
@@ -1490,7 +1577,9 @@ $(document).on('click', "input[data-role='lstpersonalguardar']", function() {
                 $("div[id^='page-listaguardar-']").dialog("close");
                 dialogoAnimado(data.response);
             } else if (data.result === 'error') {
-                alert(data.response);
+                $('<div>').mdialog({
+                    content: "<div data-role='main'><div class='ui-content' data-role='content' role='main'>" + data.response + "<a class='ui-btn ui-btn-r ui-corner-all ui-shadow' data-rel='back' href='#'>Aceptar</a></div></div>"
+                });
             } else {
                 $.each(data, function(element, error) {
                     $('#' + element + '_em_').html(error);

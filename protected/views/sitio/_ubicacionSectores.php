@@ -8,7 +8,7 @@
                         <ul data-role="listview" data-inset="false" data-icon="false">
                             <?php foreach ($sectorReferencia->listPuntoReferencias as $referencia): ?>
                                 <li class="c_lnk_sel">
-                                    <a href="<?php echo CController::createUrl('/sitio/ubicacionSeleccion', array('ciudad' => $sectorReferencia->codigoCiudad, 'sector' => $sectorReferencia->codigoSector/*, 'subsector' => $subSector->codigoSubSector*/)) ?>" data-ajax="false" class="" ><?php echo $referencia->nombreReferencia ?></a>
+                                    <a href="#" data-ubicacion="verificacion-domicilio" data-ciudad="<?php echo $sectorReferencia->codigoCiudad ?>" data-sector="<?php echo $sectorReferencia->codigoSector ?>" class="" ><?php echo $referencia->nombreReferencia ?></a>
                                 </li>
                             <?php endforeach; ?>
                         </ul>
