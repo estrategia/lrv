@@ -12,7 +12,13 @@
     <!-- <div class="cdt_line_spc"><span></span></div>-->
 
     <?php $listImagen = $objProducto->listImagen(YII::app()->params->producto['tipoImagen']['grande']); ?>
-
+    <?php if ($objProducto->fraccionado == 1): ?>
+    <div class="cdiv_prod_frc">
+        <div class="c_prod_frc">
+            <p class="">Producto fraccionado</p>
+        </div>
+    </div>
+    <?php endif; ?>
     <div id="owl-productodetalle-<?php echo $objProducto->codigoProducto ?>" class="owl-carousel owl-theme owl-productodetalle">
         <?php if (empty($listImagen)): ?>
             <div class="item"><img src="<?php echo Yii::app()->request->baseUrl . Yii::app()->params->producto['noImagen']['grande']; ?>" alt="<?php echo $objProducto->descripcionProducto ?>" title="<?php echo $objProducto->descripcionProducto ?>"></div>

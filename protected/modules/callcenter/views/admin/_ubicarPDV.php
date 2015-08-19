@@ -71,10 +71,10 @@ $listPdv = PuntoVenta::model()->findAll(array(
             <form action="" method="post" id="pdvform" name="pdvform">
                 <div class="row">
                     <div class="col-md-9">
-                        <?php echo Select2::dropDownList('pdvsaldos', $objCompra->idComercial, CHtml::listData($listPdv, 'idComercial', function($model) {return "$model->idComercial - $model->nombrePuntoDeVenta";}), array('prompt' => 'Seleccione punto de venta', 'id' => 'pdvsaldos', 'style' => 'width: 100%;')) ?>
+                        <?php echo Select2::dropDownList('select-pdv-saldo', $objCompra->idComercial, CHtml::listData($listPdv, 'idComercial', function($model) {return "$model->idComercial - $model->nombrePuntoDeVenta";}), array('prompt' => 'Seleccione punto de venta', 'id' => 'select-pdv-saldo', 'style' => 'width: 100%;')) ?>
                     </div>
                     <div class="col-md-3">
-                        <button type="button" style="color: #dd4814;" class="btn btn-sm"><strong>Consultar</strong></button>
+                        <button type="button" data-compra="<?php echo $objCompra->idCompra ?>" data-action="saldo-pdv" style="color: #dd4814;" class="btn btn-sm"><strong>Consultar</strong></button>
                     </div>
                 </div>
                 <input type="hidden" value="386414" id="idPedido" name="idPedido">

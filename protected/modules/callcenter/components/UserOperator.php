@@ -50,7 +50,7 @@ class UserOperator {
             $this->isGuest = false;
             $this->id = $user->idOperador;
             $this->name = $user->usuario;
-            $nombre = split(" ", $user->nombre);
+            $nombre = explode(" ", $user->nombre);
             $this->shortName = $nombre[0];
             $this->profile = $user->perfil;
         }

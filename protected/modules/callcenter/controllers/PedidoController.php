@@ -189,8 +189,13 @@ class PedidoController extends ControllerOperator {
         $cantidad = Yii::app()->getRequest()->getPost('cantidad');
         $item = Yii::app()->getRequest()->getPost('item');
 
-        if ($cantidad === null || $item === null || $cantidad < 0) {
-            echo CJSON::encode(array('result' => 'error', 'response' => 'Solicitud invalida.'));
+        if ($cantidad === null || $item === null) {
+            echo CJSON::encode(array('result' => 'error', 'response' => 'Solicitud inválida.'));
+            Yii::app()->end();
+        }
+        
+        if ($cantidad <0) {
+            echo CJSON::encode(array('result' => 'error', 'response' => 'Las cantidades deben ser números mayores o iguales a cero.'));
             Yii::app()->end();
         }
 
@@ -234,8 +239,13 @@ class PedidoController extends ControllerOperator {
         $combo = Yii::app()->getRequest()->getPost('combo');
         $compra = Yii::app()->getRequest()->getPost('compra');
 
-        if ($cantidad === null || $combo === null || $compra === null || $cantidad < 0) {
-            echo CJSON::encode(array('result' => 'error', 'response' => 'Solicitud invalida.'));
+        if ($cantidad === null || $combo === null || $compra === null ) {
+            echo CJSON::encode(array('result' => 'error', 'response' => 'Solicitud inválida.'));
+            Yii::app()->end();
+        }
+        
+        if ($cantidad <0) {
+            echo CJSON::encode(array('result' => 'error', 'response' => 'Las cantidades deben ser números mayores o iguales a cero.'));
             Yii::app()->end();
         }
 
@@ -269,14 +279,14 @@ class PedidoController extends ControllerOperator {
 
     public function actionBuscar() {
         if (!Yii::app()->request->isPostRequest) {
-            throw new CHttpException(404, 'Solicitud invalida.');
+            throw new CHttpException(404, 'Solicitud inválida.');
         }
 
         $busqueda = Yii::app()->getRequest()->getPost('busqueda');
         $compra = Yii::app()->getRequest()->getPost('compra');
 
         if ($busqueda === null || $compra === null) {
-            throw new CHttpException(404, 'Solicitud invalida.');
+            throw new CHttpException(404, 'Solicitud inválida.');
         }
 
         $busqueda = trim($busqueda);
@@ -745,4 +755,35 @@ class PedidoController extends ControllerOperator {
         }
     }
 
+    public function actionBuscarSaldo() {
+
+            $idCompra = Yii::app()->getRequest()->getPost('idCompra');
+            $pdv = Yii::app()->getRequest()->getPost("pdv");
+          //  $idCompra=210372;
+
+            $respuesta = $this->buscarsaldos($idCompra, $pdv);
+            $datosSerializados = serialize($respuesta);
+
+            $compra=Compras::model()->findByPk($idCompra);
+            $compra->saldosPdv=$datosSerializados;
+            $compra->save();
+            $htmlRespuesta=$this->renderPartial("_saldosPDV",array("respuesta"=>$respuesta),true);
+             echo CJSON::encode(array(
+                    'result' => 'ok',
+                    'response' => array(
+                        'htmlSaldo' => $htmlRespuesta
+            )));
+   
+    }
+
+    public function buscarsaldos($idCompra, $pdv) {
+
+        $client = new SoapClient(null, array(
+            'location' => Yii::app()->params->webServiceUrl['remisionPos'],
+            'uri' => "",
+            'trace' => 1
+        ));
+       $result = $client->__soapCall("SaldosSadRemision",  array('idPedido' => $idCompra, 'pdv_despacho' => $pdv));
+       return $result;
+    }
 }

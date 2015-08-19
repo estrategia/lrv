@@ -1,11 +1,11 @@
 <table class="table table-bordered table-hover table-striped">
     <tbody>
         <tr>
-            <th>Observación </th>
-            <th>Operador</th>                                             
-            <th>Notificación </th>
-            <th>Parametros </th>
-            <th>Fecha</th>
+            <th style="width:45%">Observación </th>
+            <th style="width:15%">Operador</th>                                             
+            <th style="width:5%">Notificación </th>
+            <th style="width:25%">Parametros </th>
+            <th style="width:10%">Fecha</th>
         </tr>
         <?php if ($objCompra->observacion != null && !empty($objCompra->observacion)):  ?>
         <tr>
