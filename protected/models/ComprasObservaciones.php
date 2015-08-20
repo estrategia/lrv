@@ -1,9 +1,9 @@
 <?php
 
 /**
- * This is the model class for table "t_Comprasobservaciones".
+ * This is the model class for table "t_ComprasObservaciones".
  *
- * The followings are the available columns in table 't_Comprasobservaciones':
+ * The followings are the available columns in table 't_ComprasObservaciones':
  * @property integer $idCompraobservacion
  * @property integer $idCompra
  * @property string $observacion
@@ -17,7 +17,7 @@
  * @property Compras $objCompra
  * @property TipoObservacion $objTipoObservacion
  */
-class Comprasobservaciones extends CActiveRecord {
+class ComprasObservaciones extends CActiveRecord {
 
     /**
      * @return string the associated database table name
