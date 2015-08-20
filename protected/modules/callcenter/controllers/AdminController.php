@@ -183,7 +183,7 @@ class AdminController extends ControllerOperator {
                 $objCompraEstado->idEstadoCompra = Yii::app()->params->callcenter['estadoCompra']['estado']['tramite'];
                 $objCompraEstado->idOperador = Yii::app()->controller->module->user->id;
 
-                $objObservacion = new Comprasobservaciones;
+                $objObservacion = new ComprasObservaciones;
                 $objObservacion->idCompra = $objCompra->idCompra;
                 $objObservacion->observacion = "Cambio de Estado: En Trámite";
                 $objObservacion->idOperador = Yii::app()->controller->module->user->id;
@@ -262,7 +262,7 @@ class AdminController extends ControllerOperator {
                     Yii::app()->end();
                 }
 
-                $objObservacion = new Comprasobservaciones;
+                $objObservacion = new ComprasObservaciones;
                 $objObservacion->idCompra = $model->idCompra;
                 $objObservacion->observacion = $model->observacion;
                 $objObservacion->idOperador = Yii::app()->controller->module->user->id;
@@ -341,7 +341,7 @@ class AdminController extends ControllerOperator {
                     Yii::app()->end();
                 }
 
-                $objObservacion = new Comprasobservaciones;
+                $objObservacion = new ComprasObservaciones;
                 $objObservacion->idCompra = $model->idCompra;
                 $objObservacion->observacion = $model->observacion;
                 $objObservacion->idOperador = Yii::app()->controller->module->user->id;

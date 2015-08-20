@@ -129,7 +129,7 @@ class PedidoController extends ControllerOperator {
                 throw new Exception("Error al guardar traza de estado: " . $objEstadoCompra->validateErrorsResponse());
             }
 
-            $objObservacion = new Comprasobservaciones;
+            $objObservacion = new ComprasObservaciones;
             $objObservacion->idCompra = $objCompra->idCompra;
             $objObservacion->observacion = "Cambio de Estado: Asignado PDV. " . $objPdv->nombrePuntoDeVenta;
             $objObservacion->idOperador = Yii::app()->controller->module->user->id;
