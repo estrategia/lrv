@@ -786,4 +786,36 @@ class PedidoController extends ControllerOperator {
        $result = $client->__soapCall("SaldosSadRemision",  array('idPedido' => $idCompra, 'pdv_despacho' => $pdv));
        return $result;
     }
+    
+    public function actionRemitir(){
+        $idCompra = Yii::app()->getRequest()->getPost('idCompra');
+        $client = new SoapClient(null, array(
+            'location' => Yii::app()->params->webServiceUrl['remisionPos'],
+            'uri' => "",
+            'trace' => 1
+        ));
+       $result = $client->__soapCall("CongelarCompraManual",  array('idPedido' => $idCompra));
+       
+        echo CJSON::encode(array(
+                    'result' => $result[0],
+                    'response' => array(
+                        'htmlResponse' => $result[1]
+         )));
+    }
+    
+    public function actionRemitirBorrar(){
+         $idCompra = Yii::app()->getRequest()->getPost('idCompra');
+         $client = new SoapClient(null, array(
+            'location' => Yii::app()->params->webServiceUrl['remisionPos'],
+            'uri' => "",
+            'trace' => 1
+        ));
+       $result = $client->__soapCall("BorrarCongelada",  array('idPedido' => $idCompra));
+       
+       echo CJSON::encode(array(
+                    'result' => $result[0],
+                    'response' => array(
+                        'htmlResponse' => $result[1]
+       )));
+    }
 }

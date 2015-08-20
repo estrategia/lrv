@@ -73,7 +73,7 @@
                         'value' => '$data->fechaEntrega',
                     ),
                     array(
-                        'header' => 'Sucursal',
+                        'header' => 'Ciudad',
                         'value' => '$data->objCiudad->nombreCiudad',
                     ),
                     array(

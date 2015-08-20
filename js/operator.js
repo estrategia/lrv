@@ -124,6 +124,61 @@ $(document).on('click', 'button[data-action="saldo-pdv"]', function() {
 
 });
 
+$(document).on('click', 'button[data-action="remitir"]', function() {
+    $.ajax({
+        type: 'POST',
+        dataType: 'json',
+        async: true,
+        url: requestUrl + '/callcenter/pedido/remitir',
+        data: {idCompra: $(this).attr('data-compra')},
+        beforeSend: function() {
+            Loading.show();
+        },
+        complete: function() {
+            Loading.hide();
+        },
+        success: function(data) {
+            if (data.result == '0') {
+               bootbox.alert(data.response.htmlResponse);
+            } else {
+               bootbox.alert(data.response.htmlResponse);
+            }
+        },
+        error: function(jqXHR, textStatus, errorThrown) {
+            Loading.hide();
+            bootbox.alert('Error: ' + errorThrown);
+        }
+    });
+});
+
+$(document).on('click', 'button[data-action="remitirborrar"]', function() {
+    $.ajax({
+        type: 'POST',
+        dataType: 'json',
+        async: true,
+        url: requestUrl + '/callcenter/pedido/remitirBorrar',
+        data: {idCompra: $(this).attr('data-compra')},
+        beforeSend: function() {
+            Loading.show();
+        },
+        complete: function() {
+            Loading.hide();
+        },
+        success: function(data) {
+            if (data.result == '0') {
+               bootbox.alert(data.response.htmlResponse);
+            } else {
+               bootbox.alert(data.response.htmlResponse);
+            }
+        },
+        error: function(jqXHR, textStatus, errorThrown) {
+            Loading.hide();
+            bootbox.alert('Error: ' + errorThrown);
+        }
+    });
+
+});
+
 $(document).on('click', "button[data-role='modificarpedido']", function() {
     var action = $(this).attr('data-action');
     var data = {accion: action};

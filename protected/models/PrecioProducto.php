@@ -20,7 +20,7 @@ class PrecioProducto extends Precio {
     protected $ahorroUnidad = 0;
     protected $ahorroFraccion = 0;
 
-    function __construct(Producto &$objProducto, &$objCiudadSector, $codigoPerfil, $consultaPrecio=false) {
+    function __construct(Producto $objProducto, $objCiudadSector, $codigoPerfil, $consultaPrecio=false) {
         if ($objCiudadSector != null) {
             if ($objProducto->tercero == 1) {
                 $listSaldosTerceros = array();
