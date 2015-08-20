@@ -100,7 +100,7 @@ class Compras extends CActiveRecord {
             'listItems' => array(self::HAS_MANY, 'ComprasItems', 'idCompra'),
             'objPuntoVenta' => array(self::BELONGS_TO, 'PuntoVenta', '','on' => 't.idComercial=objPuntoVenta.idComercial'),
             'objCompraDireccion' => array(self::HAS_ONE, 'ComprasDireccionesDespacho', 'idCompra'),
-            'objFormaPago' => array(self::HAS_ONE, 'FormasPago', 'idCompra'),
+            'objFormaPagoCompra' => array(self::HAS_ONE, 'FormasPago', 'idCompra'),
             'objUsuario' => array(self::BELONGS_TO, 'Usuario', 'identificacionUsuario'),
             'objPerfil' => array(self::BELONGS_TO, 'Perfil', 'codigoPerfil'),
             'objTipoVenta' => array(self::BELONGS_TO, 'TipoVenta', 'idTipoVenta'),
@@ -160,7 +160,7 @@ class Compras extends CActiveRecord {
      */
     public function search($params = null) {
         $criteria = new CDbCriteria;
-        
+        $criteria->with=array("objOperador","objCiudad","objTipoVenta","objUsuario","objCompraDireccion","objFormaPagoCompra"=>array("with"=>"objFormaPago"),"objEstadoCompra");
         if ($params != null && isset($params['operadorPedido'])) {
             $condition = "1=1";
             $paramsCondition = array();
@@ -198,34 +198,34 @@ class Compras extends CActiveRecord {
             $criteria->condition = $condition;
             $criteria->params = $paramsCondition;
         } else {
-            $criteria->compare('idCompra', $this->idCompra);
-            $criteria->compare('identificacionUsuario', $this->identificacionUsuario);
-            $criteria->compare('documentoCruce', $this->documentoCruce, true);
-            $criteria->compare('fechaCompra', $this->fechaCompra, true);
+            $criteria->compare('t.idCompra', $this->idCompra);
+            $criteria->compare('t.identificacionUsuario', $this->identificacionUsuario);
+            $criteria->compare('t.documentoCruce', $this->documentoCruce, true);
+            $criteria->compare('t.fechaCompra', $this->fechaCompra, true);
 
-            $criteria->compare('fechaEntrega', $this->fechaEntrega, true);
-            $criteria->compare('tipoEntrega', $this->tipoEntrega);
-            $criteria->compare('donacionFundacion', $this->donacionFundacion);
-            $criteria->compare('idComercial', $this->idComercial);
-            $criteria->compare('subtotalCompra', $this->subtotalCompra);
-            $criteria->compare('impuestosCompra', $this->impuestosCompra);
-            $criteria->compare('totalCompra', $this->totalCompra);
-            $criteria->compare('idEstadoCompra', $this->idEstadoCompra);
-            $criteria->compare('idOperador', $this->idOperador);
-            $criteria->compare('observacion', $this->observacion, true);
-            $criteria->compare('idTipoVenta', $this->idTipoVenta);
-            $criteria->compare('activa', $this->activa);
-            $criteria->compare('domicilio', $this->domicilio);
-            $criteria->compare('flete', $this->flete);
-            $criteria->compare('invitado', $this->invitado);
-            $criteria->compare('codigoPerfil', $this->codigoPerfil);
-            $criteria->compare('saldosPdv', $this->saldosPdv, true);
-            $criteria->compare('seguimiento', $this->seguimiento);
-            $criteria->compare('codigoCiudad', $this->codigoCiudad);
-            $criteria->compare('codigoSector', $this->codigoSector);
-            $criteria->compare('tiempoDomicilioCedi', $this->tiempoDomicilioCedi);
-            $criteria->compare('valorDomicilioCedi', $this->valorDomicilioCedi);
-            $criteria->compare('codigoCedi', $this->codigoCedi);
+            $criteria->compare('t.fechaEntrega', $this->fechaEntrega, true);
+            $criteria->compare('t.tipoEntrega', $this->tipoEntrega);
+            $criteria->compare('t.donacionFundacion', $this->donacionFundacion);
+            $criteria->compare('t.idComercial', $this->idComercial);
+            $criteria->compare('t.subtotalCompra', $this->subtotalCompra);
+            $criteria->compare('t.impuestosCompra', $this->impuestosCompra);
+            $criteria->compare('t.totalCompra', $this->totalCompra);
+            $criteria->compare('t.idEstadoCompra', $this->idEstadoCompra);
+            $criteria->compare('t.idOperador', $this->idOperador);
+            $criteria->compare('t.observacion', $this->observacion, true);
+            $criteria->compare('t.idTipoVenta', $this->idTipoVenta);
+            $criteria->compare('t.activa', $this->activa);
+            $criteria->compare('t.domicilio', $this->domicilio);
+            $criteria->compare('t.flete', $this->flete);
+            $criteria->compare('t.invitado', $this->invitado);
+            $criteria->compare('t.codigoPerfil', $this->codigoPerfil);
+            $criteria->compare('t.saldosPdv', $this->saldosPdv, true);
+            $criteria->compare('t.seguimiento', $this->seguimiento);
+            $criteria->compare('t.codigoCiudad', $this->codigoCiudad);
+            $criteria->compare('t.codigoSector', $this->codigoSector);
+            $criteria->compare('t.tiempoDomicilioCedi', $this->tiempoDomicilioCedi);
+            $criteria->compare('t.valorDomicilioCedi', $this->valorDomicilioCedi);
+            $criteria->compare('t.codigoCedi', $this->codigoCedi);
         }
 
         if ($params === null) {
@@ -248,7 +248,8 @@ class Compras extends CActiveRecord {
 
     public function searchAnteriores() {
         $criteria = new CDbCriteria;
-        $criteria->with="objPuntoVenta";
+    //   $criteria->with="objPuntoVenta";
+        $criteria->with=array("objCompraDireccion","objCiudad","objSector","objPuntoVenta");
         $criteria->condition = "t.tipoEntrega=:tipoEntrega AND t.identificacionUsuario=:usuario AND t.idComercial IS NOT NULL";
         $criteria->params = array(
             ':usuario' => $this->identificacionUsuario,
@@ -442,22 +443,44 @@ class Compras extends CActiveRecord {
     public static function cantidadComprasPorEstado($fecha, $idOperador = null) {
         $query1 = "";
         if ($idOperador == null) {
-            $query1 = "SELECT eo.idEstadoCompra, COUNT(t.idCompra) cantidad
+         /*   $query1 = "SELECT eo.idEstadoCompra, COUNT(t.idCompra) cantidad
             FROM t_Compras t  
             RIGHT OUTER JOIN m_EstadoCompra eo ON (eo.idEstadoCompra=t.idEstadoCompra) AND (t.fechaCompra>='$fecha' AND t.tipoEntrega='" . Yii::app()->params->entrega["tipo"]['domicilio'] . "') OR (t.idOperador IS NULL AND t.fechaCompra IS NULL)
             GROUP BY eo.idEstadoCompra
+            ORDER BY eo.idEstadoCompra";*/
+            
+            $query1 = "SELECT eo.idEstadoCompra, COUNT(t.idCompra) cantidad
+            FROM t_Compras t  
+            INNER JOIN m_EstadoCompra eo ON (eo.idEstadoCompra=t.idEstadoCompra) 
+					WHERE (t.fechaCompra>='$fecha' AND t.tipoEntrega='" . Yii::app()->params->entrega["tipo"]['domicilio'] . "')
+            GROUP BY eo.idEstadoCompra
             ORDER BY eo.idEstadoCompra";
         } else {
-            $query1 = "SELECT eo.idEstadoCompra, COUNT(t.idCompra) cantidad
+         /*   $query1 = "SELECT eo.idEstadoCompra, COUNT(t.idCompra) cantidad
             FROM t_Compras t  
             RIGHT OUTER JOIN m_EstadoCompra eo ON (eo.idEstadoCompra=t.idEstadoCompra) AND (t.idOperador=$idOperador AND t.fechaCompra>='$fecha' AND t.tipoEntrega='" . Yii::app()->params->entrega["tipo"]['domicilio'] . "') OR (t.idOperador IS NULL AND t.fechaCompra IS NULL)
             GROUP BY t.idOperador, eo.idEstadoCompra
+            ORDER BY eo.idEstadoCompra";*/
+            
+            $query1 = "SELECT eo.idEstadoCompra, COUNT(t.idCompra) cantidad
+            FROM t_Compras t  
+            INNER JOIN m_EstadoCompra eo ON (eo.idEstadoCompra=t.idEstadoCompra) 
+					WHERE (t.idOperador=$idOperador AND t.fechaCompra>='$fecha' AND t.tipoEntrega='" . Yii::app()->params->entrega["tipo"]['domicilio'] . "')
+            GROUP BY eo.idEstadoCompra
             ORDER BY eo.idEstadoCompra";
         }
         $resultAux1 = Yii::app()->db->createCommand($query1)->queryAll(true);
         $result = array();
+        $estados=EstadoCompra::model()->findAll();
+        
         foreach ($resultAux1 as $arr) {
             $result[$arr['idEstadoCompra']] = $arr['cantidad'];
+        }
+        
+        foreach($estados as $est){
+            if(!isset($result[$est->idEstadoCompra])){
+                $result[$est->idEstadoCompra]=0;
+            }
         }
 
         $query2 = "";

@@ -792,7 +792,7 @@ class CatalogoController extends Controller {
         $fecha = new DateTime;
 
         $objCombo = Combo::model()->find(array(
-            'with' => array('listProductos', 'listImagenes', 'listProductosCombo', 'listComboSectorCiudad'),
+            'with' => array('listProductos', 'listImagenesCombo', 'listProductosCombo', 'listComboSectorCiudad'),
             'condition' => 't.idCombo=:combo AND t.estadoCombo=:estado AND t.fechaInicio<=:fecha AND t.fechaFin>=:fecha AND listComboSectorCiudad.saldo>:saldo AND listComboSectorCiudad.codigoCiudad=:ciudad AND listComboSectorCiudad.codigoSector=:sector',
             'params' => array(
                 ':combo' => $combo,

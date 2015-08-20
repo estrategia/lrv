@@ -242,7 +242,7 @@
         <tr>
             <th colspan="4"></th>
             <th><strong>Bono</strong></th>
-            <th><span><?php echo Yii::app()->numberFormatter->format(Yii::app()->params->formatoMoneda['patron'], $objCompra->objFormaPago->valorBono, Yii::app()->params->formatoMoneda['moneda']) ?></span></th>
+            <th><span><?php echo Yii::app()->numberFormatter->format(Yii::app()->params->formatoMoneda['patron'], $objCompra->objFormaPagoCompra->valorBono, Yii::app()->params->formatoMoneda['moneda']) ?></span></th>
         </tr>
         <tr>
             <th colspan="4"></th>

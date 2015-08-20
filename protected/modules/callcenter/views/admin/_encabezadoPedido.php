@@ -41,12 +41,12 @@
                 </td>
                 <td> 
                     <strong> 
-                        <span style="color: #E10019; font-size: 16px;"> Pago <?php echo $objCompra->objFormaPago->objFormaPago->formaPago ?></span>
-                        <?php if ($objCompra->objFormaPago->numeroTarjeta != null && !empty($objCompra->objFormaPago->numeroTarjeta)): ?>
+                        <span style="color: #E10019; font-size: 16px;"> Pago <?php echo $objCompra->objFormaPagoCompra->objFormaPago->formaPago ?></span>
+                        <?php if ($objCompra->objFormaPagoCompra->numeroTarjeta != null && !empty($objCompra->objFormaPagoCompra->numeroTarjeta)): ?>
                             <br>
-                            <span font-size: 16px;"> <strong>No. tarjeta:</strong> <?php echo $objCompra->objFormaPago->numeroTarjeta?></span>
+                            <span font-size: 16px;"> <strong>No. tarjeta:</strong> <?php echo $objCompra->objFormaPagoCompra->numeroTarjeta?></span>
                             <br>
-                            <span font-size: 16px;"> <strong>No. cuotas:</strong> <?php echo $objCompra->objFormaPago->cuotasTarjeta?></span>
+                            <span font-size: 16px;"> <strong>No. cuotas:</strong> <?php echo $objCompra->objFormaPagoCompra->cuotasTarjeta?></span>
                         <?php endif; ?>
                         <h3><?php echo Yii::app()->numberFormatter->format(Yii::app()->params->formatoMoneda['patron'], $objCompra->totalCompra, Yii::app()->params->formatoMoneda['moneda']); ?></h3>
                     </strong>

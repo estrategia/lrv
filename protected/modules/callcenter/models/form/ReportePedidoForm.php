@@ -153,7 +153,7 @@ class ReportePedidoForm extends CFormModel {
             $objWorksheet->setCellValueByColumnAndRow($col++, $fila, $objCompra->valorDomicilioCedi);
             $objWorksheet->setCellValueByColumnAndRow($col++, $fila, $objCompra->subtotalCompra);
 
-            $objWorksheet->setCellValueByColumnAndRow($col++, $fila, $objCompra->objFormaPago == null ? "NA" : $objCompra->objFormaPago->valorBono);
+            $objWorksheet->setCellValueByColumnAndRow($col++, $fila, $objCompra->objFormaPagoCompra == null ? "NA" : $objCompra->objFormaPagoCompra->valorBono);
 
             $objWorksheet->setCellValueByColumnAndRow($col++, $fila, $objCompra->impuestosCompra);
             $objWorksheet->setCellValueByColumnAndRow($col++, $fila, $objCompra->totalCompra);

@@ -50,7 +50,7 @@ class Combo extends CActiveRecord {
             'listProductosCombo' => array(self::HAS_MANY, 'ComboProducto', 'idCombo'),
             'listProductos' => array(self::MANY_MANY, 'Producto', 'm_ComboProducto(idCombo, codigoProducto)'),
             'listComboSectorCiudad' => array(self::HAS_MANY, 'ComboSectorCiudad', 'idCombo'),
-            'listImagenes' => array(self::HAS_MANY, 'ImagenCombo', 'idCombo'),
+            'listImagenesCombo' => array(self::HAS_MANY, 'ImagenCombo', 'idCombo'),
         );
     }
 
@@ -113,7 +113,7 @@ class Combo extends CActiveRecord {
     public function objImagen($tipo) {
         $obj = null;
 
-        foreach ($this->listImagenes as $imagen) {
+        foreach ($this->listImagenesCombo as $imagen) {
             if ($imagen->tipoImagen == $tipo && $imagen->estadoImagen == 1) {
                 $obj = $imagen;
                 break;
@@ -138,7 +138,7 @@ class Combo extends CActiveRecord {
     public function listImagen($tipo) {
         $list = array();
 
-        foreach ($this->listImagenes as $imagen) {
+        foreach ($this->listImagenesCombo as $imagen) {
             if ($imagen->tipoImagen == $tipo && $imagen->estadoImagen == 1) {
                 $list[] = $imagen;
             }

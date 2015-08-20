@@ -161,10 +161,10 @@
                         <td><?php echo Yii::app()->numberFormatter->format(Yii::app()->params->formatoMoneda['patron'], $objCompra->flete, Yii::app()->params->formatoMoneda['moneda']); ?></td>
                     </tr>
                 <?php endif; ?>
-                <?php if ($objCompra->objFormaPago->valorBono > 0): ?>
+                <?php if ($objCompra->objFormaPagoCompra->valorBono > 0): ?>
                     <tr>
                         <td>Bono</td>
-                        <td><?php echo Yii::app()->numberFormatter->format(Yii::app()->params->formatoMoneda['patron'], $objCompra->objFormaPago->valorBono, Yii::app()->params->formatoMoneda['moneda']); ?></td>
+                        <td><?php echo Yii::app()->numberFormatter->format(Yii::app()->params->formatoMoneda['patron'], $objCompra->objFormaPagoCompra->valorBono, Yii::app()->params->formatoMoneda['moneda']); ?></td>
                     </tr>
                 <?php endif; ?>
                 <?php if ($objCompra->objCiudad->excentoImpuestos == 0 && $objCompra->impuestosCompra > 0): ?>

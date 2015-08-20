@@ -144,7 +144,12 @@ class AdminController extends ControllerOperator {
     public function actionDetallepedido($pedido) {
         $this->layout = "simple";
         $objCompra = Compras::model()->find(array(
-            'condition' => 'idCompra=:id',
+            'with'=>array("objUsuario","objCompraDireccion"=>array("with"=>array("objCiudad","objSector")),
+                                        "objFormaPagoCompra"=>array("with"=>"objFormaPago"),
+                                        "objFormaPagoCompra","objEstadoCompra",
+                                        "objOperador","listItems"=>array("with"=>array("objProducto","listBeneficios","objImpuesto","objEstadoItem"),
+                                        "listObservaciones"=>array("with"=>array("objTipoObservacion")))),
+            'condition' => 't.idCompra=:id',
             'params' => array(
                 ':id' => $pedido,
             )
@@ -205,6 +210,7 @@ class AdminController extends ControllerOperator {
         } else if ($opcion == "cliente") {
             $params['vista'] = "_clienteDespacho";
             $listDirecciones = DireccionesDespacho::model()->findAll(array(
+                'with'=>'objCiudad',
                 'condition' => 'identificacionUsuario=:usuario AND activo=:activo',
                 'params' => array(
                     ':usuario' => $objCompra->identificacionUsuario,
@@ -532,12 +538,12 @@ class AdminController extends ControllerOperator {
     }
 
     protected function gridPagoPedido($data, $row) {
-        if ($data->objFormaPago === null)
+        if ($data->objFormaPagoCompra === null)
             return "NA";
 
-        $result = $data->objFormaPago->objFormaPago->formaPago;
-        if ($data->objFormaPago->numeroTarjeta != null && !empty($data->objFormaPago->numeroTarjeta))
-            $result .= "<strong>No. tarjeta:</strong> " . $data->objFormaPago->numeroTarjeta . "<br/><strong>No. cuotas:</strong> " . $data->objFormaPago->cuotasTarjeta;
+        $result = $data->objFormaPagoCompra->objFormaPago->formaPago;
+        if ($data->objFormaPagoCompra->numeroTarjeta != null && !empty($data->objFormaPagoCompra->numeroTarjeta))
+            $result .= "<strong>No. tarjeta:</strong> " . $data->objFormaPagoCompra->numeroTarjeta . "<br/><strong>No. cuotas:</strong> " . $data->objFormaPagoCompra->cuotasTarjeta;
 
         return $result;
     }

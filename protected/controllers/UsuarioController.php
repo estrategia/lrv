@@ -714,7 +714,8 @@ class UsuarioController extends Controller {
 
     private function listapersonaldetalle($lista) {
         $model = ListasPersonales::model()->find(array(
-            'with' => 'listDetalle',
+            'with' => array('listDetalle'=>array("with"=>array("objProducto"=>array("with"=>array("listImagenes","objCodigoEspecial","listCalificaciones")),
+                            "objCombo"=>array("with"=>array("listProductosCombo","listImagenesCombo"))))),
             'condition' => 't.idLista=:lista AND t.identificacionUsuario=:usuario',
             'params' => array(
                 ':lista' => $lista,
