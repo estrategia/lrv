@@ -42,7 +42,7 @@ class DireccionesDespacho extends CActiveRecord {
             array('descripcion, nombre, direccion, barrio, telefono, extension, celular', 'attributeTrim'),
             array('idDireccionDespacho', 'required', 'on' => 'update', 'message' => '{attribute} no puede estar vacío'),
             array('identificacionUsuario, descripcion, nombre, direccion, barrio, telefono, codigoCiudad, codigoSector', 'required', 'message' => '{attribute} no puede estar vacío'),
-            array('activo, extension, telefono, celular', 'numerical', 'integerOnly' => true, 'message'=>'{attribute} deber ser número'),
+            array('activo, extension, telefono, celular', 'numerical', 'integerOnly' => true, 'message' => '{attribute} deber ser número'),
             array('identificacionUsuario, direccion', 'length', 'min' => 5, 'max' => 100),
             array('descripcion', 'length', 'min' => 3, 'max' => 50),
             array('nombre, barrio', 'length', 'min' => 5, 'max' => 50),
@@ -58,13 +58,13 @@ class DireccionesDespacho extends CActiveRecord {
             array('idDireccionDespacho, identificacionUsuario, descripcion, nombre, direccion, barrio, telefono, celular, codigoCiudad, codigoSector, activo, extension, pdvAsignado', 'safe', 'on' => 'search'),
         );
     }
-    
+
     /**
      * Valida que exista empleado con cedula indicada y que este activo.
      * Este es un validador declarado en rules().
      */
     public function attributeTrim($attribute, $params) {
-        if($this->$attribute != null && gettype($this->$attribute)=="string"){
+        if ($this->$attribute != null && gettype($this->$attribute) == "string") {
             $this->$attribute = trim($this->$attribute);
         }
     }
@@ -179,6 +179,40 @@ class DireccionesDespacho extends CActiveRecord {
                 'model' => $this
             ),
         );
+    }
+
+    public static function consultarDireccionesUsuario($identificacionUsuario, $agrupar=false) {
+        $models = DireccionesDespacho::model()->findAll(array(
+            'with' => array('objCiudad'),
+            'condition' => 'identificacionUsuario=:cedula AND activo=:activo',
+            'params' => array(
+                ':cedula' => $identificacionUsuario,
+                ':activo' => 1,
+            )
+        ));
+        
+        if($agrupar){
+            return self::agruparDireccionesPorCiudad($models);
+        }
+        
+        return $models;
+    }
+    
+    public static function agruparDireccionesPorCiudad(&$models){
+        $listDirecciones = array();
+
+        foreach ($models as $model) {
+            if (!isset($listDirecciones[$model->codigoCiudad])) {
+                $listDirecciones[$model->codigoCiudad] = array(
+                    'ciudad' => $model->objCiudad->nombreCiudad,
+                    'direcciones' => array()
+                );
+            }
+
+            $listDirecciones[$model->codigoCiudad]['direcciones'][] = $model;
+        }
+        
+        return $listDirecciones;
     }
 
 }

@@ -19,7 +19,7 @@
     <?php endif; ?>
     <li>
         <a href="<?php echo CController::createUrl('/sitio/categorias') ?>" data-ajax="false" >
-            <h2>Categoria de productos</h2>
+            <h2>Categorías de productos</h2>
         </a>
     </li>
     <li>

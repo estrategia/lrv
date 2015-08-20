@@ -977,19 +977,16 @@ class UsuarioController extends Controller {
         $this->fixedFooter = true;
 
         $models = DireccionesDespacho::model()->findAll(array(
+            'with' => array('objCiudad'),
             'condition' => 'identificacionUsuario=:cedula AND activo=:activo',
             'params' => array(
                 ':cedula' => Yii::app()->user->name,
                 ':activo' => 1,
             )
         ));
-
-        foreach ($models as $model) {
-            $model->codigoCiudad = "$model->codigoCiudad-$model->codigoSector";
-        }
-
-        $listUbicacion = SectorCiudad::listDataSubsector();
-        $this->render('direcciones', array('models' => $models, 'listUbicacion' => $listUbicacion));
+        
+        $listDirecciones = DireccionesDespacho::consultarDireccionesUsuario(Yii::app()->user->name, true);
+        $this->render('direcciones', array('listDirecciones' => $listDirecciones));
     }
 
     public function actionDireccionActualizar() {
@@ -1017,14 +1014,7 @@ class UsuarioController extends Controller {
             $model->telefono = $form->telefono;
             $model->extension = $form->extension;
             $model->celular = $form->celular;
-
-            if ($form->codigoCiudad !== null && !empty($form->codigoCiudad)) {
-                $codigo = $form->codigoCiudad;
-                $codigo = explode("-", $codigo);
-                $model->codigoCiudad = $codigo[0];
-                $model->codigoSector = $codigo[1];
-            }
-
+            
             if ($model->validate()) {
                 if (!$model->save()) {
                     echo CJSON::encode(array('result' => 'error', 'response' => 'Error al guardar dirección, por favor intente de nuevo'));
@@ -1064,7 +1054,7 @@ class UsuarioController extends Controller {
         echo CJSON::encode(array('result' => 'ok', 'response' => 'Informaci&oacute;n actualizada'));
         Yii::app()->end();
     }
-
+    
     public function actionDireccionCrear() {
         $objSectorCiudad = null;
         if (isset(Yii::app()->session[Yii::app()->params->sesion['sectorCiudadEntrega']]))
@@ -1074,8 +1064,18 @@ class UsuarioController extends Controller {
             echo CJSON::encode(array('result' => 'error', 'response' => 'Seleccionar ubicación'));
             Yii::app()->end();
         }
-
-        if (isset($_POST['DireccionesDespacho'])) {
+        
+        $render = Yii::app()->getRequest()->getPost('render', false);
+        $modal = Yii::app()->getRequest()->getPost('modal', 0);
+        
+        if($render){
+            echo CJSON::encode(array(
+                'result' => 'ok',
+                'response' => array(
+                    'dialogoHTML' => $this->renderPartial('_direccionForm', array('model' => new DireccionesDespacho, 'modal'=>true), true)
+            )));
+            Yii::app()->end();
+        }else if (isset($_POST['DireccionesDespacho'])) {
             $model = new DireccionesDespacho;
             $model->attributes = $_POST['DireccionesDespacho'];
 
@@ -1090,18 +1090,26 @@ class UsuarioController extends Controller {
                     Yii::app()->end();
                 }
 
-                $modelPago = null;
+                if($modal == 1){
+                    $listDirecciones = DireccionesDespacho::consultarDireccionesUsuario(Yii::app()->user->name, true);
+                    echo CJSON::encode(array('result' => 'ok', 'response' => array(
+                        'mensaje' => 'Direcci&oacute;n adicionada',
+                        'direccionesHTML' => $this->renderPartial('_direcciones', array('listDirecciones' => $listDirecciones), true)
+                    )));
+                    Yii::app()->end();
+                }else{
+                    $modelPago = null;
+                    if (isset(Yii::app()->session[Yii::app()->params->sesion['carroPagarForm']]))
+                        $modelPago = Yii::app()->session[Yii::app()->params->sesion['carroPagarForm']];
 
-                if (isset(Yii::app()->session[Yii::app()->params->sesion['carroPagarForm']]))
-                    $modelPago = Yii::app()->session[Yii::app()->params->sesion['carroPagarForm']];
+                    if ($modelPago != null) {
+                        $modelPago->idDireccionDespacho = $model->idDireccionDespacho;
+                        Yii::app()->session[Yii::app()->params->sesion['carroPagarForm']] = $modelPago;
+                    }
 
-                if ($modelPago != null) {
-                    $modelPago->idDireccionDespacho = $model->idDireccionDespacho;
-                    Yii::app()->session[Yii::app()->params->sesion['carroPagarForm']] = $modelPago;
+                    echo CJSON::encode(array('result' => 'ok', 'response' => 'Informaci&oacute;n guardada'));
+                    Yii::app()->end();
                 }
-
-                echo CJSON::encode(array('result' => 'ok', 'response' => 'Informaci&oacute;n guardada'));
-                Yii::app()->end();
             } else {
                 echo CActiveForm::validate($model);
                 Yii::app()->end();
@@ -1109,37 +1117,6 @@ class UsuarioController extends Controller {
         }
     }
 
-    public function actionDireccionCrearOld() {
-        $objSectorCiudad = null;
-        if (isset(Yii::app()->session[Yii::app()->params->sesion['sectorCiudadEntrega']]))
-            $objSectorCiudad = Yii::app()->session[Yii::app()->params->sesion['sectorCiudadEntrega']];
-
-        if ($objSectorCiudad === null) {
-            Yii::app()->user->setFlash('error', "Seleccionar ubicación.");
-            $this->redirect($this->createUrl('/usuario/direcciones'));
-        }
-
-        $model = new DireccionesDespacho;
-
-        if (isset($_POST['DireccionesDespacho'])) {
-            $model->attributes = $_POST['DireccionesDespacho'];
-            $model->identificacionUsuario = Yii::app()->user->name;
-            $model->activo = 1;
-            $model->codigoCiudad = $objSectorCiudad->codigoCiudad;
-            $model->codigoSector = $objSectorCiudad->codigoSector;
-
-            if ($model->validate()) {
-                if ($model->save()) {
-                    $this->redirect($this->createUrl('/usuario/direcciones'));
-                } else {
-                    Yii::app()->user->setFlash('error', "Error al guardar dirección, por favor intente de nuevo.");
-                }
-            }
-        }
-
-        $this->render('direccion', array('model' => $model));
-    }
-    
     protected function gridDetallePedido($data, $row) {
         return CHtml::link('Ver', $this->createUrl('/usuario/pedido', array('compra'=>$data->idCompra)), array('class'=>'ui-btn ui-btn-inline ui-icon-view-circle ui-btn-icon-notext ui-icon-center ui-nodisc-icon', 'data-ajax'=>'false'));
     }
