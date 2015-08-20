@@ -49,6 +49,8 @@ class AdminController extends ControllerOperator {
     }
     
     public function actionPedidos($parametro = 1) {
+        $this->layout = "simple";
+        
         if (is_numeric($parametro)) {
             $model = new Compras('search');
             $model->unsetAttributes();
@@ -120,8 +122,17 @@ class AdminController extends ControllerOperator {
 
         if ($post && $model === null)
             $model = new Compras('search');
+        
+        $fecha = new DateTime;
+         $dias = Yii::app()->params->callcenter['pedidos']['diasVisualizar'];
+         $fecha->modify("-$dias days");
+         $fecha = $fecha->format('Y-m-d H:i:s');
 
-        $this->render('busqueda', array('model' => $model, 'form' => $form));
+        $this->render('busqueda', array(
+            'model' => $model, 
+            'form' => $form,
+            'arrCantidadPedidos' => Compras::cantidadComprasPorEstado($fecha)
+        ));
     }
 
     public function actionRemisionborrar() {

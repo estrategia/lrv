@@ -50,3 +50,8 @@ img.center{
     overflow-y: auto;
     padding: 15px;
 }
+
+.box-content.row{
+    margin-left: 0;
+    margin-right: 0;
+}

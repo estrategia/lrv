@@ -1,25 +1,55 @@
-<?php $mensajes = Yii::app()->user->getFlashes(); ?>
-<?php if ($mensajes): ?>
-    <?php foreach ($mensajes as $idx => $mensaje): ?>
-        <div class="alert alert-<?php echo $idx ?> alert-dismissable">
-            <button type="button" class="close" data-dismiss="alert">&times;</button>
-            <?php echo $mensaje ?>
+<div class="row">
+    <form id="form-busqueda-criterio" class="form-inline" method="post">
+        <div class="form-group">
+            <label for="FormBusqueda_criterio">Criterio de búsqueda</label>
+            <?php echo CHtml::dropDownList('FormBusqueda[criterio]', '', array(1 => 'Nombre del cliente', 2 => 'Cédula del cliente', 3 => '#Pedido', 4=>'Punto de venta'), array('id' => 'FormBusqueda_criterio', 'class' => "form-control input-sm")) ?>
         </div>
-    <?php endforeach; ?>
-<?php endif; ?>
+        <div class="form-group">
+            <input type="text" class="form-control input-sm" id="FormBusqueda_valorCriterio" name="FormBusqueda[valorCriterio]">
+        </div>
+        <input type="hidden" name="FormBusqueda[tipo]" value="criterio">
+        <button type="submit" class="btn btn-primary btn-sm">
+            <i class="glyphicon glyphicon-search"></i>
+            Buscar
+        </button>
+    </form>
+</div>
 
-<div class="box-inner">
-    <div class="box-header well">
-        <div class="col-lg-1">
-            <h2><i class="glyphicon glyphicon-shopping-cart"></i> Pedidos</h2>
+<?php $listDataEstado = CHtml::listData(EstadoCompra::listData(), 'idEstadoCompra', 'compraEstado'); ?>
+
+<div class="row">
+    <form id="form-busqueda-operador" class="form-inline" method="post">
+        <div class="form-group">
+            <label for="FormBusqueda_operador">Búsqueda por operador</label>
+            <?php echo CHtml::dropDownList('FormBusqueda[operador]', '', CHtml::listData(Operador::listData(), 'idOperador', 'nombre'), array('id' => 'FormBusqueda_operador', 'class' => "form-control input-sm")) ?>
         </div>
-        <!-- <div class="box-icon"> -->
-        <div class="col-lg-11">
-            <?php $this->renderPartial('_pedidosCantidad', array('arrCantidadPedidos' => $arrCantidadPedidos)) ?>
+        <div class="form-group">
+            <?php echo CHtml::dropDownList('FormBusqueda[estado]', '', $listDataEstado, array('id' => 'FormBusqueda_estado', 'class' => "form-control input-sm")) ?>
         </div>
-    </div>
-    <div class="box-content row">
-        <div class="col-lg-12 col-md-12">
+        <input type="hidden" name="FormBusqueda[tipo]" value="operador">
+        <button type="submit" class="btn btn-primary btn-sm">
+            <i class="glyphicon glyphicon-search"></i>
+            Buscar
+        </button>
+    </form>
+</div>
+
+<div class="row">
+    <form id="form-busqueda-estado" class="form-inline" method="post">
+        <div class="form-group">
+            <label for="FormBusqueda_estado">Búsqueda por estado</label>
+            <?php echo CHtml::dropDownList('FormBusqueda[estado]', '', $listDataEstado, array('id' => 'FormBusqueda_estado', 'class' => "form-control input-sm")) ?>
+        </div>
+        <input type="hidden" name="FormBusqueda[tipo]" value="estado">
+        <button type="submit" class="btn btn-primary btn-sm">
+            <i class="glyphicon glyphicon-search"></i>
+            Buscar
+        </button>
+    </form>
+</div>
+
+<?php if ($model !== null): ?>
+    <div class="row">
             <?php
             $this->widget('zii.widgets.grid.CGridView', array(
                 'id' => 'pedidos-grid',
@@ -27,8 +57,9 @@
                 //'afterAjaxUpdate' => new CJavaScriptExpression("function() {Loading.hide(); $options}"),
                 //'ajaxUpdateError' => new CJavaScriptExpression("function() {Loading.hide(); bootbox.alert('Error, intente de nuevo');}"),
                 'ajaxUpdateError' => new CJavaScriptExpression("function(xhr, textStatus, errorThrown, errorMessage) {alert(errorMessage);}"),
-                'ajaxUrl' => $this->createUrl('pedidos', array('parametro' => $model->idEstadoCompra)),
-                'dataProvider' => $dataProvider,
+                'ajaxUrl' => $this->createUrl('pedidos', array('parametro' => 'busqueda')),
+                'dataProvider' => $model->searchBusqueda($form),
+                //'dataProvider' => $model->searchBusqueda(array('order' => 't.seguimiento DESC, t.fechaCompra DESC', 'operadorPedido' => true)),
                 //'rowCssClass'=>array('odd','even'),
                 'rowCssClassExpression' => array($this, 'rowCssClassFunction'), //'$data->seguimiento==1?"seguimiento":"jajaj"',
                 //'filter' => $model,
@@ -62,7 +93,7 @@
                         'value' => '$data->fechaEntrega',
                     ),
                     array(
-                        'header' => 'Ciudad',
+                        'header' => 'Sucursal',
                         'value' => '$data->objCiudad->nombreCiudad',
                     ),
                     array(
@@ -90,10 +121,7 @@
                 ),
             ));
             ?>
-        </div>
     </div>
-</div>
 
-<?php
-if ($model->idEstadoCompra == 1)
-    Yii::app()->clientScript->registerScript(uniqid(), "setTimeout(function(){ location.reload(); }, ".Yii::app()->params->callcenter['pedidos']['tiempoRecargarPagina'].");"); ?>
+<?php endif; ?>
+

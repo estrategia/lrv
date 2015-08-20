@@ -40,25 +40,6 @@
                         <li><?php echo CHtml::link('Salir', $this->createUrl('/callcenter/usuario/salir')) ?></li>
                     </ul>
                 </div>
-
-
-                <div class="btn-group pull-right theme-container animated tada">
-                    <button data-toggle="dropdown" class="btn btn-default dropdown-toggle">
-                        <i class="glyphicon glyphicon-tint"></i><span class="hidden-sm hidden-xs"> Cambiar tema</span>
-                        <span class="caret"></span>
-                    </button>
-                    <ul id="themes" class="dropdown-menu">
-                        <li><a href="#" data-value="classic"><i class="whitespace"></i> Classic</a></li>
-                        <li><a href="#" data-value="cerulean"><i class="whitespace"></i> Cerulean</a></li>
-                        <li><a href="#" data-value="cyborg"><i class="whitespace"></i> Cyborg</a></li>
-                        <li><a href="#" data-value="simplex"><i class="glyphicon glyphicon-ok"></i> Simplex</a></li>
-                        <li><a href="#" data-value="darkly"><i class="whitespace"></i> Darkly</a></li>
-                        <li><a href="#" data-value="lumen"><i class="whitespace"></i> Lumen</a></li>
-                        <li><a href="#" data-value="slate"><i class="whitespace"></i> Slate</a></li>
-                        <li><a href="#" data-value="spacelab"><i class="whitespace"></i> Spacelab</a></li>
-                        <li><a href="#" data-value="united"><i class="whitespace"></i> United</a></li>
-                    </ul>
-                </div>
             </div>
         </div>
 
@@ -76,7 +57,7 @@
                                     <a href="<?php echo $this->createUrl('/callcenter') ?>" class="ajax-link"><i class="glyphicon glyphicon-home"></i><span> Panel de control</span></a>
                                 </li>
                                 <li class="">
-                                    <a href="<?php echo $this->createUrl('/callcenter/admin/pedidos') ?>" class="ajax-link"><i class="glyphicon glyphicon-list-alt"></i><span> Pedidos</span></a>
+                                    <a href="<?php echo $this->createUrl('/callcenter/admin/pedidos') ?>" class="ajax-link" target="_blank"><i class="glyphicon glyphicon-list-alt"></i><span> Pedidos</span></a>
                                 </li>
                                 <li class="">
                                     <a href="<?php echo $this->createUrl('/callcenter/admin/recordarclave') ?>" class="ajax-link"><i class="glyphicon glyphicon-lock"></i><span> Administrar claves</span></a>
