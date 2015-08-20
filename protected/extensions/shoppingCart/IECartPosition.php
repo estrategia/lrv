@@ -126,9 +126,9 @@ abstract class IECartPosition {
 
     public function getTaxPrice($total = false) {
         if ($total)
-            return ($this->getPrice(true) * $this->tax * $this->quantityFraction) + ($this->getPrice() * $this->tax * ($this->quantityUnit+$this->quantityStored));
+            return Precio::calcularImpuesto($this->getPrice(true) * $this->quantityFraction,$this->tax) + Precio::calcularImpuesto($this->getPrice() * ($this->quantityUnit+$this->quantityStored),$this->tax);
         else
-            return $this->getPrice() * $this->tax;
+            return Precio::calcularImpuesto($this->getPrice() , $this->tax);
     }
 
     /**
