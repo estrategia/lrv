@@ -229,8 +229,122 @@ class CatalogoController extends Controller {
         $parametrosVista['imagenBusqueda'] = $imagenBusqueda;
         $this->render('listaProductos', $parametrosVista);
     }
-
+    
     public function actionFiltro() {
+        $objSectorCiudad = null;
+        if (isset(Yii::app()->session[Yii::app()->params->sesion['sectorCiudadEntrega']]))
+            $objSectorCiudad = Yii::app()->session[Yii::app()->params->sesion['sectorCiudadEntrega']];
+
+        $listMarcas = Yii::app()->getRequest()->getPost('marcas', array());
+        $listFiltros = Yii::app()->getRequest()->getPost('atributos', array());
+        $tipo = Yii::app()->getRequest()->getPost('tipo');
+        $categoria = Yii::app()->session[Yii::app()->params->sesion['productosBusquedaCategoria']];
+
+        $objCategoria = CategoriaTienda::model()->find(array(
+            'with' => 'listCategoriasBI',
+            'condition' => 't.idCategoriaTienda=:categoria',
+            'params' => array(
+                ':categoria' => $categoria
+            ),
+        ));
+
+        $listIdsCategoriaBI = array();
+
+        if ($objCategoria != null) {
+            foreach ($objCategoria->listCategoriasBI as $objCategoria) {
+                $listIdsCategoriaBI[] = $objCategoria->idCategoriaBI;
+            }
+        }
+
+        $formFiltro = new FiltroForm;
+        $formFiltro->listMarcas = $listMarcas;
+        $formFiltro->listFiltros = $listFiltros;
+        $parametrosProductos = array();
+
+        if ($objSectorCiudad == null) {
+            $parametrosProductos = array(
+                'with' => array('objMarca', 'listFiltros'),
+                'condition' => 't.activo=:activo AND t.idCategoriaBI IN (' . implode(",", $listIdsCategoriaBI) . ')',
+                'params' => array(
+                    ':activo' => 1,
+                )
+            );
+        } else {
+            $parametrosProductos = array(
+                'with' => array(
+                    'objMarca', 'listFiltros',
+                    'listSaldos' => array('condition' => '(listSaldos.saldoUnidad>:saldo AND listSaldos.codigoCiudad=:ciudad AND listSaldos.codigoSector=:sector) OR (listSaldos.saldoUnidad IS NULL AND listSaldos.codigoCiudad IS NULL AND listSaldos.codigoSector IS NULL)'),
+                    'listPrecios' => array('condition' => '(listPrecios.codigoCiudad=:ciudad AND listPrecios.codigoSector=:sector) OR (listPrecios.codigoCiudad IS NULL AND listPrecios.codigoSector IS NULL)'),
+                    'listSaldosTerceros' => array('condition' => '(listSaldosTerceros.codigoCiudad=:ciudad AND listSaldosTerceros.codigoSector=:sector) OR (listSaldosTerceros.codigoCiudad IS NULL AND listSaldosTerceros.codigoSector IS NULL)')
+                ),
+                'condition' => 't.activo=:activo AND t.idCategoriaBI IN (' . implode(",", $listIdsCategoriaBI) . ') AND ( (listSaldos.saldoUnidad IS NOT NULL AND listPrecios.codigoCiudad IS NOT NULL) OR listSaldosTerceros.codigoCiudad IS NOT NULL)',
+                'params' => array(
+                    ':activo' => 1,
+                    ':saldo' => 0,
+                    ':ciudad' => $objSectorCiudad->codigoCiudad,
+                    ':sector' => $objSectorCiudad->codigoSector,
+                )
+            );
+        }
+
+        if (!empty($formFiltro->listMarcas)) {
+            $codigosMarcas = implode(",", $formFiltro->listMarcas);
+            $parametrosProductos['condition'] = $parametrosProductos['condition'] . " AND t.idMarca IN ($codigosMarcas)";
+        }
+
+        if (!empty($formFiltro->listFiltros)) {
+            $codigosFiltros = implode(",", $formFiltro->listFiltros);
+            $parametrosProductos['condition'] = $parametrosProductos['condition'] . " AND listFiltros.idFiltro IN ($codigosFiltros)";
+        }
+
+        if (isset(Yii::app()->session[Yii::app()->params->sesion['productosBusquedaFiltro']])) {
+            $formFiltro->nombre = Yii::app()->session[Yii::app()->params->sesion['productosBusquedaFiltro']]->nombre;
+        }
+
+        if ($formFiltro->nombre != null) {
+            $parametrosProductos['condition'] = $parametrosProductos['condition'] . " AND t.descripcionProducto LIKE '%$formFiltro->nombre%'";
+        }
+
+        $formFiltro->listMarcasCheck = array();
+        foreach ($formFiltro->listMarcas as $idMarca => $marca) {
+            $formFiltro->listMarcasCheck[$idMarca] = $idMarca;
+        }
+
+        $formFiltro->listFiltrosCheck = array();
+        foreach ($formFiltro->listFiltros as $idFiltroDetalle => $idFiltro) {
+            $formFiltro->listFiltrosCheck[$idFiltroDetalle] = $idFiltroDetalle;
+        }
+
+        $listProductos = Producto::model()->findAll($parametrosProductos);
+
+        $formFiltro->listMarcas = array();
+        $formFiltro->listFiltros = array();
+
+        foreach ($listProductos as $objProducto) {
+            $formFiltro->listMarcas[$objProducto->idMarca] = $objProducto->objMarca->nombreMarca;
+            
+            foreach ($objProducto->listFiltros as $objFiltro) {
+                if(!isset($formFiltro->listFiltros[$objFiltro->idFiltro])){
+                    $formFiltro->listFiltros[$objFiltro->idFiltro] = array(
+                        'nombreFiltro' => $objFiltro->objFiltro->nombreFiltro,
+                        'listFiltros' => array()
+                    );
+                }
+                $formFiltro->listFiltros[$objFiltro->idFiltro]['listFiltros'][$objFiltro->idFiltroDetalle] = $objFiltro->nombreDetalle;
+            }
+        }
+        $params = array();
+        
+        $params['atributos'] = $this->renderPartial('_formFiltroAtributos', array('formFiltro' => $formFiltro), true);
+        
+        if($tipo==2){
+            $params['marcas'] = $this->renderPartial('_formFiltroMarcas', array('formFiltro' => $formFiltro), true);
+        }
+
+        echo CJSON::encode($params);
+    }
+
+    public function actionFiltro0() {
         $objSectorCiudad = null;
         if (isset(Yii::app()->session[Yii::app()->params->sesion['sectorCiudadEntrega']]))
             $objSectorCiudad = Yii::app()->session[Yii::app()->params->sesion['sectorCiudadEntrega']];

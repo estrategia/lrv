@@ -543,17 +543,25 @@ $(document).on('click', "button[data-role='calificacion']", function() {
     return false;
 });
 
-$(document).on('change', "input[id^='FiltroForm_listMarcas_'], input[id^='FiltroForm_listFiltros_']", function() {
-    var marcas = [];
+$(document).on('change', "input[id^='FiltroForm_listMarcas_']", function() {
+    recalcularFiltros(1);
+});
+
+$(document).on('change', "input[id^='FiltroForm_listFiltros_']", function() {
+    recalcularFiltros(2);
+});
+
+function recalcularFiltros(tipo) {
+    var marcas = {};
     $("input[id^='FiltroForm_listMarcas_']").each(function() {
         if ($(this).is(":checked")) {
-            marcas.push($(this).val());
+            marcas[$(this).val()]=parseInt($(this).val());
         }
     });
-    var atributos = [];
+    var atributos = {};
     $("input[id^='FiltroForm_listFiltros_']").each(function() {
         if ($(this).is(":checked")) {
-            atributos.push($(this).val());
+            atributos[$(this).val()]=parseInt($(this).attr('data-filtro'));
         }
     });
 
@@ -562,7 +570,7 @@ $(document).on('change', "input[id^='FiltroForm_listMarcas_'], input[id^='Filtro
         dataType: 'json',
         async: true,
         url: requestUrl + '/catalogo/filtro',
-        data: {marcas: marcas, atributos: atributos},
+        data: {marcas: marcas, atributos: atributos, tipo: tipo},
         beforeSend: function() {
             $.mobile.loading('show');
         },
@@ -570,17 +578,21 @@ $(document).on('change', "input[id^='FiltroForm_listMarcas_'], input[id^='Filtro
             $.mobile.loading('hide');
         },
         success: function(data) {
-            $('#div-filtro-marcas').html(data.marcas);
-            $('#div-filtro-marcas').trigger("create");
-            $('#div-filtro-atributos').html(data.atributos);
-            $('#div-filtro-atributos').trigger("create");
+            if (data.hasOwnProperty('marcas')) {
+                $('#div-filtro-marcas').html(data.marcas);
+                $('#div-filtro-marcas').trigger("create");
+            }
+            if (data.hasOwnProperty('atributos')) {
+                $('#div-filtro-atributos').html(data.atributos);
+                $('#div-filtro-atributos').trigger("create");
+            }
         },
         error: function(jqXHR, textStatus, errorThrown) {
             alert('Error: ' + errorThrown);
         }
     });
 
-});
+}
 
 function verUbicacion() {
     if ($('#ubicacion-info').attr('data-active') == '0') {
