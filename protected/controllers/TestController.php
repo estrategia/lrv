@@ -1,34 +1,319 @@
 <?php
 
 class TestController extends Controller {
-    public function actionProducto($codigo){
+    public function actionWsbarrio(){
+        $barrio = "Pance";
+        $ciudad = 76001;
+        
+        $client = new SoapClient(null, array(
+            'location' => "http://www.copservir.com/webService/serverLRV.php",
+            'uri' => "http://www.copservir.com",
+            'trace' => 1
+        ));
+        
+        $result = $client->__soapCall("LRVConsultarBarrio", array('idCiudad' => $ciudad, 'barrio' => $barrio));
+        CVarDumper::dump($result,10,true);
+        
+        /*array
+        (
+            0 => stdClass#1
+            (
+                [RESPUESTA] => 0
+                [DESCRIPCION] => 'NO EXISTEN REGISTROS PARA EL BARRIO PANCE'
+                [PDV] => '-1'
+            )
+        )*/
+        
+    }
+
+    public function actionWsgeo() {
+        $direccion = "Cll 36 No. 40-74";
+        $ciudad = 76520;
+        $llave = md5($direccion . $ciudad . "javela");
+
+        $client = new SoapClient(null, array(
+            'location' => "http://www.copservir.com/webService/serverGeo.php",
+            'uri' => "http://www.copservir.com",
+            'trace' => 1
+        ));
+
+        $params = array(
+            "direccion" => $direccion,
+            "idCiudad" => $ciudad,
+            "key" => $llave
+        );
+
+        $result = $client->__soapCall("ConsultarClienteLRV", $params);
+        
+        CVarDumper::dump($result,10,true);
+        
+        /*array
+            (
+            0 => stdClass#1
+            (
+                [RESPUESTA] => 0
+                [DESCRIPCION] => 'PARAMETROS RECHAZADOS.'
+                [PDV] => ''
+                [PDV_NOMBRE] => ''
+                [ALTERNAS] => ''
+            )
+        )*/
+    }
+
+    public function actionWsbono() {
+        $client = new SoapClient(null, array(
+            'location' => "http://www.copservir.com/webService/crmLrv.php",
+            'uri' => "http://www.copservir.com",
+            'trace' => 1
+        ));
+        $result = $client->__soapCall("ConsultarBono", array('identificacion' => '70691830'));
+
+        if (!empty($result) && $result[0]->ESTADO == 1 && $result[0]->VALOR_BONO > 0) {
+            echo ("Bono: " . $result[0]->VALOR_BONO);
+        }
+
+
+
+        //CVarDumper::dump($return, 10, true);
+
+        /* require_once (Yii::app()->basePath . DS . 'vendors' . DS . 'nusoap/nusoap.php');
+          $soapclient = new nusoap_client( 'http://www.copservir.com/webService/crmLrv.php', false);
+          $response = $soapclient->call('ConsultarBono',array('identificacion'=>'70691830'));
+          CVarDumper::dump($response, 10, true); */
+    }
+
+    public function actionWsdisponibilidad() {
+        $productos = array();
+        $productos[0]["CODIGO_PRODUCTO"] = 26255;
+        $productos[0]["ID_PRODUCTO"] = 26255;
+        $productos[0]["CANTIDAD"] = 5;
+        $productos[0]["DESCRIPCION"] = "NA";
+
+        $productos[1]["CODIGO_PRODUCTO"] = 11203;
+        $productos[1]["ID_PRODUCTO"] = 11203;
+        $productos[1]["CANTIDAD"] = 3;
+        $productos[1]["DESCRIPCION"] = "NA";
+
+        $productos[2]["CODIGO_PRODUCTO"] = 29874;
+        $productos[2]["ID_PRODUCTO"] = 29874;
+        $productos[2]["CANTIDAD"] = 6;
+        $productos[2]["DESCRIPCION"] = "NA";
+
+        $productos[3]["CODIGO_PRODUCTO"] = 22667;
+        $productos[3]["ID_PRODUCTO"] = 22667;
+        $productos[3]["CANTIDAD"] = 2;
+        $productos[3]["DESCRIPCION"] = "NA";
+
+        $client = new SoapClient(null, array(
+            'location' => "http://www.copservir.com/webService/serverLRV.php",
+            'uri' => "http://www.copservir.com",
+            'trace' => 1
+        ));
+
+        $return = $client->__soapCall("LRVConsultarSaldoMovil", array('productos' => $productos, 'ciudad' => 76001, 'sector' => 22));
+        CVarDumper::dump($return, 10, true);
+
+
+        /* require_once (Yii::app()->basePath . DS . 'vendors' . DS . 'nusoap/nusoap.php');
+          $productos = array();
+          $productos[0]["CODIGO_PRODUCTO"] = 26255;
+          $productos[0]["ID_PRODUCTO"] = 26255;
+          $productos[0]["CANTIDAD"] = 5;
+          $productos[0]["DESCRIPCION"] = "NA";
+
+          $productos[1]["CODIGO_PRODUCTO"] = 11203;
+          $productos[1]["ID_PRODUCTO"] = 11203;
+          $productos[1]["CANTIDAD"] = 3;
+          $productos[1]["DESCRIPCION"] = "NA";
+
+          $productos[2]["CODIGO_PRODUCTO"] = 29874;
+          $productos[2]["ID_PRODUCTO"] = 29874;
+          $productos[2]["CANTIDAD"] = 6;
+          $productos[2]["DESCRIPCION"] = "NA";
+
+          $productos[3]["CODIGO_PRODUCTO"] = 22667;
+          $productos[3]["ID_PRODUCTO"] = 22667;
+          $productos[3]["CANTIDAD"] = 2;
+          $productos[3]["DESCRIPCION"] = "NA";
+
+          $soapclient = new nusoap_client('http://www.copservir.com/webService/serverLRV.php', false);
+          $response = $soapclient->call('LRVConsultarSaldoMovil', array('productos' => $productos, 'ciudad' => 76001, 'sector' => 22));
+
+          CVarDumper::dump($response, 10, true); */
+    }
+
+    public function actionReplace() {
+        $plantilla = Yii::app()->params->callcenter['notificacion']['plantilla'][6];
+        //$plantilla = "hola perro como estas";
+        $saludo = "Buenos días";
+        $plantilla = str_replace(array("{saludo}", "{nombreUsuario}"), array($saludo, "asdfafd"), $plantilla);
+        echo $plantilla;
+    }
+
+    public function actionPuntos() {
+
+        $fecha = new DateTime;
+        $categorias = array(476);
+
+        /* $listPuntos = Puntos::model()->findAll(array(
+          'with' => array('listPuntosCategorias' => array('condition'=>'listPuntosCategorias.idCategoriaBI IN (' . implode(",", $categorias) . ')')),
+          'condition' => 'codigoPunto=:tipo AND activo=:activo AND fechaInicio<=:fecha AND fechaFin>=:fecha',
+          'params' => array(
+          ':tipo' => Yii::app()->params->puntos['categoria'],
+          ':activo' => 1,
+          ':fecha' => $fecha->format('Y-m-d H:i:s')
+          )
+          )); */
+        
+        $productos = Yii::app()->shoppingCart->getProductosCantidad();
+
+        $listPuntos = Puntos::generarPuntosTipo($fecha, Yii::app()->params->puntos['producto'], $productos);
+        
+        //Yii::app()->params->puntos['producto'] => Yii::app()->shoppingCart->getProductosCantidad()
+
+        //CVarDumper::dump($listPuntos);
+
+        foreach ($listPuntos as $objPunto) {
+            echo "id: $objPunto->idPunto, tipoValor: $objPunto->tipoValor, valor: $objPunto->valor<br>";
+        }
+    }
+
+    public function actionExcel() {
+        Yii::import('application.vendors.phpexcel.PHPExcel', true);
+        $objPHPExcel = new PHPExcel();
+        //$objPHPExcel->getProperties()->setTitle("Office 2007 XLSX Test Document");
+
+        $objPHPExcel->setActiveSheetIndex(0);
+        $objWorksheet = $objPHPExcel->getSheet(0);
+        $objWorksheet->setTitle('Data');
+        $objWorksheet->setCellValue('A1', 'Hello');
+        //$objWorksheet->setCellValueByColumnAndRow(0,1, 'Hello');
+        // Redirect output to a clients web browser (Excel5)
+        header('Content-Type: application/vnd.ms-excel');
+        header('Content-Disposition: attachment;filename="archivo' . date('YmdHis') . '.xls"');
+        header('Cache-Control: max-age=0');
+        // If you're serving to IE 9, then the following may be needed
+        header('Cache-Control: max-age=1');
+        // If you're serving to IE over SSL, then the following may be needed
+        //header('Expires: Mon, 26 Jul 1997 05:00:00 GMT'); // Date in the past
+        header('Last-Modified: ' . gmdate('D, d M Y H:i:s') . ' GMT'); // always modified
+        header('Cache-Control: cache, must-revalidate'); // HTTP/1.1
+        header('Pragma: public'); // HTTP/1.0
+
+        $objWriter = PHPExcel_IOFactory::createWriter($objPHPExcel, 'Excel5');
+        $objWriter->save('php://output');
+    }
+
+    public function actionAuth() {
+        echo Yii::app()->user->isGuest ? "invitado" : "autenticado";
+        echo "<br/>";
+        //echo Yii::app()->operator->isGuest ? "invitado" : "autenticado";
+    }
+
+    public function actionComprapdv() {
+        $model = Compras::model()->findByPk(271945);
+        echo "pdv: $model->idComercial<br/>";
+        echo "pdv: " . $model->objPuntoVenta->nombrePuntoDeVenta . "<br/>";
+    }
+
+    public function actionRuta() {
+        echo CController::createAbsoluteUrl('/');
+    }
+
+    public function actionPrecio() {
+        $precio = 107.5;
+        echo "modulo: " . $precio % 50;
+        echo "<br>";
+        $precio = Precio::redondear($precio, 0);
+        echo $precio;
+    }
+
+    public function actionDisponibilidad() {
+        $formapago = new FormaPagoForm;
+        //print_r($formapago->listPuntosVenta);
+
+        $formapago->consultarDisponibilidad(Yii::app()->shoppingCart);
+        echo "<br/><br/>";
+        CVarDumper::dump($formapago->listPuntosVenta, 10, true);
+    }
+
+    public function actionDecimal() {
+        $n = 700.99;
+        $aux = (string) $n;
+        $n = explode(".", $aux);
+        $n = array(
+            'unidad' => $n[0],
+            'fraccion' => isset($n[1]) ? $n[1] : 0
+        );
+
+        CVarDumper::dump($n, 10, true);
+    }
+
+    public function actionBeneficio() {
+        /* $model = Beneficios::model()->findByPk(3);
+
+
+          echo $model->objBeneficioTipo->descripcion;
+          echo "<br/>";
+          foreach($model->listPuntosVenta as $pdv){
+          echo "$pdv->nombrePuntoDeVenta";
+          echo "<br/>";
+          }
+
+          echo "<br/>";
+          foreach($model->listBeneficiosProductos as $obj){
+          echo $obj->objProducto->descripcionProducto;
+          echo "<br/>";
+          }
+         * 
+         */
+
+        $fecha = new DateTime;
+        $models = Beneficios::model()->findAll(array(
+            'with' => array('listPuntosVenta' => array('condition' => 'listPuntosVenta.codigoCiudad=:ciudad'), 'listBeneficiosProductos' => array('condition' => 'listBeneficiosProductos.codigoProducto=:producto')),
+            'condition' => 't.fechaIni<=:fecha AND t.fechaFin>=:fecha AND t.tipo IN (' . implode(",", Yii::app()->params->beneficios['lrv']) . ')',
+            'params' => array(
+                ':fecha' => $fecha->format('Y-m-d'),
+                ':ciudad' => 76001,
+                ':producto' => 30128
+            )
+        ));
+
+        echo count($models);
+    }
+
+    public function actionTodos() {
+        echo Yii::app()->params->sector['*'];
+    }
+
+    public function actionProducto($codigo) {
         $objProducto = Producto::model()->find(array(
             'condition' => 'codigoProducto=:codigo',
             'params' => array(
                 ':codigo' => $codigo,
             ),
         ));
-        
-        CVarDumper::dump($objProducto->objCategoriaBI);
-        
+
+        CVarDumper::dump($objProducto->listCategoriasTienda,3,true);
+
         echo "<br/><br/>";
-        
-        CVarDumper::dump($objProducto->objCategoriaBI->listCategoriasTienda);
+
+        //CVarDumper::dump($objProducto->objCategoriaBI->listCategoriasTienda);
     }
-    
-    public function actionOwl(){
+
+    public function actionOwl() {
         $this->render('owl');
     }
 
     public function actionAtributo() {
         $producto = Producto::model()->findByPk(10670);
         //$productos = Producto::model()->findAll(array('condition' => 'codigoProducto<>:codigo LIMIT 20000,5000', 'params' => array(':codigo' => 30282800)));
-        
-        
+
+
         if ($producto != null) {
             echo "$producto->presentacionProducto<br/>";
-            foreach ($producto->listAtributos as $objAtributo) {
-                echo "$objAtributo->nombreAtributo<br/>";
+            foreach ($producto->listFiltros as $objFiltro) {
+                echo "$objFiltro->nombreDetalle<br/>";
             }
         }
     }
@@ -188,7 +473,18 @@ class TestController extends Controller {
                 'condition' => 'sect.codigoSector<>0',
         ));
 
-        $ciudades = Ciudad::model()->findAll($criteria);
+        $ciudades = Ciudad::model()->findAll(array(
+            'with' => array('listSectores'),
+            'order' => 't.orden',
+            'condition' => 'estadoCiudadSector=:estadoCiudadSector AND estadoSector=:estadoSector AND estadoCiudad=:estadoCiudad',
+            'params' => array(
+                ':estadoCiudadSector' => 1,
+                ':estadoSector' => 1,
+                ':estadoCiudad' => 1,
+            )
+        ));
+
+        //$ciudades = Ciudad::model()->findAll($criteria);
 
 
 
@@ -201,27 +497,91 @@ class TestController extends Controller {
         }
     }
 
-    public function actionSubsector() {
-        $listCiudades = Ciudad::model()->findAll(array(
-            'with' => array('listSubSectores' => array('condition' => 'estadoSubSector=1', 'with' => array('listReferencias' => array('condition' => 'estadoReferencia=1', 'with' => 'listSectores')))),
-            'order' => 't.nombreCiudad'
+    public function actionCiudad() {
+        $ciudad = Ciudad::model()->find(array(
+            'condition' => 'codigoCiudad=76001'
         ));
 
-        foreach ($listCiudades as $indice => $ciudad) {
-            echo "$indice: $ciudad->codigoCiudad|$ciudad->nombreCiudad<br/>";
-            foreach ($ciudad->listSubSectores as $model) {
-                echo "id: $model->idSubSector - $model->nombreSubSector " . $model->objCiudad->nombreCiudad . " <br/>";
-                foreach ($model->listReferencias as $referencia) {
-                    echo "-- id: $referencia->idPuntoReferencia - $referencia->nombreReferencia <br/>";
-                    foreach ($referencia->listSectores as $sector) {
-                        echo "--- id: $sector->codigoSector - $sector->nombreSector <br/>";
-                    }
-                    echo "<br/>";
+        echo $ciudad->nombreCiudad . "<br><br>";
+
+        foreach ($ciudad->listSubSectores as $subsector) {
+            echo "id: $subsector->codigoSubSector - $subsector->nombreSubSector " . $subsector->objCiudad->nombreCiudad . " <br/>";
+            foreach ($subsector->listSectorReferencias as $sectorReferencia) {
+                echo "-- id: " . $sectorReferencia->getNombreSector() . " <br/>";
+                foreach ($sectorReferencia->listPuntoReferencias as $referencia) {
+                    echo "--- Punto ref: $referencia->nombreReferencia <br/>";
                 }
                 echo "<br/>";
             }
             echo "<br/>";
         }
+    }
+
+    public function actionSubsector() {
+        $listCiudades = Ciudad::model()->findAll(array(
+            'with' => array(
+                'listSubSectores' => array(
+                    'condition' => 'estadoSubSector=1',
+                    'with' => array(
+                        'listSectorReferencias' => array(
+                            'condition' => 'listSectorReferencias.estadoSectorReferencia=1',
+                            'with' => array(
+                                'objSectorCiudad' => array(
+                                    'condition' => 'objSectorCiudad.estadoCiudadSector=1',
+                                    'with' => array(
+                                        'objSector' => array(
+                                            'condition' => 'objSector.estadoSector=1',
+                                            'order' => 'objSector.nombreSector',
+                                        ))),
+                                'listPuntoReferencias' => array('condition' => 'listPuntoReferencias.estadoReferencia=1', 'order' => 'listPuntoReferencias.nombreReferencia')
+                            ))))),
+            'order' => 't.nombreCiudad'
+        ));
+
+        foreach ($listCiudades as $indice => $ciudad) {
+            echo "$indice: $ciudad->codigoCiudad|$ciudad->nombreCiudad<br/>";
+            foreach ($ciudad->listSubSectores as $subsector) {
+                echo "id: $subsector->codigoSubSector - $subsector->nombreSubSector " . $subsector->objCiudad->nombreCiudad . " <br/>";
+                foreach ($subsector->listSectorReferencias as $sectorReferencia) {
+                    echo "-- id: " . $sectorReferencia->objSectorCiudad->objSector->nombreSector . " <br/>";
+                    foreach ($sectorReferencia->listPuntoReferencias as $referencia) {
+                        echo "--- Punto ref: $referencia->nombreReferencia <br/>";
+                    }
+                    echo "<br/>";
+                }
+
+                /* foreach ($subsector->listReferencias as $referencia) {
+                  echo "-- id: $referencia->idPuntoReferencia - $referencia->nombreReferencia <br/>";
+                  foreach ($referencia->listSectores as $sector) {
+                  echo "--- id: $sector->codigoSector - $sector->nombreSector <br/>";
+                  }
+                  echo "<br/>";
+                  } */
+                echo "<br/>";
+            }
+            echo "<br/>";
+        }
+
+        /* $listCiudades = Ciudad::model()->findAll(array(
+          'with' => array('listSubSectores' => array('condition' => 'estadoSubSector=1', 'with' => array('listReferencias' => array('condition' => 'estadoReferencia=1', 'with' => 'listSectores')))),
+          'order' => 't.nombreCiudad'
+          ));
+
+          foreach ($listCiudades as $indice => $ciudad) {
+          echo "$indice: $ciudad->codigoCiudad|$ciudad->nombreCiudad<br/>";
+          foreach ($ciudad->listSubSectores as $model) {
+          echo "id: $model->idSubSector - $model->nombreSubSector " . $model->objCiudad->nombreCiudad . " <br/>";
+          foreach ($model->listReferencias as $referencia) {
+          echo "-- id: $referencia->idPuntoReferencia - $referencia->nombreReferencia <br/>";
+          foreach ($referencia->listSectores as $sector) {
+          echo "--- id: $sector->codigoSector - $sector->nombreSector <br/>";
+          }
+          echo "<br/>";
+          }
+          echo "<br/>";
+          }
+          echo "<br/>";
+          } */
 
 
 
@@ -332,6 +692,15 @@ class TestController extends Controller {
         }
 
         $tracks = new SimpleXMLElement($xml);
+    }
+    
+    
+    public function actionPerfil(){
+        //CVarDumper::dump(Yii::app()->session[Yii::app()->params->sesion['sectorCiudadEntrega']],10,true);
+        //echo "<br><br><br>";
+        echo Yii::app()->shoppingCart->getCodigoPerfil();
+        echo "<br><br><br>";
+        CVarDumper::dump(Yii::app()->session[Yii::app()->params->sesion['sectorCiudadEntrega']],10,true);
     }
 
 }
