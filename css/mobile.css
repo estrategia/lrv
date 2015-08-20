@@ -1127,7 +1127,7 @@ div.clst_cont_top {
     padding: 1em;
 }
 
-div.ccont_filtro{border-top: 1px solid #ccc; margin: 0 0 40px;}
+div.ccont_filtro{border-top: 1px solid #ccc; margin: 0;}
 div.ccont_filtro .right{float: right; text-align: right; border: 0; margin: 0; width: 50%;}
 div.ccont_filtro .left{float: left; border: 0; margin: 0; width: 50%;}
 
@@ -2426,14 +2426,14 @@ div.c_cont_com_prod.ui-collapsible.ui-collapsible-inset.ui-corner-all.ui-collaps
 }
 
 .grid-view table.items th {
-    background: #ff0000; /* Old browsers */
-    background: -moz-linear-gradient(top,  #ff0000 0%, #ab0000 100%); /* FF3.6+ */
-    background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,#ff0000), color-stop(100%,#ab0000)); /* Chrome,Safari4+ */
-    background: -webkit-linear-gradient(top,  #ff0000 0%,#ab0000 100%); /* Chrome10+,Safari5.1+ */
-    background: -o-linear-gradient(top,  #ff0000 0%,#ab0000 100%); /* Opera 11.10+ */
-    background: -ms-linear-gradient(top,  #ff0000 0%,#ab0000 100%); /* IE10+ */
-    background: linear-gradient(to bottom,  #ff0000 0%,#ab0000 100%); /* W3C */
-    filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#ff0000', endColorstr='#ab0000',GradientType=0 ); /* IE6-9 */
+    background: #b10000; /* Old browsers */
+    //background: -moz-linear-gradient(top,  #ff0000 0%, #ab0000 100%); /* FF3.6+ */
+    //background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,#ff0000), color-stop(100%,#ab0000)); /* Chrome,Safari4+ */
+    //background: -webkit-linear-gradient(top,  #ff0000 0%,#ab0000 100%); /* Chrome10+,Safari5.1+ */
+    //background: -o-linear-gradient(top,  #ff0000 0%,#ab0000 100%); /* Opera 11.10+ */
+    //background: -ms-linear-gradient(top,  #ff0000 0%,#ab0000 100%); /* IE10+ */
+    //background: linear-gradient(to bottom,  #ff0000 0%,#ab0000 100%); /* W3C */
+    //filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#ff0000', endColorstr='#ab0000',GradientType=0 ); /* IE6-9 */
     color: #ffffff;
     text-align: center;
 }
@@ -2477,10 +2477,6 @@ ul.yiiPager .selected a {
 }
 .codEspecial .icon_codigo_especial {
     width: 30px;
-}
-.resultado_bus > p {
-    color: #505050;
-    font-size: 15px;
 }
 .c_cont_catg_prod .ui-listview li a {
     background-color: #f6f6f6;
