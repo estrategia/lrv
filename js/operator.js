@@ -138,11 +138,7 @@ $(document).on('click', 'button[data-action="remitir"]', function() {
             Loading.hide();
         },
         success: function(data) {
-            if (data.result == '0') {
-               bootbox.alert(data.response.htmlResponse);
-            } else {
-               bootbox.alert(data.response.htmlResponse);
-            }
+             bootbox.alert(data.response);
         },
         error: function(jqXHR, textStatus, errorThrown) {
             Loading.hide();
@@ -165,11 +161,8 @@ $(document).on('click', 'button[data-action="remitirborrar"]', function() {
             Loading.hide();
         },
         success: function(data) {
-            if (data.result == '0') {
-               bootbox.alert(data.response.htmlResponse);
-            } else {
-               bootbox.alert(data.response.htmlResponse);
-            }
+              bootbox.alert(data.response);
+           
         },
         error: function(jqXHR, textStatus, errorThrown) {
             Loading.hide();

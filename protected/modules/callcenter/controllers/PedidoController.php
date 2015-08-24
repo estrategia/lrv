@@ -99,6 +99,11 @@ class PedidoController extends ControllerOperator {
             echo CJSON::encode(array('result' => 'error', 'response' => 'Pedido no existe.'));
             Yii::app()->end();
         }
+        
+        if($objCompra->idEstadoCompra==Yii::app()->params->callcenter['estadoCompra']['estado']['remitido']){
+             echo CJSON::encode(array('result' => 'error', 'response' => 'El pedido ya fue remitido a un punto de venta, si desea borre la remisión y haga la correspondiente asignación.'));
+                Yii::app()->end();
+        }
 
         $objPdv = PuntoVenta::model()->find(array(
             'condition' => 'idComercial=:pdv',
@@ -789,6 +794,18 @@ class PedidoController extends ControllerOperator {
     
     public function actionRemitir(){
         $idCompra = Yii::app()->getRequest()->getPost('idCompra');
+        $objCompra = Compras::model()->findByPk($idCompra,array("with"=>"objPuntoVenta"));
+
+        if ($objCompra === null) {
+              echo CJSON::encode(array('result' => 0, 'response' => 'Pedido no existe.'));
+              Yii::app()->end();
+        }
+            
+        if($objCompra->idComercial == null){
+                 echo CJSON::encode(array('result' => 0, 'response' => 'No se ha asignado punto de venta.'));
+                 Yii::app()->end();
+        }
+        
         $client = new SoapClient(null, array(
             'location' => Yii::app()->params->webServiceUrl['remisionPos'],
             'uri' => "",
@@ -796,15 +813,78 @@ class PedidoController extends ControllerOperator {
         ));
        $result = $client->__soapCall("CongelarCompraManual",  array('idPedido' => $idCompra));
        
-        echo CJSON::encode(array(
+       if($result[0]==1){
+     
+            $transaction = Yii::app()->db->beginTransaction();
+            try {
+                $objCompra->idEstadoCompra = Yii::app()->params->callcenter['estadoCompra']['estado']['remitido'];
+                $objCompra->generarDocumentoCruce(Yii::app()->controller->module->user->id);
+
+                // Guardar el cambio de estado de la remisión
+                if (!$objCompra->save()) {
+                    throw new Exception('Error de asignación: ' . $objCompra->validateErrorsResponse());
+                }
+
+                $objEstadoCompra = new ComprasEstados;
+                $objEstadoCompra->idCompra = $objCompra->idCompra;
+                $objEstadoCompra->idEstadoCompra = Yii::app()->params->callcenter['estadoCompra']['estado']['remitido'];
+                $objEstadoCompra->idOperador = Yii::app()->controller->module->user->id;
+
+                // guardar en ComprasEstados
+                if (!$objEstadoCompra->save()) {
+                    throw new Exception("Error al guardar traza de estado: " . $objEstadoCompra->validateErrorsResponse());
+                }
+
+                
+                $objObservacion = new ComprasObservaciones;
+                $objObservacion->idCompra = $objCompra->idCompra;
+                $objObservacion->observacion = "Cambio de Estado: Remitido al POS PDV. " . $objCompra->objPuntoVenta->nombrePuntoDeVenta;
+                $objObservacion->idOperador = Yii::app()->controller->module->user->id;
+                $objObservacion->notificarCliente = 0;
+
+                // Guardar las observaciones
+                if (!$objObservacion->save()) {
+                    throw new Exception("Error al guardar observación" . $objObservacion->validateErrorsResponse());
+                }
+
+                $transaction->commit();
+
+            } catch (Exception $exc) {
+                Yii::log($exc->getMessage() . "\n" . $exc->getTraceAsString(), CLogger::LEVEL_ERROR, 'application');
+
+                try {
+                    $transaction->rollBack();
+                } catch (Exception $txexc) {
+                    Yii::log($txexc->getMessage() . "\n" . $txexc->getTraceAsString(), CLogger::LEVEL_ERROR, 'application');
+                }
+
+                echo CJSON::encode(array('result' => 'error', 'response' => $exc->getMessage()));
+                Yii::app()->end();
+            }
+       }
+        
+         echo CJSON::encode(array(
                     'result' => $result[0],
-                    'response' => array(
-                        'htmlResponse' => $result[1]
-         )));
+                    'response' =>  $result[1]
+                ));
+            Yii::app()->end();
     }
     
     public function actionRemitirBorrar(){
-         $idCompra = Yii::app()->getRequest()->getPost('idCompra');
+        $idCompra = Yii::app()->getRequest()->getPost('idCompra');
+         
+        $objCompra = Compras::model()->findByPk($idCompra,array("with"=>"objPuntoVenta"));
+
+        if ($objCompra === null) {
+              echo CJSON::encode(array('result' => 0, 'response' => 'Pedido no existe.'));
+              Yii::app()->end();
+        }
+            
+        if($objCompra->idComercial == null){
+                 echo CJSON::encode(array('result' => 0, 'response' => 'No se ha asignado punto de venta.'));
+                 Yii::app()->end();
+        }
+        
          $client = new SoapClient(null, array(
             'location' => Yii::app()->params->webServiceUrl['remisionPos'],
             'uri' => "",
@@ -812,10 +892,64 @@ class PedidoController extends ControllerOperator {
         ));
        $result = $client->__soapCall("BorrarCongelada",  array('idPedido' => $idCompra));
        
+       if($result[0]==1){
+            $objCompra = Compras::model()->findByPk($idCompra,array("with"=>"objPuntoVenta"));
+
+            if ($objCompra === null) {
+                echo CJSON::encode(array('result' => 'error', 'response' => 'Pedido no existe.'));
+                Yii::app()->end();
+            }
+
+            $transaction = Yii::app()->db->beginTransaction();
+            try {
+                $objCompra->idEstadoCompra = Yii::app()->params->callcenter['estadoCompra']['estado']['remisionBorrada'];
+                $objCompra->generarDocumentoCruce(Yii::app()->controller->module->user->id);
+
+                // Guardar el cambio de estado de la remisión
+                if (!$objCompra->save()) {
+                    throw new Exception('Error de asignación: ' . $objCompra->validateErrorsResponse());
+                }
+
+                $objEstadoCompra = new ComprasEstados;
+                $objEstadoCompra->idCompra = $objCompra->idCompra;
+                $objEstadoCompra->idEstadoCompra = Yii::app()->params->callcenter['estadoCompra']['estado']['remisionBorrada'];
+                $objEstadoCompra->idOperador = Yii::app()->controller->module->user->id;
+
+                // guardar en ComprasEstados
+                if (!$objEstadoCompra->save()) {
+                    throw new Exception("Error al guardar traza de estado: " . $objEstadoCompra->validateErrorsResponse());
+                }
+
+                $objObservacion = new ComprasObservaciones;
+                $objObservacion->idCompra = $objCompra->idCompra;
+                $objObservacion->observacion = "Cambio de Estado: Remisión borrada del POS del PDV. " . $objCompra->objPuntoVenta->nombrePuntoDeVenta;
+                $objObservacion->idOperador = Yii::app()->controller->module->user->id;
+                $objObservacion->notificarCliente = 0;
+
+                // Guardar las observaciones
+                if (!$objObservacion->save()) {
+                    throw new Exception("Error al guardar observación" . $objObservacion->validateErrorsResponse());
+                }
+
+                $transaction->commit();
+
+            } catch (Exception $exc) {
+                Yii::log($exc->getMessage() . "\n" . $exc->getTraceAsString(), CLogger::LEVEL_ERROR, 'application');
+
+                try {
+                    $transaction->rollBack();
+                } catch (Exception $txexc) {
+                    Yii::log($txexc->getMessage() . "\n" . $txexc->getTraceAsString(), CLogger::LEVEL_ERROR, 'application');
+                }
+
+                echo CJSON::encode(array('result' => 'error', 'response' => $exc->getMessage()));
+                Yii::app()->end();
+            }
+       }
+       
        echo CJSON::encode(array(
                     'result' => $result[0],
-                    'response' => array(
-                        'htmlResponse' => $result[1]
-       )));
+                    'response' => $result[1]
+       ));
     }
 }

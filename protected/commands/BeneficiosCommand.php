@@ -1,40 +1,50 @@
 <?php
 
-/*
- * To change this template, choose Tools | Templates
+/* 
+ * To change this license header, choose License Headers in Project Properties.
+ * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
 
-/**
- * Description of SwebController
- *
- * @author Miguel Angel Sanchez Montiel
- */
-class SwebController extends CController {
-
-    public function actions() {
-        return array(
-            'wslrv' => array(
-                'class' => 'CWebServiceAction',
-            ),
-        );
+class BeneficiosCommand extends CConsoleCommand {
+    
+    public function actionHola(){
+        echo "hola mundo";
     }
-
-    /**
-     * @param array $arrTiposBeneficio arreglo de tipos de beneficio entrada
-     * @param array $arrBeneficios arreglo de beneficios a sincronizar
-     * @return array arreglo de respuesta (Result,Response)
-     * @soap
-     */
-    public function setBeneficios($arrTiposBeneficio, $arrBeneficios) {
-        $result = array(
-            'Result' => 0,
-            'Response' => 'No procesado'
-        );
-
+    
+    
+    //put your code here
+    public function actionSincronizarbeneficios() { // recibe el parámetro de id de sincronización
+  //      Yii::import('application.modules.beneficios.models.sincrolrv.*');
+         Yii::import('application.models.Beneficios');
+         Yii::import('application.models.BeneficioTipo');
+         Yii::import('application.models.BeneficiosProductos');
+         Yii::import('application.models.BeneficiosPuntosVenta');
+        $arrBeneficios = array();
+        //Beneficios-BeneficiosProductos
+        $sql="select max(idBeneficioSincronizado) as maximo from t_Beneficios" ; //
+        $result = Yii::app()->db->createCommand($sql)->queryAll();
         $transaction = Yii::app()->db->beginTransaction();
-        try {
-            foreach ($arrTiposBeneficio as $beneficioTipo) {
+         
+        if($result[0]['maximo']!=null){
+            // llamar a web service enviandole el id de sincronización
+            $client = new SoapClient(Yii::app()->params->webServiceUrl['sincronizarBeneficiosSIICOP'], array(
+                "trace" => 1,
+                'cache_wsdl' => WSDL_CACHE_NONE
+            ));
+            
+            $result = $client->setBeneficios($result[0]['maximo']/*$arrTiposBeneficio, $arrBeneficios*/);
+            
+           
+            if($result['Result']!=1){
+                 Yii::log("Beneficios no han sido sincronizados correctamente\nDescripción:".$result['Response']. date('Y-m-d H:i:s'), CLogger::LEVEL_INFO, 'application');
+                 Yii::app()->end();
+            }
+            
+            $arrTiposBeneficio=$result['arrTiposBeneficio'];
+            $arrBeneficios=$result['arrBeneficios'];
+            
+             foreach ($arrTiposBeneficio as $beneficioTipo) {
                 $objBeneficioTipo = BeneficioTipo::model()->find(array(
                     'condition' => 'tipo=:tipo',
                     'params' => array(
@@ -107,23 +117,50 @@ class SwebController extends CController {
                 }
             }
 
-            $result['Result'] = 1;
-            $result['Response'] = "beneficios sincronizados correctamente";
             $transaction->commit();
+            echo "Beneficios sincronizados correctamente";
             Yii::log("Beneficios sincronizados correctamente\n" . date('Y-m-d H:i:s'), CLogger::LEVEL_INFO, 'application');
-        } catch (Exception $exc) {
-            $result['Result'] = 0;
-            $result['Response'] = $exc->getMessage();
-            Yii::log("\n--ERROR WS SETBENEFICIOS--\n" . $exc->getMessage() . "\n" . $exc->getTraceAsString() . "\n--ERROR WS SETBENEFICIOS--\n", CLogger::LEVEL_ERROR, 'application');
-            try {
-                $transaction->rollBack();
-            } catch (Exception $txexc) {
-                Yii::log($txexc->getMessage() . "\n" . $txexc->getTraceAsString(), CLogger::LEVEL_ERROR, 'application');
-            }
+            
         }
+   /*     $beneficios = Beneficios::model()->findAll(array(
+            'with' => array('listBeneficiosProductos', 'listBeneficiosPuntoVenta'),
+            'condition' => 't.SincronizacionLRV=:sincro',
+            'params' => array(
+                ':sincro' => 0
+            )
+        ));
         
-        return $result;
+        
+        foreach ($beneficios as $idx => $beneficio) {
+            $arrBeneficios[$idx] = $beneficio->attributes;
+            $arrBeneficios[$idx]['listBeneficiosProductos'] = array();
+            $arrBeneficios[$idx]['listBeneficiosPuntoVenta'] = array();
+            foreach ($beneficio->listBeneficiosProductos as $beneficioProducto)
+                $arrBeneficios[$idx]['listBeneficiosProductos'][] = $beneficioProducto->attributes;
+            foreach ($beneficio->listBeneficiosPuntoVenta as $beneficioPdv)
+                $arrBeneficios[$idx]['listBeneficiosPuntoVenta'][] = $beneficioPdv->attributes;
+        }
+        //BeneficioTipo-Beneficios
+        $arrTiposBeneficio = BeneficioTipo::model()->getCommandBuilder()->createFindCommand(BeneficioTipo::model()->tableSchema, new CDbCriteria)->queryAll();
+        $client = new SoapClient(Yii::app()->params->webServiceUrl['sincronizarBeneficiosLRV'], array(
+            "trace" => 1,
+            'cache_wsdl' => WSDL_CACHE_NONE
+        ));
+        try {
+            $result = $client->setBeneficios($arrTiposBeneficio, $arrBeneficios);
+            if ($result['Result'] == 1) {
+                foreach ($beneficios as $beneficio) {
+                    $beneficio->SincronizacionLRV = 1;
+                    $beneficio->save();
+                }
+                Yii::log("BeneficiosCommand::sincronizarLrv: ". $result['Response'], CLogger::LEVEL_INFO, 'application');
+            }else{
+                Yii::log("BeneficiosCommand::sincronizarLrv: ". $result['Response'], CLogger::LEVEL_ERROR, 'application');
+            }
+        } catch (SoapFault $exc) {
+            Yii::log("BeneficiosCommand::sincronizarLrv::SoapFault: " . $client->__getLastResponse(), CLogger::LEVEL_ERROR, 'application');
+        } catch (Exception $exc) {
+            Yii::log("BeneficiosCommand::sincronizarLrv::Exception: " . $exc->getMessage(), CLogger::LEVEL_ERROR, 'application');
+        }*/
     }
 }
-
-?>

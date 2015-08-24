@@ -1,50 +1,67 @@
-<div class="row">
-    <form id="form-busqueda-criterio" class="form-inline" method="post">
-        <div class="form-group">
-            <label for="FormBusqueda_criterio">Criterio de búsqueda</label>
-            <?php echo CHtml::dropDownList('FormBusqueda[criterio]', '', array(1 => 'Nombre del cliente', 2 => 'Cédula del cliente', 3 => '#Pedido', 4=>'Punto de venta'), array('id' => 'FormBusqueda_criterio', 'class' => "form-control input-sm")) ?>
-        </div>
-        <div class="form-group">
-            <input type="text" class="form-control input-sm" id="FormBusqueda_valorCriterio" name="FormBusqueda[valorCriterio]">
-        </div>
-        <input type="hidden" name="FormBusqueda[tipo]" value="criterio">
-        <button type="submit" class="btn btn-primary btn-sm">
-            <i class="glyphicon glyphicon-search"></i>
-            Buscar
-        </button>
-    </form>
+ <div class="form-group">
+     <form id="form-busqueda-criterio" class="form-inline" method="post">
+      <div class="row">
+            <div class="col-xs-2">
+                <label for="FormBusqueda_criterio">Criterio de búsqueda</label>
+            </div>
+            <div class="col-xs-2">
+                <?php echo CHtml::dropDownList('FormBusqueda[criterio]', '', array(1 => 'Nombre del cliente', 2 => 'Cédula del cliente', 3 => '#Pedido', 4=>'Punto de venta'), array('id' => 'FormBusqueda_criterio', 'class' => "form-control",'style'=>'width:100%')) ?>
+            </div>
+            <div class="col-xs-2">
+                <input type="text" style="width:100%" class="form-control input-sm" id="FormBusqueda_valorCriterio" name="FormBusqueda[valorCriterio]">
+            </div>
+                <input type="hidden" name="FormBusqueda[tipo]" value="criterio">
+            <div class="col-xs-1">
+                <button type="submit" class="btn btn-primary btn-sm">
+                    <i class="glyphicon glyphicon-search"></i>
+                    Buscar
+                </button>
+            </div>  
+      </div>
+      </form>
 </div>
 
 <?php $listDataEstado = CHtml::listData(EstadoCompra::listData(), 'idEstadoCompra', 'compraEstado'); ?>
-
-<div class="row">
+<div class="form-group">
     <form id="form-busqueda-operador" class="form-inline" method="post">
-        <div class="form-group">
-            <label for="FormBusqueda_operador">Búsqueda por operador</label>
-            <?php echo CHtml::dropDownList('FormBusqueda[operador]', '', CHtml::listData(Operador::listData(), 'idOperador', 'nombre'), array('id' => 'FormBusqueda_operador', 'class' => "form-control input-sm")) ?>
+        <div class="row">
+            <div class="col-xs-2">
+                <label for="FormBusqueda_operador">Búsqueda por operador</label>
+            </div>
+            <div class="col-xs-2">
+                <?php echo CHtml::dropDownList('FormBusqueda[operador]', '', CHtml::listData(Operador::listData(), 'idOperador', 'nombre'), array('id' => 'FormBusqueda_operador', 'class' => "form-control",'style'=>'width:100%')) ?>
+            </div>
+            <div class="col-xs-2">
+                <?php echo CHtml::dropDownList('FormBusqueda[estado]', '', $listDataEstado, array('id' => 'FormBusqueda_estado', 'class' => "form-control",'style'=>'width:100%')) ?>
+            </div>
+            <div class="col-xs-1">
+                <input type="hidden" name="FormBusqueda[tipo]" value="operador">
+                <button type="submit" class="btn btn-primary btn-sm">
+                    <i class="glyphicon glyphicon-search"></i>
+                    Buscar
+                </button>
+            </div>
         </div>
-        <div class="form-group">
-            <?php echo CHtml::dropDownList('FormBusqueda[estado]', '', $listDataEstado, array('id' => 'FormBusqueda_estado', 'class' => "form-control input-sm")) ?>
-        </div>
-        <input type="hidden" name="FormBusqueda[tipo]" value="operador">
-        <button type="submit" class="btn btn-primary btn-sm">
-            <i class="glyphicon glyphicon-search"></i>
-            Buscar
-        </button>
     </form>
 </div>
-
-<div class="row">
+<div class="form-group">
     <form id="form-busqueda-estado" class="form-inline" method="post">
-        <div class="form-group">
-            <label for="FormBusqueda_estado">Búsqueda por estado</label>
-            <?php echo CHtml::dropDownList('FormBusqueda[estado]', '', $listDataEstado, array('id' => 'FormBusqueda_estado', 'class' => "form-control input-sm")) ?>
-        </div>
-        <input type="hidden" name="FormBusqueda[tipo]" value="estado">
-        <button type="submit" class="btn btn-primary btn-sm">
-            <i class="glyphicon glyphicon-search"></i>
-            Buscar
-        </button>
+    <div class="row">
+            <div class="col-xs-2">
+                <label for="FormBusqueda_estado">Búsqueda por estado</label>
+            </div>
+            <div class="col-xs-2">
+                <?php echo CHtml::dropDownList('FormBusqueda[estado]', '', $listDataEstado, array('id' => 'FormBusqueda_estado', 'class' => "form-control",'style'=>'width:100%')) ?>
+            </div>
+            <div class="col-xs-2"></div>
+            <div class="col-xs-1">
+                <input type="hidden" name="FormBusqueda[tipo]" value="estado">
+                <button type="submit" class="btn btn-primary btn-sm">
+                    <i class="glyphicon glyphicon-search"></i>
+                    Buscar
+                </button>    
+            </div>
+    </div>
     </form>
 </div>
 

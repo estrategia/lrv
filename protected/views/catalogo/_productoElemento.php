@@ -17,7 +17,7 @@
 <div style="clear:both;"></div>
 <div class="clst_cont_top">
     <div class="clst_pro_img">
-        <a href="<?php echo CController::createUrl('/catalogo/producto', array('producto' => $objProducto->codigoProducto)) ?>" data-ajax="false">
+        <a href="<?php echo CController::createUrl('/catalogo/producto', array('producto' => $objProducto->codigoProducto,'descripcion'=>  Producto::cadenaUrl($objProducto->descripcionProducto))) ?>" data-ajax="false">
             <img src="<?php echo Yii::app()->request->baseUrl . $objProducto->rutaImagen() ?>" class="ui-li-thumb">
         </a>
     </div>
@@ -35,7 +35,7 @@
     <!-- producto agregado -->
 
     <div class="clst_cont_pr_prod">
-        <h2><a href="<?php echo CController::createUrl('/catalogo/producto', array('producto' => $objProducto->codigoProducto)) ?>" data-ajax="false"><?php echo $objProducto->descripcionProducto ?></a></h2>
+        <h2><a href="<?php echo CController::createUrl('/catalogo/producto', array('producto' => $objProducto->codigoProducto,'descripcion'=>  Producto::cadenaUrl($objProducto->descripcionProducto))) ?>" data-ajax="false"><?php echo $objProducto->descripcionProducto ?></a></h2>
         <p><?php echo $objProducto->presentacionProducto ?></p>
         <div id="raty-lectura-producto-<?php echo $objProducto->codigoProducto ?>" data-role="raty" data-readonly="true" data-score="<?php echo $objProducto->getCalificacion() ?>" class="clst_cal_str"></div>
         <?php if ($objPrecio->inicializado()): ?>

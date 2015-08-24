@@ -77,7 +77,7 @@
                         <div class="ui-field-contain clst_prod_cont">
                             <div class="clst_cont_top">
                                 <div class="clst_pro_img">
-                                    <a href="<?php echo CController::createUrl('/catalogo/producto', array('producto' => $objItem->codigoProducto)) ?>" data-ajax="false">
+                                    <a href="<?php echo CController::createUrl('/catalogo/producto', array('producto' => $objItem->codigoProducto,'descripcion'=>  Producto::cadenaUrl($objItem->objProducto->descripcionProducto))) ?>" data-ajax="false">
                                         <img src="<?php echo Yii::app()->request->baseUrl . $objItem->objProducto->rutaImagen() ?>" class="ui-li-thumb">
                                     </a>
                                 </div>
