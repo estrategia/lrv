@@ -3,20 +3,20 @@
 
     <?php if ($imagen == null): ?>
         <div class="clst_pro_img">
-            <a href="<?php echo CController::createUrl('/catalogo/combo', array('combo' => $position->objCombo->idCombo)) ?>" data-ajax="false">
+            <a href="<?php echo CController::createUrl('/catalogo/combo', array('combo' => $position->objCombo->idCombo,'description'=>  Combo::cadenaUrl($position->objCombo->descripcionCombo))) ?>" data-ajax="false">
                 <img src="<?php echo Yii::app()->request->baseUrl . Yii::app()->params->producto['noImagen']['mini']; ?>" class="ui-li-thumb">
             </a>
         </div>
     <?php else: ?>
         <div class="clst_pro_img">
-            <a href="<?php echo CController::createUrl('/catalogo/combo', array('combo' => $position->objCombo->idCombo)) ?>" data-ajax="false">
+            <a href="<?php echo CController::createUrl('/catalogo/combo', array('combo' => $position->objCombo->idCombo,'description'=>  Combo::cadenaUrl($position->objCombo->descripcionCombo))) ?>" data-ajax="false">
                 <img src="<?php echo Yii::app()->request->baseUrl . Yii::app()->params->carpetaImagen['combos'][YII::app()->params->producto['tipoImagen']['mini']] . $imagen->rutaImagen; ?>" class="ui-li-thumb">
             </a>
         </div>
     <?php endif; ?>
 
     <div class="clst_cont_pr_prod">
-        <h2><a href="<?php echo CController::createUrl('/catalogo/combo', array('combo' => $position->objCombo->idCombo)) ?>" data-ajax="false"><?php echo $position->objCombo->descripcionCombo ?></a></h2>
+        <h2><a href="<?php echo CController::createUrl('/catalogo/combo', array('combo' => $position->objCombo->idCombo,'description'=>  Combo::cadenaUrl($position->objCombo->descripcionCombo))) ?>" data-ajax="false"><?php echo $position->objCombo->descripcionCombo ?></a></h2>
         <div class="clst_pre_act"><?php echo Yii::app()->numberFormatter->format(Yii::app()->params->formatoMoneda['patron'], $position->getPrice(), Yii::app()->params->formatoMoneda['moneda']); ?> </div>
 
         <?php if ($position->getShipping() > 0): ?>

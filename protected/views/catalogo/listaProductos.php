@@ -61,7 +61,7 @@
                         <div data-role="main">
                             <div data-role="content">
                                 Este producto requiere venta controlada. Por favor ver detalle del producto para mayor información.
-                                <?php echo CHtml::link('Ver detalle', CController::createUrl('/catalogo/producto', array('producto' => $objProducto->codigoProducto)), array('data-ajax' => "false", 'class' => 'ui-btn ui-corner-all ui-shadow cprod_add_car_spcl')); ?>
+                                <?php echo CHtml::link('Ver detalle', CController::createUrl('/catalogo/producto', array('producto' => $objProducto->codigoProducto,'descripcion'=>  Producto::cadenaUrl($objProducto->descripcionProducto))), array('data-ajax' => "false", 'class' => 'ui-btn ui-corner-all ui-shadow cprod_add_car_spcl')); ?>
                                 <a href="#" data-rel="back" class="ui-btn ui-corner-all ui-shadow cprod_canc_spcl">Cancelar</a>
                             </div>
                         </div>

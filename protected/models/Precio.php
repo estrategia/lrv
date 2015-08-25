@@ -82,5 +82,11 @@ abstract class Precio {
 
         return $valor;
     }
+    
+    
+    public static function calcularImpuesto($valor,$impuesto){
+        $base=$valor/(1+($impuesto));
+        return $base*$impuesto;
+    }
 
 }

@@ -261,4 +261,8 @@ class Producto extends CActiveRecord {
 
         return null;
     }
+    
+    public static function cadenaUrl($producto){
+        return str_replace(" ","-", $producto).".html";
+    }
 }

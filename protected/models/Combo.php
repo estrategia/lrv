@@ -159,5 +159,9 @@ class Combo extends CActiveRecord {
     public function getCodigo() {
         return "C-$this->idCombo";
     }
+    
+    public static function cadenaUrl($producto){
+        return str_replace(" ","-", $producto).".html";
+    }
 
 }
