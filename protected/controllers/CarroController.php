@@ -1654,6 +1654,7 @@ class CarroController extends Controller {
                 
                 $objCompra->subtotalCompra = Yii::app()->shoppingCart->getCost();
                 $objCompra->impuestosCompra = Yii::app()->shoppingCart->getTaxPrice();
+                $objCompra->baseImpuestosCompra = Yii::app()->shoppingCart->getBaseTaxPrice();
                 $objCompra->domicilio = Yii::app()->shoppingCart->getShipping();
                 $objCompra->flete = Yii::app()->shoppingCart->getExtraShipping();
                 $objCompra->totalCompra = Yii::app()->shoppingCart->getTotalCost();
@@ -1939,7 +1940,7 @@ class CarroController extends Controller {
                     $objPasarelaEnvio->idCompra = $objCompra->idCompra;
                     $objPasarelaEnvio->valor = $objCompra->totalCompra;
                     $objPasarelaEnvio->iva = $objCompra->impuestosCompra;
-                    $objPasarelaEnvio->baseIva = 0;
+                    $objPasarelaEnvio->baseIva = $objCompra->baseImpuestosCompra;
                     $objPasarelaEnvio->moneda = "COP";
                     $objPasarelaEnvio->nombre = $objUsuario->getNombreCompleto();
                     $objPasarelaEnvio->identificacionUsuario = $objCompra->identificacionUsuario;
@@ -2058,8 +2059,8 @@ class CarroController extends Controller {
       Yii::app()->shoppingCart->put($objProductoCarro, 1);
       } */
 
-    /*   
-    public function actionList() {
+       
+    /*public function actionList() {
         Yii::app()->session[Yii::app()->params->sesion['carroPagarForm']] = null;
         //Yii::app()->shoppingCart->clear();
         //exit();
@@ -2108,6 +2109,10 @@ class CarroController extends Controller {
             echo "<br/>";
             echo "Impuestos: " . $position->getTax();
             echo "<br/>";
+            echo "Impuestos precio: " . $position->getTaxPrice();
+            echo "<br/>";
+            echo "Impuestos base: " . $position->getBaseTaxPrice();
+            echo "<br/>";
             echo "Tiempo entrega: " . $position->getDelivery();
             echo "<br/>";
 
@@ -2124,16 +2129,16 @@ class CarroController extends Controller {
         }
     }*/
     
-    public function actionForm(){
+    /*public function actionForm(){
         $modelPago = null;
 
         if (isset(Yii::app()->session[Yii::app()->params->sesion['carroPagarForm']]) && Yii::app()->session[Yii::app()->params->sesion['carroPagarForm']] != null)
             $modelPago = Yii::app()->session[Yii::app()->params->sesion['carroPagarForm']];
 
         CVarDumper::dump($modelPago,10,true);
-    }
+    }*/
     
-    public function actionPuntos(){
+    /*public function actionPuntos(){
         $fecha = new DateTime;
         $parametrosPuntos = array(
             Yii::app()->params->puntos['categoria'] => Yii::app()->shoppingCart->getCategorias(),
@@ -2155,5 +2160,5 @@ class CarroController extends Controller {
         
         echo "<br/><br/>-- PUNTOS --<br/><br/>";
         CVarDumper::dump($listPuntos,3,true);
-    }
+    }*/
 }

@@ -115,6 +115,11 @@ class FormaPagoForm extends CFormModel {
         } else {
             $this->tarjetaNumero = null;
             $this->numeroCuotas = null;
+            if ($this->idFormaPago == Yii::app()->params->formaPago['pasarela']['idPasarela']) {
+                if(Yii::app()->shoppingCart->getTotalCost()<Yii::app()->params->formaPago['pasarela']['valorMinimo']){
+                    $this->addError('idFormaPago', "Compra por pasarela debe ser mayor a " . Yii::app()->numberFormatter->format(Yii::app()->params->formatoMoneda['patron'], Yii::app()->params->formaPago['pasarela']['valorMinimo'], Yii::app()->params->formatoMoneda['moneda']));
+                }
+            }
         }
     }
 

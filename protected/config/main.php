@@ -182,7 +182,7 @@ return array(
         'formaPago' => array(
             'idCredirebaja' => 2,
             'pasarela' => array(
-                'valorMinimo' => 2000,
+                'valorMinimo' => 5000,
                 'idPasarela' => 3,
                 'usuarioId' => '2',
                 'llaveEncripcion' => '1111111111111111',
@@ -254,7 +254,7 @@ return array(
             
         ),
         'callcenter' => array(
-            'correo' => 'miguel.sanchez@eiso.com.co',
+            'correo' => 'alexander_javela@copservir.com',
             'pedidos' => array(
                 'diasVisualizar' => 30,
                 'tiempoRecargarPagina' => 30000,
