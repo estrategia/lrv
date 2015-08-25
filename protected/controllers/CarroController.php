@@ -1957,7 +1957,8 @@ class CarroController extends Controller {
                     'modelPago' => $modelPago,
                     'objCompraDireccion' => $objCompraDireccion,
                     'objFormaPago' => $objFormaPago,
-                    'objFormasPago' => $objFormasPago), true, true);
+                    'objFormasPago' => $objFormasPago,
+                    'objUsuario' => $objUsuario), true, true);
                 $htmlCorreo = $this->renderPartial('/usuario/_correo', array('contenido' => $contenidoCorreo), true, true);
                 sendHtmlEmail($objUsuario->correoElectronico, Yii::app()->params->asunto['pedidoRealizado'], $htmlCorreo);
                 $transaction->commit();
@@ -1989,6 +1990,24 @@ class CarroController extends Controller {
             }
     }
     
+    public function actionProbarMensaje($idCompra=null){
+        $objUsuario = Yii::app()->session[Yii::app()->params->usuario['sesion']];
+        $objCompra=  Compras::model()->findByPk($idCompra);
+        $objCompraDireccion= ComprasDireccionesDespacho::model()->findByPk($idCompra);
+        $objFormasPago = FormasPago::model()->findByPk($idCompra);
+        $modelPago=new FormaPagoForm();
+        
+                $this->renderPartial('compraCorreo', array(
+                    'objCompra' => $objCompra,
+                    'modelPago' => $modelPago,
+                    'objCompraDireccion' => $objCompraDireccion,
+                    'objFormaPago' => $objFormasPago->objFormaPago,
+                    'objUsuario' => $objUsuario));
+               
+           //     $htmlCorreo = $this->renderPartial('/usuario/_correo', array('contenido' => $contenidoCorreo), true, true);
+             //   sendHtmlEmail($objUsuario->correoElectronico, Yii::app()->params->asunto['pedidoRealizado'], $htmlCorreo);
+           //     $transaction->commit();
+    }
     public function actionPagopasarela(){
         $modelPago = null;
         
