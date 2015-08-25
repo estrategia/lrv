@@ -45,6 +45,10 @@ return array(
             'allowAutoLogin' => true,
         //'class' => 'UserIdentity'
         ),
+        'session' => array(
+            'class' => 'CDbHttpSession',
+            'timeout' => 7200,
+        ),
         'urlManager' => array(
             'urlFormat' => 'path',
             'showScriptName' => false,
@@ -142,6 +146,7 @@ return array(
             'carroPagarForm' => 'larebaja.online.carro.pagar.form',
         ),
         'entrega' => array(
+            'listaTipos' => array(1,2),
             'tipo' => array('presencial' => 1, 'domicilio' => 2, 2 => 'DOMICILIO', 1 => 'PRESENCIAL'),
             'sesion' => 'larebaja.online.entrega.tipoEntrega',
         ),
@@ -176,6 +181,15 @@ return array(
         ),
         'formaPago' => array(
             'idCredirebaja' => 2,
+            'pasarela' => array(
+                'valorMinimo' => 2000,
+                'idPasarela' => 3,
+                'usuarioId' => '2',
+                'llaveEncripcion' => '1111111111111111',
+                'prueba' => '1',
+                'action' => 'https://gateway2.pagosonline.net/apps/gateway/index.html',
+                'descripcion' => 'La Rebaja Virtual - Pasarela de pago',
+            )
         ),
         'carpetaImagen' => array(
             'categorias' => '/images/menu/',
@@ -240,6 +254,7 @@ return array(
             
         ),
         'callcenter' => array(
+            'correo' => 'miguel.sanchez@eiso.com.co',
             'pedidos' => array(
                 'diasVisualizar' => 30,
                 'tiempoRecargarPagina' => 30000,
@@ -297,6 +312,9 @@ return array(
                     'devolucion' => 8,
                     'remisionBorrada' => 9,
                     'remisionAutomatica' => 10,
+                    'pendientePasarela' => 11,
+                    'aprobadoPasarela' => 12,
+                    'negadoPasarela' => 12,
                 ),
                 'colorClass' => array(
                     1 => 'info',
@@ -309,6 +327,9 @@ return array(
                     8 => 'default',
                     9 => 'primary',
                     10 => 'danger',
+                    11 => 'danger',
+                    12 => 'success',
+                    13 => 'warning',
                 )
             ),
             'estadoItem' => array(

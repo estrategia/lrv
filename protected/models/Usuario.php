@@ -143,5 +143,9 @@ class Usuario extends CActiveRecord {
         
         return $this->codigoPerfil;
     }
+    
+    public function getNombreCompleto(){
+        return "$this->nombre $this->apellido";
+    }
 
 }

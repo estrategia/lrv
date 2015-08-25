@@ -1656,6 +1656,36 @@ $(document).on('keyup', "input[type='number']", function() {
         $(this).val('');
     }
 });
+
+$(document).on('click',"a[data-role='pagopasarela']", function() {
+    $.ajax({
+        type: 'POST',
+        dataType: 'json',
+        async: true,
+        url: requestUrl + '/carro/pagopasarela',
+        beforeSend: function() {
+            $.mobile.loading('show');
+        },
+        complete: function() {
+            $.mobile.loading('hide');
+        },
+        success: function(data) {
+            if (data.result == 'ok') {
+                $('#div-pasarela-info form').remove();
+                $('#div-pasarela-info').append(data.response);
+                $('form[id="form-pasarela"]').submit();
+            } else {
+                $('<div>').mdialog({
+                    content: "<div data-role='main'><div class='ui-content' data-role='content' role='main'>" + data.response + "<a class='ui-btn ui-btn-r ui-corner-all ui-shadow' data-rel='back' href='#'>Aceptar</a></div></div>"
+                });
+            }
+        },
+        error: function(jqXHR, textStatus, errorThrown) {
+            alert('Error: ' + errorThrown);
+        }
+    });
+});
+
 $( document ).ready(function() {
     $('.lst_ub_cdd .ui-collapsible-heading-toggle').click(function(){
         $('li a.c_btn_sel').removeClass('ui-btn-active2');
