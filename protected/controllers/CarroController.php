@@ -1663,6 +1663,46 @@ class CarroController extends Controller {
                     throw new Exception("Error al guardar compra" . $objCompra->validateErrorsResponse());
                 }
                 
+                if($tipoEntrega==Yii::app()->params->entrega['tipo']['presencial']){
+                    $puntoVenta = $modelPago->listPuntosVenta[1][$modelPago->indicePuntoVenta];
+                    
+                    $objEstadoCompra = new ComprasEstados;
+                    $objEstadoCompra->idCompra = $objCompra->idCompra;
+                    $objEstadoCompra->idEstadoCompra = Yii::app()->params->callcenter['estadoCompra']['estado']['asignado'];
+                    $objEstadoCompra->idOperador = 38;
+                    if (!$objEstadoCompra->save()) {
+                        throw new Exception("Error al guardar traza de estado: " . $objEstadoCompra->validateErrorsResponse());
+                    }
+
+                    $objObservacion = new ComprasObservaciones;
+                    $objObservacion->idCompra = $objCompra->idCompra;
+                    $objObservacion->observacion = "Cambio de Estado: Asignado PDV. " . $puntoVenta[2];
+                    $objObservacion->idOperador = 38;
+                    $objObservacion->notificarCliente = 0;
+
+                    if (!$objObservacion->save()) {
+                        throw new Exception("Error al guardar observación" . $objObservacion->validateErrorsResponse());
+                    }
+                    
+                    $objEstadoCompra2 = new ComprasEstados;
+                    $objEstadoCompra2->idCompra = $objCompra->idCompra;
+                    $objEstadoCompra2->idEstadoCompra = Yii::app()->params->callcenter['estadoCompra']['estado']['pendiente'];
+                    $objEstadoCompra2->idOperador = 38;
+                    if (!$objEstadoCompra2->save()) {
+                        throw new Exception("Error al guardar traza de estado: " . $objEstadoCompra2->validateErrorsResponse());
+                    }
+
+                    $objObservacion2 = new ComprasObservaciones;
+                    $objObservacion2->idCompra = $objCompra->idCompra;
+                    $objObservacion2->observacion = "Cambio de Estado: Pendiente de entrega a cliente en PDV. " . $puntoVenta[2];
+                    $objObservacion2->idOperador = 38;
+                    $objObservacion2->notificarCliente = 0;
+
+                    if (!$objObservacion2->save()) {
+                        throw new Exception("Error al guardar observación" . $objObservacion2->validateErrorsResponse());
+                    }
+                }
+                
                 if ($modelPago->bono !== null && $modelPago->usoBono == 1) {
                     Yii::app()->shoppingCart->setBono($modelPago->bono['valor']);
                 }
@@ -1677,6 +1717,23 @@ class CarroController extends Controller {
                 /* if ($modelPago->bono !== null && $modelPago->usoBono == 1) {
                     $objFormasPago->valorBono = $modelPago->bono['valor'];
                 } */
+                
+                /*if($objFormasPago->valorBono>0){
+                    try{
+                        $clientBono = new SoapClient(null, array(
+                            'location' => Yii::app()->params->webServiceUrl['crmLrv'],
+                            'uri' => "",
+                            'trace' => 1
+                        ));
+                        $resultBono = $clientBono->__soapCall("ActualizarBono", array('identificacion' => $objCompra->identificacionUsuario));
+
+                        if (empty($resultBono) || $resultBono[0]->ESTADO == 0) {
+                            throw new Exception("Error al actualizar bono");
+                        }
+                    }catch(SoapFault $soapExc){
+                        throw new Exception("Error al actualizar bono");
+                    }
+                }*/
                 
                 if($tipoEntrega==Yii::app()->params->entrega['tipo']['domicilio']){
                     $objCompra->tiempoDomicilioCedi = Yii::app()->shoppingCart->getDeliveryStored();

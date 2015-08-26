@@ -169,10 +169,8 @@ class PrecioProducto extends Precio {
                 $this->porcentajeDescuentoBeneficio += $objBeneficio->dsctoUnid;
             }
 
-            //se deja solo mayor descuento
-            if ($this->tieneBeneficio() && $this->porcentajeDescuentoBeneficio >= $this->porcentajeDescuentoPerfil) {
-                $this->porcentajeDescuentoPerfil = 0;
-            } else {
+            //restriccion de maximo de beneficio
+            if ($this->porcentajeDescuentoBeneficio > Yii::app()->params->beneficios['porcentajeMaximo']) {
                 $this->porcentajeDescuentoBeneficio = 0;
                 $this->listBeneficios = array();
             }

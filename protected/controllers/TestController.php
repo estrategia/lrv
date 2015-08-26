@@ -1,6 +1,20 @@
 <?php
 
 class TestController extends Controller {
+    
+    public function actionBuscar(){
+        
+        $client = new SoapClient(null, array(
+            'location' => "http://www.copservir.com/webService/serverLRV.php",
+            'uri' => "",
+            'trace' => 1
+        ));
+        
+        $response = $client->__soapCall('BuscardorLRV', array('BUSQUEDA'=> 'LECHE KLIM'));
+        
+        CVarDumper::dump($response);
+    }
+    
     public function actionWsbarrio(){
         $barrio = "Pance";
         $ciudad = 76001;
@@ -66,15 +80,15 @@ class TestController extends Controller {
             'uri' => "http://www.copservir.com",
             'trace' => 1
         ));
-        $result = $client->__soapCall("ConsultarBono", array('identificacion' => '70691830'));
+        $result = $client->__soapCall("ActualizarBono", array('identificacion' => '123321123321456654'));
 
-        if (!empty($result) && $result[0]->ESTADO == 1 && $result[0]->VALOR_BONO > 0) {
+        /*if (!empty($result) && $result[0]->ESTADO == 1 && $result[0]->VALOR_BONO > 0) {
             echo ("Bono: " . $result[0]->VALOR_BONO);
-        }
+        }*/
 
 
 
-        //CVarDumper::dump($return, 10, true);
+        CVarDumper::dump($result, 10, true);
 
         /* require_once (Yii::app()->basePath . DS . 'vendors' . DS . 'nusoap/nusoap.php');
           $soapclient = new nusoap_client( 'http://www.copservir.com/webService/crmLrv.php', false);

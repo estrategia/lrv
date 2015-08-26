@@ -110,7 +110,7 @@
                 </div>
             <?php endif; ?>
 
-            <?php //if ($model->getScenario() == 'registro') : ?>
+            <?php if ($model->getScenario() == 'registro') : ?>
                 <div class="ui-field-container">
                     <?php echo $form->labelEx($model, 'clave', array('class' => '')); ?>
                     <?php echo $form->passwordField($model, 'clave', array('maxlength' => 15, 'placeholder' => $model->getAttributeLabel('clave'), 'autocomplete' => 'off')); ?>
@@ -122,7 +122,7 @@
                     <?php echo $form->passwordField($model, 'claveConfirmar', array('maxlength' => 15, 'placeholder' => $model->getAttributeLabel('claveConfirmar'), 'autocomplete' => 'off')); ?>
                     <?php echo $form->error($model, 'claveConfirmar'); ?>
                 </div>
-            <?php //endif; ?>
+            <?php endif; ?>
 
             <?php if ($model->getScenario() == 'registro' || $model->getScenario() == 'invitado') : ?>
                 <div class="ui-field-container">
