@@ -111,8 +111,30 @@ class TestController extends Controller {
         ));
 
         $return = $client->__soapCall("LRVConsultarSaldoMovil", array('productos' => $productos, 'ciudad' => 76001, 'sector' => 22));
-        CVarDumper::dump($return, 10, true);
-
+     //   CVarDumper::dump($return, 10, true);
+        
+        for($i=0;$i<count($return[1]);$i++){
+            for($j=0;$j<count($return[1])-1;$j++){
+                $valuej=0;
+                $valuej1=0;
+                if(isset($return[1][$j][5])){
+                    $valuej=$return[1][$j][5];
+                }
+                if(isset($return[1][$j+1][5])){
+                    $valuej1=$return[1][$j+1][5];
+                }
+                
+                if($valuej<$valuej1){
+                    $aux=$valuej[1][$j];
+                    $valuej[1][$j]=$valuej[1][$j+1];;
+                    $valuej[1][$j+1]=$aux;
+                }
+            }
+        }
+        
+        echo "<pre>";
+        print_r($return);
+        echo "</pre>";
 
         /* require_once (Yii::app()->basePath . DS . 'vendors' . DS . 'nusoap/nusoap.php');
           $productos = array();
