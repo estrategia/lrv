@@ -70,6 +70,7 @@ class SitioController extends Controller {
         $listCiudadesSubsectores = Ciudad::model()->findAll(array(
             'with' => array(
                 'listSubSectores' => array(
+                    'order'=> 'listSubSectores.nombreSubSector',
                     'condition' => 'estadoSubSector=1',
                     'with' => array(
                         'listSectorReferencias' => array(

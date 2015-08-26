@@ -14,6 +14,7 @@
  * @property string $idComercial
  * @property integer $subtotalCompra
  * @property integer $impuestosCompra
+ * @property integer $baseImpuestosCompra
  * @property integer $totalCompra
  * @property integer $idEstadoCompra
  * @property integer $idOperador
@@ -73,7 +74,7 @@ class Compras extends CActiveRecord {
         // will receive user inputs.
         return array(
             array('identificacionUsuario, tipoEntrega, codigoCiudad, codigoSector', 'required'),
-            array('donacionFundacion, subtotalCompra, impuestosCompra, totalCompra, idEstadoCompra, idOperador, idTipoVenta, activa, domicilio, flete, invitado, codigoPerfil, seguimiento, tiempoDomicilioCedi, valorDomicilioCedi, codigoCedi', 'numerical', 'integerOnly' => true),
+            array('donacionFundacion, subtotalCompra, impuestosCompra, baseImpuestosCompra, totalCompra, idEstadoCompra, idOperador, idTipoVenta, activa, domicilio, flete, invitado, codigoPerfil, seguimiento, tiempoDomicilioCedi, valorDomicilioCedi, codigoCedi', 'numerical', 'integerOnly' => true),
             array('identificacionUsuario', 'length', 'max' => 100),
             array('idComercial', 'length', 'max' => 10),
             array('documentoCruce', 'length', 'max' => 8),
@@ -83,7 +84,7 @@ class Compras extends CActiveRecord {
             array('fechaCompra, fechaEntrega, saldosPdv', 'safe'),
             // The following rule is used by search().
             // @todo Please remove those attributes that should not be searched.
-            array('busquedaSearch, idCompra, identificacionUsuario, documentoCruce, fechaCompra, fechaEntrega, tipoEntrega, donacionFundacion, idComercial, subtotalCompra, impuestosCompra, totalCompra, idEstadoCompra, idOperador, observacion, idTipoVenta, activa, domicilio, flete, invitado, codigoPerfil, saldosPdv, seguimiento, codigoCiudad, codigoSector, tiempoDomicilioCedi, valorDomicilioCedi, codigoCedi', 'safe', 'on' => 'search'),
+            array('busquedaSearch, idCompra, identificacionUsuario, documentoCruce, fechaCompra, fechaEntrega, tipoEntrega, donacionFundacion, idComercial, subtotalCompra, impuestosCompra, baseImpuestosCompra, totalCompra, idEstadoCompra, idOperador, observacion, idTipoVenta, activa, domicilio, flete, invitado, codigoPerfil, saldosPdv, seguimiento, codigoCiudad, codigoSector, tiempoDomicilioCedi, valorDomicilioCedi, codigoCedi', 'safe', 'on' => 'search'),
         );
     }
 
@@ -127,6 +128,7 @@ class Compras extends CActiveRecord {
             'idComercial' => 'Id Comercial',
             'subtotalCompra' => 'Subtotal Compra',
             'impuestosCompra' => 'Impuestos Compra',
+            'baseImpuestosCompra' => 'Base Impuestos',
             'totalCompra' => 'Total Compra',
             'idEstadoCompra' => 'Estado',
             'idOperador' => 'Operador',
@@ -210,6 +212,7 @@ class Compras extends CActiveRecord {
             $criteria->compare('t.idComercial', $this->idComercial);
             $criteria->compare('t.subtotalCompra', $this->subtotalCompra);
             $criteria->compare('t.impuestosCompra', $this->impuestosCompra);
+            $criteria->compare('t.baseImpuestosCompra', $this->baseImpuestosCompra);
             $criteria->compare('t.totalCompra', $this->totalCompra);
             $criteria->compare('t.idEstadoCompra', $this->idEstadoCompra);
             $criteria->compare('t.idOperador', $this->idOperador);

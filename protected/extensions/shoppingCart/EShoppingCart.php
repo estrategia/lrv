@@ -497,17 +497,27 @@ class EShoppingCart extends CMap {
       } */
 
     public function getTaxPrice() {
-        $tax = 0.0;
+        $tax = 0;
         if ($this->objSectorCiudad != null && $this->objSectorCiudad->objCiudad->excentoImpuestos == 0) {
             foreach ($this as $position) {
                 $tax += $position->getTaxPrice(true);
             }
         }
-
-        $tax = ceil($tax);
+        //$tax = ceil($tax);
         return $tax;
     }
-
+    
+    public function getBaseTaxPrice(){
+        $tax = 0;
+        if ($this->objSectorCiudad != null && $this->objSectorCiudad->objCiudad->excentoImpuestos == 0) {
+            foreach ($this as $position) {
+                $tax += $position->getBaseTaxPrice(true);
+            }
+        }
+        //$tax = ceil($tax);
+        return $tax;
+    }
+    
     public function onRemovePosition($event) {
         $this->raiseEvent('onRemovePosition', $event);
     }

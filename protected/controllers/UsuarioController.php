@@ -385,7 +385,6 @@ class UsuarioController extends Controller {
                 try {
                     $usuario->nombre = $model->nombre;
                     $usuario->apellido = $model->apellido;
-                    $usuario->clave = $usuario->hash($model->clave);
 
                     if (!$usuario->save()) {
                         $transaction->rollBack();

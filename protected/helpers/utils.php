@@ -16,7 +16,7 @@ function sendHtmlEmail($toStr, $subject, $content, $ccStr = null) {
       $mail->Host = 'mailserver.copservir.com';
       $mail->Port = 25;
       $mail->SMTPAuth = false;
-      $mail->isHTML(true); 
+      $mail->isHTML(true);
       $mail->CharSet = "UTF-8";
      */
 
@@ -87,6 +87,32 @@ function distanciaCoordenadas($lat1, $lon1, $lat2, $lon2, $unit = 'K') {
 }
 
 function GSASearch(&$term) {
+    $arr = array();
+    
+    if (Yii::app()->params->busqueda['buscadorActivo'] == Yii::app()->params->busqueda['tipoBuscador']['GSA']){
+        return GSASearchAux($term);
+    }else if (Yii::app()->params->busqueda['buscadorActivo'] == Yii::app()->params->busqueda['tipoBuscador']['webService']){
+        return WebServiceSearch($term);
+    }else {
+        return array();
+    }
+}
+
+function WebServiceSearch($term) {
+    try{
+        $client = new SoapClient(null, array(
+            'location' => Yii::app()->params->webServiceUrl['serverLRV'],
+            'uri' => "",
+            'trace' => 1
+        ));
+
+        return $client->__soapCall('BuscardorLRV', array('BUSQUEDA' => $term));
+    }  catch (SoapFault $soapExc){
+        return array();
+    }
+}
+
+function GSASearchAux(&$term) {
     $codigosArray = array();
 
     if ($term != "") {

@@ -1043,7 +1043,7 @@ $(document).on('click', "input[id^='btn-direccion-eliminar-']", function() {
     return false;
 });
 
-function pasoDespacho(actual, siguiente) {
+function pasoDespacho(actual, siguiente, boton) {
     $.ajax({
         type: 'POST',
         //dataType: 'json',
@@ -1081,7 +1081,7 @@ function pasoDespacho(actual, siguiente) {
     });
 }
 
-function pasoEntrega(actual, siguiente) {
+function pasoEntrega(actual, siguiente, boton) {
     var data = {siguiente: siguiente};
 
     $.ajax({
@@ -1121,7 +1121,7 @@ function pasoEntrega(actual, siguiente) {
     });
 }
 
-function pasoPago(actual, siguiente) {
+function pasoPago(actual, siguiente, boton) {
     var data = {siguiente: siguiente};
 
     $.ajax({
@@ -1158,7 +1158,7 @@ function pasoPago(actual, siguiente) {
     });
 }
 
-function pasoConfirmacion(actual, siguiente) {
+function pasoConfirmacion(actual, siguiente, boton) {
     var data = {siguiente: siguiente};
 
     $.ajax({
@@ -1199,13 +1199,13 @@ $(document).on('click', "input[id='btn-carropagar-siguiente'], input[id='btn-car
     var siguiente = $(this).attr('data-redirect');
 
     if (actual === 'despacho') {
-        pasoDespacho(actual, siguiente);
+        pasoDespacho(actual, siguiente, $(this));
     } else if (actual === 'entrega') {
-        pasoEntrega(actual, siguiente);
+        pasoEntrega(actual, siguiente, $(this));
     } else if (actual === 'pago') {
-        pasoPago(actual, siguiente);
+        pasoPago(actual, siguiente, $(this));
     } else if (actual === 'confirmacion') {
-        pasoConfirmacion(actual, siguiente);
+        pasoConfirmacion(actual, siguiente, $(this));
     }
 
     return false;
@@ -1657,7 +1657,7 @@ $(document).on('keyup', "input[type='number']", function() {
     }
 });
 
-$(document).on('click',"a[data-role='pagopasarela']", function() {
+$(document).on('click',"input[data-role='pagopasarela']", function() {
     $.ajax({
         type: 'POST',
         dataType: 'json',

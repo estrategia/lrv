@@ -125,10 +125,24 @@ abstract class IECartPosition {
     }
 
     public function getTaxPrice($total = false) {
+        $tax = 0.0;
         if ($total)
-            return Precio::calcularImpuesto($this->getPrice(true) * $this->quantityFraction,$this->tax) + Precio::calcularImpuesto($this->getPrice() * ($this->quantityUnit+$this->quantityStored),$this->tax);
+            $tax = Precio::calcularImpuesto($this->getPrice(true) * $this->quantityFraction,$this->tax) + Precio::calcularImpuesto($this->getPrice() * ($this->quantityUnit+$this->quantityStored),$this->tax);
         else
-            return Precio::calcularImpuesto($this->getPrice() , $this->tax);
+            $tax = Precio::calcularImpuesto($this->getPrice() , $this->tax);
+        
+        return round($tax);
+    }
+    
+    public function getBaseTaxPrice($total = false){
+        $base = 0.0;
+        
+        if ($total)
+            $base = Precio::calcularBaseImpuesto($this->getPrice(true) * $this->quantityFraction,$this->tax) + Precio::calcularBaseImpuesto($this->getPrice() * ($this->quantityUnit+$this->quantityStored),$this->tax);
+        else
+            $base = Precio::calcularBaseImpuesto($this->getPrice() , $this->tax);
+        
+        return round($base);
     }
 
     /**

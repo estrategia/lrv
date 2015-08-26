@@ -1654,12 +1654,53 @@ class CarroController extends Controller {
                 
                 $objCompra->subtotalCompra = Yii::app()->shoppingCart->getCost();
                 $objCompra->impuestosCompra = Yii::app()->shoppingCart->getTaxPrice();
+                $objCompra->baseImpuestosCompra = Yii::app()->shoppingCart->getBaseTaxPrice();
                 $objCompra->domicilio = Yii::app()->shoppingCart->getShipping();
                 $objCompra->flete = Yii::app()->shoppingCart->getExtraShipping();
                 $objCompra->totalCompra = Yii::app()->shoppingCart->getTotalCost();
                 
                 if (!$objCompra->save()) {
                     throw new Exception("Error al guardar compra" . $objCompra->validateErrorsResponse());
+                }
+                
+                if($tipoEntrega==Yii::app()->params->entrega['tipo']['presencial']){
+                    $puntoVenta = $modelPago->listPuntosVenta[1][$modelPago->indicePuntoVenta];
+                    
+                    $objEstadoCompra = new ComprasEstados;
+                    $objEstadoCompra->idCompra = $objCompra->idCompra;
+                    $objEstadoCompra->idEstadoCompra = Yii::app()->params->callcenter['estadoCompra']['estado']['asignado'];
+                    $objEstadoCompra->idOperador = 38;
+                    if (!$objEstadoCompra->save()) {
+                        throw new Exception("Error al guardar traza de estado: " . $objEstadoCompra->validateErrorsResponse());
+                    }
+
+                    $objObservacion = new ComprasObservaciones;
+                    $objObservacion->idCompra = $objCompra->idCompra;
+                    $objObservacion->observacion = "Cambio de Estado: Asignado PDV. " . $puntoVenta[2];
+                    $objObservacion->idOperador = 38;
+                    $objObservacion->notificarCliente = 0;
+
+                    if (!$objObservacion->save()) {
+                        throw new Exception("Error al guardar observación" . $objObservacion->validateErrorsResponse());
+                    }
+                    
+                    $objEstadoCompra2 = new ComprasEstados;
+                    $objEstadoCompra2->idCompra = $objCompra->idCompra;
+                    $objEstadoCompra2->idEstadoCompra = Yii::app()->params->callcenter['estadoCompra']['estado']['pendiente'];
+                    $objEstadoCompra2->idOperador = 38;
+                    if (!$objEstadoCompra2->save()) {
+                        throw new Exception("Error al guardar traza de estado: " . $objEstadoCompra2->validateErrorsResponse());
+                    }
+
+                    $objObservacion2 = new ComprasObservaciones;
+                    $objObservacion2->idCompra = $objCompra->idCompra;
+                    $objObservacion2->observacion = "Cambio de Estado: Pendiente de entrega a cliente en PDV. " . $puntoVenta[2];
+                    $objObservacion2->idOperador = 38;
+                    $objObservacion2->notificarCliente = 0;
+
+                    if (!$objObservacion2->save()) {
+                        throw new Exception("Error al guardar observación" . $objObservacion2->validateErrorsResponse());
+                    }
                 }
                 
                 if ($modelPago->bono !== null && $modelPago->usoBono == 1) {
@@ -1676,6 +1717,23 @@ class CarroController extends Controller {
                 /* if ($modelPago->bono !== null && $modelPago->usoBono == 1) {
                     $objFormasPago->valorBono = $modelPago->bono['valor'];
                 } */
+                
+                /*if($objFormasPago->valorBono>0){
+                    try{
+                        $clientBono = new SoapClient(null, array(
+                            'location' => Yii::app()->params->webServiceUrl['crmLrv'],
+                            'uri' => "",
+                            'trace' => 1
+                        ));
+                        $resultBono = $clientBono->__soapCall("ActualizarBono", array('identificacion' => $objCompra->identificacionUsuario));
+
+                        if (empty($resultBono) || $resultBono[0]->ESTADO == 0) {
+                            throw new Exception("Error al actualizar bono");
+                        }
+                    }catch(SoapFault $soapExc){
+                        throw new Exception("Error al actualizar bono");
+                    }
+                }*/
                 
                 if($tipoEntrega==Yii::app()->params->entrega['tipo']['domicilio']){
                     $objCompra->tiempoDomicilioCedi = Yii::app()->shoppingCart->getDeliveryStored();
@@ -1939,7 +1997,7 @@ class CarroController extends Controller {
                     $objPasarelaEnvio->idCompra = $objCompra->idCompra;
                     $objPasarelaEnvio->valor = $objCompra->totalCompra;
                     $objPasarelaEnvio->iva = $objCompra->impuestosCompra;
-                    $objPasarelaEnvio->baseIva = 0;
+                    $objPasarelaEnvio->baseIva = $objCompra->baseImpuestosCompra;
                     $objPasarelaEnvio->moneda = "COP";
                     $objPasarelaEnvio->nombre = $objUsuario->getNombreCompleto();
                     $objPasarelaEnvio->identificacionUsuario = $objCompra->identificacionUsuario;
@@ -2077,8 +2135,8 @@ class CarroController extends Controller {
       Yii::app()->shoppingCart->put($objProductoCarro, 1);
       } */
 
-    /*   
-    public function actionList() {
+       
+    /*public function actionList() {
         Yii::app()->session[Yii::app()->params->sesion['carroPagarForm']] = null;
         //Yii::app()->shoppingCart->clear();
         //exit();
@@ -2127,6 +2185,10 @@ class CarroController extends Controller {
             echo "<br/>";
             echo "Impuestos: " . $position->getTax();
             echo "<br/>";
+            echo "Impuestos precio: " . $position->getTaxPrice();
+            echo "<br/>";
+            echo "Impuestos base: " . $position->getBaseTaxPrice();
+            echo "<br/>";
             echo "Tiempo entrega: " . $position->getDelivery();
             echo "<br/>";
 
@@ -2143,16 +2205,16 @@ class CarroController extends Controller {
         }
     }*/
     
-    public function actionForm(){
+    /*public function actionForm(){
         $modelPago = null;
 
         if (isset(Yii::app()->session[Yii::app()->params->sesion['carroPagarForm']]) && Yii::app()->session[Yii::app()->params->sesion['carroPagarForm']] != null)
             $modelPago = Yii::app()->session[Yii::app()->params->sesion['carroPagarForm']];
 
         CVarDumper::dump($modelPago,10,true);
-    }
+    }*/
     
-    public function actionPuntos(){
+    /*public function actionPuntos(){
         $fecha = new DateTime;
         $parametrosPuntos = array(
             Yii::app()->params->puntos['categoria'] => Yii::app()->shoppingCart->getCategorias(),
@@ -2174,5 +2236,5 @@ class CarroController extends Controller {
         
         echo "<br/><br/>-- PUNTOS --<br/><br/>";
         CVarDumper::dump($listPuntos,3,true);
-    }
+    }*/
 }

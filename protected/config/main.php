@@ -43,12 +43,11 @@ return array(
             // enable cookie-based authentication
             'loginUrl' => array('usuario/autenticar'),
             'allowAutoLogin' => true,
-        //'class' => 'UserIdentity'
         ),
-        'session' => array(
+        /*'session' => array(
             'class' => 'CDbHttpSession',
             'timeout' => 7200,
-        ),
+        ),*/
         'urlManager' => array(
             'urlFormat' => 'path',
             'showScriptName' => false,
@@ -182,7 +181,7 @@ return array(
         'formaPago' => array(
             'idCredirebaja' => 2,
             'pasarela' => array(
-                'valorMinimo' => 2000,
+                'valorMinimo' => 5000,
                 'idPasarela' => 3,
                 'usuarioId' => '2',
                 'llaveEncripcion' => '1111111111111111',
@@ -198,6 +197,11 @@ return array(
             'combos' => array(1 => '/images/combos/thumb/', 2 => '/images/combos/'),
         ),
         'busqueda' => array(
+            'tipoBuscador' => array(
+                'GSA' => 1,
+                'webService' => 2
+            ),
+            'buscadorActivo' => 2,
             'tipo' => array(
                 'categoria' => 1, 'buscador' => 2
             ),
@@ -234,7 +238,8 @@ return array(
             'recambios' => array(1, 10),
             'recambio' => 1,
             'recambioCruzado' => 10,
-            'swobligaCli' => array(0 => 'Todos', 2 => 'Cliente fiel')
+            'swobligaCli' => array(0 => 'Todos', 2 => 'Cliente fiel'),
+            'porcentajeMaximo' => 60,
         ),
         'servicioVentaControlada' => 17,
         'asunto' => array(
@@ -254,7 +259,7 @@ return array(
             
         ),
         'callcenter' => array(
-            'correo' => 'miguel.sanchez@eiso.com.co',
+            'correo' => 'alexander_javela@copservir.com',
             'pedidos' => array(
                 'diasVisualizar' => 30,
                 'tiempoRecargarPagina' => 30000,
@@ -314,7 +319,7 @@ return array(
                     'remisionAutomatica' => 10,
                     'pendientePasarela' => 11,
                     'aprobadoPasarela' => 12,
-                    'negadoPasarela' => 12,
+                    'negadoPasarela' => 13,
                 ),
                 'colorClass' => array(
                     1 => 'info',
