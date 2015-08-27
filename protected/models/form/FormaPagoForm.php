@@ -200,7 +200,7 @@ class FormaPagoForm extends CFormModel {
         //CVarDumper::dump($this->listPuntosVenta,10,true);
         //exit();
         // Ordenar de mayor a menor los puntos de venta de acuerdo a 
-          for($i=0;$i<count($this->listPuntosVenta[1]);$i++){
+      /*    for($i=0;$i<count($this->listPuntosVenta[1]);$i++){
             for($j=0;$j<count($this->listPuntosVenta[1])-1;$j++){
                 $valuej=0;
                 $valuej1=0;
@@ -218,7 +218,7 @@ class FormaPagoForm extends CFormModel {
                 }
             }
         }
-
+*/
         $this->listPuntosVenta[3] = 0;
 
         //recorrer lista para eliminar pdvs no encontrados 

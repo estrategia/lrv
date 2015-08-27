@@ -138,7 +138,11 @@ $(document).on('click', 'button[data-action="remitir"]', function() {
             Loading.hide();
         },
         success: function(data) {
-             bootbox.alert(data.response);
+            if(data.result==1){
+                $('#div-encabezado-pedido').html(data.encabezado);
+            }
+            bootbox.alert(data.response);
+            
         },
         error: function(jqXHR, textStatus, errorThrown) {
             Loading.hide();
@@ -161,6 +165,9 @@ $(document).on('click', 'button[data-action="remitirborrar"]', function() {
             Loading.hide();
         },
         success: function(data) {
+              if(data.result==1){
+                  $('#div-encabezado-pedido').html(data.encabezado);
+              }
               bootbox.alert(data.response);
            
         },

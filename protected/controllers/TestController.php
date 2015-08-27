@@ -125,7 +125,6 @@ class TestController extends Controller {
         ));
 
         $return = $client->__soapCall("LRVConsultarSaldoMovil", array('productos' => $productos, 'ciudad' => 76001, 'sector' => 22));
-     //   CVarDumper::dump($return, 10, true);
         
         for($i=0;$i<count($return[1]);$i++){
             for($j=0;$j<count($return[1])-1;$j++){
@@ -145,10 +144,8 @@ class TestController extends Controller {
                 }
             }
         }
-        
-        echo "<pre>";
-        print_r($return);
-        echo "</pre>";
+           CVarDumper::dump($return, 10, true);
+     
 
         /* require_once (Yii::app()->basePath . DS . 'vendors' . DS . 'nusoap/nusoap.php');
           $productos = array();
@@ -178,6 +175,19 @@ class TestController extends Controller {
           CVarDumper::dump($response, 10, true); */
     }
 
+    public function actionBuscarsaldos($idCompra=null, $pdv=null) {
+
+        $client = new SoapClient(null, array(
+            'location' => Yii::app()->params->webServiceUrl['remisionPos'],
+            'uri' => "",
+            'trace' => 1
+        ));
+       $result = $client->__soapCall("SaldosSadRemision",  array('idPedido' => $idCompra, 'pdv_despacho' => $pdv));
+       echo "<pre>";
+       print_r(unserialize(serialize($result)));
+       echo "</pre>";
+    }
+    
     public function actionReplace() {
         $plantilla = Yii::app()->params->callcenter['notificacion']['plantilla'][6];
         //$plantilla = "hola perro como estas";
