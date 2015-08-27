@@ -791,7 +791,7 @@ class PedidoController extends ControllerOperator {
        $result = $client->__soapCall("SaldosSadRemision",  array('idPedido' => $idCompra, 'pdv_despacho' => $pdv));
        return $result;
     }
-    
+
     public function actionRemitir(){
         $idCompra = Yii::app()->getRequest()->getPost('idCompra');
         $objCompra = Compras::model()->findByPk($idCompra,array("with"=>"objPuntoVenta"));
@@ -807,7 +807,7 @@ class PedidoController extends ControllerOperator {
         }
         
         $client = new SoapClient(null, array(
-            'location' => Yii::app()->params->webServiceUrl['remisionPos'],
+            'location' => Yii::app()->params->webServiceUrl['remisionPosECommerce'],
             'uri' => "",
             'trace' => 1
         ));
@@ -865,7 +865,8 @@ class PedidoController extends ControllerOperator {
         
          echo CJSON::encode(array(
                     'result' => $result[0],
-                    'response' =>  $result[1]
+                    'response' =>  $result[1],
+                    'encabezado' => $this->renderPartial('/admin/_encabezadoPedido', array('objCompra' => $objCompra), true, false)
                 ));
             Yii::app()->end();
     }
@@ -886,7 +887,7 @@ class PedidoController extends ControllerOperator {
         }
         
          $client = new SoapClient(null, array(
-            'location' => Yii::app()->params->webServiceUrl['remisionPos'],
+            'location' => Yii::app()->params->webServiceUrl['remisionPosECommerce'],
             'uri' => "",
             'trace' => 1
         ));
@@ -949,7 +950,8 @@ class PedidoController extends ControllerOperator {
        
        echo CJSON::encode(array(
                     'result' => $result[0],
-                    'response' => $result[1]
+                    'response' => $result[1],
+                    'encabezado' => $this->renderPartial('/admin/_encabezadoPedido', array('objCompra' => $objCompra), true, false)
        ));
     }
 }

@@ -25,15 +25,17 @@ class BeneficiosCommand extends CConsoleCommand {
         $sql="select max(idBeneficioSincronizado) as maximo from t_Beneficios" ; //
         $result = Yii::app()->db->createCommand($sql)->queryAll();
         $transaction = Yii::app()->db->beginTransaction();
-         
+        $idSincronizacion=0; 
         if($result[0]['maximo']!=null){
+            $idSincronizacion=$result[0]['maximo']; 
+        }
             // llamar a web service enviandole el id de sincronización
             $client = new SoapClient(Yii::app()->params->webServiceUrl['sincronizarBeneficiosSIICOP'], array(
                 "trace" => 1,
                 'cache_wsdl' => WSDL_CACHE_NONE
             ));
             
-            $result = $client->setBeneficios($result[0]['maximo']/*$arrTiposBeneficio, $arrBeneficios*/);
+            $result = $client->setBeneficios($idSincronizacion/*$arrTiposBeneficio, $arrBeneficios*/);
             
            
             if($result['Result']!=1){
@@ -121,7 +123,7 @@ class BeneficiosCommand extends CConsoleCommand {
             echo "Beneficios sincronizados correctamente";
             Yii::log("Beneficios sincronizados correctamente\n" . date('Y-m-d H:i:s'), CLogger::LEVEL_INFO, 'application');
             
-        }
+        
    /*     $beneficios = Beneficios::model()->findAll(array(
             'with' => array('listBeneficiosProductos', 'listBeneficiosPuntoVenta'),
             'condition' => 't.SincronizacionLRV=:sincro',

@@ -189,7 +189,7 @@ class Compras extends CActiveRecord {
 
                 $fecha2 = new DateTime;
                 $fecha2->modify('+120 minutes');
-
+                
                 $condition .= " AND (t.idEstadoCompra=:estadoCompra OR (t.seguimiento=1 AND t.fechaEntrega BETWEEN '" . $fecha1->format('Y-m-d H:i:s') . "' AND '" . $fecha2->format('Y-m-d H:i:s') . "'))";
             } else {
                 $condition .= " AND t.idEstadoCompra=:estadoCompra";
@@ -456,9 +456,21 @@ class Compras extends CActiveRecord {
             $query1 = "SELECT eo.idEstadoCompra, COUNT(t.idCompra) cantidad
             FROM t_Compras t  
             INNER JOIN m_EstadoCompra eo ON (eo.idEstadoCompra=t.idEstadoCompra) 
-					WHERE (t.fechaCompra>='$fecha' AND t.tipoEntrega='" . Yii::app()->params->entrega["tipo"]['domicilio'] . "')
+					WHERE (t.fechaCompra>='$fecha' )
             GROUP BY eo.idEstadoCompra
             ORDER BY eo.idEstadoCompra";
+            
+            $fecha1 = new DateTime;
+            $fecha1->modify('+90 minutes');
+
+            $fecha2 = new DateTime;
+            $fecha2->modify('+120 minutes');
+                
+            $condition = " (t.seguimiento=1 AND t.fechaEntrega BETWEEN '" . $fecha1->format('Y-m-d H:i:s') . "' AND '" . $fecha2->format('Y-m-d H:i:s') . "')";
+             
+            $query2 = "SELECT COUNT(t.idCompra) as cantidad
+            FROM t_Compras as t  
+            WHERE (t.fechaCompra>='$fecha' AND $condition)";
         } else {
          /*   $query1 = "SELECT eo.idEstadoCompra, COUNT(t.idCompra) cantidad
             FROM t_Compras t  
@@ -469,16 +481,31 @@ class Compras extends CActiveRecord {
             $query1 = "SELECT eo.idEstadoCompra, COUNT(t.idCompra) cantidad
             FROM t_Compras t  
             INNER JOIN m_EstadoCompra eo ON (eo.idEstadoCompra=t.idEstadoCompra) 
-					WHERE (t.idOperador=$idOperador AND t.fechaCompra>='$fecha' AND t.tipoEntrega='" . Yii::app()->params->entrega["tipo"]['domicilio'] . "')
+					WHERE (t.idOperador=$idOperador AND t.fechaCompra>='$fecha' )
             GROUP BY eo.idEstadoCompra
             ORDER BY eo.idEstadoCompra";
+            
+            $fecha1 = new DateTime;
+            $fecha1->modify('+90 minutes');
+
+            $fecha2 = new DateTime;
+            $fecha2->modify('+120 minutes');
+                
+            $condition = " (t.seguimiento=1 AND t.fechaEntrega BETWEEN '" . $fecha1->format('Y-m-d H:i:s') . "' AND '" . $fecha2->format('Y-m-d H:i:s') . "')";
+             
+            $query2 = "SELECT COUNT(t.idCompra) as  cantidad
+            FROM t_Compras  as t WHERE (t.idOperador=$idOperador AND t.fechaCompra>='$fecha' AND $condition)";
         }
         $resultAux1 = Yii::app()->db->createCommand($query1)->queryAll(true);
+        $resultAux2 = Yii::app()->db->createCommand($query2)->queryAll(true);
         $result = array();
         $estados=EstadoCompra::model()->findAll();
         
         foreach ($resultAux1 as $arr) {
             $result[$arr['idEstadoCompra']] = $arr['cantidad'];
+            if($arr['idEstadoCompra']==Yii::app()->params->callcenter['estadoCompra']['estado']['pendiente']){
+                $result[$arr['idEstadoCompra']]+=$resultAux2[0]['cantidad'];
+            }
         }
         
         foreach($estados as $est){
