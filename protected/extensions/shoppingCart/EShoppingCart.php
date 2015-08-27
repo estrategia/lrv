@@ -183,7 +183,12 @@ class EShoppingCart extends CMap {
         $arrCategorias = array();
         foreach ($this as $position) {
             if ($position->isProduct()) {
-                $arrCategorias[] = $position->objProducto->idCategoriaBI;
+                $arrCategorias[] = array(
+                    'refe' => $position->objProducto->codigoProducto,
+                    'codigo' => $position->objProducto->idCategoriaBI,
+                    'valor' => $position->getSumPrice(),
+                    'descuento' => $position->hasDiscount()
+                );
             }
         }
         return $arrCategorias;
@@ -193,7 +198,12 @@ class EShoppingCart extends CMap {
         $arrMarcas = array();
         foreach ($this as $position) {
             if ($position->isProduct()) {
-                $arrMarcas[] = $position->objProducto->idMarca;
+                $arrMarcas[] = array(
+                    'refe' => $position->objProducto->codigoProducto,
+                    'codigo' => $position->objProducto->idMarca,
+                    'valor' => $position->getSumPrice(),
+                    'descuento' => $position->hasDiscount()
+                );
             }
         }
         return $arrMarcas;
@@ -203,7 +213,12 @@ class EShoppingCart extends CMap {
         $arrProveedores = array();
         foreach ($this as $position) {
             if ($position->isProduct()) {
-                $arrProveedores[] = $position->objProducto->codigoProveedor;
+                $arrProveedores[] = array(
+                    'refe' => $position->objProducto->codigoProducto,
+                    'codigo' => $position->objProducto->codigoProveedor,
+                    'valor' => $position->getSumPrice(),
+                    'descuento' => $position->hasDiscount()
+                );
             }
         }
         return $arrProveedores;
@@ -213,12 +228,17 @@ class EShoppingCart extends CMap {
         $arrProductos = array();
         foreach ($this as $position) {
             if ($position->isProduct()) {
-                $arrProductos[] = array('codigo' => $position->objProducto->codigoProducto, 'cantidad' => $position->getQuantityUnit());
+                $arrProductos[] = array(
+                    'codigo' => $position->objProducto->codigoProducto,
+                    'cantidad' => $position->getQuantityUnit(),
+                    'valor' => $position->getSumPrice(),
+                    'descuento' => $position->hasDiscount()
+                );
             }
         }
         return $arrProductos;
     }
-
+    
     /**
      * Restores the shopping cart from the session
      */

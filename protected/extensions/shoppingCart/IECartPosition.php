@@ -157,6 +157,10 @@ abstract class IECartPosition {
     public function getDiscountPrice($fraction = false) {
         return ($fraction ? $this->discountPriceFraction : $this->discountPriceUnit);
     }
+    
+    public function hasDiscount(){
+        return (($this->discountPriceFraction+$this->discountPriceUnit) > 0);
+    }
 
     /**
      * @return float price

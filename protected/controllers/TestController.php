@@ -2,6 +2,17 @@
 
 class TestController extends Controller {
     
+    public function actionImplode(){
+        $categorias = array(
+            1 => 1,
+            2=>2,
+            5=>9,
+        );
+        $cadena = implode(",", $categorias);
+        
+        echo $cadena;
+    }
+    
     public function actionBuscar(){
         
         $client = new SoapClient(null, array(
@@ -187,6 +198,20 @@ class TestController extends Controller {
     }
 
     public function actionPuntos() {
+        
+        
+        echo "categorias<br>";
+        CVarDumper::dump(Yii::app()->shoppingCart->getCategorias(),10, true);
+        echo "<br><br>marcas<br>";
+        CVarDumper::dump(Yii::app()->shoppingCart->getMarcas(),10, true);
+        echo "<br><br>proveedores<br>";
+        CVarDumper::dump(Yii::app()->shoppingCart->getProveedores(),10, true);
+        echo "<br><br>productos<br>";
+        CVarDumper::dump(Yii::app()->shoppingCart->getProductosCantidad(),10, true);
+        
+        exit();
+                
+                
 
         $fecha = new DateTime;
         $categorias = array(476);
@@ -212,6 +237,37 @@ class TestController extends Controller {
         foreach ($listPuntos as $objPunto) {
             echo "id: $objPunto->idPunto, tipoValor: $objPunto->tipoValor, valor: $objPunto->valor<br>";
         }
+    }
+    
+    public function actionPuntoscompra() {
+        $fecha = new DateTime;
+        $parametrosPuntos = array(
+            Yii::app()->params->puntos['categoria'] => Yii::app()->shoppingCart->getCategorias(),
+            Yii::app()->params->puntos['marca'] => Yii::app()->shoppingCart->getMarcas(),
+            Yii::app()->params->puntos['proveedor'] => Yii::app()->shoppingCart->getProveedores(),
+            Yii::app()->params->puntos['producto'] => Yii::app()->shoppingCart->getProductosCantidad(),
+            Yii::app()->params->puntos['clientefielCompra'] => Yii::app()->shoppingCart->getCost(),
+            
+            /*Yii::app()->params->puntos['monto'] => Yii::app()->shoppingCart->getCost(),
+            
+            Yii::app()->params->puntos['cedula'] => array(
+                'identificacionUsuario' => Yii::app()->user->name, 
+                'valor'=> Yii::app()->shoppingCart->getCost()),
+            
+            Yii::app()->params->puntos['rango'] => array(
+                'fecha' => $fecha, 
+                'valor'=> Yii::app()->shoppingCart->getCost()),
+            
+            Yii::app()->params->puntos['cumpleanhos'] => array(
+                'fechaNacimiento' => Yii::app()->session[Yii::app()->params->usuario['sesion']]->objUsuarioExtendida->fechaNacimiento, 
+                'valor'=> Yii::app()->shoppingCart->getCost()),*/
+        );
+        
+        //CVarDumper::dump($parametrosPuntos,3,true);exit();
+        
+        $listPuntosCompra = ComprasPuntos::generarPuntos($fecha,Yii::app()->session[Yii::app()->params->usuario['sesion']], $parametrosPuntos);
+
+        CVarDumper::dump($listPuntosCompra,3,true);
     }
 
     public function actionExcel() {

@@ -1788,29 +1788,24 @@ class CarroController extends Controller {
                     Yii::app()->params->puntos['marca'] => Yii::app()->shoppingCart->getMarcas(),
                     Yii::app()->params->puntos['proveedor'] => Yii::app()->shoppingCart->getProveedores(),
                     Yii::app()->params->puntos['producto'] => Yii::app()->shoppingCart->getProductosCantidad(),
-                    Yii::app()->params->puntos['monto'] => Yii::app()->shoppingCart->getTotalCost(),
-                    Yii::app()->params->puntos['cedula'] => Yii::app()->user->name,
-                    Yii::app()->params->puntos['rango'] => $fecha,
-                    Yii::app()->params->puntos['cumpleanhos'] => Yii::app()->session[Yii::app()->params->usuario['sesion']]->objUsuarioExtendida->fechaNacimiento,
-                    Yii::app()->params->puntos['clientefielCompra'] => Yii::app()->shoppingCart->getCost(),
+                    Yii::app()->params->puntos['monto'] => $objCompra->subtotalCompra,
+                    Yii::app()->params->puntos['cedula'] => array(
+                        'identificacionUsuario' => Yii::app()->user->name, 
+                        'valor'=> $objCompra->subtotalCompra),
+                    Yii::app()->params->puntos['rango'] => array(
+                        'fecha' => $fecha, 
+                        'valor'=> $objCompra->subtotalCompra),
+                    Yii::app()->params->puntos['cumpleanhos'] => array(
+                        'fechaNacimiento' => Yii::app()->session[Yii::app()->params->usuario['sesion']]->objUsuarioExtendida->fechaNacimiento, 
+                        'valor'=> $objCompra->subtotalCompra),
+                    Yii::app()->params->puntos['clientefielCompra'] => $objCompra->subtotalCompra,
                 );
-                $listPuntos = Puntos::generarPuntos($fecha,Yii::app()->session[Yii::app()->params->usuario['sesion']], $parametrosPuntos);
+                $listPuntosCompra = ComprasPuntos::generarPuntos($fecha,Yii::app()->session[Yii::app()->params->usuario['sesion']], $parametrosPuntos);
                 //-- generar puntos
 
                 // guardar puntos  //--
-                foreach($listPuntos as $objPuntos){
-                    $objPuntoCompra = new ComprasPuntos;
-                    $objPuntoCompra->idPunto = $objPuntos->idPunto;
-                    $objPuntoCompra->codigoPunto = $objPuntos->codigoPunto;
+                foreach($listPuntosCompra as $objPuntoCompra){
                     $objPuntoCompra->idCompra = $objCompra->idCompra;
-                    $objPuntoCompra->fechaInicio = $objPuntos->fechaInicio;
-                    $objPuntoCompra->fechaFin = $objPuntos->fechaFin;
-                    $objPuntoCompra->fechaCreacion = $objPuntos->fechaCreacion;
-                    $objPuntoCompra->fechaActualizacion = $objPuntos->fechaActualizacion;
-                    $objPuntoCompra->activo = $objPuntos->activo;
-                    $objPuntoCompra->tipoValor = $objPuntos->tipoValor;
-                    $objPuntoCompra->valor = $objPuntos->valor;
-
                     if (!$objPuntoCompra->save()) {
                         throw new Exception("Error al guardar punto de compra $objPuntoCompra->idPunto. " . $objPuntoCompra->validateErrorsResponse());
                     }
