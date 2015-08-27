@@ -52,7 +52,7 @@ class EShoppingCart extends CMap {
     public function setBono($newVal) {
         $this->bonoValue = $newVal;
     }
-
+    
     public function getBono() {
         return $this->bonoValue;
     }

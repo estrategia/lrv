@@ -5,14 +5,20 @@
         </div>
     <?php endif; ?>
 
-    <?php $direferencia = date_diff($objCompra->fechaCompraDate, $objCompra->fechaEntregaDate); ?>
+    <?php 
+    $diferencia= "-:-";
+    if($objCompra->tipoEntrega==Yii::app()->params->entrega["tipo"]['domicilio']){
+        $direferencia = date_diff($objCompra->fechaCompraDate, $objCompra->fechaEntregaDate);
+        $diferencia = $direferencia->format('%h') . ":" . $direferencia->format('%i');
+    }
+    ?>
 
     <table class="table table-striped table-bordered table-condensed">
         <tbody>
             <tr>
                 <td colspan="3">
                     <strong><span>Venta virtual</span> <span>#<?php echo $objCompra->idCompra ?></span> | </strong><?php echo $objCompra->fechaCompra ?> 
-                    <span style="float: right;font-weight: bold; color: #E10019; margin-left: 20px; font-size: 16px;"><?php echo $direferencia->format('%h') . ":" . $direferencia->format('%i'); ?></span>
+                    <span style="float: right;font-weight: bold; color: #E10019; margin-left: 20px; font-size: 16px;"><?php echo $diferencia ?></span>
                     <span style="float: right;font-weight: bold">FECHA DE ENTREGA: <?php echo $objCompra->fechaEntrega ?></span>
                 </td>
             </tr>
@@ -22,7 +28,9 @@
                         <strong>Datos del Remitente</strong> <br>
                         <strong>Cédula: </strong><?php echo $objCompra->identificacionUsuario ?><br>
                         <strong>Nombre: </strong><?php echo $objCompra->objUsuario->nombre . " " . $objCompra->objUsuario->apellido ?><br>
-                        <strong>Correo: </strong><?php echo $objCompra->objUsuario->correoElectronico ?>                                
+                        <strong>Correo: </strong><?php echo $objCompra->objUsuario->correoElectronico ?> <br/>
+                        <strong>TipoEntrega: </strong><?php echo Yii::app()->params->entrega["tipo"][$objCompra->tipoEntrega] ?> 
+                        
                     </div>
                     <?php if ($objCompra->objCompraDireccion !== null): ?>
                         <div class="col-md-6">
@@ -30,7 +38,11 @@
                             <strong>Nombre: </strong><?php echo $objCompra->objCompraDireccion->nombre ?> <br>
                             <strong>Dirección: </strong><?php echo $objCompra->objCompraDireccion->direccion . " - " . $objCompra->objCompraDireccion->barrio ?><br>
                             <strong>Teléfono: </strong> <?php echo $objCompra->objCompraDireccion->telefono ?> - <strong>Celular: </strong> <?php echo $objCompra->objCompraDireccion->celular ?><br>
-                            <strong>Ciudad: </strong><?php echo $objCompra->objCompraDireccion->objCiudad->nombreCiudad . " - " . $objCompra->objCompraDireccion->objSector->nombreSector ?>
+                            <?php if($objCompra->objCompraDireccion->objCiudad !=null): ?>
+                                <strong>Ciudad: </strong><?php echo $objCompra->objCompraDireccion->objCiudad->nombreCiudad . " - " . $objCompra->objCompraDireccion->objSector->nombreSector ?>
+                            <?php else: ?>
+                                <strong>Ciudad: </strong> NA
+                            <?php endif;?>
                         </div>
                     <?php else: ?>
                         <div class="col-md-6">

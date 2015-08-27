@@ -58,7 +58,7 @@ class AdminController extends ControllerOperator {
                 $model->attributes = $_GET['Compras'];
 
             $model->idEstadoCompra = $parametro;
-            $model->tipoEntrega = Yii::app()->params->entrega["tipo"]['domicilio'];
+            //$model->tipoEntrega = Yii::app()->params->entrega["tipo"]['domicilio'];
             $model->seguimiento = null;
             $fecha = new DateTime;
             $dias = Yii::app()->params->callcenter['pedidos']['diasVisualizar'];
@@ -84,7 +84,7 @@ class AdminController extends ControllerOperator {
                 if (isset($_GET['Compras']))
                     $model->attributes = $_GET['Compras'];
 
-                $model->tipoEntrega = Yii::app()->params->entrega["tipo"]['domicilio'];
+                //$model->tipoEntrega = Yii::app()->params->entrega["tipo"]['domicilio'];
                 $model->seguimiento = 1;
                 $model->fechaCompra = null;
                 $fecha = new DateTime;
@@ -642,6 +642,9 @@ class AdminController extends ControllerOperator {
         $classes [] = $rowCssClass[$row % count($rowCssClass)];
         if ($data->seguimiento == 1)
             $classes[] = "seguimiento";
+        else if($data->tipoEntrega == 1){
+            $classes[] = "presencial";
+        }
         return empty($classes) ? false : implode(' ', $classes);
     }
 
