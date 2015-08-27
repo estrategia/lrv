@@ -199,7 +199,25 @@ class FormaPagoForm extends CFormModel {
         
         //CVarDumper::dump($this->listPuntosVenta,10,true);
         //exit();
-        
+        // Ordenar de mayor a menor los puntos de venta de acuerdo a 
+          for($i=0;$i<count($this->listPuntosVenta[1]);$i++){
+            for($j=0;$j<count($this->listPuntosVenta[1])-1;$j++){
+                $valuej=0;
+                $valuej1=0;
+                if(isset($this->listPuntosVenta[1][$j][5])){
+                    $valuej=$this->listPuntosVenta[1][$j][5];
+                }
+                if(isset($this->listPuntosVenta[1][$j+1][5])){
+                    $valuej1=$this->listPuntosVenta[1][$j+1][5];
+                }
+                
+                if($valuej<$valuej1){
+                    $aux=$this->listPuntosVenta[1][$j];
+                    $this->listPuntosVenta[1][$j]=$this->listPuntosVenta[1][$j+1];;
+                    $this->listPuntosVenta[1][$j+1]=$aux;
+                }
+            }
+        }
 
         $this->listPuntosVenta[3] = 0;
 

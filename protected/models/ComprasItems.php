@@ -221,7 +221,8 @@ class ComprasItems extends CActiveRecord {
 
         $objCompra = $this->objCompra;
         $objCompra->subtotalCompra += $precioDiff;
-        $objCompra->impuestosCompra += Precio::calcularImpuesto($precioDiff, $this->objImpuesto->porcentaje);
+        $objCompra->impuestosCompra += round(Precio::calcularImpuesto($precioDiff, $this->objImpuesto->porcentaje));
+        $objCompra->baseImpuestosCompra += round($precioDiff/(1+($this->objImpuesto->porcentaje)));
         $objCompra->totalCompra += $precioDiff;
 
         if ($this->unidades + $this->fracciones == 0) {
@@ -309,7 +310,8 @@ class ComprasItems extends CActiveRecord {
 
         $objCompra = $this->objCompra;
         $objCompra->subtotalCompra += $precioDiff;
-        $objCompra->impuestosCompra += Precio::calcularImpuesto($precioDiff, $this->objImpuesto->porcentaje);
+        $objCompra->impuestosCompra += round(Precio::calcularImpuesto($precioDiff, $this->objImpuesto->porcentaje));
+        $objCompra->baseImpuestosCompra += round($precioDiff/(1+($this->objImpuesto->porcentaje)));
         $objCompra->totalCompra += $precioDiff;
 
         if ($this->unidades + $this->fracciones == 0) {
