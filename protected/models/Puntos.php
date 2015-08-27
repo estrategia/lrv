@@ -172,24 +172,25 @@ class Puntos extends CActiveRecord {
         }
     }
     
+    public static function calcularPuntos($valor){
+         $divisor = floor(Yii::app()->params->clienteFiel['montoCompra']/Yii::app()->params->clienteFiel['puntosCompra']);
+         return floor($valor/$divisor);
+    }
+    
     private static function generarPuntosClienteFielCompra(DateTime $fecha, $total){
         if($total>=Yii::app()->params->clienteFiel['montoCompra']){
-            $divisor = floor(Yii::app()->params->clienteFiel['montoCompra']/Yii::app()->params->clienteFiel['puntosCompra']);
-            $puntos = floor($total/$divisor);
-            
             $objPunto = new Puntos;
             $objPunto->idPunto=null;
             $objPunto->codigoPunto = Yii::app()->params->puntos['clientefielCompra'];
             $objPunto->fechaInicio = $objPunto->fechaFin = $objPunto->fechaCreacion = $objPunto->fechaActualizacion = $fecha->format('Y-m-d H:i:s');
             $objPunto->activo = 1;
             $objPunto->tipoValor = self::TIPO_CANTIDAD;
-            $objPunto->valor = $puntos;
+            $objPunto->valor = self::calcularPuntos($total);
             return array($objPunto);
         }else{
             return array();
         }
     }
-    
 
     private static function generarPuntosPorCategorias(DateTime $fecha, $categorias) {
         if (empty($categorias))

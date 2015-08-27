@@ -13,6 +13,14 @@
     background: #F6CECE none repeat scroll 0 0;
 }
 
+.grid-view table.items tr.odd.presencial{
+    background: #8FE496 none repeat scroll 0 0;
+}
+
+.grid-view table.items tr.even.presencial{
+    background: #B5EABA none repeat scroll 0 0;
+}
+
 .center{
     text-align: center;
 }
