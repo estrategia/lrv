@@ -45,19 +45,20 @@
                             <input type="submit" data-enhanced="true" value="<?php echo $pdv[1] ?>">
                         </div>
                         <?php $this->endWidget(); ?>
-                        <div class="porcen"><?php echo $pdv[5] ?>%</div>
+                        <div class="porcen">Porcentaje del pedido: <?php echo $pdv[5] ?>%</div>
                         <div class="clear"></div>
                     </div>
                 </div>
             </div>
             <div class="blockListProducts">
-                <table>
+                <table width=100%>
                     <?php foreach ($pdv[4] as $producto): ?>
                         <tr>
                             <td><?php echo $producto->CODIGO_PRODUCTO ?></td>
                             <td><?php echo $producto->DESCRIPCION ?></td>
-                            <td><?php echo $producto->SALDO_UNIDAD ?></td>
-                            <td><?php echo ($producto->CANTIDAD_FRACCION > 0 ? $producto->SALDO_FRACCION : "NA") ?></td>
+                            <td><?php echo $producto->CANTIDAD_UNIDAD."/". $producto->SALDO_UNIDAD ?></td>
+                            <td><?php echo ($producto->COMPLETITUD_UNIDAD)? "<img src='".Yii::app()->request->baseUrl."/images/iconos/checkmark.png'/>":"<img src='".Yii::app()->request->baseUrl."/images/iconos/mistake.png'/>" ?></td>
+                           <!-- <td><?php echo ($producto->CANTIDAD_FRACCION > 0 ? $producto->SALDO_FRACCION : "NA") ?></td> -->
                         </tr>
                     <?php endforeach; ?>
                 </table>
