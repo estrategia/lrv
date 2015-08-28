@@ -187,7 +187,7 @@ class EShoppingCart extends CMap {
                     'refe' => $position->objProducto->codigoProducto,
                     'codigo' => $position->objProducto->idCategoriaBI,
                     'valor' => $position->getSumPrice(),
-                    'descuento' => $position->hasDiscount()
+                    'tieneDescuento' => $position->hasDiscount()
                 );
             }
         }
@@ -202,7 +202,7 @@ class EShoppingCart extends CMap {
                     'refe' => $position->objProducto->codigoProducto,
                     'codigo' => $position->objProducto->idMarca,
                     'valor' => $position->getSumPrice(),
-                    'descuento' => $position->hasDiscount()
+                    'tieneDescuento' => $position->hasDiscount()
                 );
             }
         }
@@ -217,7 +217,7 @@ class EShoppingCart extends CMap {
                     'refe' => $position->objProducto->codigoProducto,
                     'codigo' => $position->objProducto->codigoProveedor,
                     'valor' => $position->getSumPrice(),
-                    'descuento' => $position->hasDiscount()
+                    'tieneDescuento' => $position->hasDiscount()
                 );
             }
         }
@@ -232,7 +232,7 @@ class EShoppingCart extends CMap {
                     'codigo' => $position->objProducto->codigoProducto,
                     'cantidad' => $position->getQuantityUnit(),
                     'valor' => $position->getSumPrice(),
-                    'descuento' => $position->hasDiscount()
+                    'tieneDescuento' => $position->hasDiscount()
                 );
             }
         }

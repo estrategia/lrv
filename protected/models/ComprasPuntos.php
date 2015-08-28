@@ -153,28 +153,49 @@ class ComprasPuntos extends CActiveRecord {
     
     public static function generarPuntos(DateTime $fecha, $objUsuario, $parametros) {
         $listPuntos = array();
-        $dia = $fecha->format('j');
         
+        /*$dia = $fecha->format('j');
         if ($objUsuario instanceof Usuario && $objUsuario->codigoPerfil == 1 && $objUsuario->esClienteFiel == 1 && !in_array($dia, Yii::app()->params->clienteFiel['dias']) && $objUsuario->invitado==0) {
             foreach (Yii::app()->params->puntos as $nombrePunto => $codigoPunto) {
                 if (isset($parametros[$codigoPunto])) {
                     $listPuntos = array_merge($listPuntos, self::generarPuntosTipo($fecha, $codigoPunto, $objUsuario, $parametros[$codigoPunto]));
                 }
             }
+        }*/
+        
+        $diaCF = in_array(date('j'), Yii::app()->params->clienteFiel['dias']) ? 1 : 0;
+        
+        $objParametro = ParametroCompra::model()->find(array(
+            'condition' => 'codigoPerfil=:perfil AND esClienteFiel=:cf AND esDiaClienteFiel=:diacf',
+            'params' => array(
+                ':perfil' => $objUsuario->codigoPerfil,
+                ':cf' => $objUsuario->esClienteFiel,
+                ':diacf' => $diaCF,
+            )
+        ));
+        
+        if($objParametro!=null){
+            if($objParametro->asignaPuntos!=0){
+                foreach (Yii::app()->params->puntos as $nombrePunto => $codigoPunto) {
+                    if (isset($parametros[$codigoPunto])) {
+                        $listPuntos = array_merge($listPuntos, self::generarPuntosTipo($fecha, $codigoPunto, $objParametro->asignaPuntos, $parametros[$codigoPunto]));
+                    }
+                }
+            }
         }
-
+        
         return $listPuntos;
     }
 
-    private static function generarPuntosTipo(DateTime $fecha, $tipo, $objUsuario, $parametro) {
+    private static function generarPuntosTipo(DateTime $fecha, $tipo, $asignaPuntos, $parametro) {
         if ($tipo == Yii::app()->params->puntos['categoria']) {
-            return self::generarPuntosPorCategorias($fecha, $parametro);
+            return self::generarPuntosPorCategorias($fecha, $asignaPuntos, $parametro);
         } else if ($tipo == Yii::app()->params->puntos['marca']) {
-            return self::generarPuntosPorMarcas($fecha, $parametro);
+            return self::generarPuntosPorMarcas($fecha, $asignaPuntos, $parametro);
         } else if ($tipo == Yii::app()->params->puntos['proveedor']) {
-            return self::generarPuntosPorProveedores($fecha, $parametro);
+            return self::generarPuntosPorProveedores($fecha, $asignaPuntos, $parametro);
         } else if ($tipo == Yii::app()->params->puntos['producto']) {
-            return self::generarPuntosPorProductos($fecha, $parametro);
+            return self::generarPuntosPorProductos($fecha, $asignaPuntos, $parametro);
         } else if ($tipo == Yii::app()->params->puntos['monto']) {
             return self::generarPuntosPorMonto($fecha, $parametro);
         } else if ($tipo == Yii::app()->params->puntos['cedula']) {
@@ -205,8 +226,8 @@ class ComprasPuntos extends CActiveRecord {
             return array();
         }
     }
-
-    private static function generarPuntosPorCategorias(DateTime $fecha, $categorias) {
+    
+    private static function generarPuntosPorCategorias(DateTime $fecha, $asignaPuntos, $categorias) {
         $codigos = array();
         
         foreach ($categorias as $categoria){
@@ -231,7 +252,7 @@ class ComprasPuntos extends CActiveRecord {
         foreach($listPuntos as $objPunto){
             foreach($objPunto->listPuntosCategorias as $objPuntoCategoria){
                 foreach ($categorias as $categoria){
-                    if($objPuntoCategoria->idCategoriaBI == $categoria['codigo'] && $categoria['valor']>=Yii::app()->params->clienteFiel['montoCompra']){
+                    if($objPuntoCategoria->idCategoriaBI == $categoria['codigo'] && $categoria['valor']>=Yii::app()->params->clienteFiel['montoCompra'] && ParametroCompra::validaAsignacionPuntos($asignaPuntos, $categoria['tieneDescuento'])){
                         $objPuntoCompra = new ComprasPuntos;
                         $objPuntoCompra->idPunto = $objPunto->idPunto;
                         $objPuntoCompra->codigoPunto = $objPunto->codigoPunto;
@@ -253,7 +274,7 @@ class ComprasPuntos extends CActiveRecord {
         return $listPuntosCompra;
     }
 
-    private static function generarPuntosPorMarcas(DateTime $fecha, $marcas) {
+    private static function generarPuntosPorMarcas(DateTime $fecha, $asignaPuntos, $marcas) {
         $codigos = array();
         
         foreach ($marcas as $marca){
@@ -278,7 +299,7 @@ class ComprasPuntos extends CActiveRecord {
         foreach($listPuntos as $objPunto){
             foreach($objPunto->listPuntosMarcas as $objPuntoMarca){
                 foreach ($marcas as $marca){
-                    if($objPuntoMarca->idMarca == $marca['codigo'] && $marca['valor']>=Yii::app()->params->clienteFiel['montoCompra']){
+                    if( $objPuntoMarca->idMarca == $marca['codigo'] && $marca['valor']>=Yii::app()->params->clienteFiel['montoCompra'] && ParametroCompra::validaAsignacionPuntos($asignaPuntos, $marca['tieneDescuento']) ){
                         $objPuntoCompra = new ComprasPuntos;
                         $objPuntoCompra->idPunto = $objPunto->idPunto;
                         $objPuntoCompra->codigoPunto = $objPunto->codigoPunto;
@@ -300,7 +321,7 @@ class ComprasPuntos extends CActiveRecord {
         return $listPuntosCompra;
     }
 
-    private static function generarPuntosPorProveedores(DateTime $fecha, $proveedores) {
+    private static function generarPuntosPorProveedores(DateTime $fecha, $asignaPuntos, $proveedores) {
          $codigos = array();
         
         foreach ($proveedores as $proveedor){
@@ -325,7 +346,7 @@ class ComprasPuntos extends CActiveRecord {
         foreach($listPuntos as $objPunto){
             foreach($objPunto->listPuntosProveedores as $objPuntoProveedor){
                 foreach ($proveedores as $proveedor){
-                    if($objPuntoProveedor->codigoProveedor == $proveedor['codigo'] && $proveedor['valor']>=Yii::app()->params->clienteFiel['montoCompra']){
+                    if($objPuntoProveedor->codigoProveedor == $proveedor['codigo'] && $proveedor['valor']>=Yii::app()->params->clienteFiel['montoCompra'] && ParametroCompra::validaAsignacionPuntos($asignaPuntos, $proveedor['tieneDescuento']) ){
                         $objPuntoCompra = new ComprasPuntos;
                         $objPuntoCompra->idPunto = $objPunto->idPunto;
                         $objPuntoCompra->codigoPunto = $objPunto->codigoPunto;
@@ -347,11 +368,11 @@ class ComprasPuntos extends CActiveRecord {
         return $listPuntosCompra;
     }
 
-    private static function generarPuntosPorProductos(DateTime $fecha, $productos) {
+    private static function generarPuntosPorProductos(DateTime $fecha, $asignaPuntos, $productos) {
         $listPuntosCompra = array();
 
         foreach ($productos as $producto) {
-            if($producto['valor']>=Yii::app()->params->clienteFiel['montoCompra']){
+            if($producto['valor']>=Yii::app()->params->clienteFiel['montoCompra'] && ParametroCompra::validaAsignacionPuntos($asignaPuntos, $producto['tieneDescuento']) ){
                 $listPtosAux = Puntos::model()->findAll(array(
                     'with' => array('listPuntosProductos' => array('condition' => 'listPuntosProductos.codigoProducto=:producto AND listPuntosProductos.cantidad<=:cantidad')),
                     'condition' => 'codigoPunto=:tipo AND activo=:activo AND fechaInicio<=:fecha AND fechaFin>=:fecha',

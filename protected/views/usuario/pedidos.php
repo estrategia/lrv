@@ -4,10 +4,10 @@ $this->widget('zii.widgets.grid.CGridView', array(
     'pager' => array(
         'header' => '',
         'firstPageLabel' => '&lt;&lt;',
-        'prevPageLabel' => '<<',
-        'nextPageLabel' => '>>',
+        'prevPageLabel' => 'Anterior',
+        'nextPageLabel' => 'Siguiente',
         'lastPageLabel' => '&gt;&gt;',
-        'maxButtonCount' => 5
+        'maxButtonCount' => 3
     ),
     //'template'=>'{pager}\n{items}\n{pager}',
     'id' => 'grid-cuenta-listapedidos',
@@ -28,11 +28,11 @@ $this->widget('zii.widgets.grid.CGridView', array(
             'header' => 'Fecha',
             'value' => array($this, 'gridFechaPedido'),
         ),
-        array(
+        /*array(
             'headerHtmlOptions' => array('data-priority' => 1),
             'header' => 'Ciudad',
             'value' => '$data->objCiudad->nombreCiudad',
-        ),
+        ),*/
         array(
             'header' => 'Total',
             'value' => 'Yii::app()->numberFormatter->format(Yii::app()->params->formatoMoneda["patron"], $data->totalCompra, Yii::app()->params->formatoMoneda["moneda"])',
@@ -56,3 +56,4 @@ $this->widget('zii.widgets.grid.CGridView', array(
     ),
 ));
 ?>
+<div class="space-1"></div>

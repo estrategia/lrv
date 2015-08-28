@@ -237,15 +237,13 @@
                             <p style="padding-top:4px;text-align:left;color:#666666">
                                 Para ver el estado de tu
                                 <span class="il">pedido</span>
-                                <a target="_blank" style="color:#ff0000" href="http://www.larebajavirtual.com/admin/usuario/listapedidos/">Clic aqui</a>
+                                <a target="_blank" style="color:#ff0000" href="<?php echo $this->createAbsoluteUrl("/usuario/listapedidos") ?>">Clic aqui</a>
                             </p>
                         </div>
         <div class="yj6qo"></div>
         <div class="adL"> </div>
     </div>
     <br/>
-    <h1 style="text-align:left;color:#666666;font-family:Arial;font-size:18px">Cordialmente <br/>
-    <h1 style="text-align:left;color:#666666;font-family:Arial;font-size:20px">La Rebaja Virtual</h1><br/>
     <div class="adL"> </div>
     <div class="adL" style="margin:20px"></div>
     <div class="adL"> </div>

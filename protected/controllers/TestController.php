@@ -2,6 +2,12 @@
 
 class TestController extends Controller {
     
+    public function actionCf(){
+         $codigoPerfil = Yii::app()->shoppingCart->getCodigoPerfil();
+         
+         print_r($codigoPerfil);
+    }
+    
     public function actionImplode(){
         $categorias = array(
             1 => 1,
@@ -83,6 +89,14 @@ class TestController extends Controller {
                 [ALTERNAS] => ''
             )
         )*/
+    }
+    
+    public function actionBeneficios(){
+        $client = new SoapClient("http://sii.copservir.com/beneficios/sweb/wslrv");
+        $result = $client->setBeneficios(0);
+        
+        CVarDumper::dump($result,10,true);
+        
     }
 
     public function actionWsbono() {
@@ -258,7 +272,7 @@ class TestController extends Controller {
             Yii::app()->params->puntos['producto'] => Yii::app()->shoppingCart->getProductosCantidad(),
             Yii::app()->params->puntos['clientefielCompra'] => Yii::app()->shoppingCart->getCost(),
             
-            /*Yii::app()->params->puntos['monto'] => Yii::app()->shoppingCart->getCost(),
+            Yii::app()->params->puntos['monto'] => Yii::app()->shoppingCart->getCost(),
             
             Yii::app()->params->puntos['cedula'] => array(
                 'identificacionUsuario' => Yii::app()->user->name, 
@@ -270,7 +284,7 @@ class TestController extends Controller {
             
             Yii::app()->params->puntos['cumpleanhos'] => array(
                 'fechaNacimiento' => Yii::app()->session[Yii::app()->params->usuario['sesion']]->objUsuarioExtendida->fechaNacimiento, 
-                'valor'=> Yii::app()->shoppingCart->getCost()),*/
+                'valor'=> Yii::app()->shoppingCart->getCost()),
         );
         
         //CVarDumper::dump($parametrosPuntos,3,true);exit();

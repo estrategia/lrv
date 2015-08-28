@@ -137,11 +137,27 @@ class Usuario extends CActiveRecord {
     }
     
     public function getCodigoPerfil(){
-        if($this->codigoPerfil == 1 && $this->esClienteFiel == 1 && in_array(date('j'), Yii::app()->params->clienteFiel['dias']) && $this->invitado==0){
-            return 3;
-        } 
+        $diaCF = in_array(date('j'), Yii::app()->params->clienteFiel['dias']) ? 1 : 0;
+        $codigoPerfilCompra = $this->codigoPerfil;
         
-        return $this->codigoPerfil;
+        $objParametro = ParametroCompra::model()->find(array(
+            'condition' => 'codigoPerfil=:perfil AND esClienteFiel=:cf AND esDiaClienteFiel=:diacf',
+            'params' => array(
+                ':perfil' => $this->codigoPerfil,
+                ':cf' => $this->esClienteFiel,
+                ':diacf' => $diaCF,
+            )
+        ));
+        
+        /*if($this->codigoPerfil == 1 && $this->esClienteFiel == 1 && in_array(date('j'), Yii::app()->params->clienteFiel['dias']) && $this->invitado==0){
+            $codigoPerfilCompra = 3;
+        }*/
+        
+        if($objParametro!=null){
+            $codigoPerfilCompra = $objParametro->codigoPerfilCompra;
+        }
+        
+        return $codigoPerfilCompra;
     }
     
     public function getNombreCompleto(){

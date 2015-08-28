@@ -10,10 +10,10 @@ $this->widget('zii.widgets.grid.CGridView', array(
     'pager' => array(
         'header' => '',
         'firstPageLabel' => '&lt;&lt;',
-        'prevPageLabel' => '<<',
-        'nextPageLabel' => '>>',
+        'prevPageLabel' => 'Anterior',
+        'nextPageLabel' => 'Siguiente',
         'lastPageLabel' => '&gt;&gt;',
-        'maxButtonCount' => 5
+        'maxButtonCount' => 3
     ),
     'id' => 'gridview-listapersonal',
     'beforeAjaxUpdate' => new CJavaScriptExpression("function() { $.mobile.loading('show'); }"),

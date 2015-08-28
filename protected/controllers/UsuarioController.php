@@ -1122,7 +1122,7 @@ class UsuarioController extends Controller {
     
     protected function gridFechaPedido($data, $row) {
         $fecha = DateTime::createFromFormat('Y-m-d H:i:s', $data->fechaCompra);
-        return $fecha->format('ymd H:i');
+        return $fecha->format('y-m-d');
     }
     
     protected function gridDetalleLista($data, $row) {

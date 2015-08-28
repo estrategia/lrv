@@ -1,7 +1,7 @@
 function ubicacionGPS() {
     if (navigator.geolocation) {
         $.mobile.loading('show');
-        navigator.geolocation.getCurrentPosition(obtenerPosicion, errorPosicion, {'enableHighAccuracy': true, 'timeout': 60000, 'maximumAge': 0});
+        navigator.geolocation.getCurrentPosition(obtenerPosicion, errorPosicion, {'enableHighAccuracy': true, 'timeout': 30000, 'maximumAge': 0});
     } else {
         alert("Servicio no soportado por este navegador.");
     }
@@ -457,7 +457,7 @@ $(document).on("pagecreate", function(event) {
         slideSpeed: 300,
         paginationSpeed: 400,
         singleItem: true,
-        autoPlay: 3000
+        autoPlay: 10000
     });
 
     $("#slide-relacionados").owlCarousel({
