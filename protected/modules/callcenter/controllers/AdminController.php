@@ -335,9 +335,15 @@ class AdminController extends ControllerOperator {
                     Yii::app()->end();
                 }
 
+                $estadoCompra=EstadoCompra::model()->findByPk($model->estado);
+                
+                if($estadoCompra==null){
+                      echo CJSON::encode(array('result' => 'error', 'response' => 'Estado inválido'));
+                        Yii::app()->end();
+                }
                 $objObservacion = new ComprasObservaciones;
                 $objObservacion->idCompra = $model->idCompra;
-                $objObservacion->observacion = $model->observacion;
+                $objObservacion->observacion = "<b>Cambio de estado: ".$estadoCompra->compraEstado.".</b> ".$model->observacion;
                 $objObservacion->idOperador = Yii::app()->controller->module->user->id;
                 $objObservacion->notificarCliente = 0;
                 $objObservacion->idTipoObservacion = $model->tipoObservacion;
@@ -361,7 +367,7 @@ class AdminController extends ControllerOperator {
                         //$objCompraEstado
                         $objCompraEstado = new ComprasEstados;
                         $objCompraEstado->idCompra = $objCompra->idCompra;
-                        $objCompraEstado->idCompraEstado = $model->estado;
+                        $objCompraEstado->idEstadoCompra = $model->estado;
                         $objCompraEstado->idOperador = Yii::app()->controller->module->user->id;
                         if (!$objCompraEstado->save()) {
                             throw new Exception("Error al guardar traza de estado: " . $objCompraEstado->validateErrorsResponse());

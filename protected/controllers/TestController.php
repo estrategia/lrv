@@ -137,7 +137,7 @@ class TestController extends Controller {
 
         $return = $client->__soapCall("LRVConsultarSaldoMovil", array('productos' => $productos, 'ciudad' => 76001, 'sector' => 22));
         
-        for($i=0;$i<count($return[1]);$i++){
+   /*     for($i=0;$i<count($return[1]);$i++){
             for($j=0;$j<count($return[1])-1;$j++){
                 $valuej=0;
                 $valuej1=0;
@@ -154,7 +154,7 @@ class TestController extends Controller {
                     $valuej[1][$j+1]=$aux;
                 }
             }
-        }
+        }*/
            CVarDumper::dump($return, 10, true);
      
 
@@ -796,6 +796,23 @@ class TestController extends Controller {
         $tracks = new SimpleXMLElement($xml);
     }
     
+    
+    public function actionCompra($pedido=436361,$pdv=1){
+        // http://localhost/lrv/callcenter/admin/detallepedido/pedido/272012/asignar/1
+   //     $objCompra= Compras::model()->findByPk($pedido);
+        
+        $client = new SoapClient(null, array(
+            'location' => Yii::app()->params->webServiceUrl['remisionPos'],
+            'uri' => "",
+            'trace' => 1
+        ));
+       $result = $client->__soapCall("SaldosSadRemision",  array('idPedido' => $pedido, 'pdv_despacho' => $pdv));
+        
+      
+       echo "<pre>";
+       print_r($result);
+       echo "</pre>";
+    }
     
     public function actionPerfil(){
         //CVarDumper::dump(Yii::app()->session[Yii::app()->params->sesion['sectorCiudadEntrega']],10,true);
