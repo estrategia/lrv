@@ -40,8 +40,6 @@
                     <label for="PagoExpress_idDireccionDespacho_<?php echo $objDireccion->idDireccionDespacho ?>"><?php echo $objDireccion->descripcion . " | " . $objDireccion->objCiudad->nombreCiudad ?></label>
                     <input type="radio" name="PagoExpress[idDireccionDespacho]" id="PagoExpress_idDireccionDespacho_<?php echo $objDireccion->idDireccionDespacho ?>" value="<?php echo $objDireccion->idDireccionDespacho ?>" <?php echo ($objPagoExpress->idDireccionDespacho == $objDireccion->idDireccionDespacho ? "checked" : "") ?>>
                     <div id="div-infodireccion-<?php echo $objDireccion->idDireccionDespacho ?>">
-
-
                         <div class="ui-field-container ui-bar ui-bar-a ui-corner-all">
                             <table>
                                 <tr>
@@ -80,29 +78,11 @@
             </div>
             <div class="space-2"></div>
         </fieldset>
-
-
+        
         <fieldset>
             <div class="ui-field-container ui-bar ui-bar-a ui-corner-all">
                 <h2>Forma de pago</h2>
-                <?php foreach ($listFormaPago as $idx => $objFormaPago): ?>
-                    <label for="PagoExpress_idFormaPago_<?php echo $objFormaPago->idFormaPago ?>"><?php echo $objFormaPago->formaPago ?></label>
-                    <input type="radio" data-credirebaja="<?php echo $objFormaPago->idFormaPago == Yii::app()->params->formaPago['idCredirebaja'] ? "1" : "0" ?>" name="PagoExpress[idFormaPago]" id="PagoExpress_idFormaPago_<?php echo $objFormaPago->idFormaPago ?>" value="<?php echo $objFormaPago->idFormaPago ?>" <?php echo ($objPagoExpress->idFormaPago == $objFormaPago->idFormaPago ? "checked" : "") ?>>
-                    <?php if ($objFormaPago->idFormaPago == Yii::app()->params->formaPago['idCredirebaja']): ?>
-                        <div id="div-credirebaja">
-                            <div class="ui-field-container ui-bar ui-bar-a ui-corner-all">
-                                <?php echo $form->labelEx($objPagoExpress, 'numeroTarjeta'); ?>
-                                <?php echo $form->numberField($objPagoExpress, 'numeroTarjeta', array('placeholder' => '000000000000', 'maxlength' => 12)); ?>
-                                <?php echo $form->error($objPagoExpress, 'numeroTarjeta'); ?>
-                                <?php echo $form->labelEx($objPagoExpress, 'cuotasTarjeta'); ?>
-                                <?php echo $form->dropDownList($objPagoExpress, 'cuotasTarjeta', FormaPagoForm::listDataCuotas(), array('placeholder' => '0')); ?>
-                                <?php echo $form->error($objPagoExpress, 'cuotasTarjeta'); ?>
-                            </div>
-                            <div class="space-2"></div>
-                        </div>
-                    <?php endif; ?>
-                <?php endforeach; ?>
-                <?php echo $form->error($objPagoExpress, 'idFormaPago'); ?>
+                <?php $this->renderPartial('/carro/_formaPago', array('form' => $form, 'model' => $objPagoExpress, 'listFormaPago'=>$listFormaPago)) ?>
             </div>
             <div class="space-2"></div>
         </fieldset>

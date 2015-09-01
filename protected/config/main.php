@@ -180,6 +180,7 @@ return array(
         ),
         'formaPago' => array(
             'idCredirebaja' => 2,
+            'tarjetasDatafono' => array(5,6,7,8,9,10,11,12),
             'pasarela' => array(
                 'valorMinimo' => 5000,
                 'idPasarela' => 3,

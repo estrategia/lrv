@@ -9,8 +9,8 @@ class UsuarioController extends Controller {
     public function filters() {
         return array(
             'access + autenticar, recordar, registro, restablecer',
-            'login + index, infoPersonal, contrasena, direcciones, direccionCrear, pagoexpress, listapedidos, pedido, listadetalle',
-            'loginajax + direccionActualizar, listapersonal',
+            'login + index, infoPersonal, contrasena, direcciones, pagoexpress, listapedidos, listapersonal, pedido, listadetalle',
+            'loginajax + direccionCrear, direccionActualizar',
         );
     }
 

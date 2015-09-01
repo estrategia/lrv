@@ -24,7 +24,7 @@ $form = $this->beginWidget('CActiveForm', array(
 
 <div class="form-group">
     <?php //echo $form->labelEx($model, 'observacion'); ?>
-    <?php echo $form->textArea($model, 'observacion', array('class' => 'form-control', 'maxlength' => 500, 'style' => 'width:80%')); ?>
+    <?php echo $form->textArea($model, 'observacion', array('class' => 'form-control', 'maxlength' => 1000, 'rows' => '10')); ?>
     <?php echo $form->error($model, 'observacion'); ?>
 </div>
 

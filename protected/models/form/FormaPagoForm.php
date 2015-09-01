@@ -19,8 +19,8 @@ class FormaPagoForm extends CFormModel {
     public $fechaEntrega;
     public $comentario;
     public $idFormaPago;
-    public $tarjetaNumero;
-    public $numeroCuotas;
+    public $numeroTarjeta;
+    public $cuotasTarjeta;
     public $bono;
     public $usoBono = 0;
     public $confirmacion;
@@ -45,13 +45,13 @@ class FormaPagoForm extends CFormModel {
             array('comentario', 'length', 'max' => 250, 'on' => 'entrega, finalizar', 'message' => '{attribute} no puede estar vacío'),
             array('fechaEntrega', 'fechaValidate', 'on' => 'entrega, finalizar'),
             array('idFormaPago', 'required', 'on' => 'pago, finalizar', 'message' => '{attribute} no puede estar vacío'),
-            array('tarjetaNumero, numeroCuotas', 'safe'),
-            array('comentario, tarjetaNumero, numeroCuotas, usoBono', 'default', 'value' => null),
+            array('numeroTarjeta, cuotasTarjeta', 'safe'),
+            array('comentario, numeroTarjeta, cuotasTarjeta, usoBono', 'default', 'value' => null),
             array('idFormaPago', 'pagoValidate', 'on' => 'pago, finalizar'),
             array('usoBono', 'bonoValidate', 'on' => 'pago, finalizar'),
             //array('clienteFielValidate', 'on' => 'pago, finalizar'),
             //array('codigoPromocion', 'promocionValidate', 'on' => 'pago, finalizar'),
-            array('confirmacion', 'compare', 'compareValue' => 1, 'on' => 'confirmacion', 'message' => 'Aceptar términos y condiciones'),
+            array('confirmacion', 'compare', 'compareValue' => 1, 'on' => 'confirmacion, finalizar', 'message' => 'Aceptar términos y condiciones'),
         );
     }
 
@@ -65,8 +65,8 @@ class FormaPagoForm extends CFormModel {
             'fechaEntrega' => 'Programación de entrega',
             'comentario' => 'Comentario adicional',
             'idFormaPago' => 'Forma de pago',
-            'tarjetaNumero' => 'Número tarjeta',
-            'numeroCuotas' => 'Cuotas',
+            'numeroTarjeta' => 'Número tarjeta',
+            'cuotasTarjeta' => 'Cuotas',
             'confirmacion' => 'Acepto términos y condiciones',
             'usoBono' => 'Bono'
         );
@@ -74,11 +74,22 @@ class FormaPagoForm extends CFormModel {
 
     public function calcularConfirmacion($positions) {
         $this->confirmacion = null;
+        $this->validarConfirmacion($positions);
+    }
+
+    public function validarConfirmacion($positions) {
+        $listEspecialTmp = $this->listCodigoEspecial;
         $this->listCodigoEspecial = array();
+
         foreach ($positions as $position) {
             if ($position->isProduct()) {
                 if ($position->objProducto->objCodigoEspecial->confirmacionCompra == 1) {
                     $this->listCodigoEspecial[$position->objProducto->objCodigoEspecial->codigoEspecial] = $position->objProducto->objCodigoEspecial;
+
+                    if (!isset($listEspecialTmp[$position->objProducto->objCodigoEspecial->codigoEspecial])) {
+                        $this->confirmacion = null;
+                        //echo "Cambia Confirmacion [".$position->objProducto->objCodigoEspecial->codigoEspecial."]<br/>";
+                    }
                 }
             }
         }
@@ -94,29 +105,29 @@ class FormaPagoForm extends CFormModel {
      */
     public function pagoValidate($attribute, $params) {
         if ($this->idFormaPago == Yii::app()->params->formaPago['idCredirebaja']) {
-            if ($this->tarjetaNumero === null) {
-                $this->addError('tarjetaNumero', $this->getAttributeLabel('tarjetaNumero') . " no puede estar vacío ");
+            if ($this->numeroTarjeta === null) {
+                $this->addError('numeroTarjeta', $this->getAttributeLabel('numeroTarjeta') . " no puede estar vacío ");
             } else {
-                $this->tarjetaNumero = trim($this->tarjetaNumero);
+                $this->numeroTarjeta = trim($this->numeroTarjeta);
 
-                if (strlen($this->tarjetaNumero) != 12) {
-                    $this->addError('tarjetaNumero', $this->getAttributeLabel('tarjetaNumero') . " debe tener 12 dígitos");
+                if (strlen($this->numeroTarjeta) != 12) {
+                    $this->addError('numeroTarjeta', $this->getAttributeLabel('numeroTarjeta') . " debe tener 12 dígitos");
                 }
             }
 
-            if ($this->numeroCuotas === null || empty($this->numeroCuotas)) {
-                $this->addError('numeroCuotas', $this->getAttributeLabel('numeroCuotas') . " no puede estar vacío");
+            if ($this->cuotasTarjeta === null || empty($this->cuotasTarjeta)) {
+                $this->addError('cuotasTarjeta', $this->getAttributeLabel('cuotasTarjeta') . " no puede estar vacío");
             } else {
-                $int = intval($this->numeroCuotas);
+                $int = intval($this->cuotasTarjeta);
                 if ($int <= 0 || $int > 6) {
-                    $this->addError('numeroCuotas', $this->getAttributeLabel('numeroCuotas') . " debe ser número entre 1 y 6");
+                    $this->addError('cuotasTarjeta', $this->getAttributeLabel('cuotasTarjeta') . " debe ser número entre 1 y 6");
                 }
             }
         } else {
-            $this->tarjetaNumero = null;
-            $this->numeroCuotas = null;
+            $this->numeroTarjeta = null;
+            $this->cuotasTarjeta = null;
             if ($this->idFormaPago == Yii::app()->params->formaPago['pasarela']['idPasarela']) {
-                if(Yii::app()->shoppingCart->getTotalCost()<Yii::app()->params->formaPago['pasarela']['valorMinimo']){
+                if (Yii::app()->shoppingCart->getTotalCost() < Yii::app()->params->formaPago['pasarela']['valorMinimo']) {
                     $this->addError('idFormaPago', "Compra por pasarela debe ser mayor a " . Yii::app()->numberFormatter->format(Yii::app()->params->formatoMoneda['patron'], Yii::app()->params->formaPago['pasarela']['valorMinimo'], Yii::app()->params->formatoMoneda['moneda']));
                 }
             }
@@ -136,18 +147,23 @@ class FormaPagoForm extends CFormModel {
     public function consultarBono($total) {
         $this->bono = null;
 
-        $client = new SoapClient(null, array(
-            'location' => Yii::app()->params->webServiceUrl['crmLrv'],
-            'uri' => "",
-            'trace' => 1
-        ));
-        $result = $client->__soapCall("ConsultarBono", array('identificacion' => $this->identificacionUsuario));
+        try{
+            $client = new SoapClient(null, array(
+                'location' => Yii::app()->params->webServiceUrl['crmLrv'],
+                'uri' => "",
+                'trace' => 1
+            ));
+            $result = $client->__soapCall("ConsultarBono", array('identificacion' => $this->identificacionUsuario));
 
-        if (!empty($result) && $result[0]->ESTADO == 1 && $result[0]->VALOR_BONO > 0 && $result[0]->VALOR_BONO <= $total) {
-            $this->bono = array(
-                'valor' => $result[0]->VALOR_BONO,
-                'vigencia' => DateTime::createFromFormat('Y-m-d', '2015-06-01')
-            );
+            if (!empty($result) && $result[0]->ESTADO == 1 && $result[0]->VALOR_BONO > 0 && $result[0]->VALOR_BONO <= $total) {
+                $this->bono = array(
+                    'valor' => $result[0]->VALOR_BONO,
+                    'vigenciaInicio' => $result[0]->VIGENCIA_INICIO,
+                    'vigenciaFin' => $result[0]->VIGENCIA_FINA
+                );
+            }
+        }  catch (Exception $exc){
+            Yii::log("Error WebService ConsultarBono\n" . $exc->getMessage() . "\n" . $exc->getTraceAsString(), CLogger::LEVEL_ERROR, 'application');
         }
     }
 
@@ -177,11 +193,11 @@ class FormaPagoForm extends CFormModel {
                 );
             }
         }
-        
-        /*CVarDumper::dump($productos,10,true);
-        echo "<br/>";
-        echo "<br/>";*/
-        
+
+        /* CVarDumper::dump($productos,10,true);
+          echo "<br/>";
+          echo "<br/>"; */
+
         $client = new SoapClient(null, array(
             'location' => Yii::app()->params->webServiceUrl['serverLRV'],
             'uri' => "",
@@ -192,33 +208,33 @@ class FormaPagoForm extends CFormModel {
             'ciudad' => $shoppingCart->getCodigoCiudad(),
             'sector' => $shoppingCart->getCodigoSector()
         ));
-        
-        if(empty($this->listPuntosVenta)){
+
+        if (empty($this->listPuntosVenta)) {
             $this->listPuntosVenta = array(0 => 0, 1 => 'No hay disponibilidad de productos');
         }
-        
+
         //CVarDumper::dump($this->listPuntosVenta,10,true);
         //exit();
         // Ordenar de mayor a menor los puntos de venta de acuerdo a 
-      /*    for($i=0;$i<count($this->listPuntosVenta[1]);$i++){
-            for($j=0;$j<count($this->listPuntosVenta[1])-1;$j++){
-                $valuej=0;
-                $valuej1=0;
-                if(isset($this->listPuntosVenta[1][$j][5])){
-                    $valuej=$this->listPuntosVenta[1][$j][5];
-                }
-                if(isset($this->listPuntosVenta[1][$j+1][5])){
-                    $valuej1=$this->listPuntosVenta[1][$j+1][5];
-                }
-                
-                if($valuej<$valuej1){
-                    $aux=$this->listPuntosVenta[1][$j];
-                    $this->listPuntosVenta[1][$j]=$this->listPuntosVenta[1][$j+1];;
-                    $this->listPuntosVenta[1][$j+1]=$aux;
-                }
-            }
-        }
-*/
+        /*    for($i=0;$i<count($this->listPuntosVenta[1]);$i++){
+          for($j=0;$j<count($this->listPuntosVenta[1])-1;$j++){
+          $valuej=0;
+          $valuej1=0;
+          if(isset($this->listPuntosVenta[1][$j][5])){
+          $valuej=$this->listPuntosVenta[1][$j][5];
+          }
+          if(isset($this->listPuntosVenta[1][$j+1][5])){
+          $valuej1=$this->listPuntosVenta[1][$j+1][5];
+          }
+
+          if($valuej<$valuej1){
+          $aux=$this->listPuntosVenta[1][$j];
+          $this->listPuntosVenta[1][$j]=$this->listPuntosVenta[1][$j+1];;
+          $this->listPuntosVenta[1][$j+1]=$aux;
+          }
+          }
+          }
+         */
         $this->listPuntosVenta[3] = 0;
 
         //recorrer lista para eliminar pdvs no encontrados 
@@ -230,7 +246,7 @@ class FormaPagoForm extends CFormModel {
                     if ($pdv[5] == 100) {
                         $this->listPuntosVenta[3] = 1;
                     }
-                    
+
                     foreach ($pdv[4] as $indiceProd => $producto) {
                         $arrSaldo = $this->decimalToUnidFracc($producto->SALDO);
                         if ($arrSaldo['UNIDAD'] <= 0 && $arrSaldo['FRACCION'] <= 0) {
@@ -241,8 +257,8 @@ class FormaPagoForm extends CFormModel {
                             $this->listPuntosVenta[1][$indicePdv][4][$indiceProd]->CANTIDAD_FRACCION = $arrCantidad['FRACCION'];
                             $this->listPuntosVenta[1][$indicePdv][4][$indiceProd]->SALDO_UNIDAD = $arrSaldo['UNIDAD'];
                             $this->listPuntosVenta[1][$indicePdv][4][$indiceProd]->SALDO_FRACCION = $arrSaldo['FRACCION'];
-                            $this->listPuntosVenta[1][$indicePdv][4][$indiceProd]->COMPLETITUD_UNIDAD = $arrSaldo['UNIDAD']>=$arrCantidad['UNIDAD'];
-                            $this->listPuntosVenta[1][$indicePdv][4][$indiceProd]->COMPLETITUD_FRACCION = $arrSaldo['FRACCION']>=$arrCantidad['FRACCION'];
+                            $this->listPuntosVenta[1][$indicePdv][4][$indiceProd]->COMPLETITUD_UNIDAD = $arrSaldo['UNIDAD'] >= $arrCantidad['UNIDAD'];
+                            $this->listPuntosVenta[1][$indicePdv][4][$indiceProd]->COMPLETITUD_FRACCION = $arrSaldo['FRACCION'] >= $arrCantidad['FRACCION'];
                         }
                     }
                 } else {
@@ -253,13 +269,13 @@ class FormaPagoForm extends CFormModel {
     }
 
     private function decimalToUnidFracc($n) {
-        /*$aux = (string) $n;
-        $n = explode(".", $aux);
-        return array(
-            'UNIDAD' => isset($n[0]) ? $n[0] : 0,
-            'FRACCION' => isset($n[1]) ? $n[1] : 0
-        );*/
-        
+        /* $aux = (string) $n;
+          $n = explode(".", $aux);
+          return array(
+          'UNIDAD' => isset($n[0]) ? $n[0] : 0,
+          'FRACCION' => isset($n[1]) ? $n[1] : 0
+          ); */
+
         return array(
             'UNIDAD' => $n,
             'FRACCION' => 0
@@ -285,7 +301,7 @@ class FormaPagoForm extends CFormModel {
             '6' => array('inicio' => 'horaInicioLunesASabado', 'fin' => 'horaFinLunesASabado'),
             'festivo' => array('inicio' => 'horaInicioDomingoFestivo', 'fin' => 'horaFinDomingoFestivo')
         );
-        
+
         $horaIniServicio = "07:00:00";
         $horaFinServicio = "23:00:00";
 
@@ -328,20 +344,34 @@ class FormaPagoForm extends CFormModel {
         return $rows;
     }
 
-    public
-            function fechaValidate($attribute, $params) {
-        $listHoras = $this->listDataHoras();
-        $valido = false;
+    public function fechaValidate($attribute, $params) {
+        if ($this->fechaEntrega != null) {
+            $listHoras = $this->listDataHoras();
+            $valido = false;
 
-        foreach ($listHoras as $hora) {
-            if ($hora['fecha'] == $this->fechaEntrega) {
-                $valido = true;
-                break;
+            foreach ($listHoras as $hora) {
+                if ($hora['fecha'] == $this->fechaEntrega) {
+                    $valido = true;
+                    break;
+                }
+            }
+
+            if (!$valido) {
+                $this->addError('fechaEntrega', $this->getAttributeLabel('fechaEntrega') . " no disponible");
             }
         }
+    }
 
-        if (!$valido) {
-            $this->addError('fechaEntrega', $this->getAttributeLabel('fechaEntrega') . " no disponible");
+    public function validarPasos($pasosDisponibles, &$paso) {
+        //validar pasos anteriores
+        foreach ($pasosDisponibles as $idx => $pasoAux) {
+            if(strcmp($pasoAux, $paso) == 0)
+                break;
+
+            if (!isset($this->pasoValidado[$pasoAux])) {
+                $paso = $pasoAux;
+                break;
+            }
         }
     }
 

@@ -267,6 +267,10 @@ class EShoppingCart extends CMap {
                 parent::add($key, $product);
         
         $this->setCodigoPerfil($codigoPerfil);
+        
+        if(isset(Yii::app()->session[Yii::app()->params->sesion['tipoEntrega']]) && Yii::app()->session[Yii::app()->params->sesion['tipoEntrega']] ==Yii::app()->params->entrega['tipo']['presencial']){
+            $this->shipping = 0;
+        }
     }
 
     /**

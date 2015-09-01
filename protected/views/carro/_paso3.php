@@ -23,24 +23,7 @@ $form = $this->beginWidget('CActiveForm', array(
 <fieldset>
     <div class="ui-field-container ui-bar ui-bar-a contentPaso3 ui-corner-all">
         <h2>Forma de pago</h2>
-        <?php foreach ($listFormaPago as $idx => $objFormaPago): ?>
-            <label for="FormaPagoForm_idFormaPago_<?php echo $objFormaPago->idFormaPago ?>"><?php echo $objFormaPago->formaPago ?></label>
-            <input type="radio" data-credirebaja="<?php echo $objFormaPago->idFormaPago == Yii::app()->params->formaPago['idCredirebaja'] ? "1" : "0" ?>" name="FormaPagoForm[idFormaPago]" id="FormaPagoForm_idFormaPago_<?php echo $objFormaPago->idFormaPago ?>" value="<?php echo $objFormaPago->idFormaPago ?>" <?php echo ($modelPago->idFormaPago == $objFormaPago->idFormaPago ? "checked" : "") ?>>
-            <?php if ($objFormaPago->idFormaPago == Yii::app()->params->formaPago['idCredirebaja']): ?>
-                <div id="div-credirebaja">
-                    <div class="ui-field-container ui-bar ui-bar-a ui-corner-all">
-                        <?php echo $form->labelEx($modelPago, 'tarjetaNumero'); ?>
-                        <?php echo $form->numberField($modelPago, 'tarjetaNumero', array('placeholder' => '000000000000', 'maxlength' => 12)); ?>
-                        <?php echo $form->error($modelPago, 'tarjetaNumero'); ?>
-                        <?php echo $form->labelEx($modelPago, 'numeroCuotas'); ?>
-                        <?php echo $form->dropDownList($modelPago, 'numeroCuotas', FormaPagoForm::listDataCuotas(), array('placeholder' => '0')); ?>
-                        <?php echo $form->error($modelPago, 'numeroCuotas'); ?>
-                    </div>
-                    <div class="space-2"></div>
-                </div>
-            <?php endif; ?>
-        <?php endforeach; ?>
-        <?php echo $form->error($modelPago, 'idFormaPago'); ?>
+        <?php $this->renderPartial('/carro/_formaPago', array('form' => $form, 'model' => $modelPago, 'listFormaPago'=>$listFormaPago)) ?>
     </div>
     <div class="space-2"></div>
 
@@ -51,7 +34,8 @@ $form = $this->beginWidget('CActiveForm', array(
             <div>
                 <div>Nombre o tipo de bono: Bono Cliente Fiel</div>
                 <div>Valor del bono: <?php echo Yii::app()->numberFormatter->format(Yii::app()->params->formatoMoneda['patron'], $modelPago->bono['valor'], Yii::app()->params->formatoMoneda['moneda']); ?></div>
-                <div>Vigencia del bono: NA <?php //echo $modelPago->bono['vigencia']->format('Y-m-d')  ?></div>
+                <div>Vigencia inicial del bono: <?php echo $modelPago->bono['vigenciaInicio'] ?></div>
+                <div>Vigencia final del bono: <?php echo $modelPago->bono['vigenciaFin'] ?></div>
                 <div class="utilBono">¿Desea utilizar este bono?</div>
                 <?php //echo $form->radioButton($modelPago, 'usoBono', array('value' => '1', 'data-role' => 'none')) . 'Si'; ?>
                 <?php //echo $form->radioButton($modelPago, 'usoBono', array('value' => '0', 'data-role' => 'none')) . 'No'; ?>

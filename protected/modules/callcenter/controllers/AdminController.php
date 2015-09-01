@@ -334,16 +334,10 @@ class AdminController extends ControllerOperator {
                     echo CJSON::encode(array('result' => 'error', 'response' => 'Compra no existente'));
                     Yii::app()->end();
                 }
-
-                $estadoCompra=EstadoCompra::model()->findByPk($model->estado);
                 
-                if($estadoCompra==null){
-                      echo CJSON::encode(array('result' => 'error', 'response' => 'Estado inválido'));
-                        Yii::app()->end();
-                }
                 $objObservacion = new ComprasObservaciones;
                 $objObservacion->idCompra = $model->idCompra;
-                $objObservacion->observacion = "<b>Cambio de estado: ".$estadoCompra->compraEstado.".</b> ".$model->observacion;
+                $objObservacion->observacion = $model->observacion;
                 $objObservacion->idOperador = Yii::app()->controller->module->user->id;
                 $objObservacion->notificarCliente = 0;
                 $objObservacion->idTipoObservacion = $model->tipoObservacion;
@@ -351,6 +345,14 @@ class AdminController extends ControllerOperator {
                 if ($model->estado != null) {
                     $transaction = Yii::app()->db->beginTransaction();
                     try {
+                        $estadoCompra=EstadoCompra::model()->findByPk($model->estado);
+
+                        if($estadoCompra==null){
+                            throw new Exception('Estado inválido');
+                        }
+                        
+                        $objObservacion->observacion = "<b>Cambio de estado: ".$estadoCompra->compraEstado.".</b> " . $objObservacion->observacion;
+
                         if (!$objObservacion->save()) {
                             throw new Exception('Error al actualizar estado: ' . $objObservacion->validateErrorsResponse());
                         }

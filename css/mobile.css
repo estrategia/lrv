@@ -2170,12 +2170,21 @@ div.c_cont_com_prod.ui-collapsible.ui-collapsible-inset.ui-corner-all.ui-collaps
     font-size: large;
     font-weight: normal;
 }
-.contentPaso3 .ui-radio label {
-    background-color: #fff;
-    border: 1px solid #e5e5e5;
+
+.contentPaso3 .ui-radio label, .contentPaso3 .ui-collapsible a {
     font-size: small;
     font-weight: normal;
 }
+
+.contentPaso3 > .ui-radio > label, .contentPaso3 .ui-collapsible a {
+    background-color: #fff;
+    border: 1px solid #e5e5e5;
+}
+
+.contentPaso3 .ui-collapsible .ui-collapsible-content {
+    background-color: #D2D2D2;
+}
+
 #div-credirebaja .ui-field-container {
     background: none repeat scroll 0 0 #fff;
     font-size: small;
@@ -2188,7 +2197,7 @@ div.c_cont_com_prod.ui-collapsible.ui-collapsible-inset.ui-corner-all.ui-collaps
 #div-credirebaja .ui-field-container input {
     border: 1px solid #e5e5e5;
 }
-#div-credirebaja .ui-field-container #FormaPagoForm_numeroCuotas-button{
+#div-credirebaja .ui-field-container #FormaPagoForm_cuotasTarjeta-button{
     border: 1px solid #e5e5e5;
     font-size: small;
 }

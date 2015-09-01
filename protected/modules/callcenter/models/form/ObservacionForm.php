@@ -41,7 +41,7 @@ class ObservacionForm extends CFormModel {
     }
 
     public function listTipoObservacion() {
-        return CHtml::listData(TipoObservacion::model()->findAll(), 'idTipoObservacion', 'observacion');
+        return CHtml::listData(TipoObservacion::model()->findAll(array('order'=>'idTipoObservacion')), 'idTipoObservacion', 'observacion');
     }
 
 }

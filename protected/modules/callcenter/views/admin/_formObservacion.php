@@ -18,7 +18,7 @@ $form = $this->beginWidget('CActiveForm', array(
 
 <div class="form-group">
     <?php echo $form->labelEx($model, 'tipoObservacion'); ?>
-    <?php echo $form->dropDownList($model, 'tipoObservacion', $model->listTipoObservacion(), array('prompt' => 'Seleccionar', 'class' => 'form-control')); ?>
+    <?php echo $form->dropDownList($model, 'tipoObservacion', $model->listTipoObservacion(), array('class' => 'form-control')); ?>
     <?php echo $form->error($model, 'tipoObservacion'); ?>
 </div>
 
@@ -30,7 +30,7 @@ $form = $this->beginWidget('CActiveForm', array(
 
 <div class="form-group">
     <?php //echo $form->labelEx($model, 'observacion'); ?>
-    <?php echo $form->textArea($model, 'observacion', array('class' => 'form-control', 'maxlength' => 500, 'style' => 'width:80%')); ?>
+    <?php echo $form->textArea($model, 'observacion', array('class' => 'form-control', 'maxlength' => 500, 'rows'=>5, 'style' => 'width:85%')); ?>
     <?php echo $form->error($model, 'observacion'); ?>
 </div>
 

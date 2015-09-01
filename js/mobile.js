@@ -1265,7 +1265,7 @@ function colapseDireccion() {
     }
 }
 
-$(document).on('change', "#FormaPagoForm_tarjetaTipo, #FormaPagoForm_tarjetaNumero, #FormaPagoForm_tarjetaVerificacion", function() {
+$(document).on('change', "#FormaPagoForm_numeroTarjeta", function() {
     var cantidad = $(this).val();
     cantidad = parseInt(cantidad);
     if (isNaN(cantidad)) {
