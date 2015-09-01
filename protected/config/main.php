@@ -254,7 +254,7 @@ return array(
             'serverGeo' => 'http://www.copservir.com/webService/serverGeo.php',
             'serverLRV' => 'http://www.copservir.com/webService/serverLRV.php',
             'crmLrv' => "http://www.copservir.com/webService/crmLrv.php",
-            'remisionPos'=>"http://www.copservir.com/webService/RemisionPos.php",
+            'remisionPos'=>"http://www.copservir.com/webService/serverLRV.php",
             'remisionPosECommerce'=>"http://www.copservir.com/webService/Pos/RemisionPosEcommerce.php"
             
         ),

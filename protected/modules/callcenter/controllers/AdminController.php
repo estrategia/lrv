@@ -155,7 +155,7 @@ class AdminController extends ControllerOperator {
             }
 
             $client = new SoapClient(null, array(
-                'location' => Yii::app()->params->webServiceUrl['remisionPos'],
+                'location' => Yii::app()->params->webServiceUrl['remisionPosECommerce'],
                 'uri' => "",
                 'trace' => 1
             ));
@@ -163,7 +163,7 @@ class AdminController extends ControllerOperator {
            $result = $client->__soapCall("BorrarCongelada",  array('idPedido' => $model->attributes['idCompra'],'destino'=> $model->attributes['idComercial']));
 
            if($result[0]==1){
-                
+                /*
                 $transaction = Yii::app()->db->beginTransaction();
                 try {
                    
@@ -184,7 +184,7 @@ class AdminController extends ControllerOperator {
                     if (!$objEstadoCompra->save()) {
                         throw new Exception("Error al guardar traza de estado: " . $objEstadoCompra->validateErrorsResponse());
                     }
-                    */
+                   
                     
                     $objObservacion = new ComprasObservaciones;
                     $objObservacion->idCompra = $objCompra->idCompra;
@@ -211,6 +211,7 @@ class AdminController extends ControllerOperator {
                     echo CJSON::encode(array('result' => 'error', 'response' => $exc->getMessage()));
                     Yii::app()->end();
                 }
+                 *  */
            }
             
             //if ($model->save())

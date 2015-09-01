@@ -110,10 +110,10 @@ $(document).on('click', 'button[data-action="saldo-pdv"]', function() {
             Loading.hide();
         },
         success: function(data) {
-            if (data.result == 'ok') {
+            if (data.result == '1') {
                 $('#div-saldos-pdv').html(data.response.htmlSaldo);
             } else {
-                bootbox.alert(data.response);
+                bootbox.alert(data.response.descripcion);
             }
         },
         error: function(jqXHR, textStatus, errorThrown) {
