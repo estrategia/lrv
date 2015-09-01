@@ -82,9 +82,7 @@ $listPdv = PuntoVenta::model()->findAll(array(
             </form>
 
             <div id="div-saldos-pdv">
-                <?php if($objCompra->saldosPdv!=null):?>
-                <?php       $this->renderPartial('/pedido/_saldosPDV', array('respuesta' => unserialize($objCompra->saldosPdv))) ?>
-                <?php endif;?>
+                <?php       $this->renderPartial('/pedido/_saldosPDV', array('respuesta' => $objCompra->getSaldosPDV())) ?>
             </div>
 
         </div>

@@ -637,5 +637,9 @@ class Compras extends CActiveRecord {
             $this->documentoCruce = $digVeri;
         }
     }
+    
+    public function getSaldosPDV(){
+        return unserialize(preg_replace('!s:(\d+):"(.*?)";!e', "'s:'.strlen('$2').':\"$2\";'", $this->saldosPdv));
+    }
 
 }

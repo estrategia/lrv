@@ -767,28 +767,37 @@ class PedidoController extends ControllerOperator {
           //  $idCompra=210372;
 
             $respuesta = $this->buscarsaldos($idCompra, $pdv);
-            $datosSerializados = serialize($respuesta);
-
-            $compra=Compras::model()->findByPk($idCompra);
-            $compra->saldosPdv=$datosSerializados;
-            $compra->save();
-            $htmlRespuesta=$this->renderPartial("_saldosPDV",array("respuesta"=>$respuesta),true);
+            $htmlRespuesta="";
+            if($respuesta[2]!=null){
+                $datosSerializados = serialize($respuesta[2]);
+                $compra=Compras::model()->findByPk($idCompra);
+                $compra->saldosPdv=$datosSerializados;
+                $compra->save();
+                $htmlRespuesta=$this->renderPartial("_saldosPDV",array("respuesta"=>$respuesta[2]),true);
+            }
+            
              echo CJSON::encode(array(
-                    'result' => 'ok',
+                    'result' => $respuesta[0],
                     'response' => array(
-                        'htmlSaldo' => $htmlRespuesta
+                        'htmlSaldo' => $htmlRespuesta,
+                        'descripcion'=>$respuesta[1]
             )));
    
     }
 
     public function buscarsaldos($idCompra, $pdv) {
-
-        $client = new SoapClient(null, array(
+          $client = new SoapClient(null, array(
             'location' => Yii::app()->params->webServiceUrl['remisionPos'],
             'uri' => "",
             'trace' => 1
         ));
-       $result = $client->__soapCall("SaldosSadRemision",  array('idPedido' => $idCompra, 'pdv_despacho' => $pdv));
+       $result = $client->__soapCall("LRVConsultarSaldo",  array('idPedido' => $idCompra, 'pdv_despacho' => $pdv));
+     
+       if($result[2]!= null){
+            for($i=0;$i<count($result[2][1]);$i++){
+                $result[2][1][$i]=get_object_vars($result[2][1][$i]);
+            }
+       }
        return $result;
     }
 
