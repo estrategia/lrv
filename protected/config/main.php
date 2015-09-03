@@ -246,6 +246,7 @@ return array(
             'recordatorioClave' => 'La Rebaja Virtual: Clave de ingreso',
             'bienvenida' => 'La Rebaja Virtual: Bienvenido(a)',
             'pedidoRealizado' => 'La Rebaja Virtual: Pedido realizado',
+            'pedidoRemitido' => 'La Rebaja Virtual: Pedido remitido',
         ),
         'asuntoRecordatorioClave' => 'Clave de Ingreso',
         'asuntoBienvenida' => 'La Rebaja te da la bienvenida',
