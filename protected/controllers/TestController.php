@@ -103,9 +103,10 @@ class TestController extends Controller {
         $client = new SoapClient(null, array(
             'location' => "http://www.copservir.com/webService/crmLrv.php",
             'uri' => "http://www.copservir.com",
-            'trace' => 1
+            'trace' => 1,
+            "exceptions" => 0,
         ));
-        $result = $client->__soapCall("ActualizarBono", array('identificacion' => '123321123321456654'));
+        $result = $client->__soapCall("ConsultarBono", array('identificacion' => '93451033'));
 
         /*if (!empty($result) && $result[0]->ESTADO == 1 && $result[0]->VALOR_BONO > 0) {
             echo ("Bono: " . $result[0]->VALOR_BONO);

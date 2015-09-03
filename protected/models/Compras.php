@@ -333,6 +333,17 @@ class Compras extends CActiveRecord {
             $this->fechaCompra = date('Y-m-d H:i:s');
             $this->seguimiento = 0;
         }
+        
+        if (!$this->isNewRecord){
+            if($this->objFormaPagoCompra != null){
+                $this->objFormaPagoCompra->valor = $this->totalCompra;
+                
+                if(!$this->objFormaPagoCompra->save()){
+                    throw new Exception('Error de actualización forma pago: ' . $this->objFormaPagoCompra->validateErrorsResponse());
+                }
+            }
+        }
+        
         return parent::beforeSave();
     }
 

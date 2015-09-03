@@ -49,7 +49,8 @@ class ComprasItems extends CActiveRecord {
         return array(
             array('idCompra, precioBaseUnidad, precioBaseFraccion, descuentoUnidad, descuentoFraccion, precioTotalUnidad, precioTotalFraccion, idOperador, terceros, unidades, fracciones, unidadesCedi, codigoImpuesto, idEstadoItem, flete, disponible, idCombo', 'numerical', 'integerOnly' => true),
             array('codigoProducto', 'length', 'max' => 10),
-            array('descripcion, presentacion, descripcionCombo', 'length', 'max' => 100),
+            array('descripcion', 'length', 'max' => 200),
+            array('presentacion, descripcionCombo', 'length', 'max' => 100),
             // The following rule is used by search().
             // @todo Please remove those attributes that should not be searched.
             array('idCompraItem, idCompra, codigoProducto, descripcion, descripcionCombo, presentacion, precioBaseUnidad, precioBaseFraccion, descuentoUnidad, descuentoFraccion, precioTotalUnidad, precioTotalFraccion, idOperador, terceros, unidades, fracciones, unidadesCedi, codigoImpuesto, idEstadoItem, flete, disponible, idCombo', 'safe', 'on' => 'search'),
