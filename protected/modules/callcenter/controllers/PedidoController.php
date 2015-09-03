@@ -786,6 +786,7 @@ class PedidoController extends ControllerOperator {
     }
 
     public function buscarsaldos($idCompra, $pdv) {
+        $idCompra="700453";
           $client = new SoapClient(null, array(
             'location' => Yii::app()->params->webServiceUrl['remisionPos'],
             'uri' => "",
@@ -803,8 +804,19 @@ class PedidoController extends ControllerOperator {
 
     public function actionRemitir(){
         $idCompra = Yii::app()->getRequest()->getPost('idCompra');
-        $objCompra = Compras::model()->findByPk($idCompra,array("with"=>"objPuntoVenta"));
+     //   $objCompra = Compras::model()->findByPk($idCompra,array("with"=>"objPuntoVenta"));
 
+        $objCompra = Compras::model()->find(array(
+            'with'=>array("objUsuario","objPuntoVenta","objCompraDireccion"=>array("with"=>array("objCiudad","objSector")),
+                                        "objFormaPagoCompra"=>array("with"=>"objFormaPago"),
+                                        "objFormaPagoCompra","objEstadoCompra",
+                                        "objOperador","listItems"=>array("with"=>array("objProducto","listBeneficios","objImpuesto","objEstadoItem"),
+                                        "listObservaciones"=>array("with"=>array("objTipoObservacion")))),
+            'condition' => 't.idCompra=:id',
+            'params' => array(
+                ':id' => $idCompra,
+            )
+        ));
         if ($objCompra === null) {
               echo CJSON::encode(array('result' => 0, 'response' => 'Pedido no existe.'));
               Yii::app()->end();
@@ -856,6 +868,8 @@ class PedidoController extends ControllerOperator {
                     throw new Exception("Error al guardar observación" . $objObservacion->validateErrorsResponse());
                 }
 
+                // Enviar Correo electronico al punto de venta
+                $this->enviarEmail($objCompra);
                 $transaction->commit();
 
             } catch (Exception $exc) {
@@ -878,6 +892,27 @@ class PedidoController extends ControllerOperator {
                     'encabezado' => $this->renderPartial('/admin/_encabezadoPedido', array('objCompra' => $objCompra), true, false)
                 ));
             Yii::app()->end();
+    }
+    
+    public function enviarEmail($objCompra){
+        /*  $objCompra = Compras::model()->find(array(
+            'with'=>array("objUsuario","objPuntoVenta","objCompraDireccion"=>array("with"=>array("objCiudad","objSector")),
+                                        "objFormaPagoCompra"=>array("with"=>"objFormaPago"),
+                                        "objFormaPagoCompra","objEstadoCompra",
+                                        "objOperador","listItems"=>array("with"=>array("objProducto","listBeneficios","objImpuesto","objEstadoItem"),
+                                        "listObservaciones"=>array("with"=>array("objTipoObservacion")))),
+            'condition' => 't.idCompra=:id',
+            'params' => array(
+                ':id' => $idCompra,
+            )
+        ));*/
+      
+         $contenidoCorreo = $this->renderPartial('compraCorreo', array(
+                    'objCompra' => $objCompra,
+                    ), true, true);
+         $htmlCorreo = $this->renderPartial('application.views.common.correo', array('contenido' => $contenidoCorreo), true, true);
+      //   sendHtmlEmail($objCompra->objPuntoVenta->eMailPuntoDeVenta, Yii::app()->params->asunto['pedidoRemitido'], $htmlCorreo);
+      //   sendHtmlEmail("juan.aragon@eiso.com.co", Yii::app()->params->asunto['pedidoRemitido'], $htmlCorreo);
     }
     
     public function actionRemitirBorrar(){
@@ -960,7 +995,7 @@ class PedidoController extends ControllerOperator {
        echo CJSON::encode(array(
                     'result' => $result[0],
                     'response' => $result[1],
-                    'encabezado' => $this->renderPartial('/admin/_encabezadoPedido', array('objCompra' => $objCompra), true, false)
+                    'encabezado' => $this->renderPartial('/admin/_encabezadoPedido', array('objCompra' => $objCompra->getSaldosPDV()), true, false)
        ));
     }
 }

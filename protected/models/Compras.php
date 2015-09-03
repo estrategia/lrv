@@ -271,9 +271,10 @@ class Compras extends CActiveRecord {
     public function searchBusqueda($form) {
         $criteria = new CDbCriteria;
         $criteria->with = "objUsuario";
-        $condition = "t.tipoEntrega=:tipoEntrega";
-        $params = array(':tipoEntrega' => Yii::app()->params->entrega["tipo"]['domicilio']);
-
+    //    $condition = "t.tipoEntrega=:tipoEntrega";
+    //    $params = array(':tipoEntrega' => Yii::app()->params->entrega["tipo"]['domicilio']);
+        $condition = "true ";
+        $params = array();
         if ($form['tipo'] == 'criterio') {
             if ($form['criterio'] == 1) {
                 $nombre = trim($form['valorCriterio']);
@@ -640,6 +641,16 @@ class Compras extends CActiveRecord {
     
     public function getSaldosPDV(){
         return unserialize(preg_replace('!s:(\d+):"(.*?)";!e', "'s:'.strlen('$2').':\"$2\";'", $this->saldosPdv));
+    }
+    
+    public function getPuntosCompra(){
+        $puntos=  ComprasPuntos::model()->find("idCompra=:idcompra",array("idcompra"=>$this->idCompra));
+        
+        if(!$puntos){
+            return 0;
+        }else{
+            return $puntos->cantidadPuntos;
+        }
     }
 
 }
