@@ -2,6 +2,17 @@
 
 class TestController extends Controller {
     
+    public function actionCorreo(){
+        
+        try{
+            sendHtmlEmail("pruebaeñe@gmail.com", "Prueba envio 1", "Esto es una prueba");
+            echo "Enviado";
+        }  catch (Exception $exc){
+            echo "Error: " . $exc->getMessage() . "<br/><br/>";
+            echo $exc->getTraceAsString();
+        }
+    }
+    
     public function actionCf(){
          $codigoPerfil = Yii::app()->shoppingCart->getCodigoPerfil();
          
@@ -92,10 +103,17 @@ class TestController extends Controller {
     }
     
     public function actionBeneficios(){
-        $client = new SoapClient("http://sii.copservir.com/beneficios/sweb/wslrv");
-        $result = $client->setBeneficios(0);
+        try{
+        $client = new SoapClient("http://sii.copservir.com/beneficios/sweb/wslrv", array(
+             'uri' => "",
+                'trace' => 1,
+         ));
+        $result = $client->setBeneficios(100);
         
         CVarDumper::dump($result,10,true);
+        }  catch (Exception $e){
+            echo $e->getMessage();
+        }
         
     }
 
