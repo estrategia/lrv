@@ -92,8 +92,13 @@ class TestController extends Controller {
     }
     
     public function actionBeneficios(){
-        $client = new SoapClient("http://sii.copservir.com/beneficios/sweb/wslrv");
-        $result = $client->setBeneficios(0);
+        $client = new SoapClient("http://localhost/copservir/beneficios/sweb/wslrv", array(
+            'trace' => 1,
+            'cache_wsdl' => WSDL_CACHE_NONE
+        ));
+        //http://localhost/copservir/beneficios/sweb/wslrv
+        //http://sii.copservir.com/beneficios/sweb/wslrv
+        $result = $client->setBeneficios(11200);
         
         CVarDumper::dump($result,10,true);
         

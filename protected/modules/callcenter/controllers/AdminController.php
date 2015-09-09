@@ -65,9 +65,31 @@ class AdminController extends ControllerOperator {
             $fecha->modify("-$dias days");
             $model->fechaCompra = $fecha->format('Y-m-d H:i:s');
 
+            $sort="";
+            switch ($parametro==1){
+                case 1:  $sort="t.seguimiento DESC, t.fechaCompra DESC";
+                    break;
+                case 2: $sort="t.fechaEntrega DESC";
+                    break; 
+                case 3: $sort="t.fechaEntrega DESC";
+                    break;
+                case 4: $sort="t.fechaEntrega DESC";
+                    break;
+                case 5: $sort="t.fechaCompra DESC";
+                    break;
+                case 6: $sort="t.fechaCompra DESC";
+                    break;
+                case 7: $sort="t.fechaCompra DESC";
+                    break;
+                case 10: $sort="t.fechaCompra DESC";
+                    break;
+                default: $sort="t.fechaCompra DESC";
+                    break;
+            }
+            
             $this->render('pedidos', array(
                 'model' => $model,
-                'dataProvider' => $model->search(array('order' => 't.seguimiento DESC, t.fechaCompra DESC', 'operadorPedido' => true)),
+                'dataProvider' => $model->search(array('order' => $sort, 'operadorPedido' => true)),
                 'arrCantidadPedidos' => Compras::cantidadComprasPorEstado($model->fechaCompra)
             ));
         } else {
@@ -154,70 +176,79 @@ class AdminController extends ControllerOperator {
                   Yii::app()->end();
             }
 
-            $client = new SoapClient(null, array(
-                'location' => Yii::app()->params->webServiceUrl['remisionPosECommerce'],
-                'uri' => "",
-                'trace' => 1
-            ));
-            
-           $result = $client->__soapCall("BorrarCongelada",  array('idPedido' => $model->attributes['idCompra'],'destino'=> $model->attributes['idComercial']));
+            try{
+                $client = new SoapClient(null, array(
+                    'location' => Yii::app()->params->webServiceUrl['remisionPosECommerce'],
+                    'uri' => "",
+                    'trace' => 1
+                ));
 
-           if($result[0]==1){
-                /*
-                $transaction = Yii::app()->db->beginTransaction();
-                try {
-                   
-                    /*$objCompra->idEstadoCompra = Yii::app()->params->callcenter['estadoCompra']['estado']['remisionBorrada'];
-                    $objCompra->generarDocumentoCruce(Yii::app()->controller->module->user->id);
+               $result = $client->__soapCall("BorrarCongelada",  array('idPedido' => $model->attributes['idCompra'],'destino'=> $model->attributes['idComercial']));
 
-                    // Guardar el cambio de estado de la remisión
-                    if (!$objCompra->save()) {
-                        throw new Exception('Error de asignación: ' . $objCompra->validateErrorsResponse());
-                    }
-                    
-                    $objEstadoCompra = new ComprasEstados;
-                    $objEstadoCompra->idCompra = $objCompra->idCompra;
-                    $objEstadoCompra->idEstadoCompra = Yii::app()->params->callcenter['estadoCompra']['estado']['remisionBorrada'];
-                    $objEstadoCompra->idOperador = Yii::app()->controller->module->user->id;
+                  if(!$result[0]==1){
 
-                    // guardar en ComprasEstados
-                    if (!$objEstadoCompra->save()) {
-                        throw new Exception("Error al guardar traza de estado: " . $objEstadoCompra->validateErrorsResponse());
-                    }
-                   
-                    
-                    $objObservacion = new ComprasObservaciones;
-                    $objObservacion->idCompra = $objCompra->idCompra;
-                    $objObservacion->observacion = "Cambio de Estado: Remisión borrada del POS del PDV. " . $objPuntoVenta->nombrePuntoDeVenta;
-                    $objObservacion->idOperador = Yii::app()->controller->module->user->id;
-                    $objObservacion->notificarCliente = 0;
-
-                    // Guardar las observaciones
-                    if (!$objObservacion->save()) {
-                        throw new Exception("Error al guardar observación" . $objObservacion->validateErrorsResponse());
-                    }
-
-                    $transaction->commit();
-
-                } catch (Exception $exc) {
-                    Yii::log($exc->getMessage() . "\n" . $exc->getTraceAsString(), CLogger::LEVEL_ERROR, 'application');
-
+                    Yii::app()->user->setFlash('alert alert-success', "La remisión ha sido borrada con éxito del punto de venta ".$model->attributes['idComercial']);
+                    /*
+                    $transaction = Yii::app()->db->beginTransaction();
                     try {
-                        $transaction->rollBack();
-                    } catch (Exception $txexc) {
-                        Yii::log($txexc->getMessage() . "\n" . $txexc->getTraceAsString(), CLogger::LEVEL_ERROR, 'application');
+
+                        /*$objCompra->idEstadoCompra = Yii::app()->params->callcenter['estadoCompra']['estado']['remisionBorrada'];
+                        $objCompra->generarDocumentoCruce(Yii::app()->controller->module->user->id);
+
+                        // Guardar el cambio de estado de la remisión
+                        if (!$objCompra->save()) {
+                            throw new Exception('Error de asignación: ' . $objCompra->validateErrorsResponse());
+                        }
+
+                        $objEstadoCompra = new ComprasEstados;
+                        $objEstadoCompra->idCompra = $objCompra->idCompra;
+                        $objEstadoCompra->idEstadoCompra = Yii::app()->params->callcenter['estadoCompra']['estado']['remisionBorrada'];
+                        $objEstadoCompra->idOperador = Yii::app()->controller->module->user->id;
+
+                        // guardar en ComprasEstados
+                        if (!$objEstadoCompra->save()) {
+                            throw new Exception("Error al guardar traza de estado: " . $objEstadoCompra->validateErrorsResponse());
+                        }
+
+
+                        $objObservacion = new ComprasObservaciones;
+                        $objObservacion->idCompra = $objCompra->idCompra;
+                        $objObservacion->observacion = "Cambio de Estado: Remisión borrada del POS del PDV. " . $objPuntoVenta->nombrePuntoDeVenta;
+                        $objObservacion->idOperador = Yii::app()->controller->module->user->id;
+                        $objObservacion->notificarCliente = 0;
+
+                        // Guardar las observaciones
+                        if (!$objObservacion->save()) {
+                            throw new Exception("Error al guardar observación" . $objObservacion->validateErrorsResponse());
+                        }
+
+                        $transaction->commit();
+
+                    } catch (Exception $exc) {
+                        Yii::log($exc->getMessage() . "\n" . $exc->getTraceAsString(), CLogger::LEVEL_ERROR, 'application');
+
+                        try {
+                            $transaction->rollBack();
+                        } catch (Exception $txexc) {
+                            Yii::log($txexc->getMessage() . "\n" . $txexc->getTraceAsString(), CLogger::LEVEL_ERROR, 'application');
+                        }
+
+                        echo CJSON::encode(array('result' => 'error', 'response' => $exc->getMessage()));
+                        Yii::app()->end();
                     }
+                     *  */
+               }else{
+                   Yii::app()->user->setFlash('alert alert-danger', "La remisión no ha sido borrada con éxito del punto de venta ".$model->attributes['idComercial']."<br/>"
+                           .$result[1]);
+               }
 
-                    echo CJSON::encode(array('result' => 'error', 'response' => $exc->getMessage()));
-                    Yii::app()->end();
-                }
-                 *  */
-           }
-            
-            //if ($model->save())
-            //    $this->redirect(array('admin', 'usuario' => $model->usuario));
+                //if ($model->save())
+                //    $this->redirect(array('admin', 'usuario' => $model->usuario));
+          }
+          catch(Exception $e){
+                  Yii::app()->user->setFlash('alert alert-danger', "Error  al borrar la remisión por problemas de conexión con el punto de venta ".$model->attributes['idComercial']);
+          }
         }
-
         Yii::import('ext.select2.Select2');
         $listPdv = PuntoVenta::model()->findAll(array('order' => 'idComercial'));
         $this->render('remisionBorrar', array(

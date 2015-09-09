@@ -19,12 +19,13 @@ return array(
             'username' => 'root',
             //'password' => '',
             'charset' => 'UTF8',
-            'tablePrefix' => '', // even empty table prefix required!!!
+            //'tablePrefix' => '', // even empty table prefix required!!!
             'emulatePrepare' => true,
             'enableProfiling' => true,
-            'schemaCacheID' => 'cache',
-            'queryCacheID' => 'cache',
-            'schemaCachingDuration' => 120
+            //'schemaCacheID' => 'cache',
+            //'queryCacheID' => 'cache',
+            //'schemaCachingDuration' => 120,
+            'enableParamLogging' => true,
         ),
         'log' => array(
             'class' => 'CLogRouter',

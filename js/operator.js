@@ -68,6 +68,31 @@ function gestionPedido(url, data) {
 }
 
 
+function buscarProductos(text,obj,request){
+     $.ajax({
+                    type: 'POST',
+                    async: true,
+                    url: request + '/callcenter/pedido/buscar',
+                    data: {busqueda: text, compra: $(obj).attr('data-pedido')},
+                    beforeSend: function() {
+                        $('#modal-productos-busqueda').remove();
+                        Loading.show();
+                    },
+                    success: function(data) {
+                        $('#container').append(data);
+                        $('#modal-productos-busqueda').modal('show');
+                    },
+                    complete: function() {
+                        Loading.hide();
+                    },
+                    error: function(jqXHR, textStatus, errorThrown) {
+                        Loading.hide();
+                        bootbox.alert('Error: ' + jqXHR.responseText);
+                    }
+                });
+}
+
+
 $(document).on('click', 'button[data-action="asignar-pdv"]', function() {
     $.ajax({
         type: 'POST',
@@ -140,6 +165,7 @@ $(document).on('click', 'button[data-action="remitir"]', function() {
         success: function(data) {
             if(data.result==1){
                 $('#div-encabezado-pedido').html(data.encabezado);
+                $('#div-pedido-observaciones').html(data.htmlObservaciones);
             }
             bootbox.alert(data.response);
             
@@ -167,6 +193,7 @@ $(document).on('click', 'button[data-action="remitirborrar"]', function() {
         success: function(data) {
               if(data.result==1){
                   $('#div-encabezado-pedido').html(data.encabezado);
+                  $('#div-pedido-observaciones').html(data.htmlObservaciones);
               }
               bootbox.alert(data.response);
            
@@ -285,32 +312,29 @@ $(document).on('change', "#notificacion-form #NotificacionForm_tipoObservacion",
     }
 });
 
+$( "#busqueda-buscar" ).keypress(function(event) {
+    if ( event.which == 13 ) {
+        
+           var text = $.trim($('#busqueda-buscar').val());
+            if (!text) {
+                bootbox.alert('Búsqueda no puede estar vacío');
+            } else {
+                 buscarProductos(text,this,requestUrl);
+               
+            } 
+            return false;
+    }
+});
+
+
+
+
 $(document).on('click', "button[data-role='busquedapedido']", function() {
     var text = $.trim($('#busqueda-buscar').val());
     if (!text) {
         bootbox.alert('Búsqueda no puede estar vacío');
     } else {
-        $.ajax({
-            type: 'POST',
-            async: true,
-            url: requestUrl + '/callcenter/pedido/buscar',
-            data: {busqueda: text, compra: $(this).attr('data-pedido')},
-            beforeSend: function() {
-                $('#modal-productos-busqueda').remove();
-                Loading.show();
-            },
-            success: function(data) {
-                $('#container').append(data);
-                $('#modal-productos-busqueda').modal('show');
-            },
-            complete: function() {
-                Loading.hide();
-            },
-            error: function(jqXHR, textStatus, errorThrown) {
-                Loading.hide();
-                bootbox.alert('Error: ' + jqXHR.responseText);
-            }
-        });
+        buscarProductos(text,this,requestUrl);
     }
 });
 

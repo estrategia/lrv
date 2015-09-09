@@ -47,7 +47,7 @@
                     </td>
                 </tr> -->
                 <tr>
-                    <td valign="top" style="border-left:1px solid #dddddd;border-right:1px solid #dddddd;border-bottom:1px solid #dddddd;color:#444444;background:#f9f9f9">
+                    <td valign="top" width="50%" style="border-left:1px solid #dddddd;border-right:1px solid #dddddd;border-bottom:1px solid #dddddd;color:#444444;background:#f9f9f9">
                         <p>
                             <b>Nombre destinatario:</b>
                             <?php echo $objCompra->objCompraDireccion->nombre ?>
