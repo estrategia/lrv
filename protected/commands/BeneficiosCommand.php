@@ -13,6 +13,13 @@ class BeneficiosCommand extends CConsoleCommand {
     }
     
     
+    public function actionTestMemory(){
+            
+               echo "Asignada: ". memory_get_usage(true);echo "\n";
+                echo "Usada: ". memory_get_usage(false);echo "\n";
+                echo "Libre: ". (memory_get_usage(true)-memory_get_usage(false));echo "\n";
+    }
+    
     //put your code here
     public function actionSincronizarbeneficios() { // recibe el parámetro de id de sincronización
   //       Yii::import('application.modules.beneficios.models.sincrolrv.*');
@@ -21,12 +28,25 @@ class BeneficiosCommand extends CConsoleCommand {
            Yii::import('application.models.BeneficiosProductos');
            Yii::import('application.models.BeneficiosPuntosVenta');
            Yii::app()->db->createCommand("SET FOREIGN_KEY_CHECKS=0")->execute(); 
-           
+           ini_set('memory_limit', '-1');
+      
            $pendientesSincronizar=true;
            do{
-                $arrBeneficios = array();
+               unset($arrBeneficios);
+               unset($result);
+               unset($idSincronizacion);
+               unset($arrTiposBeneficio);
+               unset($benefProd);
+               unset($beneficio);
+               unset($beneficioTipo);
+               unset($objBenefPdv);
+               unset($objBeneficio);
+               
+           
+                 $arrBeneficios = array();
                 //Beneficios-BeneficiosProductos
-                $sql="select max(idBeneficioSincronizado) as maximo from t_Beneficios" ; //
+                
+                 $sql="select max(idBeneficioSincronizado) as maximo from t_Beneficios" ; //
                 $result = Yii::app()->db->createCommand($sql)->queryAll();
                 $transaction = Yii::app()->db->beginTransaction();
                 $idSincronizacion=0; 
@@ -49,8 +69,9 @@ class BeneficiosCommand extends CConsoleCommand {
                 if($result['Result']==2){
                     $pendientesSincronizar=false;
                 }
-
+              
                 if($result['Result']==1){
+                        $pendientesSincronizar=true;
                         $arrTiposBeneficio=$result['arrTiposBeneficio'];
                         $arrBeneficios=$result['arrBeneficios'];
 
