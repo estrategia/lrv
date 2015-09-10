@@ -112,6 +112,7 @@ class AdminController extends ControllerOperator {
                 $fecha = new DateTime;
                 $dias = Yii::app()->params->callcenter['pedidos']['diasVisualizar'];
                 $fecha->modify("-$dias days");
+                $model->fechaCompra = $fecha->format('Y-m-d H:i:s');
 
                 $this->render('pedidos', array(
                     'model' => $model,

@@ -192,11 +192,13 @@ class Compras extends CActiveRecord {
                 
                 $condition .= " AND (t.idEstadoCompra=:estadoCompra OR (t.seguimiento=1 AND t.fechaEntrega BETWEEN '" . $fecha1->format('Y-m-d H:i:s') . "' AND '" . $fecha2->format('Y-m-d H:i:s') . "'))";
             } else {
-                $condition .= " AND t.idEstadoCompra=:estadoCompra";
+                if($this->idEstadoCompra != null && !empty($this->idEstadoCompra)){
+                    $condition .= " AND t.idEstadoCompra=:estadoCompra";
+                }
             }
-
-            $paramsCondition[':estadoCompra'] = $this->idEstadoCompra;
-
+            if($this->idEstadoCompra != null && !empty($this->idEstadoCompra)){
+                $paramsCondition[':estadoCompra'] = $this->idEstadoCompra;
+            }
 
             $criteria->condition = $condition;
             $criteria->params = $paramsCondition;
@@ -531,12 +533,12 @@ class Compras extends CActiveRecord {
             $query2 = "SELECT COUNT(c.idCompra) cantidad
             FROM t_Compras c
             JOIN t_ComprasItems ci ON (ci.idCompra=c.idCompra)
-            WHERE ci.terceros=1 AND c.fechaCompra>='$fecha' AND c.tipoEntrega='" . Yii::app()->params->entrega["tipo"]['domicilio'] . "'";
+            WHERE ci.terceros=1 AND c.fechaCompra>='$fecha' ";
         } else {
             $query2 = "SELECT COUNT(c.idCompra) cantidad
             FROM t_Compras c
             JOIN t_ComprasItems ci ON (ci.idCOmpra=c.idCompra)
-            WHERE ci.terceros=1 AND c.idOperador=$idOperador AND c.fechaCompra>='$fecha' AND c.tipoEntrega='" . Yii::app()->params->entrega["tipo"]['domicilio'] . "'";
+            WHERE ci.terceros=1 AND c.idOperador=$idOperador AND c.fechaCompra>='$fecha' ";
         }
         $resultAux2 = Yii::app()->db->createCommand($query2)->queryRow(true);
         $result['terceros'] = $resultAux2['cantidad'];
@@ -545,11 +547,11 @@ class Compras extends CActiveRecord {
         if ($idOperador == null) {
             $query3 = "SELECT COUNT(c.idCompra) cantidad
             FROM t_Compras c
-            WHERE c.seguimiento=1 AND c.tipoEntrega='" . Yii::app()->params->entrega["tipo"]['domicilio'] . "'";
+            WHERE c.seguimiento=1 AND c.fechaCompra>='$fecha' ";
         } else {
             $query3 = "SELECT COUNT(c.idCompra) cantidad
             FROM t_Compras c
-            WHERE c.seguimiento=1 AND c.idOperador=$idOperador AND c.tipoEntrega='" . Yii::app()->params->entrega["tipo"]['domicilio'] . "'";
+            WHERE c.seguimiento=1 AND c.idOperador=$idOperador AND c.fechaCompra>='$fecha' ";
         }
         $resultAux3 = Yii::app()->db->createCommand($query3)->queryRow(true);
         $result['seguimiento'] = $resultAux3['cantidad'];
