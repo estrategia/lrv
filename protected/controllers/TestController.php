@@ -2,6 +2,34 @@
 
 class TestController extends Controller {
     
+    public function actionMemoria(){
+        
+        //ini_set('memory_limit', '100M');
+        //echo  "Asignada: ". memory_get_peak_usage(true);
+        //echo "<br/>";
+        
+        //$asigned_memory = memory_get_usage(true);
+        //$used_memory = memory_get_usage();
+        
+        echo "Asignada: ". (memory_get_usage(true)/1024);echo "<br/>";
+        echo "Usada: ". (memory_get_usage(false)/1024);echo "<br/>";
+        echo "Libre: ". ((memory_get_usage(true)-memory_get_usage(false))/1024);echo "<br/>";
+        
+        /*echo "<br/>";echo "<br/>";
+        $start_memory = memory_get_usage();
+        $foo = "5";
+        echo "$start_memory<br/>";
+        echo memory_get_usage() - $start_memory;*/
+        
+        
+        /*$a = str_repeat("Hello", 4242);
+        echo memory_get_usage() . "\n";
+        echo "<br/>";
+        unset($a);
+        echo memory_get_usage() . "\n";
+        echo "<br/>";*/
+    }
+    
     public function actionCorreo(){
         
         try{

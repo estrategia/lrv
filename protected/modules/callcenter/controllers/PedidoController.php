@@ -910,12 +910,32 @@ class PedidoController extends ControllerOperator {
             )
         ));*/
       
-         $contenidoCorreo = $this->renderPartial('compraCorreo', array(
-                    'objCompra' => $objCompra,
-                    ), true, true);
-         $htmlCorreo = $this->renderPartial('application.views.common.correo', array('contenido' => $contenidoCorreo), true, true);
-      //   sendHtmlEmail($objCompra->objPuntoVenta->eMailPuntoDeVenta, Yii::app()->params->asunto['pedidoRemitido'], $htmlCorreo);
-   //      sendHtmlEmail("juan.aragon@eiso.com.co", Yii::app()->params->asunto['pedidoRemitido'], $htmlCorreo);
+        $contenidoCorreo = $this->renderPartial('compraCorreo', array('objCompra' => $objCompra), true, true);
+        $htmlCorreo = $this->renderPartial('application.views.common.correo', array('contenido' => $contenidoCorreo), true, true);
+        //sendHtmlEmail($objCompra->objPuntoVenta->eMailPuntoDeVenta, Yii::app()->params->asunto['pedidoRemitido'], $htmlCorreo);
+        //sendHtmlEmail("juan.aragon@eiso.com.co", Yii::app()->params->asunto['pedidoRemitido'], $htmlCorreo);
+        //sendHtmlEmail("miguel.sanchez@eiso.com.co", Yii::app()->params->asunto['pedidoRemitido'] . " - " . date("YmdHis"), $htmlCorreo);
+    }
+    
+    public function actionCorreo($idCompra){
+        try{
+            $objCompra = Compras::model()->find(array(
+                'with'=>array("objUsuario","objPuntoVenta","objCompraDireccion"=>array("with"=>array("objCiudad","objSector")),
+                                            "objFormaPagoCompra"=>array("with"=>"objFormaPago"),
+                                            "objFormaPagoCompra","objEstadoCompra",
+                                            "objOperador","listItems"=>array("with"=>array("objProducto","listBeneficios","objImpuesto","objEstadoItem"),
+                                            "listObservaciones"=>array("with"=>array("objTipoObservacion")))),
+                'condition' => 't.idCompra=:id',
+                'params' => array(
+                    ':id' => $idCompra,
+                )
+            ));
+
+            $this->enviarEmail($objCompra);
+            echo "";
+        }  catch (Exception $exc){
+            echo "Error: "  . $exc->getMessage();
+        }
     }
     
     public function actionRemitirBorrar(){

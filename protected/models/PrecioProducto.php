@@ -179,9 +179,9 @@ class PrecioProducto extends Precio {
             $this->precioUnidad = self::redondear($this->precioUnidad,1);
             $this->precioFraccionTotal = self::redondear($this->precioFraccionTotal,1);
             $this->ahorroUnidad = floor($this->precioUnidad * ($this->getPorcentajeDescuento() / 100));
-            $this->ahorroFraccion=  floor($this->precioFraccionTotal * ($this->getPorcentajeDescuento() / 100));
+            //$this->ahorroFraccion=  floor($this->precioFraccionTotal * ($this->getPorcentajeDescuento() / 100));
             $this->ahorroUnidad = self::redondear($this->ahorroUnidad, 1);
-            $this->ahorroFraccion = self::redondear($this->ahorroFraccion, 1);
+            //$this->ahorroFraccion = self::redondear($this->ahorroFraccion, 1);
 
             $this->inicializado = true;
         }
