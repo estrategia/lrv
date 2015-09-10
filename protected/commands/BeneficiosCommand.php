@@ -8,8 +8,8 @@
 
 class BeneficiosCommand extends CConsoleCommand {
     
-    public function actionHola(){
-        echo "hola mundo";
+    public function actionHello(){
+        echo "trying Beneficio's command";
     }
     
     
@@ -36,8 +36,7 @@ class BeneficiosCommand extends CConsoleCommand {
             ));
             
             $result = $client->setBeneficios($idSincronizacion/*$arrTiposBeneficio, $arrBeneficios*/);
-            
-           
+   //         Yii::app()->db->createCommand("SET FOREIGN_KEY_CHECKS=0")->execute(); 
             if($result['Result']!=1){
                  Yii::log("Beneficios no han sido sincronizados correctamente\nDescripción:".$result['Response']. date('Y-m-d H:i:s'), CLogger::LEVEL_INFO, 'application');
                  Yii::app()->end();
@@ -93,7 +92,7 @@ class BeneficiosCommand extends CConsoleCommand {
                 if (!$objBeneficio->save()) {
                     throw new Exception("Error al guardar tBeneficios {id: " . $beneficio['IdBeneficio'] . ", tipo: " . $beneficio['Tipo'] . " error: " . CActiveForm::validate($objBeneficio) . "}");
                 }
-
+                
                 foreach ($beneficio['listBeneficiosProductos'] as $benefProd) {
                     $objBenefProd = new BeneficiosProductos;
                     $objBenefProd->idBeneficio = $objBeneficio->idBeneficio;
@@ -107,8 +106,7 @@ class BeneficiosCommand extends CConsoleCommand {
                         throw new Exception("Error al xx guardar tBeneficiosProductos {idbenef: " . $objBeneficio->idBeneficio . ", id: " . $benefProd['IdBeneficio'] . ", refe: " . $benefProd['Refe'] . " error: " . CActiveForm::validate($objBenefProd) . "}");
                     }
                 }
-
-                foreach ($beneficio['listBeneficiosPuntoVenta'] as $benefPdv) {
+                 foreach ($beneficio['listBeneficiosPuntoVenta'] as $benefPdv) {
                     $objBenefPdv = new BeneficiosPuntosVenta;
                     $objBenefPdv->idBeneficio = $objBeneficio->idBeneficio;
                     $objBenefPdv->idComercial = $benefPdv['IDComercial'];

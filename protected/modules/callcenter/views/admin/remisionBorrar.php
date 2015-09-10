@@ -22,6 +22,10 @@ $form = $this->beginWidget('CActiveForm', array(
 );
 ?>
 
+<?php foreach(Yii::app()->user->getFlashes() as $key => $message):?>
+          <div class="<?php echo $key?>"><?php echo $message ?></div>
+<?php endforeach?>               
+
 <p class="note">Campos con <span class="required">*</span> son obligatorios.</p>
 
 <?php echo $form->errorSummary($model); ?>

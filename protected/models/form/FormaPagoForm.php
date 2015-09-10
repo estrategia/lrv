@@ -51,7 +51,7 @@ class FormaPagoForm extends CFormModel {
             array('usoBono', 'bonoValidate', 'on' => 'pago, finalizar'),
             //array('clienteFielValidate', 'on' => 'pago, finalizar'),
             //array('codigoPromocion', 'promocionValidate', 'on' => 'pago, finalizar'),
-            array('confirmacion', 'compare', 'compareValue' => 1, 'on' => 'confirmacion, finalizar', 'message' => 'Aceptar términos y condiciones'),
+            array('confirmacion', 'compare', 'compareValue' => 1, 'on' => 'confirmacion, finalizar', 'message' => 'Aceptar términos anteriores'),
         );
     }
 
@@ -67,7 +67,7 @@ class FormaPagoForm extends CFormModel {
             'idFormaPago' => 'Forma de pago',
             'numeroTarjeta' => 'Número tarjeta',
             'cuotasTarjeta' => 'Cuotas',
-            'confirmacion' => 'Acepto términos y condiciones',
+            'confirmacion' => 'Acepto términos anteriores',
             'usoBono' => 'Bono'
         );
     }

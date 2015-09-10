@@ -1,14 +1,14 @@
- <div class="form-group">
+<div class="form-group">
      <form id="form-busqueda-criterio" class="form-inline" method="post">
       <div class="row">
             <div class="col-xs-2">
                 <label for="FormBusqueda_criterio">Criterio de búsqueda</label>
             </div>
             <div class="col-xs-2">
-                <?php echo CHtml::dropDownList('FormBusqueda[criterio]', '', array(1 => 'Nombre del cliente', 2 => 'Cédula del cliente', 3 => '#Pedido', 4=>'Punto de venta'), array('id' => 'FormBusqueda_criterio', 'class' => "form-control",'style'=>'width:100%')) ?>
+                <?php echo CHtml::dropDownList('FormBusqueda[criterio]', isset($form['criterio'])?$form['criterio']:'', array(1 => 'Nombre del cliente', 2 => 'Cédula del cliente', 3 => '#Pedido', 4=>'Punto de venta'), array('id' => 'FormBusqueda_criterio', 'class' => "form-control",'style'=>'width:100%')) ?>
             </div>
             <div class="col-xs-2">
-                <input type="text" style="width:100%" class="form-control input-sm" id="FormBusqueda_valorCriterio" name="FormBusqueda[valorCriterio]">
+                <input type="text" style="width:100%" class="form-control input-sm" id="FormBusqueda_valorCriterio" name="FormBusqueda[valorCriterio]" value='<?php echo isset($form['valorCriterio'])?$form['valorCriterio']:''?>'>
             </div>
                 <input type="hidden" name="FormBusqueda[tipo]" value="criterio">
             <div class="col-xs-1">
@@ -28,11 +28,20 @@
             <div class="col-xs-2">
                 <label for="FormBusqueda_operador">Búsqueda por operador</label>
             </div>
+            <?php 
+                $estado=$operador="";
+                if($form!=null){
+                    if($form['tipo']=="operador"){
+                        $estado=$form['estado'];
+                        $operador=$form['operador'];
+                    }
+                }
+            ?>
             <div class="col-xs-2">
-                <?php echo CHtml::dropDownList('FormBusqueda[operador]', '', CHtml::listData(Operador::listData(), 'idOperador', 'nombre'), array('id' => 'FormBusqueda_operador', 'class' => "form-control",'style'=>'width:100%')) ?>
+                <?php echo CHtml::dropDownList('FormBusqueda[operador]', $operador, CHtml::listData(Operador::listData(), 'idOperador', 'nombre'), array('id' => 'FormBusqueda_operador', 'class' => "form-control",'style'=>'width:100%')) ?>
             </div>
             <div class="col-xs-2">
-                <?php echo CHtml::dropDownList('FormBusqueda[estado]', '', $listDataEstado, array('id' => 'FormBusqueda_estado', 'class' => "form-control",'style'=>'width:100%')) ?>
+                <?php echo CHtml::dropDownList('FormBusqueda[estado]', $estado, $listDataEstado, array('id' => 'FormBusqueda_estado', 'class' => "form-control",'style'=>'width:100%')) ?>
             </div>
             <div class="col-xs-1">
                 <input type="hidden" name="FormBusqueda[tipo]" value="operador">
@@ -50,8 +59,16 @@
             <div class="col-xs-2">
                 <label for="FormBusqueda_estado">Búsqueda por estado</label>
             </div>
+             <?php 
+                $estado="";
+                if($form!=null){
+                    if($form['tipo']=="estado"){
+                        $estado=$form['estado'];
+                    }
+                }
+            ?>
             <div class="col-xs-2">
-                <?php echo CHtml::dropDownList('FormBusqueda[estado]', '', $listDataEstado, array('id' => 'FormBusqueda_estado', 'class' => "form-control",'style'=>'width:100%')) ?>
+                <?php echo CHtml::dropDownList('FormBusqueda[estado]', $estado, $listDataEstado, array('id' => 'FormBusqueda_estado', 'class' => "form-control",'style'=>'width:100%')) ?>
             </div>
             <div class="col-xs-2"></div>
             <div class="col-xs-1">

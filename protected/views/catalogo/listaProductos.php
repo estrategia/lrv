@@ -33,7 +33,7 @@
 
     <ul data-role="listview" data-inset="true" data-icon="false" class="c_list_prod_cont" style="margin-top: -1px">
         <?php foreach ($listCombos as $objCombo): ?>
-            <li class="c_list_prod">
+            <li class="c_list_prod combo_list_item">
                 <div class="ui-field-contain clst_prod_cont">
                     <?php
                     $this->renderPartial('_comboElemento', array(

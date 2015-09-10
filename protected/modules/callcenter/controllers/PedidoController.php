@@ -341,8 +341,8 @@ class PedidoController extends ControllerOperator {
                 )
             ));
         }
-
-        $this->renderPartial('buscar', array(
+   
+       $this->renderPartial('buscar', array(
             'listProductos' => $listProductos,
             'listCombos' => $listCombos,
             'objSectorCiudad' => $objCompra->objSectorCiudad,
@@ -786,7 +786,6 @@ class PedidoController extends ControllerOperator {
     }
 
     public function buscarsaldos($idCompra, $pdv) {
-        $idCompra="700453";
           $client = new SoapClient(null, array(
             'location' => Yii::app()->params->webServiceUrl['remisionPos'],
             'uri' => "",
@@ -806,7 +805,7 @@ class PedidoController extends ControllerOperator {
         $idCompra = Yii::app()->getRequest()->getPost('idCompra');
      //   $objCompra = Compras::model()->findByPk($idCompra,array("with"=>"objPuntoVenta"));
 
-        $objCompra = Compras::model()->find(array(
+    /*    $objCompra = Compras::model()->find(array(
             'with'=>array("objUsuario","objPuntoVenta","objCompraDireccion"=>array("with"=>array("objCiudad","objSector")),
                                         "objFormaPagoCompra"=>array("with"=>"objFormaPago"),
                                         "objFormaPagoCompra","objEstadoCompra",
@@ -816,7 +815,10 @@ class PedidoController extends ControllerOperator {
             'params' => array(
                 ':id' => $idCompra,
             )
-        ));
+        ));*/
+        
+        $objCompra = Compras::model()->findByPk($idCompra,array("with"=>"objPuntoVenta"));
+
         if ($objCompra === null) {
               echo CJSON::encode(array('result' => 0, 'response' => 'Pedido no existe.'));
               Yii::app()->end();
@@ -840,7 +842,7 @@ class PedidoController extends ControllerOperator {
             try {
                 $objCompra->idEstadoCompra = Yii::app()->params->callcenter['estadoCompra']['estado']['remitido'];
                 $objCompra->generarDocumentoCruce(Yii::app()->controller->module->user->id);
-
+             
                 // Guardar el cambio de estado de la remisión
                 if (!$objCompra->save()) {
                     throw new Exception('Error de asignación: ' . $objCompra->validateErrorsResponse());
@@ -889,13 +891,14 @@ class PedidoController extends ControllerOperator {
          echo CJSON::encode(array(
                     'result' => $result[0],
                     'response' =>  $result[1],
-                    'encabezado' => $this->renderPartial('/admin/_encabezadoPedido', array('objCompra' => $objCompra), true, false)
+                    'encabezado' => $this->renderPartial('/admin/_encabezadoPedido', array('objCompra' => $objCompra), true, false),
+                    'htmlObservaciones' => $this->renderPartial('/admin/_observaciones', array('objCompra' => $objCompra), true, false),
                 ));
             Yii::app()->end();
     }
     
     public function enviarEmail($objCompra){
-        /*  $objCompra = Compras::model()->find(array(
+    /*      $objCompra = Compras::model()->find(array(
             'with'=>array("objUsuario","objPuntoVenta","objCompraDireccion"=>array("with"=>array("objCiudad","objSector")),
                                         "objFormaPagoCompra"=>array("with"=>"objFormaPago"),
                                         "objFormaPagoCompra","objEstadoCompra",
@@ -912,7 +915,7 @@ class PedidoController extends ControllerOperator {
                     ), true, true);
          $htmlCorreo = $this->renderPartial('application.views.common.correo', array('contenido' => $contenidoCorreo), true, true);
       //   sendHtmlEmail($objCompra->objPuntoVenta->eMailPuntoDeVenta, Yii::app()->params->asunto['pedidoRemitido'], $htmlCorreo);
-      //   sendHtmlEmail("juan.aragon@eiso.com.co", Yii::app()->params->asunto['pedidoRemitido'], $htmlCorreo);
+   //      sendHtmlEmail("juan.aragon@eiso.com.co", Yii::app()->params->asunto['pedidoRemitido'], $htmlCorreo);
     }
     
     public function actionRemitirBorrar(){
@@ -995,7 +998,8 @@ class PedidoController extends ControllerOperator {
        echo CJSON::encode(array(
                     'result' => $result[0],
                     'response' => $result[1],
-                    'encabezado' => $this->renderPartial('/admin/_encabezadoPedido', array('objCompra' => $objCompra->getSaldosPDV()), true, false)
+                    'encabezado' => $this->renderPartial('/admin/_encabezadoPedido', array('objCompra' => $objCompra), true, false),
+                    'htmlObservaciones' => $this->renderPartial('/admin/_observaciones', array('objCompra' => $objCompra), true, false),
        ));
     }
 }
