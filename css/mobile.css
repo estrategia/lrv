@@ -2494,3 +2494,6 @@ ul.yiiPager .selected a {
 .c_list_prod_cont li.combo_list_item.ui-first-child {
     margin-top: 1.5em;
 }
+.combo_list_item .clst_cont_pr_prod {
+    padding-top: 0.8em;
+}
