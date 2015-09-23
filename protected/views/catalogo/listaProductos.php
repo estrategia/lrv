@@ -46,7 +46,7 @@
             </li>
         <?php endforeach; ?>
         <?php foreach ($listProductos as $objProducto): ?>
-            <li class="c_list_prod">
+            <li class="c_list_prod combo_list_item">
                 <div class="ui-field-contain clst_prod_cont">
                     <?php
                     $this->renderPartial('_productoElemento', array(
