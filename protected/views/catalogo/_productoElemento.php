@@ -14,7 +14,6 @@
         </div>
     </div>
 <?php endif; ?>
-<div style="clear:both;"></div>
 <div class="clst_cont_top">
     <div class="clst_pro_img">
         <a href="<?php echo CController::createUrl('/catalogo/producto', array('producto' => $objProducto->codigoProducto,'descripcion'=>  Producto::cadenaUrl($objProducto->descripcionProducto))) ?>" data-ajax="false">
