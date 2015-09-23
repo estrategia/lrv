@@ -51,11 +51,6 @@ $form = $this->beginWidget('CActiveForm', array(
 </fieldset>
 
 <?php if (isset($submit) && $submit): ?>
-    <!--<div class="ui-input-btn ui-btn ui-corner-all ui-shadow ui-btn-r">
-        Continuar
-        <input type="submit" data-enhanced="true" value="Continuar">
-    </div>
--->
     <div class="ui-input-btn ui-btn ui-corner-all ui-shadow ui-btn-r">
         Continuar
         <input type="button" data-enhanced="true" value="Continuar" id="btn-carropagar-siguiente" data-origin="pago" data-redirect="confirmacion">

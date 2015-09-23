@@ -75,11 +75,11 @@ function distanciaCoordenadas($lat1, $lon1, $lat2, $lon2, $unit = 'K') {
     $dlon = $lon1 - $lon2;
     $distance = acos(sin(deg2rad($lat1)) * sin(deg2rad($lat2)) + cos(deg2rad($lat1)) * cos(deg2rad($lat2)) * cos(deg2rad($dlon))) * $radius;
 
-    if ($unit == "K") {
+    if ($unit == "K") {//kilometros
         return ($distance);
-    } else if ($unit == "M") {
+    } else if ($unit == "M") {//millas
         return ($distance * 0.621371192);
-    } else if ($unit == "N") {
+    } else if ($unit == "N") {//millas nauticas
         return ($distance * 0.539956803);
     } else {
         return 0;

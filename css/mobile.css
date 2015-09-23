@@ -138,7 +138,7 @@ ul.ui-listview.ui-listview-inset.ui-corner-all.ui-shadow li a.ui-btn.ui-icon-car
 }
 .ui-bar-f .f_sic{ background: #FFF; text-align: center;color: #919191;font-size: 12.5px;  }
 .ui-bar-f .f_sic p{ margin: 0;  }
-.ui-bar-f .barraf{ background: url("../images/estructura/barra_footer.jpg") repeat-x; min-height: 11px; display: block; }
+.ui-bar-f .barraf, .barraf{ background: url("../images/estructura/barra_footer.jpg") repeat-x; min-height: 11px; display: block; }
 
 /* ---- CONTENT ---- */
 .ui-body-c{  }
@@ -1132,7 +1132,7 @@ div.ccont_filtro .right{float: right; text-align: right; border: 0; margin: 0; w
 div.ccont_filtro .left{float: left; border: 0; margin: 0; width: 50%;}
 
 div.ccont_filtro a.ui-link{ text-decoration: none; }
-div.ccont_filtro a.ui-link img{ padding: .3em .4em 0em .7em; width: 2em; transition:0.5s all; }
+div.ccont_filtro a.ui-link img{ padding: .3em .4em 0em .7em; transition:0.5s all; }
 div.ccont_filtro .left a.ui-link img{ border-right: 1px solid #ccc;}
 div.ccont_filtro .right a.ui-link img{ border-left: 1px solid #ccc;}
 
@@ -1498,7 +1498,7 @@ div.cwl_txt h1.txt_nom{ text-transform: capitalize; font-size: large; padding-bo
     right: 5px;
     display: none; /* Estara oculto por defecto */
     text-indent: -9999px; /* Oculta el texto del enlace */
-    z-index: 1000; /* Evita que otros elementos esten por encima */
+    z-index: 9999; /* Evita que otros elementos esten por encima */
     background: url('../images/iconos/go_top.png') no-repeat;
 }
 

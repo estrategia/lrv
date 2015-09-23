@@ -162,6 +162,16 @@ class EShoppingCart extends CMap {
     public function getCodigoPerfil() {
         return $this->codigoPerfil;
     }
+    
+    public function getEsClienteFiel(){
+        if(isset(Yii::app()->session[Yii::app()->params->usuario['sesion']]) && Yii::app()->session[Yii::app()->params->usuario['sesion']] instanceof Usuario){
+            $objUsuario = Yii::app()->session[Yii::app()->params->usuario['sesion']];
+            return ($objUsuario->esClienteFiel==1);
+        }
+        
+        return false;
+    }
+            
 
     public function getCodigoCiudad() {
         if ($this->objSectorCiudad == null)
@@ -351,7 +361,7 @@ class EShoppingCart extends CMap {
         }
     }
     
-    public function updatePosition($key) {
+    public function updatePositionKey($key) {
         $position = $this->itemAt($key);
         if ($this->objSectorCiudad !== null && $this->codigoPerfil!==null && $position !==null) {
             $position->generate(array(
@@ -361,6 +371,16 @@ class EShoppingCart extends CMap {
             parent::add($key, $position);
 
             $this->applyDiscounts();
+            $this->onUpdatePoistion(new CEvent($this));
+            $this->saveState();
+        }
+    }
+    
+    public function updatePosition(IECartPosition $position) {
+        if ($this->objSectorCiudad !== null && $this->codigoPerfil!==null && $position !==null) {
+            parent::add($position->getId(), $position);
+
+            //$this->applyDiscounts();
             $this->onUpdatePoistion(new CEvent($this));
             $this->saveState();
         }

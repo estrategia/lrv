@@ -1,3 +1,40 @@
+function alerta(mensaje) {
+    $('<div>').mdialog({
+        content: "<div data-role='main'><div class='ui-content' data-role='content' role='main'>" + mensaje + "<a class='ui-btn ui-btn-r ui-corner-all ui-shadow' data-rel='back' href='#'>Aceptar</a></div></div>"
+    });
+}
+
+intervalRelacionados = null;
+
+function animarRelacionado() {
+    $("html, body").animate({scrollTop: 0}, 600);
+    $("#link-relacionados-agregar").css("opacity", "");
+    intervalRelacionados = setInterval(function() {
+        $("#link-relacionados-agregar").animate({opacity: '0.5'}, 400, function() {
+            $("#link-relacionados-agregar").animate({opacity: '1'}, 400);
+        });
+    }, 1000);
+    $("#link-relacionados-agregar").css("display", "");
+    setTimeout(function() {
+        if(intervalRelacionados!=null){
+            clearInterval(intervalRelacionados);
+            intervalRelacionados = null;
+        }
+        $("#link-relacionados-agregar").css("opacity", "");
+    }, 10000);
+}
+
+function quitarRelacionado(){
+    if(intervalRelacionados!=null){
+        clearInterval(intervalRelacionados);
+        intervalRelacionados = null;
+    }
+    $("#link-relacionados-agregar").css("display", "none");
+    $("#link-relacionados-agregar").css("opacity", "");
+    $("#link-relacionados-agregar").attr("href", "#");
+}
+
+
 function ubicacionGPS() {
     if (navigator.geolocation) {
         $.mobile.loading('show');
@@ -79,9 +116,9 @@ $(document).on('click', "a[data-ubicacion='verificacion-domicilio']", function()
         },
         success: function(data) {
             if (data.result == "ok") {
-                if(data.response.domicilio){
+                if (data.response.domicilio) {
                     window.location.replace(data.response.url);
-                }else{
+                } else {
                     $("#popup-ubicacion-gps [data-role='content'] div").html(data.response.mensaje);
                     $("#popup-ubicacion-gps [data-role='content'] a").attr('href', data.response.url);
                     $("#popup-ubicacion-gps").popup("open");
@@ -482,12 +519,12 @@ $(document).on("pagecreate", function(event) {
             countChar(elementArea, elementArea.attr('data-countchar'));
         }
     });
-    
-    $("div[id^='collapsible-direccion-ciudad-']").on( "collapsiblecollapse", function( event, ui ) {
+
+    $("div[id^='collapsible-direccion-ciudad-']").on("collapsiblecollapse", function(event, ui) {
         $("div[id^='div-direccion-form-']").css('display', 'none');
         $("input[id^='DireccionesDespacho_idDireccionDespacho_']").removeAttr("checked");
         $("input[id^='DireccionesDespacho_idDireccionDespacho_']").checkboxradio("refresh");
-    } );
+    });
 });
 
 $(document).on('keyup', "textarea[data-countchar]", function() {
@@ -555,13 +592,13 @@ function recalcularFiltros(tipo) {
     var marcas = {};
     $("input[id^='FiltroForm_listMarcas_']").each(function() {
         if ($(this).is(":checked")) {
-            marcas[$(this).val()]=parseInt($(this).val());
+            marcas[$(this).val()] = parseInt($(this).val());
         }
     });
     var atributos = {};
     $("input[id^='FiltroForm_listFiltros_']").each(function() {
         if ($(this).is(":checked")) {
-            atributos[$(this).val()]=parseInt($(this).attr('data-filtro'));
+            atributos[$(this).val()] = parseInt($(this).attr('data-filtro'));
         }
     });
 
@@ -628,6 +665,7 @@ $(document).on('click', "a[data-cargar='1']", function() {
         url: requestUrl + '/carro/agregar',
         data: {producto: producto, cantidadU: cantidadU, cantidadF: cantidadF},
         beforeSend: function() {
+            quitarRelacionado();
             $.mobile.loading('show');
         },
         complete: function() {
@@ -647,6 +685,11 @@ $(document).on('click', "a[data-cargar='1']", function() {
                     $('<div>').mdialog({
                         content: data.response.dialogoHTML
                     });
+                }
+                
+                if(data.response.relacionados){
+                    $("#link-relacionados-agregar").attr("href", requestUrl+ "/catalogo/relacionados/producto/" + producto);
+                    animarRelacionado();
                 }
             } else {
                 $('<div>').mdialog({
@@ -678,6 +721,7 @@ $(document).on('click', "a[data-cargar='2']", function() {
         data: {combo: combo, cantidad: cantidad},
         beforeSend: function() {
             $.mobile.loading('show');
+            quitarRelacionado();
         },
         complete: function() {
             $.mobile.loading('hide');
@@ -895,9 +939,9 @@ $(document).on('change', "input[data-modificar='1'], input[data-modificar='2'], 
 $(document).on('change', 'input[name="DireccionesDespacho[idDireccionDespacho]"]:radio', function(e) {
     var direccion = $('input[name="DireccionesDespacho[idDireccionDespacho]"]:checked').val();
     $("div[id^='div-direccion-form-']").css('display', 'none');
-    $('#div-direccion-form-'+direccion).css('display', 'block');
+    $('#div-direccion-form-' + direccion).css('display', 'block');
     $('html,body').animate({
-        scrollTop: $('#div-direccion-form-'+direccion).offset().top
+        scrollTop: $('#div-direccion-form-' + direccion).offset().top
     }, 200);
 });
 
@@ -953,10 +997,10 @@ $(document).on('click', "a[data-role='direccion-adicionar-modal']", function() {
             $.mobile.loading('hide');
         },
         success: function(data) {
-                var id = "page-direccion-crear-" + uniqueId();
-                var page = "<div data-role='page' id='" + id + "'><div data-role='main' class='ui-content'>" + data.response.dialogoHTML + "<a href='#' class='ui-btn ui-btn-n ui-corner-all ui-shadow' data-rel='back'>Cerrar</a></div></div>";
-                $('body').append(page);
-                $.mobile.changePage('#' + id, {transition: "pop", role: "dialog", reverse: false});
+            var id = "page-direccion-crear-" + uniqueId();
+            var page = "<div data-role='page' id='" + id + "'><div data-role='main' class='ui-content'>" + data.response.dialogoHTML + "<a href='#' class='ui-btn ui-btn-n ui-corner-all ui-shadow' data-rel='back'>Cerrar</a></div></div>";
+            $('body').append(page);
+            $.mobile.changePage('#' + id, {transition: "pop", role: "dialog", reverse: false});
         },
         error: function(jqXHR, textStatus, errorThrown) {
             $.mobile.loading('hide');
@@ -969,12 +1013,12 @@ $(document).on('click', "input[data-role='direccion-adicionar']", function() {
     var form = $(this).parents("form");
     var modal = $(this).attr("data-modal");
     var data = {modal: modal};
-    
+
     $.ajax({
         type: 'POST',
         async: true,
         url: requestUrl + '/usuario/direccionCrear',
-        data:  $.param(data) + '&' + form.serialize(),
+        data: $.param(data) + '&' + form.serialize(),
         beforeSend: function() {
             $.mobile.loading('show');
         },
@@ -984,12 +1028,12 @@ $(document).on('click', "input[data-role='direccion-adicionar']", function() {
         success: function(data) {
             var data = $.parseJSON(data);
             if (data.result === 'ok') {
-                if(modal==1){
+                if (modal == 1) {
                     $('#div-direcciones-lista').html(data.response.direccionesHTML);
                     $('#div-direcciones-lista').trigger("create");
                     $("div[id^='page-direccion-crear-']").dialog("close");
                     dialogoAnimado(data.response.mensaje);
-                }else{
+                } else {
                     location.reload();
                 }
             } else if (data.result === 'error') {
@@ -1044,15 +1088,17 @@ $(document).on('click', "input[id^='btn-direccion-eliminar-']", function() {
 });
 
 function pasoDespacho(actual, siguiente, boton) {
+    var data = {
+        siguiente: siguiente,
+        direccion: $('input[name="FormaPagoForm[idDireccionDespacho]"]:checked').val()
+    };
+    
     $.ajax({
         type: 'POST',
         //dataType: 'json',
         async: true,
         url: requestUrl + '/carro/pagar/paso/' + actual + '/post/true',
-        data: {
-            siguiente: siguiente,
-            direccion: $('input[name="FormaPagoForm[idDireccionDespacho]"]:checked').val()
-        },
+        data: $.param(data) + '&' + $('#form-direccion-pagoinvitado').serialize(),
         beforeSend: function() {
             boton.button('disable');
             $('div[id^="FormaPagoForm_"].has-error').html('');
@@ -1068,7 +1114,7 @@ function pasoDespacho(actual, siguiente, boton) {
             if (obj.result === 'ok') {
                 window.location.replace(obj.redirect);
             } else if (obj.result === 'error') {
-                alert(obj.response);
+                alerta(obj.response);
                 boton.button('enable');
             } else {
                 $.each(obj, function(element, error) {
@@ -1110,7 +1156,7 @@ function pasoEntrega(actual, siguiente, boton) {
             if (obj.result === 'ok') {
                 window.location.replace(obj.redirect);
             } else if (obj.result === 'error') {
-                alert(obj.response);
+                alerta(obj.response);
                 boton.button('enable');
             } else {
                 $.each(obj, function(element, error) {
@@ -1151,7 +1197,7 @@ function pasoPago(actual, siguiente, boton) {
             if (obj.result === 'ok') {
                 window.location.replace(obj.redirect);
             } else if (obj.result === 'error') {
-                alert(obj.response);
+                alerta(obj.response);
                 boton.button('enable');
             } else {
                 $.each(obj, function(element, error) {
@@ -1190,7 +1236,7 @@ function pasoConfirmacion(actual, siguiente, boton) {
             if (obj.result === 'ok') {
                 window.location.replace(obj.redirect);
             } else if (obj.result === 'error') {
-                alert(obj.response);
+                alerta(obj.response);
                 boton.button('enable');
             } else {
                 $.each(obj, function(element, error) {
@@ -1286,6 +1332,47 @@ $(document).on('click', "a[data-role='pedidodetalle']", function() {
         async: true,
         url: requestUrl + '/carro/agregarcompra',
         data: {compra: compra},
+        beforeSend: function() {
+            $.mobile.loading('show');
+        },
+        complete: function() {
+            $.mobile.loading('hide');
+        },
+        success: function(data) {
+            if (data.result === "ok") {
+                $('#panel-carro-canasta').html(data.response.canastaHTML);
+                $('#panel-carro-canasta').trigger("create");
+                if (data.response.mensajeHTML) {
+                    dialogoAnimado(data.response.mensajeHTML);
+                }
+
+                if (data.response.dialogoHTML) {
+                    $('<div>').mdialog({
+                        content: data.response.dialogoHTML
+                    });
+                }
+            } else {
+                $('<div>').mdialog({
+                    content: "<div data-role='main'><div class='ui-content' data-role='content' role='main'>" + data.response + "<a class='ui-btn ui-btn-r ui-corner-all ui-shadow' data-rel='back' href='#'>Aceptar</a></div></div>"
+                });
+            }
+        },
+        error: function(jqXHR, textStatus, errorThrown) {
+            $.mobile.loading('hide');
+            alert('Error: ' + errorThrown);
+        }
+    });
+});
+
+$(document).on('click', "a[data-role='cotizaciondetalle']", function() {
+    var cotizacion = $(this).attr('data-cotizacion');
+
+    $.ajax({
+        type: 'POST',
+        dataType: 'json',
+        async: true,
+        url: requestUrl + '/carro/agregarcotizacion',
+        data: {cotizacion: cotizacion},
         beforeSend: function() {
             $.mobile.loading('show');
         },
@@ -1671,7 +1758,7 @@ $(document).on('keyup', "input[type='number']", function() {
     }
 });
 
-$(document).on('click',"input[data-role='pagopasarela']", function() {
+$(document).on('click', "input[data-role='pagopasarela']", function() {
     var boton = $(this);
     $.ajax({
         type: 'POST',
@@ -1704,12 +1791,35 @@ $(document).on('click',"input[data-role='pagopasarela']", function() {
     });
 });
 
-$( document ).ready(function() {
-    $('.lst_ub_cdd .ui-collapsible-heading-toggle').click(function(){
+$(document).on('click', "a[data-role='crearcotizacion']", function() {
+    $.ajax({
+        type: 'POST',
+        dataType: 'json',
+        async: true,
+        url: requestUrl + '/carro/crearcotizacion',
+        beforeSend: function() {
+            $.mobile.loading('show');
+        },
+        complete: function() {
+            $.mobile.loading('hide');
+        },
+        success: function(data) {
+            $('<div>').mdialog({
+                content: "<div data-role='main'><div class='ui-content' data-role='content' role='main'>" + data.response + "<a class='ui-btn ui-btn-r ui-corner-all ui-shadow' data-rel='back' href='#'>Aceptar</a></div></div>"
+            });
+        },
+        error: function(jqXHR, textStatus, errorThrown) {
+            alert('Error: ' + errorThrown);
+        }
+    });
+});
+
+$(document).ready(function() {
+    $('.lst_ub_cdd .ui-collapsible-heading-toggle').click(function() {
         $('li a.c_btn_sel').removeClass('ui-btn-active2');
         $('.list_ciud.ui-listview li').removeClass('active2');
     });
-    $('a.c_btn_sel').click(function(){
+    $('a.c_btn_sel').click(function() {
         $('li a.c_btn_sel').removeClass('ui-btn-active2');
         $('.list_ciud.ui-listview li').removeClass('active2');
         $(this).addClass('ui-btn-active2');

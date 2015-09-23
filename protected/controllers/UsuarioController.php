@@ -584,6 +584,94 @@ class UsuarioController extends Controller {
         ));
     }
     
+    public function actionListacotizaciones() {
+        $model = new Cotizaciones('search');
+        $model->unsetAttributes();
+        if (isset($_GET['Cotizaciones']))
+            $model->attributes = $_GET['Cotizaciones'];
+        $model->identificacionUsuario = Yii::app()->user->name;
+        
+        $fecha = new DateTime;
+        $dias = Yii::app()->params->cotizaciones['diasVisualizar'];
+        $fecha->modify("-$dias days");
+        $model->fechaCotizacion = $fecha->format('Y-m-d H:i:s');
+        $model->codigoCiudad = Yii::app()->shoppingCart->getCodigoCiudad();
+        $model->codigoSector = Yii::app()->shoppingCart->getCodigoSector();
+
+        $this->render('cotizaciones', array(
+            'model' => $model,
+        ));
+    }
+    
+    public function actionCotizacion($cotizacion) {
+        $fecha = new DateTime;
+        $dias = Yii::app()->params->cotizaciones['diasVisualizar'];
+        $fecha->modify("-$dias days");
+        
+        $objCotizacion = Cotizaciones::model()->find(array(
+            'condition' => 'idCotizacion=:cotizacion AND identificacionUsuario=:usuario AND fechaCotizacion>=:fecha AND codigoCiudad=:ciudad AND codigoSector=:sector',
+            'params' => array(
+                ':cotizacion' => $cotizacion,
+                ':usuario' => Yii::app()->user->name,
+                ':fecha' => $fecha->format('Y-m-d H:i:s'),
+                ':ciudad' => Yii::app()->shoppingCart->getCodigoCiudad(),
+                ':sector' => Yii::app()->shoppingCart->getCodigoSector()
+            )
+        ));
+
+        if ($objCotizacion === null) {
+            $this->redirect($this->createUrl('listacotizaciones'));
+        }
+
+        $this->render('cotizacion', array(
+            'objCotizacion' => $objCotizacion,
+        ));
+    }
+    
+    public function actionCotizacionpdf($cotizacion) {
+        $fecha = new DateTime;
+        $dias = Yii::app()->params->cotizaciones['diasVisualizar'];
+        $fecha->modify("-$dias days");
+        
+        $objCotizacion = Cotizaciones::model()->find(array(
+            'condition' => 'idCotizacion=:cotizacion AND identificacionUsuario=:usuario AND fechaCotizacion>=:fecha AND codigoCiudad=:ciudad AND codigoSector=:sector',
+            'params' => array(
+                ':cotizacion' => $cotizacion,
+                ':usuario' => Yii::app()->user->name,
+                ':fecha' => $fecha->format('Y-m-d H:i:s'),
+                ':ciudad' => Yii::app()->shoppingCart->getCodigoCiudad(),
+                ':sector' => Yii::app()->shoppingCart->getCodigoSector()
+            )
+        ));
+        
+        
+        $mPDF1 = Yii::app()->ePdf->mpdf('utf-8', 'Letter'); //Letter, Legal, A4
+        $mPDF1->SetTitle("La Rebaja Virtual - Cotizacion");
+        $mPDF1->SetAuthor("Copservir");
+        //$styleBootstrap = file_get_contents(Yii::getPathOfAlias('bootstrap.assets') . '/css/bootstrap.css');
+        //$styleCustom1 = file_get_contents(Yii::getPathOfAlias('webroot') . '/libs/jquerymobile/css/themes/default/jquery.mobile-1.4.5.min.css');
+        //$styleCustom = file_get_contents(Yii::getPathOfAlias('webroot.css') . '/mobile.css');
+        //$mPDF1->WriteHTML($styleCustom1, 1);
+        //$mPDF1->WriteHTML($styleCustom, 1);
+        
+        
+        //$mPDF1->WriteHTML($this->renderPartial('_solicitudCredito', array('model' => $model), true));
+
+        
+        
+
+        if ($objCotizacion === null) {
+            $mPDF1->WriteHTML("<strong>Error, no se detecta cotización</strong>");
+        }else{
+            $mPDF1->WriteHTML($this->renderPartial('cotizacionPDF', array('objCotizacion' => $objCotizacion), true));
+        }
+        
+        $filename = 'LaRebajaVirtual_' . date('YmdHis') . '.pdf';
+        $mPDF1->Output($filename, 'D');
+
+        $this->render('cotizacion', array('objCotizacion' => $objCotizacion));
+    }
+    
     public function actionOcultarpedido() {
         if (!Yii::app()->request->isPostRequest) {
             echo CJSON::encode(array('result' => 'error', 'response' => 'Solicitud inválida'));
@@ -1127,6 +1215,16 @@ class UsuarioController extends Controller {
     
     protected function gridDetalleLista($data, $row) {
         return CHtml::link('Ver', $this->createUrl('/usuario/listapersonal', array('lista'=>$data->idLista)), array('class'=>'ui-btn ui-btn-inline ui-icon-view-circle ui-btn-icon-notext ui-icon-center ui-nodisc-icon', 'data-ajax'=>'false'));
+    }
+    
+    
+    protected function gridDetalleCotizacion($data, $row) {
+        return CHtml::link('Ver', $this->createUrl('/usuario/cotizacion', array('cotizacion'=>$data->idCotizacion)), array('class'=>'ui-btn ui-btn-inline ui-icon-view-circle ui-btn-icon-notext ui-icon-center ui-nodisc-icon', 'data-ajax'=>'false'));
+    }
+    
+    protected function gridFechaCotizacion($data, $row) {
+        $fecha = DateTime::createFromFormat('Y-m-d H:i:s', $data->fechaCotizacion);
+        return $fecha->format('y-m-d');
     }
 
 }

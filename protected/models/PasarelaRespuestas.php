@@ -28,6 +28,8 @@
  * @property TCompras $idCompra0
  */
 class PasarelaRespuestas extends CActiveRecord {
+    const TIPO_RESPUESTA = 1;
+    const TIPO_CONFIRMACION = 2;
 
     /**
      * @return string the associated database table name
@@ -146,6 +148,62 @@ class PasarelaRespuestas extends CActiveRecord {
      */
     public static function model($className = __CLASS__) {
         return parent::model($className);
+    }
+    
+    /*
+     * Validaciones de datos que afecten insert/update
+     */
+    public function validaDatos(){
+        if (!is_numeric($this->estadoPol)) {
+            $this->estadoPol = 0;
+        }
+        if (!is_numeric($this->codigoRespuestaPol)) {
+            $this->codigoRespuestaPol = 0;
+        }
+        if (!is_numeric($this->refPol)) {
+            $this->refPol = 0;
+        }
+        if (!is_numeric($this->medioPago)) {
+            $this->medioPago = 0;
+        }
+        if (!is_numeric($this->tipoMedioPago)) {
+            $this->tipoMedioPago = 0;
+        }
+        if (!is_numeric($this->cuotas)) {
+            $this->cuotas = 0;
+        }
+        if (!is_numeric($this->valor)) {
+            $this->valor = 0;
+        }
+        if (!is_numeric($this->valorPesos)) {
+            $this->valorPesos = 0;
+        }
+        if (!is_numeric($this->iva)) {
+            $this->iva = 0;
+        }
+        if (!is_numeric($this->valorAdicional)) {
+            $this->valorAdicional = 0;
+        }
+        if (!is_numeric($this->cus)) {
+            $this->cus = 0;
+        }
+        if($this->moneda==null){
+            $this->moneda = "COP";
+        }
+        if($this->bancoPse==null){
+            $this->bancoPse = "NA";
+        }
+        if($this->fechaTransaccion==null){
+            $this->fechaTransaccion = "NA";
+        }
+        if($this->correoElectronico==null){
+            $this->correoElectronico = "NA";
+        }
+    }
+    
+    public function beforeSave() {
+        $this->validaDatos();
+       return parent::beforeSave();
     }
     
     /**

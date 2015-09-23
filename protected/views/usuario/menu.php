@@ -31,6 +31,11 @@
         </a>
     </li>
     <li>
+        <a href="<?php echo CController::createUrl('/usuario/listacotizaciones') ?>" data-ajax="false">
+            <h2>Cotizaciones</h2>
+        </a>
+    </li>
+    <li>
         <a href="<?php echo CController::createUrl('/usuario/pagoexpress') ?>" data-ajax="false">
             <h2>Pago express</h2>
         </a>

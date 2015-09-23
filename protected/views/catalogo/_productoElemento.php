@@ -37,7 +37,9 @@
     <div class="clst_cont_pr_prod">
         <h2><a href="<?php echo CController::createUrl('/catalogo/producto', array('producto' => $objProducto->codigoProducto,'descripcion'=>  Producto::cadenaUrl($objProducto->descripcionProducto))) ?>" data-ajax="false"><?php echo $objProducto->descripcionProducto ?></a></h2>
         <p><?php echo $objProducto->presentacionProducto ?></p>
-        <div id="raty-lectura-producto-<?php echo $objProducto->codigoProducto ?>" data-role="raty" data-readonly="true" data-score="<?php echo $objProducto->getCalificacion() ?>" class="clst_cal_str"></div>
+        <?php if(!in_array($objProducto->idCategoriaBI, Yii::app()->params->calificacion['categoriasNoCalificacion'])): ?>
+            <div id="raty-lectura-producto-<?php echo $objProducto->codigoProducto ?>" data-role="raty" data-readonly="true" data-score="<?php echo $objProducto->getCalificacion() ?>" class="clst_cal_str"></div>
+        <?php endif;?>
         <?php if ($objPrecio->inicializado()): ?>
             <?php if ($objProducto->mostrarAhorroVirtual == 1 && $objPrecio->getAhorro(Precio::PRECIO_UNIDAD) > 0): ?>
                 <div class="clst_pre_ant"><?php echo Yii::app()->numberFormatter->format(Yii::app()->params->formatoMoneda['patron'], $objPrecio->getPrecio(Precio::PRECIO_UNIDAD, false), Yii::app()->params->formatoMoneda['moneda']); ?></div>
@@ -53,6 +55,11 @@
                 <div class="whitespace-normal">[Tiempo de entrega <?php echo $objPrecio->getTiempoEntrega() ?> horas]</div>
             <?php endif; ?>
         <?php endif; ?>
+        <?php foreach ($objPrecio->getPuntosDescripcion() as $descripcionPunto): ?>
+            <div>
+                <?= $descripcionPunto ?>
+            </div>
+        <?php endforeach; ?>
     </div>
     <div class="clear"></div>
 </div>

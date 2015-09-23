@@ -1,0 +1,43 @@
+body{
+    margin: 0;
+    font-family: sans-serif;
+}
+.error-logo img{
+    display: block;
+    margin: auto;
+    max-width: 100%;
+}
+.error-content {
+    border-width: 0;
+    overflow-x: hidden;
+    overflow-y: visible;
+    padding: 2em;
+}
+.col-12{
+    width: 100%;
+}
+.ico{
+    z-index: 1000;
+    position: relative;
+}
+.info p{
+    color:#9D9A9B;
+}
+.volver{
+    display: inline-block;
+    position: absolute;
+    border: 1px solid #E5E5E5;
+    padding: 8px 80px 8px 60px;
+    margin-top: 8px;
+    width: 2%;
+    border-radius: 0px 20px 20px 0px;
+    background: #E5E5E5;
+    margin-left: -50px;
+    float: right;
+    font-size: 23px;
+    color: #9D9A9B;
+}
+
+h1{
+    color: #9D9A9B;
+}

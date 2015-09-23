@@ -229,6 +229,10 @@ class SitioController extends Controller {
 
                 foreach ($puntosv as $pdv) {
                     $dist = distanciaCoordenadas($lat, $lon, $pdv->latitudGoogle, $pdv->longitudGoogle);
+                    
+                    if($dist>Yii::app()->params->gps['distanciaMaxima']){
+                        continue;
+                    }
 
                     if ($pdvCerca['pdv'] == null) {
                         $pdvCerca['pdv'] = $pdv;
@@ -333,11 +337,12 @@ class SitioController extends Controller {
      * This is the action to handle external exceptions.
      */
     public function actionError() {
+        $this->layout = "m_error";
         if ($error = Yii::app()->errorHandler->error) {
             if (Yii::app()->request->isAjaxRequest)
                 echo $error['message'];
             else
-                $this->render('error', $error);
+                $this->render('error');
         }
     }
 

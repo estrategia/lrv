@@ -21,6 +21,8 @@ class PrecioProducto extends Precio {
     protected $ahorroFraccion = 0;
 
     function __construct(Producto $objProducto, $objCiudadSector, $codigoPerfil, $consultaPrecio=false) {
+        $fecha = new DateTime;
+        
         if ($objCiudadSector != null) {
             if ($objProducto->tercero == 1) {
                 $listSaldosTerceros = array();
@@ -74,7 +76,6 @@ class PrecioProducto extends Precio {
                 }
             }
 
-            $fecha = new DateTime;
             $objDescuentoEspecial = ProductosDescuentosEspeciales::model()->find(array(
                 'condition' => 'codigoCiudad=:ciudad AND codigoSector=:sector AND codigoProducto=:producto AND codigoPerfil=:perfil AND fechaInicio<=:fecha AND fechaFin>=:fecha ',
                 'params' => array(
@@ -141,7 +142,7 @@ class PrecioProducto extends Precio {
             }
             
             //consultar beneficios del producto
-            $fecha = new DateTime;
+            //$fecha = new DateTime;
             $condition = 't.fechaIni<=:fecha AND t.fechaFin>=:fecha AND t.tipo IN (' . implode(",", Yii::app()->params->beneficios['lrv']) . ')';
             $params = array(
                 ':fecha' => $fecha->format('Y-m-d'),
@@ -149,10 +150,10 @@ class PrecioProducto extends Precio {
                 ':producto' => $objProducto->codigoProducto
             );
             
-            if ($codigoPerfil == Yii::app()->params->perfil['clienteFiel']) {
-                $condition .= ' AND (swobligaCli=0 || swobligaCli=1)';
+            if (Yii::app()->shoppingCart->getEsClienteFiel()) {
+                $condition .= " AND (swobligaCli=0 || swobligaCli=2)";
             } else {
-                $condition .= ' AND swobligaCli=0';
+                $condition .= " AND swobligaCli=0";
             }
             
             $this->listBeneficios = Beneficios::model()->findAll(array(
@@ -185,6 +186,20 @@ class PrecioProducto extends Precio {
 
             $this->inicializado = true;
         }
+        
+        $this->listPuntos = Puntos::model()->findAll(array(
+            'with' => array('listPuntosProductos' => array('condition' => 'listPuntosProductos.codigoProducto=:producto AND listPuntosProductos.cantidad=:cantidad')),
+            'condition' => 'codigoPunto=:tipo AND activo=:activo AND fechaInicio<=:fecha AND fechaFin>=:fecha',
+            'params' => array(
+                ':tipo' => Yii::app()->params->puntos['producto'],
+                ':activo' => 1,
+                ':fecha' => $fecha->format('Y-m-d H:i:s'),
+                ':producto' => $objProducto->codigoProducto,
+                ':cantidad' => 1,
+            )
+        ));
+        
+        
     }
 
     public function getPrecio() {

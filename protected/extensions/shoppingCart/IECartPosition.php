@@ -123,6 +123,30 @@ abstract class IECartPosition {
     public function getTax() {
         return $this->tax;
     }
+    
+    public function setPriceUnit($price){
+        $this->priceUnit = $price;
+    }
+    
+    public function setPriceFraction($price){
+        $this->priceFraction = $price;
+    }
+    
+    public function setDiscountPriceUnit($discount){
+        $this->discountPriceUnit = $discount;
+    }
+    
+    public function setDiscountPriceFraction($discount){
+        $this->discountPriceFraction = $discount;
+    }
+    
+    public function setDelivery($delivery){
+        $this->delivery = $delivery;
+    }
+    
+    public function setBeneficios($listBeneficios){
+        $this->listBeneficios = $listBeneficios;
+    }
 
     public function getTaxPrice($total = false) {
         $tax = 0.0;

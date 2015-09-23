@@ -17,23 +17,36 @@ class PasarelaController extends Controller {
 
     public function actionRespuesta() {
         $model = new PasarelaRespuestas;
-
-        $model->estadoPol = isset($_REQUEST['estado_pol']) ? $_REQUEST['estado_pol'] : "NA";
-        $model->codigoRespuestaPol = isset($_REQUEST['codigo_respuesta_pol']) ? $_REQUEST['codigo_respuesta_pol'] : "NA";
-        $model->idCompra = isset($_REQUEST['ref_venta']) ? $_REQUEST['ref_venta'] : "NA";
-        $model->refPol = isset($_REQUEST['ref_pol']) ? $_REQUEST['ref_pol'] : "NA";
-        $model->mensaje = isset($_REQUEST['mensaje']) ? $_REQUEST['mensaje'] : "NA";
-        $model->medioPago = isset($_REQUEST['mensaje']) ? $_REQUEST['mensaje'] : "NA";
-        $model->tipoMedioPago = isset($_REQUEST['tipo_medio_pago']) ? $_REQUEST['tipo_medio_pago'] : "NA";
-        $model->cuotas = isset($_REQUEST['cuotas']) ? $_REQUEST['cuotas'] : "NA";
-        $model->valor = isset($_REQUEST['valor']) ? $_REQUEST['valor'] : "NA";
-        $model->valorPesos = isset($_REQUEST['valorPesos']) ? $_REQUEST['valorPesos'] : "NA";
-        $model->iva = isset($_REQUEST['iva']) ? $_REQUEST['iva'] : "NA";
-        $model->valorAdicional = isset($_REQUEST['valorAdicional']) ? $_REQUEST['valorAdicional'] : "NA";
-        $model->moneda = isset($_REQUEST['moneda']) ? $_REQUEST['moneda'] : "NA";
-        $model->cus = isset($_REQUEST['cus']) ? $_REQUEST['cus'] : "NA";
-        $model->bancoPse = isset($_REQUEST['banco_pse']) ? $_REQUEST['banco_pse'] : "NA";
-        $model->fechaTransaccion = isset($_REQUEST['fecha_procesamiento']) ? $_REQUEST['fecha_procesamiento'] : "NA";
+        $model->tipoRespuesta = PasarelaRespuestas::TIPO_RESPUESTA;
+        
+        $model->estadoPol = isset($_REQUEST['estado_pol']) ? $_REQUEST['estado_pol'] : 0;
+        $model->codigoRespuestaPol = isset($_REQUEST['codigo_respuesta_pol']) ? $_REQUEST['codigo_respuesta_pol'] : 0;
+        $model->idCompra = isset($_REQUEST['ref_venta']) ? $_REQUEST['ref_venta'] : null;
+        $model->refPol = isset($_REQUEST['ref_pol']) ? $_REQUEST['ref_pol'] : 0;
+        $model->mensaje = isset($_REQUEST['mensaje']) ? $_REQUEST['mensaje'] : "";
+        $model->medioPago = isset($_REQUEST['mensaje']) ? $_REQUEST['mensaje'] : 0;
+        $model->tipoMedioPago = isset($_REQUEST['tipo_medio_pago']) ? $_REQUEST['tipo_medio_pago'] : 0;
+        $model->cuotas = isset($_REQUEST['cuotas']) ? $_REQUEST['cuotas'] : 0;
+        $model->valor = isset($_REQUEST['valor']) ? $_REQUEST['valor'] : 0;
+        $model->valorPesos = 0;
+        $model->iva = isset($_REQUEST['iva']) ? $_REQUEST['iva'] : 0;
+        $model->valorAdicional = isset($_REQUEST['valorAdicional']) ? $_REQUEST['valorAdicional'] : 0;
+        $model->moneda = isset($_REQUEST['moneda']) ? $_REQUEST['moneda'] : "";
+        $model->cus = isset($_REQUEST['cus']) ? $_REQUEST['cus'] : 0;
+        $model->bancoPse = isset($_REQUEST['banco_pse']) ? $_REQUEST['banco_pse'] : "";
+        $model->fechaTransaccion = isset($_REQUEST['fecha_procesamiento']) ? $_REQUEST['fecha_procesamiento'] : "";
+        
+        if($model->idCompra == null){
+            $this->log(0, 500, "NUMERO DE COMPRA NO DETECTADO");
+        }else{
+            try {
+                if (!$model->save()) {
+                    $this->log($model->idCompra, 504, "ERROR RESPUESTA: INSERTANDO LA TABLA t_PasarelaRespuestas. " . $model->validateErrorsResponse());
+                }
+            } catch (Exception $exc) {
+                $this->log($model->idCompra, 600, "ERROR AL REGISTRAR PASARELA: " . $exc->getMessage());
+            }
+        }
 
         $this->render("respuesta", array('model' => $model));
     }
@@ -46,50 +59,47 @@ class PasarelaController extends Controller {
             Yii::app()->end();
         }
 
-        if (!isset($_POST)) {
+        if (empty($_POST)) {
             $this->log(-1, 800, "MEDOTO DE INVOCACION NO AUTORIZADO. " . $_SERVER["REMOTE_ADDR"]);
+            Yii::app()->end();
         }
-
-        //SETEO DE VARIABLES
-        $objRespuesta = new PasarelaRespuestas;
-        //$usuarioId = $_POST["usuario_id"];
-        $firma = $_POST["firma"];
-
-        $riesgo = $_POST["riesgo"];
-        $extra1 = $_POST["extra1"];
-        $extra2 = $_POST["extra2"];
-        $idioma = $_POST["idioma"];
-
-        $objRespuesta->estadoPol = trim($_POST["estado_pol"]);
-        $objRespuesta->codigoRespuestaPol = trim($_POST["codigo_respuesta_pol"]);
-        $objRespuesta->idCompra = trim($_POST["ref_venta"]);
-        $objRespuesta->refPol = trim($_POST["ref_pol"]);
-        $objRespuesta->mensaje = trim($_POST["mensaje"]);
-        $objRespuesta->medioPago = trim($_POST["medio_pago"]);
-        $objRespuesta->tipoMedioPago = trim($_POST["tipo_medio_pago"]);
-        $objRespuesta->cuotas = trim($_POST["cuotas"]);
-        $objRespuesta->valor = trim($_POST["valor"]);
-        $objRespuesta->valorPesos = trim($_POST["valorPesos"]);
-        $objRespuesta->iva = trim($_POST["iva"]);
-        $objRespuesta->valorAdicional = trim($_POST["valorAdicional"]);
-        $objRespuesta->moneda = trim($_POST["moneda"]);
-        $objRespuesta->cus = trim($_POST["cus"]);
-        $objRespuesta->bancoPse = trim($_POST["banco_pse"]);
-        $objRespuesta->fechaTransaccion = trim($_POST["fecha_procesamiento"]);
 
         $llavesArreglo = array_keys($_POST);
         $cadenaLog = "";
 
         for ($i = 0; $i < sizeof($llavesArreglo); $i++) {
             $cadenaLog .= $llavesArreglo[$i] . " -> " . $_POST[$llavesArreglo[$i]];
-
             if (isset($llavesArreglo[$i + 1])) {
                 $cadenaLog .= " | ";
             }
         }
+		
+	$this->log(0, 100, $cadenaLog); //Guardar los datos GET de invocacion.
+        $this->log(0, 100, $_SERVER["REMOTE_ADDR"]); //Guardar los datos GET de invocacion.
+
+        //SETEO DE VARIABLES
+        $objRespuesta = new PasarelaRespuestas;
+        $objRespuesta->tipoRespuesta = PasarelaRespuestas::TIPO_CONFIRMACION;
+        $firma = $_POST["firma"];
+
+        $objRespuesta->estadoPol = trim($_POST["estado_pol"]);
+        $objRespuesta->codigoRespuestaPol = trim($_POST["codigo_respuesta_pol"]);
+        $objRespuesta->idCompra = trim($_POST["ref_venta"]);
+        $objRespuesta->refPol = trim($_POST["ref_pol"]);
+        $objRespuesta->medioPago = trim($_POST["medio_pago"]);
+        $objRespuesta->tipoMedioPago = trim($_POST["tipo_medio_pago"]);
+        $objRespuesta->cuotas = isset($_POST["cuotas"]) ? trim($_POST["cuotas"]) : 0;
+        $objRespuesta->valor = trim($_POST["valor"]);
+        $objRespuesta->valorPesos = 0;
+        $objRespuesta->iva = trim($_POST["iva"]);
+        $objRespuesta->valorAdicional = isset($_POST["valorAdicional"]) ? trim($_POST["valorAdicional"]) : 0;
+        $objRespuesta->moneda = isset($_POST["moneda"]) ? trim($_POST["moneda"]) : "";
+        $objRespuesta->cus = isset($_POST["cus"]) ? trim($_POST["cus"]) : 0;
+        $objRespuesta->bancoPse = isset($_POST["banco_pse"]) ? trim($_POST["banco_pse"]) : "";
+        $objRespuesta->fechaTransaccion = trim($_POST["fecha_transaccion"]);
 
         $this->log($objRespuesta->idCompra, 101, $cadenaLog); //Guardar los datos GET de invocacion.
-        $this->log($objRespuesta->idCompra, 101, $_SERVER["REMOTE_ADDR"]); //Guardar los datos GET de invocacion.
+        //$this->log($objRespuesta->idCompra, 101, $_SERVER["REMOTE_ADDR"]); //Guardar los datos GET de invocacion.
 
         if (!isset($_POST["ref_venta"]) || !isset($_POST["estado_pol"]) || !isset($_POST["usuario_id"])) {
             $this->log(-1, 700, "VERIFICACION DE VARIBLES PRIMARIAS FALLIDA. " . $_SERVER["REMOTE_ADDR"]);
@@ -103,39 +113,19 @@ class PasarelaController extends Controller {
         $firmacreada = md5($firma_cadena);
 
         if (strtoupper($firmacreada) != strtoupper($firma)) {
-            $this->log($objRespuesta->idCompra, 110, "FIRMAS NO CONINCIDEN. " . $firmacreada . " - " . $firma); // Se Guarda el Inicio de la Transaccion
-            $mensaje = "El pedido No. " . $objRespuesta->idCompra . " ha sido pagado por la Pasarela de Pagos, pero se ha generado un ERROR DE FIRMAS 
+            $this->log($objRespuesta->idCompra, 110, "FIRMAS NO COINCIDEN. " . $firmacreada . " - " . $firma); // Se Guarda el Inicio de la Transaccion
+            $mensaje = "El pedido No. " . $objRespuesta->idCompra . " ha sido pagado por la Pasarela de Pagos, pero se ha generado un ERROR DE FIRMAS
                 por lo que la transaccion debe ser verificada en el módulo de administracion.";
             $this->correo(4, "", 0, 0, "", $mensaje);
             Yii::app()->end();
         }
 
         $this->log($objRespuesta->idCompra, 102, "FIRMAS CONINCIDEN. " . $firmacreada . " - " . $firma); // Se Guarda el Inicio de la Transaccion
-        
-        //VALIDACIONES DE DATOS QUE AFECTEN LA ACTUALIZACION
-        if (!is_numeric($objRespuesta->valorPesos)) {
-            $objRespuesta->valorPesos = 0;
-        }
-        if (!is_numeric($objRespuesta->valorAdicional)) {
-            $objRespuesta->valorAdicional = 0;
-        }
-        if (!is_numeric($objRespuesta->valor)) {
-            $objRespuesta->valor = 0;
-        }
-        if (!is_numeric($objRespuesta->cuotas)) {
-            $objRespuesta->cuotas = 0;
-        }
-        if (!is_numeric($objRespuesta->tipoMedioPago)) {
-            $objRespuesta->tipoMedioPago = 0;
-        }
-        if (!is_numeric($objRespuesta->medioPago)) {
-            $objRespuesta->medioPago = 0;
-        }
 
         try {
             $objCompra = Compras::model()->find(array(
                 'with' => "objPasarelaEnvio",
-                'condition' => 'idCompra=:idcompra',
+                'condition' => 't.idCompra=:idCompra',
                 'params' => array(
                     ':idCompra' => $objRespuesta->idCompra
                 )
@@ -144,7 +134,7 @@ class PasarelaController extends Controller {
             if ($objCompra == null || $objCompra->objPasarelaEnvio == null) {
                 //NO EXISTE EL PEDIDO, SE DBE ENVIAR UN CORREO A CALL CENTER PARA VERIFICAR.
                 $this->log($objRespuesta->idCompra, 500, "NO EXISTE LA COMPRA. " . $objRespuesta->idCompra);
-                $mensaje = "El pedido No. " . $objRespuesta->idCompra . " ha sido pagado por la Pasarela de Pagos, pero se ha generado un NO EXISTE LA COMPRA 
+                $mensaje = "El pedido No. " . $objRespuesta->idCompra . " ha sido pagado por la Pasarela de Pagos, pero se ha generado un NO EXISTE LA COMPRA
                 por lo que la transaccion debe ser verificada en el módulo de administracion. CUS " . $objRespuesta->cus;
                 $this->correo(4, "", 0, 0, "", $mensaje);
                 Yii::app()->end();
@@ -310,17 +300,17 @@ class PasarelaController extends Controller {
         } catch (Exception $exc) {
             Yii::log($exc->getMessage() . "\n" . $exc->getTraceAsString(), CLogger::LEVEL_ERROR, 'application');
 
-            $this->log($objRespuesta->idCompra, 600, "ERROR DE CONEXION CON LA BD DE LA REBAJA VIRTUAL.");
+            $this->log($objRespuesta->idCompra, 600, "ERROR DE CONEXION CON LA BD DE LA REBAJA VIRTUAL. " . $exc->getMessage());
 
             if ($objRespuesta->estadoPol == 4) {
                 //ENVIAR CORREO A CALL CENTER PARA TRAMITAR LA VENTA
-                $mensaje = "El pedido No. " . $objRespuesta->idCompra . " ha sido pagado por la Pasarela de Pagos, pero se ha generado un ERROR DE CONEXION CON LA BD DE LA REBAJA VIRTUAL 
+                $mensaje = "El pedido No. " . $objRespuesta->idCompra . " ha sido pagado por la Pasarela de Pagos, pero se ha generado un ERROR DE CONEXION CON LA BD DE LA REBAJA VIRTUAL
             por lo que la transaccion debe ser verificada en el módulo de administracion. IMPORTANTE: La Transaccion ha sido APROBADA. CUS " . $objRespuesta->cus;
                 //mail(PARA_CALLCENTER, "Revision Transaccion Pasarela", $mensaje, $cabeceras, "-f alexander_javela@copservir.com");
                 $this->correo(4, "", 0, 0, "", $mensaje);
             } else {
                 //ENVIAR CORREO A CALL CENTER PARA TRAMITAR LA VENTA
-                $mensaje = "El pedido No. " . $objRespuesta->idCompra . " ha sido pagado por la Pasarela de Pagos, pero se ha generado un ERROR DE CONEXION CON LA BD DE LA REBAJA VIRTUAL 
+                $mensaje = "El pedido No. " . $objRespuesta->idCompra . " ha sido pagado por la Pasarela de Pagos, pero se ha generado un ERROR DE CONEXION CON LA BD DE LA REBAJA VIRTUAL
             por lo que la transaccion debe ser verificada en el módulo de administracion. IMPORTANTE: La Transaccion ha sido RECHAZADA. CUS " . $objRespuesta->cus;
                 $this->correo(4, "", 0, 0, "", $mensaje);
             }
@@ -332,6 +322,14 @@ class PasarelaController extends Controller {
         fwrite($archivo, $pedido . " | " . $tipo . " | " . $cadena . " | ");
         fwrite($archivo, date("Y-m-d H:i:s") . "\r\n");
         fclose($archivo);
+    }
+
+    public function actionLog(){
+        try {
+            $this->log(589655225, 1000, "PRUEBA LOG.");
+        } catch (Exception $exc) {
+            Yii::log($exc->getMessage() . "\n" . $exc->getTraceAsString(), CLogger::LEVEL_ERROR, 'application');
+        }
     }
 
     protected function correo($tipo_correo = 1, $nombre = "", $numeroPedido = 0, $valorCompra = 0, $correoCliente = "", $menEstado = "") {
