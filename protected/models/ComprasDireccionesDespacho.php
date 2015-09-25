@@ -14,6 +14,7 @@
  * @property string $codigoCiudad
  * @property string $codigoSector
  * @property string $pdvAsignado
+ * @property string $correoElectronico
  *
  * The followings are the available model relations:
  * @property TCompras $idCompra0
@@ -37,12 +38,15 @@ class ComprasDireccionesDespacho extends CActiveRecord {
             array('idCompra', 'required'),
             array('idCompra', 'numerical', 'integerOnly' => true),
             array('descripcion, nombre, barrio, telefono, celular', 'length', 'max' => 50),
-            array('direccion', 'length', 'max' => 100),
+            array('direccion, correoElectronico', 'length', 'max' => 100),
             array('codigoCiudad, codigoSector', 'length', 'max' => 10),
             array('pdvAsignado', 'length', 'max' => 3),
+            
+            array('descripcion, nombre, barrio, telefono, celular, direccion, correoElectronico, codigoCiudad, codigoSector, pdvAsignado', 'default', 'value'=>null),
+            
             // The following rule is used by search().
             // @todo Please remove those attributes that should not be searched.
-            array('idCompra, descripcion, nombre, direccion, barrio, telefono, celular, codigoCiudad, codigoSector, pdvAsignado', 'safe', 'on' => 'search'),
+            array('idCompra, descripcion, nombre, direccion, barrio, telefono, celular, codigoCiudad, codigoSector, pdvAsignado, correoElectronico', 'safe', 'on' => 'search'),
         );
     }
 

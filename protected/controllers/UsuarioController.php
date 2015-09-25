@@ -668,8 +668,31 @@ class UsuarioController extends Controller {
         
         $filename = 'LaRebajaVirtual_' . date('YmdHis') . '.pdf';
         $mPDF1->Output($filename, 'D');
-
-        $this->render('cotizacion', array('objCotizacion' => $objCotizacion));
+    }
+    
+    public function actionCotizacionhtml($cotizacion) {
+        $fecha = new DateTime;
+        $dias = Yii::app()->params->cotizaciones['diasVisualizar'];
+        $fecha->modify("-$dias days");
+        
+        $objCotizacion = Cotizaciones::model()->find(array(
+            'condition' => 'idCotizacion=:cotizacion AND identificacionUsuario=:usuario AND fechaCotizacion>=:fecha AND codigoCiudad=:ciudad AND codigoSector=:sector',
+            'params' => array(
+                ':cotizacion' => $cotizacion,
+                ':usuario' => Yii::app()->user->name,
+                ':fecha' => $fecha->format('Y-m-d H:i:s'),
+                ':ciudad' => Yii::app()->shoppingCart->getCodigoCiudad(),
+                ':sector' => Yii::app()->shoppingCart->getCodigoSector()
+            )
+        ));
+        
+        
+        
+        if ($objCotizacion === null) {
+            echo ("<strong>Error, no se detecta cotización</strong>");
+        }else{
+            $this->renderPartial('cotizacionPDF', array('objCotizacion' => $objCotizacion));
+        }
     }
     
     public function actionOcultarpedido() {

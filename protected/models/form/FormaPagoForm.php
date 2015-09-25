@@ -39,6 +39,7 @@ class FormaPagoForm extends CFormModel {
     public $telefono;
     public $extension;
     public $celular;
+    public $correoElectronico;
 
     /**
      * Declares the validation rules.
@@ -51,21 +52,42 @@ class FormaPagoForm extends CFormModel {
         $rules[] = array('identificacionUsuario', 'required', 'message' => '{attribute} no puede estar vacío');
 
         if ($this->pagoInvitado) {
-            $rules[] = array('descripcion, nombre, direccion, barrio, telefono, extension, celular', 'attributeTrim');
-            $rules[] = array('descripcion, nombre, direccion, barrio, telefono', 'required', 'on' => 'despacho, finalizar', 'message' => '{attribute} no puede estar vacío');
-            $rules[] = array('extension, telefono, celular', 'numerical', 'integerOnly' => true, 'on' => 'despacho, finalizar', 'message' => '{attribute} deber ser número');
-            $rules[] = array('direccion', 'length', 'min' => 5, 'max' => 100, 'on' => 'despacho, finalizar');
-            $rules[] = array('descripcion', 'length', 'min' => 3, 'max' => 50, 'on' => 'despacho, finalizar');
-            $rules[] = array('nombre, barrio', 'length', 'min' => 5, 'max' => 50, 'on' => 'despacho, finalizar');
-            $rules[] = array('celular', 'length', 'min' => 5, 'max' => 20, 'on' => 'despacho, finalizar');
-            $rules[] = array('telefono', 'length', 'min' => 5, 'max' => 11, 'on' => 'despacho, finalizar');
-            $rules[] = array('extension', 'length', 'max' => 5, 'on' => 'despacho, finalizar');
+            //echo "<br/>PAGO INVITADO<br/>";
+            
+             //$rules[] = array('descripcion, nombre, direccion, barrio, telefono, extension, celular, correoElectronico', 'attributeTrim');
+             
+            if (Yii::app()->session[Yii::app()->params->sesion['tipoEntrega']] == Yii::app()->params->entrega['tipo']['domicilio']) {
+                //echo "<br/>PAGO INVITADO DOMICILIO<br/>";
+                $rules[] = array('descripcion, nombre, direccion, barrio, telefono', 'required', 'on' => 'despacho, finalizar', 'message' => '{attribute} no puede estar vacío');
+            
+                $rules[] = array('correoElectronico', 'required', 'on' => 'despacho, finalizar', 'message' => '{attribute} no puede estar vacío');
+                $rules[] = array('correoElectronico', 'email', 'on' => 'despacho, finalizar');
+                $rules[] = array('correoElectronico', 'length', 'max' => 50, 'on' => 'despacho, finalizar');
+                
+                $rules[] = array('extension, telefono, celular', 'numerical', 'integerOnly' => true, 'on' => 'despacho, finalizar', 'message' => '{attribute} deber ser número');
+                $rules[] = array('direccion', 'length', 'min' => 5, 'max' => 100, 'on' => 'despacho, finalizar');
+                $rules[] = array('descripcion', 'length', 'min' => 3, 'max' => 50, 'on' => 'despacho, finalizar');
+                $rules[] = array('nombre, barrio', 'length', 'min' => 5, 'max' => 50, 'on' => 'despacho, finalizar');
+                $rules[] = array('celular', 'length', 'min' => 5, 'max' => 20, 'on' => 'despacho, finalizar');
+                $rules[] = array('telefono', 'length', 'min' => 5, 'max' => 11, 'on' => 'despacho, finalizar');
+                $rules[] = array('extension', 'length', 'max' => 5, 'on' => 'despacho, finalizar');
+            }
+
+            if (Yii::app()->session[Yii::app()->params->sesion['tipoEntrega']] == Yii::app()->params->entrega['tipo']['presencial']) {
+               // echo "<br/>PAGO PRESENCIAL<br/>";
+                $rules[] = array('correoElectronico', 'required', 'on' => 'entrega, finalizar', 'message' => '{attribute} no puede estar vacío');
+                $rules[] = array('correoElectronico', 'email', 'on' => 'entrega, finalizar');
+                $rules[] = array('correoElectronico', 'length', 'max' => 50, 'on' => 'entrega, finalizar');
+            }
+            
+            
             $rules[] = array('idDireccionDespacho', 'safe');
             $rules[] = array('celular, extension, idDireccionDespacho', 'default', 'value' => null);
-            
         } else {
+            $rules[] = array('descripcion, nombre, direccion, barrio, extension, telefono, celular, correoElectronico', 'safe');
             $rules[] = array('idDireccionDespacho', 'required', 'on' => 'despacho, finalizar', 'message' => '{attribute} no puede estar vacío');
         }
+        
         $rules[] = array('fechaEntrega', 'required', 'on' => 'entrega, finalizar', 'message' => '{attribute} no puede estar vacío');
         $rules[] = array('comentario', 'length', 'max' => 250, 'on' => 'entrega, finalizar');
         $rules[] = array('fechaEntrega', 'fechaValidate', 'on' => 'entrega, finalizar');
@@ -91,7 +113,7 @@ class FormaPagoForm extends CFormModel {
 
         return $rules;
     }
-    
+
     /**
      * Valida que exista empleado con cedula indicada y que este activo.
      * Este es un validador declarado en rules().
@@ -117,7 +139,6 @@ class FormaPagoForm extends CFormModel {
             'confirmacion' => 'Acepto términos anteriores',
             'usoBono' => 'Bono',
             'telefonoContacto' => 'Teléfono de contacto',
-            
             'descripcion' => 'Descripción',
             'nombre' => 'Nombre',
             'direccion' => 'Dirección',
@@ -125,6 +146,7 @@ class FormaPagoForm extends CFormModel {
             'telefono' => 'Teléfono',
             'celular' => 'Celular',
             'extension' => 'Extensión',
+            'correoElectronico' => 'Correo electrónico',
         );
     }
 

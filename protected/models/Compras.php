@@ -73,7 +73,7 @@ class Compras extends CActiveRecord {
         // NOTE: you should only define rules for those attributes that
         // will receive user inputs.
         return array(
-            array('identificacionUsuario, tipoEntrega, codigoCiudad, codigoSector', 'required'),
+            array('tipoEntrega, codigoCiudad, codigoSector', 'required'),
             array('donacionFundacion, subtotalCompra, impuestosCompra, baseImpuestosCompra, totalCompra, idEstadoCompra, idOperador, idTipoVenta, activa, domicilio, flete, invitado, codigoPerfil, seguimiento, tiempoDomicilioCedi, valorDomicilioCedi, codigoCedi', 'numerical', 'integerOnly' => true),
             array('identificacionUsuario', 'length', 'max' => 100),
             array('idComercial', 'length', 'max' => 10),
@@ -82,6 +82,7 @@ class Compras extends CActiveRecord {
             array('observacion', 'length', 'max' => 250),
             array('codigoCiudad, codigoSector', 'length', 'max' => 10),
             array('fechaCompra, fechaEntrega, saldosPdv', 'safe'),
+            array('identificacionUsuario', 'default', 'value'=>null),
             // The following rule is used by search().
             // @todo Please remove those attributes that should not be searched.
             array('busquedaSearch, idCompra, identificacionUsuario, documentoCruce, fechaCompra, fechaEntrega, tipoEntrega, donacionFundacion, idComercial, subtotalCompra, impuestosCompra, baseImpuestosCompra, totalCompra, idEstadoCompra, idOperador, observacion, idTipoVenta, activa, domicilio, flete, invitado, codigoPerfil, saldosPdv, seguimiento, codigoCiudad, codigoSector, tiempoDomicilioCedi, valorDomicilioCedi, codigoCedi', 'safe', 'on' => 'search'),

@@ -32,6 +32,11 @@
                 <?php echo $form->error($modelPago, 'nombre'); ?>
             </div>
             <div class="ui-field-container">
+                <?php echo $form->labelEx($modelPago, 'correoElectronico', array('class' => '')); ?>
+                <?php echo $form->emailField($modelPago, 'correoElectronico', array('maxlength' => 50, 'placeholder' => $modelPago->getAttributeLabel('correoElectronico'))); ?>
+                <?php echo $form->error($modelPago, 'correoElectronico'); ?>
+            </div>
+            <div class="ui-field-container">
                 <?php echo $form->labelEx($modelPago, 'direccion', array('class' => '')); ?>
                 <?php echo $form->textField($modelPago, 'direccion', array('maxlength' => 100, 'placeholder' => $modelPago->getAttributeLabel('direccion'))); ?>
                 <?php echo $form->error($modelPago, 'direccion'); ?>

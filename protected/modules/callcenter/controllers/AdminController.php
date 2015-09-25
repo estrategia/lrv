@@ -646,7 +646,11 @@ class AdminController extends ControllerOperator {
     }
 
     protected function gridOrigenPedido($data, $row) {
-        return "$data->identificacionUsuario<br/>" . $data->objUsuario->nombre . " " . $data->objUsuario->apellido . "<br/>" . $data->objUsuario->correoElectronico;
+        if($data->identificacionUsuario == null){
+            return $data->objCompraDireccion->nombre . "<br/>" . $data->objCompraDireccion->correoElectronico;
+        }else{
+            return "$data->identificacionUsuario<br/>" . $data->objUsuario->getNombreCompleto(). "<br/>" . $data->objUsuario->correoElectronico;
+        }
     }
 
     protected function gridValorPedido($data, $row) {

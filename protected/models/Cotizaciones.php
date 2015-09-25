@@ -11,6 +11,7 @@
  * @property integer $impuestosCompra
  * @property integer $baseImpuestosCompra
  * @property integer $totalCompra
+ * @property integer $ahorroCompra
  * @property integer $domicilio
  * @property integer $flete
  * @property integer $codigoPerfil
@@ -42,13 +43,13 @@ class Cotizaciones extends CActiveRecord {
         // will receive user inputs.
         return array(
             array('identificacionUsuario, codigoCiudad, codigoSector', 'required'),
-            array('subtotalCompra, impuestosCompra, baseImpuestosCompra, totalCompra, domicilio, flete, codigoPerfil, tiempoDomicilioCedi, valorDomicilioCedi, codigoCedi', 'numerical', 'integerOnly' => true),
+            array('subtotalCompra, impuestosCompra, baseImpuestosCompra, totalCompra, ahorroCompra, domicilio, flete, codigoPerfil, tiempoDomicilioCedi, valorDomicilioCedi, codigoCedi', 'numerical', 'integerOnly' => true),
             array('identificacionUsuario', 'length', 'max' => 100),
             array('codigoCiudad, codigoSector', 'length', 'max' => 10),
             array('fechaCotizacion', 'safe'),
             // The following rule is used by search().
             // @todo Please remove those attributes that should not be searched.
-            array('idCotizacion, identificacionUsuario, fechaCotizacion, subtotalCompra, impuestosCompra, baseImpuestosCompra, totalCompra, domicilio, flete, codigoPerfil, codigoCiudad, codigoSector, tiempoDomicilioCedi, valorDomicilioCedi, codigoCedi', 'safe', 'on' => 'search'),
+            array('idCotizacion, identificacionUsuario, fechaCotizacion, subtotalCompra, impuestosCompra, baseImpuestosCompra, totalCompra, ahorroCompra, domicilio, flete, codigoPerfil, codigoCiudad, codigoSector, tiempoDomicilioCedi, valorDomicilioCedi, codigoCedi', 'safe', 'on' => 'search'),
         );
     }
 
@@ -77,6 +78,7 @@ class Cotizaciones extends CActiveRecord {
             'impuestosCompra' => 'Impuestos Compra',
             'baseImpuestosCompra' => 'Base Impuestos Compra',
             'totalCompra' => 'Total Compra',
+            'ahorroCompra' => 'Ahorro Compra',
             'domicilio' => 'Domicilio',
             'flete' => 'Flete',
             'codigoPerfil' => 'Codigo Perfil',
@@ -111,6 +113,7 @@ class Cotizaciones extends CActiveRecord {
         $criteria->compare('t.impuestosCompra', $this->impuestosCompra);
         $criteria->compare('t.baseImpuestosCompra', $this->baseImpuestosCompra);
         $criteria->compare('t.totalCompra', $this->totalCompra);
+        $criteria->compare('t.ahorroCompra', $this->ahorroCompra);
         $criteria->compare('t.domicilio', $this->domicilio);
         $criteria->compare('t.flete', $this->flete);
         $criteria->compare('t.codigoPerfil', $this->codigoPerfil);

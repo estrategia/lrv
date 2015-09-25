@@ -31,12 +31,18 @@ $form = $this->beginWidget('CActiveForm', array(
             <?php echo $form->textField($modelPago, 'telefonoContacto', array('maxlength' => 50, 'placeholder' => $modelPago->getAttributeLabel('telefonoContacto'))); ?>
             <?php echo $form->error($modelPago, 'telefonoContacto'); ?>
 
+            <?php if ($modelPago->pagoInvitado): ?>
+                <?php echo $form->labelEx($modelPago, 'correoElectronico', array('class' => '')); ?>
+                <?php echo $form->emailField($modelPago, 'correoElectronico', array('maxlength' => 50, 'placeholder' => $modelPago->getAttributeLabel('correoElectronico'))); ?>
+                <?php echo $form->error($modelPago, 'correoElectronico'); ?>
+            <?php endif; ?>
+
         <?php endif; ?>
-        
+
         <?php echo $form->labelEx($modelPago, 'comentario', array()); ?>
         <?php echo $form->textArea($modelPago, 'comentario', array('data-countchar' => 'div-comentario-contador', 'maxlength' => 250, 'placeholder' => $modelPago->getAttributeLabel('comentario'))); ?>
         <div class="maxCaract">[Máximo 250 caracteres] <span id="div-comentario-contador"></span></div>
-        <?php echo $form->error($modelPago, 'comentario'); ?>
+            <?php echo $form->error($modelPago, 'comentario'); ?>
 
     </div>
 </fieldset>

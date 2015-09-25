@@ -25,10 +25,17 @@
             <tr>
                 <td> 
                     <div class="col-md-6">
-                        <strong>Datos del Remitente</strong> <br>
-                        <strong>Cédula: </strong><?php echo $objCompra->identificacionUsuario ?><br>
-                        <strong>Nombre: </strong><?php echo $objCompra->objUsuario->nombre . " " . $objCompra->objUsuario->apellido ?><br>
-                        <strong>Correo: </strong><?php echo $objCompra->objUsuario->correoElectronico ?> <br/>
+                        <?php if($objCompra->identificacionUsuario==null): ?>
+                            <strong>Datos del Remitente</strong> <br>
+                            <strong>Cédula: </strong>Invitado<br>
+                            <strong>Nombre: </strong><?php echo $objCompra->objCompraDireccion->nombre ?><br>
+                            <strong>Correo: </strong><?php echo $objCompra->objCompraDireccion->correoElectronico ?> <br/>
+                        <?php else: ?>
+                            <strong>Datos del Remitente</strong> <br>
+                            <strong>Cédula: </strong><?php echo  $objCompra->identificacionUsuario ?><br>
+                            <strong>Nombre: </strong><?php echo $objCompra->objUsuario->nombre . " " . $objCompra->objUsuario->apellido ?><br>
+                            <strong>Correo: </strong><?php echo $objCompra->objUsuario->correoElectronico ?> <br/>
+                        <?php endif;?>
                         <strong>TipoEntrega: </strong><?php echo Yii::app()->params->entrega["tipo"][$objCompra->tipoEntrega] ?> 
                         
                     </div>

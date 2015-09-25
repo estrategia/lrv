@@ -79,6 +79,10 @@
                         'value' => array($this, 'gridPagoPedido'),
                     ),
                     array(
+                        'header' => 'Tipo Usuario',
+                        'value' => '$data->identificacionUsuario == null ? "Invitado" : "Registrado"',
+                    ),
+                    array(
                         'header' => 'PDV',
                         'value' => '$data->idComercial == null ? "Sin Asignar" : $data->idComercial',
                     ),
