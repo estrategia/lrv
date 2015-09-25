@@ -138,7 +138,7 @@ ul.ui-listview.ui-listview-inset.ui-corner-all.ui-shadow li a.ui-btn.ui-icon-car
 }
 .ui-bar-f .f_sic{ background: #FFF; text-align: center;color: #919191;font-size: 12.5px;  }
 .ui-bar-f .f_sic p{ margin: 0;  }
-.ui-bar-f .barraf, .barraf{ background: url("../images/estructura/barra_footer.jpg") repeat-x; min-height: 11px; display: block; }
+.ui-bar-f .barraf{ background: url("../images/estructura/barra_footer.jpg") repeat-x; min-height: 11px; display: block; }
 
 /* ---- CONTENT ---- */
 .ui-body-c{  }
@@ -1132,7 +1132,7 @@ div.ccont_filtro .right{float: right; text-align: right; border: 0; margin: 0; w
 div.ccont_filtro .left{float: left; border: 0; margin: 0; width: 50%;}
 
 div.ccont_filtro a.ui-link{ text-decoration: none; }
-div.ccont_filtro a.ui-link img{ padding: .3em .4em 0em .7em; transition:0.5s all; }
+div.ccont_filtro a.ui-link img{ padding: .3em .4em 0em .7em; width: 2em; transition:0.5s all; }
 div.ccont_filtro .left a.ui-link img{ border-right: 1px solid #ccc;}
 div.ccont_filtro .right a.ui-link img{ border-left: 1px solid #ccc;}
 
@@ -1141,7 +1141,7 @@ div.ccont_filtro a.ui-link img:hover , div.ccont_filtro a.ui-link img:active , d
 }
 /*
 li.c_list_prod.ui-li-static.ui-body-inherit div.cdiv_prod_frc{ position: absolute; top: 0; width: 100%; min-height: 2em; }*/
-li.c_list_prod.ui-li-static.ui-body-inherit div.cdiv_prod_frc, div.cdiv_prod_frc{ float: left;}
+li.c_list_prod.ui-li-static.ui-body-inherit div.cdiv_prod_frc, div.cdiv_prod_frc{   margin-bottom: 7px; position: relative;}
 /*
 li.c_list_prod.ui-li-static.ui-body-inherit div.cdiv_prod_frc div.c_prod_frc {
     background: url("../images/iconos/etiqueta_fraccionados.png") no-repeat scroll left top rgba(0, 0, 0, 0);
@@ -1152,14 +1152,14 @@ li.c_list_prod.ui-li-static.ui-body-inherit div.cdiv_prod_frc div.c_prod_frc {
     width: 130px;
 }
 */
-li.c_list_prod.ui-li-static.ui-body-inherit div.cdiv_prod_frc div.c_prod_frc, div.cdiv_prod_frc div.c_prod_frc {
+/*li.c_list_prod.ui-li-static.ui-body-inherit div.cdiv_prod_frc div.c_prod_frc, div.cdiv_prod_frc div.c_prod_frc {
     background: none repeat scroll 0 0 #919191;
     border-radius: 0.3em 0;
     float: left;
     padding: 0 1em;
     position: relative;
     vertical-align: top;
-}
+}*/
 li.c_list_prod.ui-li-static.ui-body-inherit div.cdiv_prod_frc div.c_prod_frc p,  div.c_prod_frc p{ color: #FFF; text-transform: capitalize; /*font-size: .75em;*/ }
 /*
 li.c_list_prod.ui-li-static.ui-body-inherit div.cdiv_prod_desc{ position: relative; width: 100%; min-height: 2em; }*/
@@ -1498,7 +1498,7 @@ div.cwl_txt h1.txt_nom{ text-transform: capitalize; font-size: large; padding-bo
     right: 5px;
     display: none; /* Estara oculto por defecto */
     text-indent: -9999px; /* Oculta el texto del enlace */
-    z-index: 9999; /* Evita que otros elementos esten por encima */
+    z-index: 1000; /* Evita que otros elementos esten por encima */
     background: url('../images/iconos/go_top.png') no-repeat;
 }
 
@@ -2496,4 +2496,60 @@ ul.yiiPager .selected a {
 }
 .combo_list_item .clst_cont_pr_prod {
     padding-top: 0.8em;
+}
+.label {
+    border-radius: 0.25em;
+    -moz-border-radius: 0.25em;
+    -webkit-border-radius: 0.25em;
+    -o-border-radius: 0.25em;
+    color: #fff;
+    display: inline;
+    font-size: 75%;
+    font-weight: 700;
+    line-height: 1;
+    padding: 0.2em 0.6em 0.3em;
+    text-align: center;
+    vertical-align: baseline;
+    white-space: nowrap;
+}
+.label-primary {
+    background-color: #337ab7;
+}
+.label-default {
+    background-color: #777;
+}
+.label-success {
+    background-color: #5cb85c;
+}
+.label-info {
+    background-color: #5bc0de;
+}
+.label-warning {
+    background-color: #f0ad4e;
+}
+.label-danger {
+    background-color: #d9534f;
+}
+li.c_list_prod.ui-li-static.ui-body-inherit div.cdiv_prod_frc div.c_prod_frc, div.c_prod_frc {
+    background: url("../images/iconos/etiqueta_fraccionado.png") no-repeat scroll left top / auto 100% rgba(0, 0, 0, 0);
+    float: left;
+    height: 50px;
+    position: absolute;
+    left: -1px;
+    top: -0.7em;
+    vertical-align: top;
+    width: 210px;
+}
+li.c_list_prod.ui-li-static.ui-body-inherit div.cdiv_prod_frc div.c_prod_frc p, div.c_prod_frc p {
+    color: yellow;
+     font-size: medium;
+    font-weight: bold;
+    margin: 0.3em 0 0.6em;
+    padding: 0 1em;
+    text-align: left;
+}
+
+li.c_list_prod.ui-li-static.ui-body-inherit div.cdiv_prod_frc div.c_prod_frc p span, div.c_prod_frc p span {
+    font-size: small;
+    font-weight: normal;
 }
