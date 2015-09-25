@@ -55,9 +55,9 @@ abstract class Precio {
         $array = array();
         foreach ($this->listPuntos as $objPunto){
             if($objPunto->tipoValor==1){
-                $array[] = "$objPunto->valor";
+                $array[] = "$objPunto->valor Puntos";
             }else if($objPunto->tipoValor==2){
-                $array[] = "$objPunto->valor X";
+                $array[] = "Puntos X $objPunto->valor";
             }
         }
         return $array;

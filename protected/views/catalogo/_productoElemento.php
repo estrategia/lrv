@@ -55,9 +55,7 @@
             <?php endif; ?>
         <?php endif; ?>
         <?php foreach ($objPrecio->getPuntosDescripcion() as $descripcionPunto): ?>
-            <div>
-                <?= $descripcionPunto ?>
-            </div>
+            <span class="label label-primary"><?= $descripcionPunto ?></span>
         <?php endforeach; ?>
     </div>
     <div class="clear"></div>
