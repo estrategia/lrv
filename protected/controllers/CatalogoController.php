@@ -1309,7 +1309,7 @@ class CatalogoController extends Controller {
         }
         
         $swobligaCli = "";
-        if (Yii::app()->shoppingCart->getEsClienteFiel()) {
+        if (esClienteFiel()) {
             $swobligaCli = " AND (swobligaCli=0 || swobligaCli=2)";
         } else {
             $swobligaCli = " AND swobligaCli=0";

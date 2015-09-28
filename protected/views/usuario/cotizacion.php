@@ -131,10 +131,17 @@
                         <td><?php echo Yii::app()->numberFormatter->format(Yii::app()->params->formatoMoneda['patron'], $objCotizacion->impuestosCompra, Yii::app()->params->formatoMoneda['moneda']) ?></td>
                     </tr>
                 <?php endif; ?>
+                    <?php if ($objCotizacion->ahorroCompra > 0): ?>
+                    <tr>
+                        <td>Ahorro</td>
+                        <td><?php echo Yii::app()->numberFormatter->format(Yii::app()->params->formatoMoneda['patron'], $objCotizacion->ahorroCompra, Yii::app()->params->formatoMoneda['moneda']); ?></td>
+                    </tr>
+                <?php endif; ?>
             </tbody>
         </table>
         <p class="center TotalPagarCompra">Total <?php echo Yii::app()->numberFormatter->format(Yii::app()->params->formatoMoneda['patron'], $objCotizacion->totalCompra, Yii::app()->params->formatoMoneda['moneda']) ?></p>
     </div>
 
     <?php echo CHtml::link('Agregar al carro', "#", array("data-role" => "cotizaciondetalle", "data-cotizacion" => $objCotizacion->idCotizacion, 'class' => 'ui-btn ui-corner-all ui-shadow ui-btn-r', 'data-ajax' => "false")); ?>
+    <?php echo CHtml::link('Exportar cotizaci&oacute;n', $this->createUrl("/usuario/cotizacionpdf", array('cotizacion' => $objCotizacion->idCotizacion)), array('class' => 'ui-btn ui-corner-all ui-shadow ui-btn-r', 'data-ajax' => "false")); ?>
 </div>

@@ -163,15 +163,14 @@ class EShoppingCart extends CMap {
         return $this->codigoPerfil;
     }
     
-    public function getEsClienteFiel(){
+    /*public function getEsClienteFiel(){
         if(isset(Yii::app()->session[Yii::app()->params->usuario['sesion']]) && Yii::app()->session[Yii::app()->params->usuario['sesion']] instanceof Usuario){
             $objUsuario = Yii::app()->session[Yii::app()->params->usuario['sesion']];
             return ($objUsuario->esClienteFiel==1);
         }
         
         return false;
-    }
-            
+    }*/
 
     public function getCodigoCiudad() {
         if ($this->objSectorCiudad == null)

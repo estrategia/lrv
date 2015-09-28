@@ -150,7 +150,7 @@ class PrecioProducto extends Precio {
                 ':producto' => $objProducto->codigoProducto
             );
             
-            if (Yii::app()->shoppingCart->getEsClienteFiel()) {
+            if (esClienteFiel()) {
                 $condition .= " AND (swobligaCli=0 || swobligaCli=2)";
             } else {
                 $condition .= " AND swobligaCli=0";

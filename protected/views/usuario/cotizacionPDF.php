@@ -1,3 +1,6 @@
+
+<img style="display: block; width: 100%; height: 10%" src="<?php echo CController::createAbsoluteUrl('/')?>/images/mailing_header.png"> 
+
 <p style="text-align:right;font-size:14px">
     <b>N&uacute;mero cotizaci&oacute;n: </b>
     <span style="color:#ff0000"><?php echo $objCotizacion->idCotizacion ?></span>
@@ -187,7 +190,7 @@
                 </td>
                 <td width="250" valign="top">
                     <div>
-                        <table cellpadding="0" border="0" style="border-left:1px solid #cccccc;border-right:1px solid #cccccc;border-top:1px solid #cccccc;color:#666666;margin-top:20px;width:100%">
+                        <table cellpadding="0" border="0" style="border:1px solid #cccccc;color:#666666;margin-top:20px;width:100%">
                             <tbody>
                                 <tr>
                                     <td style="padding-left:21px;width:70%">Servicio</td>
@@ -213,25 +216,28 @@
                                 </tr>
                                 <tr>
                                     <td style="padding-left:21px">Impuestos incluidos</td>
-                                    <td style="text-align:right"><?php echo Yii::app()->numberFormatter->format(Yii::app()->params->formatoMoneda['patron'], $objCotizacion->impuestosCompra, Yii::app()->params->formatoMoneda['moneda']) ?></td>
+                                    <td style="text-align:right">
+                                        <b><?php echo Yii::app()->numberFormatter->format(Yii::app()->params->formatoMoneda['patron'], $objCotizacion->impuestosCompra, Yii::app()->params->formatoMoneda['moneda']) ?></b>
+                                    </td>
                                 </tr>
                                 <tr>
                                     <td style="padding-left:21px">Su Ahorro</td>
-                                    <td style="text-align:right"><?php echo Yii::app()->numberFormatter->format(Yii::app()->params->formatoMoneda['patron'], $objCotizacion->ahorroCompra, Yii::app()->params->formatoMoneda['moneda']) ?></td>
+                                    <td style="text-align:right">
+                                        <b><?php echo Yii::app()->numberFormatter->format(Yii::app()->params->formatoMoneda['patron'], $objCotizacion->ahorroCompra, Yii::app()->params->formatoMoneda['moneda']) ?></b>
+                                    </td>
                                 </tr>
-                            </tbody>
-                        </table>
-                        <table cellpadding="5" border="0" style="border:1px solid #ccc;color:#666666;margin-top:0px;width:100%">
-                            <tbody>
-                                <tr style="background:#f9f9f9">
-                                    <td style="color:#FFFFFF;background-color: #FF0000;font-weight:bold;width:70%;font-size:16px; border-right-width: 0px">TOTAL</td>
+                                <tr style="background:#f9f9f9;">
+                                    <td style="color:#FFFFFF;background-color: #FF0000;font-weight:bold;width:70%;font-size:16px; border-right-width: 0px;margin-top:0px;">TOTAL</td>
                                     <td style="font-size:16px;color:#FFFFFF;background-color: #FF0000;font-weight:bold;text-align:center;border-left-width: 0px"><?php echo Yii::app()->numberFormatter->format(Yii::app()->params->formatoMoneda['patron'], $objCotizacion->totalCompra, Yii::app()->params->formatoMoneda['moneda']) ?></td>
                                 </tr>
                             </tbody>
                         </table>
+                        
                     </div>
                 </td>
             </tr>
         </tbody>
     </table>
 </div>
+
+<img style="display: block; width: 100%; height: 6%" src="<?php echo CController::createAbsoluteUrl('/')?>/images/mailing_footer.png"> 

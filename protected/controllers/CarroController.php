@@ -1371,8 +1371,14 @@ class CarroController extends Controller {
             $objSectorCiudad = Yii::app()->session[Yii::app()->params->sesion['sectorCiudadEntrega']];
 
         if ($objSectorCiudad === null) {
-            Yii::app()->user->setFlash('error', "Seleccionar ubicación.");
-            $this->redirect($this->createUrl('/sitio/ubicacion'));
+            if($post){
+                echo CJSON::encode(array('result' => 'ok', 'response' => 'Seleccionar ubicaci&oacute;n', 'redirect' => $this->createUrl('/sitio/ubicacion')));
+                Yii::app()->end();
+            }else{
+                Yii::app()->user->setFlash('error', "Seleccionar ubicación.");
+                $this->redirect($this->createUrl('/sitio/ubicacion'));
+                Yii::app()->end();
+            }
         }
         
         $modelPago = null;
@@ -1408,7 +1414,7 @@ class CarroController extends Controller {
 
         if (Yii::app()->user->isGuest && $modelPago == null) {
             Yii::app()->session[Yii::app()->params->sesion['redireccionAutenticacion']] = $this->createAbsoluteUrl('pagar');
-            $this->render('autenticar');
+            $this->render('/usuario/autenticar', array('pagar' => true));
             Yii::app()->end();
         }
 

@@ -7,8 +7,7 @@
     </ul>
 <?php endif; ?>
 
-<div class="ui-content ui-body-c">
-    <h2>Recordar Contraseña</h2>
+<div class="ui-body-c">
     <?php
     $form = $this->beginWidget('CActiveForm', array(
         'enableClientValidation' => true,
@@ -34,7 +33,7 @@
     <?php /* echo CHtml::submitButton('Recordar', array('class' => 'c_bt_sendrc')); */ ?>
     <div class="ui-input-btn ui-btn ui-corner-all ui-shadow ui-btn-r">
         Recordar
-        <input type="submit" data-enhanced="true" value="Recordar">
+        <input type="button" data-registro="recordar" data-enhanced="true" value="Recordar">
     </div>
     <?php $this->endWidget(); ?>
 </div>

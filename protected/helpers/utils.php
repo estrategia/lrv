@@ -88,18 +88,18 @@ function distanciaCoordenadas($lat1, $lon1, $lat2, $lon2, $unit = 'K') {
 
 function GSASearch(&$term) {
     $arr = array();
-    
-    if (Yii::app()->params->busqueda['buscadorActivo'] == Yii::app()->params->busqueda['tipoBuscador']['GSA']){
+
+    if (Yii::app()->params->busqueda['buscadorActivo'] == Yii::app()->params->busqueda['tipoBuscador']['GSA']) {
         return GSASearchAux($term);
-    }else if (Yii::app()->params->busqueda['buscadorActivo'] == Yii::app()->params->busqueda['tipoBuscador']['webService']){
+    } else if (Yii::app()->params->busqueda['buscadorActivo'] == Yii::app()->params->busqueda['tipoBuscador']['webService']) {
         return WebServiceSearch($term);
-    }else {
+    } else {
         return array();
     }
 }
 
 function WebServiceSearch($term) {
-    try{
+    try {
         $client = new SoapClient(null, array(
             'location' => Yii::app()->params->webServiceUrl['serverLRV'],
             'uri' => "",
@@ -107,7 +107,7 @@ function WebServiceSearch($term) {
         ));
 
         return $client->__soapCall('BuscardorLRV', array('BUSQUEDA' => $term));
-    }  catch (SoapFault $soapExc){
+    } catch (SoapFault $soapExc) {
         return array();
     }
 }
@@ -201,4 +201,13 @@ function obtenerProductoRefe($busqueda) {
     }
 
     return null;
+}
+
+function esClienteFiel() {
+    if (isset(Yii::app()->session[Yii::app()->params->usuario['sesion']]) && Yii::app()->session[Yii::app()->params->usuario['sesion']] instanceof Usuario) {
+        $objUsuario = Yii::app()->session[Yii::app()->params->usuario['sesion']];
+        return ($objUsuario->esClienteFiel == 1);
+    }
+
+    return false;
 }
