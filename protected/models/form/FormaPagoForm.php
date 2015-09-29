@@ -343,8 +343,8 @@ class FormaPagoForm extends CFormModel {
                     $horario = $objPdv->$foraneaHorario;
 
                     if ($horario !== null) {
-                        $this->listPuntosVenta[1][$indicePdv]['HORA_INICIO'] = DateTime::createFromFormat('H:i:s', $horario->horarioInicio);
-                        $this->listPuntosVenta[1][$indicePdv]['HORA_FIN'] = DateTime::createFromFormat('H:i:s', $horario->horarioFin);
+                        $this->listPuntosVenta[1][$indicePdv]['HORA_INICIO'] = DateTime::createFromFormat('H:i:s', $horario->HorarioInicio);
+                        $this->listPuntosVenta[1][$indicePdv]['HORA_FIN'] = DateTime::createFromFormat('H:i:s', $horario->HorarioFin);
                     }
 
                     foreach ($pdv[4] as $indiceProd => $producto) {
@@ -444,9 +444,7 @@ class FormaPagoForm extends CFormModel {
 
         $horaIniServicio = "07:00:00";
         $horaFinServicio = "23:00:00";
-
-        Yii::log("Listhoras1: $horaFinServicio" . "\n", CLogger::LEVEL_INFO, 'application');
-
+        
         if ($this->objHorarioCiudadSector != null) {
             $dia = 'festivo';
             $ahora = new DateTime;
@@ -456,10 +454,8 @@ class FormaPagoForm extends CFormModel {
             }
             $horaIniServicio = $this->objHorarioCiudadSector->$horariosDia[$dia]['inicio'];
             $horaFinServicio = $this->objHorarioCiudadSector->$horariosDia[$dia]['fin'];
-
-            Yii::log("Listhoras2: $horaFinServicio" . "\n", CLogger::LEVEL_INFO, 'application');
         }
-
+        
         $sql = "SELECT idHorario, concat('Hoy a las ', DATE_FORMAT(hora, '%h:%i %p')) as etiqueta, concat(curdate(), ' ', DATE_FORMAT(hora, '%H:%i:%s')) as fecha, hora
              FROM   m_Horario
              WHERE  hora between ADDTIME('" . $horaIniServicio . "', '" . $deltaHorario . "') and '" . $horaFinServicio . "' and (hora >= ADDTIME(CURTIME(), '" . $deltaHorario . "'))
@@ -471,35 +467,25 @@ class FormaPagoForm extends CFormModel {
         $connection = Yii::app()->db;
         $command = $connection->createCommand($sql);
         $rows = $command->queryAll();
-
-        /* if (empty($rows)) {
-          $headers = "MIME-Version: 1.0\r\n";
-          $headers .= "Content-type: text/html; charset=iso-8859-1\r\n";
-          $headers .= "FROM: La Rebaja Virtual <infolrv@copservir.com>";
-
-          $para = "alexander_javela@copservir.com";
-          $asunto = "FALLO SELECT PEDIDOS " . $idPedido;
-          $mensaje = $sql;
-          mail($para, $asunto, $mensaje, $headers);
-
-          $r_horas = $this->_db->fetchAll($sql);
-          } */
-
+        
+        if(empty($rows)){
+            try{
+                sendHtmlEmail(Yii::app()->params->callcenter['correo'], "FALLO SELECT HORARIO ENTREGA PEDIDOS", $sql);
+            }  catch (Exception $exc){
+                Yii::log($exc->getMessage() . "\n" . $exc->getTraceAsString() . "\n" . "FALLO SELECT HORARIO ENTREGA PEDIDOS: $sql", CLogger::LEVEL_ERROR, 'application');
+            }
+        }
+        
         return $rows;
     }
 
     public function fechaValidate($attribute, $params) {
         if ($this->fechaEntrega != null) {
-            Yii::log("Fecha entrega: $this->fechaEntrega\n", CLogger::LEVEL_INFO, 'application');
             $listHoras = $this->listDataHoras();
             $valido = false;
 
-            Yii::log("Listhoras:" . CVarDumper::dumpAsString($listHoras) . "\n", CLogger::LEVEL_INFO, 'application');
-
             foreach ($listHoras as $hora) {
-                Yii::log("Hora: " . CVarDumper::dumpAsString($hora) . "\n", CLogger::LEVEL_INFO, 'application');
                 if ($hora['fecha'] == $this->fechaEntrega) {
-                    Yii::log("Hora igual: " . CVarDumper::dumpAsString($hora) . "\n", CLogger::LEVEL_INFO, 'application');
                     $valido = true;
                     break;
                 }

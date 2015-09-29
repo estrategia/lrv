@@ -1500,6 +1500,7 @@ class CarroController extends Controller {
                         $form->identificacionUsuario = Yii::app()->user->name;
                         $form->pagoInvitado = $modelPago->pagoInvitado;
                         $form->attributes = $_POST['FormaPagoForm'];
+                        $form->objHorarioCiudadSector = $modelPago->objHorarioCiudadSector;
 
                         if ($form->validate()) {
                             //$modelPago->attributes = $_POST['FormaPagoForm'];
@@ -1693,6 +1694,7 @@ class CarroController extends Controller {
                     $form = new FormaPagoForm($paso);
                     $form->pagoInvitado = $modelPago->pagoInvitado;
                     $form->identificacionUsuario = Yii::app()->user->name;
+                    $form->objHorarioCiudadSector = $modelPago->objHorarioCiudadSector;
                     
                     if (isset($_POST['FormaPagoForm'])){
                         $form->attributes = $_POST['FormaPagoForm'];

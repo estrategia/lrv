@@ -1,3 +1,5 @@
+<?php $this->pageTitle = Yii::app()->name . " - " . $objProducto->descripcionProducto; ?>
+
 <div class="ui-content c_cont_detail_prod">
     <h1><?php echo $objProducto->descripcionProducto ?></h1>
     <h2><?php echo $objProducto->presentacionProducto ?></h2>

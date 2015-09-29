@@ -4,9 +4,9 @@
  * This is the model class for table "t_HorariosPuntoVenta".
  *
  * The followings are the available columns in table 't_HorariosPuntoVenta':
- * @property integer $idHorarioPuntoDeVenta
- * @property string $horarioInicio
- * @property string $horarioFin
+ * @property integer $IdHorarioPuntoDeVenta
+ * @property string $HorarioInicio
+ * @property string $HorarioFin
  *
  */
 class HorarioPuntoVenta extends CActiveRecord {
@@ -38,10 +38,10 @@ class HorarioPuntoVenta extends CActiveRecord {
         // NOTE: you should only define rules for those attributes that
         // will receive user inputs.
         return array(
-            array('horarioInicio, horarioFin', 'required'),
+            array('HorarioInicio, HorarioFin', 'required'),
             // The following rule is used by search().
             // @todo Please remove those attributes that should not be searched.
-            array('idHorarioPuntoDeVenta, horarioInicio, horarioFin', 'safe', 'on' => 'search'),
+            array('IdHorarioPuntoDeVenta, HorarioInicio, HorarioFin', 'safe', 'on' => 'search'),
         );
     }
 
@@ -60,9 +60,9 @@ class HorarioPuntoVenta extends CActiveRecord {
      */
     public function attributeLabels() {
         return array(
-            'idHorarioPuntoDeVenta' => 'Idhorario Punto De Venta',
-            'horarioInicio' => 'Horario Inicio',
-            'horarioFin' => 'Horario Fin',
+            'IdHorarioPuntoDeVenta' => 'Idhorario Punto De Venta',
+            'HorarioInicio' => 'Horario Inicio',
+            'HorarioFin' => 'Horario Fin',
         );
     }
 
@@ -83,9 +83,9 @@ class HorarioPuntoVenta extends CActiveRecord {
 
         $criteria = new CDbCriteria;
 
-        $criteria->compare('idHorarioPuntoDeVenta', $this->idHorarioPuntoDeVenta);
-        $criteria->compare('horarioInicio', $this->horarioInicio, true);
-        $criteria->compare('horarioFin', $this->horarioFin, true);
+        $criteria->compare('IdHorarioPuntoDeVenta', $this->IdHorarioPuntoDeVenta);
+        $criteria->compare('HorarioInicio', $this->HorarioInicio, true);
+        $criteria->compare('HorarioFin', $this->HorarioFin, true);
 
         return new CActiveDataProvider($this, array(
             'criteria' => $criteria,

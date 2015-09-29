@@ -23,11 +23,14 @@
  * @property string $fechaTransaccion
  * @property string $correoElectronico
  * @property integer $tipoRespuesta
+ * @property string $numeroVisible
+ * @property string $codigoAutorizacion
  *
  * The followings are the available model relations:
  * @property TCompras $idCompra0
  */
 class PasarelaRespuestas extends CActiveRecord {
+
     const TIPO_RESPUESTA = 1;
     const TIPO_CONFIRMACION = 2;
 
@@ -48,15 +51,18 @@ class PasarelaRespuestas extends CActiveRecord {
             array('estadoPol, codigoRespuestaPol, idCompra, refPol, medioPago, tipoMedioPago, cuotas, valor, iva, valorAdicional, moneda, cus, bancoPse, fechaTransaccion, tipoRespuesta', 'required'),
             array('estadoPol, codigoRespuestaPol, idCompra, refPol, medioPago, tipoMedioPago, cuotas, tipoRespuesta', 'numerical', 'integerOnly' => true),
             array('mensaje', 'length', 'max' => 255),
+            array('numeroVisible', 'length', 'max' => 20),
+            array('codigoAutorizacion', 'length', 'max' => 10),
             array('valor, valorPesos, iva, valorAdicional', 'length', 'max' => 16),
             array('moneda', 'length', 'max' => 3),
             array('cus', 'length', 'max' => 15),
             array('bancoPse', 'length', 'max' => 25),
             array('fechaTransaccion', 'length', 'max' => 20),
             array('correoElectronico', 'length', 'max' => 100),
+            array('mensaje, numeroVisible, codigoAutorizacion, correoElectronico', 'default', 'value' => null),
             // The following rule is used by search().
             // @todo Please remove those attributes that should not be searched.
-            array('idPasarelaRespuesta, estadoPol, codigoRespuestaPol, idCompra, refPol, mensaje, medioPago, tipoMedioPago, cuotas, valor, valorPesos, iva, valorAdicional, moneda, cus, bancoPse, fechaTransaccion, correoElectronico, tipoRespuesta', 'safe', 'on' => 'search'),
+            array('idPasarelaRespuesta, estadoPol, codigoRespuestaPol, idCompra, refPol, mensaje, medioPago, tipoMedioPago, cuotas, valor, valorPesos, iva, valorAdicional, moneda, cus, bancoPse, fechaTransaccion, correoElectronico, tipoRespuesta, numeroVisible, codigoAutorizacion', 'safe', 'on' => 'search'),
         );
     }
 
@@ -95,6 +101,8 @@ class PasarelaRespuestas extends CActiveRecord {
             'fechaTransaccion' => 'Fecha Transaccion',
             'correoElectronico' => 'Correo Electronico',
             'tipoRespuesta' => 'Tipo Respuesta',
+            'numeroVisible' => 'n&uacute;mero Visible',
+            'codigoAutorizacion' => 'c&oacute;digo Autorizaci&oacute;n',
         );
     }
 
@@ -134,6 +142,8 @@ class PasarelaRespuestas extends CActiveRecord {
         $criteria->compare('fechaTransaccion', $this->fechaTransaccion, true);
         $criteria->compare('correoElectronico', $this->correoElectronico, true);
         $criteria->compare('tipoRespuesta', $this->tipoRespuesta);
+        $criteria->compare('numeroVisible', $this->numeroVisible);
+        $criteria->compare('codigoAutorizacion', $this->codigoAutorizacion);
 
         return new CActiveDataProvider($this, array(
             'criteria' => $criteria,
@@ -149,11 +159,12 @@ class PasarelaRespuestas extends CActiveRecord {
     public static function model($className = __CLASS__) {
         return parent::model($className);
     }
-    
+
     /*
      * Validaciones de datos que afecten insert/update
      */
-    public function validaDatos(){
+
+    public function validaDatos() {
         if (!is_numeric($this->estadoPol)) {
             $this->estadoPol = 0;
         }
@@ -187,25 +198,25 @@ class PasarelaRespuestas extends CActiveRecord {
         if (!is_numeric($this->cus)) {
             $this->cus = 0;
         }
-        if($this->moneda==null){
+        if ($this->moneda == null || empty($this->moneda)) {
             $this->moneda = "COP";
         }
-        if($this->bancoPse==null){
+        if ($this->bancoPse == null || empty($this->bancoPse)) {
             $this->bancoPse = "NA";
         }
-        if($this->fechaTransaccion==null){
+        if ($this->fechaTransaccion == null || empty($this->fechaTransaccion)) {
             $this->fechaTransaccion = "NA";
         }
-        if($this->correoElectronico==null){
-            $this->correoElectronico = "NA";
-        }
+        /* if($this->correoElectronico==null || empty($this->correoElectronico)){
+          $this->correoElectronico = "NA";
+          } */
     }
-    
-    public function beforeSave() {
+
+    public function beforeValidate() {
         $this->validaDatos();
-       return parent::beforeSave();
+        return parent::beforeValidate();
     }
-    
+
     /**
      * Metodo que hereda comportamiento de ValidateModelBehavior
      * @return void
@@ -217,6 +228,60 @@ class PasarelaRespuestas extends CActiveRecord {
                 'model' => $this
             ),
         );
+    }
+
+    public function getTipoRespuesta() {
+        $respuesta = "NA";
+
+        if ($this->tipoRespuesta = self::TIPO_RESPUESTA) {
+            $respuesta = "Respuesta";
+        } else if ($this->tipoRespuesta = self::TIPO_CONFIRMACION) {
+            $respuesta = "Confirmacion";
+        }
+
+        return $respuesta;
+    }
+
+    public function getEstadoTransaccion() {
+        $estado = "NA";
+
+        if ($this->estadoPol > 0) {
+            $query = "SELECT * FROM m_PasarelaEstadoPol WHERE codigo=$this->estadoPol";
+            $result = Yii::app()->db->createCommand($query)->queryRow(true);
+            if(!empty($result))
+                $estado = $result['descripcion'];
+        }
+        
+        if ($this->codigoRespuestaPol > 0) {
+            $query = "SELECT * FROM m_PasarelaCodigoRespuestaPol WHERE codigo=$this->codigoRespuestaPol";
+            $result = Yii::app()->db->createCommand($query)->queryRow(true);
+            
+            if(!empty($result))
+                $estado .= " - " . $result['descripcion'];
+        }
+
+        return $estado;
+    }
+
+    public function getMedioPago() {
+        $pago = "NA";
+
+        if ($this->tipoMedioPago > 0) {
+            $query = "SELECT * FROM m_PasarelaTipoMedioPago WHERE codigo=$this->tipoMedioPago";
+            $result = Yii::app()->db->createCommand($query)->queryRow(true);
+            if(!empty($result))
+                $pago = $result['descripcion'];
+        }
+        
+        if ($this->medioPago > 0) {
+            $query = "SELECT * FROM m_PasarelaMedioPago WHERE codigo=$this->medioPago";
+            $result = Yii::app()->db->createCommand($query)->queryRow(true);
+            
+            if(!empty($result))
+                $pago .= " - " . $result['descripcion'];
+        }
+
+        return $pago;
     }
 
 }

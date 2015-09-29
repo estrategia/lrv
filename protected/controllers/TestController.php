@@ -1,6 +1,9 @@
 <?php
 
 class TestController extends Controller {
+    public function actionVideo(){
+        $this->render('video');
+    }
     
     public function actionPdf(){
         //$compra = Compras::model()->with('items', 'items.producto')->findByPk($compra);

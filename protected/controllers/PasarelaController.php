@@ -23,8 +23,8 @@ class PasarelaController extends Controller {
         $model->codigoRespuestaPol = isset($_REQUEST['codigo_respuesta_pol']) ? $_REQUEST['codigo_respuesta_pol'] : 0;
         $model->idCompra = isset($_REQUEST['ref_venta']) ? $_REQUEST['ref_venta'] : null;
         $model->refPol = isset($_REQUEST['ref_pol']) ? $_REQUEST['ref_pol'] : 0;
-        $model->mensaje = isset($_REQUEST['mensaje']) ? $_REQUEST['mensaje'] : "";
-        $model->medioPago = isset($_REQUEST['mensaje']) ? $_REQUEST['mensaje'] : 0;
+        $model->mensaje = isset($_REQUEST['mensaje']) ? $_REQUEST['mensaje'] : null;
+        $model->medioPago = isset($_REQUEST['medio_pago']) ? $_REQUEST['medio_pago'] : 0;
         $model->tipoMedioPago = isset($_REQUEST['tipo_medio_pago']) ? $_REQUEST['tipo_medio_pago'] : 0;
         $model->cuotas = isset($_REQUEST['cuotas']) ? $_REQUEST['cuotas'] : 0;
         $model->valor = isset($_REQUEST['valor']) ? $_REQUEST['valor'] : 0;
@@ -58,7 +58,7 @@ class PasarelaController extends Controller {
             $this->log(-1, 900, "SERVIDOR NO AUTORIZADO. " . $_SERVER["REMOTE_ADDR"]);
             Yii::app()->end();
         }
-
+        
         if (empty($_POST)) {
             $this->log(-1, 800, "MEDOTO DE INVOCACION NO AUTORIZADO. " . $_SERVER["REMOTE_ADDR"]);
             Yii::app()->end();
@@ -74,33 +74,36 @@ class PasarelaController extends Controller {
             }
         }
 		
-	$this->log(0, 100, $cadenaLog); //Guardar los datos GET de invocacion.
-        $this->log(0, 100, $_SERVER["REMOTE_ADDR"]); //Guardar los datos GET de invocacion.
+	//$this->log(0, 100, $cadenaLog); //Guardar los datos GET de invocacion.
+        //$this->log(0, 100, $_SERVER["REMOTE_ADDR"]); //Guardar los datos GET de invocacion.
 
         //SETEO DE VARIABLES
         $objRespuesta = new PasarelaRespuestas;
         $objRespuesta->tipoRespuesta = PasarelaRespuestas::TIPO_CONFIRMACION;
-        $firma = $_POST["firma"];
+        $firma = isset($_POST["firma"]) ? $_POST["firma"] : "";
 
-        $objRespuesta->estadoPol = trim($_POST["estado_pol"]);
-        $objRespuesta->codigoRespuestaPol = trim($_POST["codigo_respuesta_pol"]);
-        $objRespuesta->idCompra = trim($_POST["ref_venta"]);
-        $objRespuesta->refPol = trim($_POST["ref_pol"]);
-        $objRespuesta->medioPago = trim($_POST["medio_pago"]);
-        $objRespuesta->tipoMedioPago = trim($_POST["tipo_medio_pago"]);
+        $objRespuesta->estadoPol = isset($_POST["estado_pol"]) ? trim($_POST["estado_pol"]) : 0;
+        $objRespuesta->codigoRespuestaPol = isset($_POST["codigo_respuesta_pol"]) ? trim($_POST["codigo_respuesta_pol"]) : 0;
+        $objRespuesta->idCompra = isset($_POST["ref_venta"]) ? trim($_POST["ref_venta"]) : null;
+        $objRespuesta->refPol = isset($_POST["ref_pol"]) ? trim($_POST["ref_pol"]) : 0;
+        $objRespuesta->medioPago = isset($_POST["medio_pago"]) ? trim($_POST["medio_pago"]) : 0;
+        $objRespuesta->tipoMedioPago = isset($_POST["tipo_medio_pago"]) ? trim($_POST["tipo_medio_pago"]) : 0;
         $objRespuesta->cuotas = isset($_POST["cuotas"]) ? trim($_POST["cuotas"]) : 0;
-        $objRespuesta->valor = trim($_POST["valor"]);
+        $objRespuesta->valor = isset($_POST["valor"]) ? trim($_POST["valor"]) :0;
         $objRespuesta->valorPesos = 0;
-        $objRespuesta->iva = trim($_POST["iva"]);
+        $objRespuesta->iva = isset($_POST["iva"]) ? trim($_POST["iva"]) : 0;
         $objRespuesta->valorAdicional = isset($_POST["valorAdicional"]) ? trim($_POST["valorAdicional"]) : 0;
         $objRespuesta->moneda = isset($_POST["moneda"]) ? trim($_POST["moneda"]) : "";
         $objRespuesta->cus = isset($_POST["cus"]) ? trim($_POST["cus"]) : 0;
         $objRespuesta->bancoPse = isset($_POST["banco_pse"]) ? trim($_POST["banco_pse"]) : "";
-        $objRespuesta->fechaTransaccion = trim($_POST["fecha_transaccion"]);
-
+        $objRespuesta->fechaTransaccion = isset($_POST["fecha_transaccion"]) ? trim($_POST["fecha_transaccion"]) : "";
+        $objRespuesta->correoElectronico = isset($_POST["email_comprador"]) ? trim($_POST["email_comprador"]) : null;
+        $objRespuesta->numeroVisible = isset($_POST["numero_visible"]) ? trim($_POST["numero_visible"]) : null;
+        $objRespuesta->codigoAutorizacion = isset($_POST["codigo_autorizacion"]) ? trim($_POST["codigo_autorizacion"]) : null;
+        
         $this->log($objRespuesta->idCompra, 101, $cadenaLog); //Guardar los datos GET de invocacion.
-        //$this->log($objRespuesta->idCompra, 101, $_SERVER["REMOTE_ADDR"]); //Guardar los datos GET de invocacion.
-
+        $this->log($objRespuesta->idCompra, 101, $_SERVER["REMOTE_ADDR"]); //Guardar los datos GET de invocacion.
+        
         if (!isset($_POST["ref_venta"]) || !isset($_POST["estado_pol"]) || !isset($_POST["usuario_id"])) {
             $this->log(-1, 700, "VERIFICACION DE VARIBLES PRIMARIAS FALLIDA. " . $_SERVER["REMOTE_ADDR"]);
             Yii::app()->end();

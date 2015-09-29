@@ -85,7 +85,7 @@ class Compras extends CActiveRecord {
             array('identificacionUsuario', 'default', 'value'=>null),
             // The following rule is used by search().
             // @todo Please remove those attributes that should not be searched.
-            array('busquedaSearch, idCompra, identificacionUsuario, documentoCruce, fechaCompra, fechaEntrega, tipoEntrega, donacionFundacion, idComercial, subtotalCompra, impuestosCompra, baseImpuestosCompra, totalCompra, idEstadoCompra, idOperador, observacion, idTipoVenta, activa, domicilio, flete, invitado, codigoPerfil, saldosPdv, seguimiento, codigoCiudad, codigoSector, tiempoDomicilioCedi, valorDomicilioCedi, codigoCedi', 'safe', 'on' => 'search'),
+            array('busquedaSearch, formaPagoSearch, idCompra, identificacionUsuario, documentoCruce, fechaCompra, fechaEntrega, tipoEntrega, donacionFundacion, idComercial, subtotalCompra, impuestosCompra, baseImpuestosCompra, totalCompra, idEstadoCompra, idOperador, observacion, idTipoVenta, activa, domicilio, flete, invitado, codigoPerfil, saldosPdv, seguimiento, codigoCiudad, codigoSector, tiempoDomicilioCedi, valorDomicilioCedi, codigoCedi', 'safe', 'on' => 'search'),
         );
     }
 
@@ -111,6 +111,7 @@ class Compras extends CActiveRecord {
             'objEstadoCompra' => array(self::BELONGS_TO, 'EstadoCompra', 'idEstadoCompra'),
             'listObservaciones' => array(self::HAS_MANY, 'ComprasObservaciones', 'idCompra'),
             'objPasarelaEnvio' => array(self::HAS_ONE, 'PasarelaEnvios', 'idCompra'),
+            'listPasarelaRespuestas' => array(self::HAS_MANY, 'PasarelaRespuestas', 'idCompra'),
         );
     }
 
@@ -168,6 +169,11 @@ class Compras extends CActiveRecord {
         if ($params != null && isset($params['operadorPedido'])) {
             $condition = "1=1";
             $paramsCondition = array();
+            
+            if(isset($params['formaPago'])){
+                $condition .= " AND objFormaPagoCompra.idFormaPago=:formaPago";
+                $paramsCondition[':formaPago'] = $params['formaPago'];
+            }
 
             if ($this->fechaCompra !== null && !empty($this->fechaCompra)) {
                 $condition .= " AND t.fechaCompra>=:fecha";
@@ -556,6 +562,19 @@ class Compras extends CActiveRecord {
         }
         $resultAux3 = Yii::app()->db->createCommand($query3)->queryRow(true);
         $result['seguimiento'] = $resultAux3['cantidad'];
+        
+        $query4 = "";
+        if ($idOperador == null) {
+            $query4 = "SELECT COUNT(c.idCompra) cantidad
+            FROM t_Compras c JOIN t_FormasPago fp ON fp.idCompra=c.idCompra
+            WHERE fp.idFormaPago='".Yii::app()->params->formaPago['pasarela']['idPasarela']."' AND c.fechaCompra>='$fecha' ";
+        } else {
+            $query4 = "SELECT COUNT(c.idCompra) cantidad
+            FROM t_Compras c JOIN t_FormasPago fp ON fp.idCompra=c.idCompra
+            WHERE fp.idFormaPago='".Yii::app()->params->formaPago['pasarela']['idPasarela']."' AND c.idOperador=$idOperador AND c.fechaCompra>='$fecha' ";
+        }
+        $resultAux4 = Yii::app()->db->createCommand($query4)->queryRow(true);
+        $result['enlinea'] = $resultAux4['cantidad'];
 
         return $result;
     }

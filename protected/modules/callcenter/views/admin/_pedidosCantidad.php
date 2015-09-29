@@ -8,5 +8,5 @@
 <a class="btn btn-xs btn-<?php echo Yii::app()->params->callcenter['estadoCompra']['colorClass'][7] ?>" href="<?php echo $this->createUrl('/callcenter/admin/pedidos', array('parametro' => 7)) ?>">Cancelado [<?php echo $arrCantidadPedidos[7] ?>]</a>
 <a class="btn btn-xs btn-info" href="<?php echo $this->createUrl('/callcenter/admin/pedidos', array('parametro' => 'tercero')) ?>">Terceros [<?php echo $arrCantidadPedidos['terceros'] ?>]</a>
 <a class="btn btn-xs btn-warning" href="<?php echo $this->createUrl('/callcenter/admin/pedidos', array('parametro' => 'seguimiento')) ?>">Seguimiento[<?php echo $arrCantidadPedidos['seguimiento'] ?>]</a>
-<a class="btn btn-xs btn-danger" href="<?php echo $this->createUrl('/callcenter/admin/pedidos', array('parametro' => 'enlinea')) ?>">Pagos en Linea</a>
+<a class="btn btn-xs btn-danger" href="<?php echo $this->createUrl('/callcenter/admin/pedidos', array('parametro' => 'enlinea')) ?>">Pagos en Linea [<?php echo $arrCantidadPedidos['enlinea'] ?>]</a>
 <a class="btn btn-xs btn-info" href="<?php echo $this->createUrl('/callcenter/admin/pedidos', array('parametro' => 'busqueda')) ?>">Búsquedas..</a>             
