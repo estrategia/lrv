@@ -14,6 +14,11 @@
     <!-- <div class="cdt_line_spc"><span></span></div>-->
 
     <?php $listImagen = $objProducto->listImagen(YII::app()->params->producto['tipoImagen']['grande']); ?>
+    <div class="cdiv_prod_desc">
+        <div class="c_prod_desc">
+            <p>30 % <span>dcto</span></p>
+        </div>
+    </div>
     <?php if ($objProducto->fraccionado == 1): ?>
     <div class="cdiv_prod_frc">
         <div class="c_prod_frc">
