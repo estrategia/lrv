@@ -66,7 +66,7 @@ class ControllerOperator extends CController {
         Yii::app()->getClientScript()->registerCssFile(Yii::app()->request->baseUrl . '/libs/charisma/css/jquery.iphone.toggle.css');
         Yii::app()->getClientScript()->registerCssFile(Yii::app()->request->baseUrl . '/libs/charisma/css/uploadify.css');
         Yii::app()->getClientScript()->registerCssFile(Yii::app()->request->baseUrl . '/libs/charisma/css/animate.min.css');
-        Yii::app()->getClientScript()->registerCssFile(Yii::app()->request->baseUrl . '/css/operator.css');
+        //Yii::app()->getClientScript()->registerCssFile(Yii::app()->request->baseUrl . '/css/operator.css');
         Yii::app()->getClientScript()->registerCssFile(Yii::app()->request->baseUrl . '/libs/loading/css/Loading.css');
         
         /*Yii::app()->getClientScript()->registerCssFile(Yii::app()->request->baseUrl . "/libs/bootstrap/css/bootstrap.min.css");

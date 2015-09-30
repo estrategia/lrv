@@ -86,6 +86,14 @@
     <div class="row">
             <?php
             $this->widget('zii.widgets.grid.CGridView', array(
+                'pager' => array(
+                    'header' => '',
+                    'firstPageLabel' => '&lt;&lt;',
+                    'prevPageLabel' => 'Anterior',
+                    'nextPageLabel' => 'Siguiente',
+                    'lastPageLabel' => '&gt;&gt;',
+                    'maxButtonCount' => 10
+                ),
                 'id' => 'pedidos-grid',
                 //'beforeAjaxUpdate' => new CJavaScriptExpression("function() {Loading.show();}"),
                 //'afterAjaxUpdate' => new CJavaScriptExpression("function() {Loading.hide(); $options}"),

@@ -22,6 +22,14 @@
         <div class="col-lg-12 col-md-12">
             <?php
             $this->widget('zii.widgets.grid.CGridView', array(
+                'pager' => array(
+                    'header' => '',
+                    'firstPageLabel' => '&lt;&lt;',
+                    'prevPageLabel' => 'Anterior',
+                    'nextPageLabel' => 'Siguiente',
+                    'lastPageLabel' => '&gt;&gt;',
+                    'maxButtonCount' => 10
+                ),
                 'id' => 'pedidos-grid',
                 //'beforeAjaxUpdate' => new CJavaScriptExpression("function() {Loading.show();}"),
                 //'afterAjaxUpdate' => new CJavaScriptExpression("function() {Loading.hide(); $options}"),
@@ -100,4 +108,4 @@
 
 <?php
 if ($model->idEstadoCompra == 1)
-    Yii::app()->clientScript->registerScript(uniqid(), "setTimeout(function(){ location.reload(); }, ".Yii::app()->params->callcenter['pedidos']['tiempoRecargarPagina'].");"); ?>
+    Yii::app()->clientScript->registerScript(uniqid(), "setTimeout(function(){ location.reload(); }, " . Yii::app()->params->callcenter['pedidos']['tiempoRecargarPagina'] . ");"); ?>

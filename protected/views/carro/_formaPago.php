@@ -22,11 +22,6 @@
     <?php endif; ?>
 <?php endforeach; ?>
 
-<?php if(in_array(Yii::app()->user->name, array('1113618983')) ):?>
-    <label for="<?php echo $modelClass ?>_idFormaPago_3">PSE(Tarjetas débito y crédito)</label>
-    <input type="radio" data-credirebaja="0" name="<?php echo $modelClass ?>[idFormaPago]" id="<?php echo $modelClass ?>_idFormaPago_3" value="3" <?php echo ($model->idFormaPago == 3 ? "checked" : "") ?>>
-<?php endif;?>
-
 <div data-role="collapsible" data-collapsed="<?php echo ( in_array($model->idFormaPago, Yii::app()->params->formaPago['tarjetasDatafono']) ? "false" : "true" ) ?>" data-collapsed-icon="carat-d" data-expanded-icon="carat-u" data-content-theme="a">
     <legend>Datafono</legend>
     <?php foreach ($listDatafono as $idx => $objFormaPago): ?>

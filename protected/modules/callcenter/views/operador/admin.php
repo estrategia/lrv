@@ -16,6 +16,14 @@
 
 <?php
 $this->widget('zii.widgets.grid.CGridView', array(
+    'pager' => array(
+        'header' => '',
+        'firstPageLabel' => '&lt;&lt;',
+        'prevPageLabel' => 'Anterior',
+        'nextPageLabel' => 'Siguiente',
+        'lastPageLabel' => '&gt;&gt;',
+        'maxButtonCount' => 10
+    ),
     'id' => 'operador-grid',
     //'beforeAjaxUpdate' => new CJavaScriptExpression("function() {Loading.show();}"),
     //'afterAjaxUpdate' => new CJavaScriptExpression("function() {Loading.hide(); $options}"),
@@ -29,32 +37,32 @@ $this->widget('zii.widgets.grid.CGridView', array(
             'name' => 'nombre',
             'value' => '$data->nombre',
             'header' => CHtml::encode($model->getAttributeLabel('nombre')),
-            'filter' => CHtml::activeTextField($model, 'nombre', array('class'=>'form-control input-sm')),
+            'filter' => CHtml::activeTextField($model, 'nombre', array('class' => 'form-control input-sm')),
         ),
         array(
             'name' => 'usuario',
             'value' => '$data->usuario',
             'header' => CHtml::encode($model->getAttributeLabel('usuario')),
-            'filter' => CHtml::activeTextField($model, 'usuario', array('class'=>'form-control input-sm')),
+            'filter' => CHtml::activeTextField($model, 'usuario', array('class' => 'form-control input-sm')),
         ),
         array(
             'name' => 'perfil',
             'value' => 'Yii::app()->params->callcenter["perfil"][$data->perfil]',
             'header' => CHtml::encode($model->getAttributeLabel('perfil')),
-            'filter' => CHtml::activeTextField($model, 'perfil', array('class'=>'form-control input-sm')),
+            'filter' => CHtml::activeTextField($model, 'perfil', array('class' => 'form-control input-sm')),
         ),
         array(
             'name' => 'email',
             'value' => '$data->email',
             'header' => CHtml::encode($model->getAttributeLabel('email')),
-            'filter' => CHtml::activeTextField($model, 'email', array('class'=>'form-control input-sm')),
+            'filter' => CHtml::activeTextField($model, 'email', array('class' => 'form-control input-sm')),
         ),
         array(
             'name' => 'activo',
             'value' => 'Yii::app()->params->callcenter["usuario"]["estadoNombre"][$data->activo]',
             'header' => CHtml::encode($model->getAttributeLabel('activo')),
-            'filter' => CHtml::dropDownList('Operador[activo]', $model->activo, Yii::app()->params->callcenter["usuario"]["estadoNombre"], array('class'=>'form-control input-sm', 'prompt' => 'Todo', 'style'=>'text-align: center;')),
-            //'filter' => CHtml::activeTextField($model, 'activo', array('class'=>'form-control input-sm')),
+            'filter' => CHtml::dropDownList('Operador[activo]', $model->activo, Yii::app()->params->callcenter["usuario"]["estadoNombre"], array('class' => 'form-control input-sm', 'prompt' => 'Todo', 'style' => 'text-align: center;')),
+        //'filter' => CHtml::activeTextField($model, 'activo', array('class'=>'form-control input-sm')),
         ),
         array(
             'class' => 'CButtonColumn',

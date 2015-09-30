@@ -261,9 +261,8 @@ class Compras extends CActiveRecord {
 
     public function searchAnteriores() {
         $criteria = new CDbCriteria;
-    //   $criteria->with="objPuntoVenta";
         $criteria->with=array("objCompraDireccion","objCiudad","objSector","objPuntoVenta");
-        $criteria->condition = "t.tipoEntrega=:tipoEntrega AND t.identificacionUsuario=:usuario AND t.idComercial IS NOT NULL";
+        $criteria->condition = "t.tipoEntrega=:tipoEntrega AND t.identificacionUsuario=:usuario AND t.identificacionUsuario IS NOT NULL AND t.idComercial IS NOT NULL";
         $criteria->params = array(
             ':usuario' => $this->identificacionUsuario,
             ':tipoEntrega' => $this->tipoEntrega,
