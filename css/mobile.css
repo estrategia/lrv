@@ -2557,3 +2557,16 @@ li.c_list_prod.ui-li-static.ui-body-inherit div.cdiv_prod_frc div.c_prod_frc p s
 div.clst_cont_top.top_frc {
     padding-top: 1.6em;
 }
+.c_cont_detail_prod div.cdiv_prod_frc{
+    margin-bottom: 59px;
+    position: relative;
+    float: none;
+}
+
+.c_cont_detail_prod div.cdiv_prod_desc {
+    bottom: -18px;
+    float: none;
+    margin-bottom: 40px;
+    position: relative;
+    width: 100%;
+}
