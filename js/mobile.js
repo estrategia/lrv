@@ -16,7 +16,7 @@ function animarRelacionado() {
     }, 1000);
     $("#link-relacionados-agregar").css("display", "");
     setTimeout(function() {
-        if(intervalRelacionados!=null){
+        if (intervalRelacionados != null) {
             clearInterval(intervalRelacionados);
             intervalRelacionados = null;
         }
@@ -24,8 +24,8 @@ function animarRelacionado() {
     }, 10000);
 }
 
-function quitarRelacionado(){
-    if(intervalRelacionados!=null){
+function quitarRelacionado() {
+    if (intervalRelacionados != null) {
         clearInterval(intervalRelacionados);
         intervalRelacionados = null;
     }
@@ -686,9 +686,9 @@ $(document).on('click', "a[data-cargar='1']", function() {
                         content: data.response.dialogoHTML
                     });
                 }
-                
-                if(data.response.relacionados){
-                    $("#link-relacionados-agregar").attr("href", requestUrl+ "/catalogo/relacionados/producto/" + producto);
+
+                if (data.response.relacionados && $("#link-relacionados-agregar").length > 0) {
+                    $("#link-relacionados-agregar").attr("href", requestUrl + "/catalogo/relacionados/producto/" + producto);
                     animarRelacionado();
                 }
             } else {
@@ -1092,7 +1092,7 @@ function pasoDespacho(actual, siguiente, boton) {
         siguiente: siguiente,
         direccion: $('input[name="FormaPagoForm[idDireccionDespacho]"]:checked').val()
     };
-    
+
     $.ajax({
         type: 'POST',
         //dataType: 'json',
@@ -1510,8 +1510,9 @@ $(document).on('click', "input[data-role='lstpersonalform']", function() {
                 if ($('#ListaGuardarForm_idLista').length) {
                     $("#ListaGuardarForm_idLista").append(data.response.optionHtml);
                 }
-                $('#form-listapersonal')[0].reset();
+                
                 if ($('#gridview-listapersonal').length) {
+                    $('#form-listapersonal')[0].reset();
                     $.fn.yiiGridView.update('gridview-listapersonal');
                 }
                 $('.ui-collapsible').collapsible('collapse');
@@ -1641,6 +1642,7 @@ $(document).on('click', "a[data-role='lstpersonalguardar']", function() {
         url: requestUrl + '/usuario/listapersonal/lista/guardar',
         data: {codigo: codigo, tipo: tipo, unidades: unidades, render: true},
         beforeSend: function() {
+            $("div[id^='page-listaguardar-']").remove();
             $.mobile.loading('show');
         },
         complete: function() {
@@ -1817,7 +1819,7 @@ $(document).on('click', "a[data-role='crearcotizacion']", function() {
 $(document).on('click', "#form-registro input[data-registro='registro']", function() {
     var form = $(this).parents("form");//"#form-registro"
     var boton = $(this);
-    
+
     $.ajax({
         type: 'POST',
         async: true,
@@ -1860,7 +1862,7 @@ $(document).on('click', "#form-registro input[data-registro='registro']", functi
 $(document).on('click', "#form-autenticar input[data-registro='autenticar']", function() {
     var form = $(this).parents("form");//"#form-autenticar"
     var boton = $(this);
-    
+
     $.ajax({
         type: 'POST',
         async: true,
@@ -1902,7 +1904,7 @@ $(document).on('click', "#form-autenticar input[data-registro='autenticar']", fu
 $(document).on('click', "#form-recordar input[data-registro='recordar']", function() {
     var form = $(this).parents("form");//"#form-recordar"
     var boton = $(this);
-    
+
     $.ajax({
         type: 'POST',
         async: true,
@@ -1945,7 +1947,25 @@ $(document).on('click', "#form-recordar input[data-registro='recordar']", functi
     return false;
 });
 
+$(document).on('change', "#form-listapersonal input[id='ListasPersonales_estadoLista']", function() {
+    if ($(this).is(":checked")) {
+        $('#div-lista-config-recordacion').removeClass('hide');
+    }else{
+        $('#div-lista-config-recordacion').addClass('hide');
+    }
+});
 
+$(document).on('click', "a[data-role='tooltip']", function() {
+    var id = 'autotooltip-' + uniqueId();
+    var arrow = $(this).attr('data-arrow') ? $(this).attr('data-arrow') : "t";
+    var html = "<div data-role='popup' id='"+id+"' class='ui-content' data-arrow='"+arrow+"' data-theme='a'><p>"+$(this).attr('data-msg')+"</p></div>";
+    $('body').append(html);
+    $("#" + id).popup({
+        positionTo:$(this),
+        afterclose: function( event, ui ) {$("#" + id).remove();}
+    });
+    $("#" + id).popup("open");
+});
 
 $(document).ready(function() {
     $('.lst_ub_cdd .ui-collapsible-heading-toggle').click(function() {

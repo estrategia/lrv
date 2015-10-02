@@ -22,6 +22,7 @@
  * @property ListasPersonalesDetalle[] $listDetalle
  */
 class ListasPersonales extends CActiveRecord {
+    public $estadoLista = 0;
 
     /**
      * @return string the associated database table name

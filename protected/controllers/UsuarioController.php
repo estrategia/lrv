@@ -8,19 +8,12 @@ class UsuarioController extends Controller {
      * */
     public function filters() {
         return array(
+            array('application.filters.SessionControlFilter + index, autenticar, infoPersonal, contrasena, pagoexpress, listapedidos, pedido, listacotizaciones, cotizacion, listapersonal, listadetalle, direcciones'),
             'access + autenticar, recordar, registro, restablecer',
-            'login + index, infoPersonal, contrasena, direcciones, pagoexpress, listapedidos, listapersonal, pedido, listadetalle',
+            'login + index, infoPersonal, contrasena, direcciones, pagoexpress, listapedidos, listapersonal, pedido, listadetalle, listacotizaciones',
             'loginajax + direccionCrear, direccionActualizar',
         );
     }
-
-    /*
-      public function filters() {
-      return array(
-      array('tienda.filters.AccessControlFilter'),
-      array('tienda.filters.LanzamientoControlFilter'),
-      );
-      } */
 
     public function filterAccess($filter) {
         if (!Yii::app()->user->isGuest) {
@@ -264,45 +257,6 @@ class UsuarioController extends Controller {
         }
     }
     
-    public function actionRecordar0() {
-        $this->showSeeker = false;
-        $this->fixedFooter = true;
-
-        $model = new RecordarForm;
-
-        if (isset($_POST['RecordarForm'])) {
-            $model->attributes = $_POST['RecordarForm'];
-
-            if ($model->validate()) {
-                try {
-                    $objUsuarioExtendida = $model->usuario->objUsuarioExtendida;
-                    $fecha = new DateTime;
-                    $fecha->modify('+1 day');
-                    $objUsuarioExtendida->recuperacionFecha = $fecha->format('Y-m-d H:i:s');
-                    $objUsuarioExtendida->recuperacionCodigo = md5($objUsuarioExtendida->identificacionUsuario) . md5($fecha->format('YmdHis'));
-                    $objUsuarioExtendida->recuperacionCodigo = md5($objUsuarioExtendida->recuperacionCodigo);
-                    $objUsuarioExtendida->save();
-                    $model->usuario->objUsuarioExtendida = $objUsuarioExtendida;
-
-                    $contenido = $this->renderPartial('_correoRecordar', array('objUsuario' => $model->usuario), true, true);
-                    $htmlCorreo = $this->renderPartial('_correo', array('contenido' => $contenido), true, true);
-                    sendHtmlEmail($model->correoElectronico, Yii::app()->params->asuntoRecordatorioClave, $htmlCorreo);
-                    Yii::app()->user->setFlash('success', "Se ha enviado a su correo los datos de restauración de clave");
-
-                    //$usuario->save();
-                    //$this->render('_recordarexito', array('url' => Yii::app()->homeUrl));
-                } catch (Exception $exc) {
-                    Yii::log($exc->getMessage() . "\n" . $exc->getTraceAsString(), CLogger::LEVEL_ERROR, 'application');
-                    Yii::app()->user->setFlash('error', "Error: " . $exc->getMessage());
-                    $this->render('recordar', array('model' => $model));
-                    Yii::app()->end();
-                }
-            }
-        }
-
-        $this->render('recordar', array('model' => $model));
-    }
-
     public function actionRestablecer($codigo) {
         $this->showSeeker = false;
 
@@ -659,31 +613,6 @@ class UsuarioController extends Controller {
         
         $filename = 'LaRebajaVirtual_' . date('YmdHis') . '.pdf';
         $mPDF1->Output($filename, 'D');
-    }
-    
-    public function actionCotizacionhtml($cotizacion) {
-        $fecha = new DateTime;
-        $dias = Yii::app()->params->cotizaciones['diasVisualizar'];
-        $fecha->modify("-$dias days");
-        
-        $objCotizacion = Cotizaciones::model()->find(array(
-            'condition' => 'idCotizacion=:cotizacion AND identificacionUsuario=:usuario AND fechaCotizacion>=:fecha AND codigoCiudad=:ciudad AND codigoSector=:sector',
-            'params' => array(
-                ':cotizacion' => $cotizacion,
-                ':usuario' => Yii::app()->user->name,
-                ':fecha' => $fecha->format('Y-m-d H:i:s'),
-                ':ciudad' => Yii::app()->shoppingCart->getCodigoCiudad(),
-                ':sector' => Yii::app()->shoppingCart->getCodigoSector()
-            )
-        ));
-        
-        
-        
-        if ($objCotizacion === null) {
-            echo ("<strong>Error, no se detecta cotización</strong>");
-        }else{
-            $this->renderPartial('cotizacionPDF', array('objCotizacion' => $objCotizacion));
-        }
     }
     
     public function actionOcultarpedido() {

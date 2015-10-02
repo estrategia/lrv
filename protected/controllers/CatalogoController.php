@@ -1,6 +1,15 @@
 <?php
 
 class CatalogoController extends Controller {
+    
+    /**
+     * @return array action filters
+     * */
+    public function filters() {
+        return array(
+            array('application.filters.SessionControlFilter + categoria, buscar, relacionados, producto, bodega, combo, descuentos, masvendidos, masvistos'),
+        );
+    }
 
     public function actionCategoria($categoria) {
         $objSectorCiudad = null;

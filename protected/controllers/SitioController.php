@@ -1,6 +1,15 @@
 <?php
 
 class SitioController extends Controller {
+    
+    /**
+     * @return array action filters
+     * */
+    public function filters() {
+        return array(
+            array('application.filters.SessionControlFilter + inicio, categorias'),
+        );
+    }
 
     public function actionIndex() {
         $this->showSeeker = false;
@@ -304,28 +313,6 @@ class SitioController extends Controller {
     }
 
     public function actionInicio() {
-        /* $sectorCiudad = SectorCiudad::model()->find(array(
-          'with' => array('objCiudad', 'objSector'),
-          'condition' => 't.codigoCiudad=:ciudad AND t.codigoSector=:sector AND t.estadoCiudadSector=:estado',
-          'params' => array(
-          ':ciudad' => $ciudad,
-          ':sector' => $sector,
-          ':estado' => 1,
-          )
-          ));
-
-          if ($sectorCiudad == null) {
-          $this->render('index');
-          Yii::app()->end();
-          }
-
-          $objSubSector = $subsector != null ? SubSector::model()->findByPk(array('codigoCiudad' => $ciudad, 'codigoSubSector' => $sector)) : null;
-         */
-
-        //Yii::app()->session[Yii::app()->params->sesion['pdvEntrega']] = null;
-        /* Yii::app()->session[Yii::app()->params->sesion['sectorCiudadEntrega']] = $sectorCiudad;
-          Yii::app()->session[Yii::app()->params->sesion['subSectorCiudadEntrega']] = $objSubSector; */
-
         $this->render('inicio');
     }
 

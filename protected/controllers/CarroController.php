@@ -18,6 +18,7 @@ class CarroController extends Controller {
      * */
     public function filters() {
         return array(
+            array('application.filters.SessionControlFilter + index, pagoexpress, pagoinvitado, pagar, comprar'),
             'login + pagoexpress',
                 //'access + autenticar, recordar, registro, restablecer',
                 //'loginajax + agregar',
@@ -2450,25 +2451,6 @@ class CarroController extends Controller {
             }
     }
     
-    /*public function actionProbarMensaje($idCompra=null){
-        $objUsuario = Yii::app()->session[Yii::app()->params->usuario['sesion']];
-        $objCompra=  Compras::model()->findByPk($idCompra);
-        $objCompraDireccion= ComprasDireccionesDespacho::model()->findByPk($idCompra);
-        $objFormasPago = FormasPago::model()->findByPk($idCompra);
-        $modelPago=new FormaPagoForm();
-        
-                $this->renderPartial('compraCorreo', array(
-                    'objCompra' => $objCompra,
-                    'modelPago' => $modelPago,
-                    'objCompraDireccion' => $objCompraDireccion,
-                    'objFormaPago' => $objFormasPago->objFormaPago,
-                    'objUsuario' => $objUsuario));
-               
-           //     $htmlCorreo = $this->renderPartial('/usuario/_correo', array('contenido' => $contenidoCorreo), true, true);
-             //   sendHtmlEmail($objUsuario->correoElectronico, Yii::app()->params->asunto['pedidoRealizado'], $htmlCorreo);
-           //     $transaction->commit();
-    }*/
-    
     public function actionPagopasarela(){
         $modelPago = null;
         
@@ -2668,21 +2650,8 @@ class CarroController extends Controller {
                 ));
             }
     }
-    
-    /* public function actionAdd($codigo = 10670) {
-
-      $objProducto = Producto::model()->findByPk($codigo);
-      $objProductoCarro = new ProductoCarro($objProducto);
-      //$objProductoCarro->setProducto($objProducto, 25096, 1, 1, 1);
-      //Yii::app()->shoppingCart->codigoCiudad = 25096;
-      //Yii::app()->shoppingCart->codigoSector = 1;
-      //Yii::app()->shoppingCart->setUbicacion(25096, 1);
-      //$objProducto->tipoUnidadPrecio = 1;
-      Yii::app()->shoppingCart->put($objProductoCarro, 1);
-      } */
-
-       
-    public function actionList() {
+          
+    /*public function actionList() {
         //Yii::app()->session[Yii::app()->params->sesion['carroPagarForm']] = null;
         //Yii::app()->shoppingCart->clear();
         //exit();
@@ -2749,9 +2718,9 @@ class CarroController extends Controller {
 
             echo "<br/>";
         }
-    }
+    }*/
     
-    public function actionForm($limpiar=false){
+    /*public function actionForm($limpiar=false){
         $modelPago = null;
 
         if (isset(Yii::app()->session[Yii::app()->params->sesion['carroPagarForm']]) && Yii::app()->session[Yii::app()->params->sesion['carroPagarForm']] != null)
@@ -2763,7 +2732,7 @@ class CarroController extends Controller {
         
         if($limpiar)
          Yii::app()->session[Yii::app()->params->sesion['carroPagarForm']] = null;
-    }
+    }*/
     
     /*public function actionPuntos(){
         $fecha = new DateTime;
