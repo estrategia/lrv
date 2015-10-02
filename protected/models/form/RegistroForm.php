@@ -25,18 +25,19 @@ class RegistroForm extends CFormModel {
      */
     public function rules() {
         return array(
-            array('cedula, condiciones, nombre, apellido, correoElectronico, genero, fechaNacimiento', 'attributeTrim'),
+            array('cedula, condiciones, nombre, apellido, correoElectronico, genero, fechaNacimiento, condiciones', 'attributeTrim'),
             
-            array('cedula, condiciones', 'required', 'on' => 'registro, invitado', 'message' => '{attribute} no puede estar vacío'),
+            array('cedula', 'required', 'on' => 'registro', 'message' => '{attribute} no puede estar vacío'),
+            array('condiciones', 'required', 'on' => 'registro', 'message' => 'Aceptar términos y condiciones'),
             array('cedula', 'numerical','integerOnly'=>true),
             array('cedula', 'length', 'min'=>5, 'max'=>12),
-            array('nombre, apellido, correoElectronico', 'required', 'on' => 'registro, actualizar, invitado', 'message' => '{attribute} no puede estar vacío'),
+            array('nombre, apellido', 'required', 'on' => 'registro, actualizar', 'message' => '{attribute} no puede estar vacío'),
             array('clave, claveConfirmar', 'required', 'on' => 'registro, restablecer, contrasena', 'message' => '{attribute} no puede estar vacío'),
             array('clave, claveConfirmar', 'length', 'min'=>5, 'max'=>15, 'on' => 'registro, restablecer, contrasena'),
-            array('correoElectronico', 'email', 'on' => 'registro, actualizar, invitado', 'allowEmpty' => false),
-            array('fechaNacimiento', 'date', 'on' => 'registro, actualizar, invitado', 'format' => 'yyyy-M-d', 'allowEmpty' => true),
+            array('correoElectronico', 'email', 'on' => 'registro, actualizar', 'allowEmpty' => false),
+            array('fechaNacimiento', 'date', 'on' => 'registro, actualizar', 'format' => 'yyyy-M-d', 'allowEmpty' => true),
             array('genero', 'in', 'range' => array(1, 2), 'on' => 'registro, actualizar', 'allowEmpty' => true),
-            array('genero, fechaNacimiento', 'default', 'on' => 'registro, actualizar, invitado', 'value' => null),
+            array('genero, fechaNacimiento', 'default', 'on' => 'registro, actualizar', 'value' => null),
             
             
             array('cedula, nombre, apellido, correoElectronico', 'length', 'max' => 50),
@@ -46,8 +47,8 @@ class RegistroForm extends CFormModel {
             array('profesion', 'safe', 'on' => 'actualizar'),
             array('profesion', 'default', 'value' => null),
             array('profesion', 'validarProfesion'),
-            array('cedula', 'validarCedula', 'on' => 'registro, invitado'),
-            array('correoElectronico', 'validarCorreo', 'on' => 'registro, actualizar, invitado'),
+            array('cedula', 'validarCedula', 'on' => 'registro'),
+            array('correoElectronico', 'validarCorreo', 'on' => 'registro, actualizar'),
         );
     }
     
@@ -61,11 +62,46 @@ class RegistroForm extends CFormModel {
             $nombre = "Guardar";
         }else if($escenario == "contrasena"){
             $nombre = "Guardar";
-        }else if($escenario == "invitado"){
-            $nombre = "Registrar";
         }
         
         return $nombre;
+    }
+    
+    public function getTitleForm(){
+        $nombre = "NA";
+        $escenario = $this->getScenario();
+        
+        if($escenario == "registro"){
+            $nombre = "";// "Creaci&oacute;n de cuenta";
+        }else if($escenario == "actualizar"){
+            $nombre = "Informaci&oacute;n personal";
+        }else if($escenario == "contrasena"){
+            $nombre = "Cambiar contrase&ntilde;a";
+        }
+        
+        return $nombre;
+    }
+    
+    public function getSubmitType(){
+        $tipo = "submit";
+        $escenario = $this->getScenario();
+        
+        if($escenario == "registro"){
+            $tipo = "button";
+        }
+        
+        return $tipo;
+    }
+    
+    public function getContentClass(){
+        $clase = "ui-content";
+        $escenario = $this->getScenario();
+        
+        if($escenario == "registro"){
+            $tipo = "";
+        }
+        
+        return $tipo;
     }
 
     /**
@@ -93,6 +129,10 @@ class RegistroForm extends CFormModel {
     public function attributeTrim($attribute, $params) {
         if($this->$attribute != null && gettype($this->$attribute)=="string"){
             $this->$attribute = trim($this->$attribute);
+        }
+        
+        if($attribute=="condiciones" && empty($this->condiciones)){
+            $this->condiciones = null;
         }
     }
 
@@ -140,10 +180,10 @@ class RegistroForm extends CFormModel {
      * Valida existencia de usuario con correo ingresado
      */
     public function validarCorreo() {
-        if (!$this->hasErrors()) {
+        if (!$this->hasErrors("correoElectronico")) {
             $usuario = null;
             
-            if ($this->getScenario() == 'registro' || $this->getScenario() == 'invitado') {
+            if ($this->getScenario() == 'registro') {
                 $usuario = Usuario::model()->find('correoElectronico=:correo', array(':correo' => $this->correoElectronico));
             }else if($this->getScenario() == 'actualizar'){
                 $usuario = Usuario::model()->find('correoElectronico=:correo AND identificacionUsuario<>:cedula', array(':correo' => $this->correoElectronico, ':cedula' => $this->cedula));

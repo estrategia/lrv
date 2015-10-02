@@ -25,10 +25,17 @@
             <tr>
                 <td> 
                     <div class="col-md-6">
-                        <strong>Datos del Remitente</strong> <br>
-                        <strong>Cédula: </strong><?php echo $objCompra->identificacionUsuario ?><br>
-                        <strong>Nombre: </strong><?php echo $objCompra->objUsuario->nombre . " " . $objCompra->objUsuario->apellido ?><br>
-                        <strong>Correo: </strong><?php echo $objCompra->objUsuario->correoElectronico ?> <br/>
+                        <?php if($objCompra->identificacionUsuario==null): ?>
+                            <strong>Datos del Remitente</strong> <br>
+                            <strong>Cédula: </strong>Invitado<br>
+                            <strong>Nombre: </strong><?php echo $objCompra->objCompraDireccion->nombre ?><br>
+                            <strong>Correo: </strong><?php echo $objCompra->objCompraDireccion->correoElectronico ?> <br/>
+                        <?php else: ?>
+                            <strong>Datos del Remitente</strong> <br>
+                            <strong>Cédula: </strong><?php echo  $objCompra->identificacionUsuario ?><br>
+                            <strong>Nombre: </strong><?php echo $objCompra->objUsuario->nombre . " " . $objCompra->objUsuario->apellido ?><br>
+                            <strong>Correo: </strong><?php echo $objCompra->objUsuario->correoElectronico ?> <br/>
+                        <?php endif;?>
                         <strong>TipoEntrega: </strong><?php echo Yii::app()->params->entrega["tipo"][$objCompra->tipoEntrega] ?> 
                         
                     </div>
@@ -54,11 +61,14 @@
                 <td> 
                     <strong> 
                         <span style="color: #E10019; font-size: 16px;"> Pago <?php echo $objCompra->objFormaPagoCompra->objFormaPago->formaPago ?></span>
+                        <?php if($objCompra->objFormaPagoCompra->idFormaPago==Yii::app()->params->formaPago['pasarela']['idPasarela']): ?>
+                            <button type="button" class="btn btn-info btn-sm" data-role="trazapasarela" data-pedido="<?php echo $objCompra->idCompra ?>"><i class="glyphicon glyphicon-list-alt"></i> Traza</button>
+                        <?php endif;?>
                         <?php if ($objCompra->objFormaPagoCompra->numeroTarjeta != null && !empty($objCompra->objFormaPagoCompra->numeroTarjeta)): ?>
                             <br>
-                            <span font-size: 16px;"> <strong>No. tarjeta:</strong> <?php echo $objCompra->objFormaPagoCompra->numeroTarjeta?></span>
+                            <span style="font-size: 16px;"> <strong>No. tarjeta:</strong> <?php echo $objCompra->objFormaPagoCompra->numeroTarjeta?></span>
                             <br>
-                            <span font-size: 16px;"> <strong>No. cuotas:</strong> <?php echo $objCompra->objFormaPagoCompra->cuotasTarjeta?></span>
+                            <span style="font-size: 16px;"> <strong>No. cuotas:</strong> <?php echo $objCompra->objFormaPagoCompra->cuotasTarjeta?></span>
                         <?php endif; ?>
                         <h3><?php echo Yii::app()->numberFormatter->format(Yii::app()->params->formatoMoneda['patron'], $objCompra->totalCompra, Yii::app()->params->formatoMoneda['moneda']); ?></h3>
                     </strong>

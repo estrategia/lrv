@@ -1,13 +1,15 @@
+<?php $this->pageTitle = Yii::app()->name . " - " . $objCombo->descripcionCombo; ?>
+
 <div class="ui-content c_cont_detail_prod inComboDesciption">
     <h1><?php echo $objCombo->descripcionCombo ?></h1>
     <h2>Código: <?php echo $objCombo->idCombo ?></h2>
    <!-- <h3 class="cdt_prod_spc">Código: <?php echo $objCombo->idCombo ?></h3>-->
- <div class="cdiv_prod_desc">
+    <div class="cdiv_prod_desc">
         <div class="c_prod_desc">
             <p>Combo <span></span></p>
         </div>
     </div>
-    
+
     <div class="cdt_line_spc"><span></span></div>
 
     <p>Este combo incluye los siguientes productos:</p>

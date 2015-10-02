@@ -74,6 +74,18 @@ return array(
         'shoppingCart' => array(
             'class' => 'ext.shoppingCart.EShoppingCart',
         ),
+        'ePdf' => array(
+            'class' => 'ext.yii-pdf.EYiiPdf',
+            'params' => array(
+                'mpdf' => array(
+                    'librarySourcePath' => 'application.vendors.mpdf.*',
+                    'constants' => array(
+                        '_MPDF_TEMP_PATH' => Yii::getPathOfAlias('application.runtime'),
+                    ),
+                    'class' => 'mpdf',
+                ),
+            ),
+        ),
         'log' => array(
             'class' => 'CLogRouter',
             'routes' => array(
@@ -159,6 +171,9 @@ return array(
         'calificacion' => array(
             'categoriasNoCalificacion' => array(1,2)
         ),
+        'cotizaciones' => array(
+            'diasVisualizar' => 10,
+        ),
         'pagar' => array(
             'pasos' => array(
                 'despacho' => 1, 'entrega' => 2, 'pago' => 3, 'confirmacion' => 4,
@@ -166,7 +181,7 @@ return array(
             ),
             'pasosDisponibles' => array(
                 'domicilio' => array('despacho', 'entrega', 'pago', 'confirmacion'),
-                'presencial' => array('pago', 'confirmacion'),
+                'presencial' => array('entrega', 'pago', 'confirmacion'),
             ),
         ),
         'formaPago' => array(
@@ -234,10 +249,14 @@ return array(
             'porcentajeMaximo' => 60,
         ),
         'servicioVentaControlada' => 17,
+        'gps' => array(
+            'distanciaMaxima' => 20//kilometros
+        ),
         'asunto' => array(
             'recordatorioClave' => 'La Rebaja Virtual: Clave de ingreso',
             'bienvenida' => 'La Rebaja Virtual: Bienvenido(a)',
             'pedidoRealizado' => 'La Rebaja Virtual: Pedido realizado',
+            'pedidoRealizadoPasarela' => 'La Rebaja Virtual: Pedido por pago en línea en proceso de validación',
             'pedidoRemitido' => 'La Rebaja Virtual: Pedido remitido',
         ),
         'asuntoRecordatorioClave' => 'Clave de Ingreso',

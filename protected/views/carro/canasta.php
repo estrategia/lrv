@@ -10,6 +10,8 @@
                 <?php if (Yii::app()->session[Yii::app()->params->sesion['tipoEntrega']] == Yii::app()->params->entrega['tipo']['domicilio'] && Yii::app()->shoppingCart->getObjExpress() != null): ?>
                     <?php echo CHtml::link('Pago Express', CController::createUrl('/carro/pagoexpress'), array('data-ajax' => 'false', 'class' => 'ui-btn ui-corner-all ui-shadow ui-btn-r')); ?>
                 <?php endif; ?>
+                
+                <?php echo CHtml::link('Cotizar', "#", array('data-role'=>'crearcotizacion', 'data-ajax' => 'false', 'class' => 'ui-btn ui-corner-all ui-shadow ui-btn-r')); ?>
             </div>
         <?php endif; ?>
 
@@ -37,6 +39,7 @@
                 <?php echo CHtml::link('Pago Express', CController::createUrl('/carro/pagoexpress'), array('data-ajax' => 'false', 'class' => 'ui-btn ui-corner-all ui-shadow ui-btn-r')); ?>
             <?php endif; ?>
 
+            <?php echo CHtml::link('Cotizar', "#", array('data-role'=>'crearcotizacion', 'data-ajax' => 'false', 'class' => 'ui-btn ui-corner-all ui-shadow ui-btn-r')); ?>
         </div>
     <?php endif; ?>
 </div>

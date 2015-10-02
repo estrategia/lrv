@@ -99,10 +99,10 @@ class PedidoController extends ControllerOperator {
             echo CJSON::encode(array('result' => 'error', 'response' => 'Pedido no existe.'));
             Yii::app()->end();
         }
-        
-        if($objCompra->idEstadoCompra==Yii::app()->params->callcenter['estadoCompra']['estado']['remitido']){
-             echo CJSON::encode(array('result' => 'error', 'response' => 'El pedido ya fue remitido a un punto de venta, si desea borre la remisión y haga la correspondiente asignación.'));
-                Yii::app()->end();
+
+        if ($objCompra->idEstadoCompra == Yii::app()->params->callcenter['estadoCompra']['estado']['remitido']) {
+            echo CJSON::encode(array('result' => 'error', 'response' => 'El pedido ya fue remitido a un punto de venta, si desea borre la remisión y haga la correspondiente asignación.'));
+            Yii::app()->end();
         }
 
         $objPdv = PuntoVenta::model()->find(array(
@@ -198,8 +198,8 @@ class PedidoController extends ControllerOperator {
             echo CJSON::encode(array('result' => 'error', 'response' => 'Solicitud inválida.'));
             Yii::app()->end();
         }
-        
-        if ($cantidad <0) {
+
+        if ($cantidad < 0) {
             echo CJSON::encode(array('result' => 'error', 'response' => 'Las cantidades deben ser números mayores o iguales a cero.'));
             Yii::app()->end();
         }
@@ -244,12 +244,12 @@ class PedidoController extends ControllerOperator {
         $combo = Yii::app()->getRequest()->getPost('combo');
         $compra = Yii::app()->getRequest()->getPost('compra');
 
-        if ($cantidad === null || $combo === null || $compra === null ) {
+        if ($cantidad === null || $combo === null || $compra === null) {
             echo CJSON::encode(array('result' => 'error', 'response' => 'Solicitud inválida.'));
             Yii::app()->end();
         }
-        
-        if ($cantidad <0) {
+
+        if ($cantidad < 0) {
             echo CJSON::encode(array('result' => 'error', 'response' => 'Las cantidades deben ser números mayores o iguales a cero.'));
             Yii::app()->end();
         }
@@ -341,8 +341,8 @@ class PedidoController extends ControllerOperator {
                 )
             ));
         }
-   
-       $this->renderPartial('buscar', array(
+
+        $this->renderPartial('buscar', array(
             'listProductos' => $listProductos,
             'listCombos' => $listCombos,
             'objSectorCiudad' => $objCompra->objSectorCiudad,
@@ -416,15 +416,15 @@ class PedidoController extends ControllerOperator {
                     ':combo' => $objItem->idCombo,
                 ),
             ));
-            
-            foreach ($listItems as $objItemCompra){
+
+            foreach ($listItems as $objItemCompra) {
                 if ($objItemCompra->disponible == 1)
                     $objItemCompra->disponible = 0;
                 else
                     $objItemCompra->disponible = 1;
                 $objItemCompra->save();
             }
-            
+
             echo CJSON::encode(array(
                 'result' => 'ok',
                 'response' => array(
@@ -533,7 +533,7 @@ class PedidoController extends ControllerOperator {
                 $position->setQuantity($cantidadF, true);
             } else {
                 echo CJSON::encode(array(
-                    'result' => 'error', 
+                    'result' => 'error',
                     'response' => "La cantidad solicitada no está disponible en este momento. Saldos disponibles: $objSaldo->saldoFraccion fracciones"));
                 Yii::app()->end();
             }
@@ -681,7 +681,7 @@ class PedidoController extends ControllerOperator {
 
         if ($cantidad > $objSaldo->saldo) {
             echo CJSON::encode(array(
-                'result' => 'error', 
+                'result' => 'error',
                 'response' => "La cantidad solicitada no está disponible en este momento. Saldos disponibles: $objSaldo->saldo unidades"));
             Yii::app()->end();
         }
@@ -762,87 +762,86 @@ class PedidoController extends ControllerOperator {
 
     public function actionBuscarSaldo() {
 
-            $idCompra = Yii::app()->getRequest()->getPost('idCompra');
-            $pdv = Yii::app()->getRequest()->getPost("pdv");
-          //  $idCompra=210372;
+        $idCompra = Yii::app()->getRequest()->getPost('idCompra');
+        $pdv = Yii::app()->getRequest()->getPost("pdv");
+        //  $idCompra=210372;
 
-            $respuesta = $this->buscarsaldos($idCompra, $pdv);
-            $htmlRespuesta="";
-            if($respuesta[2]!=null){
-                $datosSerializados = serialize($respuesta[2]);
-                $compra=Compras::model()->findByPk($idCompra);
-                $compra->saldosPdv=$datosSerializados;
-                $compra->save();
-                $htmlRespuesta=$this->renderPartial("_saldosPDV",array("respuesta"=>$respuesta[2]),true);
-            }
-            
-             echo CJSON::encode(array(
-                    'result' => $respuesta[0],
-                    'response' => array(
-                        'htmlSaldo' => $htmlRespuesta,
-                        'descripcion'=>$respuesta[1]
-            )));
-   
+        $respuesta = $this->buscarsaldos($idCompra, $pdv);
+        $htmlRespuesta = "";
+        if ($respuesta[2] != null) {
+            $datosSerializados = serialize($respuesta[2]);
+            $compra = Compras::model()->findByPk($idCompra);
+            $compra->saldosPdv = $datosSerializados;
+            $compra->save();
+            $htmlRespuesta = $this->renderPartial("_saldosPDV", array("respuesta" => $respuesta[2]), true);
+        }
+
+        echo CJSON::encode(array(
+            'result' => $respuesta[0],
+            'response' => array(
+                'htmlSaldo' => $htmlRespuesta,
+                'descripcion' => $respuesta[1]
+        )));
     }
 
     public function buscarsaldos($idCompra, $pdv) {
-          $client = new SoapClient(null, array(
+        $client = new SoapClient(null, array(
             'location' => Yii::app()->params->webServiceUrl['remisionPos'],
             'uri' => "",
             'trace' => 1
         ));
-       $result = $client->__soapCall("LRVConsultarSaldo",  array('idPedido' => $idCompra, 'pdv_despacho' => $pdv));
-     
-       if($result[2]!= null){
-            for($i=0;$i<count($result[2][1]);$i++){
-                $result[2][1][$i]=get_object_vars($result[2][1][$i]);
+        $result = $client->__soapCall("LRVConsultarSaldo", array('idPedido' => $idCompra, 'pdv_despacho' => $pdv));
+
+        if ($result[2] != null) {
+            for ($i = 0; $i < count($result[2][1]); $i++) {
+                $result[2][1][$i] = get_object_vars($result[2][1][$i]);
             }
-       }
-       return $result;
+        }
+        return $result;
     }
 
-    public function actionRemitir(){
+    public function actionRemitir() {
         $idCompra = Yii::app()->getRequest()->getPost('idCompra');
-     //   $objCompra = Compras::model()->findByPk($idCompra,array("with"=>"objPuntoVenta"));
+        //   $objCompra = Compras::model()->findByPk($idCompra,array("with"=>"objPuntoVenta"));
 
-    /*    $objCompra = Compras::model()->find(array(
-            'with'=>array("objUsuario","objPuntoVenta","objCompraDireccion"=>array("with"=>array("objCiudad","objSector")),
-                                        "objFormaPagoCompra"=>array("with"=>"objFormaPago"),
-                                        "objFormaPagoCompra","objEstadoCompra",
-                                        "objOperador","listItems"=>array("with"=>array("objProducto","listBeneficios","objImpuesto","objEstadoItem"),
-                                        "listObservaciones"=>array("with"=>array("objTipoObservacion")))),
-            'condition' => 't.idCompra=:id',
-            'params' => array(
-                ':id' => $idCompra,
-            )
-        ));*/
-        
-        $objCompra = Compras::model()->findByPk($idCompra,array("with"=>"objPuntoVenta"));
+        /*    $objCompra = Compras::model()->find(array(
+          'with'=>array("objUsuario","objPuntoVenta","objCompraDireccion"=>array("with"=>array("objCiudad","objSector")),
+          "objFormaPagoCompra"=>array("with"=>"objFormaPago"),
+          "objFormaPagoCompra","objEstadoCompra",
+          "objOperador","listItems"=>array("with"=>array("objProducto","listBeneficios","objImpuesto","objEstadoItem"),
+          "listObservaciones"=>array("with"=>array("objTipoObservacion")))),
+          'condition' => 't.idCompra=:id',
+          'params' => array(
+          ':id' => $idCompra,
+          )
+          )); */
+
+        $objCompra = Compras::model()->findByPk($idCompra, array("with" => "objPuntoVenta"));
 
         if ($objCompra === null) {
-              echo CJSON::encode(array('result' => 0, 'response' => 'Pedido no existe.'));
-              Yii::app()->end();
+            echo CJSON::encode(array('result' => 0, 'response' => 'Pedido no existe.'));
+            Yii::app()->end();
         }
-            
-        if($objCompra->idComercial == null){
-                 echo CJSON::encode(array('result' => 0, 'response' => 'No se ha asignado punto de venta.'));
-                 Yii::app()->end();
+
+        if ($objCompra->idComercial == null) {
+            echo CJSON::encode(array('result' => 0, 'response' => 'No se ha asignado punto de venta.'));
+            Yii::app()->end();
         }
-        
+
         $client = new SoapClient(null, array(
             'location' => Yii::app()->params->webServiceUrl['remisionPosECommerce'],
             'uri' => "",
             'trace' => 1
         ));
-       $result = $client->__soapCall("CongelarCompraManual",  array('idPedido' => $idCompra));
-       
-       if($result[0]==1){
-     
+        $result = $client->__soapCall("CongelarCompraManual", array('idPedido' => $idCompra));
+
+        if ($result[0] == 1) {
+
             $transaction = Yii::app()->db->beginTransaction();
             try {
                 $objCompra->idEstadoCompra = Yii::app()->params->callcenter['estadoCompra']['estado']['remitido'];
                 $objCompra->generarDocumentoCruce(Yii::app()->controller->module->user->id);
-             
+
                 // Guardar el cambio de estado de la remisión
                 if (!$objCompra->save()) {
                     throw new Exception('Error de asignación: ' . $objCompra->validateErrorsResponse());
@@ -858,7 +857,7 @@ class PedidoController extends ControllerOperator {
                     throw new Exception("Error al guardar traza de estado: " . $objEstadoCompra->validateErrorsResponse());
                 }
 
-                
+
                 $objObservacion = new ComprasObservaciones;
                 $objObservacion->idCompra = $objCompra->idCompra;
                 $objObservacion->observacion = "Cambio de Estado: Remitido al POS PDV. " . $objCompra->objPuntoVenta->nombrePuntoDeVenta;
@@ -873,7 +872,6 @@ class PedidoController extends ControllerOperator {
                 // Enviar Correo electronico al punto de venta
                 $this->enviarEmail($objCompra);
                 $transaction->commit();
-
             } catch (Exception $exc) {
                 Yii::log($exc->getMessage() . "\n" . $exc->getTraceAsString(), CLogger::LEVEL_ERROR, 'application');
 
@@ -886,62 +884,69 @@ class PedidoController extends ControllerOperator {
                 echo CJSON::encode(array('result' => 'error', 'response' => $exc->getMessage()));
                 Yii::app()->end();
             }
-       }
-        
-         echo CJSON::encode(array(
-                    'result' => $result[0],
-                    'response' =>  $result[1],
-                    'encabezado' => $this->renderPartial('/admin/_encabezadoPedido', array('objCompra' => $objCompra), true, false),
-                    'htmlObservaciones' => $this->renderPartial('/admin/_observaciones', array('objCompra' => $objCompra), true, false),
-                ));
-            Yii::app()->end();
+        }
+
+        echo CJSON::encode(array(
+            'result' => $result[0],
+            'response' => $result[1],
+            'encabezado' => $this->renderPartial('/admin/_encabezadoPedido', array('objCompra' => $objCompra), true, false),
+            'htmlObservaciones' => $this->renderPartial('/admin/_observaciones', array('objCompra' => $objCompra), true, false),
+        ));
+        Yii::app()->end();
     }
-    
-    public function enviarEmail($objCompra){
-    /*      $objCompra = Compras::model()->find(array(
-            'with'=>array("objUsuario","objPuntoVenta","objCompraDireccion"=>array("with"=>array("objCiudad","objSector")),
-                                        "objFormaPagoCompra"=>array("with"=>"objFormaPago"),
-                                        "objFormaPagoCompra","objEstadoCompra",
-                                        "objOperador","listItems"=>array("with"=>array("objProducto","listBeneficios","objImpuesto","objEstadoItem"),
-                                        "listObservaciones"=>array("with"=>array("objTipoObservacion")))),
-            'condition' => 't.idCompra=:id',
-            'params' => array(
-                ':id' => $idCompra,
-            )
-        ));*/
-      
-         $contenidoCorreo = $this->renderPartial('compraCorreo', array(
-                    'objCompra' => $objCompra,
-                    ), true, true);
-         $htmlCorreo = $this->renderPartial('application.views.common.correo', array('contenido' => $contenidoCorreo), true, true);
-      //   sendHtmlEmail($objCompra->objPuntoVenta->eMailPuntoDeVenta, Yii::app()->params->asunto['pedidoRemitido'], $htmlCorreo);
-   //      sendHtmlEmail("juan.aragon@eiso.com.co", Yii::app()->params->asunto['pedidoRemitido'], $htmlCorreo);
+
+    public function enviarEmail($objCompra) {
+        $contenidoCorreo = $this->renderPartial('compraCorreo', array('objCompra' => $objCompra), true, true);
+        $htmlCorreo = $this->renderPartial('application.views.common.correo', array('contenido' => $contenidoCorreo), true, true);
+        sendHtmlEmail($objCompra->objPuntoVenta->eMailPuntoDeVenta, Yii::app()->params->asunto['pedidoRemitido'], $htmlCorreo);
+        //sendHtmlEmail("juan.aragon@eiso.com.co, legnardz@hotmail.com, miguel.sanchez@eiso.com.co", Yii::app()->params->asunto['pedidoRemitido']  . " - " . date("YmdHis"), $htmlCorreo);
     }
-    
-    public function actionRemitirBorrar(){
+
+    /*public function actionCorreo($idCompra) {
+        try {
+            $objCompra = Compras::model()->find(array(
+                'with' => array("objUsuario", "objPuntoVenta", "objCompraDireccion" => array("with" => array("objCiudad", "objSector")),
+                    "objFormaPagoCompra" => array("with" => "objFormaPago"),
+                    "objFormaPagoCompra", "objEstadoCompra",
+                    "objOperador", "listItems" => array("with" => array("objProducto", "listBeneficios", "objImpuesto", "objEstadoItem"),
+                        "listObservaciones" => array("with" => array("objTipoObservacion")))),
+                'condition' => 't.idCompra=:id',
+                'params' => array(
+                    ':id' => $idCompra,
+                )
+            ));
+
+            $this->enviarEmail($objCompra);
+            echo "";
+        } catch (Exception $exc) {
+            echo "Error: " . $exc->getMessage();
+        }
+    }*/
+
+    public function actionRemitirBorrar() {
         $idCompra = Yii::app()->getRequest()->getPost('idCompra');
-         
-        $objCompra = Compras::model()->findByPk($idCompra,array("with"=>"objPuntoVenta"));
+
+        $objCompra = Compras::model()->findByPk($idCompra, array("with" => "objPuntoVenta"));
 
         if ($objCompra === null) {
-              echo CJSON::encode(array('result' => 0, 'response' => 'Pedido no existe.'));
-              Yii::app()->end();
+            echo CJSON::encode(array('result' => 0, 'response' => 'Pedido no existe.'));
+            Yii::app()->end();
         }
-            
-        if($objCompra->idComercial == null){
-                 echo CJSON::encode(array('result' => 0, 'response' => 'No se ha asignado punto de venta.'));
-                 Yii::app()->end();
+
+        if ($objCompra->idComercial == null) {
+            echo CJSON::encode(array('result' => 0, 'response' => 'No se ha asignado punto de venta.'));
+            Yii::app()->end();
         }
-        
-         $client = new SoapClient(null, array(
+
+        $client = new SoapClient(null, array(
             'location' => Yii::app()->params->webServiceUrl['remisionPosECommerce'],
             'uri' => "",
             'trace' => 1
         ));
-       $result = $client->__soapCall("BorrarCongelada",  array('idPedido' => $idCompra));
-       
-       if($result[0]==1){
-            $objCompra = Compras::model()->findByPk($idCompra,array("with"=>"objPuntoVenta"));
+        $result = $client->__soapCall("BorrarCongelada", array('idPedido' => $idCompra));
+
+        if ($result[0] == 1) {
+            $objCompra = Compras::model()->findByPk($idCompra, array("with" => "objPuntoVenta"));
 
             if ($objCompra === null) {
                 echo CJSON::encode(array('result' => 'error', 'response' => 'Pedido no existe.'));
@@ -980,7 +985,6 @@ class PedidoController extends ControllerOperator {
                 }
 
                 $transaction->commit();
-
             } catch (Exception $exc) {
                 Yii::log($exc->getMessage() . "\n" . $exc->getTraceAsString(), CLogger::LEVEL_ERROR, 'application');
 
@@ -993,13 +997,37 @@ class PedidoController extends ControllerOperator {
                 echo CJSON::encode(array('result' => 'error', 'response' => $exc->getMessage()));
                 Yii::app()->end();
             }
-       }
-       
-       echo CJSON::encode(array(
-                    'result' => $result[0],
-                    'response' => $result[1],
-                    'encabezado' => $this->renderPartial('/admin/_encabezadoPedido', array('objCompra' => $objCompra), true, false),
-                    'htmlObservaciones' => $this->renderPartial('/admin/_observaciones', array('objCompra' => $objCompra), true, false),
-       ));
+        }
+
+        echo CJSON::encode(array(
+            'result' => $result[0],
+            'response' => $result[1],
+            'encabezado' => $this->renderPartial('/admin/_encabezadoPedido', array('objCompra' => $objCompra), true, false),
+            'htmlObservaciones' => $this->renderPartial('/admin/_observaciones', array('objCompra' => $objCompra), true, false),
+        ));
     }
+
+    public function actionTrazapasarela() {
+        if (!Yii::app()->request->isPostRequest) {
+            throw new CHttpException(404, 'Solicitud inválida.');
+        }
+
+        $compra = Yii::app()->getRequest()->getPost('compra');
+        $objCompra = Compras::model()->find(array(
+            'with' => 'listPasarelaRespuestas',
+            'condition' => 't.idCompra=:compra',
+            'params' => array(
+                ':compra' => $compra
+            )
+        ));
+
+        if ($objCompra === null) {
+            throw new CHttpException(404, 'Compra no existe.');
+        }
+
+        $this->renderPartial('trazaPasarela', array(
+            'objCompra' => $objCompra,
+        ));
+    }
+
 }

@@ -138,7 +138,7 @@ ul.ui-listview.ui-listview-inset.ui-corner-all.ui-shadow li a.ui-btn.ui-icon-car
 }
 .ui-bar-f .f_sic{ background: #FFF; text-align: center;color: #919191;font-size: 12.5px;  }
 .ui-bar-f .f_sic p{ margin: 0;  }
-.ui-bar-f .barraf{ background: url("../images/estructura/barra_footer.jpg") repeat-x; min-height: 11px; display: block; }
+.ui-bar-f .barraf, .barraf{ background: url("../images/estructura/barra_footer.jpg") repeat-x; min-height: 11px; display: block; }
 
 /* ---- CONTENT ---- */
 .ui-body-c{  }
@@ -1054,7 +1054,7 @@ h3.ct_result{ color: #b40000; margin-top: 0;}
 p.cp_result{ /*margin-top: .2em; */color: #505050;}
 
 li.c_list_prod.ui-li-static.ui-body-inherit.ui-first-child { border: 1px solid #ccc; /*border-radius: 0px; border-top-left-radius: .6em;/*.3em; border-top-right-radius: .6em;/*.3em;*/ margin-bottom: 1em; padding: 0px;overflow: visible;  /*padding-bottom: 0px;*/ }
-li.c_list_prod.ui-li-static.ui-body-inherit{ border: 1px solid #ccc; border-radius: inherit; margin-bottom: 1em; padding: 0px; /*padding-top: 0px;*/background-color: #fff; }
+li.c_list_prod.ui-li-static.ui-body-inherit{ border: 1px solid #ccc; border-radius: inherit; margin-bottom: 1em; padding: 0px; /*padding-top: 0px;*/background-color: #fff; overflow: visible; }
 li.c_list_prod.ui-li-static.ui-body-inherit.ui-last-child{ border: 1px solid #ccc; border-radius: 0px; border-top-left-radius: .3em; border-top-right-radius: .3em; padding: 0px; overflow: visible; }
 div.clst_pro_img{ position: relative; max-width: 150px;  /*display: inline-block; float:left; vertical-align: top; padding-right: 1.5em;*/  }
 img.ui-li-thumb {
@@ -1132,7 +1132,7 @@ div.ccont_filtro .right{float: right; text-align: right; border: 0; margin: 0; w
 div.ccont_filtro .left{float: left; border: 0; margin: 0; width: 50%;}
 
 div.ccont_filtro a.ui-link{ text-decoration: none; }
-div.ccont_filtro a.ui-link img{ padding: .3em .4em 0em .7em; width: 2em; transition:0.5s all; }
+div.ccont_filtro a.ui-link img{ padding: .3em .4em 0em .7em; transition:0.5s all; }
 div.ccont_filtro .left a.ui-link img{ border-right: 1px solid #ccc;}
 div.ccont_filtro .right a.ui-link img{ border-left: 1px solid #ccc;}
 
@@ -1151,7 +1151,7 @@ li.c_list_prod.ui-li-static.ui-body-inherit div.cdiv_prod_frc div.c_prod_frc {
     vertical-align: top;
     width: 130px;
 }
-*/
+
 li.c_list_prod.ui-li-static.ui-body-inherit div.cdiv_prod_frc div.c_prod_frc, div.cdiv_prod_frc div.c_prod_frc {
     background: none repeat scroll 0 0 #919191;
     border-radius: 0.3em 0;
@@ -1159,7 +1159,7 @@ li.c_list_prod.ui-li-static.ui-body-inherit div.cdiv_prod_frc div.c_prod_frc, di
     padding: 0 1em;
     position: relative;
     vertical-align: top;
-}
+}*/
 li.c_list_prod.ui-li-static.ui-body-inherit div.cdiv_prod_frc div.c_prod_frc p,  div.c_prod_frc p{ color: #FFF; text-transform: capitalize; /*font-size: .75em;*/ }
 /*
 li.c_list_prod.ui-li-static.ui-body-inherit div.cdiv_prod_desc{ position: relative; width: 100%; min-height: 2em; }*/
@@ -1498,7 +1498,7 @@ div.cwl_txt h1.txt_nom{ text-transform: capitalize; font-size: large; padding-bo
     right: 5px;
     display: none; /* Estara oculto por defecto */
     text-indent: -9999px; /* Oculta el texto del enlace */
-    z-index: 1000; /* Evita que otros elementos esten por encima */
+    z-index: 9999; /* Evita que otros elementos esten por encima */
     background: url('../images/iconos/go_top.png') no-repeat;
 }
 
@@ -2492,5 +2492,82 @@ ul.yiiPager .selected a {
     padding-left: 30px;
 }
 .c_list_prod_cont li.combo_list_item.ui-first-child {
-    margin-top: 1.5em;
+    margin-top: 1em;
+}
+.combo_list_item .clst_cont_pr_prod {
+    padding-top: 0.8em;
+}
+.label {
+    border-radius: 0.25em;
+    -moz-border-radius: 0.25em;
+    -webkit-border-radius: 0.25em;
+    -o-border-radius: 0.25em;
+    color: #fff;
+    display: inline;
+    font-size: 75%;
+    font-weight: 700;
+    line-height: 1;
+    padding: 0.2em 0.6em 0.3em;
+    text-align: center;
+    vertical-align: baseline;
+    white-space: nowrap;
+}
+.label-primary {
+    background-color: #337ab7;
+}
+.label-default {
+    background-color: #777;
+}
+.label-success {
+    background-color: #5cb85c;
+}
+.label-info {
+    background-color: #5bc0de;
+}
+.label-warning {
+    background-color: #f0ad4e;
+}
+.label-danger {
+    background-color: #d9534f;
+}
+li.c_list_prod.ui-li-static.ui-body-inherit div.cdiv_prod_frc div.c_prod_frc, div.c_prod_frc {
+    background: url("../images/iconos/etiqueta_fraccionado.png") no-repeat scroll left top / auto 100% rgba(0, 0, 0, 0);
+    float: left;
+    height: 50px;
+    position: absolute;
+    left: -1px;
+    top: -0.7em;
+    vertical-align: top;
+    width: 200px;
+}
+li.c_list_prod.ui-li-static.ui-body-inherit div.cdiv_prod_frc div.c_prod_frc p, div.c_prod_frc p {
+    color: yellow;
+     font-size: medium;
+    font-weight: bold;
+    margin: 0.3em 0 0.6em;
+    padding: 0 1em;
+    text-align: left;
+}
+
+li.c_list_prod.ui-li-static.ui-body-inherit div.cdiv_prod_frc div.c_prod_frc p span, div.c_prod_frc p span {
+    font-size: small;
+    font-weight: normal;
+}
+
+div.clst_cont_top.top_frc {
+    padding-top: 1.6em;
+}
+ .c_cont_detail_prod div.cdiv_prod_frc{
+    float: none;
+    margin-bottom: 65px;
+    position: relative;
+    top: -6px;
+}
+
+ .c_cont_detail_prod div.cdiv_prod_desc {
+    bottom: -18px;
+    float: none;
+    margin-bottom: 40px;
+    position: relative;
+    width: 100%;
 }

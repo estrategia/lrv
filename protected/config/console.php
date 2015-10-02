@@ -55,7 +55,7 @@ return array(
     ),
     'params' => array(
         'webServiceUrl' => array(
-            'sincronizarBeneficiosSIICOP' => 'http://localhost/copservir/beneficios/sweb/wslrv'
+            'sincronizarBeneficiosSIICOP' => 'http://192.168.40.137/copservir/beneficios/sweb/wslrv'
         ),
     ),
 );

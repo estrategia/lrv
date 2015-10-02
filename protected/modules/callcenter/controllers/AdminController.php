@@ -119,6 +119,22 @@ class AdminController extends ControllerOperator {
                     'dataProvider' => $model->search(array('order' => 't.fechaCompra DESC', 'operadorPedido' => true)),
                     'arrCantidadPedidos' => Compras::cantidadComprasPorEstado($fecha->format('Y-m-d H:i:s'))
                 ));
+            } else if ($parametro == 'enlinea') {
+                $model = new Compras('search');
+                $model->unsetAttributes();
+                if (isset($_GET['Compras']))
+                    $model->attributes = $_GET['Compras'];
+
+                $fecha = new DateTime;
+                $dias = Yii::app()->params->callcenter['pedidos']['diasVisualizar'];
+                $fecha->modify("-$dias days");
+                $model->fechaCompra = $fecha->format('Y-m-d H:i:s');
+                
+                $this->render('pedidos', array(
+                    'model' => $model,
+                    'dataProvider' => $model->search(array('order' => 't.fechaCompra DESC', 'formaPago'=> Yii::app()->params->formaPago['pasarela']['idPasarela'], 'operadorPedido' => true)),
+                    'arrCantidadPedidos' => Compras::cantidadComprasPorEstado($fecha->format('Y-m-d H:i:s'))
+                ));
             }else {
                 echo "NOT IMPLEMENTED YET";
             }
@@ -646,7 +662,11 @@ class AdminController extends ControllerOperator {
     }
 
     protected function gridOrigenPedido($data, $row) {
-        return "$data->identificacionUsuario<br/>" . $data->objUsuario->nombre . " " . $data->objUsuario->apellido . "<br/>" . $data->objUsuario->correoElectronico;
+        if($data->identificacionUsuario == null){
+            return $data->objCompraDireccion->nombre . "<br/>" . $data->objCompraDireccion->correoElectronico;
+        }else{
+            return "$data->identificacionUsuario<br/>" . $data->objUsuario->getNombreCompleto(). "<br/>" . $data->objUsuario->correoElectronico;
+        }
     }
 
     protected function gridValorPedido($data, $row) {

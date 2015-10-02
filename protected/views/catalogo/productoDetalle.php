@@ -1,7 +1,14 @@
+<?php $this->pageTitle = Yii::app()->name . " - " . $objProducto->descripcionProducto; ?>
+
 <div class="ui-content c_cont_detail_prod">
     <h1><?php echo $objProducto->descripcionProducto ?></h1>
     <h2><?php echo $objProducto->presentacionProducto ?></h2>
-    <h2 class="cdt_prod_spc">Código: <?php echo $objProducto->codigoProducto ?></h2>
+    <h2>Código: <?php echo $objProducto->codigoProducto ?></h2>
+    <?php foreach ($objPrecio->getPuntosDescripcion() as $descripcionPunto): ?>
+        <h2 class="left"><span class="label label-primary"><?= $descripcionPunto ?></span></h2>
+    <?php endforeach; ?>
+    <div class="cdt_prod_spc"></div>
+    
     <?php if ($objPrecio->getFlete() > 0): ?>
         <h3>Flete: <?php echo Yii::app()->numberFormatter->format(Yii::app()->params->formatoMoneda['patron'], $objPrecio->getFlete(), Yii::app()->params->formatoMoneda['moneda']); ?></h3>
     <?php endif; ?>
@@ -12,12 +19,19 @@
     <!-- <div class="cdt_line_spc"><span></span></div>-->
 
     <?php $listImagen = $objProducto->listImagen(YII::app()->params->producto['tipoImagen']['grande']); ?>
-    <?php if ($objProducto->fraccionado == 1): ?>
-    <div class="cdiv_prod_frc">
-        <div class="c_prod_frc">
-            <p class="">Producto fraccionado</p>
+    <?php if ($objPrecio->tieneBeneficio()): ?>
+        <div class="cdiv_prod_desc">
+            <div class="c_prod_desc">
+                <p><?php echo $objPrecio->getPorcentajeDescuento() ?> % <span>dcto</span></p>
+            </div>
         </div>
-    </div>
+    <?php endif; ?>
+    <?php if ($objProducto->fraccionado == 1): ?>
+        <div class="cdiv_prod_frc">
+            <div class="c_prod_frc">
+                <p class="">Producto fraccionado</p>
+            </div>
+        </div>
     <?php endif; ?>
     <div id="owl-productodetalle-<?php echo $objProducto->codigoProducto ?>" class="owl-carousel owl-theme owl-productodetalle">
         <?php if (empty($listImagen)): ?>
@@ -31,7 +45,7 @@
 
     <div class="cdt_line_spc"><span></span></div>
 
-    <?php if(!in_array($objProducto->idCategoriaBI, Yii::app()->params->calificacion['categoriasNoCalificacion'])): ?>
+    <?php if (!in_array($objProducto->idCategoriaBI, Yii::app()->params->calificacion['categoriasNoCalificacion'])): ?>
         <div id="raty-lectura-producto-<?php echo $objProducto->codigoProducto ?>" data-role="raty" data-readonly="true" data-score="<?php echo $objProducto->getCalificacion() ?>" class="clst_cal_str"></div>
         <?php $calificacion = $objProducto->getCalificacion(true) ?>
         <div><strong>Total votos:</strong> <?php echo $calificacion['votos'] ?></div>
@@ -187,7 +201,7 @@
 
     <div class="cdtl_div_ln"></div>
 
-    <?php if(!in_array($objProducto->idCategoriaBI, Yii::app()->params->calificacion['categoriasNoCalificacion'])): ?>
+    <?php if (!in_array($objProducto->idCategoriaBI, Yii::app()->params->calificacion['categoriasNoCalificacion'])): ?>
         <div data-role="collapsible" data-iconpos="right" data-collapsed-icon="carat-d" data-expanded-icon="carat-u" class="c_cont_com_prod ui-nodisc-icon ui-alt-icon">
             <h3>Comentarios del producto</h3>
             <ul data-role="listview" data-inset="false" data-icon="false">
@@ -206,7 +220,7 @@
                                 </p>
                             </div>
                         </li>
-                    <?php elseif($objComentario->aprobado == 0 && $objComentario->identificacionUsuario==Yii::app()->user->name): ?>
+                    <?php elseif ($objComentario->aprobado == 0 && $objComentario->identificacionUsuario == Yii::app()->user->name): ?>
                         <?php $contadorCalificacion++; ?>
                         <li class="cdtl_coment">
                             <h3><?php echo $objComentario->objUsuario->nombre ?> <strong>(Pendiente de revisión)</strong></h3>

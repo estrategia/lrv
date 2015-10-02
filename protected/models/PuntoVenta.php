@@ -87,6 +87,9 @@ class PuntoVenta extends CActiveRecord {
         // class name for the relations automatically generated below.
         return array(
             'listServicios' => array(self::MANY_MANY, 'TipoServicio', 't_ServiciosPuntoVenta(idTipoServicio, idPuntoDeVenta)'),
+            'objHorarioAperturaLunesASabado' => array(self::BELONGS_TO, 'HorarioPuntoVenta', 'horarioAperturaLunesASabado'),
+            'objHorarioAperturaDomingo' => array(self::BELONGS_TO, 'HorarioPuntoVenta', 'horarioAperturaDomingo'),
+            'objHorarioAperturaFestivo' => array(self::BELONGS_TO, 'HorarioPuntoVenta', 'horarioAperturaFestivo'),
         );
     }
 

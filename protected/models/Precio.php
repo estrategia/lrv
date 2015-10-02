@@ -17,6 +17,7 @@ abstract class Precio {
     protected $porcentajeDescuentoBeneficio = 0;
     protected $inicializado = false;
     protected $listBeneficios = array();
+    protected $listPuntos = array();
     protected $flete = 0;
     protected $tiempoEntrega = 0;
 
@@ -44,6 +45,26 @@ abstract class Precio {
 
     public function getBeneficios() {
         return $this->listBeneficios;
+    }
+    
+    public function getPuntos(){
+        return $this->listPuntos;
+    }
+    
+    public function getPuntosDescripcion(){
+        $array = array();
+        foreach ($this->listPuntos as $objPunto){
+            if($objPunto->tipoValor==1){
+                $array[] = "$objPunto->valor Puntos";
+            }else if($objPunto->tipoValor==2){
+                $array[] = "Puntos X $objPunto->valor";
+            }
+        }
+        return $array;
+    }
+    
+    public function tienePuntos(){
+        return !empty($this->listPuntos);
     }
 
     public function inicializado() {

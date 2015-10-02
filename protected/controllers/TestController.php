@@ -1,6 +1,93 @@
 <?php
 
 class TestController extends Controller {
+    public function actionVideo(){
+        $this->render('video');
+    }
+    
+    public function actionPdf(){
+        //$compra = Compras::model()->with('items', 'items.producto')->findByPk($compra);
+        //$model = CreditoCop::generarSolicitud($compra);
+
+        $mPDF1 = Yii::app()->ePdf->mpdf('utf-8', 'Letter'); //Letter, Legal, A4
+        $mPDF1->SetTitle("Solicitud de credito");
+        $mPDF1->SetAuthor("Copservir");
+        //$styleBootstrap = file_get_contents(Yii::getPathOfAlias('bootstrap.assets') . '/css/bootstrap.css');
+        //$styleCustom = file_get_contents(Yii::getPathOfAlias('webroot.css') . '/main.css');
+        //$mPDF1->WriteHTML($styleBootstrap, 1);
+        //$mPDF1->WriteHTML($styleCustom, 1);
+        
+        $mPDF1->WriteHTML("<strong>Error, no se detecta formulario</strong>");
+        //$mPDF1->WriteHTML($this->renderPartial('_solicitudCredito', array('model' => $model), true));
+
+        $filename = 'SolicitudCreditoServicoop_' . date('YmdHis') . '.pdf';
+        $mPDF1->Output($filename, 'D');
+    }
+    
+    public function actionPdv(){
+        $objPuntoVenta = PuntoVenta::model()->findByPk(1);
+        
+        CVarDumper::dump($objPuntoVenta->objHorarioAperturaLunesASabado,10,true);
+    }
+    
+    public function actionRelacionados(){
+        /*$objProducto = Producto::model()->find(array(
+            'condition' => 'listRelacionados.codigoProducto=84259',
+            'with' => 'listRelacionados'
+        ));*/
+        
+        /*$objProducto = Producto::model()->findAll(array(
+            'condition' => 'r.codigoProducto=84259',
+            'join' => 'JOIN t_ProductosRelacionados r ON (t.codigoProducto=r.codigoRelacionado)'
+        ));*/
+        
+        $objProducto = Producto::model()->find(array(
+            'condition' => 'codigoProducto=12957',
+        ));
+        
+        
+        CVarDumper::dump($objProducto->tieneRelacionados(),10,true);
+    }
+    
+    public function actionDistancia1(){
+        $lat1 = 3.345389;
+        $lat2 = 3.345721;
+        
+        $lon1 = -76.530664;
+        $lon2 = -76.530643;
+        
+        
+        $dist = distanciaCoordenadas($lat1, $lon1, $lat2, $lon2);
+        echo "Distancia: $dist";        
+    }
+    
+    public function actionMemoria(){
+        
+        //ini_set('memory_limit', '100M');
+        //echo  "Asignada: ". memory_get_peak_usage(true);
+        //echo "<br/>";
+        
+        //$asigned_memory = memory_get_usage(true);
+        //$used_memory = memory_get_usage();
+        
+        echo "Asignada: ". (memory_get_usage(true)/1024);echo "<br/>";
+        echo "Usada: ". (memory_get_usage(false)/1024);echo "<br/>";
+        echo "Libre: ". ((memory_get_usage(true)-memory_get_usage(false))/1024);echo "<br/>";
+        
+        /*echo "<br/>";echo "<br/>";
+        $start_memory = memory_get_usage();
+        $foo = "5";
+        echo "$start_memory<br/>";
+        echo memory_get_usage() - $start_memory;*/
+        
+        
+        /*$a = str_repeat("Hello", 4242);
+        echo memory_get_usage() . "\n";
+        echo "<br/>";
+        unset($a);
+        echo memory_get_usage() . "\n";
+        echo "<br/>";*/
+    }
     
     public function actionCorreo(){
         

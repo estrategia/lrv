@@ -1,6 +1,15 @@
 <?php
 
 class SitioController extends Controller {
+    
+    /**
+     * @return array action filters
+     * */
+    public function filters() {
+        return array(
+            array('application.filters.SessionControlFilter + inicio, categorias'),
+        );
+    }
 
     public function actionIndex() {
         $this->showSeeker = false;
@@ -338,6 +347,10 @@ class SitioController extends Controller {
 
                 foreach ($puntosv as $pdv) {
                     $dist = distanciaCoordenadas($lat, $lon, $pdv->latitudGoogle, $pdv->longitudGoogle);
+                    
+                    if($dist>Yii::app()->params->gps['distanciaMaxima']){
+                        continue;
+                    }
 
                     if ($pdvCerca['pdv'] == null) {
                         $pdvCerca['pdv'] = $pdv;
@@ -431,32 +444,7 @@ class SitioController extends Controller {
     }
 
     public function actionInicio() {
-        /* $sectorCiudad = SectorCiudad::model()->find(array(
-          'with' => array('objCiudad', 'objSector'),
-          'condition' => 't.codigoCiudad=:ciudad AND t.codigoSector=:sector AND t.estadoCiudadSector=:estado',
-          'params' => array(
-          ':ciudad' => $ciudad,
-          ':sector' => $sector,
-          ':estado' => 1,
-          )
-          ));
-
-          if ($sectorCiudad == null) {
-          $this->render('index');
-          Yii::app()->end();
-          }
-
-          $objSubSector = $subsector != null ? SubSector::model()->findByPk(array('codigoCiudad' => $ciudad, 'codigoSubSector' => $sector)) : null;
-         */
-
-        //Yii::app()->session[Yii::app()->params->sesion['pdvEntrega']] = null;
-        /* Yii::app()->session[Yii::app()->params->sesion['sectorCiudadEntrega']] = $sectorCiudad;
-          Yii::app()->session[Yii::app()->params->sesion['subSectorCiudadEntrega']] = $objSubSector; */
-        if($this->isMobile){
-            $this->render('inicio');
-        }else{
-            $this->render('d_index');
-        }
+        $this->render('inicio');
     }
 
     public function actionCategorias() {
@@ -503,11 +491,12 @@ class SitioController extends Controller {
      * This is the action to handle external exceptions.
      */
     public function actionError() {
+        $this->layout = "m_error";
         if ($error = Yii::app()->errorHandler->error) {
             if (Yii::app()->request->isAjaxRequest)
                 echo $error['message'];
             else
-                $this->render('error', $error);
+                $this->render('error');
         }
     }
     

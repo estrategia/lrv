@@ -237,6 +237,12 @@ class Producto extends CActiveRecord {
         }
         return $list;
     }
+    
+    public function tieneRelacionados(){
+        $sql = "SELECT COUNT(*) FROM " . ProductosRelacionados::model()->tableName() . " WHERE codigoProducto=$this->codigoProducto";
+        $numRelacionados = Yii::app()->db->createCommand($sql)->queryScalar();
+        return ($numRelacionados>0);
+    }
 
     public function getCalificacion($arreglo = false) {
         $calificacion = 0;

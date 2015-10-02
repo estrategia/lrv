@@ -14,8 +14,7 @@
         </div>
     </div>
 <?php endif; ?>
-<div style="clear:both;"></div>
-<div class="clst_cont_top">
+<div class="clst_cont_top <?php if ($objProducto->fraccionado == 1): echo 'top_frc'; endif; ?> ">
     <div class="clst_pro_img">
         <a href="<?php echo CController::createUrl('/catalogo/producto', array('producto' => $objProducto->codigoProducto,'descripcion'=>  Producto::cadenaUrl($objProducto->descripcionProducto))) ?>" data-ajax="false">
             <img src="<?php echo Yii::app()->request->baseUrl . $objProducto->rutaImagen() ?>" class="ui-li-thumb">
@@ -37,7 +36,9 @@
     <div class="clst_cont_pr_prod">
         <h2><a href="<?php echo CController::createUrl('/catalogo/producto', array('producto' => $objProducto->codigoProducto,'descripcion'=>  Producto::cadenaUrl($objProducto->descripcionProducto))) ?>" data-ajax="false"><?php echo $objProducto->descripcionProducto ?></a></h2>
         <p><?php echo $objProducto->presentacionProducto ?></p>
-        <div id="raty-lectura-producto-<?php echo $objProducto->codigoProducto ?>" data-role="raty" data-readonly="true" data-score="<?php echo $objProducto->getCalificacion() ?>" class="clst_cal_str"></div>
+        <?php if(!in_array($objProducto->idCategoriaBI, Yii::app()->params->calificacion['categoriasNoCalificacion'])): ?>
+            <div id="raty-lectura-producto-<?php echo $objProducto->codigoProducto ?>" data-role="raty" data-readonly="true" data-score="<?php echo $objProducto->getCalificacion() ?>" class="clst_cal_str"></div>
+        <?php endif;?>
         <?php if ($objPrecio->inicializado()): ?>
             <?php if ($objProducto->mostrarAhorroVirtual == 1 && $objPrecio->getAhorro(Precio::PRECIO_UNIDAD) > 0): ?>
                 <div class="clst_pre_ant"><?php echo Yii::app()->numberFormatter->format(Yii::app()->params->formatoMoneda['patron'], $objPrecio->getPrecio(Precio::PRECIO_UNIDAD, false), Yii::app()->params->formatoMoneda['moneda']); ?></div>
@@ -53,6 +54,9 @@
                 <div class="whitespace-normal">[Tiempo de entrega <?php echo $objPrecio->getTiempoEntrega() ?> horas]</div>
             <?php endif; ?>
         <?php endif; ?>
+        <?php foreach ($objPrecio->getPuntosDescripcion() as $descripcionPunto): ?>
+            <span class="label label-primary"><?= $descripcionPunto ?></span>
+        <?php endforeach; ?>
     </div>
     <div class="clear"></div>
 </div>

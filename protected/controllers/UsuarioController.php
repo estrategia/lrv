@@ -8,19 +8,12 @@ class UsuarioController extends Controller {
      * */
     public function filters() {
         return array(
+            array('application.filters.SessionControlFilter + index, autenticar, infoPersonal, contrasena, pagoexpress, listapedidos, pedido, listacotizaciones, cotizacion, listapersonal, listadetalle, direcciones'),
             'access + autenticar, recordar, registro, restablecer',
-            'login + index, infoPersonal, contrasena, direcciones, pagoexpress, listapedidos, listapersonal, pedido, listadetalle',
+            'login + index, infoPersonal, contrasena, direcciones, pagoexpress, listapedidos, listapersonal, pedido, listadetalle, listacotizaciones',
             'loginajax + direccionCrear, direccionActualizar',
         );
     }
-
-    /*
-      public function filters() {
-      return array(
-      array('tienda.filters.AccessControlFilter'),
-      array('tienda.filters.LanzamientoControlFilter'),
-      );
-      } */
 
     public function filterAccess($filter) {
         if (!Yii::app()->user->isGuest) {
@@ -48,50 +41,79 @@ class UsuarioController extends Controller {
         $this->showSeeker = false;
         $this->render('menu');
     }
-
+    
     /**
      * Visualiza la pagina de autenticacion de usuario
      */
     public function actionAutenticar() {
         $this->showSeeker = true;
-
+        
+        if (!isset(Yii::app()->session[Yii::app()->params->sesion['redireccionAutenticacion']]) || Yii::app()->session[Yii::app()->params->sesion['redireccionAutenticacion']] == 'null') {
+            Yii::app()->session[Yii::app()->params->sesion['redireccionAutenticacion']] = (Yii::app()->request->urlReferrer == null ? 'null' : Yii::app()->request->urlReferrer);
+        }
+        
+        $this->render('autenticar');
+    }
+    
+    public function actionIngresar(){
+        if (!Yii::app()->request->isPostRequest) {
+            $this->redirect(Yii::app()->homeUrl);
+            Yii::app()->end();
+        }
+        
         $model = new LoginForm;
 
         if (isset($_POST['LoginForm'])) {
             $model->attributes = $_POST['LoginForm'];
+            
+            $redirect = Yii::app()->homeUrl;
+            if (isset(Yii::app()->session[Yii::app()->params->sesion['redireccionAutenticacion']]) && Yii::app()->session[Yii::app()->params->sesion['redireccionAutenticacion']] != 'null') {
+                $redirect = Yii::app()->session[Yii::app()->params->sesion['redireccionAutenticacion']];
+            } else {
+                $redirect = Yii::app()->request->urlReferrer == null ? Yii::app()->homeUrl : Yii::app()->request->urlReferrer;
+            }
+            
+            //echo CJSON::encode(array("result"=>"error","response"=>"redirect: $redirect"));exit();
 
             if ($model->validate()) {
-                if (Yii::app()->session[Yii::app()->params->sesion['redireccionAutenticacion']] == 'null') {
-                    $this->redirect(Yii::app()->homeUrl);
-                } else {
-                    $redirect = Yii::app()->session[Yii::app()->params->sesion['redireccionAutenticacion']];
-                    Yii::app()->session[Yii::app()->params->sesion['redireccionAutenticacion']] = 'null';
-                    $this->redirect($redirect);
-                }
-                //echo "--URL: " . Yii::app()->request->urlReferrer;
-                //$this->redirect(Yii::app()->request->urlReferrer);
-                //$this->redirect(Yii::app()->user->returnUrl);
+                Yii::app()->session[Yii::app()->params->sesion['redireccionAutenticacion']] = 'null';
+                echo CJSON::encode(array(
+                    "result"=>"ok", 
+                    "response"=>array(
+                        "msg" => "",
+                        "redirect" => $redirect
+                    )));
+                Yii::app()->end();
+            }else{
+                echo CActiveForm::validate($model);
+                Yii::app()->end();
             }
         } else {
-            if (!isset(Yii::app()->session[Yii::app()->params->sesion['redireccionAutenticacion']]) || Yii::app()->session[Yii::app()->params->sesion['redireccionAutenticacion']] == 'null') {
-                Yii::app()->session[Yii::app()->params->sesion['redireccionAutenticacion']] = (Yii::app()->request->urlReferrer == null ? 'null' : Yii::app()->request->urlReferrer);
-            }
-        }
-
-       if($this->isMobile){
-            $this->render('autenticar', array('model' => $model));
-        }else{
-            $this->render('d_autenticar', array('model' => $model));
+            echo CJSON::encode(array("result"=>"error","response"=>"Datos inv&aacute;lidos"));
+            //echo CActiveForm::validate($model);
+            Yii::app()->end();
         }
     }
 
     public function actionRegistro() {
-        $this->showSeeker = false;
-
+        if (!Yii::app()->request->isPostRequest) {
+            $this->redirect(Yii::app()->homeUrl);
+            Yii::app()->end();
+        }
+        
         $model = new RegistroForm('registro');
 
         if (isset($_POST['RegistroForm'])) {
             $model->attributes = $_POST['RegistroForm'];
+            
+            $urlBienvenida = Yii::app()->homeUrl;
+            if (isset(Yii::app()->session[Yii::app()->params->sesion['redireccionAutenticacion']]) && Yii::app()->session[Yii::app()->params->sesion['redireccionAutenticacion']] != 'null') {
+                $urlBienvenida = Yii::app()->session[Yii::app()->params->sesion['redireccionAutenticacion']];
+            } else {
+                $urlBienvenida = Yii::app()->request->urlReferrer == null ? Yii::app()->homeUrl : Yii::app()->request->urlReferrer;
+            }
+            
+            //echo CJSON::encode(array("result"=>"error","response"=>"redirect: $urlBienvenida"));exit();
 
             if ($model->validate()) {
                 $transaction = Yii::app()->db->beginTransaction();
@@ -144,11 +166,15 @@ class UsuarioController extends Controller {
                     Yii::app()->user->login($identity);
 
                     Yii::app()->session[Yii::app()->params->sesion['redireccionAutenticacion']] = 'null';
-                     if($this->isMobile){
-                        $this->render('bienvenida', array('objUsuario' => $usuario, 'url' => Yii::app()->session[Yii::app()->params->sesion['usuarioBienvenida']]));
-                    }else{
-                        $this->render('d_bienvenida', array('objUsuario' => $usuario, 'url' => Yii::app()->session[Yii::app()->params->sesion['usuarioBienvenida']]));
-                    }
+                    
+                    echo CJSON::encode(array(
+                        'result' => 'ok',
+                        'response' => array(
+                            'msg' => '',
+                            'bienvenidaHTML' => $this->renderPartial('bienvenida', array('objUsuario' => $usuario, 'url' => $urlBienvenida),true,false)
+                        )
+                    ));
+                    Yii::app()->end();
                 } catch (Exception $exc) {
                     Yii::log($exc->getMessage() . "\n" . $exc->getTraceAsString(), CLogger::LEVEL_ERROR, 'application');
 
@@ -158,104 +184,18 @@ class UsuarioController extends Controller {
                         Yii::log($txexc->getMessage() . "\n" . $txexc->getTraceAsString(), CLogger::LEVEL_ERROR, 'application');
                     }
 
-                    Yii::app()->user->setFlash('error', "Error al realizar registro, por favor intente de nuevo. " . $exc->getMessage());
-                    $this->render('registro', array('model' => $model));
+                    CJSON::encode(array('result'=>'error','response'=>"Error al realizar registro, por favor intente de nuevo. " . $exc->getMessage()));
                     Yii::app()->end();
                 }
             } else {
-                $this->render('registro', array('model' => $model));
+                echo CActiveForm::validate($model);
                 Yii::app()->end();
             }
-        }
-
-        if (!isset(Yii::app()->session[Yii::app()->params->sesion['redireccionAutenticacion']]) || Yii::app()->session[Yii::app()->params->sesion['redireccionAutenticacion']] == 'null') {
-            Yii::app()->session[Yii::app()->params->sesion['usuarioBienvenida']] = Yii::app()->request->urlReferrer == null ? Yii::app()->homeUrl : Yii::app()->request->urlReferrer;
-        } else {
-            Yii::app()->session[Yii::app()->params->sesion['usuarioBienvenida']] = Yii::app()->session[Yii::app()->params->sesion['redireccionAutenticacion']];
-        }
-
-
-        //Yii::app()->session[Yii::app()->params->sesion['usuarioBienvenida']] = Yii::app()->request->urlReferrer == null ? Yii::app()->homeUrl : Yii::app()->request->urlReferrer;
-
-        if($this->isMobile){
-            $this->render('registro', array('model' => $model));
         }else{
-            $this->render('d_registro', array('model' => $model));
+            echo CJSON::encode(array("result"=>"error","response"=>"Datos inv&aacute;lidos"));
+            //echo CActiveForm::validate($model);
+            Yii::app()->end();
         }
-    }
-
-    public function actionInvitado() {
-        $this->showSeeker = false;
-
-        $model = new RegistroForm('invitado');
-
-        if (isset($_POST['RegistroForm'])) {
-            $model->attributes = $_POST['RegistroForm'];
-
-            if ($model->validate()) {
-                $transaction = Yii::app()->db->beginTransaction();
-                try {
-                    $usuario = new Usuario;
-                    $usuario->identificacionUsuario = $model->cedula;
-                    $usuario->nombre = $model->nombre;
-                    $usuario->apellido = $model->apellido;
-                    $usuario->correoElectronico = $model->correoElectronico;
-                    $usuario->clave = $model->cedula;
-                    $usuario->nombre = $model->nombre;
-                    $usuario->activo = Yii::app()->params->usuario['estado']['activo'];
-                    $usuario->codigoPerfil = Yii::app()->params->perfil['defecto'];
-                    $usuario->invitado = 1;
-
-                    if (!$usuario->save()) {
-                        $transaction->rollBack();
-                        Yii::app()->user->setFlash('error', "Error al guardar información básica, por favor, intente de nuevo.");
-                        $this->render('registro', array('model' => $model));
-                        Yii::app()->end();
-                    }
-
-                    $usuarioExt = new UsuarioExtendida;
-                    $usuarioExt->identificacionUsuario = $usuario->identificacionUsuario;
-                    $usuarioExt->genero = $model->genero;
-                    $usuarioExt->fechaNacimiento = $model->fechaNacimiento;
-
-                    if (!$usuarioExt->save()) {
-                        $transaction->rollBack();
-                        Yii::app()->user->setFlash('error', "Error al guardar información complementaria, por favor, intente de nuevo.");
-                        $this->render('registro', array('model' => $model));
-                        Yii::app()->end();
-                    }
-
-                    $contenido = $this->renderPartial('_correoBienvenida', array('objUsuario' => $usuario), true, true);
-                    $htmlCorreo = $this->renderPartial('_correo', array('contenido' => $contenido), true, true);
-                    sendHtmlEmail($usuario->correoElectronico, Yii::app()->params->asuntoBienvenida, $htmlCorreo);
-                    $transaction->commit();
-
-                    $identity = new UserIdentity($model->cedula, $model->clave);
-                    $identity->authenticate(true);
-                    Yii::app()->user->login($identity);
-
-                    Yii::app()->session[Yii::app()->params->sesion['redireccionAutenticacion']] = 'null';
-                    $this->render('bienvenida', array('objUsuario' => $usuario, 'url' => Yii::app()->session[Yii::app()->params->sesion['usuarioBienvenida']]));
-                } catch (Exception $exc) {
-                    Yii::log($exc->getMessage() . "\n" . $exc->getTraceAsString(), CLogger::LEVEL_ERROR, 'application');
-
-                    try {
-                        $transaction->rollBack();
-                    } catch (Exception $txexc) {
-                        Yii::log($txexc->getMessage() . "\n" . $txexc->getTraceAsString(), CLogger::LEVEL_ERROR, 'application');
-                    }
-
-                    Yii::app()->user->setFlash('error', "Error al realizar registro, por favor intente de nuevo. " . $exc->getMessage());
-                    $this->render('registro', array('model' => $model));
-                    Yii::app()->end();
-                }
-            } else {
-                $this->render('registro', array('model' => $model));
-                Yii::app()->end();
-            }
-        }
-
-        $this->render('registro', array('model' => $model));
     }
 
     /**
@@ -274,8 +214,10 @@ class UsuarioController extends Controller {
     }
 
     public function actionRecordar() {
-        $this->showSeeker = false;
-        $this->fixedFooter = true;
+        if (!Yii::app()->request->isPostRequest) {
+            $this->redirect(Yii::app()->homeUrl);
+            Yii::app()->end();
+        }
 
         $model = new RecordarForm;
 
@@ -296,26 +238,25 @@ class UsuarioController extends Controller {
                     $contenido = $this->renderPartial('_correoRecordar', array('objUsuario' => $model->usuario), true, true);
                     $htmlCorreo = $this->renderPartial('_correo', array('contenido' => $contenido), true, true);
                     sendHtmlEmail($model->correoElectronico, Yii::app()->params->asuntoRecordatorioClave, $htmlCorreo);
-                    Yii::app()->user->setFlash('success', "Se ha enviado a su correo los datos de restauración de clave");
-
-                    //$usuario->save();
-                    //$this->render('_recordarexito', array('url' => Yii::app()->homeUrl));
+                    
+                    echo CJSON::encode(array("result"=>"ok","response"=>"Se ha enviado a su correo los datos de restauración de clave"));
+                    Yii::app()->end();
                 } catch (Exception $exc) {
                     Yii::log($exc->getMessage() . "\n" . $exc->getTraceAsString(), CLogger::LEVEL_ERROR, 'application');
-                    Yii::app()->user->setFlash('error', "Error: " . $exc->getMessage());
-                    $this->render('recordar', array('model' => $model));
+                    CJSON::encode(array('result'=>'error','response'=>"Error al realizar registro, por favor intente de nuevo. " . $exc->getMessage()));
                     Yii::app()->end();
                 }
+            }else{
+                echo CActiveForm::validate($model);
+                Yii::app()->end();
             }
-        }
-
-        if($this->isMobile){
-            $this->render('recordar', array('model' => $model));
         }else{
-            $this->render('d_recordar', array('model' => $model));
+            echo CJSON::encode(array("result"=>"error","response"=>"Datos inv&aacute;lidos"));
+            //echo CActiveForm::validate($model);
+            Yii::app()->end();
         }
     }
-
+    
     public function actionRestablecer($codigo) {
         $this->showSeeker = false;
 
@@ -614,6 +555,80 @@ class UsuarioController extends Controller {
         $this->render('pedido', array(
             'objCompra' => $objCompra,
         ));
+    }
+    
+    public function actionListacotizaciones() {
+        $model = new Cotizaciones('search');
+        $model->unsetAttributes();
+        if (isset($_GET['Cotizaciones']))
+            $model->attributes = $_GET['Cotizaciones'];
+        $model->identificacionUsuario = Yii::app()->user->name;
+        
+        $fecha = new DateTime;
+        $dias = Yii::app()->params->cotizaciones['diasVisualizar'];
+        $fecha->modify("-$dias days");
+        $model->fechaCotizacion = $fecha->format('Y-m-d H:i:s');
+        $model->codigoCiudad = Yii::app()->shoppingCart->getCodigoCiudad();
+        $model->codigoSector = Yii::app()->shoppingCart->getCodigoSector();
+
+        $this->render('cotizaciones', array(
+            'model' => $model,
+        ));
+    }
+    
+    public function actionCotizacion($cotizacion) {
+        $fecha = new DateTime;
+        $dias = Yii::app()->params->cotizaciones['diasVisualizar'];
+        $fecha->modify("-$dias days");
+        
+        $objCotizacion = Cotizaciones::model()->find(array(
+            'condition' => 'idCotizacion=:cotizacion AND identificacionUsuario=:usuario AND fechaCotizacion>=:fecha AND codigoCiudad=:ciudad AND codigoSector=:sector',
+            'params' => array(
+                ':cotizacion' => $cotizacion,
+                ':usuario' => Yii::app()->user->name,
+                ':fecha' => $fecha->format('Y-m-d H:i:s'),
+                ':ciudad' => Yii::app()->shoppingCart->getCodigoCiudad(),
+                ':sector' => Yii::app()->shoppingCart->getCodigoSector()
+            )
+        ));
+
+        if ($objCotizacion === null) {
+            $this->redirect($this->createUrl('listacotizaciones'));
+        }
+
+        $this->render('cotizacion', array(
+            'objCotizacion' => $objCotizacion,
+        ));
+    }
+    
+    public function actionCotizacionpdf($cotizacion) {
+        $fecha = new DateTime;
+        $dias = Yii::app()->params->cotizaciones['diasVisualizar'];
+        $fecha->modify("-$dias days");
+        
+        $objCotizacion = Cotizaciones::model()->find(array(
+            'condition' => 'idCotizacion=:cotizacion AND identificacionUsuario=:usuario AND fechaCotizacion>=:fecha AND codigoCiudad=:ciudad AND codigoSector=:sector',
+            'params' => array(
+                ':cotizacion' => $cotizacion,
+                ':usuario' => Yii::app()->user->name,
+                ':fecha' => $fecha->format('Y-m-d H:i:s'),
+                ':ciudad' => Yii::app()->shoppingCart->getCodigoCiudad(),
+                ':sector' => Yii::app()->shoppingCart->getCodigoSector()
+            )
+        ));
+        
+        $mPDF1 = Yii::app()->ePdf->mpdf('utf-8', 'Letter'); //Letter, Legal, A4
+        $mPDF1->SetTitle("La Rebaja Virtual - Cotizacion");
+        $mPDF1->SetAuthor("Copservir");
+        
+        if ($objCotizacion === null) {
+            $mPDF1->WriteHTML("<strong>Error, no se detecta cotización</strong>");
+        }else{
+            $mPDF1->WriteHTML($this->renderPartial('cotizacionPDF', array('objCotizacion' => $objCotizacion), true));
+        }
+        
+        $filename = 'LaRebajaVirtual_' . date('YmdHis') . '.pdf';
+        $mPDF1->Output($filename, 'D');
     }
     
     public function actionOcultarpedido() {
@@ -1159,6 +1174,16 @@ class UsuarioController extends Controller {
     
     protected function gridDetalleLista($data, $row) {
         return CHtml::link('Ver', $this->createUrl('/usuario/listapersonal', array('lista'=>$data->idLista)), array('class'=>'ui-btn ui-btn-inline ui-icon-view-circle ui-btn-icon-notext ui-icon-center ui-nodisc-icon', 'data-ajax'=>'false'));
+    }
+    
+    
+    protected function gridDetalleCotizacion($data, $row) {
+        return CHtml::link('Ver', $this->createUrl('/usuario/cotizacion', array('cotizacion'=>$data->idCotizacion)), array('class'=>'ui-btn ui-btn-inline ui-icon-view-circle ui-btn-icon-notext ui-icon-center ui-nodisc-icon', 'data-ajax'=>'false'));
+    }
+    
+    protected function gridFechaCotizacion($data, $row) {
+        $fecha = DateTime::createFromFormat('Y-m-d H:i:s', $data->fechaCotizacion);
+        return $fecha->format('y-m-d');
     }
 
 }

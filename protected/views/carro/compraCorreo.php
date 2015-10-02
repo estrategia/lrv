@@ -19,7 +19,7 @@
         </p>
     <?php endif; ?>
         <h1 style="text-align:left;color:#666666;font-family:Arial;font-size:22px">¡Hola! </h1> 
-        <h1 style="text-align:left;color:#666666;font-family:Arial;font-size:25px"><?php echo utf8_decode($objUsuario->nombre ." ".$objUsuario->apellido)?></h1><br/>
+        <h1 style="text-align:left;color:#666666;font-family:Arial;font-size:25px"><?php echo utf8_decode($nombreUsuario)?></h1><br/>
     <h1 style="text-align:left;color:#ff0000;font-family:Arial;font-size:20px">Gracias por su compra</h1>
     <br/>
     <?php if ($objCompra->tipoEntrega == Yii::app()->params->entrega['tipo']['domicilio']): ?>

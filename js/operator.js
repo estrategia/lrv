@@ -68,28 +68,28 @@ function gestionPedido(url, data) {
 }
 
 
-function buscarProductos(text,obj,request){
-     $.ajax({
-                    type: 'POST',
-                    async: true,
-                    url: request + '/callcenter/pedido/buscar',
-                    data: {busqueda: text, compra: $(obj).attr('data-pedido')},
-                    beforeSend: function() {
-                        $('#modal-productos-busqueda').remove();
-                        Loading.show();
-                    },
-                    success: function(data) {
-                        $('#container').append(data);
-                        $('#modal-productos-busqueda').modal('show');
-                    },
-                    complete: function() {
-                        Loading.hide();
-                    },
-                    error: function(jqXHR, textStatus, errorThrown) {
-                        Loading.hide();
-                        bootbox.alert('Error: ' + jqXHR.responseText);
-                    }
-                });
+function buscarProductos(text, obj, request) {
+    $.ajax({
+        type: 'POST',
+        async: true,
+        url: request + '/callcenter/pedido/buscar',
+        data: {busqueda: text, compra: $(obj).attr('data-pedido')},
+        beforeSend: function() {
+            $('#modal-productos-busqueda').remove();
+            Loading.show();
+        },
+        success: function(data) {
+            $('#container').append(data);
+            $('#modal-productos-busqueda').modal('show');
+        },
+        complete: function() {
+            Loading.hide();
+        },
+        error: function(jqXHR, textStatus, errorThrown) {
+            Loading.hide();
+            bootbox.alert('Error: ' + jqXHR.responseText);
+        }
+    });
 }
 
 
@@ -163,12 +163,12 @@ $(document).on('click', 'button[data-action="remitir"]', function() {
             Loading.hide();
         },
         success: function(data) {
-            if(data.result==1){
+            if (data.result == 1) {
                 $('#div-encabezado-pedido').html(data.encabezado);
                 $('#div-pedido-observaciones').html(data.htmlObservaciones);
             }
             bootbox.alert(data.response);
-            
+
         },
         error: function(jqXHR, textStatus, errorThrown) {
             Loading.hide();
@@ -191,12 +191,12 @@ $(document).on('click', 'button[data-action="remitirborrar"]', function() {
             Loading.hide();
         },
         success: function(data) {
-              if(data.result==1){
-                  $('#div-encabezado-pedido').html(data.encabezado);
-                  $('#div-pedido-observaciones').html(data.htmlObservaciones);
-              }
-              bootbox.alert(data.response);
-           
+            if (data.result == 1) {
+                $('#div-encabezado-pedido').html(data.encabezado);
+                $('#div-pedido-observaciones').html(data.htmlObservaciones);
+            }
+            bootbox.alert(data.response);
+
         },
         error: function(jqXHR, textStatus, errorThrown) {
             Loading.hide();
@@ -216,7 +216,7 @@ $(document).on('click', "button[data-role='modificarpedido']", function() {
         if (isNaN(cantidadU)) {
             cantidadU = -1;
         } else if (cantidadU < 0) {
-           // cantidadU = 0;
+            // cantidadU = 0;
         }
         data['cantidad'] = cantidadU;
         data['item'] = item;
@@ -226,7 +226,7 @@ $(document).on('click', "button[data-role='modificarpedido']", function() {
         if (isNaN(cantidadF)) {
             cantidadF = -1;
         } else if (cantidadF < 0) {
-         //   cantidadF = 0;
+            //   cantidadF = 0;
         }
         data['cantidad'] = cantidadF;
         data['item'] = item;
@@ -312,17 +312,17 @@ $(document).on('change', "#notificacion-form #NotificacionForm_tipoObservacion",
     }
 });
 
-$( "#busqueda-buscar" ).keypress(function(event) {
-    if ( event.which == 13 ) {
-        
-           var text = $.trim($('#busqueda-buscar').val());
-            if (!text) {
-                bootbox.alert('Búsqueda no puede estar vacío');
-            } else {
-                 buscarProductos(text,this,requestUrl);
-               
-            } 
-            return false;
+$("#busqueda-buscar").keypress(function(event) {
+    if (event.which == 13) {
+
+        var text = $.trim($('#busqueda-buscar').val());
+        if (!text) {
+            bootbox.alert('Búsqueda no puede estar vacío');
+        } else {
+            buscarProductos(text, this, requestUrl);
+
+        }
+        return false;
     }
 });
 
@@ -334,7 +334,7 @@ $(document).on('click', "button[data-role='busquedapedido']", function() {
     if (!text) {
         bootbox.alert('Búsqueda no puede estar vacío');
     } else {
-        buscarProductos(text,this,requestUrl);
+        buscarProductos(text, this, requestUrl);
     }
 });
 
@@ -366,7 +366,7 @@ $(document).on('click', "button[data-role='disponibilidaditem']", function() {
     var data = {};
     if ($(this).attr('data-item')) {
         data['item'] = $(this).attr('data-item');
-    } else if($(this).attr('data-combo')){
+    } else if ($(this).attr('data-combo')) {
         data['combo'] = $(this).attr('data-combo');
         data['compra'] = $(this).attr('data-compra');
     }
@@ -518,6 +518,30 @@ $(document).on('click', "button[data-role='pdvgeobarrio']", function() {
                 Loading.hide();
                 bootbox.alert(data.response);
             }
+        },
+        error: function(jqXHR, textStatus, errorThrown) {
+            Loading.hide();
+            bootbox.alert('Error: ' + jqXHR.responseText);
+        }
+    });
+});
+
+$(document).on('click', "button[data-role='trazapasarela']", function() {
+    $.ajax({
+        type: 'POST',
+        async: true,
+        url: requestUrl + '/callcenter/pedido/trazapasarela',
+        data: {compra: $(this).attr('data-pedido')},
+        beforeSend: function() {
+            $('#modal-trazapasarela').remove();
+            Loading.show();
+        },
+        success: function(data) {
+            $('#container').append(data);
+            $('#modal-trazapasarela').modal('show');
+        },
+        complete: function() {
+            Loading.hide();
         },
         error: function(jqXHR, textStatus, errorThrown) {
             Loading.hide();

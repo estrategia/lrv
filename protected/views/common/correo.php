@@ -6,11 +6,11 @@
         <meta charset="utf-8">
     </head>
     <body>
-        <table align="center" style="width:100%">
+        <table cellspacing="0" cellpadding="0" border="0" width="690" align="center">
             <tbody style="text-align:justify;font-size:10.5pt;font-family:Helvetica,sans-serif;color:rgb(51,51,51)">
                 <tr>
                     <td>
-                        <img style="display: block; width: 100%;height: 20%;" src="<?php echo CController::createAbsoluteUrl('/')?>/images/mailing_header.png"> 
+                        <img style="display: block;" src="<?php echo CController::createAbsoluteUrl('/')?>/images/mailing_header.png"> 
                    <!--     <img style="display: block; width: 100%;height: 30%;" src="http://m.larebajavirtual.com/images/mailing_header.png"> -->
                     </td>
                 </tr>
@@ -28,7 +28,7 @@
                 <tr>
                     <td>
                         <div style="height: 20px;"></div>
-                        <img style="display: block; width: 100%;height: 20%;" src="<?php echo CController::createAbsoluteUrl('/')?>/images/mailing_footer.png"> 
+                        <img style="display: block;" src="<?php echo CController::createAbsoluteUrl('/')?>/images/mailing_footer.png"> 
                        <!-- <img style="display: block; width: 100%;height: auto;" src="http://m.larebajavirtual.com/images/mailing_footer.png"> -->
                     </td>
                 </tr>

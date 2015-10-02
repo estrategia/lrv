@@ -9,6 +9,9 @@
                 <a href="<?php echo $this->createUrl("/sitio/categorias") ?>" data-ajax="false">
                     <img src="<?php echo Yii::app()->request->baseUrl ?>/images/iconos/icon_categorias.png" alt="Categorias" title="Categorias" >
                 </a>
+                <a id="link-relacionados-agregar" style="display:none;" href="#" data-ajax="false">
+                    <img src="<?php echo Yii::app()->request->baseUrl ?>/images/iconos/icon_relacionados.png" alt="Relacionados" title="Relacionados" >
+                </a>
             </div>
             <div class="right">
                 <?php if (isset($formFiltro)): ?>
@@ -46,7 +49,7 @@
             </li>
         <?php endforeach; ?>
         <?php foreach ($listProductos as $objProducto): ?>
-            <li class="c_list_prod">
+            <li class="c_list_prod combo_list_item">
                 <div class="ui-field-contain clst_prod_cont">
                     <?php
                     $this->renderPartial('_productoElemento', array(
