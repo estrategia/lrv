@@ -207,8 +207,7 @@ class PrecioProducto extends Precio {
 
         $tipo = isset($params[0]) ? $params[0] : -1;
         $descuento = isset($params[1]) ? $params[1] : true;
-
-        if ($tipo == self::PRECIO_UNIDAD) {
+         if ($tipo == self::PRECIO_UNIDAD) {
             if ($descuento)
                 return $this->precioUnidad - $this->ahorroUnidad;
             else
@@ -219,7 +218,10 @@ class PrecioProducto extends Precio {
             else
                 return $this->precioFraccionTotal;
         }else {
-            throw new Exception("Tipo precio indefinido");
+     /*       throw new Exception("Tipo precio indefinido");
+          echo "error con";
+            exit();*/
+            return "";
         }
     }
 

@@ -33,7 +33,7 @@ class ProductosCalificaciones extends CActiveRecord {
         // NOTE: you should only define rules for those attributes that
         // will receive user inputs.
         return array(
-            array('codigoProducto, identificacionUsuario, aprobado,calificacion, titulo, comentario', 'required'),
+            array('codigoProducto, identificacionUsuario, aprobado,calificacion, titulo, comentario', 'required', 'on' => 'registro','message' => '{attribute} no puede estar vacío'),
             array('calificacion, aprobado', 'numerical', 'integerOnly' => true),
             array('codigoProducto', 'length', 'max' => 10),
             array('identificacionUsuario', 'length', 'max' => 10),

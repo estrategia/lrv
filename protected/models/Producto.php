@@ -40,6 +40,9 @@ class Producto extends CActiveRecord {
     /**
      * @return string the associated database table name
      */
+
+    public $id;
+
     public function tableName() {
         return 'm_Producto';
     }
@@ -205,6 +208,23 @@ class Producto extends CActiveRecord {
     }
 
     /**
+     * Retorna el tipo de imagen de un producto, si no se detecta, retorna null
+     * @param int tipo de imagen
+     * @return Imagen imagen del producto
+     */
+    public function objImagenDesktop($tipo,$listImagenes) {
+        $obj = null;
+
+        foreach ($listImagenes as $imagen) {
+            if ($imagen['tipoImagen'] == $tipo && $imagen['estadoImagen'] == 1) {
+                $obj = $imagen;
+                break;
+            }
+        }
+        return $obj;
+    }
+
+    /**
      * Retorna lista del tipo de imagen de un producto, si no se detecta
      * @param int tipo de imagen
      * @return array imagen del producto
@@ -273,4 +293,50 @@ class Producto extends CActiveRecord {
     public static function cadenaUrl($producto){
         return str_replace(" ","-", $producto).".html";
     }
+    
+    public function getArrayCalificacion(){
+        $sumaCalificaciones=array("1"=>0,"2"=>0,"3"=>0,"4"=>0,"5"=>0);
+        $contadorCalificacion=0;
+        foreach ($this->listCalificaciones as $objComentario){
+                if ($objComentario->aprobado == 1){
+                      $contadorCalificacion++;
+                      if($objComentario->calificacion==5){$sumaCalificaciones[5]++;}
+                      else if($objComentario->calificacion==4){$sumaCalificaciones[4]++;}                                 
+                      else if($objComentario->calificacion==3){$sumaCalificaciones[3]++;}
+                      else if($objComentario->calificacion==2){$sumaCalificaciones[2]++;}
+                      else if($objComentario->calificacion==1){$sumaCalificaciones[1]++;}
+                }
+         }
+            if($contadorCalificacion==0){
+                return  array(
+                "1"=>0,
+                "2"=>0,
+                "3"=>0,
+                "4"=>0,
+                "5"=>0,
+            );
+         }
+         
+            return array(
+                "1"=>($sumaCalificaciones[1]/$contadorCalificacion*100),
+                "2"=>($sumaCalificaciones[2]/$contadorCalificacion*100),
+                "3"=>($sumaCalificaciones[3]/$contadorCalificacion*100),
+                "4"=>($sumaCalificaciones[4]/$contadorCalificacion*100),
+                "5"=>($sumaCalificaciones[5]/$contadorCalificacion*100),
+            );
+         
+    }
+    
+    public function getContadorCalificaciones(){
+         $contadorCalificacion=0;
+        foreach ($this->listCalificaciones as $objComentario){
+                if ($objComentario->aprobado == 1){
+                      $contadorCalificacion++;
+                }
+         }
+         return $contadorCalificacion;
+    }
+    
+    
+    
 }

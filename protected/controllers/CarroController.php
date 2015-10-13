@@ -134,15 +134,24 @@ class CarroController extends Controller {
                     echo CJSON::encode(array('result' => 'error', 'response' => "La cantidad solicitada no está disponible en este momento. Saldos disponibles: $objSaldo->saldoUnidad unidades"));
                     Yii::app()->end();
                 }
-
+                
+                if($this->isMobile){
+                    $htmlBodega=$this->renderPartial('_carroBodega', array(
+                                'objSaldo' => $objSaldo,
+                                'objProducto' => $objProducto,
+                                'cantidadUbicacion' => $cantidadUbicacion,
+                                'cantidadBodega' => $cantidadBodega), true);
+                }else{
+                    $htmlBodega=$this->renderPartial('_d_carroBodega', array(
+                                'objSaldo' => $objSaldo,
+                                'objProducto' => $objProducto,
+                                'cantidadUbicacion' => $cantidadUbicacion,
+                                'cantidadBodega' => $cantidadBodega), true);
+                }
                 echo CJSON::encode(array(
                     'result' => 'ok',
                     'response' => array(
-                        'dialogoHTML' => $this->renderPartial('_carroBodega', array(
-                            'objSaldo' => $objSaldo,
-                            'objProducto' => $objProducto,
-                            'cantidadUbicacion' => $cantidadUbicacion,
-                            'cantidadBodega' => $cantidadBodega), true),
+                        'dialogoHTML' => $htmlBodega,
                     ),
                 ));
                 Yii::app()->end();
@@ -160,13 +169,23 @@ class CarroController extends Controller {
           }
          */
 
+        $mensajeCanasta="";
+        if($this->isMobile){
+            $mensajeCanasta=$this->renderPartial('_carroAgregado', null, true);
+        }else{
+            $mensajeCanasta=$this->renderPartial('_d_carroAgregado', 
+                    array( 'objProducto' => $objProducto), true);
+        }
+        
         echo CJSON::encode(array(
             'result' => 'ok',
             'response' => array(
                 'relacionados' => $objProducto->tieneRelacionados(),
                 'canastaHTML' => $this->renderPartial('canasta', null, true),
-                'mensajeHTML' => $this->renderPartial('_carroAgregado', null, true),
+                'mensajeHTML' => $mensajeCanasta,
+                'objetosCarro'=>Yii::app()->shoppingCart->getCount()
             ),
+            
         ));
         Yii::app()->end();
     }
@@ -918,11 +937,19 @@ class CarroController extends Controller {
             Yii::app()->shoppingCart->putStored($objProductoCarro, $cantidadBodega);
         }
 
+        $mensajeCanasta="";
+        if($this->isMobile){
+            $mensajeCanasta=$this->renderPartial('_carroAgregado', null, true);
+        }else{
+            $mensajeCanasta=$this->renderPartial('_d_carroAgregado', 
+                    array('objProducto' => $objProducto), true);
+        }
         echo CJSON::encode(array(
             'result' => 'ok',
             'response' => array(
                 'canastaHTML' => $this->renderPartial('canasta', null, true),
-                'mensajeHTML' => $this->renderPartial('_carroAgregado', null, true),
+                'mensajeHTML' => $mensajeCanasta,
+                'objetosCarro'=>Yii::app()->shoppingCart->getCount()
             ),
         ));
         Yii::app()->end();

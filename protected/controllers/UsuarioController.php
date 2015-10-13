@@ -285,7 +285,11 @@ class UsuarioController extends Controller {
                     if (!$objUsuario->save() || !$objUsuario->objUsuarioExtendida->save()) {
                         $transaction->rollBack();
                         Yii::app()->user->setFlash('error', "Error al actualizar contraseña, por favor, intente de nuevo.");
-                        $this->render('restablecer', array('model' => $model, 'objUsuario' => $objUsuario));
+                        if($this->isMobile){
+                            $this->render('restablecer', array('model' => $model, 'objUsuario' => $objUsuario));
+                        }else{
+                            $this->render('d_restablecer', array('model' => $model, 'objUsuario' => $objUsuario));
+                        }
                         Yii::app()->end();
                     }
 
@@ -309,13 +313,21 @@ class UsuarioController extends Controller {
 
                     Yii::log($exc->getMessage() . "\n" . $exc->getTraceAsString(), CLogger::LEVEL_ERROR, 'application');
                     Yii::app()->user->setFlash('error', "Error: " . $exc->getMessage());
-                    $this->render('restablecer', array('model' => $model, 'objUsuario' => $objUsuario));
+                     if($this->isMobile){
+                        $this->render('restablecer', array('model' => $model, 'objUsuario' => $objUsuario));
+                    }else{
+                        $this->render('d_restablecer', array('model' => $model, 'objUsuario' => $objUsuario));
+                    }
                     Yii::app()->end();
                 }
             }
         }
 
-        $this->render('restablecer', array('model' => $model, 'objUsuario' => $objUsuario));
+         if($this->isMobile){
+            $this->render('restablecer', array('model' => $model, 'objUsuario' => $objUsuario));
+        }else{
+            $this->render('d_restablecer', array('model' => $model, 'objUsuario' => $objUsuario));
+        }
     }
 
     public function actionInfopersonal() {
@@ -395,7 +407,11 @@ class UsuarioController extends Controller {
             $model->profesion = $usuarioExt->codigoProfesion;
         }
 
-        $this->render('registro', array('model' => $model));
+        if($this->isMobile){
+            $this->render('registro', array('model' => $model));
+        }else{
+            $this->render('d_registro', array('model' => $model));
+        }
     }
     
     public function actionContrasena() {

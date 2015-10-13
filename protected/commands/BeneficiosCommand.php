@@ -36,7 +36,7 @@ class BeneficiosCommand extends CConsoleCommand {
            Yii::import('application.models.BeneficiosPuntosVenta');
            Yii::app()->db->createCommand("SET FOREIGN_KEY_CHECKS=0")->execute(); 
            ini_set('memory_limit', '-1');
-           $file = fopen(Yii::getPathOfAlias('application').DIRECTORY_SEPARATOR.date("H-i-s").".txt", "w");
+           $file = fopen(Yii::getPathOfAlias('application').DIRECTORY_SEPARATOR."runtime".DIRECTORY_SEPARATOR."sincronizacionlog_".date("H-i-s").".txt", "w");
            $client = new SoapClient(Yii::app()->params->webServiceUrl['sincronizarBeneficiosSIICOP'], array(
                     "trace" => 1,
                     'cache_wsdl' => WSDL_CACHE_NONE,
@@ -59,7 +59,6 @@ class BeneficiosCommand extends CConsoleCommand {
                 }
                 $h2=  round(microtime(true) * 1000);
                 
-                echo $sql.". Time execution: ".($h2-$h1)." miliseconds\n";
                 fwrite($file, $sql.". Time execution: ".($h2-$h1)." miliseconds".PHP_EOL);
                 // llamar a web service enviandole el id de sincronización
                 
@@ -73,12 +72,12 @@ class BeneficiosCommand extends CConsoleCommand {
                     $result =$client->setBeneficios($idSincronizacion/*$arrTiposBeneficio, $arrBeneficios*/);
                 }  catch (Exception $e){
                     $h2=round(microtime(true) * 1000);
-                    echo "Error to calling to webservice".". Time execution: ".($h2-$h1)." miliseconds\n";
+                   // echo "Error to calling to webservice".". Time execution: ".($h2-$h1)." miliseconds\n";
                     Yii::app()->exit();
                 }
                 
                 $h2=round(microtime(true) * 1000);
-                echo "Calling to webservice".". Time execution: ".($h2-$h1)." miliseconds\n";
+            //    echo "Calling to webservice".". Time execution: ".($h2-$h1)." miliseconds\n";
                 fwrite($file, "Calling to webservice".". Time execution: ".($h2-$h1)." miliseconds".PHP_EOL);
                 
                 if($result['Result']==0){
@@ -119,7 +118,7 @@ class BeneficiosCommand extends CConsoleCommand {
                             
                             $h2=round(microtime(true) * 1000);
                             fwrite($file, "Trying save in tipo beneficios's table".". Time execution: ".($h2-$h1)." miliseconds".PHP_EOL);
-                            echo "Trying save in tipo beneficios's table".". Time execution: ".($h2-$h1)." miliseconds\n";
+                         //   echo "Trying save in tipo beneficios's table".". Time execution: ".($h2-$h1)." miliseconds\n";
                         }
                         $datosPdv=array();
                         $beneficiosProductos=array();
@@ -154,7 +153,7 @@ class BeneficiosCommand extends CConsoleCommand {
                             $h2=round(microtime(true) * 1000);
                             fwrite($file, "Trying save in beneficios's table".". Time execution: ".($h2-$h1)." miliseconds".PHP_EOL);
                            
-                            echo "Trying save in beneficios's table".". Time execution: ".($h2-$h1)." miliseconds\n";
+                         //   echo "Trying save in beneficios's table".". Time execution: ".($h2-$h1)." miliseconds\n";
 
                             foreach ($beneficio['listBeneficiosProductos'] as $benefProd) {
                                /* $objBenefProd = new BeneficiosProductos;
@@ -173,6 +172,14 @@ class BeneficiosCommand extends CConsoleCommand {
                                     $benefProd['Mensaje']="NULL";
                                 }
                                 
+                                if($benefProd['Unid']==null){
+                                    $benefProd['Unid']="NULL";
+                                }
+                                
+                                if($benefProd['Obsequio']==null){
+                                    $benefProd['Obsequio']="NULL";
+                                }
+                                
                                 $beneficiosProductos[]="($objBeneficio->idBeneficio,".
                                 $benefProd['Refe'].",".
                                 $benefProd['Mensaje'].",".
@@ -185,9 +192,9 @@ class BeneficiosCommand extends CConsoleCommand {
                                 }*/
                                 $h2=round(microtime(true) * 1000);
                                 fwrite($file, "Trying save in beneficios producto's table".". Time execution: ".($h2-$h1)." miliseconds\n");
-                                echo "Trying save in beneficios producto's table".". Time execution: ".($h2-$h1)." miliseconds\n";
+                              //  echo "Trying save in beneficios producto's table".". Time execution: ".($h2-$h1)." miliseconds\n";
                             }
-                             echo "lista de productos ".count($beneficio['listBeneficiosPuntoVenta']);
+                           //  echo "lista de productos ".count($beneficio['listBeneficiosPuntoVenta']);
                              fwrite($file, "lista de productos ".count($beneficio['listBeneficiosPuntoVenta']).PHP_EOL);
                              $h1=round(microtime(true) * 1000);
                              
@@ -229,6 +236,7 @@ class BeneficiosCommand extends CConsoleCommand {
                 echo "Time execution process $i ".". ".($end-$start)." miliseconds\n";
                $i++;
            }while($pendientesSincronizar); 
+           fwrite($file, "Beneficios sincronizados correctamente ".PHP_EOL);
            fclose($file);
            echo "Beneficios sincronizados correctamente";
            Yii::log("Beneficios sincronizados correctamente\n" . date('Y-m-d H:i:s'), CLogger::LEVEL_INFO, 'application');
