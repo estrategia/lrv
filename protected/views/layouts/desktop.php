@@ -44,7 +44,7 @@
                                                                                         </ul>
                                                                         </div> --> 
                                                                      <ul class="user ">
-                                                                         <?php if(isset($_SESSION['nombreCiudad'])):?>
+                                                                         <?php if(isset($this->sectorName)):?>
                                                                             <li>
                                                                                <?php echo $this->sectorName?>     
                                                                             </li>
@@ -63,10 +63,23 @@
                                                                                 </div>
                                                                                 <div class="col-md-6 content-category">
                                                                                         <div class="controls">	
-                                                                                                <span>Todas las categorías</span>
-                                                                                                <span><i><a href="#"><img src="<?php echo Yii::app()->request->baseUrl; ?>/images/desktop/ico-filtro-categorias.png" alt=""></a></i></span>
-                                                                                                <span><i><a type="button" value="" ><img class="ico-buscar" src="<?php echo Yii::app()->request->baseUrl; ?>/images/desktop/ico-buscar.png" alt=""></a></i></span>
-                                                                                        </div>
+											<span>Todas las categorías</span>
+											<span class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
+												<i><a href="#"><img src="<?php echo Yii::app()->request->baseUrl; ?>/images/desktop/ico-filtro-categorias.png"></a></i></span>
+
+												<ul class="dropdown-menu todas-categorias" aria-labelledby="categorias">
+										          <li><a href="#"><img src="<?php echo Yii::app()->request->baseUrl; ?>/images/desktop/rx.png" alt="">Medicina formulada</a></li>
+										          <li><a href="#"><img src="<?php echo Yii::app()->request->baseUrl; ?>/images/desktop/productos-sin-formula.png" alt="">Productos sin formula</a></li>
+										          <li class="cuidado-personal"><a href="#"><img src="<?php echo Yii::app()->request->baseUrl; ?>/images/desktop/cuidado-personal.png" alt="">Cuidado personal</a></li>
+										          <li><a href="#"><img src="<?php echo Yii::app()->request->baseUrl; ?>/images/desktop/comida.png" alt="">Alimentos y bebidas</a></li>
+										          <li><a href="#"><img src="<?php echo Yii::app()->request->baseUrl; ?>/images/desktop/aseo.png" alt="">Aseo y Hogar</a></li>
+										          <li class="mundo-bebes"><a href="mundo-bebes.html"><img src="<?php echo Yii::app()->request->baseUrl; ?>/images/desktop/bebe.png" alt="">Mundo Bebes</a></li>
+										          <li><a href="#"><img src="<?php echo Yii::app()->request->baseUrl; ?>/images/desktop/natural.png" alt="">Natural</a></li>
+										          <li><a href="#"><img src="<?php echo Yii::app()->request->baseUrl; ?>/images/desktop/promociones.png" alt="">Promociones</a></li>
+										        </ul>
+
+											<span><i><a href="#"><img class="ico-buscar" src="<?php echo Yii::app()->request->baseUrl; ?>/images/desktop/ico-buscar.png" alt=""></a></i></span>
+										</div>
                                                                                 </div>
                                                                          </form>
 
@@ -105,33 +118,102 @@
         </div>
         <!--menu-->
         <ul class="nav nav-pills" role="tablist">
-            <li class="dropdown col-md-2 categorias" role="presentation">
+    <li class="dropdown col-md-2 categorias" role="presentation">
+        
+	<a id="categorias" href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Categorías<span class="ico-cat"></span></a>
+        <ul class="dropdown-menu category" aria-labelledby="categorias">
+                    <li><a href="#"><img src="<?php echo Yii::app()->request->baseUrl; ?>/images/desktop/rx.png" alt="">Medicina formulada</a></li>
+                    <li><a href="#"><img src="<?php echo Yii::app()->request->baseUrl; ?>/images/desktop/productos-sin-formula.png" alt="">Productos sin formula</a></li>
+                    <li class="cuidado-personal"><a href="#"><img src="<?php echo Yii::app()->request->baseUrl; ?>/images/desktop/cuidado-personal.png" alt="">Cuidado personal</a>
+                                  <div class="right-nav">
+                                                  <ul class="submenu">
+                                                          <div class="section-submenu">
+                                                                  <li class="title-submenu"><span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span>Aseo personal</li>
+                                                                  <a href="#"><li>Desodorantes</li></a>
+                                                                  <a href="#"><li>Jabones</li></a>
+                                                                  <a href="#"><li>Jabones liquídos</li></a>
+                                                                  <a href="#"><li>Pañuelos faciales</li></a>
+                                                          </div>
+                                                          <div class="section-submenu">
+                                                                  <li class="title-submenu"><span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span>Bebé</li>
+                                                                  <a href="#"><li>Aceites</li></a>
+                                                                  <a href="#"><li>Copitos</li></a>
+                                                                  <a href="#"><li>Crema antipañalitis</li></a>
+                                                          </div>
+                                                          <div class="section-submenu">
+                                                                  <li class="title-submenu"><span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span>Capilar</li>
+                                                                  <a href="#"><li>Acondicionador</li></a>
+                                                                  <a href="#"><li>Alisadores</li></a>
+                                                                  <a href="#"><li>Coloración</li></a>
+                                                                  <a href="#"><li>Shampoo</li></a>
+                                                                  <a href="#"><li>Fijación</li></a>
+                                                                  <a href="#"><li>Decolorantes</li></a>
+                                                          </div>
+                                                  </ul>
+                                                  <img style="margin-top:-3px;height:394px;" src="<?php echo Yii::app()->request->baseUrl; ?>/images/desktop/cuidado-personal-submenu.png">
+                                  </div>
+                    </li>
+                    <li><a href="#"><img src="<?php echo Yii::app()->request->baseUrl; ?>/images/desktop/comida.png" alt="">Alimentos y bebidas</a></li>
+                    <li><a href="#"><img src="<?php echo Yii::app()->request->baseUrl; ?>/images/desktop/aseo.png" alt="">Aseo y Hogar</a></li>
+                    <li class="mundo-bebes"><a href="mundo-bebes.html"><img src="<?php echo Yii::app()->request->baseUrl; ?>/images/desktop/bebe.png" alt="">Mundo Bebes</a>
+                                          <div class="right-nav">
+                                                  <ul class="submenu" style="margin-top:-143px;">
+                                                          <div class="section-submenu">
+                                                                  <a href="#">
+                                                                          <li class="title-submenu"><span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span>Leches</li>
+                                                                  </a>
+                                                          </div>
+                                                          <div class="section-submenu">
+                                                                  <a href="#">
+                                                                          <li class="title-submenu"><span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span>Alimentación</li>
+                                                                  </a>
+                                                          </div>
+                                                          <div class="section-submenu">
+                                                                  <a href="#">
+                                                                          <li class="title-submenu"><span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span>Pañales</li>
+                                                                  </a>
+                                                          </div>
+                                                          <div class="section-submenu">
+                                                                  <a href="#">
+                                                                          <li class="title-submenu"><span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span>Pañitos humedos</li>
+                                                                  </a>
+                                                          </div>
+                                                          <div class="section-submenu">
+                                                                  <a href="#">
+                                                                          <li class="title-submenu"><span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span>Cuidado de la piel</li>
+                                                                  </a>
+                                                          </div>
+                                                          <div class="section-submenu">
+                                                                  <a href="#">
+                                                                          <li class="title-submenu"><span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span>Cuidado y aseo</li>
+                                                                  </a>
+                                                          </div>
+                                                          <div class="section-submenu">
+                                                                  <a href="#">
+                                                                          <li class="title-submenu"><span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span>Maternidad y accesorios</li>
+                                                                  </a>
+                                                          </div>
+                                                  </ul>
+                                                  <img style="margin-top:-145px; height:399px" src="<?php echo Yii::app()->request->baseUrl; ?>/images/desktop/cuidado-bebe-submenu.png">
+                                  </div>
+                    </li>
+                    <li><a href="#"><img src="<?php echo Yii::app()->request->baseUrl; ?>/images/desktop/natural.png" alt="">Natural</a></li>
+                    <li><a href="#"><img src="<?php echo Yii::app()->request->baseUrl; ?>/images/desktop/promociones.png" alt="">Promociones</a></li>
+                  </ul>
+              </li>
 
-                <a id="categorias" href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Categorías<span class="ico-cat"></span></a>
-                <ul class="dropdown-menu category" aria-labelledby="categorias">
-                  <li><a href="#"><img src="<?php echo Yii::app()->request->baseUrl; ?>/images/desktop/rx.png" alt="">Medicina formulada</a></li>
-                  <li><a href="#"><img src="<?php echo Yii::app()->request->baseUrl; ?>/images/desktop/productos-sin-formula.png" alt="">Productos sin formula</a></li>
-                  <li><a href="#"><img src="<?php echo Yii::app()->request->baseUrl; ?>/images/desktop/cuidado-personal.png" alt="">Cuidado personal</a></li>
-                  <li><a href="#"><img src="<?php echo Yii::app()->request->baseUrl; ?>/images/desktop/comida.png" alt="">Alimentos y bebidas</a></li>
-                  <li><a href="#"><img src="<?php echo Yii::app()->request->baseUrl; ?>/images/desktop/aseo.png" alt="">Aseo y Hogar</a></li>
-                  <li><a href="mundo-bebes.html"><img src="<?php echo Yii::app()->request->baseUrl; ?>/images/desktop/bebe.png" alt="">Mundo Bebes</a></li>
-                  <li><a href="#"><img src="<?php echo Yii::app()->request->baseUrl; ?>/images/desktop/natural.png" alt="">Natural</a></li>
-                  <li><a href="#"><img src="<?php echo Yii::app()->request->baseUrl; ?>/images/desktop/promociones.png" alt="">Promociones</a></li>
-                </ul>
-            </li>
+                  <li class="mundo_bebe">
+                          <a href="mundo-bebes.html"><span class="ico-bebe"></span>Mundo bebé</a>
+                  </li>
 
-                <li class="col-md-3 mundo_bebe">
-                        <a href="mundo-bebes.html"><span class="ico-bebe"></span>Mundo bebé</a>
-                </li>
+              <li class="natural">
+                  <a href="#"><span class="ico-natural"></span>Natural</a>
+              </li>
+              <li class="promociones">
+                  <a href="#"><span class="ico-promociones"></span>Promociones</a>
+              </li>
 
-            <li class="col-md-3 natural">
-                <a href="#"><span class="ico-natural"></span>Natural</a>
-            </li>
-            <li class="col-md-4 promociones">
-                <a href="#"><span class="ico-promociones"></span>Promociones</a>
-            </li>
-
-        </ul>
+          </ul>
         <!--fin menu-->
         <div class="container">
             <?php echo $content; ?>
