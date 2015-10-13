@@ -283,7 +283,7 @@ h1.logo_lbv{
     display: block;
 }
 
-#ubicacion-info.hide{
+#ubicacion-info.hide, .hide{
     display: none;
 }
 
@@ -424,6 +424,14 @@ div.c_src_page div.ui-btn.ui-input-btn.ui-corner-all.ui-shadow.ui-btn-inline{
 
 .center{
     text-align: center;
+}
+
+.left{
+    text-align: left;
+}
+
+.right{
+    text-align: right;
 }
 
 img.center, .ui-alt-icon.center, ui-icon-center, a.ui-icon-center {
@@ -1272,7 +1280,7 @@ div.c_cont_detail_prod h1 {
 }
 div.c_cont_detail_prod h2{ margin-top: 1px; margin-bottom: 1px; font-size: medium; /*1em;*/ color: #4f4f4f; text-transform: capitalize; text-align: center; font-weight: 700; }
 
-div.c_cont_detail_prod h2.cdt_prod_spc{ margin-bottom: 1em; }
+div.c_cont_detail_prod h2.cdt_prod_spc, .cdt_prod_spc{ margin-bottom: 1em; }
 div.c_cont_detail_prod p.cdtl_prod_txt_ley img{ width: 25px; float: left; margin-right: 1em; }
 div.c_cont_detail_prod p.cdtl_prod_txt_ley{ text-align: justify; font-size: small; color: #505050;/*margin: auto 1em;*/ }
 div.c_cont_detail_prod img.ui-li-thumb{ margin: auto; float: none; }

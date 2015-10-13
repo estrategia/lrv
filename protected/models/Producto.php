@@ -11,6 +11,7 @@
  * @property integer $idMarca
  * @property string $codigoProveedor
  * @property integer $codigoImpuesto
+ * @property integer $idUnidadNegocioBI
  * @property integer $idCategoriaBI
  * @property integer $activo
  * @property integer $codigoEspecial
@@ -51,7 +52,7 @@ class Producto extends CActiveRecord {
         // will receive user inputs.
         return array(
             array('descripcionProducto, presentacionProducto, idMarca, codigoProveedor, codigoUnidadMedida, cantidadUnidadMedida, fechaCreacion', 'required'),
-            array('codigoImpuesto, idMarca, idCategoriaBI, activo, codigoEspecial, codigoMedidaFraccion, ventaVirtual, mostrarAhorroVirtual', 'numerical', 'integerOnly' => true),
+            array('codigoImpuesto, idMarca, idUnidadNegocioBI, idCategoriaBI, activo, codigoEspecial, codigoMedidaFraccion, ventaVirtual, mostrarAhorroVirtual', 'numerical', 'integerOnly' => true),
             array('codigoProducto, cantidadUnidadMedida', 'length', 'max' => 10),
             array('codigoBarras', 'length', 'max' => 50),
             array('descripcionProducto, presentacionProducto', 'length', 'max' => 200),
@@ -59,7 +60,7 @@ class Producto extends CActiveRecord {
             array('fraccionado, tercero, orden', 'length', 'max' => 1),
             // The following rule is used by search().
             // @todo Please remove those attributes that should not be searched.
-            array('codigoProducto, codigoBarras, idMarca, descripcionProducto, presentacionProducto, codigoProveedor, codigoImpuesto, idCategoriaBI, activo, codigoEspecial, fraccionado, tercero, orden, numeroFracciones, codigoMedidaFraccion, unidadFraccionamiento, codigoUnidadMedida, cantidadUnidadMedida, fechaCreacion, ventaVirtual, mostrarAhorroVirtual', 'safe', 'on' => 'search'),
+            array('codigoProducto, codigoBarras, idMarca, descripcionProducto, presentacionProducto, codigoProveedor, codigoImpuesto, idUnidadNegocioBI, idCategoriaBI, activo, codigoEspecial, fraccionado, tercero, orden, numeroFracciones, codigoMedidaFraccion, unidadFraccionamiento, codigoUnidadMedida, cantidadUnidadMedida, fechaCreacion, ventaVirtual, mostrarAhorroVirtual', 'safe', 'on' => 'search'),
         );
     }
 
@@ -87,8 +88,7 @@ class Producto extends CActiveRecord {
             'listFiltros' => array(self::MANY_MANY, 'FiltroDetalle', 't_ProductosFiltros(codigoProducto, idFiltroDetalle)'),
             'objMarca' => array(self::BELONGS_TO, 'Marca', 'idMarca'),
             'objCategoriaBI' => array(self::BELONGS_TO, 'Categoria', 'idCategoriaBI'),
-            
-            
+            'objUnidadNegocioBI' => array(self::BELONGS_TO, 'Categoria', 'idUnidadNegocioBI'),
             //'listCategoriasTienda' => array(self::MANY_MANY, 'CategoriaTienda', '', 'through' => 'CategoriasCategoriaTienda', 'condition' => 'CategoriasCategoriaTienda.idCategoriaBI=106'),
             //'listCategoriasCategoriaTienda' => array(self::HAS_MANY, 'CategoriasCategoriaTienda', 'idCategoriaBI'),
         );
@@ -107,6 +107,7 @@ class Producto extends CActiveRecord {
             'codigoProveedor' => 'Codigo Proveedor',
             'codigoImpuesto' => 'Codigo Impuesto',
             'idCategoriaBI' => 'Categoria',
+            'idUnidadNegocioBI' => 'Unidad Negocio',
             'activo' => 'Activo',
             'codigoEspecial' => 'Codigo Especial',
             'fraccionado' => 'Fraccionado',
@@ -148,6 +149,7 @@ class Producto extends CActiveRecord {
         $criteria->compare('codigoProveedor', $this->codigoProveedor, true);
         $criteria->compare('codigoImpuesto', $this->codigoImpuesto);
         $criteria->compare('idCategoriaBI', $this->idCategoriaBI);
+        $criteria->compare('idUnidadNegocioBI', $this->idUnidadNegocioBI);
         $criteria->compare('activo', $this->activo);
         $criteria->compare('codigoEspecial', $this->codigoEspecial);
         $criteria->compare('fraccionado', $this->fraccionado);
