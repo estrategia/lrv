@@ -7,7 +7,7 @@ class CatalogoController extends Controller {
      * */
     public function filters() {
         return array(
-            array('application.filters.SessionControlFilter + categoria, buscar, relacionados, producto, bodega, combo, descuentos, masvendidos, masvistos'),
+            array('application.filters.SessionControlFilter + categoria, buscar, buscarD, relacionados, producto, bodega, combo, descuentos, masvendidos, masvistos','isMobile' => $this->isMobile),
         );
     }
 

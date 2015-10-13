@@ -98,10 +98,10 @@ class RegistroForm extends CFormModel {
         $escenario = $this->getScenario();
         
         if($escenario == "registro"){
-            $tipo = "";
+            $clase = "";
         }
         
-        return $tipo;
+        return $clase;
     }
 
     /**
