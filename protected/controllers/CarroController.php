@@ -18,7 +18,10 @@ class CarroController extends Controller {
      * */
     public function filters() {
         return array(
-            array('application.filters.SessionControlFilter + index, pagoexpress, pagoinvitado, pagar, comprar'),
+            array(
+                'application.filters.SessionControlFilter + index, pagoexpress, pagoinvitado, pagar, comprar',
+                'isMobile' => $this->isMobile
+            ),
             'login + pagoexpress',
             //'access + autenticar, recordar, registro, restablecer',
             'loginajax + crearcotizacion',
@@ -48,6 +51,8 @@ class CarroController extends Controller {
     }
 
     public function actionAgregar() {
+        echo CJSON::encode(array('result' => 'error', 'response' => 'No  asdff asdf f '));
+        exit();
         $objSectorCiudad = null;
         if (isset(Yii::app()->session[Yii::app()->params->sesion['sectorCiudadEntrega']]))
             $objSectorCiudad = Yii::app()->session[Yii::app()->params->sesion['sectorCiudadEntrega']];
@@ -177,11 +182,16 @@ class CarroController extends Controller {
                     array( 'objProducto' => $objProducto), true);
         }
         
+        $canastaVista = "canasta";
+        if(!$this->isMobile){
+            $canastaVista = "d_canasta";
+        }
+        
         echo CJSON::encode(array(
             'result' => 'ok',
             'response' => array(
                 'relacionados' => $objProducto->tieneRelacionados(),
-                'canastaHTML' => $this->renderPartial('canasta', null, true),
+                'canastaHTML' => $this->renderPartial($canastaVista, null, true),
                 'mensajeHTML' => $mensajeCanasta,
                 'objetosCarro'=>Yii::app()->shoppingCart->getCount()
             ),
@@ -829,10 +839,15 @@ class CarroController extends Controller {
         $objProductoCarro = new ProductoCarro($objCombo);
         Yii::app()->shoppingCart->put($objProductoCarro, false, $cantidad);
 
+        $canastaVista = "canasta";
+        if(!$this->isMobile){
+            $canastaVista = "d_canasta";
+        }
+        
         echo CJSON::encode(array(
             'result' => 'ok',
             'response' => array(
-                'canastaHTML' => $this->renderPartial('canasta', null, true),
+                'canastaHTML' => $this->renderPartial($canastaVista, null, true),
                 'mensajeHTML' => $this->renderPartial('_carroAgregado', null, true),
             ),
         ));
@@ -944,10 +959,16 @@ class CarroController extends Controller {
             $mensajeCanasta=$this->renderPartial('_d_carroAgregado', 
                     array('objProducto' => $objProducto), true);
         }
+        
+        $canastaVista = "canasta";
+        if(!$this->isMobile){
+            $canastaVista = "d_canasta";
+        }
+        
         echo CJSON::encode(array(
             'result' => 'ok',
             'response' => array(
-                'canastaHTML' => $this->renderPartial('canasta', null, true),
+                'canastaHTML' => $this->renderPartial($canastaVista, null, true),
                 'mensajeHTML' => $mensajeCanasta,
                 'objetosCarro'=>Yii::app()->shoppingCart->getCount()
             ),
@@ -960,7 +981,7 @@ class CarroController extends Controller {
       } */
 
     public function actionIndex() {
-        $this->render('index');
+         $this->render('index', array('vistaCarro'=> $this->isMobile ? "/carro/carro" : "/carro/d_carro"));
         Yii::app()->end();
     }
 

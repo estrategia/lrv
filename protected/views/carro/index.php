@@ -1,3 +1,3 @@
 <div id="div-carro">
-    <?php $this->renderPartial('/carro/carro');?>
+    <?php $this->renderPartial($vistaCarro);?>
 </div>

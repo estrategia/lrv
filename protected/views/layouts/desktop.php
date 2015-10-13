@@ -94,6 +94,10 @@
                                                                                 <span id="cantidad-productos" class="cantidad-productos"><?php echo Yii::app()->shoppingCart->getCount(); ?></span>
                                                                                 <p style="color: #A3A3A3;">Productos</p>
                                                                         </div>
+                                                                    
+                                                                    <div data-role="panel" id="div-carro-canasta">
+                                                                        <?php $this->renderPartial('/carro/d_canasta'); ?>
+                                                                    </div>  
                                                                 </div>
                                                         </div>
                                                 </div>
