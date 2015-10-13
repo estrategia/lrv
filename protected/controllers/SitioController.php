@@ -7,7 +7,10 @@ class SitioController extends Controller {
      * */
     public function filters() {
         return array(
-            array('application.filters.SessionControlFilter + inicio, categorias'),
+            array(
+                'application.filters.SessionControlFilter + inicio, categorias',
+                'isMobile' => $this->isMobile
+            ),
         );
     }
 

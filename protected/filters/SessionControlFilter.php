@@ -13,6 +13,7 @@
  */
 class SessionControlFilter extends CFilter{
     public $isMobile=true;
+    
     protected function preFilter($filterChain) {
         $sesionUbicacion = false;
         $sesionTipo = false;
@@ -31,7 +32,7 @@ class SessionControlFilter extends CFilter{
                 Yii::app()->request->redirect(Yii::app()->baseUrl . "/sitio");
             }else{
                 Yii::app()->request->redirect(Yii::app()->baseUrl . "/sitio/ubicacion");
-              //  $filterChain->run();
+                //$filterChain->run();
             }
         }else if(!$sesionUbicacion){
             if($this->isMobile){

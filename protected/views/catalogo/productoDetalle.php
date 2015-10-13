@@ -45,7 +45,7 @@
 
     <div class="cdt_line_spc"><span></span></div>
 
-    <?php if (!in_array($objProducto->idCategoriaBI, Yii::app()->params->calificacion['categoriasNoCalificacion'])): ?>
+    <?php if (!in_array($objProducto->idUnidadNegocioBI, Yii::app()->params->calificacion['categoriasNoCalificacion'])): ?>
         <div id="raty-lectura-producto-<?php echo $objProducto->codigoProducto ?>" data-role="raty" data-readonly="true" data-score="<?php echo $objProducto->getCalificacion() ?>" class="clst_cal_str"></div>
         <?php $calificacion = $objProducto->getCalificacion(true) ?>
         <div><strong>Total votos:</strong> <?php echo $calificacion['votos'] ?></div>
@@ -201,7 +201,7 @@
 
     <div class="cdtl_div_ln"></div>
 
-    <?php if (!in_array($objProducto->idCategoriaBI, Yii::app()->params->calificacion['categoriasNoCalificacion'])): ?>
+    <?php if (!in_array($objProducto->idUnidadNegocioBI, Yii::app()->params->calificacion['categoriasNoCalificacion'])): ?>
         <div data-role="collapsible" data-iconpos="right" data-collapsed-icon="carat-d" data-expanded-icon="carat-u" class="c_cont_com_prod ui-nodisc-icon ui-alt-icon">
             <h3>Comentarios del producto</h3>
             <ul data-role="listview" data-inset="false" data-icon="false">

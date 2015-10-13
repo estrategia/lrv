@@ -336,15 +336,28 @@ class FormaPagoForm extends CFormModel {
                     $dia = 'festivo';
                     $fecha = new DateTime;
                     //si no es festivo, se verifica el dia de la semana
-                    if (DiasFestivos::esFestivo($fecha)) {
+                    if (!DiasFestivos::esFestivo($fecha)) {
                         $dia = $fecha->format('w');
                     }
                     $foraneaHorario = HorarioPuntoVenta::getHorariosDias()[$dia]['foranea'];
                     $horario = $objPdv->$foraneaHorario;
 
                     if ($horario !== null) {
-                        $this->listPuntosVenta[1][$indicePdv]['HORA_INICIO'] = DateTime::createFromFormat('H:i:s', $horario->HorarioInicio);
-                        $this->listPuntosVenta[1][$indicePdv]['HORA_FIN'] = DateTime::createFromFormat('H:i:s', $horario->HorarioFin);
+                        $this->listPuntosVenta[1][$indicePdv]['HORA_INICIO'] = DateTime::createFromFormat('Y-m-d H:i:s', $fecha->format('Y-m-d') . " $horario->HorarioInicio");
+                        $this->listPuntosVenta[1][$indicePdv]['HORA_FIN'] = DateTime::createFromFormat('Y-m-d H:i:s', $fecha->format('Y-m-d') . " $horario->HorarioFin");
+                    }
+                    
+                    if($this->listPuntosVenta[1][$indicePdv]['HORA_INICIO']==null || $this->listPuntosVenta[1][$indicePdv]['HORA_FIN'] == null){
+                        unset($this->listPuntosVenta[1][$indicePdv]);
+                        continue;
+                    }
+                    
+                    $diffIni = $this->listPuntosVenta[1][$indicePdv]['HORA_INICIO']->diff($fecha);
+                    $diffFin = $fecha->diff($this->listPuntosVenta[1][$indicePdv]['HORA_FIN']);
+
+                    if ($diffIni->invert==1 || $diffFin->invert==1) {
+                        unset($this->listPuntosVenta[1][$indicePdv]);
+                        continue;
                     }
 
                     foreach ($pdv[4] as $indiceProd => $producto) {
