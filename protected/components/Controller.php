@@ -31,6 +31,7 @@ class Controller extends CController {
     public $extraContentList = array();
     public $extraPageList = array();
     public $sectorName = "";
+    public $categorias = array();
 
     public function init() {
         if (Yii::app()->detectMobileBrowser->showMobile) {
@@ -135,17 +136,17 @@ class Controller extends CController {
     }
 
     public function getCategorias() {
-        if (!isset($_SESSION['categoriasDesktop'])) {
+     //   if (!isset($_SESSION['categoriasDesktop'])) {
             $categorias = CategoriaTienda::model()->findAll(array(
                 'order' => 't.orden',
                 'condition' => 't.visible=:visible AND t.idCategoriaPadre IS NULL ',
                 'params' => array(
                     ':visible' => 1,
                 ),
-                'with' => 'listCategoriasHijas',
+                'with' => array('listCategoriasHijas'/*,'listCategoriasHijasMenu'*/),
             ));
-            $_SESSION['categoriasDesktop'] = $categorias;
-        }
+            $this->categorias = $categorias;
+       // }
     }
 
 }
