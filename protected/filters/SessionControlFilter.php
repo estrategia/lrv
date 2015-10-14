@@ -12,6 +12,8 @@
  * @author miguel.sanchez
  */
 class SessionControlFilter extends CFilter{
+    public $isMobile=true;
+    
     protected function preFilter($filterChain) {
         $sesionUbicacion = false;
         $sesionTipo = false;
@@ -23,10 +25,21 @@ class SessionControlFilter extends CFilter{
             $sesionTipo = true;
         }
         
+       $sesionTipo=true;
+       
         if(!$sesionTipo){
-            Yii::app()->request->redirect(Yii::app()->baseUrl . "/sitio");
+            if($this->isMobile){
+                Yii::app()->request->redirect(Yii::app()->baseUrl . "/sitio");
+            }else{
+                Yii::app()->request->redirect(Yii::app()->baseUrl . "/sitio/ubicacion");
+                //$filterChain->run();
+            }
         }else if(!$sesionUbicacion){
-            Yii::app()->request->redirect(Yii::app()->baseUrl . "/sitio/ubicacion");
+            if($this->isMobile){
+                Yii::app()->request->redirect(Yii::app()->baseUrl . "/sitio/ubicacion");
+            }else{
+                Yii::app()->request->redirect(Yii::app()->baseUrl . "/sitio/ubicacion");
+            }
         }else{
             $filterChain->run();
         }

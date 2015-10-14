@@ -807,32 +807,6 @@ $(document).on('click', "a[data-cargar='3']", function() {
     });
 });
 
-function dialogoAnimado(texto) {
-    var id = 'dialogo-carro-' + uniqueId();
-    $("<div class='dialogo-animado' id='" + id + "'>" + texto + "</div>").appendTo('body');
-
-    $("#" + id).animate({
-        opacity: 1,
-        bottom: '+=2%'
-    }, 400, function() {
-        setTimeout(function() {
-            $("#" + id).animate({
-                opacity: 0,
-                bottom: '-=2%'
-            }, 400, function() {
-                $("#" + id).remove();
-            });
-        }, 3000);
-    });
-}
-
-function uniqueId() {
-    var time = new Date().getTime();
-    while (time == new Date().getTime())
-        ;
-    return new Date().getTime();
-}
-
 $(document).on('change', "input[data-modificar='1'], input[data-modificar='2'], input[data-modificar='3']", function() {
     var position = $(this).attr('data-position');
     var modificar = $(this).attr('data-modificar');

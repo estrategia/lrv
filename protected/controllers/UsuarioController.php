@@ -8,7 +8,10 @@ class UsuarioController extends Controller {
      * */
     public function filters() {
         return array(
-            array('application.filters.SessionControlFilter + index, autenticar, infoPersonal, contrasena, pagoexpress, listapedidos, pedido, listacotizaciones, cotizacion, listapersonal, listadetalle, direcciones'),
+            array(
+                'application.filters.SessionControlFilter + index, autenticar, infoPersonal, contrasena, pagoexpress, listapedidos, pedido, listacotizaciones, cotizacion, listapersonal, listadetalle, direcciones',
+                'isMobile' => $this->isMobile
+            ),
             'access + autenticar, recordar, registro, restablecer',
             'login + index, infoPersonal, contrasena, direcciones, pagoexpress, listapedidos, listapersonal, pedido, listadetalle, listacotizaciones',
             'loginajax + direccionCrear, direccionActualizar',
@@ -51,8 +54,11 @@ class UsuarioController extends Controller {
         if (!isset(Yii::app()->session[Yii::app()->params->sesion['redireccionAutenticacion']]) || Yii::app()->session[Yii::app()->params->sesion['redireccionAutenticacion']] == 'null') {
             Yii::app()->session[Yii::app()->params->sesion['redireccionAutenticacion']] = (Yii::app()->request->urlReferrer == null ? 'null' : Yii::app()->request->urlReferrer);
         }
-        
-        $this->render('autenticar');
+        if($this->isMobile){
+            $this->render('autenticar');
+        }else{
+            $this->render('d_autenticar');
+        }
     }
     
     public function actionIngresar(){

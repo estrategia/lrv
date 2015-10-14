@@ -36,7 +36,7 @@
     <div class="clst_cont_pr_prod">
         <h2><a href="<?php echo CController::createUrl('/catalogo/producto', array('producto' => $objProducto->codigoProducto,'descripcion'=>  Producto::cadenaUrl($objProducto->descripcionProducto))) ?>" data-ajax="false"><?php echo $objProducto->descripcionProducto ?></a></h2>
         <p><?php echo $objProducto->presentacionProducto ?></p>
-        <?php if(!in_array($objProducto->idCategoriaBI, Yii::app()->params->calificacion['categoriasNoCalificacion'])): ?>
+        <?php if(!in_array($objProducto->idUnidadNegocioBI, Yii::app()->params->calificacion['categoriasNoCalificacion'])): ?>
             <div id="raty-lectura-producto-<?php echo $objProducto->codigoProducto ?>" data-role="raty" data-readonly="true" data-score="<?php echo $objProducto->getCalificacion() ?>" class="clst_cal_str"></div>
         <?php endif;?>
         <?php if ($objPrecio->inicializado()): ?>

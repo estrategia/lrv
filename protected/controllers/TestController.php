@@ -1,11 +1,60 @@
 <?php
 
 class TestController extends Controller {
-    public function actionVideo(){
+
+    public function actionUrl() {
+        $url = "http://localhost/embebida/";
+        $raw = rawurlencode($url);
+        $encode = urlencode($url);
+        echo "$url<br/>";
+        echo "$raw<br/>";
+        echo "$encode<br/>";
+        
+        
+    }
+
+    public function actionDiff() {
+        $datetime1 = new DateTime('2009-10-11');
+        $datetime2 = new DateTime('2009-10-13');
+        $interval = $datetime2->diff($datetime1);
+        echo $interval->invert;
+    }
+
+    public function actionPdvhora() {
+        $objPdv = PuntoVenta::model()->find(array("condition" => "idComercial=:comercial", 'params' => array(':comercial' => "4K4")));
+
+        $hinicio = null;
+        $hfin = null;
+        $dia = 'festivo';
+        $fecha = new DateTime;
+        //si no es festivo, se verifica el dia de la semana
+        if (!DiasFestivos::esFestivo($fecha)) {
+            $dia = $fecha->format('w');
+        }
+
+        $foraneaHorario = HorarioPuntoVenta::getHorariosDias()[$dia]['foranea'];
+
+        echo "foranea: $foraneaHorario <br/><br/>";
+
+        $horario = $objPdv->$foraneaHorario;
+        CVarDumper::dump($horario, 10, true);
+        echo "<br/><br/>";
+
+        if ($horario !== null) {
+            $hinicio = DateTime::createFromFormat('H:i:s', $horario->HorarioInicio);
+            $hfin = DateTime::createFromFormat('H:i:s', $horario->HorarioFin);
+        }
+
+        CVarDumper::dump($hinicio, 10, true);
+        echo "<br/><br/>";
+        CVarDumper::dump($hfin, 10, true);
+    }
+
+    public function actionVideo() {
         $this->render('video');
     }
-    
-    public function actionPdf(){
+
+    public function actionPdf() {
         //$compra = Compras::model()->with('items', 'items.producto')->findByPk($compra);
         //$model = CreditoCop::generarSolicitud($compra);
 
@@ -16,143 +65,144 @@ class TestController extends Controller {
         //$styleCustom = file_get_contents(Yii::getPathOfAlias('webroot.css') . '/main.css');
         //$mPDF1->WriteHTML($styleBootstrap, 1);
         //$mPDF1->WriteHTML($styleCustom, 1);
-        
+
         $mPDF1->WriteHTML("<strong>Error, no se detecta formulario</strong>");
         //$mPDF1->WriteHTML($this->renderPartial('_solicitudCredito', array('model' => $model), true));
 
         $filename = 'SolicitudCreditoServicoop_' . date('YmdHis') . '.pdf';
         $mPDF1->Output($filename, 'D');
     }
-    
-    public function actionPdv(){
+
+    public function actionPdv() {
         $objPuntoVenta = PuntoVenta::model()->findByPk(1);
-        
-        CVarDumper::dump($objPuntoVenta->objHorarioAperturaLunesASabado,10,true);
+
+        CVarDumper::dump($objPuntoVenta->objHorarioAperturaLunesASabado, 10, true);
     }
-    
-    public function actionRelacionados(){
-        /*$objProducto = Producto::model()->find(array(
-            'condition' => 'listRelacionados.codigoProducto=84259',
-            'with' => 'listRelacionados'
-        ));*/
-        
-        /*$objProducto = Producto::model()->findAll(array(
-            'condition' => 'r.codigoProducto=84259',
-            'join' => 'JOIN t_ProductosRelacionados r ON (t.codigoProducto=r.codigoRelacionado)'
-        ));*/
-        
+
+    public function actionRelacionados() {
+        /* $objProducto = Producto::model()->find(array(
+          'condition' => 'listRelacionados.codigoProducto=84259',
+          'with' => 'listRelacionados'
+          )); */
+
+        /* $objProducto = Producto::model()->findAll(array(
+          'condition' => 'r.codigoProducto=84259',
+          'join' => 'JOIN t_ProductosRelacionados r ON (t.codigoProducto=r.codigoRelacionado)'
+          )); */
+
         $objProducto = Producto::model()->find(array(
             'condition' => 'codigoProducto=12957',
         ));
-        
-        
-        CVarDumper::dump($objProducto->tieneRelacionados(),10,true);
+
+
+        CVarDumper::dump($objProducto->tieneRelacionados(), 10, true);
     }
-    
-    public function actionDistancia1(){
+
+    public function actionDistancia1() {
         $lat1 = 3.345389;
         $lat2 = 3.345721;
-        
+
         $lon1 = -76.530664;
         $lon2 = -76.530643;
-        
-        
+
+
         $dist = distanciaCoordenadas($lat1, $lon1, $lat2, $lon2);
-        echo "Distancia: $dist";        
+        echo "Distancia: $dist";
     }
-    
-    public function actionMemoria(){
-        
+
+    public function actionMemoria() {
+
         //ini_set('memory_limit', '100M');
         //echo  "Asignada: ". memory_get_peak_usage(true);
         //echo "<br/>";
-        
         //$asigned_memory = memory_get_usage(true);
         //$used_memory = memory_get_usage();
-        
-        echo "Asignada: ". (memory_get_usage(true)/1024);echo "<br/>";
-        echo "Usada: ". (memory_get_usage(false)/1024);echo "<br/>";
-        echo "Libre: ". ((memory_get_usage(true)-memory_get_usage(false))/1024);echo "<br/>";
-        
-        /*echo "<br/>";echo "<br/>";
-        $start_memory = memory_get_usage();
-        $foo = "5";
-        echo "$start_memory<br/>";
-        echo memory_get_usage() - $start_memory;*/
-        
-        
-        /*$a = str_repeat("Hello", 4242);
-        echo memory_get_usage() . "\n";
+
+        echo "Asignada: " . (memory_get_usage(true) / 1024);
         echo "<br/>";
-        unset($a);
-        echo memory_get_usage() . "\n";
-        echo "<br/>";*/
+        echo "Usada: " . (memory_get_usage(false) / 1024);
+        echo "<br/>";
+        echo "Libre: " . ((memory_get_usage(true) - memory_get_usage(false)) / 1024);
+        echo "<br/>";
+
+        /* echo "<br/>";echo "<br/>";
+          $start_memory = memory_get_usage();
+          $foo = "5";
+          echo "$start_memory<br/>";
+          echo memory_get_usage() - $start_memory; */
+
+
+        /* $a = str_repeat("Hello", 4242);
+          echo memory_get_usage() . "\n";
+          echo "<br/>";
+          unset($a);
+          echo memory_get_usage() . "\n";
+          echo "<br/>"; */
     }
-    
-    public function actionCorreo(){
-        
-        try{
+
+    public function actionCorreo() {
+
+        try {
             sendHtmlEmail("pruebaeñe@gmail.com", "Prueba envio 1", "Esto es una prueba");
             echo "Enviado";
-        }  catch (Exception $exc){
+        } catch (Exception $exc) {
             echo "Error: " . $exc->getMessage() . "<br/><br/>";
             echo $exc->getTraceAsString();
         }
     }
-    
-    public function actionCf(){
-         $codigoPerfil = Yii::app()->shoppingCart->getCodigoPerfil();
-         
-         print_r($codigoPerfil);
+
+    public function actionCf() {
+        $codigoPerfil = Yii::app()->shoppingCart->getCodigoPerfil();
+
+        print_r($codigoPerfil);
     }
-    
-    public function actionImplode(){
+
+    public function actionImplode() {
         $categorias = array(
             1 => 1,
-            2=>2,
-            5=>9,
+            2 => 2,
+            5 => 9,
         );
         $cadena = implode(",", $categorias);
-        
+
         echo $cadena;
     }
-    
-    public function actionBuscar(){
-        
+
+    public function actionBuscar() {
+
         $client = new SoapClient(null, array(
             'location' => "http://www.copservir.com/webService/serverLRV.php",
             'uri' => "",
             'trace' => 1
         ));
-        
-        $response = $client->__soapCall('BuscardorLRV', array('BUSQUEDA'=> 'LECHE KLIM'));
-        
+
+        $response = $client->__soapCall('BuscardorLRV', array('BUSQUEDA' => 'LECHE KLIM'));
+
         CVarDumper::dump($response);
     }
-    
-    public function actionWsbarrio(){
+
+    public function actionWsbarrio() {
         $barrio = "Pance";
         $ciudad = 76001;
-        
+
         $client = new SoapClient(null, array(
             'location' => "http://www.copservir.com/webService/serverLRV.php",
             'uri' => "http://www.copservir.com",
             'trace' => 1
         ));
-        
+
         $result = $client->__soapCall("LRVConsultarBarrio", array('idCiudad' => $ciudad, 'barrio' => $barrio));
-        CVarDumper::dump($result,10,true);
-        
-        /*array
-        (
-            0 => stdClass#1
-            (
-                [RESPUESTA] => 0
-                [DESCRIPCION] => 'NO EXISTEN REGISTROS PARA EL BARRIO PANCE'
-                [PDV] => '-1'
-            )
-        )*/
-        
+        CVarDumper::dump($result, 10, true);
+
+        /* array
+          (
+          0 => stdClass#1
+          (
+          [RESPUESTA] => 0
+          [DESCRIPCION] => 'NO EXISTEN REGISTROS PARA EL BARRIO PANCE'
+          [PDV] => '-1'
+          )
+          ) */
     }
 
     public function actionWsgeo() {
@@ -173,35 +223,34 @@ class TestController extends Controller {
         );
 
         $result = $client->__soapCall("ConsultarClienteLRV", $params);
-        
-        CVarDumper::dump($result,10,true);
-        
-        /*array
-            (
-            0 => stdClass#1
-            (
-                [RESPUESTA] => 0
-                [DESCRIPCION] => 'PARAMETROS RECHAZADOS.'
-                [PDV] => ''
-                [PDV_NOMBRE] => ''
-                [ALTERNAS] => ''
-            )
-        )*/
+
+        CVarDumper::dump($result, 10, true);
+
+        /* array
+          (
+          0 => stdClass#1
+          (
+          [RESPUESTA] => 0
+          [DESCRIPCION] => 'PARAMETROS RECHAZADOS.'
+          [PDV] => ''
+          [PDV_NOMBRE] => ''
+          [ALTERNAS] => ''
+          )
+          ) */
     }
-    
-    public function actionBeneficios(){
-        try{
-        $client = new SoapClient("http://sii.copservir.com/beneficios/sweb/wslrv", array(
-             'uri' => "",
+
+    public function actionBeneficios() {
+        try {
+            $client = new SoapClient("http://sii.copservir.com/beneficios/sweb/wslrv", array(
+                'uri' => "",
                 'trace' => 1,
-         ));
-        $result = $client->setBeneficios(100);
-        
-        CVarDumper::dump($result,10,true);
-        }  catch (Exception $e){
+            ));
+            $result = $client->setBeneficios(100);
+
+            CVarDumper::dump($result, 10, true);
+        } catch (Exception $e) {
             echo $e->getMessage();
         }
-        
     }
 
     public function actionWsbono() {
@@ -213,9 +262,9 @@ class TestController extends Controller {
         ));
         $result = $client->__soapCall("ConsultarBono", array('identificacion' => '93451033'));
 
-        /*if (!empty($result) && $result[0]->ESTADO == 1 && $result[0]->VALOR_BONO > 0) {
-            echo ("Bono: " . $result[0]->VALOR_BONO);
-        }*/
+        /* if (!empty($result) && $result[0]->ESTADO == 1 && $result[0]->VALOR_BONO > 0) {
+          echo ("Bono: " . $result[0]->VALOR_BONO);
+          } */
 
 
 
@@ -256,27 +305,27 @@ class TestController extends Controller {
         ));
 
         $return = $client->__soapCall("LRVConsultarSaldoMovil", array('productos' => $productos, 'ciudad' => 76001, 'sector' => 22));
-        
-   /*     for($i=0;$i<count($return[1]);$i++){
-            for($j=0;$j<count($return[1])-1;$j++){
-                $valuej=0;
-                $valuej1=0;
-                if(isset($return[1][$j][5])){
-                    $valuej=$return[1][$j][5];
-                }
-                if(isset($return[1][$j+1][5])){
-                    $valuej1=$return[1][$j+1][5];
-                }
-                
-                if($valuej<$valuej1){
-                    $aux=$valuej[1][$j];
-                    $valuej[1][$j]=$valuej[1][$j+1];;
-                    $valuej[1][$j+1]=$aux;
-                }
-            }
-        }*/
-           CVarDumper::dump($return, 10, true);
-     
+
+        /*     for($i=0;$i<count($return[1]);$i++){
+          for($j=0;$j<count($return[1])-1;$j++){
+          $valuej=0;
+          $valuej1=0;
+          if(isset($return[1][$j][5])){
+          $valuej=$return[1][$j][5];
+          }
+          if(isset($return[1][$j+1][5])){
+          $valuej1=$return[1][$j+1][5];
+          }
+
+          if($valuej<$valuej1){
+          $aux=$valuej[1][$j];
+          $valuej[1][$j]=$valuej[1][$j+1];;
+          $valuej[1][$j+1]=$aux;
+          }
+          }
+          } */
+        CVarDumper::dump($return, 10, true);
+
 
         /* require_once (Yii::app()->basePath . DS . 'vendors' . DS . 'nusoap/nusoap.php');
           $productos = array();
@@ -306,19 +355,19 @@ class TestController extends Controller {
           CVarDumper::dump($response, 10, true); */
     }
 
-    public function actionBuscarsaldos($idCompra=null, $pdv=null) {
+    public function actionBuscarsaldos($idCompra = null, $pdv = null) {
 
         $client = new SoapClient(null, array(
             'location' => Yii::app()->params->webServiceUrl['remisionPos'],
             'uri' => "",
             'trace' => 1
         ));
-       $result = $client->__soapCall("SaldosSadRemision",  array('idPedido' => $idCompra, 'pdv_despacho' => $pdv));
-       echo "<pre>";
-       print_r(unserialize(serialize($result)));
-       echo "</pre>";
+        $result = $client->__soapCall("SaldosSadRemision", array('idPedido' => $idCompra, 'pdv_despacho' => $pdv));
+        echo "<pre>";
+        print_r(unserialize(serialize($result)));
+        echo "</pre>";
     }
-    
+
     public function actionReplace() {
         $plantilla = Yii::app()->params->callcenter['notificacion']['plantilla'][6];
         //$plantilla = "hola perro como estas";
@@ -328,20 +377,20 @@ class TestController extends Controller {
     }
 
     public function actionPuntos() {
-        
-        
+
+
         echo "categorias<br>";
-        CVarDumper::dump(Yii::app()->shoppingCart->getCategorias(),10, true);
+        CVarDumper::dump(Yii::app()->shoppingCart->getCategorias(), 10, true);
         echo "<br><br>marcas<br>";
-        CVarDumper::dump(Yii::app()->shoppingCart->getMarcas(),10, true);
+        CVarDumper::dump(Yii::app()->shoppingCart->getMarcas(), 10, true);
         echo "<br><br>proveedores<br>";
-        CVarDumper::dump(Yii::app()->shoppingCart->getProveedores(),10, true);
+        CVarDumper::dump(Yii::app()->shoppingCart->getProveedores(), 10, true);
         echo "<br><br>productos<br>";
-        CVarDumper::dump(Yii::app()->shoppingCart->getProductosCantidad(),10, true);
-        
+        CVarDumper::dump(Yii::app()->shoppingCart->getProductosCantidad(), 10, true);
+
         exit();
-                
-                
+
+
 
         $fecha = new DateTime;
         $categorias = array(476);
@@ -355,20 +404,19 @@ class TestController extends Controller {
           ':fecha' => $fecha->format('Y-m-d H:i:s')
           )
           )); */
-        
+
         $productos = Yii::app()->shoppingCart->getProductosCantidad();
 
         $listPuntos = Puntos::generarPuntosTipo($fecha, Yii::app()->params->puntos['producto'], $productos);
-        
-        //Yii::app()->params->puntos['producto'] => Yii::app()->shoppingCart->getProductosCantidad()
 
+        //Yii::app()->params->puntos['producto'] => Yii::app()->shoppingCart->getProductosCantidad()
         //CVarDumper::dump($listPuntos);
 
         foreach ($listPuntos as $objPunto) {
             echo "id: $objPunto->idPunto, tipoValor: $objPunto->tipoValor, valor: $objPunto->valor<br>";
         }
     }
-    
+
     public function actionPuntoscompra() {
         $fecha = new DateTime;
         $parametrosPuntos = array(
@@ -377,27 +425,23 @@ class TestController extends Controller {
             Yii::app()->params->puntos['proveedor'] => Yii::app()->shoppingCart->getProveedores(),
             Yii::app()->params->puntos['producto'] => Yii::app()->shoppingCart->getProductosCantidad(),
             Yii::app()->params->puntos['clientefielCompra'] => Yii::app()->shoppingCart->getCost(),
-            
             Yii::app()->params->puntos['monto'] => Yii::app()->shoppingCart->getCost(),
-            
             Yii::app()->params->puntos['cedula'] => array(
-                'identificacionUsuario' => Yii::app()->user->name, 
-                'valor'=> Yii::app()->shoppingCart->getCost()),
-            
+                'identificacionUsuario' => Yii::app()->user->name,
+                'valor' => Yii::app()->shoppingCart->getCost()),
             Yii::app()->params->puntos['rango'] => array(
-                'fecha' => $fecha, 
-                'valor'=> Yii::app()->shoppingCart->getCost()),
-            
+                'fecha' => $fecha,
+                'valor' => Yii::app()->shoppingCart->getCost()),
             Yii::app()->params->puntos['cumpleanhos'] => array(
-                'fechaNacimiento' => Yii::app()->session[Yii::app()->params->usuario['sesion']]->objUsuarioExtendida->fechaNacimiento, 
-                'valor'=> Yii::app()->shoppingCart->getCost()),
+                'fechaNacimiento' => Yii::app()->session[Yii::app()->params->usuario['sesion']]->objUsuarioExtendida->fechaNacimiento,
+                'valor' => Yii::app()->shoppingCart->getCost()),
         );
-        
-        //CVarDumper::dump($parametrosPuntos,3,true);exit();
-        
-        $listPuntosCompra = ComprasPuntos::generarPuntos($fecha,Yii::app()->session[Yii::app()->params->usuario['sesion']], $parametrosPuntos);
 
-        CVarDumper::dump($listPuntosCompra,3,true);
+        //CVarDumper::dump($parametrosPuntos,3,true);exit();
+
+        $listPuntosCompra = ComprasPuntos::generarPuntos($fecha, Yii::app()->session[Yii::app()->params->usuario['sesion']], $parametrosPuntos);
+
+        CVarDumper::dump($listPuntosCompra, 3, true);
     }
 
     public function actionExcel() {
@@ -516,7 +560,7 @@ class TestController extends Controller {
             ),
         ));
 
-        CVarDumper::dump($objProducto->listCategoriasTienda,3,true);
+        CVarDumper::dump($objProducto->listCategoriasTienda, 3, true);
 
         echo "<br/><br/>";
 
@@ -915,31 +959,30 @@ class TestController extends Controller {
 
         $tracks = new SimpleXMLElement($xml);
     }
-    
-    
-    public function actionCompra($pedido=436361,$pdv=1){
+
+    public function actionCompra($pedido = 436361, $pdv = 1) {
         // http://localhost/lrv/callcenter/admin/detallepedido/pedido/272012/asignar/1
-   //     $objCompra= Compras::model()->findByPk($pedido);
-        
+        //     $objCompra= Compras::model()->findByPk($pedido);
+
         $client = new SoapClient(null, array(
             'location' => Yii::app()->params->webServiceUrl['remisionPos'],
             'uri' => "",
             'trace' => 1
         ));
-       $result = $client->__soapCall("SaldosSadRemision",  array('idPedido' => $pedido, 'pdv_despacho' => $pdv));
-        
-      
-       echo "<pre>";
-       print_r($result);
-       echo "</pre>";
+        $result = $client->__soapCall("SaldosSadRemision", array('idPedido' => $pedido, 'pdv_despacho' => $pdv));
+
+
+        echo "<pre>";
+        print_r($result);
+        echo "</pre>";
     }
-    
-    public function actionPerfil(){
+
+    public function actionPerfil() {
         //CVarDumper::dump(Yii::app()->session[Yii::app()->params->sesion['sectorCiudadEntrega']],10,true);
         //echo "<br><br><br>";
         echo Yii::app()->shoppingCart->getCodigoPerfil();
         echo "<br><br><br>";
-        CVarDumper::dump(Yii::app()->session[Yii::app()->params->sesion['sectorCiudadEntrega']],10,true);
+        CVarDumper::dump(Yii::app()->session[Yii::app()->params->sesion['sectorCiudadEntrega']], 10, true);
     }
 
 }
