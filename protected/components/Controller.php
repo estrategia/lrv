@@ -33,6 +33,7 @@ class Controller extends CController {
     public $sectorName = "";
 
     public function init() {
+       
        if (Yii::app()->detectMobileBrowser->showMobile) {
               $this->isMobile = true;
               $this->layout = '//layouts/mobile';
@@ -40,7 +41,6 @@ class Controller extends CController {
               $this->isMobile = false;
               $this->layout = '//layouts/desktop';
           }
-
        
         $this->pageTitle = Yii::app()->name;
 
@@ -86,7 +86,7 @@ class Controller extends CController {
         } else {
         //    Yii::app()->getClientScript()->registerScriptFile(Yii::app()->request->baseUrl . "/libs/jquery/jquery-1.10.0.min.js", CClientScript::POS_HEAD);
             Yii::app()->getClientScript()->registerScriptFile(Yii::app()->request->baseUrl . "/libs/bootstrap/js/bootstrap.min.js", CClientScript::POS_HEAD);
-            Yii::app()->getClientScript()->registerScriptFile(Yii::app()->request->baseUrl . "/js/mobile.js", CClientScript::POS_HEAD);
+            //Yii::app()->getClientScript()->registerScriptFile(Yii::app()->request->baseUrl . "/js/mobile.js", CClientScript::POS_HEAD);
             Yii::app()->getClientScript()->registerScriptFile(Yii::app()->request->baseUrl . "/libs/jquery-ui/jquery-ui.min.js", CClientScript::POS_HEAD);
             Yii::app()->getClientScript()->registerScriptFile(Yii::app()->request->baseUrl . "/libs/owl-carousel/owl.carousel.min.js", CClientScript::POS_HEAD);
             Yii::app()->getClientScript()->registerScriptFile(Yii::app()->request->baseUrl . "/libs/select2/select2.min.js", CClientScript::POS_HEAD);

@@ -52,9 +52,9 @@
         
         <?php /* echo CHtml::submitButton('Guardar'); */ ?>
         <div class="row">
-                <div class="col-md-4">
-                   <input type="submit" class="btn btn-primary" data-enhanced="true" value="Guardar">
-                </div>
+            <div class="col-md-4">
+               <input type="submit" class="btn btn-primary" data-enhanced="true" value="Guardar">
+            </div>
         </div>
         <?php $this->endWidget(); ?>
     <?php endif; ?>

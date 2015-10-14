@@ -94,6 +94,18 @@ class RegistroForm extends CFormModel {
     }
     
     public function getContentClass(){
+       $clase = "ui-content";
+       $escenario = $this->getScenario();
+       
+       if($escenario == "registro"){
+           $clase = "";
+       }
+       
+       return $clase;
+   }
+
+
+    /*public function getContentClass(){
         $clase = "ui-content";
         $escenario = $this->getScenario();
         
@@ -102,7 +114,7 @@ class RegistroForm extends CFormModel {
         }
         
         return $tipo;
-    }
+    }*/
 
     /**
      * Declares attribute labels.

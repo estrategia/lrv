@@ -358,7 +358,12 @@ class UsuarioController extends Controller {
                     if (!$usuario->save()) {
                         $transaction->rollBack();
                         Yii::app()->user->setFlash('error', "Error al guardar información básica, por favor, intente de nuevo.");
-                        $this->render('registro', array('model' => $model));
+                        //$this->render('registro', array('model' => $model));
+                        if($this->isMobile){
+                            $this->render('registro', array('model' => $model));
+                        }else{
+                            $this->render('d_registro', array('model' => $model));
+                        }
                         Yii::app()->end();
                     }
 
@@ -374,7 +379,12 @@ class UsuarioController extends Controller {
                     if (!$usuarioExt->save()) {
                         $transaction->rollBack();
                         Yii::app()->user->setFlash('error', "Error al guardar información complementaria, por favor, intente de nuevo.");
-                        $this->render('registro', array('model' => $model));
+                        //$this->render('registro', array('model' => $model));
+                        if($this->isMobile){
+                            $this->render('registro', array('model' => $model));
+                        }else{
+                            $this->render('d_registro', array('model' => $model));
+                        }
                         Yii::app()->end();
                     }
 
@@ -393,7 +403,12 @@ class UsuarioController extends Controller {
                     }
 
                     Yii::app()->user->setFlash('error', "Error al realizar registro, por favor intente de nuevo.");
-                    $this->render('registro', array('model' => $model));
+                    //$this->render('registro', array('model' => $model));
+                    if($this->isMobile){
+                        $this->render('registro', array('model' => $model));
+                    }else{
+                        $this->render('d_registro', array('model' => $model));
+                    }
                     Yii::app()->end();
                 }
             }
@@ -446,13 +461,23 @@ class UsuarioController extends Controller {
                 } catch (Exception $exc) {
                     Yii::log($exc->getMessage() . "\n" . $exc->getTraceAsString(), CLogger::LEVEL_ERROR, 'application');
                     Yii::app()->user->setFlash('error', "Error al realizar registro, por favor intente de nuevo.");
-                    $this->render('registro', array('model' => $model));
+                    //$this->render('registro', array('model' => $model));
+                    if($this->isMobile){
+                        $this->render('registro', array('model' => $model));
+                    }else{
+                        $this->render('d_registro', array('model' => $model));
+                    }
                     Yii::app()->end();
                 }
             }
         }
 
-        $this->render('registro', array('model' => $model));
+        //$this->render('registro', array('model' => $model));
+        if($this->isMobile){
+            $this->render('registro', array('model' => $model));
+        }else{
+            $this->render('d_registro', array('model' => $model));
+        }
     }
 
     public function actionPagoexpress() {
@@ -481,12 +506,13 @@ class UsuarioController extends Controller {
             $objPagoExpress->identificacionUsuario = Yii::app()->user->name;
         }
 
+
         if (isset($_POST['Submit'])) {
             if (isset($_POST['PagoExpress'])) {
                 $objPagoExpress->attributes = $_POST['PagoExpress'];
             }
 
-            if ($_POST['Submit'] == 1) {
+            if ($_POST['Submit'] == 1 || strtolower($_POST['Submit']) == "modificar") {
                 $objPagoExpress->activo = 1;
             } else {
                 $objPagoExpress->activo = 0;
@@ -518,7 +544,13 @@ class UsuarioController extends Controller {
             'params' => array(':estado' => 1)
         ));
 
-        $this->render('pagoExpress', array(
+        $pagoexpress = 'pagoExpress';
+        if(!$this->isMobile)
+        {
+            $pagoexpress = 'd_pagoExpress';
+        }
+
+        $this->render($pagoexpress, array(
             'listDirecciones' => $listDirecciones,
             'listFormaPago' => $listFormaPago,
             'objPagoExpress' => $objPagoExpress)
@@ -534,7 +566,13 @@ class UsuarioController extends Controller {
         $model->activa = 1;
         $model->identificacionUsuario = Yii::app()->user->name;
 
-        $this->render('pedidos', array(
+        $pedidos = 'pedidos';
+        if(!$this->isMobile)
+        {
+            $pedidos = 'd_pedidos';
+        }
+
+        $this->render($pedidos, array(
             'model' => $model,
         ));
     }
@@ -552,7 +590,13 @@ class UsuarioController extends Controller {
             $this->redirect($this->createUrl('listapedidos'));
         }
 
-        $this->render('pedido', array(
+        $pedido = 'pedido';
+        if(!$this->isMobile)
+        {
+            $pedido = 'd_pedido';
+        }
+
+        $this->render($pedido, array(
             'objCompra' => $objCompra,
         ));
     }
@@ -571,7 +615,13 @@ class UsuarioController extends Controller {
         $model->codigoCiudad = Yii::app()->shoppingCart->getCodigoCiudad();
         $model->codigoSector = Yii::app()->shoppingCart->getCodigoSector();
 
-        $this->render('cotizaciones', array(
+        $cotizaciones = 'cotizaciones';
+        if(!$this->isMobile)
+        {
+            $cotizaciones = 'd_cotizaciones';
+        }
+
+        $this->render($cotizaciones, array(
             'model' => $model,
         ));
     }
@@ -596,7 +646,13 @@ class UsuarioController extends Controller {
             $this->redirect($this->createUrl('listacotizaciones'));
         }
 
-        $this->render('cotizacion', array(
+        $cotizacion = 'cotizacion';
+        if(!$this->isMobile)
+        {
+            $cotizacion = 'd_cotizacion';
+        }
+
+        $this->render($cotizacion, array(
             'objCotizacion' => $objCotizacion,
         ));
     }
@@ -1032,7 +1088,15 @@ class UsuarioController extends Controller {
         ));
         
         $listDirecciones = DireccionesDespacho::consultarDireccionesUsuario(Yii::app()->user->name, true);
-        $this->render('direcciones', array('listDirecciones' => $listDirecciones));
+
+        if($this->isMobile)
+        {
+            $this->render('direcciones', array('listDirecciones' => $listDirecciones));
+        }
+        else
+        {
+            $this->render('d_direcciones', array('listDirecciones' => $listDirecciones));
+        }
     }
 
     public function actionDireccionActualizar() {
@@ -1113,12 +1177,22 @@ class UsuarioController extends Controller {
         
         $render = Yii::app()->getRequest()->getPost('render', false);
         $modal = Yii::app()->getRequest()->getPost('modal', 0);
+        $pagoExpress = Yii::app()->getRequest()->getPost('pagoExpress', false);
+
+        $direccionForm = "_direccionForm";
+        $direcciones = "_direcciones";
+        if(!$this->isMobile)
+        {
+            $direccionForm = "_d_direccionForm";
+            $direcciones = "_d_direcciones";
+        }
+
         
         if($render){
             echo CJSON::encode(array(
                 'result' => 'ok',
                 'response' => array(
-                    'dialogoHTML' => $this->renderPartial('_direccionForm', array('model' => new DireccionesDespacho, 'modal'=>true), true)
+                    'dialogoHTML' => $this->renderPartial($direccionForm, array('model' => new DireccionesDespacho, 'modal'=>true), true)
             )));
             Yii::app()->end();
         }else if (isset($_POST['DireccionesDespacho'])) {
@@ -1140,7 +1214,8 @@ class UsuarioController extends Controller {
                     $listDirecciones = DireccionesDespacho::consultarDireccionesUsuario(Yii::app()->user->name, true);
                     echo CJSON::encode(array('result' => 'ok', 'response' => array(
                         'mensaje' => 'Direcci&oacute;n adicionada',
-                        'direccionesHTML' => $this->renderPartial('_direcciones', array('listDirecciones' => $listDirecciones), true)
+                        'pagoExpress' => $pagoExpress ? "si" : "no",
+                        'direccionesHTML' => $this->renderPartial($direcciones, array('listDirecciones' => $listDirecciones), true)
                     )));
                     Yii::app()->end();
                 }else{
@@ -1164,7 +1239,15 @@ class UsuarioController extends Controller {
     }
 
     protected function gridDetallePedido($data, $row) {
-        return CHtml::link('Ver', $this->createUrl('/usuario/pedido', array('compra'=>$data->idCompra)), array('class'=>'ui-btn ui-btn-inline ui-icon-view-circle ui-btn-icon-notext ui-icon-center ui-nodisc-icon', 'data-ajax'=>'false'));
+        $clase = 'ui-btn ui-btn-inline ui-icon-view-circle ui-btn-icon-notext ui-icon-center ui-nodisc-icon';
+        $texto = 'Ver';
+        if(!$this->isMobile)
+        {
+            $clase = '';
+            $texto = 'Ver Detalle';
+        }
+
+        return CHtml::link($texto, $this->createUrl('/usuario/pedido', array('compra'=>$data->idCompra)), array('class'=>$clase, 'data-ajax'=>'false'));
     }
     
     protected function gridFechaPedido($data, $row) {
@@ -1178,7 +1261,15 @@ class UsuarioController extends Controller {
     
     
     protected function gridDetalleCotizacion($data, $row) {
-        return CHtml::link('Ver', $this->createUrl('/usuario/cotizacion', array('cotizacion'=>$data->idCotizacion)), array('class'=>'ui-btn ui-btn-inline ui-icon-view-circle ui-btn-icon-notext ui-icon-center ui-nodisc-icon', 'data-ajax'=>'false'));
+        $clase = 'ui-btn ui-btn-inline ui-icon-view-circle ui-btn-icon-notext ui-icon-center ui-nodisc-icon';
+        $texto = 'Ver';
+        if(!$this->isMobile)
+        {
+            $clase = '';
+            $texto = 'Ver Detalle';
+        }
+
+        return CHtml::link($texto, $this->createUrl('/usuario/cotizacion', array('cotizacion'=>$data->idCotizacion)), array('class'=>$clase, 'data-ajax'=>'false'));
     }
     
     protected function gridFechaCotizacion($data, $row) {
