@@ -8,11 +8,6 @@
 <?php endif; ?>
 <br/>
 <div class="">
-    <div class="row">
-        <div class="col-md-12">
-                    <span class="glyphicon glyphicon-chevron-right der" aria-hidden="true"></span>&nbsp;<h4 style="display:inline-block;">Recordar Contraseña</h4>
-        </div>
-    </div>
     <br/>
     <?php
     $form = $this->beginWidget('CActiveForm', array(

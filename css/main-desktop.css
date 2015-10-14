@@ -813,11 +813,11 @@ li.active .iconStep {
 }
 
 .panel-title a.collapsed {
-  background: url(../images/right_arrow.png) center right no-repeat;
+  background: url(../images/desktop/right_arrow.png) center right no-repeat;
 }
 
 .panel-title a {
-  background: url(../images/downArrow.png) center right no-repeat;
+  background: url(../images/desktop/downArrow.png) center right no-repeat;
 }
 
 .panel-title{

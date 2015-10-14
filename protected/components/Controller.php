@@ -33,16 +33,15 @@ class Controller extends CController {
     public $sectorName = "";
 
     public function init() {
-        if (Yii::app()->detectMobileBrowser->showMobile) {
-            $this->isMobile = true;
-            $this->layout = '//layouts/mobile';
-        } else {
-            $this->isMobile = false;
-            $this->layout = '//layouts/desktop';
-        }
-
-        //$this->isMobile = true;
-        //$this->layout = '//layouts/mobile';
+       
+       if (Yii::app()->detectMobileBrowser->showMobile) {
+              $this->isMobile = true;
+              $this->layout = '//layouts/mobile';
+          }else{
+              $this->isMobile = false;
+              $this->layout = '//layouts/desktop';
+          }
+       
         $this->pageTitle = Yii::app()->name;
         $this->getSectorName();
         $this->registerJs();
@@ -98,6 +97,7 @@ class Controller extends CController {
             Yii::app()->getClientScript()->registerScriptFile(Yii::app()->request->baseUrl . '/libs/bootbox.min.js', CClientScript::POS_END);
             Yii::app()->getClientScript()->registerScriptFile(Yii::app()->request->baseUrl . "/js/common.js", CClientScript::POS_HEAD);
             Yii::app()->getClientScript()->registerScriptFile(Yii::app()->request->baseUrl . "/js/desktop.js", CClientScript::POS_END);
+            Yii::app()->getClientScript()->registerScriptFile(Yii::app()->request->baseUrl . "/js/desktop-ms.js", CClientScript::POS_END);
             /*     Yii::app()->getClientScript()->registerScriptFile(Yii::app()->request->baseUrl . "/js/npm.js", CClientScript::POS_END); */
         }
     }

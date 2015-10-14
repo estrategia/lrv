@@ -387,10 +387,16 @@ class CarroController extends Controller {
 
         $porcentajeCarro = floor(100 * ($nUnidadesCarro / $nUnidadesCompra));
 
+        $canasta = 'canasta';
+        if(!$this->isMobile)
+        {
+            //$canasta = 'd_canasta';
+        }
+
         echo CJSON::encode(array(
             'result' => 'ok',
             'response' => array(
-                'canastaHTML' => $this->renderPartial('canasta', null, true),
+                'canastaHTML' => $this->renderPartial($canasta, null, true),
                 'mensajeHTML' => $this->renderPartial('/common/mensajeHtml', array('mensaje' => "$porcentajeCarro% de lista agregada"), true),
             ),
         ));
@@ -627,10 +633,17 @@ class CarroController extends Controller {
 
         $porcentajeCarro = floor(100 * ($nUnidadesCarro / $nUnidadesCompra));
 
+        $canasta = 'canasta';
+        if(!$this->isMobile)
+        {
+            //$canasta = 'd_canasta';
+        }
+
+
         echo CJSON::encode(array(
             'result' => 'ok',
             'response' => array(
-                'canastaHTML' => $this->renderPartial('canasta', null, true),
+                'canastaHTML' => $this->renderPartial($canasta, null, true),
                 'mensajeHTML' => $this->renderPartial('/common/mensajeHtml', array('mensaje' => "$porcentajeCarro% de lista agregada"), true),
             ),
         ));

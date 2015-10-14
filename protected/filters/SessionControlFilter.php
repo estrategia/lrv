@@ -25,6 +25,8 @@ class SessionControlFilter extends CFilter{
             $sesionTipo = true;
         }
         
+       $sesionTipo=true;
+       
         if(!$sesionTipo){
             if($this->isMobile){
                 Yii::app()->request->redirect(Yii::app()->baseUrl . "/sitio");
