@@ -158,7 +158,7 @@ class UsuarioController extends Controller {
 
                     $contenido = $this->renderPartial('_correoBienvenida', array('objUsuario' => $usuario), true, true);
                     $htmlCorreo = $this->renderPartial('_correo', array('contenido' => $contenido), true, true);
-                    sendHtmlEmail($usuario->correoElectronico, Yii::app()->params->asuntoBienvenida, $htmlCorreo);
+                   // sendHtmlEmail($usuario->correoElectronico, Yii::app()->params->asuntoBienvenida, $htmlCorreo);
                     $transaction->commit();
                     
                     $identity = new UserIdentity($model->cedula, $model->clave);
@@ -167,11 +167,17 @@ class UsuarioController extends Controller {
 
                     Yii::app()->session[Yii::app()->params->sesion['redireccionAutenticacion']] = 'null';
                     
+                    $bienvenida="";
+                    if($this->isMobile){
+                        $bienvenida="bienvenida";
+                    }else{
+                        $bienvenida="d_bienvenida";
+                    }
                     echo CJSON::encode(array(
                         'result' => 'ok',
                         'response' => array(
                             'msg' => '',
-                            'bienvenidaHTML' => $this->renderPartial('bienvenida', array('objUsuario' => $usuario, 'url' => $urlBienvenida),true,false)
+                            'bienvenidaHTML' => $this->render($bienvenida, array('objUsuario' => $usuario, 'url' => $urlBienvenida),true,false)
                         )
                     ));
                     Yii::app()->end();

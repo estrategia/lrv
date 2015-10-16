@@ -126,31 +126,33 @@
                                                     <img src="<?php echo Yii::app()->request->baseUrl . Yii::app()->params->carpetaImagen['productos'][YII::app()->params->producto['tipoImagen']['mini']] . $imagen['rutaImagen']; ?>" class="img-responsive product-prom">
                                                 </a>
                                             </div>
-                                        <?php endif; ?>
-                                        <div class="col-md-12" style="text-align:center">
-                                            <div class="ranking-list" > 
-                                            <?php 
-                                                $this->widget('CStarRating',array(
-                                                            'name'=>'rating_'.$data['codigoProducto'],
-                                                            'value'=>floor($data['calificacion']),
-                                                            'minRating'=>1,
-                                                            'maxRating'=>5,
-                                                            'starCount'=>5,
-                                                            'readOnly'=>true
-                                                            )); 
-                                            ?> 
-                                            <?php   if($data->objCodigoEspecial->rutaIcono !=""):?>
-                                                        <a class='pop_codigo img-responsive product-prom' role="button" data-toggle="popover" title="" data-content="<?php echo $data->objCodigoEspecial->descripcion?>" >
-                                                            <img src="<?php echo Yii::app()->request->baseUrl . Yii::app()->params->carpetaImagen['codigoEspecial']."/".$data->objCodigoEspecial->rutaIcono?>"/>
-                                                        </a>
-                                            <?php endif;?>    
-                                            </div>
-                                           <!-- <a href="#"><i class="star-on" title="5.0"></i></a>
-                                            <a href="#"><i class="star-on" title="5.0"></i></a>
-                                            <a href="#"><i class="star-on" title="5.0"></i></a>
-                                            <a href="#"><i class="star-off" title="5.0"></i></a>
-                                            <a href="#"><i class="star-off" title="5.0"></i></a> -->
-                                        </div>
+                                        <?php endif; ?> 
+                                        <?php if(!in_array($data['idUnidadNegocioBI'], Yii::app()->params->calificacion['categoriasNoCalificacion'])): ?>
+                                                <div class="col-md-12" style="text-align:center">
+                                                    <div class="ranking-list" > 
+                                                        <?php 
+                                                            $this->widget('CStarRating',array(
+                                                                        'name'=>'rating_'.$data['codigoProducto'],
+                                                                        'value'=>floor($data['calificacion']),
+                                                                        'minRating'=>1,
+                                                                        'maxRating'=>5,
+                                                                        'starCount'=>5,
+                                                                        'readOnly'=>true
+                                                                        )); 
+                                                        ?> 
+                                                        <?php   if($data->objCodigoEspecial->rutaIcono !=""):?>
+                                                                    <a class='pop_codigo img-responsive product-prom' role="button" data-toggle="popover" title="" data-content="<?php echo $data->objCodigoEspecial->descripcion?>" >
+                                                                        <img src="<?php echo Yii::app()->request->baseUrl . Yii::app()->params->carpetaImagen['codigoEspecial']."/".$data->objCodigoEspecial->rutaIcono?>"/>
+                                                                    </a>
+                                                        <?php endif;?>    
+                                                    </div>
+                                                   <!-- <a href="#"><i class="star-on" title="5.0"></i></a>
+                                                    <a href="#"><i class="star-on" title="5.0"></i></a>
+                                                    <a href="#"><i class="star-on" title="5.0"></i></a>
+                                                    <a href="#"><i class="star-off" title="5.0"></i></a>
+                                                    <a href="#"><i class="star-off" title="5.0"></i></a> -->
+                                                </div>
+                                        <?php endif;?>
                                         <div class="col-md-12">
                                             <div class="line-bottom">
                                                 <p style="min-height: 41px">

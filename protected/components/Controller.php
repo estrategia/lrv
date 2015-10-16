@@ -31,26 +31,25 @@ class Controller extends CController {
     public $extraContentList = array();
     public $extraPageList = array();
     public $sectorName = "";
+    public $categorias = array();
 
     public function init() {
-       //*
-       if (Yii::app()->detectMobileBrowser->showMobile) {
-              $this->isMobile = true;
-              $this->layout = '//layouts/mobile';
-          }else{
-              $this->isMobile = false;
-              $this->layout = '//layouts/desktop';
-          }//*/
+        if (Yii::app()->detectMobileBrowser->showMobile) {
+            $this->isMobile = true;
+            $this->layout = '//layouts/mobile';
+        } else {
+            $this->isMobile = false;
+            $this->layout = '//layouts/desktop';
+        }
+        
         //$this->isMobile = true;
         //$this->layout = '//layouts/mobile';
-
-       
         $this->pageTitle = Yii::app()->name;
-
         $this->getSectorName();
         $this->registerJs();
         $this->registerCss();
-	if(!$this->isMobile){
+        
+        if (!$this->isMobile) {
             $this->getCategorias();
             $this->getCiudades();
         }
@@ -65,7 +64,7 @@ class Controller extends CController {
                 $this->sectorName .= " - " . $objSubSector->nombreSubSector;
             else if ($objSectorCiudad->objSector->codigoSector != 0)
                 $this->sectorName .= " - " . $objSectorCiudad->objSector->nombreSector;
-        }else{
+        }else {
             $this->sectorName = "Seleccionar ubicación";
         }
     }
@@ -87,9 +86,9 @@ class Controller extends CController {
             Yii::app()->getClientScript()->registerScriptFile(Yii::app()->request->baseUrl . "/libs/jquerymobile-windows/jqm-windows.mdialog.js", CClientScript::POS_HEAD);
             Yii::app()->getClientScript()->registerScriptFile(Yii::app()->request->baseUrl . "/js/mobile.js", CClientScript::POS_HEAD);
         } else {
-        //    Yii::app()->getClientScript()->registerScriptFile(Yii::app()->request->baseUrl . "/libs/jquery/jquery-1.10.0.min.js", CClientScript::POS_HEAD);
+            //    Yii::app()->getClientScript()->registerScriptFile(Yii::app()->request->baseUrl . "/libs/jquery/jquery-1.10.0.min.js", CClientScript::POS_HEAD);
             Yii::app()->getClientScript()->registerScriptFile(Yii::app()->request->baseUrl . "/libs/bootstrap/js/bootstrap.min.js", CClientScript::POS_HEAD);
-            //Yii::app()->getClientScript()->registerScriptFile(Yii::app()->request->baseUrl . "/js/mobile.js", CClientScript::POS_HEAD);
+            Yii::app()->getClientScript()->registerScriptFile(Yii::app()->request->baseUrl . "/js/mobile.js", CClientScript::POS_HEAD);
             Yii::app()->getClientScript()->registerScriptFile(Yii::app()->request->baseUrl . "/libs/jquery-ui/jquery-ui.min.js", CClientScript::POS_HEAD);
             Yii::app()->getClientScript()->registerScriptFile(Yii::app()->request->baseUrl . "/libs/owl-carousel/owl.carousel.min.js", CClientScript::POS_HEAD);
             Yii::app()->getClientScript()->registerScriptFile(Yii::app()->request->baseUrl . "/libs/select2/select2.min.js", CClientScript::POS_HEAD);
@@ -97,10 +96,12 @@ class Controller extends CController {
             Yii::app()->getClientScript()->registerScriptFile(Yii::app()->request->baseUrl . "/libs/bootstrap/js/bootstrap-slider.js", CClientScript::POS_HEAD);
             Yii::app()->getClientScript()->registerScriptFile(Yii::app()->request->baseUrl . "/libs/ad-gallery/jquery.ad-gallery.js", CClientScript::POS_HEAD);
             Yii::app()->getClientScript()->registerScriptFile(Yii::app()->request->baseUrl . '/libs/bootbox.min.js', CClientScript::POS_END);
-            Yii::app()->getClientScript()->registerScriptFile(Yii::app()->request->baseUrl . "/js/common.js", CClientScript::POS_END);
+            Yii::app()->getClientScript()->registerScriptFile(Yii::app()->request->baseUrl . "/js/common.js", CClientScript::POS_HEAD);
             Yii::app()->getClientScript()->registerScriptFile(Yii::app()->request->baseUrl . "/js/desktop.js", CClientScript::POS_END);
             Yii::app()->getClientScript()->registerScriptFile(Yii::app()->request->baseUrl . "/js/desktop-om.js", CClientScript::POS_END);
-       /*     Yii::app()->getClientScript()->registerScriptFile(Yii::app()->request->baseUrl . "/js/npm.js", CClientScript::POS_END);*/
+            Yii::app()->getClientScript()->registerScriptFile(Yii::app()->request->baseUrl . "/js/desktop-ms.js", CClientScript::POS_END);
+            Yii::app()->getClientScript()->registerScriptFile(Yii::app()->request->baseUrl . "/js/desktop-jj.js", CClientScript::POS_END);
+            /*     Yii::app()->getClientScript()->registerScriptFile(Yii::app()->request->baseUrl . "/js/npm.js", CClientScript::POS_END); */
         }
     }
 
@@ -127,26 +128,27 @@ class Controller extends CController {
         }
     }
 
-  public function getCiudades(){
-        if(!isset($_SESSION['listciudades'])){
-            $criteria=new CDbCriteria();
-            $criteria->order="orden";
-            $_SESSION['listciudades']=Ciudad::model()->findAll($criteria);
+    public function getCiudades() {
+        if (!isset($_SESSION['listciudades'])) {
+            $criteria = new CDbCriteria();
+            $criteria->order = "orden";
+            $_SESSION['listciudades'] = Ciudad::model()->findAll($criteria);
             Yii::app()->session[Yii::app()->params->sesion['sectorCiudadEntrega']];
         }
     }
-    
-    public function getCategorias(){
-        if(!isset($_SESSION['categoriasDesktop'])){
+
+    public function getCategorias() {
+     //   if (!isset($_SESSION['categoriasDesktop'])) {
             $categorias = CategoriaTienda::model()->findAll(array(
-               'order' => 't.orden',
-               'condition' => 't.visible=:visible AND t.idCategoriaPadre IS NULL ',
-               'params' => array(
-                   ':visible' => 1,
-               ),
-               'with' => 'listCategoriasHijas',
-           ));
-           $_SESSION['categoriasDesktop']=$categorias;
-        }
+                'order' => 't.orden',
+                'condition' => 't.visible=:visible AND t.idCategoriaPadre IS NULL ',
+                'params' => array(
+                    ':visible' => 1,
+                ),
+                'with' => array('listCategoriasHijas'/*,'listCategoriasHijasMenu'*/),
+            ));
+            $this->categorias = $categorias;
+       // }
     }
+
 }

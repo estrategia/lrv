@@ -17,7 +17,8 @@
     </head>
 
     <body>
-        <div class="container-fluid">
+        <div id="main-page" >
+            <div class="container-fluid">
                 <header>
                         <div class="row">
                                 <div class="col-md-12">	
@@ -30,8 +31,7 @@
                                                 <div class="row">
                                                         <div class="col-md-12">
                                                                 <div class="col-md-2">
-                                                                    
-                                                                     <!--   <div class="dropdown ciudad">
+                                                                     <!-- <div class="dropdown ciudad">
                                                                                  <a id="ciudad" data-target="#" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Ciudad&nbsp;&nbsp;&nbsp;|<span class="glyphicon glyphicon-arrow-down"></span></a>
                                                                                         <?php if(!isset($_SESSION['listciudades'])):
                                                                                                $this->getCiudades();
@@ -51,13 +51,18 @@
                                                                          <?php endif;?>
                                                                          <br/>
                                                                          <li>
-                                                                        <?php echo CHtml::link('Cambiar Ubicación', CController::createUrl('/sitio/ubicacion'), array()); ?>
+                                                                        <?php echo CHtml::link('<span class="text-center title-desp"><span class="glyphicon glyphicon-map-marker" style="margin-right: 5px;"></span> '
+                                                                                . ' Cambiar Ubicación </span>', CController::createUrl('/sitio/ubicacion'), array()); ?>
                                                                          </li>
                                                                      </ul>
                                                                 </div>
                                                                 <div class="col-md-6">
                                                                     <form method="get" action="<?php echo CController::createUrl('/catalogo/buscarD') ?>" data-ajax="false">
-                                                                                    
+                                                                                    <?php
+                                                                                  /*  echo "<pre>";
+                                                                                    print_r($this->categorias);
+                                                                                    echo "</pre>";*/
+                                                                                    ?>
                                                                                 <div class="col-md-6 content-search">
                                                                                         <input type="text" class="form-control" placeholder="Escriba el nombre del producto"  autocomplete="off" value="" id="busqueda" name="busqueda" > 
                                                                                 </div>
@@ -66,23 +71,24 @@
 											<span>Todas las categorías</span>
 											<span class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
 												<i><a href="#"><img src="<?php echo Yii::app()->request->baseUrl; ?>/images/desktop/ico-filtro-categorias.png"></a></i></span>
-
 												<ul class="dropdown-menu todas-categorias" aria-labelledby="categorias">
-										          <li><a href="#"><img src="<?php echo Yii::app()->request->baseUrl; ?>/images/desktop/rx.png" alt="">Medicina formulada</a></li>
+                                                                                               <?php foreach($this->categorias as $categoria):?>
+                                                                                                    <li><a href="#"><img src="<?php echo Yii::app()->request->baseUrl; ?>/images/desktop/<?php echo $categoria->rutaImagen?>" alt=""><?php echo $categoria->nombreCategoriaTienda?></a></li>
+                                                                                               <?php endforeach;?>     
+										        <!--  <li><a href="#"><img src="<?php echo Yii::app()->request->baseUrl; ?>/images/desktop/rx.png" alt="">Medicina formulada</a></li>
 										          <li><a href="#"><img src="<?php echo Yii::app()->request->baseUrl; ?>/images/desktop/productos-sin-formula.png" alt="">Productos sin formula</a></li>
 										          <li class="cuidado-personal"><a href="#"><img src="<?php echo Yii::app()->request->baseUrl; ?>/images/desktop/cuidado-personal.png" alt="">Cuidado personal</a></li>
 										          <li><a href="#"><img src="<?php echo Yii::app()->request->baseUrl; ?>/images/desktop/comida.png" alt="">Alimentos y bebidas</a></li>
 										          <li><a href="#"><img src="<?php echo Yii::app()->request->baseUrl; ?>/images/desktop/aseo.png" alt="">Aseo y Hogar</a></li>
 										          <li class="mundo-bebes"><a href="mundo-bebes.html"><img src="<?php echo Yii::app()->request->baseUrl; ?>/images/desktop/bebe.png" alt="">Mundo Bebes</a></li>
 										          <li><a href="#"><img src="<?php echo Yii::app()->request->baseUrl; ?>/images/desktop/natural.png" alt="">Natural</a></li>
-										          <li><a href="#"><img src="<?php echo Yii::app()->request->baseUrl; ?>/images/desktop/promociones.png" alt="">Promociones</a></li>
+										          <li><a href="#"><img src="<?php echo Yii::app()->request->baseUrl; ?>/images/desktop/promociones.png" alt="">Promociones</a></li> -->
 										        </ul>
 
 											<span><i><a href="#"><img class="ico-buscar" src="<?php echo Yii::app()->request->baseUrl; ?>/images/desktop/ico-buscar.png" alt=""></a></i></span>
 										</div>
                                                                                 </div>
                                                                          </form>
-
                                                                 </div>
                                                                 <div class="col-md-4">	
                                                                     <?php if(Yii::app()->user->isGuest):?>
@@ -123,9 +129,74 @@
         <!--menu-->
         <ul class="nav nav-pills" role="tablist">
     <li class="dropdown col-md-2 categorias" role="presentation">
-        
 	<a id="categorias" href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Categorías<span class="ico-cat"></span></a>
         <ul class="dropdown-menu category" aria-labelledby="categorias">
+                     <?php foreach($this->categorias as $categoria):?>
+                        <li class="cuidado-personal"><a href="#"><img src="<?php echo Yii::app()->request->baseUrl; ?>/images/desktop/<?php echo $categoria->rutaImagen?>" alt=""><?php echo $categoria->nombreCategoriaTienda?></a>
+                            <?php if($categoria->listCategoriasHijas):?>
+                                <div class="right-nav">
+                                                  <ul class="submenu">
+                                                      <?php foreach($categoria->listCategoriasHijas as $subcategoria):?>
+                                                          <div class="section-submenu">
+                                                                  <?php echo CHtml::link("<li class='title-submenu'><span class='glyphicon glyphicon-chevron-right' aria-hidden='true'></span>$subcategoria->nombreCategoriaTienda</li>", CController::createUrl('/catalogo/categoria', array('categoria' => $subcategoria->idCategoriaTienda))); ?>
+                                                                  <li>Desodorantes</li>
+                                                                  <li>Jabones</li>
+                                                                  <li>Jabones liquídos</li>
+                                                                  <li>Pañuelos faciales</li>
+                                                          </div>
+                                                        <?php endforeach;?>
+                                                         <!-- <div class="section-submenu">
+                                                                  <li class="title-submenu"><span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span>Bebé</li>
+                                                                  <a href="#"><li>Aceites</li></a>
+                                                                  <a href="#"><li>Copitos</li></a>
+                                                                  <a href="#"><li>Crema antipañalitis</li></a>
+                                                          </div>
+                                                          <div class="section-submenu">
+                                                                  <li class="title-submenu"><span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span>Capilar</li>
+                                                                  <a href="#"><li>Acondicionador</li></a>
+                                                                  <a href="#"><li>Alisadores</li></a>
+                                                                  <a href="#"><li>Coloración</li></a>
+                                                                  <a href="#"><li>Shampoo</li></a>
+                                                                  <a href="#"><li>Fijación</li></a>
+                                                                  <a href="#"><li>Decolorantes</li></a>
+                                                          </div> -->
+                                                  </ul>
+                                                  <img style="margin-top:-3px;height:394px;" src="<?php echo Yii::app()->request->baseUrl; ?>/images/desktop/cuidado-personal-submenu.png">
+                                  </div>
+                            <?php endif;?>
+                        </li>
+                        <!--
+                        <li class="cuidado-personal"><a href="#"><img src="<?php echo Yii::app()->request->baseUrl; ?>/images/desktop/cuidado-personal.png" alt="">Cuidado personal</a>
+                                  <div class="right-nav">
+                                                  <ul class="submenu">
+                                                          <div class="section-submenu">
+                                                                  <li class="title-submenu"><span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span>Aseo personal</li>
+                                                                  <a href="#"><li>Desodorantes</li></a>
+                                                                  <a href="#"><li>Jabones</li></a>
+                                                                  <a href="#"><li>Jabones liquídos</li></a>
+                                                                  <a href="#"><li>Pañuelos faciales</li></a>
+                                                          </div>
+                                                          <div class="section-submenu">
+                                                                  <li class="title-submenu"><span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span>Bebé</li>
+                                                                  <a href="#"><li>Aceites</li></a>
+                                                                  <a href="#"><li>Copitos</li></a>
+                                                                  <a href="#"><li>Crema antipañalitis</li></a>
+                                                          </div>
+                                                          <div class="section-submenu">
+                                                                  <li class="title-submenu"><span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span>Capilar</li>
+                                                                  <a href="#"><li>Acondicionador</li></a>
+                                                                  <a href="#"><li>Alisadores</li></a>
+                                                                  <a href="#"><li>Coloración</li></a>
+                                                                  <a href="#"><li>Shampoo</li></a>
+                                                                  <a href="#"><li>Fijación</li></a>
+                                                                  <a href="#"><li>Decolorantes</li></a>
+                                                          </div>
+                                                  </ul>
+                                                  <img style="margin-top:-3px;height:394px;" src="<?php echo Yii::app()->request->baseUrl; ?>/images/desktop/cuidado-personal-submenu.png">
+                                  </div>
+                    </li> -->
+                    <?php endforeach;?>
+                    <!-- 
                     <li><a href="#"><img src="<?php echo Yii::app()->request->baseUrl; ?>/images/desktop/rx.png" alt="">Medicina formulada</a></li>
                     <li><a href="#"><img src="<?php echo Yii::app()->request->baseUrl; ?>/images/desktop/productos-sin-formula.png" alt="">Productos sin formula</a></li>
                     <li class="cuidado-personal"><a href="#"><img src="<?php echo Yii::app()->request->baseUrl; ?>/images/desktop/cuidado-personal.png" alt="">Cuidado personal</a>
@@ -202,7 +273,7 @@
                                   </div>
                     </li>
                     <li><a href="#"><img src="<?php echo Yii::app()->request->baseUrl; ?>/images/desktop/natural.png" alt="">Natural</a></li>
-                    <li><a href="#"><img src="<?php echo Yii::app()->request->baseUrl; ?>/images/desktop/promociones.png" alt="">Promociones</a></li>
+                    <li><a href="#"><img src="<?php echo Yii::app()->request->baseUrl; ?>/images/desktop/promociones.png" alt="">Promociones</a></li> -->
                   </ul>
               </li>
 
@@ -255,75 +326,76 @@
                     <div class="row"></div>
             </section>
             <!--fin banner footer-->
-<!--footer-->
-<footer>	
-	<div class="container">	
-		<div class="row">
-			<div class="col-md-12" style="padding-top:20px;">	
-				<div class="col-md-3">
-					<div class="titulo-footer">	
-						<img src="<?php echo Yii::app()->request->baseUrl; ?>/images/desktop/informacion-y-servicios.png" alt="">
-						<strong style="margin-left:10px;">Información</strong><br><strong class="title-footer2"> y servicios</strong>
-					</div>
-					<ul>	
-						<li><a href="#">Horarios de atención</a></li>
-						<li><a href="#">Politicas días de descuento 1,10,15 y 25</a></li>
-						<li><a href="#">PQRS (Pregunras, quejas, reclamos, sugerencias)</a></li>
-						<li><a href="#">Políticas y términos de uso</a></li>
-						<li><a href="#">SIC (Súper intendencia de industria y comercio)</a></li>
-						<li><a href="#">Tarjeta crediRebaja</a></li>
-					</ul>
-				</div>
-				<div class="col-md-2">
-					<div class="titulo-footer">
-					<img src="<?php echo Yii::app()->request->baseUrl; ?>/images/desktop/cliente-fiel.png" alt="">	
-						<strong style="margin-left:10px;">Club</strong><br><strong class="title-footer2">cliente fiel</strong>
-					</div>
-					<ul>	
-						<li><a href="#">Informaciíon del programa</a></li>
-						<li><a href="#">Beneficios del programa</a></li>
-						<li><a href="#">Términos y condiciones</a></li>
-						<li><a href="#">Actualiza datos</a></li>
-					</ul>
-				</div>
-				<div class="col-md-3">
-					<div class="titulo-footer">	
-						<img src="<?php echo Yii::app()->request->baseUrl; ?>/images/desktop/ico-actividad-comercial.png" alt="">
-						<strong style="margin-left:10px;">Actividades</strong><br><strong class="title-footer2">comerciales</strong>
-					</div>
-					<ul>	
-						<li><a href="#">Políticas y condiciones</a></li>
-						<li><a href="#">Ganadores de campañas</a></li>
-					</ul>
-				</div>
-				<div class="col-md-2">
-					<div class="titulo-footer">	
-						<img src="<?php echo Yii::app()->request->baseUrl; ?>/images/desktop/coopervir.png" alt="">
-						<strong>Cooperservir</strong>
-					</div>
-				</div>
-				<div class="col-md-2">
-					<div class="titulo-footer-last">
-						<img src="<?php echo Yii::app()->request->baseUrl; ?>/images/desktop/ico-contactanos.png" alt="">	
-						<strong>Contactanos</strong>
-					</div>
-					<ul>	
-						<li>Call center <br> 01 8000 93 99 00</li>
-					</ul>
-				</div>
-			</div>	
-			
-			<div class="col-md-12">	
-				<br>
-				<br>
-			</div>	
+            <!--footer-->
+            <footer>	
+                    <div class="container">	
+                            <div class="row">
+                                    <div class="col-md-12" style="padding-top:20px;">	
+                                            <div class="col-md-3">
+                                                    <div class="titulo-footer">	
+                                                            <img src="<?php echo Yii::app()->request->baseUrl; ?>/images/desktop/informacion-y-servicios.png" alt="">
+                                                            <strong style="margin-left:10px;">Información</strong><br><strong class="title-footer2"> y servicios</strong>
+                                                    </div>
+                                                    <ul>	
+                                                            <li><a href="#">Horarios de atención</a></li>
+                                                            <li><a href="#">Politicas días de descuento 1,10,15 y 25</a></li>
+                                                            <li><a href="#">PQRS (Pregunras, quejas, reclamos, sugerencias)</a></li>
+                                                            <li><a href="#">Políticas y términos de uso</a></li>
+                                                            <li><a href="#">SIC (Súper intendencia de industria y comercio)</a></li>
+                                                            <li><a href="#">Tarjeta crediRebaja</a></li>
+                                                    </ul>
+                                            </div>
+                                            <div class="col-md-2">
+                                                    <div class="titulo-footer">
+                                                    <img src="<?php echo Yii::app()->request->baseUrl; ?>/images/desktop/cliente-fiel.png" alt="">	
+                                                            <strong style="margin-left:10px;">Club</strong><br><strong class="title-footer2">cliente fiel</strong>
+                                                    </div>
+                                                    <ul>	
+                                                            <li><a href="#">Informaciíon del programa</a></li>
+                                                            <li><a href="#">Beneficios del programa</a></li>
+                                                            <li><a href="#">Términos y condiciones</a></li>
+                                                            <li><a href="#">Actualiza datos</a></li>
+                                                    </ul>
+                                            </div>
+                                            <div class="col-md-3">
+                                                    <div class="titulo-footer">	
+                                                            <img src="<?php echo Yii::app()->request->baseUrl; ?>/images/desktop/ico-actividad-comercial.png" alt="">
+                                                            <strong style="margin-left:10px;">Actividades</strong><br><strong class="title-footer2">comerciales</strong>
+                                                    </div>
+                                                    <ul>	
+                                                            <li><a href="#">Políticas y condiciones</a></li>
+                                                            <li><a href="#">Ganadores de campañas</a></li>
+                                                    </ul>
+                                            </div>
+                                            <div class="col-md-2">
+                                                    <div class="titulo-footer">	
+                                                            <img src="<?php echo Yii::app()->request->baseUrl; ?>/images/desktop/coopervir.png" alt="">
+                                                            <strong>Cooperservir</strong>
+                                                    </div>
+                                            </div>
+                                            <div class="col-md-2">
+                                                    <div class="titulo-footer-last">
+                                                            <img src="<?php echo Yii::app()->request->baseUrl; ?>/images/desktop/ico-contactanos.png" alt="">	
+                                                            <strong>Contactanos</strong>
+                                                    </div>
+                                                    <ul>	
+                                                            <li>Call center <br> 01 8000 93 99 00</li>
+                                                    </ul>
+                                            </div>
+                                    </div>	
 
-			<div class="col-md-12">	
-			  <p align="center">Cooperativa Multiactiva &nbsp;de Servicios Solidarios Copservir  Ltda | NIT &nbsp;830.011.670-3 | LA REBAJA DROGUERIA | 01 8000 93 99  00 <br> Calle 13 No. 42 - 10 Bogotá, Colombia | <a href="mailto:infolrv@copservir.com">infolrv@copservir.com</a>
-              Colombia © 2015 <a href="http://www.larebajavirtual.com">www.larebajavirtual.com <br> </a><a href="/contenido/index/opcion/param/99/">PQRS (preguntas, quejas, reclamos, sugerencias)</a></p>
-			</div>
-		</div>
-	</div>
-</footer>
+                                    <div class="col-md-12">	
+                                            <br>
+                                            <br>
+                                    </div>	
+
+                                    <div class="col-md-12">	
+                                      <p align="center">Cooperativa Multiactiva &nbsp;de Servicios Solidarios Copservir  Ltda | NIT &nbsp;830.011.670-3 | LA REBAJA DROGUERIA | 01 8000 93 99  00 <br> Calle 13 No. 42 - 10 Bogotá, Colombia | <a href="mailto:infolrv@copservir.com">infolrv@copservir.com</a>
+                          Colombia © 2015 <a href="http://www.larebajavirtual.com">www.larebajavirtual.com <br> </a><a href="/contenido/index/opcion/param/99/">PQRS (preguntas, quejas, reclamos, sugerencias)</a></p>
+                                    </div>
+                            </div>
+                    </div>
+            </footer>
+        </div>
     </body>
 </html>

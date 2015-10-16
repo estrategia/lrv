@@ -367,7 +367,7 @@ $(document).on('click', "a[data-carro='3']", function() {
             if (data.result === "ok") {
                 $('#div-carro-canasta').html(data.response.canastaHTML);
                 $('#div-carro-canasta').trigger("create");
-                
+
                 if (data.response.mensajeHTML) {
                     dialogoAnimado(data.response.mensajeHTML);
                     $("#cantidad-productos").html(data.response.objetosCarro);

@@ -40,7 +40,8 @@
         <?php if($objSectorCiudad!=null):?>
          <div class="row">
             <div class="col-md-5">
-            <?php echo CHtml::link('Continuar en ' . $this->sectorName, $this->createUrl('/sitio/inicio'), array('class' => 'btn btn-warning btn-ciudad', 'data-mini' => 'true', 'data-ajax' => 'false')); ?>
+                <?php $urlRefer=(isset(Yii::app()->session[Yii::app()->params->sesion['redireccionAutenticacion']]) ? Yii::app()->session[Yii::app()->params->sesion['redireccionAutenticacion']]:$this->createUrl('/sitio/inicio'))?>
+            <?php echo CHtml::link('Continuar en ' . $this->sectorName, $urlRefer, array('class' => 'btn btn-warning btn-ciudad', 'data-mini' => 'true', 'data-ajax' => 'false')); ?>
             </div>
          </div>
         <?php endif;?>
