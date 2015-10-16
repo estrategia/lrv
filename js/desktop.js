@@ -446,24 +446,3 @@ function cargarCiudad() {
           }
       });
   }
-
-$(document).on('click', "a[data-role='crearcotizacion']", function() {
-    $.ajax({
-        type: 'POST',
-        dataType: 'json',
-        async: true,
-        url: requestUrl + '/carro/crearcotizacion',
-        beforeSend: function() {
-            //$.mobile.loading('show');
-        },
-        complete: function() {
-            //$.mobile.loading('hide');
-        },
-        success: function(data) {
-            dialogoAnimado(data.response);
-        },
-        error: function(jqXHR, textStatus, errorThrown) {
-            bootbox.alert('Error: ' + errorThrown);
-        }
-    });
-});
