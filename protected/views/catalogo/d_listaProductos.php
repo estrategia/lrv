@@ -85,14 +85,15 @@
                               <div class="row">
                                     <div class="col-md-12">
                                             <div class="col-md-8">
-                                                <h1 class="ct_result">Resultados de búsqueda: <?php echo $nombreBusqueda ?></h1>
+                                                <?php if(isset($nombreBusqueda)):?>
+                                                <h1 class="ct_result">Resultados de búsqueda: <?php echo $nombreBusqueda ?></h1> 
+                                                <?php endif;?>
                                                 <p class="cp_result"><?= count($listProductos) + count($listCombos) ?> resultados</p>
                                             </div>
 
                                             <?php if ($imagenBusqueda != null): ?>
                                                 <img src="<?php echo Yii::app()->request->baseUrl . $imagenBusqueda; ?>" class="ajustada">
                                             <?php endif; ?>
-                                                
                                             <?php if(count($listProductos) + count($listCombos) >0 ):?>   
                                                 <div class="col-md-2">    
                                                     <div class="option-list">
@@ -117,9 +118,11 @@
                                     </div>
                                 </div>
                                 <br/>
+                                
                                         <?php if ($dataprovider === null): ?>
                                             <span class="empty">Seleccionar ciudad para obtener lista de productos</span>
                                         <?php else: ?>
+                                            
                                              <?php foreach ($listCombos as $objCombo): ?>
                                                 <li class="c_list_prod">
                                                     <div class="ui-field-contain clst_prod_cont">
@@ -136,6 +139,7 @@
                                                 <section>
                                                     <div class="col-md-12">
                                                             <div class="row">
+                                                                
                                                                         <ul class="listaProductos">
                                                                             <?php $this->widget('zii.widgets.CListView', array(
                                                                                 'id' => 'id-productos-list',
@@ -228,12 +232,10 @@
 <?php endforeach; ?>*/
 ?>
 <script>
-
 $('#items-page').select2({});
             
 function actualizarNumerosPagina(){
     var items= $('#items-page').val();
     $.fn.yiiListView.update('id-productos-list', {data: {pageSize: items}});
 }
-
 </script>

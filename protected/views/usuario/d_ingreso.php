@@ -42,7 +42,12 @@
             <div class='space-1'></div>
             <div class="row">
                 <div class='col-md-4'>
-                    <input type="submit" class ='btn btn-primary' data-enhanced="true" value="Ingresar">
+                    <?php /*echo CHtml::submitButton('Buscar', array('id' => 'btnBuscar',
+                                                        'submit' => CController::createUrl('/usuario/ingresar'),
+                                                        'name' => 'button', 
+                                                        'class'=>'btn btn-primary btn-sm', 
+                                                        'data-enhanced' => 'true'));*/ ?>
+                    <input type="button" class ='btn btn-primary' data-enhanced="true" data-registro-desktop="autenticar" value="Ingresar"> 
                 </div>
             </div>
     

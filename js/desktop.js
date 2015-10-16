@@ -179,11 +179,12 @@ $(document).ready(function() {
     });
     $('.ad-gallery').adGallery({
         //  loader_image: '../libs/ad-gallery/loader.gif',
-        width: 400,
-        height: 300,
-        thumb_opacity: 0.7,
-    });
-    $('.ciudades').select2();
+          width: 400, 
+          height: 300,
+          thumb_opacity: 0.7,
+      });
+      $('.ciudades').select2();
+      $('#RegistroForm_profesion').select2();
 })
 
 $(document).on('click', "a[data-carro='1']", function() {
@@ -432,19 +433,19 @@ function cargarCiudad() {
         url: urlCargar,
         data: {codigoCiudad: ciudad},
         dataType: 'json'
-    }).done(function(data) {
-        if (data.result == 'ok') {
-            bootbox.alert(data.response);
-            if (data.urlAnterior) {
-                location.href = data.urlAnterior;
-            } else {
-                location.href = requestUrl;
-            }
-        } else {
-            bootbox.alert(data.response);
-        }
-    });
-}
+      }).done(function(data) {
+          if(data.result=='ok'){
+              bootbox.alert(data.response);
+              if(data.urlAnterior){
+                location.href=data.urlAnterior;
+              }else{
+                  location.href=requestUrl;
+              }
+          }else{
+              bootbox.alert(data.response);
+          }
+      });
+  }
 
 $(document).on('click', "a[data-role='crearcotizacion']", function() {
     $.ajax({

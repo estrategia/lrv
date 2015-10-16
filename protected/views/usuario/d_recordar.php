@@ -22,8 +22,7 @@
             'errorCssClass' => 'has-error',
             'successCssClass' => 'has-success',
         ))
-    );
-    ?>
+    ); ?>
         <div class="row">
                 <div class="col-md-4">
                     <?php echo $form->labelEx($model, 'correoElectronico', array('class' => '')); ?>
@@ -35,7 +34,7 @@
     <?php /* echo CHtml::submitButton('Recordar', array('class' => 'c_bt_sendrc')); */ ?>
     <div class="row">
          <div class="col-md-4">
-               <input type="submit" data-enhanced="true" class='btn btn-primary' value="Recordar">
+               <input type="button" data-enhanced="true" data-registro-desktop="recordar" class='btn btn-primary' value="Recordar">
          </div>
     </div>
     <?php $this->endWidget(); ?>
