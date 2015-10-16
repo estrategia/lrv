@@ -609,14 +609,14 @@ input[type="checkbox"] + label span{
     display: inline-block;
     width: 21px;
     height: 21px;
-    background: url(../images/check-box.png) right;
+    background: url(../images/desktop/check-box.png) right;
     margin: -1px 4px 0 0;
     vertical-align: middle;
     cursor:pointer;
 }
  
 input[type="checkbox"]:checked + label span{
-    background: url(../images/check-box.png) left;
+    background: url(../images/desktop/check-box.png) left;
 }
 label{
 	color:#999999;
@@ -696,14 +696,14 @@ a:hover{
     margin-bottom: 50px;
 }
 .prev-slide2 {
-    background-image: url("../images/flechas-slide2.png");
+    background-image: url("../images/desktop/flechas-slide2.png");
     background-position: center bottom;
     display: inline-block;
     width: 54px;
     height: 54px;
 }
 .next-slide2 {
-    background-image: url("../images/flechas-slide2.png");
+    background-image: url("../images/desktop/flechas-slide2.png");
     background-position: center top;
     display: inline-block;
     width: 54px;
@@ -761,18 +761,18 @@ a:hover{
 }
 
 .iconStep.step1 {
-    background-image: url("../images/despacho.png");
+    background-image: url("../images/iconos/icons_carro/desktop/despacho.png");
 }
 
 .iconStep.step2 {
-    background-image: url("../images/entrega.png");
+    background-image: url("../images/iconos/icons_carro/desktop/entrega.png");
 }
 
 .iconStep.step3 {
-    background-image: url("../images/pago.png");
+    background-image: url("../images/iconos/icons_carro/desktop/pago.png");
 }
 .iconStep.step4 {
-    background-image: url("../images/confirmacion.png");
+    background-image: url("../images/iconos/icons_carro/desktop/confirmacion.png");
 }
 .steps ul li.active p{
     color: #FF1500;
@@ -882,7 +882,7 @@ color: #fff;
 	-moz-appearance: none;
  -webkit-appearance: none;
  appearance: none;
- background: URL(../images/downArrow.png) no-repeat 380px 3px #fff !important;
+ background: URL(../images/desktop/downArrow.png) no-repeat 380px 3px #fff !important;
  color: #A4A4A4;
 }
 
@@ -903,7 +903,7 @@ font-size: 18px;
 
 .select {
     -moz-appearance: none;
-    background: #FFF url("../images/downArrow.png") no-repeat scroll 43px 3px !important;
+    background: #FFF url("../images/desktop/downArrow.png") no-repeat scroll 43px 3px !important;
     color: #A4A4A4;
 }
 
@@ -977,4 +977,8 @@ margin-bottom: 0px;
   width: 200px;
   height: 200px;
   float:left;   /* <--- this will make the items float */
+}
+
+.justify, .justify p{
+    text-align: justify;
 }

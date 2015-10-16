@@ -23,3 +23,11 @@ function uniqueId() {
         ;
     return new Date().getTime();
 }
+
+function countChar(element, idContador) {
+    $('#' + idContador).text(element.val().length);
+}
+
+$(document).on('keyup', "textarea[data-countchar]", function() {
+    countChar($(this), $(this).attr('data-countchar'));
+});

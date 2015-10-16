@@ -527,9 +527,6 @@ $(document).on("pagecreate", function(event) {
     });
 });
 
-$(document).on('keyup', "textarea[data-countchar]", function() {
-    countChar($(this), $(this).attr('data-countchar'));
-});
 
 function ratyclic(score, evt) {
     alert('ID ratyclik: ' + this.id + "\nscore: " + score + "\nevent: " + evt.type);
@@ -1292,10 +1289,6 @@ $(document).on('change', "#FormaPagoForm_numeroTarjeta", function() {
         $(this).val('');
     }
 });
-
-function countChar(element, idContador) {
-    $('#' + idContador).text(element.val().length);
-}
 
 $(document).on('click', "a[data-role='pedidodetalle']", function() {
     var compra = $(this).attr('data-compra');

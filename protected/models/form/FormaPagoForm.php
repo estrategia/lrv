@@ -53,17 +53,16 @@ class FormaPagoForm extends CFormModel {
 
         if ($this->pagoInvitado) {
             //echo "<br/>PAGO INVITADO<br/>";
-            
-             //$rules[] = array('descripcion, nombre, direccion, barrio, telefono, extension, celular, correoElectronico', 'attributeTrim');
-             
+            //$rules[] = array('descripcion, nombre, direccion, barrio, telefono, extension, celular, correoElectronico', 'attributeTrim');
+
             if (Yii::app()->session[Yii::app()->params->sesion['tipoEntrega']] == Yii::app()->params->entrega['tipo']['domicilio']) {
                 //echo "<br/>PAGO INVITADO DOMICILIO<br/>";
                 $rules[] = array('descripcion, nombre, direccion, barrio, telefono', 'required', 'on' => 'despacho, finalizar', 'message' => '{attribute} no puede estar vacío');
-            
+
                 $rules[] = array('correoElectronico', 'required', 'on' => 'despacho, finalizar', 'message' => '{attribute} no puede estar vacío');
                 $rules[] = array('correoElectronico', 'email', 'on' => 'despacho, finalizar');
                 $rules[] = array('correoElectronico', 'length', 'max' => 50, 'on' => 'despacho, finalizar');
-                
+
                 $rules[] = array('extension, telefono, celular', 'numerical', 'integerOnly' => true, 'on' => 'despacho, finalizar', 'message' => '{attribute} deber ser número');
                 $rules[] = array('direccion', 'length', 'min' => 5, 'max' => 100, 'on' => 'despacho, finalizar');
                 $rules[] = array('descripcion', 'length', 'min' => 3, 'max' => 50, 'on' => 'despacho, finalizar');
@@ -74,20 +73,20 @@ class FormaPagoForm extends CFormModel {
             }
 
             if (Yii::app()->session[Yii::app()->params->sesion['tipoEntrega']] == Yii::app()->params->entrega['tipo']['presencial']) {
-               // echo "<br/>PAGO PRESENCIAL<br/>";
+                // echo "<br/>PAGO PRESENCIAL<br/>";
                 $rules[] = array('correoElectronico', 'required', 'on' => 'entrega, finalizar', 'message' => '{attribute} no puede estar vacío');
                 $rules[] = array('correoElectronico', 'email', 'on' => 'entrega, finalizar');
                 $rules[] = array('correoElectronico', 'length', 'max' => 50, 'on' => 'entrega, finalizar');
             }
-            
-            
+
+
             $rules[] = array('idDireccionDespacho', 'safe');
             $rules[] = array('celular, extension, idDireccionDespacho', 'default', 'value' => null);
         } else {
             $rules[] = array('descripcion, nombre, direccion, barrio, extension, telefono, celular, correoElectronico', 'safe');
             $rules[] = array('idDireccionDespacho', 'required', 'on' => 'despacho, finalizar', 'message' => '{attribute} no puede estar vacío');
         }
-        
+
         $rules[] = array('fechaEntrega', 'required', 'on' => 'entrega, finalizar', 'message' => '{attribute} no puede estar vacío');
         $rules[] = array('comentario', 'length', 'max' => 250, 'on' => 'entrega, finalizar');
         $rules[] = array('fechaEntrega', 'fechaValidate', 'on' => 'entrega, finalizar');
@@ -188,8 +187,12 @@ class FormaPagoForm extends CFormModel {
             } else {
                 $this->numeroTarjeta = trim($this->numeroTarjeta);
 
-                if (strlen($this->numeroTarjeta) != 12) {
-                    $this->addError('numeroTarjeta', $this->getAttributeLabel('numeroTarjeta') . " debe tener 12 dígitos");
+                if (is_numeric($this->numeroTarjeta)) {
+                    if (strlen($this->numeroTarjeta) != 12) {
+                        $this->addError('numeroTarjeta', $this->getAttributeLabel('numeroTarjeta') . " debe tener 12 dígitos");
+                    }
+                }else{
+                    $this->addError('numeroTarjeta', $this->getAttributeLabel('numeroTarjeta') . " debe ser numerico");
                 }
             }
 
@@ -346,16 +349,16 @@ class FormaPagoForm extends CFormModel {
                         $this->listPuntosVenta[1][$indicePdv]['HORA_INICIO'] = DateTime::createFromFormat('Y-m-d H:i:s', $fecha->format('Y-m-d') . " $horario->HorarioInicio");
                         $this->listPuntosVenta[1][$indicePdv]['HORA_FIN'] = DateTime::createFromFormat('Y-m-d H:i:s', $fecha->format('Y-m-d') . " $horario->HorarioFin");
                     }
-                    
-                    if($this->listPuntosVenta[1][$indicePdv]['HORA_INICIO']==null || $this->listPuntosVenta[1][$indicePdv]['HORA_FIN'] == null){
+
+                    if ($this->listPuntosVenta[1][$indicePdv]['HORA_INICIO'] == null || $this->listPuntosVenta[1][$indicePdv]['HORA_FIN'] == null) {
                         unset($this->listPuntosVenta[1][$indicePdv]);
                         continue;
                     }
-                    
+
                     $diffIni = $this->listPuntosVenta[1][$indicePdv]['HORA_INICIO']->diff($fecha);
                     $diffFin = $fecha->diff($this->listPuntosVenta[1][$indicePdv]['HORA_FIN']);
 
-                    if ($diffIni->invert==1 || $diffFin->invert==1) {
+                    if ($diffIni->invert == 1 || $diffFin->invert == 1) {
                         unset($this->listPuntosVenta[1][$indicePdv]);
                         continue;
                     }
@@ -457,7 +460,7 @@ class FormaPagoForm extends CFormModel {
 
         $horaIniServicio = "07:00:00";
         $horaFinServicio = "23:00:00";
-        
+
         if ($this->objHorarioCiudadSector != null) {
             $dia = 'festivo';
             $ahora = new DateTime;
@@ -468,7 +471,7 @@ class FormaPagoForm extends CFormModel {
             $horaIniServicio = $this->objHorarioCiudadSector->$horariosDia[$dia]['inicio'];
             $horaFinServicio = $this->objHorarioCiudadSector->$horariosDia[$dia]['fin'];
         }
-        
+
         $sql = "SELECT idHorario, concat('Hoy a las ', DATE_FORMAT(hora, '%h:%i %p')) as etiqueta, concat(curdate(), ' ', DATE_FORMAT(hora, '%H:%i:%s')) as fecha, hora
              FROM   m_Horario
              WHERE  hora between ADDTIME('" . $horaIniServicio . "', '" . $deltaHorario . "') and '" . $horaFinServicio . "' and (hora >= ADDTIME(CURTIME(), '" . $deltaHorario . "'))
@@ -480,15 +483,15 @@ class FormaPagoForm extends CFormModel {
         $connection = Yii::app()->db;
         $command = $connection->createCommand($sql);
         $rows = $command->queryAll();
-        
-        if(empty($rows)){
-            try{
+
+        if (empty($rows)) {
+            try {
                 sendHtmlEmail(Yii::app()->params->callcenter['correo'], "FALLO SELECT HORARIO ENTREGA PEDIDOS", $sql);
-            }  catch (Exception $exc){
+            } catch (Exception $exc) {
                 Yii::log($exc->getMessage() . "\n" . $exc->getTraceAsString() . "\n" . "FALLO SELECT HORARIO ENTREGA PEDIDOS: $sql", CLogger::LEVEL_ERROR, 'application');
             }
         }
-        
+
         return $rows;
     }
 

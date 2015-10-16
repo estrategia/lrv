@@ -1,2 +1,2 @@
 <?php echo $contenido?>
-<?php Yii::app()->clientScript->registerScript('compra-load', "$.mobile.loading('hide');");?>
+<?php if($this->isMobile) {Yii::app()->clientScript->registerScript('compra-load', "$.mobile.loading('hide');");}?>

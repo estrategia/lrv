@@ -25,7 +25,7 @@ class SessionControlFilter extends CFilter{
             $sesionTipo = true;
         }
         
-       $sesionTipo=true;
+       //$sesionTipo=true;
        
         if(!$sesionTipo){
             if($this->isMobile){

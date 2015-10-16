@@ -388,8 +388,7 @@ class CarroController extends Controller {
         $porcentajeCarro = floor(100 * ($nUnidadesCarro / $nUnidadesCompra));
 
         $canasta = 'canasta';
-        if(!$this->isMobile)
-        {
+        if (!$this->isMobile) {
             //$canasta = 'd_canasta';
         }
 
@@ -634,8 +633,7 @@ class CarroController extends Controller {
         $porcentajeCarro = floor(100 * ($nUnidadesCarro / $nUnidadesCompra));
 
         $canasta = 'canasta';
-        if(!$this->isMobile)
-        {
+        if (!$this->isMobile) {
             //$canasta = 'd_canasta';
         }
 
@@ -989,8 +987,13 @@ class CarroController extends Controller {
       } */
 
     public function actionIndex() {
-        $this->render('index', array('vistaCarro' => $this->isMobile ? "/carro/carro" : "/carro/d_carro"));
-        Yii::app()->end();
+        if($this->isMobile){
+            $this->render('index', array('vistaCarro' => $this->isMobile ? "/carro/carro" : "/carro/d_carro"));
+            Yii::app()->end();
+        }else{
+            $this->redirect($this->createUrl('pagar'));
+            Yii::app()->end();
+        }
     }
 
     public function actionModificar() {
@@ -1109,7 +1112,7 @@ class CarroController extends Controller {
 
         $agregarU = false;
         $agregarF = false;
-        
+
         $canastaVista = "canasta";
         if (!$this->isMobile) {
             $canastaVista = "d_canasta";
@@ -1199,7 +1202,7 @@ class CarroController extends Controller {
         if (!$this->isMobile) {
             $carroVista = "d_carro";
         }
-        
+
         $cantidad = Yii::app()->getRequest()->getPost('cantidad', null);
 
         if ($cantidad === null || $cantidad < 0) {
@@ -1233,7 +1236,7 @@ class CarroController extends Controller {
         }
 
         Yii::app()->shoppingCart->update($position, false, $cantidad);
-        
+
         $canastaVista = "canasta";
         if (!$this->isMobile) {
             $canastaVista = "d_canasta";
@@ -1254,7 +1257,7 @@ class CarroController extends Controller {
         if (!$this->isMobile) {
             $carroVista = "d_carro";
         }
-        
+
         $cantidad = Yii::app()->getRequest()->getPost('cantidad', null);
 
         if ($cantidad === null || $cantidad < 0) {
@@ -1275,7 +1278,7 @@ class CarroController extends Controller {
         ));
 
         if ($objSaldoBodega === null) {
-             echo CJSON::encode(array('result' => 'error', 'response' => array(
+            echo CJSON::encode(array('result' => 'error', 'response' => array(
                     'message' => 'La cantidad solicitada no está disponible en este momento. No hay unidades disponibles',
                     'carroHTML' => $this->renderPartial($carroVista, null, true),
             )));
@@ -1337,8 +1340,8 @@ class CarroController extends Controller {
 
         echo CJSON::encode(array(
             'result' => 'ok',
-            'carro' => $this->renderPartial('carro', null, true),
-            'canasta' => $this->renderPartial('canasta', null, true),
+            'carro' => $this->renderPartial($this->isMobile ? "carro" : "d_carro", null, true),
+            'canasta' => $this->renderPartial($this->isMobile ? "canasta" : "d_canasta", null, true),
         ));
         Yii::app()->end();
     }
@@ -1421,7 +1424,7 @@ class CarroController extends Controller {
             $params['modelPago'] = $modelPago;
             $modelPago->pagoExpress = true;
             Yii::app()->session[Yii::app()->params->sesion['carroPagarForm']] = $modelPago;
-            $this->render('_paso4', $params);
+            $this->render($this->isMobile ? '_paso4': '_d_paso4', $params);
             Yii::app()->end();
         } else {
             //$this->comprarExpress($modelPago);
@@ -1703,6 +1706,7 @@ class CarroController extends Controller {
 
             $params['pasoAnterior'] = $pasoAnterior;
             $params['pasoSiguiente'] = $pasoSiguiente;
+            $params['nPasoActual'] = $nPasoActual;
 
             switch ($paso) {
                 case Yii::app()->params->pagar['pasos'][1]:
@@ -1746,11 +1750,16 @@ class CarroController extends Controller {
                     break;
             }
 
+            $vistaDomicilio = "pagarDomicilio";
+            if (!$this->isMobile) {
+                $vistaDomicilio = "d_pagarDomicilio";
+            }
+
             $params['parametros']['modelPago'] = $modelPago;
-            $this->render('pagarDomicilio', $params);
+            $this->render($vistaDomicilio, $params);
         }
     }
-
+    
     private function pagarPresencial($paso, $post) {
         /* if(is_string($post)){
           $post = ($post=="true");
@@ -1880,6 +1889,7 @@ class CarroController extends Controller {
             $pasoSiguiente = isset(Yii::app()->params->pagar['pasos'][$nPasoSiguiente]) ? Yii::app()->params->pagar['pasos'][$nPasoSiguiente] : null;
             $pasoAnterior = isset(Yii::app()->params->pagar['pasos'][$nPasoAnterior]) ? Yii::app()->params->pagar['pasos'][$nPasoAnterior] : null;
 
+            $params['nPasoActual'] = $nPasoActual;
             $params['pasoAnterior'] = $pasoAnterior;
             $params['pasoSiguiente'] = $pasoSiguiente;
 
@@ -1901,8 +1911,13 @@ class CarroController extends Controller {
 
                     $modelPago->consultarDisponibilidad(Yii::app()->shoppingCart);
                     Yii::app()->session[Yii::app()->params->sesion['carroPagarForm']] = $modelPago;
+                    
+                    $vistaPresencial = "pagarPresencial";
+                    if (!$this->isMobile) {
+                        $vistaPresencial = "d_pagarPresencial";
+                    }
 
-                    $this->render('pagarPresencial', array('listPuntosVenta' => $modelPago->listPuntosVenta));
+                    $this->render($vistaPresencial, array('listPuntosVenta' => $modelPago->listPuntosVenta));
                     Yii::app()->end();
                 }
                 //$this->render('_paso2', $params);
@@ -1934,9 +1949,14 @@ class CarroController extends Controller {
                 //$params['modelPago'] = $modelPago;
                 //$this->render('_paso4', $params);
             }
+            
+            $pasosPresencial = "pasosPresencial";
+            if (!$this->isMobile) {
+                $pasosPresencial = "d_pasosPresencial";
+            }
 
             $params['parametros']['modelPago'] = $modelPago;
-            $this->render('pasosPresencial', $params);
+            $this->render($pasosPresencial, $params);
         }
     }
 
@@ -2028,14 +2048,19 @@ class CarroController extends Controller {
 
         //si ha llegado aqui, paso todas las validaciones y se puede proceder con proceso de compra
         if ($modelPago->idFormaPago == Yii::app()->params->formaPago['pasarela']['idPasarela']) {
-            $this->render('pasarela', array('pagoExpress' => $modelPago->pagoExpress));
+            $this->render('pasarela', array('pagoExpress' => $modelPago->pagoExpress, 'isMobil'=>  $this->isMobile));
             Yii::app()->end();
         }
 
         $resultCompra = $this->procesoCompra($modelPago, $tipoEntrega);
 
         if ($resultCompra['result'] == 1) {
-            $contenidoSitio = $this->renderPartial('compraContenido', array(
+            $vistaCompraContenido = "compraContenido";
+            if (!$this->isMobile) {
+                $vistaCompraContenido = "d_compraContenido";
+            }
+
+            $contenidoSitio = $this->renderPartial($vistaCompraContenido, array(
                 'objCompra' => $resultCompra['response']['objCompra'],
                 'modelPago' => $resultCompra['response']['modelPago'],
                 'objCompraDireccion' => $resultCompra['response']['objCompraDireccion'],
@@ -2810,19 +2835,19 @@ class CarroController extends Controller {
       }
       } */
 
-    /* public function actionForm($limpiar=false){
-      $modelPago = null;
+    public function actionForm($limpiar = false) {
+        $modelPago = null;
 
-      if (isset(Yii::app()->session[Yii::app()->params->sesion['carroPagarForm']]) && Yii::app()->session[Yii::app()->params->sesion['carroPagarForm']] != null)
-      $modelPago = Yii::app()->session[Yii::app()->params->sesion['carroPagarForm']];
+        if (isset(Yii::app()->session[Yii::app()->params->sesion['carroPagarForm']]) && Yii::app()->session[Yii::app()->params->sesion['carroPagarForm']] != null)
+            $modelPago = Yii::app()->session[Yii::app()->params->sesion['carroPagarForm']];
 
-      CVarDumper::dump($modelPago,10,true);
-      echo "<br/><br/>";
-      CVarDumper::dump($modelPago->rules(),10,true);
+        CVarDumper::dump($modelPago, 10, true);
+        echo "<br/><br/>";
+        CVarDumper::dump($modelPago->rules(), 10, true);
 
-      if($limpiar)
-      Yii::app()->session[Yii::app()->params->sesion['carroPagarForm']] = null;
-      } */
+        if ($limpiar)
+            Yii::app()->session[Yii::app()->params->sesion['carroPagarForm']] = null;
+    }
 
     /* public function actionPuntos(){
       $fecha = new DateTime;

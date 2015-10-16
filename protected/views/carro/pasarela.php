@@ -10,12 +10,18 @@
         <li>Al dar clic en el boton "Continuar Pago en Línea" se Aceptan los politicas descritas anteriormente..</li>
     </ul>
 
-    <?php echo CHtml::link('Cambiar Forma Pago', ($pagoExpress ? $this->createUrl('/usuario/pagoexpress') : $this->createUrl('/carro/pagar', array('paso' => 'pago'))), array('class' => 'ui-btn ui-corner-all ui-shadow ui-btn-n', 'data-mini' => 'true', 'data-ajax' => 'false')); ?>
-    <?php //echo CHtml::link('Continuar Pago en Línea', "#", array('data-role' => 'pagopasarela', 'class' => 'ui-btn ui-corner-all ui-shadow ui-btn-r', 'data-mini' => 'true', 'data-ajax' => 'false')); ?>
-    <div class="ui-input-btn ui-btn ui-corner-all ui-shadow ui-btn-r">
-        Continuar Pago en Línea
-        <input type="button" data-enhanced="true" value="Continuar Pago en Línea" data-role="pagopasarela">
-    </div>
+    <?php if ($isMobil): ?>
+        <?php echo CHtml::link('Cambiar Forma Pago', ($pagoExpress ? $this->createUrl('/usuario/pagoexpress') : $this->createUrl('/carro/pagar', array('paso' => 'pago'))), array('class' => 'ui-btn ui-corner-all ui-shadow ui-btn-n', 'data-mini' => 'true', 'data-ajax' => 'false')); ?>
+        <div class="ui-input-btn ui-btn ui-corner-all ui-shadow ui-btn-r">
+            Continuar Pago en Línea
+            <input type="button" data-enhanced="true" value="Continuar Pago en Línea" data-role="pagopasarela">
+        </div>
+    <?php else: ?>
+        <div class="well center-block" style="max-width: 80%;">
+            <?php echo CHtml::link('Cambiar Forma Pago', ($pagoExpress ? $this->createUrl('/usuario/pagoexpress') : $this->createUrl('/carro/pagar', array('paso' => 'pago'))), array('class' => 'btn btn-warning btn-lg btn-block', 'role' => 'button')); ?>
+            <button type="button" class="btn btn-danger btn-lg btn-block" data-role="pagopasarela">Continuar Pago en Línea</button>
+        </div>
+    <?php endif; ?>
 
     <p>Condiciones para solicitar el proceso de reversión del pago:</p>
     <ul>
