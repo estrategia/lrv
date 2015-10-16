@@ -1,80 +1,69 @@
-<section>
-    <br/><br/>
-</section>
-    <div class="row">
-        <div class="col-md-12">
-					<span class="glyphicon glyphicon-chevron-right der" aria-hidden="true"></span>&nbsp;
-                                        <h4 style="display:inline-block;"> 
-                                            Ingreso al sistema
-                                        </h4>
-        </div>
-    </div>
-<section>
-    <br/><br/>
-</section>
-        <?php
-        $form = $this->beginWidget('CActiveForm', array(
-            'enableClientValidation' => true,
-            'htmlOptions' => array(
-                'id' => "form-autenticar", 'class' => "ui-bar ui-bar-c ui-corner-all", 'data-ajax'=>"false"
-            ),
-            'errorMessageCssClass' => 'has-error',
-            'clientOptions' => array(
-                'validateOnSubmit' => true,
-                'validateOnChange' => true,
-                'errorCssClass' => 'has-error',
-                'successCssClass' => 'has-success',
-            ))
-        );
-        ?>
+<?php $pagar = isset($pagar) ? $pagar : false ?>
 
-            <div class="row">
-                <div class="col-md-4">
-                    <div class="" data-theme="c">
-                        <?php echo $form->labelEx($model, 'username', array('class' => 'ui-hidden-accessible')); ?>
-                        <?php echo $form->textField($model, 'username', array('placeholder' => $model->getAttributeLabel('username'),'class'=>"form-control")); ?>
-                        <?php echo $form->error($model, 'username'); ?>
-                    </div>
-                </div>
-            </div>
-            <div class='space-1'></div>
-            <div class="row">
-                <div class="col-md-4">
-                    <div class="" data-theme="c">
-                        <?php echo $form->labelEx($model, 'password', array('class' => 'ui-hidden-accessible')); ?>
-                        <?php echo $form->passwordField($model, 'password', array('placeholder' => $model->getAttributeLabel('password'),'class'=>"form-control")); ?>
-                        <?php echo $form->error($model, 'password'); ?>
-                    </div>
-                </div>
-            </div>
-            <div class='space-1'></div>
-            <div class="row">
-                <div class='col-md-4'>
-                    <?php echo CHtml::link('¿Olvidó su contraseña?', CController::createUrl('/usuario/recordar'), array('class' => 'c_olv_pass', 'data-ajax'=>'false')); ?>
-                </div>
-            </div>
-            <div class='space-1'></div>
-            <div class="row">
-                <div class='col-md-4'>
-                    <input type="submit" class ='btn btn-primary' data-enhanced="true" value="Ingresar">
-                </div>
-            </div>
-    
+<section>
+	<div class="container">
+		<div class="col-md-12 desplegables"> 
+			<h3 class="text-center title-desp"><span class="glyphicon glyphicon-user"></span> Mi cuenta</h3>
+			<div class="panel-group" id="accordion" role="tablist" aria-multiselectable="true" style="margin-top:20px;">
+			  <div class="panel panel-default ">
+			    <div class="panel-heading head-desplegable" role="tab" id="headingOne">
+			      <h4 class="panel-title">
+			        <a data-toggle="collapse" data-parent="#accordion" href="#ingresoSistema" aria-expanded="false" aria-controls="collapseOne">
+			          Ingreso al sistema
+			        </a>
+			      </h4>
+			    </div>
+			    <div style="height:5px;background-color: #F5F5F5;border-top: 1px solid #E9E1E1;"></div>
+			    <div id="ingresoSistema" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingOne">
+			      <div class="panel-body" style="padding:10px 0px 20px 30px">
+                                  <div class="col-md-12">
+                                  <?php $this->renderPartial('/usuario/d_ingreso', array('model' => new LoginForm)); ?>
+                                  </div>
+			      </div>
+			    </div>
+			  </div>
+			  <div class="panel panel-default">
+			    <div class="panel-heading head-desplegable" role="tab" id="headingTwo">
+			      <h4 class="panel-title">
+			        <a class="collapsed" data-toggle="collapse" data-parent="#accordion" href="#recordarPassword" aria-expanded="false" aria-controls="collapseTwo">
+			          Recordar Contraseña
+			        </a>
+			      </h4>
+			    </div>
+			   <div style="height:5px;background-color: #F5F5F5;border-top: 1px solid #E9E1E1;"></div>
+			    <div id="recordarPassword" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingTwo">
+			      <div class="panel-body" style="padding:10px 0px 20px 30px">
+                                  <div class="col-md-12">
+                                  <?php $this->renderPartial('/usuario/d_recordar', array('model' => new RecordarForm)); ?>
+                                  </div>
+			      </div>
+			    </div>
+			  </div>
+                          <div class="panel panel-default">
+			    <div class="panel-heading head-desplegable" role="tab" id="headingTwo">
+			      <h4 class="panel-title">
+			        <a class="collapsed" data-toggle="collapse" data-parent="#accordion" href="#registroUsuario" aria-expanded="false" aria-controls="collapseTwo">
+			          Registrarse
+			        </a>
+			      </h4>
+			    </div>
+			   <div style="height:5px;background-color: #F5F5F5;border-top: 1px solid #E9E1E1;"></div>
+			    <div id="registroUsuario" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingTwo">
+			      <div class="panel-body" style="padding:10px 0px 20px 30px">
+                                  <div class="col-md-12">
+                                  <?php $this->renderPartial('/usuario/d_registro', array('model' => new RegistroForm('registro'))); ?>
+                                  </div>
+			      </div>
+			    </div>
+			  </div>
+			</div>
+			
+		</div>
+	</div>
+</section>
 
-    <?php $this->endWidget(); ?>
-    <div class='space-1'></div>
-    <?php /*echo CHtml::button('Crear una cuenta', array('submit' => CController::createUrl('/usuario/registro'), 'class' => 'c_reg'));*/ ?>
-    <div class="row">
-        <div class='col-md-4'>
-             <?php echo CHtml::link('Crear una cuenta', CController::createUrl('/usuario/registro'), array('class' => '', 'data-ajax'=>"false")); ?>
+    <?php if ($pagar): ?>
+        <div class="ui-collapsible ui-collapsible-inset ui-corner-all ui-collapsible-themed-content ui-last-child ui-collapsible-collapsed">
+            <h3 class="ui-collapsible-heading ui-collapsible-heading-collapsed"><?php echo CHtml::link('Pagar como invitado', $this->createUrl("/carro/pagoinvitado"), array('class' => 'ui-collapsible-heading-toggle ui-btn ui-icon-plus ui-btn-icon-left ui-btn-inherit', 'data-role' => 'none', 'data-ajax' => 'false')); ?></h3>
         </div>
-    </div>
-<!--
-    <div class="c_vnrg">
-        <h2 class="c_t_vnrg">Ventajas de registrarse</h2>
-        <ul data-role="listview" data-inset="true" class="c_list_ventajas">
-            <li><a href="#" class="ui-btn ui-icon-carat-r ui-btn-icon-left ui-nodisc-icon ui-alt-icon c_listvn_a">Descuentos permanentes</a></li>
-            <li><a href="#" class="ui-btn ui-icon-carat-r ui-btn-icon-left ui-nodisc-icon ui-alt-icon c_listvn_a">Paga tus pedidos en efectivo</a></li>
-        </ul>
-    </div>
--->
+    <?php endif; ?>

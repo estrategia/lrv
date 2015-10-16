@@ -48,7 +48,7 @@
 		<div class="row">
 	        <div class="col-md-4">
 	            <?php echo $form->labelEx($model, 'cedula'); ?>
-                <?php echo $form->numberField($model, 'cedula', array('maxlength' => 50, 'placeholder' => $model->getAttributeLabel('cedula'))); ?>
+                <?php echo $form->textField($model, 'cedula', array('maxlength' => 50, 'placeholder' => $model->getAttributeLabel('cedula'), 'class'=>'form-control')); ?>
             	<?php echo $form->error($model, 'cedula'); ?>
 	        </div>
 	    </div>
@@ -155,7 +155,7 @@
     	<div class="row">
             <div class="col-md-4">
                 <?php echo $form->labelEx($model, 'condiciones'); ?>
-                <?php echo $form->checkBox($model, 'condiciones', array("class"=>"form-control")); ?>
+                <?php echo $form->checkBox($model, 'condiciones', array( "style" => "display:block")); ?>
                 <?php echo $form->error($model, 'condiciones'); ?>
             </div>
         </div>
@@ -188,7 +188,7 @@
 
 <div class="row">
 	<div class="col-md-4">
-		<input class='btn btn-primary' type="submit" data-enhanced="true" value="<?= ($model->getScenario() == 'actualizar' ? 'Guardar' : 'Registrar') ?>">
+		<input class='btn btn-primary' type="button" data-enhanced="true" data-registro-desktop="registro" value="<?= ($model->getScenario() == 'actualizar' ? 'Guardar' : 'Registrar') ?>">
 	</div>
 </div>
 

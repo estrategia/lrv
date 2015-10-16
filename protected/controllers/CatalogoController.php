@@ -50,16 +50,20 @@ class CatalogoController extends Controller {
                 Yii::log($exc->getMessage() . "\n" . $exc->getTraceAsString(), CLogger::LEVEL_ERROR, 'application');
             }
 
-            $this->render('listaProductos', array(
-                'listProductos' => array(),
-                'listCombos' => array(),
-                'msgCodigoEspecial' => array(),
-                'listCodigoEspecial' => array(),
-                'imagenBusqueda' => Yii::app()->params->busqueda['imagen']['noExito'],
-                'objSectorCiudad' => $objSectorCiudad,
-                'codigoPerfil' => $codigoPerfil,
-                'nombreBusqueda' => 'NA',
-            ));
+            if($this->isMobile){
+                $this->render('listaProductos', array(
+                    'listProductos' => array(),
+                    'listCombos' => array(),
+                    'msgCodigoEspecial' => array(),
+                    'listCodigoEspecial' => array(),
+                    'imagenBusqueda' => Yii::app()->params->busqueda['imagen']['noExito'],
+                    'objSectorCiudad' => $objSectorCiudad,
+                    'codigoPerfil' => $codigoPerfil,
+                    'nombreBusqueda' => 'NA',
+                ));
+            }else{
+                
+            }
 
             Yii::app()->end();
         }
@@ -240,7 +244,280 @@ class CatalogoController extends Controller {
         }
 
         $parametrosVista['imagenBusqueda'] = $imagenBusqueda;
-        $this->render('listaProductos', $parametrosVista);
+        if($this->isMobile){
+            // $this->render('listaProductos', $parametrosVista);  
+        }else{
+            $this->render('listaProductos', $parametrosVista);
+        }
+    }
+    
+    public function actionCategoriaD($categoria=1,$pageSize=16){
+           $objSectorCiudad = null;
+        if (isset(Yii::app()->session[Yii::app()->params->sesion['sectorCiudadEntrega']]))
+            $objSectorCiudad = Yii::app()->session[Yii::app()->params->sesion['sectorCiudadEntrega']];
+
+        $codigoPerfil = Yii::app()->shoppingCart->getCodigoPerfil();
+
+        $objCategoria = CategoriaTienda::model()->find(array(
+            'with' => 'listCategoriasBI',
+            'condition' => 't.idCategoriaTienda=:categoria',
+            'params' => array(
+                ':categoria' => $categoria
+            ),
+        ));
+
+        $listIdsCategoriaBI = array();
+
+        if ($objCategoria != null) {
+            foreach ($objCategoria->listCategoriasBI as $objCategoriaBI) {
+                $listIdsCategoriaBI[] = $objCategoriaBI->idCategoriaBI;
+            }
+        }
+
+        if ($objCategoria == null || empty($listIdsCategoriaBI)) {
+            try {
+                Busquedas::registrarBusqueda(array(
+                    'idenficacionUsuario' => Yii::app()->user->isGuest ? null : Yii::app()->user->name,
+                    'tipoBusqueda' => Yii::app()->params->busqueda['tipo']['categoria'],
+                    'msgBusqueda' => $objCategoria == null ? "Categoria tienda: $categoria. No existe" : "Categoria tienda: $categoria - $objCategoria->nombreCategoriaTienda",
+                    'codigoCiudad' => $objSectorCiudad == null ? null : $objSectorCiudad->codigoCiudad,
+                    'codigoSector' => $objSectorCiudad == null ? null : $objSectorCiudad->codigoSector,
+                ));
+            } catch (Exception $exc) {
+                Yii::log($exc->getMessage() . "\n" . $exc->getTraceAsString(), CLogger::LEVEL_ERROR, 'application');
+            }
+
+            if(!$this->isMobile){
+              /*  $this->render('listaProductos', array(
+                    'listProductos' => array(),
+                    'listCombos' => array(),
+                    'msgCodigoEspecial' => array(),
+                    'listCodigoEspecial' => array(),
+                    'imagenBusqueda' => Yii::app()->params->busqueda['imagen']['noExito'],
+                    'objSectorCiudad' => $objSectorCiudad,
+                    'codigoPerfil' => $codigoPerfil,
+                    'nombreBusqueda' => 'NA',
+                ));*/
+            }
+            Yii::app()->end();
+        }
+
+        $categoriaSesion = null;
+
+        if (isset(Yii::app()->session[Yii::app()->params->sesion['productosBusquedaCategoria']])) {
+            $categoriaSesion = Yii::app()->session[Yii::app()->params->sesion['productosBusquedaCategoria']];
+
+            if ($categoriaSesion != $categoria) {
+                $categoriaSesion = null;
+            }
+        }
+
+        if ($categoriaSesion == null) {
+            Yii::app()->session[Yii::app()->params->sesion['productosBusquedaOrden']] = null;
+            Yii::app()->session[Yii::app()->params->sesion['productosBusquedaFiltro']] = null;
+        }
+
+        Yii::app()->session[Yii::app()->params->sesion['productosBusquedaCategoria']] = $categoria;
+
+        $formOrdenamiento = new OrdenamientoForm;
+        $formFiltro = new FiltroForm;
+
+        if (isset($_POST['OrdenamientoForm'])) {
+            $formOrdenamiento->attributes = $_POST['OrdenamientoForm'];
+            Yii::app()->session[Yii::app()->params->sesion['productosBusquedaOrden']] = $formOrdenamiento;
+
+            if (Yii::app()->session[Yii::app()->params->sesion['productosBusquedaFiltro']] != null) {
+                $formFiltro = Yii::app()->session[Yii::app()->params->sesion['productosBusquedaFiltro']];
+            }
+        }
+
+        if (isset($_POST['FiltroForm'])) {
+            $formFiltro->attributes = $_POST['FiltroForm'];
+            $formFiltro->listMarcasCheck = $formFiltro->listMarcas;
+            $formFiltro->listFiltrosCheck = $formFiltro->listFiltros;
+            Yii::app()->session[Yii::app()->params->sesion['productosBusquedaFiltro']] = $formFiltro;
+
+            if (Yii::app()->session[Yii::app()->params->sesion['productosBusquedaOrden']] != null) {
+                $formOrdenamiento = Yii::app()->session[Yii::app()->params->sesion['productosBusquedaOrden']];
+            }
+        }
+
+        /* CVarDumper::dump($formOrdenamiento);
+          echo "<br/><br/><br/>";
+          CVarDumper::dump($formFiltro); */
+
+        $parametrosProductos = array();
+        $listCombos = array();
+
+        if ($objSectorCiudad == null) {
+            $parametrosProductos = array(
+                'order' => 't.orden',
+                'with' => array('listImagenes', 'objCodigoEspecial', 'listCalificaciones', 'objMarca', 'listFiltros'),
+                'condition' => 't.activo=:activo AND t.idCategoriaBI IN (' . implode(",", $listIdsCategoriaBI) . ')',
+                'params' => array(
+                    ':activo' => 1,
+                )
+            );
+        } else {
+            $parametrosProductos = array(
+                'order' => 't.orden',
+                'with' => array(
+                    'listImagenes', 'objCodigoEspecial', 'listCalificaciones', 'objMarca', 'listFiltros',
+                    'listSaldos' => array('condition' => '(listSaldos.saldoUnidad>:saldo AND listSaldos.codigoCiudad=:ciudad AND listSaldos.codigoSector=:sector) OR (listSaldos.saldoUnidad IS NULL AND listSaldos.codigoCiudad IS NULL AND listSaldos.codigoSector IS NULL)'),
+                    'listPrecios' => array('condition' => '(listPrecios.codigoCiudad=:ciudad AND listPrecios.codigoSector=:sector) OR (listPrecios.codigoCiudad IS NULL AND listPrecios.codigoSector IS NULL)'),
+                    'listSaldosTerceros' => array('condition' => '(listSaldosTerceros.saldoUnidad>:saldo AND listSaldosTerceros.codigoCiudad=:ciudad AND listSaldosTerceros.codigoSector=:sector) OR (listSaldosTerceros.codigoCiudad IS NULL AND listSaldosTerceros.codigoSector IS NULL)')
+                ),
+                'condition' => 't.activo=:activo AND t.idCategoriaBI IN (' . implode(",", $listIdsCategoriaBI) . ') AND ( (listSaldos.saldoUnidad IS NOT NULL AND listPrecios.codigoCiudad IS NOT NULL) OR listSaldosTerceros.codigoCiudad IS NOT NULL)',
+                'params' => array(
+                    ':activo' => 1,
+                    ':saldo' => 0,
+                    ':ciudad' => $objSectorCiudad->codigoCiudad,
+                    ':sector' => $objSectorCiudad->codigoSector,
+                )
+            );
+
+            $fecha = new DateTime;
+
+            $listCombos = Combo::model()->findAll(array(
+                'with' => array('listComboSectorCiudad', 'listProductos' => array('condition' => 'listProductos.idCategoriaBI IN (' . implode(",", $listIdsCategoriaBI) . ')')),
+                'condition' => 't.estadoCombo=:estado AND t.fechaInicio<=:fecha AND t.fechaFin>=:fecha AND listComboSectorCiudad.saldo>:saldo AND listComboSectorCiudad.codigoCiudad=:ciudad AND listComboSectorCiudad.codigoSector=:sector',
+                'params' => array(
+                    ':estado' => 1,
+                    ':fecha' => $fecha->format('Y-m-d H:i:s'),
+                    'saldo' => 0,
+                    ':ciudad' => $objSectorCiudad->codigoCiudad,
+                    ':sector' => $objSectorCiudad->codigoSector,
+                )
+            ));
+        }
+
+        if ($formOrdenamiento->orden != null) {
+            if ($formOrdenamiento->orden == 1) {
+                $parametrosProductos['order'] = "((CASE WHEN listPrecios.precioUnidad IS NULL THEN 0 ELSE listPrecios.precioUnidad END) + (CASE WHEN listSaldosTerceros.precioUnidad IS NULL THEN 0 ELSE listSaldosTerceros.precioUnidad END)) ASC";
+            } else if ($formOrdenamiento->orden == 2) {
+                $parametrosProductos['order'] = "((CASE WHEN listPrecios.precioUnidad IS NULL THEN 0 ELSE listPrecios.precioUnidad END) + (CASE WHEN listSaldosTerceros.precioUnidad IS NULL THEN 0 ELSE listSaldosTerceros.precioUnidad END)) DESC";
+            } else if ($formOrdenamiento->orden == 3) {
+                $parametrosProductos['order'] = "t.descripcionProducto";
+            } else if ($formOrdenamiento->orden == 4) {
+                $parametrosProductos['order'] = "t.presentacionProducto";
+            }
+        }
+
+        if ($formFiltro->nombre != null) {
+            $parametrosProductos['condition'] = $parametrosProductos['condition'] . " AND t.descripcionProducto LIKE '%$formFiltro->nombre%'";
+        }
+
+        if ($formFiltro->listMarcasCheck != null && !empty($formFiltro->listMarcasCheck)) {
+            $codigosMarcas = implode(",", $formFiltro->listMarcasCheck);
+            $parametrosProductos['condition'] = $parametrosProductos['condition'] . " AND t.idMarca IN ($codigosMarcas)";
+        }
+
+        if ($formFiltro->listFiltrosCheck != null && !empty($formFiltro->listFiltrosCheck)) {
+            //$formFiltro->listFiltrosCheck = $formFiltro->listFiltros;
+            $codigosAtributos = implode(",", $formFiltro->listFiltrosCheck);
+            $parametrosProductos['condition'] = $parametrosProductos['condition'] . " AND listFiltros.idFiltroDetalle IN ($codigosAtributos)";
+        }
+
+        $parametrosProductos=new CDbCriteria();
+        $parametrosProductos->condition=" nombreProducto=:nombre AND indice=:indice";
+        $parametrosProductos->params=array(
+                            "nombre" => $nombreProducto,
+                            "indice" => 4
+                        );
+        $parametrosProductos->order= "nombreProducto";
+        $parametrosProductos->with= array("listCategoriasBI","objCategoriaPadre");
+        
+        $listProductos = Producto::model()->findAll($parametrosProductos);
+
+        $listCodigoEspecial = CodigoEspecial::model()->findAll(array(
+            'condition' => 'codigoEspecial<>0'
+        ));
+
+        $msgCodigoEspecial = array();
+        $formFiltro->listMarcas = array();
+        $formFiltro->listFiltros = array();
+        foreach ($listProductos as $objProducto) {
+            if ($objProducto->codigoEspecial != null && $objProducto->codigoEspecial != 0) {
+                $msgCodigoEspecial[$objProducto->codigoEspecial] = $objProducto->objCodigoEspecial;
+            }
+            $formFiltro->listMarcas[$objProducto->idMarca] = $objProducto->objMarca->nombreMarca;
+
+            foreach ($objProducto->listFiltros as $objFiltro) {
+                if (!isset($formFiltro->listFiltros[$objFiltro->idFiltro])) {
+                    $formFiltro->listFiltros[$objFiltro->idFiltro] = array(
+                        'nombreFiltro' => $objFiltro->objFiltro->nombreFiltro,
+                        'listFiltros' => array()
+                    );
+                }
+                $formFiltro->listFiltros[$objFiltro->idFiltro]['listFiltros'][$objFiltro->idFiltroDetalle] = $objFiltro->nombreDetalle;
+            }
+        }
+
+        /* CVarDumper::dump($formFiltro->listFiltros, 10, true);
+          exit(); */
+
+        $parametrosVista = array(
+            'listProductos' => $listProductos,
+            'listCombos' => $listCombos,
+            'msgCodigoEspecial' => $msgCodigoEspecial,
+            'listCodigoEspecial' => $listCodigoEspecial,
+            'objSectorCiudad' => $objSectorCiudad,
+            'codigoPerfil' => $codigoPerfil,
+            'tipoBusqueda' => Yii::app()->params->busqueda['tipo']['categoria'],
+            'nombreBusqueda' => $objCategoria->nombreCategoriaTienda,
+        );
+
+        $imagenBusqueda = null;
+        if (empty($listProductos)){
+            $imagenBusqueda = Yii::app()->params->busqueda['imagen']['noExito'];
+            try {
+                Busquedas::registrarBusqueda(array(
+                    'idenficacionUsuario' => Yii::app()->user->isGuest ? null : Yii::app()->user->name,
+                    'tipoBusqueda' => Yii::app()->params->busqueda['tipo']['categoria'],
+                    'msgBusqueda' => $objCategoria == null ? "Categoria tienda: $categoria. No tiene productos" : "Categoria tienda: $categoria - $objCategoria->nombreCategoriaTienda",
+                    'codigoCiudad' => $objSectorCiudad == null ? null : $objSectorCiudad->codigoCiudad,
+                    'codigoSector' => $objSectorCiudad == null ? null : $objSectorCiudad->codigoSector,
+                ));
+            } catch (Exception $exc) {
+                Yii::log($exc->getMessage() . "\n" . $exc->getTraceAsString(), CLogger::LEVEL_ERROR, 'application');
+            }
+        }else {
+            $parametrosVista['formOrdenamiento'] = $formOrdenamiento;
+            $parametrosVista['formFiltro'] = $formFiltro;
+        }
+        $parametrosVista['imagenBusqueda'] = $imagenBusqueda;
+        if($this->isMobile){
+            // $this->render('listaProductos', $parametrosVista);  
+            
+        }else{
+            $dataProvider = new CArrayDataProvider($listProductos, array(
+                'id' => 'codigoProducto',
+                'sort' => array(
+                    'attributes' => array(
+                        'descripcionProducto'
+                    ),
+                ),
+                'pagination' => array(
+                    'pageSize' => $pageSize,
+                ),
+            ));
+
+            $_SESSION['objSectorCiudad'] = $objSectorCiudad;
+            $_SESSION['codigoPerfil'] = $codigoPerfil;
+
+            //  $dataProvider=new CActiveDataProvider('Producto');
+            $this->render('d_listaProductos', array(
+                'listProductos' => $listProductos,
+                'dataprovider' => $dataProvider,
+                'listCombos' => $listCombos,
+                'msgCodigoEspecial' => $msgCodigoEspecial,
+                'listCodigoEspecial' => $listCodigoEspecial,
+                'imagenBusqueda' => $imagenBusqueda,
+                'objSectorCiudad' => $objSectorCiudad,
+                'codigoPerfil' => $codigoPerfil,
+                'formFiltro' => $formFiltro
+            ));
+        }
     }
 
     public function actionFiltro() {

@@ -150,6 +150,9 @@ class SitioController extends Controller {
         $this->logoLinkMenu = false;
         $this->fixedFooter = true;
 
+       // if (!isset(Yii::app()->session[Yii::app()->params->sesion['redireccionAutenticacion']]) || Yii::app()->session[Yii::app()->params->sesion['redireccionAutenticacion']] == 'null') {
+            Yii::app()->session[Yii::app()->params->sesion['redireccionAutenticacion']] = (Yii::app()->request->urlReferrer == null ? 'null' : Yii::app()->request->urlReferrer);
+       // }
         if ((!isset(Yii::app()->session[Yii::app()->params->sesion['tipoEntrega']]) || Yii::app()->session[Yii::app()->params->sesion['tipoEntrega']] == null)&& $this->isMobile ) {
             $this->actionIndex();
             //$this->render('index');
@@ -272,8 +275,11 @@ class SitioController extends Controller {
         if($objHorarioSecCiud!=null && $objHorarioSecCiud->sadCiudadSector==0){
             Yii::app()->session[Yii::app()->params->sesion['tipoEntrega']] = Yii::app()->params->entrega['tipo']['presencial'];
         }
-        
-        $this->redirect($this->createUrl('/sitio/inicio'));
+        if(Yii::app()->session[Yii::app()->params->sesion['redireccionAutenticacion']]==null){
+                $this->redirect($this->createUrl('/sitio/inicio'));
+        }else{
+            $this->redirect(Yii::app()->session[Yii::app()->params->sesion['redireccionAutenticacion']]);
+        }
     }
     
     public function actionUbicacionVerificacion() {
@@ -481,9 +487,15 @@ class SitioController extends Controller {
            
             $_SESSION['codigoCiudad']=$objSectorCiudad->objCiudad->codigoCiudad;
             $_SESSION['nombreCiudad']=$objSectorCiudad->objCiudad->nombreCiudad;
+            $urlAnterior="";
             
+            if(isset(Yii::app()->session[Yii::app()->params->sesion['redireccionAutenticacion']]) && Yii::app()->session[Yii::app()->params->sesion['redireccionAutenticacion']] != null){
+                $urlAnterior=Yii::app()->session[Yii::app()->params->sesion['redireccionAutenticacion']];
+            }else{
+                $urlAnterior=$this->createUrl('/sitio/index/');
+            }
             echo CJSON::encode(array('result' => 'ok', 'response' => 'Se ha cambiado la ciudad de entrega por: '.$objSectorCiudad->objCiudad->nombreCiudad,
-                                     'urlAnterior' => $_SESSION['urlAnterior']));
+                                     'urlAnterior' => $urlAnterior ));
             Yii::app()->end();
         }else{
             echo CJSON::encode(array('result' => 'error', 'response' => 'Solicitud inválida.'));

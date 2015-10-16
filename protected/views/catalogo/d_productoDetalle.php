@@ -42,17 +42,19 @@
                <!-- </div> -->
             <div class="col-md-6 content-txt2 border-left">
                                             <div class="descripciones">
-						<div class="col-md-12">
-                                                    <h4 style="margin-bottom:0px;">Califica el producto</h4>
-                                                    <?php $this->widget('CStarRating',array(
-                                                            'name'=>'avg_'.$objProducto->codigoProducto,
-                                                            'value'=>  floor($objProducto->getCalificacion()),
-                                                            'minRating'=>1,
-                                                            'maxRating'=>5,
-                                                            'starCount'=>5,
-                                                            'readOnly'=>true,
-                                                       )); ?> 
-						</div>
+                                                <?php if(!in_array($objProducto->idUnidadNegocioBI, Yii::app()->params->calificacion['categoriasNoCalificacion'])): ?>
+                                                    <div class="col-md-12">
+                                                        <h4 style="margin-bottom:0px;">Califica el producto</h4>
+                                                        <?php $this->widget('CStarRating',array(
+                                                                'name'=>'avg_'.$objProducto->codigoProducto,
+                                                                'value'=>  floor($objProducto->getCalificacion()),
+                                                                'minRating'=>1,
+                                                                'maxRating'=>5,
+                                                                'starCount'=>5,
+                                                                'readOnly'=>true,
+                                                           )); ?> 
+                                                    </div>
+                                                <?php endif;?>
 						<div class="col-md-12" style="color:#A3A3A3;font-size: 16px;">
 							<h3 style="color: #ED1C24;"><?php echo $objProducto->descripcionProducto ?> <!-- Titulo del producto --></h3>
 								<div><span><?php echo $objProducto->presentacionProducto ?></span></div>
@@ -200,110 +202,111 @@
     <div class="container">
     <?php ProductoView::generarDetalle($objProducto->objDetalle,1) ?>
         <!-- Porcentaje de las calificaciones -->
-        <?php $porcentajes=$objProducto->getArrayCalificacion();?>
-         <div class="row line-bottom2">
-			<div class="col-md-12">
-				<span class="glyphicon glyphicon-chevron-right der" aria-hidden="true"></span>&nbsp;<h4 style="display:inline-block;"> Resumen reseñas del producto</h4>
-				<div class="col-md-12"><br></div>
-				<div class="col-md-6">
-                                   
-					<div class="col-md-12">
-						<div class="col-md-3"><p>5 Estrellas </p></div>
-						<div class="col-md-9">
-						 	<div class="progress">
-							  	<div class="progress-bar progress-bar-danger" role="progressbar" aria-valuenow="<?php echo $porcentajes[5] ?>" aria-valuemin="0" aria-valuemax="100" style="width:<?php echo $porcentajes[5] ?>%">
-							  </div>
-							</div>
-						</div>
-					</div>
+        <?php if(!in_array($objProducto->idUnidadNegocioBI, Yii::app()->params->calificacion['categoriasNoCalificacion'])): ?>
+            <?php $porcentajes=$objProducto->getArrayCalificacion();?>
+             <div class="row line-bottom2">
+                            <div class="col-md-12">
+                                    <span class="glyphicon glyphicon-chevron-right der" aria-hidden="true"></span>&nbsp;<h4 style="display:inline-block;"> Resumen reseñas del producto</h4>
+                                    <div class="col-md-12"><br></div>
+                                    <div class="col-md-6">
 
-					<div class="col-md-12">
-						<div class="col-md-3"><p>4 Estrellas </p></div>
-						<div class="col-md-9">
-						 	<div class="progress">
-							  	<div class="progress-bar progress-bar-danger" role="progressbar" aria-valuenow="<?php echo $porcentajes[4] ?>" aria-valuemin="0" aria-valuemax="100" style="width:<?php echo $porcentajes[4] ?>%">
-							  </div>
-							</div>
-						</div>
-					</div>
+                                            <div class="col-md-12">
+                                                    <div class="col-md-3"><p>5 Estrellas </p></div>
+                                                    <div class="col-md-9">
+                                                            <div class="progress">
+                                                                    <div class="progress-bar progress-bar-danger" role="progressbar" aria-valuenow="<?php echo $porcentajes[5] ?>" aria-valuemin="0" aria-valuemax="100" style="width:<?php echo $porcentajes[5] ?>%">
+                                                              </div>
+                                                            </div>
+                                                    </div>
+                                            </div>
 
-					<div class="col-md-12">
-						<div class="col-md-3"><p>3 Estrellas </p></div>
-						<div class="col-md-9">
-						 	<div class="progress">
-							  	<div class="progress-bar progress-bar-danger" role="progressbar" aria-valuenow="<?php echo $porcentajes[3] ?>" aria-valuemin="0" aria-valuemax="100" style="width:<?php echo $porcentajes[3] ?>%">
-							  </div>
-							</div>
-						</div>
-					</div>
-					<div class="col-md-12">
-						<div class="col-md-3"><p>2 Estrellas </p></div>
-						<div class="col-md-9">
-						 	<div class="progress">
-							  	<div class="progress-bar progress-bar-danger" role="progressbar" aria-valuenow="<?php echo $porcentajes[2] ?>" aria-valuemin="0" aria-valuemax="100" style="width:<?php echo $porcentajes[2] ?>%">
-							  </div>
-							</div>
-						</div>
-					</div>
-					<div class="col-md-12">
-						<div class="col-md-3"><p>1 Estrella </p></div>
-						<div class="col-md-9">
-						 	<div class="progress">
-							  	<div class="progress-bar progress-bar-danger" role="progressbar" aria-valuenow="<?php echo $porcentajes[1] ?>" aria-valuemin="0" aria-valuemax="100" style="width:<?php echo $porcentajes[1] ?>%">
-							  </div>
-							</div>
-						</div>
-					</div>
-				</div>
-				<div class="col-md-6">
-					<div class="col-md-12 content-resena">	
-						<div class="row">
-							<div class="col-md-6">
-								<?php $this->widget('CStarRating',array(
-                                                                        'name'=>'avg_sumary_'.$objProducto->codigoProducto,
-                                                                        'value'=>  floor($objProducto->getCalificacion()),
-                                                                        'minRating'=>1,
-                                                                        'maxRating'=>5,
-                                                                        'starCount'=>5,
-                                                                        'readOnly'=>true,
-                                                                )); ?> 	
-							</div>
-							<div class="col-md-6"><p style="margin:0px;font-size:20px;color:#999;"><?php echo $objProducto->getContadorCalificaciones();?> Reseña(s)</p></div>
-						</div>
-						<div class="row">
-							<div class="col-md-12">	
-                                                            <?php if (Yii::app()->user->isGuest): ?>
-                                                                     <p class="">Iniciar sesión para calificar este producto</p>
-                                                            <?php elseif($objCalificacion==null):?>
-                                                                    <a href="#" data-producto="<?php echo $objProducto->codigoProducto?>" data-toggle="modal" data-target="#modal-calificacion"><div class="button-resena">Escribe una reseña&nbsp;<span class="glyphicon glyphicon-chevron-right" style="color:#fff;"></span></div></a>
-                                                            <?php else:?>
-                                                                    <table class="">
-                                                                        <tr>
-                                                                            <td>Tu calificación:</td>
-                                                                            <td>
-                                                                                <?php 
-                                                                                     $this->widget('CStarRating',array(
-                                                                                                 'name'=>'calificacion-raty-'.$objProducto->codigoProducto,
-                                                                                                 'value'=>$objCalificacion->calificacion,
-                                                                                                 'minRating'=>1,
-                                                                                                 'maxRating'=>5,
-                                                                                                 'starCount'=>5,
-                                                                                                 'readOnly'=>true
-                                                                                                 ));
-                                                                                 ?>
-                                                                            </td>
-                                                                        </tr>
-                                                                        <tr>
-                                                                            <td colspan="2">Puedes volver a calificar dentro de <?php echo $objCalificacion->getDiferencia()->format('%h horas y %i minutos'); ?></td>
-                                                                        </tr>
-                                                                    </table>
-                                                            <?php endif;?>
-							</div>
-						</div>
-					</div>
-				</div>
-			</div>
-	 </div>
+                                            <div class="col-md-12">
+                                                    <div class="col-md-3"><p>4 Estrellas </p></div>
+                                                    <div class="col-md-9">
+                                                            <div class="progress">
+                                                                    <div class="progress-bar progress-bar-danger" role="progressbar" aria-valuenow="<?php echo $porcentajes[4] ?>" aria-valuemin="0" aria-valuemax="100" style="width:<?php echo $porcentajes[4] ?>%">
+                                                              </div>
+                                                            </div>
+                                                    </div>
+                                            </div>
+
+                                            <div class="col-md-12">
+                                                    <div class="col-md-3"><p>3 Estrellas </p></div>
+                                                    <div class="col-md-9">
+                                                            <div class="progress">
+                                                                    <div class="progress-bar progress-bar-danger" role="progressbar" aria-valuenow="<?php echo $porcentajes[3] ?>" aria-valuemin="0" aria-valuemax="100" style="width:<?php echo $porcentajes[3] ?>%">
+                                                              </div>
+                                                            </div>
+                                                    </div>
+                                            </div>
+                                            <div class="col-md-12">
+                                                    <div class="col-md-3"><p>2 Estrellas </p></div>
+                                                    <div class="col-md-9">
+                                                            <div class="progress">
+                                                                    <div class="progress-bar progress-bar-danger" role="progressbar" aria-valuenow="<?php echo $porcentajes[2] ?>" aria-valuemin="0" aria-valuemax="100" style="width:<?php echo $porcentajes[2] ?>%">
+                                                              </div>
+                                                            </div>
+                                                    </div>
+                                            </div>
+                                            <div class="col-md-12">
+                                                    <div class="col-md-3"><p>1 Estrella </p></div>
+                                                    <div class="col-md-9">
+                                                            <div class="progress">
+                                                                    <div class="progress-bar progress-bar-danger" role="progressbar" aria-valuenow="<?php echo $porcentajes[1] ?>" aria-valuemin="0" aria-valuemax="100" style="width:<?php echo $porcentajes[1] ?>%">
+                                                              </div>
+                                                            </div>
+                                                    </div>
+                                            </div>
+                                    </div>
+                                    <div class="col-md-6">
+                                            <div class="col-md-12 content-resena">	
+                                                    <div class="row">
+                                                            <div class="col-md-6">
+                                                                    <?php $this->widget('CStarRating',array(
+                                                                            'name'=>'avg_sumary_'.$objProducto->codigoProducto,
+                                                                            'value'=>  floor($objProducto->getCalificacion()),
+                                                                            'minRating'=>1,
+                                                                            'maxRating'=>5,
+                                                                            'starCount'=>5,
+                                                                            'readOnly'=>true,
+                                                                    )); ?> 	
+                                                            </div>
+                                                            <div class="col-md-6"><p style="margin:0px;font-size:20px;color:#999;"><?php echo $objProducto->getContadorCalificaciones();?> Reseña(s)</p></div>
+                                                    </div>
+                                                    <div class="row">
+                                                            <div class="col-md-12">	
+                                                                <?php if (Yii::app()->user->isGuest): ?>
+                                                                         <p class="">Iniciar sesión para calificar este producto</p>
+                                                                <?php elseif($objCalificacion==null):?>
+                                                                        <a href="#" data-producto="<?php echo $objProducto->codigoProducto?>" data-toggle="modal" data-target="#modal-calificacion"><div class="button-resena">Escribe una reseña&nbsp;<span class="glyphicon glyphicon-chevron-right" style="color:#fff;"></span></div></a>
+                                                                <?php else:?>
+                                                                        <table class="">
+                                                                            <tr>
+                                                                                <td>Tu calificación:</td>
+                                                                                <td>
+                                                                                    <?php 
+                                                                                         $this->widget('CStarRating',array(
+                                                                                                     'name'=>'calificacion-raty-'.$objProducto->codigoProducto,
+                                                                                                     'value'=>$objCalificacion->calificacion,
+                                                                                                     'minRating'=>1,
+                                                                                                     'maxRating'=>5,
+                                                                                                     'starCount'=>5,
+                                                                                                     'readOnly'=>true
+                                                                                                     ));
+                                                                                     ?>
+                                                                                </td>
+                                                                            </tr>
+                                                                            <tr>
+                                                                                <td colspan="2">Puedes volver a calificar dentro de <?php echo $objCalificacion->getDiferencia()->format('%h horas y %i minutos'); ?></td>
+                                                                            </tr>
+                                                                        </table>
+                                                                <?php endif;?>
+                                                            </div>
+                                                    </div>
+                                            </div>
+                                    </div>
+                            </div>
+             </div>
                             <div class="row">
                                     <div class="col-md-12">
                                             <div class="col-md-12">
@@ -345,6 +348,7 @@
                                                   <?php endif; ?>
                                     </div>
                             </div>
+        <?php endif;?>
 </section>
 
 <!--
@@ -370,7 +374,7 @@
                               <?php $form = $this->beginWidget('CActiveForm', array(
                                         'enableClientValidation' => true,
                                         'htmlOptions' => array(
-                                            'id' => "form-registro", 'class' => "ui-bar ui-bar-c ui-corner-all", 'data-ajax' => "false"
+                                            'id' => "form-calificacion", 'class' => "", 'data-ajax' => "false"
                                         ),
                                         'errorMessageCssClass' => 'has-error',
                                         'clientOptions' => array(

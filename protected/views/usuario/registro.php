@@ -8,7 +8,7 @@
 <?php endif; ?>
 
 <div class="<?php echo $model->getContentClass() ?> c_form_rgs ui-body-c">
-    <?php if (!empty($model->getTitleForm())): ?>
+    <?php if (!($model->getTitleForm()=="")): ?>
         <h2>
             <?php echo $model->getTitleForm() ?>
         </h2>
