@@ -29,7 +29,7 @@ return array(
                 'user' => array(
                     'class' => 'callcenter.components.UserOperator',
                 ),
-        )),
+            )),
         'gii' => array(
             'class' => 'system.gii.GiiModule',
             'password' => '4dm1n*-*',
@@ -57,10 +57,10 @@ return array(
             'connectionString' => 'mysql:host=localhost;port=3306;dbname=lrvmovil',
             'emulatePrepare' => true,
             'username' => 'root',
-            //'password' => '',
+            'password' => 'admin',
             'charset' => 'utf8',
             'enableProfiling' => true,
-            //'enableParamLogging' => true,
+            'enableParamLogging' => true,
         ),
         'errorHandler' => array(
             'errorAction' => 'sitio/error',
@@ -108,12 +108,12 @@ return array(
                     'class' => 'CFileLogRoute',
                     'levels' => 'trace, vardump',
                 ),
-                /*array(
+                array(
                     'class' => 'CWebLogRoute',
                     'enabled' => YII_DEBUG,
                     'levels' => 'error, warning',
                     'showInFireBug' => true,
-                ),*/
+                ),
             ),
         ),
     ),
