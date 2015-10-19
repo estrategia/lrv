@@ -283,3 +283,197 @@ $(document).on('click', "[id^='enlace-pago-direccion-express-']", function(){
     var campoCheckbox = $(this).children("input");
     campoCheckbox.prop("checked", true);
 });
+
+
+$(document).on('change', "#form-listapersonal input[id='ListasPersonales_estadoLista']", function() {
+    if ($(this).is(":checked")) {
+        $('#div-lista-config-recordacion').removeClass('hide');
+    }else{
+        $('#div-lista-config-recordacion').addClass('hide');
+    }
+});
+
+
+$(document).on('click', "input[data-role='lstpersonalform']", function() {
+    var data = {};
+    var lista = $(this).attr('data-lista');
+    if (lista !== undefined) {
+        data['lista'] = lista;
+    }
+    $.ajax({
+        type: 'POST',
+        //dataType: 'json',
+        async: true,
+        url: requestUrl + '/usuario/listapersonal/lista/post',
+        data: $.param(data) + '&' + $('#form-listapersonal').serialize(),
+        beforeSend: function() {
+            $('div[id^="ListasPersonales_"].has-error').html('');
+            $('div[id^="ListasPersonales_"].has-error').css('display', 'none');
+            $('#form-listapersonal input[type=button]').attr('disabled', 'disabled');
+            //$.mobile.loading('show');
+        },
+        complete: function() {
+            //$.mobile.loading('hide');
+            $('#form-listapersonal input[type=button]').removeAttr('disabled');
+        },
+        success: function(data) {
+            var data = $.parseJSON(data);
+            if (data.result === "ok") {
+                if ($('#ListaGuardarForm_idLista').length) {
+                    $("#ListaGuardarForm_idLista").append(data.response.optionHtml);
+                }
+                
+                if ($('#gridview-listapersonal').length) {
+                    $('#form-listapersonal')[0].reset();
+                    $.fn.yiiGridView.update('gridview-listapersonal');
+                }
+                $("#modal-lista-personal").modal('hide');
+                dialogoAnimado(data.response.mensajeHtml);
+            } else if (data.result === 'error') {
+                bootbox.alert(data.response);
+            } else {
+                $.each(data, function(element, error) {
+                    $('#' + element + '_em_').html(error);
+                    $('#' + element + '_em_').css('display', 'block');
+                });
+            }
+        },
+        error: function(jqXHR, textStatus, errorThrown) {
+            //$.mobile.loading('hide');
+            bootbox.alert('Error: ' + errorThrown);
+        }
+    });
+});
+
+
+$(document).on('click', "a[data-role='listapersonaleliminar']", function() {
+    var lista = $(this).attr('data-lista');
+
+    $.ajax({
+        type: 'POST',
+        dataType: 'json',
+        async: true,
+        url: requestUrl + '/usuario/listapersonaleliminar',
+        data: {lista: lista},
+        beforeSend: function() {
+
+        },
+        success: function(data) {
+            if (data.result === "ok") {
+                $.fn.yiiGridView.update('gridview-listapersonal');
+                dialogoAnimado(data.response);
+            } else {
+                bootbox.alert(data.response);
+            }
+        },
+        error: function(jqXHR, textStatus, errorThrown) {
+            bootbox.alert('Error: ' + errorThrown);
+        }
+    });
+});
+
+
+$(document).on('click', "a[data-role='listapersonal']", function() {
+    var lista = $(this).attr('data-lista');
+    $.ajax({
+        type: 'POST',
+        dataType: 'json',
+        async: true,
+        url: requestUrl + '/carro/agregarlista',
+        data: {lista: lista},
+        beforeSend: function() {
+            //$.mobile.loading('show');
+        },
+        complete: function() {
+            //$.mobile.loading('hide');
+        },
+        success: function(data) {
+            if (data.result === "ok") {
+                $('#div-carro-canasta').html(data.response.canastaHTML);
+                $('#div-carro-canasta').trigger("create");
+                if (data.response.mensajeHTML) {
+                    dialogoAnimado(data.response.mensajeHTML);
+                }
+            } else {
+                bootbox.alert(data.response);
+            }
+        },
+        error: function(jqXHR, textStatus, errorThrown) {
+            //$.mobile.loading('hide');
+            bootbox.alert('Error: ' + errorThrown);
+        }
+    });
+});
+
+
+$(document).on('click', "a[data-role='eliminarlistadetalle']", function() {
+    var detalle = $(this).attr('data-detalle');
+    $.ajax({
+        type: 'POST',
+        dataType: 'json',
+        async: true,
+        url: requestUrl + '/usuario/listadetalle/accion/eliminar',
+        data: {detalle: detalle},
+        beforeSend: function() {
+            
+        },
+        complete: function() {
+            
+        },
+        success: function(data) {
+            if (data.result === "ok") {
+                dialogoAnimado(data.response.mensajeHTML);
+                $.fn.yiiGridView.update('gridview-listadetalle');
+            } else if (data.result === 'error') {
+                bootbox.alert(data.response);
+            }
+
+        },
+        error: function(jqXHR, textStatus, errorThrown) {
+            bootbox.alert('Error: ' + errorThrown);
+        }
+    });
+});
+
+
+$(document).on('click', "a[data-role='actualizarlistadetalle']", function() {
+    var detalle = $(this).attr('data-detalle');
+    var unidades = $("#campo-producto-"+detalle).val();
+    unidades = parseInt(unidades);
+
+    if (isNaN(unidades)) {
+        unidades = 0;
+    }
+    if (unidades <= 0) {
+        unidades = 0;
+    }
+    $("#campo-producto-"+detalle).val(unidades);
+
+    $.ajax({
+        type: 'POST',
+        dataType: 'json',
+        async: true,
+        url: requestUrl + '/usuario/listadetalle/accion/actualizar',
+        data: {detalle: detalle, unidades: unidades},
+        beforeSend: function() {
+        },
+        complete: function() {
+        },
+        success: function(data) {
+            if (data.result === "ok") {
+                dialogoAnimado(data.response.mensajeHTML);
+            } else if (data.result === 'error') {
+                bootbox.alert(data.response);                
+            }
+        },
+        error: function(jqXHR, textStatus, errorThrown) {
+            bootbox.alert('Error: ' + errorThrown);
+        }
+    });
+});
+
+//para que funcionen los tool tips
+
+$(function () {
+  $('[data-toggle="tooltip"]').tooltip()
+})

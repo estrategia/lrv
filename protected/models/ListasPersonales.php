@@ -39,14 +39,14 @@ class ListasPersonales extends CActiveRecord {
         // will receive user inputs.
         return array(
             array('identificacionUsuario, nombreLista', 'required'),
-            array('diasRecordar, diaRecordar, diasAnticipacion, recordarCorreo, recordarNotificacion, estadoLista', 'numerical', 'integerOnly' => true),
+            array('diasRecordar, diaRecordar, diasAnticipacion, recordarCorreo, recordarNotificacion, estadoLista, activa', 'numerical', 'integerOnly' => true),
             array('identificacionUsuario', 'length', 'max' => 100),
             array('nombreLista', 'length', 'max' => 20),
             array('fechaCreacion, fechaModificacion, fechaRecordar', 'safe'),
             array('diasRecordar, diaRecordar, diasAnticipacion, fechaRecordar', 'default', 'value' => null),
             // The following rule is used by search().
             // @todo Please remove those attributes that should not be searched.
-            array('idLista, identificacionUsuario, nombreLista, fechaCreacion, fechaModificacion, diasRecordar, diaRecordar, fechaRecordar, diasAnticipacion, recordarCorreo, recordarNotificacion, estadoLista', 'safe', 'on' => 'search'),
+            array('idLista, identificacionUsuario, nombreLista, fechaCreacion, fechaModificacion, diasRecordar, diaRecordar, fechaRecordar, diasAnticipacion, recordarCorreo, recordarNotificacion, estadoLista, activa', 'safe', 'on' => 'search'),
         );
     }
 
@@ -111,6 +111,7 @@ class ListasPersonales extends CActiveRecord {
         $criteria->compare('recordarCorreo', $this->recordarCorreo);
         $criteria->compare('recordarNotificacion', $this->recordarNotificacion);
         $criteria->compare('estadoLista', $this->estadoLista);
+        $criteria->compare('activa', $this->activa);
 
         if ($params === null) {
             return new CActiveDataProvider($this, array(

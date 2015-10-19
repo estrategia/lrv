@@ -813,6 +813,8 @@ class UsuarioController extends Controller {
         if (isset($_GET['ListasPersonales']))
             $model->attributes = $_GET['ListasPersonales'];
 
+        $model->activa = 1;
+
         $model->identificacionUsuario = Yii::app()->user->name;
 
         $listaPersonal = 'listaPersonal';
@@ -841,9 +843,53 @@ class UsuarioController extends Controller {
             $this->redirect($this->createUrl('listapersonal'));
         }
 
-        $this->render('listaDetalle', array(
+        $listaPersonalDetalle = 'listaDetalle';
+        if(!$this->isMobile)
+        {
+            $listaPersonalDetalle = 'd_listaDetalle';
+        }
+
+
+        $this->render($listaPersonalDetalle, array(
             'model' => $model,
         ));
+    }
+
+    public function actionListapersonaleliminar(){
+        if (!Yii::app()->request->isPostRequest) {
+            echo CJSON::encode(array('result' => 'error', 'response' => 'Solicitud inválida'));
+            Yii::app()->end();
+        }
+
+        $lista = Yii::app()->getRequest()->getPost('lista', false);
+
+        if ($lista === null) {
+            echo CJSON::encode(array('result' => 'error', 'response' => 'Solicitud inválida, no se detectan datos'));
+            Yii::app()->end();
+        }
+
+        $objListaPersonal = ListasPersonales::model()->find(array(
+            //'with' => 'listDetalle',
+            'condition' => 't.idLista=:lista AND t.identificacionUsuario=:usuario',
+            'params' => array(
+                ':lista' => $lista,
+                ':usuario' => Yii::app()->user->name
+            )
+        ));
+
+        if ($objListaPersonal === null) {
+            echo CJSON::encode(array('result' => 'error', 'response' => 'La lista personal no existe'));
+            Yii::app()->end();
+        }
+
+        $objListaPersonal->activa = 0;
+        $objListaPersonal->save();
+
+        echo CJSON::encode(array(
+            'result' => 'ok',
+            'response' => 'Lista personal eliminada',
+        ));
+        Yii::app()->end();
     }
 
     private function listapersonalGuardar() {
@@ -1268,7 +1314,16 @@ class UsuarioController extends Controller {
     }
     
     protected function gridDetalleLista($data, $row) {
-        return CHtml::link('Ver', $this->createUrl('/usuario/listapersonal', array('lista'=>$data->idLista)), array('class'=>'ui-btn ui-btn-inline ui-icon-view-circle ui-btn-icon-notext ui-icon-center ui-nodisc-icon', 'data-ajax'=>'false'));
+        $clase = 'ui-btn ui-btn-inline ui-icon-view-circle ui-btn-icon-notext ui-icon-center ui-nodisc-icon';
+        $texto = 'Ver';
+        if(!$this->isMobile)
+        {
+            $clase = '';
+            $texto = 'Ver Detalle';
+        }
+
+
+        return CHtml::link($texto, $this->createUrl('/usuario/listapersonal', array('lista'=>$data->idLista)), array('class'=>$clase, 'data-ajax'=>'false'));
     }
     
     

@@ -42,8 +42,8 @@ class Controller extends CController {
             $this->layout = '//layouts/desktop';
         }
         
-        //$this->isMobile = true;
-        //$this->layout = '//layouts/mobile';
+        $this->isMobile = true;
+        $this->layout = '//layouts/mobile';
         $this->pageTitle = Yii::app()->name;
         $this->getSectorName();
         $this->registerJs();

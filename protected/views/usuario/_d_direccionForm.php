@@ -68,21 +68,21 @@ $form = $this->beginWidget('CActiveForm', array(
     <div class="row">
         <div class="col-md-4">
             <?php echo $form->labelEx($model, 'telefono', array('class' => '')); ?>
-            <?php echo $form->numberField($model, 'telefono', array('maxlength'=>11,'placeholder' => $model->getAttributeLabel('telefono'), "class" => "form-control")); ?>
+            <?php echo $form->textField($model, 'telefono', array('maxlength'=>11,'placeholder' => $model->getAttributeLabel('telefono'), "class" => "form-control")); ?>
             <?php echo $form->error($model, 'telefono'); ?>
         </div>
     </div>
     <div class="row">
         <div class="col-md-4">
             <?php echo $form->labelEx($model, 'extension', array('class' => '')); ?>
-            <?php echo $form->numberField($model, 'extension', array('maxlength'=>5, 'placeholder' => $model->getAttributeLabel('extension'), "class" => "form-control")); ?>
+            <?php echo $form->textField($model, 'extension', array('maxlength'=>5, 'placeholder' => $model->getAttributeLabel('extension'), "class" => "form-control")); ?>
             <?php echo $form->error($model, 'extension'); ?>
         </div>
     </div>
     <div class="row">
         <div class="col-md-4">
             <?php echo $form->labelEx($model, 'celular', array('class' => '')); ?>
-            <?php echo $form->numberField($model, 'celular', array('maxlength'=>20,'placeholder' => $model->getAttributeLabel('celular'), "class" => "form-control")); ?>
+            <?php echo $form->textField($model, 'celular', array('maxlength'=>20,'placeholder' => $model->getAttributeLabel('celular'), "class" => "form-control")); ?>
             <?php echo $form->error($model, 'celular'); ?>
         </div>
     </div>
