@@ -23,7 +23,7 @@
 		    		<?php $ahorro = ($objItem->objProducto->mostrarAhorroVirtual == 1 && $objItem->descuentoUnidad > 0) ? $objItem->descuentoUnidad : 0 ?>
 					<tr>
 						<td>
-							<a href="<?php echo CController::createUrl('/catalogo/producto', array('producto' => $objItem->codigoProducto,'descripcion'=>  Producto::cadenaUrl($objItem->objProducto->descripcionProducto))) ?>" data-ajax="false">
+							<a href="<?php echo CController::createUrl('/catalogo/producto', array('producto' => $objItem->codigoProducto,'descripcion'=> $objItem->objProducto->getCadenaUrl())) ?>" data-ajax="false">
 		                        <img src="<?php echo Yii::app()->request->baseUrl . $objItem->objProducto->rutaImagen() ?>" class="ui-li-thumb">
 		                    </a>
 		                    <h4><a href="<?php echo CController::createUrl('/catalogo/producto', array('producto' => $objItem->codigoProducto)) ?>" data-ajax="false"><?php echo $objItem->descripcion ?></a></h4>

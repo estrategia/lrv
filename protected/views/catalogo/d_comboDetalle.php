@@ -4,14 +4,9 @@
         <h4>Este combo incluye los siguientes productos:</h4>
         <?php foreach ($objCombo->listProductos as $objProducto): ?>
             <div class="row">
-                <?php $imagen = $objProducto->objImagen(YII::app()->params->producto['tipoImagen']['mini']); ?>
                 <div class="span2">
                     <div>
-                        <?php if ($imagen == null): ?>
-                            <img src="<?php echo Yii::app()->request->baseUrl . Yii::app()->params->producto['noImagen']['mini']; ?>">
-                        <?php else: ?>
-                            <img src="<?php echo Yii::app()->request->baseUrl . Yii::app()->params->carpetaImagen['productos'][YII::app()->params->producto['tipoImagen']['mini']] . $imagen->rutaImagen; ?>">
-                        <?php endif; ?>
+                        <img src="<?php echo Yii::app()->request->baseUrl . $objProducto->rutaImagen(); ?>">
                     </div>
                     <div>
                         <strong><?php echo $objProducto->descripcionProducto ?></strong>

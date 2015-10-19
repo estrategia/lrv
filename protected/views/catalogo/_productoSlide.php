@@ -1,5 +1,5 @@
 <div class="imgRelacionado">
-    <a href="<?php echo CController::createUrl('/catalogo/producto', array('producto' => $objProducto->codigoProducto,'descripcion'=>  Producto::cadenaUrl($objProducto->descripcionProducto))) ?>" data-ajax="false">
+    <a href="<?php echo CController::createUrl('/catalogo/producto', array('producto' => $objProducto->codigoProducto,'descripcion'=>  $objProducto->getCadenaUrl())) ?>" data-ajax="false">
         <img src="<?php echo Yii::app()->request->baseUrl . $objProducto->rutaImagen(); ?>">
     </a>
 </div>
