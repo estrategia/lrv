@@ -57,7 +57,7 @@
                                                                      </ul>
                                                                 </div>
                                                                 <div class="col-md-6">
-                                                                    <form method="get" action="<?php echo CController::createUrl('/catalogo/buscarD') ?>" data-ajax="false">
+                                                                    <form method="get" action="<?php echo CController::createUrl('/catalogo/buscar') ?>" data-ajax="false">
                                                                                     <?php
                                                                                   /*  echo "<pre>";
                                                                                     print_r($this->categorias);

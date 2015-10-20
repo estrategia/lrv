@@ -135,14 +135,24 @@ class SitioController extends Controller {
         Yii::app()->end();
     }
 
-    public function actionEntrega($tipo) {
+    public function actionEntrega($tipo = null) {
+        
         if ($tipo != Yii::app()->params->entrega['tipo']['presencial'] && $tipo != Yii::app()->params->entrega['tipo']['domicilio']) {
             $this->actionIndex();
         }
 
         Yii::app()->session[Yii::app()->params->sesion['tipoEntrega']] = $tipo;
         Yii::app()->session[Yii::app()->params->sesion['carroPagarForm']] = null;
-        $this->redirect($this->createUrl('/sitio/ubicacion/'));
+        
+        if($this->isMobile){
+            $this->redirect($this->createUrl('/sitio/ubicacion/'));
+        }else{
+            echo CJSON::encode(array(
+               'result' => 'ok',
+                'response' => 'SE HA SELECCIONADO EL TIPO DE ENTREGA '.Yii::app()->params->entrega['tipo'][$tipo]
+            )); 
+            Yii::app()->end();
+        }
     }
     
     public function actionUbicacion() {

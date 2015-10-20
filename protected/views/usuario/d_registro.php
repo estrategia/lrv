@@ -11,7 +11,7 @@
     $form = $this->beginWidget('CActiveForm', array(
         'enableClientValidation' => true,
         'htmlOptions' => array(
-            'id' => "form-registro", 'class' => "ui-bar ui-bar-c ui-corner-all", 'data-ajax' => "false"
+            'id' => "form-registro", 'class' => "", 
         ),
         'errorMessageCssClass' => 'has-error',
         'clientOptions' => array(
@@ -32,7 +32,7 @@
             <?php echo $form->passwordField($model, 'clave', array('placeholder' => $model->getAttributeLabel('clave'), 'autocomplete' => 'off','class'=>'form-control')); ?>
             <?php echo $form->error($model, 'clave'); ?>
         </div>
-	</div>
+    </div>
     <div class="row">
         <div class="col-md-4">
             <?php echo $form->labelEx($model, 'claveConfirmar'); ?>
@@ -44,8 +44,7 @@
 <?php else: ?>
 
 	<?php if ($model->getScenario() == 'registro' || $model->getScenario() == 'invitado') : ?>
-
-		<div class="row">
+            <div class="row">
 	        <div class="col-md-4">
 	            <?php echo $form->labelEx($model, 'cedula'); ?>
                 <?php echo $form->textField($model, 'cedula', array('maxlength' => 50, 'placeholder' => $model->getAttributeLabel('cedula'), 'class'=>'form-control')); ?>

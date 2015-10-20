@@ -337,6 +337,14 @@ class Producto extends CActiveRecord {
          return $contadorCalificacion;
     }
     
-    
+    function object_to_array($object) {
+        if (is_object($object)) {
+         return array_map(__FUNCTION__, get_object_vars($object));
+        } else if (is_array($object)) {
+         return array_map(__FUNCTION__, $object);
+        } else {
+         return $object;
+        }
+   }
     
 }
