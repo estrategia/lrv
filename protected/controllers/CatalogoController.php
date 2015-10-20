@@ -1730,7 +1730,7 @@ class CatalogoController extends Controller {
         $criteria->with['listSaldos'] = array('condition' => '(listSaldos.saldoUnidad>:saldo AND listSaldos.codigoCiudad=:ciudad AND listSaldos.codigoSector=:sector) OR (listSaldos.saldoUnidad IS NULL AND listSaldos.codigoCiudad IS NULL AND listSaldos.codigoSector IS NULL)');
         $criteria->with['listPrecios'] = array('condition' => '(listPrecios.codigoCiudad=:ciudad AND listPrecios.codigoSector=:sector) OR (listPrecios.codigoCiudad IS NULL AND listPrecios.codigoSector IS NULL)');
         $criteria->with['listSaldosTerceros'] = array('condition' => '(listSaldosTerceros.saldoUnidad>:saldo AND listSaldosTerceros.codigoCiudad=:ciudad AND listSaldosTerceros.codigoSector=:sector) OR (listSaldosTerceros.codigoCiudad IS NULL AND listSaldosTerceros.codigoSector IS NULL)');
-        $criteria->condition = "t.activo=:activo AND (listImagenes.tipoImagen='" . Yii::app()->params->producto['tipoImagen']['mini'] . "' OR listImagenes.tipoImagen IS NULL) AND ( (listSaldos.saldoUnidad IS NOT NULL AND listPrecios.codigoCiudad IS NOT NULL) OR listSaldosTerceros.codigoCiudad IS NOT NULL)";
+        $criteria->condition = "t.activo=:activo AND t.idUnidadNegocioBI NOT IN (" . implode(",", Yii::app()->params->calificacion['categoriasNoCalificacion']) . ") AND (listImagenes.tipoImagen='" . Yii::app()->params->producto['tipoImagen']['mini'] . "' OR listImagenes.tipoImagen IS NULL) AND ( (listSaldos.saldoUnidad IS NOT NULL AND listPrecios.codigoCiudad IS NOT NULL) OR listSaldosTerceros.codigoCiudad IS NOT NULL)";
         $criteria->params = array(':activo' => 1);
         $criteria->params[':saldo'] = 0;
         $criteria->params[':ciudad'] = $objSectorCiudad->codigoCiudad;
@@ -1828,36 +1828,34 @@ class CatalogoController extends Controller {
             $this->redirect($this->createUrl('/sitio/ubicacion'));
         }
 
-        $sqlCategoriaBI = "";
         $limite = 50;
         $codigoPerfil = Yii::app()->shoppingCart->getCodigoPerfil();
         $listCombos = array();
-
-        $criteria = new CDbCriteria;
-        $criteria->with = array('listImagenes', 'objCodigoEspecial'/* , 'listCalificaciones' */);
-        $criteria->with['listSaldos'] = array('condition' => '(listSaldos.saldoUnidad>:saldo AND listSaldos.codigoCiudad=:ciudad AND listSaldos.codigoSector=:sector) OR (listSaldos.saldoUnidad IS NULL AND listSaldos.codigoCiudad IS NULL AND listSaldos.codigoSector IS NULL)');
-        $criteria->with['listPrecios'] = array('condition' => '(listPrecios.codigoCiudad=:ciudad AND listPrecios.codigoSector=:sector) OR (listPrecios.codigoCiudad IS NULL AND listPrecios.codigoSector IS NULL)');
-        $criteria->with['listSaldosTerceros'] = array('condition' => '(listSaldosTerceros.saldoUnidad>:saldo AND listSaldosTerceros.codigoCiudad=:ciudad AND listSaldosTerceros.codigoSector=:sector) OR (listSaldosTerceros.codigoCiudad IS NULL AND listSaldosTerceros.codigoSector IS NULL)');
-        $criteria->condition = "t.activo=:activo AND t.idUnidadNegocioBI NOT IN (" . implode(",", Yii::app()->params->calificacion['categoriasNoCalificacion']) . ") AND (listImagenes.tipoImagen='" . Yii::app()->params->producto['tipoImagen']['mini'] . "' OR listImagenes.tipoImagen IS NULL) AND ( (listSaldos.saldoUnidad IS NOT NULL AND listPrecios.codigoCiudad IS NOT NULL) OR listSaldosTerceros.codigoCiudad IS NOT NULL)";
-        $criteria->params = array(':activo' => 1);
-        $criteria->params[':saldo'] = 0;
-        $criteria->params[':ciudad'] = $objSectorCiudad->codigoCiudad;
-        $criteria->params[':sector'] = $objSectorCiudad->codigoSector;
+        
+        $criteria = array();
+        $criteria['with'] = array('listImagenes', 'objCodigoEspecial'/* , 'listCalificaciones' */);
+        $criteria['with']['listSaldos'] = array('condition' => '(listSaldos.saldoUnidad>:saldo AND listSaldos.codigoCiudad=:ciudad AND listSaldos.codigoSector=:sector) OR (listSaldos.saldoUnidad IS NULL AND listSaldos.codigoCiudad IS NULL AND listSaldos.codigoSector IS NULL)');
+        $criteria['with']['listPrecios'] = array('condition' => '(listPrecios.codigoCiudad=:ciudad AND listPrecios.codigoSector=:sector) OR (listPrecios.codigoCiudad IS NULL AND listPrecios.codigoSector IS NULL)');
+        $criteria['with']['listSaldosTerceros'] = array('condition' => '(listSaldosTerceros.saldoUnidad>:saldo AND listSaldosTerceros.codigoCiudad=:ciudad AND listSaldosTerceros.codigoSector=:sector) OR (listSaldosTerceros.codigoCiudad IS NULL AND listSaldosTerceros.codigoSector IS NULL)');
+        $criteria['condition'] = "t.activo=:activo AND t.idUnidadNegocioBI NOT IN (" . implode(",", Yii::app()->params->calificacion['categoriasNoCalificacion']) . ") AND (listImagenes.tipoImagen='" . Yii::app()->params->producto['tipoImagen']['mini'] . "' OR listImagenes.tipoImagen IS NULL) AND ( (listSaldos.saldoUnidad IS NOT NULL AND listPrecios.codigoCiudad IS NOT NULL) OR listSaldosTerceros.codigoCiudad IS NOT NULL)";
+        $criteria['params'] = array(':activo' => 1);
+        $criteria['params'][':saldo'] = 0;
+        $criteria['params'][':ciudad'] = $objSectorCiudad->codigoCiudad;
+        $criteria['params'][':sector'] = $objSectorCiudad->codigoSector;
+        
+        $criteria1 = $criteria;
 
         if (Yii::app()->user->isGuest) {
-            $sqlCategoriaBI = "SELECT idCategoriaBI FROM t_ProductosVendidos b ORDER BY b.cantidad DESC";
-            $criteria->condition .= ' AND t.idCategoriaBI IN (' . $sqlCategoriaBI . ')';
-            $criteria->order = "t.orden ASC LIMIT $limite";
+            $criteria1['join'] = "JOIN t_ProductosVendidos vendidos ON (vendidos.codigoProducto=t.codigoProducto) ";
+            $criteria1['order'] = "vendidos.cantidad DESC, t.orden ASC LIMIT $limite";
         } else {
-            $sqlCategoriaBI = "SELECT a.idCategoriaBI FROM t_ComprasUsuariosCategorias a JOIN t_ProductosVendidos b ON (a.idCategoriaBI=b.idCategoriaBI)";
-            $sqlCategoriaBI .= " WHERE a.identificacionUsuario='" . Yii::app()->user->name . "' ORDER BY b.cantidad DESC";
-
-            $criteria->join = "JOIN t_ComprasUsuariosCategorias comprascateg ON (comprascateg.idCategoriaBI=t.idCategoriaBI)";
-            $criteria->condition .= " AND comprascateg.identificacionUsuario='" . Yii::app()->user->name . "' AND t.idCategoriaBI IN ($sqlCategoriaBI)";
-            $criteria->order = "comprascateg.cantidad DESC, t.orden ASC LIMIT $limite";
+            $criteria1['join'] = "JOIN t_ProductosVendidos vendidos ON (vendidos.codigoProducto=t.codigoProducto) "
+                    . "JOIN t_ComprasUsuariosCategorias comprascateg ON (comprascateg.idCategoriaBI=vendidos.idCategoriaBI)";
+            $criteria1['condition'] .= " AND comprascateg.identificacionUsuario='" . Yii::app()->user->name . "'";
+            $criteria1['order'] = "comprascateg.cantidad DESC, vendidos.cantidad DESC, t.orden ASC LIMIT $limite";
         }
 
-        $listProductos = Producto::model()->findAll($criteria);
+        $listProductos = Producto::model()->findAll($criteria1);
 
         $listCodigoEspecial = CodigoEspecial::model()->findAll(array(
             'condition' => 'codigoEspecial<>0'
@@ -1880,24 +1878,14 @@ class CatalogoController extends Controller {
                 $listCodigosResultado[] = $objProducto->codigoProducto;
             }
 
-            $criteria2 = new CDbCriteria;
-            $criteria2->with = array('listImagenes', 'objCodigoEspecial');
-            $criteria2->with['listSaldos'] = array('condition' => '(listSaldos.saldoUnidad>:saldo AND listSaldos.codigoCiudad=:ciudad AND listSaldos.codigoSector=:sector) OR (listSaldos.saldoUnidad IS NULL AND listSaldos.codigoCiudad IS NULL AND listSaldos.codigoSector IS NULL)');
-            $criteria2->with['listPrecios'] = array('condition' => '(listPrecios.codigoCiudad=:ciudad AND listPrecios.codigoSector=:sector) OR (listPrecios.codigoCiudad IS NULL AND listPrecios.codigoSector IS NULL)');
-            $criteria2->with['listSaldosTerceros'] = array('condition' => '(listSaldosTerceros.saldoUnidad>:saldo AND listSaldosTerceros.codigoCiudad=:ciudad AND listSaldosTerceros.codigoSector=:sector) OR (listSaldosTerceros.codigoCiudad IS NULL AND listSaldosTerceros.codigoSector IS NULL)');
-            $criteria2->condition = "t.activo=:activo AND t.idUnidadNegocioBI NOT IN (" . implode(",", Yii::app()->params->calificacion['categoriasNoCalificacion']) . ") AND (listImagenes.tipoImagen='" . Yii::app()->params->producto['tipoImagen']['mini'] . "' OR listImagenes.tipoImagen IS NULL) AND ( (listSaldos.saldoUnidad IS NOT NULL AND listPrecios.codigoCiudad IS NOT NULL) OR listSaldosTerceros.codigoCiudad IS NOT NULL)";
-            $criteria2->params = array(':activo' => 1);
-            $criteria2->params[':saldo'] = 0;
-            $criteria2->params[':ciudad'] = $objSectorCiudad->codigoCiudad;
-            $criteria2->params[':sector'] = $objSectorCiudad->codigoSector;
-
+            $criteria2 = $criteria;
+            
             if (!empty($listCodigosResultado)) {
-                $criteria2->condition .= ' AND t.codigoProducto NOT IN (' . implode(",", $listCodigosResultado) . ')';
+                $criteria2['condition'] .= ' AND t.codigoProducto NOT IN (' . implode(",", $listCodigosResultado) . ')';
             }
-
-            $sqlCategoriaBI = "SELECT idCategoriaBI FROM t_ProductosVendidos b ORDER BY b.cantidad DESC";
-            $criteria2->condition .= ' AND t.idCategoriaBI IN (' . $sqlCategoriaBI . ')';
-            $criteria2->order = "t.orden ASC LIMIT $limiteRestante";
+            
+            $criteria2['join'] = "JOIN t_ProductosVendidos vendidos ON (vendidos.codigoProducto=t.codigoProducto) ";
+            $criteria2['order'] = "vendidos.cantidad DESC, t.orden ASC LIMIT $limiteRestante";
             $listProductos2 = Producto::model()->findAll($criteria2);
         }
 
@@ -1945,36 +1933,34 @@ class CatalogoController extends Controller {
             $this->redirect($this->createUrl('/sitio/ubicacion'));
         }
 
-        $sqlCategoriaBI = "";
         $limite = 50;
         $codigoPerfil = Yii::app()->shoppingCart->getCodigoPerfil();
         $listCombos = array();
 
-        $criteria = new CDbCriteria;
-        $criteria->with = array('listImagenes', 'objCodigoEspecial'/* , 'listCalificaciones' */);
-        $criteria->with['listSaldos'] = array('condition' => '(listSaldos.saldoUnidad>:saldo AND listSaldos.codigoCiudad=:ciudad AND listSaldos.codigoSector=:sector) OR (listSaldos.saldoUnidad IS NULL AND listSaldos.codigoCiudad IS NULL AND listSaldos.codigoSector IS NULL)');
-        $criteria->with['listPrecios'] = array('condition' => '(listPrecios.codigoCiudad=:ciudad AND listPrecios.codigoSector=:sector) OR (listPrecios.codigoCiudad IS NULL AND listPrecios.codigoSector IS NULL)');
-        $criteria->with['listSaldosTerceros'] = array('condition' => '(listSaldosTerceros.saldoUnidad>:saldo AND listSaldosTerceros.codigoCiudad=:ciudad AND listSaldosTerceros.codigoSector=:sector) OR (listSaldosTerceros.codigoCiudad IS NULL AND listSaldosTerceros.codigoSector IS NULL)');
-        $criteria->condition = "t.activo=:activo AND t.idUnidadNegocioBI NOT IN (" . implode(",", Yii::app()->params->calificacion['categoriasNoCalificacion']) . ") AND (listImagenes.tipoImagen='" . Yii::app()->params->producto['tipoImagen']['mini'] . "' OR listImagenes.tipoImagen IS NULL) AND ( (listSaldos.saldoUnidad IS NOT NULL AND listPrecios.codigoCiudad IS NOT NULL) OR listSaldosTerceros.codigoCiudad IS NOT NULL)";
-        $criteria->params = array(':activo' => 1);
-        $criteria->params[':saldo'] = 0;
-        $criteria->params[':ciudad'] = $objSectorCiudad->codigoCiudad;
-        $criteria->params[':sector'] = $objSectorCiudad->codigoSector;
+        $criteria = array();
+        $criteria['with'] = array('listImagenes', 'objCodigoEspecial'/* , 'listCalificaciones' */);
+        $criteria['with']['listSaldos'] = array('condition' => '(listSaldos.saldoUnidad>:saldo AND listSaldos.codigoCiudad=:ciudad AND listSaldos.codigoSector=:sector) OR (listSaldos.saldoUnidad IS NULL AND listSaldos.codigoCiudad IS NULL AND listSaldos.codigoSector IS NULL)');
+        $criteria['with']['listPrecios'] = array('condition' => '(listPrecios.codigoCiudad=:ciudad AND listPrecios.codigoSector=:sector) OR (listPrecios.codigoCiudad IS NULL AND listPrecios.codigoSector IS NULL)');
+        $criteria['with']['listSaldosTerceros'] = array('condition' => '(listSaldosTerceros.saldoUnidad>:saldo AND listSaldosTerceros.codigoCiudad=:ciudad AND listSaldosTerceros.codigoSector=:sector) OR (listSaldosTerceros.codigoCiudad IS NULL AND listSaldosTerceros.codigoSector IS NULL)');
+        $criteria['condition'] = "t.activo=:activo AND t.idUnidadNegocioBI NOT IN (" . implode(",", Yii::app()->params->calificacion['categoriasNoCalificacion']) . ") AND (listImagenes.tipoImagen='" . Yii::app()->params->producto['tipoImagen']['mini'] . "' OR listImagenes.tipoImagen IS NULL) AND ( (listSaldos.saldoUnidad IS NOT NULL AND listPrecios.codigoCiudad IS NOT NULL) OR listSaldosTerceros.codigoCiudad IS NOT NULL)";
+        $criteria['params'] = array(':activo' => 1);
+        $criteria['params'][':saldo'] = 0;
+        $criteria['params'][':ciudad'] = $objSectorCiudad->codigoCiudad;
+        $criteria['params'][':sector'] = $objSectorCiudad->codigoSector;
 
+        $criteria1 = $criteria;
+        
         if (Yii::app()->user->isGuest) {
-            $sqlCategoriaBI = "SELECT idCategoriaBI FROM t_ProductosVistos b ORDER BY b.cantidad DESC";
-            $criteria->condition .= ' AND t.idCategoriaBI IN (' . $sqlCategoriaBI . ')';
-            $criteria->order = "t.orden ASC LIMIT $limite";
+            $criteria1['join'] = "JOIN t_ProductosVistos vistos ON (vistos.codigoProducto=t.codigoProducto) ";
+            $criteria1['order'] = "vistos.cantidad DESC, t.orden ASC LIMIT $limite";
         } else {
-            $sqlCategoriaBI = "SELECT a.idCategoriaBI FROM t_ComprasUsuariosCategorias a JOIN t_ProductosVistos b ON (a.idCategoriaBI=b.idCategoriaBI)";
-            $sqlCategoriaBI .= " WHERE a.identificacionUsuario='" . Yii::app()->user->name . "' ORDER BY b.cantidad DESC";
-
-            $criteria->join = "JOIN t_ComprasUsuariosCategorias comprascateg ON (comprascateg.idCategoriaBI=t.idCategoriaBI)";
-            $criteria->condition .= " AND comprascateg.identificacionUsuario='" . Yii::app()->user->name . "' AND t.idCategoriaBI IN ($sqlCategoriaBI)";
-            $criteria->order = "comprascateg.cantidad DESC, t.orden ASC LIMIT $limite";
+            $criteria1['join'] = "JOIN t_ProductosVistos vistos ON (vistos.codigoProducto=t.codigoProducto) "
+                    . "JOIN t_ComprasUsuariosCategorias comprascateg ON (comprascateg.idCategoriaBI=vistos.idCategoriaBI)";
+            $criteria1['condition'] .= " AND comprascateg.identificacionUsuario='" . Yii::app()->user->name . "'";
+            $criteria1['order'] = "comprascateg.cantidad DESC, vistos.cantidad DESC, t.orden ASC LIMIT $limite";
         }
 
-        $listProductos = Producto::model()->findAll($criteria);
+        $listProductos = Producto::model()->findAll($criteria1);
 
         $listCodigoEspecial = CodigoEspecial::model()->findAll(array(
             'condition' => 'codigoEspecial<>0'
@@ -1997,24 +1983,14 @@ class CatalogoController extends Controller {
                 $listCodigosResultado[] = $objProducto->codigoProducto;
             }
 
-            $criteria2 = new CDbCriteria;
-            $criteria2->with = array('listImagenes', 'objCodigoEspecial'/* , 'listCalificaciones' */);
-            $criteria2->with['listSaldos'] = array('condition' => '(listSaldos.saldoUnidad>:saldo AND listSaldos.codigoCiudad=:ciudad AND listSaldos.codigoSector=:sector) OR (listSaldos.saldoUnidad IS NULL AND listSaldos.codigoCiudad IS NULL AND listSaldos.codigoSector IS NULL)');
-            $criteria2->with['listPrecios'] = array('condition' => '(listPrecios.codigoCiudad=:ciudad AND listPrecios.codigoSector=:sector) OR (listPrecios.codigoCiudad IS NULL AND listPrecios.codigoSector IS NULL)');
-            $criteria2->with['listSaldosTerceros'] = array('condition' => '(listSaldosTerceros.saldoUnidad>:saldo AND listSaldosTerceros.codigoCiudad=:ciudad AND listSaldosTerceros.codigoSector=:sector) OR (listSaldosTerceros.codigoCiudad IS NULL AND listSaldosTerceros.codigoSector IS NULL)');
-            $criteria2->condition = "t.activo=:activo AND t.idUnidadNegocioBI NOT IN (" . implode(",", Yii::app()->params->calificacion['categoriasNoCalificacion']) . ") AND (listImagenes.tipoImagen='" . Yii::app()->params->producto['tipoImagen']['mini'] . "' OR listImagenes.tipoImagen IS NULL) AND ( (listSaldos.saldoUnidad IS NOT NULL AND listPrecios.codigoCiudad IS NOT NULL) OR listSaldosTerceros.codigoCiudad IS NOT NULL)";
-            $criteria2->params = array(':activo' => 1);
-            $criteria2->params[':saldo'] = 0;
-            $criteria2->params[':ciudad'] = $objSectorCiudad->codigoCiudad;
-            $criteria2->params[':sector'] = $objSectorCiudad->codigoSector;
+            $criteria2 = $criteria;
 
             if (!empty($listCodigosResultado)) {
-                $criteria2->condition .= ' AND t.codigoProducto NOT IN (' . implode(",", $listCodigosResultado) . ')';
+                $criteria2['condition'] .= ' AND t.codigoProducto NOT IN (' . implode(",", $listCodigosResultado) . ')';
             }
 
-            $sqlCategoriaBI = "SELECT idCategoriaBI FROM t_ProductosVistos b ORDER BY b.cantidad DESC";
-            $criteria2->condition .= ' AND t.idCategoriaBI IN (' . $sqlCategoriaBI . ')';
-            $criteria2->order = "t.orden ASC LIMIT $limiteRestante";
+            $criteria2['join'] = "JOIN t_ProductosVistos vistos ON (vistos.codigoProducto=t.codigoProducto) ";
+            $criteria2['order'] = "vistos.cantidad DESC, t.orden ASC LIMIT $limiteRestante";
             $listProductos2 = Producto::model()->findAll($criteria2);
         }
 

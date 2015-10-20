@@ -19,7 +19,7 @@
     ?>
 
     <div class="col-md-12 coment">
-        <?php echo $form->labelEx($modelPago, 'descripcion', array('class' => 'ui-mini')); ?>
+        <?php //echo $form->labelEx($modelPago, 'descripcion', array('class' => 'ui-mini')); ?>
         <?php echo $form->textField($modelPago, 'descripcion', array('maxlength' => 50, 'placeholder' => $modelPago->getAttributeLabel('descripcion'))); ?>
         <?php echo $form->error($modelPago, 'descripcion', array('class' => 'text-danger')); ?>
     </div>

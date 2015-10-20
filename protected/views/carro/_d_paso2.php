@@ -19,7 +19,6 @@
     );
     ?>
 
-    <p style="color: #A4A4A4;font-size: 18px;"><?php echo $modelPago->getAttributeLabel('fechaEntrega') ?></p>
     <?php echo $form->dropDownList($modelPago, 'fechaEntrega', CHtml::listData($listHorarios, 'fecha', 'etiqueta'), array('encode' => false, 'prompt' => $modelPago->getAttributeLabel('fechaEntrega'), 'placeholder' => $modelPago->getAttributeLabel('fechaEntrega'), 'class' => 'form-control date-time', 'style' => "border-radius:0px;")); ?>
     <?php echo $form->error($modelPago, 'fechaEntrega', array('class'=>'text-danger')); ?>
 
@@ -44,7 +43,7 @@
 
     <div class="col-md-12 coment">
         <?php echo $form->labelEx($modelPago, 'comentario', array()); ?>
-        <?php echo $form->textArea($modelPago, 'comentario', array('class' => 'form-control', 'data-countchar' => 'div-comentario-contador', 'maxlength' => 250, 'placeholder' => $modelPago->getAttributeLabel('comentario'))); ?>
+        <?php echo $form->textArea($modelPago, 'comentario', array('class' => 'form-control', 'data-countchar' => 'div-comentario-contador', 'maxlength' => 250, /*'placeholder' => $modelPago->getAttributeLabel('comentario')*/)); ?>
         <p>[Máximo 250 caracteres] <span id="div-comentario-contador"></span></p>
             <?php echo $form->error($modelPago, 'comentario', array('class'=>'text-danger')); ?>
     </div>
