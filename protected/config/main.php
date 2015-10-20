@@ -57,7 +57,7 @@ return array(
             'connectionString' => 'mysql:host=localhost;port=3306;dbname=lrvmovil',
             'emulatePrepare' => true,
             'username' => 'root',
-            'password' => 'admin',
+            //'password' => 'admin',
             'charset' => 'utf8',
             'enableProfiling' => true,
             'enableParamLogging' => true,
