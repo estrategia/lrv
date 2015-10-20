@@ -1,15 +1,7 @@
 <div class="clst_cont_top">
-    <?php $imagen = $position->objProducto->objImagen(YII::app()->params->producto['tipoImagen']['mini']); ?>
-
-    <?php if ($imagen == null): ?>
-        <div class="clst_pro_img">
-            <img src="<?php echo Yii::app()->request->baseUrl . Yii::app()->params->producto['noImagen']['mini']; ?>" class="ui-li-thumb">
-        </div>
-    <?php else: ?>
-        <div class="clst_pro_img">
-            <img src="<?php echo Yii::app()->request->baseUrl . Yii::app()->params->carpetaImagen['productos'][YII::app()->params->producto['tipoImagen']['mini']] . $imagen->rutaImagen; ?>" class="ui-li-thumb">
-        </div>
-    <?php endif; ?>
+    <div class="clst_pro_img">
+        <img src="<?php echo Yii::app()->request->baseUrl . $position->objProducto->rutaImagen(); ?>" class="ui-li-thumb">
+    </div>
 
     <div class="clst_cont_pr_prod">
         <h2><?php echo $position->objProducto->descripcionProducto ?></h2>

@@ -5,22 +5,11 @@
 </div>
 
 <div class="">
-    <?php $imagen = $objCombo->objImagen(YII::app()->params->producto['tipoImagen']['mini']); ?>
-
-    <?php if ($imagen == null): ?>
-        <div class="">
-            <a href="<?php echo CController::createUrl('/catalogo/combo', array('combo' => $objCombo->idCombo)) ?>" data-ajax="false">
-                <img src="<?php echo Yii::app()->request->baseUrl . Yii::app()->params->producto['noImagen']['mini']; ?>" class="ui-li-thumb">
-            </a>
-        </div>
-    <?php else: ?>
-        <div class="">
-            <a href="<?php echo CController::createUrl('/catalogo/combo', array('combo' => $objCombo->idCombo)) ?>" data-ajax="false">
-                <img src="<?php echo Yii::app()->request->baseUrl . Yii::app()->params->carpetaImagen['combos'][YII::app()->params->producto['tipoImagen']['mini']] . $imagen->rutaImagen; ?>" class="ui-li-thumb">
-            </a>
-        </div>
-    <?php endif; ?>
-
+    <div class="">
+        <a href="<?php echo CController::createUrl('/catalogo/combo', array('combo' => $objCombo->idCombo)) ?>" data-ajax="false">
+            <img src="<?php echo Yii::app()->request->baseUrl . $objCombo->objImagen->rutaImagen(); ?>" class="ui-li-thumb">
+        </a>
+    </div>
     <?php if (Yii::app()->shoppingCart->contains($objCombo->getCodigo())): ?>
         <a href="" class="">
             <img src="<?php echo Yii::app()->request->baseUrl ?>/images/iconos/icon_seleccionado.png">
@@ -47,7 +36,7 @@
                 <p id="subtotal-combo-<?php echo $objCombo->idCombo ?>" style="font-size:medium;"><?php echo Yii::app()->numberFormatter->format(Yii::app()->params->formatoMoneda['patron'], $objPrecio->getPrecio(), Yii::app()->params->formatoMoneda['moneda']); ?></p>
             </td>
             <td class="ctd_03">
-                <?php echo CHtml::link('Añadir al carro', '#', array('data-combo' => $objCombo->idCombo, 'data-cargar' => 2, 'class' => 'ui-btn ui-corner-all ui-shadow ui-btn-inline ui-btn-r', 'data-mini' => 'true')); ?>
+<?php echo CHtml::link('Añadir al carro', '#', array('data-combo' => $objCombo->idCombo, 'data-cargar' => 2, 'class' => 'ui-btn ui-corner-all ui-shadow ui-btn-inline ui-btn-r', 'data-mini' => 'true')); ?>
             </td>
         </tr>
     </tbody>

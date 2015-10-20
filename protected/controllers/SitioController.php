@@ -182,7 +182,7 @@ class SitioController extends Controller {
 
         $listCiudadesSectores = Ciudad::model()->findAll(array(
             'with' => array('listSectores'),
-            'order' => 't.orden',
+            'order' => 't.orden, t.nombreCiudad',
             'condition' => 'estadoCiudadSector=:estadoCiudadSector AND estadoSector=:estadoSector AND estadoCiudad=:estadoCiudad',
             'params' => array(
                 ':estadoCiudadSector' => 1,

@@ -33,13 +33,13 @@
                         <div class="ui-field-contain clst_prod_cont">
                             <div class="clst_cont_top">
                                 <div class="clst_pro_img">
-                                    <a href="<?php echo CController::createUrl('/catalogo/producto', array('producto' => $objItem->codigoProducto, 'descripcion' => Producto::cadenaUrl($objItem->objProducto->descripcionProducto))) ?>" data-ajax="false">
+                                    <a href="<?php echo CController::createUrl('/catalogo/producto', array('producto' => $objItem->codigoProducto, 'descripcion' => $objItem->objProducto->getCadenaUrl())) ?>" data-ajax="false">
                                         <img src="<?php echo Yii::app()->request->baseUrl . $objItem->objProducto->rutaImagen() ?>" class="ui-li-thumb">
                                     </a>
                                 </div>
 
                                 <div class="clst_cont_pr_prod">
-                                    <h2><a href="<?php echo CController::createUrl('/catalogo/producto', array('producto' => $objItem->codigoProducto)) ?>" data-ajax="false"><?php echo $objItem->descripcion ?></a></h2>
+                                    <h2><a href="<?php echo CController::createUrl('/catalogo/producto', array('producto' => $objItem->codigoProducto, 'descripcion' => $objItem->objProducto->getCadenaUrl())) ?>" data-ajax="false"><?php echo $objItem->descripcion ?></a></h2>
                                     <p><?php echo $objItem->presentacion ?></p>
                                     <?php if ($objItem->objProducto->mostrarAhorroVirtual == 1 && $objItem->descuentoUnidad > 0): ?>
                                         <div class="clst_pre_ant"><?php echo Yii::app()->numberFormatter->format(Yii::app()->params->formatoMoneda['patron'], $objItem->precioBaseUnidad, Yii::app()->params->formatoMoneda['moneda']); ?></div>
@@ -82,13 +82,13 @@
                     <div class="ui-field-contain clst_prod_cont">
                         <div class="clst_cont_top">
                             <div class="clst_pro_img">
-                                <a href="<?php echo CController::createUrl('/catalogo/combo', array('combo' => $idCombo)) ?>" data-ajax="false">
+                                <a href="<?php echo CController::createUrl('/catalogo/combo', array('combo' => $idCombo, 'descripcion' => $listCombos[$idCombo][0]->objCombo->getCadenaUrl())) ?>" data-ajax="false">
                                     <img src="<?php echo Yii::app()->request->baseUrl . $listCombos[$idCombo][0]->objCombo->rutaImagen() ?>" class="ui-li-thumb">
                                 </a>
                             </div>
 
                             <div class="clst_cont_pr_prod">
-                                <h2><a href="<?php echo CController::createUrl('/catalogo/combo', array('combo' => $idCombo)) ?>" data-ajax="false"><?php echo $listCombos[$idCombo][0]->descripcionCombo ?></a></h2>
+                                <h2><a href="<?php echo CController::createUrl('/catalogo/combo', array('combo' => $idCombo, 'descripcion' => $listCombos[$idCombo][0]->objCombo->getCadenaUrl())) ?>" data-ajax="false"><?php echo $listCombos[$idCombo][0]->descripcionCombo ?></a></h2>
                                 <div class="clst_pre_act"><?php echo Yii::app()->numberFormatter->format(Yii::app()->params->formatoMoneda['patron'], $listCombos[$idCombo][1], Yii::app()->params->formatoMoneda['moneda']); ?> </div>
                                 <div class="clst_pre_cantidad">Cantidad: <?php echo $listCombos[$idCombo][0]->unidades ?></div>
                                 <p style="font-size:medium;">Subtotal <?php echo Yii::app()->numberFormatter->format(Yii::app()->params->formatoMoneda['patron'], ($listCombos[$idCombo][1] * $listCombos[$idCombo][0]->unidades), Yii::app()->params->formatoMoneda['moneda']); ?></p>

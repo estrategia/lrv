@@ -1,7 +1,7 @@
 <?php if ($position->objProducto->fraccionado == 1): ?>
     <tr>
         <td rowspan="2">
-            <a href="<?php echo CController::createUrl('/catalogo/producto', array('producto' => $position->objProducto->codigoProducto, 'descripcion' => Producto::cadenaUrl($position->objProducto->descripcionProducto))) ?>">
+            <a href="<?php echo CController::createUrl('/catalogo/producto', array('producto' => $position->objProducto->codigoProducto, 'descripcion' => $position->objProducto->getCadenaUrl())) ?>">
                 <img class="img-responsive img-table" src="<?php echo Yii::app()->request->baseUrl . $position->objProducto->rutaImagen() ?>" title="<?php echo $position->objProducto->descripcionProducto ?>"> 
             </a>
             <div style="color:#ED1C24;"><?php echo $position->objProducto->descripcionProducto ?></div>
@@ -104,7 +104,7 @@
 <?php else: ?>
     <tr>
         <td>
-            <a href="<?php echo CController::createUrl('/catalogo/producto', array('producto' => $position->objProducto->codigoProducto, 'descripcion' => Producto::cadenaUrl($position->objProducto->descripcionProducto))) ?>">
+            <a href="<?php echo CController::createUrl('/catalogo/producto', array('producto' => $position->objProducto->codigoProducto, 'descripcion' => $position->objProducto->getCadenaUrl())) ?>">
                 <img class="img-responsive img-table" src="<?php echo Yii::app()->request->baseUrl . $position->objProducto->rutaImagen() ?>" title="<?php echo $position->objProducto->descripcionProducto ?>"> 
             </a>
             <div style="color:#ED1C24;"><?php echo $position->objProducto->descripcionProducto ?></div>
