@@ -8,13 +8,13 @@
 			  <div class="panel panel-default ">
 			    <div class="panel-heading head-desplegable" role="tab" id="headingOne">
 			      <h4 class="panel-title">
-			        <a data-toggle="collapse" data-parent="#accordion" href="#ingresoSistema" aria-expanded="false" aria-controls="collapseOne">
+			        <a <?php echo ($opcion=='inicio')? "":"class='collapsed'"?> data-toggle="collapse" data-parent="#accordion" href="#ingresoSistema" aria-expanded="false" aria-controls="collapseOne">
 			          Ingreso al sistema
 			        </a>
 			      </h4>
 			    </div>
 			    <div style="height:5px;background-color: #F5F5F5;border-top: 1px solid #E9E1E1;"></div>
-			    <div id="ingresoSistema" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingOne">
+			    <div id="ingresoSistema" class="panel-collapse collapse <?php echo ($opcion=='inicio')? "in":""?>" role="tabpanel" aria-labelledby="headingOne">
 			      <div class="panel-body" style="padding:10px 0px 20px 30px">
                                   <div class="col-md-12">
                                   <?php $this->renderPartial('/usuario/d_ingreso', array('model' => new LoginForm)); ?>
@@ -25,13 +25,13 @@
 			  <div class="panel panel-default">
 			    <div class="panel-heading head-desplegable" role="tab" id="headingTwo">
 			      <h4 class="panel-title">
-			        <a class="collapsed" data-toggle="collapse" data-parent="#accordion" href="#recordarPassword" aria-expanded="false" aria-controls="collapseTwo">
+			        <a  data-toggle="collapse" data-parent="#accordion" href="#recordarPassword" aria-expanded="false" aria-controls="collapseTwo">
 			          Recordar Contraseña
 			        </a>
 			      </h4>
 			    </div>
 			   <div style="height:5px;background-color: #F5F5F5;border-top: 1px solid #E9E1E1;"></div>
-			    <div id="recordarPassword" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingTwo">
+			    <div id="recordarPassword" class="panel-collapse collapse " role="tabpanel" aria-labelledby="headingTwo">
 			      <div class="panel-body" style="padding:10px 0px 20px 30px">
                                   <div class="col-md-12">
                                   <?php $this->renderPartial('/usuario/d_recordar', array('model' => new RecordarForm)); ?>
@@ -42,13 +42,13 @@
                           <div class="panel panel-default">
 			    <div class="panel-heading head-desplegable" role="tab" id="headingTwo">
 			      <h4 class="panel-title">
-			        <a class="collapsed" data-toggle="collapse" data-parent="#accordion" href="#registroUsuario" aria-expanded="false" aria-controls="collapseTwo">
+			        <a <?php echo ($opcion=='registro')? "":"class='collapsed'"?> data-toggle="collapse" data-parent="#accordion" href="#registroUsuario" aria-expanded="false" aria-controls="collapseTwo">
 			          Registrarse
 			        </a>
 			      </h4>
 			    </div>
 			   <div style="height:5px;background-color: #F5F5F5;border-top: 1px solid #E9E1E1;"></div>
-			    <div id="registroUsuario" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingTwo">
+			    <div id="registroUsuario" class="panel-collapse collapse <?php echo ($opcion=='registro')? "in":""?>" role="tabpanel" aria-labelledby="headingTwo">
 			      <div class="panel-body" style="padding:10px 0px 20px 30px">
                                   <div class="col-md-12">
                                   <?php $this->renderPartial('/usuario/d_registro', array('model' => new RegistroForm('registro'))); ?>

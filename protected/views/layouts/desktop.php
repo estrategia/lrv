@@ -57,7 +57,7 @@
                                                                      </ul>
                                                                 </div>
                                                                 <div class="col-md-6">
-                                                                    <form method="get" action="<?php echo CController::createUrl('/catalogo/buscarD') ?>" data-ajax="false">
+                                                                    <form method="get" action="<?php echo CController::createUrl('/catalogo/buscar') ?>" data-ajax="false">
                                                                                     <?php
                                                                                   /*  echo "<pre>";
                                                                                     print_r($this->categorias);
@@ -94,9 +94,9 @@
                                                                     <?php if(Yii::app()->user->isGuest):?>
                                                                             <ul class="user">
                                                                                     <img class="ico-user" src="<?php echo Yii::app()->request->baseUrl; ?>/images/desktop/ico-iniciar-sesion.png" alt="">
-                                                                                    <li><a href="<?= Yii::app()->request->baseUrl;?>/usuario/autenticar" >Iniciar Sesión</a></li>
+                                                                                    <li><a href="<?= Yii::app()->request->baseUrl;?>/usuario/autenticar/opcion/inicio" >Iniciar Sesión</a></li>
                                                                                     <span style="color:#A3A3A3;">|</span>
-                                                                                    <li><a href="<?= Yii::app()->request->baseUrl;?>/usuario/registro">Registrate</a></li>
+                                                                                    <li><a href="<?= Yii::app()->request->baseUrl;?>/usuario/autenticar/opcion/registro">Registrate</a></li>
                                                                             </ul>
                                                                     <?php else:?>
                                                                                 <?php $nombre=explode(" ",Yii::app()->session[Yii::app()->params->usuario['sesion']]->nombre."");?>

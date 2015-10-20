@@ -1,13 +1,32 @@
-<h3 class="">
-    <?php if ($tipoEntrega == Yii::app()->params->entrega['tipo']['presencial']): ?>
-        Selecciona la ubicación para recoger el pedido
-    <?php else: ?>
-        Selecciona la ubicación donde deseas que te entreguemos el pedido
-    <?php endif; ?>
-</h3>
+
+
+
 <div class="modal fade" id="modalUbicacion" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"></div>
 <section>
+    
+    
     <div class="col-md-12">
+        <div class="row">
+            <div class="col-md-5 " >
+                Seleccione el método de entrega
+                <select id='tipo_entrega' name='tipo_entrega' class='form-control' onchange="cambiarEstadoTipoEntrega()">
+                    <option value=''>Seleccione...</option>
+                    <option value='<?php echo  Yii::app()->params->entrega['tipo']['presencial'];?>'>Quiero pasar por el pedido</option>
+                    <option value='<?php echo  Yii::app()->params->entrega['tipo']['domicilio'];?>'>Quiero que me lo entreguen a domicilio</option>
+                </select>
+            </div>
+        </div>
+        <div class="row">
+             <div class="col-md-5 " >
+                <h3 class="">
+                 <?php if ($tipoEntrega == Yii::app()->params->entrega['tipo']['presencial']): ?>
+                     Selecciona la ubicación 
+                 <?php else: ?>
+                     Selecciona la ubicación 
+                 <?php endif; ?>
+                 </h3> 
+             </div>
+        </div>
         <div class="row">
             <div class="col-md-5 " >
             <?php echo CHtml::htmlButton('Usar la ubicación de tu dispositivo', array('class' => 'btn btn-danger btn-ciudad', 'onclick' => 'ubicacionGPSDesktop();')); ?>

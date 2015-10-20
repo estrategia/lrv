@@ -11,7 +11,7 @@
     $form = $this->beginWidget('CActiveForm', array(
         'enableClientValidation' => true,
         'htmlOptions' => array(
-            'id' => "form-registro", 'class' => "ui-bar ui-bar-c ui-corner-all", 'data-ajax' => "false"
+            'id' => "form-registro", 'class' => "", 
         ),
         'errorMessageCssClass' => 'has-error',
         'clientOptions' => array(
@@ -30,26 +30,25 @@
         <div class="col-md-4">
             <?php echo $form->labelEx($model, 'clave'); ?>
             <?php echo $form->passwordField($model, 'clave', array('placeholder' => $model->getAttributeLabel('clave'), 'autocomplete' => 'off','class'=>'form-control')); ?>
-            <?php echo $form->error($model, 'clave'); ?>
+            <?php echo $form->error($model, 'clave',array( "class" => "text-danger")); ?>
         </div>
-	</div>
+    </div>
     <div class="row">
         <div class="col-md-4">
             <?php echo $form->labelEx($model, 'claveConfirmar'); ?>
             <?php echo $form->passwordField($model, 'claveConfirmar', array('placeholder' => $model->getAttributeLabel('claveConfirmar'), 'autocomplete' => 'off','class'=>'form-control')); ?>
-            <?php echo $form->error($model, 'claveConfirmar'); ?>
+            <?php echo $form->error($model, 'claveConfirmar',array( "class" => "text-danger")); ?>
         </div>
     </div>
 
 <?php else: ?>
 
 	<?php if ($model->getScenario() == 'registro' || $model->getScenario() == 'invitado') : ?>
-
-		<div class="row">
+            <div class="row">
 	        <div class="col-md-4">
 	            <?php echo $form->labelEx($model, 'cedula'); ?>
                 <?php echo $form->textField($model, 'cedula', array('maxlength' => 50, 'placeholder' => $model->getAttributeLabel('cedula'), 'class'=>'form-control')); ?>
-            	<?php echo $form->error($model, 'cedula'); ?>
+            	<?php echo $form->error($model, 'cedula',array( "class" => "text-danger")); ?>
 	        </div>
 	    </div>
 
@@ -61,7 +60,7 @@
 	        <div class="col-md-4">
 	            <?php echo $form->labelEx($model, 'cedula'); ?>
                 <?php echo $form->textField($model, 'cedula', array('disabled' => 'disabled','class'=>'form-control')); ?>
-                <?php echo $form->error($model, 'cedula'); ?>
+                <?php echo $form->error($model, 'cedula',array( "class" => "text-danger")); ?>
 	        </div>
 	    </div>
 
@@ -71,14 +70,14 @@
         <div class="col-md-4">
             <?php echo $form->labelEx($model, 'nombre'); ?>
             <?php echo $form->textField($model, 'nombre', array('placeholder' => $model->getAttributeLabel('nombre'),'class'=>'form-control')); ?>
-            <?php echo $form->error($model, 'nombre'); ?>
+            <?php echo $form->error($model, 'nombre',array( "class" => "text-danger")); ?>
         </div>
     </div>
     <div class="row">
         <div class="col-md-4">
             <?php echo $form->labelEx($model, 'apellido'); ?>
             <?php echo $form->textField($model, 'apellido', array('placeholder' => $model->getAttributeLabel('apellido'),'class'=>'form-control')); ?>
-            <?php echo $form->error($model, 'apellido'); ?>
+            <?php echo $form->error($model, 'apellido',array( "class" => "text-danger")); ?>
         </div>
     </div>
 
@@ -88,7 +87,7 @@
             <div class="col-md-4">
                 <?php echo $form->labelEx($model, 'correoElectronico'); ?>
                 <?php echo $form->emailField($model, 'correoElectronico', array('placeholder' => $model->getAttributeLabel('correoElectronico'),'class'=>'form-control', 'disabled' => 'disabled')); ?>
-                <?php echo $form->error($model, 'correoElectronico'); ?>
+                <?php echo $form->error($model, 'correoElectronico',array( "class" => "text-danger")); ?>
             </div>
 	    </div>
 
@@ -98,7 +97,7 @@
             <div class="col-md-4">
                 <?php echo $form->labelEx($model, 'correoElectronico'); ?>
                 <?php echo $form->emailField($model, 'correoElectronico', array('placeholder' => $model->getAttributeLabel('correoElectronico'),'class'=>'form-control', 'maxlength' => 50)); ?>
-                <?php echo $form->error($model, 'correoElectronico'); ?>
+                <?php echo $form->error($model, 'correoElectronico',array( "class" => "text-danger")); ?>
             </div>
 	    </div>
 
@@ -125,7 +124,7 @@
             <div class="col-md-4">
                 <?php echo $form->labelEx($model, 'fechaNacimiento'); ?>
                 <?php echo $form->textField($model, 'fechaNacimiento',array('class'=>'form-control')); ?>
-                <?php echo $form->error($model, 'fechaNacimiento'); ?>
+                <?php echo $form->error($model, 'fechaNacimiento',array( "class" => "text-danger")); ?>
             </div>
         </div>
 
@@ -137,14 +136,14 @@
             <div class="col-md-4">
                 <?php echo $form->labelEx($model, 'clave'); ?>
                 <?php echo $form->passwordField($model, 'clave', array('placeholder' => $model->getAttributeLabel('clave'), 'autocomplete' => 'off','class'=>'form-control')); ?>
-                <?php echo $form->error($model, 'clave'); ?>
+                <?php echo $form->error($model, 'clave',array( "class" => "text-danger")); ?>
             </div>
         </div>
         <div class="row">
             <div class="col-md-4">
                 <?php echo $form->labelEx($model, 'claveConfirmar'); ?>
                 <?php echo $form->passwordField($model, 'claveConfirmar', array('placeholder' => $model->getAttributeLabel('claveConfirmar'), 'autocomplete' => 'off','class'=>'form-control')); ?>
-                <?php echo $form->error($model, 'claveConfirmar'); ?>
+                <?php echo $form->error($model, 'claveConfirmar',array( "class" => "text-danger")); ?>
             </div>
         </div>
 
@@ -156,7 +155,7 @@
             <div class="col-md-4">
                 <?php echo $form->labelEx($model, 'condiciones'); ?>
                 <?php echo $form->checkBox($model, 'condiciones', array( "style" => "display:block")); ?>
-                <?php echo $form->error($model, 'condiciones'); ?>
+                <?php echo $form->error($model, 'condiciones',array( "class" => "text-danger")); ?>
             </div>
         </div>
 
@@ -168,7 +167,7 @@
             <div class="col-md-4">
                 <?php echo $form->labelEx($model, 'profesion'); ?>
                 <?php echo $form->dropDownList($model, 'profesion', CHtml::listData(ProfesionCliente::listData(), 'codigoProfesion', 'nombreProfesion'), array('prompt' => $model->getAttributeLabel('profesion'), 'encode' => false, 'data-native-menu' => true)); ?>
-                <?php echo $form->error($model, 'profesion'); ?>
+                <?php echo $form->error($model, 'profesion',array( "class" => "text-danger")); ?>
             </div>
         </div>
         

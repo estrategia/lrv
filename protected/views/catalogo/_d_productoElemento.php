@@ -93,8 +93,13 @@
  * 
 */
 ?>
-
-<div class="col-md-3 border-left">
+<?php if(isset($vista)):?>
+    <?php if($vista == "relacionado"):?>
+        <div class="col-md-12 border-left">
+    <?php endif;?>
+<?php else:?>    
+    <div class="col-md-3 border-left">
+<?php endif;?>
 	<div class="col-md-12 content-txt2">
                             <?php /*if ($data['tipo_producto'] == Productos::PRODUCTO_ESPECIAL): ?>
                                <img src ="<?php echo Yii::app()->getBaseUrl() . Yii::app()->params->imagenespecial ?>" alt="icono-medida" title="Producto a la medida" class="icon_special"/>
@@ -104,8 +109,11 @@
                             echo CHtml::link("<img class='mediana $class' src = '" . ProductosImagenes::imagenPresentacion($data['codigo_producto']) . "' alt = ' " . $data['presentacion_producto'] . "'>", array('/tienda/catalogo/producto', 'id' => $data['codigo_producto']), array('rel' => 'tooltip', 'id' => 'img-list_' . $data['codigo_producto'], 'title' => $data['nombre_producto'], 'data-title' => $data['nombre_producto'], 'data-original-title' => $data['nombre_producto']));
                            */ ?>
                             <?php $objProducto = new Producto(); ?>
-                            <?php $array=(object)$data;?>
-                            <?php $objPrecio= new PrecioProducto($array, $_SESSION['objSectorCiudad'], $_SESSION['codigoPerfil']);?>
+                            <?php $objSectorCiudad = null;
+                                    if (isset(Yii::app()->session[Yii::app()->params->sesion['sectorCiudadEntrega']]))
+                                        $objSectorCiudad = Yii::app()->session[Yii::app()->params->sesion['sectorCiudadEntrega']];
+                            ?>        
+                            <?php $objPrecio= new PrecioProducto($data, $objSectorCiudad, Yii::app()->shoppingCart->getCodigoPerfil());?>
                             <?php if ($objPrecio->tieneBeneficio()): ?>
                                         <div class="cdiv_prod_desc">
                                             <div class="c_prod_desc">
@@ -113,27 +121,27 @@
                                             </div>
                                         </div>
                             <?php endif; ?>
-                                    <?php $imagen = $objProducto->objImagenDesktop(YII::app()->params->producto['tipoImagen']['mini'],$data['listImagenes']);?>
+                                    <?php $imagen = $objProducto->objImagenDesktop(YII::app()->params->producto['tipoImagen']['mini'],$data->listImagenes);?>
                                     <?php if ($imagen == null): ?>
                                             <div class="">
-                                                <a href="<?php echo CController::createUrl('/catalogo/producto', array('producto' => $data['codigoProducto'])) ?>" data-ajax="false">
+                                                <a href="<?php echo CController::createUrl('/catalogo/producto', array('producto' => $data->codigoProducto)) ?>" data-ajax="false">
                                                     <img src="<?php echo Yii::app()->request->baseUrl . Yii::app()->params->producto['noImagen']['grande']; ?>" class="img-responsive product-prom">
                                                 </a>
                                             </div>
                                         <?php else: ?>
                                             <div class="">
-                                                <a href="<?php echo CController::createUrl('/catalogo/producto', array('producto' => $data['codigoProducto'])) ?>" data-ajax="false">
+                                                <a href="<?php echo CController::createUrl('/catalogo/producto', array('producto' => $data->codigoProducto)) ?>" data-ajax="false">
                                                     <img src="<?php echo Yii::app()->request->baseUrl . Yii::app()->params->carpetaImagen['productos'][YII::app()->params->producto['tipoImagen']['mini']] . $imagen['rutaImagen']; ?>" class="img-responsive product-prom">
                                                 </a>
                                             </div>
                                         <?php endif; ?> 
-                                        <?php if(!in_array($data['idUnidadNegocioBI'], Yii::app()->params->calificacion['categoriasNoCalificacion'])): ?>
+                                        <?php if(!in_array($data->idUnidadNegocioBI, Yii::app()->params->calificacion['categoriasNoCalificacion'])): ?>
                                                 <div class="col-md-12" style="text-align:center">
                                                     <div class="ranking-list" > 
                                                         <?php 
                                                             $this->widget('CStarRating',array(
-                                                                        'name'=>'rating_'.$data['codigoProducto'],
-                                                                        'value'=>floor($data['calificacion']),
+                                                                        'name'=>'rating_'.$data->codigoProducto,
+                                                                        'value'=>floor($data->calificacion),
                                                                         'minRating'=>1,
                                                                         'maxRating'=>5,
                                                                         'starCount'=>5,
@@ -156,26 +164,26 @@
                                         <div class="col-md-12">
                                             <div class="line-bottom">
                                                 <p style="min-height: 41px">
-                                                    <a href="<?php echo CController::createUrl('/catalogo/producto', array('producto' => $data['codigoProducto'])) ?>" title='<?php echo $data['descripcionProducto']?>' data-ajax="false">
-                                                        <?php if(strlen($data['descripcionProducto'])>20):?>
-                                                            <?php echo substr($data['descripcionProducto'],0,20)."..." ?>
+                                                    <a href="<?php echo CController::createUrl('/catalogo/producto', array('producto' => $data->codigoProducto)) ?>" title='<?php echo $data->descripcionProducto?>' data-ajax="false">
+                                                        <?php if(strlen($data->descripcionProducto)>20):?>
+                                                            <?php echo substr($data->descripcionProducto,0,20)."..." ?>
                                                         <?php else:?>
-                                                            <?php echo $data['descripcionProducto'] ?>
+                                                            <?php echo $data->descripcionProducto ?>
                                                         <?php endif;?>
                                                     </a>
                                                 </p>  
                                             </div>
                                             <div class="line-bottom">
-                                                    <?php if(strlen($data['presentacionProducto'])>15):?>
-                                                        <span><?php echo substr($data['presentacionProducto'],0,14) ?>...</span>
+                                                    <?php if(strlen($data->presentacionProducto)>15):?>
+                                                        <span><?php echo substr($data->presentacionProducto,0,14) ?>...</span>
                                                     <?php else:?>
-                                                            <?php echo $data['presentacionProducto'] ?>
+                                                            <?php echo $data->presentacionProducto  ?>
                                                     <?php endif;?>
                                             </div>
-                                            <!--    <div class="description"><p><?php echo $data['descripcionProducto'] ?></p></div> -->
+                                            <!--    <div class="description"><p><?php echo $data->descripcionProducto ?></p></div> -->
                                             <!-- Precio del producto -->
                                                 <?php if($objPrecio->inicializado()): ?>
-                                                        <?php if ($objProducto['mostrarAhorroVirtual'] == 1 && $objPrecio->getAhorro(Precio::PRECIO_UNIDAD) > 0 && $_SESSION['objSectorCiudad']->objCiudad->excentoImpuestos!=1): ?>
+                                                        <?php if ($data->mostrarAhorroVirtual == 1 && $objPrecio->getAhorro(Precio::PRECIO_UNIDAD) > 0 && $objSectorCiudad->objCiudad->excentoImpuestos!=1): ?>
                                                         <div class=""> 
                                                            <div class="price">
                                                                  <?php echo Yii::app()->numberFormatter->format(Yii::app()->params->formatoMoneda['patron'], $objPrecio->getPrecio(Precio::PRECIO_UNIDAD), Yii::app()->params->formatoMoneda['moneda']); ?>
@@ -198,20 +206,20 @@
                                                       -->
                                                 <?php endif;?>
                                             </div>
-                                    <?php if($data['fraccionado']==1):?>
+                                    <?php if($data->fraccionado==1):?>
                                         <br/> PRODUCTO FRACCIONADO
                                     <?php endif;?> 
-                                    <?php if($data['ventaVirtual']==1):?>
+                                    <?php if($data->ventaVirtual==1):?>
                                         <!-- <?php echo $objProducto['codigoProducto']?> -->
                                         <div class="col-md-12">
-                                            <button class="col-md-3" style="border:0px solid;" id="disminuir-unidad-<?php echo $data['codigoProducto'] ?>" onclick="disminuirCantidad(<?php echo $data['codigoProducto']?>,<?= $objPrecio->getPrecio(Precio::PRECIO_UNIDAD)?>)" type="button"><span style="color:red" class="glyphicon glyphicon-minus"></span></button>
+                                            <button class="col-md-3" style="border:0px solid;" id="disminuir-unidad-<?php echo $data->codigoProducto ?>" onclick="disminuirCantidad(<?php echo $data->codigoProducto ?>,<?= $objPrecio->getPrecio(Precio::PRECIO_UNIDAD)?>)" type="button"><span style="color:red" class="glyphicon glyphicon-minus"></span></button>
                                              <div class="col-md-6 ressete">
-                                                <input id="cantidad-producto-unidad-<?php echo $data['codigoProducto'] ?>" class="increment" type="text" onchange="validarCantidadUnidad(<?php echo $data['codigoProducto'] ?>,<?= $objPrecio->getPrecio(Precio::PRECIO_UNIDAD)?>)" maxlength="3" value="1" data-total="700"/>
+                                                <input id="cantidad-producto-unidad-<?php echo $data->codigoProducto ?>" class="increment" type="text" onchange="validarCantidadUnidad(<?php echo $data->codigoProducto ?>,<?= $objPrecio->getPrecio(Precio::PRECIO_UNIDAD)?>)" maxlength="3" value="1" data-total="700"/>
                                              </div>
-                                                <button class="col-md-3" style="border:0px solid;" id="aumentar-unidad-<?php echo $data['codigoProducto'] ?>" onclick="aumentarCantidad(<?php echo $data['codigoProducto'] ?>,<?= $objPrecio->getPrecio(Precio::PRECIO_UNIDAD)?>)" type="button"><span style="color:red" class="glyphicon glyphicon-plus"></span></button>
+                                                <button class="col-md-3" style="border:0px solid;" id="aumentar-unidad-<?php echo $data->codigoProducto ?>" onclick="aumentarCantidad(<?php echo $data->codigoProducto ?>,<?= $objPrecio->getPrecio(Precio::PRECIO_UNIDAD)?>)" type="button"><span style="color:red" class="glyphicon glyphicon-plus"></span></button>
                                         </div>
                                         <div class="col-md-12">
-                                            <?php echo CHtml::link('<div class="button">Añadir <img src="'.Yii::app()->baseUrl.'/images/desktop/button-carrito.png" alt=""></div>', '#', array('data-producto' => $data['codigoProducto'], 'data-carro' => 1)); ?>
+                                            <?php echo CHtml::link('<div class="button">Añadir <img src="'.Yii::app()->baseUrl.'/images/desktop/button-carrito.png" alt=""></div>', '#', array('data-producto' => $data->codigoProducto, 'data-carro' => 1)); ?>
                                         </div>
                                         <div class="col-md-12">	
                                             <a href="#">
@@ -221,7 +229,7 @@
                                         </div>
                                     <?php else:?>
                                          <div class="col-md-12">
-                                            <?php echo CHtml::link('<div class="button">Ver producto</div>', CController::createUrl('/catalogo/producto', array('producto' => $data['codigoProducto']))); ?>
+                                            <?php echo CHtml::link('<div class="button">Ver producto</div>', CController::createUrl('/catalogo/producto', array('producto' => $data->codigoProducto))); ?>
                                          </div>
                                     <?php endif;?>    
         </div>

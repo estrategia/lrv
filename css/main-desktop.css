@@ -962,7 +962,7 @@ margin-bottom: 0px;
       margin: 3px;
 }
 
-#owl-demo .item img{
+#owl-demo .item>img{
       display: block;
       width: 100%;
       height: auto;

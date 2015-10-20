@@ -231,11 +231,3 @@
     </div>
 <?php endforeach; ?>*/
 ?>
-<script>
-$('#items-page').select2({});
-            
-function actualizarNumerosPagina(){
-    var items= $('#items-page').val();
-    $.fn.yiiListView.update('id-productos-list', {data: {pageSize: items}});
-}
-</script>

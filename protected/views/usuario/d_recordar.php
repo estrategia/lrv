@@ -27,7 +27,7 @@
                 <div class="col-md-4">
                     <?php echo $form->labelEx($model, 'correoElectronico', array('class' => '')); ?>
                     <?php echo $form->textField($model, 'correoElectronico', array('placeholder' => $model->getAttributeLabel('correoElectronico'),'class'=>'form-control')); ?>
-                    <?php echo $form->error($model, 'correoElectronico'); ?>
+                    <?php echo $form->error($model, 'correoElectronico',array( "class" => "text-danger")); ?>
                 </div>
         </div>
     <div class='space-1'></div>
