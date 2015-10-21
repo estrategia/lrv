@@ -95,7 +95,7 @@
             <?php echo $form->error($objPagoExpress, 'idDireccionDespacho'); ?>
         </div>
         <div class="col-md-4">
-            <?php $this->renderPartial('/carro/_formaPago', array('form' => $form, 'model' => $objPagoExpress, 'listFormaPago'=>$listFormaPago)) ?>
+            <?php $this->renderPartial('/carro/_d_formaPago', array('form' => $form, 'model' => $objPagoExpress, 'listFormaPago'=>$listFormaPago)) ?>
         </div>
     </div>
     

@@ -43,7 +43,7 @@
                     {
                         $objCombo = $data->objCombo;
                         $params['combo'] = $objCombo->idCombo;
-                        $params['description'] = Combo::cadenaUrl($objCombo->descripcionCombo);
+                        $params['description'] = $objCombo->getCadenaUrl();
                         $controlador = "/catalogo/combo";
                         $urlImagen = $objCombo->rutaImagen();
                         $descripcion = $objCombo->descripcionCombo;
