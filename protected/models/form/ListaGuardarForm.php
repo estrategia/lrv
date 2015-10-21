@@ -57,7 +57,7 @@ class ListaGuardarForm extends CFormModel {
 
     public function listData() {
         return ListasPersonales::model()->findAll(array(
-            'condition' => 'identificacionUsuario=:usuario',
+            'condition' => 'identificacionUsuario=:usuario AND activa = 1',
             'params' => array(
                 ':usuario' => $this->identificacionUsuario
             )

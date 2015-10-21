@@ -1,10 +1,11 @@
 <?php $mensajes = Yii::app()->user->getFlashes(); ?>
 <?php if ($mensajes): ?>
-    <ul class="messages">
         <?php foreach ($mensajes as $idx => $mensaje): ?>
-            <li><div class="<?php echo $idx ?>-msg"><?php echo $mensaje ?></div></li>
+            <div class="alert alert-dismissable alert-<?php echo $idx; ?>">
+                <button type="button" class="close" data-dismiss="alert">&times;</button>
+                <?php echo $mensaje; ?>
+            </div>
         <?php endforeach; ?>
-    </ul>
 <?php endif; ?>
 
 <?php
@@ -123,8 +124,29 @@
         <div class="row">
             <div class="col-md-4">
                 <?php echo $form->labelEx($model, 'fechaNacimiento'); ?>
-                <?php echo $form->textField($model, 'fechaNacimiento',array('class'=>'form-control')); ?>
-                <?php echo $form->error($model, 'fechaNacimiento',array( "class" => "text-danger")); ?>
+                <?php //echo $form->textField($model, 'fechaNacimiento',array('class'=>'form-control')); ?>
+                <?php 
+                    $this->widget('zii.widgets.jui.CJuiDatePicker', array(
+                        'model' => $model,
+                        'attribute' => 'fechaNacimiento',
+                        'language' => 'es',
+                        'options' => array(
+                            'showAnim' => 'slide',
+                            'dateFormat' => 'yy-mm-dd',
+                            "changeYear" => true,
+                            "changeMonth" => true,
+                            "yearRange" => "1900:2015"
+                        ),
+                        'htmlOptions' => array(
+                            'class' => 'form-control',
+                            'size' => '10',
+                            'maxlength' => '10',
+                            'placeholder' => 'yyyy-mm-dd',
+                        ),
+                    ));
+                ?>
+
+                <?php echo $form->error($model, 'fechaNacimiento'); ?>
             </div>
         </div>
 
@@ -187,7 +209,13 @@
 
 <div class="row">
 	<div class="col-md-4">
-		<input class='btn btn-primary' type="button" data-enhanced="true" data-registro-desktop="registro" value="<?= ($model->getScenario() == 'actualizar' ? 'Guardar' : 'Registrar') ?>">
+    <?php if($model->getScenario() == 'registro' || $model->getScenario() == 'invitado'): ?>
+		<input class='btn btn-primary' type="button" data-enhanced="true" data-registro-desktop="registro" value="Registrar">
+    <?php elseif($model->getScenario() == 'actualizar'): ?>
+        <input class='btn btn-primary' type="submit" data-enhanced="true" value="Guardar">
+    <?php elseif($model->getScenario() == "contrasena"): ?>
+        <input class='btn btn-primary' type="submit" data-enhanced="true" value="Actualizar">
+    <?php endif; ?>
 	</div>
 </div>
 
