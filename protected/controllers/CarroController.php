@@ -851,11 +851,19 @@ class CarroController extends Controller {
             $canastaVista = "d_canasta";
         }
 
+        $mensajeCanasta = "";
+        if ($this->isMobile) {
+            $mensajeCanasta = $this->renderPartial('_carroAgregado', null, true);
+        } else {
+            $mensajeCanasta = $this->renderPartial('_d_comboAgregado', array('objCombo' => $objCombo), true);
+        }
+        
         echo CJSON::encode(array(
             'result' => 'ok',
             'response' => array(
                 'canastaHTML' => $this->renderPartial($canastaVista, null, true),
-                'mensajeHTML' => $this->renderPartial('_carroAgregado', null, true),
+                'mensajeHTML' => $mensajeCanasta,
+                'objetosCarro' => Yii::app()->shoppingCart->getCount()
             ),
         ));
         Yii::app()->end();

@@ -98,7 +98,7 @@
                             <br/>
                             <div class="">Total: <span id="total-producto-<?php echo $objProducto->codigoProducto ?>"><?php echo Yii::app()->numberFormatter->format(Yii::app()->params->formatoMoneda['patron'], $objPrecio->getPrecio(Precio::PRECIO_UNIDAD) * ($cantidadBodega + $cantidadUbicacion), Yii::app()->params->formatoMoneda['moneda']); ?></span></div>
                             <br/>
-                            <?php echo CHtml::link('<div class="button anadir" >Añadir <img src="'.Yii::app()->baseUrl.'/images/desktop/carrito-amarillo.png" alt=""></div>', '#', array('data-producto' => $objProducto->codigoProducto, 'data-carro' => 3)); ?>
+                            <?php echo CHtml::link('<div class="button anadir" >Añadir <img src="'.Yii::app()->baseUrl.'/images/desktop/carrito-amarillo.png" alt=""></div>', '#', array('data-producto' => $objProducto->codigoProducto, 'data-cargar' => 3)); ?>
                             
 
                             <?php if ($objProducto->codigoEspecial !== null && $objProducto->codigoEspecial != 0): ?>

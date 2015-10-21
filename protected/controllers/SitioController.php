@@ -18,6 +18,9 @@ class SitioController extends Controller {
         $this->showSeeker = false;
         $this->logoLinkMenu = false;
         
+       /*  CVarDumper::dump(Yii::app()->request->urlReferrer);
+        CVarDumper::dump(Yii::app()->user->returnUrl);*/
+        
         $objSectorCiudad = null;
         $tipoEntrega = null;
         if (isset(Yii::app()->session[Yii::app()->params->sesion['sectorCiudadEntrega']])){
@@ -159,7 +162,11 @@ class SitioController extends Controller {
         $this->showSeeker = false;
         $this->logoLinkMenu = false;
         $this->fixedFooter = true;
-
+ /*
+        CVarDumper::dump(Yii::app()->request->urlReferrer);
+        CVarDumper::dump(Yii::app()->user->returnUrl);
+   */      
+        
        // if (!isset(Yii::app()->session[Yii::app()->params->sesion['redireccionAutenticacion']]) || Yii::app()->session[Yii::app()->params->sesion['redireccionAutenticacion']] == 'null') {
             Yii::app()->session[Yii::app()->params->sesion['redireccionAutenticacion']] = (Yii::app()->request->urlReferrer == null ? 'null' : Yii::app()->request->urlReferrer);
        // }
