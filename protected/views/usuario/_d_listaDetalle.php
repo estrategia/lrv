@@ -54,7 +54,7 @@
                     {
                         $objProducto = $data->objProducto;
                         $params['producto'] = $objProducto->codigoProducto;
-                        $params['descripcion'] = Producto::cadenaUrl($objProducto->descripcionProducto);
+                        $params['descripcion'] = $objProducto->getCadenaUrl();
                         $controlador = "/catalogo/producto";
                         $urlImagen = $objProducto->rutaImagen();
                         $descripcion = $objProducto->descripcionProducto;
