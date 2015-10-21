@@ -1,10 +1,11 @@
 <?php $mensajes = Yii::app()->user->getFlashes(); ?>
 <?php if ($mensajes): ?>
-    <ul class="messages">
         <?php foreach ($mensajes as $idx => $mensaje): ?>
-            <li><div class="<?php echo $idx ?>-msg"><?php echo $mensaje ?></div></li>
+            <div class="alert alert-dismissable alert-<?php echo $idx; ?>">
+                <button type="button" class="close" data-dismiss="alert">&times;</button>
+                <?php echo $mensaje; ?>
+            </div>
         <?php endforeach; ?>
-    </ul>
 <?php endif; ?>
 
 <?php
@@ -133,6 +134,8 @@
                             'showAnim' => 'slide',
                             'dateFormat' => 'yy-mm-dd',
                             "changeYear" => true,
+                            "changeMonth" => true,
+                            "yearRange" => "1900:2015"
                         ),
                         'htmlOptions' => array(
                             'class' => 'form-control',
@@ -206,7 +209,13 @@
 
 <div class="row">
 	<div class="col-md-4">
-		<input class='btn btn-primary' type="button" data-enhanced="true" data-registro-desktop="registro" value="<?= ($model->getScenario() == 'actualizar' ? 'Guardar' : 'Registrar') ?>">
+    <?php if($model->getScenario() == 'registro' || $model->getScenario() == 'invitado'): ?>
+		<input class='btn btn-primary' type="button" data-enhanced="true" data-registro-desktop="registro" value="Registrar">
+    <?php elseif($model->getScenario() == 'actualizar'): ?>
+        <input class='btn btn-primary' type="submit" data-enhanced="true" value="Guardar">
+    <?php elseif($model->getScenario() == "contrasena"): ?>
+        <input class='btn btn-primary' type="submit" data-enhanced="true" value="Actualizar">
+    <?php endif; ?>
 	</div>
 </div>
 
