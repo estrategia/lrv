@@ -107,23 +107,23 @@ function aumentarCantidadUnidad(codigoProducto, valorUnidad) {
 
 
 function disminuirCantidadCombo(codigoCombo, valorCombo) {
-    var nro = $("#cantidad-producto-combo-" + codigoCombo).val();
+    var nro = $("#cantidad-combo-" + codigoCombo).val();
     nro--;
     if (nro < 0) {
         nro = 0;
     }
     $("#subtotal-producto-combo-" + codigoCombo).html("$" + format(nro * valorCombo));
-    $("#cantidad-producto-combo-" + codigoCombo).val(nro);
+    $("#cantidad-combo-" + codigoCombo).val(nro);
 }
 
 function aumentarCantidadCombo(codigoCombo, valorCombo) {
-    var nro = $("#cantidad-producto-combo-" + codigoCombo).val();
+    var nro = $("#cantidad-combo-" + codigoCombo).val();
     nro++;
     if (nro < 0) {
         nro = 0;
     }
     $("#subtotal-producto-combo-" + codigoCombo).html("$" + format(nro * valorCombo));
-    $("#cantidad-producto-combo-" + codigoCombo).val(nro);
+    $("#cantidad-combo-" + codigoCombo).val(nro);
 }
 
 function validarCantidadCombo(codigoCombo, valorCombo) {
@@ -379,6 +379,7 @@ $(document).on('click', "a[data-cargar='2']", function() {
 
                 if (data.response.mensajeHTML) {
                     dialogoAnimado(data.response.mensajeHTML);
+                    $("#cantidad-productos").html(data.response.objetosCarro);
                     //$('#icono-combo-agregado-' + combo).addClass('active');
                 }
 
@@ -397,7 +398,7 @@ $(document).on('click', "a[data-cargar='2']", function() {
 });
 
 
-$(document).on('click', "a[data-carro='1']", function() {
+$(document).on('click', "a[data-cargar='1']", function() {
 
     var producto = $(this).attr('data-producto');
     var cantidadU = $('#cantidad-producto-unidad-' + producto).val();
@@ -452,7 +453,7 @@ $(document).on('click', "a[data-carro='1']", function() {
 });
 
 
-$(document).on('click', "a[data-carro='3']", function() {
+$(document).on('click', "a[data-cargar='3']", function() {
     var producto = $(this).attr('data-producto');
 
     var cantidadUbicacion = $('#cantidad-producto-ubicacion-' + producto).val();

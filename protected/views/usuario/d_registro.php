@@ -93,13 +93,13 @@
 
 	<?php else: ?>
 
-		<div class="row">
+        <div class="row">
             <div class="col-md-4">
                 <?php echo $form->labelEx($model, 'correoElectronico'); ?>
                 <?php echo $form->emailField($model, 'correoElectronico', array('placeholder' => $model->getAttributeLabel('correoElectronico'),'class'=>'form-control', 'maxlength' => 50)); ?>
                 <?php echo $form->error($model, 'correoElectronico',array( "class" => "text-danger")); ?>
             </div>
-	    </div>
+	</div>
 
     <?php endif; ?>
 

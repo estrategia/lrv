@@ -7,7 +7,7 @@
 <div class="">
     <div class="">
         <a href="<?php echo CController::createUrl('/catalogo/combo', array('combo' => $objCombo->idCombo)) ?>" data-ajax="false">
-            <img src="<?php echo Yii::app()->request->baseUrl . $objCombo->objImagen->rutaImagen(); ?>" class="ui-li-thumb">
+            <img src="<?php echo Yii::app()->request->baseUrl . $objCombo->rutaImagen(); ?>" class="ui-li-thumb">
         </a>
     </div>
     <?php if (Yii::app()->shoppingCart->contains($objCombo->getCodigo())): ?>

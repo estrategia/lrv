@@ -75,14 +75,6 @@
                                                                                                <?php foreach($this->categorias as $categoria):?>
                                                                                                     <li><a href="#"><img src="<?php echo Yii::app()->request->baseUrl; ?>/images/desktop/<?php echo $categoria->rutaImagen?>" alt=""><?php echo $categoria->nombreCategoriaTienda?></a></li>
                                                                                                <?php endforeach;?>     
-										        <!--  <li><a href="#"><img src="<?php echo Yii::app()->request->baseUrl; ?>/images/desktop/rx.png" alt="">Medicina formulada</a></li>
-										          <li><a href="#"><img src="<?php echo Yii::app()->request->baseUrl; ?>/images/desktop/productos-sin-formula.png" alt="">Productos sin formula</a></li>
-										          <li class="cuidado-personal"><a href="#"><img src="<?php echo Yii::app()->request->baseUrl; ?>/images/desktop/cuidado-personal.png" alt="">Cuidado personal</a></li>
-										          <li><a href="#"><img src="<?php echo Yii::app()->request->baseUrl; ?>/images/desktop/comida.png" alt="">Alimentos y bebidas</a></li>
-										          <li><a href="#"><img src="<?php echo Yii::app()->request->baseUrl; ?>/images/desktop/aseo.png" alt="">Aseo y Hogar</a></li>
-										          <li class="mundo-bebes"><a href="mundo-bebes.html"><img src="<?php echo Yii::app()->request->baseUrl; ?>/images/desktop/bebe.png" alt="">Mundo Bebes</a></li>
-										          <li><a href="#"><img src="<?php echo Yii::app()->request->baseUrl; ?>/images/desktop/natural.png" alt="">Natural</a></li>
-										          <li><a href="#"><img src="<?php echo Yii::app()->request->baseUrl; ?>/images/desktop/promociones.png" alt="">Promociones</a></li> -->
 										        </ul>
 
 											<span><i><a href="#"><img class="ico-buscar" src="<?php echo Yii::app()->request->baseUrl; ?>/images/desktop/ico-buscar.png" alt=""></a></i></span>

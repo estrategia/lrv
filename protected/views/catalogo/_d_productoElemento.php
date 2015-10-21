@@ -219,11 +219,11 @@
                                                 <button class="col-md-3" style="border:0px solid;" id="aumentar-unidad-<?php echo $data->codigoProducto ?>" onclick="aumentarCantidad(<?php echo $data->codigoProducto ?>,<?= $objPrecio->getPrecio(Precio::PRECIO_UNIDAD)?>)" type="button"><span style="color:red" class="glyphicon glyphicon-plus"></span></button>
                                         </div>
                                         <div class="col-md-12">
-                                            <?php echo CHtml::link('<div class="button">Añadir <img src="'.Yii::app()->baseUrl.'/images/desktop/button-carrito.png" alt=""></div>', '#', array('data-producto' => $data->codigoProducto, 'data-carro' => 1)); ?>
+                                            <?php echo CHtml::link('<div class="button">Añadir <img src="'.Yii::app()->baseUrl.'/images/desktop/button-carrito.png" alt=""></div>', '#', array('data-producto' => $data->codigoProducto, 'data-cargar' => 1)); ?>
                                         </div>
                                         <div class="col-md-12">	
-                                            <a href="#">
-                                                    <div class="button-lista">Añadir a lista&nbsp;&nbsp;<span class="glyphicon glyphicon-pencil" aria-hidden="true"></span>
+                                            <a href="#" data-tipo="1" data-role="lstpersonalguardar" data-codigo="<?php echo $data->codigoProducto?>">
+                                                    <div class="button-lista"   >Añadir a lista&nbsp;&nbsp;<span class="glyphicon glyphicon-pencil" aria-hidden="true"></span>
                                                     </div>
                                             </a>
                                         </div>
