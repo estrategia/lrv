@@ -39,10 +39,10 @@
 
             <div class="col-md-12">
                 <?php if ($pasoAnterior !== null): ?>
-                    <div class="col-md-3"><button class="editar" id="btn-carropagar-anterior" data-origin="<?php echo $paso ?>" data-redirect="<?php echo $pasoAnterior ?>">Anterior</button></div>
+                <div class="col-md-3"><button class="editar" id="btn-carropagar-anterior" data-origin="<?php echo $paso ?>" data-redirect="<?php echo $pasoAnterior ?>">Atr&aacute;s</button></div>
                 <?php endif; ?>
                 <?php if ($pasoSiguiente !== null): ?>
-                    <div class="col-md-3"><button class="adicionar" id="btn-carropagar-siguiente" data-origin="<?php echo $paso ?>" data-redirect="<?php echo $pasoSiguiente ?>">Siguiente</button></div>
+                    <div class="col-md-3"><button class="adicionar" id="btn-carropagar-siguiente" data-origin="<?php echo $paso ?>" data-redirect="<?php echo $pasoSiguiente ?>">Continuar</button></div>
                 <?php endif; ?>
             </div>
         </div>

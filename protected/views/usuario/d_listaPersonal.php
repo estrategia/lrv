@@ -1,7 +1,7 @@
 <div class="container">
     <div class="row">
         <div class="col-md-12">
-            <?php echo CHtml::link('Nueva lista personal', "#", array('class' => 'btn btn-default', 'data-toggle'=>"modal", 'data-target'=>"#modalListaPersonal")); ?>
+            <?php echo CHtml::link('Nueva lista personal', "#", array('class' => 'btn btn-default', 'data-toggle'=>"modal", 'data-target'=>"#modal-lista-personal")); ?>
         </div>
     </div>
 </div>
@@ -16,9 +16,9 @@ $this->widget('zii.widgets.grid.CGridView', array(
         'maxButtonCount' => 3
     ),
     'id' => 'gridview-listapersonal',
-    'beforeAjaxUpdate' => new CJavaScriptExpression("function() { $.mobile.loading('show'); }"),
-    'afterAjaxUpdate' => new CJavaScriptExpression("function() { $.mobile.loading('hide'); }"),
-    'ajaxUpdateError' => new CJavaScriptExpression("function() { $.mobile.loading('hide'); alert('Error, intente de nuevo');}"),
+    'beforeAjaxUpdate' => new CJavaScriptExpression("function() {  }"),
+    'afterAjaxUpdate' => new CJavaScriptExpression("function() {  }"),
+    'ajaxUpdateError' => new CJavaScriptExpression("function() { alert('Error, intente de nuevo');}"),
     'dataProvider' => $model->search(array('order'=> "t.fechaCreacion DESC", 'pageSize' => 5)),
     'columns' => array(
         array(
@@ -44,7 +44,13 @@ $this->widget('zii.widgets.grid.CGridView', array(
         array(
             'header' => 'Agregar',
             'type' => 'raw',
-            'value' => ' \'<a href="#" class="ui-btn ui-btn-inline ui-icon-cart ui-btn-icon-notext ui-corner-all ui-shadow ui-nodisc-icon ui-alt-icon center" data-role="listapersonal" data-lista="\' . $data->idLista  . \'">Agregar</a>\''
+            'value' => ' \'<a href="#" class="" data-role="listapersonal" data-lista="\' . $data->idLista  . \'">Agregar</a>\''
+        ),
+
+        array(
+            'header' => 'Eliminar',
+            'type' => 'raw',
+            'value' => ' \'<a href="#" class="" data-role="listapersonaleliminar" data-lista="\' . $data->idLista  . \'">Eliminar</a>\''
         ),
     ),
 ));

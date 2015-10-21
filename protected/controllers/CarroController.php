@@ -995,13 +995,8 @@ class CarroController extends Controller {
       } */
 
     public function actionIndex() {
-        if($this->isMobile){
-            $this->render('index', array('vistaCarro' => $this->isMobile ? "/carro/carro" : "/carro/d_carro"));
-            Yii::app()->end();
-        }else{
-            $this->redirect($this->createUrl('pagar'));
-            Yii::app()->end();
-        }
+        $this->render('index', array('vistaCarro' => $this->isMobile ? "/carro/carro" : "/carro/d_carro"));
+        Yii::app()->end();
     }
 
     public function actionModificar() {

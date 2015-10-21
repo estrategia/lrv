@@ -1,13 +1,14 @@
 <?php if($modal): ?>
 
-    <div class="modal fade" id="modalListaPersonal" role="dialog">
+    <div class="modal fade" id="modal-lista-personal" role="dialog">
     <div class="modal-dialog modal-lg" role="document">
         <div class="modal-content">
             <div class="modal-header">
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                    <h4 class="modal-title">Configurar lista</h4>
 <?php endif; ?>
 
-    <h4 class="<?php $modal ? 'modal-title' : '';?>">Configurar lista</h4>
+    
 
 <?php if($modal): ?>
         </div>
@@ -35,7 +36,7 @@
 
     <?php if ($model->isNewRecord) : ?>
         <div class="row">
-            <div class="col-md-4">
+            <div class="col-md-6 col-md-offset-3">
                 <?php echo $form->labelEx($model, 'nombreLista'); ?>
                 <?php echo $form->textField($model, 'nombreLista', array('class' => 'form-control', 'placeholder' => $model->getAttributeLabel('nombreLista'))); ?>
                 <?php echo $form->error($model, 'nombreLista', array('class' => 'text-danger')); ?>
@@ -43,7 +44,7 @@
         </div>
     <?php else: ?>
         <div class="row">
-            <div class="col-md-4">
+            <div class="col-md-6 col-md-offset-3">
                 <?php echo $form->labelEx($model, 'nombreLista'); ?>
                 <?php echo $form->textField($model, 'nombreLista', array('class' => 'form-control', 'disabled' => 'disabled', 'placeholder' => $model->getAttributeLabel('nombreLista'))); ?>
                 <?php echo $form->error($model, 'nombreLista', array('class' => 'text-danger')); ?>
@@ -53,46 +54,75 @@
 
 
         <div class="row">
-            <div class="col-md-4">
+            <div class="col-md-6 col-md-offset-3">
                 <?php echo $form->labelEx($model, 'estadoLista', array('class' => '')); ?>
                 <?php echo $form->checkBox($model, 'estadoLista', array('class' => 'form-control')); ?>
                 <?php echo $form->error($model, 'estadoLista', array('class' => 'text-danger')); ?>
             </div>
         </div>
 
-        <div class="row">
-            <div id="div-lista-config-recordacion" class="<?php echo ($model->estadoLista == 1 ? "" : "hide") ?>">
-                <div class="col-md-4">
-                    <?php echo CHtml::label($model->getAttributeLabel("diasRecordar") . "<a data-role='tooltip' data-msg='Cada cuantos d&iacute;as desea que se realice recordaci&oacute;n' class='ui-btn ui-btn-inline ui-icon-info ui-btn-icon-notext ui-corner-all ui-shadow'>?</a>", 'ListasPersonales_diasRecordar'); ?>
-                    <?php echo $form->numberField($model, 'diasRecordar', array('placeholder' => $model->getAttributeLabel('diasRecordar'))); ?>
+        
+        <div id="div-lista-config-recordacion" class="<?php echo ($model->estadoLista == 1 ? "" : "hide") ?>">
+
+            <div class="row">
+                <div class="col-md-6 col-md-offset-3">
+                    <?php echo CHtml::label($model->getAttributeLabel("diasRecordar") . "<a data-toggle='tooltip' data-placement='top' title='Cada cuantos d&iacute;as desea que se realice recordaci&oacute;n' class='glyphicon glyphicon-info-sign'></a>", 'ListasPersonales_diasRecordar'); ?>
+                    <?php echo $form->textField($model, 'diasRecordar', array('class' => 'form-control', 'placeholder' => $model->getAttributeLabel('diasRecordar'))); ?>
                     <?php echo $form->error($model, 'diasRecordar', array('class' => 'text-danger')); ?>
                 </div>
-                <div class="col-md-4">
+            </div>
+            <div class="row">
+                <div class="col-md-6 col-md-offset-3">
                     <?php //echo $form->labelEx($model, 'diaRecordar'); ?>
-                    <?php echo CHtml::label($model->getAttributeLabel("diaRecordar") . "<a data-role='tooltip' data-msg='D&iacute;a del mes en que desea que se realice recordaci&oacute;n' class='ui-btn ui-btn-inline ui-icon-info ui-btn-icon-notext ui-corner-all ui-shadow'>?</a>", 'ListasPersonales_diaRecordar'); ?>
-                    <?php echo $form->numberField($model, 'diaRecordar', array('placeholder' => $model->getAttributeLabel('diaRecordar'))); ?>
+                    <?php echo CHtml::label($model->getAttributeLabel("diaRecordar") . "<a data-toggle='tooltip' title='D&iacute;a del mes en que desea que se realice recordaci&oacute;n' data-placement='top' class='glyphicon glyphicon-info-sign'></a>", 'ListasPersonales_diaRecordar'); ?>
+                    <?php echo $form->textField($model, 'diaRecordar', array('class' => 'form-control', 'placeholder' => $model->getAttributeLabel('diaRecordar'))); ?>
                     <?php echo $form->error($model, 'diaRecordar', array('class' => 'text-danger')); ?>
                 </div>
-                <div class="col-md-4">
+            </div>
+            <div class="row">
+                <div class="col-md-6 col-md-offset-3">
                     <?php //echo $form->labelEx($model, 'fechaRecordar'); ?>
-                    <?php echo CHtml::label($model->getAttributeLabel("fechaRecordar") . "<a data-role='tooltip' data-msg='Fecha del mes en que desea que se realice recordaci&oacute;n' class='ui-btn ui-btn-inline ui-icon-info ui-btn-icon-notext ui-corner-all ui-shadow'>?</a>", 'ListasPersonales_fechaRecordar'); ?>
-                    <?php echo $form->dateField($model, 'fechaRecordar', array('placeholder'=>'yyyy-mm-dd')); ?>
+                    <?php echo CHtml::label($model->getAttributeLabel("fechaRecordar") . "<a data-toggle='tooltip' title='Fecha del mes en que desea que se realice recordaci&oacute;n' data-placement='top' class='glyphicon glyphicon-info-sign'></a>", 'ListasPersonales_fechaRecordar'); ?>
+                    <?php //echo $form->dateField($model, 'fechaRecordar', array('class' => 'form-control', 'placeholder'=>'yyyy-mm-dd')); ?>
+                    <?php 
+                        $this->widget('zii.widgets.jui.CJuiDatePicker', array(
+                            'model' => $model,
+                            'attribute' => 'fechaRecordar',
+                            'language' => 'es',
+                            'options' => array(
+                                'showAnim' => 'slide',
+                                'dateFormat' => 'yy-mm-dd',
+                            ),
+                            'htmlOptions' => array(
+                                'class' => 'form-control',
+                                'size' => '10',
+                                'maxlength' => '10',
+                                'placeholder' => 'yyyy-mm-dd',
+                            ),
+                        ));
+                    ?>
                     <?php echo $form->error($model, 'fechaRecordar', array('class' => 'text-danger')); ?>
                 </div>
-                <div class="col-md-4">
+            </div>
+            <div class="row">
+                <div class="col-md-6 col-md-offset-3">
                     <?php //echo $form->labelEx($model, 'diasAnticipacion'); ?>
-                    <?php echo CHtml::label($model->getAttributeLabel("diasAnticipacion") . "<a data-role='tooltip' data-msg='D&iacute;as de anticipaci&oacute;n para realizar recordaci&oacute;n' class='ui-btn ui-btn-inline ui-icon-info ui-btn-icon-notext ui-corner-all ui-shadow'>?</a>", 'ListasPersonales_diasAnticipacion'); ?>
-                    <?php echo $form->numberField($model, 'diasAnticipacion', array('placeholder' => $model->getAttributeLabel('diasAnticipacion'))); ?>
+                    <?php echo CHtml::label($model->getAttributeLabel("diasAnticipacion") . "<a data-toggle='tooltip' title='D&iacute;as de anticipaci&oacute;n para realizar recordaci&oacute;n' data-placement='top' class='glyphicon glyphicon-info-sign'></a>", 'ListasPersonales_diasAnticipacion'); ?>
+                    <?php echo $form->textField($model, 'diasAnticipacion', array('class' => 'form-control', 'placeholder' => $model->getAttributeLabel('diasAnticipacion'))); ?>
                     <?php echo $form->error($model, 'diasAnticipacion', array('class' => 'text-danger')); ?>
                 </div>
-                <div class="col-md-4">
-                    <?php echo $form->labelEx($model, 'recordarCorreo', array('class' => 'c_cond_rg')); ?>
-                    <?php echo $form->checkBox($model, 'recordarCorreo', array('data-mini' => 'true')); ?>
+            </div>
+            <div class="row">
+                <div class="col-md-6 col-md-offset-3">
+                    <?php echo $form->labelEx($model, 'recordarCorreo', array('class' => '')); ?>
+                    <?php echo $form->checkBox($model, 'recordarCorreo', array('class' => 'form-control')); ?>
                     <?php echo $form->error($model, 'recordarCorreo', array('class' => 'text-danger')); ?>
                 </div>
-                <div class="col-md-4">
-                    <?php echo $form->labelEx($model, 'recordarNotificacion', array('class' => 'c_cond_rg')); ?>
-                    <?php echo $form->checkBox($model, 'recordarNotificacion', array('data-mini' => 'true')); ?>
+            </div>
+            <div class="row">
+                <div class="col-md-6 col-md-offset-3">
+                    <?php echo $form->labelEx($model, 'recordarNotificacion', array('class' => '')); ?>
+                    <?php echo $form->checkBox($model, 'recordarNotificacion', array('class' => 'form-control')); ?>
                     <?php echo $form->error($model, 'recordarNotificacion', array('class' => 'text-danger')); ?>
                 </div>
             </div>
