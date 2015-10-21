@@ -1,6 +1,6 @@
 <tr>
     <td>
-        <a href="<?php echo CController::createUrl('/catalogo/combo', array('combo' => $position->objCombo->idCombo, 'description' => Combo::cadenaUrl($position->objCombo->descripcionCombo))) ?>" >
+        <a href="<?php echo CController::createUrl('/catalogo/combo', array('combo' => $position->objCombo->idCombo, 'descripcion' => $position->objCombo->getCadenaUrl())) ?>" >
             <img class="img-responsive img-table" src="<?php echo Yii::app()->request->baseUrl . $position->objCombo->rutaImagen() ?>" title="<?php echo $position->objCombo->descripcionCombo ?>">
         </a>
         <div style="color:#ED1C24;"><?php echo $position->objCombo->descripcionCombo ?></div>

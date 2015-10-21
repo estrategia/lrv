@@ -6,7 +6,7 @@
 
 <div class="clst_cont_top">
     <div class="clst_pro_img">
-        <a href="<?php echo CController::createUrl('/catalogo/combo', array('combo' => $objCombo->idCombo,'description'=>  Combo::cadenaUrl($objCombo->descripcionCombo))) ?>" data-ajax="false">
+        <a href="<?php echo CController::createUrl('/catalogo/combo', array('combo' => $objCombo->idCombo,'descripcion'=>  $objCombo->getCadenaUrl())) ?>" data-ajax="false">
             <img src="<?php echo Yii::app()->request->baseUrl . $objCombo->rutaImagen(); ?>" class="ui-li-thumb">
         </a>
     </div>
@@ -18,7 +18,7 @@
     <!-- combo agregado -->
 
     <div class="clst_cont_pr_prod">
-        <h2><a href="<?php echo CController::createUrl('/catalogo/combo', array('combo' => $objCombo->idCombo,'description'=>  Combo::cadenaUrl($objCombo->descripcionCombo))) ?>" data-ajax="false"><?php echo $objCombo->descripcionCombo ?></a></h2>
+        <h2><a href="<?php echo CController::createUrl('/catalogo/combo', array('combo' => $objCombo->idCombo,'descripcion'=>  $objCombo->getCadenaUrl())) ?>" data-ajax="false"><?php echo $objCombo->descripcionCombo ?></a></h2>
         <div class="clst_pre_act" style="padding-bottom:1em;"><?php echo Yii::app()->numberFormatter->format(Yii::app()->params->formatoMoneda['patron'], $objPrecio->getPrecio(), Yii::app()->params->formatoMoneda['moneda']); ?> </div>
     </div>
     <div class="clear"></div>

@@ -1,22 +1,12 @@
 <div class="clst_cont_top">
-    <?php $imagen = $position->objCombo->objImagen(YII::app()->params->producto['tipoImagen']['mini']); ?>
-
-    <?php if ($imagen == null): ?>
-        <div class="clst_pro_img">
-            <a href="<?php echo CController::createUrl('/catalogo/combo', array('combo' => $position->objCombo->idCombo,'description'=>  Combo::cadenaUrl($position->objCombo->descripcionCombo))) ?>" data-ajax="false">
-                <img src="<?php echo Yii::app()->request->baseUrl . Yii::app()->params->producto['noImagen']['mini']; ?>" class="ui-li-thumb">
-            </a>
-        </div>
-    <?php else: ?>
-        <div class="clst_pro_img">
-            <a href="<?php echo CController::createUrl('/catalogo/combo', array('combo' => $position->objCombo->idCombo,'description'=>  Combo::cadenaUrl($position->objCombo->descripcionCombo))) ?>" data-ajax="false">
-                <img src="<?php echo Yii::app()->request->baseUrl . Yii::app()->params->carpetaImagen['combos'][YII::app()->params->producto['tipoImagen']['mini']] . $imagen->rutaImagen; ?>" class="ui-li-thumb">
-            </a>
-        </div>
-    <?php endif; ?>
-
+   <div class="clst_pro_img">
+        <a href="<?php echo CController::createUrl('/catalogo/combo', array('combo' => $position->objCombo->idCombo, 'descripcion' => $position->objCombo->getCadenaUrl())) ?>" data-ajax="false">
+            <img src="<?php echo Yii::app()->request->baseUrl . $position->objCombo->rutaImagen(); ?>" class="ui-li-thumb">
+        </a>
+    </div>
+    
     <div class="clst_cont_pr_prod">
-        <h2><a href="<?php echo CController::createUrl('/catalogo/combo', array('combo' => $position->objCombo->idCombo,'description'=>  Combo::cadenaUrl($position->objCombo->descripcionCombo))) ?>" data-ajax="false"><?php echo $position->objCombo->descripcionCombo ?></a></h2>
+        <h2><a href="<?php echo CController::createUrl('/catalogo/combo', array('combo' => $position->objCombo->idCombo, 'descripcion' => $position->objCombo->getCadenaUrl())) ?>" data-ajax="false"><?php echo $position->objCombo->descripcionCombo ?></a></h2>
         <div class="clst_pre_act"><?php echo Yii::app()->numberFormatter->format(Yii::app()->params->formatoMoneda['patron'], $position->getPrice(), Yii::app()->params->formatoMoneda['moneda']); ?> </div>
 
         <?php if ($position->getShipping() > 0): ?>
@@ -31,7 +21,7 @@
             <div class="clst_pre_act"><span>Tiempo de entrega: <?php echo $position->getDelivery() ?> hora(s)</span></div>
         <?php endif; ?>
     </div>
-	<div class="clear"></div>
+    <div class="clear"></div>
 </div>
 
 <table class="ui-responsive ctable_list_prod"  cellspacing="0">

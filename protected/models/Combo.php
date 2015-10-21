@@ -104,6 +104,11 @@ class Combo extends CActiveRecord {
     public static function model($className = __CLASS__) {
         return parent::model($className);
     }
+    
+    public function afterFind() {
+        $this->descripcionCombo = trim($this->descripcionCombo);
+        parent::afterFind();
+    }
 
     /**
      * Retorna el tipo de imagen de un producto, si no se detecta, retorna null
@@ -160,8 +165,8 @@ class Combo extends CActiveRecord {
         return "C-$this->idCombo";
     }
     
-    public static function cadenaUrl($producto){
-        return str_replace(" ","-", $producto).".html";
+    public function getCadenaUrl(){
+        return str_replace(" ","-", $this->descripcionCombo).".html";
     }
 
 }

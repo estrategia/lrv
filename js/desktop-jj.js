@@ -1,8 +1,34 @@
-/* 
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
+function cambiarEstadoTipoEntrega(){
+    var tipo=$("#tipo_entrega").val();
+    $.ajax({
+        type: 'GET',
+        dataType: 'json',
+        async: true,
+        url: requestUrl + '/sitio/entrega',
+        data: {tipo : tipo},
+        success: function(data) {
+            if (data.result == 'ok') {
+                //$('[data-role= \"main\"]').html(data.response);
+                //window.location.href = data.response;
+               bootbox.alert(data.response);
+            } else {
+                bootbox.alert(data.response);
+            }
+        },
+        error: function(jqXHR, textStatus, errorThrown) {
+            // $.mobile.loading('hide');
+            alert('Error: ' + errorThrown);
+        }
+    });
+    
+}
+
+
+function actualizarNumerosPagina(){
+    var items= $('#items-page').val();
+    $.fn.yiiListView.update('id-productos-list', {data: {pageSize: items}});
+}
+
 function disminuirCantidadFraccionado(codigoProducto, numeroFracciones, unidadFraccionamiento, valorFraccionado, valorUnidad) {
     var nro = $("#cantidad-producto-fraccion-" + codigoProducto).val();
     nro--;
@@ -114,11 +140,11 @@ function guardarCalificacion(codigoProducto, objCalificacion, url) {
     var titulo = $('#calificacion-titulo-' + codigoProducto).val();
     var comentario = $('#calificacion-comentario-' + codigoProducto).val();
     var calificacion = $(objCalificacion).val();
-
+    var form = $("#form-calificacion");
     $.ajax({
         type: 'POST',
         url: url,
-        data: 'codigo=' + codigoProducto + '&titulo=' + titulo + '&calificacion=' + calificacion + "&comentario=" + comentario,
+        data: 'codigo=' + codigoProducto + '&titulo=' + titulo + '&calificacion=' + calificacion + "&comentario=" + comentario+"&"+form.serialize(),
         dataType: 'json',
         success: function(data) {
 
@@ -134,14 +160,19 @@ function guardarCalificacion(codigoProducto, objCalificacion, url) {
                 /*$('<div>').mdialog({
                  content: "<div data-role='main'><div class='ui-content' data-role='content' role='main'>" + data.response + "<a class='ui-btn ui-btn-r ui-corner-all ui-shadow' data-rel='back' href='#'>Aceptar</a></div></div>"
                  });*/
-            } else {
+            } else if (data.result === 'error') {
                 $("#dialog").html(data.response);
                 $("#dialog").dialog("open");
                 /*$('<div>').mdialog({
                  content: "<div data-role='main'><div class='ui-content' data-role='content' role='main'>" + data.response + "<a class='ui-btn ui-btn-r ui-corner-all ui-shadow' data-rel='back' href='#'>Aceptar</a></div></div>"
                  });*/
+            }else{
+                 $.each(data, function(element, error) {
+                    $('#' + form.attr('id') + ' #' + element + '_em_').html(error);
+                    $('#' + form.attr('id') + ' #' + element + '_em_').css('display', 'block');
+                });
             }
-        }
+        }     
     });
 }
 
@@ -185,6 +216,7 @@ $(document).ready(function() {
       });
       $('.ciudades').select2();
       $('#RegistroForm_profesion').select2();
+      $('#items-page').select2({});
 })
 
 
@@ -243,6 +275,27 @@ function ubicacionGPSDesktop() {
     }
 }
 
+function errorPosicion(error) {
+ //   $.mobile.loading('hide');
+    var mensaje = 'NA';
+
+    switch (error.code) {
+        case error.PERMISSION_DENIED:
+            mensaje = "Por favor activar/habilitar servicio de ubicación de tu dispositivo.";//"User denied the request for Geolocation."
+            break;
+        case error.POSITION_UNAVAILABLE:
+            mensaje = "Posición no disponible.";
+            break;
+        case error.TIMEOUT:
+            mensaje = "Expiró el tiempo de espera.";
+            break;
+        case error.UNKNOWN_ERROR:
+            mensaje = "Error desconocido: " + error.message;
+            break;
+    }
+
+    alert(mensaje);
+}
 
 function obtenerPosicionDesktop(pos) {
     var lat = 0;

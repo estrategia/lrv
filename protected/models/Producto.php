@@ -181,6 +181,11 @@ class Producto extends CActiveRecord {
     public static function model($className = __CLASS__) {
         return parent::model($className);
     }
+    
+    public function afterFind() {
+        $this->descripcionProducto = trim($this->descripcionProducto);
+        parent::afterFind();
+    }
 
     /**
      * Retorna el tipo de imagen de un producto, si no se detecta, retorna null
@@ -290,8 +295,8 @@ class Producto extends CActiveRecord {
         return null;
     }
     
-    public static function cadenaUrl($producto){
-        return str_replace(" ","-", $producto).".html";
+    public function getCadenaUrl(){
+        return str_replace(" ","-", $this->descripcionProducto).".html";
     }
     
     public function getArrayCalificacion(){
@@ -337,6 +342,14 @@ class Producto extends CActiveRecord {
          return $contadorCalificacion;
     }
     
-    
+    function object_to_array($object) {
+        if (is_object($object)) {
+         return array_map(__FUNCTION__, get_object_vars($object));
+        } else if (is_array($object)) {
+         return array_map(__FUNCTION__, $object);
+        } else {
+         return $object;
+        }
+   }
     
 }

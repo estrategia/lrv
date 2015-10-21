@@ -4,17 +4,17 @@
         <p>
             <?php $imagen = $objItem->objProducto->objImagen(YII::app()->params->producto['tipoImagen']['mini']); ?>
             <?php if ($imagen == null): ?>
-                <a target="_blank" href="<?php echo CController::createAbsoluteUrl('/catalogo/producto', array('producto' => $objItem->objProducto->codigoProducto)) ?>">
+                <a target="_blank" href="<?php echo CController::createAbsoluteUrl('/catalogo/producto', array('producto' => $objItem->objProducto->codigoProducto, 'descripcion' => $objItem->objProducto->getCadenaUrl())) ?>">
                     <img class="CToWUd" width="70" height="70" align="left" src="<?php echo CController::createAbsoluteUrl('/') . Yii::app()->params->producto['noImagen']['mini']; ?>" title="" style="margin-right:7px;margin-bottom:13px;float:left">
                 </a>
             <?php else: ?>
-                <a target="_blank" href="<?php echo CController::createAbsoluteUrl('/catalogo/producto', array('producto' => $objItem->objProducto->codigoProducto)) ?>">
+                <a target="_blank" href="<?php echo CController::createAbsoluteUrl('/catalogo/producto', array('producto' => $objItem->objProducto->codigoProducto, 'descripcion' => $objItem->objProducto->getCadenaUrl())) ?>">
                     <img class="CToWUd" width="70" height="70" align="left" src="<?php echo CController::createAbsoluteUrl('/') . Yii::app()->params->carpetaImagen['productos'][YII::app()->params->producto['tipoImagen']['mini']] . $imagen->rutaImagen; ?>" title="" style="margin-right:7px;margin-bottom:13px;float:left">
                 </a>
             <?php endif; ?>
         </p>
         <p style="margin:0">
-            <a target="_blank" href="<?php echo CController::createAbsoluteUrl('/catalogo/producto', array('producto' => $objItem->objProducto->codigoProducto)) ?>" style="color:#0088cc;text-decoration:none">
+            <a target="_blank" href="<?php echo CController::createAbsoluteUrl('/catalogo/producto', array('producto' => $objItem->objProducto->codigoProducto, 'descripcion' => $objItem->objProducto->getCadenaUrl())) ?>" style="color:#0088cc;text-decoration:none">
                 <b><?php echo $objItem->objProducto->descripcionProducto ?></b>
             </a>
         </p>
@@ -49,17 +49,17 @@
                 <p>
                     <?php $imagen = $objItem->objProducto->objImagen(YII::app()->params->producto['tipoImagen']['mini']); ?>
                     <?php if ($imagen == null): ?>
-                        <a target="_blank" href="<?php echo CController::createAbsoluteUrl('/catalogo/producto', array('producto' => $objItem->objProducto->codigoProducto)) ?>">
+                        <a target="_blank" href="<?php echo CController::createAbsoluteUrl('/catalogo/producto', array('producto' => $objItem->objProducto->codigoProducto, 'descripcion' => $objItem->objProducto->getCadenaUrl())) ?>">
                             <img class="CToWUd" width="70" height="70" align="left" src="<?php echo CController::createAbsoluteUrl('/') . Yii::app()->params->producto['noImagen']['mini']; ?>" title="" style="margin-right:7px;margin-bottom:13px;float:left">
                         </a>
                     <?php else: ?>
-                        <a target="_blank" href="<?php echo CController::createAbsoluteUrl('/catalogo/producto', array('producto' => $objItem->objProducto->codigoProducto)) ?>">
+                        <a target="_blank" href="<?php echo CController::createAbsoluteUrl('/catalogo/producto', array('producto' => $objItem->objProducto->codigoProducto, 'descripcion' => $objItem->objProducto->getCadenaUrl())) ?>">
                             <img class="CToWUd" width="70" height="70" align="left" src="<?php echo CController::createAbsoluteUrl('/') . Yii::app()->params->carpetaImagen['productos'][YII::app()->params->producto['tipoImagen']['mini']] . $imagen->rutaImagen; ?>" title="" style="margin-right:7px;margin-bottom:13px;float:left">
                         </a>
                     <?php endif; ?>
                 </p>
                 <p style="margin:0">
-                    <a target="_blank" href="<?php echo CController::createAbsoluteUrl('/catalogo/producto', array('producto' => $objItem->objProducto->codigoProducto)) ?>" style="color:#0088cc;text-decoration:none">
+                    <a target="_blank" href="<?php echo CController::createAbsoluteUrl('/catalogo/producto', array('producto' => $objItem->objProducto->codigoProducto, 'descripcion' => $objItem->objProducto->getCadenaUrl())) ?>" style="color:#0088cc;text-decoration:none">
                         <b><?php echo $objItem->objProducto->descripcionProducto ?></b>
                     </a>
                 </p>
@@ -83,17 +83,17 @@
     <p>
         <?php $imagen = $objItem->objProducto->objImagen(YII::app()->params->producto['tipoImagen']['mini']); ?>
         <?php if ($imagen == null): ?>
-            <a target="_blank" href="<?php echo CController::createAbsoluteUrl('/catalogo/producto', array('producto' => $objItem->objProducto->codigoProducto)) ?>">
+            <a target="_blank" href="<?php echo CController::createAbsoluteUrl('/catalogo/producto', array('producto' => $objItem->objProducto->codigoProducto, 'descripcion' => $objItem->objProducto->getCadenaUrl())) ?>">
                 <img class="CToWUd" width="70" height="70" align="left" src="<?php echo CController::createAbsoluteUrl('/') . Yii::app()->params->producto['noImagen']['mini']; ?>" title="" style="margin-right:7px;margin-bottom:13px;float:left">
             </a>
         <?php else: ?>
-            <a target="_blank" href="<?php echo CController::createAbsoluteUrl('/catalogo/producto', array('producto' => $objItem->objProducto->codigoProducto)) ?>">
+            <a target="_blank" href="<?php echo CController::createAbsoluteUrl('/catalogo/producto', array('producto' => $objItem->objProducto->codigoProducto, 'descripcion' => $objItem->objProducto->getCadenaUrl())) ?>">
                 <img class="CToWUd" width="70" height="70" align="left" src="<?php echo CController::createAbsoluteUrl('/') . Yii::app()->params->carpetaImagen['productos'][YII::app()->params->producto['tipoImagen']['mini']] . $imagen->rutaImagen; ?>" title="" style="margin-right:7px;margin-bottom:13px;float:left">
             </a>
         <?php endif; ?>
     </p>
     <p style="margin:0">
-        <a target="_blank" href="<?php echo CController::createAbsoluteUrl('/catalogo/producto', array('producto' => $objItem->objProducto->codigoProducto)) ?>" style="color:#0088cc;text-decoration:none">
+        <a target="_blank" href="<?php echo CController::createAbsoluteUrl('/catalogo/producto', array('producto' => $objItem->objProducto->codigoProducto, 'descripcion' => $objItem->objProducto->getCadenaUrl())) ?>" style="color:#0088cc;text-decoration:none">
             <b><?php echo $objItem->objProducto->descripcionProducto ?></b>
         </a>
     </p>

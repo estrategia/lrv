@@ -1,22 +1,12 @@
 <div class="clst_cont_top">
-    <?php $imagen = $position->objProducto->objImagen(YII::app()->params->producto['tipoImagen']['mini']); ?>
-
-    <?php if ($imagen == null): ?>
-        <div class="clst_pro_img">
-            <a href="<?php echo CController::createUrl('/catalogo/producto', array('producto' => $position->objProducto->codigoProducto,'descripcion'=>  Producto::cadenaUrl($position->objProducto->descripcionProducto))) ?>" data-ajax="false">
-                <img src="<?php echo Yii::app()->request->baseUrl . Yii::app()->params->producto['noImagen']['mini']; ?>" class="ui-li-thumb">
-            </a>
-        </div>
-    <?php else: ?>
-        <div class="clst_pro_img">
-            <a href="<?php echo CController::createUrl('/catalogo/producto', array('producto' => $position->objProducto->codigoProducto,'descripcion'=>  Producto::cadenaUrl($position->objProducto->descripcionProducto))) ?>" data-ajax="false">
-                <img src="<?php echo Yii::app()->request->baseUrl . Yii::app()->params->carpetaImagen['productos'][YII::app()->params->producto['tipoImagen']['mini']] . $imagen->rutaImagen; ?>" class="ui-li-thumb">
-            </a>
-        </div>
-    <?php endif; ?>
+    <div class="clst_pro_img">
+        <a href="<?php echo CController::createUrl('/catalogo/producto', array('producto' => $position->objProducto->codigoProducto, 'descripcion' => $position->objProducto->getCadenaUrl())) ?>" data-ajax="false">
+            <img src="<?php echo Yii::app()->request->baseUrl . $position->objProducto->rutaImagen(); ?>" class="ui-li-thumb">
+        </a>
+    </div>
 
     <div class="clst_cont_pr_prod">
-        <h2><a href="<?php echo CController::createUrl('/catalogo/producto', array('producto' => $position->objProducto->codigoProducto,'descripcion'=>  Producto::cadenaUrl($position->objProducto->descripcionProducto))) ?>" data-ajax="false"><?php echo $position->objProducto->descripcionProducto ?></a></h2>
+        <h2><a href="<?php echo CController::createUrl('/catalogo/producto', array('producto' => $position->objProducto->codigoProducto, 'descripcion' => $position->objProducto->getCadenaUrl())) ?>" data-ajax="false"><?php echo $position->objProducto->descripcionProducto ?></a></h2>
         <p><?php echo $position->objProducto->presentacionProducto ?></p>
         <?php if ($position->objProducto->mostrarAhorroVirtual == 1 && $position->getDiscountPrice() > 0): ?>
             <div class="clst_pre_ant"><?php echo Yii::app()->numberFormatter->format(Yii::app()->params->formatoMoneda['patron'], $position->getPrice(false, false), Yii::app()->params->formatoMoneda['moneda']); ?></div>
@@ -37,7 +27,7 @@
             <div class="clst_pre_act"><span>Tiempo de entrega: <?php echo $position->getDelivery() ?> hora(s)</span></div>
         <?php endif; ?>
     </div>
-	<div class="clear"></div>
+    <div class="clear"></div>
 </div>
 
 <table class="ui-responsive ctable_list_prod" cellspacing="0">
@@ -60,7 +50,7 @@
                 <p id="subtotal-producto-<?php echo $position->getId(); ?>" style="font-size:medium;"><?php echo Yii::app()->numberFormatter->format(Yii::app()->params->formatoMoneda['patron'], $position->getSumPriceUnit(false, true), Yii::app()->params->formatoMoneda['moneda']); ?></p>
             </td>
             <td class="ctd_03">
-                <?php echo CHtml::link('Eliminar', '#', array('data-eliminar' => 1, 'data-position'=>$position->getId(), 'class' => 'ui-btn ui-corner-all ui-shadow ui-btn-inline ui-btn-a', 'data-mini' => 'true')); ?>
+                <?php echo CHtml::link('Eliminar', '#', array('data-eliminar' => 1, 'data-position' => $position->getId(), 'class' => 'ui-btn ui-corner-all ui-shadow ui-btn-inline ui-btn-a', 'data-mini' => 'true')); ?>
             </td>
         </tr>
 
@@ -79,7 +69,7 @@
                     <p id="subtotal-producto-<?php echo $position->getId(); ?>" style="font-size:medium;"><?php echo Yii::app()->numberFormatter->format(Yii::app()->params->formatoMoneda['patron'], $position->getSumPriceFraction(), Yii::app()->params->formatoMoneda['moneda']); ?></p>
                 </td>
                 <td class="ctd_03">
-                    <?php echo CHtml::link('Eliminar', '#', array('data-eliminar'=> 2, 'data-position'=>$position->getId(), 'class' => 'ui-btn ui-corner-all ui-shadow ui-btn-inline ui-btn-a', 'data-mini' => 'true')); ?>
+                    <?php echo CHtml::link('Eliminar', '#', array('data-eliminar' => 2, 'data-position' => $position->getId(), 'class' => 'ui-btn ui-corner-all ui-shadow ui-btn-inline ui-btn-a', 'data-mini' => 'true')); ?>
                 </td>
             </tr>
         <?php endif; ?>

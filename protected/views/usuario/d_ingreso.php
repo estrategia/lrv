@@ -19,7 +19,7 @@
                     <div class="" data-theme="c">
                         <?php echo $form->labelEx($model, 'username', array('class' => 'ui-hidden-accessible')); ?>
                         <?php echo $form->textField($model, 'username', array('placeholder' => $model->getAttributeLabel('username'),'class'=>"form-control")); ?>
-                        <?php echo $form->error($model, 'username'); ?>
+                        <?php echo $form->error($model, 'username',array( "class" => "text-danger")); ?>
                     </div>
                 </div>
             </div>
@@ -29,7 +29,7 @@
                     <div class="" data-theme="c">
                         <?php echo $form->labelEx($model, 'password', array('class' => 'ui-hidden-accessible')); ?>
                         <?php echo $form->passwordField($model, 'password', array('placeholder' => $model->getAttributeLabel('password'),'class'=>"form-control")); ?>
-                        <?php echo $form->error($model, 'password'); ?>
+                        <?php echo $form->error($model, 'password',array( "class" => "text-danger")); ?>
                     </div>
                 </div>
             </div>
