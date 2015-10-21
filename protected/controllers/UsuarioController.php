@@ -351,6 +351,11 @@ class UsuarioController extends Controller {
         $usuarioExt = $usuario->objUsuarioExtendida;
         $model->cedula = $usuario->identificacionUsuario;
 
+        $registro = 'registro';
+        if(!$this->isMobile){
+            $registro = 'd_registro';
+        }
+
         if (isset($_POST['RegistroForm'])) {
             $model->attributes = $_POST['RegistroForm'];
             $model->correoElectronico = $usuario->correoElectronico;
@@ -365,11 +370,8 @@ class UsuarioController extends Controller {
                         $transaction->rollBack();
                         Yii::app()->user->setFlash('error', "Error al guardar información básica, por favor, intente de nuevo.");
                         //$this->render('registro', array('model' => $model));
-                        if($this->isMobile){
-                            $this->render('registro', array('model' => $model));
-                        }else{
-                            $this->render('d_registro', array('model' => $model));
-                        }
+                        
+                        $this->render($registro, array('model' => $model));
                         Yii::app()->end();
                     }
 
@@ -386,11 +388,8 @@ class UsuarioController extends Controller {
                         $transaction->rollBack();
                         Yii::app()->user->setFlash('error', "Error al guardar información complementaria, por favor, intente de nuevo.");
                         //$this->render('registro', array('model' => $model));
-                        if($this->isMobile){
-                            $this->render('registro', array('model' => $model));
-                        }else{
-                            $this->render('d_registro', array('model' => $model));
-                        }
+                        
+                        $this->render($registro, array('model' => $model));
                         Yii::app()->end();
                     }
 
@@ -410,11 +409,8 @@ class UsuarioController extends Controller {
 
                     Yii::app()->user->setFlash('error', "Error al realizar registro, por favor intente de nuevo.");
                     //$this->render('registro', array('model' => $model));
-                    if($this->isMobile){
-                        $this->render('registro', array('model' => $model));
-                    }else{
-                        $this->render('d_registro', array('model' => $model));
-                    }
+                    
+                    $this->render($registro, array('model' => $model));
                     Yii::app()->end();
                 }
             }
@@ -428,11 +424,7 @@ class UsuarioController extends Controller {
             $model->profesion = $usuarioExt->codigoProfesion;
         }
 
-        if($this->isMobile){
-            $this->render('registro', array('model' => $model));
-        }else{
-            $this->render('d_registro', array('model' => $model));
-        }
+        $this->render($registro, array('model' => $model));
     }
     
     public function actionContrasena() {
@@ -449,6 +441,11 @@ class UsuarioController extends Controller {
         ));
         
         //CVarDumper::dump($model,10,true);
+        $registro = 'registro';
+        if(!$this->isMobile)
+        {
+            $registro = 'd_registro';
+        }
         
         if (isset($_POST['RegistroForm'])) {
             $model->attributes = $_POST['RegistroForm'];
@@ -468,22 +465,13 @@ class UsuarioController extends Controller {
                     Yii::log($exc->getMessage() . "\n" . $exc->getTraceAsString(), CLogger::LEVEL_ERROR, 'application');
                     Yii::app()->user->setFlash('error', "Error al realizar registro, por favor intente de nuevo.");
                     //$this->render('registro', array('model' => $model));
-                    if($this->isMobile){
-                        $this->render('registro', array('model' => $model));
-                    }else{
-                        $this->render('d_registro', array('model' => $model));
-                    }
+                    $this->render($registro, array('model' => $model));
                     Yii::app()->end();
                 }
             }
         }
 
-        //$this->render('registro', array('model' => $model));
-        if($this->isMobile){
-            $this->render('registro', array('model' => $model));
-        }else{
-            $this->render('d_registro', array('model' => $model));
-        }
+        $this->render($registro, array('model' => $model));
     }
 
     public function actionPagoexpress() {
@@ -921,10 +909,16 @@ class UsuarioController extends Controller {
             $model->codigo = $codigo;
             $model->unidades = $unidades;
 
+            $listaGuardar = 'listaGuardar';
+            if(!$this->isMobile)
+            {
+                $listaGuardar = 'd_listaGuardar';
+            }
+
             echo CJSON::encode(array(
                 'result' => 'ok',
                 'response' => array(
-                    'dialogoHTML' => $this->renderPartial('listaGuardar', array('model' => $model), true)
+                    'dialogoHTML' => $this->renderPartial($listaGuardar, array('model' => $model), true)
             )));
             Yii::app()->end();
         } else if (isset($_POST['ListaGuardarForm'])) {
@@ -1073,10 +1067,16 @@ class UsuarioController extends Controller {
             $objDetalle->save();
         }
 
+        $listaDetalle = '_listaDetalle';
+        if(!$this->isMobile)
+        {
+            $listaDetalle = '_d_listaDetalle';
+        }
+
         echo CJSON::encode(array(
             'result' => 'ok',
             'response' => array(
-                'detalleHTML' => $this->renderPartial('_listaDetalle', array('model' => $objDetalle->objLista), true),
+                'detalleHTML' => $this->renderPartial($listaDetalle, array('model' => $objDetalle->objLista), true),
                 'mensajeHTML' => $this->renderPartial('/common/mensajeHtml', array('mensaje' => "Elemento actualizado"), true),
             )
         ));
@@ -1113,10 +1113,16 @@ class UsuarioController extends Controller {
 
         $objDetalle->delete();
 
+        $listaDetalle = '_listaDetalle';
+        if(!$this->isMobile)
+        {
+            $listaDetalle = '_d_listaDetalle';
+        }
+
         echo CJSON::encode(array(
             'result' => 'ok',
             'response' => array(
-                'detalleHTML' => $this->renderPartial('_listaDetalle', array('model' => $objDetalle->objLista), true),
+                'detalleHTML' => $this->renderPartial($listaDetalle, array('model' => $objDetalle->objLista), true),
                 'mensajeHTML' => $this->renderPartial('/common/mensajeHtml', array('mensaje' => "Elemento actualizado"), true),
             )
         ));
@@ -1343,14 +1349,4 @@ class UsuarioController extends Controller {
         $fecha = DateTime::createFromFormat('Y-m-d H:i:s', $data->fechaCotizacion);
         return $fecha->format('y-m-d');
     }
-
-
-    public function actionLogueomio()
-    {
-        $identity = new UserIdentity('1116247424', 'oscar');
-        $identity->authenticate();
-        Yii::app()->user->login($identity);
-        //$this->redirect('index');
-    }
-
 }

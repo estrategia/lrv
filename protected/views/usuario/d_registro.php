@@ -124,7 +124,26 @@
         <div class="row">
             <div class="col-md-4">
                 <?php echo $form->labelEx($model, 'fechaNacimiento'); ?>
-                <?php echo $form->textField($model, 'fechaNacimiento',array('class'=>'form-control')); ?>
+                <?php //echo $form->textField($model, 'fechaNacimiento',array('class'=>'form-control')); ?>
+                <?php 
+                    $this->widget('zii.widgets.jui.CJuiDatePicker', array(
+                        'model' => $model,
+                        'attribute' => 'fechaNacimiento',
+                        'language' => 'es',
+                        'options' => array(
+                            'showAnim' => 'slide',
+                            'dateFormat' => 'yy-mm-dd',
+                            "changeYear" => true,
+                        ),
+                        'htmlOptions' => array(
+                            'class' => 'form-control',
+                            'size' => '10',
+                            'maxlength' => '10',
+                            'placeholder' => 'yyyy-mm-dd',
+                        ),
+                    ));
+                ?>
+
                 <?php echo $form->error($model, 'fechaNacimiento'); ?>
             </div>
         </div>

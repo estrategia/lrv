@@ -324,9 +324,9 @@ $(document).on('click', "input[data-role='lstpersonalform']", function() {
                 }
                 
                 if ($('#gridview-listapersonal').length) {
-                    $('#form-listapersonal')[0].reset();
                     $.fn.yiiGridView.update('gridview-listapersonal');
                 }
+                $('#form-listapersonal')[0].reset();
                 $("#modal-lista-personal").modal('hide');
                 dialogoAnimado(data.response.mensajeHtml);
             } else if (data.result === 'error') {
@@ -423,7 +423,9 @@ $(document).on('click', "a[data-role='eliminarlistadetalle']", function() {
         success: function(data) {
             if (data.result === "ok") {
                 dialogoAnimado(data.response.mensajeHTML);
-                $.fn.yiiGridView.update('gridview-listadetalle');
+                //$.fn.yiiGridView.update('gridview-listadetalle');
+                $('#div-listadetalle').html(data.response.detalleHTML);
+                $('#div-listadetalle').trigger("create");
             } else if (data.result === 'error') {
                 bootbox.alert(data.response);
             }
@@ -471,6 +473,103 @@ $(document).on('click', "a[data-role='actualizarlistadetalle']", function() {
         }
     });
 });
+
+
+$(document).on('click', "a[data-role='lstpersonalguardar']", function() {
+    var tipo = $(this).attr('data-tipo');
+    tipo = parseInt(tipo);
+    if (isNaN(tipo)) {
+        tipo = -1;
+    }
+    var codigo = $(this).attr('data-codigo');
+    var unidades = 0;
+
+    if (tipo === 1) {
+        unidades = $('#cantidad-producto-unidad-' + codigo).val();
+        unidades = parseInt(unidades);
+        if (isNaN(unidades)) {
+            unidades = 0;
+        }
+    } else if (tipo === 2) {
+        unidades = $('#cantidad-combo-' + codigo).val();
+        unidades = parseInt(unidades);
+        if (isNaN(unidades)) {
+            unidades = 0;
+        }
+    }
+
+    $.ajax({
+        type: 'POST',
+        dataType: 'json',
+        async: true,
+        url: requestUrl + '/usuario/listapersonal/lista/guardar',
+        data: {codigo: codigo, tipo: tipo, unidades: unidades, render: true},
+        beforeSend: function() {
+            //$("div[id^='page-listaguardar-']").remove();
+            //$.mobile.loading('show');
+        },
+        complete: function() {
+            //$.mobile.loading('hide');
+        },
+        success: function(data) {
+            if (data.result === 'ok') {
+                if(!$("#modal-lista-guardar").length)
+                {
+                    $('body').append('<div id="div-modal-agregar-lista"></div>');
+                    $('#div-modal-agregar-lista').append(data.response.dialogoHTML);
+                }
+                else
+                {
+                    $('#div-modal-agregar-lista').html(data.response.dialogoHTML);
+                }
+                $("#modal-lista-guardar").modal("show");
+            } else if (data.result === 'error') {
+                bootbox.alert(data.response);
+            }
+        },
+        error: function(jqXHR, textStatus, errorThrown) {
+            bootbox.alert('Error: ' + errorThrown);
+        }
+    });
+});
+
+$(document).on('click', "input[data-role='lstpersonalguardar']", function() {
+    $.ajax({
+        type: 'POST',
+        //dataType: 'json',
+        async: true,
+        url: requestUrl + '/usuario/listapersonal/lista/guardar',
+        data: $('#form-listaguardar').serialize(),
+        beforeSend: function() {
+            $('div[id^="ListaGuardarForm_"].has-error').html('');
+            $('div[id^="ListaGuardarForm_"].has-error').css('display', 'none');
+            $('#form-listaguardar input[type=button]').attr('disabled', 'disabled');
+        },
+        complete: function() {
+            $('#form-listaguardar input[type=button]').removeAttr('disabled');
+        },
+        success: function(data) {
+            var data = $.parseJSON(data);
+            if (data.result === "ok") {
+                //$('#form-listaguardar')[0].reset();
+                //$("div[id^=popup-listaguardar-]").popup("close");
+                $("#modal-lista-guardar").modal("hide");
+                dialogoAnimado(data.response);
+            } else if (data.result === 'error') {
+                bootbox.alert(data.response);
+            } else {
+                $.each(data, function(element, error) {
+                    $('#' + element + '_em_').html(error);
+                    $('#' + element + '_em_').css('display', 'block');
+                });
+            }
+        },
+        error: function(jqXHR, textStatus, errorThrown) {
+            bootbox.alert('Error: ' + errorThrown);
+        }
+    });
+});
+
 
 //para que funcionen los tool tips
 
