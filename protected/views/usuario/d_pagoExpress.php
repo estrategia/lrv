@@ -6,7 +6,7 @@
 <?php endif; ?>
 
 <?php if (empty($listDirecciones)): ?>
-    <?php echo CHtml::link('Crear dirección de despacho', "#", array('data-role' => 'direccion-adicionar-modal', 'data-pagoexpress' => true, 'class' => 'btn btn-primary')); ?>
+    <?php echo CHtml::link('Crear dirección de despacho', "#", array('data-role' => 'direccion-adicionar-modal', 'data-pagoexpress' => 1, 'class' => 'btn btn-primary')); ?>
 <?php else: ?>
     <div class="row">
         <div class="col-md-12">

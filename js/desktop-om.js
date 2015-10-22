@@ -61,7 +61,7 @@ $(document).on('click', "a[data-role='direccion-adicionar-modal']", function() {
         },
         success: function(data) {
             var id = "page-direccion-crear-" + uniqueId();
-            if(!$("#modal-nueva-direccion").length)
+            if (!$("#modal-nueva-direccion").length)
             {
                 $('body').append(data.response.dialogoHTML);
             }
@@ -74,12 +74,11 @@ $(document).on('click', "a[data-role='direccion-adicionar-modal']", function() {
 });
 
 $(document).on('click', "input[data-role='direccion-adicionar']", function() {
-    //var form = $(this).parents("form");
     var form = $("#form-direccion");
     var modal = $(this).attr("data-modal");
     var pagoExpress = $("[data-role='direccion-adicionar-modal']").attr("data-pagoexpress");
-    var data = {modal: modal, pagoExpress: pagoExpress};
-    //console.log(form);
+    var data = {modal: modal, pagoExpress: pagoExpress, pasosCompra: $('#div-direcciones-pasoscompra').length};
+    
     $.ajax({
         type: 'POST',
         async: true,
@@ -92,34 +91,27 @@ $(document).on('click', "input[data-role='direccion-adicionar']", function() {
             //$.mobile.loading('hide');
         },
         success: function(data) {
-            //console.log(data);
             var data = $.parseJSON(data);
             if (data.result === 'ok') {
                 if (modal == 1) {
-
-                    if(data.response.pagoExpress == "no")
-                    {
-                        $('#div-direcciones-lista').html(data.response.direccionesHTML);
-                        $('#div-direcciones-lista').trigger("create");
-                    }
-                    else
-                    {
+                    if (data.response.pagoExpress == 0) {
+                        if ($('#div-direcciones-pasoscompra').length) {
+                            $('#div-direcciones-pasoscompra').html(data.response.direccionesHTML);
+                            $('#div-direcciones-pasoscompra').trigger("create");
+                        } else {
+                            $('#div-direcciones-lista').html(data.response.direccionesHTML);
+                            $('#div-direcciones-lista').trigger("create");
+                        }
+                    } else {
                         location.reload();
                     }
                     $("#modal-nueva-direccion").modal("hide");
                     $("#form-direccion")[0].reset();
-                    //$("#modal-nueva-direccion").remove();
-                    //$(".modal-backdrop").remove();
                     dialogoAnimado(data.response.mensaje);
-                    //$("div[id^='page-direccion-crear-']").dialog("close");
-                    //dialogoAnimado(data.response.mensaje);
                 } else {
                     location.reload();
                 }
             } else if (data.result === 'error') {
-                //$('<div>').mdialog({
-                //    content: "<div data-role='main'><div class='ui-content' data-role='content' role='main'>" + data.response + "<a class='ui-btn ui-btn-r ui-corner-all ui-shadow' data-rel='back' href='#'>Aceptar</a></div></div>"
-                //});
                 bootbox.alert(data.response);
             } else {
                 $.each(data, function(element, error) {
@@ -129,7 +121,6 @@ $(document).on('click', "input[data-role='direccion-adicionar']", function() {
             }
         },
         error: function(jqXHR, textStatus, errorThrown) {
-            //alert('Error: ' + errorThrown);
             bootbox.alert('Error: ' + errorThrown);
         }
     });
@@ -174,7 +165,7 @@ $(document).on('click', "a[data-role='pedidogridestado']", function() {
         message: $(this).attr('data-estado'),
         buttons: {
             ok: {
-                label : "Aceptar",
+                label: "Aceptar",
             }
         }
     });
@@ -196,18 +187,18 @@ $(document).on('click', "a[data-role='pedidodetalle']", function() {
         },
         success: function(data) {
             if (data.result === "ok") {
-                
+
                 $('#div-carro-canasta').html(data.response.canastaHTML);
                 $('#div-carro-canasta').trigger("create");
-                
+
                 if (data.response.mensajeHTML) {
                     dialogoAnimado(data.response.mensajeHTML);
                     //bootbox.alert(data.response.mensajeHTML);
                 }
             } else {
                 /*$('<div>').mdialog({
-                    content: "<div data-role='main'><div class='ui-content' data-role='content' role='main'>" + data.response + "<a class='ui-btn ui-btn-r ui-corner-all ui-shadow' data-rel='back' href='#'>Aceptar</a></div></div>"
-                });*/
+                 content: "<div data-role='main'><div class='ui-content' data-role='content' role='main'>" + data.response + "<a class='ui-btn ui-btn-r ui-corner-all ui-shadow' data-rel='back' href='#'>Aceptar</a></div></div>"
+                 });*/
                 bootbox.alert(data.response);
             }
         },
@@ -256,10 +247,10 @@ $(document).on('click', "a[data-role='cotizaciondetalle']", function() {
         url: requestUrl + '/carro/agregarcotizacion',
         data: {cotizacion: cotizacion},
         beforeSend: function() {
-            
+
         },
         complete: function() {
-            
+
         },
         success: function(data) {
             if (data.result === "ok") {
@@ -279,7 +270,7 @@ $(document).on('click', "a[data-role='cotizaciondetalle']", function() {
 });
 
 
-$(document).on('click', "[id^='enlace-pago-direccion-express-']", function(){
+$(document).on('click', "[id^='enlace-pago-direccion-express-']", function() {
     var campoCheckbox = $(this).children("input");
     campoCheckbox.prop("checked", true);
 });
@@ -288,7 +279,7 @@ $(document).on('click', "[id^='enlace-pago-direccion-express-']", function(){
 $(document).on('change', "#form-listapersonal input[id='ListasPersonales_estadoLista']", function() {
     if ($(this).is(":checked")) {
         $('#div-lista-config-recordacion').removeClass('hide');
-    }else{
+    } else {
         $('#div-lista-config-recordacion').addClass('hide');
     }
 });
@@ -322,7 +313,7 @@ $(document).on('click', "input[data-role='lstpersonalform']", function() {
                 if ($('#ListaGuardarForm_idLista').length) {
                     $("#ListaGuardarForm_idLista").append(data.response.optionHtml);
                 }
-                
+
                 if ($('#gridview-listapersonal').length) {
                     $.fn.yiiGridView.update('gridview-listapersonal');
                 }
@@ -415,10 +406,10 @@ $(document).on('click', "a[data-role='eliminarlistadetalle']", function() {
         url: requestUrl + '/usuario/listadetalle/accion/eliminar',
         data: {detalle: detalle},
         beforeSend: function() {
-            
+
         },
         complete: function() {
-            
+
         },
         success: function(data) {
             if (data.result === "ok") {
@@ -440,7 +431,7 @@ $(document).on('click', "a[data-role='eliminarlistadetalle']", function() {
 
 $(document).on('click', "a[data-role='actualizarlistadetalle']", function() {
     var detalle = $(this).attr('data-detalle');
-    var unidades = $("#campo-producto-"+detalle).val();
+    var unidades = $("#campo-producto-" + detalle).val();
     unidades = parseInt(unidades);
 
     if (isNaN(unidades)) {
@@ -449,7 +440,7 @@ $(document).on('click', "a[data-role='actualizarlistadetalle']", function() {
     if (unidades <= 0) {
         unidades = 0;
     }
-    $("#campo-producto-"+detalle).val(unidades);
+    $("#campo-producto-" + detalle).val(unidades);
 
     $.ajax({
         type: 'POST',
@@ -465,7 +456,7 @@ $(document).on('click', "a[data-role='actualizarlistadetalle']", function() {
             if (data.result === "ok") {
                 dialogoAnimado(data.response.mensajeHTML);
             } else if (data.result === 'error') {
-                bootbox.alert(data.response);                
+                bootbox.alert(data.response);
             }
         },
         error: function(jqXHR, textStatus, errorThrown) {
@@ -513,7 +504,7 @@ $(document).on('click', "a[data-role='lstpersonalguardar']", function() {
         },
         success: function(data) {
             if (data.result === 'ok') {
-                if(!$("#modal-lista-guardar").length)
+                if (!$("#modal-lista-guardar").length)
                 {
                     $('body').append('<div id="div-modal-agregar-lista"></div>');
                     $('#div-modal-agregar-lista').append(data.response.dialogoHTML);
@@ -573,6 +564,6 @@ $(document).on('click', "input[data-role='lstpersonalguardar']", function() {
 
 //para que funcionen los tool tips
 
-$(function () {
-  $('[data-toggle="tooltip"]').tooltip()
+$(function() {
+    $('[data-toggle="tooltip"]').tooltip()
 })
