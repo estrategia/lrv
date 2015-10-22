@@ -45,14 +45,20 @@ class UsuarioController extends Controller {
     /**
      * Visualiza la pagina de autenticacion de usuario
      */
-    public function actionAutenticar() {
+    public function actionAutenticar($opcion=null) {
         $this->showSeeker = true;
         
         if (!isset(Yii::app()->session[Yii::app()->params->sesion['redireccionAutenticacion']]) || Yii::app()->session[Yii::app()->params->sesion['redireccionAutenticacion']] == 'null') {
             Yii::app()->session[Yii::app()->params->sesion['redireccionAutenticacion']] = (Yii::app()->request->urlReferrer == null ? 'null' : Yii::app()->request->urlReferrer);
         }
         
-        $this->render('autenticar');
+        if($this->isMobile){
+            $this->render('autenticar');
+        }else{
+            $this->render('d_autenticar',array(
+                    'opcion' => $opcion
+            ));
+        }
     }
     
     public function actionIngresar(){

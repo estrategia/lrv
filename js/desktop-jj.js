@@ -275,6 +275,27 @@ function ubicacionGPSDesktop() {
     }
 }
 
+function errorPosicion(error) {
+ //   $.mobile.loading('hide');
+    var mensaje = 'NA';
+
+    switch (error.code) {
+        case error.PERMISSION_DENIED:
+            mensaje = "Por favor activar/habilitar servicio de ubicación de tu dispositivo.";//"User denied the request for Geolocation."
+            break;
+        case error.POSITION_UNAVAILABLE:
+            mensaje = "Posición no disponible.";
+            break;
+        case error.TIMEOUT:
+            mensaje = "Expiró el tiempo de espera.";
+            break;
+        case error.UNKNOWN_ERROR:
+            mensaje = "Error desconocido: " + error.message;
+            break;
+    }
+
+    alert(mensaje);
+}
 
 function obtenerPosicionDesktop(pos) {
     var lat = 0;
