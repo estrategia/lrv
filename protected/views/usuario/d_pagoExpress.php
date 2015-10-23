@@ -6,7 +6,7 @@
 <?php endif; ?>
 
 <?php if (empty($listDirecciones)): ?>
-    <?php echo CHtml::link('Crear dirección de despacho', "#", array('data-role' => 'direccion-adicionar-modal', 'data-pagoexpress' => true, 'class' => 'btn btn-primary')); ?>
+    <?php echo CHtml::link('Crear dirección de despacho', "#", array('data-role' => 'direccion-adicionar-modal', 'data-pagoexpress' => 1, 'class' => 'btn btn-primary')); ?>
 <?php else: ?>
     <div class="row">
         <div class="col-md-12">
@@ -95,7 +95,7 @@
             <?php echo $form->error($objPagoExpress, 'idDireccionDespacho'); ?>
         </div>
         <div class="col-md-4">
-            <?php $this->renderPartial('/carro/_formaPago', array('form' => $form, 'model' => $objPagoExpress, 'listFormaPago'=>$listFormaPago)) ?>
+            <?php $this->renderPartial('/carro/_d_formaPago', array('form' => $form, 'model' => $objPagoExpress, 'listFormaPago'=>$listFormaPago)) ?>
         </div>
     </div>
     

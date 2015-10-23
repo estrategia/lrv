@@ -12,21 +12,7 @@
             <div style="height:5px;background-color: #F5F5F5;border-top: 1px solid #E9E1E1;"></div>
             <div id="collapsible-direccion-ciudad-<?php echo $codigoCiudad ?>" class="panel-collapse collapse" role="tabpanel" aria-labelledby="encabezado-direccion-<?php echo $codigoCiudad ?>">
                 <div class="panel-body">
-                <?php foreach ($direccion['direcciones'] as $model): ?>
-                    <div class="row">
-                        <div class="col-md-11 col-md-offset-1">
-                            
-                            <div id="div-direccion-radio-<?php echo $model->idDireccionDespacho ?>" class="col-md-12">
-                                <input type="radio" name="DireccionesDespacho[idDireccionDespacho]" id="DireccionesDespacho_idDireccionDespacho_<?php echo $model->idDireccionDespacho ?>" value="<?php echo $model->idDireccionDespacho ?>" >
-                                <label for="DireccionesDespacho_idDireccionDespacho_<?php echo $model->idDireccionDespacho ?>"><?php echo $model->descripcion ?></label>
-                                <div id="div-direccion-form-<?php echo $model->idDireccionDespacho ?>"  class="c_form_rgs ui-body-c" style="display: none">
-                                    <?php $this->renderPartial('/usuario/_d_direccionForm', array('model' => $model)); ?>
-                                    
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                <?php endforeach; ?>
+                    <?php $this->renderPartial('/usuario/_d_direccionesLista', array('listDirecciones' => $direccion['direcciones'], 'radio' => false, 'idDireccionSeleccionada' => 0)) ?>
                 </div>
             </div>
 

@@ -1247,7 +1247,7 @@ class UsuarioController extends Controller {
         
         $render = Yii::app()->getRequest()->getPost('render', false);
         $modal = Yii::app()->getRequest()->getPost('modal', 0);
-        $pagoExpress = Yii::app()->getRequest()->getPost('pagoExpress', false);
+        $pagoExpress = Yii::app()->getRequest()->getPost('pagoExpress', 0);
 
         $direccionForm = "_direccionForm";
         $direcciones = "_direcciones";
@@ -1273,7 +1273,7 @@ class UsuarioController extends Controller {
             $model->activo = 1;
             $model->codigoCiudad = $objSectorCiudad->codigoCiudad;
             $model->codigoSector = $objSectorCiudad->codigoSector;
-
+            
             if ($model->validate()) {
                 if (!$model->save()) {
                     echo CJSON::encode(array('result' => 'error', 'response' => 'Error al guardar dirección, por favor intente de nuevo'));
@@ -1281,11 +1281,42 @@ class UsuarioController extends Controller {
                 }
 
                 if($modal == 1){
-                    $listDirecciones = DireccionesDespacho::consultarDireccionesUsuario(Yii::app()->user->name, true);
+                    $pasosCompra = Yii::app()->getRequest()->getPost('pasosCompra', 0);
+                    
+                    $direccionesHTML = "";
+                    
+                    if($pasosCompra==1){
+                        $listDirecciones = DireccionesDespacho::model()->findAll(array(
+                            'condition' => 'identificacionUsuario=:cedula AND (codigoCiudad=:ciudad AND (codigoSector=:sector OR codigoSector=0)) AND activo=:activo',
+                            'params' => array(
+                                ':cedula' => Yii::app()->user->name,
+                                ':activo' => 1,
+                                ':ciudad' => $objSectorCiudad->codigoCiudad,
+                                ':sector' => $objSectorCiudad->codigoSector
+                            )
+                        ));
+                        
+                        $idDireccionSeleccionada = 0;
+                        if (isset(Yii::app()->session[Yii::app()->params->sesion['carroPagarForm']])){
+                            $modelPago = Yii::app()->session[Yii::app()->params->sesion['carroPagarForm']];
+                        }
+
+                        if ($modelPago != null) {
+                            $modelPago->idDireccionDespacho = $model->idDireccionDespacho;
+                            Yii::app()->session[Yii::app()->params->sesion['carroPagarForm']] = $modelPago;
+                            $idDireccionSeleccionada = $modelPago->idDireccionDespacho;
+                        }
+                        
+                        $direccionesHTML = $this->renderPartial('/usuario/_d_direccionesLista', array('listDirecciones' => $listDirecciones, 'radio' => true, 'idDireccionSeleccionada' => $idDireccionSeleccionada), true);
+                    }else{
+                        $listDirecciones = DireccionesDespacho::consultarDireccionesUsuario(Yii::app()->user->name, true);
+                        $direccionesHTML = $this->renderPartial($direcciones, array('listDirecciones' => $listDirecciones), true);
+                    }
+                    
                     echo CJSON::encode(array('result' => 'ok', 'response' => array(
                         'mensaje' => 'Direcci&oacute;n adicionada',
-                        'pagoExpress' => $pagoExpress ? "si" : "no",
-                        'direccionesHTML' => $this->renderPartial($direcciones, array('listDirecciones' => $listDirecciones), true)
+                        'pagoExpress' => $pagoExpress,
+                        'direccionesHTML' => $direccionesHTML
                     )));
                     Yii::app()->end();
                 }else{
