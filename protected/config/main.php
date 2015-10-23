@@ -57,7 +57,7 @@ return array(
             'connectionString' => 'mysql:host=localhost;port=3306;dbname=lrvmovil',
             'emulatePrepare' => true,
             'username' => 'root',
-            'password' => 'admin',
+            'password' => '',
             'charset' => 'utf8',
             'enableProfiling' => true,
             'enableParamLogging' => true,
@@ -119,6 +119,7 @@ return array(
     ),
     'params' => array(
         'correoAdmin' => 'infolrv@copservir.com',
+        'maximoComparacion' => 5,
         'urlSitio' => 'www.larebajavirtual.com',
         'clienteFiel' => array(
             'correo' => 'cliente_fiel@copservir.com', 
@@ -146,6 +147,7 @@ return array(
             'productosBusquedaFiltro' => 'larebaja.online.productos.busqueda.filtro',
             'productosBusquedaCategoria' => 'larebaja.online.productos.busqueda.categoria',
             'carroPagarForm' => 'larebaja.online.carro.pagar.form',
+            'productosComparar' => 'larebaja.online.productos.agregarProductos'
         ),
         'entrega' => array(
             'listaTipos' => array(1,2),
