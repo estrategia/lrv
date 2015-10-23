@@ -2074,6 +2074,7 @@ class CarroController extends Controller {
             Yii::app()->shoppingCart->clear();
             $this->render('compra', array(
                 'contenido' => $contenidoSitio,
+                'objCompra' => $resultCompra['response']['objCompra'],
             ));
             Yii::app()->end();
         } else {
@@ -2616,6 +2617,7 @@ class CarroController extends Controller {
 
         echo CJSON::encode(array(
             'result' => 'ok',
+            'analytics' => GoogleAnalytics::getScriptCompra($resultCompra['response']['objCompra']),
             'response' => $this->renderPartial('pasarelaForm', array(
                 'model' => $resultCompra['response']['objPasarelaEnvio'],
                 'action' => $action,
