@@ -75,27 +75,6 @@ function validarCantidadFraccionado(codigoProducto, numeroFracciones, unidadFrac
     $("#cantidad-producto-fraccion-" + codigoProducto).val(nroFracciones);
 }
 
-
-
-function disminuirCantidad(codigoProducto, valorUnidad) {
-    var nro = $("#cantidad-producto-unidad-" + codigoProducto).val();
-    nro--;
-    if (nro < 0) {
-        nro = 0;
-    }
-    $("#subtotal-producto-unidad-" + codigoProducto).html("$" + format(nro * valorUnidad));
-    $("#cantidad-producto-unidad-" + codigoProducto).val(nro);
-}
-function aumentarCantidad(codigoProducto, valorUnidad) {
-    var nro = $("#cantidad-producto-unidad-" + codigoProducto).val();
-    nro++;
-    if (nro < 0) {
-        nro = 0;
-    }
-    $("#subtotal-producto-unidad-" + codigoProducto).html("$" + format(nro * valorUnidad));
-    $("#cantidad-producto-unidad-" + codigoProducto).val(nro);
-}
-
 function aumentarCantidadUnidad(codigoProducto, valorUnidad) {
     var nro = $("#cantidad-producto-unidad-" + codigoProducto).val();
     if (nro < 0) {
@@ -155,8 +134,8 @@ function guardarCalificacion(codigoProducto, objCalificacion, url) {
             if (data.result === 'ok') {
                 $("[data-role='calificacion']").remove();
                 $("#calificacion-producto").html("<div class='col-md-6'>TU COMENTARIO HA SIDO PUBLICADO, ESTE SERÁ APROBADO POR UN MODERADOR EN LAS PRÓXIMAS HORAS</div>");
-                $("#dialog").html(data.response);
-                $("#dialog").dialog("open");
+             //   $("#dialog").html(data.response);
+             //   $("#dialog").dialog("open");
                 /*$('<div>').mdialog({
                  content: "<div data-role='main'><div class='ui-content' data-role='content' role='main'>" + data.response + "<a class='ui-btn ui-btn-r ui-corner-all ui-shadow' data-rel='back' href='#'>Aceptar</a></div></div>"
                  });*/
@@ -453,6 +432,13 @@ $(document).on('click', "a[data-cargar='1']", function() {
 });
 
 
+
+
+
+$(document).on('click', "#form-autenticar input[data-registro-desktop='autenticar']", function() {
+    var form = $(this).parents("form");//"#form-autenticar"
+    var boton = $(this);
+   
 $(document).on('click', "a[data-cargar='3']", function() {
     var producto = $(this).attr('data-producto');
 
@@ -501,13 +487,6 @@ $(document).on('click', "a[data-cargar='3']", function() {
         }
     });
 });
-
-
-
-$(document).on('click', "#form-autenticar input[data-registro-desktop='autenticar']", function() {
-    var form = $(this).parents("form");//"#form-autenticar"
-    var boton = $(this);
-   
 
     $.ajax({
         type: 'POST',
@@ -683,4 +662,128 @@ $(document).on('click', "#form-recordar input[data-registro-desktop='recordar']"
         }
     });
     return false;
+});
+
+
+$(document).on('click', "a[data-role='comparar']", function() {
+    var producto = $(this).attr('data-producto');
+
+    $.ajax({
+        type: 'POST',
+        dataType: 'json',
+        async: true,
+        url: requestUrl + '/catalogo/agregarProductoComparar',
+        data: {producto: producto},
+        beforeSend: function() {
+            //  $.mobile.loading('show');
+        },
+        complete: function() {
+            //   $.mobile.loading('hide');
+        },
+        success: function(data) {
+            if (data.result === "ok") {
+              $("#cantidad-productos-comparar").html(data.productos)
+              if(data.productos>=data.maximoComparar){
+                  $(".btnComparar").css("display","none");
+              }else{
+                  $(".btnComparar").css("display","block");
+              }
+            } else {
+              
+            }
+        },
+        error: function(jqXHR, textStatus, errorThrown) {
+            bootbox.alert('Error: ' + errorThrown);
+        }
+    });
+});
+
+$(document).on('click', "a[data-role='quitarComparar']", function() {
+    var producto = $(this).attr('data-producto');
+
+    $.ajax({
+        type: 'POST',
+        dataType: 'json',
+        async: true,
+        url: requestUrl + '/catalogo/quitarProductoComparar',
+        data: {producto: producto},
+        beforeSend: function() {
+            //  $.mobile.loading('show');
+        },
+        complete: function() {
+            //   $.mobile.loading('hide');
+        },
+        success: function(data) {
+            if (data.result === "ok") {
+              $("#cantidad-productos-comparar").html(data.productos)
+              $("#comparacion-producto-"+producto).css("display","none");
+              if(data.productos>=data.maximoComparar){
+                  $(".btnComparar").css("display","none");
+              }else{
+                  $(".btnComparar").css("display","block");
+              }
+            } else {
+              
+            }
+        },
+        error: function(jqXHR, textStatus, errorThrown) {
+            bootbox.alert('Error: ' + errorThrown);
+        }
+    });
+});
+
+
+
+$(document).on('click', "a[data-registro-desktop='autenticar']", function() {
+    var form = $(this).parents("form");//"#form-autenticar"
+    var boton = $(this);
+   
+});
+
+
+$(document).on('click', "a[data-role='compararProductos']", function() {
+   $.ajax({
+        type: 'GET',
+        async: true,
+        url: requestUrl + '/catalogo/verProductosComparar',
+        beforeSend: function() {
+            //  $.mobile.loading('show');
+            $('#modal-comparar-productos').remove();
+        },
+        complete: function() {
+            //   $.mobile.loading('hide');
+        },
+        success: function(data) {
+               $('#main-page').append(data);
+               $('#modal-comparar-productos').modal('show');
+        },
+        error: function(jqXHR, textStatus, errorThrown) {
+            bootbox.alert(textStatus+"");
+        }
+    });
+});
+
+
+$(document).on('click', "button[data-role='disminuir-cantidad']", function() {
+    var codigoProducto = $(this).attr('data-producto');
+    var valorUnidad = $(this).attr('data-precio');
+    var nro = $("#cantidad-producto-unidad-" + codigoProducto).val();
+    nro--;
+    if (nro < 0) {
+        nro = 0;
+    }
+    $("#subtotal-producto-unidad-" + codigoProducto).html("$" + format(nro * valorUnidad));
+    $("#cantidad-producto-unidad-" + codigoProducto).val(nro);
+});
+
+$(document).on('click', "button[data-role='aumentar-cantidad']", function() {
+    var codigoProducto = $(this).attr('data-producto');
+    var valorUnidad = $(this).attr('data-precio');
+    var nro = $("#cantidad-producto-unidad-" + codigoProducto).val();
+    nro++;
+    if (nro < 0) {
+        nro = 0;
+    }
+    $("#subtotal-producto-unidad-" + codigoProducto).html("$" + format(nro * valorUnidad));
+    $("#cantidad-producto-unidad-" + codigoProducto).val(nro);
 });

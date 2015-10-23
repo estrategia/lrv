@@ -144,7 +144,7 @@
                                                    <?php if (isset(Yii::app()->session[Yii::app()->params->sesion['sectorCiudadEntrega']])):?>                                  
                                                     <div class="col-md-12" style="margin-top: 13px;">
                                                         <?php echo CHtml::link('<div class="button anadir">Añadir&nbsp;<img src="'.Yii::app()->baseUrl.'/images/desktop/carrito-amarillo.png" alt=""></div>', '#', array('data-producto' => $objProducto->codigoProducto, 'data-carro' => 1, 'class' => '')); ?>
-                                                        <?php echo CHtml::link('<div class="comprar-ahora" >Añadir a la lista</div>', '#', array('class' => '','data-tipo' => '1', 'data-role' => 'lstpersonalguardar', 'data-codigo' => $data->codigoProducto )); ?>
+                                                        <?php echo CHtml::link('<div class="comprar-ahora" >Añadir a la lista</div>', '#', array('class' => '','data-tipo' => '1', 'data-role' => 'lstpersonalguardar', 'data-codigo' => $objProducto->codigoProducto )); ?>
                                                     </div>
                                                    <?php else:?>
                                                        <div class="col-md-12" style="margin-top: 13px;">                             
@@ -331,7 +331,6 @@
                                                                                 </div>
                                                                                 <div class="row">
                                                                                         <p style="color:#999;font-weight:bolder;" ><?php echo $objComentario->objUsuario->nombre ;?><br>
-                                                                                       <!-- Soy de: Cali -->
                                                                                         </p>
                                                                                 </div>
                                                                         </div>

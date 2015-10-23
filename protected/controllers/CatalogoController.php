@@ -1047,6 +1047,97 @@ class CatalogoController extends Controller {
             ));
         }
     }
+    
+    public function actionAgregarProductoComparar(){
+        $codigoProducto = Yii::app()->getRequest()->getPost('producto');
+        $listaProductos= array();
+        
+        if (isset(Yii::app()->session[Yii::app()->params->sesion['sectorCiudadEntrega']]))
+               $listaProductos=Yii::app()->session[Yii::app()->params->sesion['productosComparar']];
+        
+        $objSectorCiudad = null;
+        if (isset(Yii::app()->session[Yii::app()->params->sesion['sectorCiudadEntrega']]))
+            $objSectorCiudad = Yii::app()->session[Yii::app()->params->sesion['sectorCiudadEntrega']];
+
+        if ($objSectorCiudad == null) {
+            $objProducto = Producto::model()->find(array(
+                'with' => array('listImagenes', 'objDetalle', 'objCodigoEspecial', 'listCalificaciones' => array('with' => 'objUsuario')),
+                'condition' => 't.activo=:activo AND t.codigoProducto=:codigo',
+                'params' => array(
+                    ':activo' => 1,
+                    ':codigo' => $codigoProducto,
+                ),
+            ));
+        } else {
+            $objProducto = Producto::model()->find(array(
+                'with' => array(
+                    'listImagenes',
+                    'objDetalle',
+                    'objCodigoEspecial',
+                    'listCalificaciones' => array('with' => 'objUsuario'),
+                    'listSaldos' => array('condition' => '(listSaldos.saldoUnidad>:saldo AND listSaldos.codigoCiudad=:ciudad AND listSaldos.codigoSector=:sector) OR (listSaldos.saldoUnidad IS NULL AND listSaldos.codigoCiudad IS NULL AND listSaldos.codigoSector IS NULL)'),
+                    'listPrecios' => array('condition' => '(listPrecios.codigoCiudad=:ciudad AND listPrecios.codigoSector=:sector) OR (listPrecios.codigoCiudad IS NULL AND listPrecios.codigoSector IS NULL)'),
+                    'listSaldosTerceros' => array('condition' => '(listSaldosTerceros.saldoUnidad>:saldo AND listSaldosTerceros.codigoCiudad=:ciudad AND listSaldosTerceros.codigoSector=:sector) OR (listSaldosTerceros.codigoCiudad IS NULL AND listSaldosTerceros.codigoSector IS NULL)')
+                ),
+                'condition' => 't.activo=:activo AND t.codigoProducto=:codigo AND ( (listSaldos.saldoUnidad IS NOT NULL AND listPrecios.codigoCiudad IS NOT NULL) OR listSaldosTerceros.codigoCiudad IS NOT NULL)',
+                'params' => array(
+                    ':activo' => 1,
+                    ':codigo' => $codigoProducto,
+                    ':saldo' => 0,
+                    ':ciudad' => $objSectorCiudad->codigoCiudad,
+                    ':sector' => $objSectorCiudad->codigoSector,
+                ),
+            ));
+        }
+        
+     
+       $listaProductos[$codigoProducto] =$objProducto;
+       Yii::app()->session[Yii::app()->params->sesion['productosComparar']]=$listaProductos;
+       
+       
+       echo CJSON::encode(array(
+                    'result' => 'ok',
+                    'productos' => count(Yii::app()->session[Yii::app()->params->sesion['productosComparar']]),
+                    'maximoComparar' => Yii::app()->params->maximoComparacion
+       ));
+       
+    }
+    
+    
+    public function actionQuitarProductoComparar(){
+        $codigoProducto = Yii::app()->getRequest()->getPost('producto');
+        $listaProductos= array();
+        
+        if (isset(Yii::app()->session[Yii::app()->params->sesion['sectorCiudadEntrega']]))
+               $listaProductos=Yii::app()->session[Yii::app()->params->sesion['productosComparar']];
+        
+        
+       unset($listaProductos[$codigoProducto]);
+       Yii::app()->session[Yii::app()->params->sesion['productosComparar']]=$listaProductos;
+       
+       
+       echo CJSON::encode(array(
+                    'result' => 'ok',
+                    'productos' => count(Yii::app()->session[Yii::app()->params->sesion['productosComparar']]),
+                    'maximoComparar' => Yii::app()->params->maximoComparacion
+       ));
+       
+    }
+    
+    
+    public function actionVerProductosComparar(){
+        $listaProductos=array();
+          if (isset(Yii::app()->session[Yii::app()->params->sesion['productosComparar']]))
+               $listaProductos=Yii::app()->session[Yii::app()->params->sesion['productosComparar']];
+          
+          
+          
+                echo $this->renderPartial('d_comparacionProductos',array(
+                                            'listaProductos' => $listaProductos
+                                        ),true,false);
+          
+        
+    }
 
     public function actionSubtotalUnidad() {
         $codigoProducto = Yii::app()->getRequest()->getPost('codigo');
