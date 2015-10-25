@@ -63,6 +63,7 @@
                         <span style="color: #E10019; font-size: 16px;"> Pago <?php echo $objCompra->objFormaPagoCompra->objFormaPago->formaPago ?></span>
                         <?php if($objCompra->objFormaPagoCompra->idFormaPago==Yii::app()->params->formaPago['pasarela']['idPasarela']): ?>
                             <button type="button" class="btn btn-info btn-sm" data-role="trazapasarela" data-pedido="<?php echo $objCompra->idCompra ?>"><i class="glyphicon glyphicon-list-alt"></i> Traza</button>
+                            <p>N&uacute;mero de validaci&oacute;n: <?php echo $objCompra->objFormaPagoCompra->numeroValidacion?></p>
                         <?php endif;?>
                         <?php if ($objCompra->objFormaPagoCompra->numeroTarjeta != null && !empty($objCompra->objFormaPagoCompra->numeroTarjeta)): ?>
                             <br>

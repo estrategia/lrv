@@ -2194,6 +2194,12 @@ class CarroController extends Controller {
             $objFormasPago->cuotasTarjeta = $modelPago->cuotasTarjeta;
             $objFormasPago->idFormaPago = $modelPago->idFormaPago;
             $objFormasPago->valorBono = Yii::app()->shoppingCart->getBono();
+            
+            if ($objFormasPago->idFormaPago == Yii::app()->params->formaPago['pasarela']['idPasarela']) {
+                $numValidacion = substr(($objCompra->identificacionUsuario + $objCompra->idCompra + $objCompra->totalCompra) * 863, -7);
+                $objFormasPago->numeroValidacion = $numValidacion;
+            }
+            
             /* if ($modelPago->bono !== null && $modelPago->usoBono == 1) {
               $objFormasPago->valorBono = $modelPago->bono['valor'];
               } */
