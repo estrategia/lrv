@@ -452,6 +452,89 @@ $(document).on('click', "button[data-role='pagopasarela']", function() {
 });
 
 /*
+ * FILTROS
+ */
+
+$(document).on('change', "input[id^='FiltroForm_listMarcas_']", function() {
+    recalcularFiltros(1);
+});
+
+$(document).on('change', "input[id^='FiltroForm_listFiltros_']", function() {
+    recalcularFiltros(2);
+});
+
+function recalcularFiltros(tipo) {
+    var marcas = {};
+    $("input[id^='FiltroForm_listMarcas_']").each(function() {
+        if ($(this).is(":checked")) {
+            marcas[$(this).val()] = parseInt($(this).val());
+        }
+    });
+    var atributos = {};
+    $("input[id^='FiltroForm_listFiltros_']").each(function() {
+        if ($(this).is(":checked")) {
+            atributos[$(this).val()] = parseInt($(this).attr('data-filtro'));
+        }
+    });
+    
+    $.ajax({
+        type: 'POST',
+        dataType: 'json',
+        async: true,
+        url: requestUrl + '/catalogo/filtro',
+        data: {marcas: marcas, atributos: atributos, tipo: tipo},
+        beforeSend: function() {
+            //$.mobile.loading('show');
+        },
+        complete: function() {
+            //$.mobile.loading('hide');
+        },
+        success: function(data) {
+            if (data.hasOwnProperty('marcas')) {
+                $('#div-filtro-marcas').html(data.marcas);
+                $('#div-filtro-marcas').trigger("create");
+            }
+            if (data.hasOwnProperty('atributos')) {
+                $('#div-filtro-atributos').html(data.atributos);
+                $('#div-filtro-atributos').trigger("create");
+            }
+        },
+        error: function(jqXHR, textStatus, errorThrown) {
+            bootbox.alert('Error: ' + errorThrown);
+        }
+    });
+}
+
+$(document).on('click', "a[data-role='filtro-listaproductos']", function() {
+    $.ajax({
+        type: 'POST',
+        dataType: 'json',
+        async: true,
+        url: requestUrl + '/catalogo/filtrar',
+        data: $('#form-filtro-listaproductos').serialize(),
+        beforeSend: function() {
+            //boton.button('disable');
+            //$.mobile.loading('show');
+        },
+        complete: function() {
+            //$.mobile.loading('hide');
+        },
+        success: function(data) {
+            if (data.result === 'ok') {
+                //bootbox.alert(data.response);
+                $.fn.yiiListView.update('id-productos-list');
+            } else {
+               bootbox.alert(data.response);
+            }
+        },
+        error: function(jqXHR, textStatus, errorThrown) {
+            bootbox.alert('Error: ' + errorThrown);
+            //boton.button('enable');
+        }
+    });
+});
+
+/*
  * contador de caracteres para textarea
  */
 
