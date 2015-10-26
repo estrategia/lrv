@@ -1,6 +1,12 @@
 <?php
 
 class TestController extends Controller {
+    
+    public function actionAnalitics($idCompra){
+        $objCompra = Compras::model()->findByPk($idCompra);
+        $script = GoogleAnalytics::getScriptCompra($objCompra);
+        echo $script;
+    }
 
     public function actionUrl() {
         $url = "http://localhost/embebida/";

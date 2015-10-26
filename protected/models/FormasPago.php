@@ -10,6 +10,7 @@
  * @property string $numeroTarjeta
  * @property integer $cuotasTarjeta
  * @property integer $valorBono
+ * @property string $numeroValidacion
  *
  * The followings are the available model relations:
  * @property Formapago $objFormaPago
@@ -34,9 +35,11 @@ class FormasPago extends CActiveRecord {
             array('idFormaPago', 'required'),
             array('idCompra, idFormaPago, valor, cuotasTarjeta, valorBono', 'numerical', 'integerOnly' => true),
             array('numeroTarjeta', 'length', 'max' => 20),
+            array('numeroValidacion', 'length', 'max' => 20),
+            array('numeroValidacion, numeroTarjeta', 'default', 'value' => null),
             // The following rule is used by search().
             // @todo Please remove those attributes that should not be searched.
-            array('idCompra, idFormaPago, valor, numeroTarjeta, cuotasTarjeta, valorBono', 'safe', 'on' => 'search'),
+            array('idCompra, idFormaPago, valor, numeroTarjeta, cuotasTarjeta, valorBono, numeroValidacion', 'safe', 'on' => 'search'),
         );
     }
 
@@ -63,6 +66,7 @@ class FormasPago extends CActiveRecord {
             'numeroTarjeta' => 'Numero Tarjeta',
             'cuotasTarjeta' => 'Cuotas Tarjeta',
             'valorBono' => 'Valor Bono',
+            'numeroValidacion' => 'N&uacute;mero Validaci&oacute;n',
         );
     }
 
@@ -87,6 +91,7 @@ class FormasPago extends CActiveRecord {
         $criteria->compare('idFormaPago', $this->idFormaPago);
         $criteria->compare('valor', $this->valor);
         $criteria->compare('numeroTarjeta', $this->numeroTarjeta, true);
+        $criteria->compare('numeroValidacion', $this->numeroValidacion, true);
         $criteria->compare('cuotasTarjeta', $this->cuotasTarjeta);
         $criteria->compare('valorBono', $this->valorBono);
 

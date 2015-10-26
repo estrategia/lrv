@@ -171,6 +171,18 @@ class ComprasItems extends CActiveRecord {
             ),
         );
     }
+    
+    public function getTotalUnidades(){
+        $unidades = $this->unidades+$this->unidadesCedi;
+        $fracciones = 0;
+        
+        if($this->fracciones>0){
+            $fracciones = round($this->objProducto->unidadFraccionamiento/$this->objProducto->numeroFracciones,4);
+            $fracciones = $fracciones*$this->fracciones;
+        }
+        
+        return $unidades+$fracciones;
+    }
 
     public function actualizarUnidades($cantidad) {
         $cantDiff = $cantidad - $this->unidades;
@@ -385,7 +397,8 @@ class ComprasItems extends CActiveRecord {
 
         $objCompra = $this->objCompra;
         $objCompra->subtotalCompra += $precioDiff;
-        $objCompra->impuestosCompra += $precioDiff * $this->objImpuesto->porcentaje;
+        $objCompra->impuestosCompra += round(Precio::calcularImpuesto($precioDiff, $this->objImpuesto->porcentaje));
+        $objCompra->baseImpuestosCompra += round(Precio::calcularBaseImpuesto($precioDiff,$this->objImpuesto->porcentaje));
         $objCompra->totalCompra += $precioDiff;
 
         if ($this->unidades + $this->fracciones == 0) {
