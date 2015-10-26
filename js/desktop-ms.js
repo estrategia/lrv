@@ -534,6 +534,65 @@ $(document).on('click', "a[data-role='filtro-listaproductos']", function() {
     });
 });
 
+$(document).on('click', "a[data-role='orden-listaproductos']", function() {
+    $.ajax({
+        type: 'POST',
+        dataType: 'json',
+        async: true,
+        url: requestUrl + '/catalogo/filtrar',
+        data: $('#form-ordenamiento-listaproductos').serialize(),
+        beforeSend: function() {
+            //boton.button('disable');
+            //$.mobile.loading('show');
+        },
+        complete: function() {
+            //$.mobile.loading('hide');
+        },
+        success: function(data) {
+            if (data.result === 'ok') {
+                //bootbox.alert(data.response);
+                $.fn.yiiListView.update('id-productos-list');
+            } else {
+               bootbox.alert(data.response);
+            }
+        },
+        error: function(jqXHR, textStatus, errorThrown) {
+            bootbox.alert('Error: ' + errorThrown);
+            //boton.button('enable');
+        }
+    });
+});
+
+$(document).on('change','#FiltroForm_precio',function(){
+    var value = $('#FiltroForm_precio').slider('getValue');
+    $('#FiltroForm_precio_0_text').val("$" + format(value[0]));
+    $('#FiltroForm_precio_1_text').val("$" + format(value[1]));
+    $('#FiltroForm_precio_0').val(value[0]);
+    $('#FiltroForm_precio_1').val(value[1]);
+});
+
+$(document).on('change','#FiltroForm_precio_0_text',function(){
+    var value = $(this).val();
+    value = parseInt(value);
+    if (isNaN(value)) {
+        value=0;
+    }
+    $('#FiltroForm_precio').slider('setValue',[value,$('#FiltroForm_precio').slider('getValue')[1]]);
+    $('#FiltroForm_precio_0').val(value);
+    $('#FiltroForm_precio_0_text').val("$" + format(value));
+});
+
+$(document).on('change','#FiltroForm_precio_1_text',function(){
+    var value = $(this).val();
+    value = parseInt(value);
+    if (isNaN(value)) {
+        value=200000;
+    }
+    $('#FiltroForm_precio').slider('setValue',[$('#FiltroForm_precio').slider('getValue')[0],value]);
+    $('#FiltroForm_precio_1').val(value);
+    $('#FiltroForm_precio_1_text').val("$" + format(value));
+});
+
 /*
  * contador de caracteres para textarea
  */

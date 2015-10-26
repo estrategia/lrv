@@ -176,7 +176,7 @@ function format(input)
  }*/
 $(document).ready(function() {
     $('.pop_codigo').popover();
-    $("#rango-precios").slider({});
+    $("input[data-role='bootstrap-slider']").slider();
     $("#owl-demo").owlCarousel({
         items: 4,
         lazyLoad: true,
