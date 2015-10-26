@@ -14,6 +14,7 @@ class FiltroForm extends CFormModel {
     public $listFiltros;
     public $listCategoriasTienda = array();
     public $listCategoriasTiendaCheck = array();
+    public $precio;
     
     /**
      * Declares the validation rules.
@@ -23,8 +24,8 @@ class FiltroForm extends CFormModel {
     public function rules() {
         return array(
             // username and password are required
-            array('listMarcas, nombre, listFiltros, listCategoriasTienda', 'safe'),
-            array('listMarcas, nombre', 'default', 'value' => null),
+            array('listMarcas, nombre, listFiltros, listCategoriasTienda, precio', 'safe'),
+            array('listMarcas, nombre, precio', 'default', 'value' => null),
         );
     }
     
@@ -36,8 +37,21 @@ class FiltroForm extends CFormModel {
             'listMarcas' => 'Marcas',
             'nombre' => 'Nombre',
             'listFiltros' => 'Filtros',
-            'listCategoriasTienda' => 'Categorías'
+            'listCategoriasTienda' => 'Categorías',
+            'precio' => 'Precio',
         );
+    }
+    
+    public function getPrecioInicio(){
+        if($this->precio == null || empty($this->precio) || !isset($this->precio[0]) || $this->precio[0]<0)
+            return -1;
+        return $this->precio[0];
+    }
+    
+    public function getPrecioFin(){
+        if($this->precio == null || empty($this->precio) || !isset($this->precio[1]) || $this->precio[1]<0)
+            return -1;
+        return $this->precio[1];
     }
 
 }

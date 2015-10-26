@@ -2,13 +2,26 @@
 
 <div class="row">
     <!-- Menu de ordenamiento -->
-    
+
     <!-- Menu de filtros -->
-    <?php if (isset($formFiltro)): ?>
-        <?php $this->renderPartial('_d_formFiltro', array('formFiltro' => $formFiltro, 'tipoBusqueda' => $tipoBusqueda)); ?>
+    <?php if (isset($formFiltro) || isset($formOrdenamiento)): ?>
+        <div class="col-md-2 menu-categorias cat-collapsables">
+            <?php if (isset($formFiltro)): ?>
+                <div class="panel-group" id="accordion-filtros" role="tablist" aria-multiselectable="true">
+                    <?php $this->renderPartial('_d_formFiltro', array('formFiltro' => $formFiltro, 'tipoBusqueda' => $tipoBusqueda)); ?>
+                </div>
+            <?php endif; ?>
+
+            <?php if (isset($formOrdenamiento)): ?>
+                <div class="panel-group" id="accordion-ordenamiento" role="tablist" aria-multiselectable="true">
+                    <?php $this->renderPartial('_d_formOrdenamiento', array('formOrdenamiento' => $formOrdenamiento, 'objSectorCiudad' => $objSectorCiudad)); ?>
+                </div>
+            <?php endif; ?>
+
+        </div>
     <?php endif; ?>
 
-    <div class="col-md-<?php echo isset($formFiltro) ? "10" : "12" ?> side">
+    <div class="col-md-<?php echo (isset($formFiltro) || isset($formOrdenamiento)) ? "10" : "12" ?> side">
         <div class="row">
             <div class="col-md-12">
                 <div class="col-md-8">
@@ -81,6 +94,6 @@
                     </div>
                 </section>
             </div>
-<?php endif; ?>
+        <?php endif; ?>
     </div>
 </div>
