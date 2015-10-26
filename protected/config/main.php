@@ -118,6 +118,7 @@ return array(
         ),
     ),
     'params' => array(
+        
         'correoAdmin' => 'infolrv@copservir.com',
         'maximoComparacion' => 5,
         'urlSitio' => 'www.larebajavirtual.com',
