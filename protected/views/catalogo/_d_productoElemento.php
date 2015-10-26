@@ -106,7 +106,7 @@
                                     <?php if($data->fraccionado==1):?>
                                         <br/> PRODUCTO FRACCIONADO
                                     <?php endif;?> 
-                                    <?php if($data->ventaVirtual==1):?>
+                                    <?php if($data->ventaVirtual==1 && $objPrecio->inicializado()):?>
                                         <!-- <?php echo $objProducto['codigoProducto']?> -->
                                         <div class="col-md-12">
                                             <button class="col-md-3" style="border:0px solid;" data-role="disminuir-cantidad" id="disminuir-unidad-<?php echo $data->codigoProducto ?>" data-producto="<?php echo $data->codigoProducto ?>" data-precio="<?= $objPrecio->getPrecio(Precio::PRECIO_UNIDAD)?>" type="button"><span style="color:red" class="glyphicon glyphicon-minus"></span></button>

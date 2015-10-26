@@ -91,9 +91,7 @@
                                                 <p class="cp_result"><?= count($listProductos) + count($listCombos) ?> resultados</p>
                                             </div>
 
-                                            <?php if ($imagenBusqueda != null): ?>
-                                                <img src="<?php echo Yii::app()->request->baseUrl . $imagenBusqueda; ?>" class="ajustada">
-                                            <?php endif; ?>
+                                            
                                             <?php if(count($listProductos) + count($listCombos) >0 ):?>   
                                                 <div class="col-md-2">    
                                                     <div class="option-list">
@@ -114,7 +112,9 @@
                                                 </div>
                                             <?php endif;?>    
                                             <div class="clear"></div>
-
+                                            <?php if ($imagenBusqueda != null): ?>
+                                                <img src="<?php echo Yii::app()->request->baseUrl . $imagenBusqueda; ?>" class="ajustada">
+                                            <?php endif; ?>
                                     </div>
                                 </div>
                                 <br/>
@@ -123,18 +123,31 @@
                                             <span class="empty">Seleccionar ciudad para obtener lista de productos</span>
                                         <?php else: ?>
                                             
-                                             <?php foreach ($listCombos as $objCombo): ?>
-                                                <li class="c_list_prod">
-                                                    <div class="ui-field-contain clst_prod_cont">
-                                                        <?php
-                                                        $this->renderPartial('_d_comboElemento', array(
-                                                            'objCombo' => $objCombo,
-                                                            'objPrecio' => new PrecioCombo($objCombo),
-                                                        ));
-                                                        ?>
+                                            
+                                            <!-- Lista de combos de productos -->
+                                            
+                                            <?php if(!empty($listCombos)):?>
+                                            <div class="list_cuadricula">
+                                                <section>
+                                                    <div class="col-md-12">
+                                                            <div class="row">
+                                                                <div id="owl-combos" class="owl-carousel"  style="display:block">
+                                                                    <?php foreach ($listCombos as $objCombo): ?>
+                                                                            <div class="item">
+                                                                               <?php
+                                                                               $this->renderPartial('_d_comboElemento', array(
+                                                                                   'objCombo' => $objCombo,
+                                                                                   'objPrecio' => new PrecioCombo($objCombo),
+                                                                               ));
+                                                                               ?>
+                                                                           </div>
+                                                                   <?php endforeach; ?>
+                                                                </div>
+                                                            </div>
                                                     </div>
-                                                </li>
-                                            <?php endforeach; ?>
+                                                </section>
+                                            </div>
+                                            <?php endif;?>       
                                             <div id="lista-productos" class="list_cuadricula">
                                                 <section>
                                                     <div class="col-md-12">

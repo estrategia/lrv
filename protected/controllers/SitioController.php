@@ -39,101 +39,64 @@ class SitioController extends Controller {
             $this->render('index');
         }else{
             
-        /*    
-        $listProductos = array();
-        $listCombos = array();
-
-            if ($objSectorCiudad == null) {
-                $listProductos = Producto::model()->findAll(array(
-                    'with' => array('listImagenes', 'objCodigoEspecial', 'listCalificaciones', 'objCategoriaBI'),
-                    'condition' => "t.activo=:activo AND t.codigoProducto IN ($codigosStr)",
-                    'params' => array(
-                        ':activo' => 1,
-                    )
-                ));
-            } else {
-                $listProductos = Producto::model()->findAll(array(
-                    'with' => array('listImagenes', 'objCodigoEspecial', 'listCalificaciones', 'objCategoriaBI',
-                        'listSaldos' => array('condition' => '(listSaldos.saldoUnidad>:saldo AND listSaldos.codigoCiudad=:ciudad AND listSaldos.codigoSector=:sector) OR (listSaldos.saldoUnidad IS NULL AND listSaldos.codigoCiudad IS NULL AND listSaldos.codigoSector IS NULL)'),
-                        'listPrecios' => array('condition' => '(listPrecios.codigoCiudad=:ciudad AND listPrecios.codigoSector=:sector) OR (listPrecios.codigoCiudad IS NULL AND listPrecios.codigoSector IS NULL)'),
-                        'listSaldosTerceros' => array('condition' => '(listSaldosTerceros.codigoCiudad=:ciudad AND listSaldosTerceros.codigoSector=:sector) OR (listSaldosTerceros.codigoCiudad IS NULL AND listSaldosTerceros.codigoSector IS NULL)')
-                    ),
-                    'condition' => "t.activo=:activo AND t.codigoProducto IN ($codigosStr) AND ( (listSaldos.saldoUnidad IS NOT NULL AND listPrecios.codigoCiudad IS NOT NULL) OR listSaldosTerceros.codigoCiudad IS NOT NULL)",
-                    'params' => array(
-                        ':activo' => 1,
-                        ':saldo' => 0,
-                        ':ciudad' => $objSectorCiudad->codigoCiudad,
-                        ':sector' => $objSectorCiudad->codigoSector,
-                    )
-                ));
-            }
+       /*     $parametrosProductos = array(
+                'order' => 't.orden',
+                'with' => array(
+                    'listImagenes', 'objCodigoEspecial', 'listCalificaciones', 'objMarca', 'listFiltros',
+                    'listSaldos' => array('condition' => '(listSaldos.saldoUnidad>:saldo AND listSaldos.codigoCiudad=:ciudad AND listSaldos.codigoSector=:sector) OR (listSaldos.saldoUnidad IS NULL AND listSaldos.codigoCiudad IS NULL AND listSaldos.codigoSector IS NULL)'),
+                    'listPrecios' => array('condition' => '(listPrecios.codigoCiudad=:ciudad AND listPrecios.codigoSector=:sector) OR (listPrecios.codigoCiudad IS NULL AND listPrecios.codigoSector IS NULL)'),
+                    'listSaldosTerceros' => array('condition' => '(listSaldosTerceros.saldoUnidad>:saldo AND listSaldosTerceros.codigoCiudad=:ciudad AND listSaldosTerceros.codigoSector=:sector) OR (listSaldosTerceros.codigoCiudad IS NULL AND listSaldosTerceros.codigoSector IS NULL)')
+                ),
+                'condition' => 't.activo=:activo AND ( (listSaldos.saldoUnidad IS NOT NULL AND listPrecios.codigoCiudad IS NOT NULL) OR listSaldosTerceros.codigoCiudad IS NOT NULL)',
+                'params' => array(
+                    ':activo' => 1,
+                    ':saldo' => 0,
+                    ':ciudad' => $objSectorCiudad->codigoCiudad,
+                    ':sector' => $objSectorCiudad->codigoSector,
+                )
+            );*/
+            
+        $objSectorCiudad = null;
+        $sector=$ciudad="";
+        if (isset(Yii::app()->session[Yii::app()->params->sesion['sectorCiudadEntrega']])){
+            $objSectorCiudad = Yii::app()->session[Yii::app()->params->sesion['sectorCiudadEntrega']];
+            $sector=$objSectorCiudad->codigoSector;
+            $ciudad=$objSectorCiudad->codigoCiudad;
+        }else{
+            $sector=Yii::app()->params->sector['*'];
+            $ciudad=Yii::app()->params->ciudad['*'];
+        }
         
-
-            $listCodigoEspecial = CodigoEspecial::model()->findAll(array(
-                'condition' => 'codigoEspecial<>0'
-            ));
-
-            $formFiltro = new FiltroForm;
-
-            $msgCodigoEspecial = array();
-            foreach ($listProductos as $objProducto) {
-                if ($objProducto->codigoEspecial != null && $objProducto->codigoEspecial != 0) {
-                    $msgCodigoEspecial[$objProducto->codigoEspecial] = $objProducto->objCodigoEspecial;
-                }
-
-                foreach ($objProducto->objCategoriaBI->listCategoriasTienda as $objCategoriaTienda) {
-                    $formFiltro->listCategoriasTienda[$objCategoriaTienda->idCategoriaTienda] = $objCategoriaTienda;
-                }
-            }
-
-            $imagenBusqueda = null;
-            if (empty($listProductos)) {
-                $imagenBusqueda = Yii::app()->params->busqueda['imagen']['noExito'];
-
-                if ($objSectorCiudad != null) {
-                    try {
-                        $busqueda = new Busquedas;
-
-                        if (!Yii::app()->user->isGuest)
-                            $busqueda->identificacionUsuario = Yii::app()->user->name;
-
-                        $busqueda->tipoBusqueda = Yii::app()->params->busqueda['tipo']['buscador'];
-                        $busqueda->busqueda = $term;
-                        $busqueda->fecha = new CDbExpression('NOW()');
-                        $busqueda->codigoCiudad = $objSectorCiudad->codigoCiudad;
-                        $busqueda->codigoSector = $objSectorCiudad->codigoSector;
-                        $busqueda->save();
-                    } catch (Exception $exc) {
-                        Yii::log($exc->getMessage() . "\n" . $exc->getTraceAsString(), CLogger::LEVEL_ERROR, 'application');
-                    }
-                }
-            }
-
-            $codigoPerfil = Yii::app()->params->perfil['defecto'];
-
-            if (!Yii::app()->user->isGuest) {
-                $usuario = Yii::app()->session[Yii::app()->params->usuario['sesion']];
-                $codigoPerfil = $usuario->objPerfil->codigoPerfil;
-            }
-       
-           // $rawData=Yii::app()->db->createCommand('SELECT * FROM tbl_user')->queryAll();
-            // or using: $rawData=User::model()->findAll(); <--this better represents your question
-                $dataProvider=new CArrayDataProvider($listProductos, array(
-                    'id'=>'codigoProducto',
-                    'sort'=>array(
-                        'attributes'=>array(
-                             'descripcionProducto'
-                        ),
-                    ),
-                    'pagination'=>array(
-                        'pageSize'=>10,
-                    ),
-                ));
-
-                $_SESSION['objSectorCiudad']=$objSectorCiudad;
-                $_SESSION['codigoPerfil']=$codigoPerfil;
- */           
-                $this->render('d_index');
+        
+        
+            $modulosInicio = UbicacionModulos::model()->findAll( array (
+                                'with' => array('objModulo' => array('with' => array('objImagenBanners',
+                                  'objProductosModulos'=> 
+                                            array('with' => 
+                                                    array('objProducto' => 
+                                                                array ('with' => 
+                                                                        array(
+                                                                            'listImagenes', 'objCodigoEspecial', 'listCalificaciones', 'objMarca', 'listFiltros',
+                                                                            'listSaldos' => array('condition' => '(listSaldos.saldoUnidad>:saldo AND listSaldos.codigoCiudad=:ciudad AND listSaldos.codigoSector=:sector) OR (listSaldos.saldoUnidad IS NULL AND listSaldos.codigoCiudad IS NULL AND listSaldos.codigoSector IS NULL)'),
+                                                                            'listPrecios' => array('condition' => '(listPrecios.codigoCiudad=:ciudad AND listPrecios.codigoSector=:sector) OR (listPrecios.codigoCiudad IS NULL AND listPrecios.codigoSector IS NULL)'),
+                                                                            'listSaldosTerceros' => array('condition' => '(listSaldosTerceros.saldoUnidad>:saldo AND listSaldosTerceros.codigoCiudad=:ciudad AND listSaldosTerceros.codigoSector=:sector) OR (listSaldosTerceros.codigoCiudad IS NULL AND listSaldosTerceros.codigoSector IS NULL)')
+                                                                        )))),'objModuloSectorCiudad' ))),
+                                'condition' => "objModuloSectorCiudad.codigoSector=:sector  AND objModuloSectorCiudad.codigoCiudad=:ciudad AND 
+                                                 objModulo.dias like :dia AND t.ubicacion =:ubicacion and objModulo.inicio<=:fecha and objModulo.fin>=:fecha",
+                                'params' => array(
+                                    'ubicacion' => 1,
+                                    'fecha' => Date("Y-m-d"),
+                                    'dia' => "%".Date("w")."%",
+                                    'sector' => $sector,
+                                    'ciudad' => $ciudad,
+                                    'saldo' => 0,
+                                ),
+                                'order' => 't.orden,objImagenBanners.orden'
+                              )); 
+                              
+                $this->render('d_index',array(
+                        'modulosInicio' => $modulosInicio
+                )); 
         }
         Yii::app()->end();
     }

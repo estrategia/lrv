@@ -299,33 +299,6 @@
             <?php echo $content; ?>
         </div>
          
-            <section>	
-            <br>
-            </section>
-                    <!--promociones-->
-            <section>	
-                    <div class="container">	
-                            <div class="row">	
-                                    <div class="col-md-12">	
-                                            <div class="col-md-4">
-                                                    <a href="#"><img style="width:100%;" src="<?php echo Yii::app()->request->baseUrl; ?>/images/desktop/prom-lunes.png"></a>
-                                            </div>
-                                            <div class="col-md-4">
-                                                    <a href="#"><img style="width:100%;" src="<?php echo Yii::app()->request->baseUrl; ?>/images/desktop/prom-descuento.png"></a>	
-                                            </div>
-                                            <div class="col-md-4">
-                                                    <a href="#"><img style="width:100%;" src="<?php echo Yii::app()->request->baseUrl; ?>/images/desktop/prom-bebes.png"></a>		
-                                            </div>
-                                    </div>
-                            </div>
-                    </div>
-            </section>
-            <!--promociones-->
-
-            <section>	
-            <br>
-            </section>
-
             <!--banner footer-->
             <section class="img-footer">	
                     <div class="row"></div>

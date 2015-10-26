@@ -51,7 +51,7 @@ class CatalogoController extends Controller {
             }
 
             if($this->isMobile){
-                $this->render('listaProductos', array(
+                $this->render('d_listaProductos', array(
                     'listProductos' => array(),
                     'listCombos' => array(),
                     'msgCodigoEspecial' => array(),

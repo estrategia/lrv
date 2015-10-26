@@ -182,6 +182,11 @@ $(document).ready(function() {
         lazyLoad: true,
         navigation: true
     });
+    $("#owl-combos").owlCarousel({
+        items: 4,
+        lazyLoad: true,
+        navigation: true
+    });
     $("#carrousel-img-productos").owlCarousel({
         items: 4,
         lazyLoad: true,

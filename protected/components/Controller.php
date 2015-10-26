@@ -32,7 +32,8 @@ class Controller extends CController {
     public $extraPageList = array();
     public $sectorName = "";
     public $categorias = array();
-
+    
+    
     public function init() {
         if (Yii::app()->detectMobileBrowser->showMobile) {
             $this->isMobile = true;
@@ -68,7 +69,7 @@ class Controller extends CController {
             $this->sectorName = "Seleccionar ubicación";
         }
     }
-
+   
     public function registerJs() {
         if ($this->isMobile) {
             /* $cs = Yii::app()->clientScript;
