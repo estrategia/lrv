@@ -145,7 +145,7 @@ class Controller extends CController {
                 'params' => array(
                     ':visible' => 1,
                 ),
-                'with' => array('listCategoriasHijas'/*,'listCategoriasHijasMenu'*/),
+                'with' => array('listCategoriasHijas'),
             ));
             $this->categorias = $categorias;
        // }

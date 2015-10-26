@@ -494,5 +494,31 @@ class SitioController extends Controller {
                 $this->render('error');
         }
     }
-    
+
+    public function actionVercontenido($contenido = null){
+        
+        $imagenBanner=ImagenBanner::model()->find("idBanner =:idimagen", 
+                        array('idimagen' => $contenido
+                ));
+        
+        if($imagenBanner == null){
+            throw new CHttpException(404, 'Contenido no disponible.');
+            Yii::app()->end();
+        }
+        
+        if($imagenBanner->tipoContenido != 2){
+            throw new CHttpException(404, 'Contenido no disponible.');
+            Yii::app()->end();
+        }
+        
+        if(empty($imagenBanner->contenido)){
+            throw new CHttpException(404, 'Contenido vacío.');
+            Yii::app()->end();
+        }
+        
+        $this->render('verContenidoHtml', array(
+            'contenido' => $imagenBanner->contenido
+        ));
+        Yii::app()->end();
+    }
 }
