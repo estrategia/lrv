@@ -19,9 +19,10 @@ class CategoriaView {
     public static function generarMenu() {
         $categorias = CategoriaTienda::model()->findAll(array(
             'order' => 't.orden',
-            'condition' => 't.visible=:visible AND t.idCategoriaPadre IS NULL',
+            'condition' => 't.tipoDispositivo=:dispositivo AND t.visible=:visible AND t.idCategoriaPadre IS NULL',
             'params' => array(
-                ':visible' => 1
+                ':visible' => 1,
+                ':dispositivo' => CategoriaTienda::DISPOSITIVO_MOVIL,
             )
         ));
 

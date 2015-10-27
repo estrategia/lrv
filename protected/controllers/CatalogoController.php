@@ -322,8 +322,6 @@ class CatalogoController extends Controller {
         if (isset($_POST['FiltroForm'])) {
             $formFiltro->attributes = $_POST['FiltroForm'];
             Yii::app()->session[Yii::app()->params->sesion['productosBusquedaFiltro']] = $formFiltro;
-            
-            Yii::log(CVarDumper::dumpAsString($formFiltro), CLogger::LEVEL_INFO, 'application');
         }
 
         echo CJSON::encode(array("result" => "ok", "response" => "Filtro almacenado"));
@@ -449,6 +447,7 @@ class CatalogoController extends Controller {
         //ini_set('memory_limit', '1024M');
         //$term = Yii::app()->getRequest()->getPost('busqueda', '');
         $term = trim(Yii::app()->request->getParam('busqueda', ''));
+        $categoriasBuscador = Yii::app()->request->getParam('categoriasBuscador', array());
         $codigosArray = GSASearch($term);
         $codigosStr = implode(",", $codigosArray);
 
@@ -571,6 +570,11 @@ class CatalogoController extends Controller {
             } else if ($formOrdenamiento->orden == 4) {
                 $parametrosProductos['order'] = "t.presentacionProducto";
             }
+        }
+        
+        if(!empty($categoriasBuscador)){
+            $codigosCategorias = implode(",", $categoriasBuscador);
+            $parametrosProductos['condition'] = $parametrosProductos['condition'] . " AND listCategoriasTienda.idCategoriaRaiz IN ($codigosCategorias)";
         }
 
         if ($formFiltro->listCategoriasTiendaCheck != null && !empty($formFiltro->listCategoriasTiendaCheck)) {

@@ -10,12 +10,15 @@
  * @property integer $orden
  * @property integer $visible
  * @property string $rutaImagen
+ * @property integer $tipoDispositivo
  *
  * The followings are the available model relations:
  * @property Categoria[] $listCategoriasBI
  * @property CategoriaTienda $objCategoriaPadre
  */
 class CategoriaTienda extends CActiveRecord {
+    const DISPOSITIVO_MOVIL = 1;
+    const DISPOSITIVO_ESCRITORIO = 2;
 
     /**
      * @return string the associated database table name
@@ -32,11 +35,11 @@ class CategoriaTienda extends CActiveRecord {
         // will receive user inputs.
         return array(
             array('nombreCategoriaTienda, orden', 'required'),
-            array('idCategoriaPadre, orden, visible', 'numerical', 'integerOnly' => true),
+            array('idCategoriaPadre, orden, visible, tipoDispositivo', 'numerical', 'integerOnly' => true),
             array('nombreCategoriaTienda, rutaImagen', 'length', 'max' => 100),
             // The following rule is used by search().
             // @todo Please remove those attributes that should not be searched.
-            array('idCategoriaTienda, idCategoriaPadre, nombreCategoriaTienda, orden, visible, rutaImagen', 'safe', 'on' => 'search'),
+            array('idCategoriaTienda, idCategoriaPadre, nombreCategoriaTienda, orden, visible, rutaImagen, tipoDispositivo', 'safe', 'on' => 'search'),
         );
     }
 
@@ -65,6 +68,7 @@ class CategoriaTienda extends CActiveRecord {
             'orden' => 'Orden',
             'visible' => 'Visible',
             'rutaImagen' => 'Ruta Imagen',
+            'tipoDispositivo' => 'tipoDispositivo',
         );
     }
 
@@ -91,6 +95,7 @@ class CategoriaTienda extends CActiveRecord {
         $criteria->compare('orden', $this->orden);
         $criteria->compare('visible', $this->visible);
         $criteria->compare('rutaImagen', $this->rutaImagen, true);
+        $criteria->compare('tipoDispositivo', $this->tipoDispositivo);
 
         return new CActiveDataProvider($this, array(
             'criteria' => $criteria,

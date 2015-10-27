@@ -2,6 +2,33 @@
 
 class TestController extends Controller {
     
+    public function actionCategoriaraiz(){
+        $categorias = CategoriaTienda::model()->findAll(array(
+            'condition' => 't.idCategoriaPadre IS NULL',
+        ));
+        
+        foreach($categorias as $categoria){
+            $categoria->idCategoriaRaiz = $categoria->idCategoriaTienda;
+            $categoria->save();
+            foreach($categoria->listCategoriasHijas as $categoriaHija1){
+                $categoriaHija1->idCategoriaRaiz = $categoria->idCategoriaTienda;
+                $categoriaHija1->save();
+                foreach($categoriaHija1->listCategoriasHijas as $categoriaHija2){
+                    $categoriaHija2->idCategoriaRaiz = $categoria->idCategoriaTienda;
+                    $categoriaHija2->save();
+                    foreach($categoriaHija2->listCategoriasHijas as $categoriaHija3){
+                        $categoriaHija3->idCategoriaRaiz = $categoria->idCategoriaTienda;
+                        $categoriaHija3->save();
+                        foreach($categoriaHija3->listCategoriasHijas as $categoriaHija4){
+                            $categoriaHija4->idCategoriaRaiz = $categoria->idCategoriaTienda;
+                            $categoriaHija4->save();
+                        }
+                    }
+                }
+            }
+        }
+    }
+    
     public function actionAnalitics($idCompra){
         $objCompra = Compras::model()->findByPk($idCompra);
         $script = GoogleAnalytics::getScriptCompra($objCompra);

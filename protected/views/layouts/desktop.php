@@ -57,23 +57,21 @@
                                                                      </ul>
                                                                 </div>
                                                                 <div class="col-md-6">
-                                                                    <form method="get" action="<?php echo CController::createUrl('/catalogo/buscar') ?>" data-ajax="false">
-                                                                                    <?php
-                                                                                  /*  echo "<pre>";
-                                                                                    print_r($this->categorias);
-                                                                                    echo "</pre>";*/
-                                                                                    ?>
+                                                                    <form method="get" action="<?php echo CController::createUrl('/catalogo/buscar') ?>">
                                                                                 <div class="col-md-6 content-search">
-                                                                                        <input type="text" class="form-control" placeholder="Escriba el nombre del producto"  autocomplete="off" value="" id="busqueda" name="busqueda" > 
+                                                                                    <input type="text" class="form-control" placeholder="Escriba el nombre del producto"  autocomplete="off" value="" id="busqueda" name="busqueda" > 
                                                                                 </div>
                                                                                 <div class="col-md-6 content-category">
                                                                                         <div class="controls">	
-											<span>Todas las categorías</span>
+                                                                                            <span>Todas las categor&iacute;as</span>
 											<span class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
 												<i><a href="#"><img src="<?php echo Yii::app()->request->baseUrl; ?>/images/desktop/ico-filtro-categorias.png"></a></i></span>
 												<ul class="dropdown-menu todas-categorias" aria-labelledby="categorias">
                                                                                                <?php foreach($this->categorias as $categoria):?>
-                                                                                                    <li><a href="#"><img src="<?php echo Yii::app()->request->baseUrl; ?>/images/desktop/<?php echo $categoria->rutaImagen?>" alt=""><?php echo $categoria->nombreCategoriaTienda?></a></li>
+                                                                                                    <li>
+                                                                                                        <input type="checkbox" name="categoriasBuscador[<?php echo $categoria->idCategoriaTienda ?>]" id="categoriasBuscador_<?php echo $categoria->idCategoriaTienda ?>" value="<?php echo $categoria->idCategoriaTienda ?>">
+                                                                                                        <label for="categoriasBuscador_<?php echo $categoria->idCategoriaTienda ?>" class="clst_check"><span></span> <img src="<?php echo Yii::app()->request->baseUrl; ?>/images/desktop/<?php echo $categoria->rutaImagen?>" alt=""><?php echo $categoria->nombreCategoriaTienda?></label>
+                                                                                                    </li>
                                                                                                <?php endforeach;?>     
 										        </ul>
 

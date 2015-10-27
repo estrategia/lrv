@@ -141,9 +141,10 @@ class Controller extends CController {
      //   if (!isset($_SESSION['categoriasDesktop'])) {
             $categorias = CategoriaTienda::model()->findAll(array(
                 'order' => 't.orden',
-                'condition' => 't.visible=:visible AND t.idCategoriaPadre IS NULL ',
+                'condition' => 't.tipoDispositivo=:dispositivo AND t.visible=:visible AND t.idCategoriaPadre IS NULL ',
                 'params' => array(
                     ':visible' => 1,
+                    ':dispositivo' => CategoriaTienda::DISPOSITIVO_ESCRITORIO
                 ),
                 'with' => array('listCategoriasHijas'/*,'listCategoriasHijasMenu'*/),
             ));
