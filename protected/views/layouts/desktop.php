@@ -143,7 +143,7 @@
                                                   <ul class="submenu">
                                                       <?php foreach($categoria->listCategoriasHijas as $subcategoria):?>
                                                           <div class="section-submenu">
-                                                                  <?php echo CHtml::link("<li class='title-submenu'><span class='glyphicon glyphicon-chevron-right' aria-hidden='true'></span>$subcategoria->nombreCategoriaTienda</li>", CController::createUrl('/catalogo/categoria', array('categoria' => $subcategoria->idCategoriaTienda))); ?>
+                                                                  <?php echo CHtml::link("<li class='title-submenu'><span class='glyphicon glyphicon-chevron-right' aria-hidden='true'></span>$subcategoria->nombreCategoriaTienda</li>", CController::createUrl('/catalogo/division', array('division' => $subcategoria->idCategoriaTienda))); ?>
                                                                   <?php foreach($subcategoria->listCategoriasHijasMenu as $categoriaHija):?>
                                                                   <li><?php echo $categoriaHija->nombreCategoriaTienda?></li>
                                                                   <?php  endforeach;?>

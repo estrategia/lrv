@@ -97,3 +97,10 @@
         <?php endif; ?>
     </div>
 </div>
+
+  <?php if(isset($modulos)):?>
+                <?php $this->renderPartial('/sitio/d_modulosTienda', array(
+                            'modulosTienda' => $modulos
+                ));?>
+                
+        <?php endif;?>  

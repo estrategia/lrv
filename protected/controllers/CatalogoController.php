@@ -13,6 +13,27 @@ class CatalogoController extends Controller {
             ),
         );
     }
+    
+    public function actionDivision($division){
+        
+          $categorias = CategoriaTienda::model()->find(array(
+                'order' => 't.orden',
+                'condition' => 't.visible=:visible AND t.idCategoriaTienda=:division ',
+                'params' => array(
+                    ':visible' => 1,
+                    ':division' => $division
+                ),
+                'with' => array('listCategoriasHijas'),
+            ));
+              
+          
+            $modulos= ModulosConfigurados::traerModulos(2,$division);
+            
+            $this->render('d_division',array(
+                'categorias' => $categorias,
+                'modulos' => $modulos
+            ));
+    }
 
     public function actionCategoria($categoria) {
         $objSectorCiudad = null;
@@ -62,7 +83,16 @@ class CatalogoController extends Controller {
                     'nombreBusqueda' => 'NA',
                 ));
             } else {
-                
+                $this->render('d_listaProductos', array(
+                    'listProductos' => array(),
+                    'listCombos' => array(),
+                    'msgCodigoEspecial' => array(),
+                    'listCodigoEspecial' => array(),
+                    'imagenBusqueda' => Yii::app()->params->busqueda['imagen']['noExito'],
+                    'objSectorCiudad' => $objSectorCiudad,
+                    'codigoPerfil' => $codigoPerfil,
+                    'nombreBusqueda' => 'NA',
+                ));
             }
 
             Yii::app()->end();
@@ -286,6 +316,8 @@ class CatalogoController extends Controller {
                 ),
             ));
 
+            $modulos= ModulosConfigurados::traerModulos(3,$categoria);
+            
             //  $dataProvider=new CActiveDataProvider('Producto');
             $this->render('d_listaProductos', array(
                 'listProductos' => $listProductos,
@@ -299,6 +331,7 @@ class CatalogoController extends Controller {
                 'tipoBusqueda' => Yii::app()->params->busqueda['tipo']['categoria'],
                 'formFiltro' => $formFiltro,
                 'formOrdenamiento' => $formOrdenamiento,
+                'modulos' => $modulos
             ));
         }
     }

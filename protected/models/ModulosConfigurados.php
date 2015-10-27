@@ -118,4 +118,73 @@ class ModulosConfigurados extends CActiveRecord
 	{
 		return parent::model($className);
 	}
+        
+        public static function traerModulos($idUbicacion,$idCategoria=null){
+                $objSectorCiudad = null;
+                $sector=$ciudad="";
+                if (isset(Yii::app()->session[Yii::app()->params->sesion['sectorCiudadEntrega']])){
+                    $objSectorCiudad = Yii::app()->session[Yii::app()->params->sesion['sectorCiudadEntrega']];
+                    $sector=$objSectorCiudad->codigoSector;
+                    $ciudad=$objSectorCiudad->codigoCiudad;
+                }else{
+                    $sector=Yii::app()->params->sector['*'];
+                    $ciudad=Yii::app()->params->ciudad['*'];
+                }
+        
+            if($idUbicacion == 1){
+             $modulosInicio = UbicacionModulos::model()->findAll( array (
+                                'with' => array('objModulo' => array('with' => array('objImagenBanners',
+                                  'objProductosModulos'=> 
+                                            array('with' => 
+                                                    array('objProducto' => 
+                                                                array ('with' => 
+                                                                        array(
+                                                                            'listImagenes', 'objCodigoEspecial', 'listCalificaciones', 'objMarca', 'listFiltros',
+                                                                            'listSaldos' => array('condition' => '(listSaldos.saldoUnidad>:saldo AND listSaldos.codigoCiudad=:ciudad AND listSaldos.codigoSector=:sector) OR (listSaldos.saldoUnidad IS NULL AND listSaldos.codigoCiudad IS NULL AND listSaldos.codigoSector IS NULL)'),
+                                                                            'listPrecios' => array('condition' => '(listPrecios.codigoCiudad=:ciudad AND listPrecios.codigoSector=:sector) OR (listPrecios.codigoCiudad IS NULL AND listPrecios.codigoSector IS NULL)'),
+                                                                            'listSaldosTerceros' => array('condition' => '(listSaldosTerceros.saldoUnidad>:saldo AND listSaldosTerceros.codigoCiudad=:ciudad AND listSaldosTerceros.codigoSector=:sector) OR (listSaldosTerceros.codigoCiudad IS NULL AND listSaldosTerceros.codigoSector IS NULL)')
+                                                                        )))),'objModuloSectorCiudad' ))),
+                                'condition' => "objModuloSectorCiudad.codigoSector=:sector  AND objModuloSectorCiudad.codigoCiudad=:ciudad AND 
+                                                 objModulo.dias like :dia AND t.ubicacion =:ubicacion and objModulo.inicio<=:fecha and objModulo.fin>=:fecha",
+                                'params' => array(
+                                    'ubicacion' => $idUbicacion,
+                                    'fecha' => Date("Y-m-d"),
+                                    'dia' => "%".Date("w")."%",
+                                    'sector' => $sector,
+                                    'ciudad' => $ciudad,
+                                    'saldo' => 0,
+                                ),
+                                'order' => 't.orden,objImagenBanners.orden'
+                              )); 
+            }else{
+                $modulosInicio = UbicacionModulos::model()->findAll( array (
+                                'with' => array('objModulo' => array('with' => array('objImagenBanners',
+                                  'objProductosModulos'=> 
+                                            array('with' => 
+                                                    array('objProducto' => 
+                                                                array ('with' => 
+                                                                        array(
+                                                                            'listImagenes', 'objCodigoEspecial', 'listCalificaciones', 'objMarca', 'listFiltros',
+                                                                            'listSaldos' => array('condition' => '(listSaldos.saldoUnidad>:saldo AND listSaldos.codigoCiudad=:ciudad AND listSaldos.codigoSector=:sector) OR (listSaldos.saldoUnidad IS NULL AND listSaldos.codigoCiudad IS NULL AND listSaldos.codigoSector IS NULL)'),
+                                                                            'listPrecios' => array('condition' => '(listPrecios.codigoCiudad=:ciudad AND listPrecios.codigoSector=:sector) OR (listPrecios.codigoCiudad IS NULL AND listPrecios.codigoSector IS NULL)'),
+                                                                            'listSaldosTerceros' => array('condition' => '(listSaldosTerceros.saldoUnidad>:saldo AND listSaldosTerceros.codigoCiudad=:ciudad AND listSaldosTerceros.codigoSector=:sector) OR (listSaldosTerceros.codigoCiudad IS NULL AND listSaldosTerceros.codigoSector IS NULL)')
+                                                                        )))),'objModuloSectorCiudad' )),'objUbicacionCategorias'),
+                                'condition' => "objModuloSectorCiudad.codigoSector=:sector  AND objModuloSectorCiudad.codigoCiudad=:ciudad AND 
+                                                 objModulo.dias like :dia AND t.ubicacion =:ubicacion and objModulo.inicio<=:fecha and objModulo.fin>=:fecha AND
+                                                 objUbicacionCategorias.idCategoriaBi=:idCategoria",
+                                'params' => array(
+                                    'ubicacion' => $idUbicacion,
+                                    'fecha' => Date("Y-m-d"),
+                                    'dia' => "%".Date("w")."%",
+                                    'sector' => $sector,
+                                    'ciudad' => $ciudad,
+                                    'saldo' => 0,
+                                    'idCategoria' => $idCategoria
+                                ),
+                                'order' => 't.orden,objImagenBanners.orden'
+                              )); 
+            }
+             
+             return $modulosInicio;
+        }
 }
