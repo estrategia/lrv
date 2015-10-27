@@ -1,4 +1,4 @@
-
+<div class="container">
 
 
 <div class="modal fade" id="modalUbicacion" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"></div>
@@ -66,6 +66,7 @@
         <?php endif;?>
     </div>
 </section>
+</div>
 <!--
 <div data-role="popup" id="popup-ubicacion-gps" data-dismissible="false" data-position-to="window" data-theme="a">
     <a href="#" data-rel="back" class="">Close</a>

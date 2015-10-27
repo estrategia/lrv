@@ -32,16 +32,17 @@
                         </div>
                     </section>
                 <?php elseif($objModulo->tipo == 2):?>
-                    <section>
-                            <div class="container">
+                    <div class="container">
+                            <section>
+                        
                                     <div class="row-fluid">
                                             <div class="col-md-12 title">
                                                     <span><i class="glyphicon glyphicon-chevron-right"></i></span>
                                                     <strong class="productos-destacados">Productos destacados</strong>
                                             </div>
                                     </div>
-                            </div>
-                    </section>
+                             </section>
+                        
                     <br>
                      <div id="owl-demo" class="owl-carousel">
                          
@@ -62,11 +63,10 @@
 
                             <?php endforeach;?>
                        </div>
-                    
+                    </div>
                     
                 <?php elseif($objModulo->tipo == 3):?>
                         <section>	
-                            <div class="container">	
                                     <div class="row">	
                                             <div class="col-md-12">
                                                 <?php foreach($objModulo->objImagenBanners as $imagenes):?>
@@ -87,7 +87,6 @@
                                                 <?php endforeach?>
                                             </div>
                                     </div>
-                            </div>
                         </section>
                 <?php endif;?>
         </section>

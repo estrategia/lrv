@@ -167,11 +167,12 @@
                   <a href="#"><span class="ico-promociones"></span>Promociones</a>
               </li>
 
-          </ul>
+     
+        </ul>
         <!--fin menu-->
-        <div class="container">
+       <!-- <div class="container"> -->
             <?php echo $content; ?>
-        </div>
+        <!-- </div> -->
          
             <!--banner footer-->
             <section class="img-footer">	
