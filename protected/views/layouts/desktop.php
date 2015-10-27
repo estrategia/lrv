@@ -75,7 +75,7 @@
                                                                                                <?php endforeach;?>     
 										        </ul>
 
-											<span><i><a href="#"><img class="ico-buscar" src="<?php echo Yii::app()->request->baseUrl; ?>/images/desktop/ico-buscar.png" alt=""></a></i></span>
+											<span><i><a href="#" id="btn-buscador-productos"><img class="ico-buscar" src="<?php echo Yii::app()->request->baseUrl; ?>/images/desktop/ico-buscar.png" alt=""></a></i></span>
 										</div>
                                                                                 </div>
                                                                          </form>

@@ -36,7 +36,7 @@ class SitioController extends Controller {
         }
         
         if($this->isMobile){
-            $this->render('index');
+            $this->render('index', array('listImagenes'=>ImagenBanner::getListImagenes(new DateTime, ModulosConfigurados::TIPO_MOVIL_BANNER_HOME)));
         }else{
             
        /*     $parametrosProductos = array(
@@ -400,7 +400,11 @@ class SitioController extends Controller {
     }
 
     public function actionInicio() {
-        $this->render('inicio');
+        if(!$this->isMobile){
+            $this->redirect($this->createUrl('/'));
+        }
+        
+        $this->render('inicio', array('listImagenes'=>  ImagenBanner::getListImagenes(new DateTime, ModulosConfigurados::TIPO_MOVIL_BANNER_INICIO)));
     }
 
     public function actionCategorias() {

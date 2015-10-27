@@ -1,3 +1,8 @@
+function isEmptyStr(str) {
+    return (!str || 0 === str.length);
+}
+
+
 /*
  * cotizaciones
  */
@@ -92,24 +97,24 @@ $(document).on('click', "button[data-role='modificarcarro']", function() {
             }
         }
     }
-    
+
     $(id).val(cantidad);
-    modificarCarro(position,modificar);
+    modificarCarro(position, modificar);
 });
 
 $(document).on('change', "input[data-role='modificarcarro']", function() {
     var cantidad = parseInt($(this).val());
     var position = $(this).attr('data-position');
     var modificar = $(this).attr('data-modificar');
-    
+
     if (isNaN(cantidad) || cantidad < 1) {
         cantidad = 1;
     }
     $(this).val(cantidad);
-    modificarCarro(position,modificar);
+    modificarCarro(position, modificar);
 });
 
-function modificarCarro(position, modificar){
+function modificarCarro(position, modificar) {
     var data = {
         modificar: modificar,
         position: position
@@ -476,7 +481,7 @@ function recalcularFiltros(tipo) {
             atributos[$(this).val()] = parseInt($(this).attr('data-filtro'));
         }
     });
-    
+
     $.ajax({
         type: 'POST',
         dataType: 'json',
@@ -524,7 +529,7 @@ $(document).on('click', "a[data-role='filtro-listaproductos']", function() {
                 //bootbox.alert(data.response);
                 $.fn.yiiListView.update('id-productos-list');
             } else {
-               bootbox.alert(data.response);
+                bootbox.alert(data.response);
             }
         },
         error: function(jqXHR, textStatus, errorThrown) {
@@ -553,7 +558,7 @@ $(document).on('click', "a[data-role='orden-listaproductos']", function() {
                 //bootbox.alert(data.response);
                 $.fn.yiiListView.update('id-productos-list');
             } else {
-               bootbox.alert(data.response);
+                bootbox.alert(data.response);
             }
         },
         error: function(jqXHR, textStatus, errorThrown) {
@@ -563,7 +568,7 @@ $(document).on('click', "a[data-role='orden-listaproductos']", function() {
     });
 });
 
-$(document).on('change','#FiltroForm_precio',function(){
+$(document).on('change', '#FiltroForm_precio', function() {
     var value = $('#FiltroForm_precio').slider('getValue');
     $('#FiltroForm_precio_0_text').val("$" + format(value[0]));
     $('#FiltroForm_precio_1_text').val("$" + format(value[1]));
@@ -571,26 +576,34 @@ $(document).on('change','#FiltroForm_precio',function(){
     $('#FiltroForm_precio_1').val(value[1]);
 });
 
-$(document).on('change','#FiltroForm_precio_0_text',function(){
+$(document).on('change', '#FiltroForm_precio_0_text', function() {
     var value = $(this).val();
     value = parseInt(value);
     if (isNaN(value)) {
-        value=0;
+        value = 0;
     }
-    $('#FiltroForm_precio').slider('setValue',[value,$('#FiltroForm_precio').slider('getValue')[1]]);
+    $('#FiltroForm_precio').slider('setValue', [value, $('#FiltroForm_precio').slider('getValue')[1]]);
     $('#FiltroForm_precio_0').val(value);
     $('#FiltroForm_precio_0_text').val("$" + format(value));
 });
 
-$(document).on('change','#FiltroForm_precio_1_text',function(){
+$(document).on('change', '#FiltroForm_precio_1_text', function() {
     var value = $(this).val();
     value = parseInt(value);
     if (isNaN(value)) {
-        value=200000;
+        value = 200000;
     }
-    $('#FiltroForm_precio').slider('setValue',[$('#FiltroForm_precio').slider('getValue')[0],value]);
+    $('#FiltroForm_precio').slider('setValue', [$('#FiltroForm_precio').slider('getValue')[0], value]);
     $('#FiltroForm_precio_1').val(value);
     $('#FiltroForm_precio_1_text').val("$" + format(value));
+});
+
+$(document).on('click', "a[id='btn-buscador-productos']", function() {
+    var form = $(this).parents("form");
+    var text = $("input[id='busqueda']").val().trim();
+    if(!isEmptyStr(text)){
+        form.submit();
+    }
 });
 
 /*

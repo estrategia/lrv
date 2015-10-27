@@ -1,6 +1,7 @@
 <div id="owl-productodetalle-inicio" class="owl-carousel owl-theme owl-productodetalle">
-    <div class="item"><a href="#" ><img src="<?php echo Yii::app()->request->baseUrl; ?>/images/banner/banner_inicio1.jpg" alt=""></a></div>
-    <div class="item"><a href="#" ><img src="<?php echo Yii::app()->request->baseUrl; ?>/images/banner/banner_inicio2.jpg" alt=""></a></div>
+    <?php foreach($listImagenes as $objImagen):?>
+        <div class="item"><a href="#" ><img src="<?php echo Yii::app()->request->baseUrl . $objImagen->rutaImagen; ?>" alt="<?php echo $objImagen->nombre?>"></a></div>
+    <?php endforeach;?>
 </div>
 
 <ul data-role="listview" data-inset="true" class="c_list_inicio">
