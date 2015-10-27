@@ -127,9 +127,9 @@ function guardarCalificacion(codigoProducto, objCalificacion, url) {
         dataType: 'json',
         success: function(data) {
 
-            $("#dialog").dialog({
+          /*  $("#dialog").dialog({
                 autoOpen: false,
-            });
+            });*/
 
             if (data.result === 'ok') {
                 $("[data-role='calificacion']").remove();

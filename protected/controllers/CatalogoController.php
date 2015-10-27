@@ -92,6 +92,7 @@ class CatalogoController extends Controller {
                     'objSectorCiudad' => $objSectorCiudad,
                     'codigoPerfil' => $codigoPerfil,
                     'nombreBusqueda' => 'NA',
+                    'dataprovider' => null
                 ));
             }
 
