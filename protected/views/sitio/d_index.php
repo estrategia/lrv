@@ -56,7 +56,17 @@
                                     <?php $i=0?>
                                     <?php foreach($objModulo->objImagenBanners as $imagenes):?>
                                     <div class="item <?php echo ($i==0)?'active':''?>">
-                                        <img src="<?php echo Yii::app()->request->baseUrl.$imagenes->rutaImagen; ?>" alt="calidad servicio" />
+                                        <?php if($imagenes->tipoContenido == 1):?>
+                                                <a href="<?php echo $imagenes->contenido?>">
+                                                    <img src="<?php echo Yii::app()->request->baseUrl.$imagenes->rutaImagen; ?>" alt="<?php echo $imagenes->nombre?>" />
+                                                </a>
+                                        <?php elseif($imagenes->tipoContenido == 2):?>
+                                               <?php echo CHtml::link('<img src="'.Yii::app()->request->baseUrl.$imagenes->rutaImagen.'" alt="<?php echo $imagenes->nombre?>" />', 
+                                                       CController::createUrl('/sitio/vercontenido',array('contenido' => $imagenes->idBanner
+                                                        )));?>
+                                        <?php elseif($imagenes->tipoContenido == 3):?>
+                                                <img src="<?php echo Yii::app()->request->baseUrl.$imagenes->rutaImagen; ?>" alt="<?php echo $imagenes->nombre?>" />
+                                        <?php endif;?>
                                     </div>
                                         <?php $i++?>
                                     <?php endforeach;?>
@@ -109,7 +119,18 @@
                                             <div class="col-md-12">
                                                 <?php foreach($objModulo->objImagenBanners as $imagenes):?>
                                                     <div class="col-md-4">
-                                                            <a href="#"><img style="width:100%;" src="<?php echo Yii::app()->request->baseUrl.$imagenes->rutaImagen;?>"></a>
+                                                        <?php if($imagenes->tipoContenido == 1):?>
+                                                                <a href="<?php echo $imagenes->contenido?>">
+                                                                    <img style="width:100%;" src="<?php echo Yii::app()->request->baseUrl.$imagenes->rutaImagen; ?>" alt="<?php echo $imagenes->nombre?>" />
+                                                                </a>
+                                                        <?php elseif($imagenes->tipoContenido == 2):?>
+                                                               <?php echo CHtml::link('<img style="width:100%;" src="'.Yii::app()->request->baseUrl.$imagenes->rutaImagen.'" alt="'.$imagenes->nombre.'" />', 
+                                                                       CController::createUrl('/sitio/vercontenido',array('contenido' => $imagenes->idBanner
+                                                                        )));?>
+                                                        <?php elseif($imagenes->tipoContenido == 3):?>
+                                                                <img style="width:100%;" src="<?php echo Yii::app()->request->baseUrl.$imagenes->rutaImagen; ?>" alt="<?php echo $imagenes->nombre?>" />
+                                                        <?php endif;?>
+                                                          
                                                     </div>
                                                 <?php endforeach?>
                                             </div>

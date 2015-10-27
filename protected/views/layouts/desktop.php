@@ -142,141 +142,17 @@
                                                       <?php foreach($categoria->listCategoriasHijas as $subcategoria):?>
                                                           <div class="section-submenu">
                                                                   <?php echo CHtml::link("<li class='title-submenu'><span class='glyphicon glyphicon-chevron-right' aria-hidden='true'></span>$subcategoria->nombreCategoriaTienda</li>", CController::createUrl('/catalogo/categoria', array('categoria' => $subcategoria->idCategoriaTienda))); ?>
-                                                                  <li>Desodorantes</li>
-                                                                  <li>Jabones</li>
-                                                                  <li>Jabones liquídos</li>
-                                                                  <li>Pañuelos faciales</li>
+                                                                  <?php foreach($subcategoria->listCategoriasHijasMenu as $categoriaHija):?>
+                                                                  <li><?php echo $categoriaHija->nombreCategoriaTienda?></li>
+                                                                  <?php  endforeach;?>
                                                           </div>
                                                         <?php endforeach;?>
-                                                         <!-- <div class="section-submenu">
-                                                                  <li class="title-submenu"><span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span>Bebé</li>
-                                                                  <a href="#"><li>Aceites</li></a>
-                                                                  <a href="#"><li>Copitos</li></a>
-                                                                  <a href="#"><li>Crema antipañalitis</li></a>
-                                                          </div>
-                                                          <div class="section-submenu">
-                                                                  <li class="title-submenu"><span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span>Capilar</li>
-                                                                  <a href="#"><li>Acondicionador</li></a>
-                                                                  <a href="#"><li>Alisadores</li></a>
-                                                                  <a href="#"><li>Coloración</li></a>
-                                                                  <a href="#"><li>Shampoo</li></a>
-                                                                  <a href="#"><li>Fijación</li></a>
-                                                                  <a href="#"><li>Decolorantes</li></a>
-                                                          </div> -->
                                                   </ul>
                                                   <img style="margin-top:-3px;height:394px;" src="<?php echo Yii::app()->request->baseUrl; ?>/images/desktop/cuidado-personal-submenu.png">
                                   </div>
                             <?php endif;?>
                         </li>
-                        <!--
-                        <li class="cuidado-personal"><a href="#"><img src="<?php echo Yii::app()->request->baseUrl; ?>/images/desktop/cuidado-personal.png" alt="">Cuidado personal</a>
-                                  <div class="right-nav">
-                                                  <ul class="submenu">
-                                                          <div class="section-submenu">
-                                                                  <li class="title-submenu"><span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span>Aseo personal</li>
-                                                                  <a href="#"><li>Desodorantes</li></a>
-                                                                  <a href="#"><li>Jabones</li></a>
-                                                                  <a href="#"><li>Jabones liquídos</li></a>
-                                                                  <a href="#"><li>Pañuelos faciales</li></a>
-                                                          </div>
-                                                          <div class="section-submenu">
-                                                                  <li class="title-submenu"><span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span>Bebé</li>
-                                                                  <a href="#"><li>Aceites</li></a>
-                                                                  <a href="#"><li>Copitos</li></a>
-                                                                  <a href="#"><li>Crema antipañalitis</li></a>
-                                                          </div>
-                                                          <div class="section-submenu">
-                                                                  <li class="title-submenu"><span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span>Capilar</li>
-                                                                  <a href="#"><li>Acondicionador</li></a>
-                                                                  <a href="#"><li>Alisadores</li></a>
-                                                                  <a href="#"><li>Coloración</li></a>
-                                                                  <a href="#"><li>Shampoo</li></a>
-                                                                  <a href="#"><li>Fijación</li></a>
-                                                                  <a href="#"><li>Decolorantes</li></a>
-                                                          </div>
-                                                  </ul>
-                                                  <img style="margin-top:-3px;height:394px;" src="<?php echo Yii::app()->request->baseUrl; ?>/images/desktop/cuidado-personal-submenu.png">
-                                  </div>
-                    </li> -->
                     <?php endforeach;?>
-                    <!-- 
-                    <li><a href="#"><img src="<?php echo Yii::app()->request->baseUrl; ?>/images/desktop/rx.png" alt="">Medicina formulada</a></li>
-                    <li><a href="#"><img src="<?php echo Yii::app()->request->baseUrl; ?>/images/desktop/productos-sin-formula.png" alt="">Productos sin formula</a></li>
-                    <li class="cuidado-personal"><a href="#"><img src="<?php echo Yii::app()->request->baseUrl; ?>/images/desktop/cuidado-personal.png" alt="">Cuidado personal</a>
-                                  <div class="right-nav">
-                                                  <ul class="submenu">
-                                                          <div class="section-submenu">
-                                                                  <li class="title-submenu"><span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span>Aseo personal</li>
-                                                                  <a href="#"><li>Desodorantes</li></a>
-                                                                  <a href="#"><li>Jabones</li></a>
-                                                                  <a href="#"><li>Jabones liquídos</li></a>
-                                                                  <a href="#"><li>Pañuelos faciales</li></a>
-                                                          </div>
-                                                          <div class="section-submenu">
-                                                                  <li class="title-submenu"><span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span>Bebé</li>
-                                                                  <a href="#"><li>Aceites</li></a>
-                                                                  <a href="#"><li>Copitos</li></a>
-                                                                  <a href="#"><li>Crema antipañalitis</li></a>
-                                                          </div>
-                                                          <div class="section-submenu">
-                                                                  <li class="title-submenu"><span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span>Capilar</li>
-                                                                  <a href="#"><li>Acondicionador</li></a>
-                                                                  <a href="#"><li>Alisadores</li></a>
-                                                                  <a href="#"><li>Coloración</li></a>
-                                                                  <a href="#"><li>Shampoo</li></a>
-                                                                  <a href="#"><li>Fijación</li></a>
-                                                                  <a href="#"><li>Decolorantes</li></a>
-                                                          </div>
-                                                  </ul>
-                                                  <img style="margin-top:-3px;height:394px;" src="<?php echo Yii::app()->request->baseUrl; ?>/images/desktop/cuidado-personal-submenu.png">
-                                  </div>
-                    </li>
-                    <li><a href="#"><img src="<?php echo Yii::app()->request->baseUrl; ?>/images/desktop/comida.png" alt="">Alimentos y bebidas</a></li>
-                    <li><a href="#"><img src="<?php echo Yii::app()->request->baseUrl; ?>/images/desktop/aseo.png" alt="">Aseo y Hogar</a></li>
-                    <li class="mundo-bebes"><a href="mundo-bebes.html"><img src="<?php echo Yii::app()->request->baseUrl; ?>/images/desktop/bebe.png" alt="">Mundo Bebes</a>
-                                          <div class="right-nav">
-                                                  <ul class="submenu" style="margin-top:-143px;">
-                                                          <div class="section-submenu">
-                                                                  <a href="#">
-                                                                          <li class="title-submenu"><span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span>Leches</li>
-                                                                  </a>
-                                                          </div>
-                                                          <div class="section-submenu">
-                                                                  <a href="#">
-                                                                          <li class="title-submenu"><span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span>Alimentación</li>
-                                                                  </a>
-                                                          </div>
-                                                          <div class="section-submenu">
-                                                                  <a href="#">
-                                                                          <li class="title-submenu"><span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span>Pañales</li>
-                                                                  </a>
-                                                          </div>
-                                                          <div class="section-submenu">
-                                                                  <a href="#">
-                                                                          <li class="title-submenu"><span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span>Pañitos humedos</li>
-                                                                  </a>
-                                                          </div>
-                                                          <div class="section-submenu">
-                                                                  <a href="#">
-                                                                          <li class="title-submenu"><span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span>Cuidado de la piel</li>
-                                                                  </a>
-                                                          </div>
-                                                          <div class="section-submenu">
-                                                                  <a href="#">
-                                                                          <li class="title-submenu"><span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span>Cuidado y aseo</li>
-                                                                  </a>
-                                                          </div>
-                                                          <div class="section-submenu">
-                                                                  <a href="#">
-                                                                          <li class="title-submenu"><span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span>Maternidad y accesorios</li>
-                                                                  </a>
-                                                          </div>
-                                                  </ul>
-                                                  <img style="margin-top:-145px; height:399px" src="<?php echo Yii::app()->request->baseUrl; ?>/images/desktop/cuidado-bebe-submenu.png">
-                                  </div>
-                    </li>
-                    <li><a href="#"><img src="<?php echo Yii::app()->request->baseUrl; ?>/images/desktop/natural.png" alt="">Natural</a></li>
-                    <li><a href="#"><img src="<?php echo Yii::app()->request->baseUrl; ?>/images/desktop/promociones.png" alt="">Promociones</a></li> -->
                   </ul>
               </li>
 

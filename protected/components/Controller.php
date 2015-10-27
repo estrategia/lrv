@@ -146,7 +146,7 @@ class Controller extends CController {
                     ':visible' => 1,
                     ':dispositivo' => CategoriaTienda::DISPOSITIVO_ESCRITORIO
                 ),
-                'with' => array('listCategoriasHijas'/*,'listCategoriasHijasMenu'*/),
+                'with' => array('listCategoriasHijas'),
             ));
             $this->categorias = $categorias;
        // }
