@@ -92,18 +92,9 @@ class SitioController extends Controller {
         $this->showSeeker = false;
         $this->logoLinkMenu = false;
         $this->fixedFooter = true;
- /*
-        CVarDumper::dump(Yii::app()->request->urlReferrer);
-        CVarDumper::dump(Yii::app()->user->returnUrl);
-   */      
         
-       // if (!isset(Yii::app()->session[Yii::app()->params->sesion['redireccionAutenticacion']]) || Yii::app()->session[Yii::app()->params->sesion['redireccionAutenticacion']] == 'null') {
-            Yii::app()->session[Yii::app()->params->sesion['redireccionAutenticacion']] = (Yii::app()->request->urlReferrer == null ? 'null' : Yii::app()->request->urlReferrer);
-       // }
         if ((!isset(Yii::app()->session[Yii::app()->params->sesion['tipoEntrega']]) || Yii::app()->session[Yii::app()->params->sesion['tipoEntrega']] == null)&& $this->isMobile ) {
             $this->actionIndex();
-            //$this->render('index');
-            //Yii::app()->end();
         }
         
         $tipo = Yii::app()->session[Yii::app()->params->sesion['tipoEntrega']];
@@ -222,10 +213,17 @@ class SitioController extends Controller {
         if($objHorarioSecCiud!=null && $objHorarioSecCiud->sadCiudadSector==0){
             Yii::app()->session[Yii::app()->params->sesion['tipoEntrega']] = Yii::app()->params->entrega['tipo']['presencial'];
         }
-        if(Yii::app()->session[Yii::app()->params->sesion['redireccionAutenticacion']]==null){
-                $this->redirect($this->createUrl('/sitio/inicio'));
+        
+        if($this->isMobile){
+        $this->redirect($this->createUrl('/sitio/inicio'));
         }else{
-            $this->redirect(Yii::app()->session[Yii::app()->params->sesion['redireccionAutenticacion']]);
+            $redirect = $this->createUrl('/');
+            if(isset(Yii::app()->session[Yii::app()->params->sesion['redireccionUbicacion']]) && Yii::app()->session[Yii::app()->params->sesion['redireccionUbicacion']]!=null){
+                $redirect = Yii::app()->session[Yii::app()->params->sesion['redireccionUbicacion']];
+            }
+            //se debe de eliminar url de sesion
+            Yii::app()->session[Yii::app()->params->sesion['redireccionUbicacion']] = null;
+            $this->redirect($redirect);
         }
     }
     
@@ -401,7 +399,7 @@ class SitioController extends Controller {
 
     public function actionInicio() {
         if(!$this->isMobile){
-            $this->redirect($this->createUrl('/'));
+            $this->actionIndex();
         }
         
         $this->render('inicio', array('listImagenes'=>  ImagenBanner::getListImagenes(new DateTime, ModulosConfigurados::TIPO_MOVIL_BANNER_INICIO)));
