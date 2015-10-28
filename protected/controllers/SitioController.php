@@ -92,14 +92,7 @@ class SitioController extends Controller {
         $this->showSeeker = false;
         $this->logoLinkMenu = false;
         $this->fixedFooter = true;
- /*
-        CVarDumper::dump(Yii::app()->request->urlReferrer);
-        CVarDumper::dump(Yii::app()->user->returnUrl);
-   */      
         
-       // if (!isset(Yii::app()->session[Yii::app()->params->sesion['redireccionAutenticacion']]) || Yii::app()->session[Yii::app()->params->sesion['redireccionAutenticacion']] == 'null') {
-            Yii::app()->session[Yii::app()->params->sesion['redireccionAutenticacion']] = (Yii::app()->request->urlReferrer == null ? 'null' : Yii::app()->request->urlReferrer);
-       // }
         if ((!isset(Yii::app()->session[Yii::app()->params->sesion['tipoEntrega']]) || Yii::app()->session[Yii::app()->params->sesion['tipoEntrega']] == null)&& $this->isMobile ) {
             $this->actionIndex();
             //$this->render('index');

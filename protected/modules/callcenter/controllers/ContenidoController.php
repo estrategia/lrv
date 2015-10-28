@@ -1,13 +1,12 @@
 <?php
 
-class ContenidoController extends ControllerOperator{
-    public $defaultAction = "crearlistaproductos";
-            
+class ContenidoController extends ControllerOperator {
+    
     public function filters() {
         return array(
-            'login + admin',
-            'access + admin',
-            //'loginajax + direccionActualizar',
+            //'access',
+            'login + index',
+                //'loginajax + direccionActualizar',
         );
     }
 
@@ -32,33 +31,28 @@ class ContenidoController extends ControllerOperator{
         }
         $filter->run();
     }
-
-    public function actionCrearlistaproductos()
-    {
+  
+    public function actionIndex(){
+        $this->layout = "admin";
+      
+        $model= new ModuloForm();
         
-
-
-
-        $this->render("contenidoCrealistaproductos");
-    }
-
-    
-    public function loadModel($id) {
-        $model = Operador::model()->findByPk($id);
-        if ($model === null)
-            throw new CHttpException(404, 'La página solicitada no existe.');
-        return $model;
-    }
-
-    /**
-     * Performs the AJAX validation.
-     * @param Operador $model the model to be validated
-     */
-    protected function performAjaxValidation($model) {
-        if (isset($_POST['ajax']) && $_POST['ajax'] === 'operador-form') {
-            echo CActiveForm::validate($model);
-            Yii::app()->end();
+        
+        if (isset($_POST['ModuloForm'])) {
+            $modelModulo = new ModulosConfigurados();
+            $modelModulo->attributes = $_POST['ModuloForm'];
+            $modelModulo->dias= implode(",", $modelModulo->dias);
+            
+            
+            if($modelModulo->save()){
+                Yii::app()->user->setFlash('alert alert-success', "El módulo ha sido creado con éxito");
+            }
+            
         }
+        
+        $this->render('modulos',array(
+            'model' => $model
+        ));
     }
-
+    
 }

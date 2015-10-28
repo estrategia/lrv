@@ -80,7 +80,7 @@
                                     <a href="<?php echo $this->createUrl('/callcenter/pedido/exportar') ?>" class="ajax-link"><i class="glyphicon glyphicon-download-alt"></i><span> Pedidos</span></a>
                                 </li>
                                 <li>
-                                    <a href="<?php echo $this->createUrl('/callcenter/contenido/crearlistaproductos') ?>" class="ajax-link"><i class="glyphicon glyphicon-download-alt"></i><span> Contenidos</span></a>
+                                    <a href="<?php echo $this->createUrl('/callcenter/contenido/index') ?>" class="ajax-link"><i class="glyphicon glyphicon-file"></i><span> Contenidos administrables</span></a>
                                 </li>
                             <?php endif; ?>
                         </ul>
