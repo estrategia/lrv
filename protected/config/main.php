@@ -352,6 +352,27 @@ return array(
                     13 => 'warning',
                 )
             ),
+            'modulosConfigurados' => array(
+               'tiposModulos' => array(
+                    1 => 'Banner', 
+                    2 => 'Lista de Productos', 
+                    3 => 'Lista de Imagenes', 
+                    4 => 'Banner Home Móvil', 
+                    5 => 'Banner Inicio Móvil',
+                    6 => 'Html', 
+                    7 => 'Html y lista de productos', 
+                    8 => 'Lista de productos en el carro'
+                ),  
+                'diasSemana' => array(
+                   0 => 'Domingo',
+                   1 => 'Lunes',
+                   2 => 'Martes', 
+                   3 => 'Miércoles', 
+                   4 => 'Jueves', 
+                   5 => 'Viernes', 
+                   6 => 'Sábado', 
+                )
+            ),
             'estadoItem' => array(
                 'estado' => array(
                     'activo' => 1,
