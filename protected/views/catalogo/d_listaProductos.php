@@ -82,7 +82,7 @@
                                         'template' => "{summary}<div class='col-md-12'>{items}</div><br/><br/><div class='col-md-12'>{pager}</div>",
                                         'itemView' => '_d_productoElemento',
                                         'beforeAjaxUpdate' => new CJavaScriptExpression("function() {/*loadingClass(2); Loading.show();*/}"),
-                                        'afterAjaxUpdate' => new CJavaScriptExpression("function(id,data) { /*Loading.hide(); */$('span[id^=\'rating_\'] > input').rating({'readOnly':true});$('.pop_codigo').popover();}"),
+                                        'afterAjaxUpdate' => new CJavaScriptExpression("function(id,data) { /*Loading.hide(); */raty();$('.pop_codigo').popover();}"),
                                         'pager' => array('class' => 'CLinkPager', 'header' => ''),
                                     ));
                                     ?>

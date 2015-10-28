@@ -601,7 +601,7 @@ $(document).on('change', '#FiltroForm_precio_1_text', function() {
 $(document).on('click', "a[id='btn-buscador-productos']", function() {
     var form = $(this).parents("form");
     var text = $("input[id='busqueda']").val().trim();
-    if(!isEmptyStr(text)){
+    if (!isEmptyStr(text)) {
         form.submit();
     }
 });
@@ -617,4 +617,30 @@ $(document).ready(function() {
             countChar(elementArea, elementArea.attr('data-countchar'));
         }
     });
+    raty();
 });
+
+function raty() {
+    $("[data-role='raty']").raty({
+        starOn: requestUrl + '/libs/raty/images/star-on.png',
+        starOff: requestUrl + '/libs/raty/images/star-off.png',
+        starHalf: requestUrl + '/libs/raty/images/star-half.png',
+        cancelOn: requestUrl + '/libs/raty/images/cancel-on.png',
+        cancelOff: requestUrl + '/libs/raty/images/cancel-off.png',
+        hints: ['mala', 'deficiente', 'regular', 'buena', 'excelente'],
+        noRatedMsg: 'Sin calificación',
+        /*round: { down: 0.25, full: 0.6, up: 0.76 },*/
+        readOnly: function() {
+            return $(this).attr('data-readonly') === "true";
+        },
+        click: function(score, evt) {
+            if ($(this).attr('data-callback')) {
+                var funcion = $(this).attr('data-callback');
+                window[funcion](score, evt);
+            }
+        },
+        score: function() {
+            return $(this).attr('data-score');
+        }
+    });
+}
