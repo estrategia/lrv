@@ -389,7 +389,7 @@ class CarroController extends Controller {
 
         $canasta = 'canasta';
         if (!$this->isMobile) {
-            //$canasta = 'd_canasta';
+            $canasta = 'd_canasta';
         }
 
         echo CJSON::encode(array(
@@ -634,7 +634,7 @@ class CarroController extends Controller {
 
         $canasta = 'canasta';
         if (!$this->isMobile) {
-            //$canasta = 'd_canasta';
+            $canasta = 'd_canasta';
         }
 
 

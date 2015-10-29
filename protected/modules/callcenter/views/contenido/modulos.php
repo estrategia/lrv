@@ -1,13 +1,3 @@
-<?php $mensajes = Yii::app()->user->getFlashes(); ?>
-<?php if ($mensajes): ?>
-    <?php foreach ($mensajes as $idx => $mensaje): ?>
-        <div class="alert alert-<?php echo $idx ?> alert-dismissable">
-            <button type="button" class="close" data-dismiss="alert">&times;</button>
-            <?php echo $mensaje ?>
-        </div>
-    <?php endforeach; ?>
-<?php endif; ?>
-
 <div class="box-inner">
     <div class="box-header well">
         <div class="col-lg-1">

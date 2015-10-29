@@ -46,6 +46,7 @@ class ModulosConfigurados extends CActiveRecord {
             // The following rule is used by search().
             // @todo Please remove those attributes that should not be searched.
             array('idModulo, tipo, inicio, fin, dias, orden, descripcion', 'safe', 'on' => 'search'),
+            array('contenido', 'required', 'on' => 'contenido'),
         );
     }
 

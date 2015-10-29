@@ -666,4 +666,12 @@ $(document).on('click', "a[data-role='eliminar-producto-contenido']", function()
 });
 
 
+$(document).ready(function(){
+    if($("#ModulosConfigurados_contenido").length)
+    {
+        CKEDITOR.replace('ModulosConfigurados_contenido');
+    }
+
+});
+
 /*********** Fin Configuracion Modulos ************/
