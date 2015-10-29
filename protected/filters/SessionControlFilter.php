@@ -11,37 +11,41 @@
  *
  * @author miguel.sanchez
  */
-class SessionControlFilter extends CFilter{
-    public $isMobile=true;
-    
+class SessionControlFilter extends CFilter {
+
+    public $isMobile = true;
+
     protected function preFilter($filterChain) {
         $sesionUbicacion = false;
         $sesionTipo = false;
-        
-        if (isset(Yii::app()->session[Yii::app()->params->sesion['sectorCiudadEntrega']]) && Yii::app()->session[Yii::app()->params->sesion['sectorCiudadEntrega']] != null){
+
+        if (!$this->isMobile) {
+            Yii::app()->session[Yii::app()->params->sesion['redireccionUbicacion']] = null;
+        }
+
+        if (isset(Yii::app()->session[Yii::app()->params->sesion['sectorCiudadEntrega']]) && Yii::app()->session[Yii::app()->params->sesion['sectorCiudadEntrega']] != null) {
             $sesionUbicacion = true;
         }
-        if (isset(Yii::app()->session[Yii::app()->params->sesion['tipoEntrega']]) && Yii::app()->session[Yii::app()->params->sesion['tipoEntrega']] != null ) {
+        if (isset(Yii::app()->session[Yii::app()->params->sesion['tipoEntrega']]) && Yii::app()->session[Yii::app()->params->sesion['tipoEntrega']] != null) {
             $sesionTipo = true;
         }
-        
-       //$sesionTipo=true;
-       
-        if(!$sesionTipo){
-            if($this->isMobile){
+
+        if (!$sesionTipo) {
+            if ($this->isMobile) {
                 Yii::app()->request->redirect(Yii::app()->baseUrl . "/sitio");
-            }else{
-                Yii::app()->request->redirect(Yii::app()->baseUrl . "/sitio/ubicacion");
-                //$filterChain->run();
-            }
-        }else if(!$sesionUbicacion){
-            if($this->isMobile){
-                Yii::app()->request->redirect(Yii::app()->baseUrl . "/sitio/ubicacion");
-            }else{
+            } else {
+                Yii::app()->session[Yii::app()->params->sesion['redireccionUbicacion']] = Yii::app()->request->url;
                 Yii::app()->request->redirect(Yii::app()->baseUrl . "/sitio/ubicacion");
             }
-        }else{
+        } else if (!$sesionUbicacion) {
+            if (!$this->isMobile) {
+                Yii::app()->session[Yii::app()->params->sesion['redireccionUbicacion']] = Yii::app()->request->url;
+            }
+
+            Yii::app()->request->redirect(Yii::app()->baseUrl . "/sitio/ubicacion");
+        } else {
             $filterChain->run();
         }
     }
+
 }

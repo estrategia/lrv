@@ -8,7 +8,10 @@ class UsuarioController extends Controller {
      * */
     public function filters() {
         return array(
-            array('application.filters.SessionControlFilter + index, autenticar, infoPersonal, contrasena, pagoexpress, listapedidos, pedido, listacotizaciones, cotizacion, listapersonal, listadetalle, direcciones'),
+            array(
+                'application.filters.SessionControlFilter + index, autenticar, infoPersonal, contrasena, pagoexpress, listapedidos, pedido, listacotizaciones, cotizacion, listapersonal, listadetalle, direcciones',
+                'isMobile' => $this->isMobile
+            ),
             'access + autenticar, recordar, registro, restablecer',
             'login + index, infoPersonal, contrasena, direcciones, pagoexpress, listapedidos, listapersonal, pedido, listadetalle, listacotizaciones',
             'loginajax + direccionCrear, direccionActualizar',

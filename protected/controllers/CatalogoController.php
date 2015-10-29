@@ -8,7 +8,7 @@ class CatalogoController extends Controller {
     public function filters() {
         return array(
             array(
-                'application.filters.SessionControlFilter + categoria, buscar, buscarD, relacionados, bodega, descuentos, masvendidos, masvistos',
+                'application.filters.SessionControlFilter + categoria, buscar, relacionados, bodega, descuentos, masvendidos, masvistos',
                 'isMobile' => $this->isMobile
             ),
         );
@@ -44,9 +44,10 @@ class CatalogoController extends Controller {
 
         $objCategoria = CategoriaTienda::model()->find(array(
             'with' => 'listCategoriasBI',
-            'condition' => 't.idCategoriaTienda=:categoria',
+            'condition' => 't.idCategoriaTienda=:categoria AND t.tipoDispositivo=:dispositivo',
             'params' => array(
-                ':categoria' => $categoria
+                ':categoria' => $categoria,
+                ':dispositivo' => $this->isMobile ? CategoriaTienda::DISPOSITIVO_MOVIL : CategoriaTienda::DISPOSITIVO_ESCRITORIO
             ),
         ));
 
@@ -374,9 +375,10 @@ class CatalogoController extends Controller {
 
         $objCategoria = CategoriaTienda::model()->find(array(
             'with' => 'listCategoriasBI',
-            'condition' => 't.idCategoriaTienda=:categoria',
+            'condition' => 't.idCategoriaTienda=:categoria AND t.tipoDispositivo=:dispositivo',
             'params' => array(
-                ':categoria' => $categoria
+                ':categoria' => $categoria,
+                ':dispositivo' => $this->isMobile ? CategoriaTienda::DISPOSITIVO_MOVIL : CategoriaTienda::DISPOSITIVO_ESCRITORIO
             ),
         ));
 
@@ -550,23 +552,24 @@ class CatalogoController extends Controller {
 
         $parametrosProductos = array();
         $listCombos = array();
-
+        
         if ($objSectorCiudad == null) {
             $parametrosProductos = array(
                 'order' => 't.orden',
                 'with' => array('listImagenes', 'objCodigoEspecial', 'listCalificaciones',
-                    'objCategoriaBI' => array('with' => 'listCategoriasTienda'),
+                    'objCategoriaBI' => array('with' => 'listCategoriasTienda', 'condition'=> 'listCategoriasTienda.tipoDispositivo=:dispositivo'),
                 ),
                 'condition' => "t.activo=:activo AND t.codigoProducto IN ($codigosStr)",
                 'params' => array(
                     ':activo' => 1,
+                     ':dispositivo' => $this->isMobile ? CategoriaTienda::DISPOSITIVO_MOVIL : CategoriaTienda::DISPOSITIVO_ESCRITORIO
                 )
             );
         } else {
             $parametrosProductos = array(
                 'order' => 't.orden',
                 'with' => array('listImagenes', 'objCodigoEspecial', 'listCalificaciones',
-                    'objCategoriaBI' => array('with' => 'listCategoriasTienda'),
+                    'objCategoriaBI' => array('with' => 'listCategoriasTienda', 'condition'=> 'listCategoriasTienda.tipoDispositivo=:dispositivo'),
                     'listSaldos' => array('condition' => '(listSaldos.saldoUnidad>:saldo AND listSaldos.codigoCiudad=:ciudad AND listSaldos.codigoSector=:sector) OR (listSaldos.saldoUnidad IS NULL AND listSaldos.codigoCiudad IS NULL AND listSaldos.codigoSector IS NULL)'),
                     'listPrecios' => array('condition' => '(listPrecios.codigoCiudad=:ciudad AND listPrecios.codigoSector=:sector) OR (listPrecios.codigoCiudad IS NULL AND listPrecios.codigoSector IS NULL)'),
                     'listSaldosTerceros' => array('condition' => '(listSaldosTerceros.saldoUnidad>:saldo AND listSaldosTerceros.codigoCiudad=:ciudad AND listSaldosTerceros.codigoSector=:sector) OR (listSaldosTerceros.codigoCiudad IS NULL AND listSaldosTerceros.codigoSector IS NULL)')
@@ -574,6 +577,7 @@ class CatalogoController extends Controller {
                 'condition' => "t.activo=:activo AND t.codigoProducto IN ($codigosStr) AND ( (listSaldos.saldoUnidad IS NOT NULL AND listPrecios.codigoCiudad IS NOT NULL) OR listSaldosTerceros.codigoCiudad IS NOT NULL)",
                 'params' => array(
                     ':activo' => 1,
+                    ':dispositivo' => $this->isMobile ? CategoriaTienda::DISPOSITIVO_MOVIL : CategoriaTienda::DISPOSITIVO_ESCRITORIO,
                     ':saldo' => 0,
                     ':ciudad' => $objSectorCiudad->codigoCiudad,
                     ':sector' => $objSectorCiudad->codigoSector,

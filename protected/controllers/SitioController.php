@@ -95,8 +95,6 @@ class SitioController extends Controller {
         
         if ((!isset(Yii::app()->session[Yii::app()->params->sesion['tipoEntrega']]) || Yii::app()->session[Yii::app()->params->sesion['tipoEntrega']] == null)&& $this->isMobile ) {
             $this->actionIndex();
-            //$this->render('index');
-            //Yii::app()->end();
         }
         
         $tipo = Yii::app()->session[Yii::app()->params->sesion['tipoEntrega']];
@@ -215,10 +213,17 @@ class SitioController extends Controller {
         if($objHorarioSecCiud!=null && $objHorarioSecCiud->sadCiudadSector==0){
             Yii::app()->session[Yii::app()->params->sesion['tipoEntrega']] = Yii::app()->params->entrega['tipo']['presencial'];
         }
-        if(Yii::app()->session[Yii::app()->params->sesion['redireccionAutenticacion']]==null){
-                $this->redirect($this->createUrl('/sitio/inicio'));
+        
+        if($this->isMobile){
+        $this->redirect($this->createUrl('/sitio/inicio'));
         }else{
-            $this->redirect(Yii::app()->session[Yii::app()->params->sesion['redireccionAutenticacion']]);
+            $redirect = $this->createUrl('/');
+            if(isset(Yii::app()->session[Yii::app()->params->sesion['redireccionUbicacion']]) && Yii::app()->session[Yii::app()->params->sesion['redireccionUbicacion']]!=null){
+                $redirect = Yii::app()->session[Yii::app()->params->sesion['redireccionUbicacion']];
+            }
+            //se debe de eliminar url de sesion
+            Yii::app()->session[Yii::app()->params->sesion['redireccionUbicacion']] = null;
+            $this->redirect($redirect);
         }
     }
     
@@ -394,7 +399,7 @@ class SitioController extends Controller {
 
     public function actionInicio() {
         if(!$this->isMobile){
-            $this->redirect($this->createUrl('/'));
+            $this->actionIndex();
         }
         
         $this->render('inicio', array('listImagenes'=>  ImagenBanner::getListImagenes(new DateTime, ModulosConfigurados::TIPO_MOVIL_BANNER_INICIO)));

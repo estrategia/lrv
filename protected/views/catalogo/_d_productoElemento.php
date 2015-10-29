@@ -40,18 +40,7 @@
                                         <?php if(!in_array($data->idUnidadNegocioBI, Yii::app()->params->calificacion['categoriasNoCalificacion'])): ?>
                                                 <div class="col-md-12" style="text-align:center">
                                                     <div class="ranking-list" > 
-                                                        <?php 
-                                                            $this->widget('CStarRating',array(
-                                                                        'name'=> (isset($vista) && $vista == "comparacion")?'rating_calificacion_'.$data->codigoProducto:'rating_'.$data->codigoProducto,
-                                                                        'value'=>floor($data->calificacion),
-                                                                        'minRating'=>1,
-                                                                        'maxRating'=>5,
-                                                                        'starCount'=>5,
-                                                                        'readOnly'=>true,
-                                                                        'htmlOptions' => array(
-                                                                                'class' => (isset($vista) && $vista == "comparacion")?'calificacion-comparar':'')
-                                                                        )); 
-                                                        ?> 
+                                                        <div id="raty-lectura-producto-<?php echo $data->codigoProducto ?>" data-role="raty" data-readonly="true" data-score="<?php echo $data->getCalificacion() ?>" class="clst_cal_str"></div>
                                                         <?php   if($data->objCodigoEspecial->rutaIcono !=""):?>
                                                                     <a class='pop_codigo img-responsive product-prom' role="button" data-toggle="popover" title="" data-content="<?php echo $data->objCodigoEspecial->descripcion?>" >
                                                                         <img src="<?php echo Yii::app()->request->baseUrl . Yii::app()->params->carpetaImagen['codigoEspecial']."/".$data->objCodigoEspecial->rutaIcono?>"/>

@@ -12,7 +12,7 @@
             <div class="panel-heading head-desplegable" role="tab" id="heading-formapago-<?php echo $objFormaPago->idFormaPago ?>">
                 <h4 class="panel-title">
                     <input type="radio" data-credirebaja="<?php echo $objFormaPago->idFormaPago == Yii::app()->params->formaPago['idCredirebaja'] ? "1" : "0" ?>" name="<?php echo $modelClass ?>[idFormaPago]" id="<?php echo $modelClass ?>_idFormaPago_<?php echo $objFormaPago->idFormaPago ?>" value="<?php echo $objFormaPago->idFormaPago ?>" <?php echo ($model->idFormaPago == $objFormaPago->idFormaPago ? "checked" : "") ?>>
-                    <a data-toggle="collapse" data-parent="#accordion-formaPago" href="#collapse-formapago-<?php echo $objFormaPago->idFormaPago ?>" aria-expanded="false" aria-controls="collapse-formapago-<?php echo $objFormaPago->idFormaPago ?>">
+                    <a class="<?php echo ($model->idFormaPago == $objFormaPago->idFormaPago ? "" : "collapsed") ?>" data-toggle="collapse" data-parent="#accordion-formaPago" href="#collapse-formapago-<?php echo $objFormaPago->idFormaPago ?>" aria-expanded="<?php echo ($model->idFormaPago == $objFormaPago->idFormaPago ? "true" : "false") ?>" aria-controls="collapse-formapago-<?php echo $objFormaPago->idFormaPago ?>">
                         <?php echo $objFormaPago->formaPago ?>
                     </a>
                 </h4>
@@ -41,7 +41,7 @@
     <div class="panel panel-default ">
         <div class="panel-heading head-desplegable" role="tab" id="heading-formapago-datafono">
             <h4 class="panel-title">
-                <a data-toggle="collapse" data-parent="#accordion-formaPago" href="#collapse-formapago-datafono" aria-expanded="false" aria-controls="collapse-formapago-datafono">
+                <a class="<?php echo (in_array($model->idFormaPago, Yii::app()->params->formaPago['tarjetasDatafono']) ? "" : "collapsed") ?>" data-toggle="collapse" data-parent="#accordion-formaPago" href="#collapse-formapago-datafono" aria-expanded="<?php echo (in_array($model->idFormaPago, Yii::app()->params->formaPago['tarjetasDatafono']) ? "true" : "false") ?>" aria-controls="collapse-formapago-datafono">
                     Datáfono
                 </a>
             </h4>

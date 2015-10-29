@@ -1517,7 +1517,12 @@ class CarroController extends Controller {
 
         if (Yii::app()->user->isGuest && $modelPago == null) {
             Yii::app()->session[Yii::app()->params->sesion['redireccionAutenticacion']] = $this->createAbsoluteUrl('pagar');
-            $this->render('/usuario/autenticar', array('pagar' => true));
+            
+            if($this->isMobile){
+                $this->render('/usuario/autenticar', array('pagar' => true));
+            }else{
+                $this->render('/usuario/d_autenticar', array('pagar' => true));
+            }
             Yii::app()->end();
         }
 
