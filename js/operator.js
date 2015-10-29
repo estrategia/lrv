@@ -556,3 +556,8 @@ function uniqueId() {
         ;
     return new Date().getTime();
 }
+
+
+$(document).on('click', "a[data-role='modulo-editar']", function(){
+    
+});

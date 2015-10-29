@@ -35,6 +35,21 @@ class ContenidoController extends ControllerOperator {
     public function actionIndex(){
         $this->layout = "admin";
       
+        $model = new ModulosConfigurados('search');
+
+        $model->unsetAttributes();
+        if (isset($_GET['Compras']))
+            $model->attributes = $_GET['Compras'];
+        
+        
+        $this->render('index',array(
+            'model' => $model
+        ));
+    }
+
+    public function actionCrear(){
+        $this->layout = "admin";
+      
         $model= new ModuloForm();
         
         
@@ -53,6 +68,11 @@ class ContenidoController extends ControllerOperator {
         $this->render('modulos',array(
             'model' => $model
         ));
+    }
+
+    public function actionEditar()
+    {
+        print_r($_GET);
     }
     
 }
