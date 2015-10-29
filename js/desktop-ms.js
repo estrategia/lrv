@@ -644,3 +644,13 @@ function raty() {
         }
     });
 }
+
+function capturarfiltrocalificacion(score, evt){
+    var calificacion = score;
+    calificacion = parseInt(calificacion);
+    if (isNaN(calificacion)) {
+        calificacion = -1;
+    }
+    $('#FiltroForm_calificacion').val(calificacion);
+    $('#calificacion-filtro-listaproductos').attr('data-score',calificacion);
+}
