@@ -13,10 +13,6 @@
         <div class="col-lg-1">
             <h2><i class="glyphicon glyphicon-file"></i> Modulos</h2>
         </div>
-        <!-- <div class="box-icon"> -->
-        <div class="col-lg-11">
-            <?php $this->renderPartial('_opciones') ?>
-        </div>
     </div>
     <div class="box-content row">
         <div class="col-lg-12 col-md-12">
