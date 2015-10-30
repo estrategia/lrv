@@ -7,7 +7,7 @@ defined('DS') or define('DS', DIRECTORY_SEPARATOR);
 //$yii=dirname(__FILE__).'/../../yii/framework/yii.php'; //SERVIDOR EISO
 //$yii=dirname(__FILE__).'/../yii-1.1.16.bca042/framework/yii.php'; //LOCAL
 $yii=dirname(__FILE__).'/../yii/framework/yii.php';
-
+$yii=dirname(__FILE__).'/../yii-1.1.16.bca042/framework/yii.php'; //LOCAL
 $config=dirname(__FILE__).'/protected/config/main.php';
 $utils = dirname(__FILE__) . DS . 'protected' . DS . 'helpers' . DS . 'utils.php';
 
