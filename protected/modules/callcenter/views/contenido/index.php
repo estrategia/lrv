@@ -1,3 +1,15 @@
+<?php $mensajes = Yii::app()->user->getFlashes(); ?>
+<?php if ($mensajes): ?>
+    <?php foreach ($mensajes as $idx => $mensaje): ?>
+        <div class="alert alert-<?php echo $idx ?> alert-dismissable">
+            <button type="button" class="close" data-dismiss="alert">&times;</button>
+            <?php echo $mensaje ?>
+        </div>
+    <?php endforeach; ?>
+<?php endif; ?>
+
+
+
 <div class="box-header well">
     <div class="col-lg-11">
         <h2><i class="glyphicon glyphicon-file"></i> Modulos</h2>
@@ -28,7 +40,11 @@ $this->widget('zii.widgets.grid.CGridView', array(
             'header' => '#',
             'value' => '$data->idModulo',
         ),
-        'tipo',
+        array(
+            'header' => 'Tipo',
+            'type' => 'raw',
+            'value' => 'Yii::app()->params->callcenter["modulosConfigurados"]["tiposModulos"][$data->tipo]',
+        ),
         'inicio',
         'fin',
         array(

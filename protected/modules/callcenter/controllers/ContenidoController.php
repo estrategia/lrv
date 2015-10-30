@@ -61,6 +61,7 @@ class ContenidoController extends ControllerOperator {
             
             if($modelModulo->save()){
                 Yii::app()->user->setFlash('alert alert-success', "El módulo ha sido creado con éxito");
+                $this->redirect($this->createUrl('index'));
             }
             
         }
@@ -75,15 +76,42 @@ class ContenidoController extends ControllerOperator {
         print_r($modulo);
     }
 
-    public function actionCrearlistaproductos($modulo)
+    public function actionTipomoduloeditar($modulo)
+    {
+        $objModulo = ModulosConfigurados::model()->findByPk($modulo);
+        if($objModulo->tipo == 1)
+        {
+            $this->crearBanner($objModulo);
+            Yii::app()->end();
+        }
+        if($objModulo->tipo == 2)
+        {
+            $this->crearListaProductos($objModulo);
+            Yii::app()->end();
+        }
+
+        if($objModulo->tipo == 6)
+        {
+            $this->crearContenidoHtml($objModulo);
+            Yii::app()->end();
+        }
+
+        if($objModulo->tipo == 7)
+        {
+            $this->crearContenidoHtmlProductos($objModulo);
+            Yii::app()->end();
+        }
+    }
+
+    public function crearListaProductos($objModulo)
     {
         //print_r($modulo);
-        $objModulo = ModulosConfigurados::model()->findByPk($modulo);
-        //$objProductosModulo = ProductosModulos::model()->findAll("idModulo=:idModulo", array(":idModulo" => $modulo));
         
+        //$objProductosModulo = ProductosModulos::model()->findAll("idModulo=:idModulo", array(":idModulo" => $modulo));
+        $model = $objModulo;
         $this->render('contenidoCrearListaProductos', array(
             //'objProductosModulo' => $objProductosModulo,
-            'objModulo' => $objModulo
+            'model' => $model
         ));
     }
 
@@ -156,11 +184,11 @@ class ContenidoController extends ControllerOperator {
 
         if($model->save())
         {
-            $objModulo = ModulosConfigurados::model()->findByPk($idModulo);
+            $model = ModulosConfigurados::model()->findByPk($idModulo);
 
             echo CJSON::encode(array('result' => 'ok',
                 'response' => array(
-                    'htmlProductosAgregados' => $this->renderPartial('_listaModuloProductos', array('objModulo' => $objModulo), true, false),
+                    'htmlProductosAgregados' => $this->renderPartial('_listaModuloProductos', array('model' => $model), true, false),
                     'mensaje' => "Se agrego el producto"
             )));
             Yii::app()->end();
@@ -197,11 +225,11 @@ class ContenidoController extends ControllerOperator {
         
         if($model->delete())
         {
-            $objModulo = ModulosConfigurados::model()->findByPk($idModulo);
+            $model = ModulosConfigurados::model()->findByPk($idModulo);
 
             echo CJSON::encode(array('result' => 'ok',
                 'response' => array(
-                    'htmlProductosAgregados' => $this->renderPartial('_listaModuloProductos', array('objModulo' => $objModulo), true, false),
+                    'htmlProductosAgregados' => $this->renderPartial('_listaModuloProductos', array('model' => $model), true, false),
                     'mensaje' => "Se elimino el producto"
             )));
             Yii::app()->end();
@@ -214,5 +242,56 @@ class ContenidoController extends ControllerOperator {
             ));
             Yii::app()->end();
         }
+    }
+
+    public function crearContenidoHtml($objModulo)
+    {
+
+        $model = $objModulo;
+        $model->scenario = 'contenido';
+
+
+        if(isset($_POST['ModulosConfigurados']))
+        {
+            $model->attributes = $_POST['ModulosConfigurados'];
+            if($model->save())
+            {
+                Yii::app()->user->setFlash('alert alert-success', "El contenido ha sido agregado con exito, al modulo ".$model->idModulo);
+                $this->redirect($this->createUrl('index'));
+            }
+
+        }
+
+        $this->render('contenidoHtml', array(
+            'model' => $model
+        ));
+    }
+
+    public function crearBanner($objModulo)
+    {
+        $this->render('contenidoBanner', array(
+            'objModulo' => $objModulo
+        ));
+    }
+
+    public function crearContenidoHtmlProductos($objModulo)
+    {
+        $model = $objModulo;
+        $model->scenario = 'contenido';
+
+
+        if(isset($_POST['ModulosConfigurados']))
+        {
+            $model->attributes = $_POST['ModulosConfigurados'];
+            if($model->save())
+            {
+                Yii::app()->user->setFlash('alert alert-success', "El contenido ha sido agregado con exito, al modulo ".$model->idModulo);
+            }
+        }
+
+        $this->render('contenidoHtml', array(
+            'model' => $model,
+            'listaProductos' => true
+        ));
     }
 }
