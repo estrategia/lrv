@@ -49,7 +49,9 @@
                                          <div class="row">
                                              <div class="col-md-6">
                                                  Calificación:
-                                                 <?php 
+                                                 <div id="calificacion_form" data-role="raty" data-readonly="false" data-score="0" class="clst_cal_str"></div>
+                                                                                     
+                                                 <?php /*
                                                       $this->widget('CStarRating',array(
                                                                   'name'=>'calificacion_form',
                                                                   'value'=>'',
@@ -61,6 +63,8 @@
                                                                                       guardarCalificacion('$objProducto->codigoProducto',this,'".Yii::app()->createUrl('catalogo/calificar/')."');
                                                                               }"
                                                                   ));
+                                                  * 
+                                                  */
                                                   ?> 
                                              </div>
                                          </div>

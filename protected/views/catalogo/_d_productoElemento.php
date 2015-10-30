@@ -26,13 +26,14 @@
                                     <?php $imagen = $objProducto->objImagenDesktop(YII::app()->params->producto['tipoImagen']['mini'],$data->listImagenes);?>
                                     <?php if ($imagen == null): ?>
                                             <div class="">
-                                                <a href="<?php echo CController::createUrl('/catalogo/producto', array('producto' => $data->codigoProducto)) ?>" data-ajax="false">
+                                                <a href="<?php echo CController::createUrl('/catalogo/producto', array('producto' => $data->codigoProducto,'descripcion'=>  $data->getCadenaUrl())) ?>" data-ajax="false">
                                                     <img src="<?php echo Yii::app()->request->baseUrl . Yii::app()->params->producto['noImagen']['grande']; ?>" class="img-responsive product-prom">
                                                 </a>
                                             </div>
                                         <?php else: ?>
                                             <div class="">
-                                                <a href="<?php echo CController::createUrl('/catalogo/producto', array('producto' => $data->codigoProducto)) ?>" data-ajax="false">
+                                               
+                                                <a href="<?php echo CController::createUrl('/catalogo/producto', array('producto' => $data->codigoProducto,'descripcion'=>  $data->getCadenaUrl())) ?>" data-ajax="false">
                                                     <img src="<?php echo Yii::app()->request->baseUrl . Yii::app()->params->carpetaImagen['productos'][YII::app()->params->producto['tipoImagen']['mini']] . $imagen['rutaImagen']; ?>" class="img-responsive product-prom">
                                                 </a>
                                             </div>
@@ -52,7 +53,7 @@
                                         <div class="col-md-12">
                                             <div class="line-bottom">
                                                 <p style="min-height: 41px">
-                                                    <a href="<?php echo CController::createUrl('/catalogo/producto', array('producto' => $data->codigoProducto)) ?>" title='<?php echo $data->descripcionProducto?>' data-ajax="false">
+                                                    <a href="<?php echo CController::createUrl('/catalogo/producto', array('producto' => $data->codigoProducto,'descripcion'=>  $data->getCadenaUrl())) ?>" title='<?php echo $data->descripcionProducto?>' data-ajax="false">
                                                         <?php if(strlen($data->descripcionProducto)>20):?>
                                                             <?php echo substr($data->descripcionProducto,0,20)."..." ?>
                                                         <?php else:?>
