@@ -15,7 +15,34 @@ class FiltroForm extends CFormModel {
     public $listCategoriasTienda = array();
     public $listCategoriasTiendaCheck = array();
     public $precio;
+    public $precioRango = array("min"=>-1,"max"=>-1);
+    public $calificacion = 0;
     
+    public function setRango($minproducto, $maxproducto, $mintercero, $maxtercero){
+        $arrMin = array();
+        
+        if($minproducto!=null && $minproducto>0)
+            $arrMin[] = $minproducto;
+        if($mintercero!=null && $mintercero>0)
+            $arrMin[] = $mintercero;
+        if(!empty($arrMin))
+            $this->precioRango["min"] = min($arrMin);
+        
+        $arrMax = array();
+        if($maxproducto!=null && $maxproducto>0)
+            $arrMax[] = $maxproducto;
+        if($maxtercero!=null && $maxtercero>0)
+            $arrMax[] = $maxtercero;
+        if(!empty($arrMax))
+            $this->precioRango["max"] = max($arrMax);
+        
+    }
+    
+    public function isRangoPrecioValido(){
+        return ($this->precioRango["min"]>0 && $this->precioRango["max"]>0);
+    }
+
+
     /**
      * Declares the validation rules.
      * The rules state that username and password are required,
@@ -24,7 +51,7 @@ class FiltroForm extends CFormModel {
     public function rules() {
         return array(
             // username and password are required
-            array('listMarcas, nombre, listFiltros, listCategoriasTienda, precio', 'safe'),
+            array('listMarcas, nombre, listFiltros, listCategoriasTienda, precio, calificacion', 'safe'),
             array('listMarcas, nombre, precio', 'default', 'value' => null),
         );
     }

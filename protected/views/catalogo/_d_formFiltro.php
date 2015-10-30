@@ -24,26 +24,27 @@
         <?php $this->renderPartial('_d_formFiltroAtributos', array('formFiltro' => $formFiltro)) ?>
     </div>
 
-    <div class="panel panel-default">
-        <div class="panel-heading" role="tab" id="heading-precio">
-            <h4 class="panel-title">
-                <a class="collapsed" role="button" data-toggle="collapse" data-parent="#accordion-filtros" href="#collapse-precio" aria-expanded="false" aria-controls="collapse-precio" style="background:none;" >
-                    Precio <span class="glyphicon glyphicon-plus" aria-hidden="true"></span>
-                </a>
-            </h4>
-        </div>
-        <div id="collapse-precio" class="panel-collapse collapse" role="tabpanel" aria-labelledby="heading-precio">
-            <div class="panel-body">	
-                <input id="FiltroForm_precio" class="span2" value="" data-role="bootstrap-slider" data-slider-min="0" data-slider-max="200000" data-slider-step="50" data-slider-value="[0,200000]"/>
-                <input id="FiltroForm_precio_0_text" class="search-priced" value="$0" />
-                <span>-</span>
-                <input id="FiltroForm_precio_1_text" class="search-priced" value="$200.000" />
-                <input id="FiltroForm_precio_0" name="FiltroForm[precio][0]" class="search-priced" value="-1" type="hidden"/>
-                <input id="FiltroForm_precio_1" name="FiltroForm[precio][1]" class="search-priced" value="-1" type="hidden"/>
-                <!-- <a href="#"><img src="<?php echo Yii::app()->baseUrl ?>/images/desktop/ico-lupa.png"></a> -->
+    <?php if ($formFiltro->isRangoPrecioValido()): ?>
+        <div class="panel panel-default">
+            <div class="panel-heading" role="tab" id="heading-precio">
+                <h4 class="panel-title">
+                    <a class="collapsed" role="button" data-toggle="collapse" data-parent="#accordion-filtros" href="#collapse-precio" aria-expanded="false" aria-controls="collapse-precio" style="background:none;" >
+                        Precio <span class="glyphicon glyphicon-plus" aria-hidden="true"></span>
+                    </a>
+                </h4>
+            </div>
+            <div id="collapse-precio" class="panel-collapse collapse" role="tabpanel" aria-labelledby="heading-precio">
+                <div class="panel-body">	
+                    <input id="FiltroForm_precio" class="span2" value="" data-role="bootstrap-slider" data-slider-min="<?php echo $formFiltro->precioRango["min"] ?>" data-slider-max="<?php echo $formFiltro->precioRango["max"] ?>" data-slider-step="50" data-slider-value="[<?php echo $formFiltro->precioRango["min"] ?>,<?php echo $formFiltro->precioRango["max"] ?>]"/>
+                    <input id="FiltroForm_precio_0_text" class="search-priced" value="<?php echo Yii::app()->numberFormatter->format(Yii::app()->params->formatoMoneda['patron'], $formFiltro->precioRango["min"], Yii::app()->params->formatoMoneda['moneda']) ?>" />
+                    <span>-</span>
+                    <input id="FiltroForm_precio_1_text" class="search-priced" value="<?php echo Yii::app()->numberFormatter->format(Yii::app()->params->formatoMoneda['patron'], $formFiltro->precioRango["max"], Yii::app()->params->formatoMoneda['moneda']) ?>" />
+                    <input id="FiltroForm_precio_0" name="FiltroForm[precio][0]" value="<?php echo $formFiltro->precioRango["min"] ?>" type="hidden"/>
+                    <input id="FiltroForm_precio_1" name="FiltroForm[precio][1]" value="<?php echo $formFiltro->precioRango["max"] ?>" type="hidden"/>
+                </div>
             </div>
         </div>
-    </div>
+    <?php endif; ?>
 
 
     <div class="panel panel-default">
@@ -56,7 +57,8 @@
         </div>
         <div id="collapseFour" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingFour">
             <div class="panel-body">
-                Anim pariatur cliche reprehenderit, enim eiusmod high life accusamus terry richardson ad squid.
+                <div id="calificacion-filtro-listaproductos" data-role="raty" data-readonly="false" data-score="0" data-callback="capturarfiltrocalificacion"></div>
+                <input id="FiltroForm_calificacion" name="FiltroForm[calificacion]" value="-1" type="hidden"/>
             </div>
         </div>
     </div>
@@ -86,23 +88,40 @@
         <?php $this->renderPartial('_d_formFiltroCategorias', array('formFiltro' => $formFiltro)) ?>
     </div>
 
+    <?php if ($formFiltro->isRangoPrecioValido()): ?>
+        <div class="panel panel-default">
+            <div class="panel-heading" role="tab" id="heading-precio">
+                <h4 class="panel-title">
+                    <a class="collapsed" role="button" data-toggle="collapse" data-parent="#accordion-filtros" href="#collapse-precio" aria-expanded="false" aria-controls="collapse-precio" style="background:none;" >
+                        Precio <span class="glyphicon glyphicon-plus" aria-hidden="true"></span>
+                    </a>
+                </h4>
+            </div>
+            <div id="collapse-precio" class="panel-collapse collapse" role="tabpanel" aria-labelledby="heading-precio">
+                <div class="panel-body">	
+                    <input id="FiltroForm_precio" class="span2" value="" data-role="bootstrap-slider" data-slider-min="<?php echo $formFiltro->precioRango["min"] ?>" data-slider-max="<?php echo $formFiltro->precioRango["max"] ?>" data-slider-step="50" data-slider-value="[<?php echo $formFiltro->precioRango["min"] ?>,<?php echo $formFiltro->precioRango["max"] ?>]"/>
+                    <input id="FiltroForm_precio_0_text" class="search-priced" value="<?php echo Yii::app()->numberFormatter->format(Yii::app()->params->formatoMoneda['patron'], $formFiltro->precioRango["min"], Yii::app()->params->formatoMoneda['moneda']) ?>" />
+                    <span>-</span>
+                    <input id="FiltroForm_precio_1_text" class="search-priced" value="<?php echo Yii::app()->numberFormatter->format(Yii::app()->params->formatoMoneda['patron'], $formFiltro->precioRango["max"], Yii::app()->params->formatoMoneda['moneda']) ?>" />
+                    <input id="FiltroForm_precio_0" name="FiltroForm[precio][0]" value="<?php echo $formFiltro->precioRango["min"] ?>" type="hidden"/>
+                    <input id="FiltroForm_precio_1" name="FiltroForm[precio][1]" value="<?php echo $formFiltro->precioRango["max"] ?>" type="hidden"/>
+                </div>
+            </div>
+        </div>
+    <?php endif; ?>
+    
     <div class="panel panel-default">
-        <div class="panel-heading" role="tab" id="heading-precio">
+        <div class="panel-heading" role="tab" id="headingFour">
             <h4 class="panel-title">
-                <a class="collapsed" role="button" data-toggle="collapse" data-parent="#accordion-filtros" href="#collapse-precio" aria-expanded="false" aria-controls="collapse-precio" style="background:none;" >
-                    Precio <span class="glyphicon glyphicon-plus" aria-hidden="true"></span>
+                <a class="collapsed" role="button" data-toggle="collapse" data-parent="#accordion-filtros" href="#collapseFour" aria-expanded="true" aria-controls="collapseFour" style="background:none;" >
+                    Calificaci&oacute;n <span class="glyphicon glyphicon-plus" aria-hidden="true"></span>
                 </a>
             </h4>
         </div>
-        <div id="collapse-precio" class="panel-collapse collapse" role="tabpanel" aria-labelledby="heading-precio">
-            <div class="panel-body">	
-                <input id="FiltroForm_precio" class="span2" value="" data-role="bootstrap-slider" data-slider-min="0" data-slider-max="200000" data-slider-step="50" data-slider-value="[0,200000]"/>
-                <input id="FiltroForm_precio_0_text" class="search-priced" value="$0" />
-                <span>-</span>
-                <input id="FiltroForm_precio_1_text" class="search-priced" value="$200.000" />
-                <input id="FiltroForm_precio_0" name="FiltroForm[precio][0]" class="search-priced" value="-1" type="hidden"/>
-                <input id="FiltroForm_precio_1" name="FiltroForm[precio][1]" class="search-priced" value="-1" type="hidden"/>
-                <!-- <a href="#"><img src="<?php echo Yii::app()->baseUrl ?>/images/desktop/ico-lupa.png"></a> -->
+        <div id="collapseFour" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingFour">
+            <div class="panel-body">
+                <div id="calificacion-filtro-listaproductos" data-role="raty" data-readonly="false" data-score="0" data-callback="capturarfiltrocalificacion"></div>
+                <input id="FiltroForm_calificacion" name="FiltroForm[calificacion]" value="-1" type="hidden"/>
             </div>
         </div>
     </div>

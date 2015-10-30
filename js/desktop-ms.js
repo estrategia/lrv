@@ -14,10 +14,10 @@ $(document).on('click', "a[data-role='crearcotizacion']", function() {
         async: true,
         url: requestUrl + '/carro/crearcotizacion',
         beforeSend: function() {
-            //$.mobile.loading('show');
+            Loading.show();
         },
         complete: function() {
-            //$.mobile.loading('hide');
+            Loading.hide();
         },
         success: function(data) {
             dialogoAnimado(data.response);
@@ -39,10 +39,10 @@ $(document).on('click', "a[data-role='carrovaciar']", function() {
         async: true,
         url: requestUrl + '/carro/vaciar',
         beforeSend: function() {
-            //$.mobile.loading('show');
+            Loading.show();
         },
         complete: function() {
-            //$.mobile.loading('hide');
+            Loading.hide();
         },
         success: function(data) {
             if (data.result == 'ok') {
@@ -170,10 +170,10 @@ function modificarCarro(position, modificar) {
         url: requestUrl + '/carro/modificar',
         data: data,
         beforeSend: function() {
-            //$.mobile.loading('show');
+            Loading.show();
         },
         complete: function() {
-            //$.mobile.loading('hide');
+            Loading.hide();
         },
         success: function(data) {
             if (data.result === "ok") {
@@ -212,10 +212,10 @@ $(document).on('click', "a[data-eliminar='1'], a[data-eliminar='2'], a[data-elim
         url: requestUrl + '/carro/eliminar',
         data: {id: position, eliminar: eliminar},
         beforeSend: function() {
-            //$.mobile.loading('show');
+            Loading.show();
         },
         complete: function() {
-            //$.mobile.loading('hide');
+            Loading.hide();
         },
         success: function(data) {
             if (data.result == 'ok') {
@@ -271,10 +271,10 @@ function pasoDespacho(actual, siguiente, boton) {
             //boton.button('disable');
             $('div[id^="FormaPagoForm_"].has-error').html('');
             $('div[id^="FormaPagoForm_"].has-error').css('display', 'none');
-            //$.mobile.loading('show');
+            Loading.show();
         },
         complete: function() {
-            //$.mobile.loading('hide');
+            Loading.hide();
         },
         success: function(data) {
             var obj = $.parseJSON(data);
@@ -313,10 +313,10 @@ function pasoEntrega(actual, siguiente, boton) {
             $('div[id^="FormaPagoForm_"].has-error').html('');
             $('div[id^="FormaPagoForm_"].has-error').css('display', 'none');
             $('#form-pago-entrega').trigger("create");
-            //$.mobile.loading('show');
+            Loading.show();
         },
         complete: function() {
-            //$.mobile.loading('hide');
+            Loading.hide();
         },
         success: function(data) {
             var obj = $.parseJSON(data);
@@ -354,10 +354,10 @@ function pasoPago(actual, siguiente, boton) {
             //boton.button('disable');
             $('div[id^="FormaPagoForm_"].has-error').html('');
             $('div[id^="FormaPagoForm_"].has-error').css('display', 'none');
-            //$.mobile.loading('show');
+            Loading.show();
         },
         complete: function() {
-            //$.mobile.loading('hide');
+            Loading.hide();
         },
         success: function(data) {
             var obj = $.parseJSON(data);
@@ -393,10 +393,10 @@ function pasoConfirmacion(actual, siguiente, boton) {
         data: $.param(data) + '&' + $('#form-pago-confirmacion').serialize(),
         beforeSend: function() {
             //boton.button('disable');
-            //$.mobile.loading('show');
+            Loading.show();
         },
         complete: function() {
-            //$.mobile.loading('hide');
+            Loading.hide();
         },
         success: function(data) {
             var obj = $.parseJSON(data);
@@ -434,10 +434,10 @@ $(document).on('click', "button[data-role='pagopasarela']", function() {
         url: requestUrl + '/carro/pagopasarela',
         beforeSend: function() {
             //boton.button('disable');
-            //$.mobile.loading('show');
+            Loading.show();
         },
         complete: function() {
-            //$.mobile.loading('hide');
+            Loading.hide();
         },
         success: function(data) {
             if (data.result == 'ok') {
@@ -489,10 +489,10 @@ function recalcularFiltros(tipo) {
         url: requestUrl + '/catalogo/filtro',
         data: {marcas: marcas, atributos: atributos, tipo: tipo},
         beforeSend: function() {
-            //$.mobile.loading('show');
+            Loading.show();
         },
         complete: function() {
-            //$.mobile.loading('hide');
+            Loading.hide();
         },
         success: function(data) {
             if (data.hasOwnProperty('marcas')) {
@@ -519,10 +519,10 @@ $(document).on('click', "a[data-role='filtro-listaproductos']", function() {
         data: $('#form-filtro-listaproductos').serialize(),
         beforeSend: function() {
             //boton.button('disable');
-            //$.mobile.loading('show');
+            Loading.show();
         },
         complete: function() {
-            //$.mobile.loading('hide');
+            Loading.hide();
         },
         success: function(data) {
             if (data.result === 'ok') {
@@ -548,10 +548,10 @@ $(document).on('click', "a[data-role='orden-listaproductos']", function() {
         data: $('#form-ordenamiento-listaproductos').serialize(),
         beforeSend: function() {
             //boton.button('disable');
-            //$.mobile.loading('show');
+            Loading.show();
         },
         complete: function() {
-            //$.mobile.loading('hide');
+            Loading.hide();
         },
         success: function(data) {
             if (data.result === 'ok') {
@@ -643,4 +643,14 @@ function raty() {
             return $(this).attr('data-score');
         }
     });
+}
+
+function capturarfiltrocalificacion(score, evt){
+    var calificacion = score;
+    calificacion = parseInt(calificacion);
+    if (isNaN(calificacion)) {
+        calificacion = -1;
+    }
+    $('#FiltroForm_calificacion').val(calificacion);
+    $('#calificacion-filtro-listaproductos').attr('data-score',calificacion);
 }

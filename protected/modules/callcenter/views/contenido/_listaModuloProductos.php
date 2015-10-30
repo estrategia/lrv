@@ -6,7 +6,7 @@
             <th>Producto</th>
             <th></th>
         </tr>
-        <?php foreach ($objModulo->objProductosModulos as $fila => $objProductoModulo): ?>
+        <?php foreach ($model->objProductosModulos as $fila => $objProductoModulo): ?>
             <tr>
                 <td><img src="<?php echo Yii::app()->request->baseUrl . $objProductoModulo->objProducto->rutaImagen() ?>" title="<?php echo $objProductoModulo->objProducto->descripcionProducto ?>"> </td>
                 <td><?php echo $objProductoModulo->objProducto->codigoProducto ?></td>

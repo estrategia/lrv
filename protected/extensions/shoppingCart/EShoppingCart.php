@@ -178,7 +178,15 @@ class EShoppingCart extends CMap {
         return $this->objSectorCiudad->codigoCiudad;
     }
 
+    public function getobjSectorCiudad() {
+        if ($this->objSectorCiudad == null)
+            return null;
+        return $this->objSectorCiudad;
+    }
+    
     public function getObjCiudad() {
+        if ($this->objSectorCiudad == null)
+            return null;
         return $this->objSectorCiudad->objCiudad;
     }
 
@@ -186,6 +194,12 @@ class EShoppingCart extends CMap {
         if ($this->objSectorCiudad == null)
             return null;
         return $this->objSectorCiudad->codigoSector;
+    }
+    
+    public function getObjSector() {
+        if ($this->objSectorCiudad == null)
+            return null;
+        return $this->objSectorCiudad->objSector;
     }
 
     public function getCategorias() {
