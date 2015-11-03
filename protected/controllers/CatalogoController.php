@@ -119,8 +119,6 @@ class CatalogoController extends Controller {
                 Yii::app()->session[Yii::app()->params->sesion['productosBusquedaFiltro']] = null;
             }
 
-            Yii::app()->session[Yii::app()->params->sesion['productosBusquedaCategoria']] = $categoria;
-
             if (isset($_POST['OrdenamientoForm'])) {
                 $formOrdenamiento->attributes = $_POST['OrdenamientoForm'];
                 Yii::app()->session[Yii::app()->params->sesion['productosBusquedaOrden']] = $formOrdenamiento;
@@ -156,7 +154,8 @@ class CatalogoController extends Controller {
                 $formOrdenamiento = Yii::app()->session[Yii::app()->params->sesion['productosBusquedaOrden']];
             }
         }
-
+        
+        Yii::app()->session[Yii::app()->params->sesion['productosBusquedaCategoria']] = $categoria;
         //Yii::log("Ordenamiento: \n" . CVarDumper::dumpAsString($formOrdenamiento), CLogger::LEVEL_INFO, 'application');
         //Yii::log("Filtro: \n" . CVarDumper::dumpAsString($formFiltro), CLogger::LEVEL_INFO, 'application');
 

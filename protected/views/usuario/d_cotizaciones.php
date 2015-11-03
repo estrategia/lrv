@@ -7,12 +7,12 @@ $this->widget('zii.widgets.grid.CGridView', array(
         'prevPageLabel' => 'Anterior',
         'nextPageLabel' => 'Siguiente',
         'lastPageLabel' => '&gt;&gt;',
-        'maxButtonCount' => 3
+        'maxButtonCount' => 8
     ),
     'id' => 'grid-cuenta-listacotizaciones',
-    'beforeAjaxUpdate' => new CJavaScriptExpression("function() { $.mobile.loading('show'); }"),
-    'afterAjaxUpdate' => new CJavaScriptExpression("function() { $.mobile.loading('hide'); }"),
-    'ajaxUpdateError' => new CJavaScriptExpression("function() { $.mobile.loading('hide'); alert('Error, intente de nuevo');}"),
+    'beforeAjaxUpdate' => new CJavaScriptExpression("function() {Loading.show();}"),
+    'afterAjaxUpdate' => new CJavaScriptExpression("function() {Loading.hide();}"),
+    'ajaxUpdateError' => new CJavaScriptExpression("function() { Loading.hide(); bootbox.alert('Error, intente de nuevo');}"),
     'dataProvider' => $model->search(array('order' => "t.fechaCotizacion DESC", 'pageSize' => 5, 'with'=>array('objCiudad'))),
     'columns' => array(
         array(

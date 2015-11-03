@@ -11,12 +11,12 @@
             'prevPageLabel' => 'Anterior',
             'nextPageLabel' => 'Siguiente',
             'lastPageLabel' => '&gt;&gt;',
-            'maxButtonCount' => 3
+            'maxButtonCount' => 8
         ),
         'id' => 'gridview-listadetalle',
-        'beforeAjaxUpdate' => new CJavaScriptExpression("function() {  }"),
-        'afterAjaxUpdate' => new CJavaScriptExpression("function() {  }"),
-        'ajaxUpdateError' => new CJavaScriptExpression("function() { alert('Error, intente de nuevo');}"),
+        'beforeAjaxUpdate' => new CJavaScriptExpression("function() {Loading.show();}"),
+    'afterAjaxUpdate' => new CJavaScriptExpression("function() {Loading.hide();}"),
+    'ajaxUpdateError' => new CJavaScriptExpression("function() { Loading.hide(); bootbox.alert('Error, intente de nuevo');}"),
         'dataProvider' => new CArrayDataProvider($model->listDetalle, array(
             'keyField' => 'idListaDetalle',
         )),
