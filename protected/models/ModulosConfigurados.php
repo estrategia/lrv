@@ -9,7 +9,7 @@
  * @property string $inicio
  * @property string $fin
  * @property string $dias
- * @property integer $orden
+ * @property integer $estado
  * @property string $descripcion
  *
  * The followings are the available model relations:
@@ -19,11 +19,11 @@
  * @property TUbicacionModulos[] $tUbicacionModuloses
  */
 class ModulosConfigurados extends CActiveRecord {
-    const TIPO_ESCRITORIO_BANNER = 1;
-    const TIPO_LISTA_PRODUCTOS = 2;
-    const TIPO_ESCRITORIO_IMAGENES = 3;
-    const TIPO_MOVIL_BANNER_HOME = 4;
-    const TIPO_MOVIL_BANNER_INICIO = 5;
+    const TIPO_BANNER = 1;
+    const TIPO_PRODUCTOS = 2;
+    const TIPO_IMAGENES = 3;
+    const TIPO_HTML = 4;
+    const TIPO_HTML_PRODUCTOS = 5;
 
     /**
      * @return string the associated database table name
@@ -39,13 +39,13 @@ class ModulosConfigurados extends CActiveRecord {
         // NOTE: you should only define rules for those attributes that
         // will receive user inputs.
         return array(
-            array('tipo, inicio, fin, orden', 'required'),
-            array('tipo, orden', 'numerical', 'integerOnly' => true),
+            array('tipo, inicio, fin, estado', 'required'),
+            array('tipo, estado', 'numerical', 'integerOnly' => true),
             array('dias', 'length', 'max' => 30),
             array('descripcion', 'length', 'max' => 255),
             // The following rule is used by search().
             // @todo Please remove those attributes that should not be searched.
-            array('idModulo, tipo, inicio, fin, dias, orden, descripcion', 'safe', 'on' => 'search'),
+            array('idModulo, tipo, inicio, fin, dias, estado, descripcion', 'safe', 'on' => 'search'),
             array('contenido', 'required', 'on' => 'contenido'),
         );
     }
@@ -75,7 +75,7 @@ class ModulosConfigurados extends CActiveRecord {
             'inicio' => 'Inicio',
             'fin' => 'Fin',
             'dias' => 'Dias',
-            'orden' => 'Orden',
+            'estado' => 'Estado',
             'descripcion' => 'Descripcion',
         );
     }
@@ -102,7 +102,7 @@ class ModulosConfigurados extends CActiveRecord {
         $criteria->compare('inicio', $this->inicio, true);
         $criteria->compare('fin', $this->fin, true);
         $criteria->compare('dias', $this->dias, true);
-        $criteria->compare('orden', $this->orden);
+        $criteria->compare('estado', $this->estado);
         $criteria->compare('descripcion', $this->descripcion, true);
 
         return new CActiveDataProvider($this, array(
@@ -118,6 +118,21 @@ class ModulosConfigurados extends CActiveRecord {
      */
     public static function model($className = __CLASS__) {
         return parent::model($className);
+    }
+    
+    public static function getModulosBanner(DateTime $fecha, $ubicacion){
+        return ModulosConfigurados::model()->findAll(array(
+                'with' => array('listImagenesBanners', 'listUbicacionesModulos'),
+                'order' => 'listUbicacionesModulos.orden, listImagenesBanners.orden',
+                'condition' => 't.estado=:estado AND t.tipo =:tipo AND t.dias LIKE :dia AND t.inicio<=:fecha AND t.fin>=:fecha AND listUbicacionesModulos.ubicacion=:ubicacion',
+                'params' => array(
+                    ':estado' => 1,
+                    ':tipo' => ModulosConfigurados::TIPO_BANNER,
+                    ':dia' => "%" . $fecha->format("w") . "%",
+                    ':fecha' => $fecha->format("Y-m-d"),
+                    ':ubicacion' => $ubicacion
+                )
+            ));
     }
 
     public static function traerModulos($idUbicacion, $idCategoria = null) {
@@ -155,7 +170,7 @@ class ModulosConfigurados extends CActiveRecord {
                     'ciudad' => $ciudad,
                     'saldo' => 0,
                 ),
-                'order' => 't.orden,objImagenBanners.orden'
+                'order' => 'objImagenBanners.orden'
             ));
         } else {
             $modulosInicio = UbicacionModulos::model()->findAll(array(
@@ -182,7 +197,7 @@ class ModulosConfigurados extends CActiveRecord {
                     'saldo' => 0,
                     'idCategoria' => $idCategoria
                 ),
-                'order' => 't.orden,objImagenBanners.orden'
+                'order' => 'objImagenBanners.orden'
             ));
         }
 

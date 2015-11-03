@@ -1,7 +1,9 @@
 <div id="owl-productodetalle-inicio" class="owl-carousel owl-theme owl-productodetalle">
-    <?php foreach($listImagenes as $objImagen):?>
-        <div class="item"><a href="#" ><img src="<?php echo Yii::app()->request->baseUrl . $objImagen->rutaImagen; ?>" alt="<?php echo $objImagen->nombre?>"></a></div>
-    <?php endforeach;?>
+    <?php foreach ($listModulos as $objModulo): ?>
+        <?php foreach ($objModulo->listImagenesBanners as $objImagen): ?>
+            <div class="item"><a href="#" ><img src="<?php echo Yii::app()->request->baseUrl . $objImagen->rutaImagen; ?>" alt="<?php echo $objImagen->nombre ?>"></a></div>
+        <?php endforeach; ?>
+    <?php endforeach; ?>
 </div>
 
 <ul data-role="listview" data-inset="true" class="c_list_inicio">
@@ -36,7 +38,7 @@
             <p>Aproveche nuestras ofertas.</p>
         </a>
     </li>
-    
+
     <li>
         <a href="<?php echo CController::createUrl('/catalogo/masvistos') ?>" data-ajax="false" class=" ui-nodisc-icon ui-alt-icon cbtn_menu_inicio">
             <img src="<?php echo Yii::app()->request->baseUrl; ?>/images/inicio/masvistos.png">
@@ -44,7 +46,7 @@
             <p>M&aacute;s vistos.</p>
         </a>
     </li>
-    
+
     <li>
         <a href="<?php echo CController::createUrl('/catalogo/masvendidos') ?>" data-ajax="false" class=" ui-nodisc-icon ui-alt-icon cbtn_menu_inicio">
             <img src="<?php echo Yii::app()->request->baseUrl; ?>/images/inicio/masvendidos.png">
@@ -62,5 +64,5 @@
         </a>
     </li>
     -->
-    
+
 </ul>
