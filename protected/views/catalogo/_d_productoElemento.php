@@ -20,7 +20,7 @@
                     </div>
                 <?php endif; ?>
                 <div class="">
-                    <a href="<?php echo CController::createUrl('/catalogo/producto', array('producto' => $data->codigoProducto)) ?>">
+                    <a href="<?php echo CController::createUrl('/catalogo/producto', array('producto' => $data->codigoProducto,'descripcion'=>  $data->getCadenaUrl() )) ?>">
                         <img src="<?php echo Yii::app()->request->baseUrl . $data->rutaImagen(); ?>" class="img-responsive product-prom">
                     </a>
                 </div>
@@ -40,7 +40,7 @@
                 <div class="col-md-12">
                     <div class="line-bottom">
                         <p style="min-height: 41px">
-                            <a href="<?php echo CController::createUrl('/catalogo/producto', array('producto' => $data->codigoProducto)) ?>" title='<?php echo $data->descripcionProducto ?>' data-ajax="false">
+                            <a href="<?php echo CController::createUrl('/catalogo/producto', array('producto' => $data->codigoProducto,'descripcion'=>  $data->getCadenaUrl())) ?>" title='<?php echo $data->descripcionProducto ?>' data-ajax="false">
                                 <?php if (strlen($data->descripcionProducto) > 20): ?>
                                     <?php echo substr($data->descripcionProducto, 0, 20) . "..." ?>
                                 <?php else: ?>

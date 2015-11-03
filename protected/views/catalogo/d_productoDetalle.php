@@ -45,14 +45,15 @@
                                                 <?php if(!in_array($objProducto->idUnidadNegocioBI, Yii::app()->params->calificacion['categoriasNoCalificacion'])): ?>
                                                     <div class="col-md-12">
                                                         <h4 style="margin-bottom:0px;">Califica el producto</h4>
-                                                        <?php $this->widget('CStarRating',array(
+                                                        <div id="raty-lectura-producto-<?php echo $objProducto->codigoProducto ?>" data-role="raty" data-readonly="true" data-score="<?php echo $objProducto->getCalificacion() ?>" class="clst_cal_str"></div>
+                                                        <?php /*$this->widget('CStarRating',array(
                                                                 'name'=>'avg_'.$objProducto->codigoProducto,
                                                                 'value'=>  floor($objProducto->getCalificacion()),
                                                                 'minRating'=>1,
                                                                 'maxRating'=>5,
                                                                 'starCount'=>5,
                                                                 'readOnly'=>true,
-                                                           )); ?> 
+                                                           )); */?> 
                                                     </div>
                                                 <?php endif;?>
 						<div class="col-md-12" style="color:#A3A3A3;font-size: 16px;">
@@ -262,14 +263,15 @@
                                             <div class="col-md-12 content-resena">	
                                                     <div class="row">
                                                             <div class="col-md-6">
-                                                                    <?php $this->widget('CStarRating',array(
+                                                                    <div id="avg_sumary_<?php echo $objProducto->codigoProducto ?>" data-role="raty" data-readonly="true" data-score="<?php echo $objProducto->getCalificacion() ?>" class="clst_cal_str"></div>
+                                                                    <?php /*$this->widget('CStarRating',array(
                                                                             'name'=>'avg_sumary_'.$objProducto->codigoProducto,
                                                                             'value'=>  floor($objProducto->getCalificacion()),
                                                                             'minRating'=>1,
                                                                             'maxRating'=>5,
                                                                             'starCount'=>5,
                                                                             'readOnly'=>true,
-                                                                    )); ?> 	
+                                                                    )); */?> 	
                                                             </div>
                                                             <div class="col-md-6"><p style="margin:0px;font-size:20px;color:#999;"><?php echo $objProducto->getContadorCalificaciones();?> Reseña(s)</p></div>
                                                     </div>
@@ -284,7 +286,9 @@
                                                                             <tr>
                                                                                 <td>Tu calificación:</td>
                                                                                 <td>
+                                                                                    <div id="calificacion-raty-<?php echo $objProducto->codigoProducto ?>" data-role="raty" data-readonly="true" data-score="<?php echo $objCalificacion->calificacion ?>" class="clst_cal_str"></div>
                                                                                     <?php 
+                                                                                         /*
                                                                                          $this->widget('CStarRating',array(
                                                                                                      'name'=>'calificacion-raty-'.$objProducto->codigoProducto,
                                                                                                      'value'=>$objCalificacion->calificacion,
@@ -293,6 +297,7 @@
                                                                                                      'starCount'=>5,
                                                                                                      'readOnly'=>true
                                                                                                      ));
+                                                                                          */
                                                                                      ?>
                                                                                 </td>
                                                                             </tr>
@@ -320,14 +325,15 @@
                                                                 <div class="col-md-2">
                                                                         <div class="col-md-12">	
                                                                                 <div class="row">
-                                                                                        <?php $this->widget('CStarRating',array(
+                                                                                    <div id="rating-<?php echo $objComentario->codigoProducto ?>" data-role="raty" data-readonly="true" data-score="<?php echo $objComentario->calificacion ?>" class="clst_cal_str"></div>
+                                                                                        <?php /*$this->widget('CStarRating',array(
                                                                                                     'name'=>'rating_'.$objComentario->idCalificacion,
                                                                                                     'value'=>$objComentario->calificacion,
                                                                                                     'minRating'=>1,
                                                                                                     'maxRating'=>5,
                                                                                                     'starCount'=>5,
                                                                                                     'readOnly'=>true
-                                                                                           ));?>		
+                                                                                           ));*/?>		
                                                                                 </div>
                                                                                 <div class="row">
                                                                                         <p style="color:#999;font-weight:bolder;" ><?php echo $objComentario->objUsuario->nombre ;?><br>
