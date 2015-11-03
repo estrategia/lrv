@@ -18,14 +18,19 @@ class CatalogoController extends Controller {
         
           $categorias = CategoriaTienda::model()->find(array(
                 'order' => 't.orden',
-                'condition' => 't.visible=:visible AND t.idCategoriaTienda=:division ',
+                'condition' => 't.visible=:visible AND t.idCategoriaTienda=:division AND t.tipoDispositivo=:dispositivo',
                 'params' => array(
                     ':visible' => 1,
-                    ':division' => $division
+                    ':division' => $division,
+                    ':dispositivo' => CategoriaTienda::DISPOSITIVO_ESCRITORIO
                 ),
                 'with' => array('listCategoriasHijas'),
             ));
-              
+             
+          if(empty($categorias)){
+              throw new CHttpException(404, 'La Categoria no existe.');
+              Yii::app()->end();
+          }
           
             $modulos= ModulosConfigurados::traerModulos(2,$division);
             
@@ -119,8 +124,6 @@ class CatalogoController extends Controller {
                 Yii::app()->session[Yii::app()->params->sesion['productosBusquedaFiltro']] = null;
             }
 
-            Yii::app()->session[Yii::app()->params->sesion['productosBusquedaCategoria']] = $categoria;
-
             if (isset($_POST['OrdenamientoForm'])) {
                 $formOrdenamiento->attributes = $_POST['OrdenamientoForm'];
                 Yii::app()->session[Yii::app()->params->sesion['productosBusquedaOrden']] = $formOrdenamiento;
@@ -156,7 +159,8 @@ class CatalogoController extends Controller {
                 $formOrdenamiento = Yii::app()->session[Yii::app()->params->sesion['productosBusquedaOrden']];
             }
         }
-
+        
+        Yii::app()->session[Yii::app()->params->sesion['productosBusquedaCategoria']] = $categoria;
         //Yii::log("Ordenamiento: \n" . CVarDumper::dumpAsString($formOrdenamiento), CLogger::LEVEL_INFO, 'application');
         //Yii::log("Filtro: \n" . CVarDumper::dumpAsString($formFiltro), CLogger::LEVEL_INFO, 'application');
 

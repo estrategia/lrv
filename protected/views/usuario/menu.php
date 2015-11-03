@@ -7,12 +7,12 @@
 <ul data-role="listview" data-inset="true" class="cpanel_menu_ppal ui-nodisc-icon ui-alt-icon">
     <li>
         <a href="<?php echo CController::createUrl('/usuario/infoPersonal') ?>" data-ajax="false">
-            <h2>Información personal</h2>
+            <h2>Informaci&oacute;n personal</h2>
         </a>
     </li>
     <li>
         <a href="<?php echo CController::createUrl('/usuario/contrasena') ?>" data-ajax="false">
-            <h2>Cambiar contraseña</h2>
+            <h2>Cambiar contrase&ntilde;a</h2>
         </a>
     </li>
     <li>
@@ -42,7 +42,7 @@
     </li>
     <li>
         <a href="<?php echo CController::createUrl('/usuario/salir') ?>" data-ajax="false">
-            <h2>Cerrar sesión</h2>
+            <h2>Cerrar sesi&oacute;n</h2>
         </a>
     </li>
 </ul>

@@ -433,9 +433,7 @@ class SitioController extends Controller {
 
             $objSectorCiudad->objCiudad->getDomicilio();
             Yii::app()->session[Yii::app()->params->sesion['sectorCiudadEntrega']] = $objSectorCiudad;
-           
-            $_SESSION['codigoCiudad']=$objSectorCiudad->objCiudad->codigoCiudad;
-            $_SESSION['nombreCiudad']=$objSectorCiudad->objCiudad->nombreCiudad;
+         
             $urlAnterior="";
             
             if(isset(Yii::app()->session[Yii::app()->params->sesion['redireccionAutenticacion']]) && Yii::app()->session[Yii::app()->params->sesion['redireccionAutenticacion']] != null){
