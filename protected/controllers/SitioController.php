@@ -118,7 +118,7 @@ class SitioController extends Controller {
                 ':estadoCiudad' => 1,
             )
         ));
-        
+
         $listCiudadesSubsectores = Ciudad::model()->findAll(array(
             'with' => array(
                 'listSubSectores' => array(
@@ -167,8 +167,77 @@ class SitioController extends Controller {
             ));
         }
     }
+     public function actionCargarUbicacion($codigoCiudad=null, $sector=0,$subsector = null){
+        if(isset($codigoCiudad)){
+            $objSectorCiudad = SectorCiudad::model()->find(array(
+            'with' => array('objCiudad', 'objSector'),
+            'condition' => 't.codigoCiudad=:ciudad AND t.codigoSector=:sector AND t.estadoCiudadSector=:estado',
+            'params' => array(
+                ':ciudad' => $codigoCiudad,
+                ':sector' => $sector,
+                ':estado' => 1,
+            )
+            ));
+
+             if ($objSectorCiudad == null) {
+                $this->actionIndex();
+            }
+            
+            $objSectorCiudadOld = null;
+
+            if (isset(Yii::app()->session[Yii::app()->params->sesion['sectorCiudadEntrega']]))
+                $objSectorCiudadOld = Yii::app()->session[Yii::app()->params->sesion['sectorCiudadEntrega']];
+
+            $objSubSector = $subsector != null ? SubSector::model()->findByPk(array('codigoCiudad' => $codigoCiudad, 'codigoSubSector' => $sector)) : null;
+
+            $objSectorCiudad->objCiudad->getDomicilio();
+            Yii::app()->session[Yii::app()->params->sesion['sectorCiudadEntrega']] = $objSectorCiudad;
+         
+            $urlAnterior="";
+            
+            if(isset(Yii::app()->session[Yii::app()->params->sesion['redireccionAutenticacion']]) && Yii::app()->session[Yii::app()->params->sesion['redireccionAutenticacion']] != null){
+                $urlAnterior=Yii::app()->session[Yii::app()->params->sesion['redireccionAutenticacion']];
+            }else{
+                $urlAnterior=$this->createUrl('/sitio/index/');
+            }
+            echo CJSON::encode(array('result' => 'ok', 'response' => 'Se ha cambiado la ciudad de entrega por: '.$objSectorCiudad->objCiudad->nombreCiudad,
+                                     'urlAnterior' => $urlAnterior ));
+            Yii::app()->end();
+        }else{
+            echo CJSON::encode(array('result' => 'error', 'response' => 'Solicitud inválida.'));
+        }
+    }
     
-    public function actionUbicacionSeleccion($ciudad, $sector, $subsector = null) {
+    public function actionUbicacionSeleccion($ciudad, $sector = null, $subsector = null) {
+        if(!$this->isMobile){
+            
+            if($sector == null){
+                $sector = 0;
+            }
+            
+            $arrayCiudad=explode("-",$ciudad);
+            if(count($arrayCiudad)>1){
+               $sectores= SectorPuntoReferencia::model()->findAll(array(
+                   'with' => array('objSector','listPuntoReferencias'),
+                    'condition' => 't.codigoSubsector=:codigosubsector AND t.estadoSectorReferencia=:estadoSector',
+                    'params' => array(
+                        'codigosubsector' => $arrayCiudad[1],
+                        'estadoSector' => 1
+                    )
+                ));
+               
+                 $htmlRender=$this->renderPartial('_d_ubicacionSector',array(
+                        'sectores' => $sectores,
+                        'ciudad' => $arrayCiudad[0]
+                 ),true,false);
+                 echo CJSON::encode(array('result' => 'select', 
+                                          'response' => $htmlRender
+                            ));
+                
+                Yii::app()->end();
+            }
+        }
+        
         $objSectorCiudad = SectorCiudad::model()->find(array(
             'with' => array('objCiudad', 'objSector'),
             'condition' => 't.codigoCiudad=:ciudad AND t.codigoSector=:sector AND t.estadoCiudadSector=:estado',
@@ -219,11 +288,17 @@ class SitioController extends Controller {
         }else{
             $redirect = $this->createUrl('/');
             if(isset(Yii::app()->session[Yii::app()->params->sesion['redireccionUbicacion']]) && Yii::app()->session[Yii::app()->params->sesion['redireccionUbicacion']]!=null){
-                $redirect = Yii::app()->session[Yii::app()->params->sesion['redireccionUbicacion']];
+                 $redirect = Yii::app()->session[Yii::app()->params->sesion['redireccionUbicacion']];
             }
-            //se debe de eliminar url de sesion
+                //se debe de eliminar url de sesion
             Yii::app()->session[Yii::app()->params->sesion['redireccionUbicacion']] = null;
-            $this->redirect($redirect);
+            if(!Yii::app()->request->isAjaxRequest){
+                   $this->redirect($redirect);
+            }else{
+                 echo CJSON::encode(array('result' => 'ok', 'response' => 'Se ha cambiado la ciudad de entrega por: '.$objSectorCiudad->objCiudad->nombreCiudad,
+                                     'urlAnterior' => $redirect ));
+                Yii::app()->end();
+            }
         }
     }
     
@@ -408,47 +483,6 @@ class SitioController extends Controller {
     public function actionCategorias() {
         $this->render('categorias');
     }
-
-    public function actionCargarUbicacion($codigoCiudad=null, $sector=0,$subsector = null){
-        if(isset($codigoCiudad)){
-            $objSectorCiudad = SectorCiudad::model()->find(array(
-            'with' => array('objCiudad', 'objSector'),
-            'condition' => 't.codigoCiudad=:ciudad AND t.codigoSector=:sector AND t.estadoCiudadSector=:estado',
-            'params' => array(
-                ':ciudad' => $codigoCiudad,
-                ':sector' => $sector,
-                ':estado' => 1,
-            )
-            ));
-
-            if ($objSectorCiudad == null) {
-                $this->actionIndex();
-            }
-            $objSectorCiudadOld = null;
-
-            if (isset(Yii::app()->session[Yii::app()->params->sesion['sectorCiudadEntrega']]))
-                $objSectorCiudadOld = Yii::app()->session[Yii::app()->params->sesion['sectorCiudadEntrega']];
-
-            $objSubSector = $subsector != null ? SubSector::model()->findByPk(array('codigoCiudad' => $codigoCiudad, 'codigoSubSector' => $sector)) : null;
-
-            $objSectorCiudad->objCiudad->getDomicilio();
-            Yii::app()->session[Yii::app()->params->sesion['sectorCiudadEntrega']] = $objSectorCiudad;
-         
-            $urlAnterior="";
-            
-            if(isset(Yii::app()->session[Yii::app()->params->sesion['redireccionAutenticacion']]) && Yii::app()->session[Yii::app()->params->sesion['redireccionAutenticacion']] != null){
-                $urlAnterior=Yii::app()->session[Yii::app()->params->sesion['redireccionAutenticacion']];
-            }else{
-                $urlAnterior=$this->createUrl('/sitio/index/');
-            }
-            echo CJSON::encode(array('result' => 'ok', 'response' => 'Se ha cambiado la ciudad de entrega por: '.$objSectorCiudad->objCiudad->nombreCiudad,
-                                     'urlAnterior' => $urlAnterior ));
-            Yii::app()->end();
-        }else{
-            echo CJSON::encode(array('result' => 'error', 'response' => 'Solicitud inválida.'));
-        }
-    }
-
     /**
      * This is the action to handle external exceptions.
      */

@@ -49,8 +49,9 @@
                                          <div class="row">
                                              <div class="col-md-6">
                                                  Calificación:
-                                                 <div id="calificacion_form" data-role="raty" data-readonly="false" data-score="0" class="clst_cal_str"></div>
-                                                                                     
+                                                 <div id="calificacion_form" data-role="raty" data-readonly="false" data-score="0" class="clst_cal_str" data-callback="capturarcalificacionproducto"></div>
+                                                 <input id="CalificacionForm_calificacion" name="CalificacionForm[calificacion]" value="" type="hidden"/>
+                                                  <?php echo $form->error($objFormCalificacion, 'calificacion',array( "class" => "text-danger")); ?>                                   
                                                  <?php /*
                                                       $this->widget('CStarRating',array(
                                                                   'name'=>'calificacion_form',
@@ -66,6 +67,11 @@
                                                   * 
                                                   */
                                                   ?> 
+                                             </div>
+                                         </div>
+                                         <div class="row">
+                                             <div class="col-md-6">
+                                                 <button type="button" data-role='guardarCalificacion' data-producto='<?php echo $objProducto->codigoProducto?>' class="btn btn-default">Calificar</button>  
                                              </div>
                                          </div>
                                      </div>
