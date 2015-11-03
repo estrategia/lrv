@@ -2,6 +2,20 @@ function isEmptyStr(str) {
     return (!str || 0 === str.length);
 }
 
+$.fn.clearForm = function() {
+  return this.each(function() {
+    var type = this.type, tag = this.tagName.toLowerCase();
+    if (tag == 'form')
+      return $(':input',this).clearForm();
+    if (type == 'text' || type == 'password' || tag == 'textarea')
+      this.value = '';
+    else if (type == 'checkbox' || type == 'radio')
+      this.checked = false;
+    else if (tag == 'select')
+      this.selectedIndex = -1;
+  });
+};
+
 
 /*
  * cotizaciones
@@ -468,6 +482,19 @@ $(document).on('change', "input[id^='FiltroForm_listFiltros_']", function() {
     recalcularFiltros(2);
 });
 
+$(document).on('click', "a[data-role='filtro-listaproductos-reset']", function() {
+    $('#form-filtro-listaproductos').clearForm();
+    var value = [parseInt($('#FiltroForm_precio').attr('data-slider-min')),parseInt($('#FiltroForm_precio').attr('data-slider-max'))];
+    setPrecioFiltroForm(value);
+    $('#FiltroForm_precio').slider('setValue', value);
+    $('#calificacion-filtro-listaproductos').raty('score', 0);
+    $('#calificacion-filtro-listaproductos').attr('data-score',-1);
+        
+    if($(this).attr('data-tipo')=='1'){
+        recalcularFiltros(2);
+    }
+});
+
 function recalcularFiltros(tipo) {
     var marcas = {};
     $("input[id^='FiltroForm_listMarcas_']").each(function() {
@@ -570,11 +597,15 @@ $(document).on('click', "a[data-role='orden-listaproductos']", function() {
 
 $(document).on('change', '#FiltroForm_precio', function() {
     var value = $('#FiltroForm_precio').slider('getValue');
+    setPrecioFiltroForm(value);
+});
+
+function setPrecioFiltroForm(value){
     $('#FiltroForm_precio_0_text').val("$" + format(value[0]));
     $('#FiltroForm_precio_1_text').val("$" + format(value[1]));
     $('#FiltroForm_precio_0').val(value[0]);
     $('#FiltroForm_precio_1').val(value[1]);
-});
+}
 
 $(document).on('change', '#FiltroForm_precio_0_text', function() {
     var value = $(this).val();

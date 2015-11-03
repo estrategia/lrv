@@ -9,7 +9,7 @@
  * @property string $inicio
  * @property string $fin
  * @property string $dias
- * @property integer $orden
+ * @property integer $estado
  * @property string $descripcion
  *
  * The followings are the available model relations:
@@ -19,11 +19,11 @@
  * @property TUbicacionModulos[] $tUbicacionModuloses
  */
 class ModulosConfigurados extends CActiveRecord {
-    const TIPO_ESCRITORIO_BANNER = 1;
-    const TIPO_LISTA_PRODUCTOS = 2;
-    const TIPO_ESCRITORIO_IMAGENES = 3;
-    const TIPO_MOVIL_BANNER_HOME = 4;
-    const TIPO_MOVIL_BANNER_INICIO = 5;
+    const TIPO_BANNER = 1;
+    const TIPO_PRODUCTOS = 2;
+    const TIPO_IMAGENES = 3;
+    const TIPO_HTML = 4;
+    const TIPO_HTML_PRODUCTOS = 5;
 
     /**
      * @return string the associated database table name
@@ -39,13 +39,13 @@ class ModulosConfigurados extends CActiveRecord {
         // NOTE: you should only define rules for those attributes that
         // will receive user inputs.
         return array(
-            array('tipo, inicio, fin, orden', 'required'),
-            array('tipo, orden', 'numerical', 'integerOnly' => true),
+            array('tipo, inicio, fin, estado', 'required'),
+            array('tipo, estado', 'numerical', 'integerOnly' => true),
             array('dias', 'length', 'max' => 30),
             array('descripcion', 'length', 'max' => 255),
             // The following rule is used by search().
             // @todo Please remove those attributes that should not be searched.
-            array('idModulo, tipo, inicio, fin, dias, orden, descripcion', 'safe', 'on' => 'search'),
+            array('idModulo, tipo, inicio, fin, dias, estado, descripcion', 'safe', 'on' => 'search'),
             array('contenido', 'required', 'on' => 'contenido'),
         );
     }
@@ -58,10 +58,9 @@ class ModulosConfigurados extends CActiveRecord {
         // class name for the relations automatically generated below.
         return array(
             'listImagenesBanners' => array(self::HAS_MANY, 'ImagenBanner', 'idModulo'),
-            'objImagenBanners' => array(self::HAS_MANY, 'ImagenBanner', 'idModulo'),
-            'objModuloSectorCiudad' => array(self::HAS_MANY, 'ModuloSectorCiudad', 'idModulo'),
-            'objProductosModulos' => array(self::HAS_MANY, 'ProductosModulos', 'idModulo'),
-            'objUbicacionModulos' => array(self::HAS_MANY, 'UbicacionModulos', 'idModulo'),
+            'listModulosSectoresCiudades' => array(self::HAS_MANY, 'ModuloSectorCiudad', 'idModulo'),
+            'listProductosModulos' => array(self::HAS_MANY, 'ProductosModulos', 'idModulo'),
+            'listUbicacionesModulos' => array(self::HAS_MANY, 'UbicacionModulos', 'idModulo'),
         );
     }
 
@@ -75,7 +74,7 @@ class ModulosConfigurados extends CActiveRecord {
             'inicio' => 'Inicio',
             'fin' => 'Fin',
             'dias' => 'Dias',
-            'orden' => 'Orden',
+            'estado' => 'Estado',
             'descripcion' => 'Descripcion',
         );
     }
@@ -102,7 +101,7 @@ class ModulosConfigurados extends CActiveRecord {
         $criteria->compare('inicio', $this->inicio, true);
         $criteria->compare('fin', $this->fin, true);
         $criteria->compare('dias', $this->dias, true);
-        $criteria->compare('orden', $this->orden);
+        $criteria->compare('estado', $this->estado);
         $criteria->compare('descripcion', $this->descripcion, true);
 
         return new CActiveDataProvider($this, array(
@@ -119,6 +118,21 @@ class ModulosConfigurados extends CActiveRecord {
     public static function model($className = __CLASS__) {
         return parent::model($className);
     }
+    
+    public static function getModulosBanner(DateTime $fecha, $ubicacion){
+        return ModulosConfigurados::model()->findAll(array(
+                'with' => array('listImagenesBanners', 'listUbicacionesModulos'),
+                'order' => 'listUbicacionesModulos.orden, listImagenesBanners.orden',
+                'condition' => 't.estado=:estado AND t.tipo =:tipo AND t.dias LIKE :dia AND t.inicio<=:fecha AND t.fin>=:fecha AND listUbicacionesModulos.ubicacion=:ubicacion',
+                'params' => array(
+                    ':estado' => 1,
+                    ':tipo' => ModulosConfigurados::TIPO_BANNER,
+                    ':dia' => "%" . $fecha->format("w") . "%",
+                    ':fecha' => $fecha->format("Y-m-d"),
+                    ':ubicacion' => $ubicacion
+                )
+            ));
+    }
 
     public static function traerModulos($idUbicacion, $idCategoria = null) {
         $objSectorCiudad = null;
@@ -134,8 +148,8 @@ class ModulosConfigurados extends CActiveRecord {
 
         if ($idUbicacion == 1) {
             $modulosInicio = UbicacionModulos::model()->findAll(array(
-                'with' => array('objModulo' => array('with' => array('objImagenBanners',
-                            'objProductosModulos' =>
+                'with' => array('objModulo' => array('with' => array('listImagenesBanners',
+                            'listProductosModulos' =>
                             array('with' =>
                                 array('objProducto' =>
                                     array('with' =>
@@ -144,8 +158,8 @@ class ModulosConfigurados extends CActiveRecord {
                                             'listSaldos' => array('condition' => '(listSaldos.saldoUnidad>:saldo AND listSaldos.codigoCiudad=:ciudad AND listSaldos.codigoSector=:sector) OR (listSaldos.saldoUnidad IS NULL AND listSaldos.codigoCiudad IS NULL AND listSaldos.codigoSector IS NULL)'),
                                             'listPrecios' => array('condition' => '(listPrecios.codigoCiudad=:ciudad AND listPrecios.codigoSector=:sector) OR (listPrecios.codigoCiudad IS NULL AND listPrecios.codigoSector IS NULL)'),
                                             'listSaldosTerceros' => array('condition' => '(listSaldosTerceros.saldoUnidad>:saldo AND listSaldosTerceros.codigoCiudad=:ciudad AND listSaldosTerceros.codigoSector=:sector) OR (listSaldosTerceros.codigoCiudad IS NULL AND listSaldosTerceros.codigoSector IS NULL)')
-                                        )))), 'objModuloSectorCiudad'))),
-                'condition' => "objModuloSectorCiudad.codigoSector=:sector  AND objModuloSectorCiudad.codigoCiudad=:ciudad AND 
+                                        )))), 'listModulosSectoresCiudades'))),
+                'condition' => "listModulosSectoresCiudades.codigoSector=:sector  AND listModulosSectoresCiudades.codigoCiudad=:ciudad AND 
                                                  objModulo.dias like :dia AND t.ubicacion =:ubicacion and objModulo.inicio<=:fecha and objModulo.fin>=:fecha",
                 'params' => array(
                     'ubicacion' => $idUbicacion,
@@ -155,12 +169,12 @@ class ModulosConfigurados extends CActiveRecord {
                     'ciudad' => $ciudad,
                     'saldo' => 0,
                 ),
-                'order' => 't.orden,objImagenBanners.orden'
+                'order' => 'listImagenesBanners.orden'
             ));
         } else {
             $modulosInicio = UbicacionModulos::model()->findAll(array(
-                'with' => array('objModulo' => array('with' => array('objImagenBanners',
-                            'objProductosModulos' =>
+                'with' => array('objModulo' => array('with' => array('listImagenesBanners',
+                            'listProductosModulos' =>
                             array('with' =>
                                 array('objProducto' =>
                                     array('with' =>
@@ -169,8 +183,8 @@ class ModulosConfigurados extends CActiveRecord {
                                             'listSaldos' => array('condition' => '(listSaldos.saldoUnidad>:saldo AND listSaldos.codigoCiudad=:ciudad AND listSaldos.codigoSector=:sector) OR (listSaldos.saldoUnidad IS NULL AND listSaldos.codigoCiudad IS NULL AND listSaldos.codigoSector IS NULL)'),
                                             'listPrecios' => array('condition' => '(listPrecios.codigoCiudad=:ciudad AND listPrecios.codigoSector=:sector) OR (listPrecios.codigoCiudad IS NULL AND listPrecios.codigoSector IS NULL)'),
                                             'listSaldosTerceros' => array('condition' => '(listSaldosTerceros.saldoUnidad>:saldo AND listSaldosTerceros.codigoCiudad=:ciudad AND listSaldosTerceros.codigoSector=:sector) OR (listSaldosTerceros.codigoCiudad IS NULL AND listSaldosTerceros.codigoSector IS NULL)')
-                                        )))), 'objModuloSectorCiudad')), 'objUbicacionCategorias'),
-                'condition' => "objModuloSectorCiudad.codigoSector=:sector  AND objModuloSectorCiudad.codigoCiudad=:ciudad AND 
+                                        )))), 'listModulosSectoresCiudades')), 'objUbicacionCategorias'),
+                'condition' => "listModulosSectoresCiudades.codigoSector=:sector  AND listModulosSectoresCiudades.codigoCiudad=:ciudad AND 
                                                  objModulo.dias like :dia AND t.ubicacion =:ubicacion and objModulo.inicio<=:fecha and objModulo.fin>=:fecha AND
                                                  objUbicacionCategorias.idCategoriaBi=:idCategoria",
                 'params' => array(
@@ -182,7 +196,7 @@ class ModulosConfigurados extends CActiveRecord {
                     'saldo' => 0,
                     'idCategoria' => $idCategoria
                 ),
-                'order' => 't.orden,objImagenBanners.orden'
+                'order' => 'listImagenesBanners.orden'
             ));
         }
 

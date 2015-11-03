@@ -20,7 +20,16 @@
                                 <td><?php echo $objProducto->codigoProducto ?></td>
                                 <td><?php echo $objProducto->descripcionProducto . "<br>" . $objProducto->presentacionProducto ?></td>
                                 <td>
-                                    <?php echo CHtml::link('Agregar', '#', array('data-producto' => $objProducto->codigoProducto, 'data-role' => "agregar-producto-contenido", 'data-modulo' => $idModulo, 'class' => 'btn btn-primary')); ?>
+                                    <?php 
+                                        $texto = 'Agregar';
+                                        $habilitado = false;
+                                        if(array_search($objProducto->codigoProducto, $productosAgregados) !== false)
+                                        {
+                                            $texto = 'Agregado';
+                                            $habilitado = true;
+                                        } 
+                                    ?>
+                                    <?php echo CHtml::link($texto, '#', array('data-producto' => $objProducto->codigoProducto, 'data-role' => "agregar-producto-contenido", 'data-modulo' => $idModulo, 'class' => 'btn btn-primary', 'disabled' => $habilitado)); ?>
                                 </td>
                             </tr>
                         <?php endforeach; ?>
@@ -28,7 +37,7 @@
                 </table>
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-default" data-dismiss="modal">Cancelar</button>
+                <button type="button" class="btn btn-default" data-dismiss="modal">Cerrar</button>
             </div>
         </div>
     </div>

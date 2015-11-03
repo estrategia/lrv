@@ -15,29 +15,31 @@ class SitioController extends Controller {
     }
 
     public function actionIndex() {
-        $this->showSeeker = false;
-        $this->logoLinkMenu = false;
-        
-       /*  CVarDumper::dump(Yii::app()->request->urlReferrer);
-        CVarDumper::dump(Yii::app()->user->returnUrl);*/
-        
-        $objSectorCiudad = null;
-        $tipoEntrega = null;
-        if (isset(Yii::app()->session[Yii::app()->params->sesion['sectorCiudadEntrega']])){
-            $objSectorCiudad = Yii::app()->session[Yii::app()->params->sesion['sectorCiudadEntrega']];
-        }
-        
-        if (isset(Yii::app()->session[Yii::app()->params->sesion['tipoEntrega']]) && Yii::app()->session[Yii::app()->params->sesion['tipoEntrega']] != null ) {
-            $tipoEntrega = Yii::app()->session[Yii::app()->params->sesion['tipoEntrega']];
-        }
-        
-        if($objSectorCiudad==null || $tipoEntrega==null){
-            $this->showHeaderIcons = false;
-        }
-        
         if($this->isMobile){
-            $this->render('index', array('listImagenes'=>ImagenBanner::getListImagenes(new DateTime, ModulosConfigurados::TIPO_MOVIL_BANNER_HOME)));
+            $this->showSeeker = false;
+            $this->logoLinkMenu = false;
+
+            $objSectorCiudad = null;
+            $tipoEntrega = null;
+            if (isset(Yii::app()->session[Yii::app()->params->sesion['sectorCiudadEntrega']])){
+                $objSectorCiudad = Yii::app()->session[Yii::app()->params->sesion['sectorCiudadEntrega']];
+            }
+
+            if (isset(Yii::app()->session[Yii::app()->params->sesion['tipoEntrega']]) && Yii::app()->session[Yii::app()->params->sesion['tipoEntrega']] != null ) {
+                $tipoEntrega = Yii::app()->session[Yii::app()->params->sesion['tipoEntrega']];
+            }
+
+            if($objSectorCiudad==null || $tipoEntrega==null){
+                $this->showHeaderIcons = false;
+            }
+            
+            $this->render('index', array(
+                'listModulos'=>ModulosConfigurados::getModulosBanner(new DateTime, UbicacionModulos::UBICACION_MOVIL_HOME)
+            ));
         }else{
+            $this->render('d_index',array(
+                'modulosInicio' => ModulosConfigurados::traerModulos(1)
+            )); 
             
        /*     $parametrosProductos = array(
                 'order' => 't.orden',
@@ -61,9 +63,7 @@ class SitioController extends Controller {
          // utilizar un modelo para consultar
            
                               
-                $this->render('d_index',array(
-                        'modulosInicio' => ModulosConfigurados::traerModulos(1)
-                )); 
+             
         }
         Yii::app()->end();
     }
@@ -477,7 +477,9 @@ class SitioController extends Controller {
             $this->actionIndex();
         }
         
-        $this->render('inicio', array('listImagenes'=>  ImagenBanner::getListImagenes(new DateTime, ModulosConfigurados::TIPO_MOVIL_BANNER_INICIO)));
+        $this->render('inicio', array(
+            'listModulos'=>ModulosConfigurados::getModulosBanner(new DateTime, UbicacionModulos::UBICACION_MOVIL_INICIO)
+        ));
     }
 
     public function actionCategorias() {

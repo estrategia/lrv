@@ -7,13 +7,13 @@ $this->widget('zii.widgets.grid.CGridView', array(
         'prevPageLabel' => 'Anterior',
         'nextPageLabel' => 'Siguiente',
         'lastPageLabel' => '&gt;&gt;',
-        'maxButtonCount' => 3
+        'maxButtonCount' => 8
     ),
     //'template'=>'{pager}\n{items}\n{pager}',
     'id' => 'grid-cuenta-listapedidos',
-    'beforeAjaxUpdate' => new CJavaScriptExpression("function() { }"),
-    'afterAjaxUpdate' => new CJavaScriptExpression("function() { }"),
-    'ajaxUpdateError' => new CJavaScriptExpression("function() { bootbox.alert('Error, intente de nuevo');}"),
+    'beforeAjaxUpdate' => new CJavaScriptExpression("function() {Loading.show();}"),
+    'afterAjaxUpdate' => new CJavaScriptExpression("function() {Loading.hide();}"),
+    'ajaxUpdateError' => new CJavaScriptExpression("function() { Loading.hide(); bootbox.alert('Error, intente de nuevo');}"),
     'dataProvider' => $model->search(array('order' => "t.fechaCompra DESC", 'pageSize' => 5)),
     //'columnToggle' => true,
     //'toggleText' => 'Columnas..',

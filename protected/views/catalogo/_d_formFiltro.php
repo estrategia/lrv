@@ -64,6 +64,8 @@
     </div>
 
     <a href="#" data-role="filtro-listaproductos" ><div class="button">Filtrar</div></a>
+    <br>
+    <a href="#" data-role="filtro-listaproductos-reset" data-tipo="1" ><div class="button">Limpiar filtros</div></a>
 
     <?php $this->endWidget(); ?>
 <?php endif; ?>
@@ -128,5 +130,7 @@
 
 
     <a href="#" data-role="filtro-listaproductos" ><div class="button">Filtrar</div></a>
+    <br>
+    <a href="#" data-role="filtro-listaproductos-reset" data-tipo="2"><div class="button">Limpiar filtros</div></a>
     <?php $this->endWidget(); ?>
 <?php endif; ?>

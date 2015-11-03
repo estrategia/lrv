@@ -607,7 +607,7 @@ $(document).on('keypress', "#contenido-busqueda-buscar", function(e){
 $(document).on('click', "a[data-role='agregar-producto-contenido']", function(){
     var producto = $(this).attr("data-producto");
     var idModulo = $(this).attr("data-modulo");
-
+    var self = $(this);
     $.ajax({
         type: 'POST',
         async: true,
@@ -620,6 +620,8 @@ $(document).on('click', "a[data-role='agregar-producto-contenido']", function(){
             var data = $.parseJSON(data);
             if (data.result === "ok") {
                 $("#contenido-productos-lista").html(data.response.htmlProductosAgregados);
+                self.attr("disabled", true);
+                self.html("Agregado");
             } else if (data.result === 'error') {
                 bootbox.alert(data.response);
             }

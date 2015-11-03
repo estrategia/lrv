@@ -1004,3 +1004,71 @@ margin-bottom: 0px;
       -webkit-transition: all 0.5s ease-in-out 0s;
       transition: all 0.5s ease-in-out 0s;*/
 }
+
+.grid-view-loading { background-image:none }
+
+.grid-view table.items th {
+    background: #b10000; /* Old browsers */
+    //background: -moz-linear-gradient(top,  #ff0000 0%, #ab0000 100%); /* FF3.6+ */
+    //background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,#ff0000), color-stop(100%,#ab0000)); /* Chrome,Safari4+ */
+    //background: -webkit-linear-gradient(top,  #ff0000 0%,#ab0000 100%); /* Chrome10+,Safari5.1+ */
+    //background: -o-linear-gradient(top,  #ff0000 0%,#ab0000 100%); /* Opera 11.10+ */
+    //background: -ms-linear-gradient(top,  #ff0000 0%,#ab0000 100%); /* IE10+ */
+    //background: linear-gradient(to bottom,  #ff0000 0%,#ab0000 100%); /* W3C */
+    //filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#ff0000', endColorstr='#ab0000',GradientType=0 ); /* IE6-9 */
+    color: #ffffff;
+    text-align: center;
+}
+
+.grid-view table.items tr.even {
+    background: #FAF8F8 none repeat scroll 0 0;
+}
+.grid-view table.items tr.even:hover {
+    background: #FCC7C7 none repeat scroll 0 0;
+}
+.grid-view table.items tr.odd {
+    background: #e4e4e4 none repeat scroll 0 0;
+}
+.grid-view table.items tr.odd:hover {
+    background: #FCC7C7 none repeat scroll 0 0;
+}
+
+.grid-view .summary {
+    text-align: left;
+    font-size: medium;
+    font-style: italic;
+}
+
+ul.yiiPager a:link, ul.yiiPager a:visited {
+    border: 1px solid #FCC7C7;
+    color: #000000;
+    font-weight: bold;
+    padding: 5px 15px;
+    text-decoration: none;
+}
+
+ul.yiiPager .selected a {
+    background: #ff0000 none repeat scroll 0 0;
+    color: #ffffff;
+    font-weight: bold;
+}
+
+.grid-view .pager {
+    margin: 5px 0 0;
+    text-align: center;
+}
+
+.pager li > a, .pager li > span {
+    background-color: #fff;
+    border: 1px solid #ddd;
+    border-radius: 0px;
+    display: inline-block;
+}
+
+.pager .next > a, .pager .next > span {
+    float: none;
+}
+
+.pager .previous > a, .pager .previous > span {
+    float: none;
+}
