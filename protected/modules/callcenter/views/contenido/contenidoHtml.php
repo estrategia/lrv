@@ -14,7 +14,7 @@
             'enableClientValidation' => true,
             'enableAjaxValidation' => false,
             'htmlOptions' => array(
-                'id' => "remision-form",
+                'id' => "contenido-html-form",
                 'role' => 'form',
             ),
             'errorMessageCssClass' => 'has-error',

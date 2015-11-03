@@ -12,7 +12,7 @@
 	<div class="row">
 		<div class="col-md-12">
 			<div id="contenido-productos-lista">
-				<?php if(count($model->objProductosModulos) == 0): ?>
+				<?php if(count($model->listProductosModulos) == 0): ?>
 					<p>No hay productos en la lista</p>
 				<?php else: ?>
 					<?php $this->renderPartial('_listaModuloProductos', array("model" => $model)); ?>

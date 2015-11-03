@@ -6,7 +6,7 @@
                         <div id="myCarousel" class="carousel slide" data-interval="false">
                             <div class="carousel-inner">
                                     <?php $i=0?>
-                                    <?php foreach($objModulo->objImagenBanners as $imagenes):?>
+                                    <?php foreach($objModulo->listImagenesBanners as $imagenes):?>
                                     <div class="item <?php echo ($i==0)?'active':''?>">
                                         <?php if($imagenes->tipoContenido == 1):?>
                                                 <a href="<?php echo $imagenes->contenido?>">
@@ -46,8 +46,8 @@
                     <br>
                      <div id="owl-demo" class="owl-carousel">
                          
-                            <?php foreach ($objModulo->objProductosModulos as $objProductosModulos): ?>
-                                <?php $objProducto = $objProductosModulos->objProducto ?>
+                            <?php foreach ($objModulo->listProductosModulos as $listProductosModulos): ?>
+                                <?php $objProducto = $listProductosModulos->objProducto ?>
                                  <div class="item"><?php
                                  // hacer uso de _d_productoElemento
                                       
@@ -69,7 +69,7 @@
                         <section>	
                                     <div class="row">	
                                             <div class="col-md-12">
-                                                <?php foreach($objModulo->objImagenBanners as $imagenes):?>
+                                                <?php foreach($objModulo->listImagenesBanners as $imagenes):?>
                                                     <div class="col-md-4">
                                                         <?php if($imagenes->tipoContenido == 1):?>
                                                                 <a href="<?php echo $imagenes->contenido?>">

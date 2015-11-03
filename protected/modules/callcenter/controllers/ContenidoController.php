@@ -71,14 +71,82 @@ class ContenidoController extends ControllerOperator {
         ));
     }
 
-    public function actionEditar($modulo)
+    public function actionEditar($idModulo, $opcion)
     {
-        print_r($modulo);
+        $model = ModulosConfigurados::model()->findByPk($idModulo);
+        $params = array();
+        $params['opcion'] = $opcion;
+        $deshabilitados = $this->botonesDeshabilitados($model);
+
+        if($opcion == 'contenido' && !$deshabilitados)
+        {
+            if($model->tipo == 1)
+            {
+                $params['vista'] = 'contenidoBanner';
+            }
+            if($model->tipo == 2)
+            {
+                $params['vista'] = 'contenidoCrearListaProductos';
+            }
+            if($model->tipo == 6)
+            {
+                $params['vista'] = 'contenidoHtml';
+                $model->scenario = 'contenido';
+            }
+            if($model->tipo == 7)
+            {
+                $params['vista'] = 'contenidoHtml';
+                $params['listaProductos'] = true;
+                $model->scenario = 'contenido';
+            }
+        }
+        else
+        {
+            $params['vista'] = 'modulos';
+            $params['opcion'] = 'editar';
+        }
+        //CVarDumper::dump($deshabilitarBotones, 10, true);
+        //exit();
+
+        $params['deshabilitados'] = $deshabilitados;
+        $params['model'] = $model;
+        
+        $this->render('editar',array(
+            'params' => $params
+        ));
     }
 
-    public function actionTipomoduloeditar($modulo)
+    public function botonesDeshabilitados($model)
     {
-        $objModulo = ModulosConfigurados::model()->findByPk($modulo);
+        if(count($model->listModulosSectoresCiudades) == 0 || $model->listUbicacionesModulos == 0)
+        {
+            return true;
+        }
+
+        if($model->tipo == 1 || $model->tipo == 3 && count($model->listImagenesBanners) > 0)
+        {
+            return false;
+        }
+        if($model->tipo == 2 && count($model->listProductosModulos) > 0)
+        {
+            return false;
+        }
+        if($model->tipo == 7 || $model->contenido != "" && count($model->listProductosModulos) > 0)
+        {
+            return false;
+        }
+
+        if($model->tipo == 6 || $model->contenido != "")
+        {
+            return false;
+        }
+        
+        return true;
+    }
+
+    public function actionTipomoduloeditar($idModulo)
+    {
+        $objModulo = ModulosConfigurados::model()->findByPk($idModulo);
         if($objModulo->tipo == 1)
         {
             $this->crearBanner($objModulo);
@@ -140,7 +208,6 @@ class ContenidoController extends ControllerOperator {
 
         $listProductos = array();
         $codigosArray = GSASearch($busqueda);
-        //$codigosArray = array(10670, 21461, 22159, 410760, 301280, 10192, 30128, 36085);
         $codigosStr = implode(",", $codigosArray);
 
         if (!empty($codigosArray)) {
@@ -153,10 +220,25 @@ class ContenidoController extends ControllerOperator {
             ));
         }
 
+        $model = ProductosModulos::model()->findAll('idModulo=:idModulo', array(':idModulo'=>$idModulo));
+        
+        $productosAgregados = array();
+
+        foreach ($model as $indice => $fila) 
+        {
+            $productosAgregados[] = $fila->codigoProducto;
+        }
+
+
+        //print_r();
+        
+
+
         $this->renderPartial('buscarProductos', array(
             'listProductos' => $listProductos,
             'nombreBusqueda' => $busqueda,
-            'idModulo' => $idModulo
+            'idModulo' => $idModulo,
+            'productosAgregados' => $productosAgregados
         ));
     }
     
