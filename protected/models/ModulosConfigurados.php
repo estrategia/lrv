@@ -169,7 +169,7 @@ class ModulosConfigurados extends CActiveRecord {
                     'ciudad' => $ciudad,
                     'saldo' => 0,
                 ),
-                'order' => 'objImagenBanners.orden'
+                'order' => 'listImagenesBanners.orden'
             ));
         } else {
             $modulosInicio = UbicacionModulos::model()->findAll(array(
@@ -196,7 +196,7 @@ class ModulosConfigurados extends CActiveRecord {
                     'saldo' => 0,
                     'idCategoria' => $idCategoria
                 ),
-                'order' => 'objImagenBanners.orden'
+                'order' => 'listImagenesBanners.orden'
             ));
         }
 
