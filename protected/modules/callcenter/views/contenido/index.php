@@ -69,7 +69,7 @@ $this->widget('zii.widgets.grid.CGridView', array(
         array(
             'header' => 'Editar',
             'type' => 'raw',
-            'value' => 'CHtml::link("Editar", Yii::app()->createAbsoluteUrl("/callcenter/contenido/editar", array("modulo" => $data->idModulo)), array("data-ajax"=>"false"))'
+            'value' => 'CHtml::link("Editar", Yii::app()->createAbsoluteUrl("/callcenter/contenido/editar", array("idModulo" => $data->idModulo, "opcion" => "editar")), array("data-ajax"=>"false"))'
         ),
         array(
             'header' => 'Inactivar',

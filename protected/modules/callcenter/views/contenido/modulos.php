@@ -1,10 +1,12 @@
-<div class="box-inner">
-    <div class="box-header well">
-        <div class="col-lg-1">
-            <h2><i class="glyphicon glyphicon-file"></i> Modulos</h2>
+<?php if($model->isNewRecord): ?>
+    <div class="box-inner">
+        <div class="box-header well">
+            <div class="col-lg-1">
+                <h2><i class="glyphicon glyphicon-file"></i> Modulos</h2>
+            </div>
         </div>
-    </div>
-    <div class="box-content row">
+        <div class="box-content row">
+<?php endif; ?>
         <div class="col-lg-12 col-md-12">
             <?php
             $form = $this->beginWidget('CActiveForm', array(
@@ -29,7 +31,7 @@
             
             <div class="form-group">
                 <?php echo $form->labelEx($model, 'tipo'); ?>
-                <?php echo $form->dropDownList($model, 'tipo', Yii::app()->params->callcenter['modulosConfigurados']['tiposModulos'],  array('class' => 'tipo form-control')); ?>
+                <?php echo $form->dropDownList($model, 'tipo', Yii::app()->params->callcenter['modulosConfigurados']['tiposModulos'],  array('class' => 'tipo form-control', 'disabled' => $model->isNewRecord ? false : true)); ?>
                 <?php echo $form->error($model, 'tipo'); ?>
             </div>
             
@@ -102,8 +104,12 @@
                 <?php  echo $form->numberField($model, 'orden', Yii::app()->params->callcenter['modulosConfigurados']['diasSemana'],array('class' => 'orden','style' => 'display:block'))?>
                 <?php echo $form->error($model, 'orden'); ?>
             </div>
-            <?php echo CHtml::submitButton('Guardar Módulo', array('class' => "btn btn-default")); ?>
+            <?php if($model->isNewRecord): ?>
+                <?php echo CHtml::submitButton('Guardar Módulo', array('class' => "btn btn-default")); ?>
+            <?php endif; ?>
             <?php $this->endWidget(); ?>
         </div>
+<?php if($model->isNewRecord): ?>
     </div>
 </div>
+<?php endif; ?>
