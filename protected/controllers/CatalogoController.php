@@ -1445,21 +1445,16 @@ class CatalogoController extends Controller {
 
     private function calificarProductoDesktop() {
         $codigoProducto = Yii::app()->getRequest()->getPost('codigo');
-        $calificacion = Yii::app()->getRequest()->getPost('calificacion');
-
+        
+       
         if ($codigoProducto == null || empty($codigoProducto)) {
             echo CJSON::encode(array('result' => 'error', 'response' => 'No se detecta producto a calificar.'));
             Yii::app()->end();
         }
 
-        if ($calificacion == null || empty($calificacion) || $calificacion == 0) {
-            echo CJSON::encode(array('result' => 'error', 'response' => 'Por favor selecciona el número de estrellas con el que quieres calificar este producto.'));
-            Yii::app()->end();
-        }
-
+       
         $model = new CalificacionForm();
         $model->attributes = $_POST['CalificacionForm'];
-        $model->calificacion = $calificacion;
         if (!$model->validate()) {
             echo CActiveForm::validate($model);
             Yii::app()->end();
@@ -1487,12 +1482,9 @@ class CatalogoController extends Controller {
             }
 
             $objCalificacion = new ProductosCalificaciones;
+            $objCalificacion->attributes= $_POST['CalificacionForm'];
             $objCalificacion->codigoProducto = $codigoProducto;
             $objCalificacion->identificacionUsuario = Yii::app()->user->name;
-            $objCalificacion->calificacion = $calificacion;
-            $objCalificacion->titulo = $titulo;
-            $objCalificacion->comentario = $comentario;
-
             //$fechaCalificacion = new DateTime();
             $objCalificacion->aprobado = 0;
 
