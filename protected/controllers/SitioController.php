@@ -480,7 +480,7 @@ class SitioController extends Controller {
     public function actionCategorias() {
         $this->render('categorias');
     }
-
+    
     /**
      * This is the action to handle external exceptions.
      */
