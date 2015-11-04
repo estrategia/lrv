@@ -106,18 +106,4 @@ class ImagenBanner extends CActiveRecord {
     public static function model($className = __CLASS__) {
         return parent::model($className);
     }
-    
-    public static function getListImagenes(DateTime $fecha, $tipo){
-         return ImagenBanner::model()->findAll(array(
-            'with' => array('objModulo'),
-            'order' => 'objModulo.orden, t.orden',
-            'condition' => 'objModulo.tipo =:tipo AND objModulo.dias LIKE :dia AND objModulo.inicio<=:fecha AND objModulo.fin>=:fecha',
-            'params' => array(
-                ':tipo' => $tipo,
-                ':dia' => "%" . $fecha->format("w") . "%",
-                ':fecha' => $fecha->format("Y-m-d"),
-            )
-        ));
-    }
-
 }

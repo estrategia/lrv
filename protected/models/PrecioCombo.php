@@ -22,8 +22,11 @@ class PrecioCombo extends Precio {
         foreach ($objCombo->listProductosCombo as $objProductoCombo) {
             $this->precio += $objProductoCombo->precio;
         }
-        $this->precio = $this->redondear($this->precio,1);
-        $this->inicializado = true;
+        
+        if($this->precio>0){
+            $this->precio = $this->redondear($this->precio,1);
+            $this->inicializado = true;
+        }
     }
 
     public function getPrecio() {
