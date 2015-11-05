@@ -7,28 +7,55 @@ $(document).on('change', 'input[name="DireccionesDespacho[idDireccionDespacho]"]
     }, 200);
 });
 
-$(document).on('click', "input[id^='btn-direccion-actualizar-']", function() {
+$(document).on('click', "button[data-role='direccion-editar']", function() {
+    $.ajax({
+        type: 'POST',
+        dataType: 'json',
+        async: true,
+        url: requestUrl + '/usuario/direccionActualizar',
+        data: {render: true, direccion: $(this).attr('data-direccion'), radio: $(this).attr('data-radio')},
+        beforeSend: function() {
+            $("#modal-nueva-direccion").remove();
+            Loading.show();
+        },
+        complete: function() {
+            Loading.hide();
+        },
+        success: function(data) {
+            $('body').append(data.response.dialogoHTML);
+            $("#modal-nueva-direccion").modal("show");
+        },
+        error: function(jqXHR, textStatus, errorThrown) {
+            Loading.hide();
+            bootbox.alert('Error: ' + errorThrown);
+        }
+    });
+});
+
+$(document).on('click', "input[data-role='direccion-actualizar']", function() {
     var form = $(this).parents("form");
     $.ajax({
         type: 'POST',
         async: true,
         url: requestUrl + '/usuario/direccionActualizar',
-        data: form.serialize(),
+        data: $.param({radio: $(this).attr('data-radio')}) + '&' + form.serialize(),
         beforeSend: function() {
-            //$.mobile.loading('show');
+            Loading.show();
         },
         complete: function() {
-            //$.mobile.loading('hide');
+            Loading.hide();
         },
         success: function(data) {
-            var obj = $.parseJSON(data);
+            var data = $.parseJSON(data);
 
-            if (obj.result === 'ok') {
-                dialogoAnimado(obj.response);
-            } else if (obj.result === 'error') {
-                bootbox.alert(obj.response);
+            if (data.result === 'ok') {
+                $("#modal-nueva-direccion").modal("hide");
+                dialogoAnimado(data.response.mensaje);
+                $('#div-direccion-interior-' + data.response.direccion).html(data.response.direccionHTML);
+            } else if (data.result === 'error') {
+                bootbox.alert(data.response);
             } else {
-                $.each(obj, function(element, error) {
+                $.each(data, function(element, error) {
                     //$('#' + element + '_em_').html(error);
                     //$('#' + element + '_em_').css('display', 'block');
                     $('#' + form.attr('id') + ' #' + element + '_em_').html(error);
@@ -37,7 +64,8 @@ $(document).on('click', "input[id^='btn-direccion-actualizar-']", function() {
             }
         },
         error: function(jqXHR, textStatus, errorThrown) {
-            alert('Error: ' + errorThrown);
+            Loading.hide();
+            bootbox.alert('Error: ' + errorThrown);
         }
     });
 
@@ -54,20 +82,18 @@ $(document).on('click', "a[data-role='direccion-adicionar-modal']", function() {
         url: requestUrl + '/usuario/direccionCrear',
         data: {render: true},
         beforeSend: function() {
-            //$.mobile.loading('show');
+            Loading.show();
+            $("#modal-nueva-direccion").remove();
         },
         complete: function() {
-            //$.mobile.loading('hide');
+            Loading.hide();
         },
         success: function(data) {
-            var id = "page-direccion-crear-" + uniqueId();
-            if (!$("#modal-nueva-direccion").length)
-            {
-                $('body').append(data.response.dialogoHTML);
-            }
+            $('body').append(data.response.dialogoHTML);
             $("#modal-nueva-direccion").modal("show");
         },
         error: function(jqXHR, textStatus, errorThrown) {
+            Loading.hide();
             bootbox.alert('Error: ' + errorThrown);
         }
     });
@@ -75,42 +101,34 @@ $(document).on('click', "a[data-role='direccion-adicionar-modal']", function() {
 
 $(document).on('click', "input[data-role='direccion-adicionar']", function() {
     var form = $("#form-direccion");
-    var modal = $(this).attr("data-modal");
-    var pagoExpress = $("[data-role='direccion-adicionar-modal']").attr("data-pagoexpress");
-    var data = {modal: modal, pagoExpress: pagoExpress, pasosCompra: $('#div-direcciones-pasoscompra').length};
-    
+    var vista = $("[data-role='direccion-adicionar-modal']").attr("data-vista");
+    var data = {vista: vista};
+
     $.ajax({
         type: 'POST',
         async: true,
         url: requestUrl + '/usuario/direccionCrear',
         data: $.param(data) + '&' + form.serialize(),
         beforeSend: function() {
-            //$.mobile.loading('show');
+            Loading.show();
         },
         complete: function() {
-            //$.mobile.loading('hide');
+            Loading.hide();
         },
         success: function(data) {
             var data = $.parseJSON(data);
             if (data.result === 'ok') {
-                if (modal == 1) {
-                    if (data.response.pagoExpress == 0) {
-                        if ($('#div-direcciones-pasoscompra').length) {
-                            $('#div-direcciones-pasoscompra').html(data.response.direccionesHTML);
-                            $('#div-direcciones-pasoscompra').trigger("create");
-                        } else {
-                            $('#div-direcciones-lista').html(data.response.direccionesHTML);
-                            $('#div-direcciones-lista').trigger("create");
-                        }
-                    } else {
-                        location.reload();
-                    }
-                    $("#modal-nueva-direccion").modal("hide");
-                    $("#form-direccion")[0].reset();
-                    dialogoAnimado(data.response.mensaje);
+                $("#modal-nueva-direccion").modal("hide");
+                dialogoAnimado(data.response.mensaje);
+                
+                if ($('#div-direcciones-pasoscompra').length) {
+                    $('#div-direcciones-pasoscompra').html(data.response.direccionesHTML);
+                    $('#div-direcciones-pasoscompra').trigger("create");
                 } else {
-                    location.reload();
+                    $('#div-direcciones-lista').html(data.response.direccionesHTML);
+                    $('#div-direcciones-lista').trigger("create");
                 }
+
             } else if (data.result === 'error') {
                 bootbox.alert(data.response);
             } else {
@@ -121,6 +139,7 @@ $(document).on('click', "input[data-role='direccion-adicionar']", function() {
             }
         },
         error: function(jqXHR, textStatus, errorThrown) {
+            Loading.hide();
             bootbox.alert('Error: ' + errorThrown);
         }
     });
@@ -129,7 +148,7 @@ $(document).on('click', "input[data-role='direccion-adicionar']", function() {
 
 });
 
-$(document).on('click', "input[id^='btn-direccion-eliminar-']", function() {
+$(document).on('click', "button[data-role='direccion-eliminar']", function() {
     var direccion = $(this).attr('data-direccion');
     $.ajax({
         type: 'POST',
@@ -138,39 +157,27 @@ $(document).on('click', "input[id^='btn-direccion-eliminar-']", function() {
         url: requestUrl + '/usuario/direccionEliminar',
         data: {direccion: direccion},
         beforeSend: function() {
-            //$.mobile.loading('show');
+            Loading.show();
         },
         complete: function() {
-            //$.mobile.loading('hide');
+            Loading.hide();
         },
         success: function(data) {
             if (data.result === 'ok') {
-                $('#div-direccion-radio-' + direccion).remove();
+                $('#div-direccion-exterior-' + direccion).remove();
                 dialogoAnimado(data.response);
             } else if (data.result === 'error') {
                 bootbox.alert(data.response);
             }
         },
         error: function(jqXHR, textStatus, errorThrown) {
-            alert('Error: ' + errorThrown);
+            Loading.hide();
+            bootbox.alert('Error: ' + errorThrown);
         }
     });
 
     return false;
 });
-
-
-$(document).on('click', "a[data-role='pedidogridestado']", function() {
-    bootbox.alert({
-        message: $(this).attr('data-estado'),
-        buttons: {
-            ok: {
-                label: "Aceptar",
-            }
-        }
-    });
-});
-
 
 $(document).on('click', "a[data-role='pedidodetalle']", function() {
     var compra = $(this).attr('data-compra');

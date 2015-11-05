@@ -38,10 +38,13 @@
 <?php endif; ?>
 
 <section>
-    <div class="container">
-        <div class="col-md-12 desplegables">
-            <?php $this->renderPartial('_d_paso' . Yii::app()->params->pagar['pasos'][$paso], $parametros); ?>
-
+    <div class="container desplegables">
+        <div class="row">
+            <div class="col-md-12">
+                <?php $this->renderPartial('_d_paso' . Yii::app()->params->pagar['pasos'][$paso], $parametros); ?>
+            </div>
+        </div>
+        <div class="row">
             <div class="col-md-12">
                 <?php if ($pasoAnterior !== null): ?>
                     <div class="col-md-3"><button class="editar" id="btn-carropagar-anterior" data-origin="<?php echo $paso ?>" data-redirect="<?php echo $pasoAnterior ?>">Atr&aacute;s</button></div>
@@ -61,9 +64,3 @@
         </div>
     </div>
 </section>
-
-<div id="div-carro">
-    <?php //$this->renderPartial('_d_carro', array('lectura' => ($nPasoActual >= Yii::app()->params->pagar['pasos']['pago']) )); ?>
-</div>
-
-

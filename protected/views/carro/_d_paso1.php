@@ -63,12 +63,21 @@
     <?php $this->endWidget(); ?>
 <?php else: ?>
     <h3 class="text-center title-desp"><span class="glyphicon glyphicon-map-marker"></span>Direcci&oacute;nes de despacho</h3>
-    <div id="div-direcciones-pasoscompra">
+    <div class="row">
+        <div class="col-md-4">
+            <?php echo CHtml::link('Adicionar direcci&oacute;n', "#", array('data-role' => 'direccion-adicionar-modal', 'data-vista' => 'pasoscompra', 'class' => 'btn btn-primary adicionar')); ?>
+        </div>
+    </div>
+    
+    <div id="div-direcciones-pasoscompra" class="row">
         <?php $this->renderPartial('/usuario/_d_direccionesLista', array('listDirecciones' => $listDirecciones, 'radio' => true, 'idDireccionSeleccionada' => $modelPago->idDireccionDespacho)) ?>
     </div>
 
     <div id="FormaPagoForm_idDireccionDespacho_em_" class="text-danger" style="display: none;"></div>
-    <div class="col-md-4">
-        <?php echo CHtml::link('Adicionar direcci&oacute;n', "#", array('data-role' => 'direccion-adicionar-modal', 'data-pagoexpress' => 0, 'class' => 'btn btn-primary adicionar')); ?>
+
+    <div class="row">
+        <div class="col-md-4">
+            <?php echo CHtml::link('Adicionar direcci&oacute;n', "#", array('data-role' => 'direccion-adicionar-modal', 'data-vista' => 'pasoscompra', 'class' => 'btn btn-primary adicionar')); ?>
+        </div>
     </div>
 <?php endif; ?>
