@@ -30,15 +30,13 @@
                     <?php if ($imagenBusqueda != null): ?>
                         <img src="<?php echo Yii::app()->request->baseUrl . $imagenBusqueda; ?>" class="ajustada">
                     <?php endif; ?>
-                    <?php if (count($listProductos) + count($listCombos) > 0): ?>   
+                    <?php if ($dataprovider!=null && !empty($dataprovider->getData())): ?>   
                         <div class="col-md-2">    
                             <div class="option-list">
                                 <select name="items-page" class="form-control"id="items-page" onchange="actualizarNumerosPagina()">
-                                    <option value="5">5</option>
-                                    <option value="10" selected="">10</option>
-                                    <option value="15">15</option>
-                                    <option value="20">20</option>
-                                    <option value="25">25</option>
+                                    <?php foreach(Yii::app()->params->busqueda['productosPorPagina'] as $pagina):?>
+                                        <option value="<?php echo $pagina?>" <?php echo (($dataprovider != null && $dataprovider->getPagination()->getPageSize() == $pagina) ? "selected" : "") ?>><?php echo $pagina?></option>
+                                    <?php endforeach;?>
                                 </select>
                             </div>
                         </div>

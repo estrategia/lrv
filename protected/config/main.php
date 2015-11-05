@@ -205,6 +205,7 @@ return array(
             'codigoEspecial' => '/images/codigoespecial/',
             'productos' => array(1 => '/images/productos/thumb/', 2 => '/images/productos/'),
             'combos' => array(1 => '/images/combos/thumb/', 2 => '/images/combos/'),
+            'menuDesktop' => '/images/menu/desktop/',
         ),
         'busqueda' => array(
             'tipoBuscador' => array(
@@ -220,6 +221,7 @@ return array(
                 'noExito' => '/images/sin_resultado.png',
                 'noExacta' => '/images/conicidedencias-no-exactas.jpg',
             ),
+            'productosPorPagina' => array(5,10,15,20,25)
         ),
         'ciudad' => array(
             '*' => 99999

@@ -11,12 +11,14 @@
  * @property string $dias
  * @property integer $estado
  * @property string $descripcion
+ * @property string $contenido
+ * @property string $rutaImagen
  *
  * The followings are the available model relations:
- * @property MImagenBanner[] $mImagenBanners
- * @property MModuloSectorCiudad[] $mModuloSectorCiudads
- * @property TProductosModulos[] $tProductosModuloses
- * @property TUbicacionModulos[] $tUbicacionModuloses
+ * @property ImagenBanner[] $listImagenesBanners
+ * @property ModuloSectorCiudad[] $listModulosSectoresCiudades
+ * @property ProductosModulos[] $listProductosModulos
+ * @property UbicacionModulos[] $listUbicacionesModulos
  */
 class ModulosConfigurados extends CActiveRecord {
     const TIPO_BANNER = 1;
@@ -24,6 +26,7 @@ class ModulosConfigurados extends CActiveRecord {
     const TIPO_IMAGENES = 3;
     const TIPO_HTML = 4;
     const TIPO_HTML_PRODUCTOS = 5;
+    const TIPO_HTML_MENU = 6;
 
     /**
      * @return string the associated database table name
@@ -43,10 +46,11 @@ class ModulosConfigurados extends CActiveRecord {
             array('tipo, estado', 'numerical', 'integerOnly' => true),
             array('dias', 'length', 'max' => 30),
             array('descripcion', 'length', 'max' => 255),
+            array('nombreCategoriaTienda, rutaImagen', 'length', 'max' => 100),
+            array('contenido', 'required', 'on' => 'contenido'),
             // The following rule is used by search().
             // @todo Please remove those attributes that should not be searched.
-            array('idModulo, tipo, inicio, fin, dias, estado, descripcion', 'safe', 'on' => 'search'),
-            array('contenido', 'required', 'on' => 'contenido'),
+            array('idModulo, tipo, inicio, fin, dias, estado, descripcion, contenido, rutaImagen', 'safe', 'on' => 'search'),
         );
     }
 
@@ -76,6 +80,8 @@ class ModulosConfigurados extends CActiveRecord {
             'dias' => 'Dias',
             'estado' => 'Estado',
             'descripcion' => 'Descripcion',
+            'contenido' => 'Contenido',
+            'rutaImagen' => 'Ruta Imagen',
         );
     }
 
@@ -103,6 +109,8 @@ class ModulosConfigurados extends CActiveRecord {
         $criteria->compare('dias', $this->dias, true);
         $criteria->compare('estado', $this->estado);
         $criteria->compare('descripcion', $this->descripcion, true);
+        $criteria->compare('contenido', $this->contenido, true);
+        $criteria->compare('rutaImagen', $this->rutaImagen, true);
 
         return new CActiveDataProvider($this, array(
             'criteria' => $criteria,
@@ -130,6 +138,18 @@ class ModulosConfigurados extends CActiveRecord {
                     ':dia' => "%" . $fecha->format("w") . "%",
                     ':fecha' => $fecha->format("Y-m-d"),
                     ':ubicacion' => $ubicacion
+                )
+            ));
+    }
+    
+    public static function getModulosMenu(DateTime $fecha){
+        return ModulosConfigurados::model()->findAll(array(
+                'condition' => 't.estado=:estado AND t.tipo =:tipo AND t.dias LIKE :dia AND t.inicio<=:fecha AND t.fin>=:fecha',
+                'params' => array(
+                    ':estado' => 1,
+                    ':tipo' => ModulosConfigurados::TIPO_HTML_MENU,
+                    ':dia' => "%" . $fecha->format("w") . "%",
+                    ':fecha' => $fecha->format("Y-m-d"),
                 )
             ));
     }
@@ -163,6 +183,7 @@ class ModulosConfigurados extends CActiveRecord {
                                   listModulosSectoresCiudades.codigoCiudad=:todasciudades OR (listModulosSectoresCiudades.codigoCiudad=:ciudad AND listModulosSectoresCiudades.codigoSector=:todossectores))
                                         AND objModulo.dias like :dia AND t.ubicacion =:ubicacion and objModulo.inicio<=:fecha and objModulo.fin>=:fecha",
                 'params' => array(
+                    ':estado' => 1,
                     'ubicacion' => $idUbicacion,
                     'fecha' => Date("Y-m-d"),
                     'dia' => "%" . Date("w") . "%",

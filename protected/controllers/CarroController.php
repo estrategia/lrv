@@ -2206,27 +2206,6 @@ class CarroController extends Controller {
                 $objFormasPago->numeroValidacion = $numValidacion;
             }
             
-            /* if ($modelPago->bono !== null && $modelPago->usoBono == 1) {
-              $objFormasPago->valorBono = $modelPago->bono['valor'];
-              } */
-
-            if ($objFormasPago->valorBono > 0) {
-                try {
-                    $clientBono = new SoapClient(null, array(
-                        'location' => Yii::app()->params->webServiceUrl['crmLrv'],
-                        'uri' => "",
-                        'trace' => 1
-                    ));
-                    $resultBono = $clientBono->__soapCall("ActualizarBono", array('identificacion' => $objCompra->identificacionUsuario));
-
-                    if (empty($resultBono) || $resultBono[0]->ESTADO == 0) {
-                        throw new Exception("Error al actualizar bono");
-                    }
-                } catch (SoapFault $soapExc) {
-                    throw new Exception("Error al actualizar bono");
-                }
-            }
-
             if (!$objFormasPago->save()) {
                 throw new Exception("Error al guardar forma de pago" . $objFormasPago->validateErrorsResponse());
             }
@@ -2307,6 +2286,7 @@ class CarroController extends Controller {
                 $listPuntosCompra = ComprasPuntos::generarPuntos($fecha, Yii::app()->session[Yii::app()->params->usuario['sesion']], $parametrosPuntos);
             }
             //-- generar puntos
+            
             // guardar puntos  //--
             foreach ($listPuntosCompra as $objPuntoCompra) {
                 $objPuntoCompra->idCompra = $objCompra->idCompra;
@@ -2315,6 +2295,7 @@ class CarroController extends Controller {
                 }
             }
             //-- guardar puntos //--
+            
             //items de compra
             $positions = Yii::app()->shoppingCart->getPositions();
             foreach ($positions as $position) {
@@ -2554,6 +2535,27 @@ class CarroController extends Controller {
             $htmlCorreo = $this->renderPartial('/usuario/_correo', array('contenido' => $contenidoCorreo), true, true);
             sendHtmlEmail($correoUsuario, $asuntoCorreo, $htmlCorreo);
             $transaction->commit();
+            
+            /* if ($modelPago->bono !== null && $modelPago->usoBono == 1) {
+              $objFormasPago->valorBono = $modelPago->bono['valor'];
+              } */
+
+            if ($objFormasPago->valorBono > 0) {
+                try {
+                    $clientBono = new SoapClient(null, array(
+                        'location' => Yii::app()->params->webServiceUrl['crmLrv'],
+                        'uri' => "",
+                        'trace' => 1
+                    ));
+                    $resultBono = $clientBono->__soapCall("ActualizarBono", array('identificacion' => $objCompra->identificacionUsuario));
+
+                    if (empty($resultBono) || $resultBono[0]->ESTADO == 0) {
+                        throw new Exception("Error al actualizar bono");
+                    }
+                } catch (SoapFault $soapExc) {
+                    throw new Exception("Error al actualizar bono");
+                }
+            }
 
             return array(
                 'result' => 1,

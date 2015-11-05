@@ -145,18 +145,11 @@
                   </ul>
               </li>
 
-                  <li class="mundo_bebe">
-                          <a href="mundo-bebes.html"><span class="ico-bebe"></span>Mundo bebé</a>
-                  </li>
-
-              <li class="natural">
-                  <a href="#"><span class="ico-natural"></span>Natural</a>
-              </li>
-              <li class="promociones">
-                  <a href="#"><span class="ico-promociones"></span>Promociones</a>
-              </li>
-
-     
+              <?php foreach(ModulosConfigurados::getModulosMenu(new DateTime) as $objModulo): ?>
+                <li class="mundo_bebe">
+                    <a href="<?php echo $this->createUrl('/sitio/vercontenido', array('tipo'=>'modulo','contenido'=>$objModulo->idModulo)) ?>"><img src="<?php echo Yii::app()->request->baseUrl . Yii::app()->params->carpetaImagen['menuDesktop'] . $objModulo->rutaImagen; ?>" /> <?php echo $objModulo->descripcion?></a>
+                </li>
+              <?php endforeach;?>
         </ul>
         <!--fin menu-->
        <!-- <div class="container"> -->

@@ -293,6 +293,8 @@ footer li a:hover{
 .nav-pills > li {
 	height: 55px;
 }
+
+/*
 .ico-bebe{
 	background-image: url('../images/desktop/ico-mundo-bebe.png');
 	width: 24px;
@@ -317,6 +319,8 @@ footer li a:hover{
     background-position: center center;
     margin-right: 20px;
 }
+*/
+
 .title-bebe {
 	margin-left: 10px;
 	font-size: 25px;
