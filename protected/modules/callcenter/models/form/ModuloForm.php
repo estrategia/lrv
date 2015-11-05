@@ -13,7 +13,7 @@ class ModuloForm extends CFormModel {
     public $inicio;
     public $fin;
     public $dias;
-    public $orden;
+    public $estado;
     public $descripcion;
     public $contenido;
     

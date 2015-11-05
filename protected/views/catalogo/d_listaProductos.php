@@ -55,18 +55,21 @@
             <br/>
 
             <?php if ($dataprovider != null):?> 
-                <?php foreach ($listCombos as $objCombo): ?>
-                    <li class="c_list_prod">
-                        <div class="ui-field-contain clst_prod_cont">
-                            <?php
-                            $this->renderPartial('_d_comboElemento', array(
-                                'objCombo' => $objCombo,
-                                'objPrecio' => new PrecioCombo($objCombo),
-                            ));
-                            ?>
-                        </div>
-                    </li>
-                <?php endforeach; ?>
+                <?php if($listCombos != null):?>
+                    <div id="owl-demo" class="owl-carousel">
+                       
+                                <?php foreach ($listCombos as $objCombo): ?>
+                                    <div class="item">
+                                            <?php
+                                            $this->renderPartial('_d_comboElemento', array(
+                                                'objCombo' => $objCombo,
+                                                'objPrecio' => new PrecioCombo($objCombo),
+                                            ));
+                                            ?>
+                                   </div>
+                                <?php endforeach; ?>
+                    </div>
+            <?php endif;?>
                 <div id="lista-productos" class="list_cuadricula">
                     <section>
                         <div class="col-md-12">

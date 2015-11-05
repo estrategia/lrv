@@ -32,18 +32,6 @@
                                                 <div class="row">
                                                         <div class="col-md-12">
                                                                 <div class="col-md-2">
-                                                                     <!-- <div class="dropdown ciudad">
-                                                                                 <a id="ciudad" data-target="#" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Ciudad&nbsp;&nbsp;&nbsp;|<span class="glyphicon glyphicon-arrow-down"></span></a>
-                                                                                        <?php if(!isset($_SESSION['listciudades'])):
-                                                                                               $this->getCiudades();
-                                                                                        endif;?>
-                                                                                        <ul class="dropdown-menu" aria-labelledby="ciudad">
-                                                                                             
-                                                                                            <?php foreach($_SESSION['listciudades'] as $ciudad):?>
-                                                                                                <a href="#"><li><?php echo /*$ciudad->codigoCiudad." - ".*/$ciudad->nombreCiudad ?></li></a>
-                                                                                            <?php  endforeach; ?>   
-                                                                                        </ul>
-                                                                        </div> --> 
                                                                      <ul class="user ">
                                                                          <?php if(isset($this->sectorName)):?>
                                                                             <li>

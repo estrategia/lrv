@@ -1,5 +1,5 @@
 
-<div class="col-md-3 border-left">
+<div class="col-md-12 border-left" style="margin-left: 15%">
     <div class="">
         <a href="<?php echo CController::createUrl('/catalogo/combo', array('combo' => $objCombo->idCombo)) ?>" data-ajax="false">
             <img src="<?php echo Yii::app()->request->baseUrl . $objCombo->rutaImagen(); ?>" class="ui-li-thumb">

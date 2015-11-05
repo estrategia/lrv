@@ -676,4 +676,135 @@ $(document).ready(function(){
 
 });
 
+$(document).on('change', "select[data-role='modulo-ciudad']", function(){
+
+    var codigoCiudad=$('#select-ciudad-modulo').val();
+     $.ajax({
+        type: 'GET',
+        async: true,
+        url: requestUrl + '/callcenter/contenido/comprobarciudad',
+        data: {codigoCiudad : codigoCiudad},
+        beforeSend: function(){
+
+        },
+        success: function(data){
+            var data = $.parseJSON(data);
+            if (data.result === "ok") {
+                if(data.code == 1){
+                    $("#div-sector-modulo").html(data.htmlResponse);
+                    $("#div-sector-modulo").css('display','block');
+                    $("#sector-select").val(1);
+                }else if(data.code == 2){
+                    $("#div-sector-modulo").css('display','none');
+                    $("#sector-select").val(0);
+                }
+            }
+        },
+        complete: function(){
+
+        },
+        error: function(jqXHR, textStatus, errorThrown){
+
+        }
+    });
+});
+
+$(document).on('click', "button[data-role='add-sector-ciudad']", function(){
+
+    var codigoCiudad=$('#select-ciudad-modulo').val();
+    var codigoSector=$('#sector-modulo').val();
+    var idModulo = $(this).attr('data-modulo');
+    
+    if($("#sector-select").val() == 0){
+        codigoSector = 0;
+    }
+     $.ajax({
+        type: 'POST',
+        async: true,
+        url: requestUrl + '/callcenter/contenido/guardarCiudadSector',
+        data: {codigoCiudad : codigoCiudad,codigoSector: codigoSector, idModulo: idModulo},
+        dataType: 'json',
+        beforeSend: function(data){
+           
+        },
+        success: function(data){
+            if (data.result == "ok") {
+                bootbox.alert("Ciudad/Sector adicionado con éxito");
+                $("#lista-sectores").html(data.response);
+            }else if(data.result == "error"){
+                bootbox.alert(data.response);
+            }
+        },
+        complete: function(){
+
+        },
+        error: function(jqXHR, textStatus, errorThrown){
+
+        }
+    });
+});
+
+$(document).on('click', "a[data-role='eliminar-sector-modulo']", function(){
+    var idSectorCiudad = $(this).attr("data-modulo-sector");
+     $.ajax({
+        type: 'POST',
+        async: true,
+        url: requestUrl + '/callcenter/contenido/eliminarCiudadSector',
+        data: {idModuloSectorCiudad : idSectorCiudad},
+        dataType: 'json',
+        beforeSend: function(data){
+           
+        },
+        success: function(data){
+            if (data.result == "ok") {
+                bootbox.alert("Ciudad/Sector eliminado con éxito");
+                $("#lista-sectores").html(data.response);
+            }else if(data.result == "error"){
+                bootbox.alert(data.response);
+            }
+        },
+        complete: function(){
+
+        },
+        error: function(jqXHR, textStatus, errorThrown){
+
+        }
+    });
+});
+
+$(document).on('change', "select[data-role='ubicacion-modulo']", function(){
+
+    var ubicacion=$('#UbicacionModulos_ubicacion').val();
+     $.ajax({
+        type: 'GET',
+        async: true,
+        url: requestUrl + '/callcenter/contenido/formUbicacionCategoria',
+        data: {ubicacion : ubicacion},
+        beforeSend: function(){
+
+        },
+        success: function(data){
+            var data = $.parseJSON(data);
+            if (data.result === "ok") {
+                if(data.code == 1){
+                    $("#div-sector-modulo").html(data.htmlResponse);
+                    $("#div-sector-modulo").css('display','block');
+                    $("#sector-select").val(1);
+                }else if(data.code == 2){
+                    $("#div-sector-modulo").css('display','none');
+                    $("#sector-select").val(0);
+                }
+            }
+        },
+        complete: function(){
+
+        },
+        error: function(jqXHR, textStatus, errorThrown){
+
+        }
+    });
+});
+
+
+
 /*********** Fin Configuracion Modulos ************/

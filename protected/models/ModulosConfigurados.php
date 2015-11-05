@@ -39,7 +39,7 @@ class ModulosConfigurados extends CActiveRecord {
         // NOTE: you should only define rules for those attributes that
         // will receive user inputs.
         return array(
-            array('tipo, inicio, fin, estado', 'required'),
+            array('tipo, inicio, fin, estado, dias', 'required'),
             array('tipo, estado', 'numerical', 'integerOnly' => true),
             array('dias', 'length', 'max' => 30),
             array('descripcion', 'length', 'max' => 255),
@@ -146,7 +146,7 @@ class ModulosConfigurados extends CActiveRecord {
             $ciudad = Yii::app()->params->ciudad['*'];
         }
 
-        if ($idUbicacion == 1) {
+        if ($idUbicacion == UbicacionModulos::UBICACION_ESCRITORIO_HOME) {
             $modulosInicio = UbicacionModulos::model()->findAll(array(
                 'with' => array('objModulo' => array('with' => array('listImagenesBanners',
                             'listProductosModulos' =>
@@ -159,14 +159,17 @@ class ModulosConfigurados extends CActiveRecord {
                                             'listPrecios' => array('condition' => '(listPrecios.codigoCiudad=:ciudad AND listPrecios.codigoSector=:sector) OR (listPrecios.codigoCiudad IS NULL AND listPrecios.codigoSector IS NULL)'),
                                             'listSaldosTerceros' => array('condition' => '(listSaldosTerceros.saldoUnidad>:saldo AND listSaldosTerceros.codigoCiudad=:ciudad AND listSaldosTerceros.codigoSector=:sector) OR (listSaldosTerceros.codigoCiudad IS NULL AND listSaldosTerceros.codigoSector IS NULL)')
                                         )))), 'listModulosSectoresCiudades'))),
-                'condition' => "listModulosSectoresCiudades.codigoSector=:sector  AND listModulosSectoresCiudades.codigoCiudad=:ciudad AND 
-                                                 objModulo.dias like :dia AND t.ubicacion =:ubicacion and objModulo.inicio<=:fecha and objModulo.fin>=:fecha",
+                'condition' => "((listModulosSectoresCiudades.codigoSector=:sector  AND listModulosSectoresCiudades.codigoCiudad=:ciudad) OR 
+                                  listModulosSectoresCiudades.codigoCiudad=:todasciudades OR (listModulosSectoresCiudades.codigoCiudad=:ciudad AND listModulosSectoresCiudades.codigoSector=:todossectores))
+                                        AND objModulo.dias like :dia AND t.ubicacion =:ubicacion and objModulo.inicio<=:fecha and objModulo.fin>=:fecha",
                 'params' => array(
                     'ubicacion' => $idUbicacion,
                     'fecha' => Date("Y-m-d"),
                     'dia' => "%" . Date("w") . "%",
                     'sector' => $sector,
                     'ciudad' => $ciudad,
+                    'todasciudades' => Yii::app()->params->ciudad['*'],
+                    'todossectores' => Yii::app()->params->sector['*'],
                     'saldo' => 0,
                 ),
                 'order' => 'listImagenesBanners.orden'
@@ -184,8 +187,9 @@ class ModulosConfigurados extends CActiveRecord {
                                             'listPrecios' => array('condition' => '(listPrecios.codigoCiudad=:ciudad AND listPrecios.codigoSector=:sector) OR (listPrecios.codigoCiudad IS NULL AND listPrecios.codigoSector IS NULL)'),
                                             'listSaldosTerceros' => array('condition' => '(listSaldosTerceros.saldoUnidad>:saldo AND listSaldosTerceros.codigoCiudad=:ciudad AND listSaldosTerceros.codigoSector=:sector) OR (listSaldosTerceros.codigoCiudad IS NULL AND listSaldosTerceros.codigoSector IS NULL)')
                                         )))), 'listModulosSectoresCiudades')), 'objUbicacionCategorias'),
-                'condition' => "listModulosSectoresCiudades.codigoSector=:sector  AND listModulosSectoresCiudades.codigoCiudad=:ciudad AND 
-                                                 objModulo.dias like :dia AND t.ubicacion =:ubicacion and objModulo.inicio<=:fecha and objModulo.fin>=:fecha AND
+                'condition' => "((listModulosSectoresCiudades.codigoSector=:sector  AND listModulosSectoresCiudades.codigoCiudad=:ciudad) OR 
+                                  listModulosSectoresCiudades.codigoCiudad=:todasciudades OR (listModulosSectoresCiudades.codigoCiudad=:ciudad AND listModulosSectoresCiudades.codigoSector=:todossectores))
+                                   AND objModulo.dias like :dia AND t.ubicacion =:ubicacion and objModulo.inicio<=:fecha and objModulo.fin>=:fecha AND
                                                  objUbicacionCategorias.idCategoriaBi=:idCategoria",
                 'params' => array(
                     'ubicacion' => $idUbicacion,
@@ -193,6 +197,8 @@ class ModulosConfigurados extends CActiveRecord {
                     'dia' => "%" . Date("w") . "%",
                     'sector' => $sector,
                     'ciudad' => $ciudad,
+                    'todasciudades' => Yii::app()->params->ciudad['*'],
+                    'todossectores' => Yii::app()->params->sector['*'],
                     'saldo' => 0,
                     'idCategoria' => $idCategoria
                 ),

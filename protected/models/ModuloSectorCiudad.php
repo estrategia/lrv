@@ -32,12 +32,12 @@ class ModuloSectorCiudad extends CActiveRecord
 		// NOTE: you should only define rules for those attributes that
 		// will receive user inputs.
 		return array(
-			array('idModulo, CodigoSector, CodigoCiudad', 'required'),
+			array('idModulo, codigoSector, codigoCiudad', 'required'),
 			array('idModulo', 'numerical', 'integerOnly'=>true),
-			array('CodigoSector, CodigoCiudad', 'length', 'max'=>10),
+			array('codigoSector, codigoCiudad', 'length', 'max'=>10),
 			// The following rule is used by search().
 			// @todo Please remove those attributes that should not be searched.
-			array('idModuloSectorCiudad, idModulo, CodigoSector, CodigoCiudad', 'safe', 'on'=>'search'),
+			array('idModuloSectorCiudad, idModulo, codigoSector, codigoCiudad', 'safe', 'on'=>'search'),
 		);
 	}
 
@@ -63,8 +63,8 @@ class ModuloSectorCiudad extends CActiveRecord
 		return array(
 			'idModuloSectorCiudad' => 'Id Modulo Sector Ciudad',
 			'idModulo' => 'Id Modulo',
-			'CodigoSector' => 'Codigo Sector',
-			'CodigoCiudad' => 'Codigo Ciudad',
+			'codigoSector' => 'Codigo Sector',
+			'codigoCiudad' => 'Codigo Ciudad',
 		);
 	}
 
@@ -88,8 +88,8 @@ class ModuloSectorCiudad extends CActiveRecord
 
 		$criteria->compare('idModuloSectorCiudad',$this->idModuloSectorCiudad,true);
 		$criteria->compare('idModulo',$this->idModulo);
-		$criteria->compare('CodigoSector',$this->CodigoSector,true);
-		$criteria->compare('CodigoCiudad',$this->CodigoCiudad,true);
+		$criteria->compare('codigoSector',$this->codigoSector,true);
+		$criteria->compare('codigoCiudad',$this->codigoCiudad,true);
 
 		return new CActiveDataProvider($this, array(
 			'criteria'=>$criteria,

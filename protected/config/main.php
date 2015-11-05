@@ -362,7 +362,12 @@ return array(
                     6 => 'Html', 
                     7 => 'Html y lista de productos', 
                     8 => 'Lista de productos en el carro'
-                ),  
+                ),
+                'ubicacionModulos' => array(
+                    1 => 'Inicio',
+                    2 => 'División',
+                    3 => 'Categoria'
+                ),
                 'diasSemana' => array(
                    0 => 'Domingo',
                    1 => 'Lunes',

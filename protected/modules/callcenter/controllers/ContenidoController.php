@@ -50,7 +50,7 @@ class ContenidoController extends ControllerOperator {
     public function actionCrear(){
         $this->layout = "admin";
       
-        $model= new ModuloForm();
+        $model= new ModulosConfigurados();
         
         
         if (isset($_POST['ModuloForm'])) {
@@ -77,9 +77,36 @@ class ContenidoController extends ControllerOperator {
         $params = array();
         $params['opcion'] = $opcion;
         $deshabilitados = $this->botonesDeshabilitados($model);
-
-        if($opcion == 'contenido' && !$deshabilitados)
-        {
+        
+        
+        if($opcion == 'sector'){
+            Yii::import('ext.select2.Select2');
+            $params['vista'] = '_sector';
+            $params['idModulo'] = $idModulo;
+            $params['ciudades'] = Ciudad::model()->findAll(array(
+                'with' => array('listSectores'),
+                'order' => 't.orden, t.nombreCiudad',
+                'condition' => 'estadoCiudadSector=:estadoCiudadSector AND estadoSector=:estadoSector AND estadoCiudad=:estadoCiudad',
+                'params' => array(
+                    ':estadoCiudadSector' => 1,
+                    ':estadoSector' => 1,
+                    ':estadoCiudad' => 1,
+                ),
+            ));
+            $params['sectores']= ModuloSectorCiudad::model()->findAll(array(
+                        'with' => array('objCiudad','objSector'),
+                        'condition' => 'idModulo =:idmodulo',
+                        'params' => array(
+                            'idmodulo' => $idModulo
+                        ),
+                        'order' => 'objCiudad.nombreCiudad,objSector.nombreSector'
+                ));
+            
+        }else if($opcion == 'categoria'){
+            $params['vista'] = '_categoria';
+            $params['ubicacionModel'] = new UbicacionModulos();
+            
+        } else if($opcion == 'contenido' && !$deshabilitados){
             if($model->tipo == 1)
             {
                 $params['vista'] = 'contenidoBanner';
@@ -99,9 +126,7 @@ class ContenidoController extends ControllerOperator {
                 $params['listaProductos'] = true;
                 $model->scenario = 'contenido';
             }
-        }
-        else
-        {
+        } else {
             $params['vista'] = 'modulos';
             $params['opcion'] = 'editar';
         }
@@ -115,6 +140,152 @@ class ContenidoController extends ControllerOperator {
             'params' => $params
         ));
     }
+    
+    
+    public function actionComprobarciudad($codigoCiudad){
+        
+        $sectores=Ciudad::model()->find(array(
+            'with' => array('listSubSectores' => 
+                array(
+                        'with' => array(
+                                'listSectorReferencias' => array(
+                                        'with' => 'objSector'
+                                )
+                         
+                         )
+                     )),
+            'condition' => 't.codigoCiudad=:ciudad',
+            'params' => array(
+                'ciudad' => $codigoCiudad
+            )
+        ));
+        
+        if(count($sectores)>0 &&  count($sectores->listSubSectores)>0){
+            echo CJSON::encode( array(
+                        'result' => 'ok',
+                        'code' => 1,
+                        'htmlResponse' => $this->renderPartial('_sectorlista',array(
+                                        'sectores' => $sectores
+                           ),true,false)));
+        }else{
+            echo CJSON::encode( array(
+                        'result' => 'ok',
+                        'code' => 2,
+                        ));
+        }
+    }
+    
+    
+    public function actionGuardarCiudadSector(){
+         if (!Yii::app()->request->isPostRequest) {
+            throw new CHttpException(404, 'Solicitud inválida.');
+        }
+
+        $codigoCiudad = Yii::app()->getRequest()->getPost('codigoCiudad');
+        $codigoSector = Yii::app()->getRequest()->getPost('codigoSector');
+        $idModulo = Yii::app()->getRequest()->getPost('idModulo');
+        
+        $moduloSector = ModuloSectorCiudad::model()->find(array(
+                'condition' => 'CodigoCiudad =:codigoCiudad AND CodigoSector =:codigoSector AND idModulo=:idmodulo ',
+                'params' => array(
+                            'codigoCiudad' => $codigoCiudad,
+                            'codigoSector' => $codigoSector,
+                            'idmodulo' => $idModulo
+                )
+            ));
+        
+        if($moduloSector == null){
+            $moduloSector = new ModuloSectorCiudad();
+            $moduloSector->codigoCiudad=$codigoCiudad;
+            $moduloSector->codigoSector=$codigoSector;
+            $moduloSector->idModulo=$idModulo;
+            
+            if($moduloSector->save()){
+                $sectores= ModuloSectorCiudad::model()->findAll(array(
+                        'with' => array('objCiudad','objSector'),
+                        'condition' => 'idModulo =:idmodulo',
+                        'params' => array(
+                            'idmodulo' => $idModulo
+                        ),
+                        'order' => 'objCiudad.nombreCiudad,objSector.nombreSector'
+                    ));
+                
+                $html=$this->renderPartial('_listaSectoresCiudades',array(
+                    'sectores' => $sectores    
+                ),true, false);
+                   echo CJSON::encode(array(
+                       'result' => 'ok',
+                       'response' => $html
+                   ));
+            }else{
+                echo CJSON::encode(array(
+                       'result' => 'error',
+                       'response' => "Error al guardar la ciudad/sector"
+                   ));
+            }
+        }else{
+            echo CJSON::encode(array(
+                       'result' => 'error',
+                       'response' => "El sector ya tiene referencia"
+                   ));
+        }
+    }
+    
+    
+    public function actionEliminarCiudadSector(){
+        if (!Yii::app()->request->isPostRequest) {
+            throw new CHttpException(404, 'Solicitud inválida.');
+        }
+        
+        $idModuloSector = Yii::app()->getRequest()->getPost('idModuloSectorCiudad');
+        
+        $moduloSector = ModuloSectorCiudad::model()->find(array(
+                'condition' => 'idModuloSectorCiudad =:idmodulosector',
+                'params' => array(
+                            'idmodulosector' => $idModuloSector
+                )
+            ));
+        
+        if($moduloSector != null){
+            $idModulo=$moduloSector->idModulo;
+            $moduloSector->delete();
+            
+            $sectores= ModuloSectorCiudad::model()->findAll(array(
+                        'with' => array('objCiudad','objSector'),
+                        'condition' => 'idModulo =:idmodulo',
+                        'params' => array(
+                            'idmodulo' => $idModulo
+                        )));
+                
+                $html=$this->renderPartial('_listaSectoresCiudades',array(
+                    'sectores' => $sectores    
+                ),true, false);
+                   echo CJSON::encode(array(
+                       'result' => 'ok',
+                       'response' => $html
+                   ));
+        }else{
+             echo CJSON::encode(array(
+                       'result' => 'error',
+                       'response' => "No se ha encontrado la ciudad/sector a eliminar"
+                   ));
+        }
+        
+    }
+    
+    
+    public function actionFormUbicacionCategoria($ubicacion=null){
+        
+        if($ubicacion == UbicacionModulos::UBICACION_ESCRITORIO_DIVISION || $ubicacion == UbicacionModulos::UBICACION_ESCRITORIO_CATEGORIA ){
+            $model = new UbicacionCategoria();
+            
+            
+            $this->renderPartial('_formUbicacionCategoria', array(
+                    'model' => $model
+            ));
+        }
+    }
+    
 
     public function botonesDeshabilitados($model)
     {

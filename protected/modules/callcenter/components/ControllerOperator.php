@@ -40,8 +40,7 @@ class ControllerOperator extends CController {
         Yii::app()->getClientScript()->registerScriptFile(Yii::app()->request->baseUrl . '/libs/charisma/js/jquery.uploadify-3.1.min.js', CClientScript::POS_END);
         //Yii::app()->getClientScript()->registerScriptFile(Yii::app()->request->baseUrl . '/libs/charisma/js/jquery.history.js', CClientScript::POS_END);
         Yii::app()->getClientScript()->registerScriptFile(Yii::app()->request->baseUrl . '/libs/charisma/js/charisma.js', CClientScript::POS_END);
-        //Yii::app()->getClientScript()->registerScriptFile(Yii::app()->request->baseUrl . '/js/operator.js', CClientScript::POS_END);
-        
+     //   Yii::app()->getClientScript()->registerScriptFile(Yii::app()->request->baseUrl . '/js/operator.js', CClientScript::POS_END);
         
         Yii::app()->getClientScript()->registerScriptFile(Yii::app()->request->baseUrl . '/libs/loading/js/Loading.js', CClientScript::POS_END);
         Yii::app()->getClientScript()->registerScriptFile(Yii::app()->request->baseUrl . '/libs/bootbox.min.js', CClientScript::POS_END);
