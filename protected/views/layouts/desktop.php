@@ -22,7 +22,6 @@
             <div class="container-fluid">
                 <header>
                         <div class="row">
-                                <div class="col-md-12">	
                                         <!--logo-->
                                         <div class="col-md-2">
                                                 <a class="navbar-brand logo-top"  title="Drogueria - La Rebaja Virtual" alt="logo - La Rebaja" href="<?php echo Yii::app()->baseUrl?>"><img src="<?php echo Yii::app()->request->baseUrl; ?>/images/logotop.png" alt="La rebaja virtual"></a>
@@ -30,7 +29,6 @@
 
                                         <div class="col-md-10">
                                                 <div class="row">
-                                                        <div class="col-md-12">
                                                                 <div class="col-md-2">
                                                                      <!-- <div class="dropdown ciudad">
                                                                                  <a id="ciudad" data-target="#" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Ciudad&nbsp;&nbsp;&nbsp;|<span class="glyphicon glyphicon-arrow-down"></span></a>
@@ -119,11 +117,10 @@
                                                                         <?php $this->renderPartial('/carro/d_canasta'); ?>
                                                                     </div>  
                                                                 </div>
-                                                        </div>
+                                                                
                                                 </div>
                                         </div>
-
-                                </div>
+                                        
                         </div>
                 </header>
         </div>
