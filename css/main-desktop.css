@@ -69,10 +69,10 @@ header {
     width: 16px;
 }
 .user{
-    width: 270px;
+   /* width: 270px;*/
     margin-top: 25px;
-    padding: 0 40px;
-    position: absolute;
+    padding: 0;
+   */ position: absolute;*/
 }
 .user li{
     display: inline-block;
