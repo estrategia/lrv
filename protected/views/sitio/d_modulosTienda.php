@@ -35,7 +35,7 @@
             <section>
                 <div class="container">
 
-                    <div class="row-fluid">
+                    <div class="row">
                         <div class="col-md-12 title">
                             <span><i class="glyphicon glyphicon-chevron-right"></i></span>
                             <strong class="productos-destacados"><?php echo $objModulo->descripcion ?></strong>
@@ -66,7 +66,7 @@
                 <div class="container-fluid">
                     <div class="row">
                         <?php foreach ($objModulo->listImagenesBanners as $imagenes): ?>
-                            <div class="col-md-4 padding6px">
+                            <div class="col-sm-4 padding6px">
                                 <?php if ($imagenes->tipoContenido == 1): ?>
                                     <a href="<?php echo $imagenes->contenido ?>">
                                         <img style="width:100%;" src="<?php echo Yii::app()->request->baseUrl . $imagenes->rutaImagen; ?>" alt="<?php echo $imagenes->nombre ?>" />
