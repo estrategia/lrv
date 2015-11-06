@@ -131,6 +131,7 @@
         <!-- Modal para comparación de productos -->
            
         <!--menu-->
+        <nav class="main_menu">
         <ul class="nav nav-justified" role="tablist">
     <li class="dropdown categorias" role="presentation">
 	<a id="categorias" href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Categorías<span class="ico-cat"></span></a>
@@ -164,6 +165,7 @@
                 </li>
               <?php endforeach;?>
         </ul>
+        </nav>
         <!--fin menu-->
        <!-- <div class="container"> -->
             <?php echo $content; ?>
