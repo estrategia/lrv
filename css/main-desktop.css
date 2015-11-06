@@ -72,7 +72,8 @@ header {
    /* width: 270px;*/
     margin-top: 25px;
     padding: 0;
-   */ position: absolute;*/
+    float:left;
+   /* position: absolute;*/
 }
 .user li{
     display: inline-block;
