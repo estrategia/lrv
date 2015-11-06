@@ -1,5 +1,4 @@
 <?php foreach ($modulosTienda as $ubicacionModulo): ?>
-    <section>
         <?php $objModulo = $ubicacionModulo->objModulo ?>
         <?php if ($objModulo->tipo == 1): ?>
             <section class="block">
@@ -33,8 +32,8 @@
                 </div>
             </section>
         <?php elseif ($objModulo->tipo == 2): ?>
-            <div class="container">
-                <section>
+            <section>
+                <div class="container">
 
                     <div class="row-fluid">
                         <div class="col-md-12 title">
@@ -42,9 +41,7 @@
                             <strong class="productos-destacados"><?php echo $objModulo->descripcion ?></strong>
                         </div>
                     </div>
-                </section>
-
-                <br>
+                
                 <div id="owl-demo" class="owl-carousel">
 
                     <?php foreach ($objModulo->listProductosModulos as $listProductosModulos): ?>
@@ -63,12 +60,13 @@
                     <?php endforeach; ?>
                 </div>
             </div>
+            </section>
         <?php elseif ($objModulo->tipo == 3): ?>
-            <section>	
-                <div class="row">	
-                    <div class="col-md-12">
+            <section>
+                <div class="container-fluid">
+                    <div class="row">
                         <?php foreach ($objModulo->listImagenesBanners as $imagenes): ?>
-                            <div class="col-md-4">
+                            <div class="col-md-4 padding6px">
                                 <?php if ($imagenes->tipoContenido == 1): ?>
                                     <a href="<?php echo $imagenes->contenido ?>">
                                         <img style="width:100%;" src="<?php echo Yii::app()->request->baseUrl . $imagenes->rutaImagen; ?>" alt="<?php echo $imagenes->nombre ?>" />
@@ -88,6 +86,5 @@
                 </div>
             </section>
         <?php endif; ?>
-    </section>
     <br/>
 <?php endforeach; ?>
