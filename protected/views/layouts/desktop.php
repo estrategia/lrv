@@ -56,10 +56,11 @@
                                                                 </div>
                                                                 <div class="col-md-6">
                                                                     <form method="get" action="<?php echo CController::createUrl('/catalogo/buscar') ?>">
-                                                                                <div class="col-md-6 content-search">
+                                                                    	<div class="row">
+                                                                                <div class="col-md-5 content-search">
                                                                                     <input type="text" class="form-control" placeholder="Escriba el nombre del producto"  autocomplete="off" value="" id="busqueda" name="busqueda" > 
                                                                                 </div>
-                                                                                <div class="col-md-6 content-category">
+                                                                                <div class="col-md-7 content-category">
                                                                                         <div class="controls">	
                                                                                             <span>Todas las categor&iacute;as</span>
 											<span class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
@@ -75,6 +76,7 @@
 
 											<span><i><a href="#" id="btn-buscador-productos"><img class="ico-buscar" src="<?php echo Yii::app()->request->baseUrl; ?>/images/desktop/ico-buscar.png" alt=""></a></i></span>
 										</div>
+                                                                                </div>
                                                                                 </div>
                                                                          </form>
                                                                 </div>
