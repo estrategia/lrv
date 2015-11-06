@@ -42,7 +42,7 @@
                                                                                             <?php  endforeach; ?>   
                                                                                         </ul>
                                                                         </div> --> 
-                                                                     <ul class="user ">
+                                                                     <div class="top_ubicacion">
                                                                          <?php if(isset($this->sectorName)):?>
                                                                             <li>
                                                                                <?php echo $this->sectorName?>     
@@ -52,8 +52,7 @@
                                                                          <li>
                                                                         <?php echo CHtml::link('<span class="text-center title-desp"><span class="glyphicon glyphicon-map-marker" style="margin-right: 5px;"></span> '
                                                                                 . ' Cambiar Ubicación </span>', CController::createUrl('/sitio/ubicacion'), array()); ?>
-                                                                         </li>
-                                                                     </ul>
+                                                                      </div>
                                                                 </div>
                                                                 <div class="col-md-6">
                                                                     <form method="get" action="<?php echo CController::createUrl('/catalogo/buscar') ?>">
