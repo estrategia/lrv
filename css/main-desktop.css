@@ -1,3 +1,7 @@
+.content-category #btn-buscador-productos {
+    float: right;
+    margin-right: 4%;
+}
 .top_ubicacion {
     margin-top: 15px;
     text-align:center;
