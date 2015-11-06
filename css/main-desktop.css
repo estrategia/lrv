@@ -1,3 +1,7 @@
+.main_menu ul li a {
+    display: block;
+    padding: 1px 15px;
+}
 .padding6px {
     padding-left: 6px;
     padding-right: 6px;
