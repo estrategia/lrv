@@ -1,5 +1,13 @@
-
-
+.padding6px {
+    padding-left: 6px;
+    padding-right: 6px;
+}
+.padding6px:first-child {
+    padding-left: 0;
+}
+.padding6px:last-child {
+    padding-right: 0;
+}
 .logo-top img{
     width:150px ;
 }
