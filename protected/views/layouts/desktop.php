@@ -44,12 +44,8 @@
                                                                         </div> --> 
                                                                      <div class="top_ubicacion">
                                                                          <?php if(isset($this->sectorName)):?>
-                                                                            <li>
-                                                                               <?php echo $this->sectorName?>     
-                                                                            </li>
+                                                                               <?php echo $this->sectorName?>
                                                                          <?php endif;?>
-                                                                         <br/>
-                                                                         <li>
                                                                         <?php echo CHtml::link('<span class="text-center title-desp"><span class="glyphicon glyphicon-map-marker" style="margin-right: 5px;"></span> '
                                                                                 . ' Cambiar Ubicación </span>', CController::createUrl('/sitio/ubicacion'), array()); ?>
                                                                       </div>
@@ -61,20 +57,20 @@
                                                                                     <input type="text" class="form-control" placeholder="Escriba el nombre del producto"  autocomplete="off" value="" id="busqueda" name="busqueda" > 
                                                                                 </div>
                                                                                 <div class="col-md-7 content-category">
-                                                                                        <div class="controls">	
-                                                                                            <span>Todas las categor&iacute;as</span>
+                                                                                        <div class="controls">
 											<span class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
+												Todas las categor&iacute;as
 												<i><a href="#"><img src="<?php echo Yii::app()->request->baseUrl; ?>/images/desktop/ico-filtro-categorias.png"></a></i></span>
 												<ul class="dropdown-menu todas-categorias" aria-labelledby="categorias">
                                                                                                <?php foreach($this->categorias as $categoria):?>
                                                                                                     <li>
                                                                                                         <input type="checkbox" name="categoriasBuscador[<?php echo $categoria->idCategoriaTienda ?>]" id="categoriasBuscador_<?php echo $categoria->idCategoriaTienda ?>" value="<?php echo $categoria->idCategoriaTienda ?>">
-                                                                                                        <label for="categoriasBuscador_<?php echo $categoria->idCategoriaTienda ?>" class="clst_check"><span></span> <img src="<?php echo Yii::app()->request->baseUrl; ?>/images/desktop/<?php echo $categoria->rutaImagen?>" alt=""><?php echo $categoria->nombreCategoriaTienda?></label>
+                                                                                                        <label for="categoriasBuscador_<?php echo $categoria->idCategoriaTienda ?>" class="clst_check"><span></span> <img src="<?php echo Yii::app()->request->baseUrl; ?>/images/desktop/<?php echo $categoria->rutaImagen?>" alt="" class="data-label"><?php echo $categoria->nombreCategoriaTienda?></label>
                                                                                                     </li>
                                                                                                <?php endforeach;?>     
 										        </ul>
 
-											<span><i><a href="#" id="btn-buscador-productos"><img class="ico-buscar" src="<?php echo Yii::app()->request->baseUrl; ?>/images/desktop/ico-buscar.png" alt=""></a></i></span>
+											<a href="#" id="btn-buscador-productos"><img class="ico-buscar" src="<?php echo Yii::app()->request->baseUrl; ?>/images/desktop/ico-buscar.png" alt=""></a>
 										</div>
                                                                                 </div>
                                                                                 </div>
