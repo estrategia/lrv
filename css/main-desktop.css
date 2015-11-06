@@ -92,7 +92,8 @@ header {
     width: 33px;
 }
 .info-compra {
-    float:right;
+    float: right;
+    margin-right: 10px;
     margin-top: 13px;
 }
 .content-category{padding-left: 0px;}
