@@ -131,8 +131,8 @@
         <!-- Modal para comparación de productos -->
            
         <!--menu-->
-        <ul class="nav nav-pills" role="tablist">
-    <li class="dropdown col-md-2 categorias" role="presentation">
+        <ul class="nav nav-justified" role="tablist">
+    <li class="dropdown categorias" role="presentation">
 	<a id="categorias" href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Categorías<span class="ico-cat"></span></a>
         <ul class="dropdown-menu category" aria-labelledby="categorias">
                      <?php foreach($this->categorias as $categoria):?>
