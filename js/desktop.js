@@ -4,7 +4,7 @@
  * and open the template in the editor.
  */
  $('#items-page').select2();
- $('.viewsList .btn').click(function(){
+$('.viewsList .btn').click(function(){
  	atribu=$(this).attr('data-type');
  	if (atribu=='lineal') {
  		$('#lista-productos').removeClass('list_cuadricula');
@@ -13,5 +13,12 @@
  		$('#lista-productos.list_lineal .listaProductos li .content-txt2 .img-list-products').addClass('col-sm-3');
  		$('#lista-productos.list_lineal .listaProductos li .content-txt2 .content_product').addClass('col-sm-5');
  		$('#lista-productos.list_lineal .listaProductos li .content-txt2 .botones-list').addClass('col-sm-4');
+ 	}else{
+ 		$('#lista-productos').removeClass('list_lineal');
+ 		$('#lista-productos').addClass('list_cuadricula')
+ 		$('#lista-productos.list_cuadricula .listaProductos li .content-txt2').removeClass('row');
+ 		$('#lista-productos.list_cuadricula .listaProductos li .content-txt2 .img-list-products').removeClass('col-sm-3');
+ 		$('#lista-productos.list_cuadricula .listaProductos li .content-txt2 .content_product').removeClass('col-sm-5');
+ 		$('#lista-productos.list_cuadricula .listaProductos li .content-txt2 .botones-list').removeClass('col-sm-4');
  	}
  });
