@@ -2,13 +2,13 @@
     <?php if ($vista == "relacionado"): ?>
         <div class="col-md-12 border-left">
         <?php elseif ($vista == "comparacion"): ?>
-            <div class="col-md-2 border-left" id="comparacion-producto-<?php echo $data->codigoProducto ?>">
+            <div class="col-md-<?php echo $colums; ?> border-left" id="comparacion-producto-<?php echo $data->codigoProducto ?>">
             <?php endif; ?>
         <?php else: ?>    
             <div class="col-md-3 border-left" >
             <?php endif; ?>
 
-            <div class="col-md-12 content-txt2">
+            <div class=" content-txt2">
                 <?php
                 $objSectorCiudad = Yii::app()->shoppingCart->getobjSectorCiudad();?>        
                 <?php $objPrecio = new PrecioProducto($data, $objSectorCiudad, Yii::app()->shoppingCart->getCodigoPerfil()); ?>
@@ -26,7 +26,7 @@
                 </div>
 
                 <?php if (!in_array($data->idUnidadNegocioBI, Yii::app()->params->calificacion['categoriasNoCalificacion'])): ?>
-                    <div class="col-md-12" style="text-align:center">
+                    <div class="" style="text-align:center">
                         <div class="ranking-list" >
                             <div id="raty-lectura-producto-<?php echo $data->codigoProducto ?>" data-role="raty" data-readonly="true" data-score="<?php echo $data->getCalificacion() ?>"></div>
                     <?php if ($data->objCodigoEspecial->rutaIcono != ""): ?>
@@ -37,7 +37,7 @@
                         </div>
                     </div>
                 <?php endif; ?>
-                <div class="col-md-12">
+                <div class="">
                     <div class="line-bottom">
                         <p style="min-height: 41px">
                             <a href="<?php echo CController::createUrl('/catalogo/producto', array('producto' => $data->codigoProducto,'descripcion'=>  $data->getCadenaUrl())) ?>" title='<?php echo $data->descripcionProducto ?>' data-ajax="false">
@@ -84,17 +84,17 @@
                     <br/> PRODUCTO FRACCIONADO
                 <?php endif; ?> 
                 <?php if ($data->ventaVirtual == 1 && $objPrecio->inicializado()): ?>
-                    <div class="col-md-12">
+                    <div class="row">
                         <button class="col-md-3" style="border:0px solid;" data-role="disminuir-cantidad" id="disminuir-unidad-<?php echo $data->codigoProducto ?>" data-producto="<?php echo $data->codigoProducto ?>" data-precio="<?= $objPrecio->getPrecio(Precio::PRECIO_UNIDAD) ?>" type="button"><span style="color:red" class="glyphicon glyphicon-minus"></span></button>
                         <div class="col-md-6 ressete">
                             <input id="cantidad-producto-unidad-<?php echo $data->codigoProducto ?>" class="increment" type="text" onchange="validarCantidadUnidad(<?php echo $data->codigoProducto ?>,<?= $objPrecio->getPrecio(Precio::PRECIO_UNIDAD) ?>)" maxlength="3" value="1" data-total="700"/>
                         </div>
                         <button class="col-md-3" style="border:0px solid;" data-role="aumentar-cantidad"  id="aumentar-unidad-<?php echo $data->codigoProducto ?>" data-producto="<?php echo $data->codigoProducto ?>" data-precio="<?= $objPrecio->getPrecio(Precio::PRECIO_UNIDAD) ?>" type="button"><span style="color:red" class="glyphicon glyphicon-plus"></span></button>
                     </div>
-                    <div class="col-md-12">
+                    <div class="">
                     <?php echo CHtml::link('<div class="button">Añadir <img src="' . Yii::app()->baseUrl . '/images/desktop/button-carrito.png" alt=""></div>', '#', array('data-producto' => $data->codigoProducto, 'data-cargar' => 1)); ?>
                     </div>
-                    <div class="col-md-12">	
+                    <div class="">	
                         <a href="#" data-tipo="1" data-role="lstpersonalguardar" data-codigo="<?php echo $data->codigoProducto ?>">
                             <div class="button-lista"   >Añadir a lista&nbsp;&nbsp;<span class="glyphicon glyphicon-pencil" aria-hidden="true"></span>
                             </div>
@@ -102,16 +102,16 @@
                     </div>
 
                         <?php if (isset($vista) && $vista == "comparacion"): ?>
-                        <div class="col-md-12 btnQuitarComparar">
+                        <div class=" btnQuitarComparar">
                         <?php echo CHtml::link('<div class="button">Quitar elemento <img src="' . Yii::app()->baseUrl . '/images/desktop/carrito-amarillo.png" alt=""></div>', '#', array('data-producto' => $data->codigoProducto, 'data-role' => 'quitarComparar')); ?>
                         </div>
                         <?php elseif (!isset($vista)): ?>
-                        <div class="col-md-12 btnComparar">
+                        <div class=" btnComparar">
                         <?php echo CHtml::link('<div class="button">Comparar <img src="' . Yii::app()->baseUrl . '/images/desktop/carrito-amarillo.png" alt=""></div>', '#', array('data-producto' => $data->codigoProducto, 'data-role' => 'comparar')); ?>
                         </div>
                     <?php endif; ?>
                     <?php else: ?>
-                    <div class="col-md-12">
+                    <div class="">
                     <?php echo CHtml::link('<div class="button">Ver producto</div>', CController::createUrl('/catalogo/producto', array('producto' => $data->codigoProducto))); ?>
                     </div>
                 <?php endif; ?>    
