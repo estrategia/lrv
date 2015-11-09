@@ -19,7 +19,7 @@
                         </div>
                     </div>
                 <?php endif; ?>
-                <div class="">
+                <div class="img-list-products">
                     <a href="<?php echo CController::createUrl('/catalogo/producto', array('producto' => $data->codigoProducto,'descripcion'=>  $data->getCadenaUrl() )) ?>">
                         <img src="<?php echo Yii::app()->request->baseUrl . $data->rutaImagen(); ?>" class="img-responsive product-prom">
                     </a>
