@@ -14,6 +14,8 @@
                                     No hay productos para comparar
                                 </div>
                             <?php else:?>
+                            <ul class="listaProductos">
+                            <div class="items">
                             <?php
                               $countComparacion=count($listaProductos);
                               if ($countComparacion<=3) {
@@ -30,6 +32,8 @@
                                         ));?>
 
                           <?php endforeach;?>
+                          </div>
+                        </ul>
                           <?php endif; ?>
                         </div>
                     </section>
