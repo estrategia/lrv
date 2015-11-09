@@ -31,17 +31,15 @@
                         <img src="<?php echo Yii::app()->request->baseUrl . $imagenBusqueda; ?>" class="ajustada">
                     <?php endif; ?>
                     <?php if ($dataprovider!=null && !empty($dataprovider->getData())): ?>   
-                        <div class="col-md-2">    
+                        <div class="col-md-offset-8 col-md-4">    
                             <div class="option-list">
                                 <select name="items-page" class="form-control"id="items-page" onchange="actualizarNumerosPagina()">
                                     <?php foreach(Yii::app()->params->busqueda['productosPorPagina'] as $pagina):?>
                                         <option value="<?php echo $pagina?>" <?php echo (($dataprovider != null && $dataprovider->getPagination()->getPageSize() == $pagina) ? "selected" : "") ?>><?php echo $pagina?></option>
                                     <?php endforeach;?>
                                 </select>
-                            </div>
-                        </div>
-                        <div class="col-md-2">    
-                            <div class="btn-group">
+                            </div>  
+                            <div class="btn-group viewsList">
                                 <button class="btn-white btn" data-type="cuadricula" type="button"><span  class="glyphicon glyphicon-th" alt="Cuadricula"></span></button>
                                 <button class="btn-white btn" data-type="lineal" type="button"><span  class="glyphicon glyphicon-th-list" alt="Cuadricula"></span></button>
                             </div>
