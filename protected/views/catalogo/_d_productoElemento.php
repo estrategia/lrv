@@ -114,7 +114,7 @@
                         </div>
                         <?php elseif (!isset($vista)): ?>
                         <div class=" btnComparar">
-                        <?php echo CHtml::link('<div class="button">Comparar <img src="' . Yii::app()->baseUrl . '/images/desktop/carrito-amarillo.png" alt=""></div>', '#', array('data-producto' => $data->codigoProducto, 'data-role' => 'comparar')); ?>
+                        <?php echo CHtml::link('<div class="button">Comparar <img src="' . Yii::app()->baseUrl . '/images/desktop/button-carrito.png" alt=""></div>', '#', array('data-producto' => $data->codigoProducto, 'data-role' => 'comparar')); ?>
                         </div>
                     <?php endif; ?>
                     <?php else: ?>
