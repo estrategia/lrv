@@ -1,3 +1,8 @@
+.btn-pagar a.btn {
+    background: #ed1c24 none repeat scroll 0 0;
+    border: 0 none;
+    border-radius: 0;
+}
 .carro-descripcion  a {
     color: #666666;
 }
@@ -9,7 +14,7 @@
 }
 .minicar .vermasc > a {
     background-color: #e6e6e6;
-    color: #e10019;
+    color: #ed1c24;
     text-align: center;
     font-size: 13px;
 }
@@ -21,12 +26,12 @@
     font-size: 19px;
 }
 .minicar .vermasc > a:hover {
-    background-color: #e10019;
+    background-color: #ed1c24;
     background-image: none;
     color: #ffffff;
 }
 .carro-descripcion  span {
-    color: #e10019;
+    color: #ed1c24;
     font-size: 14px;
     font-weight: bold;
 }
@@ -57,12 +62,12 @@
     box-shadow: none;
     width: 200px;
     z-index: 10000;
-    border: 1px solid #e10019;
+    border: 1px solid #ed1c24;
     padding-top: 0;
 }
 
 .info-compra .minicar .dropdown-menu .top {
-    background-color: #e10019;
+    background-color: #ed1c24;
     border-radius: 5px 0 0;
     color: #ffffff;
     font-size: 12px;
