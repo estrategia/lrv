@@ -31,8 +31,9 @@
                         <img src="<?php echo Yii::app()->request->baseUrl . $imagenBusqueda; ?>" class="ajustada">
                     <?php endif; ?>
                     <?php if ($dataprovider!=null && !empty($dataprovider->getData())): ?>   
-                        <div class="col-md-offset-8 col-md-4">    
+                        <div class="col-xs-12">    
                             <div class="option-list">
+                                Productos por página
                                 <select name="items-page" class="form-control"id="items-page" onchange="actualizarNumerosPagina()">
                                     <?php foreach(Yii::app()->params->busqueda['productosPorPagina'] as $pagina):?>
                                         <option value="<?php echo $pagina?>" <?php echo (($dataprovider != null && $dataprovider->getPagination()->getPageSize() == $pagina) ? "selected" : "") ?>><?php echo $pagina?></option>
