@@ -1,11 +1,11 @@
 <?php if (isset($vista)): ?>
     <?php if ($vista == "relacionado"): ?>
-        <div class="col-md-12 border-left">
+        <li class="col-md-12 border-left">
         <?php elseif ($vista == "comparacion"): ?>
-            <div class="col-md-<?php echo $colums; ?> border-left" id="comparacion-producto-<?php echo $data->codigoProducto ?>">
+            <li class="col-md-<?php echo $colums; ?> border-left" id="comparacion-producto-<?php echo $data->codigoProducto ?>">
             <?php endif; ?>
         <?php else: ?>    
-            <div class="col-md-3 border-left" >
+            <li class="border-left" >
             <?php endif; ?>
 
             <div class=" content-txt2">
@@ -37,7 +37,7 @@
                         </div>
                     </div>
                 <?php endif; ?>
-                <div class="">
+                <div class="content_product">
                     <div class="line-bottom">
                         <p style="min-height: 41px">
                             <a href="<?php echo CController::createUrl('/catalogo/producto', array('producto' => $data->codigoProducto,'descripcion'=>  $data->getCadenaUrl())) ?>" title='<?php echo $data->descripcionProducto ?>' data-ajax="false">
@@ -59,7 +59,7 @@
                     <!-- Precio del producto -->
                     <?php if ($objPrecio->inicializado()): ?>
                         <?php if ($data->mostrarAhorroVirtual == 1 && $objPrecio->getAhorro(Precio::PRECIO_UNIDAD) > 0 && $objSectorCiudad->objCiudad->excentoImpuestos != 1): ?>
-                            <div class=""> 
+                            <div class="prices_status"> 
                                 <div class="price">
                                 <?php echo Yii::app()->numberFormatter->format(Yii::app()->params->formatoMoneda['patron'], $objPrecio->getPrecio(Precio::PRECIO_UNIDAD), Yii::app()->params->formatoMoneda['moneda']); ?>
                                 </div>
@@ -79,10 +79,11 @@
                         <?php endif; ?>
 
                     <?php endif; ?>
-                </div>
+                
                 <?php if ($data->fraccionado == 1): ?>
-                    <span class="fraccion_text"></span>PRODUCTO FRACCIONADO</span>
+                    <span class="fraccion_text">PRODUCTO FRACCIONADO</span>
                 <?php endif; ?> 
+                </div>
                 <?php if ($data->ventaVirtual == 1 && $objPrecio->inicializado()): ?>
                 
                     <div class="">
@@ -123,4 +124,4 @@
                     </div>
                 <?php endif; ?>    
             </div>  
-        </div>
+        </li>
