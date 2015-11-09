@@ -1,3 +1,26 @@
+.clear{
+    clear: both;
+}
+.listaProductos .items li {
+    display: inline-block;
+    margin-bottom: 30px;
+    width: 24%;
+}
+.content_product {
+    min-height: 190px;
+}
+.prices_status {
+    color: #9f9f9f;
+}
+.listaProductos .content-txt2 {
+    padding: 0 16px;
+}
+.listaProductos {
+    list-style: outside none none;
+    margin: 0;
+    padding: 0;
+    text-align: center;
+}
 .container-fluid.group-botones-cantidad {
     padding: 5px 15px;
 }
