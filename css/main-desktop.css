@@ -1,3 +1,13 @@
+.btn-addless-cantidad {
+    background: rgba(0, 0, 0, 0) none repeat scroll 0 0;
+    border: 1px solid #ccc;
+    color: #ea0001;
+    padding: 1px 10px;
+    width: 100%;
+}
+.btn-addless-cantidad span{
+    color: #ea0001;
+}
 .border-left:first-child {
     border: 0 none;
 }
