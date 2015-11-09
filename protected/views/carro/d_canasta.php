@@ -8,7 +8,7 @@
     <ul class="dropdown-menu noclose pull-right">
         <li class="top">Hay <?php echo Yii::app()->shoppingCart->getCount(); ?> producto(s) en el carro</li>
         <?php if (!Yii::app()->shoppingCart->isEmpty()): ?>
-            <?php if (Yii::app()->shoppingCart->getCount() > 1): ?>
+            <?php if (Yii::app()->shoppingCart->getCount() > 1):/* ?>
                 <li>
                     <?php echo CHtml::link('Editar carro', CController::createUrl('/carro'), array('class' => '')); ?>
                     <div class="subtotalCanasta">
@@ -24,8 +24,8 @@
                     </div>
                 </li>
                 <li role="separator" class="divider"></li>
-            <?php endif; ?>
-
+            <?php*/ endif; ?>
+            <div class="scroll">
             <?php foreach (Yii::app()->shoppingCart->getPositions() as $position): ?>
                 <li class="c_list_prod">
                     <div class="ui-field-contain clst_prod_cont">
@@ -36,24 +36,24 @@
                         ?>
                     </div>
                 </li>
+                <li role="separator" class="divider"></li>
             <?php endforeach; ?>
-
-
-
-            <li role="separator" class="divider"></li>
-
-            <li>
+            </div>
+            <li class="vermasc">
                 <?php echo CHtml::link('Editar carro', CController::createUrl('/carro'), array('class' => '')); ?>
-                <div class="subtotalCanasta">
-                    <p class="center">Subtotal pedido <?php echo Yii::app()->numberFormatter->format(Yii::app()->params->formatoMoneda['patron'], Yii::app()->shoppingCart->getCost(), Yii::app()->params->formatoMoneda['moneda']); ?></p>
-                    <?php echo CHtml::link('Pagar', CController::createUrl('/carro/pagar'), array('class' => '')); ?>
-
-                    <?php if (Yii::app()->session[Yii::app()->params->sesion['tipoEntrega']] == Yii::app()->params->entrega['tipo']['domicilio'] && Yii::app()->shoppingCart->getObjExpress() != null): ?>
-                        <?php echo CHtml::link('Pago Express', CController::createUrl('/carro/pagoexpress'), array('class' => '')); ?>
-                    <?php endif; ?>
-                    <?php if (!Yii::app()->user->isGuest): ?>
-                        <?php echo CHtml::link('Cotizar', "#", array('data-role' => 'crearcotizacion', 'class' => '')); ?>
-                    <?php endif; ?>
+            </li>
+            <li class="subtotal">Subtotal: <strong><?php echo Yii::app()->numberFormatter->format(Yii::app()->params->formatoMoneda['patron'], Yii::app()->shoppingCart->getCost(), Yii::app()->params->formatoMoneda['moneda']); ?></strong></li>
+            <li>
+                <div class="row btn-pagar">
+                    <div class="col-sm-12">
+                        <?php echo CHtml::link('Pagar', CController::createUrl('/carro/pagar'), array('class' => 'btn btn-danger')); ?>
+                        <?php if (Yii::app()->session[Yii::app()->params->sesion['tipoEntrega']] == Yii::app()->params->entrega['tipo']['domicilio'] && Yii::app()->shoppingCart->getObjExpress() != null): ?>
+                            <?php echo CHtml::link('Pago Express', CController::createUrl('/carro/pagoexpress'), array('class' => '')); ?>
+                        <?php endif; ?>
+                        <?php if (!Yii::app()->user->isGuest): ?>
+                            <?php echo CHtml::link('Cotizar', "#", array('data-role' => 'crearcotizacion', 'class' => '')); ?>
+                        <?php endif; ?>
+                    </div>
                 </div>
             </li>
         <?php else: ?>
@@ -65,7 +65,5 @@
                 </div>
             </li>
         <?php endif; ?>
-
-
     </ul>
 </div>
