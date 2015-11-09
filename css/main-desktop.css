@@ -1,3 +1,9 @@
+.option-list {
+    float: right;
+}
+.btn-group.viewsList {
+    float: right;
+}
 .clear{
     clear: both;
 }
