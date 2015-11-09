@@ -14,11 +14,19 @@
                                     No hay productos para comparar
                                 </div>
                             <?php else:?>
-                            <?php foreach($listaProductos as $codigo=> $producto):?>
+                            <?php
+                              $countComparacion=count($listaProductos);
+                              if ($countComparacion<=3) {
+                                $numc=4;
+                              }else{
+                                $numc=3;
+                              }
+                            foreach($listaProductos as $codigo=> $producto):?>
                                 <?php 
                                       $this->renderPartial('_d_productoElemento',array(
                                             'data' => $producto,
-                                            'vista' => 'comparacion'
+                                            'vista' => 'comparacion',
+                                            'colums'=>$numc
                                         ));?>
 
                           <?php endforeach;?>
