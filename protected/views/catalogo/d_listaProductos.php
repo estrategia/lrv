@@ -67,26 +67,19 @@
                 <?php endforeach; ?>
                 <div id="lista-productos" class="list_cuadricula">
                     <section>
-                        <div class="col-md-12">
-                            <div class="row">
-
-                                <ul class="listaProductos">
-                                    <?php
-                                    $this->widget('zii.widgets.CListView', array(
-                                        'id' => 'id-productos-list',
-                                        'dataProvider' => $dataprovider,
-                                        //'template' => "{items}\n{pager}",
-                                        //'summaryText' => "{start} - {end} из {count}",
-                                        'template' => "{summary}<div class='col-md-12'>{items}</div><br/><br/><div class='col-md-12'>{pager}</div>",
-                                        'itemView' => '_d_productoElemento',
-                                        'beforeAjaxUpdate' => new CJavaScriptExpression("function() {/*loadingClass(2); Loading.show();*/}"),
-                                        'afterAjaxUpdate' => new CJavaScriptExpression("function(id,data) { /*Loading.hide(); */raty();$('.pop_codigo').popover();}"),
-                                        'pager' => array('class' => 'CLinkPager', 'header' => ''),
-                                    ));
-                                    ?>
-                                </ul>
-                            </div>
-                        </div>
+                        <?php
+                        $this->widget('zii.widgets.CListView', array(
+                            'id' => 'id-productos-list',
+                            'dataProvider' => $dataprovider,
+                            //'template' => "{items}\n{pager}",
+                            //'summaryText' => "{start} - {end} из {count}",
+                            'template' => "{summary}<ul class='listaProductos'>{items}</ul><div class='clear'></div>{pager}",
+                            'itemView' => '_d_productoElemento',
+                            'beforeAjaxUpdate' => new CJavaScriptExpression("function() {/*loadingClass(2); Loading.show();*/}"),
+                            'afterAjaxUpdate' => new CJavaScriptExpression("function(id,data) { /*Loading.hide(); */raty();$('.pop_codigo').popover();}"),
+                            'pager' => array('class' => 'CLinkPager', 'header' => ''),
+                        ));
+                        ?>
                     </section>
                 </div>
             <?php endif; ?>
