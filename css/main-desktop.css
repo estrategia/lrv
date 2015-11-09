@@ -1,6 +1,87 @@
+.carro-descripcion  a {
+    color: #666666;
+}
+.minicar li.vermasc {
+    padding: 0;
+}
+.row.btn-pagar{
+    text-align: center;
+}
+.minicar .vermasc > a {
+    background-color: #e6e6e6;
+    color: #e10019;
+    text-align: center;
+    font-size: 13px;
+}
+.minicar li.subtotal {
+    font-size: 15px;
+    text-align: center;
+}
+.minicar li.subtotal strong {
+    font-size: 19px;
+}
+.minicar .vermasc > a:hover {
+    background-color: #e10019;
+    background-image: none;
+    color: #ffffff;
+}
+.carro-descripcion  span {
+    color: #e10019;
+    font-size: 14px;
+    font-weight: bold;
+}
+.minicar .divider {
+    margin: 0;
+    padding: 0 !important;
+}
+.carro-descripcion {
+    color: #777777;
+    font-size: 12px;
+    line-height: 17px;
+    text-align: left;
+}
+.scroll > li {
+    padding: 7px 2px;
+}
+.minicar .scroll {
+    height: 214px;
+    overflow-y: auto;
+}
 .info-compra .minicar .dropdown-toggle {
     box-shadow: none;
     text-decoration: none;
+}
+
+.info-compra .minicar .dropdown-menu {
+    border-radius: 6px 0 6px 6px;
+    box-shadow: none;
+    width: 200px;
+    z-index: 10000;
+    border: 1px solid #e10019;
+    padding-top: 0;
+}
+
+.info-compra .minicar .dropdown-menu .top {
+    background-color: #e10019;
+    border-radius: 5px 0 0;
+    color: #ffffff;
+    font-size: 12px;
+    text-align: center;
+}
+.info-compra .minicar .dropdown-menu > li {
+    padding: 9px 0;
+}
+
+.info-compra .minicar .dropdown-menu  li .carro-descripcion.sin-productos {
+    color: #808487;
+    padding: 10px 5px 0;
+    text-align: center;
+}
+.carro-descripcion {
+    color: #777777;
+    font-size: 12px;
+    line-height: 17px;
+    text-align: left;
 }
 .content-category #btn-buscador-productos {
     float: right;
@@ -712,10 +793,10 @@ label{
     padding-left: 5px;
 }
 .subtotal{
-    border-top: 1px dashed #999999;
+    /*border-top: 1px dashed #999999;
     padding: 6px 0px;
     color: red;
-    font-size: 18px;
+    font-size: 18px;*/
 }
 .anadir{
     font-size: 23px;
