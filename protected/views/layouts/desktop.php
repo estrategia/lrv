@@ -95,9 +95,9 @@
                                                                            </ul>
                                                                     <?php endif;?>
                                                                         <div class="info-compra" style="margin-right:0;">
-                                                                                <span><img class="ico-carrito" src="<?php echo Yii::app()->request->baseUrl; ?>/images/desktop/ico-carrito.png" alt=""></span>
-                                                                                <span id="cantidad-productos" class="cantidad-productos"><?php echo Yii::app()->shoppingCart->getCount(); ?></span>
-                                                                                <p style="color: #A3A3A3;">Productos</p>
+	                                                                        <div data-role="panel" id="div-carro-canasta">
+			                                                        	<?php $this->renderPartial('/carro/d_canasta'); ?>
+			                                                        </div>
                                                                         </div>
                                                                         <div class="info-compra">
                                                                                 <a href="#" data-role='compararProductos' data-opcion='comparar'>
@@ -110,9 +110,7 @@
                                                                                 <p style="color: #A3A3A3;">Productos</p>
                                                                         </div>
                                                                     
-                                                                    <div data-role="panel" id="div-carro-canasta">
-                                                                        <?php $this->renderPartial('/carro/d_canasta'); ?>
-                                                                    </div>  
+                                                                    
                                                                 </div>
                                                                 
                                                 </div>
