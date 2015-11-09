@@ -86,9 +86,9 @@
                 </div>
                 <?php if ($data->ventaVirtual == 1 && $objPrecio->inicializado()): ?>
                 
-                    <div class="">
+                    <div class="botones-list">
                     <?php echo CHtml::link('<div class="button">Añadir <img src="' . Yii::app()->baseUrl . '/images/desktop/carrito-amarillo.png" alt=""></div>', '#', array('data-producto' => $data->codigoProducto, 'data-cargar' => 1)); ?>
-                    </div>
+                   
                     <div class="container-fluid group-botones-cantidad">
                     <div class="row">
                         <div class="col-xs-3" style="padding-left:0;">
@@ -118,8 +118,9 @@
                         <?php echo CHtml::link('<div class="button">Comparar <img src="' . Yii::app()->baseUrl . '/images/desktop/button-carrito.png" alt=""></div>', '#', array('data-producto' => $data->codigoProducto, 'data-role' => 'comparar')); ?>
                         </div>
                     <?php endif; ?>
+                    </div>
                     <?php else: ?>
-                    <div style="margin-top:5px;">
+                    <div class="botones-list">
                     <?php echo CHtml::link('<div class="button">Ver producto</div>', CController::createUrl('/catalogo/producto', array('producto' => $data->codigoProducto))); ?>
                     </div>
                 <?php endif; ?>    
