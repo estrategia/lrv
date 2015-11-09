@@ -86,7 +86,7 @@
                 <?php if ($data->ventaVirtual == 1 && $objPrecio->inicializado()): ?>
                 
                     <div class="">
-                    <?php echo CHtml::link('<div class="button">Añadir <img src="' . Yii::app()->baseUrl . '/images/desktop/button-carrito.png" alt=""></div>', '#', array('data-producto' => $data->codigoProducto, 'data-cargar' => 1)); ?>
+                    <?php echo CHtml::link('<div class="button">Añadir <img src="' . Yii::app()->baseUrl . '/images/desktop/carrito-amarillo.png" alt=""></div>', '#', array('data-producto' => $data->codigoProducto, 'data-cargar' => 1)); ?>
                     </div>
                     <div class="container-fluid">
                     <div class="row">
@@ -110,7 +110,7 @@
 
                         <?php if (isset($vista) && $vista == "comparacion"): ?>
                         <div class=" btnQuitarComparar">
-                        <?php echo CHtml::link('<div class="button">Quitar elemento <img src="' . Yii::app()->baseUrl . '/images/desktop/carrito-amarillo.png" alt=""></div>', '#', array('data-producto' => $data->codigoProducto, 'data-role' => 'quitarComparar')); ?>
+                        <?php echo CHtml::link('<div class="button">Quitar elemento <img src="' . Yii::app()->baseUrl . '/images/desktop/button-carrito.png" alt=""></div>', '#', array('data-producto' => $data->codigoProducto, 'data-role' => 'quitarComparar')); ?>
                         </div>
                         <?php elseif (!isset($vista)): ?>
                         <div class=" btnComparar">
@@ -118,7 +118,7 @@
                         </div>
                     <?php endif; ?>
                     <?php else: ?>
-                    <div class="">
+                    <div style="margin-top:5px;">
                     <?php echo CHtml::link('<div class="button">Ver producto</div>', CController::createUrl('/catalogo/producto', array('producto' => $data->codigoProducto))); ?>
                     </div>
                 <?php endif; ?>    
