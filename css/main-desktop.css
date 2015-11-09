@@ -319,6 +319,7 @@ header {
 .price{
     font-size: 17px;
     color: #EA0001 !important;
+    padding:5px 0;
 }
 
 .txt{
@@ -637,7 +638,7 @@ footer li a:hover{
 
 .line-bottom{
     border-bottom: 1px dashed #9F9F9F;
-    padding-bottom: 5px;
+    padding: 5px 0;
 }
 .increment {
     border: 1px solid #ccc;
