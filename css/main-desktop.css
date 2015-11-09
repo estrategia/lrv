@@ -1,3 +1,7 @@
+.info-compra .minicar .dropdown-toggle {
+    box-shadow: none;
+    text-decoration: none;
+}
 .content-category #btn-buscador-productos {
     float: right;
     margin-right: 2%;
