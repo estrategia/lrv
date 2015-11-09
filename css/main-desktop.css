@@ -1,3 +1,9 @@
+.border-left:first-child {
+    border: 0 none;
+}
+#contenidoCompararProductos .content-txt2 {
+    padding: 0 5%;
+}
 .btn-pagar a.btn {
     background: #ed1c24 none repeat scroll 0 0;
     border: 0 none;
@@ -623,12 +629,12 @@ footer li a:hover{
     border-bottom: 1px dashed #9F9F9F;
     padding-bottom: 5px;
 }
-.increment{
-    width:100%;
-    text-align:center;
-    color: #CCCCCC;
+.increment {
+    border: 1px solid #ccc;
+    color: #ea0001;
     font-weight: bolder;
-    border: 2px solid #fff
+    text-align: center;
+    width: 100%;
 }
 .side{
     font-size: 15px;
