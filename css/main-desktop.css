@@ -88,8 +88,10 @@
     margin-right: 2%;
 }
 .top_ubicacion {
+    color: #6f6f6f;
+    font-size: 13px;
+    line-height: 13px;
     margin-top: 15px;
-    text-align:center;
 }
 header {
     color: #333;
