@@ -2,7 +2,7 @@
     <?php if ($vista == "relacionado"): ?>
         <li class="col-md-12 border-left">
         <?php elseif ($vista == "comparacion"): ?>
-            <li class="col-md-<?php echo $colums; ?> border-left" id="comparacion-producto-<?php echo $data->codigoProducto ?>">
+            <li class="--col-md-<?php echo $colums; ?> border-left" id="comparacion-producto-<?php echo $data->codigoProducto ?>">
             <?php endif; ?>
         <?php else: ?>    
             <li class="border-left" >
