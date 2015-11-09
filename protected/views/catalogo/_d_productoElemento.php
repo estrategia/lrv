@@ -53,7 +53,7 @@
                         <?php if (strlen($data->presentacionProducto) > 15): ?>
                             <span><?php echo substr($data->presentacionProducto, 0, 14) ?>...</span>
                         <?php else: ?>
-                            <?php echo $data->presentacionProducto ?>
+                            <span><?php echo $data->presentacionProducto; ?></span>
                         <?php endif; ?>
                     </div>
                     <!-- Precio del producto -->
@@ -69,7 +69,7 @@
                                 </p>
                             </div>
                         <?php else: ?>
-                            <div class="price" style="padding-bottom:1em;"><?php echo Yii::app()->numberFormatter->format(Yii::app()->params->formatoMoneda['patron'], $objPrecio->getPrecio(Precio::PRECIO_UNIDAD), Yii::app()->params->formatoMoneda['moneda']); ?> </div>
+                            <div class="price"><?php echo Yii::app()->numberFormatter->format(Yii::app()->params->formatoMoneda['patron'], $objPrecio->getPrecio(Precio::PRECIO_UNIDAD), Yii::app()->params->formatoMoneda['moneda']); ?> </div>
                         <?php endif; ?>
                         <?php if ($objPrecio->getFlete() > 0): ?>
                             <p>Flete: <span> <?php echo Yii::app()->numberFormatter->format(Yii::app()->params->formatoMoneda['patron'], $objPrecio->getFlete(), Yii::app()->params->formatoMoneda['moneda']); ?>]</span></p>
