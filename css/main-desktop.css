@@ -1,3 +1,10 @@
+.container-fluid.group-botones-cantidad {
+    padding: 5px 15px;
+}
+.fraccion_text {
+    display: block;
+    padding: 5px 0;
+}
 .btn-addless-cantidad {
     background: rgba(0, 0, 0, 0) none repeat scroll 0 0;
     border: 1px solid #ccc;
@@ -546,7 +553,7 @@ footer li a:hover{
     color: #6C6363;
     padding: 6px 12px;
     text-align: center;
-    margin-top: 5px;
+    margin-bottom: 5px;
 }
 .producto-fraccionado{
     background-color: #D2CECE;
