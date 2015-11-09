@@ -81,10 +81,14 @@
                     <?php endif; ?>
                 </div>
                 <?php if ($data->fraccionado == 1): ?>
-                    <br/> PRODUCTO FRACCIONADO
+                    <span class="fraccion_text"></span>PRODUCTO FRACCIONADO</span>
                 <?php endif; ?> 
                 <?php if ($data->ventaVirtual == 1 && $objPrecio->inicializado()): ?>
-                <div class="container-fluid">
+                
+                    <div class="">
+                    <?php echo CHtml::link('<div class="button">Añadir <img src="' . Yii::app()->baseUrl . '/images/desktop/button-carrito.png" alt=""></div>', '#', array('data-producto' => $data->codigoProducto, 'data-cargar' => 1)); ?>
+                    </div>
+                    <div class="container-fluid">
                     <div class="row">
                         <div class="col-xs-3" style="padding-left:0;">
                             <button class="btn-addless-cantidad" data-role="disminuir-cantidad" id="disminuir-unidad-<?php echo $data->codigoProducto ?>" data-producto="<?php echo $data->codigoProducto ?>" data-precio="<?= $objPrecio->getPrecio(Precio::PRECIO_UNIDAD) ?>" type="button"><span style="color:red" class="glyphicon glyphicon-minus"></span></button>
@@ -97,9 +101,6 @@
                         </div>
                     </div>
                 </div>
-                    <div class="">
-                    <?php echo CHtml::link('<div class="button">Añadir <img src="' . Yii::app()->baseUrl . '/images/desktop/button-carrito.png" alt=""></div>', '#', array('data-producto' => $data->codigoProducto, 'data-cargar' => 1)); ?>
-                    </div>
                     <div class="">	
                         <a href="#" data-tipo="1" data-role="lstpersonalguardar" data-codigo="<?php echo $data->codigoProducto ?>">
                             <div class="button-lista"   >Añadir a lista&nbsp;&nbsp;<span class="glyphicon glyphicon-pencil" aria-hidden="true"></span>
