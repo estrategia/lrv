@@ -14,12 +14,7 @@
         ))
     );
     ?>
-
-
-    <div id="div-filtro-marcas">
-        <?php $this->renderPartial('_d_formFiltroMarcas', array('formFiltro' => $formFiltro)) ?>
-    </div>
-
+    <?php $this->renderPartial('_d_formFiltroMarcas', array('formFiltro' => $formFiltro)) ?>
     <div id="div-filtro-atributos">
         <?php $this->renderPartial('_d_formFiltroAtributos', array('formFiltro' => $formFiltro)) ?>
     </div>
