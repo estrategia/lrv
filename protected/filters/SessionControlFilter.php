@@ -16,6 +16,7 @@ class SessionControlFilter extends CFilter {
     public $isMobile = true;
 
     protected function preFilter($filterChain) {
+        //Yii::app()->request->urlReferrer
         $sesionUbicacion = false;
         $sesionTipo = false;
 

@@ -19,7 +19,7 @@
                                     ?>
                                 <?php elseif ($imagenes->tipoContenido == 3): ?>
                                     <img src="<?php echo Yii::app()->request->baseUrl . $imagenes->rutaImagen; ?>" alt="<?php echo $imagenes->nombre ?>" />
-                            <?php endif; ?>
+                                <?php endif; ?>
                             </div>
                             <?php $i++ ?>
                         <?php endforeach; ?>
@@ -48,7 +48,7 @@
                 <div id="owl-demo" class="owl-carousel">
 
                     <?php foreach ($objModulo->listProductosModulos as $listProductosModulos): ?>
-                            <?php $objProducto = $listProductosModulos->objProducto ?>
+                        <?php $objProducto = $listProductosModulos->objProducto ?>
                         <div class="item"><?php
                             // hacer uso de _d_productoElemento
 
@@ -87,6 +87,8 @@
                     </div>
                 </div>
             </section>
+        <?php elseif ($objModulo->tipo == ModulosConfigurados::TIPO_PROMOCION_FLOTANTE): ?>
+            <a href="<?php echo $objModulo->contenido ?>" class="scroll-modulo-flotante"><?php echo $objModulo->descripcion ?></a>
         <?php endif; ?>
     </section>
     <br/>

@@ -1091,3 +1091,27 @@ ul.yiiPager .selected a {
     border: 1px dashed #ddd; 
     background-color: white;
 }
+
+.space-1 {
+    height: 10px;
+}
+
+.space-2 {
+    height: 20px;
+}
+
+.space-3 {
+    height: 30px;
+}
+
+.scroll-modulo-flotante {
+    width: 60px;
+    height: 60px;
+    position: fixed;
+    bottom: 30%;
+    right: 5px;
+    display: block;
+    text-indent: -9999px;
+    z-index: 9999;
+    background: url('../images/iconos/icon_module_link.png') no-repeat;
+}

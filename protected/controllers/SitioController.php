@@ -155,6 +155,24 @@ class SitioController extends Controller {
                 'objSectorCiudad' => $objSectorCiudad,
             ));
         } else {
+            //si no fue redireccionado por sessionfilter, se redirecciona a la pagina anterior
+            if(!isset(Yii::app()->session[Yii::app()->params->sesion['redireccionUbicacion']]) || Yii::app()->session[Yii::app()->params->sesion['redireccionUbicacion']]==null){
+                Yii::app()->session[Yii::app()->params->sesion['redireccionUbicacion']] = Yii::app()->request->urlReferrer;
+            }
+            
+            /*echo '<p>';
+            CVarDumper::dump(Yii::app()->request->urlReferrer);
+            echo '</p>';
+
+            echo '<p>';
+            CVarDumper::dump(Yii::app()->request->url);
+            echo '</p>';
+            
+            echo '<p>';
+            Yii::app()->session[Yii::app()->params->sesion['redireccionUbicacion']];
+            echo '</p>';
+            exit();*/
+            
             $this->render('d_ubicacion', array(
                 'listCiudadesSectores' => $listCiudadesSectores,
                 'listCiudadesSubsectores' => $listCiudadesSubsectores,
@@ -506,7 +524,11 @@ class SitioController extends Controller {
             if ($imagenBanner == null || $imagenBanner->tipoContenido != 2) {
                 throw new CHttpException(404, 'Contenido no disponible.');
             }
-            $contenidoHTML = trim($imagenBanner->contenido);
+            if($this->isMobile){
+                $contenidoHTML = trim($imagenBanner->contenidoMovil);
+            }else{
+                $contenidoHTML = trim($imagenBanner->contenido);
+            }
         } else if ($tipo == "modulo") {
             $objModulo = ModulosConfigurados::model()->find(array(
                 'condition' => 'idModulo=:modulo AND contenido IS NOT NULL',
@@ -518,7 +540,12 @@ class SitioController extends Controller {
             if ($objModulo == null) {
                 throw new CHttpException(404, 'Contenido no disponible.');
             }
-            $contenidoHTML = trim($objModulo->contenido);
+            
+            if($this->isMobile){
+                $contenidoHTML = trim($objModulo->contenidoMovil);
+            }else{
+                $contenidoHTML = trim($objModulo->contenido);
+            }
         } else {
             throw new CHttpException(404, 'Solicitud inv&aacute;lida.');
         }
