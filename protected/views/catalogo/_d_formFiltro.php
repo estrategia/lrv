@@ -57,7 +57,7 @@
             </div>
         </div>
     </div>
-
+    <br>
     <a href="#" data-role="filtro-listaproductos" ><div class="button">Filtrar</div></a>
     <br>
     <a href="#" data-role="filtro-listaproductos-reset" data-tipo="1" ><div class="button">Limpiar filtros</div></a>
