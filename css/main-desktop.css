@@ -1,3 +1,8 @@
+.conten_user_infor {
+    border-left: 1px solid #ccc;
+    padding-left: 20px;
+    padding-top: 0;
+}
 .container.content_user_info {
     margin: 50px;
 }
