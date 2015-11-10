@@ -91,13 +91,13 @@
                    
                     <div class="container-fluid group-botones-cantidad">
                     <div class="row">
-                        <div class="col-xs-3" style="padding-left:0;">
+                        <div class="col-xs-3" style="padding-left: 0px; padding-right: 2px;">
                             <button class="btn-addless-cantidad" data-role="disminuir-cantidad" id="disminuir-unidad-<?php echo $data->codigoProducto ?>" data-producto="<?php echo $data->codigoProducto ?>" data-precio="<?= $objPrecio->getPrecio(Precio::PRECIO_UNIDAD) ?>" type="button"><span style="color:red" class="glyphicon glyphicon-minus"></span></button>
                         </div>
                         <div class="col-xs-6 ressete">
                             <input id="cantidad-producto-unidad-<?php echo $data->codigoProducto ?>" class="increment" type="text" onchange="validarCantidadUnidad(<?php echo $data->codigoProducto ?>,<?= $objPrecio->getPrecio(Precio::PRECIO_UNIDAD) ?>)" maxlength="3" value="1" data-total="700"/>
                         </div>
-                        <div class="col-xs-3" style="padding-right:0;">
+                        <div class="col-xs-3" style="padding-left: 2px; padding-right: 0;">
                             <button class="btn-addless-cantidad" data-role="aumentar-cantidad"  id="aumentar-unidad-<?php echo $data->codigoProducto ?>" data-producto="<?php echo $data->codigoProducto ?>" data-precio="<?= $objPrecio->getPrecio(Precio::PRECIO_UNIDAD) ?>" type="button"><span style="color:red" class="glyphicon glyphicon-plus"></span></button>
                         </div>
                     </div>
