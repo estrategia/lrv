@@ -1,3 +1,6 @@
+.list_lineal .listaProductos .content-txt2 {
+    padding: inherit;
+}
 .list_lineal .listaProductos .items li {
     width: 100%;
 }
