@@ -572,5 +572,5 @@ $(document).on('click', "input[data-role='lstpersonalguardar']", function() {
 //para que funcionen los tool tips
 
 $(function() {
-    $('[data-toggle="tooltip"]').tooltip()
-})
+    $('[data-toggle="tooltip"]').tooltip();
+});

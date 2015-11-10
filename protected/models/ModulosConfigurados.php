@@ -165,7 +165,7 @@ class ModulosConfigurados extends CActiveRecord {
         if ($ubicacion == UbicacionModulos::UBICACION_ESCRITORIO_CATEGORIA && $categoria!=null) {
             return ModulosConfigurados::model()->find(array(
                         'with' => array('listUbicacionesModulos' => array('with'=>'listUbicacionesCategorias')),
-                        'condition' => "t.estado=:estado AND t.tipo =:tipo AND t.dias LIKE :dia AND t.inicio<=:fecha AND t.fin>=:fecha AND listUbicacionesModulos.ubicacion=:ubicacion AND listUbicacionesCategorias.idCategoriaBi IN (" . implode(",", $listIdsCategoriaBI) . ")",
+                        'condition' => "t.estado=:estado AND t.tipo =:tipo AND t.dias LIKE :dia AND t.inicio<=:fecha AND t.fin>=:fecha AND listUbicacionesModulos.ubicacion=:ubicacion AND listUbicacionesCategorias.idCategoriaBi = $categoria",
                         'params' => array(
                             ':estado' => 1,
                             ':tipo' => ModulosConfigurados::TIPO_PROMOCION_FLOTANTE,

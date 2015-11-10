@@ -485,7 +485,7 @@ class UsuarioController extends Controller {
                     if ($this->isMobile) {
                         $this->render('registro', array('model' => $model));
                     } else {
-                        $this->render('d_usuario', array('vista' => 'd_registro', 'params' => array('model' => $model)));
+                        $this->render('d_usuario', array('vista' => 'd_contrasena', 'params' => array('model' => $model)));
                     }
                     Yii::app()->end();
                 }
@@ -495,7 +495,7 @@ class UsuarioController extends Controller {
         if ($this->isMobile) {
             $this->render('registro', array('model' => $model));
         } else {
-            $this->render('d_usuario', array('vista' => 'd_registro', 'params' => array('model' => $model)));
+            $this->render('d_usuario', array('vista' => 'd_contrasena', 'params' => array('model' => $model)));
         }
     }
 
