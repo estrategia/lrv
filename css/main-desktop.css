@@ -1,3 +1,15 @@
+.list-view .pager ul li.selected a {
+    color: #fff;
+}
+.list-view .pager ul li a {
+    border: 1px solid red;
+    color: #6c6363;
+    font-size: 13px;
+    font-weight: normal;
+}
+.list-view .pager {
+    margin: 20px 0;
+}
 .list_lineal .listaProductos .content-txt2 {
     padding: inherit;
 }
