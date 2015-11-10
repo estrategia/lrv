@@ -1,3 +1,16 @@
+.menu-categorias #form-filtro-listaproductos .panel {
+    border-color: -moz-use-text-color -moz-use-text-color #ccc;
+    border-radius: 0;
+    border-style: none none solid;
+    border-width: 0 0 1px;
+    padding-bottom: 2px;
+}
+.menu-categorias #form-filtro-listaproductos .panel:last-child {
+    border-bottom: 0;
+}
+.menu-categorias #accordion-filtros {
+    margin-top: 20px;
+}
 .list-view .pager ul li.selected a {
     color: #fff;
 }
@@ -712,7 +725,7 @@ footer li a:hover{
     float: right;
     margin-top: -5px;
 
-}
+}/*
 .panel {
     border: none;
 }
@@ -722,11 +735,11 @@ footer li a:hover{
 }
 .panel-body{
     padding: 0px 8px;
-    /*border: 1px solid #E9E1E1;*/
+    /*border: 1px solid #E9E1E1;
 }
 .panel-body ul{
     padding: 5px;
-}
+}*/
 
 .line-bottom{
     border-bottom: 1px dashed #9F9F9F;
