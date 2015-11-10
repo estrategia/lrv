@@ -1,11 +1,52 @@
-.menu-categorias #form-filtro-listaproductos .panel {
+#form-ordenamiento-listaproductos .panel .panel-body ul li label span {
+    margin-left: -25px;
+}
+#form-ordenamiento-listaproductos input[type="radio"] {
+    display: none;
+}
+#form-ordenamiento-listaproductos input[type="radio"] + label span {
+    background: rgba(0, 0, 0, 0) url("../images/desktop/check-box.png") repeat scroll right center;
+    cursor: pointer;
+    display: inline-block;
+    height: 21px;
+    margin: -1px 4px 0 0;
+    vertical-align: middle;
+    width: 21px;
+}
+#form-ordenamiento-listaproductos input[type="radio"]:checked + label span {
+    background: rgba(0, 0, 0, 0) url("../images/desktop/check-box.png") repeat scroll left center;
+}
+#calificacion-filtro-listaproductos > img {
+    width: 17%;
+}
+
+.menu-categorias #form-filtro-listaproductos .panel .panel-body ul li label span {
+    margin-left: -29px;
+}
+
+.menu-categorias #form-filtro-listaproductos .panel .panel-body ul li label, #form-ordenamiento-listaproductos .panel .panel-body ul li label  {
+    padding-left: 29px;
+    cursor: pointer;
+}
+
+.menu-categorias #form-filtro-listaproductos .panel .panel-body ul, #form-ordenamiento-listaproductos .panel .panel-body ul  {
+    margin: 0;
+    padding: 0;
+}
+
+.menu-categorias #form-filtro-listaproductos .panel .panel-title a, #form-ordenamiento-listaproductos .panel .panel-title a {
+    outline: medium none;
+}
+
+.menu-categorias #form-filtro-listaproductos .panel, #form-ordenamiento-listaproductos .panel {
     border-color: -moz-use-text-color -moz-use-text-color #ccc;
     border-radius: 0;
     border-style: none none solid;
     border-width: 0 0 1px;
     padding-bottom: 2px;
 }
-.menu-categorias #form-filtro-listaproductos .panel:last-child {
+
+.menu-categorias #form-filtro-listaproductos .panel:last-child, #form-ordenamiento-listaproductos .panel:last-child {
     border-bottom: 0;
 }
 .menu-categorias #accordion-filtros {
