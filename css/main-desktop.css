@@ -1,3 +1,20 @@
+.nav.nav-pills.nav-stacked.menu-user li.active a {
+    background: #ea0001 none repeat scroll 0 0;
+    color: #fff;
+}
+.nav.nav-pills.nav-stacked.menu-user li a {
+    border-radius: 0 !important;
+    color: #6f6f6f;
+}
+.nav.nav-pills.nav-stacked.menu-user {
+    border: 1px solid #ccc;
+}
+.nav.nav-pills.nav-stacked.menu-user li {
+    border-bottom: 1px solid #ccc;
+}
+.nav.nav-pills.nav-stacked.menu-user li:last-child {
+    border-bottom: 0;
+}
 #select2-RegistroForm_profesion-container {
     color: #a3a3a3;
 }
