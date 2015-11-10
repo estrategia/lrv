@@ -86,7 +86,7 @@
                                                                             </ul>
                                                                     <?php else:?>
                                                                                 <?php $nombre=explode(" ",Yii::app()->session[Yii::app()->params->usuario['sesion']]->nombre."");?>
-                                                                           <ul class="user">
+                                                                           <ul class="user login_in">
                                                                                 <li>
                                                                                 <a href="<?= Yii::app()->request->baseUrl;?>/usuario/infoPersonal" class="">Hola <?php echo $nombre[0];?> (Mi cuenta)</a> 
                                                                                 <br>
