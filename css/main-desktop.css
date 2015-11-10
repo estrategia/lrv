@@ -1,3 +1,7 @@
+.categorias li a:hover li {
+    background-color: #dadada;
+    color: #e90000;
+}
 #form-ordenamiento-listaproductos .panel .panel-body ul li label span {
     margin-left: -25px;
 }
