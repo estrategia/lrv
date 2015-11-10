@@ -1,3 +1,6 @@
+.container.content_user_info {
+    margin: 50px;
+}
 .nav.nav-pills.nav-stacked.menu-user li.active a {
     background: #ea0001 none repeat scroll 0 0;
     color: #fff;
