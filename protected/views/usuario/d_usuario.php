@@ -4,7 +4,9 @@
             <?php $this->renderPartial('_d_menu'); ?>
         </div>
         <div class="col-md-9">
+            <div class="conten_user_infor">
             <?php $this->renderPartial($vista, $params); ?>
+            </div> 
         </div>  
     </div>
 </div>
