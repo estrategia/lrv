@@ -582,7 +582,7 @@ footer li a:hover{
 .content-txt2 span{
     color: #9f9f9f;
 }
-.nav-pills > li {
+.main_menu .nav-pills > li {
     height: 55px;
 }
 
@@ -618,16 +618,16 @@ footer li a:hover{
     font-size: 25px;
 }
 
-.nav > li > a:focus, .nav > li > a:hover {
+.main_menu .nav > li > a:focus, .main_menu .nav > li > a:hover {
     background: none;
 }
 
-.nav > li > a {
+.main_menu .nav > li > a {
     color: #fff;
     font-size: 25px;
 }
-.nav-pills > li + li {margin-left: 0px !important;}
-.nav .open > a, .nav .open > a:focus, .nav .open > a:hover {background: none;}
+.main_menu .nav-pills > li + li {margin-left: 0px !important;}
+.main_menu .nav .open > a, .main_menu .nav .open > a:focus, .main_menu .nav .open > a:hover {background: none;}
 
 .ico-cat{
     background-image: url('../images/desktop/ico-menu-categorias.png');
@@ -636,14 +636,14 @@ footer li a:hover{
     height: 19px;
     margin-left: 4px;
 }
-+
+/*
 .ico-mundo-bebe{
     background-image: url('../images/desktop/ico-mundo-bebe.png');
-    /*display: inline-block;*/
+    /*display: inline-block;
     width: 50px;
     height: 28px;
-    /*margin-left: 25px;*/
-}
+    /*margin-left: 25px;
+}*/
 .dropdown-menu.category {
     /*width: 16.6667%;*/
     margin-top: 0px;
