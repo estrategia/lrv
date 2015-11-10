@@ -1237,8 +1237,8 @@ li.active .iconStep {
 }
 .submenu .glyphicon {
     font-size: 15px;
+    margin-left: -19px;
     margin-right: 5px;
-
 }
 
 .todas-categorias{
