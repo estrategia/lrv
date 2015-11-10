@@ -89,7 +89,7 @@
                                                                            <ul class="user">
                                                                                 <li>
                                                                                 <a href="<?= Yii::app()->request->baseUrl;?>/usuario/infoPersonal" class="">Hola <?php echo $nombre[0];?> (Mi cuenta)</a> 
-                                                                                <span style="color:#A3A3A3;">|</span>
+                                                                                <br>
                                                                                 <a href="<?= Yii::app()->request->baseUrl;?>/usuario/salir" class=""><span class="glyphicon glyphicon-log-out"></span> Cerrar sesion</a> 
                                                                                </li>
                                                                            </ul>
