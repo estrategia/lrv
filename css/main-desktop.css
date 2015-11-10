@@ -1,3 +1,9 @@
+#select2-RegistroForm_profesion-container {
+    color: #a3a3a3;
+}
+input#RegistroForm_condiciones[type="checkbox"] + label span {
+    background: rgba(0, 0, 0, 0) none repeat scroll 0 0;
+}
 .user.login_in {
     margin-top: 17px;
 }
