@@ -1,6 +1,5 @@
 
 <?php foreach ($modulosTienda as $ubicacionModulo): ?>
-    <section>
         <?php $objModulo = $ubicacionModulo->objModulo ?>
         <?php if ($objModulo->tipo == ModulosConfigurados::TIPO_BANNER): ?>
             <section class="block">
@@ -33,20 +32,18 @@
                     </a>
                 </div>
             </section>
-        <?php elseif ($objModulo->tipo == ModulosConfigurados::TIPO_PRODUCTOS): ?>
-            <div class="container">
-                <section>
+        <?php elseif ($objModulo->tipo == 2): ?>
+            <section>
+                <div class="container">
 
-                    <div class="row-fluid">
+                    <div class="row">
                         <div class="col-md-12 title">
                             <span><i class="glyphicon glyphicon-chevron-right"></i></span>
                             <strong class="productos-destacados"><?php echo $objModulo->descripcion ?></strong>
                         </div>
                     </div>
-                </section>
-
-                <br>
-                <div id="owl-carousel" class="owl-carousel slide-productos">
+                
+                <div id="owl-demo" class="owl-carousel">
 
                     <?php foreach ($objModulo->listProductosModulos as $listProductosModulos): ?>
                             <?php $objProducto = $listProductosModulos->objProducto ?>
@@ -64,11 +61,11 @@
                     <?php endforeach; ?>
                 </div>
             </div>
-        <?php elseif ($objModulo->tipo == ModulosConfigurados::TIPO_IMAGENES): ?>
-            <section>	
-                <div class="row">	
-                    <div class="col-md-12">
-                        <?php $dim=12/count($objModulo->listImagenesBanners)?>
+            </section>
+        <?php elseif ($objModulo->tipo == 3): ?>
+            <section>
+                <div class="container-fluid">
+                    <div class="row">
                         <?php foreach ($objModulo->listImagenesBanners as $imagenes): ?>
                             <div class="col-md-<?php echo $dim?>">
                                 <?php if ($imagenes->tipoContenido == 1): ?>
@@ -137,6 +134,5 @@
                 </div>
             </div>
         <?php endif; ?>
-    </section>
     <br/>
 <?php endforeach; ?>

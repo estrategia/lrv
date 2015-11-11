@@ -28,7 +28,7 @@ $form = $this->beginWidget('CActiveForm', array(
                 <?php foreach ($formOrdenamiento->getOpciones($objSectorCiudad == null ? OrdenamientoForm::NO_PRECIO : OrdenamientoForm::SI_PRECIO) as $valor => $nombre): ?>
                     <li>
                         <input type="radio" name="OrdenamientoForm[orden]" data-mini="true" id="OrdenamientoForm_orden_<?php echo $valor ?>" value="<?php echo $valor ?>" <?php echo ($formOrdenamiento->orden == $valor ? "checked='checked'" : "") ?> />
-                        <label for="OrdenamientoForm_orden_<?php echo $valor ?>" class="clst_radio"><?php echo $nombre ?></label>
+                        <label for="OrdenamientoForm_orden_<?php echo $valor ?>" class="clst_radio"><span></span><?php echo $nombre ?></label>
                     </li>
                 <?php endforeach; ?>
             </ul>

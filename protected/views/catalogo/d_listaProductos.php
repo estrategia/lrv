@@ -30,18 +30,17 @@
                     <?php if ($imagenBusqueda != null): ?>
                         <img src="<?php echo Yii::app()->request->baseUrl . $imagenBusqueda; ?>" class="ajustada">
                     <?php endif; ?>
-                    <?php if ($dataprovider!=null/* && !empty($dataprovider->getData())*/): ?>   
-                        <div class="col-md-2">    
+                    <?php if ($dataprovider!=null && !empty($dataprovider->getData())): ?>   
+                        <div class="col-xs-12">    
                             <div class="option-list">
+                                Productos por página
                                 <select name="items-page" class="form-control"id="items-page" onchange="actualizarNumerosPagina()">
                                     <?php foreach(Yii::app()->params->busqueda['productosPorPagina'] as $pagina):?>
                                         <option value="<?php echo $pagina?>" <?php echo (($dataprovider != null && $dataprovider->getPagination()->getPageSize() == $pagina) ? "selected" : "") ?>><?php echo $pagina?></option>
                                     <?php endforeach;?>
                                 </select>
-                            </div>
-                        </div>
-                        <div class="col-md-2">    
-                            <div class="btn-group">
+                            </div>  
+                            <div class="btn-group viewsList">
                                 <button class="btn-white btn" data-type="cuadricula" type="button"><span  class="glyphicon glyphicon-th" alt="Cuadricula"></span></button>
                                 <button class="btn-white btn" data-type="lineal" type="button"><span  class="glyphicon glyphicon-th-list" alt="Cuadricula"></span></button>
                             </div>
@@ -117,26 +116,19 @@
             <?php endif;?>
                 <div id="lista-productos" class="list_cuadricula">
                     <section>
-                        <div class="col-md-12">
-                            <div class="row">
-
-                                <ul class="listaProductos">
-                                    <?php
-                                    $this->widget('zii.widgets.CListView', array(
-                                        'id' => 'id-productos-list',
-                                        'dataProvider' => $dataprovider,
-                                        //'template' => "{items}\n{pager}",
-                                        //'summaryText' => "{start} - {end} из {count}",
-                                        'template' => "{summary}<div class='col-md-12'>{items}</div><br/><br/><div class='col-md-12'>{pager}</div>",
-                                        'itemView' => '_d_productoElemento',
-                                        'beforeAjaxUpdate' => new CJavaScriptExpression("function() {/*loadingClass(2); Loading.show();*/}"),
-                                        'afterAjaxUpdate' => new CJavaScriptExpression("function(id,data) { /*Loading.hide(); */raty();$('.pop_codigo').popover();}"),
-                                        'pager' => array('class' => 'CLinkPager', 'header' => ''),
-                                    ));
-                                    ?>
-                                </ul>
-                            </div>
-                        </div>
+                        <?php
+                        $this->widget('zii.widgets.CListView', array(
+                            'id' => 'id-productos-list',
+                            'dataProvider' => $dataprovider,
+                            //'template' => "{items}\n{pager}",
+                            //'summaryText' => "{start} - {end} из {count}",
+                            'template' => "{summary}<ul class='listaProductos'>{items}</ul><div class='clear'></div>{pager}",
+                            'itemView' => '_d_productoElemento',
+                            'beforeAjaxUpdate' => new CJavaScriptExpression("function() {/*loadingClass(2); Loading.show();*/}"),
+                            'afterAjaxUpdate' => new CJavaScriptExpression("function(id,data) { /*Loading.hide(); */raty();$('.pop_codigo').popover();}"),
+                            'pager' => array('class' => 'CLinkPager', 'header' => ''),
+                        ));
+                        ?>
                     </section>
                 </div>
             <?php endif; ?>
