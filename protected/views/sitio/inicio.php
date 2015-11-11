@@ -66,3 +66,5 @@
     -->
 
 </ul>
+
+<?php $this->renderPartial('/sitio/_modulos', array('objModulo'=>ModulosConfigurados::getModuloFlotante(UbicacionModulos::UBICACION_MOVIL_INICIO))) ?>

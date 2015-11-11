@@ -9,6 +9,7 @@
  * @property integer $rutaImagen
  * @property integer $tipoContenido
  * @property string $contenido
+ * @property string $contenidoMovil
  * @property integer $idModulo
  * @property integer $orden
  *
@@ -94,6 +95,7 @@ class ImagenBanner extends CActiveRecord {
         $criteria->compare('rutaImagen', $this->rutaImagen);
         $criteria->compare('tipoContenido', $this->tipoContenido);
         $criteria->compare('contenido', $this->contenido, true);
+        $criteria->compare('contenidoMovil', $this->contenidoMovil, true);
         $criteria->compare('idModulo', $this->idModulo);
         $criteria->compare('orden', $this->orden);
 

@@ -1,9 +1,6 @@
 <?php if (empty($model->listDetalle)): ?>
     <p>Lista vacía</p>
 <?php else: ?>
-
-    <?php //CVarDumper::dump($model->listDetalle, 10, true) ?>
-
     <?php $this->widget('zii.widgets.grid.CGridView', array(
         'pager' => array(
             'header' => '',

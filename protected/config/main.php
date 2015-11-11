@@ -57,11 +57,20 @@ return array(
             'connectionString' => 'mysql:host=localhost;port=3306;dbname=lrvmovil',
             'emulatePrepare' => true,
             'username' => 'root',
-            //'password' => 'admin',
+            'password' => 'admin',
             'charset' => 'utf8',
             'enableProfiling' => true,
             'enableParamLogging' => true,
         ),
+        /*'db' => array(
+            'connectionString' => 'mysql:host=66.147.244.236;port=3306;dbname=promarca_tmp_lrvmovil',
+            'emulatePrepare' => true,
+            'username' => 'promarca_tmp',
+            'password' => 'T3mp0r4l',
+            'charset' => 'utf8',
+            'enableProfiling' => true,
+            'enableParamLogging' => true,
+        ),*/
         'errorHandler' => array(
             'errorAction' => 'sitio/error',
         ),

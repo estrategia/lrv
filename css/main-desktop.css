@@ -4,7 +4,8 @@
     padding-top: 0;
 }
 .container.content_user_info {
-    margin: 50px;
+    margin: 20px;
+    width: 99%;
 }
 .nav.nav-pills.nav-stacked.menu-user li.active a {
     background: #ea0001 none repeat scroll 0 0;
@@ -439,8 +440,8 @@ header {
 .ico-mundo-bebe{
     text-align: center;
     background-color: #00CAD4;
-   //* border: 1px solid #00CAD4;
-    border-radius: 0px 10px 10px 0px;
+    /*border: 1px solid #00CAD4;*/
+    /*border-radius: 0px 10px 10px 0px;
     width:27.7%;*/
 
 }
@@ -1408,3 +1409,30 @@ ul.yiiPager .selected a {
     border: 1px dashed #ddd; 
     background-color: white;
 }
+
+.space-1 {
+    height: 10px;
+}
+
+.space-2 {
+    height: 20px;
+}
+
+.space-3 {
+    height: 30px;
+}
+
+.scroll-modulo-flotante {
+    width: 60px;
+    height: 60px;
+    position: fixed;
+    bottom: 30%;
+    right: 5px;
+    display: block;
+    text-indent: -9999px;
+    z-index: 9999;
+    background: url('../images/iconos/icon_module_link.png') no-repeat;
+}
+
+a.clst_slct_prod{ display:none;}
+a.clst_slct_prod.active{display: block;}

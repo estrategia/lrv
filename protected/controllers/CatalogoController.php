@@ -87,6 +87,7 @@ class CatalogoController extends Controller {
                     'objSectorCiudad' => $objSectorCiudad,
                     'codigoPerfil' => $codigoPerfil,
                     'nombreBusqueda' => 'NA',
+                    'objModulo'=>ModulosConfigurados::getModuloFlotante(UbicacionModulos::UBICACION_ESCRITORIO_CATEGORIA,$categoria)
                 ));
             } else {
                 $this->render('d_listaProductos', array(
@@ -300,6 +301,7 @@ class CatalogoController extends Controller {
             'codigoPerfil' => $codigoPerfil,
             'tipoBusqueda' => Yii::app()->params->busqueda['tipo']['categoria'],
             'nombreBusqueda' => $objCategoria->nombreCategoriaTienda,
+            'objModulo'=>ModulosConfigurados::getModuloFlotante(UbicacionModulos::UBICACION_ESCRITORIO_CATEGORIA,$categoria)
         );
 
         $imagenBusqueda = null;

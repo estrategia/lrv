@@ -88,6 +88,8 @@
     <?php endif; ?>
 </div>
 
+<?php if(isset($objModulo)) $this->renderPartial('/sitio/_modulos', array('objModulo'=>$objModulo)); ?>
+
 <?php if (isset($formOrdenamiento)) $this->extraContentList[] = $this->renderPartial('_formOrdenamiento', array('formOrdenamiento' => $formOrdenamiento, 'objSectorCiudad' => $objSectorCiudad), true); ?>
 <?php if (isset($formFiltro)) $this->extraContentList[] = $this->renderPartial('_formFiltro', array('formFiltro' => $formFiltro, 'tipoBusqueda' => $tipoBusqueda), true); ?>
 
