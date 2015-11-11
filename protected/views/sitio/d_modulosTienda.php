@@ -3,7 +3,7 @@
     <?php $objModulo = $ubicacionModulo->objModulo ?>
     <?php if ($objModulo->tipo == 1): ?>
         <section class="block">
-            <div id="myCarousel" class="carousel slide" data-interval="false">
+            <div id="carousel-modulo-<?php echo$ubicacionModulo->idModulo ?>" class="carousel slide" data-interval="false">
                 <div class="carousel-inner">
                     <?php $i = 0 ?>
                     <?php foreach ($objModulo->listImagenesBanners as $imagenes): ?>
@@ -24,15 +24,15 @@
                         <?php $i++ ?>
                     <?php endforeach; ?>
                 </div>
-                <a class="carousel-control left" href="#myCarousel" data-slide="prev">
+                <a class="carousel-control left" href="#carousel-modulo-<?php echo$ubicacionModulo->idModulo ?>" data-slide="prev">
                     <i class="prev-slide"></i>
                 </a>
-                <a class="carousel-control right" href="#myCarousel" data-slide="next">
+                <a class="carousel-control right" href="#carousel-modulo-<?php echo$ubicacionModulo->idModulo ?>" data-slide="next">
                     <i class="next-slide"></i>
                 </a>
             </div>
         </section>
-    <?php elseif ($objModulo->tipo == 2): ?>
+    <?php elseif ($objModulo->tipo == ModulosConfigurados::TIPO_PRODUCTOS): ?>
         <section>
             <div class="container">
 
@@ -43,7 +43,7 @@
                     </div>
                 </div>
 
-                <div id="owl-demo" class="owl-carousel">
+                <div id="owl-carousel" class="owl-carousel slide-productos">
                     <?php foreach ($objModulo->listProductosModulos as $listProductosModulos): ?>
                         <?php $objProducto = $listProductosModulos->objProducto ?>
                         <div class="item">
@@ -61,12 +61,13 @@
                 </div>
             </div>
         </section>
-    <?php elseif ($objModulo->tipo == 3): ?>
+    <?php elseif ($objModulo->tipo == ModulosConfigurados::TIPO_IMAGENES): ?>
         <section>
             <div class="container-fluid">
                 <div class="row">
+                    <?php $dim = 12 / count($objModulo->listImagenesBanners) ?>
                     <?php foreach ($objModulo->listImagenesBanners as $imagenes): ?>
-                        <div class="col-sm-4 padding6px">
+                        <div class="col-md-<?php echo $dim ?> padding6px">
                             <?php if ($imagenes->tipoContenido == 1): ?>
                                 <a href="<?php echo $imagenes->contenido ?>">
                                     <img style="width:100%;" src="<?php echo Yii::app()->request->baseUrl . $imagenes->rutaImagen; ?>" alt="<?php echo $imagenes->nombre ?>" />
@@ -86,6 +87,57 @@
         </section>
     <?php elseif ($objModulo->tipo == ModulosConfigurados::TIPO_PROMOCION_FLOTANTE): ?>
         <a href="<?php echo $objModulo->contenido ?>" class="scroll-modulo-flotante"><?php echo $objModulo->descripcion ?></a>
-    <?php endif; ?>
-    <br/>
-<?php endforeach; ?>
+    <?php elseif ($objModulo->tipo == ModulosConfigurados::TIPO_HTML): ?>
+        <div class="container">
+            <section> 
+                <div class="row-fluid">
+                    <div class="col-md-12 title">
+                        <span><i class="glyphicon glyphicon-chevron-right"></i></span>
+                        <strong class="productos-destacados"><?php echo $objModulo->descripcion ?></strong>
+                    </div>
+                </div>
+            </section> 
+            <br>
+            <?php echo $objModulo->contenido ?>
+        </div>
+    <?php elseif ($objModulo->tipo == ModulosConfigurados::TIPO_HTML_PRODUCTOS): ?>
+        <div class="container">
+            <section> 
+                <div class="row-fluid">
+                    <div class="col-md-12 title">
+                        <span><i class="glyphicon glyphicon-chevron-right"></i></span>
+                        <strong class="productos-destacados"><?php echo $objModulo->descripcion ?></strong>
+                    </div>
+                </div>
+            </section> 
+            <br>
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="col-md-4"><?php echo $objModulo->contenido ?></div>
+
+                    <!-- Lista de productos -->
+                    <div class="col-md-8">
+                        <div class="row">
+
+                            <?php foreach ($objModulo->listProductosModulos as $listProductosModulos): ?>
+                                <?php $objProducto = $listProductosModulos->objProducto ?>
+                                <ul class="listaProductos">
+                                    <?php
+                                    // hacer uso de _d_productoElemento
+
+                                          $this->renderPartial('/catalogo/_d_productoElemento', array(
+                                      'data' => $objProducto,
+                                      'vista' => 'grid'
+                                      ));
+                                    
+                                    ?>
+                                </ul>
+                            <?php endforeach; ?>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <?php endif; ?>
+        <br/>
+    <?php endforeach; ?>

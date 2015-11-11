@@ -30,7 +30,7 @@
                     <?php if ($imagenBusqueda != null): ?>
                         <img src="<?php echo Yii::app()->request->baseUrl . $imagenBusqueda; ?>" class="ajustada">
                     <?php endif; ?>
-                    <?php if ($dataprovider!=null && !empty($dataprovider->getData())): ?>   
+                    <?php if ($dataprovider!=null /*&& !empty($dataprovider->getData())*/): ?>   
                         <div class="col-xs-12">    
                             <div class="option-list">
                                 Productos por página
