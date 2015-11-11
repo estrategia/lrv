@@ -53,15 +53,19 @@ class ContenidoController extends ControllerOperator {
         $model= new ModulosConfigurados();
         
         
-        if (isset($_POST['ModuloForm'])) {
-            //$modelModulo = new ModulosConfigurados();
-            $modelModulo->attributes = $_POST['ModuloForm'];
+        if (isset($_POST['ModulosConfigurados'])) {
+            $modelModulo = new ModulosConfigurados();
+            $modelModulo->attributes = $_POST['ModulosConfigurados'];
             $modelModulo->dias= implode(",", $modelModulo->dias);
-            
             
             if($modelModulo->save()){
                 Yii::app()->user->setFlash('alert alert-success', "El módulo ha sido creado con éxito");
-                $this->redirect($this->createUrl('index'));
+                $this->redirect($this->createUrl('contenido/editar',array('idModulo' => $modelModulo->idModulo, 'opcion' => 'sector')));
+                Yii::app()->end();
+            }else{
+                echo "<pre>";
+                print_r($modelModulo->getErrors());
+                echo "</pre>";
             }
             
         }
@@ -101,8 +105,7 @@ class ContenidoController extends ControllerOperator {
                         ),
                         'order' => 'objCiudad.nombreCiudad,objSector.nombreSector'
                 ));
-            
-           
+           $params['siguiente'] = CController::createUrl('/callcenter/contenido/editar', array('idModulo' => $idModulo, 'opcion'=>'contenido'));
         }else if($opcion == 'categoria'){
             $params['vista'] = '_categoria';
             $params['ubicacionModel'] = new UbicacionModulos();
@@ -144,19 +147,13 @@ class ContenidoController extends ControllerOperator {
                             'idmodulo' => $idModulo
                         )
                      ));
-                 
-        } else if($opcion == 'contenido' && !$deshabilitados){
+                     
+                 $params['siguiente'] = null;
+        } else if($opcion == 'contenido'){
             
-            if($model->tipo == 1)
+            if($model->tipo == 1 || $model->tipo == 3 )
             {
-                $params['vista'] = 'contenidoBanner';
-            }
-            if($model->tipo == 2)
-            {
-                $params['vista'] = 'contenidoCrearListaProductos';
-            }
-            if($model->tipo == 3){
-                $params['vista'] = '_contenidoImagenes';
+                 $params['vista'] = '_contenidoImagenes';
                 $params['modelImagen'] = new ImagenBanner();
                
                 if($_POST){
@@ -199,6 +196,10 @@ class ContenidoController extends ControllerOperator {
                     )
                 ));
             }
+            if($model->tipo == 2)
+            {
+                $params['vista'] = 'contenidoCrearListaProductos';
+            } 
             if($model->tipo == 6)
             {
                 $params['vista'] = 'contenidoHtml';
@@ -210,9 +211,11 @@ class ContenidoController extends ControllerOperator {
                 $params['listaProductos'] = true;
                 $model->scenario = 'contenido';
             }
+            $params['siguiente'] = CController::createUrl('/callcenter/contenido/editar', array('idModulo' => $idModulo, 'opcion'=>'categoria'));
         } else {
             $params['vista'] = 'modulos';
             $params['opcion'] = 'editar';
+            $params['siguiente'] = CController::createUrl('/callcenter/contenido/editar', array('idModulo' => $idModulo, 'opcion'=>'sector'));
             $model->dias= explode(",",$model->dias);
         }
         //CVarDumper::dump($deshabilitarBotones, 10, true);

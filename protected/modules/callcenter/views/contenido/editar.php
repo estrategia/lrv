@@ -24,7 +24,9 @@
         <div class="col-md-12">
             <div class="form-group">
                 <div class="pull-right">
-                    <button class="btn btn-primary">Siguiente</button>
+                    <?php if($params['siguiente'] != null && !empty($params['siguiente'])):?>
+                    <a href="<?php echo $params['siguiente']?>" class="btn btn-primary" >Siguiente</a>
+                    <?php endif;?>
                 </div>
             </div>
         </div>

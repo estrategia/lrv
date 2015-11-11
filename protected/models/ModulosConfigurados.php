@@ -49,7 +49,7 @@ class ModulosConfigurados extends CActiveRecord {
             array('tipo, estado', 'numerical', 'integerOnly' => true),
             array('dias', 'length', 'max' => 30),
             array('descripcion', 'length', 'max' => 255),
-            array('nombreCategoriaTienda, rutaImagen', 'length', 'max' => 100),
+            array('rutaImagen', 'length', 'max' => 100),
             array('contenido', 'required', 'on' => 'contenido'),
             // The following rule is used by search().
             // @todo Please remove those attributes that should not be searched.
@@ -230,7 +230,7 @@ class ModulosConfigurados extends CActiveRecord {
                     'todossectores' => Yii::app()->params->sector['*'],
                     'saldo' => 0,
                 ),
-                'order' => 'listImagenesBanners.orden'
+                'order' => 't.orden,listImagenesBanners.orden'
             ));
         } else {
             $modulosInicio = UbicacionModulos::model()->findAll(array(
@@ -261,7 +261,7 @@ class ModulosConfigurados extends CActiveRecord {
                     'saldo' => 0,
                     'idCategoria' => $idCategoria
                 ),
-                'order' => 'listImagenesBanners.orden'
+                'order' => 't.orden,listImagenesBanners.orden'
             ));
         }
 
