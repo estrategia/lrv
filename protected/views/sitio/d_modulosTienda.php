@@ -32,7 +32,7 @@
                     </a>
                 </div>
             </section>
-        <?php elseif ($objModulo->tipo == 2): ?>
+        <?php elseif ($objModulo->tipo == ModulosConfigurados::TIPO_PRODUCTOS): ?>
             <section>
                 <div class="container">
 
@@ -43,7 +43,7 @@
                         </div>
                     </div>
                 
-                <div id="owl-demo" class="owl-carousel">
+                <div id="owl-carousel" class="owl-carousel slide-productos">
 
                     <?php foreach ($objModulo->listProductosModulos as $listProductosModulos): ?>
                             <?php $objProducto = $listProductosModulos->objProducto ?>
@@ -62,10 +62,11 @@
                 </div>
             </div>
             </section>
-        <?php elseif ($objModulo->tipo == 3): ?>
+        <?php elseif ($objModulo->tipo == ModulosConfigurados::TIPO_IMAGENES): ?>
             <section>
                 <div class="container-fluid">
                     <div class="row">
+			<?php $dim=12/count($objModulo->listImagenesBanners)?>
                         <?php foreach ($objModulo->listImagenesBanners as $imagenes): ?>
                             <div class="col-md-<?php echo $dim?>">
                                 <?php if ($imagenes->tipoContenido == 1): ?>
