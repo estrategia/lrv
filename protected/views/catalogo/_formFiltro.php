@@ -54,7 +54,7 @@
         ?>
         
         <fieldset data-role="controlgroup" class="ccnt_filtro">
-            <div id="div-filtro-marcas">
+            <div id="div-filtro-categorias">
                 <?php $this->renderPartial('_formFiltroCategorias', array('formFiltro' => $formFiltro)) ?>
             </div>
         </fieldset>
