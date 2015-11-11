@@ -2,27 +2,19 @@
     <?php if ($vista == "relacionado"): ?>
         <li class="col-md-12 border-left">
         <?php elseif ($vista == "comparacion"): ?>
-            <li class="--col-md-<?php echo $colums; ?> border-left" id="comparacion-producto-<?php echo $data->codigoProducto ?>">
-            <?php endif; ?>
-        <?php else: ?>    
-            <li class="border-left" >
-            <?php endif; ?>
+        <li class="--col-md-<?php echo $colums; ?> border-left" id="comparacion-producto-<?php echo $data->codigoProducto ?>">
+        <?php endif; ?>
+    <?php else: ?>    
+    <li class="border-left" >
+    <?php endif; ?>
 
-            <div class=" content-txt2">
-                <?php
-                $objSectorCiudad = Yii::app()->shoppingCart->getobjSectorCiudad();?>        
-                <?php $objPrecio = new PrecioProducto($data, $objSectorCiudad, Yii::app()->shoppingCart->getCodigoPerfil()); ?>
-                <?php if ($objPrecio->tieneBeneficio()): ?>
-                    <div class="cdiv_prod_desc">
-                        <div class="c_prod_desc">
-                            <p><?php echo $objPrecio->getPorcentajeDescuento() ?> % <span>dcto</span></p>
-                        </div>
-                    </div>
-                <?php endif; ?>
-                <div class="img-list-products">
-                    <a href="<?php echo CController::createUrl('/catalogo/producto', array('producto' => $data->codigoProducto,'descripcion'=>  $data->getCadenaUrl() )) ?>">
-                        <img src="<?php echo Yii::app()->request->baseUrl . $data->rutaImagen(); ?>" class="img-responsive product-prom">
-                    </a>
+    <div class=" content-txt2">
+        <?php $objSectorCiudad = Yii::app()->shoppingCart->getobjSectorCiudad(); ?>        
+        <?php $objPrecio = new PrecioProducto($data, $objSectorCiudad, Yii::app()->shoppingCart->getCodigoPerfil()); ?>
+        <?php if ($objPrecio->tieneBeneficio()): ?>
+            <div class="cdiv_prod_desc">
+                <div class="c_prod_desc">
+                    <p><?php echo $objPrecio->getPorcentajeDescuento() ?> % <span>dcto</span></p>
                 </div>
             </div>
         <?php endif; ?>
@@ -115,27 +107,27 @@
                         </div>
                     </div>
                 </div>
-                    <div class="">	
-                        <a href="#" data-tipo="1" data-role="lstpersonalguardar" data-codigo="<?php echo $data->codigoProducto ?>">
-                            <div class="button-lista"   >Añadir a lista&nbsp;&nbsp;<span class="glyphicon glyphicon-pencil" aria-hidden="true"></span>
-                            </div>
-                        </a>
-                    </div>
+                <div class="">	
+                    <a href="#" data-tipo="1" data-role="lstpersonalguardar" data-codigo="<?php echo $data->codigoProducto ?>">
+                        <div class="button-lista"   >Añadir a lista&nbsp;&nbsp;<span class="glyphicon glyphicon-pencil" aria-hidden="true"></span>
+                        </div>
+                    </a>
+                </div>
 
-                        <?php if (isset($vista) && $vista == "comparacion"): ?>
-                        <div class=" btnQuitarComparar">
+                <?php if (isset($vista) && $vista == "comparacion"): ?>
+                    <div class=" btnQuitarComparar">
                         <?php echo CHtml::link('<div class="button">Quitar elemento <img src="' . Yii::app()->baseUrl . '/images/desktop/button-carrito.png" alt=""></div>', '#', array('data-producto' => $data->codigoProducto, 'data-role' => 'quitarComparar')); ?>
-                        </div>
-                        <?php elseif (!isset($vista)): ?>
-                        <div class=" btnComparar">
+                    </div>
+                <?php elseif (!isset($vista)): ?>
+                    <div class=" btnComparar">
                         <?php echo CHtml::link('<div class="button">Comparar <img src="' . Yii::app()->baseUrl . '/images/desktop/button-carrito.png" alt=""></div>', '#', array('data-producto' => $data->codigoProducto, 'data-role' => 'comparar')); ?>
-                        </div>
-                    <?php endif; ?>
                     </div>
-                    <?php else: ?>
-                    <div class="botones-list">
-                    <?php echo CHtml::link('<div class="button">Ver producto</div>', CController::createUrl('/catalogo/producto', array('producto' => $data->codigoProducto))); ?>
-                    </div>
-                <?php endif; ?>    
-            </div>  
-        </li>
+                <?php endif; ?>
+            </div>
+        <?php else: ?>
+            <div class="botones-list">
+                <?php echo CHtml::link('<div class="button">Ver producto</div>', CController::createUrl('/catalogo/producto', array('producto' => $data->codigoProducto))); ?>
+            </div>
+        <?php endif; ?>    
+    </div>  
+</li>
