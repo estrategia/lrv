@@ -40,7 +40,8 @@
                         <span><i class="glyphicon glyphicon-chevron-right"></i></span>
                         <strong class="productos-destacados"><?php echo $objModulo->descripcion ?></strong>
                     </div>
-                
+                </div>
+
                 <div id="owl-demo" class="owl-carousel">
                     <?php foreach ($objModulo->listProductosModulos as $listProductosModulos): ?>
                         <?php $objProducto = $listProductosModulos->objProducto ?>
@@ -58,23 +59,15 @@
                     <?php endforeach; ?>
                 </div>
             </div>
-            </section>
-        <?php elseif ($objModulo->tipo == 3): ?>
-            <section>
-                <div class="container-fluid">
-                    <div class="row">
-                        <?php foreach ($objModulo->listImagenesBanners as $imagenes): ?>
-                            <div class="col-sm-4 padding6px">
-                                <?php if ($imagenes->tipoContenido == 1): ?>
-                                    <a href="<?php echo $imagenes->contenido ?>">
-                                        <img style="width:100%;" src="<?php echo Yii::app()->request->baseUrl . $imagenes->rutaImagen; ?>" alt="<?php echo $imagenes->nombre ?>" />
-                                    </a>
-                                <?php elseif ($imagenes->tipoContenido == 2): ?>
-                                    <?php
-                                    echo CHtml::link('<img style="width:100%;" src="' . Yii::app()->request->baseUrl . $imagenes->rutaImagen . '" alt="' . $imagenes->nombre . '" />', CController::createUrl('/sitio/vercontenido', array('contenido' => $imagenes->idBanner
-                                    )));
-                                    ?>
-                                <?php elseif ($imagenes->tipoContenido == 3): ?>
+        </section>
+    <?php elseif ($objModulo->tipo == 3): ?>
+        <section>
+            <div class="container-fluid">
+                <div class="row">
+                    <?php foreach ($objModulo->listImagenesBanners as $imagenes): ?>
+                        <div class="col-sm-4 padding6px">
+                            <?php if ($imagenes->tipoContenido == 1): ?>
+                                <a href="<?php echo $imagenes->contenido ?>">
                                     <img style="width:100%;" src="<?php echo Yii::app()->request->baseUrl . $imagenes->rutaImagen; ?>" alt="<?php echo $imagenes->nombre ?>" />
                                 </a>
                             <?php elseif ($imagenes->tipoContenido == 2): ?>
@@ -85,7 +78,6 @@
                             <?php elseif ($imagenes->tipoContenido == 3): ?>
                                 <img style="width:100%;" src="<?php echo Yii::app()->request->baseUrl . $imagenes->rutaImagen; ?>" alt="<?php echo $imagenes->nombre ?>" />
                             <?php endif; ?>
-
                         </div>
                     <?php endforeach ?>
                 </div>

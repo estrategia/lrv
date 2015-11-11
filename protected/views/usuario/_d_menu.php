@@ -1,4 +1,3 @@
-
 <ul class="nav nav-pills nav-stacked menu-user">
     <li class="<?php echo ($vista=="d_registro" ? "active" : "")?>">
         <a href="<?php echo CController::createUrl('/usuario/infoPersonal') ?>" >
