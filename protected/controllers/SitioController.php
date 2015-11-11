@@ -36,31 +36,10 @@ class SitioController extends Controller {
             $this->render('index', array(
                 'listModulos' => ModulosConfigurados::getModulosBanner(new DateTime, UbicacionModulos::UBICACION_MOVIL_HOME)
             ));
-        } else {
-            $this->render('d_index', array(
-                'modulosInicio' => ModulosConfigurados::traerModulos(1)
-            ));
-
-            /*     $parametrosProductos = array(
-              'order' => 't.orden',
-              'with' => array(
-              'listImagenes', 'objCodigoEspecial', 'listCalificaciones', 'objMarca', 'listFiltros',
-              'listSaldos' => array('condition' => '(listSaldos.saldoUnidad>:saldo AND listSaldos.codigoCiudad=:ciudad AND listSaldos.codigoSector=:sector) OR (listSaldos.saldoUnidad IS NULL AND listSaldos.codigoCiudad IS NULL AND listSaldos.codigoSector IS NULL)'),
-              'listPrecios' => array('condition' => '(listPrecios.codigoCiudad=:ciudad AND listPrecios.codigoSector=:sector) OR (listPrecios.codigoCiudad IS NULL AND listPrecios.codigoSector IS NULL)'),
-              'listSaldosTerceros' => array('condition' => '(listSaldosTerceros.saldoUnidad>:saldo AND listSaldosTerceros.codigoCiudad=:ciudad AND listSaldosTerceros.codigoSector=:sector) OR (listSaldosTerceros.codigoCiudad IS NULL AND listSaldosTerceros.codigoSector IS NULL)')
-              ),
-              'condition' => 't.activo=:activo AND ( (listSaldos.saldoUnidad IS NOT NULL AND listPrecios.codigoCiudad IS NOT NULL) OR listSaldosTerceros.codigoCiudad IS NOT NULL)',
-              'params' => array(
-              ':activo' => 1,
-              ':saldo' => 0,
-              ':ciudad' => $objSectorCiudad->codigoCiudad,
-              ':sector' => $objSectorCiudad->codigoSector,
-              )
-              ); */
-
-
-
-            // utilizar un modelo para consultar
+        }else{
+            $this->render('d_index',array(
+                'modulosInicio' => ModulosConfigurados::traerModulos(UbicacionModulos::UBICACION_ESCRITORIO_HOME)
+            ));           
         }
         Yii::app()->end();
     }

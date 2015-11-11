@@ -45,7 +45,7 @@ class ModulosConfigurados extends CActiveRecord {
         // NOTE: you should only define rules for those attributes that
         // will receive user inputs.
         return array(
-            array('tipo, inicio, fin, estado', 'required'),
+            array('tipo, inicio, fin, estado, dias', 'required'),
             array('tipo, estado', 'numerical', 'integerOnly' => true),
             array('dias', 'length', 'max' => 30),
             array('descripcion', 'length', 'max' => 255),
@@ -131,23 +131,23 @@ class ModulosConfigurados extends CActiveRecord {
     public static function model($className = __CLASS__) {
         return parent::model($className);
     }
-
-    public static function getModulosBanner(DateTime $fecha, $ubicacion) {
+    
+    public static function getModulosBanner(DateTime $fecha, $ubicacion){
         return ModulosConfigurados::model()->findAll(array(
-                    'with' => array('listImagenesBanners', 'listUbicacionesModulos'),
-                    'order' => 'listUbicacionesModulos.orden, listImagenesBanners.orden',
-                    'condition' => 't.estado=:estado AND t.tipo =:tipo AND t.dias LIKE :dia AND t.inicio<=:fecha AND t.fin>=:fecha AND listUbicacionesModulos.ubicacion=:ubicacion',
-                    'params' => array(
-                        ':estado' => 1,
-                        ':tipo' => ModulosConfigurados::TIPO_BANNER,
-                        ':dia' => "%" . $fecha->format("w") . "%",
-                        ':fecha' => $fecha->format("Y-m-d"),
-                        ':ubicacion' => $ubicacion
-                    )
-        ));
+                'with' => array('listImagenesBanners', 'listUbicacionesModulos'),
+                'order' => 'listUbicacionesModulos.orden, listImagenesBanners.orden',
+                'condition' => 't.estado=:estado AND t.tipo =:tipo AND t.dias LIKE :dia AND t.inicio<=:fecha AND t.fin>=:fecha AND listUbicacionesModulos.ubicacion=:ubicacion',
+                'params' => array(
+                    ':estado' => 1,
+                    ':tipo' => ModulosConfigurados::TIPO_BANNER,
+                    ':dia' => "%" . $fecha->format("w") . "%",
+                    ':fecha' => $fecha->format("Y-m-d"),
+                    ':ubicacion' => $ubicacion
+                )
+            ));
     }
-
-    public static function getModulosMenu(DateTime $fecha) {
+    
+    public static function getModulosMenu(DateTime $fecha){
         return ModulosConfigurados::model()->findAll(array(
                     'condition' => 't.estado=:estado AND t.tipo =:tipo AND t.dias LIKE :dia AND t.inicio<=:fecha AND t.fin>=:fecha',
                     'params' => array(
@@ -203,7 +203,7 @@ class ModulosConfigurados extends CActiveRecord {
             $ciudad = Yii::app()->params->ciudad['*'];
         }
 
-        if ($idUbicacion == 1) {
+        if ($idUbicacion == UbicacionModulos::UBICACION_ESCRITORIO_HOME) {
             $modulosInicio = UbicacionModulos::model()->findAll(array(
                 'with' => array('objModulo' => array('with' => array('listImagenesBanners',
                             'listProductosModulos' =>
@@ -216,8 +216,9 @@ class ModulosConfigurados extends CActiveRecord {
                                             'listPrecios' => array('condition' => '(listPrecios.codigoCiudad=:ciudad AND listPrecios.codigoSector=:sector) OR (listPrecios.codigoCiudad IS NULL AND listPrecios.codigoSector IS NULL)'),
                                             'listSaldosTerceros' => array('condition' => '(listSaldosTerceros.saldoUnidad>:saldo AND listSaldosTerceros.codigoCiudad=:ciudad AND listSaldosTerceros.codigoSector=:sector) OR (listSaldosTerceros.codigoCiudad IS NULL AND listSaldosTerceros.codigoSector IS NULL)')
                                         )))), 'listModulosSectoresCiudades'))),
-                'condition' => "objModulo.estado=:estado AND listModulosSectoresCiudades.codigoSector=:sector  AND listModulosSectoresCiudades.codigoCiudad=:ciudad AND 
-                                                 objModulo.dias like :dia AND t.ubicacion =:ubicacion and objModulo.inicio<=:fecha and objModulo.fin>=:fecha",
+                'condition' => "objModulo.estado =:estado AND ((listModulosSectoresCiudades.codigoSector=:sector  AND listModulosSectoresCiudades.codigoCiudad=:ciudad) OR 
+                                  listModulosSectoresCiudades.codigoCiudad=:todasciudades OR (listModulosSectoresCiudades.codigoCiudad=:ciudad AND listModulosSectoresCiudades.codigoSector=:todossectores))
+                                        AND objModulo.dias like :dia AND t.ubicacion =:ubicacion and objModulo.inicio<=:fecha and objModulo.fin>=:fecha",
                 'params' => array(
                     ':estado' => 1,
                     'ubicacion' => $idUbicacion,
@@ -225,6 +226,8 @@ class ModulosConfigurados extends CActiveRecord {
                     'dia' => "%" . Date("w") . "%",
                     'sector' => $sector,
                     'ciudad' => $ciudad,
+                    'todasciudades' => Yii::app()->params->ciudad['*'],
+                    'todossectores' => Yii::app()->params->sector['*'],
                     'saldo' => 0,
                 ),
                 'order' => 'listImagenesBanners.orden'
@@ -242,15 +245,19 @@ class ModulosConfigurados extends CActiveRecord {
                                             'listPrecios' => array('condition' => '(listPrecios.codigoCiudad=:ciudad AND listPrecios.codigoSector=:sector) OR (listPrecios.codigoCiudad IS NULL AND listPrecios.codigoSector IS NULL)'),
                                             'listSaldosTerceros' => array('condition' => '(listSaldosTerceros.saldoUnidad>:saldo AND listSaldosTerceros.codigoCiudad=:ciudad AND listSaldosTerceros.codigoSector=:sector) OR (listSaldosTerceros.codigoCiudad IS NULL AND listSaldosTerceros.codigoSector IS NULL)')
                                         )))), 'listModulosSectoresCiudades')), 'objUbicacionCategorias'),
-                'condition' => "listModulosSectoresCiudades.codigoSector=:sector  AND listModulosSectoresCiudades.codigoCiudad=:ciudad AND 
-                                                 objModulo.dias like :dia AND t.ubicacion =:ubicacion and objModulo.inicio<=:fecha and objModulo.fin>=:fecha AND
+                'condition' => "objModulo.estado =:estado AND ((listModulosSectoresCiudades.codigoSector=:sector  AND listModulosSectoresCiudades.codigoCiudad=:ciudad) OR 
+                                  listModulosSectoresCiudades.codigoCiudad=:todasciudades OR (listModulosSectoresCiudades.codigoCiudad=:ciudad AND listModulosSectoresCiudades.codigoSector=:todossectores))
+                                   AND objModulo.dias like :dia AND t.ubicacion =:ubicacion and objModulo.inicio<=:fecha and objModulo.fin>=:fecha AND
                                                  objUbicacionCategorias.idCategoriaBi=:idCategoria",
                 'params' => array(
+                    'estado' => 1,
                     'ubicacion' => $idUbicacion,
                     'fecha' => Date("Y-m-d"),
                     'dia' => "%" . Date("w") . "%",
                     'sector' => $sector,
                     'ciudad' => $ciudad,
+                    'todasciudades' => Yii::app()->params->ciudad['*'],
+                    'todossectores' => Yii::app()->params->sector['*'],
                     'saldo' => 0,
                     'idCategoria' => $idCategoria
                 ),

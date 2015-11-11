@@ -52,7 +52,6 @@ class Controller extends CController {
         
         if (!$this->isMobile) {
             $this->getCategorias();
-            $this->getCiudades();
         }
     }
 
@@ -133,17 +132,8 @@ class Controller extends CController {
         }
     }
 
-    public function getCiudades() {
-        if (!isset($_SESSION['listciudades'])) {
-            $criteria = new CDbCriteria();
-            $criteria->order = "orden";
-            $_SESSION['listciudades'] = Ciudad::model()->findAll($criteria);
-            Yii::app()->session[Yii::app()->params->sesion['sectorCiudadEntrega']];
-        }
-    }
-
+  
     public function getCategorias() {
-     //   if (!isset($_SESSION['categoriasDesktop'])) {
             $categorias = CategoriaTienda::model()->findAll(array(
                 'order' => 't.orden',
                 'condition' => 't.tipoDispositivo=:dispositivo AND t.visible=:visible AND t.idCategoriaPadre IS NULL ',
@@ -154,7 +144,6 @@ class Controller extends CController {
                 'with' => array('listCategoriasHijas'),
             ));
             $this->categorias = $categorias;
-       // }
     }
 
 }

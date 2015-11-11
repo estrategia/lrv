@@ -32,7 +32,7 @@ class CatalogoController extends Controller {
               Yii::app()->end();
           }
           
-            $modulos= ModulosConfigurados::traerModulos(2,$division);
+            $modulos= ModulosConfigurados::traerModulos(UbicacionModulos::UBICACION_ESCRITORIO_DIVISION,$division);
             
             $this->render('d_division',array(
                 'categorias' => $categorias,
@@ -343,7 +343,7 @@ class CatalogoController extends Controller {
                 ),
             ));
 
-            $modulos= ModulosConfigurados::traerModulos(3,$categoria);
+            $modulos= ModulosConfigurados::traerModulos(UbicacionModulos::UBICACION_ESCRITORIO_CATEGORIA,$categoria);
             
             //  $dataProvider=new CActiveDataProvider('Producto');
             $this->render('d_listaProductos', array(

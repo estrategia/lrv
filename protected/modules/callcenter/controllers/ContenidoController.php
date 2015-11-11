@@ -50,11 +50,11 @@ class ContenidoController extends ControllerOperator {
     public function actionCrear(){
         $this->layout = "admin";
       
-        $model= new ModuloForm();
+        $model= new ModulosConfigurados();
         
         
         if (isset($_POST['ModuloForm'])) {
-            $modelModulo = new ModulosConfigurados();
+            //$modelModulo = new ModulosConfigurados();
             $modelModulo->attributes = $_POST['ModuloForm'];
             $modelModulo->dias= implode(",", $modelModulo->dias);
             
@@ -77,9 +77,76 @@ class ContenidoController extends ControllerOperator {
         $params = array();
         $params['opcion'] = $opcion;
         $deshabilitados = $this->botonesDeshabilitados($model);
-
-        if($opcion == 'contenido' && !$deshabilitados)
-        {
+        
+        
+        if($opcion == 'sector'){
+            Yii::import('ext.select2.Select2');
+            $params['vista'] = '_sector';
+            $params['idModulo'] = $idModulo;
+            $params['ciudades'] = Ciudad::model()->findAll(array(
+                'with' => array('listSectores'),
+                'order' => 't.orden, t.nombreCiudad',
+                'condition' => 'estadoCiudadSector=:estadoCiudadSector AND estadoSector=:estadoSector AND estadoCiudad=:estadoCiudad',
+                'params' => array(
+                    ':estadoCiudadSector' => 1,
+                    ':estadoSector' => 1,
+                    ':estadoCiudad' => 1,
+                ),
+            ));
+            $params['sectores']= ModuloSectorCiudad::model()->findAll(array(
+                        'with' => array('objCiudad','objSector'),
+                        'condition' => 'idModulo =:idmodulo',
+                        'params' => array(
+                            'idmodulo' => $idModulo
+                        ),
+                        'order' => 'objCiudad.nombreCiudad,objSector.nombreSector'
+                ));
+            
+           
+        }else if($opcion == 'categoria'){
+            $params['vista'] = '_categoria';
+            $params['ubicacionModel'] = new UbicacionModulos();
+             if($_POST) { 
+                $model = new UbicacionModulos();
+                $model->orden = $_POST['UbicacionModulos']['orden'];
+                $model->ubicacion = $_POST['UbicacionModulos']['ubicacion'];
+                $model->idModulo= $idModulo;
+              //  $model->idUbicacion= Yii::app()->db->getLastInsertID('t_UbicacionModulos'); 
+                
+                if($model->save()){
+                    $id = $model->idUbicacion; 
+                    echo $id;
+                    if(isset( $_POST['UbicacionCategoria']) && !empty( $_POST['UbicacionCategoria']['idCategoriaBi'])){
+                        $modelCategoria= new UbicacionCategoria();
+                        $modelCategoria->attributes =  $_POST['UbicacionCategoria'];
+                        $modelCategoria->idUbicacion = $id;
+                      //  $modelCategoria->idUbicacionCategoria = Yii::app()->db->getLastInsertID('t_UbicacionCategoria'); 
+                        
+                        if($modelCategoria->save()){
+                            
+                        }else{
+                              echo "<pre>";
+                                print_r($modelCategoria->getErrors());
+                                echo "</pre>"; 
+                        }
+                    }
+                    
+                }else{
+                    echo "<pre>";
+                    print_r($model->getErrors());
+                    echo "</pre>"; 
+                }
+             }
+             $params['ubicaciones']= UbicacionModulos::model()->findAll( array(
+                        'with' => array('objUbicacionCategorias' => array('with' => 'objCategoriaTienda')),
+                        'condition' => 't.idModulo =:idmodulo',
+                        'params' => array(
+                            'idmodulo' => $idModulo
+                        )
+                     ));
+                 
+        } else if($opcion == 'contenido' && !$deshabilitados){
+            
             if($model->tipo == 1)
             {
                 $params['vista'] = 'contenidoBanner';
@@ -87,6 +154,50 @@ class ContenidoController extends ControllerOperator {
             if($model->tipo == 2)
             {
                 $params['vista'] = 'contenidoCrearListaProductos';
+            }
+            if($model->tipo == 3){
+                $params['vista'] = '_contenidoImagenes';
+                $params['modelImagen'] = new ImagenBanner();
+               
+                if($_POST){
+                 
+                    if(isset($_FILES))
+                    {
+                       $modelBanner = new ImagenBanner();
+                       $modelBanner->attributes = $_POST['ImagenBanner'];
+                       $uploadedFile = CUploadedFile::getInstance($modelBanner, "rutaImagen");
+                      
+                       if($uploadedFile->getExtensionName() == "jpg" || $uploadedFile->getExtensionName() == "png" ||
+                           $uploadedFile->getExtensionName() == "jpeg" || $uploadedFile->getExtensionName()== "gif"){
+                           
+                            if($uploadedFile->saveAs(Yii::app()->params->callcenter['modulosConfigurados']['urlImagenes'].$uploadedFile->getName())){
+                                Yii::app()->user->setFlash('error_imagen','La imagen no fue guardada');
+                            }
+                            
+                            
+                            $modelBanner->rutaImagen = "/".Yii::app()->params->callcenter['modulosConfigurados']['urlImagenes'].$uploadedFile->getName();
+                            $modelBanner->idModulo = $idModulo;
+                            if($modelBanner->save()){
+                                
+                            }else{
+                                echo "<pre>";
+                                print_r($modelBanner->getErrors());
+                                echo "</pre>";
+                            }
+                            
+                          //   $this->refresh();
+                       }else{
+                           Yii::app()->user->setFlash('error_imagen','Imagen no valida');
+                       } 
+                    }
+                }
+                
+                $params['listaImagenes'] = ImagenBanner::model()->findAll(array(
+                    'condition' => 'idModulo =:idmodulo',
+                    'params' => array(
+                            'idmodulo' => $idModulo 
+                    )
+                ));
             }
             if($model->tipo == 6)
             {
@@ -99,11 +210,10 @@ class ContenidoController extends ControllerOperator {
                 $params['listaProductos'] = true;
                 $model->scenario = 'contenido';
             }
-        }
-        else
-        {
+        } else {
             $params['vista'] = 'modulos';
             $params['opcion'] = 'editar';
+            $model->dias= explode(",",$model->dias);
         }
         //CVarDumper::dump($deshabilitarBotones, 10, true);
         //exit();
@@ -115,6 +225,294 @@ class ContenidoController extends ControllerOperator {
             'params' => $params
         ));
     }
+    
+    public function actionEliminarImagen(){
+        if (!Yii::app()->request->isPostRequest) {
+            throw new CHttpException(404, 'Solicitud inválida.');
+        }
+        $idBanner = Yii::app()->getRequest()->getPost('idBanner');
+        
+        $model = ImagenBanner::model()->find(array(
+            'condition' => 'idBanner =:idbanner',
+            'params' => array(
+                'idbanner' => $idBanner
+            )
+            
+        ));
+        
+        if($model != null){
+            $idModulo = $model->idModulo;
+            $model->delete();
+            
+            $listaImagenes = ImagenBanner::model()->findAll(array(
+                    'condition' => 'idModulo =:idmodulo',
+                    'params' => array(
+                            'idmodulo' => $idModulo 
+                    )
+                ));
+            
+            echo CJSON::encode(array(
+                'result' => 'ok',
+                'response' => $this->renderPartial('_listaImagenes', array(
+                    'listaImagenes' => $listaImagenes
+                ),true,false)
+            ));
+        }
+        
+    }
+    
+    
+    public function actionComprobarciudad($codigoCiudad){
+        
+        $sectores=Ciudad::model()->find(array(
+            'with' => array('listSubSectores' => 
+                array(
+                        'with' => array(
+                                'listSectorReferencias' => array(
+                                        'with' => 'objSector'
+                                )
+                         
+                         )
+                     )),
+            'condition' => 't.codigoCiudad=:ciudad',
+            'params' => array(
+                'ciudad' => $codigoCiudad
+            )
+        ));
+        
+        if(count($sectores)>0 &&  count($sectores->listSubSectores)>0){
+            echo CJSON::encode( array(
+                        'result' => 'ok',
+                        'code' => 1,
+                        'htmlResponse' => $this->renderPartial('_sectorlista',array(
+                                        'sectores' => $sectores
+                           ),true,false)));
+        }else{
+            echo CJSON::encode( array(
+                        'result' => 'ok',
+                        'code' => 2,
+                        ));
+        }
+    }
+    
+    
+    public function actionGuardarCiudadSector(){
+         if (!Yii::app()->request->isPostRequest) {
+            throw new CHttpException(404, 'Solicitud inválida.');
+        }
+
+        $codigoCiudad = Yii::app()->getRequest()->getPost('codigoCiudad');
+        $codigoSector = Yii::app()->getRequest()->getPost('codigoSector');
+        $idModulo = Yii::app()->getRequest()->getPost('idModulo');
+        
+        $moduloSector = ModuloSectorCiudad::model()->find(array(
+                'condition' => 'CodigoCiudad =:codigoCiudad AND CodigoSector =:codigoSector AND idModulo=:idmodulo ',
+                'params' => array(
+                            'codigoCiudad' => $codigoCiudad,
+                            'codigoSector' => $codigoSector,
+                            'idmodulo' => $idModulo
+                )
+            ));
+        
+        if($moduloSector == null){
+            $moduloSector = new ModuloSectorCiudad();
+            $moduloSector->codigoCiudad=$codigoCiudad;
+            $moduloSector->codigoSector=$codigoSector;
+            $moduloSector->idModulo=$idModulo;
+            
+            if($moduloSector->save()){
+                $sectores= ModuloSectorCiudad::model()->findAll(array(
+                        'with' => array('objCiudad','objSector'),
+                        'condition' => 'idModulo =:idmodulo',
+                        'params' => array(
+                            'idmodulo' => $idModulo
+                        ),
+                        'order' => 'objCiudad.nombreCiudad,objSector.nombreSector'
+                    ));
+                
+                $html=$this->renderPartial('_listaSectoresCiudades',array(
+                    'sectores' => $sectores    
+                ),true, false);
+                   echo CJSON::encode(array(
+                       'result' => 'ok',
+                       'response' => $html
+                   ));
+            }else{
+                echo CJSON::encode(array(
+                       'result' => 'error',
+                       'response' => "Error al guardar la ciudad/sector"
+                   ));
+            }
+        }else{
+            echo CJSON::encode(array(
+                       'result' => 'error',
+                       'response' => "El sector ya tiene referencia"
+                   ));
+        }
+    }
+    
+    
+    public function actionEliminarCiudadSector(){
+        if (!Yii::app()->request->isPostRequest) {
+            throw new CHttpException(404, 'Solicitud inválida.');
+        }
+        
+        $idModuloSector = Yii::app()->getRequest()->getPost('idModuloSectorCiudad');
+        
+        $moduloSector = ModuloSectorCiudad::model()->find(array(
+                'condition' => 'idModuloSectorCiudad =:idmodulosector',
+                'params' => array(
+                            'idmodulosector' => $idModuloSector
+                )
+            ));
+        
+        if($moduloSector != null){
+            $idModulo=$moduloSector->idModulo;
+            $moduloSector->delete();
+            
+            $sectores= ModuloSectorCiudad::model()->findAll(array(
+                        'with' => array('objCiudad','objSector'),
+                        'condition' => 'idModulo =:idmodulo',
+                        'params' => array(
+                            'idmodulo' => $idModulo
+                        )));
+                
+                $html=$this->renderPartial('_listaSectoresCiudades',array(
+                    'sectores' => $sectores    
+                ),true, false);
+                   echo CJSON::encode(array(
+                       'result' => 'ok',
+                       'response' => $html
+                   ));
+        }else{
+             echo CJSON::encode(array(
+                       'result' => 'error',
+                       'response' => "No se ha encontrado la ciudad/sector a eliminar"
+                   ));
+        }
+        
+    }
+    
+    
+    public function actionEliminarUbicacion(){
+         if (!Yii::app()->request->isPostRequest) {
+            throw new CHttpException(404, 'Solicitud inválida.');
+        }
+        
+        $idUbicacion = Yii::app()->getRequest()->getPost('ubicacion');
+        
+        $ubicacion = UbicacionModulos::model()->find(array(
+                'condition' => 'idUbicacion =:idubicacion',
+                'params' => array(
+                            'idubicacion' => $idUbicacion
+                )
+            ));
+        
+        $idModulo= $ubicacion->idModulo;
+        if($ubicacion != null){
+            
+            $ubicacionCategoria = UbicacionCategoria::model()->find(array(
+                'condition' => 'idUbicacion =:idubicacion',
+                'params' => array(
+                            'idubicacion' => $idUbicacion
+                )
+            ));
+            
+            if($ubicacionCategoria != null){
+                $ubicacionCategoria->delete();
+            }
+            
+            $ubicacion->delete();
+            
+           $ubicaciones= UbicacionModulos::model()->findAll( array(
+                        'with' => array('objUbicacionCategorias' => array('with' => 'objCategoriaTienda')),
+                        'condition' => 't.idModulo =:idmodulo',
+                        'params' => array(
+                            'idmodulo' => $idModulo
+                        )
+                     ));
+                
+                $html=$this->renderPartial('_listaUbicaciones',array(
+                    'ubicaciones' => $ubicaciones    
+                ),true, false);
+                   echo CJSON::encode(array(
+                       'result' => 'ok',
+                       'response' => $html
+                   ));
+        }else{
+             echo CJSON::encode(array(
+                       'result' => 'error',
+                       'response' => "No se ha encontrado la ciudad/sector a eliminar"
+                   ));
+        }
+    }
+    
+    
+    public function actionFormUbicacionCategoria($ubicacion=null){
+        
+        if($ubicacion == UbicacionModulos::UBICACION_ESCRITORIO_DIVISION || $ubicacion == UbicacionModulos::UBICACION_ESCRITORIO_CATEGORIA ){
+            $model = new UbicacionCategoria();
+            $arraycategorias=array();
+            $categorias = CategoriaTienda::model()->findAll(array(
+                'order' => 't.orden',
+                'condition' => 't.tipoDispositivo=:dispositivo AND t.visible=:visible AND t.idCategoriaPadre IS NULL ',
+                'params' => array(
+                    ':visible' => 1,
+                    ':dispositivo' => CategoriaTienda::DISPOSITIVO_ESCRITORIO
+                ),
+                'with' => array('listCategoriasHijas'),
+                ));
+            
+            if($ubicacion == UbicacionModulos::UBICACION_ESCRITORIO_DIVISION){
+                foreach($categorias as $categoria){
+                    foreach($categoria->listCategoriasHijas as $division){
+                        $arraycategorias[]=array(
+                                        'idCategoria' => $division->idCategoriaTienda,
+                                        'nombreCategoria' => $division->nombreCategoriaTienda,
+                        );
+                    }
+                }
+            }else{
+                foreach($categorias as $categoria){
+                    foreach($categoria->listCategoriasHijas as $division){
+                         foreach($division->listCategoriasHijasMenu as $categoriaHija){
+                            $arraycategorias[]=array(
+                                            'idCategoria' => $categoriaHija->idCategoriaTienda,
+                                            'nombreCategoria' => $categoriaHija->nombreCategoriaTienda,
+                            );
+                         }
+                    }
+                }
+            }
+            echo CJSON::encode(array(
+                'result' => 'ok',
+                'response' => $this->renderPartial('_formUbicacionCategoria', array(
+                    'model' => $model,
+                    'categorias' => $arraycategorias
+            ),true,false)));
+        }else{
+            echo CJSON::encode(array(
+                    'result' => 'none'
+                ));
+        }
+            
+            
+    }
+   
+    public function actionFormContenidoImagen($tipoContenido){
+        if($tipoContenido == ImagenBanner::CONTENIDO_HTML || $tipoContenido == ImagenBanner::CONTENIDO_LINK){
+            echo CJSON::encode(array(
+                'result' => 'ok',
+                'response' => 1
+            ));
+        }else{
+            echo CJSON::encode(array(
+                'result' => 'ok',
+                'response' => 2
+            ));
+        }
+    }
+    
 
     public function botonesDeshabilitados($model)
     {
@@ -375,5 +773,46 @@ class ContenidoController extends ControllerOperator {
             'model' => $model,
             'listaProductos' => true
         ));
+    }
+
+
+    public function actionUpload() {
+        $message = "";
+        $name = time() . "_" . $_FILES['upload']['name'];
+        $url = Yii::getPathOfAlias('webroot') . Yii::app()->params->carpetaImagen['contenidos'] . $name;
+        //extensive suitability check before doing anything with the file…
+        if (($_FILES['upload'] == "none") OR (empty($_FILES['upload']['name']))) 
+        {
+           $message = "No se ha cargado archivo.";
+        } 
+        else if ($_FILES['upload']["size"] == 0) 
+        {
+           $message = "Archivo inv&aacute;lido: Tama&ntilde;o 0";
+        } 
+        else if (($_FILES['upload']["type"] != "image/pjpeg") AND ($_FILES['upload']["type"] != "image/jpeg") AND ($_FILES['upload']["type"] != "image/png")) 
+        {
+           $message = "El formato de la imagen debe de ser JPG or PNG. Por favor cargar archivo JPG or PNG.";
+        } 
+        else if (!is_uploaded_file($_FILES['upload']["tmp_name"])) 
+        {
+           $message = "Solicitud inv&aacute;lida."; //$message = "You may be attempting to hack our server. We're on to you; expect a knock on the door sometime soon.";
+        } 
+        else 
+        {
+           $message = "";
+           $move = move_uploaded_file($_FILES['upload']['tmp_name'], $url);
+           if (!$move) 
+           {
+               $message = "Error al cargar el archivo."; //$message = "Error moving uploaded file. Check the script is granted Read/Write/Modify permissions.";
+           }
+           //$url = "../" . $url;
+        }
+        $url = Yii::app()->getBaseUrl() . Yii::app()->params->carpetaImagen['contenidos'] . $name;
+
+        if (!empty($message))
+           $url = "";
+
+        $funcNum = $_GET['CKEditorFuncNum'];
+        echo "<script type='text/javascript'>window.parent.CKEDITOR.tools.callFunction($funcNum, '$url', '$message');</script>";
     }
 }

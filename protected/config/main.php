@@ -57,7 +57,7 @@ return array(
             'connectionString' => 'mysql:host=localhost;port=3306;dbname=lrvmovil',
             'emulatePrepare' => true,
             'username' => 'root',
-            //'password' => 'admin',
+            'password' => '',
             'charset' => 'utf8',
             'enableProfiling' => true,
             'enableParamLogging' => true,
@@ -373,7 +373,12 @@ return array(
                     6 => 'Html', 
                     7 => 'Html y lista de productos', 
                     8 => 'Lista de productos en el carro'
-                ),  
+                ),
+                'ubicacionModulos' => array(
+                    1 => 'Inicio',
+                    2 => 'División',
+                    3 => 'Categoria'
+                ),
                 'diasSemana' => array(
                    0 => 'Domingo',
                    1 => 'Lunes',
@@ -382,7 +387,13 @@ return array(
                    4 => 'Jueves', 
                    5 => 'Viernes', 
                    6 => 'Sábado', 
-                )
+                ),
+                'tiposContenidos' => array(
+                    1 => 'Link',
+                    2 => 'Html',
+                    3 => 'Ninguno'
+                ),
+                'urlImagenes' => 'images/banners/'
             ),
             'estadoItem' => array(
                 'estado' => array(

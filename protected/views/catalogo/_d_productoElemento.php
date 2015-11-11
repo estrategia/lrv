@@ -2,8 +2,10 @@
     <?php if ($vista == "relacionado"): ?>
         <li class="col-md-12 border-left">
         <?php elseif ($vista == "comparacion"): ?>
-        <li class="col-md-<?php echo $colums; ?> border-left" id="comparacion-producto-<?php echo $data->codigoProducto ?>">
-        <?php endif; ?>
+        <li class="--col-md-<?php echo $colums; ?> border-left" id="comparacion-producto-<?php echo $data->codigoProducto ?>">
+        <?php elseif ($vista == "grid"): ?>
+        	<li class="col-md-4 border-left">        
+    	<?php endif; ?>
     <?php else: ?>    
     <li class="border-left" >
     <?php endif; ?>
@@ -123,6 +125,10 @@
                         <?php echo CHtml::link('<div class="button">Comparar <img src="' . Yii::app()->baseUrl . '/images/desktop/button-carrito.png" alt=""></div>', '#', array('data-producto' => $data->codigoProducto, 'data-role' => 'comparar')); ?>
                     </div>
                 <?php endif; ?>
+            </div>
+	<?php elseif($objSectorCiudad != null): ?>
+            <div class="col-md-12">
+            <?php echo CHtml::link('<div class="button">Producto Agotado</div>', '#', array('disabled' => 'true')); ?>
             </div>
         <?php else: ?>
             <div class="botones-list">

@@ -34,8 +34,8 @@ class UbicacionModulos extends CActiveRecord {
         // NOTE: you should only define rules for those attributes that
         // will receive user inputs.
         return array(
-            array('idUbicacion, idModulo, ubicacion, orden', 'required'),
-            array('idUbicacion, idModulo, ubicacion, orden', 'numerical', 'integerOnly' => true),
+            array('idModulo, ubicacion, orden', 'required'),
+            array('idModulo, ubicacion, orden', 'numerical', 'integerOnly' => true),
             // The following rule is used by search().
             // @todo Please remove those attributes that should not be searched.
             array('idUbicacion, idModulo, ubicacion, orden', 'safe', 'on' => 'search'),

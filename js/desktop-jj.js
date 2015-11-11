@@ -164,7 +164,7 @@ function format(input)
 $(document).ready(function() {
     $('.pop_codigo').popover();
     $("input[data-role='bootstrap-slider']").slider();
-    $("#owl-demo").owlCarousel({
+    $(".slide-productos").owlCarousel({
         items: 4,
         lazyLoad: true,
         navigation: true
@@ -174,6 +174,12 @@ $(document).ready(function() {
         lazyLoad: true,
         navigation: true
     });
+    $("#slide-combos").owlCarousel({
+        items: 4,
+        lazyLoad: true,
+        navigation: true
+    });
+    
     $("#carrousel-img-productos").owlCarousel({
         items: 4,
         lazyLoad: true,
