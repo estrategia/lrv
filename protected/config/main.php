@@ -57,7 +57,7 @@ return array(
             'connectionString' => 'mysql:host=localhost;port=3306;dbname=lrvmovil',
             'emulatePrepare' => true,
             'username' => 'root',
-            //'password' => 'admin',
+            'password' => 'admin',
             'charset' => 'utf8',
             'enableProfiling' => true,
             'enableParamLogging' => true,
@@ -205,6 +205,7 @@ return array(
             'codigoEspecial' => '/images/codigoespecial/',
             'productos' => array(1 => '/images/productos/thumb/', 2 => '/images/productos/'),
             'combos' => array(1 => '/images/combos/thumb/', 2 => '/images/combos/'),
+            'contenidos' => '/images/contenidos',
         ),
         'busqueda' => array(
             'tipoBuscador' => array(

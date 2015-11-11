@@ -50,11 +50,11 @@ class ContenidoController extends ControllerOperator {
     public function actionCrear(){
         $this->layout = "admin";
       
-        $model= new ModuloForm();
+        $model= new ModulosConfigurados();
         
         
         if (isset($_POST['ModuloForm'])) {
-            $modelModulo = new ModulosConfigurados();
+            //$modelModulo = new ModulosConfigurados();
             $modelModulo->attributes = $_POST['ModuloForm'];
             $modelModulo->dias= implode(",", $modelModulo->dias);
             
@@ -375,5 +375,46 @@ class ContenidoController extends ControllerOperator {
             'model' => $model,
             'listaProductos' => true
         ));
+    }
+
+
+    public function actionUpload() {
+        $message = "";
+        $name = time() . "_" . $_FILES['upload']['name'];
+        $url = Yii::getPathOfAlias('webroot') . Yii::app()->params->carpetaImagen['contenidos'] . $name;
+        //extensive suitability check before doing anything with the file…
+        if (($_FILES['upload'] == "none") OR (empty($_FILES['upload']['name']))) 
+        {
+           $message = "No se ha cargado archivo.";
+        } 
+        else if ($_FILES['upload']["size"] == 0) 
+        {
+           $message = "Archivo inv&aacute;lido: Tama&ntilde;o 0";
+        } 
+        else if (($_FILES['upload']["type"] != "image/pjpeg") AND ($_FILES['upload']["type"] != "image/jpeg") AND ($_FILES['upload']["type"] != "image/png")) 
+        {
+           $message = "El formato de la imagen debe de ser JPG or PNG. Por favor cargar archivo JPG or PNG.";
+        } 
+        else if (!is_uploaded_file($_FILES['upload']["tmp_name"])) 
+        {
+           $message = "Solicitud inv&aacute;lida."; //$message = "You may be attempting to hack our server. We're on to you; expect a knock on the door sometime soon.";
+        } 
+        else 
+        {
+           $message = "";
+           $move = move_uploaded_file($_FILES['upload']['tmp_name'], $url);
+           if (!$move) 
+           {
+               $message = "Error al cargar el archivo."; //$message = "Error moving uploaded file. Check the script is granted Read/Write/Modify permissions.";
+           }
+           //$url = "../" . $url;
+        }
+        $url = Yii::app()->getBaseUrl() . Yii::app()->params->carpetaImagen['contenidos'] . $name;
+
+        if (!empty($message))
+           $url = "";
+
+        $funcNum = $_GET['CKEditorFuncNum'];
+        echo "<script type='text/javascript'>window.parent.CKEDITOR.tools.callFunction($funcNum, '$url', '$message');</script>";
     }
 }

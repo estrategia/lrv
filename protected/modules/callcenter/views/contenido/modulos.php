@@ -98,12 +98,6 @@
                 <?php echo $form->error($model, 'dias'); ?>
             </div>
             
-            <div class="form-group">
-                 <!-- checkbox -->
-                <?php echo $form->labelEx($model, 'orden'); ?>
-                <?php  echo $form->numberField($model, 'orden', Yii::app()->params->callcenter['modulosConfigurados']['diasSemana'],array('class' => 'orden','style' => 'display:block'))?>
-                <?php echo $form->error($model, 'orden'); ?>
-            </div>
             <?php if($model->isNewRecord): ?>
                 <?php echo CHtml::submitButton('Guardar Módulo', array('class' => "btn btn-default")); ?>
             <?php endif; ?>
