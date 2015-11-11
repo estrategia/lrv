@@ -378,7 +378,13 @@ return array(
                    4 => 'Jueves', 
                    5 => 'Viernes', 
                    6 => 'Sábado', 
-                )
+                ),
+                'tiposContenidos' => array(
+                    1 => 'Link',
+                    2 => 'Html',
+                    3 => 'Ninguno'
+                ),
+                'urlImagenes' => 'images/banners/'
             ),
             'estadoItem' => array(
                 'estado' => array(

@@ -64,8 +64,7 @@
                     ));
                 ?>
                 <?php echo $form->error($model, 'inicio'); ?>
-            </div>
-            
+            </div> 
             <div class="form-group"> <!-- calendario -->
                 <?php echo $form->labelEx($model, 'fin'); ?>
                 <?php 
@@ -90,11 +89,10 @@
                 ?>
                 <?php echo $form->error($model, 'fin'); ?>
             </div>
-            
             <div class="form-group">
                  <!-- checkbox -->
                 <?php echo $form->labelEx($model, 'dias'); ?>
-                <?php  echo $form->checkboxList($model, 'dias', Yii::app()->params->callcenter['modulosConfigurados']['diasSemana'],array('class' => 'dias','style' => 'display:block'))?>
+                <?php echo $form->checkboxList($model, 'dias', Yii::app()->params->callcenter['modulosConfigurados']['diasSemana'],array('class' => 'dias','style' => 'display:block'))?>
                 <?php echo $form->error($model, 'dias'); ?>
             </div>
            

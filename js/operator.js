@@ -786,14 +786,104 @@ $(document).on('change', "select[data-role='ubicacion-modulo']", function(){
         success: function(data){
             var data = $.parseJSON(data);
             if (data.result === "ok") {
-                if(data.code == 1){
-                    $("#div-sector-modulo").html(data.htmlResponse);
-                    $("#div-sector-modulo").css('display','block');
-                    $("#sector-select").val(1);
-                }else if(data.code == 2){
-                    $("#div-sector-modulo").css('display','none');
-                    $("#sector-select").val(0);
+                    $("#ubicacion-categoria").html(data.response);
+                    $("#ubicacion-categoria").css('display','block');
+            }else{
+                    $("#ubicacion-categoria").css('display','none');
+            }
+        },
+        complete: function(){
+
+        },
+        error: function(jqXHR, textStatus, errorThrown){
+
+        }
+    });
+});
+
+$(document).on('click', "a[data-role='eliminar-modulo-ubicacion']", function(){
+
+    var idUbicacion = $(this).attr("data-modulo-ubicacion");
+     $.ajax({
+        type: 'POST',
+        async: true,
+        url: requestUrl + '/callcenter/contenido/eliminarUbicacion',
+        data: {ubicacion : idUbicacion},
+        beforeSend: function(){
+
+        },
+        success: function(data){
+            var data = $.parseJSON(data);
+            if (data.result == "ok") {
+                bootbox.alert("Ubicación eliminada con éxito");
+                $("#lista-ubicaciones").html(data.response);
+            }else if(data.result == "error"){
+                bootbox.alert(data.response);
+            }
+        },
+        complete: function(){
+
+        },
+        error: function(jqXHR, textStatus, errorThrown){
+
+        }
+    });
+});
+
+$(document).on('change', "select[data-role='validar-contenido']", function(){ 
+    var tipoContenido=$('#ImagenBanner_tipoContenido').val();
+     $.ajax({
+        type: 'GET',
+        async: true,
+        url: requestUrl + '/callcenter/contenido/formContenidoImagen',
+        data: {tipoContenido : tipoContenido},
+        beforeSend: function(){
+
+        },
+        success: function(data){
+            var data = $.parseJSON(data);
+            if (data.result === "ok") {
+                if(data.response === 1){
+                    $("#div-contenido-imagen").css('display','block');
+                }else{
+                    $("#div-contenido-imagen").css('display','none');
                 }
+            }
+        },
+        complete: function(){
+
+        },
+        error: function(jqXHR, textStatus, errorThrown){
+
+        }
+    });
+});
+$(document).on('click', "a[data-role='modal-contenido']", function(){
+    var content=$(this).attr('data-contenido-modal');
+    $("#pre-contenido-modal").html(content);
+    $('#modal-contenido-visual').modal('show');
+});
+
+
+
+$(document).on('click', "a[data-role='eliminar-modulo-imagen']", function(){
+
+    var idImagen = $(this).attr("data-modulo-imagen");
+     $.ajax({
+        type: 'POST',
+        async: true,
+        url: requestUrl + '/callcenter/contenido/eliminarImagen',
+        data: {idBanner : idImagen},
+        beforeSend: function(){
+
+        },
+        success: function(data){
+            var data = $.parseJSON(data);
+            if (data.result == "ok") {
+                bootbox.alert("Imagen eliminada con éxito");
+                $("#lista-imagenes").html(data.response);
+            }else if(data.result == "error"){
+                bootbox.alert(data.response);
             }
         },
         complete: function(){

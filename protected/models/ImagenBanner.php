@@ -17,6 +17,10 @@
  */
 class ImagenBanner extends CActiveRecord {
 
+    public $archivo;
+    const CONTENIDO_LINK = 1;
+    const CONTENIDO_HTML = 2;
+    const CONTENIDO_NONE = 3;
     /**
      * @return string the associated database table name
      */
@@ -32,12 +36,12 @@ class ImagenBanner extends CActiveRecord {
         // will receive user inputs.
         return array(
             array('nombre, rutaImagen, tipoContenido, idModulo, orden', 'required'),
-            array('rutaImagen, tipoContenido, idModulo, orden', 'numerical', 'integerOnly' => true),
+            array('tipoContenido, idModulo, orden', 'numerical', 'integerOnly' => true),
             array('nombre', 'length', 'max' => 45),
-            array('contenido', 'safe'),
+            array('contenido, contenidoMovil', 'safe'),
             // The following rule is used by search().
             // @todo Please remove those attributes that should not be searched.
-            array('idBanner, nombre, rutaImagen, tipoContenido, contenido, idModulo, orden', 'safe', 'on' => 'search'),
+            array('idBanner, nombre, rutaImagen, tipoContenido, contenido, contenidoMovil, idModulo, orden', 'safe', 'on' => 'search'),
         );
     }
 
@@ -62,6 +66,7 @@ class ImagenBanner extends CActiveRecord {
             'rutaImagen' => 'Ruta Imagen',
             'tipoContenido' => 'Tipo Contenido',
             'contenido' => 'Contenido',
+            'contenidoMovil' => 'Contenido Móvil',
             'idModulo' => 'Id Modulo',
             'orden' => 'Orden',
         );

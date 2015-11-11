@@ -32,4 +32,16 @@
       <?php echo $form->error($ubicacionModel, 'orden'); ?>
 </div>
 
+<?php echo CHtml::submitButton( 'Agregar' , array('class' => "btn btn-default")); ?>
+
 <?php $this->endWidget(); ?>
+
+
+<div class="space-1"></div>
+<div class="panel-body">
+	<div class="row">
+		<div class="col-md-12" id="lista-ubicaciones">
+			<?php $this->renderPartial('_listaUbicaciones',array('ubicaciones' => $ubicaciones))?>
+		</div>
+	</div>
+</div>

@@ -30,8 +30,8 @@ class UbicacionCategoria extends CActiveRecord
 		// NOTE: you should only define rules for those attributes that
 		// will receive user inputs.
 		return array(
-			array('idUbicacionCategoria, idUbicacion, idCategoriaBi', 'required'),
-			array('idUbicacionCategoria, idUbicacion, idCategoriaBi', 'numerical', 'integerOnly'=>true),
+			array('idUbicacion, idCategoriaBi', 'required'),
+			array('idUbicacion, idCategoriaBi', 'numerical', 'integerOnly'=>true),
 			// The following rule is used by search().
 			// @todo Please remove those attributes that should not be searched.
 			array('idUbicacionCategoria, idUbicacion, idCategoriaBi', 'safe', 'on'=>'search'),
@@ -46,8 +46,8 @@ class UbicacionCategoria extends CActiveRecord
 		// NOTE: you may need to adjust the relation name and the related
 		// class name for the relations automatically generated below.
 		return array(
-			'idUbicacion0' => array(self::BELONGS_TO, 'TUbicacionModulos', 'idUbicacion'),
-			'idCategoriaBi0' => array(self::BELONGS_TO, 'MCategoria', 'idCategoriaBi'),
+			'objUbicacionModulo' => array(self::BELONGS_TO, 'UbicacionModulos', 'idUbicacion'),
+			'objCategoriaTienda' => array(self::BELONGS_TO, 'CategoriaTienda', 'idCategoriaBi'),
 		);
 	}
 
@@ -58,8 +58,8 @@ class UbicacionCategoria extends CActiveRecord
 	{
 		return array(
 			'idUbicacionCategoria' => 'Id Ubicacion Categoria',
-			'idUbicacion' => 'Id Ubicacion',
-			'idCategoriaBi' => 'Id Categoria Bi',
+			'idUbicacion' => 'Ubicación',
+			'idCategoriaBi' => 'Categoría',
 		);
 	}
 
