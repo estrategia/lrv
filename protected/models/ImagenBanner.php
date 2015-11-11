@@ -9,6 +9,7 @@
  * @property integer $rutaImagen
  * @property integer $tipoContenido
  * @property string $contenido
+ * @property string $contenidoMovil
  * @property integer $idModulo
  * @property integer $orden
  *
@@ -37,7 +38,7 @@ class ImagenBanner extends CActiveRecord {
             array('contenido', 'safe'),
             // The following rule is used by search().
             // @todo Please remove those attributes that should not be searched.
-            array('idBanner, nombre, rutaImagen, tipoContenido, contenido, idModulo, orden', 'safe', 'on' => 'search'),
+            array('idBanner, nombre, rutaImagen, tipoContenido, contenido, contenidoMovil, idModulo, orden', 'safe', 'on' => 'search'),
         );
     }
 
@@ -62,6 +63,7 @@ class ImagenBanner extends CActiveRecord {
             'rutaImagen' => 'Ruta Imagen',
             'tipoContenido' => 'Tipo Contenido',
             'contenido' => 'Contenido',
+            'contenidoMovil' => 'contenidoMovil',
             'idModulo' => 'Id Modulo',
             'orden' => 'Orden',
         );
@@ -89,6 +91,7 @@ class ImagenBanner extends CActiveRecord {
         $criteria->compare('rutaImagen', $this->rutaImagen);
         $criteria->compare('tipoContenido', $this->tipoContenido);
         $criteria->compare('contenido', $this->contenido, true);
+        $criteria->compare('contenidoMovil', $this->contenidoMovil, true);
         $criteria->compare('idModulo', $this->idModulo);
         $criteria->compare('orden', $this->orden);
 
@@ -106,18 +109,4 @@ class ImagenBanner extends CActiveRecord {
     public static function model($className = __CLASS__) {
         return parent::model($className);
     }
-    
-    public static function getListImagenes(DateTime $fecha, $tipo){
-         return ImagenBanner::model()->findAll(array(
-            'with' => array('objModulo'),
-            'order' => 'objModulo.orden, t.orden',
-            'condition' => 'objModulo.tipo =:tipo AND objModulo.dias LIKE :dia AND objModulo.inicio<=:fecha AND objModulo.fin>=:fecha',
-            'params' => array(
-                ':tipo' => $tipo,
-                ':dia' => "%" . $fecha->format("w") . "%",
-                ':fecha' => $fecha->format("Y-m-d"),
-            )
-        ));
-    }
-
 }

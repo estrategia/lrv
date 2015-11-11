@@ -126,25 +126,12 @@ function guardarCalificacion(codigoProducto, objCalificacion, url) {
         data: 'codigo=' + codigoProducto + '&titulo=' + titulo + '&calificacion=' + calificacion + "&comentario=" + comentario+"&"+form.serialize(),
         dataType: 'json',
         success: function(data) {
-
-          /*  $("#dialog").dialog({
-                autoOpen: false,
-            });*/
-
             if (data.result === 'ok') {
                 $("[data-role='calificacion']").remove();
                 $("#calificacion-producto").html("<div class='col-md-6'>TU COMENTARIO HA SIDO PUBLICADO, ESTE SERÁ APROBADO POR UN MODERADOR EN LAS PRÓXIMAS HORAS</div>");
-             //   $("#dialog").html(data.response);
-             //   $("#dialog").dialog("open");
-                /*$('<div>').mdialog({
-                 content: "<div data-role='main'><div class='ui-content' data-role='content' role='main'>" + data.response + "<a class='ui-btn ui-btn-r ui-corner-all ui-shadow' data-rel='back' href='#'>Aceptar</a></div></div>"
-                 });*/
             } else if (data.result === 'error') {
                 $("#dialog").html(data.response);
                 $("#dialog").dialog("open");
-                /*$('<div>').mdialog({
-                 content: "<div data-role='main'><div class='ui-content' data-role='content' role='main'>" + data.response + "<a class='ui-btn ui-btn-r ui-corner-all ui-shadow' data-rel='back' href='#'>Aceptar</a></div></div>"
-                 });*/
             }else{
                  $.each(data, function(element, error) {
                     $('#' + form.attr('id') + ' #' + element + '_em_').html(error);
@@ -313,12 +300,17 @@ function obtenerPosicionDesktop(pos) {
 
 function cargarCiudad() {
     var ciudad = $("#ciudadDespacho").val();
-    var urlCargar = requestUrl + "/sitio/cargarUbicacion/";
+    var urlCargar = requestUrl + "/sitio/UbicacionSeleccion/";
     $.ajax({
         url: urlCargar,
-        data: {codigoCiudad: ciudad},
-        dataType: 'json'
+        data: {ciudad: ciudad},
+        dataType: 'json',
+        beforeSend: function() {
+            //  $.mobile.loading('show');
+            $("#modal-sector").remove();
+        }
       }).done(function(data) {
+          
           if(data.result=='ok'){
               bootbox.alert(data.response);
               if(data.urlAnterior){
@@ -326,11 +318,49 @@ function cargarCiudad() {
               }else{
                   location.href=requestUrl;
               }
+          }else if(data.result=='select'){
+             $("#main-page").append(data.response);
+             $("#modal-sector").modal('show');
+           //  $("#selectSectores").select2();
           }else{
-              bootbox.alert(data.response);
+               bootbox.alert(data.response);
           }
       });
   }
+  
+ $(document).on('click', "button[data-role='cargar-sector']", function() {
+    var codigoCiudad = $(this).attr('data-ciudad');
+    var sector=$("#selectSectores").val();
+    $.ajax({
+        type: 'GET',
+        async: true,
+        url: requestUrl + '/sitio/ubicacionSeleccion',
+        data: {ciudad:codigoCiudad,sector:sector},
+        dataType: 'json',
+        beforeSend: function() {
+        
+        },
+        complete: function(data) {
+             
+        },
+        success: function(data) {
+             if(data.result=='ok'){
+                $("#modal-sector").modal('hide');
+                    bootbox.alert(data.response);
+                if(data.urlAnterior){
+                  location.href=data.urlAnterior;
+                }else{
+                    location.href=requestUrl;
+                }
+              }
+        },
+        error: function(jqXHR, textStatus, errorThrown) {
+           // boton.button('enable');
+            alert('Error: ' + errorThrown);
+        }
+    });
+    return false;
+});
 
 
 
@@ -792,3 +822,40 @@ $(document).on('click', "button[data-role='aumentar-cantidad']", function() {
     $("#subtotal-producto-unidad-" + codigoProducto).html("$" + format(nro * valorUnidad));
     $("#cantidad-producto-unidad-" + codigoProducto).val(nro);
 });
+
+$(document).on('click', "button[data-role='guardarCalificacion']", function() {
+
+    var codigoProducto =$(this).attr('data-producto');
+    var form = $("#form-calificacion");
+    $.ajax({
+        type: 'POST',
+        url: requestUrl +"/catalogo/calificar/",
+        data: 'codigo=' + codigoProducto +"&"+ form.serialize(),
+        dataType: 'json',
+        success: function(data) {
+            if (data.result === 'ok') {
+                $("[data-role='calificacion']").remove();
+                $("#calificacion-producto").html("<div class='col-md-6'>TU COMENTARIO HA SIDO PUBLICADO, ESTE SERÁ APROBADO POR UN MODERADOR EN LAS PRÓXIMAS HORAS</div>");
+            } else if (data.result === 'error') {
+                $("#dialog").html(data.response);
+                $("#dialog").dialog("open");
+            }else{
+                 $.each(data, function(element, error) {
+                    $('#' + form.attr('id') + ' #' + element + '_em_').html(error);
+                    $('#' + form.attr('id') + ' #' + element + '_em_').css('display', 'block');
+                });
+            }
+        }     
+    });
+});
+
+
+function capturarcalificacionproducto(score, evt){
+    var calificacion = score;
+    calificacion = parseInt(calificacion);
+    if (isNaN(calificacion)) {
+        calificacion = '';
+    }
+    $('#CalificacionForm_calificacion').val(calificacion);
+    $('#calificacion_form').attr('data-score',calificacion);
+}

@@ -41,18 +41,16 @@
             <div class="col-md-3">
              <h3 class="">Seleccionar ciudad</h3> 
              <select class="form-control ciudades" id="ciudadDespacho" onclick="">
-                
                 <?php foreach ($listCiudadesSectores as $ciudad): ?>
-                 
                     <?php if (!empty($ciudad->listSectores)): ?>
-                           <?php if(count($ciudad->listSectores) == 1):?>
-                           <option value="<?php echo $ciudad->codigoCiudad ?>"><?php echo $ciudad->nombreCiudad ?></option>
-                            <?php else: ?>
-                           <optgroup label="<?php echo $ciudad->nombreCiudad?>">
-                               <?php foreach($ciudad->listSectores as $sector):?>
-                                        <option value="<?php echo $sector->codigoSector ?>"><?php echo $sector->nombreSector ?></option>
-                               <?php endforeach;?>
-                           </optgroup>     
+                        <?php if (isset($idxCiudadesSubSectores[$ciudad->codigoCiudad])): ?>
+                             <optgroup label="<?php echo $ciudad->nombreCiudad?>">
+                                 <?php foreach ($listCiudadesSubsectores[$idxCiudadesSubSectores[$ciudad->codigoCiudad]]->listSubSectores as $subSector): ?>
+                                    <option value="<?php echo $subSector->codigoCiudad."-".$subSector->codigoSubSector?>"><?php echo $subSector->nombreSubSector ?></option>
+                                <?php endforeach; ?>
+                           </optgroup> 
+                        <?php elseif ($ciudad->listSectores[0]->codigoSector == 0): ?>
+                           <option value="<?php echo $ciudad->codigoCiudad ?>"><?php echo $ciudad->nombreCiudad ?></option>   
                             <?php endif;?>
                           <?php endif;?> 
                 <?php endforeach; ?>

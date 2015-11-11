@@ -49,6 +49,7 @@ class UbicacionModulos extends CActiveRecord {
         // NOTE: you may need to adjust the relation name and the related
         // class name for the relations automatically generated below.
         return array(
+            'listUbicacionesCategorias' => array(self::HAS_MANY, 'UbicacionCategoria', 'idUbicacion'),
             'objUbicacionCategorias' => array(self::HAS_MANY, 'UbicacionCategoria', 'idUbicacion'),
             'objModulo' => array(self::BELONGS_TO, 'ModulosConfigurados', 'idModulo'),
         );

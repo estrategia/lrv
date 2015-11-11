@@ -62,6 +62,15 @@ return array(
             'enableProfiling' => true,
             'enableParamLogging' => true,
         ),
+        /*'db' => array(
+            'connectionString' => 'mysql:host=66.147.244.236;port=3306;dbname=promarca_tmp_lrvmovil',
+            'emulatePrepare' => true,
+            'username' => 'promarca_tmp',
+            'password' => 'T3mp0r4l',
+            'charset' => 'utf8',
+            'enableProfiling' => true,
+            'enableParamLogging' => true,
+        ),*/
         'errorHandler' => array(
             'errorAction' => 'sitio/error',
         ),
@@ -205,7 +214,7 @@ return array(
             'codigoEspecial' => '/images/codigoespecial/',
             'productos' => array(1 => '/images/productos/thumb/', 2 => '/images/productos/'),
             'combos' => array(1 => '/images/combos/thumb/', 2 => '/images/combos/'),
-            'contenidos' => '/images/contenidos',
+            'menuDesktop' => '/images/menu/desktop/',
         ),
         'busqueda' => array(
             'tipoBuscador' => array(
@@ -221,6 +230,7 @@ return array(
                 'noExito' => '/images/sin_resultado.png',
                 'noExacta' => '/images/conicidedencias-no-exactas.jpg',
             ),
+            'productosPorPagina' => array(5,10,15,20,25)
         ),
         'ciudad' => array(
             '*' => 99999

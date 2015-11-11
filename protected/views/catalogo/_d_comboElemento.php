@@ -5,11 +5,12 @@
             <img src="<?php echo Yii::app()->request->baseUrl . $objCombo->rutaImagen(); ?>" class="ui-li-thumb">
         </a>
     </div>
-    <?php if (Yii::app()->shoppingCart->contains($objCombo->getCodigo())): ?>
-        <a href="" class="">
-            <img src="<?php echo Yii::app()->request->baseUrl ?>/images/iconos/icon_seleccionado.png">
-        </a>
-    <?php endif; ?>
+
+    <!-- combo agregado -->
+    <a href="" class="clst_slct_prod<?php echo (Yii::app()->shoppingCart->contains($objCombo->getCodigo()) ? " active" : "") ?>">
+        <img src="<?php echo Yii::app()->request->baseUrl ?>/images/iconos/icon_seleccionado.png">
+    </a>
+    <!-- combo agregado -->
 
     <div class="">
         <strong>
@@ -18,5 +19,5 @@
         </strong>
     </div>
 
-<br/>
+    <br/>
 </div>

@@ -14,12 +14,7 @@
         ))
     );
     ?>
-
-
-    <div id="div-filtro-marcas">
-        <?php $this->renderPartial('_d_formFiltroMarcas', array('formFiltro' => $formFiltro)) ?>
-    </div>
-
+    <?php $this->renderPartial('_d_formFiltroMarcas', array('formFiltro' => $formFiltro)) ?>
     <div id="div-filtro-atributos">
         <?php $this->renderPartial('_d_formFiltroAtributos', array('formFiltro' => $formFiltro)) ?>
     </div>
@@ -62,7 +57,7 @@
             </div>
         </div>
     </div>
-
+    <br>
     <a href="#" data-role="filtro-listaproductos" ><div class="button">Filtrar</div></a>
     <br>
     <a href="#" data-role="filtro-listaproductos-reset" data-tipo="1" ><div class="button">Limpiar filtros</div></a>
@@ -111,7 +106,7 @@
             </div>
         </div>
     <?php endif; ?>
-    
+
     <div class="panel panel-default">
         <div class="panel-heading" role="tab" id="headingFour">
             <h4 class="panel-title">
@@ -128,7 +123,7 @@
         </div>
     </div>
 
-
+    <br>
     <a href="#" data-role="filtro-listaproductos" ><div class="button">Filtrar</div></a>
     <br>
     <a href="#" data-role="filtro-listaproductos-reset" data-tipo="2"><div class="button">Limpiar filtros</div></a>

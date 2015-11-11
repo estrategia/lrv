@@ -1,6 +1,6 @@
 <?php
 
-$this->widget('zii.widgets.grid.CGridView', array(
+$this->widget('application.widgets.PedidosGridView', array(
     'pager' => array(
         'header' => '',
         'firstPageLabel' => '&lt;&lt;',
@@ -37,26 +37,26 @@ $this->widget('zii.widgets.grid.CGridView', array(
             'header' => 'Total',
             'value' => 'Yii::app()->numberFormatter->format(Yii::app()->params->formatoMoneda["patron"], $data->totalCompra, Yii::app()->params->formatoMoneda["moneda"])',
         ),
-        array(
+        /*array(
             'name' => 'idEstadoCompra',
             'type' => 'raw',
             //'value' => ' \'<a href="#" class="ui-btn ui-btn-inline ui-icon-view-circle ui-btn-icon-notext ui-icon-center ui-nodisc-icon" data-role="pedidogridestado" data-estado="\' . $data->objEstadoCompra->compraEstadoCliente  . \'">Ver</a>\''
             'value' => ' \'<a href="#" class="" data-role="pedidogridestado" data-estado="\' . $data->objEstadoCompra->compraEstadoCliente  . \'">Ver</a>\''
-        ),
+        ),*/
         array(
             'header' => 'Detalle',
             'type' => 'raw',
             'value' => array($this, 'gridDetallePedido'),
         ),
         array(
-            'header' => 'Agregar Al Carro',
+            'header' => 'Agregar al carro',
             'type' => 'raw',
-            'value' => ' \'<a href="#" title="Agregar al carro" data-role="pedidodetalle" data-compra="\' . $data->idCompra  . \'">Agregar al carro</a>\''
+            'value' => ' \'<a href="#" class="center" title="Agregar al carro" data-role="pedidodetalle" data-compra="\' . $data->idCompra  . \'"><span class="glyphicon glyphicon-shopping-cart center-div" aria-hidden="true"></a>\''
         ),
         array(
             'header' => 'Ocultar',
             'type' => 'raw',
-            'value' => ' \'<a href="#" title="Ocultar" data-role="pedidolistaocultar" data-compra="\' . $data->idCompra  . \'">Ocultar</a>\''
+            'value' => ' \'<a href="#" class="center" title="Ocultar" data-role="pedidolistaocultar" data-compra="\' . $data->idCompra  . \'"><span class="glyphicon glyphicon-remove center-div" aria-hidden="true"></a>\''
         ),
     ),
 ));

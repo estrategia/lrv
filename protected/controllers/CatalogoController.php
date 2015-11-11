@@ -87,10 +87,10 @@ class CatalogoController extends Controller {
                     'objSectorCiudad' => $objSectorCiudad,
                     'codigoPerfil' => $codigoPerfil,
                     'nombreBusqueda' => 'NA',
+                    'objModulo'=>ModulosConfigurados::getModuloFlotante(UbicacionModulos::UBICACION_ESCRITORIO_CATEGORIA,$categoria)
                 ));
             } else {
                 $this->render('d_listaProductos', array(
-                    'listProductos' => array(),
                     'listCombos' => array(),
                     'msgCodigoEspecial' => array(),
                     'listCodigoEspecial' => array(),
@@ -252,11 +252,13 @@ class CatalogoController extends Controller {
         }
         
         if($formFiltro->getPrecioInicio()>=0){
-            $parametrosProductos['condition'] = $parametrosProductos['condition'] . " AND listPrecios.precioUnidad>=" . $formFiltro->getPrecioInicio();
+            //$parametrosProductos['condition'] = $parametrosProductos['condition'] . " AND listPrecios.precioUnidad>=" . $formFiltro->getPrecioInicio();
+            $parametrosProductos['condition'] = $parametrosProductos['condition'] . " AND ((listPrecios.precioUnidad IS NOT NULL AND listPrecios.precioUnidad>=" . $formFiltro->getPrecioInicio() . ") OR (listSaldosTerceros.precioUnidad IS NOT NULL AND listSaldosTerceros.precioUnidad>=" . $formFiltro->getPrecioInicio() . ") )";
         }
         
         if($formFiltro->getPrecioFin()>0){
-            $parametrosProductos['condition'] = $parametrosProductos['condition'] . " AND listPrecios.precioUnidad<=" . $formFiltro->getPrecioFin();
+            //$parametrosProductos['condition'] = $parametrosProductos['condition'] . " AND listPrecios.precioUnidad<=" . $formFiltro->getPrecioFin();
+            $parametrosProductos['condition'] = $parametrosProductos['condition'] . " AND ((listPrecios.precioUnidad IS NOT NULL AND listPrecios.precioUnidad<=" . $formFiltro->getPrecioFin() . ") OR (listSaldosTerceros.precioUnidad IS NOT NULL AND listSaldosTerceros.precioUnidad<=" . $formFiltro->getPrecioFin() . ") )";
         }
         
         $listProductos = Producto::model()->findAll($parametrosProductos);
@@ -299,6 +301,7 @@ class CatalogoController extends Controller {
             'codigoPerfil' => $codigoPerfil,
             'tipoBusqueda' => Yii::app()->params->busqueda['tipo']['categoria'],
             'nombreBusqueda' => $objCategoria->nombreCategoriaTienda,
+            'objModulo'=>ModulosConfigurados::getModuloFlotante(UbicacionModulos::UBICACION_ESCRITORIO_CATEGORIA,$categoria)
         );
 
         $imagenBusqueda = null;
@@ -344,7 +347,6 @@ class CatalogoController extends Controller {
             
             //  $dataProvider=new CActiveDataProvider('Producto');
             $this->render('d_listaProductos', array(
-                'listProductos' => $listProductos,
                 'dataprovider' => $dataProvider,
                 'listCombos' => $listCombos,
                 'msgCodigoEspecial' => $msgCodigoEspecial,
@@ -654,11 +656,13 @@ class CatalogoController extends Controller {
         }
         
         if($formFiltro->getPrecioInicio()>=0){
-            $parametrosProductos['condition'] = $parametrosProductos['condition'] . " AND listPrecios.precioUnidad>=" . $formFiltro->getPrecioInicio();
+            //$parametrosProductos['condition'] = $parametrosProductos['condition'] . " AND listPrecios.precioUnidad>=" . $formFiltro->getPrecioInicio();
+            $parametrosProductos['condition'] = $parametrosProductos['condition'] . " AND ((listPrecios.precioUnidad IS NOT NULL AND listPrecios.precioUnidad>=" . $formFiltro->getPrecioInicio() . ") OR (listSaldosTerceros.precioUnidad IS NOT NULL AND listSaldosTerceros.precioUnidad>=" . $formFiltro->getPrecioInicio() . ") )";
         }
         
         if($formFiltro->getPrecioFin()>0){
-            $parametrosProductos['condition'] = $parametrosProductos['condition'] . " AND listPrecios.precioUnidad<=" . $formFiltro->getPrecioFin();
+            //$parametrosProductos['condition'] = $parametrosProductos['condition'] . " AND listPrecios.precioUnidad<=" . $formFiltro->getPrecioFin();
+            $parametrosProductos['condition'] = $parametrosProductos['condition'] . " AND ((listPrecios.precioUnidad IS NOT NULL AND listPrecios.precioUnidad<=" . $formFiltro->getPrecioFin() . ") OR (listSaldosTerceros.precioUnidad IS NOT NULL AND listSaldosTerceros.precioUnidad<=" . $formFiltro->getPrecioFin() . ") )";
         }
 
         $listProductos = Producto::model()->findAll($parametrosProductos);
@@ -742,7 +746,6 @@ class CatalogoController extends Controller {
 
             //  $dataProvider=new CActiveDataProvider('Producto');
             $this->render('d_listaProductos', array(
-                'listProductos' => $listProductos,
                 'dataprovider' => $dataProvider,
                 'listCombos' => $listCombos,
                 'msgCodigoEspecial' => $msgCodigoEspecial,
@@ -1444,21 +1447,16 @@ class CatalogoController extends Controller {
 
     private function calificarProductoDesktop() {
         $codigoProducto = Yii::app()->getRequest()->getPost('codigo');
-        $calificacion = Yii::app()->getRequest()->getPost('calificacion');
-
+        
+       
         if ($codigoProducto == null || empty($codigoProducto)) {
             echo CJSON::encode(array('result' => 'error', 'response' => 'No se detecta producto a calificar.'));
             Yii::app()->end();
         }
 
-        if ($calificacion == null || empty($calificacion) || $calificacion == 0) {
-            echo CJSON::encode(array('result' => 'error', 'response' => 'Por favor selecciona el número de estrellas con el que quieres calificar este producto.'));
-            Yii::app()->end();
-        }
-
+       
         $model = new CalificacionForm();
         $model->attributes = $_POST['CalificacionForm'];
-        $model->calificacion = $calificacion;
         if (!$model->validate()) {
             echo CActiveForm::validate($model);
             Yii::app()->end();
@@ -1486,12 +1484,9 @@ class CatalogoController extends Controller {
             }
 
             $objCalificacion = new ProductosCalificaciones;
+            $objCalificacion->attributes= $_POST['CalificacionForm'];
             $objCalificacion->codigoProducto = $codigoProducto;
             $objCalificacion->identificacionUsuario = Yii::app()->user->name;
-            $objCalificacion->calificacion = $calificacion;
-            $objCalificacion->titulo = $titulo;
-            $objCalificacion->comentario = $comentario;
-
             //$fechaCalificacion = new DateTime();
             $objCalificacion->aprobado = 0;
 
@@ -1692,7 +1687,30 @@ class CatalogoController extends Controller {
         );
 
         $parametrosVista['imagenBusqueda'] = $imagenBusqueda;
-        $this->render('listaProductos', $parametrosVista);
+        
+        if ($this->isMobile) {
+            $this->render('listaProductos', $parametrosVista);
+        } else {
+            $pagina = 25;
+            if (isset($_GET['pageSize']) and is_numeric($_GET['pageSize'])) {
+                $pagina = $_GET['pageSize'];
+            }
+
+            $dataProvider = new CArrayDataProvider($listProductos, array(
+                'id' => 'codigoProducto',
+                'sort' => array(
+                    'attributes' => array(
+                        'descripcionProducto'
+                    ),
+                ),
+                'pagination' => array(
+                    'pageSize' => $pagina,
+                ),
+            ));
+
+            $parametrosVista['dataprovider'] = $dataProvider;
+            $this->render('d_listaProductos', $parametrosVista);
+        }
     }
 
     public function actionMasvendidos() {
@@ -1797,7 +1815,30 @@ class CatalogoController extends Controller {
         );
 
         $parametrosVista['imagenBusqueda'] = $imagenBusqueda;
-        $this->render('listaProductos', $parametrosVista);
+        
+        if ($this->isMobile) {
+            $this->render('listaProductos', $parametrosVista);
+        } else {
+            $pagina = 25;
+            if (isset($_GET['pageSize']) and is_numeric($_GET['pageSize'])) {
+                $pagina = $_GET['pageSize'];
+            }
+
+            $dataProvider = new CArrayDataProvider($listProductos, array(
+                'id' => 'codigoProducto',
+                'sort' => array(
+                    'attributes' => array(
+                        'descripcionProducto'
+                    ),
+                ),
+                'pagination' => array(
+                    'pageSize' => $pagina,
+                ),
+            ));
+
+            $parametrosVista['dataprovider'] = $dataProvider;
+            $this->render('d_listaProductos', $parametrosVista);
+        }
     }
 
     public function actionMasvistos() {
@@ -1891,7 +1932,6 @@ class CatalogoController extends Controller {
         }
 
         $parametrosVista = array(
-            'listProductos' => $listProductos,
             'listCombos' => $listCombos,
             'msgCodigoEspecial' => $msgCodigoEspecial,
             'listCodigoEspecial' => $listCodigoEspecial,
@@ -1902,7 +1942,31 @@ class CatalogoController extends Controller {
         );
 
         $parametrosVista['imagenBusqueda'] = $imagenBusqueda;
-        $this->render('listaProductos', $parametrosVista);
+        
+        if ($this->isMobile) {
+            $parametrosVista['listProductos'] = $listProductos;
+            $this->render('listaProductos', $parametrosVista);
+        } else {
+            $pagina = 25;
+            if (isset($_GET['pageSize']) and is_numeric($_GET['pageSize'])) {
+                $pagina = $_GET['pageSize'];
+            }
+
+            $dataProvider = new CArrayDataProvider($listProductos, array(
+                'id' => 'codigoProducto',
+                'sort' => array(
+                    'attributes' => array(
+                        'descripcionProducto'
+                    ),
+                ),
+                'pagination' => array(
+                    'pageSize' => $pagina,
+                ),
+            ));
+
+            $parametrosVista['dataprovider'] = $dataProvider;
+            $this->render('d_listaProductos', $parametrosVista);
+        }
     }
 
 }
