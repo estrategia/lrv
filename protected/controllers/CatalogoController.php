@@ -32,11 +32,9 @@ class CatalogoController extends Controller {
               Yii::app()->end();
           }
           
-            $modulos= ModulosConfigurados::traerModulos(UbicacionModulos::UBICACION_ESCRITORIO_DIVISION,$division);
-            
             $this->render('d_division',array(
                 'categorias' => $categorias,
-                'modulos' => $modulos
+                'listModulos' => ModulosConfigurados::getModulos($this->objSectorCiudad, UbicacionModulos::UBICACION_ESCRITORIO_DIVISION,$division)
             ));
     }
 
@@ -87,7 +85,7 @@ class CatalogoController extends Controller {
                     'objSectorCiudad' => $objSectorCiudad,
                     'codigoPerfil' => $codigoPerfil,
                     'nombreBusqueda' => 'NA',
-                    'objModulo'=>ModulosConfigurados::getModuloFlotante(UbicacionModulos::UBICACION_ESCRITORIO_CATEGORIA,$categoria)
+                    'objModulo'=>ModulosConfigurados::getModuloFlotante($this->objSectorCiudad, UbicacionModulos::UBICACION_ESCRITORIO_CATEGORIA,$categoria)
                 ));
             } else {
                 $this->render('d_listaProductos', array(
@@ -301,7 +299,7 @@ class CatalogoController extends Controller {
             'codigoPerfil' => $codigoPerfil,
             'tipoBusqueda' => Yii::app()->params->busqueda['tipo']['categoria'],
             'nombreBusqueda' => $objCategoria->nombreCategoriaTienda,
-            'objModulo'=>ModulosConfigurados::getModuloFlotante(UbicacionModulos::UBICACION_ESCRITORIO_CATEGORIA,$categoria)
+            'objModulo'=>ModulosConfigurados::getModuloFlotante($this->objSectorCiudad, UbicacionModulos::UBICACION_ESCRITORIO_CATEGORIA,$categoria)
         );
 
         $imagenBusqueda = null;
@@ -343,8 +341,6 @@ class CatalogoController extends Controller {
                 ),
             ));
 
-            $modulos= ModulosConfigurados::traerModulos(UbicacionModulos::UBICACION_ESCRITORIO_CATEGORIA,$categoria);
-            
             //  $dataProvider=new CActiveDataProvider('Producto');
             $this->render('d_listaProductos', array(
                 'dataprovider' => $dataProvider,
@@ -357,7 +353,7 @@ class CatalogoController extends Controller {
                 'tipoBusqueda' => Yii::app()->params->busqueda['tipo']['categoria'],
                 'formFiltro' => $formFiltro,
                 'formOrdenamiento' => $formOrdenamiento,
-                'modulos' => $modulos
+                'listModulos' => ModulosConfigurados::getModulos($this->objSectorCiudad, UbicacionModulos::UBICACION_ESCRITORIO_CATEGORIA,$categoria)
             ));
         }
     }

@@ -11,8 +11,7 @@
     <?php endif; ?>
 
     <div class=" content-txt2">
-        <?php $objSectorCiudad = Yii::app()->shoppingCart->getobjSectorCiudad(); ?>        
-        <?php $objPrecio = new PrecioProducto($data, $objSectorCiudad, Yii::app()->shoppingCart->getCodigoPerfil()); ?>
+        <?php $objPrecio = new PrecioProducto($data, $this->objSectorCiudad, Yii::app()->shoppingCart->getCodigoPerfil()); ?>
         <?php if ($objPrecio->tieneBeneficio()): ?>
             <div class="cdiv_prod_desc">
                 <div class="c_prod_desc">
@@ -65,7 +64,7 @@
 
             <!-- Precio del producto -->
             <?php if ($objPrecio->inicializado()): ?>
-                <?php if ($data->mostrarAhorroVirtual == 1 && $objPrecio->getAhorro(Precio::PRECIO_UNIDAD) > 0 && $objSectorCiudad->objCiudad->excentoImpuestos != 1): ?>
+                <?php if ($data->mostrarAhorroVirtual == 1 && $objPrecio->getAhorro(Precio::PRECIO_UNIDAD) > 0 && $this->objSectorCiudad->objCiudad->excentoImpuestos != 1): ?>
                     <div class="prices_status"> 
                         <div class="price">
                             <?php echo Yii::app()->numberFormatter->format(Yii::app()->params->formatoMoneda['patron'], $objPrecio->getPrecio(Precio::PRECIO_UNIDAD), Yii::app()->params->formatoMoneda['moneda']); ?>
@@ -92,7 +91,7 @@
             <?php endif; ?> 
         </div>
 
-        <?php if ($objSectorCiudad == null): ?>
+        <?php if ($this->objSectorCiudad == null): ?>
             <div class="col-md-12">
                 <?php echo CHtml::link('<div class="button">Cosultar precio</div>', $this->createUrl('/sitio/ubicacion'), array()); ?>
             </div>

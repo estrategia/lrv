@@ -19,26 +19,20 @@ class SitioController extends Controller {
             $this->showSeeker = false;
             $this->logoLinkMenu = false;
 
-            $objSectorCiudad = null;
-            $tipoEntrega = null;
-            if (isset(Yii::app()->session[Yii::app()->params->sesion['sectorCiudadEntrega']])) {
-                $objSectorCiudad = Yii::app()->session[Yii::app()->params->sesion['sectorCiudadEntrega']];
-            }
-
             if (isset(Yii::app()->session[Yii::app()->params->sesion['tipoEntrega']]) && Yii::app()->session[Yii::app()->params->sesion['tipoEntrega']] != null) {
                 $tipoEntrega = Yii::app()->session[Yii::app()->params->sesion['tipoEntrega']];
             }
 
-            if ($objSectorCiudad == null || $tipoEntrega == null) {
+            if ($this->objSectorCiudad == null || $tipoEntrega == null) {
                 $this->showHeaderIcons = false;
             }
 
             $this->render('index', array(
-                'listModulos' => ModulosConfigurados::getModulosBanner(new DateTime, UbicacionModulos::UBICACION_MOVIL_HOME)
+                'listModulos' => ModulosConfigurados::getModulosBanner($this->objSectorCiudad, UbicacionModulos::UBICACION_MOVIL_HOME)
             ));
         }else{
             $this->render('d_index',array(
-                'modulosInicio' => ModulosConfigurados::traerModulos(UbicacionModulos::UBICACION_ESCRITORIO_HOME)
+                'listModulos' => ModulosConfigurados::getModulos($this->objSectorCiudad, UbicacionModulos::UBICACION_ESCRITORIO_HOME)
             ));           
         }
         Yii::app()->end();
@@ -467,7 +461,7 @@ class SitioController extends Controller {
         }
 
         $this->render('inicio', array(
-            'listModulos' => ModulosConfigurados::getModulosBanner(new DateTime, UbicacionModulos::UBICACION_MOVIL_INICIO)
+            'listModulos' => ModulosConfigurados::getModulosBanner($this->objSectorCiudad, UbicacionModulos::UBICACION_MOVIL_INICIO)
         ));
     }
 
