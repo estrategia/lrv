@@ -15,8 +15,7 @@
             <!-- Lista de productos -->
             <div class="col-md-8">
                 <div class="row">
-                    <?php foreach ($objModulo->getListaProductos($this->objSectorCiudad) as $listProductosModulos): ?>
-                        <?php $objProducto = $listProductosModulos->objProducto ?>
+                    <?php foreach ($objModulo->getListaProductos($this->objSectorCiudad) as $objProducto): ?>
                         <ul class="listaProductos">
                             <?php
                             $this->renderPartial('/catalogo/_d_productoElemento', array(

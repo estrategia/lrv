@@ -10,4 +10,6 @@
     <?php $this->renderPartial('/modulo/_d_html', array('objModulo' => $objModulo)) ?>
 <?php elseif ($objModulo->tipo == ModulosConfigurados::TIPO_HTML_PRODUCTOS): ?>
     <?php $this->renderPartial('/modulo/_d_htmlProductos', array('objModulo' => $objModulo)) ?>
+<?php elseif ($objModulo->tipo == ModulosConfigurados::TIPO_PRODUCTOS_CUADRICULA): ?>
+    <?php $this->renderPartial('/modulo/_d_GrillaProductos', array('objModulo' => $objModulo)) ?>
 <?php endif; ?>
