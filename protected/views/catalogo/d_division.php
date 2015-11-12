@@ -10,8 +10,8 @@
 			</ul>
 		</div>
 		<div class="col-md-10 ressete">
-			<?php $this->renderPartial('/sitio/d_modulosTienda',array(
-                                        'modulosTienda' => $modulos
+			<?php $this->renderPartial('/modulo/d_modulos',array(
+                                        'listModulos' => $listModulos
                         ));?>
 		</div>
 	</div>
