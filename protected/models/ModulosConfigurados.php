@@ -49,7 +49,7 @@ class ModulosConfigurados extends CActiveRecord {
             array('tipo, estado', 'numerical', 'integerOnly' => true),
             array('dias', 'length', 'max' => 30),
             array('descripcion', 'length', 'max' => 255),
-            array('nombreCategoriaTienda, rutaImagen', 'length', 'max' => 100),
+            array('rutaImagen', 'length', 'max' => 100),
             array('contenido', 'required', 'on' => 'contenido'),
             // The following rule is used by search().
             // @todo Please remove those attributes that should not be searched.
@@ -250,7 +250,7 @@ class ModulosConfigurados extends CActiveRecord {
                     'todossectores' => Yii::app()->params->sector['*'],
                     'saldo' => 0,
                 ),
-                'order' => 'listImagenesBanners.orden'
+                'order' => 't.orden,listImagenesBanners.orden'
             ));
         } else {
             $modulosInicio = UbicacionModulos::model()->findAll(array(
@@ -268,7 +268,7 @@ class ModulosConfigurados extends CActiveRecord {
                 'condition' => "objModulo.estado =:estado AND ((listModulosSectoresCiudades.codigoSector=:sector  AND listModulosSectoresCiudades.codigoCiudad=:ciudad) OR 
                                   listModulosSectoresCiudades.codigoCiudad=:todasciudades OR (listModulosSectoresCiudades.codigoCiudad=:ciudad AND listModulosSectoresCiudades.codigoSector=:todossectores))
                                    AND objModulo.dias like :dia AND t.ubicacion =:ubicacion and objModulo.inicio<=:fecha and objModulo.fin>=:fecha AND
-                                                 objUbicacionCategorias.idCategoriaBi=:idCategoria",
+                                                 objUbicacionCategorias.idCategoriaTienda=:idCategoria",
                 'params' => array(
                     'estado' => 1,
                     'ubicacion' => $idUbicacion,
@@ -281,11 +281,13 @@ class ModulosConfigurados extends CActiveRecord {
                     'saldo' => 0,
                     'idCategoria' => $idCategoria
                 ),
-                'order' => 'listImagenesBanners.orden'
+                'order' => 't.orden,listImagenesBanners.orden'
             ));
         }
 
         return $modulosInicio;
     }
+    
+    
 
 }
