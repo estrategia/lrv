@@ -21,9 +21,13 @@
             </div>
         <?php endif; ?>
         <div class="img-list-products">
+            <?php if ($objPrecio->inicializado()):?>
             <a href="<?php echo CController::createUrl('/catalogo/producto', array('producto' => $data->codigoProducto, 'descripcion' => $data->getCadenaUrl())) ?>">
+            <?php endif;?>    
                 <img src="<?php echo Yii::app()->request->baseUrl . $data->rutaImagen(); ?>" class="img-responsive product-prom">
+            <?php if ($objPrecio->inicializado()):?>    
             </a>
+            <?php endif;?>
             <!-- producto agregado -->
             <a href="" class="clst_slct_prod<?php echo (Yii::app()->shoppingCart->contains($data->codigoProducto) ? " active" : "") ?>" id="icono-producto-agregado-<?php echo $data->codigoProducto ?>">
                 <img src="<?php echo Yii::app()->request->baseUrl ?>/images/iconos/icon_seleccionado.png">
@@ -46,13 +50,17 @@
         <div class="content_product">
             <div class="line-bottom">
                 <p style="min-height: 41px">
+                    <?php if ($objPrecio->inicializado()):?>
                     <a href="<?php echo CController::createUrl('/catalogo/producto', array('producto' => $data->codigoProducto, 'descripcion' => $data->getCadenaUrl())) ?>" title='<?php echo $data->descripcionProducto ?>'>
+                    <?php endif;?>
                         <?php if (strlen($data->descripcionProducto) > 20): ?>
                             <?php echo substr($data->descripcionProducto, 0, 20) . "..." ?>
                         <?php else: ?>
                             <?php echo $data->descripcionProducto ?>
                         <?php endif; ?>
+                    <?php if ($objPrecio->inicializado()):?>    
                     </a>
+                    <?php endif;?>
                 </p>  
             </div>
             <div class="line-bottom">
@@ -105,7 +113,7 @@
                             <button class="btn-addless-cantidad" data-role="disminuir-cantidad" id="disminuir-unidad-<?php echo $data->codigoProducto ?>" data-producto="<?php echo $data->codigoProducto ?>" data-precio="<?= $objPrecio->getPrecio(Precio::PRECIO_UNIDAD) ?>" type="button"><span style="color:red" class="glyphicon glyphicon-minus"></span></button>
                         </div>
                         <div class="col-xs-6 ressete">
-                            <input id="cantidad-producto-unidad-<?php echo $data->codigoProducto ?>" class="increment" type="text" onchange="validarCantidadUnidad(<?php echo $data->codigoProducto ?>,<?= $objPrecio->getPrecio(Precio::PRECIO_UNIDAD) ?>)" maxlength="3" value="1" data-total="700"/>
+                            <input id="cantidad-producto-unidad-<?php echo $data->codigoProducto ?>" class="increment" type="text" data-role="validar-cantidad-unidad"  data-producto="<?php echo $data->codigoProducto ?>" data-precio="<?= $objPrecio->getPrecio(Precio::PRECIO_UNIDAD) ?>" maxlength="3" value="1" data-total="700"/>
                         </div>
                         <div class="col-xs-3" style="padding-left: 2px; padding-right: 0;">
                             <button class="btn-addless-cantidad" data-role="aumentar-cantidad"  id="aumentar-unidad-<?php echo $data->codigoProducto ?>" data-producto="<?php echo $data->codigoProducto ?>" data-precio="<?= $objPrecio->getPrecio(Precio::PRECIO_UNIDAD) ?>" type="button"><span style="color:red" class="glyphicon glyphicon-plus"></span></button>
