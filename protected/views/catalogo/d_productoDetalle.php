@@ -149,7 +149,7 @@
                                                     </div>
                                                    <?php else:?>
                                                        <div class="col-md-12" style="margin-top: 13px;">                             
-                                                         <?php echo CHtml::link('<div class="button anadir">Consultar Precio&nbsp;', '#', array(/*'data-producto' => $objProducto->codigoProducto, 'data-carro' => 1, 'class' => ''*/)); ?>                           
+                                                         <?php echo CHtml::link('<div class="button anadir">Consultar Precio', '#', array(/*'data-producto' => $objProducto->codigoProducto, 'data-carro' => 1, 'class' => ''*/)); ?>                           
                                                        </div>     
                                                    <?php endif;?>                                 
                                                 <?php else: ?>

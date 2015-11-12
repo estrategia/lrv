@@ -165,7 +165,7 @@ class ModulosConfigurados extends CActiveRecord {
         if ($ubicacion == UbicacionModulos::UBICACION_ESCRITORIO_CATEGORIA && $categoria!=null) {
             return ModulosConfigurados::model()->find(array(
                         'with' => array('listUbicacionesModulos' => array('with'=>'listUbicacionesCategorias')),
-                        'condition' => "t.estado=:estado AND t.tipo =:tipo AND t.dias LIKE :dia AND t.inicio<=:fecha AND t.fin>=:fecha AND listUbicacionesModulos.ubicacion=:ubicacion AND listUbicacionesCategorias.idCategoriaBi = $categoria",
+                        'condition' => "t.estado=:estado AND t.tipo =:tipo AND t.dias LIKE :dia AND t.inicio<=:fecha AND t.fin>=:fecha AND listUbicacionesModulos.ubicacion=:ubicacion AND listUbicacionesCategorias.idCategoriaTienda = $categoria",
                         'params' => array(
                             ':estado' => 1,
                             ':tipo' => ModulosConfigurados::TIPO_PROMOCION_FLOTANTE,
@@ -248,7 +248,7 @@ class ModulosConfigurados extends CActiveRecord {
                 'condition' => "objModulo.estado =:estado AND ((listModulosSectoresCiudades.codigoSector=:sector  AND listModulosSectoresCiudades.codigoCiudad=:ciudad) OR 
                                   listModulosSectoresCiudades.codigoCiudad=:todasciudades OR (listModulosSectoresCiudades.codigoCiudad=:ciudad AND listModulosSectoresCiudades.codigoSector=:todossectores))
                                    AND objModulo.dias like :dia AND t.ubicacion =:ubicacion and objModulo.inicio<=:fecha and objModulo.fin>=:fecha AND
-                                                 objUbicacionCategorias.idCategoriaBi=:idCategoria",
+                                                 objUbicacionCategorias.idCategoriaTienda=:idCategoria",
                 'params' => array(
                     'estado' => 1,
                     'ubicacion' => $idUbicacion,
@@ -267,5 +267,7 @@ class ModulosConfigurados extends CActiveRecord {
 
         return $modulosInicio;
     }
+    
+    
 
 }

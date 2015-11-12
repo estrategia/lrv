@@ -59,13 +59,11 @@ class ContenidoController extends ControllerOperator {
             $modelModulo->dias= implode(",", $modelModulo->dias);
             
             if($modelModulo->save()){
-                Yii::app()->user->setFlash('alert alert-success', "El módulo ha sido creado con éxito");
+                Yii::app()->user->setFlash('alert alert-success', "El módulo ha sido guardado con éxito");
                 $this->redirect($this->createUrl('contenido/editar',array('idModulo' => $modelModulo->idModulo, 'opcion' => 'sector')));
                 Yii::app()->end();
             }else{
-                echo "<pre>";
-                print_r($modelModulo->getErrors());
-                echo "</pre>";
+                Yii::app()->user->setFlash('alert alert-success', "Error al guardar el módulo");
             }
             
         }
@@ -74,13 +72,13 @@ class ContenidoController extends ControllerOperator {
             'model' => $model
         ));
     }
-
+    
     public function actionEditar($idModulo, $opcion)
     {
         $model = ModulosConfigurados::model()->findByPk($idModulo);
         $params = array();
         $params['opcion'] = $opcion;
-        $deshabilitados = $this->botonesDeshabilitados($model);
+       // $deshabilitados = $this->botonesDeshabilitados($model);
         
         
         if($opcion == 'sector'){
@@ -118,7 +116,6 @@ class ContenidoController extends ControllerOperator {
                 
                 if($model->save()){
                     $id = $model->idUbicacion; 
-                    echo $id;
                     if(isset( $_POST['UbicacionCategoria']) && !empty( $_POST['UbicacionCategoria']['idCategoriaBi'])){
                         $modelCategoria= new UbicacionCategoria();
                         $modelCategoria->attributes =  $_POST['UbicacionCategoria'];
@@ -126,18 +123,16 @@ class ContenidoController extends ControllerOperator {
                       //  $modelCategoria->idUbicacionCategoria = Yii::app()->db->getLastInsertID('t_UbicacionCategoria'); 
                         
                         if($modelCategoria->save()){
-                            
+                            Yii::app()->user->setFlash('alert alert-success', "La ubicación del módulo fué guardada con éxito");
                         }else{
-                              echo "<pre>";
-                                print_r($modelCategoria->getErrors());
-                                echo "</pre>"; 
+                            Yii::app()->user->setFlash('alert alert-danger', "Error al guardar la ubicación del módulo");  
                         }
+                    }else{
+                        Yii::app()->user->setFlash('alert alert-success', "El módulo ha sido guardado con éxito");
                     }
                     
                 }else{
-                    echo "<pre>";
-                    print_r($model->getErrors());
-                    echo "</pre>"; 
+                   Yii::app()->user->setFlash('alert alert-danger', "Error al guardar la ubicación del módulo");  
                 }
              }
              $params['ubicaciones']= UbicacionModulos::model()->findAll( array(
@@ -175,11 +170,9 @@ class ContenidoController extends ControllerOperator {
                             $modelBanner->rutaImagen = "/".Yii::app()->params->callcenter['modulosConfigurados']['urlImagenes'].$uploadedFile->getName();
                             $modelBanner->idModulo = $idModulo;
                             if($modelBanner->save()){
-                                
+                                 Yii::app()->user->setFlash('alert alert-success', "La imagen ha sido guardada con éxito");  
                             }else{
-                                echo "<pre>";
-                                print_r($modelBanner->getErrors());
-                                echo "</pre>";
+                                 Yii::app()->user->setFlash('alert alert-danger', "Error al subir la imagen");  
                             }
                             
                           //   $this->refresh();
@@ -215,13 +208,31 @@ class ContenidoController extends ControllerOperator {
         } else {
             $params['vista'] = 'modulos';
             $params['opcion'] = 'editar';
-            $params['siguiente'] = CController::createUrl('/callcenter/contenido/editar', array('idModulo' => $idModulo, 'opcion'=>'sector'));
+            
             $model->dias= explode(",",$model->dias);
+            
+            if(isset($_POST['ModulosConfigurados'])){
+                $modelModulo= ModulosConfigurados::model()->find( array(
+                            'condition' => 'idModulo =:idmodulo',
+                            'params' =>  array(
+                                'idmodulo' => $idModulo
+                        )
+                ));
+                
+                $modelModulo->attributes = $_POST['ModulosConfigurados'];
+                $modelModulo->dias= implode(",", $modelModulo->dias);
+            
+                if($modelModulo->save()){
+                    Yii::app()->user->setFlash('alert alert-success', "El módulo ha sido guardado con éxito");
+                    $this->redirect($this->createUrl('contenido/editar',array('idModulo' => $modelModulo->idModulo, 'opcion' => 'sector')));
+                    Yii::app()->end();
+                }else{
+                    Yii::app()->user->setFlash('alert alert-success', "Error al guardar el módulo");
+                } 
+            }
+            
         }
-        //CVarDumper::dump($deshabilitarBotones, 10, true);
-        //exit();
-
-        $params['deshabilitados'] = $deshabilitados;
+    
         $params['model'] = $model;
         
         $this->render('editar',array(
