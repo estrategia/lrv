@@ -4,8 +4,8 @@
         <?php elseif ($vista == "comparacion"): ?>
         <li class="--col-md-<?php echo $colums; ?> border-left" id="comparacion-producto-<?php echo $data->codigoProducto ?>">
         <?php elseif ($vista == "grid"): ?>
-        	<li class="col-md-4 border-left">        
-    	<?php endif; ?>
+        <li class="col-md-4 border-left">        
+        <?php endif; ?>
     <?php else: ?>    
     <li class="border-left" >
     <?php endif; ?>
@@ -25,9 +25,9 @@
                 <img src="<?php echo Yii::app()->request->baseUrl . $data->rutaImagen(); ?>" class="img-responsive product-prom">
             </a>
             <!-- producto agregado -->
-                <a href="" class="clst_slct_prod<?php echo (Yii::app()->shoppingCart->contains($data->codigoProducto) ? " active" : "") ?>" id="icono-producto-agregado-<?php echo $data->codigoProducto ?>">
-                    <img src="<?php echo Yii::app()->request->baseUrl ?>/images/iconos/icon_seleccionado.png">
-                </a>
+            <a href="" class="clst_slct_prod<?php echo (Yii::app()->shoppingCart->contains($data->codigoProducto) ? " active" : "") ?>" id="icono-producto-agregado-<?php echo $data->codigoProducto ?>">
+                <img src="<?php echo Yii::app()->request->baseUrl ?>/images/iconos/icon_seleccionado.png">
+            </a>
             <!-- producto agregado -->
         </div>
 
@@ -46,7 +46,7 @@
         <div class="content_product">
             <div class="line-bottom">
                 <p style="min-height: 41px">
-                    <a href="<?php echo CController::createUrl('/catalogo/producto', array('producto' => $data->codigoProducto, 'descripcion' => $data->getCadenaUrl())) ?>" title='<?php echo $data->descripcionProducto ?>' data-ajax="false">
+                    <a href="<?php echo CController::createUrl('/catalogo/producto', array('producto' => $data->codigoProducto, 'descripcion' => $data->getCadenaUrl())) ?>" title='<?php echo $data->descripcionProducto ?>'>
                         <?php if (strlen($data->descripcionProducto) > 20): ?>
                             <?php echo substr($data->descripcionProducto, 0, 20) . "..." ?>
                         <?php else: ?>
@@ -91,11 +91,14 @@
                 <span class="fraccion_text">PRODUCTO FRACCIONADO</span>
             <?php endif; ?> 
         </div>
-        <?php if ($data->ventaVirtual == 1 && $objPrecio->inicializado()): ?>
 
+        <?php if ($objSectorCiudad == null): ?>
+            <div class="col-md-12">
+                <?php echo CHtml::link('<div class="button">Cosultar precio</div>', $this->createUrl('/sitio/ubicacion'), array()); ?>
+            </div>
+        <?php elseif ($data->ventaVirtual == 1 && $objPrecio->inicializado()): ?>
             <div class="botones-list">
                 <?php echo CHtml::link('<div class="button">Añadir <img src="' . Yii::app()->baseUrl . '/images/desktop/carrito-amarillo.png" alt=""></div>', '#', array('data-producto' => $data->codigoProducto, 'data-cargar' => 1)); ?>
-
                 <div class="container-fluid group-botones-cantidad">
                     <div class="row">
                         <div class="col-xs-3" style="padding-left: 0px; padding-right: 2px;">
@@ -126,9 +129,9 @@
                     </div>
                 <?php endif; ?>
             </div>
-	<?php elseif($objSectorCiudad != null): ?>
+        <?php elseif (!$objPrecio->inicializado()): ?>
             <div class="col-md-12">
-            <?php echo CHtml::link('<div class="button">Producto Agotado</div>', '#', array('disabled' => 'true')); ?>
+                <?php echo CHtml::link('<div class="button">Producto Agotado</div>', '#', array('disabled' => 'true')); ?>
             </div>
         <?php else: ?>
             <div class="botones-list">

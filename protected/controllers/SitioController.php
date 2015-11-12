@@ -142,15 +142,12 @@ class SitioController extends Controller {
             /*echo '<p>';
             CVarDumper::dump(Yii::app()->request->urlReferrer);
             echo '</p>';
-
             echo '<p>';
             CVarDumper::dump(Yii::app()->request->url);
             echo '</p>';
-            
             echo '<p>';
             Yii::app()->session[Yii::app()->params->sesion['redireccionUbicacion']];
-            echo '</p>';
-            exit();*/
+            echo '</p>';*/
             
             $this->render('d_ubicacion', array(
                 'listCiudadesSectores' => $listCiudadesSectores,

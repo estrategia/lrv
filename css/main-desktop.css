@@ -437,30 +437,8 @@ header {
     border: 1px solid #EA0001;
 }
 
-.ico-mundo-bebe{
-    text-align: center;
-    background-color: #00CAD4;
-    /*border: 1px solid #00CAD4;*/
-    /*border-radius: 0px 10px 10px 0px;
-    width:27.7%;*/
-
-}
-
-.ico-natural{
-    background-color: #8BB726;
-   /* border: 1px solid #8BB726;*/
-    text-align: center;
-   /* border-radius: 0px 10px 10px 0px;
-    width:27.7%;*/
-
-}
-
-.ico-promociones{
-    background-color: #FF6215;
-    /*border: 1px solid #FF6215;*/
-    text-align: center;
-    /*border-radius: 0px 10px 10px 0px;
-    width: 27.93%;*/
+.modulo-menu{
+    border-radius: 0px 10px 10px 0px;
 }
 
 .carousel-control.left {background-image: none !important;}

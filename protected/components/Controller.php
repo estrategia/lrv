@@ -32,6 +32,7 @@ class Controller extends CController {
     public $extraPageList = array();
     public $sectorName = "";
     public $categorias = array();
+    public $objSectorCiudad = null;
     
     
     public function init() {
@@ -41,6 +42,10 @@ class Controller extends CController {
         } else {
             $this->isMobile = false;
             $this->layout = '//layouts/desktop';
+        }
+        
+        if (isset(Yii::app()->session[Yii::app()->params->sesion['sectorCiudadEntrega']]) && Yii::app()->session[Yii::app()->params->sesion['sectorCiudadEntrega']]!=null){
+            $this->objSectorCiudad = Yii::app()->session[Yii::app()->params->sesion['sectorCiudadEntrega']];
         }
         
         //$this->isMobile = true;
