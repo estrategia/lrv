@@ -146,7 +146,7 @@ class ModulosConfigurados extends CActiveRecord {
 
         if (!empty($listaCodigos)) {
             $criteria = array(
-                'order' => 't.orden',
+                'order' => 't.orden DESC',
                 'with' => array('listImagenes', 'objCodigoEspecial', 'listCalificaciones'),
                 'condition' => "t.activo=:activo AND t.codigoProducto IN (" . implode(",", $listaCodigos) . ") AND (listImagenes.tipoImagen='" . Yii::app()->params->producto['tipoImagen']['mini'] . "' OR listImagenes.tipoImagen IS NULL)",
                 'params' => array(
@@ -155,11 +155,11 @@ class ModulosConfigurados extends CActiveRecord {
             );
 
             if ($objSectorCiudad !== null) {
-                $criteria['with']['listSaldos'] = array('condition' => '(listSaldos.saldoUnidad>:saldo AND listSaldos.codigoCiudad=:ciudad AND listSaldos.codigoSector=:sector) OR (listSaldos.saldoUnidad IS NULL AND listSaldos.codigoCiudad IS NULL AND listSaldos.codigoSector IS NULL)');
+                $criteria['with']['listSaldos'] = array('condition' => '(listSaldos.codigoCiudad=:ciudad AND listSaldos.codigoSector=:sector) OR (listSaldos.saldoUnidad IS NULL AND listSaldos.codigoCiudad IS NULL AND listSaldos.codigoSector IS NULL)');
                 $criteria['with']['listPrecios'] = array('condition' => '(listPrecios.codigoCiudad=:ciudad AND listPrecios.codigoSector=:sector) OR (listPrecios.codigoCiudad IS NULL AND listPrecios.codigoSector IS NULL)');
-                $criteria['with']['listSaldosTerceros'] = array('condition' => '(listSaldosTerceros.saldoUnidad>:saldo AND listSaldosTerceros.codigoCiudad=:ciudad AND listSaldosTerceros.codigoSector=:sector) OR (listSaldosTerceros.codigoCiudad IS NULL AND listSaldosTerceros.codigoSector IS NULL)');
-                $criteria['condition'] .= " AND ( (listSaldos.saldoUnidad IS NOT NULL AND listPrecios.codigoCiudad IS NOT NULL) OR listSaldosTerceros.codigoCiudad IS NOT NULL)";
-                $criteria['params'][':saldo'] = 0;
+                $criteria['with']['listSaldosTerceros'] = array('condition' => '(listSaldosTerceros.codigoCiudad=:ciudad AND listSaldosTerceros.codigoSector=:sector) OR (listSaldosTerceros.codigoCiudad IS NULL AND listSaldosTerceros.codigoSector IS NULL)');
+                //$criteria['condition'] .= " AND ( (listSaldos.saldoUnidad IS NOT NULL AND listPrecios.codigoCiudad IS NOT NULL) OR listSaldosTerceros.codigoCiudad IS NOT NULL)";
+                //$criteria['params'][':saldo'] = 0;
                 $criteria['params'][':ciudad'] = $objSectorCiudad->codigoCiudad;
                 $criteria['params'][':sector'] = $objSectorCiudad->codigoSector;
             }
@@ -292,14 +292,14 @@ class ModulosConfigurados extends CActiveRecord {
                 ':ubicacion' => $ubicacion,
             )
         );
-
+        
         if ($categoria == null) {
             $criteria['with'][] = 'listUbicacionesModulos';
         } else {
             $criteria['with']['listUbicacionesModulos'] = array('with' => 'listUbicacionesCategorias');
             $criteria['condition'] .= " AND listUbicacionesCategorias.idCategoriaTienda = $categoria";
         }
-
+        
         if ($objSectorCiudad == null) {
             $criteria['condition'] .= " AND listModulosSectoresCiudades.codigoCiudad=:ciudad AND listModulosSectoresCiudades.codigoSector=:sector";
             $criteria['params'][':sector'] = Yii::app()->params->sector['*'];
@@ -308,7 +308,7 @@ class ModulosConfigurados extends CActiveRecord {
             $condicion = " AND ( (listModulosSectoresCiudades.codigoCiudad=:ciudadA AND listModulosSectoresCiudades.codigoSector=:sectorA)";
             $condicion .= " OR (listModulosSectoresCiudades.codigoCiudad=:ciudad AND listModulosSectoresCiudades.codigoSector=:sectorA)";
             $condicion .= " OR (listModulosSectoresCiudades.codigoCiudad=:ciudad AND listModulosSectoresCiudades.codigoSector=:sector))";
-
+            
             $criteria['condition'] .= $condicion;
             $criteria['params'][':sectorA'] = Yii::app()->params->sector['*'];
             $criteria['params'][':ciudadA'] = Yii::app()->params->ciudad['*'];
