@@ -49,22 +49,20 @@ $this->widget('zii.widgets.grid.CGridView', array(
         'fin',
         array(
             'header' => 'D&iacute;as',
-            'value' => function($data) {
-                if (empty($data->dias)) {
-                    return "NA";
-                } else {
-                    $numDias = explode(",", $data->dias);
-                    $cadenaDias = "";
+            'value' => function($data){
+                $numDias = explode(",", $data->dias);
+                $cadenaDias = "";
 
-                    foreach ($numDias as $indice => $fila) {
-                        if ($indice > 0) {
-                            $cadenaDias .= ",";
-                        }
-                        $cadenaDias .= Yii::app()->params->callcenter['modulosConfigurados']['diasSemana'][$fila];
+                foreach ($numDias as $indice => $fila) 
+                {
+                    if ($indice > 0) 
+                    {
+                        $cadenaDias .= ",";
                     }
-
-                    return $cadenaDias;
+                    $cadenaDias .= Yii::app()->params->callcenter['modulosConfigurados']['diasSemana'][$fila];
                 }
+
+                return $cadenaDias;
             },
         ),
         'descripcion',
@@ -80,4 +78,6 @@ $this->widget('zii.widgets.grid.CGridView', array(
         )
     ),
 ));
+
+
 ?>

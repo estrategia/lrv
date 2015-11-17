@@ -817,14 +817,6 @@ $(document).on('click', "button[data-role='disminuir-cantidad']", function() {
     $("#cantidad-producto-unidad-" + codigoProducto).val(nro);
 });
 
-$(document).on('change', "input[data-role='validar-cantidad-unidad']", function() {
-    var codigoProducto = $(this).attr('data-producto');
-    var valorUnidad = $(this).attr('data-precio');
-    var nro = $(this).val();
-    $("#subtotal-producto-unidad-" + codigoProducto).html("$" + format(nro * valorUnidad));
-    $("#cantidad-producto-unidad-" + codigoProducto).val(nro);
-});
-
 $(document).on('click', "button[data-role='aumentar-cantidad']", function() {
     var codigoProducto = $(this).attr('data-producto');
     var valorUnidad = $(this).attr('data-precio');

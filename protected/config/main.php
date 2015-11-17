@@ -22,7 +22,7 @@ return array(
         'ext.shoppingCart.*',
     ),
     'modules' => array(
-    // uncomment the following to enable the Gii tool
+        // uncomment the following to enable the Gii tool
         'callcenter' => array(
             'defaultController' => 'admin',
             'components' => array(
@@ -62,15 +62,15 @@ return array(
             'enableProfiling' => true,
             'enableParamLogging' => true,
         ),
-        /*'db' => array(
-            'connectionString' => 'mysql:host=66.147.244.236;port=3306;dbname=promarca_tmp_lrvmovil',
-            'emulatePrepare' => true,
-            'username' => 'promarca_tmp',
-            'password' => 'T3mp0r4l',
-            'charset' => 'utf8',
-            'enableProfiling' => true,
-            'enableParamLogging' => true,
-        ),*/
+        /* 'db' => array(
+          'connectionString' => 'mysql:host=66.147.244.236;port=3306;dbname=promarca_tmp_lrvmovil',
+          'emulatePrepare' => true,
+          'username' => 'promarca_tmp',
+          'password' => 'T3mp0r4l',
+          'charset' => 'utf8',
+          'enableProfiling' => true,
+          'enableParamLogging' => true,
+          ), */
         'errorHandler' => array(
             'errorAction' => 'sitio/error',
         ),
@@ -127,14 +127,13 @@ return array(
         ),
     ),
     'params' => array(
-        
         'correoAdmin' => 'infolrv@copservir.com',
         'maximoComparacion' => 5,
         'urlSitio' => 'www.larebajavirtual.com',
         'clienteFiel' => array(
-            'correo' => 'cliente_fiel@copservir.com', 
+            'correo' => 'cliente_fiel@copservir.com',
             'telefono' => '01 8000 93 99 00',
-            'dias' => array(1,10,15,25),
+            'dias' => array(1, 10, 15, 25),
             'montoCompra' => 1000,
             'puntosCompra' => 10,
         ),
@@ -160,7 +159,7 @@ return array(
             'productosComparar' => 'larebaja.online.productos.agregarProductos'
         ),
         'entrega' => array(
-            'listaTipos' => array(1,2),
+            'listaTipos' => array(1, 2),
             'tipo' => array('presencial' => 1, 'domicilio' => 2, 2 => 'DOMICILIO', 1 => 'PRESENCIAL'),
             'sesion' => 'larebaja.online.entrega.tipoEntrega',
         ),
@@ -181,7 +180,7 @@ return array(
             )
         ),
         'calificacion' => array(
-            'categoriasNoCalificacion' => array(1,2)
+            'categoriasNoCalificacion' => array(1, 2)
         ),
         'cotizaciones' => array(
             'diasVisualizar' => 10,
@@ -198,7 +197,7 @@ return array(
         ),
         'formaPago' => array(
             'idCredirebaja' => 2,
-            'tarjetasDatafono' => array(5,6,7,8,9,10,11,12),
+            'tarjetasDatafono' => array(5, 6, 7, 8, 9, 10, 11, 12),
             'pasarela' => array(
                 'valorMinimo' => 5000,
                 'idPasarela' => 3,
@@ -230,7 +229,7 @@ return array(
                 'noExito' => '/images/sin_resultado.png',
                 'noExacta' => '/images/conicidedencias-no-exactas.jpg',
             ),
-            'productosPorPagina' => array(5,10,15,20,25)
+            'productosPorPagina' => array(5, 10, 15, 20, 25)
         ),
         'ciudad' => array(
             '*' => 99999
@@ -280,9 +279,8 @@ return array(
             'serverGeo' => 'http://www.copservir.com/webService/serverGeo.php',
             'serverLRV' => 'http://www.copservir.com/webService/serverLRV.php',
             'crmLrv' => "http://www.copservir.com/webService/crmLrv.php",
-            'remisionPos'=>"http://www.copservir.com/webService/serverLRV.php",
-            'remisionPosECommerce'=>"http://www.copservir.com/webService/Pos/RemisionPosEcommerce.php"
-            
+            'remisionPos' => "http://www.copservir.com/webService/serverLRV.php",
+            'remisionPosECommerce' => "http://www.copservir.com/webService/Pos/RemisionPosEcommerce.php"
         ),
         'callcenter' => array(
             'correo' => 'alexander_javela@copservir.com',
@@ -364,16 +362,16 @@ return array(
                 )
             ),
             'modulosConfigurados' => array(
-               'tiposModulos' => array(
-                    1 => 'Banner', 
-                    2 => 'Lista de Productos', 
-                    3 => 'Lista de Imagenes', 
-                    4 => 'Banner Home Móvil', 
+                'tiposModulos' => array(
+                    1 => 'Banner',
+                    2 => 'Lista de Productos',
+                    3 => 'Lista de Imagenes',
+                    4 => 'Banner Home Móvil',
                     5 => 'Banner Inicio Móvil',
-                    6 => 'Html', 
-                    7 => 'Html y lista de productos', 
+                    6 => 'Html',
+                    7 => 'Html y lista de productos',
                     8 => 'Lista de productos en el carro',
-                   9 => 'Grupo de módulos',
+                    9 => 'Grupo de módulos',
                 ),
                 'ubicacionModulos' => array(
                     1 => 'Inicio',
@@ -381,20 +379,29 @@ return array(
                     3 => 'Categoria'
                 ),
                 'diasSemana' => array(
-                   0 => 'Domingo',
-                   1 => 'Lunes',
-                   2 => 'Martes', 
-                   3 => 'Miércoles', 
-                   4 => 'Jueves', 
-                   5 => 'Viernes', 
-                   6 => 'Sábado', 
+                    0 => 'Domingo',
+                    1 => 'Lunes',
+                    2 => 'Martes',
+                    3 => 'Miércoles',
+                    4 => 'Jueves',
+                    5 => 'Viernes',
+                    6 => 'Sábado',
                 ),
                 'tiposContenidos' => array(
                     1 => 'Link',
                     2 => 'Html',
                     3 => 'Ninguno'
                 ),
-                'urlImagenes' => 'images/banners/'
+                'urlImagenes' => 'images/banners/',
+                'tiposListasProductos' => array(
+                    0 => 'Producto',
+                    1 => 'Marca',
+                    2 => 'Categoria'
+                ),
+                'estadosModulos' => array(
+                    0 => 'Inactivo',
+                    1 => 'Activo'
+                ),
             ),
             'estadoItem' => array(
                 'estado' => array(

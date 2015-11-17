@@ -44,7 +44,7 @@
             <div class="form-group"> <!-- calendario -->
                 <?php echo $form->labelEx($model, 'inicio'); ?>
                <?php 
-                    $this->widget('application.extensions.CJuiDateTimePicker.CJuiDateTimePicker', array(
+                    $this->widget('zii.widgets.jui.CJuiDatePicker', array(
                         'model' => $model,
                         'attribute' => 'inicio',
                         'language' => 'es',
@@ -67,11 +67,10 @@
             </div> 
             <div class="form-group"> <!-- calendario -->
                 <?php echo $form->labelEx($model, 'fin'); ?>
-                <?php
-                    $this->widget('application.extensions.CJuiDateTimePicker.CJuiDateTimePicker',array(
-                        'model'=> $model, //Model object
-                        'attribute'=>'fin', //attribute name
-                        'mode'=>'datetime', //use "time","date" or "datetime" (default)
+                <?php 
+                    $this->widget('zii.widgets.jui.CJuiDatePicker', array(
+                        'model' => $model,
+                        'attribute' => 'fin',
                         'language' => 'es',
                         'options' => array(
                             'showAnim' => 'slide',
@@ -92,10 +91,20 @@
             </div>
             <div class="form-group">
                  <!-- checkbox -->
-                <?php echo $form->labelEx($model, 'dias'); ?><div class="space-1"></div>
-                <?php echo $form->checkboxList($model, 'dias', Yii::app()->params->callcenter['modulosConfigurados']['diasSemana'],array('class' => 'dias','style' => 'display:inline', 'separator' => '&nbsp;', 'template' => '<div class="col-md-1">{input}{label}</div>'))?>
+                <?php echo $form->labelEx($model, 'dias'); ?>
+                <?php echo $form->checkboxList($model, 'dias', Yii::app()->params->callcenter['modulosConfigurados']['diasSemana'],array('class' => 'dias','style' => 'display:block'))?>
                 <?php echo $form->error($model, 'dias'); ?>
             </div>
+            
+            <?php if(!$model->isNewRecord):?>
+                <div class="form-group">
+                     <!-- checkbox -->
+                    <?php echo $form->labelEx($model, 'estado'); ?><div class="space-1"></div>
+                    <?php echo $form->dropDownList($model, 'estado', Yii::app()->params->callcenter['modulosConfigurados']['estadosModulos'], array('class' => 'estado', 'class' => 'form-control'))?>
+                    <?php echo $form->error($model, 'estado'); ?>
+                </div>
+            <?php endif;?>
+            
            <div class="col-md-12">
                 <div class="form-group">
                     <?php echo CHtml::submitButton('Guardar Módulo', array('class' => "btn btn-default")); ?>

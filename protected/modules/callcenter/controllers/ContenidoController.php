@@ -53,17 +53,15 @@ class ContenidoController extends ControllerOperator {
         $model= new ModulosConfigurados();
         
         
-        if (isset($_POST['ModulosConfigurados'])) {
-            $modelModulo = new ModulosConfigurados();
-            $modelModulo->attributes = $_POST['ModulosConfigurados'];
+        if (isset($_POST['ModuloForm'])) {
+            //$modelModulo = new ModulosConfigurados();
+            $modelModulo->attributes = $_POST['ModuloForm'];
             $modelModulo->dias= implode(",", $modelModulo->dias);
             
+            
             if($modelModulo->save()){
-                Yii::app()->user->setFlash('alert alert-success', "El módulo ha sido guardado con éxito");
-                $this->redirect($this->createUrl('contenido/editar',array('idModulo' => $modelModulo->idModulo, 'opcion' => 'sector')));
-                Yii::app()->end();
-            }else{
-                Yii::app()->user->setFlash('alert alert-success', "Error al guardar el módulo");
+                Yii::app()->user->setFlash('alert alert-success', "El módulo ha sido creado con éxito");
+                $this->redirect($this->createUrl('index'));
             }
             
         }
@@ -72,13 +70,13 @@ class ContenidoController extends ControllerOperator {
             'model' => $model
         ));
     }
-    
+
     public function actionEditar($idModulo, $opcion)
     {
         $model = ModulosConfigurados::model()->findByPk($idModulo);
         $params = array();
         $params['opcion'] = $opcion;
-       // $deshabilitados = $this->botonesDeshabilitados($model);
+        $deshabilitados = $this->botonesDeshabilitados($model);
         
         
         if($opcion == 'sector'){
@@ -103,7 +101,51 @@ class ContenidoController extends ControllerOperator {
                         ),
                         'order' => 'objCiudad.nombreCiudad,objSector.nombreSector'
                 ));
-           $params['siguiente'] = CController::createUrl('/callcenter/contenido/editar', array('idModulo' => $idModulo, 'opcion'=>'contenido'));
+        }else if ($opcion == 'perfil'){
+            $params['vista'] = '_perfil';
+            $params['idModulo'] = $idModulo;
+            $params['perfiles'] = Perfil::model()->findAll();
+            $params['modelPerfil'] = new ModuloPerfil();
+            
+            if(isset($_POST)){
+                
+                 $perfiles=ModuloPerfil::model()->deleteAll('idModulo =:idmodulo', array(
+                    'idmodulo' => $idModulo
+                ));
+                 
+                $modelModuloPerfil= $_POST['ModuloPerfil'];
+                foreach($modelModuloPerfil['idPerfil'] as $perfil){
+                    $moduloGuardar = ModuloPerfil::model()->findAll(array(
+                        'condition' => 'idModulo =:idmodulo AND idPerfil =:idperfil',
+                        'params' => array(
+                            'idmodulo' => $idModulo,
+                            'idperfil' => $perfil
+                        )
+                    ));
+                    
+                    if($moduloGuardar == null){
+                        $moduloGuardar = new ModuloPerfil();
+                        $moduloGuardar->idModulo = $idModulo;
+                        $moduloGuardar->idPerfil = $perfil;
+                        
+                        if($moduloGuardar->save()){
+                            Yii::app()->user->setFlash('alert alert-success', "Los perfiles fueron adicionados con éxito");
+                        }
+                    }
+                    
+                }
+                
+            }
+            $perfilAdd = array();
+            
+            $perfiles=ModuloPerfil::model()->findAll('idModulo =:idmodulo', array(
+                'idmodulo' => $idModulo
+            ));
+            
+            foreach ($perfiles as $valores){
+                $perfilAdd[]= $valores->idPerfil;
+            }
+            $params['modelPerfil']->idPerfil = $perfilAdd;
         }else if($opcion == 'categoria'){
             $params['vista'] = '_categoria';
             $params['ubicacionModel'] = new UbicacionModulos();
@@ -112,24 +154,30 @@ class ContenidoController extends ControllerOperator {
                 $model->orden = $_POST['UbicacionModulos']['orden'];
                 $model->ubicacion = $_POST['UbicacionModulos']['ubicacion'];
                 $model->idModulo= $idModulo;
-                 
+              //  $model->idUbicacion= Yii::app()->db->getLastInsertID('t_UbicacionModulos'); 
+                
                 if($model->save()){
                     $id = $model->idUbicacion; 
+                    echo $id;
                     if(isset( $_POST['UbicacionCategoria']) && !empty( $_POST['UbicacionCategoria']['idCategoriaBi'])){
                         $modelCategoria= new UbicacionCategoria();
                         $modelCategoria->attributes =  $_POST['UbicacionCategoria'];
                         $modelCategoria->idUbicacion = $id;
+                      //  $modelCategoria->idUbicacionCategoria = Yii::app()->db->getLastInsertID('t_UbicacionCategoria'); 
                         
                         if($modelCategoria->save()){
-                            Yii::app()->user->setFlash('alert alert-success', "La ubicación del módulo fué guardada con éxito");
+                            
                         }else{
-                            Yii::app()->user->setFlash('alert alert-danger', "Error al guardar la ubicación del módulo");  
+                              echo "<pre>";
+                                print_r($modelCategoria->getErrors());
+                                echo "</pre>"; 
                         }
-                    }else{
-                        Yii::app()->user->setFlash('alert alert-success', "El módulo ha sido guardado con éxito");
-                    } 
+                    }
+                    
                 }else{
-                   Yii::app()->user->setFlash('alert alert-danger', "Error al guardar la ubicación del módulo");  
+                    echo "<pre>";
+                    print_r($model->getErrors());
+                    echo "</pre>"; 
                 }
              }
              $params['ubicaciones']= UbicacionModulos::model()->findAll( array(
@@ -139,18 +187,35 @@ class ContenidoController extends ControllerOperator {
                             'idmodulo' => $idModulo
                         )
                      ));
-                     
-                 $params['siguiente'] = null;
-        } else if($opcion == 'contenido'){
+                 
+        } else if($opcion == 'contenido' && !$deshabilitados){
             
-            if($model->tipo == 1 || $model->tipo == 3 )
+            if($model->tipo == 1)
             {
+                $params['vista'] = 'contenidoBanner';
+            }
+            if($model->tipo == 2)
+            {
+                $params['vista'] = 'contenidoCrearListaProductos';
+
+                $query = "SELECT m.nombreMarca, m.idMarca ";
+                $query .= "FROM m_Producto AS p ";
+                $query .= "LEFT OUTER JOIN m_Marca AS m ON (m.idMarca = p.idMarca) ";
+                $query .= "GROUP BY p.idMarca; ";
+                $marcas = Yii::app()->db->createCommand($query)->queryAll();
+                $arrayMarcas = array_column($marcas, 'nombreMarca', 'idMarca');
+
+                $params['arrayMarcas'] = $arrayMarcas;
+
+            }
+            if($model->tipo == 3){
                 $params['vista'] = '_contenidoImagenes';
                 $params['modelImagen'] = new ImagenBanner();
                
                 if($_POST){
                  
-                    if(isset($_FILES)) {
+                    if(isset($_FILES))
+                    {
                        $modelBanner = new ImagenBanner();
                        $modelBanner->attributes = $_POST['ImagenBanner'];
                        $uploadedFile = CUploadedFile::getInstance($modelBanner, "rutaImagen");
@@ -159,16 +224,21 @@ class ContenidoController extends ControllerOperator {
                            $uploadedFile->getExtensionName() == "jpeg" || $uploadedFile->getExtensionName()== "gif"){
                            
                             if($uploadedFile->saveAs(Yii::app()->params->callcenter['modulosConfigurados']['urlImagenes'].$uploadedFile->getName())){
-                                $modelBanner->rutaImagen = "/".Yii::app()->params->callcenter['modulosConfigurados']['urlImagenes'].$uploadedFile->getName();
-                                $modelBanner->idModulo = $idModulo;
-                                if($modelBanner->save()){
-                                     Yii::app()->user->setFlash('alert alert-success', "La imagen ha sido guardada con éxito");  
-                                }else{
-                                     Yii::app()->user->setFlash('alert alert-danger', "Error al subir la imagen");  
-                                }
-                            }else{
-                                Yii::app()->user->setFlash('alert alert-danger','Error al subir la imagen');
+                                Yii::app()->user->setFlash('error_imagen','La imagen no fue guardada');
                             }
+                            
+                            
+                            $modelBanner->rutaImagen = "/".Yii::app()->params->callcenter['modulosConfigurados']['urlImagenes'].$uploadedFile->getName();
+                            $modelBanner->idModulo = $idModulo;
+                            if($modelBanner->save()){
+                                
+                            }else{
+                                echo "<pre>";
+                                print_r($modelBanner->getErrors());
+                                echo "</pre>";
+                            }
+                            
+                          //   $this->refresh();
                        }else{
                            Yii::app()->user->setFlash('error_imagen','Imagen no valida');
                        } 
@@ -182,10 +252,6 @@ class ContenidoController extends ControllerOperator {
                     )
                 ));
             }
-            if($model->tipo == 2)
-            {
-                $params['vista'] = 'contenidoCrearListaProductos';
-            } 
             if($model->tipo == 6)
             {
                 $params['vista'] = 'contenidoHtml';
@@ -197,35 +263,17 @@ class ContenidoController extends ControllerOperator {
                 $params['listaProductos'] = true;
                 $model->scenario = 'contenido';
             }
-            $params['siguiente'] = CController::createUrl('/callcenter/contenido/editar', array('idModulo' => $idModulo, 'opcion'=>'categoria'));
         } else {
             $params['vista'] = 'modulos';
             $params['opcion'] = 'editar';
-            
             $model->dias= explode(",",$model->dias);
-            
-            if(isset($_POST['ModulosConfigurados'])){
-                $modelModulo= ModulosConfigurados::model()->find( array(
-                            'condition' => 'idModulo =:idmodulo',
-                            'params' =>  array(
-                                'idmodulo' => $idModulo
-                        )
-                ));
-                
-                $modelModulo->attributes = $_POST['ModulosConfigurados'];
-                $modelModulo->dias= implode(",", $modelModulo->dias);
-            
-                if($modelModulo->save()){
-                    Yii::app()->user->setFlash('alert alert-success', "El módulo ha sido guardado con éxito");
-                    $this->redirect($this->createUrl('contenido/editar',array('idModulo' => $modelModulo->idModulo, 'opcion' => 'sector')));
-                    Yii::app()->end();
-                }else{
-                    Yii::app()->user->setFlash('alert alert-success', "Error al guardar el módulo");
-                } 
-            } 
         }
-    
-        $params['model'] = $model; 
+        //CVarDumper::dump($deshabilitarBotones, 10, true);
+        //exit();
+
+        $params['deshabilitados'] = $deshabilitados;
+        $params['model'] = $model;
+        
         $this->render('editar',array(
             'params' => $params
         ));
@@ -235,29 +283,35 @@ class ContenidoController extends ControllerOperator {
         if (!Yii::app()->request->isPostRequest) {
             throw new CHttpException(404, 'Solicitud inválida.');
         }
-        $idBanner = Yii::app()->getRequest()->getPost('idBanner'); 
+        $idBanner = Yii::app()->getRequest()->getPost('idBanner');
+        
         $model = ImagenBanner::model()->find(array(
             'condition' => 'idBanner =:idbanner',
             'params' => array(
                 'idbanner' => $idBanner
-            ) 
-        )); 
+            )
+            
+        ));
+        
         if($model != null){
             $idModulo = $model->idModulo;
-            $model->delete(); 
+            $model->delete();
+            
             $listaImagenes = ImagenBanner::model()->findAll(array(
                     'condition' => 'idModulo =:idmodulo',
                     'params' => array(
                             'idmodulo' => $idModulo 
                     )
-                )); 
+                ));
+            
             echo CJSON::encode(array(
                 'result' => 'ok',
                 'response' => $this->renderPartial('_listaImagenes', array(
                     'listaImagenes' => $listaImagenes
                 ),true,false)
             ));
-        } 
+        }
+        
     }
     
     
@@ -315,10 +369,6 @@ class ContenidoController extends ControllerOperator {
         
         if($moduloSector == null){
             $moduloSector = new ModuloSectorCiudad();
-            
-            if(empty($codigoCiudad)){
-                $codigoCiudad = Yii::app()->params->ciudad['*'];
-            }
             $moduloSector->codigoCiudad=$codigoCiudad;
             $moduloSector->codigoSector=$codigoSector;
             $moduloSector->idModulo=$idModulo;
@@ -349,7 +399,7 @@ class ContenidoController extends ControllerOperator {
         }else{
             echo CJSON::encode(array(
                        'result' => 'error',
-                       'response' => "El sector está referenciado"
+                       'response' => "El sector ya tiene referencia"
                    ));
         }
     }
@@ -360,7 +410,8 @@ class ContenidoController extends ControllerOperator {
             throw new CHttpException(404, 'Solicitud inválida.');
         }
         
-        $idModuloSector = Yii::app()->getRequest()->getPost('idModuloSectorCiudad'); 
+        $idModuloSector = Yii::app()->getRequest()->getPost('idModuloSectorCiudad');
+        
         $moduloSector = ModuloSectorCiudad::model()->find(array(
                 'condition' => 'idModuloSectorCiudad =:idmodulosector',
                 'params' => array(
@@ -370,7 +421,8 @@ class ContenidoController extends ControllerOperator {
         
         if($moduloSector != null){
             $idModulo=$moduloSector->idModulo;
-            $moduloSector->delete(); 
+            $moduloSector->delete();
+            
             $sectores= ModuloSectorCiudad::model()->findAll(array(
                         'with' => array('objCiudad','objSector'),
                         'condition' => 'idModulo =:idmodulo',
@@ -400,7 +452,8 @@ class ContenidoController extends ControllerOperator {
             throw new CHttpException(404, 'Solicitud inválida.');
         }
         
-        $idUbicacion = Yii::app()->getRequest()->getPost('ubicacion'); 
+        $idUbicacion = Yii::app()->getRequest()->getPost('ubicacion');
+        
         $ubicacion = UbicacionModulos::model()->find(array(
                 'condition' => 'idUbicacion =:idubicacion',
                 'params' => array(
@@ -410,6 +463,7 @@ class ContenidoController extends ControllerOperator {
         
         $idModulo= $ubicacion->idModulo;
         if($ubicacion != null){
+            
             $ubicacionCategoria = UbicacionCategoria::model()->find(array(
                 'condition' => 'idUbicacion =:idubicacion',
                 'params' => array(
@@ -572,8 +626,50 @@ class ContenidoController extends ControllerOperator {
     {
         //print_r($modulo);
         
-        //$objProductosModulo = ProductosModulos::model()->findAll("idModulo=:idModulo", array(":idModulo" => $modulo));
-        $model = $objModulo;
+        $model = ProductosModulos::model()->findAll("idModulo=:idModulo", array(":idModulo" => $objModulo));
+        //$model = $objModulo;
+
+        $query = "SELECT m.nombreMarca, m.idMarca ";
+        $query .= "FROM m_Producto AS p ";
+        $query .= "LEFT OUTER JOIN m_Marca AS m ON (m.idMarca = p.idMarca) ";
+        $query .= "GROUP BY p.idMarca; ";
+        $marcas = Yii::app()->db->createCommand($query)->queryAll();
+        $arrayMarcas = array_column($marcas, 'nombreMarca', 'idMarca');
+        //$formFiltro->setRango($resultadoRango['minproducto'], $resultadoRango['maxproducto'], $resultadoRango['mintercero'], $resultadoRango['maxtercero']);
+
+        CVarDumper::dump(array_column($arrayMarcas, 'nombreMarca', 'idMarca'), 10, true);
+        exit();
+
+        
+
+        $this->render('contenidoCrearListaProductos', array(
+            //'objProductosModulo' => $objProductosModulo,
+            'model' => $model
+        ));
+    }
+
+    public function actioncrearListaProductos()
+    {
+        //print_r($modulo);
+        
+        //$model = ProductosModulos::model()->findAll("idModulo=:idModulo", array(":idModulo" => $objModulo));
+        //$model = $objModulo;
+        $idMarcas = "22,23,26,35,37,38,39";
+
+        $query = "SELECT c.nombreCategoria, c.idCategoriaBI, p.codigoProducto, p.idMarca ";
+        $query .= "FROM m_Producto AS p ";
+        $query .= "LEFT JOIN m_Categoria AS c ON (p.idCategoriaBI = c.idCategoriaBI) ";
+        $query .= "WHERE p.idMarca IN (".$idMarcas.")";
+        $query .= "GROUP BY p.idCategoriaBI; ";
+        $categorias = Yii::app()->db->createCommand($query)->queryAll();
+        $arrayCategorias = array_column($categorias, 'nombreCategoria', 'idCategoriaBI');
+        //$formFiltro->setRango($resultadoRango['minproducto'], $resultadoRango['maxproducto'], $resultadoRango['mintercero'], $resultadoRango['maxtercero']);
+
+        CVarDumper::dump($arrayCategorias, 10, true);
+        exit();
+
+        
+
         $this->render('contenidoCrearListaProductos', array(
             //'objProductosModulo' => $objProductosModulo,
             'model' => $model
@@ -589,11 +685,13 @@ class ContenidoController extends ControllerOperator {
 
         $busqueda = Yii::app()->getRequest()->getPost('busqueda');
         $idModulo = Yii::app()->getRequest()->getPost('idModulo');
+        
 
         //echo $busqueda." ... ".$modulo;
         //Yii::app()->end();
 
-        if ($busqueda === null || $idModulo === null) {
+        if ($busqueda === null || $idModulo === null) 
+        {
             throw new CHttpException(404, 'Solicitud inválida.');
         }
 
@@ -772,46 +870,5 @@ class ContenidoController extends ControllerOperator {
             'model' => $model,
             'listaProductos' => true
         ));
-    }
-
-
-    public function actionUpload() {
-        $message = "";
-        $name = time() . "_" . $_FILES['upload']['name'];
-        $url = Yii::getPathOfAlias('webroot') . Yii::app()->params->carpetaImagen['contenidos'] . $name;
-        //extensive suitability check before doing anything with the file…
-        if (($_FILES['upload'] == "none") OR (empty($_FILES['upload']['name']))) 
-        {
-           $message = "No se ha cargado archivo.";
-        } 
-        else if ($_FILES['upload']["size"] == 0) 
-        {
-           $message = "Archivo inv&aacute;lido: Tama&ntilde;o 0";
-        } 
-        else if (($_FILES['upload']["type"] != "image/pjpeg") AND ($_FILES['upload']["type"] != "image/jpeg") AND ($_FILES['upload']["type"] != "image/png")) 
-        {
-           $message = "El formato de la imagen debe de ser JPG or PNG. Por favor cargar archivo JPG or PNG.";
-        } 
-        else if (!is_uploaded_file($_FILES['upload']["tmp_name"])) 
-        {
-           $message = "Solicitud inv&aacute;lida."; //$message = "You may be attempting to hack our server. We're on to you; expect a knock on the door sometime soon.";
-        } 
-        else 
-        {
-           $message = "";
-           $move = move_uploaded_file($_FILES['upload']['tmp_name'], $url);
-           if (!$move) 
-           {
-               $message = "Error al cargar el archivo."; //$message = "Error moving uploaded file. Check the script is granted Read/Write/Modify permissions.";
-           }
-           //$url = "../" . $url;
-        }
-        $url = Yii::app()->getBaseUrl() . Yii::app()->params->carpetaImagen['contenidos'] . $name;
-
-        if (!empty($message))
-           $url = "";
-
-        $funcNum = $_GET['CKEditorFuncNum'];
-        echo "<script type='text/javascript'>window.parent.CKEDITOR.tools.callFunction($funcNum, '$url', '$message');</script>";
     }
 }
