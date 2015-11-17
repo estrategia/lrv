@@ -1,3 +1,4 @@
+<?php //solucion versionamiento ?>
 <div class="container-fluid">
 	<div class="row">
 		<div class="col-md-2 menu-categorias">
