@@ -9,10 +9,7 @@
                             <img style="width:100%;" src="<?php echo Yii::app()->request->baseUrl . $imagenes->rutaImagen; ?>" alt="<?php echo $imagenes->nombre ?>" />
                         </a>
                     <?php elseif ($imagenes->tipoContenido == 2): ?>
-                        <?php
-                        echo CHtml::link('<img style="width:100%;" src="' . Yii::app()->request->baseUrl . $imagenes->rutaImagen . '" alt="' . $imagenes->nombre . '" />', CController::createUrl('/sitio/vercontenido', array('contenido' => $imagenes->idBanner
-                        )));
-                        ?>
+                        <?php echo CHtml::link('<img style="width:100%;" src="' . Yii::app()->request->baseUrl . $imagenes->rutaImagen . '" alt="' . $imagenes->nombre . '" />', CController::createUrl('/contenido/ver', array('tipo'=>'imagen', 'contenido' => $imagenes->idBanner))); ?>
                     <?php elseif ($imagenes->tipoContenido == 3): ?>
                         <img style="width:100%;" src="<?php echo Yii::app()->request->baseUrl . $imagenes->rutaImagen; ?>" alt="<?php echo $imagenes->nombre ?>" />
                     <?php endif; ?>

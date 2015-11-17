@@ -65,7 +65,7 @@ class ModulosConfigurados extends CActiveRecord {
         // NOTE: you may need to adjust the relation name and the related
         // class name for the relations automatically generated below.
         return array(
-            'listImagenesBanners' => array(self::HAS_MANY, 'ImagenBanner', 'idModulo'),
+            'listImagenesBanners' => array(self::HAS_MANY, 'ImagenBanner', 'idModulo', 'order'=>'listImagenesBanners.orden ASC'),
             'listModulosSectoresCiudades' => array(self::HAS_MANY, 'ModuloSectorCiudad', 'idModulo'),
             'listProductosModulos' => array(self::HAS_MANY, 'ProductosModulos', 'idModulo'),
             'listUbicacionesModulos' => array(self::HAS_MANY, 'UbicacionModulos', 'idModulo'),
@@ -283,6 +283,7 @@ class ModulosConfigurados extends CActiveRecord {
         $fecha = new DateTime;
 
         $criteria = array(
+            'order' => 'listUbicacionesModulos.orden',
             'with' => array('listModulosSectoresCiudades'),
             'condition' => "t.estado=:estado AND t.dias LIKE :dia AND t.inicio<=:fecha AND t.fin>=:fecha AND listUbicacionesModulos.ubicacion=:ubicacion",
             'params' => array(
