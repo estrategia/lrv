@@ -17,6 +17,7 @@
  * The followings are the available model relations:
  * @property TCompras $idCompra0
  */
+//solucion versionamiento
 class PasarelaEnvios extends CActiveRecord {
 
     /**
