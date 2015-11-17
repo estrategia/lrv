@@ -69,6 +69,7 @@ class ModulosConfigurados extends CActiveRecord {
             'listModulosSectoresCiudades' => array(self::HAS_MANY, 'ModuloSectorCiudad', 'idModulo'),
             'listProductosModulos' => array(self::HAS_MANY, 'ProductosModulos', 'idModulo'),
             'listUbicacionesModulos' => array(self::HAS_MANY, 'UbicacionModulos', 'idModulo'),
+            'listPerfiles' => array(self::HAS_MANY, 'ModuloPerfil', 'idModulo'),
             'objMenuModulo' => array(self::BELONGS_TO, 'MenuModulo', 'idModulo'),
         );
     }

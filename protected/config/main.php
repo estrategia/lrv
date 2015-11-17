@@ -393,6 +393,10 @@ return array(
                     2 => 'Html',
                     3 => 'Ninguno'
                 ),
+                'estadosModulos' => array (
+                    0 => 'Inactivo',
+                    1 => 'Activo'
+                ),
                 'urlImagenes' => 'images/banners/'
             ),
             'estadoItem' => array(

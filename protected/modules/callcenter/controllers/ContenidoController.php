@@ -103,7 +103,51 @@ class ContenidoController extends ControllerOperator {
                         ),
                         'order' => 'objCiudad.nombreCiudad,objSector.nombreSector'
                 ));
-           $params['siguiente'] = CController::createUrl('/callcenter/contenido/editar', array('idModulo' => $idModulo, 'opcion'=>'contenido'));
+        }else if ($opcion == 'perfil'){
+            $params['vista'] = '_perfil';
+            $params['idModulo'] = $idModulo;
+            $params['perfiles'] = Perfil::model()->findAll();
+            $params['modelPerfil'] = new ModuloPerfil();
+            
+            if(isset($_POST)){
+                
+                 $perfiles=ModuloPerfil::model()->deleteAll('idModulo =:idmodulo', array(
+                    'idmodulo' => $idModulo
+                ));
+                 
+                $modelModuloPerfil= $_POST['ModuloPerfil'];
+                foreach($modelModuloPerfil['idPerfil'] as $perfil){
+                    $moduloGuardar = ModuloPerfil::model()->findAll(array(
+                        'condition' => 'idModulo =:idmodulo AND idPerfil =:idperfil',
+                        'params' => array(
+                            'idmodulo' => $idModulo,
+                            'idperfil' => $perfil
+                        )
+                    ));
+                    
+                    if($moduloGuardar == null){
+                        $moduloGuardar = new ModuloPerfil();
+                        $moduloGuardar->idModulo = $idModulo;
+                        $moduloGuardar->idPerfil = $perfil;
+                        
+                        if($moduloGuardar->save()){
+                            Yii::app()->user->setFlash('alert alert-success', "Los perfiles fueron adicionados con éxito");
+                        }
+                    }
+                    
+                }
+                
+            }
+            $perfilAdd = array();
+            
+            $perfiles=ModuloPerfil::model()->findAll('idModulo =:idmodulo', array(
+                'idmodulo' => $idModulo
+            ));
+            
+            foreach ($perfiles as $valores){
+                $perfilAdd[]= $valores->idPerfil;
+            }
+            $params['modelPerfil']->idPerfil = $perfilAdd;
         }else if($opcion == 'categoria'){
             $params['vista'] = '_categoria';
             $params['ubicacionModel'] = new UbicacionModulos();
