@@ -1,4 +1,3 @@
-<?php //solucion versionamiento ?>
 <div class="container-fluid">
 	<div class="row">
 		<div class="col-md-2 menu-categorias">
@@ -11,8 +10,8 @@
 			</ul>
 		</div>
 		<div class="col-md-10 ressete">
-			<?php $this->renderPartial('/sitio/d_modulosTienda',array(
-                                        'modulosTienda' => $modulos
+			<?php $this->renderPartial('/contenido/d_modulos',array(
+                                        'listModulos' => $listModulos
                         ));?>
 		</div>
 	</div>

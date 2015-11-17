@@ -17,7 +17,6 @@
  * The followings are the available model relations:
  * @property TCompras $idCompra0
  */
-//solucion versionamiento
 class PasarelaEnvios extends CActiveRecord {
 
     /**
@@ -34,7 +33,7 @@ class PasarelaEnvios extends CActiveRecord {
         // NOTE: you should only define rules for those attributes that
         // will receive user inputs.
         return array(
-            array('idCompra, valor, iva, baseIva, moneda, nombre, identificacionUsuario, tipoDocumento, correoElectronico', 'required'),
+            array('idCompra, valor, iva, baseIva, moneda, nombre, tipoDocumento, correoElectronico', 'required'),
             array('idCompra, valor, tipoDocumento', 'numerical', 'integerOnly' => true),
             array('iva, baseIva', 'length', 'max' => 16),
             array('moneda', 'length', 'max' => 3),

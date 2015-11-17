@@ -1,4 +1,3 @@
-<?php //solucion versionamiento ?>
 <div class="space-3"></div>
 <div class="container">
     <div class="row">
@@ -137,9 +136,9 @@
     </div>
 </div>
 
-  <?php if(isset($modulos)):?>
-                <?php $this->renderPartial('/sitio/d_modulosTienda', array(
-                            'modulosTienda' => $modulos
+  <?php if(isset($listModulos)):?>
+                <?php $this->renderPartial('/contenido/d_modulos', array(
+                            'listModulos' => $listModulos
                 ));?>
                 
  <?php endif;?>  
