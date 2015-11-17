@@ -1,3 +1,4 @@
+<?php //solucion versionamiento ?>
 <?php if (isset($vista)): ?>
     <?php if ($vista == "relacionado"): ?>
         <li class="col-md-12 border-left">
