@@ -13,7 +13,6 @@
  * @property string $descripcion
  * @property string $contenido
  * @property string $contenidoMovil
- * @property string $rutaImagen
  *
  * The followings are the available model relations:
  * @property ImagenBanner[] $listImagenesBanners
@@ -49,11 +48,11 @@ class ModulosConfigurados extends CActiveRecord {
             array('tipo, estado', 'numerical', 'integerOnly' => true),
             array('dias', 'length', 'max' => 30),
             array('descripcion', 'length', 'max' => 255),
-            array('nombreCategoriaTienda, rutaImagen', 'length', 'max' => 100),
+            array('nombreCategoriaTienda', 'length', 'max' => 100),
             array('contenido', 'required', 'on' => 'contenido'),
             // The following rule is used by search().
             // @todo Please remove those attributes that should not be searched.
-            array('idModulo, tipo, inicio, fin, dias, estado, descripcion, contenido, contenidoMovil, rutaImagen', 'safe', 'on' => 'search'),
+            array('idModulo, tipo, inicio, fin, dias, estado, descripcion, contenido, contenidoMovil', 'safe', 'on' => 'search'),
         );
     }
 
@@ -87,7 +86,6 @@ class ModulosConfigurados extends CActiveRecord {
             'descripcion' => 'Descripcion',
             'contenido' => 'Contenido',
             'contenidoMovil' => 'contenidoMovil',
-            'rutaImagen' => 'Ruta Imagen',
         );
     }
 
@@ -117,7 +115,6 @@ class ModulosConfigurados extends CActiveRecord {
         $criteria->compare('descripcion', $this->descripcion, true);
         $criteria->compare('contenido', $this->contenido, true);
         $criteria->compare('contenidoMovil', $this->contenidoMovil, true);
-        $criteria->compare('rutaImagen', $this->rutaImagen, true);
 
         return new CActiveDataProvider($this, array(
             'criteria' => $criteria,
