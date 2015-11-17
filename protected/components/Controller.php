@@ -32,7 +32,7 @@ class Controller extends CController {
     public $extraPageList = array();
     public $sectorName = "";
     public $categorias = array();
-    public $objSectorCiudad = null;
+    public $objSectorCiudad = null;//
     
     
     public function init() {
