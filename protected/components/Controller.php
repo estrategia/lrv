@@ -44,10 +44,6 @@ class Controller extends CController {
             $this->layout = '//layouts/desktop';
         }
         
-        if (isset(Yii::app()->session[Yii::app()->params->sesion['sectorCiudadEntrega']]) && Yii::app()->session[Yii::app()->params->sesion['sectorCiudadEntrega']]!=null){
-            $this->objSectorCiudad = Yii::app()->session[Yii::app()->params->sesion['sectorCiudadEntrega']];
-        }
-        
         //$this->isMobile = true;
         //$this->layout = '//layouts/mobile';
         $this->pageTitle = Yii::app()->name;

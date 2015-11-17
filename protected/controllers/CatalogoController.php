@@ -32,9 +32,11 @@ class CatalogoController extends Controller {
               Yii::app()->end();
           }
           
+            $modulos= ModulosConfigurados::traerModulos(UbicacionModulos::UBICACION_ESCRITORIO_DIVISION,$division);
+            
             $this->render('d_division',array(
                 'categorias' => $categorias,
-                'listModulos' => ModulosConfigurados::getModulos($this->objSectorCiudad, UbicacionModulos::UBICACION_ESCRITORIO_DIVISION,$division)
+                'modulos' => $modulos
             ));
     }
 
@@ -85,7 +87,7 @@ class CatalogoController extends Controller {
                     'objSectorCiudad' => $objSectorCiudad,
                     'codigoPerfil' => $codigoPerfil,
                     'nombreBusqueda' => 'NA',
-                    'objModulo'=>ModulosConfigurados::getModuloFlotante($this->objSectorCiudad, UbicacionModulos::UBICACION_ESCRITORIO_CATEGORIA,$categoria)
+                    'objModulo'=>ModulosConfigurados::getModuloFlotante(UbicacionModulos::UBICACION_ESCRITORIO_CATEGORIA,$categoria)
                 ));
             } else {
                 $this->render('d_listaProductos', array(
@@ -167,7 +169,7 @@ class CatalogoController extends Controller {
 
         if ($objSectorCiudad == null) {
             $parametrosProductos = array(
-                'order' => 't.orden DESC',
+                'order' => 't.orden',
                 'with' => array('listImagenes', 'objCodigoEspecial', 'listCalificaciones', 'objMarca', 'listFiltros'),
                 'condition' => "t.activo=:activo AND t.idCategoriaBI IN (" . implode(",", $listIdsCategoriaBI) . ") AND (listImagenes.tipoImagen='" . Yii::app()->params->producto['tipoImagen']['mini'] . "' OR listImagenes.tipoImagen IS NULL)",
                 'params' => array(
@@ -176,7 +178,7 @@ class CatalogoController extends Controller {
             );
         } else {
             $parametrosProductos = array(
-                'order' => 't.orden DESC',
+                'order' => 't.orden',
                 'with' => array(
                     'listImagenes', 'objCodigoEspecial', 'listCalificaciones', 'objMarca', 'listFiltros',
                     'listSaldos' => array('condition' => '(listSaldos.saldoUnidad>:saldo AND listSaldos.codigoCiudad=:ciudad AND listSaldos.codigoSector=:sector) OR (listSaldos.saldoUnidad IS NULL AND listSaldos.codigoCiudad IS NULL AND listSaldos.codigoSector IS NULL)'),
@@ -299,7 +301,7 @@ class CatalogoController extends Controller {
             'codigoPerfil' => $codigoPerfil,
             'tipoBusqueda' => Yii::app()->params->busqueda['tipo']['categoria'],
             'nombreBusqueda' => $objCategoria->nombreCategoriaTienda,
-            'objModulo'=>ModulosConfigurados::getModuloFlotante($this->objSectorCiudad, UbicacionModulos::UBICACION_ESCRITORIO_CATEGORIA,$categoria)
+            'objModulo'=>ModulosConfigurados::getModuloFlotante(UbicacionModulos::UBICACION_ESCRITORIO_CATEGORIA,$categoria)
         );
 
         $imagenBusqueda = null;
@@ -341,6 +343,8 @@ class CatalogoController extends Controller {
                 ),
             ));
 
+            $modulos= ModulosConfigurados::traerModulos(UbicacionModulos::UBICACION_ESCRITORIO_CATEGORIA,$categoria);
+            
             //  $dataProvider=new CActiveDataProvider('Producto');
             $this->render('d_listaProductos', array(
                 'dataprovider' => $dataProvider,
@@ -353,7 +357,7 @@ class CatalogoController extends Controller {
                 'tipoBusqueda' => Yii::app()->params->busqueda['tipo']['categoria'],
                 'formFiltro' => $formFiltro,
                 'formOrdenamiento' => $formOrdenamiento,
-                'listModulos' => ModulosConfigurados::getModulos($this->objSectorCiudad, UbicacionModulos::UBICACION_ESCRITORIO_CATEGORIA,$categoria)
+                'modulos' => $modulos
             ));
         }
     }
@@ -572,7 +576,7 @@ class CatalogoController extends Controller {
         
         if ($objSectorCiudad == null) {
             $parametrosProductos = array(
-                'order' => 't.orden DESC',
+                'order' => 't.orden',
                 'with' => array('listImagenes', 'objCodigoEspecial', 'listCalificaciones',
                     'objCategoriaBI' => array('with' => 'listCategoriasTienda', 'condition'=> 'listCategoriasTienda.tipoDispositivo=:dispositivo'),
                 ),
@@ -584,7 +588,7 @@ class CatalogoController extends Controller {
             );
         } else {
             $parametrosProductos = array(
-                'order' => 't.orden DESC',
+                'order' => 't.orden',
                 'with' => array('listImagenes', 'objCodigoEspecial', 'listCalificaciones',
                     'objCategoriaBI' => array('with' => 'listCategoriasTienda', 'condition'=> 'listCategoriasTienda.tipoDispositivo=:dispositivo'),
                     'listSaldos' => array('condition' => '(listSaldos.saldoUnidad>:saldo AND listSaldos.codigoCiudad=:ciudad AND listSaldos.codigoSector=:sector) OR (listSaldos.saldoUnidad IS NULL AND listSaldos.codigoCiudad IS NULL AND listSaldos.codigoSector IS NULL)'),
@@ -768,7 +772,7 @@ class CatalogoController extends Controller {
 
         if ($objSectorCiudad == null) {
             $parametrosProductos = array(
-                'order' => 't.orden DESC',
+                'order' => 't.orden',
                 'with' => array('listImagenes', 'objCodigoEspecial', 'listCalificaciones'),
                 'condition' => 't.activo=:activo AND r.codigoProducto=:producto',
                 'join' => 'JOIN t_ProductosRelacionados r ON (t.codigoProducto=r.codigoRelacionado)',
@@ -779,7 +783,7 @@ class CatalogoController extends Controller {
             );
         } else {
             $parametrosProductos = array(
-                'order' => 't.orden DESC',
+                'order' => 't.orden',
                 'with' => array(
                     'listImagenes', 'objCodigoEspecial', 'listCalificaciones',
                     'listSaldos' => array('condition' => '(listSaldos.saldoUnidad>:saldo AND listSaldos.codigoCiudad=:ciudad AND listSaldos.codigoSector=:sector) OR (listSaldos.saldoUnidad IS NULL AND listSaldos.codigoCiudad IS NULL AND listSaldos.codigoSector IS NULL)'),
@@ -1592,7 +1596,7 @@ class CatalogoController extends Controller {
         $listCombos = array();
 
         $criteria = new CDbCriteria;
-        $criteria->order = "t.orden DESC LIMIT 50";
+        $criteria->order = "t.orden LIMIT 50";
         $criteria->with = array('listImagenes', 'objCodigoEspecial'/* , 'listCalificaciones' */);
         $criteria->with['listSaldos'] = array('condition' => '(listSaldos.saldoUnidad>:saldo AND listSaldos.codigoCiudad=:ciudad AND listSaldos.codigoSector=:sector) OR (listSaldos.saldoUnidad IS NULL AND listSaldos.codigoCiudad IS NULL AND listSaldos.codigoSector IS NULL)');
         $criteria->with['listPrecios'] = array('condition' => '(listPrecios.codigoCiudad=:ciudad AND listPrecios.codigoSector=:sector) OR (listPrecios.codigoCiudad IS NULL AND listPrecios.codigoSector IS NULL)');
@@ -1737,12 +1741,12 @@ class CatalogoController extends Controller {
 
         if (Yii::app()->user->isGuest) {
             $criteria1['join'] = "JOIN t_ProductosVendidos vendidos ON (vendidos.codigoProducto=t.codigoProducto) ";
-            $criteria1['order'] = "vendidos.cantidad DESC, t.orden DESC LIMIT $limite";
+            $criteria1['order'] = "vendidos.cantidad DESC, t.orden ASC LIMIT $limite";
         } else {
             $criteria1['join'] = "JOIN t_ProductosVendidos vendidos ON (vendidos.codigoProducto=t.codigoProducto) "
                     . "JOIN t_ComprasUsuariosCategorias comprascateg ON (comprascateg.idCategoriaBI=vendidos.idCategoriaBI)";
             $criteria1['condition'] .= " AND comprascateg.identificacionUsuario='" . Yii::app()->user->name . "'";
-            $criteria1['order'] = "comprascateg.cantidad DESC, vendidos.cantidad DESC, t.orden DESC LIMIT $limite";
+            $criteria1['order'] = "comprascateg.cantidad DESC, vendidos.cantidad DESC, t.orden ASC LIMIT $limite";
         }
 
         $listProductos = Producto::model()->findAll($criteria1);
@@ -1775,7 +1779,7 @@ class CatalogoController extends Controller {
             }
 
             $criteria2['join'] = "JOIN t_ProductosVendidos vendidos ON (vendidos.codigoProducto=t.codigoProducto) ";
-            $criteria2['order'] = "vendidos.cantidad DESC, t.orden DESC LIMIT $limiteRestante";
+            $criteria2['order'] = "vendidos.cantidad DESC, t.orden ASC LIMIT $limiteRestante";
             $listProductos2 = Producto::model()->findAll($criteria2);
         }
 
@@ -1865,12 +1869,12 @@ class CatalogoController extends Controller {
 
         if (Yii::app()->user->isGuest) {
             $criteria1['join'] = "JOIN t_ProductosVistos vistos ON (vistos.codigoProducto=t.codigoProducto) ";
-            $criteria1['order'] = "vistos.cantidad DESC, t.orden DESC LIMIT $limite";
+            $criteria1['order'] = "vistos.cantidad DESC, t.orden ASC LIMIT $limite";
         } else {
             $criteria1['join'] = "JOIN t_ProductosVistos vistos ON (vistos.codigoProducto=t.codigoProducto) "
                     . "JOIN t_ComprasUsuariosCategorias comprascateg ON (comprascateg.idCategoriaBI=vistos.idCategoriaBI)";
             $criteria1['condition'] .= " AND comprascateg.identificacionUsuario='" . Yii::app()->user->name . "'";
-            $criteria1['order'] = "comprascateg.cantidad DESC, vistos.cantidad DESC, t.orden DESC LIMIT $limite";
+            $criteria1['order'] = "comprascateg.cantidad DESC, vistos.cantidad DESC, t.orden ASC LIMIT $limite";
         }
 
         $listProductos = Producto::model()->findAll($criteria1);
@@ -1903,7 +1907,7 @@ class CatalogoController extends Controller {
             }
 
             $criteria2['join'] = "JOIN t_ProductosVistos vistos ON (vistos.codigoProducto=t.codigoProducto) ";
-            $criteria2['order'] = "vistos.cantidad DESC, t.orden DESC LIMIT $limiteRestante";
+            $criteria2['order'] = "vistos.cantidad DESC, t.orden ASC LIMIT $limiteRestante";
             $listProductos2 = Producto::model()->findAll($criteria2);
         }
 
