@@ -20,6 +20,7 @@
  * @property ProductosModulos[] $listProductosModulos
  * @property UbicacionModulos[] $listUbicacionesModulos
  */
+//solucion versionamiento
 class ModulosConfigurados extends CActiveRecord {
 
     const TIPO_BANNER = 1;
