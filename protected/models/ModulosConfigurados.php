@@ -28,9 +28,8 @@ class ModulosConfigurados extends CActiveRecord {
     const TIPO_IMAGENES = 3;
     const TIPO_HTML = 4;
     const TIPO_HTML_PRODUCTOS = 5;
-    const TIPO_ENLACE_MENU = 6;
+    const TIPO_HTML_MENU = 6;
     const TIPO_PROMOCION_FLOTANTE = 7;
-    const TIPO_PRODUCTOS_CUADRICULA = 8;
 
     /**
      * @return string the associated database table name
@@ -50,7 +49,7 @@ class ModulosConfigurados extends CActiveRecord {
             array('tipo, estado', 'numerical', 'integerOnly' => true),
             array('dias', 'length', 'max' => 30),
             array('descripcion', 'length', 'max' => 255),
-            array('rutaImagen', 'length', 'max' => 100),
+            array('nombreCategoriaTienda, rutaImagen', 'length', 'max' => 100),
             array('contenido', 'required', 'on' => 'contenido'),
             // The following rule is used by search().
             // @todo Please remove those attributes that should not be searched.
@@ -134,189 +133,141 @@ class ModulosConfigurados extends CActiveRecord {
     public static function model($className = __CLASS__) {
         return parent::model($className);
     }
-
-    public function getListaProductos($objSectorCiudad) {
-
-        $listaCodigos = array();
-
-        foreach ($this->listProductosModulos as $objProductoModulo) {
-            $listaCodigos[] = $objProductoModulo->codigoProducto;
-        }
-
-        $listaProductos = array();
-
-        if (!empty($listaCodigos)) {
-            $criteria = array(
-                'order' => 't.orden',
-                'with' => array('listImagenes', 'objCodigoEspecial', 'listCalificaciones'),
-                'condition' => "t.activo=:activo AND t.codigoProducto IN (" . implode(",", $listaCodigos) . ") AND (listImagenes.tipoImagen='" . Yii::app()->params->producto['tipoImagen']['mini'] . "' OR listImagenes.tipoImagen IS NULL)",
+    
+    public static function getModulosBanner(DateTime $fecha, $ubicacion){
+        return ModulosConfigurados::model()->findAll(array(
+                'with' => array('listImagenesBanners', 'listUbicacionesModulos'),
+                'order' => 'listUbicacionesModulos.orden, listImagenesBanners.orden',
+                'condition' => 't.estado=:estado AND t.tipo =:tipo AND t.dias LIKE :dia AND t.inicio<=:fecha AND t.fin>=:fecha AND listUbicacionesModulos.ubicacion=:ubicacion',
                 'params' => array(
-                    ':activo' => 1,
+                    ':estado' => 1,
+                    ':tipo' => ModulosConfigurados::TIPO_BANNER,
+                    ':dia' => "%" . $fecha->format("w") . "%",
+                    ':fecha' => $fecha->format("Y-m-d"),
+                    ':ubicacion' => $ubicacion
                 )
-            );
-
-            if ($objSectorCiudad !== null) {
-                $criteria['with']['listSaldos'] = array('condition' => '(listSaldos.saldoUnidad>:saldo AND listSaldos.codigoCiudad=:ciudad AND listSaldos.codigoSector=:sector) OR (listSaldos.saldoUnidad IS NULL AND listSaldos.codigoCiudad IS NULL AND listSaldos.codigoSector IS NULL)');
-                $criteria['with']['listPrecios'] = array('condition' => '(listPrecios.codigoCiudad=:ciudad AND listPrecios.codigoSector=:sector) OR (listPrecios.codigoCiudad IS NULL AND listPrecios.codigoSector IS NULL)');
-                $criteria['with']['listSaldosTerceros'] = array('condition' => '(listSaldosTerceros.saldoUnidad>:saldo AND listSaldosTerceros.codigoCiudad=:ciudad AND listSaldosTerceros.codigoSector=:sector) OR (listSaldosTerceros.codigoCiudad IS NULL AND listSaldosTerceros.codigoSector IS NULL)');
-                $criteria['condition'] .= " AND ( (listSaldos.saldoUnidad IS NOT NULL AND listPrecios.codigoCiudad IS NOT NULL) OR listSaldosTerceros.codigoCiudad IS NOT NULL)";
-                $criteria['params'][':saldo'] = 0;
-                $criteria['params'][':ciudad'] = $objSectorCiudad->codigoCiudad;
-                $criteria['params'][':sector'] = $objSectorCiudad->codigoSector;
-            }
-
-            $listaProductos = Producto::model()->findAll($criteria);
-        }
-
-        return $listaProductos;
+            ));
+    }
+    
+    public static function getModulosMenu(DateTime $fecha){
+        return ModulosConfigurados::model()->findAll(array(
+                    'condition' => 't.estado=:estado AND t.tipo =:tipo AND t.dias LIKE :dia AND t.inicio<=:fecha AND t.fin>=:fecha',
+                    'params' => array(
+                        ':estado' => 1,
+                        ':tipo' => ModulosConfigurados::TIPO_HTML_MENU,
+                        ':dia' => "%" . $fecha->format("w") . "%",
+                        ':fecha' => $fecha->format("Y-m-d"),
+                    )
+        ));
     }
 
-    public static function getModulosBanner($objSectorCiudad, $ubicacion) {
+    public static function getModuloFlotante($ubicacion, $categoria = null) {
         $fecha = new DateTime;
 
-        $criteria = array(
-            'with' => array('listImagenesBanners', 'listUbicacionesModulos', 'listModulosSectoresCiudades'),
-            'order' => 'listUbicacionesModulos.orden, listImagenesBanners.orden',
-            'condition' => 't.estado=:estado AND t.tipo =:tipo AND t.dias LIKE :dia AND t.inicio<=:fecha AND t.fin>=:fecha AND listUbicacionesModulos.ubicacion=:ubicacion',
-            'params' => array(
-                ':estado' => 1,
-                ':tipo' => ModulosConfigurados::TIPO_BANNER,
-                ':dia' => "%" . $fecha->format("w") . "%",
-                ':fecha' => $fecha->format("Y-m-d"),
-                ':ubicacion' => $ubicacion
-            )
-        );
-
-        if ($objSectorCiudad == null) {
-            $criteria['condition'] .= " AND listModulosSectoresCiudades.codigoCiudad=:ciudad AND listModulosSectoresCiudades.codigoSector=:sector";
-            $criteria['params'][':sector'] = Yii::app()->params->sector['*'];
-            $criteria['params'][':ciudad'] = Yii::app()->params->ciudad['*'];
-        } else {
-            $condicion = " AND ( (listModulosSectoresCiudades.codigoCiudad=:ciudadA AND listModulosSectoresCiudades.codigoSector=:sectorA)";
-            $condicion .= " OR (listModulosSectoresCiudades.codigoCiudad=:ciudad AND listModulosSectoresCiudades.codigoSector=:sectorA)";
-            $condicion .= " OR (listModulosSectoresCiudades.codigoCiudad=:ciudad AND listModulosSectoresCiudades.codigoSector=:sector))";
-
-            $criteria['condition'] .= $condicion;
-            $criteria['params'][':sectorA'] = Yii::app()->params->sector['*'];
-            $criteria['params'][':ciudadA'] = Yii::app()->params->ciudad['*'];
-            $criteria['params'][':sector'] = $objSectorCiudad->codigoCiudad;
-            $criteria['params'][':ciudad'] = $objSectorCiudad->codigoSector;
+        if ($ubicacion == UbicacionModulos::UBICACION_ESCRITORIO_CATEGORIA && $categoria!=null) {
+            return ModulosConfigurados::model()->find(array(
+                        'with' => array('listUbicacionesModulos' => array('with'=>'listUbicacionesCategorias')),
+                        'condition' => "t.estado=:estado AND t.tipo =:tipo AND t.dias LIKE :dia AND t.inicio<=:fecha AND t.fin>=:fecha AND listUbicacionesModulos.ubicacion=:ubicacion AND listUbicacionesCategorias.idCategoriaBi = $categoria",
+                        'params' => array(
+                            ':estado' => 1,
+                            ':tipo' => ModulosConfigurados::TIPO_PROMOCION_FLOTANTE,
+                            ':dia' => "%" . $fecha->format("w") . "%",
+                            ':fecha' => $fecha->format("Y-m-d"),
+                            ':ubicacion' => $ubicacion,
+                        )
+            ));
+        } else if($categoria==null){
+            return ModulosConfigurados::model()->find(array(
+                        'with' => array('listUbicacionesModulos'),
+                        'condition' => 't.estado=:estado AND t.tipo =:tipo AND t.dias LIKE :dia AND t.inicio<=:fecha AND t.fin>=:fecha AND listUbicacionesModulos.ubicacion=:ubicacion',
+                        'params' => array(
+                            ':estado' => 1,
+                            ':tipo' => ModulosConfigurados::TIPO_PROMOCION_FLOTANTE,
+                            ':dia' => "%" . $fecha->format("w") . "%",
+                            ':fecha' => $fecha->format("Y-m-d"),
+                            ':ubicacion' => $ubicacion
+                        )
+            ));
         }
-
-        return ModulosConfigurados::model()->findAll($criteria);
+        
+        return null;
     }
 
-    public static function getModulosMenu($objSectorCiudad) {
-        $fecha = new DateTime;
-
-        $criteria = array(
-            'with' => array('listModulosSectoresCiudades', 'objMenuModulo', 'listModulosSectoresCiudades'),
-            'condition' => 't.estado=:estado AND t.tipo =:tipo AND t.dias LIKE :dia AND t.inicio<=:fecha AND t.fin>=:fecha',
-            'params' => array(
-                ':estado' => 1,
-                ':tipo' => ModulosConfigurados::TIPO_ENLACE_MENU,
-                ':dia' => "%" . $fecha->format("w") . "%",
-                ':fecha' => $fecha->format("Y-m-d"),
-            )
-        );
-
-        if ($objSectorCiudad == null) {
-            $criteria['condition'] .= " AND listModulosSectoresCiudades.codigoCiudad=:ciudad AND listModulosSectoresCiudades.codigoSector=:sector";
-            $criteria['params'][':sector'] = Yii::app()->params->sector['*'];
-            $criteria['params'][':ciudad'] = Yii::app()->params->ciudad['*'];
+    public static function traerModulos($idUbicacion, $idCategoria = null) {
+        $objSectorCiudad = null;
+        $sector = $ciudad = "";
+        if (isset(Yii::app()->session[Yii::app()->params->sesion['sectorCiudadEntrega']])) {
+            $objSectorCiudad = Yii::app()->session[Yii::app()->params->sesion['sectorCiudadEntrega']];
+            $sector = $objSectorCiudad->codigoSector;
+            $ciudad = $objSectorCiudad->codigoCiudad;
         } else {
-            $condicion = " AND ( (listModulosSectoresCiudades.codigoCiudad=:ciudadA AND listModulosSectoresCiudades.codigoSector=:sectorA)";
-            $condicion .= " OR (listModulosSectoresCiudades.codigoCiudad=:ciudad AND listModulosSectoresCiudades.codigoSector=:sectorA)";
-            $condicion .= " OR (listModulosSectoresCiudades.codigoCiudad=:ciudad AND listModulosSectoresCiudades.codigoSector=:sector))";
-
-            $criteria['condition'] .= $condicion;
-            $criteria['params'][':sectorA'] = Yii::app()->params->sector['*'];
-            $criteria['params'][':ciudadA'] = Yii::app()->params->ciudad['*'];
-            $criteria['params'][':sector'] = $objSectorCiudad->codigoCiudad;
-            $criteria['params'][':ciudad'] = $objSectorCiudad->codigoSector;
+            $sector = Yii::app()->params->sector['*'];
+            $ciudad = Yii::app()->params->ciudad['*'];
         }
 
-        return ModulosConfigurados::model()->findAll($criteria);
+        if ($idUbicacion == UbicacionModulos::UBICACION_ESCRITORIO_HOME) {
+            $modulosInicio = UbicacionModulos::model()->findAll(array(
+                'with' => array('objModulo' => array('with' => array('listImagenesBanners',
+                            'listProductosModulos' =>
+                            array('with' =>
+                                array('objProducto' =>
+                                    array('with' =>
+                                        array(
+                                            'listImagenes', 'objCodigoEspecial', 'listCalificaciones', 'objMarca', 'listFiltros',
+                                            'listSaldos' => array('condition' => '(listSaldos.saldoUnidad>:saldo AND listSaldos.codigoCiudad=:ciudad AND listSaldos.codigoSector=:sector) OR (listSaldos.saldoUnidad IS NULL AND listSaldos.codigoCiudad IS NULL AND listSaldos.codigoSector IS NULL)'),
+                                            'listPrecios' => array('condition' => '(listPrecios.codigoCiudad=:ciudad AND listPrecios.codigoSector=:sector) OR (listPrecios.codigoCiudad IS NULL AND listPrecios.codigoSector IS NULL)'),
+                                            'listSaldosTerceros' => array('condition' => '(listSaldosTerceros.saldoUnidad>:saldo AND listSaldosTerceros.codigoCiudad=:ciudad AND listSaldosTerceros.codigoSector=:sector) OR (listSaldosTerceros.codigoCiudad IS NULL AND listSaldosTerceros.codigoSector IS NULL)')
+                                        )))), 'listModulosSectoresCiudades'))),
+                'condition' => "objModulo.estado =:estado AND ((listModulosSectoresCiudades.codigoSector=:sector  AND listModulosSectoresCiudades.codigoCiudad=:ciudad) OR 
+                                  listModulosSectoresCiudades.codigoCiudad=:todasciudades OR (listModulosSectoresCiudades.codigoCiudad=:ciudad AND listModulosSectoresCiudades.codigoSector=:todossectores))
+                                        AND objModulo.dias like :dia AND t.ubicacion =:ubicacion and objModulo.inicio<=:fecha and objModulo.fin>=:fecha",
+                'params' => array(
+                    ':estado' => 1,
+                    'ubicacion' => $idUbicacion,
+                    'fecha' => Date("Y-m-d"),
+                    'dia' => "%" . Date("w") . "%",
+                    'sector' => $sector,
+                    'ciudad' => $ciudad,
+                    'todasciudades' => Yii::app()->params->ciudad['*'],
+                    'todossectores' => Yii::app()->params->sector['*'],
+                    'saldo' => 0,
+                ),
+                'order' => 'listImagenesBanners.orden'
+            ));
+        } else {
+            $modulosInicio = UbicacionModulos::model()->findAll(array(
+                'with' => array('objModulo' => array('with' => array('listImagenesBanners',
+                            'listProductosModulos' =>
+                            array('with' =>
+                                array('objProducto' =>
+                                    array('with' =>
+                                        array(
+                                            'listImagenes', 'objCodigoEspecial', 'listCalificaciones', 'objMarca', 'listFiltros',
+                                            'listSaldos' => array('condition' => '(listSaldos.saldoUnidad>:saldo AND listSaldos.codigoCiudad=:ciudad AND listSaldos.codigoSector=:sector) OR (listSaldos.saldoUnidad IS NULL AND listSaldos.codigoCiudad IS NULL AND listSaldos.codigoSector IS NULL)'),
+                                            'listPrecios' => array('condition' => '(listPrecios.codigoCiudad=:ciudad AND listPrecios.codigoSector=:sector) OR (listPrecios.codigoCiudad IS NULL AND listPrecios.codigoSector IS NULL)'),
+                                            'listSaldosTerceros' => array('condition' => '(listSaldosTerceros.saldoUnidad>:saldo AND listSaldosTerceros.codigoCiudad=:ciudad AND listSaldosTerceros.codigoSector=:sector) OR (listSaldosTerceros.codigoCiudad IS NULL AND listSaldosTerceros.codigoSector IS NULL)')
+                                        )))), 'listModulosSectoresCiudades')), 'objUbicacionCategorias'),
+                'condition' => "objModulo.estado =:estado AND ((listModulosSectoresCiudades.codigoSector=:sector  AND listModulosSectoresCiudades.codigoCiudad=:ciudad) OR 
+                                  listModulosSectoresCiudades.codigoCiudad=:todasciudades OR (listModulosSectoresCiudades.codigoCiudad=:ciudad AND listModulosSectoresCiudades.codigoSector=:todossectores))
+                                   AND objModulo.dias like :dia AND t.ubicacion =:ubicacion and objModulo.inicio<=:fecha and objModulo.fin>=:fecha AND
+                                                 objUbicacionCategorias.idCategoriaBi=:idCategoria",
+                'params' => array(
+                    'estado' => 1,
+                    'ubicacion' => $idUbicacion,
+                    'fecha' => Date("Y-m-d"),
+                    'dia' => "%" . Date("w") . "%",
+                    'sector' => $sector,
+                    'ciudad' => $ciudad,
+                    'todasciudades' => Yii::app()->params->ciudad['*'],
+                    'todossectores' => Yii::app()->params->sector['*'],
+                    'saldo' => 0,
+                    'idCategoria' => $idCategoria
+                ),
+                'order' => 'listImagenesBanners.orden'
+            ));
+        }
+
+        return $modulosInicio;
     }
 
-    public static function getModuloFlotante($objSectorCiudad, $ubicacion, $categoria = null) {
-        $fecha = new DateTime;
-
-        $criteria = array(
-            'with' => array('listModulosSectoresCiudades'),
-            'condition' => "t.estado=:estado AND t.tipo =:tipo AND t.dias LIKE :dia AND t.inicio<=:fecha AND t.fin>=:fecha AND listUbicacionesModulos.ubicacion=:ubicacion",
-            'params' => array(
-                ':estado' => 1,
-                ':tipo' => ModulosConfigurados::TIPO_PROMOCION_FLOTANTE,
-                ':dia' => "%" . $fecha->format("w") . "%",
-                ':fecha' => $fecha->format("Y-m-d"),
-                ':ubicacion' => $ubicacion,
-            )
-        );
-
-        if ($categoria == null) {
-            $criteria['with'][] = 'listUbicacionesModulos';
-        } else {
-            $criteria['with']['listUbicacionesModulos'] = array('with' => 'listUbicacionesCategorias');
-            $criteria['condition'] .= " AND listUbicacionesCategorias.idCategoriaTienda = $categoria";
-        }
-
-        if ($objSectorCiudad == null) {
-            $criteria['condition'] .= " AND listModulosSectoresCiudades.codigoCiudad=:ciudad AND listModulosSectoresCiudades.codigoSector=:sector";
-            $criteria['params'][':sector'] = Yii::app()->params->sector['*'];
-            $criteria['params'][':ciudad'] = Yii::app()->params->ciudad['*'];
-        } else {
-            $condicion = " AND ( (listModulosSectoresCiudades.codigoCiudad=:ciudadA AND listModulosSectoresCiudades.codigoSector=:sectorA)";
-            $condicion .= " OR (listModulosSectoresCiudades.codigoCiudad=:ciudad AND listModulosSectoresCiudades.codigoSector=:sectorA)";
-            $condicion .= " OR (listModulosSectoresCiudades.codigoCiudad=:ciudad AND listModulosSectoresCiudades.codigoSector=:sector))";
-
-            $criteria['condition'] .= $condicion;
-            $criteria['params'][':sectorA'] = Yii::app()->params->sector['*'];
-            $criteria['params'][':ciudadA'] = Yii::app()->params->ciudad['*'];
-            $criteria['params'][':sector'] = $objSectorCiudad->codigoCiudad;
-            $criteria['params'][':ciudad'] = $objSectorCiudad->codigoSector;
-        }
-
-        return ModulosConfigurados::model()->find($criteria);
-    }
-
-    public static function getModulos($objSectorCiudad, $ubicacion, $categoria = null) {
-        $fecha = new DateTime;
-
-        $criteria = array(
-            'with' => array('listModulosSectoresCiudades'),
-            'condition' => "t.estado=:estado AND t.dias LIKE :dia AND t.inicio<=:fecha AND t.fin>=:fecha AND listUbicacionesModulos.ubicacion=:ubicacion",
-            'params' => array(
-                ':estado' => 1,
-                ':dia' => "%" . $fecha->format("w") . "%",
-                ':fecha' => $fecha->format("Y-m-d"),
-                ':ubicacion' => $ubicacion,
-            )
-        );
-
-        if ($categoria == null) {
-            $criteria['with'][] = 'listUbicacionesModulos';
-        } else {
-            $criteria['with']['listUbicacionesModulos'] = array('with' => 'listUbicacionesCategorias');
-            $criteria['condition'] .= " AND listUbicacionesCategorias.idCategoriaTienda = $categoria";
-        }
-
-        if ($objSectorCiudad == null) {
-            $criteria['condition'] .= " AND listModulosSectoresCiudades.codigoCiudad=:ciudad AND listModulosSectoresCiudades.codigoSector=:sector";
-            $criteria['params'][':sector'] = Yii::app()->params->sector['*'];
-            $criteria['params'][':ciudad'] = Yii::app()->params->ciudad['*'];
-        } else {
-            $condicion = " AND ( (listModulosSectoresCiudades.codigoCiudad=:ciudadA AND listModulosSectoresCiudades.codigoSector=:sectorA)";
-            $condicion .= " OR (listModulosSectoresCiudades.codigoCiudad=:ciudad AND listModulosSectoresCiudades.codigoSector=:sectorA)";
-            $condicion .= " OR (listModulosSectoresCiudades.codigoCiudad=:ciudad AND listModulosSectoresCiudades.codigoSector=:sector))";
-
-            $criteria['condition'] .= $condicion;
-            $criteria['params'][':sectorA'] = Yii::app()->params->sector['*'];
-            $criteria['params'][':ciudadA'] = Yii::app()->params->ciudad['*'];
-            $criteria['params'][':sector'] = $objSectorCiudad->codigoCiudad;
-            $criteria['params'][':ciudad'] = $objSectorCiudad->codigoSector;
-        }
-
-        return ModulosConfigurados::model()->findAll($criteria);
-    }
 }

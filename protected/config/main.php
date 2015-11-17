@@ -57,7 +57,7 @@ return array(
             'connectionString' => 'mysql:host=localhost;port=3306;dbname=lrvmovil',
             'emulatePrepare' => true,
             'username' => 'root',
-            'password' => '',
+            'password' => 'admin',
             'charset' => 'utf8',
             'enableProfiling' => true,
             'enableParamLogging' => true,
@@ -393,11 +393,16 @@ return array(
                     2 => 'Html',
                     3 => 'Ninguno'
                 ),
+                'urlImagenes' => 'images/banners/',
+                'tiposListasProductos' => array(
+                    0 => 'Producto',
+                    1 => 'Marca',
+                    2 => 'Categoria'
+                ),
                 'estadosModulos' => array (
                     0 => 'Inactivo',
                     1 => 'Activo'
                 ),
-                'urlImagenes' => 'images/banners/'
             ),
             'estadoItem' => array(
                 'estado' => array(

@@ -127,9 +127,10 @@
                         </ul>
                     </li>
 
-                    <?php foreach (ModulosConfigurados::getModulosMenu($this->objSectorCiudad) as $objModulo): ?>
-                        <li class="modulo-menu" style="background-color: <?php echo $objModulo->objMenuModulo->color; ?>;">
-                            <a href="<?php echo $objModulo->objMenuModulo->contenido ?>"><img src="<?php echo Yii::app()->request->baseUrl . Yii::app()->params->carpetaImagen['menuDesktop'] . $objModulo->objMenuModulo->rutaImagen; ?>" /> <?php echo $objModulo->descripcion ?></a>
+                    <?php foreach (ModulosConfigurados::getModulosMenu(new DateTime) as $objModulo): ?>
+                        <?php $class_item = explode('.', $objModulo->rutaImagen); ?>
+                        <li class="<?php echo $class_item[0]; ?>">
+                            <a href="<?php echo $this->createUrl('/sitio/vercontenido', array('tipo' => 'modulo', 'contenido' => $objModulo->idModulo)) ?>"><img src="<?php echo Yii::app()->request->baseUrl . Yii::app()->params->carpetaImagen['menuDesktop'] . $objModulo->rutaImagen; ?>" /> <?php echo $objModulo->descripcion ?></a>
                         </li>
                     <?php endforeach; ?>
                 </ul>

@@ -47,8 +47,8 @@
 
 <!-- Mirar como reutilizarla -->
 
-<?php $this->renderPartial('/modulo/d_modulos',array(
-                'listModulos' => $listModulos
+<?php $this->renderPartial('d_modulosTienda',array(
+                'modulosTienda' => $modulosInicio
 ));?>
 <section>	
 <br>

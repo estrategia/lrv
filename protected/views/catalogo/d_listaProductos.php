@@ -136,9 +136,9 @@
     </div>
 </div>
 
-  <?php if(isset($listModulos)):?>
-                <?php $this->renderPartial('/modulo/d_modulos', array(
-                            'listModulos' => $listModulos
+  <?php if(isset($modulos)):?>
+                <?php $this->renderPartial('/sitio/d_modulosTienda', array(
+                            'modulosTienda' => $modulos
                 ));?>
                 
  <?php endif;?>  

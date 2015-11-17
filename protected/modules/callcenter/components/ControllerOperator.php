@@ -45,7 +45,7 @@ class ControllerOperator extends CController {
         Yii::app()->getClientScript()->registerScriptFile(Yii::app()->request->baseUrl . '/libs/loading/js/Loading.js', CClientScript::POS_END);
         Yii::app()->getClientScript()->registerScriptFile(Yii::app()->request->baseUrl . '/libs/bootbox.min.js', CClientScript::POS_END);
 
-        Yii::app()->getClientScript()->registerScriptFile(Yii::app()->request->baseUrl . '/libs/ckeditor/ckeditor.js', CClientScript::POS_END);
+        //Yii::app()->getClientScript()->registerScriptFile(Yii::app()->request->baseUrl . '/js/modulos-om.js', CClientScript::POS_END);
 
         /*Yii::app()->getClientScript()->registerScriptFile(Yii::app()->request->baseUrl . "/libs/bootstrap/js/bootstrap.min.js", CClientScript::POS_HEAD);
         Yii::app()->getClientScript()->registerScriptFile(Yii::app()->request->baseUrl . "/js/operator.js", CClientScript::POS_HEAD);
