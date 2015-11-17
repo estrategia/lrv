@@ -13,53 +13,78 @@ class ContenidoController extends Controller {
             ),
         );
     }
-    
+
     public function actionVer($tipo, $contenido) {
-        $contenidoHTML = "";
-
         if ($tipo == "imagen") {
-            $imagenBanner = ImagenBanner::model()->find(array(
-                'condition' => "idBanner =:idimagen  AND contenido IS NOT NULL", 
-                'params' => array('idimagen' => $contenido)
-            ));
-
-            if ($imagenBanner == null || $imagenBanner->tipoContenido != 2) {
-                throw new CHttpException(404, 'Contenido no disponible.');
-            }
-            if($this->isMobile){
-                $contenidoHTML = trim($imagenBanner->contenidoMovil);
-            }else{
-                $contenidoHTML = trim($imagenBanner->contenido);
-            }
+            $this->verContenidoImagen($contenido);
         } else if ($tipo == "modulo") {
-            $objModulo = ModulosConfigurados::model()->find(array(
-                'condition' => 'idModulo=:modulo AND contenido IS NOT NULL',
-                'params' => array(
-                    ':modulo' => $contenido
-                )
-            ));
-
-            if ($objModulo == null) {
-                throw new CHttpException(404, 'Contenido no disponible.');
-            }
-            
-            if($this->isMobile){
-                $contenidoHTML = trim($objModulo->contenidoMovil);
-            }else{
-                $contenidoHTML = trim($objModulo->contenido);
-            }
+            $this->verContenidoModulo($contenido);
+        } else if ($tipo == "grupo") {
+            $this->verContenidoGrupo($contenido);
         } else {
             throw new CHttpException(404, 'Solicitud inv&aacute;lida.');
         }
-        
+    }
+
+    private function verContenidoImagen($idimagen) {
+        $imagenBanner = ImagenBanner::model()->find(array(
+            'condition' => "idBanner =:idimagen  AND contenido IS NOT NULL",
+            'params' => array('idimagen' => $idimagen)
+        ));
+
+        if ($imagenBanner == null || $imagenBanner->tipoContenido != 2) {
+            throw new CHttpException(404, 'Contenido no disponible.');
+        }
+
+        $contenidoHTML = "";
+
+        if ($this->isMobile) {
+            $contenidoHTML = trim($imagenBanner->contenidoMovil);
+        } else {
+            $contenidoHTML = trim($imagenBanner->contenido);
+        }
+
         if (empty($contenidoHTML)) {
             throw new CHttpException(404, 'Contenido no disponible.');
         }
-        
+
         $this->render('html', array(
             'contenido' => $contenidoHTML
         ));
         Yii::app()->end();
+    }
+
+    private function verContenidoModulo($idModulo) {
+        $objModulo = ModulosConfigurados::model()->find(array(
+            'condition' => 'idModulo=:modulo AND contenido IS NOT NULL',
+            'params' => array(
+                ':modulo' => $idModulo
+            )
+        ));
+
+        if ($objModulo == null) {
+            throw new CHttpException(404, 'Contenido no disponible.');
+        }
+
+        $contenidoHTML = "";
+
+        if ($this->isMobile) {
+            $contenidoHTML = trim($objModulo->contenidoMovil);
+        } else {
+            $contenidoHTML = trim($objModulo->contenido);
+        }
+
+        if (empty($contenidoHTML)) {
+            throw new CHttpException(404, 'Contenido no disponible.');
+        }
+
+        $this->render('html', array(
+            'contenido' => $contenidoHTML
+        ));
+        Yii::app()->end();
+    }
+
+    private function verContenidoGrupo($idModulo) {
         
     }
 

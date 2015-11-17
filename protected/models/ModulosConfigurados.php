@@ -31,6 +31,7 @@ class ModulosConfigurados extends CActiveRecord {
     const TIPO_ENLACE_MENU = 6;
     const TIPO_PROMOCION_FLOTANTE = 7;
     const TIPO_PRODUCTOS_CUADRICULA = 8;
+    const TIPO_GRUPO_MODULOS = 9;
 
     /**
      * @return string the associated database table name
