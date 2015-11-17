@@ -1,3 +1,4 @@
+<?php //solucion versionamiento ?>
 <?php /* @var $this Controller */ ?>
 <!DOCTYPE html>
 
