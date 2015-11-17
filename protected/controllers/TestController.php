@@ -1,25 +1,38 @@
 <?php
 
 class TestController extends Controller {
-    
-    public function actionCategoriaraiz(){
+
+    public function actionModulogrupo() {
+        $objModulo = ModulosConfigurados::model()->find(array(
+            'order' => 'listModulosGrupo_listModulosGrupo.orden',
+            'with' => 'listModulosGrupo',
+            'condition' => 't.idModulo=:modulo',
+            'params' => array(
+                ':modulo' => 10
+            )
+        ));
+
+        CVarDumper::dump($objModulo, 10, true);
+    }
+
+    public function actionCategoriaraiz() {
         $categorias = CategoriaTienda::model()->findAll(array(
             'condition' => 't.idCategoriaPadre IS NULL',
         ));
-        
-        foreach($categorias as $categoria){
+
+        foreach ($categorias as $categoria) {
             $categoria->idCategoriaRaiz = $categoria->idCategoriaTienda;
             $categoria->save();
-            foreach($categoria->listCategoriasHijas as $categoriaHija1){
+            foreach ($categoria->listCategoriasHijas as $categoriaHija1) {
                 $categoriaHija1->idCategoriaRaiz = $categoria->idCategoriaTienda;
                 $categoriaHija1->save();
-                foreach($categoriaHija1->listCategoriasHijas as $categoriaHija2){
+                foreach ($categoriaHija1->listCategoriasHijas as $categoriaHija2) {
                     $categoriaHija2->idCategoriaRaiz = $categoria->idCategoriaTienda;
                     $categoriaHija2->save();
-                    foreach($categoriaHija2->listCategoriasHijas as $categoriaHija3){
+                    foreach ($categoriaHija2->listCategoriasHijas as $categoriaHija3) {
                         $categoriaHija3->idCategoriaRaiz = $categoria->idCategoriaTienda;
                         $categoriaHija3->save();
-                        foreach($categoriaHija3->listCategoriasHijas as $categoriaHija4){
+                        foreach ($categoriaHija3->listCategoriasHijas as $categoriaHija4) {
                             $categoriaHija4->idCategoriaRaiz = $categoria->idCategoriaTienda;
                             $categoriaHija4->save();
                         }
@@ -28,8 +41,8 @@ class TestController extends Controller {
             }
         }
     }
-    
-    public function actionAnalitics($idCompra){
+
+    public function actionAnalitics($idCompra) {
         $objCompra = Compras::model()->findByPk($idCompra);
         $script = GoogleAnalytics::getScriptCompra($objCompra);
         echo $script;
@@ -42,8 +55,6 @@ class TestController extends Controller {
         echo "$url<br/>";
         echo "$raw<br/>";
         echo "$encode<br/>";
-        
-        
     }
 
     public function actionDiff() {

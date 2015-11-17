@@ -69,6 +69,7 @@ class ModulosConfigurados extends CActiveRecord {
             'listProductosModulos' => array(self::HAS_MANY, 'ProductosModulos', 'idModulo'),
             'listUbicacionesModulos' => array(self::HAS_MANY, 'UbicacionModulos', 'idModulo'),
             'objMenuModulo' => array(self::BELONGS_TO, 'MenuModulo', 'idModulo'),
+            'listModulosGrupo' => array(self::MANY_MANY, 'ModulosConfigurados', 't_GruposModulos(idGrupoModulo, idModulo)'),
         );
     }
 
@@ -274,6 +275,27 @@ class ModulosConfigurados extends CActiveRecord {
         }
 
         return ModulosConfigurados::model()->find($criteria);
+    }
+    
+    public static function getModulosGrupo($idGrupo){
+        $fecha = new DateTime;
+        
+        $objModulo = ModulosConfigurados::model()->find(array(
+            'order' => 'listModulosGrupo_listModulosGrupo.orden',
+            'with' => 'listModulosGrupo',
+            'condition' => 't.estado=:estado AND t.inicio<=:fecha AND t.fin>=:fecha AND t.idModulo=:modulo',
+            'params' => array(
+                ':estado' => 1,
+                ':fecha' => $fecha->format("Y-m-d"),
+                ':modulo' => $idGrupo
+            )
+        ));
+        
+        if($objModulo==null){
+            return array();
+        }else{
+            return $objModulo->listModulosGrupo;
+        }
     }
 
     public static function getModulos($objSectorCiudad, $ubicacion, $categoria = null) {
