@@ -154,6 +154,16 @@ class ContenidoController extends ControllerOperator {
             if($model->tipo == 2)
             {
                 $params['vista'] = 'contenidoCrearListaProductos';
+
+                $query = "SELECT m.nombreMarca, m.idMarca ";
+                $query .= "FROM m_Producto AS p ";
+                $query .= "LEFT OUTER JOIN m_Marca AS m ON (m.idMarca = p.idMarca) ";
+                $query .= "GROUP BY p.idMarca; ";
+                $marcas = Yii::app()->db->createCommand($query)->queryAll();
+                $arrayMarcas = array_column($marcas, 'nombreMarca', 'idMarca');
+
+                $params['arrayMarcas'] = $arrayMarcas;
+
             }
             if($model->tipo == 3){
                 $params['vista'] = '_contenidoImagenes';
@@ -573,8 +583,50 @@ class ContenidoController extends ControllerOperator {
     {
         //print_r($modulo);
         
-        //$objProductosModulo = ProductosModulos::model()->findAll("idModulo=:idModulo", array(":idModulo" => $modulo));
-        $model = $objModulo;
+        $model = ProductosModulos::model()->findAll("idModulo=:idModulo", array(":idModulo" => $objModulo));
+        //$model = $objModulo;
+
+        $query = "SELECT m.nombreMarca, m.idMarca ";
+        $query .= "FROM m_Producto AS p ";
+        $query .= "LEFT OUTER JOIN m_Marca AS m ON (m.idMarca = p.idMarca) ";
+        $query .= "GROUP BY p.idMarca; ";
+        $marcas = Yii::app()->db->createCommand($query)->queryAll();
+        $arrayMarcas = array_column($marcas, 'nombreMarca', 'idMarca');
+        //$formFiltro->setRango($resultadoRango['minproducto'], $resultadoRango['maxproducto'], $resultadoRango['mintercero'], $resultadoRango['maxtercero']);
+
+        CVarDumper::dump(array_column($arrayMarcas, 'nombreMarca', 'idMarca'), 10, true);
+        exit();
+
+        
+
+        $this->render('contenidoCrearListaProductos', array(
+            //'objProductosModulo' => $objProductosModulo,
+            'model' => $model
+        ));
+    }
+
+    public function actioncrearListaProductos()
+    {
+        //print_r($modulo);
+        
+        //$model = ProductosModulos::model()->findAll("idModulo=:idModulo", array(":idModulo" => $objModulo));
+        //$model = $objModulo;
+        $idMarcas = "22,23,26,35,37,38,39";
+
+        $query = "SELECT c.nombreCategoria, c.idCategoriaBI, p.codigoProducto, p.idMarca ";
+        $query .= "FROM m_Producto AS p ";
+        $query .= "LEFT JOIN m_Categoria AS c ON (p.idCategoriaBI = c.idCategoriaBI) ";
+        $query .= "WHERE p.idMarca IN (".$idMarcas.")";
+        $query .= "GROUP BY p.idCategoriaBI; ";
+        $categorias = Yii::app()->db->createCommand($query)->queryAll();
+        $arrayCategorias = array_column($categorias, 'nombreCategoria', 'idCategoriaBI');
+        //$formFiltro->setRango($resultadoRango['minproducto'], $resultadoRango['maxproducto'], $resultadoRango['mintercero'], $resultadoRango['maxtercero']);
+
+        CVarDumper::dump($arrayCategorias, 10, true);
+        exit();
+
+        
+
         $this->render('contenidoCrearListaProductos', array(
             //'objProductosModulo' => $objProductosModulo,
             'model' => $model
@@ -590,11 +642,13 @@ class ContenidoController extends ControllerOperator {
 
         $busqueda = Yii::app()->getRequest()->getPost('busqueda');
         $idModulo = Yii::app()->getRequest()->getPost('idModulo');
+        
 
         //echo $busqueda." ... ".$modulo;
         //Yii::app()->end();
 
-        if ($busqueda === null || $idModulo === null) {
+        if ($busqueda === null || $idModulo === null) 
+        {
             throw new CHttpException(404, 'Solicitud inválida.');
         }
 
@@ -773,46 +827,5 @@ class ContenidoController extends ControllerOperator {
             'model' => $model,
             'listaProductos' => true
         ));
-    }
-
-
-    public function actionUpload() {
-        $message = "";
-        $name = time() . "_" . $_FILES['upload']['name'];
-        $url = Yii::getPathOfAlias('webroot') . Yii::app()->params->carpetaImagen['contenidos'] . $name;
-        //extensive suitability check before doing anything with the file…
-        if (($_FILES['upload'] == "none") OR (empty($_FILES['upload']['name']))) 
-        {
-           $message = "No se ha cargado archivo.";
-        } 
-        else if ($_FILES['upload']["size"] == 0) 
-        {
-           $message = "Archivo inv&aacute;lido: Tama&ntilde;o 0";
-        } 
-        else if (($_FILES['upload']["type"] != "image/pjpeg") AND ($_FILES['upload']["type"] != "image/jpeg") AND ($_FILES['upload']["type"] != "image/png")) 
-        {
-           $message = "El formato de la imagen debe de ser JPG or PNG. Por favor cargar archivo JPG or PNG.";
-        } 
-        else if (!is_uploaded_file($_FILES['upload']["tmp_name"])) 
-        {
-           $message = "Solicitud inv&aacute;lida."; //$message = "You may be attempting to hack our server. We're on to you; expect a knock on the door sometime soon.";
-        } 
-        else 
-        {
-           $message = "";
-           $move = move_uploaded_file($_FILES['upload']['tmp_name'], $url);
-           if (!$move) 
-           {
-               $message = "Error al cargar el archivo."; //$message = "Error moving uploaded file. Check the script is granted Read/Write/Modify permissions.";
-           }
-           //$url = "../" . $url;
-        }
-        $url = Yii::app()->getBaseUrl() . Yii::app()->params->carpetaImagen['contenidos'] . $name;
-
-        if (!empty($message))
-           $url = "";
-
-        $funcNum = $_GET['CKEditorFuncNum'];
-        echo "<script type='text/javascript'>window.parent.CKEDITOR.tools.callFunction($funcNum, '$url', '$message');</script>";
     }
 }
