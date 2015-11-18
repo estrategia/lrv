@@ -578,9 +578,13 @@ footer li a:hover{
     display: inline-block;
     background-position: center top;
 }
+.productos-destacados span i{
+    font-size: 14px;
+}
 .productos-destacados {
     color: #818181;
     font-size: 18px;
+    font-weight: bold;
 }
 .content-txt{
     text-align: center;
