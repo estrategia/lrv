@@ -1,4 +1,4 @@
-<section>
+<section class="product_detail">
     <div class="container">
         <div class="row">
             <div class="col-md-6">
