@@ -114,7 +114,7 @@
                                 <div style="margin-top: 15px;">
                                     <div class="line-bottom">
                                         <button class=" min" style="border:1px solid;" id="disminuir_unidad_<?php echo $objProducto->codigoProducto ?>" data-role="disminuir-cantidad"  data-producto="<?php echo $objProducto->codigoProducto ?>" data-precio="<?= $objPrecio->getPrecio(Precio::PRECIO_UNIDAD) ?>"  type="button"><span style="color:white" class="glyphicon glyphicon-minus"></span></button>
-                                        <div class=" ressete"><input id="cantidad-producto-unidad-<?php echo $objProducto->codigoProducto ?>"  class="increment" type="text" data-role="validar-cantidad-unidad"  data-producto="<?php echo $objProducto->codigoProducto ?>" data-precio="<?= $objPrecio->getPrecio(Precio::PRECIO_UNIDAD) ?>" maxlength="3" value="1" data-total="700"/></div>
+                                        <div class="input_cant ressete"><input id="cantidad-producto-unidad-<?php echo $objProducto->codigoProducto ?>"  class="increment" type="text" data-role="validar-cantidad-unidad"  data-producto="<?php echo $objProducto->codigoProducto ?>" data-precio="<?= $objPrecio->getPrecio(Precio::PRECIO_UNIDAD) ?>" maxlength="3" value="1" data-total="700"/></div>
                                         <button class=" min" style="border:1px solid;" id="aumentar_unidad_<?php echo $objProducto->codigoProducto ?>"  data-role="aumentar-cantidad"  data-producto="<?php echo $objProducto->codigoProducto ?>" data-precio="<?= $objPrecio->getPrecio(Precio::PRECIO_UNIDAD) ?>" type="button"><span style="color:white" class="glyphicon glyphicon-plus"></span></button>
                                     </div>
 
@@ -125,12 +125,12 @@
                     <?php endif; ?>   
                     <?php if ($objProducto->ventaVirtual == 1): ?>
                         <?php if ($objSectorCiudad!=null): ?>                                  
-                            <div class="col-md-12" style="margin-top: 13px;">
+                            <div class="" style="margin-top: 13px;">
                                 <?php echo CHtml::link('<div class="button anadir">Añadir&nbsp;<img src="' . Yii::app()->baseUrl . '/images/desktop/carrito-amarillo.png" alt=""></div>', '#', array('data-producto' => $objProducto->codigoProducto, 'data-cargar' => 1, 'class' => '')); ?>
                                 <?php echo CHtml::link('<div class="comprar-ahora" >Añadir a la lista</div>', '#', array('class' => '', 'data-tipo' => '1', 'data-role' => 'lstpersonalguardar', 'data-codigo' => $objProducto->codigoProducto)); ?>
                             </div>
                         <?php else: ?>
-                            <div class="col-md-12" style="margin-top: 13px;">                             
+                            <div class="" style="margin-top: 13px;">                             
                                 <?php echo CHtml::link('<div class="button anadir">Consultar Precio', $this->createUrl('/sitio/ubicacion'), array(/* 'data-producto' => $objProducto->codigoProducto, 'data-carro' => 1, 'class' => '' */)); ?>                           
                             </div>     
                         <?php endif; ?>                                 
