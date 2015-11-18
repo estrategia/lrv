@@ -1028,6 +1028,7 @@ label{
     background-color: #EA0001;
     color: #fff;
     border: 1px solid #EA0001 !important;
+    height:27px;
 }
 .select-cantidad{
     padding-right: 5px;
