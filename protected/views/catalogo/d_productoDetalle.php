@@ -140,8 +140,6 @@
                     <?php endif; ?>
                 </div>
             </div>
-
-            <?php $listImagen = $objProducto->listImagen(YII::app()->params->producto['tipoImagen']['grande']); ?>
         </div>
     </div>
 </section>
