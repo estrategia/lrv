@@ -1,3 +1,9 @@
+.slide-productos .owl-item:first-child {
+    border-left: 0;
+}
+.slide-productos .owl-item {
+    border-left: 1px dashed #ccc;
+}
 .noimagenProduct{
     max-width: 150px;
     min-width: 150px;
