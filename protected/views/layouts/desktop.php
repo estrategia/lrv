@@ -112,9 +112,17 @@
                                             <ul class="submenu">
                                                 <?php foreach ($categoria->listCategoriasHijas as $subcategoria): ?>
                                                     <div class="section-submenu">
+                                                         <?php if(count($subcategoria->listModulosConfigurados)>0):?>
                                                         <?php echo CHtml::link("<li class='title-submenu'><span class='glyphicon glyphicon-chevron-right' aria-hidden='true'></span>$subcategoria->nombreCategoriaTienda</li>", CController::createUrl('/catalogo/division', array('division' => $subcategoria->idCategoriaTienda))); ?>
-                                                        <?php foreach ($subcategoria->listCategoriasHijasMenu as $categoriaHija): ?>
-                                                            <li><?php echo $categoriaHija->nombreCategoriaTienda ?></li>
+                                                        <?php else:?>
+                                                                <li class='title-submenu'><span class='glyphicon glyphicon-chevron-right' aria-hidden='true'></span><?php echo $subcategoria->nombreCategoriaTienda?></li>
+                                                        <?php endif;?>
+                                                         <?php foreach ($subcategoria->listCategoriasHijasMenu as $categoriaHija): ?>
+                                                           <?php if(count($subcategoria->listModulosConfigurados)>0):?>
+                                                                    <li><?php echo $categoriaHija->nombreCategoriaTienda ?></li>
+                                                                <?php else:?>
+                                                                    <?php echo CHtml::link("<li>$categoriaHija->nombreCategoriaTienda</li>", CController::createUrl('/catalogo/categoria', array('categoria' => $categoriaHija->idCategoriaTienda))); ?>
+                                                                <?php endif;?>
                                                         <?php endforeach; ?>
                                                     </div>
                                                 <?php endforeach; ?>
