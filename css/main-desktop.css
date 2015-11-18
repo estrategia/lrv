@@ -1,3 +1,10 @@
+.fraccionado_columns .antes.strike {
+    color: #ea0001;
+    font-size: 23px;
+}
+.presentation_product, .presentation_product span{
+    color: #ea0001 !important;
+}
 .fraccionado_columns table .min {
     background: #ffdf20 none repeat scroll 0 0;
     border: 0 none !important;
