@@ -436,11 +436,11 @@ header {
     background-color: #EA0001;
     border: 1px solid #EA0001;
 }
-
+/*
 .modulo-menu{
     border-radius: 0px 10px 10px 0px;
 }
-
+*/
 .carousel-control.left {background-image: none !important;}
 .carousel-control.right {background-image: none !important;}
 
