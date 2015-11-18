@@ -372,7 +372,8 @@ return array(
                     5 => 'Banner Inicio Móvil',
                     6 => 'Html', 
                     7 => 'Html y lista de productos', 
-                    8 => 'Lista de productos en el carro'
+                    8 => 'Lista de productos en el carro',
+                   9 => 'Grupo de módulos',
                 ),
                 'ubicacionModulos' => array(
                     1 => 'Inicio',

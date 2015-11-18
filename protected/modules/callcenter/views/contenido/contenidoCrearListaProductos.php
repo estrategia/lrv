@@ -53,7 +53,7 @@
 	            <div class="panel-body">
 	                
 	                <div class="col-md-6" style="height:250px;overflow-y: scroll;">
-	  	              	<?php echo CHtml::checkboxList('marcas-contenido', null, $arrayMarcas ,array('class' => '','style' => ''))?>
+	  	              	<?php echo CHtml::checkboxList('marcas-contenido', $arrayMarcasSeleccionadas, $arrayMarcas ,array('class' => '','style' => ''))?>
 	                </div>
 
 	                <div class="col-md-6" style="height:250px;overflow-y: scroll;">

@@ -30,11 +30,11 @@ class UbicacionCategoria extends CActiveRecord
 		// NOTE: you should only define rules for those attributes that
 		// will receive user inputs.
 		return array(
-			array('idUbicacion, idCategoriaBi', 'required'),
-			array('idUbicacion, idCategoriaBi', 'numerical', 'integerOnly'=>true),
+			array('idUbicacion, idCategoriaTienda', 'required'),
+			array('idUbicacion, idCategoriaTienda', 'numerical', 'integerOnly'=>true),
 			// The following rule is used by search().
 			// @todo Please remove those attributes that should not be searched.
-			array('idUbicacionCategoria, idUbicacion, idCategoriaBi', 'safe', 'on'=>'search'),
+			array('idUbicacionCategoria, idUbicacion, idCategoriaTienda', 'safe', 'on'=>'search'),
 		);
 	}
 
@@ -47,7 +47,7 @@ class UbicacionCategoria extends CActiveRecord
 		// class name for the relations automatically generated below.
 		return array(
 			'objUbicacionModulo' => array(self::BELONGS_TO, 'UbicacionModulos', 'idUbicacion'),
-			'objCategoriaTienda' => array(self::BELONGS_TO, 'CategoriaTienda', 'idCategoriaBi'),
+			'objCategoriaTienda' => array(self::BELONGS_TO, 'CategoriaTienda', 'idCategoriaTienda'),
 		);
 	}
 
@@ -59,7 +59,7 @@ class UbicacionCategoria extends CActiveRecord
 		return array(
 			'idUbicacionCategoria' => 'Id Ubicacion Categoria',
 			'idUbicacion' => 'Ubicación',
-			'idCategoriaBi' => 'Categoría',
+			'idCategoriaTienda' => 'Categoría',
 		);
 	}
 
@@ -83,7 +83,7 @@ class UbicacionCategoria extends CActiveRecord
 
 		$criteria->compare('idUbicacionCategoria',$this->idUbicacionCategoria);
 		$criteria->compare('idUbicacion',$this->idUbicacion);
-		$criteria->compare('idCategoriaBi',$this->idCategoriaBi);
+		$criteria->compare('idCategoriaTienda',$this->idCategoriaTienda);
 
 		return new CActiveDataProvider($this, array(
 			'criteria'=>$criteria,

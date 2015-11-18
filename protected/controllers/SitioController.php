@@ -19,26 +19,20 @@ class SitioController extends Controller {
             $this->showSeeker = false;
             $this->logoLinkMenu = false;
 
-            $objSectorCiudad = null;
-            $tipoEntrega = null;
-            if (isset(Yii::app()->session[Yii::app()->params->sesion['sectorCiudadEntrega']])) {
-                $objSectorCiudad = Yii::app()->session[Yii::app()->params->sesion['sectorCiudadEntrega']];
-            }
-
             if (isset(Yii::app()->session[Yii::app()->params->sesion['tipoEntrega']]) && Yii::app()->session[Yii::app()->params->sesion['tipoEntrega']] != null) {
                 $tipoEntrega = Yii::app()->session[Yii::app()->params->sesion['tipoEntrega']];
             }
 
-            if ($objSectorCiudad == null || $tipoEntrega == null) {
+            if ($this->objSectorCiudad == null || $tipoEntrega == null) {
                 $this->showHeaderIcons = false;
             }
 
             $this->render('index', array(
-                'listModulos' => ModulosConfigurados::getModulosBanner(new DateTime, UbicacionModulos::UBICACION_MOVIL_HOME)
+                'listModulos' => ModulosConfigurados::getModulosBanner($this->objSectorCiudad, UbicacionModulos::UBICACION_MOVIL_HOME)
             ));
         }else{
             $this->render('d_index',array(
-                'modulosInicio' => ModulosConfigurados::traerModulos(UbicacionModulos::UBICACION_ESCRITORIO_HOME)
+                'listModulos' => ModulosConfigurados::getModulos($this->objSectorCiudad, UbicacionModulos::UBICACION_ESCRITORIO_HOME)
             ));           
         }
         Yii::app()->end();
@@ -142,15 +136,12 @@ class SitioController extends Controller {
             /*echo '<p>';
             CVarDumper::dump(Yii::app()->request->urlReferrer);
             echo '</p>';
-
             echo '<p>';
             CVarDumper::dump(Yii::app()->request->url);
             echo '</p>';
-            
             echo '<p>';
             Yii::app()->session[Yii::app()->params->sesion['redireccionUbicacion']];
-            echo '</p>';
-            exit();*/
+            echo '</p>';*/
             
             $this->render('d_ubicacion', array(
                 'listCiudadesSectores' => $listCiudadesSectores,
@@ -470,7 +461,7 @@ class SitioController extends Controller {
         }
 
         $this->render('inicio', array(
-            'listModulos' => ModulosConfigurados::getModulosBanner(new DateTime, UbicacionModulos::UBICACION_MOVIL_INICIO)
+            'listModulos' => ModulosConfigurados::getModulosBanner($this->objSectorCiudad, UbicacionModulos::UBICACION_MOVIL_INICIO)
         ));
     }
 
@@ -489,54 +480,5 @@ class SitioController extends Controller {
             else
                 $this->render('error');
         }
-    }
-
-    public function actionVercontenido($tipo, $contenido) {
-        $contenidoHTML = "";
-
-        if ($tipo == "imagen") {
-            $imagenBanner = ImagenBanner::model()->find(array(
-                'condition' => "idBanner =:idimagen  AND contenido IS NOT NULL", 
-                'params' => array('idimagen' => $contenido)
-            ));
-
-            if ($imagenBanner == null || $imagenBanner->tipoContenido != 2) {
-                throw new CHttpException(404, 'Contenido no disponible.');
-            }
-            if($this->isMobile){
-                $contenidoHTML = trim($imagenBanner->contenidoMovil);
-            }else{
-                $contenidoHTML = trim($imagenBanner->contenido);
-            }
-        } else if ($tipo == "modulo") {
-            $objModulo = ModulosConfigurados::model()->find(array(
-                'condition' => 'idModulo=:modulo AND contenido IS NOT NULL',
-                'params' => array(
-                    ':modulo' => $contenido
-                )
-            ));
-
-            if ($objModulo == null) {
-                throw new CHttpException(404, 'Contenido no disponible.');
-            }
-            
-            if($this->isMobile){
-                $contenidoHTML = trim($objModulo->contenidoMovil);
-            }else{
-                $contenidoHTML = trim($objModulo->contenido);
-            }
-        } else {
-            throw new CHttpException(404, 'Solicitud inv&aacute;lida.');
-        }
-        
-        if (empty($contenidoHTML)) {
-            throw new CHttpException(404, 'Contenido no disponible.');
-        }
-        
-        $this->render('verContenidoHtml', array(
-            'contenido' => $contenidoHTML
-        ));
-        Yii::app()->end();
-        
     }
 }
