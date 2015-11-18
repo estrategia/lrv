@@ -6,9 +6,8 @@
     <div class="container">
         <div class="col-md-12">
             <div class="col-md-6">
-                <?php $listImagen = $objProducto->listImagenes; ?>
                 <div id="<?php echo $objProducto->codigoProducto ?>" class="">
-                    <?php if (empty($listImagen)): ?>
+                    <?php if (empty($objProducto->listImagenesGrandes)): ?>
                         <div class="item"><img class='img-responsive' src="<?php echo Yii::app()->request->baseUrl . Yii::app()->params->producto['noImagen']['grande']; ?>" alt="<?php echo $objProducto->descripcionProducto ?>" title="<?php echo $objProducto->descripcionProducto ?>"></div>
                     <?php else: ?>
                         <div class="col-md-10">
@@ -20,10 +19,10 @@
                                 <div class="ad-nav">
                                     <div class="ad-thumbs">
                                         <ul class="ad-thumb-list">
-                                            <?php foreach ($listImagen as $imagen): ?>
+                                            <?php foreach ($objProducto->listImagenesGrandes as $imagen): ?>
                                                 <li>
                                                     <a style="width:60%" href="<?php echo Yii::app()->request->baseUrl . Yii::app()->params->carpetaImagen['productos'][YII::app()->params->producto['tipoImagen']['grande']] . $imagen->rutaImagen; ?>">
-                                                        <img   class="img-responsive"src="<?php echo Yii::app()->request->baseUrl . Yii::app()->params->carpetaImagen['productos'][YII::app()->params->producto['tipoImagen']['mini']] . $imagen->rutaImagen; ?>" >
+                                                        <img class="img-responsive"src="<?php echo Yii::app()->request->baseUrl . Yii::app()->params->carpetaImagen['productos'][YII::app()->params->producto['tipoImagen']['mini']] . $imagen->rutaImagen; ?>" >
                                                     </a>
                                                 </li>
                                             <?php endforeach; ?>
@@ -53,7 +52,7 @@
                         <?php if ($objPrecio->getTiempoEntrega() > 0): ?>
                             <div><span>Tiempo de entrega: <?php echo $objPrecio->getTiempoEntrega() ?> horas</span></div>
                         <?php endif; ?>
-                            
+
                         <?php if ($objPrecio->inicializado()): ?>
                             <?php if ($objProducto->fraccionado == 1): ?> 
                                 <!-- Producto fraccionado -->
@@ -128,7 +127,7 @@
                         <?php endif; ?>
                     <?php endif; ?>   
                     <?php if ($objProducto->ventaVirtual == 1): ?>
-                        <?php if ($objSectorCiudad!=null): ?>                                  
+                        <?php if ($objSectorCiudad != null): ?>                                  
                             <div class="col-md-12" style="margin-top: 13px;">
                                 <?php echo CHtml::link('<div class="button anadir">Añadir&nbsp;<img src="' . Yii::app()->baseUrl . '/images/desktop/carrito-amarillo.png" alt=""></div>', '#', array('data-producto' => $objProducto->codigoProducto, 'data-cargar' => 1, 'class' => '')); ?>
                                 <?php echo CHtml::link('<div class="comprar-ahora" >Añadir a la lista</div>', '#', array('class' => '', 'data-tipo' => '1', 'data-role' => 'lstpersonalguardar', 'data-codigo' => $objProducto->codigoProducto)); ?>
@@ -144,7 +143,6 @@
                 </div>
             </div>
 
-            <?php $listImagen = $objProducto->listImagen(YII::app()->params->producto['tipoImagen']['grande']); ?>
             <div class=""></div>
             <div class=""></div>
         </div>
@@ -323,8 +321,6 @@
                     'objFormCalificacion' => $objFormCalificacion
                 ))
                 ?>
-            <?php else: ?>
-
             <?php endif; ?>
         <?php endif; ?>
         <?php if ($objProducto->codigoEspecial !== null && $objProducto->codigoEspecial != 0): ?>
@@ -334,25 +330,32 @@
                 <?php echo $objProducto->objCodigoEspecial->descripcion ?>
             </p>
         <?php endif; ?>
-
-        <?php if (!empty($listRelacionados)): ?>
-            <section>
-                <div class="container">
-                    <span class="glyphicon glyphicon-chevron-right der" aria-hidden="true"></span>&nbsp;<h4 style="display:inline-block;"> Productos relacionados</h4>
-                </div>
-                <div id="owl-demo" class="owl-carousel">
-                    <?php foreach ($listRelacionados as $objRelacionado): ?>
-                        <div class="item"><?php
-                            $this->renderPartial('_d_productoElemento', array(
-                                'data' => $objRelacionado->objProductoRelacionado,
-                                'vista' => 'relacionado'
-                            ));
-                            ?>
-                        </div>
-
-                    <?php endforeach; ?>
-                </div>
-            </section>       
-        <?php endif; ?>
     </div>
 </section>    
+
+<?php if (!empty($listRelacionados)): ?>
+    <section>
+        <div class="container">
+            <div class="row">
+                <div class="col-md-12 title">
+                    <h2 class="productos-destacados"><span><i class="glyphicon glyphicon-chevron-right"></i></span> Productos relacionados</h2>
+                </div>
+            </div>
+        </div>
+
+        <div id="owl-relacionados" class="owl-carousel slide-productos">
+            <?php foreach ($listRelacionados as $objRelacionado): ?>
+                <div class="item">
+                    <ul class="listaProductos">
+                        <?php
+                        $this->renderPartial('_d_productoElemento', array(
+                            'data' => $objRelacionado->objProductoRelacionado,
+                            'vista' => 'relacionado'
+                        ));
+                        ?>
+                    </ul>
+                </div>
+            <?php endforeach; ?>
+        </div>
+    </section>
+<?php endif; ?>

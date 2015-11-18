@@ -50,8 +50,7 @@
             <?php if ($dataprovider != null): ?> 
                 <?php if ($listCombos != null): ?>
                     <p align="center">
-                    <div id="slide-combos" class="owl-carousel">
-
+                    <div id="slide-combos" class="owl-carousel slide-productos">
                         <?php foreach ($listCombos as $objCombo): ?>
                             <div class="item">
                                 <?php

@@ -169,19 +169,21 @@ class ModulosConfigurados extends CActiveRecord {
         return $listaProductos;
     }
 
-    public static function getModulosBanner($objSectorCiudad, $ubicacion) {
+    public static function getModulosBanner($objSectorCiudad, $codigoPerfil, $ubicacion) {
         $fecha = new DateTime;
 
         $criteria = array(
-            'with' => array('listImagenesBanners', 'listUbicacionesModulos', 'listModulosSectoresCiudades'),
+            'with' => array('listImagenesBanners', 'listUbicacionesModulos', 'listModulosSectoresCiudades','listPerfiles'),
             'order' => 'listUbicacionesModulos.orden, listImagenesBanners.orden',
-            'condition' => 't.estado=:estado AND t.tipo =:tipo AND t.dias LIKE :dia AND t.inicio<=:fecha AND t.fin>=:fecha AND listUbicacionesModulos.ubicacion=:ubicacion',
+            'condition' => 't.estado=:estado AND t.tipo =:tipo AND t.dias LIKE :dia AND t.inicio<=:fecha AND t.fin>=:fecha AND listUbicacionesModulos.ubicacion=:ubicacion AND (listPerfiles.idPerfil =:perfilA  OR listPerfiles.idPerfil =:perfil )',
             'params' => array(
                 ':estado' => 1,
                 ':tipo' => ModulosConfigurados::TIPO_BANNER,
                 ':dia' => "%" . $fecha->format("w") . "%",
                 ':fecha' => $fecha->format("Y-m-d"),
-                ':ubicacion' => $ubicacion
+                ':ubicacion' => $ubicacion,
+                ':perfil' => $codigoPerfil,
+                ':perfilA' => Yii::app()->params->perfil['*']
             )
         );
 
@@ -197,8 +199,8 @@ class ModulosConfigurados extends CActiveRecord {
             $criteria['condition'] .= $condicion;
             $criteria['params'][':sectorA'] = Yii::app()->params->sector['*'];
             $criteria['params'][':ciudadA'] = Yii::app()->params->ciudad['*'];
-            $criteria['params'][':sector'] = $objSectorCiudad->codigoCiudad;
-            $criteria['params'][':ciudad'] = $objSectorCiudad->codigoSector;
+            $criteria['params'][':sector'] = $objSectorCiudad->codigoSector;
+            $criteria['params'][':ciudad'] = $objSectorCiudad->codigoCiudad;
         }
 
         return ModulosConfigurados::model()->findAll($criteria);
@@ -230,25 +232,27 @@ class ModulosConfigurados extends CActiveRecord {
             $criteria['condition'] .= $condicion;
             $criteria['params'][':sectorA'] = Yii::app()->params->sector['*'];
             $criteria['params'][':ciudadA'] = Yii::app()->params->ciudad['*'];
-            $criteria['params'][':sector'] = $objSectorCiudad->codigoCiudad;
-            $criteria['params'][':ciudad'] = $objSectorCiudad->codigoSector;
+            $criteria['params'][':sector'] = $objSectorCiudad->codigoSector;
+            $criteria['params'][':ciudad'] = $objSectorCiudad->codigoCiudad;
         }
 
         return ModulosConfigurados::model()->findAll($criteria);
     }
 
-    public static function getModuloFlotante($objSectorCiudad, $ubicacion, $categoria = null) {
+    public static function getModuloFlotante($objSectorCiudad, $codigoPerfil, $ubicacion, $categoria = null) {
         $fecha = new DateTime;
 
         $criteria = array(
-            'with' => array('listModulosSectoresCiudades'),
-            'condition' => "t.estado=:estado AND t.tipo =:tipo AND t.dias LIKE :dia AND t.inicio<=:fecha AND t.fin>=:fecha AND listUbicacionesModulos.ubicacion=:ubicacion",
+            'with' => array('listModulosSectoresCiudades', 'listPerfiles'),
+            'condition' => "t.estado=:estado AND t.tipo =:tipo AND t.dias LIKE :dia AND t.inicio<=:fecha AND t.fin>=:fecha AND listUbicacionesModulos.ubicacion=:ubicacion AND (listPerfiles.idPerfil =:perfilA  OR listPerfiles.idPerfil =:perfil )",
             'params' => array(
                 ':estado' => 1,
                 ':tipo' => ModulosConfigurados::TIPO_PROMOCION_FLOTANTE,
                 ':dia' => "%" . $fecha->format("w") . "%",
                 ':fecha' => $fecha->format("Y-m-d"),
                 ':ubicacion' => $ubicacion,
+                ':perfil' => $codigoPerfil,
+                ':perfilA' => Yii::app()->params->perfil['*']
             )
         );
 
@@ -271,8 +275,8 @@ class ModulosConfigurados extends CActiveRecord {
             $criteria['condition'] .= $condicion;
             $criteria['params'][':sectorA'] = Yii::app()->params->sector['*'];
             $criteria['params'][':ciudadA'] = Yii::app()->params->ciudad['*'];
-            $criteria['params'][':sector'] = $objSectorCiudad->codigoCiudad;
-            $criteria['params'][':ciudad'] = $objSectorCiudad->codigoSector;
+            $criteria['params'][':sector'] = $objSectorCiudad->codigoSector;
+            $criteria['params'][':ciudad'] = $objSectorCiudad->codigoCiudad;
         }
 
         return ModulosConfigurados::model()->find($criteria);
@@ -299,26 +303,22 @@ class ModulosConfigurados extends CActiveRecord {
         }
     }
 
-    public static function getModulos($objSectorCiudad, $ubicacion, $categoria = null) {
+    public static function getModulos($objSectorCiudad, $codigoPerfil, $ubicacion, $categoria = null) {
         $fecha = new DateTime;
-        $codigoPerfil = Yii::app()->shoppingCart->getCodigoPerfil();
         
         $criteria = array(
             'order' => 'listUbicacionesModulos.orden',
-            'with' => array('listModulosSectoresCiudades'),
-            'condition' => "t.estado=:estado AND t.dias LIKE :dia AND t.inicio<=:fecha AND t.fin>=:fecha AND listUbicacionesModulos.ubicacion=:ubicacion",
+            'with' => array('listModulosSectoresCiudades','listPerfiles'),
+            'condition' => "t.estado=:estado AND t.dias LIKE :dia AND t.inicio<=:fecha AND t.fin>=:fecha AND listUbicacionesModulos.ubicacion=:ubicacion AND (listPerfiles.idPerfil =:perfilA  OR listPerfiles.idPerfil =:perfil )",
             'params' => array(
                 ':estado' => 1,
                 ':dia' => "%" . $fecha->format("w") . "%",
                 ':fecha' => $fecha->format("Y-m-d"),
                 ':ubicacion' => $ubicacion,
+                ':perfil' => $codigoPerfil,
+                ':perfilA' => Yii::app()->params->perfil['*']
             )
         );
-        
-        $criteria['with'][] = 'listPerfiles';
-        $criteria['condition'] .= " AND (listPerfiles.idPerfil =:perfilA  OR listPerfiles.idPerfil =:perfil )";
-        $criteria['params'][':perfil'] = $codigoPerfil;
-        $criteria['params'][':perfilA'] = Yii::app()->params->perfil['*'];
         
         if ($categoria == null) {
             $criteria['with'][] = 'listUbicacionesModulos';
@@ -339,11 +339,9 @@ class ModulosConfigurados extends CActiveRecord {
             $criteria['condition'] .= $condicion;
             $criteria['params'][':sectorA'] = Yii::app()->params->sector['*'];
             $criteria['params'][':ciudadA'] = Yii::app()->params->ciudad['*'];
-            $criteria['params'][':sector'] = $objSectorCiudad->codigoCiudad;
-            $criteria['params'][':ciudad'] = $objSectorCiudad->codigoSector;
+            $criteria['params'][':sector'] = $objSectorCiudad->codigoSector;
+            $criteria['params'][':ciudad'] = $objSectorCiudad->codigoCiudad;
         }
-        
-        
 
         return ModulosConfigurados::model()->findAll($criteria);
     }

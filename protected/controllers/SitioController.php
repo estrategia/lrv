@@ -30,11 +30,11 @@ class SitioController extends Controller {
             }
 
             $this->render('index', array(
-                'listModulos' => ModulosConfigurados::getModulosBanner($this->objSectorCiudad, UbicacionModulos::UBICACION_MOVIL_HOME)
+                'listModulos' => ModulosConfigurados::getModulosBanner($this->objSectorCiudad, Yii::app()->shoppingCart->getCodigoPerfil(), UbicacionModulos::UBICACION_MOVIL_HOME)
             ));
         }else{
             $this->render('d_index',array(
-                'listModulos' => ModulosConfigurados::getModulos($this->objSectorCiudad, UbicacionModulos::UBICACION_ESCRITORIO_HOME)
+                'listModulos' => ModulosConfigurados::getModulos($this->objSectorCiudad, Yii::app()->shoppingCart->getCodigoPerfil(), UbicacionModulos::UBICACION_ESCRITORIO_HOME)
             ));           
         }
         Yii::app()->end();
@@ -463,7 +463,7 @@ class SitioController extends Controller {
         }
 
         $this->render('inicio', array(
-            'listModulos' => ModulosConfigurados::getModulosBanner($this->objSectorCiudad, UbicacionModulos::UBICACION_MOVIL_INICIO)
+            'listModulos' => ModulosConfigurados::getModulosBanner($this->objSectorCiudad, Yii::app()->shoppingCart->getCodigoPerfil(), UbicacionModulos::UBICACION_MOVIL_INICIO)
         ));
     }
 

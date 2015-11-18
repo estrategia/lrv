@@ -1,8 +1,10 @@
-<?php $this->renderPartial('/contenido/d_modulos',array(
-                'listModulos' => $listModulos
-));?>
+<?php
+$this->renderPartial('/contenido/d_modulos', array(
+    'listModulos' => $listModulos
+));
+?>
 <section>	
-<br>
+    <br>
 </section>
 
 <!--fin slide-->

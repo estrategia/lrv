@@ -67,4 +67,4 @@
 
 </ul>
 
-<?php $this->renderPartial('/contenido/modulo', array('objModulo'=>ModulosConfigurados::getModuloFlotante($this->objSectorCiudad, UbicacionModulos::UBICACION_MOVIL_INICIO))) ?>
+<?php $this->renderPartial('/contenido/modulo', array('objModulo'=>ModulosConfigurados::getModuloFlotante($this->objSectorCiudad, Yii::app()->shoppingCart->getCodigoPerfil(), UbicacionModulos::UBICACION_MOVIL_INICIO))) ?>

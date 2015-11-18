@@ -174,22 +174,22 @@ $(document).ready(function() {
             "<i class='glyphicon glyphicon-chevron-right'></i>"
         ]
     });
-    $("#owl-combos").owlCarousel({
+    /*$("#owl-combos").owlCarousel({
         items: 4,
         lazyLoad: true,
         navigation: true
-    });
-    $("#slide-combos").owlCarousel({
+    });*/
+    /*$("#slide-combos").owlCarousel({
         items: 4,
         lazyLoad: true,
         navigation: true
-    });
+    });*/
     
-    $("#carrousel-img-productos").owlCarousel({
+    /*$("#carrousel-img-productos").owlCarousel({
         items: 4,
         lazyLoad: true,
         navigation: true
-    });
+    });*/
     $('.ad-gallery').adGallery({
         //  loader_image: '../libs/ad-gallery/loader.gif',
           width: 400, 
