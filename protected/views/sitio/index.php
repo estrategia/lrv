@@ -28,7 +28,7 @@
     </div>
 </div>
 
-<?php $this->renderPartial('/contenido/modulo', array('objModulo'=>ModulosConfigurados::getModuloFlotante($this->objSectorCiudad, UbicacionModulos::UBICACION_MOVIL_HOME))) ?>
+<?php $this->renderPartial('/contenido/modulo', array('objModulo'=>ModulosConfigurados::getModuloFlotante($this->objSectorCiudad, Yii::app()->shoppingCart->getCodigoPerfil(), UbicacionModulos::UBICACION_MOVIL_HOME))) ?>
 
 <?php $this->extraContentList[] = $this->renderPartial('_entregaDomicilio', null, true); ?>
 <?php $this->extraContentList[] = $this->renderPartial('_entregaPresencial', null, true); ?>

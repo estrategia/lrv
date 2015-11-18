@@ -51,6 +51,7 @@ class Combo extends CActiveRecord {
             'listProductos' => array(self::MANY_MANY, 'Producto', 'm_ComboProducto(idCombo, codigoProducto)'),
             'listComboSectorCiudad' => array(self::HAS_MANY, 'ComboSectorCiudad', 'idCombo'),
             'listImagenesCombo' => array(self::HAS_MANY, 'ImagenCombo', 'idCombo'),
+            'listImagenesComboGrande' => array(self::HAS_MANY, 'ImagenCombo', 'idCombo', 'condition'=>'listImagenesComboGrande.estadoImagen=1 AND listImagenesComboGrande.tipoImagen='. YII::app()->params->producto['tipoImagen']['grande']),
         );
     }
 

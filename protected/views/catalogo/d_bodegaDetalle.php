@@ -2,12 +2,11 @@
         <div class="container">
             <div class="col-md-12">
                 <div class="col-md-6">
-                    <?php $listImagen = $objProducto->listImagen(YII::app()->params->producto['tipoImagen']['grande']); ?>
                     <div id="owl-productodetalle-<?php echo $objProducto->codigoProducto ?>" class="">
-                        <?php if (empty($listImagen)): ?>
+                        <?php if (empty($objProducto->listImagenesGrandes)): ?>
                             <div class="item"><img src="<?php echo Yii::app()->request->baseUrl . Yii::app()->params->producto['noImagen']['grande']; ?>" alt="<?php echo $objProducto->descripcionProducto ?>" title="<?php echo $objProducto->descripcionProducto ?>"></div>
                         <?php else: ?>
-                            <?php foreach ($listImagen as $imagen): ?>
+                            <?php foreach ($objProducto->listImagenesGrandes as $imagen): ?>
                                 <div class="item"><img src="<?php echo Yii::app()->request->baseUrl . Yii::app()->params->carpetaImagen['productos'][YII::app()->params->producto['tipoImagen']['grande']] . $imagen->rutaImagen; ?>" alt="<?php echo $imagen->nombreImagen ?>" title="<?php echo $imagen->tituloImagen ?>"></div>
                             <?php endforeach; ?>
                         <?php endif; ?>
