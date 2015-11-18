@@ -110,4 +110,5 @@
     </body>
     <script src="<?php echo Yii::app()->request->baseUrl; ?>/js/operator.js"></script>
     <script src="<?php echo Yii::app()->request->baseUrl; ?>/js/modulos-om.js"></script>
+    <script src="<?php echo Yii::app()->request->baseUrl; ?>/js/modulos-jj.js"></script>
 </html>

@@ -15,9 +15,9 @@
 ?>
 
 <div class="form-group">
-      <?php echo $form->labelEx($model, 'idCategoriaBi'); ?>
-      <?php echo $form->dropDownList($model, 'idCategoriaBi',  CHtml::listData($categorias, 'idCategoria', 'nombreCategoria'),  array('prompt' => 'Seleccione..','class' => 'tipo form-control')); ?>
-      <?php echo $form->error($model, 'idCategoriaBi'); ?>
+      <?php echo $form->labelEx($model, 'idCategoriaTienda'); ?>
+      <?php echo $form->dropDownList($model, 'idCategoriaTienda',  CHtml::listData($categorias, 'idCategoria', 'nombreCategoria'),  array('prompt' => 'Seleccione..','class' => 'tipo form-control')); ?>
+      <?php echo $form->error($model, 'idCategoriaTienda'); ?>
 </div>
 
 <?php $this->endWidget()?>

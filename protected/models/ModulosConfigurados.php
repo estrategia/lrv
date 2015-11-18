@@ -70,6 +70,7 @@ class ModulosConfigurados extends CActiveRecord {
             'listUbicacionesModulos' => array(self::HAS_MANY, 'UbicacionModulos', 'idModulo'),
             'objMenuModulo' => array(self::BELONGS_TO, 'MenuModulo', 'idModulo'),
             'listModulosGrupo' => array(self::MANY_MANY, 'ModulosConfigurados', 't_GruposModulos(idGrupoModulo, idModulo)'),
+            'listPerfiles' => array(self::HAS_MANY, 'ModuloPerfil', 'idModulo'),
         );
     }
 
@@ -300,7 +301,8 @@ class ModulosConfigurados extends CActiveRecord {
 
     public static function getModulos($objSectorCiudad, $ubicacion, $categoria = null) {
         $fecha = new DateTime;
-
+        $codigoPerfil = Yii::app()->shoppingCart->getCodigoPerfil();
+        
         $criteria = array(
             'order' => 'listUbicacionesModulos.orden',
             'with' => array('listModulosSectoresCiudades'),
@@ -312,6 +314,11 @@ class ModulosConfigurados extends CActiveRecord {
                 ':ubicacion' => $ubicacion,
             )
         );
+        
+        $criteria['with'][] = 'listPerfiles';
+        $criteria['condition'] .= " AND (listPerfiles.idPerfil =:perfilA  OR listPerfiles.idPerfil =:perfil )";
+        $criteria['params'][':perfil'] = $codigoPerfil;
+        $criteria['params'][':perfilA'] = Yii::app()->params->perfil['*'];
         
         if ($categoria == null) {
             $criteria['with'][] = 'listUbicacionesModulos';
@@ -335,6 +342,8 @@ class ModulosConfigurados extends CActiveRecord {
             $criteria['params'][':sector'] = $objSectorCiudad->codigoCiudad;
             $criteria['params'][':ciudad'] = $objSectorCiudad->codigoSector;
         }
+        
+        
 
         return ModulosConfigurados::model()->findAll($criteria);
     }
