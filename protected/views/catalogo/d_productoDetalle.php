@@ -56,9 +56,9 @@
                             </div>
                         </div>
                         <div  class="descripciones fraccionado_columns">
-                            <div class="row" style="margin-top:12px;">
-                                <div class="col-md-6">
-                                    <div class="container_gray_fracc">
+                            <table border="0" cellpadding="0" cellspacing="0" style="margin-top:12px;">
+                                <tr>
+                                    <td valign="bottom" class="container_gray_fracc">
                                     <div class="sep-dashed"><label for="uno" checked=""><span></span><?php echo $objProducto->presentacionProducto ?></label><br/></div>
                                     <?php if ($objProducto->mostrarAhorroVirtual == 1 && $objPrecio->getPorcentajeDescuento() > 0 && $objSectorCiudad->objCiudad->excentoImpuestos == 0): ?> 
                                         <div class="sep-dashed"><span class="antes strike"><?php echo Yii::app()->numberFormatter->format(Yii::app()->params->formatoMoneda['patron'], $objPrecio->getPrecio(Precio::PRECIO_UNIDAD, false), Yii::app()->params->formatoMoneda['moneda']); ?></span><br></div>
@@ -74,9 +74,9 @@
                                         <button class="col-md-3 min" style="border:1px solid;" id="aumentar-unidad-<?php echo $objProducto->codigoProducto ?>"  data-role="aumentar-cantidad"  data-producto="<?php echo $objProducto->codigoProducto ?>" data-precio="<?= $objPrecio->getPrecio(Precio::PRECIO_UNIDAD) ?>" type="button"><span class="glyphicon glyphicon-plus" style='color: white'></span></button>
                                     </div>
                                     <div class=" subtotal"><span class="">Subtotal: <span id="subtotal-producto-unidad-<?php echo $objProducto->codigoProducto ?>"><?php echo Yii::app()->numberFormatter->format(Yii::app()->params->formatoMoneda['patron'], $objPrecio->getPrecio(Precio::PRECIO_UNIDAD), Yii::app()->params->formatoMoneda['moneda']); ?></span></span></div>
-                                </div>
-                                </div>
-                                <div class="col-md-6">
+                                
+                                </td>
+                                <td  valign="bottom">
                                     <p class="sep-dashed" style="color: #999;font-size: 16px;">Unidad minima de venta <br> (U.M.V)</p>
                                     <div class="sep-dashed"><label for="dos"><span></span> <?php echo $objProducto->objMedidaFraccion->descripcionMedidaFraccion ?> X <?php echo $objProducto->unidadFraccionamiento ?></label><br></div>
                                     <?php if ($objProducto->mostrarAhorroVirtual == 1 && $objPrecio->getPorcentajeDescuento() > 0 && $objSectorCiudad->objCiudad->excentoImpuestos == 0): ?> 
@@ -92,9 +92,9 @@
                                         <button class="col-md-3 min" style="border:1px solid;" id="aumentar-fraccion-<?php echo $objProducto->codigoProducto ?>"   onclick="aumentarCantidadFraccionado(<?php echo $objProducto->codigoProducto ?>,<?php echo $objProducto->numeroFracciones ?>,<?php echo $objProducto->unidadFraccionamiento ?>,<?= $objPrecio->getPrecio(Precio::PRECIO_FRACCION) ?>,<?= $objPrecio->getPrecio(Precio::PRECIO_UNIDAD, false) ?>)" type="button"><span style='color: white' class="glyphicon glyphicon-plus"></span></button>
                                     </div>
                                     <div class=" subtotal"><span class="">Subtotal: <span id="subtotal-producto-fraccion-<?php echo $objProducto->codigoProducto ?>">$0</span></span></div>
-                                    <div class=""><div style="width: 5px;height: 9px;"></div></div>
-                                </div>				
-                            </div>
+                                </td>  
+                                </tr>            
+                            </table>
                         </div>
                         <div class="descripciones">
                         <?php else: ?>
