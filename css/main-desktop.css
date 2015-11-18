@@ -9,7 +9,7 @@
     min-width: 150px;
 }
 #owl-carousel.slide-productos {
-    padding: 0 35px;
+    padding:35px;
 }
 .slide-productos .owl-buttons .owl-prev {
     background: #ea0001 none repeat scroll 0 0 !important;
