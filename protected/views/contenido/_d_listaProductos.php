@@ -2,8 +2,7 @@
     <div class="container">
         <div class="row">
             <div class="col-md-12 title">
-                <span><i class="glyphicon glyphicon-chevron-right"></i></span>
-                <strong class="productos-destacados"><?php echo $objModulo->descripcion ?></strong>
+                <h2 class="productos-destacados"><span><i class="glyphicon glyphicon-chevron-right"></i></span> <?php echo $objModulo->descripcion ?></h2>
             </div>
         </div>
 

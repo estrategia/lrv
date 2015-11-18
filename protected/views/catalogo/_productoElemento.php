@@ -14,33 +14,34 @@
         </div>
     </div>
 <?php endif; ?>
-<div class="clst_cont_top <?php if ($objProducto->fraccionado == 1): echo 'top_frc'; endif; ?> ">
+<div class="clst_cont_top <?php if ($objProducto->fraccionado == 1): echo 'top_frc';
+endif; ?> ">
     <div class="clst_pro_img">
-        <a href="<?php echo CController::createUrl('/catalogo/producto', array('producto' => $objProducto->codigoProducto,'descripcion'=>  $objProducto->getCadenaUrl())) ?>" data-ajax="false">
+        <a href="<?php echo ($objPrecio->inicializado() ? CController::createUrl('/catalogo/producto', array('producto' => $objProducto->codigoProducto, 'descripcion' => $objProducto->getCadenaUrl())) : "#") ?>" data-ajax="false">
             <img src="<?php echo Yii::app()->request->baseUrl . $objProducto->rutaImagen() ?>" class="ui-li-thumb">
         </a>
     </div>
 
-    <?php if ($objProducto->codigoEspecial != 0): ?>
+<?php if ($objProducto->codigoEspecial != 0): ?>
         <a href="#popup-especial-<?php echo $objProducto->codigoEspecial ?>" data-rel="popup" class="c_lst_pop_spcl">
             <img src="<?php echo Yii::app()->request->baseUrl . Yii::app()->params->carpetaImagen['codigoEspecial'] . $objProducto->objCodigoEspecial->rutaIcono; ?>" >
         </a>
-    <?php endif; ?>
+<?php endif; ?>
 
     <!-- producto agregado -->
     <a href="" class="clst_slct_prod<?php echo (Yii::app()->shoppingCart->contains($objProducto->codigoProducto) ? " active" : "") ?>" id="icono-producto-agregado-<?php echo $objProducto->codigoProducto ?>">
         <img src="<?php echo Yii::app()->request->baseUrl ?>/images/iconos/icon_seleccionado.png">
     </a>
     <!-- producto agregado -->
-    
+
     <div class="clst_cont_pr_prod">
-        <h2><a href="<?php echo CController::createUrl('/catalogo/producto', array('producto' => $objProducto->codigoProducto,'descripcion'=>  $objProducto->getCadenaUrl())) ?>" data-ajax="false"><?php echo $objProducto->descripcionProducto ?></a></h2>
+        <h2><a href="<?php echo ($objPrecio->inicializado() ? CController::createUrl('/catalogo/producto', array('producto' => $objProducto->codigoProducto, 'descripcion' => $objProducto->getCadenaUrl())) : "#") ?>" data-ajax="false"><?php echo $objProducto->descripcionProducto ?></a></h2>
         <p><?php echo $objProducto->presentacionProducto ?></p>
-        <?php if(!in_array($objProducto->idUnidadNegocioBI, Yii::app()->params->calificacion['categoriasNoCalificacion'])): ?>
+        <?php if (!in_array($objProducto->idUnidadNegocioBI, Yii::app()->params->calificacion['categoriasNoCalificacion'])): ?>
             <div id="raty-lectura-producto-<?php echo $objProducto->codigoProducto ?>" data-role="raty" data-readonly="true" data-score="<?php echo $objProducto->getCalificacion() ?>" class="clst_cal_str"></div>
-        <?php endif;?>
+        <?php endif; ?>
         <?php if ($objPrecio->inicializado()): ?>
-            <?php if ($objProducto->mostrarAhorroVirtual == 1 && $objPrecio->getAhorro(Precio::PRECIO_UNIDAD) > 0): ?>
+    <?php if ($objProducto->mostrarAhorroVirtual == 1 && $objPrecio->getAhorro(Precio::PRECIO_UNIDAD) > 0): ?>
                 <div class="clst_pre_ant"><?php echo Yii::app()->numberFormatter->format(Yii::app()->params->formatoMoneda['patron'], $objPrecio->getPrecio(Precio::PRECIO_UNIDAD, false), Yii::app()->params->formatoMoneda['moneda']); ?></div>
                 <div class="clst_pre_act"><?php echo Yii::app()->numberFormatter->format(Yii::app()->params->formatoMoneda['patron'], $objPrecio->getPrecio(Precio::PRECIO_UNIDAD), Yii::app()->params->formatoMoneda['moneda']); ?>  <span class="whitespace-normal">[Ahorro <?php echo Yii::app()->numberFormatter->format(Yii::app()->params->formatoMoneda['patron'], $objPrecio->getAhorro(Precio::PRECIO_UNIDAD), Yii::app()->params->formatoMoneda['moneda']); ?>]</span></div>
             <?php else: ?>
@@ -56,13 +57,23 @@
         <?php endif; ?>
         <?php foreach ($objPrecio->getPuntosDescripcion() as $descripcionPunto): ?>
             <span class="label label-primary"><?= $descripcionPunto ?></span>
-        <?php endforeach; ?>
+<?php endforeach; ?>
     </div>
     <div class="clear"></div>
 </div>
 
 <?php if ($vista == "listaCatalogo"): ?>
-    <?php if ($objPrecio->inicializado()): ?>
+    <?php if ($this->objSectorCiudad == null): ?>
+        <table class="ui-responsive ctable_list_prod">
+            <tbody>
+                <tr>
+                    <td class="ctd_03">
+                        <?php echo CHtml::link('Consultar precio', '#popup-consultarprecio', array('data-rel' => "popup", 'class' => 'ui-btn ui-corner-all ui-shadow ui-btn-r')); ?>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    <?php elseif ($objPrecio->inicializado()): ?>
         <table class="ui-responsive ctable_list_prod">
             <tbody>
                 <tr>
@@ -78,7 +89,7 @@
                             <?php echo CHtml::link('Añadir al carro', "#popup-carro-controlada-$objProducto->codigoProducto", array('class' => 'ui-btn ui-corner-all ui-shadow ui-btn-inline ui-btn-r', 'data-rel' => 'popup', 'data-mini' => 'true')); ?>
                         <?php else: ?>
                             <?php echo CHtml::link('Añadir al carro', '#', array('data-producto' => $objProducto->codigoProducto, 'data-cargar' => 1, 'class' => 'ui-btn ui-corner-all ui-shadow ui-btn-inline ui-btn-r', 'data-mini' => 'true')); ?>
-                        <?php endif; ?>
+        <?php endif; ?>
                     </td>
                 </tr>
             </tbody>
@@ -88,7 +99,7 @@
             <tbody>
                 <tr>
                     <td class="ctd_03">
-                        <?php echo CHtml::link('Consultar precio', '#popup-consultarprecio', array('data-rel' => "popup", 'class' => 'ui-btn ui-corner-all ui-shadow ui-btn-r')); ?>
+                    <?php echo CHtml::link('Producto agotado', '#', array('data-rel' => "popup", 'class' => 'ui-btn ui-corner-all ui-shadow ui-btn-r')); ?>
                     </td>
                 </tr>
             </tbody>

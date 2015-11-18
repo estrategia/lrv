@@ -91,7 +91,7 @@ class ContenidoController extends Controller {
             throw new CHttpException(404, 'Contenido no disponible.');
         }
 
-        $this->render('d_modulos', array(
+        $this->render($this->isMobile ? 'modulos' : 'd_modulos', array(
             'listModulos' => $listModulos
         ));
         Yii::app()->end();

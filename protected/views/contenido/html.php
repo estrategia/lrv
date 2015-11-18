@@ -1,5 +1,3 @@
-<br/>
-
+<div class="space-1"></div>
 <?php echo $contenido;?>
-
-<br/><br/>
+<div class="space-1"></div>

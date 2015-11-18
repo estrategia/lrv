@@ -5,7 +5,7 @@
 <?php elseif ($objModulo->tipo == ModulosConfigurados::TIPO_IMAGENES): ?>
     <?php $this->renderPartial('/contenido/_d_listaImagenes', array('objModulo' => $objModulo)) ?>
 <?php elseif ($objModulo->tipo == ModulosConfigurados::TIPO_PROMOCION_FLOTANTE): ?>
-    <?php $this->renderPartial('/contenido/_d_linkFlotante', array('objModulo' => $objModulo)) ?>
+    <?php $this->renderPartial('/contenido/_linkFlotante', array('objModulo' => $objModulo)) ?>
 <?php elseif ($objModulo->tipo == ModulosConfigurados::TIPO_HTML): ?>
     <?php $this->renderPartial('/contenido/_d_html', array('objModulo' => $objModulo)) ?>
 <?php elseif ($objModulo->tipo == ModulosConfigurados::TIPO_HTML_PRODUCTOS): ?>

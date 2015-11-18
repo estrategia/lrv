@@ -18,6 +18,8 @@ class SitioController extends Controller {
         if ($this->isMobile) {
             $this->showSeeker = false;
             $this->logoLinkMenu = false;
+            
+            $tipoEntrega = null;
 
             if (isset(Yii::app()->session[Yii::app()->params->sesion['tipoEntrega']]) && Yii::app()->session[Yii::app()->params->sesion['tipoEntrega']] != null) {
                 $tipoEntrega = Yii::app()->session[Yii::app()->params->sesion['tipoEntrega']];

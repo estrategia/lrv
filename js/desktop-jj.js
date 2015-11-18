@@ -167,7 +167,12 @@ $(document).ready(function() {
     $(".slide-productos").owlCarousel({
         items: 4,
         lazyLoad: true,
-        navigation: true
+        navigation: true,
+        pagination:false,
+        navigationText: [
+            "<i class='glyphicon glyphicon-chevron-left'></i>",
+            "<i class='glyphicon glyphicon-chevron-right'></i>"
+        ]
     });
     $("#owl-combos").owlCarousel({
         items: 4,
