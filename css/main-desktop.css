@@ -1,3 +1,38 @@
+.fraccionado_columns table .min {
+    background: #ffdf20 none repeat scroll 0 0;
+    border: 0 none !important;
+    color: #ea0001;
+}
+.fraccionado_columns table .increment {
+    background: #ea0001;
+    color: #fff;
+}
+.fraccionado_columns table .min span{
+    color: #ea0001 !important;
+}
+.descripciones.fraccionado_columns table td .ahora, .descripciones.fraccionado_columns table td  .subtotal, .descripciones.fraccionado_columns table td  .subtotal span{
+    color: #EA0001;
+}
+.control_cant_detalle{
+    padding: 0 15px 15px;
+}
+.container_gray_fracc {
+    background: #ebebeb none repeat scroll 0 0;
+    border-bottom-color: #ebebeb !important;
+    border-left-color: #ebebeb !important;
+    border-top-color: #ebebeb !important;
+}
+.descripciones.fraccionado_columns table td {
+    border: 1px solid #dadada;
+    color: #666666;
+    padding: 15px;
+}
+.descripciones.fraccionado_columns table td strong, .descripciones.fraccionado_columns table td span, .descripciones.fraccionado_columns table td label{
+    color: #666;
+}
+.fraccionado_columns{
+    color:#A3A3A3;font-size: 16px;
+}
 .ad-gallery .ad-thumbs li a.ad-active img {
     border: 3px solid #ea0001;
 }
