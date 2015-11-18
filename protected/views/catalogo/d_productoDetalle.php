@@ -112,7 +112,7 @@
                             <?php endif; ?>
                             <?php if ($objProducto->ventaVirtual == 1): ?>
                                 <div style="margin-top: 15px;">
-                                    <div class="line-bottom">
+                                    <div class="line-bottom detPproduct">
                                         <button class=" min" style="border:1px solid;" id="disminuir_unidad_<?php echo $objProducto->codigoProducto ?>" data-role="disminuir-cantidad"  data-producto="<?php echo $objProducto->codigoProducto ?>" data-precio="<?= $objPrecio->getPrecio(Precio::PRECIO_UNIDAD) ?>"  type="button"><span style="color:white" class="glyphicon glyphicon-minus"></span></button>
                                         <div class="input_cant ressete"><input id="cantidad-producto-unidad-<?php echo $objProducto->codigoProducto ?>"  class="increment" type="text" data-role="validar-cantidad-unidad"  data-producto="<?php echo $objProducto->codigoProducto ?>" data-precio="<?= $objPrecio->getPrecio(Precio::PRECIO_UNIDAD) ?>" maxlength="3" value="1" data-total="700"/></div>
                                         <button class=" min" style="border:1px solid;" id="aumentar_unidad_<?php echo $objProducto->codigoProducto ?>"  data-role="aumentar-cantidad"  data-producto="<?php echo $objProducto->codigoProducto ?>" data-precio="<?= $objPrecio->getPrecio(Precio::PRECIO_UNIDAD) ?>" type="button"><span style="color:white" class="glyphicon glyphicon-plus"></span></button>
