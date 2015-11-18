@@ -68,7 +68,7 @@
                                         <div style="margin-top:8px;margin-bottom:8px;"><span class="ahora"><?php echo Yii::app()->numberFormatter->format(Yii::app()->params->formatoMoneda['patron'], $objPrecio->getPrecio(Precio::PRECIO_UNIDAD, false), Yii::app()->params->formatoMoneda['moneda']); ?></span><br></div>
                                     <?php endif; ?>         
 
-                                    <div class="row" style="padding-bottom: 15px;">
+                                    <div class="row control_cant_detalle">
                                         <button class="col-md-3 min" style="border:1px solid;" id="disminuir-unidad-<?php echo $objProducto->codigoProducto ?>"  data-role="disminuir-cantidad"  data-producto="<?php echo $objProducto->codigoProducto ?>" data-precio="<?= $objPrecio->getPrecio(Precio::PRECIO_UNIDAD) ?>" type="button"><span class="glyphicon glyphicon-minus" style='color: white'></span></button>
                                         <div class="col-md-6 select-cantidad"><input id="cantidad-producto-unidad-<?php echo $objProducto->codigoProducto ?>" class="increment" type="text" data-role="validar-cantidad-unidad"  data-producto="<?php echo $objProducto->codigoProducto ?>" data-precio="<?= $objPrecio->getPrecio(Precio::PRECIO_UNIDAD) ?>"  maxlength="3" value="1" data-total="700"/></div>
                                         <button class="col-md-3 min" style="border:1px solid;" id="aumentar-unidad-<?php echo $objProducto->codigoProducto ?>"  data-role="aumentar-cantidad"  data-producto="<?php echo $objProducto->codigoProducto ?>" data-precio="<?= $objPrecio->getPrecio(Precio::PRECIO_UNIDAD) ?>" type="button"><span class="glyphicon glyphicon-plus" style='color: white'></span></button>
