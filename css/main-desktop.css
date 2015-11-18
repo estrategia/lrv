@@ -187,6 +187,7 @@ input#RegistroForm_condiciones[type="checkbox"] + label span {
 }
 .content_product {
     min-height: 190px;
+    color:#6c6363;
 }
 .prices_status {
     color: #9f9f9f;
