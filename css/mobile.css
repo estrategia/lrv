@@ -548,7 +548,7 @@ ul.cpanel_menu_ppal.ui-listview.ui-listview-inset.ui-corner-all.ui-shadow li a h
 /* -- primero de la lista -- */
 .ui-nodisc-icon.ui-alt-icon.cbtn_catg_contdiv.catg_n1.ui-collapsible.ui-collapsible-inset.ui-corner-all.ui-collapsible-themed-content.ui-first-child:hover{ background: #f4f4f4; }
 
-//.ui-nodisc-icon.ui-alt-icon.cbtn_catg_contdiv.catg_n1.ui-collapsible.ui-collapsible-inset.ui-corner-all.ui-collapsible-themed-content.ui-first-child:hover h3 a{ color: #fff !important; }
+/*.ui-nodisc-icon.ui-alt-icon.cbtn_catg_contdiv.catg_n1.ui-collapsible.ui-collapsible-inset.ui-corner-all.ui-collapsible-themed-content.ui-first-child:hover h3 a{ color: #fff !important; }*/
 .ui-nodisc-icon.ui-alt-icon.cbtn_catg_contdiv.catg_n1.ui-collapsible.ui-collapsible-inset.ui-corner-all.ui-collapsible-themed-content.ui-first-child:hover > h3{ background: #b10000; }
 /*.ui-nodisc-icon.ui-alt-icon.cbtn_catg_contdiv.catg_n1.ui-collapsible.ui-collapsible-inset.ui-corner-all.ui-collapsible-themed-content.ui-first-child:hover > h3 a{ color: #505050 !important; }*/
 .ui-nodisc-icon.ui-alt-icon.cbtn_catg_contdiv.catg_n1.ui-collapsible.ui-collapsible-inset.ui-corner-all.ui-collapsible-themed-content.ui-first-child > div.ui-collapsible-content{ padding-top: 0px; padding-bottom: 0px; }
@@ -1490,7 +1490,11 @@ div.cwl_txt h1.txt_nom{ text-transform: capitalize; font-size: large; padding-bo
     text-align: justify;
 }
 
-.owl-productodetalle .item img, img.ajustada {
+.owl-slideimagen .item{
+    margin: 1px;
+}
+
+.owl-productodetalle .item img, .owl-slideimagen .item img, img.ajustada {
     display: block;
     margin: auto;
     max-width: 100%;
@@ -2550,7 +2554,7 @@ li.c_list_prod.ui-li-static.ui-body-inherit div.cdiv_prod_frc div.c_prod_frc, di
 }
 li.c_list_prod.ui-li-static.ui-body-inherit div.cdiv_prod_frc div.c_prod_frc p, div.c_prod_frc p {
     color: yellow;
-     font-size: medium;
+    font-size: medium;
     font-weight: bold;
     margin: 0.3em 0 0.6em;
     padding: 0 1em;
@@ -2565,14 +2569,14 @@ li.c_list_prod.ui-li-static.ui-body-inherit div.cdiv_prod_frc div.c_prod_frc p s
 div.clst_cont_top.top_frc {
     padding-top: 1.6em;
 }
- .c_cont_detail_prod div.cdiv_prod_frc{
+.c_cont_detail_prod div.cdiv_prod_frc{
     float: none;
     margin-bottom: 65px;
     position: relative;
     top: -6px;
 }
 
- .c_cont_detail_prod div.cdiv_prod_desc {
+.c_cont_detail_prod div.cdiv_prod_desc {
     bottom: -18px;
     float: none;
     margin-bottom: 40px;

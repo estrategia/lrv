@@ -48,8 +48,8 @@ class Controller extends CController {
             $this->objSectorCiudad = Yii::app()->session[Yii::app()->params->sesion['sectorCiudadEntrega']];
         }
         
-        $this->isMobile = true;
-        $this->layout = '//layouts/mobile';
+        //$this->isMobile = true;
+        //$this->layout = '//layouts/mobile';
         $this->pageTitle = Yii::app()->name;
         $this->getSectorName();
         $this->registerJs();
