@@ -77,7 +77,7 @@
                                 
                                 </td>
                                 <td  valign="bottom">
-                                    <p class="sep-dashed" style="color: #999;font-size: 16px;">Unidad minima de venta <br> (U.M.V)</p>
+                                    <p class="sep-dashed" style="font-size: 16px;">Unidad minima de venta <br> (U.M.V)</p>
                                     <div class="sep-dashed"><label for="dos"><span></span> <?php echo $objProducto->objMedidaFraccion->descripcionMedidaFraccion ?> X <?php echo $objProducto->unidadFraccionamiento ?></label><br></div>
                                     <?php if ($objProducto->mostrarAhorroVirtual == 1 && $objPrecio->getPorcentajeDescuento() > 0 && $objSectorCiudad->objCiudad->excentoImpuestos == 0): ?> 
                                         <div class="sep-dashed"><span class="antes strike"><?php echo Yii::app()->numberFormatter->format(Yii::app()->params->formatoMoneda['patron'], $objPrecio->getPrecio(Precio::PRECIO_FRACCION, false), Yii::app()->params->formatoMoneda['moneda']); ?></span><br></div>
