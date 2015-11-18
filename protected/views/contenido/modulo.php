@@ -8,7 +8,7 @@
     <?php elseif ($objModulo->tipo == ModulosConfigurados::TIPO_PROMOCION_FLOTANTE): ?>
         <?php $this->renderPartial('/contenido/_linkFlotante', array('objModulo' => $objModulo)) ?>
     <?php elseif ($objModulo->tipo == ModulosConfigurados::TIPO_HTML): ?>
-        <?php $this->renderPartial('/contenido/html', array('objModulo' => $objModulo)) ?>
+        <?php $this->renderPartial('/contenido/html', array('contenido' => $objModulo->contenidoMovil)) ?>
     <?php elseif ($objModulo->tipo == ModulosConfigurados::TIPO_HTML_PRODUCTOS): ?>
         <?php $this->renderPartial('/contenido/_htmlProductos', array('objModulo' => $objModulo))  ?>
     <?php elseif ($objModulo->tipo == ModulosConfigurados::TIPO_PRODUCTOS_CUADRICULA): ?>
