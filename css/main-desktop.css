@@ -1,3 +1,33 @@
+.slide-productos .owl-item:first-child {
+    border-left: 0;
+}
+.slide-productos .owl-item {
+    border-left: 1px dashed #ccc;
+}
+.noimagenProduct{
+    max-width: 150px;
+    min-width: 150px;
+}
+#owl-carousel.slide-productos {
+    padding:35px;
+}
+.slide-productos .owl-buttons .owl-prev {
+    background: #ea0001 none repeat scroll 0 0 !important;
+    left: 0;
+    opacity: 1 !important;
+    position: absolute;
+    top: 25%;
+    padding:3px 6px !important;
+}
+
+.slide-productos .owl-buttons .owl-next {
+    background: #ea0001 none repeat scroll 0 0 !important;
+    right: 0;
+    opacity: 1 !important;
+    position: absolute;
+    top: 25%;
+    padding:3px 6px !important;
+}
 .conten_user_infor {
     border-left: 1px solid #ccc;
     padding-left: 20px;
@@ -163,6 +193,7 @@ input#RegistroForm_condiciones[type="checkbox"] + label span {
 }
 .content_product {
     min-height: 190px;
+    color:#6c6363;
 }
 .prices_status {
     color: #9f9f9f;
@@ -436,11 +467,11 @@ header {
     background-color: #EA0001;
     border: 1px solid #EA0001;
 }
-
+/*
 .modulo-menu{
     border-radius: 0px 10px 10px 0px;
 }
-
+*/
 .carousel-control.left {background-image: none !important;}
 .carousel-control.right {background-image: none !important;}
 
@@ -558,9 +589,13 @@ footer li a:hover{
     display: inline-block;
     background-position: center top;
 }
+.productos-destacados span i{
+    font-size: 14px;
+}
 .productos-destacados {
     color: #818181;
     font-size: 18px;
+    font-weight: bold;
 }
 .content-txt{
     text-align: center;
