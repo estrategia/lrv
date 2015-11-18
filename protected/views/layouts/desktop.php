@@ -34,7 +34,7 @@
                                         <?php if (isset($this->sectorName)): ?>
                                             <?php echo $this->sectorName ?>
                                         <?php endif; ?>
-                                        <?php echo CHtml::link('<span class="text-center title-desp"><span class="glyphicon glyphicon-map-marker" style="margin-right: 5px;"></span> Cambiar Ubicaci&oacute;n </span>', CController::createUrl('/sitio/ubicacion'), array()); ?>
+                                        <?php echo CHtml::link('<span class="text-center title-desp"><br><span class="glyphicon glyphicon-map-marker" style="margin-right: 5px;"></span> Cambiar Ubicaci&oacute;n </span>', CController::createUrl('/sitio/ubicacion'), array()); ?>
                                     </div>
                                 </div>
                                 <div class="col-md-6">
