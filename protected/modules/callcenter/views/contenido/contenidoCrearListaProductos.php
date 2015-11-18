@@ -26,11 +26,7 @@
 						<div class="row">
 							<div class="col-md-12">
 								<div id="contenido-productos-lista">
-									<?php if(count($model->listProductosModulos) == 0): ?>
-										<p>No hay productos en la lista</p>
-									<?php else: ?>
-										<?php $this->renderPartial('_listaModuloProductos', array("model" => $model)); ?>
-									<?php endif; ?>
+									<?php $this->renderPartial('_listaModuloProductos', array("model" => $model)); ?>
 								</div>
 							</div>
 						</div>
@@ -52,13 +48,7 @@
 	        <div id="collapsible-cuerpo-marcas-contenido" class="panel-collapse collapse" role="tabpanel" aria-labelledby="encabezado-buscar-marcas-contenido">
 	            <div class="panel-body">
 	                
-	                <div class="col-md-6" style="height:250px;overflow-y: scroll;">
-	  	              	<?php echo CHtml::checkboxList('marcas-contenido', $arrayMarcasSeleccionadas, $arrayMarcas ,array('class' => '','style' => ''))?>
-	                </div>
-
-	                <div class="col-md-6" style="height:250px;overflow-y: scroll;">
-	                	
-	                </div>
+	                <?php $this->renderPartial('_listaMarcaCategorias', array("model" => $model, "arrayMarcas" => $arrayMarcas)); ?>
 
 	            </div>
 	        </div>

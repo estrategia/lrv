@@ -109,18 +109,53 @@ $(document).on('click', "a[data-role='eliminar-producto-contenido']", function()
 
 
 $(document).on('click', 'input[name="marcas-contenido[]"]:checkbox', function(){
-    checkboxSeleccionados = "";
+    cargarCategoriasSeleccionadas($(this).attr('data-modulo'));
+});
+
+
+function cargarCategoriasSeleccionadas(attrIdModulo)
+{
+    idMarcas = "";
 
     $('input[name="marcas-contenido[]"]:checked').each(function(index){
         if(index != 0)
         {
-            checkboxSeleccionados += ",";
+            idMarcas += ",";
         }
-        checkboxSeleccionados += $(this).val();
+        idMarcas += $(this).val();
     });
+    
+    idModulo = attrIdModulo;
+    if(idMarcas != "")
+    {
+        $.ajax({
+            type: 'POST',
+            async: true,
+            url: requestUrl + '/callcenter/contenido/obtenerlistacategorias',
+            data: {idMarcas : idMarcas, idModulo : idModulo},
+            beforeSend: function(){
 
+            },
+            success: function(data){
+                var data = $.parseJSON(data);
+                if (data.result === "ok") {
+                    $("#categorias-marcas-seleccionadas").html(data.response.htmlCategorias);
+                } else if (data.result === 'error') {
+                    bootbox.alert(data.response);
+                }
+            },
+            complete: function(){
 
-    console.log(checkboxSeleccionados);
-});
+            },
+            error: function(jqXHR, textStatus, errorThrown){
+
+            }
+        });
+    }
+    else
+    {
+        $("#categorias-marcas-seleccionadas").html('');
+    }
+}
 
 /*********** Fin Configuracion Modulos ************/

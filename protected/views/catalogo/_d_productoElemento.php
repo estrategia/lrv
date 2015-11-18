@@ -23,7 +23,7 @@
             <?php if ($objPrecio->inicializado()):?>
             <a href="<?php echo CController::createUrl('/catalogo/producto', array('producto' => $data->codigoProducto, 'descripcion' => $data->getCadenaUrl())) ?>">
             <?php endif;?>    
-                <img src="<?php echo Yii::app()->request->baseUrl . $data->rutaImagen(); ?>" class="img-responsive product-prom">
+                <img src="<?php echo Yii::app()->request->baseUrl . $data->rutaImagen(); ?>" class="img-responsive noimagenProduct product-prom">
             <?php if ($objPrecio->inicializado()):?>    
             </a>
             <?php endif;?>

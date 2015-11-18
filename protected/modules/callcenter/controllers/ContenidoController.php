@@ -103,7 +103,51 @@ class ContenidoController extends ControllerOperator {
                         ),
                         'order' => 'objCiudad.nombreCiudad,objSector.nombreSector'
                 ));
-           $params['siguiente'] = CController::createUrl('/callcenter/contenido/editar', array('idModulo' => $idModulo, 'opcion'=>'contenido'));
+        }else if ($opcion == 'perfil'){
+            $params['vista'] = '_perfil';
+            $params['idModulo'] = $idModulo;
+            $params['perfiles'] = Perfil::model()->findAll();
+            $params['modelPerfil'] = new ModuloPerfil();
+            
+            if(isset($_POST)){
+                
+                 $perfiles=ModuloPerfil::model()->deleteAll('idModulo =:idmodulo', array(
+                    'idmodulo' => $idModulo
+                ));
+                 
+                $modelModuloPerfil= $_POST['ModuloPerfil'];
+                foreach($modelModuloPerfil['idPerfil'] as $perfil){
+                    $moduloGuardar = ModuloPerfil::model()->findAll(array(
+                        'condition' => 'idModulo =:idmodulo AND idPerfil =:idperfil',
+                        'params' => array(
+                            'idmodulo' => $idModulo,
+                            'idperfil' => $perfil
+                        )
+                    ));
+                    
+                    if($moduloGuardar == null){
+                        $moduloGuardar = new ModuloPerfil();
+                        $moduloGuardar->idModulo = $idModulo;
+                        $moduloGuardar->idPerfil = $perfil;
+                        
+                        if($moduloGuardar->save()){
+                            Yii::app()->user->setFlash('alert alert-success', "Los perfiles fueron adicionados con éxito");
+                        }
+                    }
+                    
+                }
+                
+            }
+            $perfilAdd = array();
+            
+            $perfiles=ModuloPerfil::model()->findAll('idModulo =:idmodulo', array(
+                'idmodulo' => $idModulo
+            ));
+            
+            foreach ($perfiles as $valores){
+                $perfilAdd[]= $valores->idPerfil;
+            }
+            $params['modelPerfil']->idPerfil = $perfilAdd;
         }else if($opcion == 'categoria'){
             $params['vista'] = '_categoria';
             $params['ubicacionModel'] = new UbicacionModulos();
@@ -193,8 +237,9 @@ class ContenidoController extends ControllerOperator {
                 $marcas = Yii::app()->db->createCommand($query)->queryAll();
                 $arrayMarcas = array_column($marcas, 'nombreMarca', 'idMarca');
 
+
                 $params['arrayMarcas'] = $arrayMarcas;
-                $params['arrayMarcasSeleccionadas'] = array(5,6);
+                //$params['arrayMarcasSeleccionadas'] = array(5,6);
             } 
             if($model->tipo == ModulosConfigurados::TIPO_HTML)
             {
@@ -616,10 +661,14 @@ class ContenidoController extends ControllerOperator {
         }
 
         $idMarcas = Yii::app()->getRequest()->getPost('idMarcas');
+        $idModulo = Yii::app()->getRequest()->getPost('idModulo');
 
+        if ($idMarcas === null || $idModulo === null) 
+        {
+            throw new CHttpException(404, 'Solicitud inválida.');
+        }
 
-
-        //$idMarcas = "22,23,26,35,37,38,39";
+        $model = ModulosConfigurados::model()->findByPk($idModulo);
 
         $query = "SELECT c.nombreCategoria, c.idCategoriaBI, p.codigoProducto, p.idMarca ";
         $query .= "FROM m_Producto AS p ";
@@ -630,15 +679,14 @@ class ContenidoController extends ControllerOperator {
         $arrayCategorias = array_column($categorias, 'nombreCategoria', 'idCategoriaBI');
         //$formFiltro->setRango($resultadoRango['minproducto'], $resultadoRango['maxproducto'], $resultadoRango['mintercero'], $resultadoRango['maxtercero']);
 
-        CVarDumper::dump($arrayCategorias, 10, true);
-        exit();
+        //CVarDumper::dump($arrayCategorias, 10, true);
+        //exit();
 
-        
-
-        $this->render('contenidoCrearListaProductos', array(
-            //'objProductosModulo' => $objProductosModulo,
-            'model' => $model
-        ));
+        echo CJSON::encode(array('result' => 'ok',
+            'response' => array(
+                'htmlCategorias' => $this->renderPartial('_listaCategorias', array('model' => $model, 'arrayCategorias' => $arrayCategorias), true, false),
+        )));
+        Yii::app()->end();
     }
 
 

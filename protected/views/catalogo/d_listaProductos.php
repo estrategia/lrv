@@ -24,28 +24,24 @@
         <div class="col-md-<?php echo (isset($formFiltro) || isset($formOrdenamiento)) ? "10" : "12" ?> side">
             <div class="row">
                 <div class="col-md-12">
-                    <div class="col-md-8">
-                    </div>
-
                     <?php if ($imagenBusqueda != null): ?>
-                        <img src="<?php echo Yii::app()->request->baseUrl . $imagenBusqueda; ?>" class="ajustada">
-                    <?php endif; ?>
-                    <?php if ($dataprovider!=null /*&& !empty($dataprovider->getData())*/): ?>   
-                        <div class="col-xs-12">    
-                            <div class="option-list">
-                                Productos por página
-                                <select name="items-page" class="form-control"id="items-page" onchange="actualizarNumerosPagina()">
-                                    <?php foreach(Yii::app()->params->busqueda['productosPorPagina'] as $pagina):?>
-                                        <option value="<?php echo $pagina?>" <?php echo (($dataprovider != null && $dataprovider->getPagination()->getPageSize() == $pagina) ? "selected" : "") ?>><?php echo $pagina?></option>
-                                    <?php endforeach;?>
-                                </select>
-                            </div>  
-                            <div class="btn-group viewsList">
-                                <button class="btn-white btn" data-type="cuadricula" type="button"><span  class="glyphicon glyphicon-th" alt="Cuadricula"></span></button>
-                                <button class="btn-white btn" data-type="lineal" type="button"><span  class="glyphicon glyphicon-th-list" alt="Cuadricula"></span></button>
-                            </div>
-                        </div>
-                    <?php endif; ?>    
+                        <p align="center"><img alt="lo sentimos no se han encontrado resultados" src="<?php echo Yii::app()->request->baseUrl . $imagenBusqueda; ?>" class="ajustada"></p>
+                    <?php else: ?>
+                        <?php if ($dataprovider!=null /*&& !empty($dataprovider->getData())*/): ?> 
+                                <div class="option-list">
+                                    Productos por página
+                                    <select name="items-page" class="form-control"id="items-page" onchange="actualizarNumerosPagina()">
+                                        <?php foreach(Yii::app()->params->busqueda['productosPorPagina'] as $pagina):?>
+                                            <option value="<?php echo $pagina?>" <?php echo (($dataprovider != null && $dataprovider->getPagination()->getPageSize() == $pagina) ? "selected" : "") ?>><?php echo $pagina?></option>
+                                        <?php endforeach;?>
+                                    </select>
+                                </div>  
+                                <div class="btn-group viewsList">
+                                    <button class="btn-white btn" data-type="cuadricula" type="button"><span  class="glyphicon glyphicon-th" alt="Cuadricula"></span></button>
+                                    <button class="btn-white btn" data-type="lineal" type="button"><span  class="glyphicon glyphicon-th-list" alt="Cuadricula"></span></button>
+                                </div>
+                        <?php endif; ?>   
+                    <?php endif; ?> 
                     <div class="clear"></div>
                 </div>
             </div>

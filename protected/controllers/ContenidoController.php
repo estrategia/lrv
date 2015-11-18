@@ -84,22 +84,10 @@ class ContenidoController extends Controller {
         Yii::app()->end();
     }
 
-    private function verContenidoGrupo($idModulo) {
-        $gruposModulos = GruposModulos::model()->findAll(array(
-            'with' => array('objModulo'),
-            'condition' => 'idGrupoModulo=:modulo',
-            'params' => array(
-                ':modulo' => $idModulo
-            )
-        ));
+    private function verContenidoGrupo($idGrupo) {
+        $listModulos = ModulosConfigurados::getModulosGrupo($idGrupo);
         
-        $listModulos = array();
-        
-        foreach($gruposModulos as $grupo){
-            $listModulos[] = $grupo->objModulo;
-        }
-
-        if (empty($listModulos)) {
+        if(empty($listModulos)){
             throw new CHttpException(404, 'Contenido no disponible.');
         }
 
