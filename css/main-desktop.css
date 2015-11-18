@@ -1,3 +1,6 @@
+.product_detail #gallery .ad-thumb-list > li {
+    max-width: 33.3333%;
+}
 .product_detail{
     margin: 60px;
 }
