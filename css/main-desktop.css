@@ -1,3 +1,23 @@
+#owl-carousel.slide-productos {
+    padding: 0 35px;
+}
+.slide-productos .owl-buttons .owl-prev {
+    background: #ea0001 none repeat scroll 0 0 !important;
+    left: 0;
+    opacity: 1 !important;
+    position: absolute;
+    top: 25%;
+    padding:3px 6px !important;
+}
+
+.slide-productos .owl-buttons .owl-next {
+    background: #ea0001 none repeat scroll 0 0 !important;
+    right: 0;
+    opacity: 1 !important;
+    position: absolute;
+    top: 25%;
+    padding:3px 6px !important;
+}
 .conten_user_infor {
     border-left: 1px solid #ccc;
     padding-left: 20px;
