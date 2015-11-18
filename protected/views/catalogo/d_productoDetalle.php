@@ -55,9 +55,10 @@
                                 <!-- Producto fraccionado -->
                             </div>
                         </div>
-                        <div class="" style="color:#A3A3A3;font-size: 16px;">
+                        <div  class="descripciones fraccionado_columns">
                             <div class="row" style="margin-top:12px;">
-                                <div class="col-md-6 contenedor">
+                                <div class="col-md-6">
+                                    <div class="container_gray_fracc">
                                     <div class="sep-dashed"><label for="uno" checked=""><span></span><?php echo $objProducto->presentacionProducto ?></label><br/></div>
                                     <?php if ($objProducto->mostrarAhorroVirtual == 1 && $objPrecio->getPorcentajeDescuento() > 0 && $objSectorCiudad->objCiudad->excentoImpuestos == 0): ?> 
                                         <div class="sep-dashed"><span class="antes strike"><?php echo Yii::app()->numberFormatter->format(Yii::app()->params->formatoMoneda['patron'], $objPrecio->getPrecio(Precio::PRECIO_UNIDAD, false), Yii::app()->params->formatoMoneda['moneda']); ?></span><br></div>
@@ -74,8 +75,8 @@
                                     </div>
                                     <div class=" subtotal"><span class="">Subtotal: <span id="subtotal-producto-unidad-<?php echo $objProducto->codigoProducto ?>"><?php echo Yii::app()->numberFormatter->format(Yii::app()->params->formatoMoneda['patron'], $objPrecio->getPrecio(Precio::PRECIO_UNIDAD), Yii::app()->params->formatoMoneda['moneda']); ?></span></span></div>
                                 </div>
-                                <div class="col-md-6" style="border:2px solid #EAEAEA;">
-                                    <br>
+                                </div>
+                                <div class="col-md-6">
                                     <p class="sep-dashed" style="color: #999;font-size: 16px;">Unidad minima de venta <br> (U.M.V)</p>
                                     <div class="sep-dashed"><label for="dos"><span></span> <?php echo $objProducto->objMedidaFraccion->descripcionMedidaFraccion ?> X <?php echo $objProducto->unidadFraccionamiento ?></label><br></div>
                                     <?php if ($objProducto->mostrarAhorroVirtual == 1 && $objPrecio->getPorcentajeDescuento() > 0 && $objSectorCiudad->objCiudad->excentoImpuestos == 0): ?> 
