@@ -291,7 +291,6 @@ class CatalogoController extends Controller {
         }
 
         $parametrosVista = array(
-            'listProductos' => $listProductos,
             'listCombos' => $listCombos,
             'msgCodigoEspecial' => $msgCodigoEspecial,
             'listCodigoEspecial' => $listCodigoEspecial,
@@ -299,7 +298,6 @@ class CatalogoController extends Controller {
             'codigoPerfil' => $codigoPerfil,
             'tipoBusqueda' => Yii::app()->params->busqueda['tipo']['categoria'],
             'nombreBusqueda' => $objCategoria->nombreCategoriaTienda,
-            'objModulo' => ModulosConfigurados::getModuloFlotante($this->objSectorCiudad, UbicacionModulos::UBICACION_ESCRITORIO_CATEGORIA, $categoria)
         );
 
         $imagenBusqueda = null;
@@ -322,39 +320,36 @@ class CatalogoController extends Controller {
         }
 
         $parametrosVista['imagenBusqueda'] = $imagenBusqueda;
+
         if ($this->isMobile) {
+            $parametrosVista['listProductos'] = $listProductos;
             $this->render('listaProductos', $parametrosVista);
         } else {
             $pagina = 10;
             if (isset($_GET['pageSize']) and is_numeric($_GET['pageSize'])) {
                 $pagina = $_GET['pageSize'];
             }
-            $dataProvider = new CArrayDataProvider($listProductos, array(
-                'id' => 'codigoProducto',
-                'sort' => array(
-                    'attributes' => array(
-                        'descripcionProducto'
-                    ),
-                ),
-                'pagination' => array(
-                    'pageSize' => $pagina, // elementos por página
-                ),
-            ));
 
-            //  $dataProvider=new CActiveDataProvider('Producto');
-            $this->render('d_listaProductos', array(
-                'dataprovider' => $dataProvider,
-                'listCombos' => $listCombos,
-                'msgCodigoEspecial' => $msgCodigoEspecial,
-                'listCodigoEspecial' => $listCodigoEspecial,
-                'imagenBusqueda' => $imagenBusqueda,
-                'objSectorCiudad' => $objSectorCiudad,
-                'codigoPerfil' => $codigoPerfil,
-                'tipoBusqueda' => Yii::app()->params->busqueda['tipo']['categoria'],
-                'formFiltro' => $formFiltro,
-                'formOrdenamiento' => $formOrdenamiento,
-                'listModulos' => ModulosConfigurados::getModulos($this->objSectorCiudad, UbicacionModulos::UBICACION_ESCRITORIO_CATEGORIA, $categoria)
-            ));
+            $dataProvider = null;
+
+            if (!empty($listProductos)) {
+                $dataProvider = new CArrayDataProvider($listProductos, array(
+                    'id' => 'codigoProducto',
+                    'sort' => array(
+                        'attributes' => array(
+                            'descripcionProducto'
+                        ),
+                    ),
+                    'pagination' => array(
+                        'pageSize' => $pagina, // elementos por página
+                    ),
+                ));
+            }
+
+            $parametrosVista['dataprovider'] = $dataProvider;
+            $parametrosVista['objModulo'] = ModulosConfigurados::getModuloFlotante($this->objSectorCiudad, UbicacionModulos::UBICACION_ESCRITORIO_CATEGORIA, $categoria);
+            $parametrosVista['listModulos'] = ModulosConfigurados::getModulos($this->objSectorCiudad, UbicacionModulos::UBICACION_ESCRITORIO_CATEGORIA, $categoria);
+            $this->render('d_listaProductos', $parametrosVista);
         }
     }
 
@@ -697,13 +692,11 @@ class CatalogoController extends Controller {
         }
 
         $parametrosVista = array(
-            'listProductos' => $listProductos,
             'listCombos' => $listCombos,
             'msgCodigoEspecial' => $msgCodigoEspecial,
             'listCodigoEspecial' => $listCodigoEspecial,
             'objSectorCiudad' => $objSectorCiudad,
             'codigoPerfil' => $codigoPerfil,
-            'formFiltro' => $formFiltro,
             'tipoBusqueda' => Yii::app()->params->busqueda['tipo']['buscador'],
             'nombreBusqueda' => $term,
         );
@@ -726,46 +719,38 @@ class CatalogoController extends Controller {
             }
         } else {
             $parametrosVista['formOrdenamiento'] = $formOrdenamiento;
+            $parametrosVista['formFiltro'] = $formFiltro;
         }
 
         $parametrosVista['imagenBusqueda'] = $imagenBusqueda;
 
-
         if ($this->isMobile) {
+            $parametrosVista['listProductos'] = $listProductos;
             $this->render('listaProductos', $parametrosVista);
         } else {
-
             $pagina = 10;
             if (isset($_GET['pageSize']) and is_numeric($_GET['pageSize'])) {
                 $pagina = $_GET['pageSize'];
             }
 
-            $dataProvider = new CArrayDataProvider($listProductos, array(
-                'id' => 'codigoProducto',
-                'sort' => array(
-                    'attributes' => array(
-                        'descripcionProducto'
-                    ),
-                ),
-                'pagination' => array(
-                    'pageSize' => $pagina,
-                ),
-            ));
+            $dataProvider = null;
 
-            //  $dataProvider=new CActiveDataProvider('Producto');
-            $this->render('d_listaProductos', array(
-                'dataprovider' => $dataProvider,
-                'listCombos' => $listCombos,
-                'msgCodigoEspecial' => $msgCodigoEspecial,
-                'listCodigoEspecial' => $listCodigoEspecial,
-                'imagenBusqueda' => $imagenBusqueda,
-                'objSectorCiudad' => $objSectorCiudad,
-                'codigoPerfil' => $codigoPerfil,
-                'formFiltro' => $formFiltro,
-                'formOrdenamiento' => $formOrdenamiento,
-                'tipoBusqueda' => Yii::app()->params->busqueda['tipo']['buscador'],
-                'nombreBusqueda' => $term,
-            ));
+            if (!empty($listProductos)) {
+                $dataProvider = new CArrayDataProvider($listProductos, array(
+                    'id' => 'codigoProducto',
+                    'sort' => array(
+                        'attributes' => array(
+                            'descripcionProducto'
+                        ),
+                    ),
+                    'pagination' => array(
+                        'pageSize' => $pagina,
+                    ),
+                ));
+            }
+
+            $parametrosVista['dataprovider'] = $dataProvider;
+            $this->render('d_listaProductos', $parametrosVista);
         }
     }
 
