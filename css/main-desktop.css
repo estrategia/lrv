@@ -1,3 +1,6 @@
+.ad-gallery .ad-thumbs li a.ad-active img {
+    border: 3px solid #ea0001;
+}
 .product_detail #gallery .ad-thumb-list > li {
     max-width: 33.3333%;
 }
