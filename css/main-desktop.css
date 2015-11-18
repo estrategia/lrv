@@ -1,3 +1,7 @@
+.noimagenProduct{
+    max-width: 150px;
+    min-width: 150px;
+}
 #owl-carousel.slide-productos {
     padding: 0 35px;
 }
