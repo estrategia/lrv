@@ -1,17 +1,13 @@
-<section>	
-    <br>
-</section>
-
 <section>
     <div class="container">
-        <div class="col-md-12">
+        <div class="row">
             <div class="col-md-6">
                 <?php $listImagen = $objProducto->listImagenes; ?>
                 <div id="<?php echo $objProducto->codigoProducto ?>" class="">
                     <?php if (empty($listImagen)): ?>
                         <div class="item"><img class='img-responsive' src="<?php echo Yii::app()->request->baseUrl . Yii::app()->params->producto['noImagen']['grande']; ?>" alt="<?php echo $objProducto->descripcionProducto ?>" title="<?php echo $objProducto->descripcionProducto ?>"></div>
                     <?php else: ?>
-                        <div class="col-md-10">
+                        <div class="">
                             <div id="gallery" class="ad-gallery">
                                 <div class="ad-image-wrapper">
                                 </div>
@@ -43,7 +39,7 @@
                             <div id="raty-lectura-producto-<?php echo $objProducto->codigoProducto ?>" data-role="raty" data-readonly="true" data-score="<?php echo $objProducto->getCalificacion() ?>" class="clst_cal_str"></div>
                         </div>
                     <?php endif; ?>
-                    <div class="col-md-12" style="color:#A3A3A3;font-size: 16px;">
+                    <div class="" style="color:#A3A3A3;font-size: 16px;">
                         <h3 style="color: #ED1C24;"><?php echo $objProducto->descripcionProducto ?> <!-- Titulo del producto --></h3>
                         <div><span><?php echo $objProducto->presentacionProducto ?></span></div>
                         <div><span>Código: <?php echo $objProducto->codigoProducto ?></span></div>
@@ -59,8 +55,8 @@
                                 <!-- Producto fraccionado -->
                             </div>
                         </div>
-                        <div class="col-md-12" style="color:#A3A3A3;font-size: 16px;">
-                            <div class="col-md-12" style="margin-top:12px;">
+                        <div class="" style="color:#A3A3A3;font-size: 16px;">
+                            <div class="row" style="margin-top:12px;">
                                 <div class="col-md-6 contenedor">
                                     <div class="sep-dashed"><label for="uno" checked=""><span></span><?php echo $objProducto->presentacionProducto ?></label><br/></div>
                                     <?php if ($objProducto->mostrarAhorroVirtual == 1 && $objPrecio->getPorcentajeDescuento() > 0 && $objSectorCiudad->objCiudad->excentoImpuestos == 0): ?> 
@@ -71,12 +67,12 @@
                                         <div style="margin-top:8px;margin-bottom:8px;"><span class="ahora"><?php echo Yii::app()->numberFormatter->format(Yii::app()->params->formatoMoneda['patron'], $objPrecio->getPrecio(Precio::PRECIO_UNIDAD, false), Yii::app()->params->formatoMoneda['moneda']); ?></span><br></div>
                                     <?php endif; ?>         
 
-                                    <div class="col-md-12" style="padding-bottom: 15px;">
+                                    <div class="row" style="padding-bottom: 15px;">
                                         <button class="col-md-3 min" style="border:1px solid;" id="disminuir-unidad-<?php echo $objProducto->codigoProducto ?>"  data-role="disminuir-cantidad"  data-producto="<?php echo $objProducto->codigoProducto ?>" data-precio="<?= $objPrecio->getPrecio(Precio::PRECIO_UNIDAD) ?>" type="button"><span class="glyphicon glyphicon-minus" style='color: white'></span></button>
                                         <div class="col-md-6 select-cantidad"><input id="cantidad-producto-unidad-<?php echo $objProducto->codigoProducto ?>" class="increment" type="text" data-role="validar-cantidad-unidad"  data-producto="<?php echo $objProducto->codigoProducto ?>" data-precio="<?= $objPrecio->getPrecio(Precio::PRECIO_UNIDAD) ?>"  maxlength="3" value="1" data-total="700"/></div>
                                         <button class="col-md-3 min" style="border:1px solid;" id="aumentar-unidad-<?php echo $objProducto->codigoProducto ?>"  data-role="aumentar-cantidad"  data-producto="<?php echo $objProducto->codigoProducto ?>" data-precio="<?= $objPrecio->getPrecio(Precio::PRECIO_UNIDAD) ?>" type="button"><span class="glyphicon glyphicon-plus" style='color: white'></span></button></span>
                                     </div>
-                                    <div class="col-md-12 subtotal"><span class="">Subtotal: <span id="subtotal-producto-unidad-<?php echo $objProducto->codigoProducto ?>"><?php echo Yii::app()->numberFormatter->format(Yii::app()->params->formatoMoneda['patron'], $objPrecio->getPrecio(Precio::PRECIO_UNIDAD), Yii::app()->params->formatoMoneda['moneda']); ?></span></span></div>
+                                    <div class=" subtotal"><span class="">Subtotal: <span id="subtotal-producto-unidad-<?php echo $objProducto->codigoProducto ?>"><?php echo Yii::app()->numberFormatter->format(Yii::app()->params->formatoMoneda['patron'], $objPrecio->getPrecio(Precio::PRECIO_UNIDAD), Yii::app()->params->formatoMoneda['moneda']); ?></span></span></div>
                                 </div>
                                 <div class="col-md-6" style="border:2px solid #EAEAEA;">
                                     <br>
@@ -89,13 +85,13 @@
                                     <?php else: ?>
                                         <div style="margin-top:8px;margin-bottom:8px;"><span class="ahora"><?php echo Yii::app()->numberFormatter->format(Yii::app()->params->formatoMoneda['patron'], $objPrecio->getPrecio(Precio::PRECIO_FRACCION, false), Yii::app()->params->formatoMoneda['moneda']); ?></span><br></div>
                                     <?php endif; ?>  
-                                    <div class="col-md-12" style="padding-bottom: 15px;">
+                                    <div class="row" style="padding-bottom: 15px;">
                                         <button class="col-md-3 min" style="border:1px solid;" id="disminuir-fraccion-<?php echo $objProducto->codigoProducto ?>" onclick="disminuirCantidadFraccionado(<?php echo $objProducto->codigoProducto ?>,<?php echo $objProducto->numeroFracciones ?>,<?php echo $objProducto->unidadFraccionamiento ?>,<?= $objPrecio->getPrecio(Precio::PRECIO_FRACCION) ?>,<?= $objPrecio->getPrecio(Precio::PRECIO_UNIDAD, false) ?>)" type="button"><span style='color: white' class="glyphicon glyphicon-minus"></span></button>
                                         <div class="col-md-6 select-cantidad"><input id="cantidad-producto-fraccion-<?php echo $objProducto->codigoProducto ?>" class="increment" type="text" onchange="validarCantidadFraccionado(<?php echo $objProducto->codigoProducto ?>,<?php echo $objProducto->numeroFracciones ?>,<?php echo $objProducto->unidadFraccionamiento ?>,<?= $objPrecio->getPrecio(Precio::PRECIO_FRACCION) ?>,<?= $objPrecio->getPrecio(Precio::PRECIO_UNIDAD, false) ?>)" maxlength="3" value="0" data-total="700"/></div>
                                         <button class="col-md-3 min" style="border:1px solid;" id="aumentar-fraccion-<?php echo $objProducto->codigoProducto ?>"   onclick="aumentarCantidadFraccionado(<?php echo $objProducto->codigoProducto ?>,<?php echo $objProducto->numeroFracciones ?>,<?php echo $objProducto->unidadFraccionamiento ?>,<?= $objPrecio->getPrecio(Precio::PRECIO_FRACCION) ?>,<?= $objPrecio->getPrecio(Precio::PRECIO_UNIDAD, false) ?>)" type="button"><span style='color: white' class="glyphicon glyphicon-plus"></span></button>
                                     </div>
-                                    <div class="col-md-12 subtotal"><span class="">Subtotal: <span id="subtotal-producto-fraccion-<?php echo $objProducto->codigoProducto ?>">$0</span></span></div>
-                                    <div class="col-md-12"><div style="width: 5px;height: 9px;"></div></div>
+                                    <div class=" subtotal"><span class="">Subtotal: <span id="subtotal-producto-fraccion-<?php echo $objProducto->codigoProducto ?>">$0</span></span></div>
+                                    <div class=""><div style="width: 5px;height: 9px;"></div></div>
                                 </div>				
                             </div>
                         </div>
@@ -116,7 +112,7 @@
                             <?php endif; ?>
                             <?php if ($objProducto->ventaVirtual == 1): ?>
                                 <div style="margin-top: 15px;">
-                                    <div class="col-md-12 line-bottom">
+                                    <div class="row line-bottom">
                                         <button class="col-md-2 min" style="border:1px solid;" id="disminuir_unidad_<?php echo $objProducto->codigoProducto ?>" data-role="disminuir-cantidad"  data-producto="<?php echo $objProducto->codigoProducto ?>" data-precio="<?= $objPrecio->getPrecio(Precio::PRECIO_UNIDAD) ?>"  type="button"><span style="color:white" class="glyphicon glyphicon-minus"></span></button>
                                         <div class="col-md-2 ressete"><input id="cantidad-producto-unidad-<?php echo $objProducto->codigoProducto ?>"  class="increment" type="text" data-role="validar-cantidad-unidad"  data-producto="<?php echo $objProducto->codigoProducto ?>" data-precio="<?= $objPrecio->getPrecio(Precio::PRECIO_UNIDAD) ?>" maxlength="3" value="1" data-total="700"/></div>
                                         <button class="col-md-2 min" style="border:1px solid;" id="aumentar_unidad_<?php echo $objProducto->codigoProducto ?>"  data-role="aumentar-cantidad"  data-producto="<?php echo $objProducto->codigoProducto ?>" data-precio="<?= $objPrecio->getPrecio(Precio::PRECIO_UNIDAD) ?>" type="button"><span style="color:white" class="glyphicon glyphicon-plus"></span></button>
