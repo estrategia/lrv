@@ -147,8 +147,8 @@
             <?php echo $content; ?>
             <!-- </div> -->
             <!--banner footer-->
-            <section class="img-footer">	
-                <div class="row"></div>
+            <section class="img-footer">
+                <img src="<?php echo Yii::app()->request->baseUrl; ?>/images/desktop/entrega-pedido.png" alt="Entregamos tus pedidos en tan solo 1H -  o si prefieres programala la hora!">
             </section>
             <!--fin banner footer-->
             <!--footer-->
