@@ -1,3 +1,7 @@
+.line-bottom.detPproduct {
+    margin-bottom: 15px;
+    padding: 20px 0;
+}
 .detPproduct .input_cant {
     float: left;
     margin: 0 3px;
