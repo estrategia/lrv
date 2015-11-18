@@ -37,7 +37,7 @@
             
             <div class="form-group"> <!-- calendario -->
                 <?php echo $form->labelEx($model, 'descripcion'); ?>
-                <?php echo $form->textField($model, 'descripcion', array('class' => 'descripcion form-control', 'size' => 20, 'maxlength' => 20, )); ?>
+                <?php echo $form->textField($model, 'descripcion', array('class' => 'descripcion form-control', )); ?>
                 <?php echo $form->error($model, 'descripcion'); ?>
             </div>
             
@@ -103,8 +103,8 @@
             </div>
             <div class="form-group">
                  <!-- checkbox -->
-                <?php echo $form->labelEx($model, 'dias'); ?>
-                <?php echo $form->checkboxList($model, 'dias', Yii::app()->params->callcenter['modulosConfigurados']['diasSemana'],array('class' => 'dias','style' => 'display:block'))?>
+                <?php echo $form->labelEx($model, 'dias'); ?><div class="space-1"></div>
+                <?php echo $form->checkboxList($model, 'dias', Yii::app()->params->callcenter['modulosConfigurados']['diasSemana'],array('class' => 'dias','style' => 'display:inline', 'separator' => '&nbsp;', 'template' => '<div class="col-md-1">{input}{label}</div>'))?>
                 <?php echo $form->error($model, 'dias'); ?>
             </div>
             

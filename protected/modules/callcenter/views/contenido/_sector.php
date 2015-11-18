@@ -2,7 +2,7 @@
     <div class="row">
         <div class="col-md-3">
             Ciudad: 
-                <?php echo Select2::dropDownList('select-ciudades-modulos', null, CHtml::listData($ciudades, 'codigoCiudad', 'nombreCiudad'), array('prompt' => 'Todas las ciudades', 'data-role' => 'modulo-ciudad', 'id' => 'select-ciudad-modulo', 'style' => 'width: 80%;')) ?>
+                <?php echo Select2::dropDownList('select-ciudades-modulos', null, CHtml::listData($ciudades, 'codigoCiudad', 'nombreCiudad'), array('prompt' => 'Todas las ciudades y sectores', 'data-role' => 'modulo-ciudad', 'id' => 'select-ciudad-modulo', 'style' => 'width: 80%;')) ?>
         </div>
         <div id='div-sector-modulo' class="col-md-3" style="display:none">
             Sector:
