@@ -216,3 +216,35 @@ $(document).on('click', "a[data-role='eliminar-modulo-imagen']", function(){
         }
     });
 });
+
+$(document).on('click', "a[data-role='agregar-modulo-grupo']", function(){
+
+    var idModuloGrupo = $("#idGrupoModulo").val();
+    var idModulo = $(this).attr("data-idModulo");
+    var accion = $(this).attr("data-accion");
+    var orden = $("#orden_"+idModulo).val();
+     $.ajax({
+        type: 'POST',
+        async: true,
+        url: requestUrl + '/callcenter/contenido/configurarModuloGrupo',
+        data: {idModuloGrupo : idModuloGrupo, idModulo:idModulo, accion:accion, orden:orden},
+        beforeSend: function(){
+            Loading.show();
+        },
+        success: function(data){
+            var data = $.parseJSON(data);
+            if (data.result == "ok") {
+               $.fn.yiiGridView.update('grid-modulos');
+               $("#grid-modulos-adicionados").html(data.response)
+            }else if(data.result == "error"){
+                bootbox.alert(data.response);
+            }
+        },
+        complete: function(){
+            Loading.hide();
+        },
+        error: function(jqXHR, textStatus, errorThrown){
+
+        }
+    });
+});

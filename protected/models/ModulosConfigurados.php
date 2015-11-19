@@ -70,6 +70,7 @@ class ModulosConfigurados extends CActiveRecord {
             'listUbicacionesModulos' => array(self::HAS_MANY, 'UbicacionModulos', 'idModulo'),
             'objMenuModulo' => array(self::BELONGS_TO, 'MenuModulo', 'idModulo'),
             'listModulosGrupo' => array(self::MANY_MANY, 'ModulosConfigurados', 't_GruposModulos(idGrupoModulo, idModulo)'),
+            'objModuloGrupo' => array(self::BELONGS_TO, 'GruposModulos', '','on' => 't.idModulo=objModuloGrupo.idModulo AND objModuloGrupo.idGrupoModulo =:idgrupoModulo'),
             'listPerfiles' => array(self::HAS_MANY, 'ModuloPerfil', 'idModulo'),
         );
     }
@@ -118,6 +119,34 @@ class ModulosConfigurados extends CActiveRecord {
         $criteria->compare('contenido', $this->contenido, true);
         $criteria->compare('contenidoMovil', $this->contenidoMovil, true);
 
+        return new CActiveDataProvider($this, array(
+            'criteria' => $criteria,
+        ));
+    }
+    
+    
+     public function searchModulos($idGrupoModulo) {
+        // @todo Please modify the following code to remove attributes that should not be searched.
+
+        $criteria = new CDbCriteria;
+
+        $criteria->compare('idModulo', $this->idModulo);
+        $criteria->compare('tipo', $this->tipo);
+        $criteria->compare('inicio', $this->inicio, true);
+        $criteria->compare('fin', $this->fin, true);
+        $criteria->compare('dias', $this->dias, true);
+        $criteria->compare('estado', $this->estado);
+        $criteria->compare('descripcion', $this->descripcion, true);
+        $criteria->compare('contenido', $this->contenido, true);
+        $criteria->compare('contenidoMovil', $this->contenidoMovil, true);
+
+        $criteria->with = array('objModuloGrupo');
+        $criteria->condition = 't.tipo  NOT IN (:grupoModulo)';
+        $criteria->params = array (
+            ':grupoModulo' => ModulosConfigurados::TIPO_GRUPO_MODULOS,
+            ':idgrupoModulo' => $idGrupoModulo
+        );
+        
         return new CActiveDataProvider($this, array(
             'criteria' => $criteria,
         ));

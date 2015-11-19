@@ -314,6 +314,19 @@ class ContenidoController extends ControllerOperator {
                }
                
             }
+            if($model->tipo == ModulosConfigurados::TIPO_GRUPO_MODULOS){
+                $params['vista'] = '_grupoModulos';
+                $params['modelModulos'] = new ModulosConfigurados('search');
+                $params['idModulo'] = $idModulo;
+                
+                $params['modulosAdicionados'] = GruposModulos::model()->findAll(array(
+                    'with' => 'objModulo',
+                    'condition' => 't.idGrupoModulo =:idgrupomodulo',
+                    'params' => array(
+                        'idgrupomodulo' => $idModulo
+                    )
+                ));
+            }
             
         } else {
             $params['vista'] = 'modulos';
@@ -345,6 +358,95 @@ class ContenidoController extends ControllerOperator {
         $this->render('editar',array(
             'params' => $params
         ));
+    }
+    
+    public function actionConfigurarModuloGrupo(){
+        
+         if (!Yii::app()->request->isPostRequest) {
+            throw new CHttpException(404, 'Solicitud inválida.');
+        }
+        $idModulo = Yii::app()->getRequest()->getPost('idModulo');
+        $idGrupoModulo = Yii::app()->getRequest()->getPost('idModuloGrupo');
+        $accion = Yii::app()->getRequest()->getPost('accion');
+        
+        if($accion == 1){
+            $model = new GruposModulos();
+            $model->idGrupoModulo = $idGrupoModulo;
+            $model->idModulo = $idModulo;
+            $model->orden = 0;
+            if(!$model->save()){
+                   echo CJSON::encode(array(
+                        'result' => 'error',
+                        'response' => 'error al guardar el módulo'
+                    )); 
+                    Yii::app()->end();
+            }
+        }else if($accion == 2){
+            $orden = Yii::app()->getRequest()->getPost('orden');
+            $model = GruposModulos::model()->find(array(
+               'condition' => 'idGrupoModulo =:idgrupomodulo AND idModulo =:idmodulo',
+                'params' => array(
+                    'idgrupomodulo' => $idGrupoModulo,
+                    'idmodulo' => $idModulo
+                )
+            ));
+            $model->orden = $orden;
+            if(!$model->save()){
+                   echo CJSON::encode(array(
+                        'result' => 'error',
+                        'response' => 'error al actualizar el módulo'
+                    )); 
+                    Yii::app()->end();
+            }
+        }else{
+            $model = GruposModulos::model()->find(array(
+               'condition' => 'idGrupoModulo =:idgrupomodulo AND idModulo =:idmodulo',
+                'params' => array(
+                    'idgrupomodulo' => $idGrupoModulo,
+                    'idmodulo' => $idModulo
+                )
+            ));
+            
+            if(!$model->delete()){
+                   echo CJSON::encode(array(
+                        'result' => 'error',
+                        'response' => 'error al eliminar el módulo'
+                    )); 
+                    Yii::app()->end();
+            }
+        }
+        
+        
+           echo CJSON::encode(array(
+               'result' => 'ok',
+               'response' => $this->renderPartial('_modulosAdicionados', array(
+                                'modulosAdicionados' => GruposModulos::model()->findAll(array(
+                                        'with' => 'objModulo',
+                                        'condition' => 't.idGrupoModulo =:idgrupomodulo',
+                                        'params' => array(
+                                            'idgrupomodulo' => $idGrupoModulo
+                                        )
+                                    ))
+                                 ),true,false
+                             )
+           ));
+    }
+    
+    public function actionTestModulo(){
+        $idGrupoModulo=12;
+        $criteria = new CDbCriteria();
+        $criteria->with = array('objModuloGrupo');
+        $criteria->condition = 't.tipo  NOT IN (:grupoModulo)';
+        $criteria->params = array (
+            ':grupoModulo' => ModulosConfigurados::TIPO_GRUPO_MODULOS,
+            ':idgrupoModulo' => $idGrupoModulo
+        );
+        
+        $modulos=ModulosConfigurados::model()->findAll($criteria);
+        
+        echo "<pre>";
+        print_r($modulos);
+        echo "</pre>";
     }
     
     public function actionEliminarImagen(){
