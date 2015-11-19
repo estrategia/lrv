@@ -38,8 +38,8 @@ class ContenidoController extends ControllerOperator {
         $model = new ModulosConfigurados('search');
 
         $model->unsetAttributes();
-        if (isset($_GET['Compras']))
-            $model->attributes = $_GET['Compras'];
+        if (isset($_GET['ModulosConfigurados']))
+            $model->attributes = $_GET['ModulosConfigurados'];
         
         
         $this->render('index',array(
@@ -1086,7 +1086,7 @@ class ContenidoController extends ControllerOperator {
         {
             $query = "DELETE 
                       FROM t_ProductosModulos
-                      WHERE idModulo = :idModulo AND idMarca IS NOT NULL OR idCategoriaBI IS NOT NULL";
+                      WHERE idModulo = :idModulo AND idMarca IS NOT NULL AND idCategoriaBI IS NOT NULL";
 
             $command = Yii::app()->db->createCommand($query);
             $command->bindParam(":idModulo", $idModulo, PDO::PARAM_STR);
@@ -1190,5 +1190,41 @@ class ContenidoController extends ControllerOperator {
         $marcas = Yii::app()->db->createCommand($query)->queryAll();
         $arrayMarcas = array_column($marcas, 'nombreMarca', 'idMarca');
         return $arrayMarcas;
+    }
+
+    public function actionActivardesactivarmodulo()
+    {
+        if (!Yii::app()->request->isPostRequest) 
+        {
+            throw new CHttpException(404, 'Solicitud inválida.');
+        }
+
+        $idModulo = Yii::app()->getRequest()->getPost('idModulo');
+        
+        if($idModulo === null) 
+        {
+            throw new CHttpException(404, 'Solicitud inválida.');
+        }
+
+        $model = ModulosConfigurados::model()->findByPk($idModulo);
+
+        if($model->estado == 0)
+        {
+            $model->estado = 1;
+        }
+        else
+        {
+            $model->estado = 0;
+        }
+
+        if(!$model->save())
+        {
+            echo CJSON::encode(array('result' => 'error', 'response' => "No se pudo realizar la solicitud, por favor intentelo nuevamente"));
+            Yii::app()->end();
+        }
+
+        echo CJSON::encode(array('result' => 'ok', 'response' => "La operaci&oacute;n se realizo con &eacute;xito"));
+        Yii::app()->end();
+
     }
 }

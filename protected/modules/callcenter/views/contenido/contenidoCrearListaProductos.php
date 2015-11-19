@@ -28,9 +28,22 @@
 					        </form>
 					    </div>
 					    <div class="row">
+				    		<div class="col-md-6 col-md-offset-3">
+						    	<div class="alert alert-info">
+						            <p>El archivo debe ser en formato .txt</p>
+						            <p>Cada código de producto debe estar separado por un Enter.</p> 
+						            <p>Ej: </p>
+						            <p>20418</p>
+						            <p>22963</p>
+						            <p>27333</p>
+						        </div>
+					    	</div>
+					    </div>
+					    <div class="row">
 					    	<form id="cargarproducto" method="post" name="cargarproducto" enctype="multipart/form-data">
 						    	<div class="col-md-5 col-md-offset-3">
 							    	<div class="form-group">
+							    		<!--<a href="#" data-toggle='tooltip' data-placement='top' title="El archivo debe ser en formato .txt <br> Cada código de producto debe estar separado por un Enter. <br> Ej: <br />20418 22963&#10;27333" class="glyphicon glyphicon-question-sign"></a>-->
 							    		<input type="file" class="form-control input-sm" data-modulo="<?php echo $model->idModulo ?>" id="contenido-cargar-producto" name="contenido-cargar-producto">
 							    	</div>
 						    	</div>

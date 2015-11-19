@@ -267,3 +267,31 @@ $(document).on('click', "button[data-role='cargar-productos-contenido']", functi
 
     return false;
 });
+
+
+$(document).on('click', 'a[data-role="modulo-inactivar"]', function(){
+    var idModulo = $(this).attr("data-modulo");
+
+
+    $.ajax({
+        type: 'POST',
+        async: true,
+        url: requestUrl + '/callcenter/contenido/activardesactivarmodulo',
+        data: {idModulo : idModulo},
+        beforeSend: function() {
+        },
+        complete: function() {
+        },
+        success: function(data) {
+            var data = $.parseJSON(data);
+            if (data.result === "ok") {
+                $.fn.yiiGridView.update('grid-modulos');
+            } else if (data.result === 'error') {
+                bootbox.alert(data.response);
+            }
+        },
+        error: function(jqXHR, textStatus, errorThrown) {
+            bootbox.alert('Error: ' + errorThrown);
+        }
+    });
+});
