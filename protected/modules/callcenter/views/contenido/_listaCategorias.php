@@ -1,6 +1,6 @@
+<?php $arrayCategoriasSeleccionadas = array(); ?>
 <?php if(count($model->listProductosModulos(array('condition' => 'idCategoriaBI IS NOT NULL'))) != 0): ?>
 
-	<?php $arrayCategoriasSeleccionadas = array(); ?>
 	<?php foreach ($model->listProductosModulos(array('condition' => 'idCategoriaBI IS NOT NULL')) as $fila): ?>
 		<?php $arrayCategoriasSeleccionadas[] = $fila->idCategoriaBI; ?>
 	<?php endforeach; ?>
