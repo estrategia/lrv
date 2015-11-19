@@ -1,6 +1,6 @@
+<?php $arrayMarcasSeleccionadas = array(); ?>
 <?php if(count($model->listProductosModulos(array('condition' => 'idMarca IS NOT NULL'))) != 0): ?>
 
-	<?php $arrayMarcasSeleccionadas = array(); ?>
 	<?php foreach ($model->listProductosModulos(array('condition' => 'idMarca IS NOT NULL')) as $fila): ?>
 		<?php $arrayMarcasSeleccionadas[] = $fila->idMarca; ?>
 	<?php endforeach; ?>
@@ -17,8 +17,4 @@
 	
 </div>
 
-<script>
-	$(document).ready(function(){
-		cargarCategoriasSeleccionadas($("#btn-pedido-buscar").attr('data-modulo'));
-	});
-</script>
+<?php Yii::app()->clientScript->registerScript('cargar-categorias-marcas', "cargarCategoriasSeleccionadas($('#btn-pedido-buscar').attr('data-modulo'));", CClientScript::POS_LOAD); ?>

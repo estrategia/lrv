@@ -52,7 +52,7 @@ $(document).on('click', "a[data-role='agregar-producto-contenido']", function(){
         url: requestUrl + '/callcenter/contenido/agregarproductomodulo',
         data: {producto : producto, idModulo : idModulo},
         beforeSend: function(){
-
+            Loading.show();
         },
         success: function(data){
             var data = $.parseJSON(data);
@@ -65,10 +65,10 @@ $(document).on('click', "a[data-role='agregar-producto-contenido']", function(){
             }
         },
         complete: function(){
-
+            Loading.hide();
         },
         error: function(jqXHR, textStatus, errorThrown){
-
+            Loading.hide();
         }
     });
 
@@ -85,7 +85,7 @@ $(document).on('click', "a[data-role='eliminar-producto-contenido']", function()
         url: requestUrl + '/callcenter/contenido/eliminarproductomodulo',
         data: {idProductoModulo : idProductoModulo},
         beforeSend: function(){
-
+            Loading.show();
         },
         success: function(data){
             var data = $.parseJSON(data);
@@ -96,17 +96,17 @@ $(document).on('click', "a[data-role='eliminar-producto-contenido']", function()
             }
         },
         complete: function(){
-
+            Loading.hide();
         },
         error: function(jqXHR, textStatus, errorThrown){
-
+            Loading.hide();
         }
     });
 
 });
 
 
-$(document).on('click', 'input[name="marcas-contenido[]"]:checkbox', function(){
+$(document).on('click', 'input[name="marcas-contenido[]"]:checkbox', function(evento){
     cargarCategoriasSeleccionadas($(this).attr('data-modulo'));
 });
 
@@ -122,7 +122,7 @@ function cargarCategoriasSeleccionadas(attrIdModulo)
         }
         idMarcas += $(this).val();
     });
-    
+
     idModulo = attrIdModulo;
     //if(idMarcas != "")
     //{
@@ -132,7 +132,9 @@ function cargarCategoriasSeleccionadas(attrIdModulo)
             url: requestUrl + '/callcenter/contenido/obtenerlistacategorias',
             data: {idMarcas : idMarcas, idModulo : idModulo},
             beforeSend: function(){
-
+                
+                    Loading.show();
+                
             },
             success: function(data){
                 var data = $.parseJSON(data);
@@ -143,10 +145,12 @@ function cargarCategoriasSeleccionadas(attrIdModulo)
                 }
             },
             complete: function(){
-
+                    Loading.hide();
+                
             },
             error: function(jqXHR, textStatus, errorThrown){
-
+                    Loading.hide();
+                
             }
         });
     //}
@@ -195,7 +199,7 @@ $(document).on('click', "input[data-role='almacenar-html-producto-marcas']", fun
         url: requestUrl + '/callcenter/contenido/'+url,
         data: {idModulo : idModulo, htmlModulo : htmlModulo, idMarcas : idMarcas, idCategorias : idCategorias},
         beforeSend: function(){
-
+            Loading.show();
         },
         success: function(data){
             var data = $.parseJSON(data);
@@ -206,9 +210,10 @@ $(document).on('click', "input[data-role='almacenar-html-producto-marcas']", fun
             }
         },
         complete: function(){
-
+            Loading.hide();
         },
         error: function(jqXHR, textStatus, errorThrown){
+            Loading.hide();
             bootbox.alert('Error: ' + errorThrown);
         }
     });
@@ -240,9 +245,11 @@ $(document).on('click', "button[data-role='cargar-productos-contenido']", functi
             contentType: false,
             processData: false,
             beforeSend: function() {
+                Loading.show();
             },
             complete: function() {
                 formulario.removeChild(campo);
+                Loading.hide();
             },
             success: function(data) {
                 //console.log(data);
@@ -256,6 +263,7 @@ $(document).on('click', "button[data-role='cargar-productos-contenido']", functi
                 }
             },
             error: function(jqXHR, textStatus, errorThrown) {
+                Loading.hide();
                 bootbox.alert('Error: ' + errorThrown);
             }
         });
@@ -279,8 +287,10 @@ $(document).on('click', 'a[data-role="modulo-inactivar"]', function(){
         url: requestUrl + '/callcenter/contenido/activardesactivarmodulo',
         data: {idModulo : idModulo},
         beforeSend: function() {
+            Loading.show();
         },
         complete: function() {
+            Loading.hide();
         },
         success: function(data) {
             var data = $.parseJSON(data);
@@ -291,6 +301,7 @@ $(document).on('click', 'a[data-role="modulo-inactivar"]', function(){
             }
         },
         error: function(jqXHR, textStatus, errorThrown) {
+            Loading.hide();
             bootbox.alert('Error: ' + errorThrown);
         }
     });

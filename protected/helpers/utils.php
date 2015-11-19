@@ -211,3 +211,14 @@ function esClienteFiel() {
 
     return false;
 }
+
+
+function array_column_lrv($array, $valor, $clave)
+{
+    $arrayOrganizado = array();
+    foreach ($array as $value)
+    {
+        $arrayOrganizado[$value[$clave]] = $value[$valor];
+    }
+    return $arrayOrganizado;
+}
