@@ -34,7 +34,7 @@ class CatalogoController extends Controller {
 
         $this->render('d_division', array(
             'categorias' => $categorias,
-            'listModulos' => ModulosConfigurados::getModulos($this->objSectorCiudad, UbicacionModulos::UBICACION_ESCRITORIO_DIVISION, $division)
+            'listModulos' => ModulosConfigurados::getModulos($this->objSectorCiudad, Yii::app()->shoppingCart->getCodigoPerfil(), UbicacionModulos::UBICACION_ESCRITORIO_DIVISION, $division)
         ));
     }
 
@@ -85,7 +85,7 @@ class CatalogoController extends Controller {
                     'objSectorCiudad' => $objSectorCiudad,
                     'codigoPerfil' => $codigoPerfil,
                     'nombreBusqueda' => 'NA',
-                    'objModulo' => ModulosConfigurados::getModuloFlotante($this->objSectorCiudad, UbicacionModulos::UBICACION_ESCRITORIO_CATEGORIA, $categoria)
+                    'objModulo' => ModulosConfigurados::getModuloFlotante($this->objSectorCiudad, Yii::app()->shoppingCart->getCodigoPerfil(), UbicacionModulos::UBICACION_ESCRITORIO_CATEGORIA, $categoria)
                 ));
             } else {
                 $this->render('d_listaProductos', array(
@@ -347,8 +347,8 @@ class CatalogoController extends Controller {
             }
 
             $parametrosVista['dataprovider'] = $dataProvider;
-            $parametrosVista['objModulo'] = ModulosConfigurados::getModuloFlotante($this->objSectorCiudad, UbicacionModulos::UBICACION_ESCRITORIO_CATEGORIA, $categoria);
-            $parametrosVista['listModulos'] = ModulosConfigurados::getModulos($this->objSectorCiudad, UbicacionModulos::UBICACION_ESCRITORIO_CATEGORIA, $categoria);
+            $parametrosVista['objModulo'] = ModulosConfigurados::getModuloFlotante($this->objSectorCiudad, Yii::app()->shoppingCart->getCodigoPerfil(), UbicacionModulos::UBICACION_ESCRITORIO_CATEGORIA, $categoria);
+            $parametrosVista['listModulos'] = ModulosConfigurados::getModulos($this->objSectorCiudad, Yii::app()->shoppingCart->getCodigoPerfil(), UbicacionModulos::UBICACION_ESCRITORIO_CATEGORIA, $categoria);
             $this->render('d_listaProductos', $parametrosVista);
         }
     }
@@ -860,7 +860,7 @@ class CatalogoController extends Controller {
 
         if ($objSectorCiudad == null) {
             $objProducto = Producto::model()->find(array(
-                'with' => array('listImagenes', 'objDetalle', 'objCodigoEspecial', 'listCalificaciones' => array('with' => 'objUsuario')),
+                'with' => array('listImagenesGrandes', 'objDetalle', 'objCodigoEspecial', 'listCalificaciones' => array('with' => 'objUsuario')),
                 'condition' => 't.activo=:activo AND t.codigoProducto=:codigo',
                 'params' => array(
                     ':activo' => 1,
@@ -870,7 +870,7 @@ class CatalogoController extends Controller {
         } else {
             $objProducto = Producto::model()->find(array(
                 'with' => array(
-                    'listImagenes',
+                    'listImagenesGrandes',
                     'objDetalle',
                     'objCodigoEspecial',
                     'listCalificaciones' => array('with' => 'objUsuario'),
@@ -987,7 +987,7 @@ class CatalogoController extends Controller {
 
         $objProducto = Producto::model()->find(array(
             'with' => array(
-                'listImagenes',
+                'listImagenesGrandes',
                 'objDetalle',
                 'objCodigoEspecial',
                 'listCalificaciones' => array('with' => 'objUsuario'),
@@ -1049,7 +1049,7 @@ class CatalogoController extends Controller {
         $fecha = new DateTime;
 
         $objCombo = Combo::model()->find(array(
-            'with' => array('listProductos', 'listImagenesCombo', 'listProductosCombo', 'listComboSectorCiudad'),
+            'with' => array('listProductos', 'listImagenesComboGrande', 'listProductosCombo', 'listComboSectorCiudad'),
             'condition' => 't.idCombo=:combo AND t.estadoCombo=:estado AND t.fechaInicio<=:fecha AND t.fechaFin>=:fecha AND listComboSectorCiudad.saldo>:saldo AND listComboSectorCiudad.codigoCiudad=:ciudad AND listComboSectorCiudad.codigoSector=:sector',
             'params' => array(
                 ':combo' => $combo,
@@ -1060,18 +1060,6 @@ class CatalogoController extends Controller {
                 ':sector' => $objSectorCiudad->codigoSector,
             )
         ));
-
-        /* $objCombo = Combo::model()->find(array(
-          'with' => array('listProductos', 'listImagenes', 'listProductosCombo'),
-          'condition' => 't.estadoCombo=:estado AND t.fechaInicio<=:fecha AND t.fechaFin>=:fecha AND t.saldo>:saldo AND t.codigoCiudad=:ciudad AND t.codigoSector=:sector',
-          'params' => array(
-          ':estado' => 1,
-          ':fecha' => $fecha->format('Y-m-d H:i:s'),
-          'saldo' => 0,
-          ':ciudad' => $objSectorCiudad->codigoCiudad,
-          ':sector' => $objSectorCiudad->codigoSector,
-          )
-          )); */
 
         if ($objCombo == null) {
             throw new CHttpException(404, 'Producto no existe.');

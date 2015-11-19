@@ -65,7 +65,6 @@ class ContenidoController extends ControllerOperator {
             }else{
                 Yii::app()->user->setFlash('alert alert-success', "Error al guardar el módulo");
             }
-            
         }
         
         $this->render('modulos',array(
@@ -254,6 +253,21 @@ class ContenidoController extends ControllerOperator {
 
                 $model->scenario = 'contenido';
             }
+            if( $model->tipo == ModulosConfigurados::TIPO_PROMOCION_FLOTANTE){
+                $params['vista'] = 'contenidoHtml';
+                
+                if($_POST){
+                    $model->contenido=$_POST['ModulosConfigurados']['contenido'];
+                    
+                    if($model->save()){
+                        Yii::app()->user->setFlash('alert alert-success', "Contenido guardado con éxito");  
+                    }else{
+                         Yii::app()->user->setFlash('alert alert-danger', "Error al guardar el contenido"); 
+                    }
+                }
+                
+                $model->scenario = 'contenido';
+            }
             if($model->tipo == ModulosConfigurados::TIPO_HTML_PRODUCTOS)
             {
                 $params['vista'] = 'contenidoHtml';
@@ -261,7 +275,54 @@ class ContenidoController extends ControllerOperator {
                 $params['arrayMarcas'] = $this->obtenerMarcas();
                 $model->scenario = 'contenido';
             }
-            $params['siguiente'] = CController::createUrl('/callcenter/contenido/editar', array('idModulo' => $idModulo, 'opcion'=>'categoria'));
+            if($model->tipo == ModulosConfigurados::TIPO_ENLACE_MENU){
+               $params['vista'] = '_enlaceMenu';
+               $model->scenario = 'contenido';
+               
+               $params['modelMenu'] = new MenuModulo();
+               
+               
+               
+               if($_POST){
+                 
+                   
+                    if(isset($_FILES))
+                    {
+                        $modelMenu = MenuModulo::model()->find("idModulo =:idmodulo", array('idmodulo' => $idModulo));
+                        if($modelMenu == null){
+                            $modelMenu = new MenuModulo();
+                        }
+                       $modelMenu->attributes = $_POST['MenuModulo'];
+                       $uploadedFile = CUploadedFile::getInstance($modelMenu, "rutaImagen");
+                     
+                       if($uploadedFile->getExtensionName() == "jpg" || $uploadedFile->getExtensionName() == "png" ||
+                           $uploadedFile->getExtensionName() == "jpeg" || $uploadedFile->getExtensionName()== "gif"){
+                           
+                            if($uploadedFile->saveAs(substr(Yii::app()->params->carpetaImagen['menuDesktop'].$uploadedFile->getName(),1))){
+                                $modelMenu->rutaImagen = $uploadedFile->getName();
+                                $modelMenu->idModulo = $idModulo;
+                                if($modelMenu->save()){
+                                     Yii::app()->user->setFlash('alert alert-success', "La imagen ha sido guardada con éxito");  
+                                }else{
+                                     Yii::app()->user->setFlash('alert alert-danger', "Error al subir la imagen");  
+                                }
+                            }else{
+                                Yii::app()->user->setFlash('alert alert-danger','Error al subir la imagen');
+                            }
+                       }else{
+                           Yii::app()->user->setFlash('alert alert-danger','Imagen no valida');
+                       } 
+                    }
+                }
+               
+               $modelMenu = MenuModulo::model()->find("idModulo =:idmodulo", array('idmodulo' => $idModulo));
+               
+               if($modelMenu != null){
+                    $params['modelMenu'] = $modelMenu;
+               }
+               
+            }
+            
         } else {
             $params['vista'] = 'modulos';
             $params['opcion'] = 'editar';
@@ -397,6 +458,12 @@ class ContenidoController extends ControllerOperator {
             ));
         
         if($moduloSector == null){
+            
+            if(empty($codigoCiudad)){
+                $codigoCiudad = Yii::app()->params->ciudad['*'];
+                $codigoSector = Yii::app()->params->sector['*'];
+            }
+            
             $moduloSector = new ModuloSectorCiudad();
             
             if(empty($codigoCiudad)){

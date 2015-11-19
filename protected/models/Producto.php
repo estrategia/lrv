@@ -81,6 +81,7 @@ class Producto extends CActiveRecord {
             'objImpuesto' => array(self::BELONGS_TO, 'Impuesto', 'codigoImpuesto'),
             'objDetalle' => array(self::HAS_ONE, 'ProductoDetalle', 'codigoProducto'),
             'listImagenes' => array(self::HAS_MANY, 'Imagen', 'codigoProducto'),
+            'listImagenesGrandes' => array(self::HAS_MANY, 'Imagen', 'codigoProducto', 'condition'=>'listImagenesGrandes.estadoImagen=1 AND listImagenesGrandes.tipoImagen='. YII::app()->params->producto['tipoImagen']['grande']),
             'listCalificaciones' => array(self::HAS_MANY, 'ProductosCalificaciones', 'codigoProducto'),
             'listSaldos' => array(self::HAS_MANY, 'ProductosSaldos', 'codigoProducto'),
             'listPrecios' => array(self::HAS_MANY, 'ProductosPrecios', 'codigoProducto'),
@@ -210,23 +211,6 @@ class Producto extends CActiveRecord {
             return Yii::app()->params->producto['noImagen']['mini'];
         
         return Yii::app()->params->carpetaImagen['productos'][YII::app()->params->producto['tipoImagen']['mini']] . $objImagen->rutaImagen;
-    }
-
-    /**
-     * Retorna el tipo de imagen de un producto, si no se detecta, retorna null
-     * @param int tipo de imagen
-     * @return Imagen imagen del producto
-     */
-    public function objImagenDesktop($tipo,$listImagenes) {
-        $obj = null;
-
-        foreach ($listImagenes as $imagen) {
-            if ($imagen['tipoImagen'] == $tipo && $imagen['estadoImagen'] == 1) {
-                $obj = $imagen;
-                break;
-            }
-        }
-        return $obj;
     }
 
     /**

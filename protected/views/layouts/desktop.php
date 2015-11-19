@@ -137,7 +137,7 @@
 
                     <?php foreach (ModulosConfigurados::getModulosMenu($this->objSectorCiudad) as $objModulo): ?>
                         <li class="modulo-menu" style="background-color: <?php echo $objModulo->objMenuModulo->color; ?>;">
-                            <a href="<?php echo $objModulo->objMenuModulo->contenido ?>"><img src="<?php echo Yii::app()->request->baseUrl . Yii::app()->params->carpetaImagen['menuDesktop'] . $objModulo->objMenuModulo->rutaImagen; ?>" /> <?php echo $objModulo->descripcion ?></a>
+                            <a href="<?php echo $this->createUrl($objModulo->objMenuModulo->contenido) ?>"><img src="<?php echo Yii::app()->request->baseUrl . Yii::app()->params->carpetaImagen['menuDesktop'] . $objModulo->objMenuModulo->rutaImagen; ?>" /> <?php echo $objModulo->descripcion ?></a>
                         </li>
                     <?php endforeach; ?>
                 </ul>
@@ -147,8 +147,8 @@
             <?php echo $content; ?>
             <!-- </div> -->
             <!--banner footer-->
-            <section class="img-footer">	
-                <div class="row"></div>
+            <section class="img-footer">
+                <img src="<?php echo Yii::app()->request->baseUrl; ?>/images/desktop/entrega-pedido.png" alt="Entregamos tus pedidos en tan solo 1H -  o si prefieres programala la hora!">
             </section>
             <!--fin banner footer-->
             <!--footer-->

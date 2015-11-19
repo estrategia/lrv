@@ -37,7 +37,7 @@
             
             <div class="form-group"> <!-- calendario -->
                 <?php echo $form->labelEx($model, 'descripcion'); ?>
-                <?php echo $form->textField($model, 'descripcion', array('class' => 'descripcion form-control', 'size' => 20, 'maxlength' => 20, )); ?>
+                <?php echo $form->textField($model, 'descripcion', array('class' => 'descripcion form-control', )); ?>
                 <?php echo $form->error($model, 'descripcion'); ?>
             </div>
             
