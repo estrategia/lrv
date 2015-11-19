@@ -1061,18 +1061,6 @@ class CatalogoController extends Controller {
             )
         ));
 
-        /* $objCombo = Combo::model()->find(array(
-          'with' => array('listProductos', 'listImagenes', 'listProductosCombo'),
-          'condition' => 't.estadoCombo=:estado AND t.fechaInicio<=:fecha AND t.fechaFin>=:fecha AND t.saldo>:saldo AND t.codigoCiudad=:ciudad AND t.codigoSector=:sector',
-          'params' => array(
-          ':estado' => 1,
-          ':fecha' => $fecha->format('Y-m-d H:i:s'),
-          'saldo' => 0,
-          ':ciudad' => $objSectorCiudad->codigoCiudad,
-          ':sector' => $objSectorCiudad->codigoSector,
-          )
-          )); */
-
         if ($objCombo == null) {
             throw new CHttpException(404, 'Producto no existe.');
         }
