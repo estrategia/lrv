@@ -78,7 +78,6 @@ class ContenidoController extends ControllerOperator {
         $model = ModulosConfigurados::model()->findByPk($idModulo);
         $params = array();
         $params['opcion'] = $opcion;
-       // $deshabilitados = $this->botonesDeshabilitados($model);
         
         
         if($opcion == 'sector'){
@@ -109,7 +108,7 @@ class ContenidoController extends ControllerOperator {
             $params['perfiles'] = Perfil::model()->findAll();
             $params['modelPerfil'] = new ModuloPerfil();
             
-            if(isset($_POST)){
+            if(isset($_POST['ModuloPerfil'])){
                 
                  $perfiles=ModuloPerfil::model()->deleteAll('idModulo =:idmodulo', array(
                     'idmodulo' => $idModulo
@@ -172,8 +171,9 @@ class ContenidoController extends ControllerOperator {
                     }else{
                         Yii::app()->user->setFlash('alert alert-success', "El módulo ha sido guardado con éxito");
                     } 
+                    
                 }else{
-                   Yii::app()->user->setFlash('alert alert-danger', "Error al guardar la ubicación del módulo");  
+                    Yii::app()->user->setFlash('alert alert-danger', "Error al guardar la ubicación del módulo");  
                 }
              }
              $params['ubicaciones']= UbicacionModulos::model()->findAll( array(
@@ -183,12 +183,18 @@ class ContenidoController extends ControllerOperator {
                             'idmodulo' => $idModulo
                         )
                      ));
-                     
-                 $params['siguiente'] = null;
+                 
         } else if($opcion == 'contenido'){
             
-            if($model->tipo == ModulosConfigurados::TIPO_BANNER || $model->tipo == ModulosConfigurados::TIPO_IMAGENES )
+            
+            if($model->tipo == ModulosConfigurados::TIPO_PRODUCTOS)
             {
+                $params['vista'] = 'contenidoCrearListaProductos';
+
+                $params['arrayMarcas'] = $this->obtenerMarcas();
+                //$params['arrayMarcasSeleccionadas'] = array(5,6);
+            } 
+            if($model->tipo == ModulosConfigurados::TIPO_BANNER || $model->tipo == ModulosConfigurados::TIPO_IMAGENES ){
                 $params['vista'] = '_contenidoImagenes';
                 $params['modelImagen'] = new ImagenBanner();
                
@@ -214,7 +220,7 @@ class ContenidoController extends ControllerOperator {
                                 Yii::app()->user->setFlash('alert alert-danger','Error al subir la imagen');
                             }
                        }else{
-                           Yii::app()->user->setFlash('error_imagen','Imagen no valida');
+                           Yii::app()->user->setFlash('alert alert-danger','Imagen no valida');
                        } 
                     }
                 }
@@ -226,30 +232,33 @@ class ContenidoController extends ControllerOperator {
                     )
                 ));
             }
-            if($model->tipo == ModulosConfigurados::TIPO_PRODUCTOS)
-            {
-                $params['vista'] = 'contenidoCrearListaProductos';
-
-                $query = "SELECT m.nombreMarca, m.idMarca ";
-                $query .= "FROM m_Producto AS p ";
-                $query .= "LEFT OUTER JOIN m_Marca AS m ON (m.idMarca = p.idMarca) ";
-                $query .= "GROUP BY p.idMarca; ";
-                $marcas = Yii::app()->db->createCommand($query)->queryAll();
-                $arrayMarcas = array_column($marcas, 'nombreMarca', 'idMarca');
-
-
-                $params['arrayMarcas'] = $arrayMarcas;
-                //$params['arrayMarcasSeleccionadas'] = array(5,6);
-            } 
             if($model->tipo == ModulosConfigurados::TIPO_HTML)
             {
                 $params['vista'] = 'contenidoHtml';
+
+
+                if(isset($_POST['ModulosConfigurados']))
+                {
+                    $model = ModulosConfigurados::model()->findByPk($_POST['ModulosConfigurados']['idModulo']);
+                    $model->scenario = 'contenido';
+                    $model->attributes = $_POST['ModulosConfigurados'];
+                    //CVarDumper::dump($model->attributes,10,true);
+                    //Yii::app()->end();
+                    if($model->save())
+                    {
+                        Yii::app()->user->setFlash('alert alert-success', "El contenido ha sido agregado con exito, al modulo ".$model->idModulo);
+                        //$this->redirect($this->createUrl('index'));
+                    }
+
+                }
+
                 $model->scenario = 'contenido';
             }
             if($model->tipo == ModulosConfigurados::TIPO_HTML_PRODUCTOS)
             {
                 $params['vista'] = 'contenidoHtml';
                 $params['listaProductos'] = true;
+                $params['arrayMarcas'] = $this->obtenerMarcas();
                 $model->scenario = 'contenido';
             }
             $params['siguiente'] = CController::createUrl('/callcenter/contenido/editar', array('idModulo' => $idModulo, 'opcion'=>'categoria'));
@@ -257,6 +266,24 @@ class ContenidoController extends ControllerOperator {
             $params['vista'] = 'modulos';
             $params['opcion'] = 'editar';
             
+            if(isset($_POST['ModulosConfigurados'])){
+                $modelModulo= ModulosConfigurados::model()->find( array(
+                            'condition' => 'idModulo =:idmodulo',
+                            'params' =>  array(
+                                'idmodulo' => $idModulo
+                        )
+                ));
+                
+                $modelModulo->attributes = $_POST['ModulosConfigurados'];
+                $modelModulo->dias= implode(",", $modelModulo->dias);
+            
+                if($modelModulo->save()){
+                    Yii::app()->user->setFlash('alert alert-success', "El módulo ha sido guardado con éxito");
+                    $model = $modelModulo;
+                }else{
+                    Yii::app()->user->setFlash('alert alert-success', "Error al guardar el módulo");
+                } 
+            } 
             $model->dias= explode(",",$model->dias);
             
             if(isset($_POST['ModulosConfigurados'])){
@@ -279,8 +306,9 @@ class ContenidoController extends ControllerOperator {
                 } 
             } 
         }
-    
-        $params['model'] = $model; 
+
+        $params['model'] = $model;
+        
         $this->render('editar',array(
             'params' => $params
         ));
@@ -663,7 +691,7 @@ class ContenidoController extends ControllerOperator {
         $idMarcas = Yii::app()->getRequest()->getPost('idMarcas');
         $idModulo = Yii::app()->getRequest()->getPost('idModulo');
 
-        if ($idMarcas === null || $idModulo === null) 
+        if ($idModulo === null) 
         {
             throw new CHttpException(404, 'Solicitud inválida.');
         }
@@ -673,7 +701,12 @@ class ContenidoController extends ControllerOperator {
         $query = "SELECT c.nombreCategoria, c.idCategoriaBI, p.codigoProducto, p.idMarca ";
         $query .= "FROM m_Producto AS p ";
         $query .= "LEFT JOIN m_Categoria AS c ON (p.idCategoriaBI = c.idCategoriaBI) ";
-        $query .= "WHERE p.idMarca IN (".$idMarcas.")";
+        
+        if(isset($idMarcas) && $idMarcas != "")
+        {
+            $query .= "WHERE p.idMarca IN (".$idMarcas.")";
+        }
+
         $query .= "GROUP BY p.idCategoriaBI; ";
         $categorias = Yii::app()->db->createCommand($query)->queryAll();
         $arrayCategorias = array_column($categorias, 'nombreCategoria', 'idCategoriaBI');
@@ -834,16 +867,18 @@ class ContenidoController extends ControllerOperator {
         }
     }
 
-    public function crearContenidoHtml($objModulo)
+    public function actionCrearcontenidohtml()
     {
-
-        $model = $objModulo;
-        $model->scenario = 'contenido';
-
+        //$model = new ModulosConfigurados;
+        
 
         if(isset($_POST['ModulosConfigurados']))
         {
+            $model = ModulosConfigurados::model()->findByPk($_POST['ModulosConfigurados']['idModulo']);
+            $model->scenario = 'contenido';
             $model->attributes = $_POST['ModulosConfigurados'];
+            //CVarDumper::dump($model->attributes,10,true);
+            //Yii::app()->end();
             if($model->save())
             {
                 Yii::app()->user->setFlash('alert alert-success', "El contenido ha sido agregado con exito, al modulo ".$model->idModulo);
@@ -852,10 +887,193 @@ class ContenidoController extends ControllerOperator {
 
         }
 
-        $this->render('contenidoHtml', array(
-            'model' => $model
+        $params = array();
+        $params['model'] = $model;
+        $params['vista'] = 'contenidoHtml';
+        $params['opcion'] = 'contenido';
+
+
+
+        $this->render('editar', array(
+            'params' => $params
         ));
     }
+
+    public function actionCargarplanoproductos()
+    {
+        if (!Yii::app()->request->isPostRequest) {
+            throw new CHttpException(404, 'Solicitud inválida.');
+        }
+
+        $idModulo = Yii::app()->getRequest()->getPost('idModulo');
+
+        if($idModulo === null)
+        {
+            throw new CHttpException(404, 'Solicitud inválida.');
+        }
+
+
+        if(isset($_FILES)) {
+
+            $archivo = CUploadedFile::getInstanceByName("contenido-cargar-producto");
+          
+            //print_r($_REQUEST);
+            //Yii::app()->end();
+            if($archivo->getExtensionName() == "txt")
+            {
+                $tempLoc = $archivo->getTempName();
+                
+                $transaction = Yii::app()->db->beginTransaction();
+                try 
+                {
+                    $archivoALeer = fopen(addslashes($tempLoc), "r");
+
+                    while(!feof($archivoALeer))
+                    {
+                        $linea = fgets($archivoALeer);
+                        if($linea != "")
+                        {
+                            $modelExiste = ProductosModulos::model()->findAll('idModulo=:idModulo AND codigoProducto=:codigoProducto', array(
+                                    ':idModulo' => $idModulo,
+                                    ':codigoProducto' => $linea
+                                )
+                            );
+                            
+                            if(empty($modelExiste))
+                            {
+                                $modelProductoModulo = new ProductosModulos;
+                                $modelProductoModulo->idModulo = $idModulo;
+                                $modelProductoModulo->codigoProducto = $linea;
+
+                                if (!$modelProductoModulo->save()) 
+                                {
+                                    throw new Exception('Error al cargar los productos');
+                                }
+                            }
+                            //print_r($modelProductoModulo->validate());
+                        }
+                    }   
+                    
+                    $transaction->commit();
+
+                    //Yii::app()->user->setFlash('alert alert-success', "Se han cargado los productos".$model->idModulo);
+
+                    fclose($archivoALeer);
+
+                    $model = ModulosConfigurados::model()->findByPk($idModulo);
+                    echo CJSON::encode(array(
+                        'result' => 'ok',
+                        'response' => array(
+                            'htmlProductosAgregados' => $this->renderPartial('_listaModuloProductos', array('model' => $model), true, false),
+                            'mensaje' => "Se cargaron los productos"
+                    )));
+                    Yii::app()->end();
+
+                } catch (Exception $exc) {
+                    $transaction->rollBack();
+                    echo CJSON::encode(array('result' => 'error', 'response' => $exc->getMessage()));
+                    Yii::app()->end();
+                }
+
+            }
+            else
+            {
+                //Yii::app()->user->setFlash('alert alert-danger','El archivo debe tener extensi&oacute;n .txt');
+                echo CJSON::encode(array(
+                    'result' => 'error',
+                    'response' => 'El formato del archivo debe ser .txt',
+                ));
+                Yii::app()->end();
+            } 
+        }
+        else
+        {
+            //Yii::app()->user->setFlash('alert alert-danger','El archivo no puede ser nulo');
+            echo CJSON::encode(array(
+                'result' => 'error',
+                'response' => 'Error al cargar los productos, por favor intente de nuevo',
+            ));
+            Yii::app()->end();
+        } 
+    }
+
+    public function actionAgregarmarcascategorias()
+    {
+        if (!Yii::app()->request->isPostRequest) 
+        {
+            throw new CHttpException(404, 'Solicitud inválida.');
+        }
+
+        $idModulo = Yii::app()->getRequest()->getPost('idModulo');
+        $idMarcas = Yii::app()->getRequest()->getPost('idMarcas');
+        $idCategorias = Yii::app()->getRequest()->getPost('idCategorias');
+
+
+        if($idModulo === null) 
+        {
+            throw new CHttpException(404, 'Solicitud inválida.');
+        }
+
+        $transaction = Yii::app()->db->beginTransaction();
+        try 
+        {
+            $query = "DELETE 
+                      FROM t_ProductosModulos
+                      WHERE idModulo = :idModulo AND idMarca IS NOT NULL OR idCategoriaBI IS NOT NULL";
+
+            $command = Yii::app()->db->createCommand($query);
+            $command->bindParam(":idModulo", $idModulo, PDO::PARAM_STR);
+            $command->execute();
+            
+            $arrayIdMarcas = explode(",", $idMarcas);
+            foreach ($arrayIdMarcas as $indice => $fila) 
+            {
+                $modelProductoModulo = new ProductosModulos;
+                $modelProductoModulo->idModulo = $idModulo;
+                $modelProductoModulo->idMarca = $fila;
+
+                if (!$modelProductoModulo->save()) 
+                {
+                    throw new Exception('Error al agregar la marca: ' . $modelProductoModulo->getErrors());
+                }
+            }
+
+            $arrayIdCategorias = explode(",", $idCategorias);
+            foreach ($arrayIdCategorias as $indice => $fila) 
+            {
+                $modelProductoModulo = new ProductosModulos;
+                $modelProductoModulo->idModulo = $idModulo;
+                $modelProductoModulo->idCategoriaBI = $fila;
+
+                if (!$modelProductoModulo->save()) 
+                {
+                    throw new Exception('Error al agregar la categoria: ' . $modelProductoModulo->getErrors());
+                }
+            }
+
+            $transaction->commit();
+
+            Yii::app()->user->setFlash('alert alert-success', "El contenido ha sido agregado con exito, al modulo ".$model->idModulo);
+
+            echo CJSON::encode(array(
+                'result' => 'ok'
+            ));
+
+        } catch (Exception $exc) {
+            //Yii::log($exc->getMessage() . "\n" . $exc->getTraceAsString(), CLogger::LEVEL_ERROR, 'application');
+
+            //try {
+                $transaction->rollBack();
+            //} catch (Exception $txexc) {
+            //    Yii::log($txexc->getMessage() . "\n" . $txexc->getTraceAsString(), CLogger::LEVEL_ERROR, 'application');
+            //}
+
+            echo CJSON::encode(array('result' => 'error', 'response' => $exc->getMessage()));
+            Yii::app()->end();
+        }
+    }
+
+
 
     public function crearBanner($objModulo)
     {
@@ -864,24 +1082,46 @@ class ContenidoController extends ControllerOperator {
         ));
     }
 
-    public function crearContenidoHtmlProductos($objModulo)
+    public function actionContenidohtmlproductos()
     {
-        $model = $objModulo;
-        $model->scenario = 'contenido';
-
-
-        if(isset($_POST['ModulosConfigurados']))
+        //print_r($_POST);
+        
+        if (!Yii::app()->request->isPostRequest) 
         {
-            $model->attributes = $_POST['ModulosConfigurados'];
-            if($model->save())
-            {
-                Yii::app()->user->setFlash('alert alert-success', "El contenido ha sido agregado con exito, al modulo ".$model->idModulo);
-            }
+            throw new CHttpException(404, 'Solicitud inválida.');
         }
 
-        $this->render('contenidoHtml', array(
-            'model' => $model,
-            'listaProductos' => true
-        ));
+        $idModulo = Yii::app()->getRequest()->getPost('idModulo');
+        $htmlModulo = Yii::app()->getRequest()->getPost('htmlModulo');
+
+        if($idModulo === null) 
+        {
+            throw new CHttpException(404, 'Solicitud inválida.');
+        }
+
+        $model = ModulosConfigurados::model()->findByPk($idModulo);
+        $model->scenario = "contenido";
+        $model->contenido = $htmlModulo;
+
+        if(!$model->save())
+        {
+            //print_r($model->getErrors());
+            echo CJSON::encode(array('result' => 'error', 'response' => implode(",", $model->getErrors()['contenido'])));
+            Yii::app()->end();
+            //throw new CHttpException(404, 'Error al agregar el contenido html ' . implode(",", $model->getErrors()['contenido']));
+        }
+
+        $this->actionAgregarmarcascategorias();
+    }
+
+    public function obtenerMarcas()
+    {
+        $query = "SELECT m.nombreMarca, m.idMarca ";
+        $query .= "FROM m_Producto AS p ";
+        $query .= "LEFT OUTER JOIN m_Marca AS m ON (m.idMarca = p.idMarca) ";
+        $query .= "GROUP BY p.idMarca; ";
+        $marcas = Yii::app()->db->createCommand($query)->queryAll();
+        $arrayMarcas = array_column($marcas, 'nombreMarca', 'idMarca');
+        return $arrayMarcas;
     }
 }

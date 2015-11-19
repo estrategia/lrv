@@ -30,7 +30,7 @@ class ProductosModulos extends CActiveRecord
 		// NOTE: you should only define rules for those attributes that
 		// will receive user inputs.
 		return array(
-			array('idModulo, codigoProducto', 'required'),
+			array('idModulo', 'required'),
 			array('idProductoModulo, idModulo', 'numerical', 'integerOnly'=>true),
 			array('codigoProducto', 'length', 'max'=>10),
 			// The following rule is used by search().

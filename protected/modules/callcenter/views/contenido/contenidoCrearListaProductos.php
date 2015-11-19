@@ -12,16 +12,36 @@
 	        <div id="collapsible-cuerpo-productos-contenido" class="panel-collapse collapse in" role="tabpanel" aria-labelledby="encabezado-buscar-productos-contenido">
 	            <div class="panel-body">
 
-	                <form id="addproducto" method="post" name="addproducto">
+	                
 					    <div class="row">
-					    	<div class="col-md-5 col-md-offset-3">
-					            <input type="text" placeholder="Descripción" class="form-control input-sm"  data-modulo="<?php echo $model->idModulo ?>" maxlength="50" id="contenido-busqueda-buscar"> 
-					        </div>
-					        <div class="col-md-1">
-					            <button id="btn-pedido-buscar" type="button" class="btn btn-danger btn-sm" data-role="busqueda-contenido" data-modulo="<?php echo $model->idModulo ?>"><i class="glyphicon glyphicon-search"></i> Buscar</button>
-					        </div>
+					    	<form id="addproducto" method="post" name="addproducto">
+						    	<div class="col-md-5 col-md-offset-3">
+						    		<div class="form-group">
+						            	<input type="text" placeholder="Descripción" class="form-control input-sm"  data-modulo="<?php echo $model->idModulo ?>" maxlength="50" id="contenido-busqueda-buscar"> 
+						            </div>
+						        </div>
+						        <div class="col-md-1">
+						        	<div class="form-group">
+						            	<button id="btn-pedido-buscar" type="button" class="btn btn-danger btn-sm" data-role="busqueda-contenido" data-modulo="<?php echo $model->idModulo ?>"><i class="glyphicon glyphicon-search"></i> Buscar</button>
+						        	</div>
+						        </div>
+					        </form>
 					    </div>
-					</form>
+					    <div class="row">
+					    	<form id="cargarproducto" method="post" name="cargarproducto" enctype="multipart/form-data">
+						    	<div class="col-md-5 col-md-offset-3">
+							    	<div class="form-group">
+							    		<input type="file" class="form-control input-sm" data-modulo="<?php echo $model->idModulo ?>" id="contenido-cargar-producto" name="contenido-cargar-producto">
+							    	</div>
+						    	</div>
+						    	<div class="col-md-1">
+						    		<div class="form-group">
+						    			<button class="btn btn-danger btn-sm" data-role="cargar-productos-contenido" data-modulo="<?php echo $model->idModulo ?>"><i class="glyphicon glyphicon-upload"></i> Cargar</button>
+						    		</div>
+						    	</div>
+					    	</form>
+					    </div>
+					
 					<div class="panel-body">
 						<div class="row">
 							<div class="col-md-12">
@@ -54,5 +74,8 @@
 	        </div>
 	    </div>
 
+	</div>
+	<div class="row">
+		<?php echo CHtml::button('Guardar Contenidos', array('class' => "btn btn-default", "data-modulo" => $model->idModulo, 'data-role' => 'almacenar-html-producto-marcas')); ?>
 	</div>
 </div>

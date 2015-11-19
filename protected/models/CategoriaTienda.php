@@ -54,6 +54,7 @@ class CategoriaTienda extends CActiveRecord {
             'objCategoriaPadre' => array(self::BELONGS_TO, 'CategoriaTienda', 'idCategoriaPadre'),
             'listCategoriasHijas' => array(self::HAS_MANY, 'CategoriaTienda', 'idCategoriaPadre'),
             'listCategoriasHijasMenu' => array(self::HAS_MANY, 'CategoriaTienda', 'idCategoriaPadre', 'condition' => 'listCategoriasHijasMenu.visible=1', 'order' => 'listCategoriasHijasMenu.orden ASC'),
+            'listModulosConfigurados' => array(self::HAS_MANY, 'UbicacionCategoria', 'idCategoriaTienda'),
         );
     }
 

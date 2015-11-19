@@ -51,15 +51,22 @@
                         'options' => array(
                             'showAnim' => 'slide',
                             'dateFormat' => 'yy-mm-dd',
+                            'timeFormat' => 'hh:mm',
                             "changeYear" => true,
                             "changeMonth" => true,
+                            "changeHour" => true,
+                            'hourMin' => 0,
+                            'hourMax' => 24,
+                            'minuteMin' => 0,
+                            'minuteMax' => 60,
+                            'timeFormat' => 'hh:mm',
                             "yearRange" => Date("Y").":".(Date("Y")+1)
                         ),
                         'htmlOptions' => array(
                             'class' => 'form-control',
                             'size' => '10',
                             'maxlength' => '10',
-                            'placeholder' => 'yyyy-mm-dd',
+                            'placeholder' => 'yyyy-mm-dd hh:mm',
                         ),
                     ));
                 ?>
@@ -67,17 +74,21 @@
             </div> 
             <div class="form-group"> <!-- calendario -->
                 <?php echo $form->labelEx($model, 'fin'); ?>
-                <?php
-                    $this->widget('application.extensions.CJuiDateTimePicker.CJuiDateTimePicker',array(
-                        'model'=> $model, //Model object
-                        'attribute'=>'fin', //attribute name
-                        'mode'=>'datetime', //use "time","date" or "datetime" (default)
+                <?php 
+                    $this->widget('application.extensions.CJuiDateTimePicker.CJuiDateTimePicker', array(
+                        'model' => $model,
+                        'attribute' => 'fin',
                         'language' => 'es',
                         'options' => array(
                             'showAnim' => 'slide',
                             'dateFormat' => 'yy-mm-dd',
                             "changeYear" => true,
                             "changeMonth" => true,
+                            'hourMin' => 0,
+                            'hourMax' => 24,
+                            'minuteMin' => 0,
+                            'minuteMax' => 60,
+                            'timeFormat' => 'hh:mm',
                             "yearRange" => Date("Y").":".(Date("Y")+1)
                         ),
                         'htmlOptions' => array(

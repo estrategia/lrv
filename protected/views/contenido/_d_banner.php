@@ -4,7 +4,7 @@
             <?php foreach ($objModulo->listImagenesBanners as $i => $imagenes): ?>
                 <div class="item <?php echo ($i == 0) ? 'active' : '' ?>">
                     <?php if ($imagenes->tipoContenido == 1): ?>
-                        <a href="<?php echo $imagenes->contenido ?>">
+                        <a href="<?php echo $this->createUrl($imagenes->contenido) ?>">
                             <img src="<?php echo Yii::app()->request->baseUrl . $imagenes->rutaImagen; ?>" alt="<?php echo $imagenes->nombre ?>" />
                         </a>
                     <?php elseif ($imagenes->tipoContenido == 2): ?>

@@ -497,7 +497,7 @@ $(document).on("pagecreate", function(event) {
         autoPlay: 10000
     });
 
-    $("#slide-relacionados").owlCarousel({
+    $("[id^='slide-relacionados']").owlCarousel({
         slideSpeed: 300,
         paginationSpeed: 400,
         autoPlay: 3000,
@@ -506,6 +506,14 @@ $(document).on("pagecreate", function(event) {
         itemsDesktopSmall: [900, 3], // betweem 900px and 601px
         itemsTablet: [600, 2], //2 items between 600 and 0
         itemsMobile: [300, 2] // itemsMobile disabled - inherit from itemsTablet option
+    });
+
+    $("[id^='slide-imagenes']").owlCarousel({
+        autoPlay: 3000, //Set AutoPlay to 3 seconds
+        items: 4,
+        itemsDesktop: [1199, 3],
+        itemsDesktopSmall: [979, 3]
+
     });
 
     pagoCredirebaja('#form-pago-pago', 'FormaPagoForm');
@@ -1477,7 +1485,7 @@ $(document).on('click', "input[data-role='lstpersonalform']", function() {
                 if ($('#ListaGuardarForm_idLista').length) {
                     $("#ListaGuardarForm_idLista").append(data.response.optionHtml);
                 }
-                
+
                 if ($('#gridview-listapersonal').length) {
                     $('#form-listapersonal')[0].reset();
                     $.fn.yiiGridView.update('gridview-listapersonal');
@@ -1918,7 +1926,7 @@ $(document).on('click', "#form-recordar input[data-registro='recordar']", functi
 $(document).on('change', "#form-listapersonal input[id='ListasPersonales_estadoLista']", function() {
     if ($(this).is(":checked")) {
         $('#div-lista-config-recordacion').removeClass('hide');
-    }else{
+    } else {
         $('#div-lista-config-recordacion').addClass('hide');
     }
 });
@@ -1926,11 +1934,13 @@ $(document).on('change', "#form-listapersonal input[id='ListasPersonales_estadoL
 $(document).on('click', "a[data-role='tooltip']", function() {
     var id = 'autotooltip-' + uniqueId();
     var arrow = $(this).attr('data-arrow') ? $(this).attr('data-arrow') : "t";
-    var html = "<div data-role='popup' id='"+id+"' class='ui-content' data-arrow='"+arrow+"' data-theme='a'><p>"+$(this).attr('data-msg')+"</p></div>";
+    var html = "<div data-role='popup' id='" + id + "' class='ui-content' data-arrow='" + arrow + "' data-theme='a'><p>" + $(this).attr('data-msg') + "</p></div>";
     $('body').append(html);
     $("#" + id).popup({
-        positionTo:$(this),
-        afterclose: function( event, ui ) {$("#" + id).remove();}
+        positionTo: $(this),
+        afterclose: function(event, ui) {
+            $("#" + id).remove();
+        }
     });
     $("#" + id).popup("open");
 });
