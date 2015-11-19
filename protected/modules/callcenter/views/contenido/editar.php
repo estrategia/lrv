@@ -15,7 +15,7 @@
             <h2><i class="glyphicon glyphicon-file"></i> Modulos</h2>
         </div>
     </div>
-    <div class="box-content row">
+    <div class="box-content row" id='botones-modulos'>
         <div class="col-md-12">
             <div class="form-group">
                 <div class="center">

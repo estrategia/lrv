@@ -1,5 +1,3 @@
-/*********** Configuracion Modulos ************/
-
 $(document).on('click', "button[data-role='busqueda-contenido']", function(){
     
     var valorBusqueda = $.trim($("#contenido-busqueda-buscar").val());
@@ -109,18 +107,191 @@ $(document).on('click', "a[data-role='eliminar-producto-contenido']", function()
 
 
 $(document).on('click', 'input[name="marcas-contenido[]"]:checkbox', function(){
-    checkboxSeleccionados = "";
+    cargarCategoriasSeleccionadas($(this).attr('data-modulo'));
+});
+
+
+function cargarCategoriasSeleccionadas(attrIdModulo)
+{
+    var idMarcas = "";
 
     $('input[name="marcas-contenido[]"]:checked').each(function(index){
         if(index != 0)
         {
-            checkboxSeleccionados += ",";
+            idMarcas += ",";
         }
-        checkboxSeleccionados += $(this).val();
+        idMarcas += $(this).val();
+    });
+    
+    idModulo = attrIdModulo;
+    //if(idMarcas != "")
+    //{
+        $.ajax({
+            type: 'POST',
+            async: true,
+            url: requestUrl + '/callcenter/contenido/obtenerlistacategorias',
+            data: {idMarcas : idMarcas, idModulo : idModulo},
+            beforeSend: function(){
+
+            },
+            success: function(data){
+                var data = $.parseJSON(data);
+                if (data.result === "ok") {
+                    $("#categorias-marcas-seleccionadas").html(data.response.htmlCategorias);
+                } else if (data.result === 'error') {
+                    bootbox.alert(data.response);
+                }
+            },
+            complete: function(){
+
+            },
+            error: function(jqXHR, textStatus, errorThrown){
+
+            }
+        });
+    //}
+    //else
+    //{
+    //    $("#categorias-marcas-seleccionadas").html('');
+    //}
+}
+
+$(document).on('click', "input[data-role='almacenar-html-producto-marcas']", function(){
+
+    var idModulo = $(this).attr('data-modulo');
+    var htmlModulo = "";
+    var url = "agregarmarcascategorias";
+    var idMarcas = "";
+    var idCategorias = "";
+
+    if($("#ModulosConfigurados_contenido").length)
+    {
+        htmlModulo = $("#ModulosConfigurados_contenido").val();
+        url = "contenidohtmlproductos";
+    }
+
+    $('input[name="marcas-contenido[]"]:checked').each(function(index){
+        if(index != 0)
+        {
+            idMarcas += ",";
+        }
+        idMarcas += $(this).val();
+    });
+
+    $('input[name="categorias-contenido[]"]:checked').each(function(index){
+        if(index != 0)
+        {
+            idCategorias += ",";
+        }
+        idCategorias += $(this).val();
     });
 
 
-    console.log(checkboxSeleccionados);
+    //console.log("idModulo " + idModulo + " -- html " + htmlModulo + " -- marcas " + idMarcas + " -- categorias " + idCategorias);
+
+    $.ajax({
+        type: 'POST',
+        async: true,
+        url: requestUrl + '/callcenter/contenido/'+url,
+        data: {idModulo : idModulo, htmlModulo : htmlModulo, idMarcas : idMarcas, idCategorias : idCategorias},
+        beforeSend: function(){
+
+        },
+        success: function(data){
+            var data = $.parseJSON(data);
+            if (data.result === "ok") {
+                window.location.reload();
+            } else if (data.result === 'error') {
+                bootbox.alert(data.response);
+            }
+        },
+        complete: function(){
+
+        },
+        error: function(jqXHR, textStatus, errorThrown){
+            bootbox.alert('Error: ' + errorThrown);
+        }
+    });
 });
 
-/*********** Fin Configuracion Modulos ************/
+
+$(document).on('click', "button[data-role='cargar-productos-contenido']", function(){
+    //var form = $(this).parents("form");
+    var formulario = document.getElementById("cargarproducto");
+    var campo = document.createElement("input");
+    campo.type = 'hidden';
+    campo.value = $(this).attr("data-modulo");
+    campo.name = "idModulo";
+    campo.id = "idModulo";
+    
+    formulario.appendChild(campo);
+
+    var form = new FormData(formulario);
+    //console.log(form);
+    //var idModulo = ;
+    if($("#contenido-cargar-producto").val() != "")
+    {
+        $.ajax({
+            type: 'POST',
+            async: true,
+            url: requestUrl + '/callcenter/contenido/cargarplanoproductos',
+            data: form,
+            cache: false,
+            contentType: false,
+            processData: false,
+            beforeSend: function() {
+            },
+            complete: function() {
+                formulario.removeChild(campo);
+            },
+            success: function(data) {
+                //console.log(data);
+                var data = $.parseJSON(data);
+                if (data.result === "ok") {
+                    $("#contenido-productos-lista").html(data.response.htmlProductosAgregados); 
+                    //dialogoAnimado();
+                    $("#contenido-cargar-producto").val('');
+                } else if (data.result === 'error') {
+                    bootbox.alert(data.response);
+                }
+            },
+            error: function(jqXHR, textStatus, errorThrown) {
+                bootbox.alert('Error: ' + errorThrown);
+            }
+        });
+    }
+    else
+    {
+        bootbox.alert("Debe seleccionar un archivo en formato txt");
+    }
+
+    return false;
+});
+
+
+$(document).on('click', 'a[data-role="modulo-inactivar"]', function(){
+    var idModulo = $(this).attr("data-modulo");
+
+
+    $.ajax({
+        type: 'POST',
+        async: true,
+        url: requestUrl + '/callcenter/contenido/activardesactivarmodulo',
+        data: {idModulo : idModulo},
+        beforeSend: function() {
+        },
+        complete: function() {
+        },
+        success: function(data) {
+            var data = $.parseJSON(data);
+            if (data.result === "ok") {
+                $.fn.yiiGridView.update('grid-modulos');
+            } else if (data.result === 'error') {
+                bootbox.alert(data.response);
+            }
+        },
+        error: function(jqXHR, textStatus, errorThrown) {
+            bootbox.alert('Error: ' + errorThrown);
+        }
+    });
+});

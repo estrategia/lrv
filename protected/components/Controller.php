@@ -33,8 +33,7 @@ class Controller extends CController {
     public $sectorName = "";
     public $categorias = array();
     public $objSectorCiudad = null;
-    
-    
+
     public function init() {
         if (Yii::app()->detectMobileBrowser->showMobile) {
             $this->isMobile = true;
@@ -43,20 +42,49 @@ class Controller extends CController {
             $this->isMobile = false;
             $this->layout = '//layouts/desktop';
         }
-        
-        if (isset(Yii::app()->session[Yii::app()->params->sesion['sectorCiudadEntrega']]) && Yii::app()->session[Yii::app()->params->sesion['sectorCiudadEntrega']]!=null){
-            $this->objSectorCiudad = Yii::app()->session[Yii::app()->params->sesion['sectorCiudadEntrega']];
-        }
-        
+
         //$this->isMobile = true;
         //$this->layout = '//layouts/mobile';
+        $this->verificarDispositivo();
+
+        if (isset(Yii::app()->session[Yii::app()->params->sesion['sectorCiudadEntrega']]) && Yii::app()->session[Yii::app()->params->sesion['sectorCiudadEntrega']] != null) {
+            $this->objSectorCiudad = Yii::app()->session[Yii::app()->params->sesion['sectorCiudadEntrega']];
+        }
+
         $this->pageTitle = Yii::app()->name;
         $this->getSectorName();
         $this->registerJs();
         $this->registerCss();
-        
+
         if (!$this->isMobile) {
             $this->getCategorias();
+        }
+    }
+
+    public function verificarDispositivo() {
+        //Get HTTP/HTTPS (the possible values for this vary from server to server)
+        $urlProtocolo = (isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] && !in_array(strtolower($_SERVER['HTTPS']), array('off', 'no'))) ? 'https' : 'http';
+
+        //Get domain portion
+        $urlHost = '://' . $_SERVER['HTTP_HOST'];
+
+        //Get path to script
+        $urlRequest = $_SERVER['REQUEST_URI'];
+        
+        $urlFull = $urlProtocolo . $urlHost . $urlRequest;
+        $urlMovil = "://m.larebajavirtual.com";
+        $urlDesktop = "://larebajavirtual.com";
+
+        //si el host es movil y el dispositivo es escritorio => cambiar host por escritorio
+        if (!$this->isMobile && strpos($urlHost, $urlMovil) !== FALSE) {
+            $urlFull = str_replace($urlMovil, $urlDesktop, $urlFull);
+            header("Location: $urlFull");
+        }
+
+        //si el host es escritorio y el dispositivo es movil => cambiar host por movil
+        if ($this->isMobile && strpos($urlHost, $urlDesktop) !== FALSE) {
+            $urlFull = str_replace($urlDesktop, $urlMovil, $urlFull);
+            header("Location: $urlFull");
         }
     }
 
@@ -73,7 +101,7 @@ class Controller extends CController {
             $this->sectorName = "Seleccionar ubicación";
         }
     }
-   
+
     public function registerJs() {
         if ($this->isMobile) {
             /* $cs = Yii::app()->clientScript;
@@ -94,7 +122,7 @@ class Controller extends CController {
         } else {
             //    Yii::app()->getClientScript()->registerScriptFile(Yii::app()->request->baseUrl . "/libs/jquery/jquery-1.10.0.min.js", CClientScript::POS_HEAD);
             Yii::app()->getClientScript()->registerScriptFile(Yii::app()->request->baseUrl . "/libs/bootstrap/js/bootstrap.min.js", CClientScript::POS_HEAD);
-          //  Yii::app()->getClientScript()->registerScriptFile(Yii::app()->request->baseUrl . "/libs/jquery-ui/jquery-ui.min.js", CClientScript::POS_HEAD);
+            //  Yii::app()->getClientScript()->registerScriptFile(Yii::app()->request->baseUrl . "/libs/jquery-ui/jquery-ui.min.js", CClientScript::POS_HEAD);
             Yii::app()->getClientScript()->registerScriptFile(Yii::app()->request->baseUrl . "/libs/owl-carousel/owl.carousel.min.js", CClientScript::POS_HEAD);
             Yii::app()->getClientScript()->registerScriptFile(Yii::app()->request->baseUrl . "/libs/select2/select2.min.js", CClientScript::POS_HEAD);
             Yii::app()->getClientScript()->registerScriptFile(Yii::app()->request->baseUrl . "/libs/bootstrap/js/dropdown.js", CClientScript::POS_HEAD);
@@ -137,20 +165,19 @@ class Controller extends CController {
         }
     }
 
-  
     public function getCategorias() {
-            $categorias = CategoriaTienda::model()->findAll(array(
-                'order' => 't.orden',
-                'condition' => 't.tipoDispositivo=:dispositivo AND t.visible=:visible AND t.idCategoriaPadre IS NULL ',
-                'params' => array(
-                    ':visible' => 1,
-                    ':dispositivo' => CategoriaTienda::DISPOSITIVO_ESCRITORIO
-                ),
-                'with' => array('listCategoriasHijas' => array (
+        $categorias = CategoriaTienda::model()->findAll(array(
+            'order' => 't.orden',
+            'condition' => 't.tipoDispositivo=:dispositivo AND t.visible=:visible AND t.idCategoriaPadre IS NULL ',
+            'params' => array(
+                ':visible' => 1,
+                ':dispositivo' => CategoriaTienda::DISPOSITIVO_ESCRITORIO
+            ),
+            'with' => array('listCategoriasHijas' => array(
                     'with' => 'listModulosConfigurados'
                 )),
-            ));
-            $this->categorias = $categorias;
+        ));
+        $this->categorias = $categorias;
     }
 
 }

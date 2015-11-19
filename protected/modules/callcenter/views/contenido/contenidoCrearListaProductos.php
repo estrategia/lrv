@@ -12,25 +12,54 @@
 	        <div id="collapsible-cuerpo-productos-contenido" class="panel-collapse collapse in" role="tabpanel" aria-labelledby="encabezado-buscar-productos-contenido">
 	            <div class="panel-body">
 
-	                <form id="addproducto" method="post" name="addproducto">
+	                
 					    <div class="row">
-					    	<div class="col-md-5 col-md-offset-3">
-					            <input type="text" placeholder="Descripción" class="form-control input-sm"  data-modulo="<?php echo $model->idModulo ?>" maxlength="50" id="contenido-busqueda-buscar"> 
-					        </div>
-					        <div class="col-md-1">
-					            <button id="btn-pedido-buscar" type="button" class="btn btn-danger btn-sm" data-role="busqueda-contenido" data-modulo="<?php echo $model->idModulo ?>"><i class="glyphicon glyphicon-search"></i> Buscar</button>
-					        </div>
+					    	<form id="addproducto" method="post" name="addproducto">
+						    	<div class="col-md-5 col-md-offset-3">
+						    		<div class="form-group">
+						            	<input type="text" placeholder="Descripción" class="form-control input-sm"  data-modulo="<?php echo $model->idModulo ?>" maxlength="50" id="contenido-busqueda-buscar"> 
+						            </div>
+						        </div>
+						        <div class="col-md-1">
+						        	<div class="form-group">
+						            	<button id="btn-pedido-buscar" type="button" class="btn btn-danger btn-sm" data-role="busqueda-contenido" data-modulo="<?php echo $model->idModulo ?>"><i class="glyphicon glyphicon-search"></i> Buscar</button>
+						        	</div>
+						        </div>
+					        </form>
 					    </div>
-					</form>
+					    <div class="row">
+				    		<div class="col-md-6 col-md-offset-3">
+						    	<div class="alert alert-info">
+						            <p>El archivo debe ser en formato .txt</p>
+						            <p>Cada código de producto debe estar separado por un Enter.</p> 
+						            <p>Ej: </p>
+						            <p>20418</p>
+						            <p>22963</p>
+						            <p>27333</p>
+						        </div>
+					    	</div>
+					    </div>
+					    <div class="row">
+					    	<form id="cargarproducto" method="post" name="cargarproducto" enctype="multipart/form-data">
+						    	<div class="col-md-5 col-md-offset-3">
+							    	<div class="form-group">
+							    		<!--<a href="#" data-toggle='tooltip' data-placement='top' title="El archivo debe ser en formato .txt <br> Cada código de producto debe estar separado por un Enter. <br> Ej: <br />20418 22963&#10;27333" class="glyphicon glyphicon-question-sign"></a>-->
+							    		<input type="file" class="form-control input-sm" data-modulo="<?php echo $model->idModulo ?>" id="contenido-cargar-producto" name="contenido-cargar-producto">
+							    	</div>
+						    	</div>
+						    	<div class="col-md-1">
+						    		<div class="form-group">
+						    			<button class="btn btn-danger btn-sm" data-role="cargar-productos-contenido" data-modulo="<?php echo $model->idModulo ?>"><i class="glyphicon glyphicon-upload"></i> Cargar</button>
+						    		</div>
+						    	</div>
+					    	</form>
+					    </div>
+					
 					<div class="panel-body">
 						<div class="row">
 							<div class="col-md-12">
 								<div id="contenido-productos-lista">
-									<?php if(count($model->listProductosModulos) == 0): ?>
-										<p>No hay productos en la lista</p>
-									<?php else: ?>
-										<?php $this->renderPartial('_listaModuloProductos', array("model" => $model)); ?>
-									<?php endif; ?>
+									<?php $this->renderPartial('_listaModuloProductos', array("model" => $model)); ?>
 								</div>
 							</div>
 						</div>
@@ -52,17 +81,14 @@
 	        <div id="collapsible-cuerpo-marcas-contenido" class="panel-collapse collapse" role="tabpanel" aria-labelledby="encabezado-buscar-marcas-contenido">
 	            <div class="panel-body">
 	                
-	                <div class="col-md-6" style="height:250px;overflow-y: scroll;">
-	  	              	<?php echo CHtml::checkboxList('marcas-contenido', null, $arrayMarcas ,array('class' => '','style' => ''))?>
-	                </div>
-
-	                <div class="col-md-6" style="height:250px;overflow-y: scroll;">
-	                	
-	                </div>
+	                <?php $this->renderPartial('_listaMarcaCategorias', array("model" => $model, "arrayMarcas" => $arrayMarcas)); ?>
 
 	            </div>
 	        </div>
 	    </div>
 
+	</div>
+	<div class="row">
+		<?php echo CHtml::button('Guardar Contenidos', array('class' => "btn btn-default", "data-modulo" => $model->idModulo, 'data-role' => 'almacenar-html-producto-marcas')); ?>
 	</div>
 </div>

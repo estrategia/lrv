@@ -34,18 +34,7 @@
             <!-- producto agregado -->
         </div>
 
-        <?php if (!in_array($data->idUnidadNegocioBI, Yii::app()->params->calificacion['categoriasNoCalificacion'])): ?>
-            <div class="" style="text-align:center">
-                <div class="ranking-list" >
-                    <div id="raty-lectura-producto-<?php echo $data->codigoProducto ?>" data-role="raty" data-readonly="true" data-score="<?php echo $data->getCalificacion() ?>"></div>
-                    <?php if ($data->objCodigoEspecial->rutaIcono != ""): ?>
-                        <a class='pop_codigo img-responsive product-prom' role="button" data-toggle="popover" title="" data-content="<?php echo $data->objCodigoEspecial->descripcion ?>" >
-                            <img src="<?php echo Yii::app()->request->baseUrl . Yii::app()->params->carpetaImagen['codigoEspecial'] . "/" . $data->objCodigoEspecial->rutaIcono ?>"/>
-                        </a>
-                    <?php endif; ?>    
-                </div>
-            </div>
-        <?php endif; ?>
+       
         <div class="content_product">
             <div class="line-bottom">
                 <p style="min-height: 41px">
@@ -94,9 +83,7 @@
 
             <?php endif; ?>
 
-            <?php if ($data->fraccionado == 1): ?>
-                <span class="fraccion_text">PRODUCTO FRACCIONADO</span>
-            <?php endif; ?> 
+            
         </div>
 
         <?php if ($this->objSectorCiudad == null): ?>
@@ -135,6 +122,21 @@
                         <?php echo CHtml::link('<div class="button">Comparar <img src="' . Yii::app()->baseUrl . '/images/desktop/button-carrito.png" alt=""></div>', '#', array('data-producto' => $data->codigoProducto, 'data-role' => 'comparar')); ?>
                     </div>
                 <?php endif; ?>
+                 <?php if (!in_array($data->idUnidadNegocioBI, Yii::app()->params->calificacion['categoriasNoCalificacion'])): ?>
+            <div class="" style="text-align:center">
+                <div class="ranking-list" >
+                    <div id="raty-lectura-producto-<?php echo $data->codigoProducto ?>" data-role="raty" data-readonly="true" data-score="<?php echo $data->getCalificacion() ?>"></div>
+                    <?php if ($data->objCodigoEspecial->rutaIcono != ""): ?>
+                        <a class='pop_codigo img-responsive product-prom' role="button" data-toggle="popover" title="" data-content="<?php echo $data->objCodigoEspecial->descripcion ?>" >
+                            <img src="<?php echo Yii::app()->request->baseUrl . Yii::app()->params->carpetaImagen['codigoEspecial'] . "/" . $data->objCodigoEspecial->rutaIcono ?>"/>
+                        </a>
+                    <?php endif; ?>    
+                </div>
+            </div>
+        <?php endif; ?>
+        <?php if ($data->fraccionado == 1): ?>
+                <span class="fraccion_text">Producto fraccionado</span>
+            <?php endif; ?> 
             </div>
         <?php elseif (!$objPrecio->inicializado()): ?>
             <div class="col-md-12">
@@ -143,6 +145,21 @@
         <?php else: ?>
             <div class="botones-list">
                 <?php echo CHtml::link('<div class="button">Ver producto</div>', CController::createUrl('/catalogo/producto', array('producto' => $data->codigoProducto))); ?>
+                 <?php if (!in_array($data->idUnidadNegocioBI, Yii::app()->params->calificacion['categoriasNoCalificacion'])): ?>
+            <div class="" style="text-align:center">
+                <div class="ranking-list" >
+                    <div id="raty-lectura-producto-<?php echo $data->codigoProducto ?>" data-role="raty" data-readonly="true" data-score="<?php echo $data->getCalificacion() ?>"></div>
+                    <?php if ($data->objCodigoEspecial->rutaIcono != ""): ?>
+                        <a class='pop_codigo img-responsive product-prom' role="button" data-toggle="popover" title="" data-content="<?php echo $data->objCodigoEspecial->descripcion ?>" >
+                            <img src="<?php echo Yii::app()->request->baseUrl . Yii::app()->params->carpetaImagen['codigoEspecial'] . "/" . $data->objCodigoEspecial->rutaIcono ?>"/>
+                        </a>
+                    <?php endif; ?>    
+                </div>
+            </div>
+        <?php endif; ?>
+        <?php if ($data->fraccionado == 1): ?>
+                <span class="fraccion_text">Producto fraccionado</span>
+            <?php endif; ?> 
             </div>
         <?php endif; ?>    
     </div>  
