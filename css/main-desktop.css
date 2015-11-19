@@ -1,3 +1,6 @@
+.botones-list .ranking-list {
+    margin: 5px 0;
+}
 .img-list-products {
     position: relative;
 }
@@ -284,8 +287,13 @@ input#RegistroForm_condiciones[type="checkbox"] + label span {
     padding: 5px 15px;
 }
 .fraccion_text {
+    background: #ffdf1e none repeat scroll 0 0;
+    color: #ea0001 !important;
     display: block;
-    padding: 5px 0;
+    font-size: 12px;
+    margin: 5px 0;
+    padding: 3px 0;
+    text-align: center;
 }
 .btn-addless-cantidad {
     background: rgba(0, 0, 0, 0) none repeat scroll 0 0;
@@ -1143,10 +1151,10 @@ a:hover{
 .detalles h3{
     color:#EA0001;
 }
-
 .steps ul {
-    display: table;
-    padding: 0px;
+    display: block;
+    padding: 0;
+    width: 100%;
 }
 
 .steps ul li {
@@ -1156,21 +1164,21 @@ a:hover{
     font-size: small;
     letter-spacing: -1px;
     list-style: outside none none;
-    width: 277px;
     text-align: center;
+    width: 25%;
 }
 .steps li {
-    padding: 0px 42px;
+    vertical-align: middle;
 
 }
 .iconStep {
     background-position: center top;
     background-size: 100% auto;
-    display:block;
+    display: inline-block;
     height: 70px;
+    vertical-align: middle;
     width: 100px;
 }
-
 .iconStep.step1 {
     background-image: url("../images/iconos/icons_carro/desktop/despacho.png");
 }
@@ -1197,13 +1205,12 @@ li.active .iconStep {
 .steps p {
     margin: 0px;
 }
-.text{
+.text {
+    color: #a4a4a4;
     display: inline-block;
-    position: absolute;
     font-size: 22px;
-    color: #A4A4A4;
-    margin-top: -46px;
-
+    margin-top: 20px;
+    vertical-align: middle;
 }
 
 .desplegables{

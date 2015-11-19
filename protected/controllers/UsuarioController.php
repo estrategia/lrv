@@ -43,7 +43,7 @@ class UsuarioController extends Controller {
     public function actionIndex() {
         if ($this->isMobile) {
             $this->showSeeker = false;
-            $this->render('d_menu');
+            $this->render('menu');
         } else {
             $this->actionInfopersonal();
         }
@@ -388,8 +388,10 @@ class UsuarioController extends Controller {
                         Yii::app()->end();
                     }
 
-                    if ($model->profesion != null)
+                    if ($model->profesion != null && !empty($model->profesion))
                         $usuarioExt->codigoProfesion = $model->profesion;
+                    else
+                        $usuarioExt->codigoProfesion = null;
 
                     if ($model->genero != null)
                         $usuarioExt->genero = $model->genero;

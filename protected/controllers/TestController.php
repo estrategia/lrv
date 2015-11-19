@@ -598,13 +598,16 @@ class TestController extends Controller {
 
     public function actionProducto($codigo) {
         $objProducto = Producto::model()->find(array(
-            'condition' => 'codigoProducto=:codigo',
+            //'with' => 'listImagenesGrandes',
+            'condition' => 't.codigoProducto=:codigo',
             'params' => array(
                 ':codigo' => $codigo,
             ),
         ));
+        
+        CVarDumper::dump($objProducto->listImagenesGrandes, 10, true);
 
-        CVarDumper::dump($objProducto->listCategoriasTienda, 3, true);
+        //CVarDumper::dump($objProducto->listCategoriasTienda, 3, true);
 
         echo "<br/><br/>";
 
