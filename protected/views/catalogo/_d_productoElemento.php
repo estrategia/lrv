@@ -135,7 +135,7 @@
             </div>
         <?php endif; ?>
         <?php if ($data->fraccionado == 1): ?>
-                <span class="fraccion_text">PRODUCTO FRACCIONADO</span>
+                <span class="fraccion_text">Producto fraccionado</span>
             <?php endif; ?> 
             </div>
         <?php elseif (!$objPrecio->inicializado()): ?>
@@ -158,7 +158,7 @@
             </div>
         <?php endif; ?>
         <?php if ($data->fraccionado == 1): ?>
-                <span class="fraccion_text">PRODUCTO FRACCIONADO</span>
+                <span class="fraccion_text">Producto fraccionado</span>
             <?php endif; ?> 
             </div>
         <?php endif; ?>    
