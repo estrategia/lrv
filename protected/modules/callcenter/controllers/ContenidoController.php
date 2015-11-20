@@ -1084,9 +1084,7 @@ class ContenidoController extends ControllerOperator {
         $transaction = Yii::app()->db->beginTransaction();
         try 
         {
-            $query = "DELETE 
-                      FROM t_ProductosModulos
-                      WHERE idModulo = :idModulo AND idMarca IS NOT NULL AND idCategoriaBI IS NOT NULL";
+            $query = "DELETE FROM t_ProductosModulos WHERE idModulo = :idModulo AND codigoProducto IS NULL";
 
             $command = Yii::app()->db->createCommand($query);
             $command->bindParam(":idModulo", $idModulo, PDO::PARAM_STR);
@@ -1120,7 +1118,7 @@ class ContenidoController extends ControllerOperator {
 
             $transaction->commit();
 
-            Yii::app()->user->setFlash('alert alert-success', "El contenido ha sido agregado con exito, al modulo ".$model->idModulo);
+            Yii::app()->user->setFlash('alert alert-success', "El contenido ha sido agregado con exito, al modulo :  $idModulo");
 
             echo CJSON::encode(array(
                 'result' => 'ok'
