@@ -19,4 +19,4 @@
         <?php $this->renderPartial('_opciones') ?>
     </div>
 </div>
-<?php $this->renderPartial('_gridModulos', array('model' => $model)); ?>
+<?php $this->renderPartial('_gridModulos', array('model' => $model, 'vista' => 'index')); ?>

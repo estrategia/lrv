@@ -248,3 +248,45 @@ $(document).on('click', "a[data-role='agregar-modulo-grupo']", function(){
         }
     });
 });
+
+
+$(document).on('click', "a[data-role='modulo-visualizar']", function(){
+
+    var idModulo = $(this).attr("data-modulo");
+     $.ajax({
+        type: 'GET',
+        async: true,
+        url: requestUrl + '/callcenter/contenido/visualizarModulo',
+        data: { idModulo:idModulo},
+        beforeSend: function(){
+            Loading.show();
+        },
+        success: function(data){
+            var data = $.parseJSON(data);
+            if (data.result == "ok") {
+                $("#modal-previsualizar").remove();
+                $("#container").append(data.response);
+                $(".slide-productos").owlCarousel({
+                    items: 4,
+                    lazyLoad: true,
+                    navigation: true,
+                    pagination:false,
+                    navigationText: [
+                        "<i class='glyphicon glyphicon-chevron-left'></i>",
+                        "<i class='glyphicon glyphicon-chevron-right'></i>"
+                    ]
+                });
+                $("#modal-previsualizar").modal('show');
+                
+            }else if(data.result == "error"){
+                bootbox.alert(data.response);
+            }
+        },
+        complete: function(){
+            Loading.hide();
+        },
+        error: function(jqXHR, textStatus, errorThrown){
+
+        }
+    });
+});
