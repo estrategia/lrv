@@ -41,7 +41,7 @@
                     <td><?php echo $modulos->objModulo->descripcion ?></td>
                     <td><?php echo CHtml::textField('orden',$modulos->orden, array('id' => 'orden_'.$modulos->idModulo)) ?></td>
                     <td><?php echo CHtml::link("Actualizar", '#', array("data-role" => "agregar-modulo-grupo","data-idModulo" => $modulos->idModulo, 'data-accion' => '2'));?></td>
-                    <td><?php echo CHtml::link("Visualizar", '#', array("data-role" => "agregar-modulo-grupo","data-idModulo" => $modulos->idModulo, 'data-accion' => ''));?></td>
+                    <td><?php echo CHtml::link("Visualizar", '#', array("data-role" => "modulo-visualizar", 'data-modulo' =>$modulos->idModulo));?></td>
                     <td><?php echo CHtml::link("Eliminar", '#', array("data-role" => "agregar-modulo-grupo","data-idModulo" => $modulos->idModulo, 'data-accion' => '3'));?></td>
                 </tr>
             <?php endforeach; ?>

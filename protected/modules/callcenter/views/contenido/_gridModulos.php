@@ -1,20 +1,5 @@
 <?php
-$this->widget('zii.widgets.grid.CGridView', array(
-    'pager' => array(
-        'header' => '',
-        'firstPageLabel' => '&lt;&lt;',
-        'prevPageLabel' => 'Anterior',
-        'nextPageLabel' => 'Siguiente',
-        'lastPageLabel' => '&gt;&gt;',
-        'maxButtonCount' => 3
-    ),
-    'id' => 'grid-modulos',
-    'beforeAjaxUpdate' => new CJavaScriptExpression("function() { }"),
-    'afterAjaxUpdate' => new CJavaScriptExpression("function() { }"),
-    'ajaxUpdateError' => new CJavaScriptExpression("function() { bootbox.alert('Error, intente de nuevo');}"),
-    'dataProvider' => $model->search(),
-    'filter' => $model,
-    'columns' => array(
+$columns = array(
         array(
             'header' => '#',
             'value' => '$data->idModulo',
@@ -112,18 +97,59 @@ $this->widget('zii.widgets.grid.CGridView', array(
             'value' => '$data->descripcion',
             'filter' => CHtml::activeTextField($model, 'descripcion', array('class' => 'form-control')),
         ),
-        array(
-            'header' => 'Editar',
-            'type' => 'raw',
-            'value' => 'CHtml::link("Editar", Yii::app()->createAbsoluteUrl("/callcenter/contenido/editar", array("idModulo" => $data->idModulo, "opcion" => "editar")), array("data-ajax"=>"false"))'
-        ),
-        array(
-            'header' => 'Inactivar',
-            'type' => 'raw',
-            'value' => function($data){
-                return '<a href="#" data-role="modulo-inactivar" data-modulo="'.$data->idModulo.'" >'.($data->estado == "1" ? "inactivar": "activar").'</a>';
-            }
-        )
+        
+            ) ;
+        
+        if($vista == 'index'){    
+            $columns[] = array(
+                'header' => 'Editar',
+                'type' => 'raw',
+                'value' => 'CHtml::link("Editar", Yii::app()->createAbsoluteUrl("/callcenter/contenido/editar", array("idModulo" => $data->idModulo, "opcion" => "editar")), array("data-ajax"=>"false"))'
+            );
+            $columns[] = array(
+                'header' => 'Inactivar',
+                'type' => 'raw',
+                'value' => function($data){
+                    return '<a href="#" data-role="modulo-inactivar" data-modulo="'.$data->idModulo.'" >'.($data->estado == "1" ? "inactivar": "activar").'</a>';
+                }
+            );
+        }else{
+            $columns[] =  array(
+                'header' => 'Opción',
+                'type' => 'raw',
+                'value' => function($data) {
+                    if(count($data->objModuloGrupo)>0){
+                        return "Adicionado";
+                    }else{
+                        return CHtml::link("Adicionar", '#', array("data-role" => "agregar-modulo-grupo","data-idModulo" => $data->idModulo, 'data-accion' => '1'));
+                    }
+                }
+            );
+            
+        }
+        $columns[] = array(
+                'header' => 'Visualizar',
+                'type' => 'raw',
+                'value' => '\'<a href="#" data-role="modulo-visualizar" data-modulo="\'.$data->idModulo.\'" >Visualizar</a>\''
+            );
+        
+$this->widget('zii.widgets.grid.CGridView', array(
+    'pager' => array(
+        'header' => '',
+        'firstPageLabel' => '&lt;&lt;',
+        'prevPageLabel' => 'Anterior',
+        'nextPageLabel' => 'Siguiente',
+        'lastPageLabel' => '&gt;&gt;',
+        'maxButtonCount' => 3
     ),
+    'id' => 'grid-modulos',
+    'beforeAjaxUpdate' => new CJavaScriptExpression("function() { }"),
+    'afterAjaxUpdate' => new CJavaScriptExpression("function() { }"),
+    'ajaxUpdateError' => new CJavaScriptExpression("function() { bootbox.alert('Error, intente de nuevo');}"),
+    'dataProvider' => ($vista == 'index')?$model->search():$model->searchModulos($idModulo),
+    'filter' => $model,
+    'columns' => $columns
+        
+    ,
 ));
 ?>

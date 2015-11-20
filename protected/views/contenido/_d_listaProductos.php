@@ -11,7 +11,7 @@
                 <div class="item">
                     <ul class="listaProductos">
                         <?php
-                        $this->renderPartial('/catalogo/_d_productoElemento', array(
+                        $this->renderPartial('//catalogo/_d_productoElemento', array(
                             'data' => $objProducto,
                             'vista' => 'relacionado'
                         ));

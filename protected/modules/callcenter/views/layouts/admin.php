@@ -14,6 +14,9 @@
         <?php Yii::app()->clientScript->registerCoreScript('jquery'); ?>
         <?php //Yii::app()->clientScript->registerCoreScript('jquery.ui'); ?>
         
+        <?php Yii::app()->getClientScript()->registerCssFile(Yii::app()->request->baseUrl . "/libs/owl-carousel/owl.carousel.css");?>
+        <?php Yii::app()->getClientScript()->registerCssFile(Yii::app()->request->baseUrl . "/libs/owl-carousel/owl.theme.css")?>
+        <?php Yii::app()->getClientScript()->registerCssFile(Yii::app()->request->baseUrl . "/css/main-desktop.css"); ?>
         <?php Yii::app()->getClientScript()->registerCssFile(Yii::app()->request->baseUrl . "/css/operator.css"); ?>
     </head>
 
@@ -108,8 +111,8 @@
 
         
     </body>
+    <script src="<?php echo Yii::app()->request->baseUrl; ?>/libs/owl-carousel/owl.carousel.min.js"></script>
     <script src="<?php echo Yii::app()->request->baseUrl; ?>/js/operator.js"></script>
     <script src="<?php echo Yii::app()->request->baseUrl; ?>/js/modulos-jj.js"></script>
     <script src="<?php echo Yii::app()->request->baseUrl; ?>/js/modulos-om.js"></script>
-    <script src="<?php echo Yii::app()->request->baseUrl; ?>/js/modulos-jj.js"></script>
 </html>

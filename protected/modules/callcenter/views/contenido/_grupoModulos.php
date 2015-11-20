@@ -1,6 +1,6 @@
 <input type="hidden" name="idModulo" value="<?php echo $idModulo?>" id="idGrupoModulo" />    
 <div id="grid-modulo-modulos">    
-<?php $this->renderPartial('_gridGrupoModulos', array('modelModulos' => $modelModulos, 'idModulo' => $idModulo)) ?>
+<?php $this->renderPartial('_gridModulos', array('model' => $modelModulos, 'idModulo' => $idModulo, 'vista' => 'grupomodulos')) ?>
 </div>
 
 
