@@ -64,7 +64,7 @@ class ModulosConfigurados extends CActiveRecord {
         // NOTE: you may need to adjust the relation name and the related
         // class name for the relations automatically generated below.
         return array(
-            'listImagenesBanners' => array(self::HAS_MANY, 'ImagenBanner', 'idModulo', 'order'=>'listImagenesBanners.orden ASC'),
+            'listImagenesBanners' => array(self::HAS_MANY, 'ImagenBanner', 'idModulo', 'order' => 'listImagenesBanners.orden ASC'),
             'listModulosSectoresCiudades' => array(self::HAS_MANY, 'ModuloSectorCiudad', 'idModulo'),
             'listProductosModulos' => array(self::HAS_MANY, 'ProductosModulos', 'idModulo'),
             'listUbicacionesModulos' => array(self::HAS_MANY, 'UbicacionModulos', 'idModulo'),
@@ -160,22 +160,62 @@ class ModulosConfigurados extends CActiveRecord {
     public function getListaProductos($objSectorCiudad) {
 
         $listaCodigos = array();
+        $listaCodigosCategoria = array();
+        $listaCodigosMarca = array();
 
         foreach ($this->listProductosModulos as $objProductoModulo) {
-            $listaCodigos[] = $objProductoModulo->codigoProducto;
+            if ($objProductoModulo->codigoProducto !== null)
+                $listaCodigos[] = $objProductoModulo->codigoProducto;
+            if ($objProductoModulo->idCategoriaBI !== null)
+                $listaCodigosCategoria[] = $objProductoModulo->idCategoriaBI;
+            if ($objProductoModulo->idMarca !== null)
+                $listaCodigosMarca[] = $objProductoModulo->idMarca;
         }
 
         $listaProductos = array();
 
-        if (!empty($listaCodigos)) {
+        if (!empty($listaCodigos) || !empty($listaCodigosCategoria) || !empty($listaCodigosMarca)) {
             $criteria = array(
                 'order' => 't.orden DESC',
                 'with' => array('listImagenes', 'objCodigoEspecial', 'listCalificaciones'),
-                'condition' => "t.activo=:activo AND t.codigoProducto IN (" . implode(",", $listaCodigos) . ") AND (listImagenes.tipoImagen='" . Yii::app()->params->producto['tipoImagen']['mini'] . "' OR listImagenes.tipoImagen IS NULL)",
+                'condition' => "t.activo=:activo AND (listImagenes.tipoImagen='" . Yii::app()->params->producto['tipoImagen']['mini'] . "' OR listImagenes.tipoImagen IS NULL)",
                 'params' => array(
                     ':activo' => 1,
                 )
             );
+
+            $condition = "";
+
+            if (!empty($listaCodigos)) {
+                $condition .= "t.codigoProducto IN (" . implode(",", $listaCodigos) . ")";
+            }
+
+            if (!empty($listaCodigosCategoria) || !empty($listaCodigosMarca)) {
+                $conditionAux = "";
+
+                if (!empty($listaCodigosCategoria)) {
+                    $conditionAux .= "t.idCategoriaBI IN (" . implode(",", $listaCodigosCategoria) . ")";
+                }
+
+                if (!empty($listaCodigosMarca)) {
+                    if (!empty($conditionAux)) {
+                        $conditionAux .= " AND";
+                    }
+                    
+                    $conditionAux .= " t.idMarca IN (" . implode(",", $listaCodigosMarca) . ")";
+                }
+
+                if (empty($condition)) {
+                    $condition = " AND $conditionAux";
+                } else {
+                    $condition = " AND ($condition OR ($conditionAux))";
+                }
+            } else {
+                if (!empty($condition))
+                    $condition = " AND $condition";
+            }
+
+            $criteria['condition'] .= " $condition";
 
             if ($objSectorCiudad !== null) {
                 $criteria['with']['listSaldos'] = array('condition' => '(listSaldos.codigoCiudad=:ciudad AND listSaldos.codigoSector=:sector) OR (listSaldos.saldoUnidad IS NULL AND listSaldos.codigoCiudad IS NULL AND listSaldos.codigoSector IS NULL)');
@@ -197,7 +237,7 @@ class ModulosConfigurados extends CActiveRecord {
         $fecha = new DateTime;
 
         $criteria = array(
-            'with' => array('listImagenesBanners', 'listUbicacionesModulos', 'listModulosSectoresCiudades','listPerfiles'),
+            'with' => array('listImagenesBanners', 'listUbicacionesModulos', 'listModulosSectoresCiudades', 'listPerfiles'),
             'order' => 'listUbicacionesModulos.orden, listImagenesBanners.orden',
             'condition' => 't.estado=:estado AND t.tipo =:tipo AND t.dias LIKE :dia AND t.inicio<=:fecha AND t.fin>=:fecha AND listUbicacionesModulos.ubicacion=:ubicacion AND (listPerfiles.idPerfil =:perfilA  OR listPerfiles.idPerfil =:perfil )',
             'params' => array(
@@ -305,10 +345,10 @@ class ModulosConfigurados extends CActiveRecord {
 
         return ModulosConfigurados::model()->find($criteria);
     }
-    
-    public static function getModulosGrupo($idGrupo){
+
+    public static function getModulosGrupo($idGrupo) {
         $fecha = new DateTime;
-        
+
         $objModulo = ModulosConfigurados::model()->find(array(
             'order' => 'listModulosGrupo_listModulosGrupo.orden',
             'with' => 'listModulosGrupo',
@@ -319,20 +359,20 @@ class ModulosConfigurados extends CActiveRecord {
                 ':modulo' => $idGrupo
             )
         ));
-        
-        if($objModulo==null){
+
+        if ($objModulo == null) {
             return array();
-        }else{
+        } else {
             return $objModulo->listModulosGrupo;
         }
     }
 
     public static function getModulos($objSectorCiudad, $codigoPerfil, $ubicacion, $categoria = null) {
         $fecha = new DateTime;
-        
+
         $criteria = array(
             'order' => 'listUbicacionesModulos.orden',
-            'with' => array('listModulosSectoresCiudades','listPerfiles'),
+            'with' => array('listModulosSectoresCiudades', 'listPerfiles'),
             'condition' => "t.estado=:estado AND t.dias LIKE :dia AND t.inicio<=:fecha AND t.fin>=:fecha AND listUbicacionesModulos.ubicacion=:ubicacion AND (listPerfiles.idPerfil =:perfilA  OR listPerfiles.idPerfil =:perfil )",
             'params' => array(
                 ':estado' => 1,
@@ -343,14 +383,14 @@ class ModulosConfigurados extends CActiveRecord {
                 ':perfilA' => Yii::app()->params->perfil['*']
             )
         );
-        
+
         if ($categoria == null) {
             $criteria['with'][] = 'listUbicacionesModulos';
         } else {
             $criteria['with']['listUbicacionesModulos'] = array('with' => 'listUbicacionesCategorias');
             $criteria['condition'] .= " AND listUbicacionesCategorias.idCategoriaTienda = $categoria";
         }
-        
+
         if ($objSectorCiudad == null) {
             $criteria['condition'] .= " AND listModulosSectoresCiudades.codigoCiudad=:ciudad AND listModulosSectoresCiudades.codigoSector=:sector";
             $criteria['params'][':sector'] = Yii::app()->params->sector['*'];
@@ -359,7 +399,7 @@ class ModulosConfigurados extends CActiveRecord {
             $condicion = " AND ( (listModulosSectoresCiudades.codigoCiudad=:ciudadA AND listModulosSectoresCiudades.codigoSector=:sectorA)";
             $condicion .= " OR (listModulosSectoresCiudades.codigoCiudad=:ciudad AND listModulosSectoresCiudades.codigoSector=:sectorA)";
             $condicion .= " OR (listModulosSectoresCiudades.codigoCiudad=:ciudad AND listModulosSectoresCiudades.codigoSector=:sector))";
-            
+
             $criteria['condition'] .= $condicion;
             $criteria['params'][':sectorA'] = Yii::app()->params->sector['*'];
             $criteria['params'][':ciudadA'] = Yii::app()->params->ciudad['*'];

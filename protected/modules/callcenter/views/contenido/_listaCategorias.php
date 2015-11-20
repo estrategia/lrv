@@ -6,6 +6,4 @@
 	<?php endforeach; ?>
 
 <?php endif; ?>
-
-
-<?php echo CHtml::checkboxList('categorias-contenido', $arrayCategoriasSeleccionadas, $arrayCategorias ,array('class' => '','style' => ''))?>
+<?php echo CHtml::checkboxList('categorias-contenido', $arrayCategoriasSeleccionadas, $arrayCategorias, array('class' => '', 'style' => ''))?>
