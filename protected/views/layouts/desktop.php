@@ -112,17 +112,17 @@
                                             <ul class="submenu">
                                                 <?php foreach ($categoria->listCategoriasHijas as $subcategoria): ?>
                                                     <div class="section-submenu">
-                                                         <?php if(count($subcategoria->listModulosConfigurados)>0):?>
-                                                        <?php echo CHtml::link("<li class='title-submenu'><span class='glyphicon glyphicon-chevron-right' aria-hidden='true'></span>$subcategoria->nombreCategoriaTienda</li>", CController::createUrl('/catalogo/division', array('division' => $subcategoria->idCategoriaTienda))); ?>
-                                                        <?php else:?>
-                                                                <li class='title-submenu'><span class='glyphicon glyphicon-chevron-right' aria-hidden='true'></span><?php echo $subcategoria->nombreCategoriaTienda?></li>
-                                                        <?php endif;?>
-                                                         <?php foreach ($subcategoria->listCategoriasHijasMenu as $categoriaHija): ?>
-                                                           <?php if(count($subcategoria->listModulosConfigurados)>0):?>
-                                                                    <li><?php echo $categoriaHija->nombreCategoriaTienda ?></li>
-                                                                <?php else:?>
-                                                                    <?php echo CHtml::link("<li>$categoriaHija->nombreCategoriaTienda</li>", CController::createUrl('/catalogo/categoria', array('categoria' => $categoriaHija->idCategoriaTienda))); ?>
-                                                                <?php endif;?>
+                                                        <?php if (count($subcategoria->listModulosConfigurados) > 0): ?>
+                                                            <?php echo CHtml::link("<li class='title-submenu'><span class='glyphicon glyphicon-chevron-right' aria-hidden='true'></span>$subcategoria->nombreCategoriaTienda</li>", CController::createUrl('/catalogo/division', array('division' => $subcategoria->idCategoriaTienda))); ?>
+                                                        <?php else: ?>
+                                                            <li class='title-submenu'><span class='glyphicon glyphicon-chevron-right' aria-hidden='true'></span><?php echo $subcategoria->nombreCategoriaTienda ?></li>
+                                                        <?php endif; ?>
+                                                        <?php foreach ($subcategoria->listCategoriasHijasMenu as $categoriaHija): ?>
+                                                            <?php if (count($subcategoria->listModulosConfigurados) > 0): ?>
+                                                                <li><?php echo $categoriaHija->nombreCategoriaTienda ?></li>
+                                                            <?php else: ?>
+                                                                <?php echo CHtml::link("<li>$categoriaHija->nombreCategoriaTienda</li>", CController::createUrl('/catalogo/categoria', array('categoria' => $categoriaHija->idCategoriaTienda))); ?>
+                                                            <?php endif; ?>
                                                         <?php endforeach; ?>
                                                     </div>
                                                 <?php endforeach; ?>
@@ -143,6 +143,28 @@
                 </ul>
             </nav>
             <!--fin menu-->
+
+            <!--inicio migas de pan-->
+            <?php if (isset($this->breadcrumbs) && !(empty($this->breadcrumbs))): ?>
+                <section>
+                    <div class="container">
+                        <?php
+                        $this->widget('zii.widgets.CBreadcrumbs', array(
+                            'links' => $this->breadcrumbs,
+                            'encodeLabel' => false,
+                            'homeLink' => false,
+                            'tagName' => 'ol',
+                            'separator' => '',
+                            'activeLinkTemplate' => '<li><a href="{url}">{label}</a></li>',
+                            'inactiveLinkTemplate' => '<li class="active">{label}</li>',
+                            'htmlOptions' => array('class' => 'breadcrumb')
+                        ));
+                        ?>
+                    </div>
+                </section>
+            <?php endif ?>
+            <!--fin migas de pan-->
+
             <!-- <div class="container"> -->
             <?php echo $content; ?>
             <!-- </div> -->

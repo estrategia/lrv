@@ -352,6 +352,14 @@ class UsuarioController extends Controller {
     public function actionInfopersonal() {
         $this->showSeeker = false;
 
+        if (!$this->isMobile) {
+            $this->breadcrumbs = array(
+                'Inicio' => array('/'),
+                'Mi cuenta' => array('/usuario'),
+                'Informaci&oacute;n personal'
+            );
+        }
+
         $model = new RegistroForm('actualizar');
         //$usuario = Yii::app()->session[Yii::app()->params->usuario['sesion']];
         $usuario = Usuario::model()->find(array(
@@ -456,6 +464,14 @@ class UsuarioController extends Controller {
 
     public function actionContrasena() {
         $this->showSeeker = false;
+
+        if (!$this->isMobile) {
+            $this->breadcrumbs = array(
+                'Inicio' => array('/'),
+                'Mi cuenta' => array('/usuario'),
+                'Cambiar contrase&ntilde;a'
+            );
+        }
 
         $model = new RegistroForm('contrasena');
         //$usuario = Yii::app()->session[Yii::app()->params->usuario['sesion']];
@@ -573,6 +589,12 @@ class UsuarioController extends Controller {
         if ($this->isMobile) {
             $this->render('pagoExpress', $params);
         } else {
+            $this->breadcrumbs = array(
+                'Inicio' => array('/'),
+                'Mi cuenta' => array('/usuario'),
+                'Pago express'
+            );
+            
             $this->render('d_usuario', array('vista' => 'd_pagoExpress', 'params' => $params));
         }
     }
@@ -585,11 +607,16 @@ class UsuarioController extends Controller {
             $model->attributes = $_GET['Compras'];
         $model->activa = 1;
         $model->identificacionUsuario = Yii::app()->user->name;
-        
+
         $params = array('model' => $model);
         if ($this->isMobile) {
             $this->render('pedidos', $params);
         } else {
+            $this->breadcrumbs = array(
+                'Inicio' => array('/'),
+                'Mi cuenta' => array('/usuario'),
+                'Listado de pedidos'
+            );
             $this->render('d_usuario', array('vista' => 'd_pedidos', 'params' => $params));
         }
     }
@@ -636,6 +663,12 @@ class UsuarioController extends Controller {
         if ($this->isMobile) {
             $this->render('cotizaciones', $params);
         } else {
+            $this->breadcrumbs = array(
+                'Inicio' => array('/'),
+                'Mi cuenta' => array('/usuario'),
+                'Cotizaciones'
+            );
+            
             $this->render('d_usuario', array('vista' => 'd_cotizaciones', 'params' => $params));
         }
     }
@@ -825,6 +858,11 @@ class UsuarioController extends Controller {
         if ($this->isMobile) {
             $this->render('listaPersonal', $params);
         } else {
+            $this->breadcrumbs = array(
+                'Inicio' => array('/'),
+                'Mi cuenta' => array('/usuario'),
+                'Listas personales'
+            );
             $this->render('d_usuario', array('vista' => 'd_listaPersonal', 'params' => $params));
         }
     }
@@ -1163,6 +1201,12 @@ class UsuarioController extends Controller {
         if ($this->isMobile) {
             $this->render('direcciones', $params);
         } else {
+            $this->breadcrumbs = array(
+                'Inicio' => array('/'),
+                'Mi cuenta' => array('/usuario'),
+                'Direcciones de despacho'
+            );
+
             $this->render('d_usuario', array('vista' => 'd_direcciones', 'params' => $params));
         }
     }
@@ -1332,15 +1376,15 @@ class UsuarioController extends Controller {
 
                 if ($this->isMobile) {
                     $modal = Yii::app()->getRequest()->getPost('modal', 0);
-                    
-                    if($modal == 1){
+
+                    if ($modal == 1) {
                         $listDirecciones = DireccionesDespacho::consultarDireccionesUsuario(Yii::app()->user->name, true);
                         echo CJSON::encode(array('result' => 'ok', 'response' => array(
-                            'mensaje' => 'Direcci&oacute;n adicionada',
-                            'direccionesHTML' => $this->renderPartial('_direcciones', array('listDirecciones' => $listDirecciones), true)
+                                'mensaje' => 'Direcci&oacute;n adicionada',
+                                'direccionesHTML' => $this->renderPartial('_direcciones', array('listDirecciones' => $listDirecciones), true)
                         )));
                         Yii::app()->end();
-                    }else{
+                    } else {
                         $modelPago = null;
                         if (isset(Yii::app()->session[Yii::app()->params->sesion['carroPagarForm']]))
                             $modelPago = Yii::app()->session[Yii::app()->params->sesion['carroPagarForm']];
@@ -1386,7 +1430,7 @@ class UsuarioController extends Controller {
                         }
 
                         $direccionesHTML = $this->renderPartial('/usuario/_d_direccionesLista', array('listDirecciones' => $listDirecciones, 'radio' => true, 'idDireccionSeleccionada' => $idDireccionSeleccionada), true);
-                    }else if($vista=="pagoexpress"){
+                    } else if ($vista == "pagoexpress") {
                         $objPagoExpress = PagoExpress::model()->find(array(
                             'with' => array('objDireccionDespacho' => array('condition' => 'objDireccionDespacho.codigoCiudad=:ciudad AND objDireccionDespacho.codigoSector=:sector')),
                             'condition' => 't.identificacionUsuario=:cedula AND t.activo=:activo',
@@ -1403,7 +1447,7 @@ class UsuarioController extends Controller {
                             $objPagoExpress->identificacionUsuario = Yii::app()->user->name;
                         }
                         $objPagoExpress->idDireccionDespacho = $model->idDireccionDespacho;
-                        
+
                         $listDirecciones = DireccionesDespacho::model()->findAll(array(
                             'condition' => 'identificacionUsuario=:cedula AND codigoCiudad=:ciudad AND codigoSector=:sector AND activo=:activo',
                             'params' => array(
@@ -1413,10 +1457,9 @@ class UsuarioController extends Controller {
                                 ':sector' => $objSectorCiudad->codigoSector
                             )
                         ));
-                        
-                        $direccionesHTML = $this->renderPartial('/usuario/_d_direccionListaAcordeon', array('objPagoExpress'=>$objPagoExpress, 'listDirecciones' => $listDirecciones), true);
-                        
-                    } else if($vista=="direcciones") {
+
+                        $direccionesHTML = $this->renderPartial('/usuario/_d_direccionListaAcordeon', array('objPagoExpress' => $objPagoExpress, 'listDirecciones' => $listDirecciones), true);
+                    } else if ($vista == "direcciones") {
                         $listDirecciones = DireccionesDespacho::consultarDireccionesUsuario(Yii::app()->user->name, true);
                         $direccionesHTML = $this->renderPartial($direcciones, array('listDirecciones' => $listDirecciones), true);
                     }
@@ -1428,7 +1471,6 @@ class UsuarioController extends Controller {
                     )));
                     Yii::app()->end();
                 }
-                
             } else {
                 echo CActiveForm::validate($model);
                 Yii::app()->end();

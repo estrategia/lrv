@@ -876,9 +876,15 @@ footer li a:hover{
 .ressete{
     padding: 0;
 }
-.breadcrumb{
+/*.breadcrumb{
     background-color:#fff; 
     padding: 20px 63px;
+}*/
+.breadcrumb{
+    background-color:#fff; 
+    padding: 10px 0;
+    margin-bottom: 0;
+    border-radius: 0;
 }
 .breadcrumb a {
     color: #828282;

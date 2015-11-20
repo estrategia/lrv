@@ -16,7 +16,7 @@ class CatalogoController extends Controller {
 
     public function actionDivision($division) {
 
-        $categorias = CategoriaTienda::model()->find(array(
+        $objCategoria = CategoriaTienda::model()->find(array(
             'order' => 't.orden',
             'condition' => 't.visible=:visible AND t.idCategoriaTienda=:division AND t.tipoDispositivo=:dispositivo',
             'params' => array(
@@ -27,13 +27,18 @@ class CatalogoController extends Controller {
             'with' => array('listCategoriasHijas'),
         ));
 
-        if (empty($categorias)) {
+        if (empty($objCategoria)) {
             throw new CHttpException(404, 'La Categoria no existe.');
             Yii::app()->end();
         }
 
+        $this->breadcrumbs = array(
+            'Inicio' => array('/'),
+            $objCategoria->nombreCategoriaTienda
+        );
+
         $this->render('d_division', array(
-            'categorias' => $categorias,
+            'objCategoria' => $objCategoria,
             'listModulos' => ModulosConfigurados::getModulos($this->objSectorCiudad, Yii::app()->shoppingCart->getCodigoPerfil(), UbicacionModulos::UBICACION_ESCRITORIO_DIVISION, $division)
         ));
     }
@@ -46,7 +51,7 @@ class CatalogoController extends Controller {
         $codigoPerfil = Yii::app()->shoppingCart->getCodigoPerfil();
 
         $objCategoria = CategoriaTienda::model()->find(array(
-            'with' => 'listCategoriasBI',
+            'with' => array('objCategoriaPadre', 'listCategoriasBI'),
             'condition' => 't.idCategoriaTienda=:categoria AND t.tipoDispositivo=:dispositivo',
             'params' => array(
                 ':categoria' => $categoria,
@@ -57,12 +62,32 @@ class CatalogoController extends Controller {
         $listIdsCategoriaBI = array();
 
         if ($objCategoria != null) {
+
+            if ($objCategoria->objCategoriaPadre == null) {
+                $this->breadcrumbs = array(
+                    'Inicio' => array('/'),
+                    $objCategoria->nombreCategoriaTienda
+                );
+            } else {
+                $this->breadcrumbs = array(
+                    'Inicio' => array('/'),
+                    $objCategoria->objCategoriaPadre->nombreCategoriaTienda => array('/catalogo/division/division/' . $objCategoria->objCategoriaPadre->idCategoriaTienda),
+                    $objCategoria->nombreCategoriaTienda
+                );
+            }
+
+
             foreach ($objCategoria->listCategoriasBI as $objCategoriaBI) {
                 $listIdsCategoriaBI[] = $objCategoriaBI->idCategoriaBI;
             }
         }
 
         if ($objCategoria == null || empty($listIdsCategoriaBI)) {
+            $this->breadcrumbs = array(
+                'Inicio' => array('/'),
+                'Categor&iacute;as'
+            );
+
             try {
                 Busquedas::registrarBusqueda(array(
                     'idenficacionUsuario' => Yii::app()->user->isGuest ? null : Yii::app()->user->name,
@@ -953,6 +978,27 @@ class CatalogoController extends Controller {
                 'tipoBusqueda' => Yii::app()->params->busqueda['tipo']['buscador'],
             ));
         } else {
+            $objCategoria = CategoriasCategoriaTienda::model()->find(array(
+                'with' => array('objCategoriaTienda'),
+                'condition' => 't.idCategoriaBI=:categoriabi AND objCategoriaTienda.tipoDispositivo=:dispositivo',
+                'params' => array(
+                    ':categoriabi' => $objProducto->idCategoriaBI,
+                    ':dispositivo' => CategoriaTienda::DISPOSITIVO_ESCRITORIO
+                )
+            ));
+
+            if ($objCategoria == null) {
+                $this->breadcrumbs = array(
+                    'Inicio' => array('/'),
+                );
+            } else {
+                $this->breadcrumbs = array(
+                    'Inicio' => array('/'),
+                    $objCategoria->objCategoriaTienda->nombreCategoriaTienda => array('/catalogo/categoria/categoria/' . $objCategoria->objCategoriaTienda->idCategoriaTienda)
+                );
+            }
+
+
             $objFormCalificacion = new CalificacionForm;
             $this->render('d_productoDetalle', array(
                 'objProducto' => $objProducto,

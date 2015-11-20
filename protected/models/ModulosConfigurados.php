@@ -69,7 +69,7 @@ class ModulosConfigurados extends CActiveRecord {
             'listProductosModulos' => array(self::HAS_MANY, 'ProductosModulos', 'idModulo'),
             'listUbicacionesModulos' => array(self::HAS_MANY, 'UbicacionModulos', 'idModulo'),
             'objMenuModulo' => array(self::BELONGS_TO, 'MenuModulo', 'idModulo'),
-            'listModulosGrupo' => array(self::MANY_MANY, 'ModulosConfigurados', 't_GruposModulos(idGrupoModulo, idModulo)'),
+            'listModulosGrupo' => array(self::MANY_MANY, 'ModulosConfigurados', 't_GruposModulos(idGrupoModulo, idModulo)', 'order'=>'listModulosGrupo_listModulosGrupo.orden'),
             'objModuloGrupo' => array(self::BELONGS_TO, 'GruposModulos', '','on' => 't.idModulo=objModuloGrupo.idModulo AND objModuloGrupo.idGrupoModulo =:idgrupoModulo'),
             'listPerfiles' => array(self::HAS_MANY, 'ModuloPerfil', 'idModulo'),
         );
@@ -355,11 +355,12 @@ class ModulosConfigurados extends CActiveRecord {
         $fecha = new DateTime;
 
         $objModulo = ModulosConfigurados::model()->find(array(
-            'order' => 'listModulosGrupo_listModulosGrupo.orden',
+            //'order' => 'listModulosGrupo_listModulosGrupo.orden',
             'with' => 'listModulosGrupo',
-            'condition' => 't.estado=:estado AND t.inicio<=:fecha AND t.fin>=:fecha AND t.idModulo=:modulo',
+            'condition' => 't.estado=:estado AND t.dias LIKE :dia AND t.inicio<=:fecha AND t.fin>=:fecha AND t.idModulo=:modulo AND listModulosGrupo.estado=:estado AND listModulosGrupo.dias LIKE :dia AND listModulosGrupo.inicio<=:fecha AND listModulosGrupo.fin>=:fecha',
             'params' => array(
                 ':estado' => 1,
+                ':dia' => "%" . $fecha->format("w") . "%",
                 ':fecha' => $fecha->format("Y-m-d"),
                 ':modulo' => $idGrupo
             )
