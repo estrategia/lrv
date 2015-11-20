@@ -322,6 +322,19 @@ class ContenidoController extends ControllerOperator {
                }
                
             }
+            if($model->tipo == ModulosConfigurados::TIPO_GRUPO_MODULOS){
+                $params['vista'] = '_grupoModulos';
+                $params['modelModulos'] = new ModulosConfigurados('search');
+                $params['idModulo'] = $idModulo;
+                
+                $params['modulosAdicionados'] = GruposModulos::model()->findAll(array(
+                    'with' => 'objModulo',
+                    'condition' => 't.idGrupoModulo =:idgrupomodulo',
+                    'params' => array(
+                        'idgrupomodulo' => $idModulo
+                    )
+                ));
+            }
             
         } else {
             $params['vista'] = 'modulos';
@@ -373,6 +386,95 @@ class ContenidoController extends ControllerOperator {
         $this->render('editar',array(
             'params' => $params
         ));
+    }
+    
+    public function actionConfigurarModuloGrupo(){
+        
+         if (!Yii::app()->request->isPostRequest) {
+            throw new CHttpException(404, 'Solicitud inválida.');
+        }
+        $idModulo = Yii::app()->getRequest()->getPost('idModulo');
+        $idGrupoModulo = Yii::app()->getRequest()->getPost('idModuloGrupo');
+        $accion = Yii::app()->getRequest()->getPost('accion');
+        
+        if($accion == 1){
+            $model = new GruposModulos();
+            $model->idGrupoModulo = $idGrupoModulo;
+            $model->idModulo = $idModulo;
+            $model->orden = 0;
+            if(!$model->save()){
+                   echo CJSON::encode(array(
+                        'result' => 'error',
+                        'response' => 'error al guardar el módulo'
+                    )); 
+                    Yii::app()->end();
+            }
+        }else if($accion == 2){
+            $orden = Yii::app()->getRequest()->getPost('orden');
+            $model = GruposModulos::model()->find(array(
+               'condition' => 'idGrupoModulo =:idgrupomodulo AND idModulo =:idmodulo',
+                'params' => array(
+                    'idgrupomodulo' => $idGrupoModulo,
+                    'idmodulo' => $idModulo
+                )
+            ));
+            $model->orden = $orden;
+            if(!$model->save()){
+                   echo CJSON::encode(array(
+                        'result' => 'error',
+                        'response' => 'error al actualizar el módulo'
+                    )); 
+                    Yii::app()->end();
+            }
+        }else{
+            $model = GruposModulos::model()->find(array(
+               'condition' => 'idGrupoModulo =:idgrupomodulo AND idModulo =:idmodulo',
+                'params' => array(
+                    'idgrupomodulo' => $idGrupoModulo,
+                    'idmodulo' => $idModulo
+                )
+            ));
+            
+            if(!$model->delete()){
+                   echo CJSON::encode(array(
+                        'result' => 'error',
+                        'response' => 'error al eliminar el módulo'
+                    )); 
+                    Yii::app()->end();
+            }
+        }
+        
+        
+           echo CJSON::encode(array(
+               'result' => 'ok',
+               'response' => $this->renderPartial('_modulosAdicionados', array(
+                                'modulosAdicionados' => GruposModulos::model()->findAll(array(
+                                        'with' => 'objModulo',
+                                        'condition' => 't.idGrupoModulo =:idgrupomodulo',
+                                        'params' => array(
+                                            'idgrupomodulo' => $idGrupoModulo
+                                        )
+                                    ))
+                                 ),true,false
+                             )
+           ));
+    }
+    
+    public function actionTestModulo(){
+        $idGrupoModulo=12;
+        $criteria = new CDbCriteria();
+        $criteria->with = array('objModuloGrupo');
+        $criteria->condition = 't.tipo  NOT IN (:grupoModulo)';
+        $criteria->params = array (
+            ':grupoModulo' => ModulosConfigurados::TIPO_GRUPO_MODULOS,
+            ':idgrupoModulo' => $idGrupoModulo
+        );
+        
+        $modulos=ModulosConfigurados::model()->findAll($criteria);
+        
+        echo "<pre>";
+        print_r($modulos);
+        echo "</pre>";
     }
     
     public function actionEliminarImagen(){
@@ -718,22 +820,23 @@ class ContenidoController extends ControllerOperator {
         }
     }
 
-    public function crearListaProductos($objModulo)
+    public function actioncrearListaProductos()
     {
         //print_r($modulo);
         
-        $model = ProductosModulos::model()->findAll("idModulo=:idModulo", array(":idModulo" => $objModulo));
+        $model = ProductosModulos::model()->findAll("idModulo=:idModulo", array(":idModulo" => 2));
         //$model = $objModulo;
 
         $query = "SELECT m.nombreMarca, m.idMarca ";
         $query .= "FROM m_Producto AS p ";
         $query .= "LEFT OUTER JOIN m_Marca AS m ON (m.idMarca = p.idMarca) ";
         $query .= "GROUP BY p.idMarca; ";
+        $query .= "LIMIT 100 ";
         $marcas = Yii::app()->db->createCommand($query)->queryAll();
-        $arrayMarcas = array_column($marcas, 'nombreMarca', 'idMarca');
+        $arrayMarcas = array_column_lrv($marcas, 'nombreMarca', 'idMarca');
         //$formFiltro->setRango($resultadoRango['minproducto'], $resultadoRango['maxproducto'], $resultadoRango['mintercero'], $resultadoRango['maxtercero']);
 
-        CVarDumper::dump(array_column($arrayMarcas, 'nombreMarca', 'idMarca'), 10, true);
+        CVarDumper::dump($arrayMarcas, 10, true);
         exit();
 
         
@@ -776,7 +879,7 @@ class ContenidoController extends ControllerOperator {
 
         $query .= "GROUP BY p.idCategoriaBI; ";
         $categorias = Yii::app()->db->createCommand($query)->queryAll();
-        $arrayCategorias = array_column($categorias, 'nombreCategoria', 'idCategoriaBI');
+        $arrayCategorias = array_column_lrv($categorias, 'nombreCategoria', 'idCategoriaBI');
         //$formFiltro->setRango($resultadoRango['minproducto'], $resultadoRango['maxproducto'], $resultadoRango['mintercero'], $resultadoRango['maxtercero']);
 
         //CVarDumper::dump($arrayCategorias, 10, true);
@@ -1084,41 +1187,49 @@ class ContenidoController extends ControllerOperator {
         $transaction = Yii::app()->db->beginTransaction();
         try 
         {
-            $query = "DELETE FROM t_ProductosModulos WHERE idModulo = :idModulo AND codigoProducto IS NULL";
+            $query = "DELETE 
+                      FROM t_ProductosModulos
+                      WHERE idModulo = :idModulo AND codigoProducto IS NULL";
 
             $command = Yii::app()->db->createCommand($query);
             $command->bindParam(":idModulo", $idModulo, PDO::PARAM_STR);
             $command->execute();
             
-            $arrayIdMarcas = explode(",", $idMarcas);
-            foreach ($arrayIdMarcas as $indice => $fila) 
+            if($idMarcas != "")
             {
-                $modelProductoModulo = new ProductosModulos;
-                $modelProductoModulo->idModulo = $idModulo;
-                $modelProductoModulo->idMarca = $fila;
-
-                if (!$modelProductoModulo->save()) 
+                $arrayIdMarcas = explode(",", $idMarcas);
+                foreach ($arrayIdMarcas as $indice => $fila) 
                 {
-                    throw new Exception('Error al agregar la marca: ' . $modelProductoModulo->getErrors());
+                    $modelProductoModulo = new ProductosModulos;
+                    $modelProductoModulo->idModulo = $idModulo;
+                    $modelProductoModulo->idMarca = $fila;
+
+                    if (!$modelProductoModulo->save()) 
+                    {
+                        throw new Exception('Error al agregar la marca: ' . $modelProductoModulo->getErrors());
+                    }
                 }
             }
 
-            $arrayIdCategorias = explode(",", $idCategorias);
-            foreach ($arrayIdCategorias as $indice => $fila) 
+            if($idCategorias != "")
             {
-                $modelProductoModulo = new ProductosModulos;
-                $modelProductoModulo->idModulo = $idModulo;
-                $modelProductoModulo->idCategoriaBI = $fila;
-
-                if (!$modelProductoModulo->save()) 
+                $arrayIdCategorias = explode(",", $idCategorias);
+                foreach ($arrayIdCategorias as $indice => $fila) 
                 {
-                    throw new Exception('Error al agregar la categoria: ' . $modelProductoModulo->getErrors());
+                    $modelProductoModulo = new ProductosModulos;
+                    $modelProductoModulo->idModulo = $idModulo;
+                    $modelProductoModulo->idCategoriaBI = $fila;
+
+                    if (!$modelProductoModulo->save()) 
+                    {
+                        throw new Exception('Error al agregar la categoria: ' . $modelProductoModulo->getErrors());
+                    }
                 }
             }
 
             $transaction->commit();
 
-            Yii::app()->user->setFlash('alert alert-success', "El contenido ha sido agregado con exito, al modulo :  $idModulo");
+            Yii::app()->user->setFlash('alert alert-success', "El contenido ha sido agregado con exito, al modulo ".$idModulo);
 
             echo CJSON::encode(array(
                 'result' => 'ok'
@@ -1186,7 +1297,7 @@ class ContenidoController extends ControllerOperator {
         $query .= "LEFT OUTER JOIN m_Marca AS m ON (m.idMarca = p.idMarca) ";
         $query .= "GROUP BY p.idMarca; ";
         $marcas = Yii::app()->db->createCommand($query)->queryAll();
-        $arrayMarcas = array_column($marcas, 'nombreMarca', 'idMarca');
+        $arrayMarcas = array_column_lrv($marcas, 'nombreMarca', 'idMarca');
         return $arrayMarcas;
     }
 
