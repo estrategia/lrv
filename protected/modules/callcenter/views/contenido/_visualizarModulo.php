@@ -6,10 +6,7 @@
             <h4 class="modal-title" id="myModalLabel">Previsualización</h4>
           </div>
           <div class="modal-body" id='pre-contenido-modal'> 
-              <?php echo $contenido ?>
-              <?php 
-                    
-              ?>        
+              <?php echo $contenido ?>       
           </div>
           <div class="modal-footer">
             <button type="button" class="btn btn-default" data-dismiss="modal">Cerrar</button>

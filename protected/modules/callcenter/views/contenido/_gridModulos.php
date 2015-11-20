@@ -110,7 +110,7 @@ $columns = array(
                 'header' => 'Inactivar',
                 'type' => 'raw',
                 'value' => function($data){
-                    return '<a href="#" data-role="modulo-inactivar" data-modulo="'.$data->idModulo.'" >'.($data->estado == "1" ? "inactivar": "activar").'</a>';
+                    return '<a href="#" data-role="modulo-inactivar" data-modulo="'.$data->idModulo.'" >'.($data->estado == "1" ? "Inactivar": "Activar").'</a>';
                 }
             );
         }else{
@@ -130,7 +130,11 @@ $columns = array(
         $columns[] = array(
                 'header' => 'Visualizar',
                 'type' => 'raw',
-                'value' => '\'<a href="#" data-role="modulo-visualizar" data-modulo="\'.$data->idModulo.\'" >Visualizar</a>\''
+                'value' => function($data) {
+                    if(!($data->tipo == ModulosConfigurados::TIPO_ENLACE_MENU || $data->tipo == ModulosConfigurados::TIPO_PROMOCION_FLOTANTE)){
+                        return '<a href="#" data-role="modulo-visualizar" data-modulo="'.$data->idModulo.'" >Visualizar</a>';
+                    }
+                }
             );
         
 $this->widget('zii.widgets.grid.CGridView', array(
