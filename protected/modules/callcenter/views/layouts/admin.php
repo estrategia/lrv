@@ -85,6 +85,12 @@
                                 <li>
                                     <a href="<?php echo $this->createUrl('/callcenter/contenido/index') ?>" class="ajax-link"><i class="glyphicon glyphicon-file"></i><span> Contenidos administrables</span></a>
                                 </li>
+                                <li>
+                                    <a href="<?php echo $this->createUrl('/callcenter/productosRelacionados/index') ?>" class="ajax-link"><i class="glyphicon glyphicon-file"></i><span> Productos relacionados</span></a>
+                                </li>
+                                <li>
+                                    <a href="<?php echo $this->createUrl('/callcenter/tarifadomicilio/index') ?>" class="ajax-link"><i class="glyphicon glyphicon-file"></i><span> Tarifa domicilio</span></a>
+                                </li>
                             <?php endif; ?>
                         </ul>
                     </div>
