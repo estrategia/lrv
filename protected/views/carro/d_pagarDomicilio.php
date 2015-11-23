@@ -44,6 +44,7 @@
                 <?php $this->renderPartial('_d_paso' . Yii::app()->params->pagar['pasos'][$paso], $parametros); ?>
             </div>
         </div>
+        <div class="space-1"></div>
         <div class="row">
             <div class="col-md-12">
                 <?php if ($pasoAnterior !== null): ?>

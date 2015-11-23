@@ -366,8 +366,8 @@ function pasoPago(actual, siguiente, boton) {
         data: $.param(data) + '&' + $('#form-pago-pago').serialize(),
         beforeSend: function() {
             boton.prop('disabled', true);
-            $('div[id^="FormaPagoForm_"].has-error').html('');
-            $('div[id^="FormaPagoForm_"].has-error').css('display', 'none');
+            $('div[id^="FormaPagoForm_"].text-danger').html('');
+            $('div[id^="FormaPagoForm_"].text-danger').css('display', 'none');
             Loading.show();
         },
         complete: function() {
@@ -386,7 +386,7 @@ function pasoPago(actual, siguiente, boton) {
                     $('#' + element + '_em_').html(error);
                     $('#' + element + '_em_').css('display', 'block');
                 });
-                //boton.button('enable');
+                boton.prop('disabled', false);
             }
         },
         error: function(jqXHR, textStatus, errorThrown) {
@@ -638,6 +638,27 @@ $(document).on('click', "a[id='btn-buscador-productos']", function() {
         form.submit();
     }
 });
+
+$(document).on('click', "div[data-role='formapago']", function() {
+    if ($(this).attr('data-tipo') == "datafono") {
+        $("#modal-formapago input[type='radio']").removeAttr('checked');
+        $("#modal-formapago #idFormaPago_"+$("#FormaPagoForm_idFormaPago").val()).prop('checked', true);
+        $("#modal-formapago").modal("show");
+    } else {
+        $("div[data-role='formapago']").removeClass('activo');
+        $(this).addClass('activo');
+        $('input[id="FormaPagoForm_idFormaPago"]').val($(this).attr('data-tipo'));
+    }
+});
+
+$(document).on('click', "#modal-formapago input[type='radio']", function() {
+    if ($(this).is(':checked')) {
+        $("div[data-role='formapago']").removeClass('activo');
+        $('div[data-tipo="datafono"]').addClass('activo');
+        $('input[id="FormaPagoForm_idFormaPago"]').val($(this).val());
+    }
+});
+
 
 /*
  * contador de caracteres para textarea
