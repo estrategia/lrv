@@ -3,3 +3,5 @@ assets/*
 protected/runtime/*
 !protected/runtime/.gitignore
 /.project
+/images/productos/
+/images/owl/

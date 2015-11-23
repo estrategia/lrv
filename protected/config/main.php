@@ -54,7 +54,7 @@ return array(
             'caseSensitive' => true,
         ),
         'db' => array(
-            'connectionString' => 'mysql:host=localhost;port=3306;dbname=lrvmovil',
+            'connectionString' => 'mysql:host=localhost;port=3306;dbname=lrvmovil_copservir',
             'emulatePrepare' => true,
             'username' => 'root',
             'password' => 'admin',
@@ -63,7 +63,7 @@ return array(
             'enableParamLogging' => true,
         ),
         /* 'db' => array(
-          'connectionString' => 'mysql:host=66.147.244.236;port=3306;dbname=promarca_tmp_lrvmovil',
+          'connectionString' => 'mysql:host=66.147.244.236;port=3306;dbname=promarca_tmp_lrv',
           'emulatePrepare' => true,
           'username' => 'promarca_tmp',
           'password' => 'T3mp0r4l',
