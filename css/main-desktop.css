@@ -1027,7 +1027,7 @@ footer li a:hover{
     margin-right: auto;
 }
 
-/*input[type="checkbox"]{ display: none; }
+input[type="checkbox"]{ display: none; }
 
 input[type="checkbox"] + label span{
     display: inline-block;
@@ -1041,7 +1041,7 @@ input[type="checkbox"] + label span{
 
 input[type="checkbox"]:checked + label span{
     background: url(../images/desktop/check-box.png) left;
-}*/
+}
 label{
     color:#999999;
 }
