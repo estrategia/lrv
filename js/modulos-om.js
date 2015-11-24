@@ -306,3 +306,145 @@ $(document).on('click', 'a[data-role="modulo-inactivar"]', function(){
         }
     });
 });
+
+
+//administradcion productos relacionados 
+
+$(document).on('click', "button[data-role='busqueda-relacionados']", function(){
+    
+    var valorBusqueda = $.trim($("#relacionados-busqueda-buscar").val());
+    if(!valorBusqueda)
+    {
+        bootbox.alert('Búsqueda no puede estar vacío');
+    }
+    else
+    {
+        var codigoProducto = $(this).attr('data-producto');
+        $.ajax({
+            type: 'POST',
+            async: true,
+            url: requestUrl + '/callcenter/productosRelacionados/buscarproductos',
+            data: {busqueda: valorBusqueda, codigoProducto: codigoProducto},
+            beforeSend: function() {
+                $('#modal-productos-busqueda').remove();
+                Loading.show();
+            },
+            success: function(data) {
+                $('#container').append(data);
+                //alert(data);
+                $('#modal-productos-busqueda').modal('show');
+            },
+            complete: function() {
+                Loading.hide();
+            },
+            error: function(jqXHR, textStatus, errorThrown) {
+                Loading.hide();
+                bootbox.alert('Error: ' + jqXHR.responseText);
+            }
+        });
+    }
+
+});
+
+$(document).on('keypress', "#relacionados-busqueda-buscar", function(e){
+    if(e.keyCode == 13)
+    {
+        $("button[data-role='busqueda-relacionados']").trigger('click');
+        e.preventDefault();
+    }
+});
+
+
+$(document).on('click', "a[data-role='agregar-producto-relacionado']", function(){
+    var productoRelacionado = $(this).attr("data-relacionado");
+    var producto = $(this).attr("data-producto");
+    var self = $(this);
+    $.ajax({
+        type: 'POST',
+        async: true,
+        url: requestUrl + '/callcenter/productosRelacionados/agregarproductorelacionado',
+        data: {producto : producto, productoRelacionado : productoRelacionado},
+        beforeSend: function(){
+            Loading.show();
+        },
+        success: function(data){
+            var data = $.parseJSON(data);
+            if (data.result === "ok") {
+                $("#productos-relacionados-lista").html(data.response.htmlProductosAgregados);
+                self.attr("disabled", true);
+                self.html("Relacionado");
+            } else if (data.result === 'error') {
+                bootbox.alert(data.response);
+            }
+        },
+        complete: function(){
+            Loading.hide();
+        },
+        error: function(jqXHR, textStatus, errorThrown){
+            Loading.hide();
+        }
+    });
+
+});
+
+
+$(document).on('click', "a[data-role='eliminar-producto-relacionado']", function(){
+    
+    var idRelacionado = $(this).attr("data-relacion");
+
+    $.ajax({
+        type: 'POST',
+        async: true,
+        url: requestUrl + '/callcenter/productosRelacionados/eliminarproductorelacionado',
+        data: {idRelacionado : idRelacionado},
+        beforeSend: function(){
+            Loading.show();
+        },
+        success: function(data){
+            var data = $.parseJSON(data);
+            if (data.result === "ok") {
+                $("#productos-relacionados-lista").html(data.response.htmlProductosAgregados);
+            } else if (data.result === 'error') {
+                bootbox.alert(data.response);
+            }
+        },
+        complete: function(){
+            Loading.hide();
+        },
+        error: function(jqXHR, textStatus, errorThrown){
+            Loading.hide();
+        }
+    });
+
+});
+
+$(document).on('click', "a[data-role='actualizar-producto-relacionado']", function(){
+    
+    var idRelacionado = $(this).attr("data-relacion");
+    var orden = $("#orden_"+idRelacionado).val();
+
+    $.ajax({
+        type: 'POST',
+        async: true,
+        url: requestUrl + '/callcenter/productosRelacionados/actualizarproductorelacionado',
+        data: {idRelacionado : idRelacionado, orden : orden},
+        beforeSend: function(){
+            Loading.show();
+        },
+        success: function(data){
+            var data = $.parseJSON(data);
+            if (data.result === "ok") {
+                $("#productos-relacionados-lista").html(data.response.htmlProductosAgregados);
+            } else if (data.result === 'error') {
+                bootbox.alert(data.response);
+            }
+        },
+        complete: function(){
+            Loading.hide();
+        },
+        error: function(jqXHR, textStatus, errorThrown){
+            Loading.hide();
+        }
+    });
+
+});

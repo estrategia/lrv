@@ -16,6 +16,7 @@
  * @property integer $recordarCorreo
  * @property integer $recordarNotificacion
  * @property integer $estadoLista
+ * @property integer $activa
  *
  * The followings are the available model relations:
  * @property Usuario $objUsuario

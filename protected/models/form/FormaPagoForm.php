@@ -90,7 +90,7 @@ class FormaPagoForm extends CFormModel {
         $rules[] = array('fechaEntrega', 'required', 'on' => 'entrega, finalizar', 'message' => '{attribute} no puede estar vacío');
         $rules[] = array('comentario', 'length', 'max' => 250, 'on' => 'entrega, finalizar');
         $rules[] = array('fechaEntrega', 'fechaValidate', 'on' => 'entrega, finalizar');
-        $rules[] = array('idFormaPago', 'required', 'on' => 'pago, finalizar', 'message' => '{attribute} no puede estar vacío');
+        $rules[] = array('idFormaPago', 'required', 'on' => 'pago, finalizar', 'message' => 'Seleccionar forma de pago');
         $rules[] = array('numeroTarjeta, cuotasTarjeta', 'safe');
         $rules[] = array('comentario, numeroTarjeta, cuotasTarjeta, usoBono', 'default', 'value' => null);
         $rules[] = array('idFormaPago', 'pagoValidate', 'on' => 'pago, finalizar');

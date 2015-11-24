@@ -218,11 +218,22 @@ class ModulosConfigurados extends CActiveRecord {
             $criteria['condition'] .= " $condition";
 
             if ($objSectorCiudad !== null) {
-                $criteria['with']['listSaldos'] = array('condition' => '(listSaldos.codigoCiudad=:ciudad AND listSaldos.codigoSector=:sector) OR (listSaldos.saldoUnidad IS NULL AND listSaldos.codigoCiudad IS NULL AND listSaldos.codigoSector IS NULL)');
-                $criteria['with']['listPrecios'] = array('condition' => '(listPrecios.codigoCiudad=:ciudad AND listPrecios.codigoSector=:sector) OR (listPrecios.codigoCiudad IS NULL AND listPrecios.codigoSector IS NULL)');
-                $criteria['with']['listSaldosTerceros'] = array('condition' => '(listSaldosTerceros.codigoCiudad=:ciudad AND listSaldosTerceros.codigoSector=:sector) OR (listSaldosTerceros.codigoCiudad IS NULL AND listSaldosTerceros.codigoSector IS NULL)');
+                $criteria['with']['listSaldos'] = array('on' => 'listSaldos.codigoCiudad=:ciudad AND listSaldos.codigoSector=:sector OR listSaldos.idProductoSaldos IS NULL');
+                $criteria['with']['listPrecios'] = array('on' => 'listPrecios.codigoCiudad=:ciudad AND listPrecios.codigoSector=:sector OR listPrecios.idProductoPrecios IS NULL');
+                $criteria['with']['listSaldosTerceros'] = array('on' => 'listSaldosTerceros.codigoCiudad=:ciudad AND listSaldosTerceros.codigoSector=:sector OR listSaldosTerceros.idProductoSaldo IS NULL');
+                
+                /*
+                $criteria['with']['listSaldos'] = 'listSaldos';
+                $criteria['with'][] = 'listPrecios';
+                $criteria['with'][] = 'listSaldosTerceros';
+                $criteria['condition'] .= " AND (listSaldos.codigoCiudad=:ciudad AND listSaldos.codigoSector=:sector OR listSaldos.idProductoSaldos IS NULL)";
+                $criteria['condition'] .= " AND (listPrecios.codigoCiudad=:ciudad AND listPrecios.codigoSector=:sector OR listPrecios.idProductoPrecios IS NULL)";
+                $criteria['condition'] .= " AND (listSaldosTerceros.codigoCiudad=:ciudad AND listSaldosTerceros.codigoSector=:sector OR listSaldosTerceros.idProductoSaldo IS NULL)";
+                */
+                
                 //$criteria['condition'] .= " AND ( (listSaldos.saldoUnidad IS NOT NULL AND listPrecios.codigoCiudad IS NOT NULL) OR listSaldosTerceros.codigoCiudad IS NOT NULL)";
                 //$criteria['params'][':saldo'] = 0;
+                
                 $criteria['params'][':ciudad'] = $objSectorCiudad->codigoCiudad;
                 $criteria['params'][':sector'] = $objSectorCiudad->codigoSector;
             }
