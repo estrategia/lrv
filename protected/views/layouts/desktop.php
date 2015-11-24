@@ -52,7 +52,7 @@
                                                         <?php foreach ($this->categorias as $categoria): ?>
                                                             <li>
                                                                 <input type="checkbox" name="categoriasBuscador[<?php echo $categoria->idCategoriaTienda ?>]" id="categoriasBuscador_<?php echo $categoria->idCategoriaTienda ?>" value="<?php echo $categoria->idCategoriaTienda ?>">
-                                                                <label for="categoriasBuscador_<?php echo $categoria->idCategoriaTienda ?>" class="clst_check"><span></span> <img src="<?php echo Yii::app()->request->baseUrl; ?>/images/desktop/<?php echo $categoria->rutaImagen ?>" alt="" class="data-label"><?php echo $categoria->nombreCategoriaTienda ?></label>
+                                                                <label for="categoriasBuscador_<?php echo $categoria->idCategoriaTienda ?>" class="clst_check"><span></span> <img src="<?php echo Yii::app()->request->baseUrl; ?>/images/menu/desktop/<?php echo $categoria->rutaImagen ?>" alt="" class="data-label"><?php echo $categoria->nombreCategoriaTienda ?></label>
                                                             </li>
                                                         <?php endforeach; ?>     
                                                     </ul>
