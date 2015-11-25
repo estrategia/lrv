@@ -44,6 +44,7 @@ class ContenidoController extends ControllerOperator {
             $model->attributes = $_GET['ModulosConfigurados'];
 
 
+        Yii::app()->getClientScript()->registerCssFile(Yii::app()->request->baseUrl . "/css/main-desktop.css"); 
         $this->render('index', array(
             'model' => $model
         ));
@@ -315,6 +316,7 @@ class ContenidoController extends ControllerOperator {
                 $params['vista'] = '_grupoModulos';
                 $params['modelModulos'] = new ModulosConfigurados('searchModulos');
                 $params['modelModulos']->unsetAttributes();
+                Yii::app()->getClientScript()->registerCssFile(Yii::app()->request->baseUrl . "/css/main-desktop.css"); 
                 if (isset($_GET['ModulosConfigurados']))
                     $params['modelModulos']->attributes = $_GET['ModulosConfigurados'];
 

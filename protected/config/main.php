@@ -404,6 +404,12 @@ return array(
                     1 => 'Activo'
                 ),
             ),
+            'categorias' => array(
+                'visible'  => array(
+                    '0' => 'No visible',
+                    '1' => 'Visible'
+                )
+            ),
             'estadoItem' => array(
                 'estado' => array(
                     'activo' => 1,
