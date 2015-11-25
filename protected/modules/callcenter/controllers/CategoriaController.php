@@ -81,7 +81,6 @@ class CategoriaController extends ControllerOperator {
                      )
                    ));
        
-                  
         echo CJSON::encode(array(
                 'result' => 'ok',
                 'response' => $this->renderPartial('_formAsociarCategoria', array(
@@ -120,8 +119,6 @@ class CategoriaController extends ControllerOperator {
                'idcategoriatienda' => Yii::app()->getRequest()->getPost('idCategoria')
            )
        ));
-    
-       
        if($model->delete()){
             $categorias=CategoriaTienda::model()->findAll(array(
                 'condition' => 'idCategoriaPadre is NULL AND tipoDispositivo =:tipodispositivo',
@@ -199,12 +196,12 @@ class CategoriaController extends ControllerOperator {
           
           if($_FILES){
                   $uploadedFile = CUploadedFile::getInstance($model, "rutaImagen");
-    
+
                   if($_FILES['CategoriaTienda']['size']['rutaImagen'] > 0){
                     if ($uploadedFile->getExtensionName() == "jpg" || $uploadedFile->getExtensionName() == "png" ||
                        $uploadedFile->getExtensionName() == "jpeg" || $uploadedFile->getExtensionName() == "gif") {
-
-                         if ($uploadedFile->saveAs(substr(($_POST['dispositivo']==2)?'/images/menu/desktop/':'/images/menu/' . $uploadedFile->getName(), 1))) {
+                        $directorio = substr((($_POST['dispositivo']==2)?'/images/menu/desktop/':'/images/menu/') . $uploadedFile->getName(), 1);
+                         if ($uploadedFile->saveAs($directorio)) {
                              $model->rutaImagen = $uploadedFile->getName();
                         } else {
                             echo CJSON::encode(
@@ -217,6 +214,24 @@ class CategoriaController extends ControllerOperator {
                          }
                       }
                   }
+                  $imagenMenu = CUploadedFile::getInstance($model, "rutaImagenMenu");
+                 
+                  if($_FILES['CategoriaTienda']['size']['rutaImagenMenu'] > 0){
+                    if ($imagenMenu->getExtensionName() == "jpg" || $imagenMenu->getExtensionName() == "png" ||
+                       $imagenMenu->getExtensionName() == "jpeg" || $imagenMenu->getExtensionName() == "gif") {
+                         if ($imagenMenu->saveAs(substr((($_POST['dispositivo']==2)?'/images/menu/desktop/':'/images/menu/') . $imagenMenu->getName(), 1))) {
+                             $model->rutaImagenMenu = $imagenMenu->getName();
+                        } else {
+                            echo CJSON::encode(
+                                array(
+                                    'result' => 'ok',
+                                    'response' => 'Error al cargar la imagen del menú la categoría'
+                                ));
+                                Yii::app()->end();
+                            
+                         }
+                      }
+                  } 
             }
               
           if($model->save()){
@@ -244,11 +259,7 @@ class CategoriaController extends ControllerOperator {
                           'result' => 'error',
                           'response' => 'Error al guardar los datos'
                       ));
-          }
-          /*
-        
-            */
-          
+          } 
       }
     }
 }

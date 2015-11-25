@@ -443,7 +443,7 @@ $(document).on('click', "a[data-role='actualizar-categoria']", function(){
      var idCategoria = $(this).attr('data-categoria');
      var formulario =  new FormData( document.getElementById('form-categoria') );
     
-       var formulario = document.getElementById("form-categoria");
+     var formulario = document.getElementById("form-categoria");
      
      var campo1 = document.createElement("input");
      campo1.type = 'hidden';
