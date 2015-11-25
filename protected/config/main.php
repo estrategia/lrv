@@ -235,7 +235,8 @@ return array(
             '*' => 99999
         ),
         'sector' => array(
-            '*' => 99
+            '*' => 99,
+            'sinSector' => 0
         ),
         'perfil' => array(
             'defecto' => 1,

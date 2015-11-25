@@ -2,8 +2,6 @@
 
 class ProductosRelacionadosController extends ControllerOperator {
 
-    public $objSectorCiudad = null;
-
     public function filters() {
         return array(
             //'access',
