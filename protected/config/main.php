@@ -54,10 +54,10 @@ return array(
             'caseSensitive' => true,
         ),
         'db' => array(
-            'connectionString' => 'mysql:host=localhost;port=3306;dbname=lrvmovil_copservir',
+            'connectionString' => 'mysql:host=localhost;port=3306;dbname=lrvmovil',
             'emulatePrepare' => true,
             'username' => 'root',
-            'password' => 'admin',
+            'password' => '',
             'charset' => 'utf8',
             'enableProfiling' => true,
             'enableParamLogging' => true,

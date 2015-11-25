@@ -199,14 +199,12 @@ class CategoriaController extends ControllerOperator {
           
           if($_FILES){
                   $uploadedFile = CUploadedFile::getInstance($model, "rutaImagen");
-
-                 
-                  
+    
                   if($_FILES['CategoriaTienda']['size']['rutaImagen'] > 0){
                     if ($uploadedFile->getExtensionName() == "jpg" || $uploadedFile->getExtensionName() == "png" ||
                        $uploadedFile->getExtensionName() == "jpeg" || $uploadedFile->getExtensionName() == "gif") {
 
-                         if ($uploadedFile->saveAs(substr('/images/desktop/' . $uploadedFile->getName(), 1))) {
+                         if ($uploadedFile->saveAs(substr(($_POST['dispositivo']==2)?'/images/menu/desktop/':'/images/menu/' . $uploadedFile->getName(), 1))) {
                              $model->rutaImagen = $uploadedFile->getName();
                         } else {
                             echo CJSON::encode(
