@@ -448,3 +448,141 @@ $(document).on('click', "a[data-role='actualizar-producto-relacionado']", functi
     });
 
 });
+
+//administracion tarifa domicilio
+
+$(document).on('click', "a[data-role='tarifa-domicilio']", function(){
+    
+    var idDomicilio = $(this).attr("data-tarifa");
+    
+    $.ajax({
+        type: 'POST',
+        async: true,
+        url: requestUrl + '/callcenter/tarifaDomicilio/tarifadomicilio',
+        data: {idDomicilio : idDomicilio},
+        beforeSend: function() {
+            $('#modal-tarifas-domicilio').remove();
+            Loading.show();
+        },
+        success: function(data) {
+            var data = $.parseJSON(data);
+            //alert(data);
+            $('#container').append(data.response.htmlTarifa);
+            
+            $('#modal-tarifas-domicilio').modal('show');
+        },
+        complete: function() {
+            Loading.hide();
+        },
+        error: function(jqXHR, textStatus, errorThrown) {
+            Loading.hide();
+            bootbox.alert('Error: ' + jqXHR.responseText);
+        }
+    });
+
+});
+
+
+$(document).on('change', "select[data-role='select-ciudades-domicilio']", function(){
+
+    var codigoCiudad = $(this).val();
+    //alert(codigoCiudad);
+    
+    $.ajax({
+        type: 'POST',
+        async: true,
+        url: requestUrl + '/callcenter/tarifaDomicilio/comprobarciudad',
+        data: {codigoCiudad : codigoCiudad},
+        beforeSend: function(){
+            Loading.show();
+        },
+        success: function(data){
+            var data = $.parseJSON(data);
+            if (data.result === "ok") {
+                /*if(data.code == 1){
+                    $("#div-sector-modulo").html(data.htmlResponse);
+                    $("#div-sector-modulo").css('display','block');
+                    $("#sector-select").val(1);
+                }else if(data.code == 2){
+                    $("#div-sector-modulo").css('display','none');
+                    $("#sector-select").val(0);
+                }*/
+                $("#listaSectoresTarifas").html(data.response.htmlSector);
+            }
+        },
+        complete: function(){
+            Loading.hide();
+        },
+        error: function(jqXHR, textStatus, errorThrown){
+            Loading.hide();
+            bootbox.alert('Error: ' + jqXHR.responseText);
+        }
+    });
+
+});
+
+$(document).on('click', "button[data-role='guardar-tarifa-domicilio']", function(){
+    var form = $("#tarifa-domicilio-form");
+    $.ajax({
+        type: 'POST',
+        async: true,
+        url: requestUrl + '/callcenter/tarifaDomicilio/agregartarifadomicilio',
+        data: form.serialize(),
+        beforeSend: function() {
+            Loading.show();
+        },
+        complete: function() {
+            Loading.hide();
+        },
+        success: function(data) {
+            var data = $.parseJSON(data);
+            if (data.result === 'ok') {
+                $("#modal-tarifas-domicilio").modal("hide");
+                $.fn.yiiGridView.update('grid-tarifas-domicilios');
+            } else if (data.result === 'error') {
+                bootbox.alert(data.response);
+            } else {
+                $.each(data, function(element, error) {
+                    $('#' + form.attr('id') + ' #' + element + '_em_').html(error);
+                    $('#' + form.attr('id') + ' #' + element + '_em_').css('display', 'block');
+                });
+            }
+        },
+        error: function(jqXHR, textStatus, errorThrown) {
+            Loading.hide();
+            bootbox.alert('Error: ' + errorThrown);
+        }
+    });
+
+    //return false;
+});
+
+$(document).on('click', "a[data-role='eliminar-tarifa-domicilio']", function(){
+    var idDomicilio = $(this).attr("data-tarifa");
+    $.ajax({
+        type: 'POST',
+        async: true,
+        url: requestUrl + '/callcenter/tarifaDomicilio/eliminartarifadomicilio',
+        data: {idDomicilio : idDomicilio},
+        beforeSend: function() {
+            Loading.show();
+        },
+        complete: function() {
+            Loading.hide();
+        },
+        success: function(data) {
+            var data = $.parseJSON(data);
+            if (data.result === 'ok') {
+                $.fn.yiiGridView.update('grid-tarifas-domicilios');
+            } else{
+                bootbox.alert(data.response);
+            }
+        },
+        error: function(jqXHR, textStatus, errorThrown) {
+            Loading.hide();
+            bootbox.alert('Error: ' + errorThrown);
+        }
+    });
+
+    //return false;
+});
