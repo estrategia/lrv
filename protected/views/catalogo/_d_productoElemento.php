@@ -151,7 +151,7 @@
             <?php endif; ?>
             <?php if ($data->fraccionado == 1): ?>
             <!--fraccionado-->
-                    <span class="fraccion_text">F<br>Fracci&oacute;n</span>
+                    <div class="fraccion_text"><span>F</span>Fracci&oacute;n</div>
             <?php endif; ?>
             <?php if ($data->ventaVirtual == 1 && $objPrecio->inicializado()):  ?>
             <!--adicionar a lista-->
