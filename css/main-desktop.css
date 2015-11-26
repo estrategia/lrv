@@ -1602,9 +1602,8 @@ ul.yiiPager .selected a {
     z-index: 9999;
     background: url('../images/iconos/icon_module_link.png') no-repeat;
 }
-
-a.clst_slct_prod{ display:none;}
-a.clst_slct_prod.active{display: block;}
+a.clst_slct_prod{ display:none !important;}
+a.clst_slct_prod.active{display: inline-block !important;}
 
 .forma-pago{
     border: 1px solid #dadada;
