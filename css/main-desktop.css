@@ -1,7 +1,20 @@
+.cod_puntos span{
+    color: #fff !important;
+}
+.cod_puntos {
+    background: #00c2e2 none repeat scroll 0 0;
+    color: #fff;
+    font-size: 15px;
+    height: 40px;
+    line-height: 16px;
+    padding-top: 5px;
+    text-align: center;
+    width: 40px;
+}
 .cod_especial {
     display: block;
     height: 40px;
-    margin: 0;
+    margin: 0 !important;
     width: 40px;
 }
 .button-lista .text_add_list {
