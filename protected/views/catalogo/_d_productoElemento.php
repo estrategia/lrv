@@ -107,12 +107,6 @@
                         </div>
                     </div>
                 </div>
-                <div class="">	
-                    <a href="#" data-tipo="1" data-role="lstpersonalguardar" data-codigo="<?php echo $data->codigoProducto ?>">
-                        <div class="button-lista"   >Añadir a lista&nbsp;&nbsp;<span class="glyphicon glyphicon-pencil" aria-hidden="true"></span>
-                        </div>
-                    </a>
-                </div>
 
                 <?php if (isset($vista) && $vista == "comparacion"): ?>
                     <div class=" btnQuitarComparar">
@@ -161,7 +155,7 @@
             <?php endif; ?>
             <?php if ($data->ventaVirtual == 1 && $objPrecio->inicializado()):  ?>
             <!--adicionar a lista-->
-                <a href="#" data-tipo="1" class="button-lista"  data-role="lstpersonalguardar" data-codigo="<?php echo $data->codigoProducto ?>">Añadir a lista&nbsp;&nbsp;<span class="glyphicon glyphicon-pencil" aria-hidden="true"></span>
+                <a href="#" data-tipo="1" class="button-lista"  data-role="lstpersonalguardar" data-codigo="<?php echo $data->codigoProducto ?>"><span class="text_add_list">Añadir a lista</span> <span class="glyphicon glyphicon-pencil" aria-hidden="true"></span>
                 </a>
             <?php endif; ?>
         </div>
