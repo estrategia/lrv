@@ -33,10 +33,8 @@
             <div class="col-md-6 content-txt2 border-left">
                 <div class="descripciones">
                     <?php if (!in_array($objProducto->idUnidadNegocioBI, Yii::app()->params->calificacion['categoriasNoCalificacion'])): ?>
-                        <div class="col-md-12">
-                            <h4 style="margin-bottom:0px;">Califica el producto</h4>
+                            <h4>Califica el producto</h4>
                             <div id="raty-lectura-producto-<?php echo $objProducto->codigoProducto ?>" data-role="raty" data-readonly="true" data-score="<?php echo $objProducto->getCalificacion() ?>" class="clst_cal_str"></div>
-                        </div>
                     <?php endif; ?>
                     <div class="" style="color:#A3A3A3;font-size: 16px;">
                         <h3 style="color: #ED1C24;"><?php echo $objProducto->descripcionProducto ?> <!-- Titulo del producto --></h3>
@@ -119,7 +117,7 @@
                                     <div class="clear"></div>
                                     </div>
 
-                                    <div><span> Subtotal:<span id="subtotal-producto-unidad-<?php echo $objProducto->codigoProducto ?>"><?php echo Yii::app()->numberFormatter->format(Yii::app()->params->formatoMoneda['patron'], $objPrecio->getPrecio(Precio::PRECIO_UNIDAD), Yii::app()->params->formatoMoneda['moneda']); ?></span></span></div>
+                                    <div class="subtotal"><span> Subtotal:<span id="subtotal-producto-unidad-<?php echo $objProducto->codigoProducto ?>"><?php echo Yii::app()->numberFormatter->format(Yii::app()->params->formatoMoneda['patron'], $objPrecio->getPrecio(Precio::PRECIO_UNIDAD), Yii::app()->params->formatoMoneda['moneda']); ?></span></span></div>
                                 </div>
                             <?php endif; ?>
                         <?php endif; ?>
@@ -239,8 +237,8 @@
                         </div>
                     </div>
                     <div class="col-md-6">
-                        <div class="col-md-12 content-resena">	
-                            <div class="row">
+                        <div class="content-resena">	
+                            <div class="row" style="margin-bottom: 10px;">
                                 <div class="col-md-6">
                                     <div id="avg_sumary_<?php echo $objProducto->codigoProducto ?>" data-role="raty" data-readonly="true" data-score="<?php echo $objProducto->getCalificacion() ?>" class="clst_cal_str"></div>
                                 </div>
