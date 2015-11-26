@@ -290,13 +290,20 @@ input#RegistroForm_condiciones[type="checkbox"] + label span {
     padding: 5px 15px;
 }
 .fraccion_text {
-    background: #ffdf1e none repeat scroll 0 0;
-    color: #ea0001 !important;
-    display: block;
-    font-size: 12px;
-    margin: 5px 0;
-    padding: 3px 0;
+    background: #ff6316 none repeat scroll 0 0;
+    color: #fff;
+    font-size: 10px;
+    height: 40px;
     text-align: center;
+    width: 40px;
+}
+.fraccion_text > span {
+    color: #fff;
+    display: block;
+    font-size: 20px;
+    font-weight: bold;
+    line-height: 15px;
+    padding-top: 7px;
 }
 .btn-addless-cantidad {
     background: rgba(0, 0, 0, 0) none repeat scroll 0 0;
