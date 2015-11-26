@@ -127,7 +127,7 @@
                                                     </div>
                                                 <?php endforeach; ?>
                                             </ul>
-                                            <img style="margin-top:-3px;height:394px;" src="<?php echo Yii::app()->request->baseUrl; ?>/images/desktop/cuidado-personal-submenu.png">
+                                            <img style="margin-top:-3px;height:394px;" src="<?php echo Yii::app()->request->baseUrl; ?>/images/menu/desktop/<?php echo $categoria->rutaImagenMenu ?>">
                                         </div>
                                     <?php endif; ?>
                                 </li>

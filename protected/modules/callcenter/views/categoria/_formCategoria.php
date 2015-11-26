@@ -51,6 +51,11 @@
                   <?php echo CHtml::activeFileField($model, 'rutaImagen' , array('class' => 'rutaImagen')); ?>
                   <?php echo $form->error($model, 'rutaImagen'); ?>
                 </div>
+                <div class="form-group">
+                  <?php echo $form->labelEx($model, 'rutaImagenMenu'); ?>
+                  <?php echo CHtml::activeFileField($model, 'rutaImagenMenu' , array('class' => 'rutaImagenMenu')); ?>
+                  <?php echo $form->error($model, 'rutaImagenMenu'); ?>
+                </div>
               <?php endif;?>
               <?php  $this->endWidget();?>  
           </div>

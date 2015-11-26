@@ -11,7 +11,7 @@
                     <div class="panel-heading head-desplegable" role="tab" id="headingOne">
                         <h4 class="panel-title">
                             <a class = "collapsed"  data-toggle="collapse" data-parent="#accordion" href="#cat-<?php echo $categoriaNivel1->idCategoriaTienda ?>" aria-expanded="false" aria-controls="collapseOne">
-                               <img src="<?php echo Yii::app()->request->baseUrl; ?>/images/desktop/<?php echo $categoriaNivel1->rutaImagen ?>"/> <?php echo $categoriaNivel1->nombreCategoriaTienda ?>
+                               <img src="<?php echo Yii::app()->request->baseUrl; ?><?php echo ($opcion==2)?'/images/menu/desktop/':'/images/menu/'?><?php echo $categoriaNivel1->rutaImagen ?>"/> <?php echo $categoriaNivel1->nombreCategoriaTienda ?>
                             </a>
                         </h4>
                         <br/> <!-- Editar categoria -->
@@ -65,7 +65,7 @@
                                                                                                         <th></th>
                                                                                                     </tr>
                                                                                     <?php foreach($categoriaNivel3->listCategoriasBI as $categoriaBi):?>
-                                                                                                    <tr>
+                                                                                                    <tr id='visible-categoria-bi-<?php echo $categoriaBi->idCategoriaBI?>'>
                                                                                                         <td><?php echo $categoriaBi->nombreCategoria ?></td>
                                                                                                         <td> <a class="btn btn-xs btn-<?php echo Yii::app()->params->callcenter['estadoCompra']['colorClass'][2] ?>" href="#" data-categoria='<?php echo $categoriaNivel3->idCategoriaTienda ?>' data-dispositivo='<?php echo $opcion ?>' data-categoria-bi='<?php echo $categoriaBi->idCategoriaBI ?>' data-role='eliminar-categoria-bi'> Eliminar  </a></td>
                                                                                                     </tr>
