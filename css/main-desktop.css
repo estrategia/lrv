@@ -1,3 +1,7 @@
+.subtotal span {
+    color: #555 !important;
+    font-size: 20px;
+}
 .btnComparar {
     margin-top: 5px;
 }
