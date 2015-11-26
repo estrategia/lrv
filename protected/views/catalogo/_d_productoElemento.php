@@ -96,7 +96,6 @@
             </div>
         <?php elseif ($data->ventaVirtual == 1 && $objPrecio->inicializado()): ?>
             <div class="botones-list">
-                <?php echo CHtml::link('<div class="button">Añadir <img src="' . Yii::app()->baseUrl . '/images/desktop/carrito-amarillo.png" alt=""></div>', '#', array('data-producto' => $data->codigoProducto, 'data-cargar' => 1)); ?>
                 <div class="container-fluid group-botones-cantidad">
                     <div class="row">
                         <div class="col-xs-3" style="padding-left: 0px; padding-right: 2px;">
@@ -110,7 +109,7 @@
                         </div>
                     </div>
                 </div>
-
+                <?php echo CHtml::link('<div class="button">Añadir <img src="' . Yii::app()->baseUrl . '/images/desktop/carrito-amarillo.png" alt=""></div>', '#', array('data-producto' => $data->codigoProducto, 'data-cargar' => 1)); ?>
                 <?php if (isset($vista) && $vista == "comparacion"): ?>
                     <div class=" btnQuitarComparar">
                         <?php echo CHtml::link('<div class="button">Quitar elemento <img src="' . Yii::app()->baseUrl . '/images/desktop/button-carrito.png" alt=""></div>', '#', array('data-producto' => $data->codigoProducto, 'data-role' => 'quitarComparar')); ?>
