@@ -66,7 +66,7 @@ class TarifaDomicilioController extends ControllerOperator {
 
         echo CJSON::encode(array('result' => 'ok', 
             'response' => array(
-                "htmlTarifa" => $this->renderPartial("_formularioModal", array('model' => $model), true)
+                "htmlTarifa" => $this->renderPartial("_formularioModal", array('model' => $model), true, true)
         )));
         Yii::app()->end();
 

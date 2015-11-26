@@ -13,12 +13,12 @@
         array(
             'header' => 'Fecha Inicio',
             'value' => '$data->fechaInicio',
-            'filter' => CHtml::activeTextField($model, 'fechaInicio', array('class' => 'form-control')),
+            'filter' => CHtml::activeTextField($model, 'fechaInicio', array('id' => 'fechaInicioFiltro','class' => 'form-control')),
         ),
         array(
             'header' => 'Fecha Fin',
             'value' => '$data->fechaFin',
-            'filter' => CHtml::activeTextField($model, 'fechaFin', array('class' => 'form-control')),
+            'filter' => CHtml::activeTextField($model, 'fechaFin', array('id' => 'fechaFinFiltro','class' => 'form-control')),
         ),
         array(
             'header' => 'Ciudad',
