@@ -329,7 +329,7 @@ input#RegistroForm_condiciones[type="checkbox"] + label span {
     width: 24%;
 }
 .content_product {
-    min-height: 190px;
+    min-height: 180px;
     color:#6c6363;
 }
 .prices_status {
