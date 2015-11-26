@@ -31,11 +31,7 @@
                     </div>
                 </div>
              <?php endif; ?>
-            <!-- producto agregado -->
-            <a href="" class="clst_slct_prod<?php echo (Yii::app()->shoppingCart->contains($data->codigoProducto) ? " active" : "") ?>" id="icono-producto-agregado-<?php echo $data->codigoProducto ?>">
-                <img src="<?php echo Yii::app()->request->baseUrl ?>/images/iconos/icon_seleccionado.png">
-            </a>
-            <!-- producto agregado -->
+            
         </div>
 
        
@@ -130,6 +126,11 @@
             </div>
         <?php endif; ?>
         <div class="iconos_right"> 
+        <!-- producto agregado -->
+            <a href="" class="clst_slct_prod<?php echo (Yii::app()->shoppingCart->contains($data->codigoProducto) ? " active" : "") ?>" id="icono-producto-agregado-<?php echo $data->codigoProducto ?>">
+                <img src="<?php echo Yii::app()->request->baseUrl ?>/images/iconos/icon_seleccionado.png">
+            </a>
+            <!-- producto agregado -->
             <div class="itm_ico cod_puntos">pts<br><span>x2</span></div>
             <?php if ($data->objCodigoEspecial->rutaIcono != ""): ?>
             <!--codigo especial verde-->
