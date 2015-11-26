@@ -517,11 +517,13 @@ $(document).on('click', "a[data-role='actualizar-categoria']", function(){
 $(document).on('click', "a[data-role='asociar-categorias']", function(){
  
      var idCategoria = $(this).attr('data-categoria');
+     var dispositivo = $(this).attr('data-dispositivo');
+     
      $.ajax({
         type: 'GET',
         async: true,
         url: requestUrl + '/callcenter/categoria/asociarCategorias',
-         data: {idCategoria: idCategoria},
+         data: {idCategoria: idCategoria, tipoDispositivo: dispositivo},
         beforeSend: function(){
           //  Loading.show();
         },
@@ -548,11 +550,12 @@ $(document).on('click', "a[data-role='add-categoria-bi']", function(){
  
      var idCategoria = $(this).attr('data-categoria');
      var idCategoriaBi = $(this).attr('data-categoria-bi');
+     var dispositivo = $(this).attr('data-dispositivo');
      $.ajax({
         type: 'POST',
         async: true,
         url: requestUrl + '/callcenter/categoria/agregarAsociacionCategoria',
-         data: {idCategoria: idCategoria, idCategoriaBi:idCategoriaBi},
+         data: {idCategoria: idCategoria, idCategoriaBi:idCategoriaBi, tipoDispositivo:dispositivo },
         beforeSend: function(){
             Loading.show();
         },
@@ -560,7 +563,8 @@ $(document).on('click', "a[data-role='add-categoria-bi']", function(){
             var data = $.parseJSON(data);
             if (data.result == "ok") {
               //  bootbox.alert(data.response);
-                $("#btn-"+idCategoriaBi).html("Añadido")
+                $("#btn-"+idCategoriaBi).html("Añadido");
+                $("#div-categorias-tienda").html(data.responseHtml);
             }else if(data.result == "error"){
                 bootbox.alert(data.response);
             }
@@ -591,7 +595,6 @@ $(document).on('click', "a[data-role='eliminar-categoria-bi']", function(){
             var data = $.parseJSON(data);
             if (data.result == "ok") {
               //  bootbox.alert(data.response);
-              //   $("#div-categorias-tienda").html(data.response);
                 $("#visible-categoria-bi-"+idCategoriaBi).css('display','none');
             }else if(data.result == "error"){
                 bootbox.alert(data.response);
