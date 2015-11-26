@@ -141,21 +141,20 @@
         <?php endif; ?>
             </div>
         <?php endif; ?>
-        <div class="iconos_right">
-            
+        <div class="iconos_right">            
             <?php if ($data->objCodigoEspecial->rutaIcono != ""): ?>
             <!--codigo especial verde-->
-                <a class='pop_codigo img-responsive product-prom' role="button" data-toggle="popover" title="" data-content="<?php echo $data->objCodigoEspecial->descripcion ?>" >
+                <a class='pop_codigo product-prom cod_especial' role="button" data-toggle="popover" title="Codigo especial" data-content="<?php echo $data->objCodigoEspecial->descripcion ?>" >
                     <img src="<?php echo Yii::app()->request->baseUrl . Yii::app()->params->carpetaImagen['codigoEspecial'] . "/" . $data->objCodigoEspecial->rutaIcono ?>"/>
                 </a>
             <?php endif; ?>
             <?php if ($data->fraccionado == 1): ?>
             <!--fraccionado-->
-                    <div class="fraccion_text"><span>F</span>Fracci&oacute;n</div>
+            <div class="fraccion_text" title="Producto Fraccionado"><span>F</span>Fracci&oacute;n</div>
             <?php endif; ?>
             <?php if ($data->ventaVirtual == 1 && $objPrecio->inicializado()):  ?>
             <!--adicionar a lista-->
-                <a href="#" data-tipo="1" class="button-lista"  data-role="lstpersonalguardar" data-codigo="<?php echo $data->codigoProducto ?>"><span class="text_add_list">Añadir a lista</span> <span class="glyphicon glyphicon-pencil" aria-hidden="true"></span>
+                <a href="#" data-tipo="1" class="button-lista" title="Añadir a lista" data-role="lstpersonalguardar" data-codigo="<?php echo $data->codigoProducto ?>"><span class="text_add_list">Añadir a lista</span> <span class="glyphicon glyphicon-pencil" aria-hidden="true"></span>
                 </a>
             <?php endif; ?>
         </div>
