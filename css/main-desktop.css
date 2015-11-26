@@ -1,3 +1,9 @@
+.cod_especial {
+    display: block;
+    height: 40px;
+    margin: 0;
+    width: 40px;
+}
 .button-lista .text_add_list {
     display: none;
 }
@@ -832,7 +838,7 @@ footer li a:hover{
     display: block;
     font-size: 22px;
     height: 40px;
-    line-height: 42px;
+    line-height: 46px;
     text-align: center;
     width: 40px;
 }
