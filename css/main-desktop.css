@@ -1,3 +1,6 @@
+.button-lista .text_add_list {
+    display: none;
+}
 .botones-list .ranking-list {
     margin: 5px 0;
 }
@@ -816,12 +819,15 @@ footer li a:hover{
     cursor: pointer;
     background-color:#E0151D; 
 }
-.button-lista{
-    background-color: #D2CECE;
-    color: #6C6363;
-    padding: 0px 12px;
+.button-lista {
+    background-color: #d2cece;
+    color: #6c6363;
+    display: block;
+    font-size: 22px;
+    height: 40px;
+    line-height: 42px;
     text-align: center;
-    margin-bottom: 5px;
+    width: 40px;
 }
 .producto-fraccionado{
     background-color: #D2CECE;
