@@ -141,7 +141,8 @@
         <?php endif; ?>
             </div>
         <?php endif; ?>
-        <div class="iconos_right">            
+        <div class="iconos_right"> 
+            <div class="cod_puntos">pts<br><span>x2</span></div>
             <?php if ($data->objCodigoEspecial->rutaIcono != ""): ?>
             <!--codigo especial verde-->
                 <a class='pop_codigo product-prom cod_especial' role="button" data-toggle="popover" title="Codigo especial" data-content="<?php echo $data->objCodigoEspecial->descripcion ?>" >
