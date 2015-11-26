@@ -1,3 +1,10 @@
+.iconos_right {
+    margin-right: -5px;
+    position: absolute;
+    right: 0;
+    top: 0;
+    z-index: 1;
+}
 .iconos_right .itm_ico {
     margin-bottom: 5px !important;
 }
