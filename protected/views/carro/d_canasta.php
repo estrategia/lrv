@@ -28,21 +28,20 @@
             <li class="subtotal">Subtotal: <strong><?php echo Yii::app()->numberFormatter->format(Yii::app()->params->formatoMoneda['patron'], Yii::app()->shoppingCart->getCost(), Yii::app()->params->formatoMoneda['moneda']); ?></strong></li>
             <li>
                 <div class="row btn-pagar">
-                    <div class="col-sm-12">
-                        <div class="row">
+                       
                             <?php echo CHtml::link('Pagar', CController::createUrl('/carro/pagar'), array('class' => 'btn btn-danger')); ?>
-                        </div>
+                       
                         <?php if (Yii::app()->session[Yii::app()->params->sesion['tipoEntrega']] == Yii::app()->params->entrega['tipo']['domicilio'] && Yii::app()->shoppingCart->getObjExpress() != null): ?>
-                            <div class="row">
+                           
                                 <?php echo CHtml::link('Pago Express', CController::createUrl('/carro/pagoexpress'), array('class' => 'btn btn-danger')); ?>
-                            </div>
+                        
                         <?php endif; ?>
                         <?php if (!Yii::app()->user->isGuest): ?>
-                            <div class="row">
+                 
                                 <?php echo CHtml::link('Cotizar', "#", array('data-role' => 'crearcotizacion', 'class' => 'btn btn-danger')); ?>
-                            </div>
+                            
                         <?php endif; ?>
-                    </div>
+                    
                 </div>
             </li>
         <?php else: ?>
