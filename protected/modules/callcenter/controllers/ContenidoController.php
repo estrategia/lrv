@@ -66,7 +66,7 @@ class ContenidoController extends ControllerOperator {
                 $this->redirect($this->createUrl('contenido/editar', array('idModulo' => $modelModulo->idModulo, 'opcion' => 'sector')));
                 Yii::app()->end();
             } else {
-                Yii::app()->user->setFlash('alert alert-success', "Error al guardar el módulo");
+                Yii::app()->user->setFlash('alert alert-danger', "Error al guardar el módulo");
             }
         }
 

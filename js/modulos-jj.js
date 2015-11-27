@@ -610,3 +610,100 @@ $(document).on('click', "a[data-role='eliminar-categoria-bi']", function(){
 });
 
 
+$(document).on('click', "button[data-role='busqueda-producto-combo']", function(){
+    
+    var valorBusqueda = $.trim($("#combo-busqueda-buscar").val());
+    if(!valorBusqueda)
+    {
+        bootbox.alert('Búsqueda no puede estar vacío');
+    }
+    else
+    {
+        var idCombo = $(this).attr('data-combo');
+        $.ajax({
+            type: 'POST',
+            async: true,
+            url: requestUrl + '/callcenter/combo/buscarproductos',
+            data: {busqueda: valorBusqueda, idCombo: idCombo},
+            beforeSend: function() {
+                $('#modal-productos-busqueda-combo').remove();
+                Loading.show();
+            },
+            success: function(data) {
+                $('#container').append(data);
+                $('#modal-productos-busqueda-combo').modal('show');
+            },
+            complete: function() {
+                Loading.hide();
+            },
+            error: function(jqXHR, textStatus, errorThrown) {
+                Loading.hide();
+                bootbox.alert('Error: ' + jqXHR.responseText);
+            }
+        });
+    }
+});
+
+$(document).on('click', "a[data-role='agregar-producto-combo']", function(){
+    var producto = $(this).attr("data-producto");
+    var idModulo = $(this).attr("data-combo");
+    var precio = $("#precio_"+producto).val();
+    var self = $(this);
+    $.ajax({
+        type: 'POST',
+        async: true,
+        url: requestUrl + '/callcenter/combo/agregarproductocombo',
+        data: {producto : producto, idCombo : idModulo, precio:precio},
+        beforeSend: function(){
+            Loading.show();
+        },
+        success: function(data){
+            var data = $.parseJSON(data);
+            if (data.result === "ok") {
+                $("#contenido-productos-lista").html(data.response.htmlProductosAgregados);
+                self.attr("disabled", true);
+                self.html("Agregado");
+            } else if (data.result === 'error') {
+                bootbox.alert(data.response);
+            }
+        },
+        complete: function(){
+            Loading.hide();
+        },
+        error: function(jqXHR, textStatus, errorThrown){
+            Loading.hide();
+        }
+    });
+});
+
+
+$(document).on('click', "a[data-role='eliminar-producto-combo']", function(){
+    
+    var idComboProducto = $(this).attr("data-combo-producto");
+    var idCombo =  $(this).attr("data-combo");
+
+    $.ajax({
+        type: 'POST',
+        async: true,
+        url: requestUrl + '/callcenter/combo/eliminarproductocombo',
+        data: {idComboProducto : idComboProducto, idCombo:idCombo },
+        beforeSend: function(){
+            Loading.show();
+        },
+        success: function(data){
+            var data = $.parseJSON(data);
+            if (data.result === "ok") {
+                $("#contenido-productos-lista").html(data.response.htmlProductosAgregados);
+            } else if (data.result === 'error') {
+                bootbox.alert(data.response);
+            }
+        },
+        complete: function(){
+            Loading.hide();
+        },
+        error: function(jqXHR, textStatus, errorThrown){
+            Loading.hide();
+        }
+    });
+
+});
