@@ -1,31 +1,5 @@
-function cambiarEstadoTipoEntrega(){
-    var tipo=$("#tipo_entrega").val();
-    $.ajax({
-        type: 'GET',
-        dataType: 'json',
-        async: true,
-        url: requestUrl + '/sitio/entrega',
-        data: {tipo : tipo},
-        success: function(data) {
-            if (data.result == 'ok') {
-                //$('[data-role= \"main\"]').html(data.response);
-                //window.location.href = data.response;
-               bootbox.alert(data.response);
-            } else {
-                bootbox.alert(data.response);
-            }
-        },
-        error: function(jqXHR, textStatus, errorThrown) {
-            // $.mobile.loading('hide');
-            alert('Error: ' + errorThrown);
-        }
-    });
-    
-}
-
-
-function actualizarNumerosPagina(){
-    var items= $('#items-page').val();
+function actualizarNumerosPagina() {
+    var items = $('#items-page').val();
     $.fn.yiiListView.update('id-productos-list', {data: {pageSize: items}});
 }
 
@@ -123,7 +97,7 @@ function guardarCalificacion(codigoProducto, objCalificacion, url) {
     $.ajax({
         type: 'POST',
         url: url,
-        data: 'codigo=' + codigoProducto + '&titulo=' + titulo + '&calificacion=' + calificacion + "&comentario=" + comentario+"&"+form.serialize(),
+        data: 'codigo=' + codigoProducto + '&titulo=' + titulo + '&calificacion=' + calificacion + "&comentario=" + comentario + "&" + form.serialize(),
         dataType: 'json',
         success: function(data) {
             if (data.result === 'ok') {
@@ -132,13 +106,13 @@ function guardarCalificacion(codigoProducto, objCalificacion, url) {
             } else if (data.result === 'error') {
                 $("#dialog").html(data.response);
                 $("#dialog").dialog("open");
-            }else{
-                 $.each(data, function(element, error) {
+            } else {
+                $.each(data, function(element, error) {
                     $('#' + form.attr('id') + ' #' + element + '_em_').html(error);
                     $('#' + form.attr('id') + ' #' + element + '_em_').css('display', 'block');
                 });
             }
-        }     
+        }
     });
 }
 
@@ -168,37 +142,37 @@ $(document).ready(function() {
         items: 4,
         lazyLoad: true,
         navigation: true,
-        pagination:false,
+        pagination: false,
         navigationText: [
             "<i class='glyphicon glyphicon-chevron-left'></i>",
             "<i class='glyphicon glyphicon-chevron-right'></i>"
         ]
     });
     /*$("#owl-combos").owlCarousel({
-        items: 4,
-        lazyLoad: true,
-        navigation: true
-    });*/
+     items: 4,
+     lazyLoad: true,
+     navigation: true
+     });*/
     /*$("#slide-combos").owlCarousel({
-        items: 4,
-        lazyLoad: true,
-        navigation: true
-    });*/
-    
+     items: 4,
+     lazyLoad: true,
+     navigation: true
+     });*/
+
     /*$("#carrousel-img-productos").owlCarousel({
-        items: 4,
-        lazyLoad: true,
-        navigation: true
-    });*/
+     items: 4,
+     lazyLoad: true,
+     navigation: true
+     });*/
     $('.ad-gallery').adGallery({
         //  loader_image: '../libs/ad-gallery/loader.gif',
-          width: 400, 
-          height: 300,
-          thumb_opacity: 0.7,
-      });
-      $('.ciudades').select2();
-      $('#RegistroForm_profesion').select2();
-      $('#items-page').select2({});
+        width: 400,
+        height: 300,
+        thumb_opacity: 0.7,
+    });
+    $('.ciudades').select2();
+    $('#RegistroForm_profesion').select2();
+    $('#items-page').select2({});
 })
 
 
@@ -248,17 +222,19 @@ function cambioUnidadesBodega(codigoProducto, valorUnidad, op) {
 }
 
 
-function ubicacionGPSDesktop() {
+function ubicacionGPS() {
     if (navigator.geolocation) {
-        //     $.mobile.loading('show');
-        navigator.geolocation.getCurrentPosition(obtenerPosicionDesktop, errorPosicion, {'enableHighAccuracy': true, 'timeout': 30000, 'maximumAge': 0});
+        navigator.geolocation.getCurrentPosition(obtenerPosicion, errorPosicion, {'enableHighAccuracy': true, 'timeout': 30000, 'maximumAge': 0});
     } else {
-        alert("Servicio no soportado por este navegador.");
+        bootbox.alert("Servicio no soportado por este navegador.");
     }
 }
 
+$(document).on('click', 'button[data-role="ubicacion-gps"]', function() {
+    ubicacionGPS();
+});
+
 function errorPosicion(error) {
- //   $.mobile.loading('hide');
     var mensaje = 'NA';
 
     switch (error.code) {
@@ -276,10 +252,11 @@ function errorPosicion(error) {
             break;
     }
 
-    alert(mensaje);
+    bootbox.alert(mensaje);
 }
 
-function obtenerPosicionDesktop(pos) {
+function obtenerPosicion(pos) {
+    Loading.show();
     var lat = 0;
     var lon = 0;
     if (pos) {
@@ -292,88 +269,241 @@ function obtenerPosicionDesktop(pos) {
         async: true,
         url: requestUrl + '/sitio/gps',
         data: {lat: lat, lon: lon},
+        beforeSend: function() {
+            Loading.show();
+        },
         success: function(data) {
             if (data.result == 'ok') {
-                //$('[data-role= \"main\"]').html(data.response);
-                //window.location.href = data.response;
-                $("#modalUbicacion").html(data.response.ubicacion);
-                $("#modalUbicacion").modal();
+                bootbox.dialog({
+                    message: data.response.mensaje,
+                    title: "Ubicaci&oacute;n encontrada",
+                    buttons: {
+                        success: {
+                            label: "Usar esta ubicación",
+                            className: "btn-success",
+                            callback: function() {
+                                $('#ubicacion-seleccion-ciudad').val(data.response.ciudad);
+                                $('#ubicacion-seleccion-sector').val(data.response.sector);
+                                $('#ubicacion-seleccion-direccion').val('');
+                            }
+                        },
+                        close: {
+                            label: "Cancelar",
+                            className: "btn-danger",
+                            callback: function() {
+                            }
+                        }
+                    }
+                });
+
             } else {
                 bootbox.alert(data.response);
             }
+            Loading.hide();
         },
         error: function(jqXHR, textStatus, errorThrown) {
-            // $.mobile.loading('hide');
-            alert('Error: ' + errorThrown);
+            Loading.hide();
+            bootbox.alert('Error: ' + errorThrown);
         }
     });
 }
 
-function cargarCiudad() {
-    var ciudad = $("#ciudadDespacho").val();
-    var urlCargar = requestUrl + "/sitio/UbicacionSeleccion/";
-    $.ajax({
-        url: urlCargar,
-        data: {ciudad: ciudad},
-        dataType: 'json',
-        beforeSend: function() {
-            //  $.mobile.loading('show');
-            $("#modal-sector").remove();
-        }
-      }).done(function(data) {
-          
-          if(data.result=='ok'){
-              bootbox.alert(data.response);
-              if(data.urlAnterior){
-                location.href=data.urlAnterior;
-              }else{
-                  location.href=requestUrl;
-              }
-          }else if(data.result=='select'){
-             $("#main-page").append(data.response);
-             $("#modal-sector").modal('show');
-           //  $("#selectSectores").select2();
-          }else{
-               bootbox.alert(data.response);
-          }
-      });
-  }
-  
- $(document).on('click', "button[data-role='cargar-sector']", function() {
-    var codigoCiudad = $(this).attr('data-ciudad');
-    var sector=$("#selectSectores").val();
+$(document).on('click', 'div[data-role="tipoentrega"]', function() {
+    $('div[data-role="tipoentrega"]').removeClass('activo');
+    $('#ubicacion-seleccion-entrega').val($(this).attr('data-tipo'));
+    $(this).addClass('activo');
+});
+
+$(document).on('click', 'button[data-role="ubicacion-direccion"]', function() {
     $.ajax({
         type: 'GET',
         async: true,
-        url: requestUrl + '/sitio/ubicacionSeleccion',
-        data: {ciudad:codigoCiudad,sector:sector},
-        dataType: 'json',
+        url: requestUrl + '/usuario/direccionesUbicacion',
+        dataType: 'html',
         beforeSend: function() {
-        
+            $("#modal-ubicacion-direcciones").remove();
+            Loading.show();
         },
         complete: function(data) {
-             
+            Loading.hide();
         },
         success: function(data) {
-             if(data.result=='ok'){
-                $("#modal-sector").modal('hide');
-                    bootbox.alert(data.response);
-                if(data.urlAnterior){
-                  location.href=data.urlAnterior;
-                }else{
-                    location.href=requestUrl;
-                }
-              }
+            $('#main-page').append(data);
+            $('#modal-ubicacion-direcciones').modal('show');
         },
         error: function(jqXHR, textStatus, errorThrown) {
-           // boton.button('enable');
-            alert('Error: ' + errorThrown);
+            Loading.hide();
+            bootbox.alert('Error: ' + errorThrown);
         }
     });
     return false;
 });
 
+$(document).on('click', '#modal-ubicacion-direcciones input[type="radio"]', function() {
+    $('#ubicacion-seleccion-ciudad').val('');
+    $('#ubicacion-seleccion-sector').val('');
+    $('#ubicacion-seleccion-direccion').val($(this).val());
+});
 
+$(document).on('click', 'button[data-role="ubicacion-mapa"]', function() {
+    $('#modal-ubicacion-map').modal('show');
+    resizeMap();
+});
+
+$(document).on('click', 'button[data-role="ubicacion-seleccion-mapa"]', function() {
+    Loading.show();
+    var lat = 0;
+    var lon = 0;
+    if (map) {
+        lat = map.getCenter().lat();
+        lon = map.getCenter().lng();
+    }
+    $.ajax({
+        type: 'POST',
+        dataType: 'json',
+        async: true,
+        url: requestUrl + '/sitio/gps',
+        data: {lat: lat, lon: lon},
+        beforeSend: function() {
+            Loading.show();
+        },
+        success: function(data) {
+            if (data.result == 'ok') {
+                $('#modal-ubicacion-map').modal('hide');
+                $('#ubicacion-seleccion-ciudad').val(data.response.ciudad);
+                $('#ubicacion-seleccion-sector').val(data.response.sector);
+                $('#ubicacion-seleccion-direccion').val('');
+            } else {
+                bootbox.alert(data.response);
+            }
+            Loading.hide();
+        },
+        error: function(jqXHR, textStatus, errorThrown) {
+            Loading.hide();
+            bootbox.alert('Error: ' + errorThrown);
+        }
+    });
+});
+
+$(document).on('change', 'select[data-role="ciudad-despacho-map"]', function() {
+    var val = $(this).val().trim();
+    if (val.length > 0) {
+        var option = $('select[data-role="ciudad-despacho-map"] option[value="' + val + '"]').attr('selected', 'selected');
+
+        if (map) {
+            map.setCenter(new google.maps.LatLng(parseFloat(option.attr('data-latitud')), parseFloat(option.attr('data-longitud'))));
+            $('#select-ubicacion-preferencia').remove();
+
+            if (option.attr('data-tipo') == 1) {
+                $('#select-ubicacion-psubsector').removeClass('div-center').addClass('float-left');
+                $.ajax({
+                    type: 'POST',
+                    async: true,
+                    url: requestUrl + '/sitio/ubicacionSeleccion',
+                    data: {ciudad: $(this).val()},
+                    dataType: 'html',
+                    beforeSend: function() {
+                        Loading.show();
+                    },
+                    complete: function() {
+                        Loading.hide();
+                    },
+                    success: function(data) {
+                        $('#select-ubicacion-content').append(data);
+                        $('#select-ubicacion-preferencia .ciudades').select2();
+                    },
+                    error: function(jqXHR, textStatus, errorThrown) {
+                        Loading.hide();
+                        bootbox.alert('Error: ' + errorThrown);
+                    }
+                });
+            } else {
+                $('#select-ubicacion-psubsector').removeClass('float-left').addClass('div-center');
+            }
+        }
+    }
+});
+
+$(document).on('change', 'select[data-role="sector-despacho-map"]', function() {
+    var val = $(this).val().trim();
+    if (val.length > 0) {
+        var option = $('select[data-role="sector-despacho-map"] option[value="' + val + '"]').attr('selected', 'selected');
+
+        if (map) {
+            map.setCenter(new google.maps.LatLng(parseFloat(option.attr('data-latitud')), parseFloat(option.attr('data-longitud'))));
+        }
+    }
+});
+
+
+$(document).on('click', 'button[data-role="ubicacion-seleccion"]', function() {
+    var form = $(this).parents("form");
+    $.ajax({
+        type: 'POST',
+        async: true,
+        url: requestUrl + '/sitio/ubicacionSeleccion',
+        data: form.serialize(),
+        dataType: 'json',
+        beforeSend: function() {
+            Loading.show();
+        },
+        complete: function(data) {
+            Loading.hide();
+        },
+        success: function(data) {
+            if (data.result == 'ok') {
+                dialogoAnimado(data.response);
+                if (data.urlAnterior) {
+                    location.href = data.urlAnterior;
+                } else {
+                    location.href = requestUrl;
+                }
+            } else {
+                bootbox.alert(data.response);
+            }
+        },
+        error: function(jqXHR, textStatus, errorThrown) {
+            // boton.button('enable');
+            Loading.hide();
+            bootbox.alert('Error: ' + errorThrown);
+        }
+    });
+    return false;
+});
+
+/*$(document).on('click', "button[data-role='cargar-sector']", function() {
+ var codigoCiudad = $(this).attr('data-ciudad');
+ var sector = $("#selectSectores").val();
+ $.ajax({
+ type: 'GET',
+ async: true,
+ url: requestUrl + '/sitio/ubicacionSeleccion',
+ data: {ciudad: codigoCiudad, sector: sector},
+ dataType: 'json',
+ beforeSend: function() {
+ 
+ },
+ complete: function(data) {
+ 
+ },
+ success: function(data) {
+ if (data.result == 'ok') {
+ $("#modal-sector").modal('hide');
+ bootbox.alert(data.response);
+ if (data.urlAnterior) {
+ location.href = data.urlAnterior;
+ } else {
+ location.href = requestUrl;
+ }
+ }
+ },
+ error: function(jqXHR, textStatus, errorThrown) {
+ // boton.button('enable');
+ alert('Error: ' + errorThrown);
+ }
+ });
+ return false;
+ });*/
 
 $(document).on('click', "a[data-cargar='2']", function() {
     var combo = $(this).attr('data-combo');
@@ -484,55 +614,55 @@ $(document).on('click', "a[data-cargar='1']", function() {
 $(document).on('click', "#form-autenticar input[data-registro-desktop='autenticar']", function() {
     var form = $(this).parents("form");//"#form-autenticar"
     var boton = $(this);
-   
-$(document).on('click', "a[data-cargar='3']", function() {
-    var producto = $(this).attr('data-producto');
 
-    var cantidadUbicacion = $('#cantidad-producto-ubicacion-' + producto).val();
-    cantidadUbicacion = parseInt(cantidadUbicacion);
-    if (isNaN(cantidadUbicacion)) {
-        cantidadUbicacion = 0;
-    }
+    $(document).on('click', "a[data-cargar='3']", function() {
+        var producto = $(this).attr('data-producto');
 
-    var cantidadBodega = parseInt($('#cantidad-producto-bodega-' + producto).val());
-    cantidadBodega = parseInt(cantidadBodega);
-    if (isNaN(cantidadBodega)) {
-        cantidadBodega = 0;
-    }
-
-    $.ajax({
-        type: 'POST',
-        dataType: 'json',
-        async: true,
-        url: requestUrl + '/carro/agregarBodega',
-        data: {producto: producto, cantidadU: cantidadUbicacion, cantidadB: cantidadBodega},
-        beforeSend: function() {
-            //  $.mobile.loading('show');
-        },
-        complete: function() {
-            //   $.mobile.loading('hide');
-        },
-        success: function(data) {
-            if (data.result === "ok") {
-                $('#div-carro-canasta').html(data.response.canastaHTML);
-                $('#div-carro-canasta').trigger("create");
-
-                if (data.response.mensajeHTML) {
-                    dialogoAnimado(data.response.mensajeHTML);
-                    $("#cantidad-productos").html(data.response.objetosCarro);
-                }
-                if (data.response.dialogoHTML) {
-                    bootbox.alert(data.response.dialogoHTML);
-                }
-            } else {
-                bootbox.alert(data.response);
-            }
-        },
-        error: function(jqXHR, textStatus, errorThrown) {
-            bootbox.alert('Error: ' + errorThrown);
+        var cantidadUbicacion = $('#cantidad-producto-ubicacion-' + producto).val();
+        cantidadUbicacion = parseInt(cantidadUbicacion);
+        if (isNaN(cantidadUbicacion)) {
+            cantidadUbicacion = 0;
         }
+
+        var cantidadBodega = parseInt($('#cantidad-producto-bodega-' + producto).val());
+        cantidadBodega = parseInt(cantidadBodega);
+        if (isNaN(cantidadBodega)) {
+            cantidadBodega = 0;
+        }
+
+        $.ajax({
+            type: 'POST',
+            dataType: 'json',
+            async: true,
+            url: requestUrl + '/carro/agregarBodega',
+            data: {producto: producto, cantidadU: cantidadUbicacion, cantidadB: cantidadBodega},
+            beforeSend: function() {
+                //  $.mobile.loading('show');
+            },
+            complete: function() {
+                //   $.mobile.loading('hide');
+            },
+            success: function(data) {
+                if (data.result === "ok") {
+                    $('#div-carro-canasta').html(data.response.canastaHTML);
+                    $('#div-carro-canasta').trigger("create");
+
+                    if (data.response.mensajeHTML) {
+                        dialogoAnimado(data.response.mensajeHTML);
+                        $("#cantidad-productos").html(data.response.objetosCarro);
+                    }
+                    if (data.response.dialogoHTML) {
+                        bootbox.alert(data.response.dialogoHTML);
+                    }
+                } else {
+                    bootbox.alert(data.response);
+                }
+            },
+            error: function(jqXHR, textStatus, errorThrown) {
+                bootbox.alert('Error: ' + errorThrown);
+            }
+        });
     });
-});
 
     $.ajax({
         type: 'POST',
@@ -540,28 +670,28 @@ $(document).on('click', "a[data-cargar='3']", function() {
         url: requestUrl + '/usuario/ingresar',
         data: form.serialize(),
         beforeSend: function() {
-    //        boton.button('disable');
-   //         $.mobile.loading('show');
+            //        boton.button('disable');
+            //         $.mobile.loading('show');
         },
         complete: function() {
-     //       $.mobile.loading('hide');
+            //       $.mobile.loading('hide');
         },
         success: function(data) {
             var obj = $.parseJSON(data);
             if (obj.result === 'ok') {
                 window.location.replace(obj.response.redirect);
             } else if (obj.result === 'error') {
-              /*  boton.button('enable');
-                $('<div>').mdialog({
-                    content: "<div data-role='main'><div class='ui-content' data-role='content' role='main'>" + obj.response + "<a class='ui-btn ui-btn-r ui-corner-all ui-shadow' data-rel='back' href='#'>Aceptar</a></div></div>"
-                });*/
+                /*  boton.button('enable');
+                 $('<div>').mdialog({
+                 content: "<div data-role='main'><div class='ui-content' data-role='content' role='main'>" + obj.response + "<a class='ui-btn ui-btn-r ui-corner-all ui-shadow' data-rel='back' href='#'>Aceptar</a></div></div>"
+                 });*/
             } else {
-              //  boton.button('enable');
+                //  boton.button('enable');
                 $.each(obj, function(element, error) {
                     $('#' + form.attr('id') + ' #' + element + '_em_').html(error);
                     $('#' + form.attr('id') + ' #' + element + '_em_').css('display', 'block');
                 });
-            } 
+            }
         },
         error: function(jqXHR, textStatus, errorThrown) {
             boton.button('enable');
@@ -583,11 +713,11 @@ $(document).on('click', "#form-registro input[data-registro-desktop='registro']"
         url: requestUrl + '/usuario/registro',
         data: form.serialize(),
         beforeSend: function() {
-        //    boton.button('disable');
-        //    $.mobile.loading('show');
+            //    boton.button('disable');
+            //    $.mobile.loading('show');
         },
         complete: function() {
-         //   $.mobile.loading('hide');
+            //   $.mobile.loading('hide');
         },
         success: function(data) {
             var obj = $.parseJSON(data);
@@ -596,12 +726,12 @@ $(document).on('click', "#form-registro input[data-registro-desktop='registro']"
                 $("#main-page").html(obj.response.bienvenidaHTML);
                 $("#main-page").trigger("create");
             } else if (obj.result === 'error') {
-             /*   boton.button('enable');
-                $('<div>').mdialog({
-                    content: "<div data-role='main'><div class='ui-content' data-role='content' role='main'>" + obj.response + "<a class='ui-btn ui-btn-r ui-corner-all ui-shadow' data-rel='back' href='#'>Aceptar</a></div></div>"
-                });*/
+                /*   boton.button('enable');
+                 $('<div>').mdialog({
+                 content: "<div data-role='main'><div class='ui-content' data-role='content' role='main'>" + obj.response + "<a class='ui-btn ui-btn-r ui-corner-all ui-shadow' data-rel='back' href='#'>Aceptar</a></div></div>"
+                 });*/
             } else {
-             //   boton.button('enable');
+                //   boton.button('enable');
                 $.each(obj, function(element, error) {
                     $('#' + form.attr('id') + ' #' + element + '_em_').html(error);
                     $('#' + form.attr('id') + ' #' + element + '_em_').css('display', 'block');
@@ -609,7 +739,7 @@ $(document).on('click', "#form-registro input[data-registro-desktop='registro']"
             }
         },
         error: function(jqXHR, textStatus, errorThrown) {
-           // boton.button('enable');
+            // boton.button('enable');
             alert('Error: ' + errorThrown);
         }
     });
@@ -627,26 +757,26 @@ $(document).on('click', "#form-registro input[data-registro-desktop='recordar']"
         url: requestUrl + '/usuario/registro',
         data: form.serialize(),
         beforeSend: function() {
-        //    boton.button('disable');
-        //    $.mobile.loading('show');
+            //    boton.button('disable');
+            //    $.mobile.loading('show');
         },
         complete: function() {
-         //   $.mobile.loading('hide');
+            //   $.mobile.loading('hide');
         },
         success: function(data) {
             var obj = $.parseJSON(data);
 
             if (obj.result === 'ok') {
                 $("#main-page").html(obj.response.bienvenidaHTML);
-             //   $("#main-page").trigger("create");
+                //   $("#main-page").trigger("create");
             } else if (obj.result === 'error') {
                 bootbox.alert(obj.response);
-             /*   boton.button('enable');
-                $('<div>').mdialog({
-                    content: "<div data-role='main'><div class='ui-content' data-role='content' role='main'>" + obj.response + "<a class='ui-btn ui-btn-r ui-corner-all ui-shadow' data-rel='back' href='#'>Aceptar</a></div></div>"
-                });*/
+                /*   boton.button('enable');
+                 $('<div>').mdialog({
+                 content: "<div data-role='main'><div class='ui-content' data-role='content' role='main'>" + obj.response + "<a class='ui-btn ui-btn-r ui-corner-all ui-shadow' data-rel='back' href='#'>Aceptar</a></div></div>"
+                 });*/
             } else {
-             //   boton.button('enable');
+                //   boton.button('enable');
                 $.each(obj, function(element, error) {
                     $('#' + form.attr('id') + ' #' + element + '_em_').html(error);
                     $('#' + form.attr('id') + ' #' + element + '_em_').css('display', 'block');
@@ -654,7 +784,7 @@ $(document).on('click', "#form-registro input[data-registro-desktop='recordar']"
             }
         },
         error: function(jqXHR, textStatus, errorThrown) {
-           // boton.button('enable');
+            // boton.button('enable');
             alert('Error: ' + errorThrown);
         }
     });
@@ -672,30 +802,30 @@ $(document).on('click', "#form-recordar input[data-registro-desktop='recordar']"
         url: requestUrl + '/usuario/recordar',
         data: form.serialize(),
         beforeSend: function() {
-        //    boton.button('disable');
-        //    $.mobile.loading('show');
+            //    boton.button('disable');
+            //    $.mobile.loading('show');
         },
         complete: function() {
-       //     $.mobile.loading('hide');
+            //     $.mobile.loading('hide');
         },
         success: function(data) {
             var obj = $.parseJSON(data);
 
             if (obj.result === 'ok') {
-           //     boton.button('enable');
+                //     boton.button('enable');
                 form.trigger("reset");
                 bootbox.alert(obj.response);
-             /*   $('<div>').mdialog({
-                    content: "<div data-role='main'><div class='ui-content' data-role='content' role='main'>" + obj.response + "<a class='ui-btn ui-btn-r ui-corner-all ui-shadow' data-rel='back' href='#'>Aceptar</a></div></div>"
-                });*/
+                /*   $('<div>').mdialog({
+                 content: "<div data-role='main'><div class='ui-content' data-role='content' role='main'>" + obj.response + "<a class='ui-btn ui-btn-r ui-corner-all ui-shadow' data-rel='back' href='#'>Aceptar</a></div></div>"
+                 });*/
             } else if (obj.result === 'error') {
                 bootbox.alert(obj.response);
-             /*   boton.button('enable');
-                $('<div>').mdialog({
-                    content: "<div data-role='main'><div class='ui-content' data-role='content' role='main'>" + obj.response + "<a class='ui-btn ui-btn-r ui-corner-all ui-shadow' data-rel='back' href='#'>Aceptar</a></div></div>"
-                });*/
+                /*   boton.button('enable');
+                 $('<div>').mdialog({
+                 content: "<div data-role='main'><div class='ui-content' data-role='content' role='main'>" + obj.response + "<a class='ui-btn ui-btn-r ui-corner-all ui-shadow' data-rel='back' href='#'>Aceptar</a></div></div>"
+                 });*/
             } else {
-            //    boton.button('enable');
+                //    boton.button('enable');
                 $.each(obj, function(element, error) {
                     $('#' + form.attr('id') + ' #' + element + '_em_').html(error);
                     $('#' + form.attr('id') + ' #' + element + '_em_').css('display', 'block');
@@ -728,14 +858,14 @@ $(document).on('click', "a[data-role='comparar']", function() {
         },
         success: function(data) {
             if (data.result === "ok") {
-              $("#cantidad-productos-comparar").html(data.productos)
-              if(data.productos>=data.maximoComparar){
-                  $(".btnComparar").css("display","none");
-              }else{
-                  $(".btnComparar").css("display","block");
-              }
+                $("#cantidad-productos-comparar").html(data.productos)
+                if (data.productos >= data.maximoComparar) {
+                    $(".btnComparar").css("display", "none");
+                } else {
+                    $(".btnComparar").css("display", "block");
+                }
             } else {
-              
+
             }
         },
         error: function(jqXHR, textStatus, errorThrown) {
@@ -761,15 +891,15 @@ $(document).on('click', "a[data-role='quitarComparar']", function() {
         },
         success: function(data) {
             if (data.result === "ok") {
-              $("#cantidad-productos-comparar").html(data.productos)
-              $("#comparacion-producto-"+producto).css("display","none");
-              if(data.productos>=data.maximoComparar){
-                  $(".btnComparar").css("display","none");
-              }else{
-                  $(".btnComparar").css("display","block");
-              }
+                $("#cantidad-productos-comparar").html(data.productos)
+                $("#comparacion-producto-" + producto).css("display", "none");
+                if (data.productos >= data.maximoComparar) {
+                    $(".btnComparar").css("display", "none");
+                } else {
+                    $(".btnComparar").css("display", "block");
+                }
             } else {
-              
+
             }
         },
         error: function(jqXHR, textStatus, errorThrown) {
@@ -783,12 +913,12 @@ $(document).on('click', "a[data-role='quitarComparar']", function() {
 $(document).on('click', "a[data-registro-desktop='autenticar']", function() {
     var form = $(this).parents("form");//"#form-autenticar"
     var boton = $(this);
-   
+
 });
 
 
 $(document).on('click', "a[data-role='compararProductos']", function() {
-   $.ajax({
+    $.ajax({
         type: 'GET',
         async: true,
         url: requestUrl + '/catalogo/verProductosComparar',
@@ -800,11 +930,11 @@ $(document).on('click', "a[data-role='compararProductos']", function() {
             //   $.mobile.loading('hide');
         },
         success: function(data) {
-               $('#main-page').append(data);
-               $('#modal-comparar-productos').modal('show');
+            $('#main-page').append(data);
+            $('#modal-comparar-productos').modal('show');
         },
         error: function(jqXHR, textStatus, errorThrown) {
-            bootbox.alert(textStatus+"");
+            bootbox.alert(textStatus + "");
         }
     });
 });
@@ -844,12 +974,12 @@ $(document).on('click', "button[data-role='aumentar-cantidad']", function() {
 
 $(document).on('click', "button[data-role='guardarCalificacion']", function() {
 
-    var codigoProducto =$(this).attr('data-producto');
+    var codigoProducto = $(this).attr('data-producto');
     var form = $("#form-calificacion");
     $.ajax({
         type: 'POST',
-        url: requestUrl +"/catalogo/calificar/",
-        data: 'codigo=' + codigoProducto +"&"+ form.serialize(),
+        url: requestUrl + "/catalogo/calificar/",
+        data: 'codigo=' + codigoProducto + "&" + form.serialize(),
         dataType: 'json',
         success: function(data) {
             if (data.result === 'ok') {
@@ -858,23 +988,23 @@ $(document).on('click', "button[data-role='guardarCalificacion']", function() {
             } else if (data.result === 'error') {
                 $("#dialog").html(data.response);
                 $("#dialog").dialog("open");
-            }else{
-                 $.each(data, function(element, error) {
+            } else {
+                $.each(data, function(element, error) {
                     $('#' + form.attr('id') + ' #' + element + '_em_').html(error);
                     $('#' + form.attr('id') + ' #' + element + '_em_').css('display', 'block');
                 });
             }
-        }     
+        }
     });
 });
 
 
-function capturarcalificacionproducto(score, evt){
+function capturarcalificacionproducto(score, evt) {
     var calificacion = score;
     calificacion = parseInt(calificacion);
     if (isNaN(calificacion)) {
         calificacion = '';
     }
     $('#CalificacionForm_calificacion').val(calificacion);
-    $('#calificacion_form').attr('data-score',calificacion);
+    $('#calificacion_form').attr('data-score', calificacion);
 }

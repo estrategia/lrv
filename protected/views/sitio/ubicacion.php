@@ -1,7 +1,7 @@
 <h3 class="ui-bar ui-bar-h center title_h tpad">
     <?php if ($tipoEntrega == Yii::app()->params->entrega['tipo']['presencial']): ?>
         Selecciona la ubicación para recoger el pedido
-    <?php else: ?>
+    <?php elseif ($tipoEntrega == Yii::app()->params->entrega['tipo']['domicilio']): ?>
         Selecciona la ubicación donde deseas que te entreguemos el pedido
     <?php endif; ?>
 </h3>

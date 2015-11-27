@@ -47,6 +47,7 @@ class Ciudad extends CActiveRecord {
         // class name for the relations automatically generated below.
         return array(
             'listSectores' => array(self::MANY_MANY, 'Sector', 'm_SectorCiudad(codigoCiudad, codigoSector)'),
+            'listSectorCiudad' => array(self::HAS_MANY, 'SectorCiudad', 'codigoCiudad'),
             //'listSubSectores' => array(self::HAS_MANY, 'SubSector', 'codigoCiudad', 'condition' => 'listSubSectores.estadoSubSector=1', 'order' => 'listSubSectores.nombreSubSector ASC'),
             'listSubSectores' => array(self::HAS_MANY, 'SubSector', 'codigoCiudad'),
         );

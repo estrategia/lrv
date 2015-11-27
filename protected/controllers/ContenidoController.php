@@ -8,8 +8,9 @@ class ContenidoController extends Controller {
     public function filters() {
         return array(
             array(
-                'application.filters.SessionControlFilter + categoria, buscar, relacionados, bodega, descuentos, masvendidos, masvistos',
-                'isMobile' => $this->isMobile
+                'application.filters.SessionControlFilter + ver',
+                'isMobile' => $this->isMobile,
+                'redirect' => false
             ),
         );
     }

@@ -606,7 +606,7 @@ class CatalogoController extends Controller {
             $parametrosProductos = array(
                 'order' => 't.orden DESC',
                 'with' => array('listImagenes', 'objCodigoEspecial', 'listCalificaciones',
-                    'objCategoriaBI' => array('with' => 'listCategoriasTienda', 'condition' => 'listCategoriasTienda.tipoDispositivo=:dispositivo'),
+                    'objCategoriaBI' => array('with' => array('listCategoriasTienda' => array('on' => 'listCategoriasTienda.tipoDispositivo=:dispositivo'))),
                 ),
                 'condition' => "t.activo=:activo AND t.codigoProducto IN ($codigosStr)",
                 'params' => array(
@@ -618,7 +618,7 @@ class CatalogoController extends Controller {
             $parametrosProductos = array(
                 'order' => 't.orden DESC',
                 'with' => array('listImagenes', 'objCodigoEspecial', 'listCalificaciones',
-                    'objCategoriaBI' => array('with' => 'listCategoriasTienda', 'condition' => 'listCategoriasTienda.tipoDispositivo=:dispositivo'),
+                    'objCategoriaBI' => array('with' => array('listCategoriasTienda' => array('on' => 'listCategoriasTienda.tipoDispositivo=:dispositivo'))),
                     'listSaldos' => array('condition' => '(listSaldos.saldoUnidad>:saldo AND listSaldos.codigoCiudad=:ciudad AND listSaldos.codigoSector=:sector) OR (listSaldos.saldoUnidad IS NULL AND listSaldos.codigoCiudad IS NULL AND listSaldos.codigoSector IS NULL)'),
                     'listPrecios' => array('condition' => '(listPrecios.codigoCiudad=:ciudad AND listPrecios.codigoSector=:sector) OR (listPrecios.codigoCiudad IS NULL AND listPrecios.codigoSector IS NULL)'),
                     'listSaldosTerceros' => array('condition' => '(listSaldosTerceros.saldoUnidad>:saldo AND listSaldosTerceros.codigoCiudad=:ciudad AND listSaldosTerceros.codigoSector=:sector) OR (listSaldosTerceros.codigoCiudad IS NULL AND listSaldosTerceros.codigoSector IS NULL)')
@@ -1994,6 +1994,94 @@ class CatalogoController extends Controller {
             $parametrosVista['dataprovider'] = $dataProvider;
             $this->render('d_listaProductos', $parametrosVista);
         }
+    }
+    
+    public function actionPromocion($nombre, $elemento) {
+        if (!$this->isMobile) {
+            $this->actionIndex();
+        }
+        
+        $promocion = $nombre;
+        if (!isset(Yii::app()->params->promociones[$promocion]) && !isset(Yii::app()->params->promociones[$promocion][$elemento])) {
+            throw new CHttpException(404, 'Promoci&oacute;n no existe.');
+        }
+        
+        $fActual = new DateTime;
+        $fInicio = DateTime::createFromFormat('Y-m-d H:i:s', Yii::app()->params->promociones[$promocion]['fechaInicio']);
+        $fFin = DateTime::createFromFormat('Y-m-d H:i:s', Yii::app()->params->promociones[$promocion]['fechaFin']);
+
+        $diffInicio = $fInicio->diff($fActual);
+        $diffFin = $fActual->diff($fFin);
+
+        if ($diffInicio->invert == 1 || $diffFin->invert == 1) {
+            throw new CHttpException(404, 'Promoci&oacute;n no existe.');
+        }
+
+        $listaCodigos = Yii::app()->params->promociones[$promocion]['elementos'][$elemento]['productos'];
+        $listProductos = array();
+
+        if (!empty($listaCodigos)) {
+            $criteria = array(
+                'order' => 't.orden DESC',
+                'with' => array('listImagenes', 'objCodigoEspecial', 'listCalificaciones'),
+                'condition' => "t.activo=:activo AND (listImagenes.tipoImagen='" . Yii::app()->params->producto['tipoImagen']['mini'] . "' OR listImagenes.tipoImagen IS NULL)",
+                'params' => array(
+                    ':activo' => 1,
+                )
+            );
+            
+            $criteria['condition'] .= " AND t.codigoProducto IN (" . implode(",", $listaCodigos) . ")";
+            $criteria['with']['listSaldos'] = array('on' => 'listSaldos.codigoCiudad=:ciudad AND listSaldos.codigoSector=:sector OR listSaldos.idProductoSaldos IS NULL');
+            $criteria['with']['listPrecios'] = array('on' => 'listPrecios.codigoCiudad=:ciudad AND listPrecios.codigoSector=:sector OR listPrecios.idProductoPrecios IS NULL');
+            $criteria['with']['listSaldosTerceros'] = array('on' => 'listSaldosTerceros.codigoCiudad=:ciudad AND listSaldosTerceros.codigoSector=:sector OR listSaldosTerceros.idProductoSaldo IS NULL');
+            $criteria['params'][':ciudad'] = $this->objSectorCiudad->codigoCiudad;
+            $criteria['params'][':sector'] = $this->objSectorCiudad->codigoSector;
+
+            $listProductos = Producto::model()->findAll($criteria);
+        }
+
+        $listCodigoEspecial = CodigoEspecial::model()->findAll(array(
+            'condition' => 'codigoEspecial<>0'
+        ));
+
+        $msgCodigoEspecial = array();
+        foreach ($listProductos as $objProducto) {
+            if ($objProducto->codigoEspecial != null && $objProducto->codigoEspecial != 0) {
+                $msgCodigoEspecial[$objProducto->codigoEspecial] = $objProducto->objCodigoEspecial;
+            }
+        }
+
+        $imagenBusqueda = null;
+        if (empty($listProductos)) {
+            $imagenBusqueda = Yii::app()->params->busqueda['imagen']['noExito'];
+            try {
+                Busquedas::registrarBusqueda(array(
+                    'idenficacionUsuario' => Yii::app()->user->isGuest ? null : Yii::app()->user->name,
+                    'tipoBusqueda' => Yii::app()->params->busqueda['tipo']['categoria'],
+                    'msgBusqueda' => "Mas Vistos",
+                    'codigoCiudad' => $this->objSectorCiudad == null ? null : $this->objSectorCiudad->codigoCiudad,
+                    'codigoSector' => $this->objSectorCiudad == null ? null : $this->objSectorCiudad->codigoSector,
+                ));
+            } catch (Exception $exc) {
+                Yii::log($exc->getMessage() . "\n" . $exc->getTraceAsString(), CLogger::LEVEL_ERROR, 'application');
+            }
+        }
+
+        $codigoPerfil = Yii::app()->shoppingCart->getCodigoPerfil();
+        
+        $parametrosVista = array(
+            'listProductos' => $listProductos,
+            'listCombos' => array(),
+            'msgCodigoEspecial' => $msgCodigoEspecial,
+            'listCodigoEspecial' => $listCodigoEspecial,
+            'objSectorCiudad' => $this->objSectorCiudad,
+            'codigoPerfil' => $codigoPerfil,
+            'tipoBusqueda' => Yii::app()->params->busqueda['tipo']['categoria'],
+            'nombreBusqueda' => Yii::app()->params->promociones[$promocion]['nombre'],
+        );
+
+        $parametrosVista['imagenBusqueda'] = $imagenBusqueda;
+        $this->render('listaProductos', $parametrosVista);
     }
 
 }

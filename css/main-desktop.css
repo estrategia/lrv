@@ -474,11 +474,11 @@ header {
     width: 16px;
 }
 .user{
-   /* width: 270px;*/
+    /* width: 270px;*/
     margin-top: 25px;
     padding: 0;
     float:left;
-   /* position: absolute;*/
+    /* position: absolute;*/
 }
 .user li{
     display: inline-block;
@@ -1539,4 +1539,147 @@ a.clst_slct_prod.active{display: block;}
 
 .forma-pago.activo{
     border: 1px solid #000000;
+}
+
+.tipo-entrega{
+    border: 1px solid #dadada;
+}
+
+.tipo-entrega.activo{
+    border: 1px solid #000000;
+}
+
+.modal.map {
+    position: fixed;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    overflow: hidden;
+}
+
+.modal.map .modal-dialog {
+    position: fixed;
+    margin: 0;
+    width: 100%;
+    height: 100%;
+    padding: 0;
+}
+
+.modal.map .modal-header {
+  position: absolute;
+  top: 0;
+  right: 0;
+  left: 0;
+  height: auto;
+  padding: 10px;
+  background: #6598d9;
+  border: 0;
+  z-index: 99;
+}
+
+.modal.map .modal-title {
+  font-weight: 300;
+  font-size: 2em;
+  color: #fff;
+  line-height: 30px;
+}
+
+.modal.map .modal-content {
+    position: absolute;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    border: 2px solid #3c7dcf;
+    border-radius: 0;
+    box-shadow: none;
+}
+
+.modal.map .modal-body {
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    margin: 0;
+    padding: 0;
+    width: 100%;
+    overflow: auto;
+}
+
+.modal.map .modal-footer {
+    position:absolute; 
+    z-index:9999; 
+    bottom: 10px; 
+    width:100%; 
+    height:50px;
+    border: none;
+}
+
+.modal.map .btn {
+    height: 40px;
+    border-radius: 0;
+
+    // focus
+    &:focus,
+        &:active,
+        &:active:focus {
+        box-shadow: none;
+        outline: none;
+    }
+}
+
+.modal.map .btn-primary,.modal.map .btn-primary:hover, .modal.map .btn-primary:focus,.modal.map .btn-primary:active {
+    font-weight: 300;
+    font-size: 1.6rem;
+    color: #fff;
+    color: lighten(#484b5b, 20%);
+    color: #fff;
+    text-align: center;
+    background: #60cc69;
+    border: 1px solid #36a940;
+    border-bottom: 3px solid #36a940;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.15);
+
+    // active
+    &:active {
+        border-bottom: 1px solid #36a940;
+    }
+}
+
+.modal.map .btn-default,.modal.map .btn-default:hover,.modal.map .btn-default:focus,.modal.map .btn-default:active {
+    font-weight: 300;
+    font-size: 1.6rem;
+    text-align: center;
+    background: darken(#dcdfe4, 10%);
+    border: 1px solid darken(#dcdfe4, 20%);
+    border-bottom: 3px solid darken(#dcdfe4, 20%);
+
+    // active
+    &:active {
+        border-bottom: 1px solid darken(#dcdfe4, 20%);
+    }
+}
+
+.modal.map .select2-container .select2-selection--single .select2-selection__rendered{
+    color: #444;
+    line-height: 28px;
+    padding: 0;
+}
+
+.map-content{
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    margin: 0;
+    padding: 0;
+    width:100%;
+    height:100%;
+}
+
+.float-left{
+    float: left;
+}
+
+.float-right{
+    float: right;
 }

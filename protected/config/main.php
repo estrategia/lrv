@@ -127,6 +127,36 @@ return array(
         ),
     ),
     'params' => array(
+        'promociones' => array(
+            'viernesnegro' => array(
+                'icono' => '/images/inicio/masvistos.png',
+                'nombre' => 'Viernes negro',
+                'fechaInicio' => '2015-11-25 13:00:00',
+                'fechaFin' => '2015-11-28 15:10:00',
+                'elementos' => array(
+                    array(
+                        'rutaImagen' => '/images/banner/banner_inicio1-2015-10-20.jpg',
+                        'productos' => array(12957, 12959, 30128, 32591, 97448, 17600, 26767, 48679, 48683)
+                    ),
+                    array(
+                        'rutaImagen' => '/images/banner/banner_inicio2-2015-10-20.jpg',
+                        'productos' => array(12957, 12959, 30128, 32591, 97448, 17600, 26767, 48679, 48683)
+                    ),
+                    array(
+                        'rutaImagen' => '/images/banner/banner_inicio1.jpg',
+                        'productos' => array(12957, 12959, 30128, 32591, 97448, 17600, 26767, 48679, 48683)
+                    ),
+                    array(
+                        'rutaImagen' => '/images/banner/banner_inicio2.jpg',
+                        'productos' => array(12957, 12959, 30128, 32591, 97448, 17600, 26767, 48679, 48683)
+                    ),
+                    array(
+                        'rutaImagen' => '/images/banner/banner_inicio3.jpg',
+                        'productos' => array(12957, 12959, 30128, 32591, 97448, 17600, 26767, 48679, 48683)
+                    )
+                )
+            )
+        ),
         'correoAdmin' => 'infolrv@copservir.com',
         'maximoComparacion' => 5,
         'urlSitio' => 'www.larebajavirtual.com',
@@ -150,6 +180,7 @@ return array(
             'redireccionUbicacion' => 'larebaja.online.ubicacion.redireccion',
             'redireccionAutenticacion' => 'larebaja.online.usuario.autenticacion',
             'pdvEntrega' => 'larebaja.online.ubicacion.pdvEntrega',
+            'direccionEntrega' => 'larebaja.online.ubicacion.direccionEntrega',
             'sectorCiudadEntrega' => 'larebaja.online.ubicacion.sectorCiudadEntrega',
             'subSectorCiudadEntrega' => 'larebaja.online.ubicacion.subSsectorCiudadEntrega',
             'productosBusquedaOrden' => 'larebaja.online.productos.busqueda.orden',
@@ -392,7 +423,7 @@ return array(
                     2 => 'Html',
                     3 => 'Ninguno'
                 ),
-                'urlImagenes' => 'images/banners/',
+                'urlImagenes' => 'images/banner/',
                 'tiposListasProductos' => array(
                     0 => 'Producto',
                     1 => 'Marca',

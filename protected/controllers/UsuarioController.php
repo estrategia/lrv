@@ -594,7 +594,7 @@ class UsuarioController extends Controller {
                 'Mi cuenta' => array('/usuario'),
                 'Pago express'
             );
-            
+
             $this->render('d_usuario', array('vista' => 'd_pagoExpress', 'params' => $params));
         }
     }
@@ -668,7 +668,7 @@ class UsuarioController extends Controller {
                 'Mi cuenta' => array('/usuario'),
                 'Cotizaciones'
             );
-            
+
             $this->render('d_usuario', array('vista' => 'd_cotizaciones', 'params' => $params));
         }
     }
@@ -1173,6 +1173,25 @@ class UsuarioController extends Controller {
         Yii::app()->end();
     }
 
+    public function actionDireccionesUbicacion() {
+        $contenido = "prueba";
+
+        if (Yii::app()->user->isGuest) {
+            $contenido = "No hay usuario autenticado";
+        } else {
+            $listDirecciones = DireccionesDespacho::consultarDireccionesUsuario(Yii::app()->user->name, true);
+            if(empty($listDirecciones)){
+                $contenido = "No hay direcciones de despacho registradas";
+            }else{
+                $contenido = $this->renderPartial('d_direcciones', array('listDirecciones' => $listDirecciones, 'modal'=>true), true);
+            }
+        }
+
+        $this->renderPartial('d_direccionesUbicacion', array(
+            'contenido' => $contenido
+        ));
+    }
+
     public function actionDirecciones() {
         $objSectorCiudad = null;
         if (isset(Yii::app()->session[Yii::app()->params->sesion['sectorCiudadEntrega']]))
@@ -1185,15 +1204,6 @@ class UsuarioController extends Controller {
 
         $this->showSeeker = false;
         $this->fixedFooter = true;
-
-        $models = DireccionesDespacho::model()->findAll(array(
-            'with' => array('objCiudad'),
-            'condition' => 'identificacionUsuario=:cedula AND activo=:activo',
-            'params' => array(
-                ':cedula' => Yii::app()->user->name,
-                ':activo' => 1,
-            )
-        ));
 
         $listDirecciones = DireccionesDespacho::consultarDireccionesUsuario(Yii::app()->user->name, true);
 
