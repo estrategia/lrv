@@ -21,27 +21,18 @@ $form = $this->beginWidget('CActiveForm', array(
 <?php //$this->renderPartial('/carro/_d_formaPago', array('form' => $form, 'model' => $modelPago, 'listFormaPago' => $listFormaPago)) ?>
 
 <div class="row">
-    <div class="col-md-6 center">
+    <div class="col-md-12 center">
         <div data-role="formapago" data-tipo="1"class="forma-pago<?php echo ($modelPago->idFormaPago == 1 ? " activo" : "" ) ?>">
-            Efectivo
+            <span>&bull;</span> Efectivo <i class="glyphicon glyphicon-chevron-right icon-right-pagar"></i>
         </div>
-    </div>
-    <div class="col-md-6 center">
         <div data-role="formapago" data-tipo="datafono" class="forma-pago<?php echo (in_array($modelPago->idFormaPago, Yii::app()->params->formaPago['tarjetasDatafono']) ? " activo" : "" ) ?>">
-            Datafono
+            <span>&bull;</span> Datafono <i class="glyphicon glyphicon-chevron-right icon-right-pagar"></i>
         </div>
-    </div>
-</div>
-
-<div class="row">
-    <div class="col-md-6 center">
         <div data-role="formapago" data-tipo="3"  class="forma-pago<?php echo ($modelPago->idFormaPago == 3 ? " activo" : "" ) ?>">
-            Paga en linea
+            <span>&bull;</span> Paga en linea <i class="glyphicon glyphicon-chevron-right icon-right-pagar"></i>
         </div>
-    </div>
-    <div class="col-md-6 center">
         <div data-role="formapago" data-tipo="2" class="forma-pago<?php echo ($modelPago->idFormaPago == 2 ? " activo" : "" ) ?>">
-            Credirebaja
+            <span>&bull;</span> Credirebaja <i class="glyphicon glyphicon-chevron-right icon-right-pagar"></i>
             <div class="row">
                 <div class="col-md-8 info-oficina">
                     <?php echo $form->labelEx($modelPago, 'numeroTarjeta'); ?>

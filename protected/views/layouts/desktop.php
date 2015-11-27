@@ -102,7 +102,7 @@
             <!--menu-->
             <nav class="main_menu">
                 <ul class="nav nav-justified" role="tablist">
-                    <li class="dropdown categorias" role="presentation">
+                    <li class="dropdown categorias" role="presentation" style="position:inherit;">
                         <a id="categorias" href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Categorías<span class="ico-cat"></span></a>
                         <ul class="dropdown-menu category" aria-labelledby="categorias">
                             <?php foreach ($this->categorias as $categoria): ?>
@@ -113,7 +113,7 @@
                                                 <?php foreach ($categoria->listCategoriasHijas as $subcategoria): ?>
                                                     <div class="section-submenu">
                                                         <?php if (count($subcategoria->listModulosConfigurados) > 0): ?>
-                                                            <?php echo CHtml::link("<li class='title-submenu'><span class='glyphicon glyphicon-chevron-right' aria-hidden='true'></span>$subcategoria->nombreCategoriaTienda</li>", CController::createUrl('/catalogo/division', array('division' => $subcategoria->idCategoriaTienda))); ?>
+                                                           <li class='title-submenu'><?php echo CHtml::link("<span class='glyphicon glyphicon-chevron-right' aria-hidden='true'></span>$subcategoria->nombreCategoriaTienda", CController::createUrl('/catalogo/division', array('division' => $subcategoria->idCategoriaTienda))); ?></li>
                                                         <?php else: ?>
                                                             <li class='title-submenu'><span class='glyphicon glyphicon-chevron-right' aria-hidden='true'></span><?php echo $subcategoria->nombreCategoriaTienda ?></li>
                                                         <?php endif; ?>
@@ -121,13 +121,13 @@
                                                             <?php if (count($subcategoria->listModulosConfigurados) > 0): ?>
                                                                 <li><?php echo $categoriaHija->nombreCategoriaTienda ?></li>
                                                             <?php else: ?>
-                                                                <?php echo CHtml::link("<li>$categoriaHija->nombreCategoriaTienda</li>", CController::createUrl('/catalogo/categoria', array('categoria' => $categoriaHija->idCategoriaTienda))); ?>
+                                                                <li><?php echo CHtml::link("$categoriaHija->nombreCategoriaTienda", CController::createUrl('/catalogo/categoria', array('categoria' => $categoriaHija->idCategoriaTienda))); ?></li>
                                                             <?php endif; ?>
                                                         <?php endforeach; ?>
                                                     </div>
                                                 <?php endforeach; ?>
                                             </ul>
-                                            <img style="margin-top:-3px;height:394px;" src="<?php echo Yii::app()->request->baseUrl; ?>/images/menu/desktop/<?php echo $categoria->rutaImagenMenu ?>">
+                                            <img class="img_categoria" src="<?php echo Yii::app()->request->baseUrl; ?>/images/menu/desktop/<?php echo $categoria->rutaImagenMenu ?>">
                                         </div>
                                     <?php endif; ?>
                                 </li>

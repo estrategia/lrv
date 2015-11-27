@@ -22,3 +22,17 @@ $('.viewsList .btn').click(function(){
  		$('#lista-productos.list_cuadricula .listaProductos li .content-txt2 .botones-list').removeClass('col-sm-4');
  	}
  });
+$(document).ready(function(){
+	widht=$('.main_menu .categorias').width()-4;
+	widhtDocument=($(window).width()-widht)-4;
+	$('.categorias .category > li').width(widht);
+	$('.categorias .category > li .right-nav').width(widhtDocument);
+	$('.categorias .category > li .right-nav .submenu').width(widhtDocument);
+});
+$(".categorias .cuidado-personal").hover( function() {
+  $('.submenu').isotope({
+    layoutMode: 'masonryHorizontal',
+    itemSelector: '.section-submenu'
+  });
+  
+});

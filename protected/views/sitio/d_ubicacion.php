@@ -2,13 +2,11 @@
 
 
 <div class="modal fade" id="modalUbicacion" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"></div>
-<section>
-    
-    
-    <div class="col-md-12">
+<section style="max-width: 500px; margin: auto; padding: 30px 0px;">
+
         <div class="row">
-            <div class="col-md-5 " >
-                Seleccione el método de entrega
+            <div style=" border-bottom: 1px dashed; padding-bottom: 41px;"  >
+                <h2>Seleccione el método de entrega</h2>
                 <select id='tipo_entrega' name='tipo_entrega' class='form-control' onchange="cambiarEstadoTipoEntrega()">
                     <option value=''>Seleccione...</option>
                     <option value='<?php echo  Yii::app()->params->entrega['tipo']['presencial'];?>'>Quiero pasar por el pedido</option>
@@ -17,7 +15,7 @@
             </div>
         </div>
         <div class="row">
-             <div class="col-md-5 " >
+             <div class=" " >
                 <h3 class="">
                  <?php if ($tipoEntrega == Yii::app()->params->entrega['tipo']['presencial']): ?>
                      Selecciona la ubicación 
@@ -28,17 +26,17 @@
              </div>
         </div>
         <div class="row">
-            <div class="col-md-5 " >
+            <div class=" " >
             <?php echo CHtml::htmlButton('Usar la ubicación de tu dispositivo', array('class' => 'btn btn-danger btn-ciudad', 'onclick' => 'ubicacionGPSDesktop();')); ?>
             </div><br/>
         </div>
         <div class="row">
-            <div class="col-md-5">
+            <div class="">
             <h3 class="" style="font-weight:bold;">ó</h3>
             </div>
         </div>
         <div class="row">
-            <div class="col-md-3">
+            <div class="">
              <h3 class="">Seleccionar ciudad</h3> 
              <select class="form-control ciudades" id="ciudadDespacho" onclick="">
                 <?php foreach ($listCiudadesSectores as $ciudad): ?>
@@ -58,7 +56,7 @@
             </div>
         </div>
         <div class="row">
-            <div class="col-md-5">
+            <div class="">
              <br/>
              <?php echo CHtml::link('Usar esta ubicación', 'javascript:cargarCiudad()',array('class' => 'btn btn-success btn-ciudad', 'data-ajax' => 'false')); ?>
             </div>
@@ -66,13 +64,12 @@
          <br/><br/><br/>
         <?php if($objSectorCiudad!=null):?>
          <div class="row">
-            <div class="col-md-5">
+            <div class="">
                 <?php $urlRefer=(isset(Yii::app()->session[Yii::app()->params->sesion['redireccionAutenticacion']]) ? Yii::app()->session[Yii::app()->params->sesion['redireccionAutenticacion']]:$this->createUrl('/sitio/inicio'))?>
             <?php echo CHtml::link('Continuar en ' . $this->sectorName, $urlRefer, array('class' => 'btn btn-warning btn-ciudad', 'data-mini' => 'true', 'data-ajax' => 'false')); ?>
             </div>
          </div>
         <?php endif;?>
-    </div>
 </section>
 </div>
 <!--
