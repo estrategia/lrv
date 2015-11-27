@@ -120,4 +120,9 @@ class Ciudad extends CActiveRecord {
         return $this->objDomicilioCedi;
     }
 
+
+    public static function listData(){
+        return self::model()->findAll(array("condition" => "estadoCiudad =:estadoCiudad", "params" => array(":estadoCiudad" => 1)));
+    }
+
 }

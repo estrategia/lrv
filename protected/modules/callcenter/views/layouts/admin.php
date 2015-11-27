@@ -16,7 +16,6 @@
         
         <?php Yii::app()->getClientScript()->registerCssFile(Yii::app()->request->baseUrl . "/libs/owl-carousel/owl.carousel.css");?>
         <?php Yii::app()->getClientScript()->registerCssFile(Yii::app()->request->baseUrl . "/libs/owl-carousel/owl.theme.css")?>
-        <?php Yii::app()->getClientScript()->registerCssFile(Yii::app()->request->baseUrl . "/css/main-desktop.css"); ?>
         <?php Yii::app()->getClientScript()->registerCssFile(Yii::app()->request->baseUrl . "/css/operator.css"); ?>
     </head>
 
@@ -80,10 +79,19 @@
                                     <a href="<?php echo $this->createUrl('/callcenter/operador') ?>" class="ajax-link"><i class="glyphicon glyphicon-user"></i><span> Operadores</span></a>
                                 </li>
                                 <li>
+                                    <a href="<?php echo $this->createUrl('/callcenter/categoria') ?>" class="ajax-link"><i class="glyphicon glyphicon-glass"></i><span> Categorías</span></a>
+                                </li>
+                                <li>
                                     <a href="<?php echo $this->createUrl('/callcenter/pedido/exportar') ?>" class="ajax-link"><i class="glyphicon glyphicon-download-alt"></i><span> Pedidos</span></a>
                                 </li>
                                 <li>
                                     <a href="<?php echo $this->createUrl('/callcenter/contenido/index') ?>" class="ajax-link"><i class="glyphicon glyphicon-file"></i><span> Contenidos administrables</span></a>
+                                </li>
+                                <li>
+                                    <a href="<?php echo $this->createUrl('/callcenter/productosRelacionados/index') ?>" class="ajax-link"><i class="glyphicon glyphicon-file"></i><span> Productos relacionados</span></a>
+                                </li>
+                                <li>
+                                    <a href="<?php echo $this->createUrl('/callcenter/tarifaDomicilio/index') ?>" class="ajax-link"><i class="glyphicon glyphicon-file"></i><span> Tarifa domicilio</span></a>
                                 </li>
                             <?php endif; ?>
                         </ul>

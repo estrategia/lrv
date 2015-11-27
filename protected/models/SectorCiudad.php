@@ -245,4 +245,43 @@ class SectorCiudad extends CActiveRecord {
         return $listUbicacion;
     }
 
+
+
+    public static function listDataSectorCiudad($codigoCiudad = null)
+    {
+
+        if($codigoCiudad === null)
+        {
+            return Sector::model()->findAll(array(
+                    'with' => 'listCiudades',
+                    'condition' => 'estadoCiudadSector=:estadoCiudadSector AND estadoSector=:estadoSector AND estadoCiudad =:estadoCiudad',
+                    'params' => array(
+                        ':estadoCiudadSector' => 1,
+                        ':estadoSector' => 1,
+                        ':estadoCiudad' => 1,
+                    )
+                ));
+        }
+        elseif ($codigoCiudad === "") 
+        {
+            return array();
+        }
+        else
+        {
+            $ciudad = Ciudad::model()->find(array(
+                    'with' => 'listSectores',
+                    'condition' => 'estadoCiudadSector=:estadoCiudadSector AND estadoSector=:estadoSector AND estadoCiudad =:estadoCiudad AND t.codigoCiudad =:codigoCiudad',
+                    'params' => array(
+                        ':codigoCiudad' => $codigoCiudad,
+                        ':estadoSector' => 1,
+                        ':estadoCiudadSector' => 1,
+                        ':estadoCiudad' => 1,
+                    )
+                ));
+
+
+            return $ciudad->listSectores;
+        }
+    }
+
 }

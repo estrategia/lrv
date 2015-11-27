@@ -94,4 +94,9 @@ class Perfil extends CActiveRecord {
         return parent::model($className);
     }
 
+
+    public static function listData(){
+        return self::model()->findAll();
+    }
+
 }

@@ -290,3 +290,320 @@ $(document).on('click', "a[data-role='modulo-visualizar']", function(){
         }
     });
 });
+
+/******************/
+/*  CATEGORIAS    */
+/******************/
+
+$(document).on('click', "a[data-role='crear-categoria']", function(){
+
+    var dispositivo = $(this).attr('data-dispositivo');
+    var nivel = $(this).attr('data-nivel');
+    var idCategoriaRaiz = $(this).attr('data-categoria-raiz');
+    var idCategoriaPadre = $(this).attr('data-categoria-padre');
+    
+     $.ajax({
+        type: 'GET',
+        async: true,
+        url: requestUrl + '/callcenter/categoria/crearCategoria',
+        data: {dispositivo: dispositivo, nivel:nivel, idCategoriaRaiz:idCategoriaRaiz, idCategoriaPadre: idCategoriaPadre},
+        beforeSend: function(){
+            Loading.show();
+        },
+        success: function(data){
+            var data = $.parseJSON(data);
+            if (data.result == "ok") {
+               $("#modal-categoria").remove();
+               $("#content").append(data.response);
+               $('#modal-categoria').modal('show');
+            }else if(data.result == "error"){
+                bootbox.alert(data.response);
+            }
+        },
+        complete: function(){
+            Loading.hide();
+        },
+        error: function(jqXHR, textStatus, errorThrown){
+
+        }
+    });
+});
+
+
+$(document).on('click', "a[data-role='guardar-categoria']", function(){
+   //  var form = $("#form-categoria");
+     var dispositivo = $(this).attr('data-dispositivo');
+     var idCategoriaRaiz = $(this).attr('data-categoria-raiz');
+     var idCategoriaPadre = $(this).attr('data-categoria-padre');
+   //  var formulario =  new FormData($('#form-categoria')[0] );
+     var formulario = document.getElementById("form-categoria");
+     
+     var campo1 = document.createElement("input");
+     campo1.type = 'hidden';
+     campo1.value = dispositivo;
+     campo1.name = "dispositivo";
+     campo1.id = "dispositivo";
+     formulario.appendChild(campo1);
+     
+     var campo2 = document.createElement("input");
+     campo2.type = 'hidden';
+     campo2.value = idCategoriaRaiz;
+     campo2.name = "idCategoriaRaiz";
+     campo2.id = "idCategoriaRaiz";
+     formulario.appendChild(campo2);
+     
+     var campo3 = document.createElement("input");
+     campo3.type = 'hidden';
+     campo3.value = idCategoriaPadre;
+     campo3.name = "idCategoriaPadre";
+     campo3.id = "idCategoriaPadre";
+     formulario.appendChild(campo3);
+     
+     var campo4 = document.createElement("input");
+     campo4.type = 'hidden';
+     campo4.value = 'crear';
+     campo4.name = "scenario";
+     campo4.id = "scenario";
+     formulario.appendChild(campo4);
+     
+     /*form.serialize()+"&dispositivo="+dispositivo+"&idCategoriaRaiz="+idCategoriaRaiz+"&idCategoriaPadre="+idCategoriaPadre+"&scenario=crear"*/
+     $.ajax({
+        type: 'POST',
+        async: true,
+        url: requestUrl + '/callcenter/categoria/guardarCategoria',
+        data:  new FormData(formulario),
+        cache: false,
+        contentType: false,
+        processData: false,
+        beforeSend: function(){
+         //   Loading.show();
+        },
+        success: function(data){
+            var data = $.parseJSON(data);
+            if (data.result == "ok") {
+               $("#div-categorias-tienda").html(data.response);
+               $('#modal-categoria').modal('hide');
+            }else if(data.result == "error"){
+                bootbox.alert(data.response);
+            }else{
+                 $.each(data, function(element, error) {
+                    $('#' + form.attr('id') + ' #' + element + '_em_').html(error);
+                    $('#' + form.attr('id') + ' #' + element + '_em_').css('display', 'block');
+                });
+            }
+        },
+        complete: function(){
+         //   Loading.hide();
+        },
+        error: function(jqXHR, textStatus, errorThrown){
+
+        }
+    });
+});
+
+
+$(document).on('click', "a[data-role='editar-categoria']", function(){
+     var dispositivo = $(this).attr('data-dispositivo');
+     var idCategoria = $(this).attr('data-categoria');
+     var idCategoriaRaiz = $(this).attr('data-categoria-raiz');
+     var idCategoriaPadre = $(this).attr('data-categoria-padre');
+     var nivel = $(this).attr('data-nivel');
+     $.ajax({
+        type: 'GET',
+        async: true,
+        url: requestUrl + '/callcenter/categoria/editarCategoria',
+         data: {dispositivo: dispositivo, nivel:nivel, idCategoriaRaiz:idCategoriaRaiz, idCategoriaPadre: idCategoriaPadre, idCategoria: idCategoria},
+        beforeSend: function(){
+            Loading.show();
+        },
+        success: function(data){
+            var data = $.parseJSON(data);
+            if (data.result == "ok") {
+               $("#modal-categoria").remove();
+               $("#content").append(data.response);
+               $('#modal-categoria').modal('show');
+            }else if(data.result == "error"){
+                bootbox.alert(data.response);
+            }
+        },
+        complete: function(){
+            Loading.hide();
+        },
+        error: function(jqXHR, textStatus, errorThrown){
+
+        }
+    });
+});
+
+$(document).on('click', "a[data-role='actualizar-categoria']", function(){
+     var form = $("#form-categoria");
+     var dispositivo = $(this).attr('data-dispositivo');
+     var idCategoriaRaiz = $(this).attr('data-categoria-raiz');
+     var idCategoriaPadre = $(this).attr('data-categoria-padre');
+     var idCategoria = $(this).attr('data-categoria');
+     var formulario =  new FormData( document.getElementById('form-categoria') );
+    
+     var formulario = document.getElementById("form-categoria");
+     
+     var campo1 = document.createElement("input");
+     campo1.type = 'hidden';
+     campo1.value = dispositivo;
+     campo1.name = "dispositivo";
+     campo1.id = "dispositivo";
+     formulario.appendChild(campo1);
+     
+     var campo2 = document.createElement("input");
+     campo2.type = 'hidden';
+     campo2.value = idCategoriaRaiz;
+     campo2.name = "idCategoriaRaiz";
+     campo2.id = "idCategoriaRaiz";
+     formulario.appendChild(campo2);
+     
+     var campo3 = document.createElement("input");
+     campo3.type = 'hidden';
+     campo3.value = idCategoriaPadre;
+     campo3.name = "idCategoriaPadre";
+     campo3.id = "idCategoriaPadre";
+     formulario.appendChild(campo3);
+     
+     var campo4 = document.createElement("input");
+     campo4.type = 'hidden';
+     campo4.value = 'actualizar';
+     campo4.name = "scenario";
+     campo4.id = "scenario";
+     formulario.appendChild(campo4);
+     
+     var campo5= document.createElement("input");
+     campo5.type = 'hidden';
+     campo5.value = idCategoria;
+     campo5.name = "idCategoria";
+     campo5.id = "idCategoria";
+     formulario.appendChild(campo5);
+     
+     $.ajax({
+        type: 'POST',
+        async: true,
+        url: requestUrl + '/callcenter/categoria/guardarCategoria',
+         data:  new FormData(formulario),
+        cache: false,
+        contentType: false,
+        processData: false,
+        beforeSend: function(){
+            Loading.show();
+        },
+        success: function(data){
+            var data = $.parseJSON(data);
+            if (data.result == "ok") {
+               $("#div-categorias-tienda").html(data.response);
+               $('#modal-categoria').modal('hide');
+            }else if(data.result == "error"){
+                bootbox.alert(data.response);
+            }else{
+                 $.each(data, function(element, error) {
+                    $('#' + form.attr('id') + ' #' + element + '_em_').html(error);
+                    $('#' + form.attr('id') + ' #' + element + '_em_').css('display', 'block');
+                });
+            }
+        },
+        complete: function(){
+            Loading.hide();
+        },
+        error: function(jqXHR, textStatus, errorThrown){
+
+        }
+    });
+});
+
+$(document).on('click', "a[data-role='asociar-categorias']", function(){
+ 
+     var idCategoria = $(this).attr('data-categoria');
+     $.ajax({
+        type: 'GET',
+        async: true,
+        url: requestUrl + '/callcenter/categoria/asociarCategorias',
+         data: {idCategoria: idCategoria},
+        beforeSend: function(){
+          //  Loading.show();
+        },
+        success: function(data){
+            var data = $.parseJSON(data);
+            if (data.result == "ok") {
+               $("#modal-categoria-asociacion").remove();
+               $("#content").append(data.response);
+               $('#modal-categoria-asociacion').modal('show');
+            }else if(data.result == "error"){
+                bootbox.alert(data.response);
+            }
+        },
+        complete: function(){
+         //   Loading.hide();
+        },
+        error: function(jqXHR, textStatus, errorThrown){
+
+        }
+    });
+});
+
+$(document).on('click', "a[data-role='add-categoria-bi']", function(){
+ 
+     var idCategoria = $(this).attr('data-categoria');
+     var idCategoriaBi = $(this).attr('data-categoria-bi');
+     $.ajax({
+        type: 'POST',
+        async: true,
+        url: requestUrl + '/callcenter/categoria/agregarAsociacionCategoria',
+         data: {idCategoria: idCategoria, idCategoriaBi:idCategoriaBi},
+        beforeSend: function(){
+            Loading.show();
+        },
+        success: function(data){
+            var data = $.parseJSON(data);
+            if (data.result == "ok") {
+              //  bootbox.alert(data.response);
+                $("#btn-"+idCategoriaBi).html("Añadido")
+            }else if(data.result == "error"){
+                bootbox.alert(data.response);
+            }
+        },
+        complete: function(){
+            Loading.hide();
+        },
+        error: function(jqXHR, textStatus, errorThrown){
+
+        }
+    });
+});
+
+$(document).on('click', "a[data-role='eliminar-categoria-bi']", function(){
+ 
+     var idCategoria = $(this).attr('data-categoria');
+     var idCategoriaBi = $(this).attr('data-categoria-bi');
+     var dispositivo = $(this).attr('data-dispositivo');
+     $.ajax({
+        type: 'POST',
+        async: true,
+        url: requestUrl + '/callcenter/categoria/eliminarAsociacionCategoria',
+        data: {idCategoria: idCategoria, idCategoriaBi:idCategoriaBi, tipoDispositivo:dispositivo},
+        beforeSend: function(){
+            Loading.show();
+        },
+        success: function(data){
+            var data = $.parseJSON(data);
+            if (data.result == "ok") {
+              //  bootbox.alert(data.response);
+              //   $("#div-categorias-tienda").html(data.response);
+                $("#visible-categoria-bi-"+idCategoriaBi).css('display','none');
+            }else if(data.result == "error"){
+                bootbox.alert(data.response);
+            }
+        },
+        complete: function(){
+            Loading.hide();
+        },
+        error: function(jqXHR, textStatus, errorThrown){
+
+        }
+    });
+});
+
+

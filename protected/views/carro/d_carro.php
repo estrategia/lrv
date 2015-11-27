@@ -1,4 +1,4 @@
-<div class="ui-content">
+<div class="container">
     <h2>Carro de compras</h2>
 
     <?php $mensajes = Yii::app()->user->getFlashes(); ?>

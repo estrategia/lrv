@@ -54,7 +54,7 @@ return array(
             'caseSensitive' => true,
         ),
         'db' => array(
-            'connectionString' => 'mysql:host=localhost;port=3306;dbname=lrvmovil_copservir',
+            'connectionString' => 'mysql:host=localhost;port=3306;dbname=lrvmovil',
             'emulatePrepare' => true,
             'username' => 'root',
             'password' => '',
@@ -266,7 +266,8 @@ return array(
             '*' => 99999
         ),
         'sector' => array(
-            '*' => 99
+            '*' => 99,
+            'sinSector' => 0
         ),
         'perfil' => array(
             'defecto' => 1,
@@ -433,6 +434,12 @@ return array(
                     0 => 'Inactivo',
                     1 => 'Activo'
                 ),
+            ),
+            'categorias' => array(
+                'visible'  => array(
+                    '0' => 'No visible',
+                    '1' => 'Visible'
+                )
             ),
             'estadoItem' => array(
                 'estado' => array(
