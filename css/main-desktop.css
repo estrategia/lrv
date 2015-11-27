@@ -1,3 +1,10 @@
+.categorias .dropdown-menu.category {
+    border: 0 none;
+    padding-bottom: 0;
+    padding-right: 0;
+    padding-top: 0;
+    width: 100%;
+}
 .subtotal span {
     color: #555 !important;
     font-size: 20px;
@@ -620,7 +627,6 @@ header {
 .categorias{
     text-align: center;
     background-color: #EA0001;
-    border: 1px solid #EA0001;
 }
 
 .modulo-menu{
@@ -835,21 +841,20 @@ footer li a:hover{
     /*margin-left: 25px;
 }*/
 .dropdown-menu.category {
-    /*width: 16.6667%;*/
-    margin-top: 0px;
     border-radius: 0;
-    background-color: #DADADA;
+    margin-top: 0;
     padding-bottom: 9px;
 }
 
-.dropdown-menu.category li {
-    padding: 0px 0px 11.5px;
-    font-size: 17px;
+.dropdown-menu.category > li {
+    background: #dadada none repeat scroll 0 0;
     color: rgb(101, 101, 101);
-
+    font-size: 17px;
+    padding: 0 0 11.5px 4%;
 }
 .dropdown-menu.category > li > a {
     padding: 3px 16px;
+    color: #666;
 }
 
 .title-footer2{
