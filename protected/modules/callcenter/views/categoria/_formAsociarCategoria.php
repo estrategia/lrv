@@ -46,7 +46,7 @@
                                                                                 <?php if(count($categoriaNivel3->listCategoriasTiendaCategoria) > 0):?>
                                                                                     Añadido
                                                                                 <?php else:?>    
-                                                                                    <a class="btn btn-xs btn-<?php echo Yii::app()->params->callcenter['estadoCompra']['colorClass'][3] ?>" href="#" data-categoria='<?php echo $idCategoriaTienda ?>' data-categoria-bi='<?php echo $categoriaNivel3->idCategoriaBI ?>' data-role='add-categoria-bi'> Añadir  </a>
+                                                                                    <a class="btn btn-xs btn-<?php echo Yii::app()->params->callcenter['estadoCompra']['colorClass'][3] ?>" href="#" data-categoria='<?php echo $idCategoriaTienda ?>' data-categoria-bi='<?php echo $categoriaNivel3->idCategoriaBI ?>' data-dispositivo='<?php echo $dispositivo ?>' data-role='add-categoria-bi'> Añadir  </a>
                                                                                 <?php endif;?>
                                                                                 </div>
                                                                              </div>

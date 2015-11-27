@@ -27,7 +27,9 @@
         array(
             'header' => '',
             'type' => 'raw',
-            'value' => 'CHtml::link("Crear relaci&oacute;n", CController::createUrl("/callcenter/productosRelacionados/crearrelacion", array("codigo" => $data->codigoProducto)), array("data-ajax"=>"false"))'
+            'value' => function($data) {
+               return  CHtml::link("Crear relaci&oacute;n", CController::createUrl("/callcenter/productosRelacionados/crearrelacion", array("codigo" => $data->codigoProducto)), array("data-ajax"=>"false"));
+            }
         )
     );
         

@@ -1,0 +1,1 @@
+<a class="btn btn-xs btn-<?php echo Yii::app()->params->callcenter['estadoCompra']['colorClass'][1] ?>" href="<?php echo $this->createUrl('/callcenter/combo/combo', array('opcion' => 'crear')) ?>">Crear Combo  </a>
