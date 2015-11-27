@@ -102,7 +102,7 @@
             <!--menu-->
             <nav class="main_menu">
                 <ul class="nav nav-justified" role="tablist">
-                    <li class="dropdown categorias" role="presentation">
+                    <li class="dropdown categorias" role="presentation" style="position:inherit;">
                         <a id="categorias" href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Categorías<span class="ico-cat"></span></a>
                         <ul class="dropdown-menu category" aria-labelledby="categorias">
                             <?php foreach ($this->categorias as $categoria): ?>
