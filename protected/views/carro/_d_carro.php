@@ -2,10 +2,8 @@
 <?php $listPositionDelivery = array(); ?>
 
 <section>
-    <div class="container">
-        <div class="col-md-12">
+        <div class="row">
             <div class="col-md-9 border-right">
-                <div class="col-md-12">
                     <table class="table table-bordered table-hover table-striped">
                         <thead class="cabecera-tabla">
                             <tr>
@@ -82,7 +80,6 @@
                             </tbody>
                         </table>
                     <?php endif; ?>
-                </div>
             </div>
 
             <div class="col-md-3 detalles">
@@ -115,5 +112,4 @@
 
             </div>
         </div>
-    </div>
 </section>
