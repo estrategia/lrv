@@ -26,7 +26,7 @@
             <?php endif; ?>
 
             <?php if (!$lectura): ?>
-                <?php echo CHtml::link('Eliminar', '#', array('data-eliminar' => 1, 'data-position' => $position->getId(), 'class' => 'btn btn-default')); ?>
+                <?php echo CHtml::link('Eliminar', '#', array('data-eliminar' => 1, 'data-position' => $position->getId(), 'class' => 'btn btn-danger')); ?>
             <?php endif; ?>
         </td>
         <td>
@@ -77,7 +77,7 @@
             <?php endif; ?>
 
             <?php if (!$lectura): ?>
-                <?php echo CHtml::link('Eliminar', '#', array('data-eliminar' => 2, 'data-position' => $position->getId(), 'class' => 'btn btn-default')); ?>
+                <?php echo CHtml::link('Eliminar', '#', array('data-eliminar' => 2, 'data-position' => $position->getId(), 'class' => 'btn btn-danger')); ?>
             <?php endif; ?>
         </td>
         <td>
@@ -137,7 +137,7 @@
             <?php endif; ?>
 
             <?php if (!$lectura): ?>
-                <?php echo CHtml::link('Eliminar', '#', array('data-eliminar' => 1, 'data-position' => $position->getId(), 'class' => 'btn btn-default')); ?>
+                <?php echo CHtml::link('Eliminar', '#', array('data-eliminar' => 1, 'data-position' => $position->getId(), 'class' => 'btn btn-danger')); ?>
             <?php endif; ?>
         </td>
         <td>
