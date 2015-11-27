@@ -101,12 +101,13 @@
                 <?php endif; ?>
 
                 <?php if (!$lectura) : ?>
+                <div class="btn-pagar" align="center">
                     <br/>
-                    <?php echo CHtml::link('Pagar', $this->createUrl('/carro/pagar'), array('class' => 'btn btn-default', 'role' => "button")); ?>
-                    <br/>
-                    <?php echo CHtml::link('Vaciar carrito', '#', array('data-role' => 'carrovaciar', 'class' => 'btn btn-default', 'role' => "button")); ?>
-                    <br/>
-                    <?php echo CHtml::link('Guardar en la lista personal', '#', array('data-role' => 'lstpersonalguardar', 'data-tipo' => 3, 'data-codigo' => 0, 'class' => 'btn btn-default', 'role' => "button")); ?>
+                    <?php echo CHtml::link('Pagar', $this->createUrl('/carro/pagar'), array('class' => 'btn btn-danger', 'role' => "button")); ?>
+                    <?php echo CHtml::link('Vaciar carrito', '#', array('data-role' => 'carrovaciar', 'class' => 'btn btn-danger', 'role' => "button")); ?>
+                    <br/><br/>
+                    <?php echo CHtml::link('Guardar en la lista personal', '#', array('data-role' => 'lstpersonalguardar', 'data-tipo' => 3, 'data-codigo' => 0, 'class' => 'btn btn-danger', 'role' => "button")); ?>
+                </div>
                 <?php endif; ?>
 
 
