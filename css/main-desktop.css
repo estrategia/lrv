@@ -3,6 +3,9 @@
     right: 0;
     top: 0;
 }
+.submenu .title-submenu > a {
+    padding: 0;
+}
 .dropdown-menu.category > li:first-child {
     padding-top: 11.5px;
 }
