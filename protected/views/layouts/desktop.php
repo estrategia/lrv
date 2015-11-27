@@ -121,7 +121,7 @@
                                                             <?php if (count($subcategoria->listModulosConfigurados) > 0): ?>
                                                                 <li><?php echo $categoriaHija->nombreCategoriaTienda ?></li>
                                                             <?php else: ?>
-                                                                <?php echo CHtml::link("<li>$categoriaHija->nombreCategoriaTienda</li>", CController::createUrl('/catalogo/categoria', array('categoria' => $categoriaHija->idCategoriaTienda))); ?>
+                                                                <li><?php echo CHtml::link("$categoriaHija->nombreCategoriaTienda", CController::createUrl('/catalogo/categoria', array('categoria' => $categoriaHija->idCategoriaTienda))); ?></li>
                                                             <?php endif; ?>
                                                         <?php endforeach; ?>
                                                     </div>
