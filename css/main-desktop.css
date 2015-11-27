@@ -1,3 +1,27 @@
+.submenu .section-submenu > li > a {
+    padding: 0 !important;
+}
+.submenu .section-submenu > li {
+    padding-left: 6px !important;
+    color: #888888;
+}
+.submenu .section-submenu > li a {
+    color: #888888;
+}
+.submenu .section-submenu > li a:hover {
+    background: none;
+}
+
+.submenu .section-submenu > li.title-submenu {
+    color: #4f4f4f !important;
+    padding: 0 !important;
+}
+.submenu .section-submenu > li.title-submenu a{
+    color: #4f4f4f !important;
+}
+.submenu .section-submenu > li.title-submenu a:hover{
+    color: #e90000 !important;
+}
 .img_categoria {
     position: absolute;
     right: 0;
@@ -1433,9 +1457,18 @@ li.active .iconStep {
 .rojo{
     color: #E90000 !important;
 }
-.submenu{
-    list-style: none;
-    position: absolute;
+.submenu {
+    display: block;
+    height: 100%;
+    list-style: outside none none;
+    position: absolute !important;
+    width: 80% !important;
+}
+.section-submenu {
+    /*min-height: 250px;*/
+    padding: 10px 0;
+    width: 235px;
+    float: left;
 }
 .title-submenu{
     border-bottom: 1px solid;
