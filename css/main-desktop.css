@@ -1,3 +1,6 @@
+.dropdown-menu.category > li:first-child {
+    padding-top: 11.5px;
+}
 .categorias .dropdown-menu.category {
     border: 0 none;
     padding-bottom: 0;
@@ -1432,14 +1435,13 @@ li.active .iconStep {
 .dropdown-menu .submenu li {
     padding: 0px;
 }
-.right-nav{
-    margin-left: 222px;
-    position: absolute;
-    margin-top: -133px;
-    width: 105%;
-    background-color: #E8E8E8;
+.right-nav {
+    background-color: #e8e8e8;
     display: none;
-} 
+    position: absolute;
+    right: 0;
+    top: 0;
+}
 .section-submenu{
     padding: 10px 0px;
 }
