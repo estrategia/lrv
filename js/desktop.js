@@ -22,3 +22,8 @@ $('.viewsList .btn').click(function(){
  		$('#lista-productos.list_cuadricula .listaProductos li .content-txt2 .botones-list').removeClass('col-sm-4');
  	}
  });
+ $(document).ready(function(){
+	widht=$('.main_menu .categorias').width()-3;
+	$('.categorias .category > li').width(widht);
+});
+
