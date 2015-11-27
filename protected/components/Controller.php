@@ -136,6 +136,8 @@ class Controller extends CController {
             Yii::app()->getClientScript()->registerScriptFile(Yii::app()->request->baseUrl . "/js/desktop-om.js", CClientScript::POS_END);
             Yii::app()->getClientScript()->registerScriptFile(Yii::app()->request->baseUrl . "/js/desktop-ms.js", CClientScript::POS_END);
             Yii::app()->getClientScript()->registerScriptFile(Yii::app()->request->baseUrl . "/js/desktop-jj.js", CClientScript::POS_END);
+            Yii::app()->getClientScript()->registerScriptFile(Yii::app()->request->baseUrl . "/js/isotope.pkgd.js", CClientScript::POS_END);
+            Yii::app()->getClientScript()->registerScriptFile(Yii::app()->request->baseUrl . "/js/masonry-horizontal.js", CClientScript::POS_END);
             Yii::app()->getClientScript()->registerScriptFile(Yii::app()->request->baseUrl . '/libs/loading/js/Loading.js', CClientScript::POS_END);
             /*     Yii::app()->getClientScript()->registerScriptFile(Yii::app()->request->baseUrl . "/js/npm.js", CClientScript::POS_END); */
         }
