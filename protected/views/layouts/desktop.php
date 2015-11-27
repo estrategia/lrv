@@ -113,7 +113,7 @@
                                                 <?php foreach ($categoria->listCategoriasHijas as $subcategoria): ?>
                                                     <div class="section-submenu">
                                                         <?php if (count($subcategoria->listModulosConfigurados) > 0): ?>
-                                                            <?php echo CHtml::link("<li class='title-submenu'><span class='glyphicon glyphicon-chevron-right' aria-hidden='true'></span>$subcategoria->nombreCategoriaTienda</li>", CController::createUrl('/catalogo/division', array('division' => $subcategoria->idCategoriaTienda))); ?>
+                                                           <li class='title-submenu'><?php echo CHtml::link("<span class='glyphicon glyphicon-chevron-right' aria-hidden='true'></span>$subcategoria->nombreCategoriaTienda", CController::createUrl('/catalogo/division', array('division' => $subcategoria->idCategoriaTienda))); ?></li>
                                                         <?php else: ?>
                                                             <li class='title-submenu'><span class='glyphicon glyphicon-chevron-right' aria-hidden='true'></span><?php echo $subcategoria->nombreCategoriaTienda ?></li>
                                                         <?php endif; ?>
