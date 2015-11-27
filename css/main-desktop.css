@@ -1,3 +1,27 @@
+#form-pago-pago .forma-pago.activo {
+    border: 1px solid red;
+    color: red;
+}
+#form-pago-pago .forma-pago i {
+    float: right;
+    margin-top: 2px;
+}
+#form-pago-pago .forma-pago.activo span , #form-pago-pago .forma-pago.activo i{
+    color: red;
+}
+#form-pago-pago .forma-pago {
+    background: #fff none repeat scroll 0 0;
+    color: #555;
+    margin-bottom: 12px;
+    padding: 5px;
+    text-align: left;
+}
+#form-pago-pago .forma-pago span {
+    float: left;
+    font-size: 45px;
+    line-height: 23px;
+    margin-right: 10px;
+}
 .submenu .section-submenu > li > a {
     padding: 0 !important;
 }
