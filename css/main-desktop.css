@@ -705,7 +705,7 @@ footer li a:hover{
     color:#504F4F;
     text-decoration: none;
 }
-.categorias li a:hover{
+.categorias li a:hover, .dropdown-menu.category > li:hover > a{
     color: #E90000;
     background-color: #DADADA;
 }
