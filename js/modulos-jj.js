@@ -850,10 +850,15 @@ $(document).on('change', "select[data-role='validar-tipo-combo']", function(){
         },
         success: function(data){
             if (data.result == "ok") {
-                  $("#beneficio-combo").html(data.response);
-                  $("#Combo_descripcionCombo").prop("disabled",true);
-                  $("#Combo_fechaInicio").prop("disabled",true);
-                  $("#Combo_fechaFin").prop("disabled",true);
+                if(data.response == 'true'){
+                   $("#Combo_fechaInicio").prop("disabled",true);
+                   $("#Combo_fechaFin").prop("disabled",true);
+                   $("#beneficio-combo").css("display","block");
+                }else{
+                   $("#Combo_fechaInicio").prop("disabled",false);
+                   $("#Combo_fechaFin").prop("disabled",false);
+                   $("#beneficio-combo").css("display","none");
+                }
             }else if(data.result == "error"){
                 bootbox.alert(data.response);
             }
@@ -867,9 +872,9 @@ $(document).on('change', "select[data-role='validar-tipo-combo']", function(){
     });
 });
 
-$(document).on('change', "select[data-role='info-beneficio']", function(){
-    var val=$(this).val();
-    
+$(document).on('click', "a[data-role='add-beneficio']", function(){
+    var val=$(this).attr('data-beneficio');
+    var tipo=$(this).attr('data-tipo');
      $.ajax({
         type: 'GET',
         async: true,
@@ -884,6 +889,12 @@ $(document).on('change', "select[data-role='info-beneficio']", function(){
                   $("#Combo_descripcionCombo").val(data.descripcion);
                   $("#Combo_fechaInicio").val(data.fechaInicio);
                   $("#Combo_fechaFin").val(data.fechaFin);
+                  $("#Combo_tipoBeneficio").val(tipo);
+                  $("#Combo_idBeneficio").val(val);
+                  $(".link-beneficio").css('display','none');
+                  $("#link_beneficio_"+val).html("Añadido");
+                  $("#link_beneficio_"+val).css("display","block");
+                  
             }else if(data.result == "error"){
                 bootbox.alert(data.response);
             }
@@ -895,4 +906,5 @@ $(document).on('change', "select[data-role='info-beneficio']", function(){
 
         }
     });
+    return false;
 });

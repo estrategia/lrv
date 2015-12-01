@@ -12,18 +12,20 @@
 	        <div id="collapsible-cuerpo-productos-contenido" class="panel-collapse collapse in" role="tabpanel" aria-labelledby="encabezado-buscar-productos-contenido">
 	            <div class="panel-body">
                     	    <div class="row">
-				<form id="addproducto" method="post" name="addproducto">
-					 <div class="col-md-5 col-md-offset-3">
-                                            <div class="form-group">
-					       <input type="text" placeholder="Descripción" class="form-control input-sm"  data-combo="<?php echo $model->idCombo ?>" maxlength="50" id="combo-busqueda-buscar"> 
-					    </div>
-					 </div>
-					 <div class="col-md-1">
-                                            <div class="form-group">
-						<button id="btn-pedido-buscar" type="button" class="btn btn-danger btn-sm" data-role="busqueda-producto-combo" data-combo="<?php echo $model->idCombo ?>"><i class="glyphicon glyphicon-search"></i> Buscar</button>
-                                            </div>
-					 </div>
-				</form>
+                                <?php if($model->idBeneficio == null):?>
+                                    <form id="addproducto" method="post" name="addproducto">
+                                             <div class="col-md-5 col-md-offset-3">
+                                                <div class="form-group">
+                                                   <input type="text" placeholder="Descripción" class="form-control input-sm"  data-combo="<?php echo $model->idCombo ?>" maxlength="50" id="combo-busqueda-buscar"> 
+                                                </div>
+                                             </div>
+                                             <div class="col-md-1">
+                                                <div class="form-group">
+                                                    <button id="btn-pedido-buscar" type="button" class="btn btn-danger btn-sm" data-role="busqueda-producto-combo" data-combo="<?php echo $model->idCombo ?>"><i class="glyphicon glyphicon-search"></i> Buscar</button>
+                                                </div>
+                                             </div>
+                                    </form>
+                                <?php endif;?>
 			    </div>		   
 			    <div class="panel-body">
 				 <div class="row">
@@ -37,4 +39,5 @@
 	            </div>
 	        </div>
 	    </div>
+    </div>
 </div>

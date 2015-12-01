@@ -32,11 +32,11 @@ class Combo extends CActiveRecord {
         // will receive user inputs.
         return array(
             array('descripcionCombo, fechaInicio, fechaFin', 'required'),
-            array('estadoCombo', 'numerical', 'integerOnly' => true),
+            array('estadoCombo, idBeneficio, tipoBeneficio', 'numerical', 'integerOnly' => true),
             array('descripcionCombo', 'length', 'max' => 100),
             // The following rule is used by search().
             // @todo Please remove those attributes that should not be searched.
-            array('idCombo, descripcionCombo, fechaInicio, fechaFin, estadoCombo', 'safe', 'on' => 'search'),
+            array('idCombo, descripcionCombo, fechaInicio, fechaFin, estadoCombo, idBeneficio, tipoBeneficio', 'safe', 'on' => 'search'),
         );
     }
 
@@ -65,6 +65,8 @@ class Combo extends CActiveRecord {
             'fechaInicio' => 'Fecha Inicio',
             'fechaFin' => 'Fecha Fin',
             'estadoCombo' => 'Estado Combo',
+            'idBeneficio' => 'Beneficio', 
+            'tipoBeneficio' => 'Tipo Beneficio'
         );
     }
 
@@ -90,6 +92,8 @@ class Combo extends CActiveRecord {
         $criteria->compare('fechaInicio', $this->fechaInicio, true);
         $criteria->compare('fechaFin', $this->fechaFin, true);
         $criteria->compare('estadoCombo', $this->estadoCombo);
+        $criteria->compare('idBeneficio', $this->idBeneficio);
+        $criteria->compare('tipoBeneficio', $this->tipoBeneficio);
 
         return new CActiveDataProvider($this, array(
             'criteria' => $criteria,

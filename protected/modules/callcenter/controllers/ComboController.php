@@ -52,17 +52,81 @@ class ComboController extends ControllerOperator{
         if($opcion == 'crear'){
             $params['model'] = new Combo();
             
+            $params['beneficios'] = new Beneficios('search');
+            
+            $params['beneficios']->unsetAttributes();
+            if (isset($_GET['Beneficios'])){
+                     $params['beneficios']->attributes = $_GET['Beneficios'];
+            }
+           
             if($_POST){
                 $model = new Combo();
                 $model->attributes = $_POST['Combo'];
-                
-                if($model->save()){
-                    Yii::app()->user->setFlash('alert alert-success', "El módulo ha sido guardado con éxito");
-                    $this->redirect($this->createUrl('combo/combo', array('idCombo' => $model->idCombo, 'opcion' => 'editar')));
-                    Yii::app()->end();
-                }else{
-                    Yii::app()->user->setFlash('alert alert-danger', "Error al guardar el módulo");
+                $transaction = Yii::app()->db->beginTransaction();
+                $error= false;
+                if($model->idBeneficio != null){
+                   $objBeneficio= Beneficios::model()->findByPk($model->idBeneficio);
+                    
+                   if($objBeneficio != null){
+                       // agregar productos para los combos
+                       $model->fechaInicio = $objBeneficio->fechaIni;
+                       $model->fechaFin = $objBeneficio->fechaFin;
+                       
+                       if($model->save()){
+                            foreach($objBeneficio->listBeneficiosProductos as $productoBeneficio){
+                                if($productoBeneficio->unid > 0){
+                                    $cont = 0;
+                                    do{
+                                        $comboProducto = new ComboProducto();
+                                        $comboProducto->idCombo = $model->idCombo ;
+                                        $comboProducto->codigoProducto = $productoBeneficio->codigoProducto ;
+                                        $comboProducto->precio = 0;
+                                        if(!$comboProducto->save()){
+                                            Yii::app()->user->setFlash('alert alert-danger', "Error al guardar producto en el combo");
+                                            $error = true;
+                                        }
+                                        $cont++;
+                                    }while($cont<$productoBeneficio->unid);
+                                }
+
+                                if($productoBeneficio->obsequio > 0){
+                                    $cont = 0;
+                                    do{
+                                        $comboProducto = new ComboProducto();
+                                        $comboProducto->idCombo = $model->idCombo ;
+                                        $comboProducto->codigoProducto = $productoBeneficio->codigoProducto ;
+                                        $comboProducto->precio = 0;
+                                        
+                                        if(!$comboProducto->save()){
+                                            Yii::app()->user->setFlash('alert alert-danger', "Error al guardar el producto en el combo");
+                                            $error = true;
+                                        }
+                                        $cont++;
+                                    }while($cont<$productoBeneficio->obsequio);
+                                }
+                            }
+                       }else{
+                           Yii::app()->user->setFlash('alert alert-danger', "Error al guardar el combo aplicado a el beneficio");
+                           $error= true;
+                       }
+                       
+                   }else{
+                       $error= true;
+                       Yii::app()->user->setFlash('alert alert-danger', "Error al guardar el combo, el beneficio no existe");
+                   }
+                }else  if(!$model->save()){
+                      $error= true;
+                      Yii::app()->user->setFlash('alert alert-danger', "Error al guardar el combo, ocurrió un error");
                 }
+                
+                 if(!$error){
+                     $transaction->commit();
+                     Yii::app()->user->setFlash('alert alert-success', "Los datos han sido guardados o actualizados con éxito");
+                     $this->redirect($this->createUrl('combo/combo', array('idCombo' => $model->idCombo, 'opcion' => 'editar')));
+                    Yii::app()->end();
+                 }else{
+                      $transaction->rollBack(); 
+                 }
             }
             $params['vista'] = '_crearCombo';
         }else if($opcion == 'editar'){
@@ -209,21 +273,12 @@ class ComboController extends ControllerOperator{
         if($valor == 1){
             echo CJSON::encode(array(
                 'result' => 'ok',
-                'response' => ''));
+                'response' => 'false'));
             Yii::app()->end();
         }else if ($valor == 2){
-            $beneficios = Beneficios::model()->findAll(array(
-                 'with' => 'listBeneficiosProductos',
-                 'condition' => 't.tipo in ('.implode(",", Yii::app()->params->beneficios['recambios']).')',
-                 
-             ));
-            
               echo CJSON::encode(array(
                 'result' => 'ok',
-                'response' => $this->renderPartial('_selectBeneficios',array(
-                        'beneficios' => $beneficios
-                ),true,false)
-                
+                 'response' => 'true' 
             )); 
             Yii::app()->end();
             
@@ -242,6 +297,17 @@ class ComboController extends ControllerOperator{
                 $descripción = "PAGUE $productos->unid LLEVE ".($productos->unid+$productos->obsequio)." - $descripcionProducto";
             }
             
+        }else if($beneficios->tipo == Yii::app()->params->beneficios['recambioCruzado']){
+            $productoCompra= $productoObsequio = array();
+            foreach($beneficios->listBeneficiosProductos as $productos){
+                if($productos->unid > 0 ){
+                    $productoCompra[]= $productos->objProducto->descripcionProducto." UNIDADES: ".$productos->unid;
+                }
+                if($productos->obsequio > 0){
+                    $productoObsequio[] = $productos->objProducto->descripcionProducto." UNIDADES: ".$productos->obsequio;
+                }
+            }
+            $descripción = "COMPRE ".implode(", ",$productoCompra)." Y LLEVA GRATIS ".implode(", ",$productoObsequio);
         }
         
         echo CJSON::encode(array(
