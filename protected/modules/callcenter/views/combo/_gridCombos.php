@@ -37,5 +37,14 @@ $this->widget('zii.widgets.grid.CGridView', array(
             'value' => '$data->fechaFin',
             'filter' => CHtml::activeTextField($model, 'fechaFin', array('class' => 'form-control')),
         ),
+        array(
+            'header' => 'Editar',
+            'type' => 'raw',
+            'value' => function($data){
+                 return  CHtml::link("Editar", CController::createUrl("/callcenter/combo/combo", array("idCombo" => $data->idCombo, "opcion" => 'editar')), array("data-ajax"=>"false"));
+
+            },
+          
+        ),
     ),
 ));

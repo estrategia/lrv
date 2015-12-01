@@ -83,11 +83,172 @@ class ComboController extends ControllerOperator{
              $params['model'] =  Combo::model()->findByPk($idCombo);
              $params['vista'] = '_crearListaProductos';
         }else if($opcion == 'sector'){
+             Yii::import('ext.select2.Select2');
+            $params['vista'] = '_ciudadSector';
+            $params['model'] =  Combo::model()->findByPk($idCombo);
+            $params['ciudades'] =  Ciudad::model()->findAll(array(
+                'with' => array('listSectores'),
+                'order' => 't.orden, t.nombreCiudad',
+                'condition' => 'estadoCiudadSector=:estadoCiudadSector AND estadoSector=:estadoSector AND estadoCiudad=:estadoCiudad',
+                'params' => array(
+                    ':estadoCiudadSector' => 1,
+                    ':estadoSector' => 1,
+                    ':estadoCiudad' => 1,
+                ),
+            ));
+        }else if($opcion == 'imagen'){
+            $params['model'] =  Combo::model()->findByPk($idCombo);
+            $params['vista'] = '_imagenCombo';
+            $params['modelImagen'] = new ImagenCombo();
             
+            if($_POST){
+                if (isset($_FILES)) {
+                        $modelImagen =  new ImagenCombo();;
+                        $modelImagen->attributes = $_POST['ImagenCombo'];
+                        $uploadedFile = CUploadedFile::getInstance($modelImagen, "rutaImagen");
+
+                        if ($uploadedFile->getExtensionName() == "jpg" || $uploadedFile->getExtensionName() == "png" ||
+                                $uploadedFile->getExtensionName() == "jpeg" || $uploadedFile->getExtensionName() == "gif") {
+
+                            if ($uploadedFile->saveAs(substr(Yii::app()->params->carpetaImagen['combos'][$modelImagen->tipoImagen] . $uploadedFile->getName(), 1))) {
+                                $modelImagen->rutaImagen =  $uploadedFile->getName();
+                                $modelImagen->idCombo = $idCombo;
+                                  if ($modelImagen->save()) {
+                                    Yii::app()->user->setFlash('alert alert-success', "La imagen ha sido guardada con éxito");
+                                } else {
+                                    Yii::app()->user->setFlash('alert alert-danger', "Error al subir la imagen");
+                                }
+                            } else {
+                                Yii::app()->user->setFlash('alert alert-danger', 'Error al subir la imagen');
+                            }
+                        } else {
+                            Yii::app()->user->setFlash('alert alert-danger', 'Imagen no valida');
+                        }
+               }
+            }
         }
         
         $this->render('editar',array(
             'params' => $params
+        ));
+    }
+    
+    
+    public function actionEliminarImagenCombo(){
+        if (!Yii::app()->request->isPostRequest) {
+            throw new CHttpException(404, 'Solicitud inválida.');
+        }
+
+        $imagenCombo = Yii::app()->getRequest()->getPost('imagenCombo');
+        
+        $resultado= ImagenCombo::model()->findByPk($imagenCombo);
+        
+        if($resultado == null){
+            echo CJSON::encode(array(
+                'result' => 'error',
+                'response' => 'Imagen no encontrada'
+            ));
+            Yii::app()->end();
+        }
+        
+        $idCombo = $resultado->idCombo;
+        
+        if($resultado->delete()){
+            $model = Combo::model()->findByPk($idCombo);
+             echo CJSON::encode(array('result' => 'ok',
+                'response' =>  $this->renderPartial('_listaImagenes', array('listaImagenes' => $model->listImagenesCombo), true, false),
+                    ));
+            Yii::app()->end();
+        }else{
+            echo CJSON::encode(array('result' => 'ok',
+                'response' => 'error al eliminar la imagen'));
+            Yii::app()->end();
+        }
+        
+        
+    }
+    
+    public function actionEstadoImagenCombo(){
+        if (!Yii::app()->request->isPostRequest) {
+            throw new CHttpException(404, 'Solicitud inválida.');
+        }
+
+        $imagenCombo = Yii::app()->getRequest()->getPost('imagenCombo');
+        $resultado= ImagenCombo::model()->findByPk($imagenCombo);
+        
+        if($resultado == null){
+            echo CJSON::encode(array(
+                'result' => 'error',
+                'response' => 'Imagen no encontrada'
+            ));
+            Yii::app()->end();
+        }
+        
+        if($resultado->estadoImagen == 0){
+            $resultado->estadoImagen = 1;
+        }else{
+            $resultado->estadoImagen = 0;
+        }
+        $idCombo = $resultado->idCombo;
+        
+        if($resultado->save()){
+            $model = Combo::model()->findByPk($idCombo);
+             echo CJSON::encode(array('result' => 'ok',
+                'response' =>  $this->renderPartial('_listaImagenes', array('listaImagenes' => $model->listImagenesCombo), true, false),
+                    ));
+            Yii::app()->end();
+        }else{
+            echo CJSON::encode(array('result' => 'ok',
+                'response' => 'error al eliminar la imagen'));
+            Yii::app()->end();
+        }
+    }
+    
+    public function actionValidarComboBeneficio($valor){
+        
+        if($valor == 1){
+            echo CJSON::encode(array(
+                'result' => 'ok',
+                'response' => ''));
+            Yii::app()->end();
+        }else if ($valor == 2){
+            $beneficios = Beneficios::model()->findAll(array(
+                 'with' => 'listBeneficiosProductos',
+                 'condition' => 't.tipo in ('.implode(",", Yii::app()->params->beneficios['recambios']).')',
+                 
+             ));
+            
+              echo CJSON::encode(array(
+                'result' => 'ok',
+                'response' => $this->renderPartial('_selectBeneficios',array(
+                        'beneficios' => $beneficios
+                ),true,false)
+                
+            )); 
+            Yii::app()->end();
+            
+        }
+    }
+    
+    
+    public function actionInformacioBeneficio($idBeneficio){
+        $beneficios = Beneficios::model()->find('idBeneficio =:idBeneficio',array(
+            'idBeneficio' => $idBeneficio
+        )); 
+        $descripción = "";
+        if($beneficios->tipo == Yii::app()->params->beneficios['recambio']){
+            foreach($beneficios->listBeneficiosProductos as $productos){
+                $descripcionProducto = $productos ->objProducto->descripcionProducto;
+                $descripción = "PAGUE $productos->unid LLEVE ".($productos->unid+$productos->obsequio)." - $descripcionProducto";
+            }
+            
+        }
+        
+        echo CJSON::encode(array(
+            'result' => 'ok',
+            'descripcion' => $descripción,
+            'fechaInicio' => $beneficios->fechaIni,
+            'fechaFin' => $beneficios->fechaFin,
         ));
     }
     
@@ -98,10 +259,6 @@ class ComboController extends ControllerOperator{
 
         $busqueda = Yii::app()->getRequest()->getPost('busqueda');
         $idCombo = Yii::app()->getRequest()->getPost('idCombo');
-
-
-        //echo $busqueda." ... ".$modulo;
-        //Yii::app()->end();
 
         if ($busqueda === null || $idCombo === null) {
             throw new CHttpException(404, 'Solicitud inválida.');
@@ -211,6 +368,105 @@ class ComboController extends ControllerOperator{
                 'response' => 'Error al eliminar el producto, por favor intente de nuevo',
             ));
             Yii::app()->end();
+        }
+    }
+    
+    public function actionGuardarCiudadSector(){
+       
+        if (!Yii::app()->request->isPostRequest) {
+            throw new CHttpException(404, 'Solicitud inválida.');
+        }
+
+        $codigoCiudad = Yii::app()->getRequest()->getPost('codigoCiudad');
+        $codigoSector = Yii::app()->getRequest()->getPost('codigoSector');
+        $idCombo = Yii::app()->getRequest()->getPost('idCombo');
+        $saldo = Yii::app()->getRequest()->getPost('saldo');
+
+        $comboSector = ComboSectorCiudad::model()->find(array(
+            'condition' => 'codigoCiudad =:codigoCiudad AND codigoSector =:codigoSector AND idCombo=:idCombo ',
+            'params' => array(
+                'codigoCiudad' => $codigoCiudad,
+                'codigoSector' => $codigoSector,
+                'idCombo' => $idCombo
+            )
+        ));
+
+        if ($comboSector == null) {
+
+            if (empty($codigoCiudad)) {
+                $codigoCiudad = Yii::app()->params->ciudad['*'];
+                $codigoSector = Yii::app()->params->sector['*'];
+            }
+
+            $comboSector = new ComboSectorCiudad();
+
+            if (empty($codigoCiudad)) {
+                $codigoCiudad = Yii::app()->params->ciudad['*'];
+            }
+            $comboSector->codigoCiudad = $codigoCiudad;
+            $comboSector->codigoSector = $codigoSector;
+            $comboSector->idCombo = $idCombo;
+            $comboSector->saldo = $saldo;
+
+            if ($comboSector->save()) {
+                $model = Combo::model()->findByPk($idCombo);
+
+                $html = $this->renderPartial('_listaSectoresCiudades', array(
+                    'model' => $model
+                        ), true, false);
+                echo CJSON::encode(array(
+                    'result' => 'ok',
+                    'response' => $html
+                ));
+            } else {
+                echo CJSON::encode(array(
+                    'result' => 'error',
+                    'response' => "Error al guardar la ciudad/sector"
+                ));
+            }
+        } else {
+            echo CJSON::encode(array(
+                'result' => 'error',
+                'response' => "El sector está referenciado"
+            ));
+        }
+    
+    }
+    
+     public function actionEliminarCiudadSector() {
+        if (!Yii::app()->request->isPostRequest) {
+            throw new CHttpException(404, 'Solicitud inválida.');
+        }
+
+        $codigoSector = Yii::app()->getRequest()->getPost('codigoSector');
+        $codigoCiudad = Yii::app()->getRequest()->getPost('codigoCiudad');
+        $idCombo = Yii::app()->getRequest()->getPost('idCombo');
+        
+        $moduloSector = ComboSectorCiudad::model()->find(array(
+            'condition' => 'codigoSector=:codigoSector AND codigoCiudad=:codigoCiudad AND idCombo=:idCombo',
+            'params' => array(
+                'codigoSector' => $codigoSector,
+                'codigoCiudad' => $codigoCiudad,
+                'idCombo' => $idCombo
+            )
+        ));
+
+        if ($moduloSector != null) {
+            $moduloSector->delete();
+            $model = Combo::model()->findByPk($idCombo);
+
+            $html = $this->renderPartial('_listaSectoresCiudades', array(
+                'model' => $model
+                    ), true, false);
+            echo CJSON::encode(array(
+                'result' => 'ok',
+                'response' => $html
+            ));
+        } else {
+            echo CJSON::encode(array(
+                'result' => 'error',
+                'response' => "No se ha encontrado la ciudad/sector a eliminar"
+            ));
         }
     }
     

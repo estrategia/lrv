@@ -174,6 +174,10 @@ return array(
                 'mini' => 1,
                 'grande' => 2,
             ),
+            'tipoImagenSelect' => array(
+                1 => 'mini',
+                2 => 'grande'
+            ),
             'noImagen' => array(
                 'mini' => '/images/productos/thumb/noimage.gif',
                 'grande' => '/images/productos/noimage.gif',

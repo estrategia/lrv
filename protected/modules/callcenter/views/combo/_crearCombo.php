@@ -19,7 +19,19 @@
 <p class="note">Campos con <span class="required">*</span> son obligatorios.</p>
 
             <?php echo $form->errorSummary($model); ?>
-            
+           
+            <?php if($model->isNewRecord):?>
+                <div class="form-group">
+                    <?php echo $form->labelEx($model, 'tipoCombo'); ?>
+                    <?php echo CHtml::dropDownList('descripcionCombo',null ,array ( 1=> 'Crear un combo manual', 2 => 'Crear a partir de un beneficio'), array('class' => 'form-control', 'data-role' => 'validar-tipo-combo')); ?>
+                    <?php echo $form->error($model, 'descripcionCombo'); ?>
+                </div>
+            <?php endif;?>
+
+            <div class="form-group" id="beneficio-combo">
+                
+            </div>
+
             <div class="form-group">
                 <?php echo $form->labelEx($model, 'descripcionCombo'); ?>
                 <?php echo $form->textField($model, 'descripcionCombo', array('class' => 'tipo form-control')); ?>

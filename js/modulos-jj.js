@@ -707,3 +707,192 @@ $(document).on('click', "a[data-role='eliminar-producto-combo']", function(){
     });
 
 });
+
+
+$(document).on('click', "button[data-role='add-sector-ciudad-combo']", function(){
+
+    var codigoCiudad=$('#select-ciudad-modulo').val();
+    var codigoSector=$('#sector-modulo').val();
+    var saldo=$('#cantidades-combo').val();
+    var idCombo = $(this).attr('data-combo');
+    
+    if($("#sector-select").val() == 0){
+        codigoSector = 0;
+    }
+     $.ajax({
+        type: 'POST',
+        async: true,
+        url: requestUrl + '/callcenter/combo/guardarCiudadSector',
+        data: {codigoCiudad : codigoCiudad,codigoSector: codigoSector, idCombo: idCombo, saldo:saldo},
+        dataType: 'json',
+        beforeSend: function(data){
+           
+        },
+        success: function(data){
+            if (data.result == "ok") {
+                bootbox.alert("Ciudad/Sector adicionado con éxito");
+                $("#lista-sectores").html(data.response);
+            }else if(data.result == "error"){
+                bootbox.alert(data.response);
+            }
+        },
+        complete: function(){
+
+        },
+        error: function(jqXHR, textStatus, errorThrown){
+
+        }
+    });
+});
+
+$(document).on('click', "a[data-role='eliminar-combo-sector']", function(){
+    var idCombo = $(this).attr("data-combo");
+    var codigoSector = $(this).attr("data-sector");
+    var codigoCiudad = $(this).attr("data-ciudad");
+    
+     $.ajax({
+        type: 'POST',
+        async: true,
+        url: requestUrl + '/callcenter/combo/eliminarCiudadSector',
+        data: {idCombo : idCombo, codigoSector:codigoSector, codigoCiudad:codigoCiudad},
+        dataType: 'json',
+        beforeSend: function(data){
+           
+        },
+        success: function(data){
+            if (data.result == "ok") {
+                bootbox.alert("Ciudad/Sector eliminado con éxito");
+                $("#lista-sectores").html(data.response);
+            }else if(data.result == "error"){
+                bootbox.alert(data.response);
+            }
+        },
+        complete: function(){
+
+        },
+        error: function(jqXHR, textStatus, errorThrown){
+
+        }
+    });
+});
+   
+$(document).on('click', "a[data-role='eliminar-imagen-combo']", function(){
+
+    var imagenCombo=$(this).attr('data-imagen-combo');
+     
+     $.ajax({
+        type: 'POST',
+        async: true,
+        url: requestUrl + '/callcenter/combo/eliminarImagenCombo',
+        data: {imagenCombo : imagenCombo},
+        dataType: 'json',
+        beforeSend: function(data){
+           
+        },
+        success: function(data){
+            if (data.result == "ok") {
+                bootbox.alert("Imagen Eliminada con éxito");
+                $("#lista-imagenes").html(data.response);
+            }else if(data.result == "error"){
+                bootbox.alert(data.response);
+            }
+        },
+        complete: function(){
+
+        },
+        error: function(jqXHR, textStatus, errorThrown){
+
+        }
+    });
+});
+
+$(document).on('click', "a[data-role='estado-imagen-combo']", function(){
+
+    var imagenCombo=$(this).attr('data-imagen-combo');
+    
+     $.ajax({
+        type: 'POST',
+        async: true,
+        url: requestUrl + '/callcenter/combo/estadoImagenCombo',
+        data: {imagenCombo : imagenCombo},
+        dataType: 'json',
+        beforeSend: function(data){
+           
+        },
+        success: function(data){
+            if (data.result == "ok") {
+                bootbox.alert("El cambio se efectuó con éxito");
+                $("#lista-imagenes").html(data.response);
+            }else if(data.result == "error"){
+                bootbox.alert(data.response);
+            }
+        },
+        complete: function(){
+
+        },
+        error: function(jqXHR, textStatus, errorThrown){
+
+        }
+    });
+});
+
+$(document).on('change', "select[data-role='validar-tipo-combo']", function(){
+    var val=$(this).val();
+    
+     $.ajax({
+        type: 'GET',
+        async: true,
+        url: requestUrl + '/callcenter/combo/validarComboBeneficio',
+        data: {valor : val},
+        dataType: 'json',
+        beforeSend: function(data){
+           
+        },
+        success: function(data){
+            if (data.result == "ok") {
+                  $("#beneficio-combo").html(data.response);
+                  $("#Combo_descripcionCombo").prop("disabled",true);
+                  $("#Combo_fechaInicio").prop("disabled",true);
+                  $("#Combo_fechaFin").prop("disabled",true);
+            }else if(data.result == "error"){
+                bootbox.alert(data.response);
+            }
+        },
+        complete: function(){
+
+        },
+        error: function(jqXHR, textStatus, errorThrown){
+
+        }
+    });
+});
+
+$(document).on('change', "select[data-role='info-beneficio']", function(){
+    var val=$(this).val();
+    
+     $.ajax({
+        type: 'GET',
+        async: true,
+        url: requestUrl + '/callcenter/combo/informacioBeneficio',
+        data: {idBeneficio : val},
+        dataType: 'json',
+        beforeSend: function(data){
+           
+        },
+        success: function(data){
+            if (data.result == "ok") {
+                  $("#Combo_descripcionCombo").val(data.descripcion);
+                  $("#Combo_fechaInicio").val(data.fechaInicio);
+                  $("#Combo_fechaFin").val(data.fechaFin);
+            }else if(data.result == "error"){
+                bootbox.alert(data.response);
+            }
+        },
+        complete: function(){
+
+        },
+        error: function(jqXHR, textStatus, errorThrown){
+
+        }
+    });
+});
