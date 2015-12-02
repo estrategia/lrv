@@ -17,7 +17,11 @@
                     <td><?php echo $objProductoCombo->objProducto->descripcionProducto . "<br>" . $objProductoCombo->objProducto->presentacionProducto ?></td>
                     <td><?php echo Yii::app()->numberFormatter->format(Yii::app()->params->formatoMoneda['patron'],$objProductoCombo->precio, Yii::app()->params->formatoMoneda['moneda']);  ?></td>
                     <td>
-                        <?php echo CHtml::link('Eliminar', '#', array('data-combo-producto' => $objProductoCombo->idComboProducto, 'data-combo' => $objProductoCombo->idCombo, 'data-role' => "eliminar-producto-combo", 'class' => 'btn btn-primary')); ?>
+                        <?php if($model->idBeneficio == null):?>
+                            <?php echo CHtml::link('Eliminar', '#', array('data-combo-producto' => $objProductoCombo->idComboProducto, 'data-combo' => $objProductoCombo->idCombo, 'data-role' => "eliminar-producto-combo", 'class' => 'btn btn-primary')); ?>
+                        <?php else:?>
+                            Eliminar no disponible
+                        <?php endif;?>
                     </td>
                 </tr>
             <?php endforeach; ?>

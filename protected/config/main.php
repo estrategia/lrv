@@ -205,6 +205,10 @@ return array(
                 'mini' => 1,
                 'grande' => 2,
             ),
+            'tipoImagenSelect' => array(
+                1 => 'mini',
+                2 => 'grande'
+            ),
             'noImagen' => array(
                 'mini' => '/images/productos/thumb/noimage.gif',
                 'grande' => '/images/productos/noimage.gif',
@@ -288,6 +292,7 @@ return array(
         'beneficios' => array(
             'lrv' => array(21, 22, 23, 24),
             'recambios' => array(1, 10),
+            'recambioslabel' => array(1 => 'Recambio', 10 => 'Recambio Cruzado'),
             'recambio' => 1,
             'recambioCruzado' => 10,
             'swobligaCli' => array(0 => 'Todos', 2 => 'Cliente fiel'),

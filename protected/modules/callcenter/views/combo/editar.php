@@ -12,7 +12,7 @@
 <div class="box-inner">
     <div class="box-header well">
         <div class="col-lg-1">
-            <h2><i class="glyphicon glyphicon-file"></i> Modulos</h2>
+            <h2><i class="glyphicon glyphicon-file"></i> Combos</h2>
         </div>
     </div>
     

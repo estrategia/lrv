@@ -31,6 +31,7 @@
  */
 class Beneficios extends CActiveRecord {
 
+    public $searchProductoUnidad;
     /**
      * @return string the associated database table name
      */
@@ -51,7 +52,7 @@ class Beneficios extends CActiveRecord {
             array('mensaje', 'length', 'max'=>140),
             // The following rule is used by search().
             // @todo Please remove those attributes that should not be searched.
-            array('idBeneficio, idBeneficioSincronizado, tipo, fechaIni, fechaFin, dsctoUnid, dsctoFrac, vtaUnid, vtaFrac, pagoUnid, pagoFrac, cuentaCop, nitCop, porcCop, cuentaProv, nitProv, porcProv, promoFiel, mensaje, swobligaCli, fechaCreacionBeneficio', 'safe', 'on' => 'search'),
+            array('idBeneficio, idBeneficioSincronizado, tipo, fechaIni, fechaFin, dsctoUnid, dsctoFrac, vtaUnid, vtaFrac, pagoUnid, pagoFrac, cuentaCop, nitCop, porcCop, cuentaProv, nitProv, porcProv, promoFiel, mensaje, swobligaCli, fechaCreacionBeneficio,searchProductoUnidad', 'safe', 'on' => 'search'),
         );
     }
 
@@ -63,6 +64,7 @@ class Beneficios extends CActiveRecord {
         // class name for the relations automatically generated below.
         return array(
             'objBeneficioTipo' => array(self::BELONGS_TO, 'BeneficioTipo', 'tipo'),
+            'objCombo' => array(self::BELONGS_TO, 'Combo', '', 'on' => 't.idBeneficio = objCombo.IdBeneficio'),
             'listPuntosVenta' => array(self::MANY_MANY, 'PuntoVenta', 't_BeneficiosPuntosVenta(idBeneficio, idComercial)'),
             'listBeneficiosProductos' => array(self::HAS_MANY, 'BeneficiosProductos', 'idBeneficio'),
         );
@@ -137,6 +139,34 @@ class Beneficios extends CActiveRecord {
         $criteria->compare('fechaCreacionBeneficio', $this->fechaCreacionBeneficio, true);
 
         return new CActiveDataProvider($this, array(
+            'criteria' => $criteria,
+        ));
+    }
+    
+    
+    public function searchBeneficiosCombos(){
+       $criteria = new CDbCriteria;
+
+       $criteria->with = array('listBeneficiosProductos' => array('with' => 'objProducto',),'objCombo');
+       $criteria->condition  =  't.fechaFin >=:fecha AND  t.tipo in ('.implode(",", Yii::app()->params->beneficios['recambios']).') ';
+       $criteria->params  = array(
+                    'fecha' => date("Y-m-d"),
+                );
+        
+       if(!empty($this->searchProductoUnidad ) && $this->searchProductoUnidad != null){
+         $criteria->with['listBeneficiosProductos']['condition']= "objProducto.codigoProducto='$this->searchProductoUnidad' OR objProducto.descripcionProducto LIKE '%$this->searchProductoUnidad%'";
+       }
+       
+        $criteria->compare('idBeneficio', $this->idBeneficio);
+        $criteria->compare('idBeneficioSincronizado', $this->idBeneficioSincronizado);
+        
+        if(!empty($this->tipo)){
+            $criteria->compare('t.tipo', $this->tipo);
+        }
+        $criteria->compare('fechaIni', $this->fechaIni, true);   
+        $criteria->compare('fechaFin', $this->fechaFin, true); 
+        
+         return new CActiveDataProvider($this, array(
             'criteria' => $criteria,
         ));
     }
