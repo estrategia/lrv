@@ -53,5 +53,5 @@
         </tbody>
     </table>
 <?php else:?>
-    No se han añadido ubicaciones a el modulo configurado.
+    No se han añadido imagenes al combo.
 <?php endif;?>

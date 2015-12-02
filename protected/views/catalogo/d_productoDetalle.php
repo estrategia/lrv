@@ -339,7 +339,7 @@
                 ?>
             <?php endif; ?>
         <?php endif; ?>
-        <?php/* if ($objProducto->codigoEspecial !== null && $objProducto->codigoEspecial != 0): ?>
+        <?php /* if ($objProducto->codigoEspecial !== null && $objProducto->codigoEspecial != 0): ?>
             <div class=""><span></span></div>
             <p class="">
                 <img src="<?php echo Yii::app()->request->baseUrl . Yii::app()->params->carpetaImagen['codigoEspecial'] . $objProducto->objCodigoEspecial->rutaIcono; ?>" >

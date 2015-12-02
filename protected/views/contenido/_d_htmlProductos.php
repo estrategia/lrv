@@ -15,16 +15,20 @@
             <!-- Lista de productos -->
             <div class="col-md-8">
                 <div class="row">
-                    <?php foreach ($objModulo->getListaProductos($this->objSectorCiudad) as $objProducto): ?>
-                        <ul class="listaProductos">
-                            <?php
-                            $this->renderPartial('//catalogo/_d_productoElemento', array(
-                                'data' => $objProducto,
-                                'vista' => 'grid'
-                            ));
-                            ?>
-                        </ul>
-                    <?php endforeach; ?>
+                    <ul class="listaProductosB">
+                            <div class="items">
+                                <?php foreach ($objModulo->getListaProductos($this->objSectorCiudad) as $objProducto): ?>
+                        
+                                    <?php
+                                    $this->renderPartial('//catalogo/_d_productoElemento', array(
+                                        'data' => $objProducto,
+                                        'vista' => 'grid'
+                                    ));
+                                    ?>
+                       
+                                <?php endforeach; ?>
+                            </div>
+                         </ul>
                 </div>
             </div>
         </div>
