@@ -282,6 +282,11 @@ $(document).on('click', "[id^='enlace-pago-direccion-express-']", function() {
     campoCheckbox.prop("checked", true);
 });
 
+$(document).on('click', "a[data-role='usuario-pagoexpress-formapago']", function() {
+    console.log("asdff");
+    var campoCheckbox = $(this).children("input");
+    campoCheckbox.prop("checked", true);
+});
 
 $(document).on('change', "#form-listapersonal input[id='ListasPersonales_estadoLista']", function() {
     if ($(this).is(":checked")) {

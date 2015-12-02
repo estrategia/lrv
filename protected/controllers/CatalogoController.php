@@ -1108,7 +1108,7 @@ class CatalogoController extends Controller {
         ));
 
         if ($objCombo == null) {
-            throw new CHttpException(404, 'Producto no existe.');
+            throw new CHttpException(404, 'Combo no existe.');
         }
 
         if ($this->isMobile) {

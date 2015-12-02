@@ -54,7 +54,7 @@ return array(
             'caseSensitive' => true,
         ),
         'db' => array(
-            'connectionString' => 'mysql:host=localhost;port=3306;dbname=lrvmovil',
+            'connectionString' => 'mysql:host=localhost;port=3306;dbname=lrvmovil_copservir',
             'emulatePrepare' => true,
             'username' => 'root',
             'password' => '',

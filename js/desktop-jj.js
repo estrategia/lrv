@@ -550,6 +550,8 @@ $(document).on('click', "a[data-cargar='2']", function() {
             bootbox.alert('Error: ' + errorThrown);
         }
     });
+
+    return false;
 });
 
 
@@ -605,64 +607,65 @@ $(document).on('click', "a[data-cargar='1']", function() {
             bootbox.alert('Error: ' + errorThrown);
         }
     });
+    return false;
 });
 
+$(document).on('click', "a[data-cargar='3']", function() {
+    var producto = $(this).attr('data-producto');
 
+    var cantidadUbicacion = $('#cantidad-producto-ubicacion-' + producto).val();
+    cantidadUbicacion = parseInt(cantidadUbicacion);
+    if (isNaN(cantidadUbicacion)) {
+        cantidadUbicacion = 0;
+    }
+
+    var cantidadBodega = parseInt($('#cantidad-producto-bodega-' + producto).val());
+    cantidadBodega = parseInt(cantidadBodega);
+    if (isNaN(cantidadBodega)) {
+        cantidadBodega = 0;
+    }
+
+    $.ajax({
+        type: 'POST',
+        dataType: 'json',
+        async: true,
+        url: requestUrl + '/carro/agregarBodega',
+        data: {producto: producto, cantidadU: cantidadUbicacion, cantidadB: cantidadBodega},
+        beforeSend: function() {
+            //  $.mobile.loading('show');
+        },
+        complete: function() {
+            //   $.mobile.loading('hide');
+        },
+        success: function(data) {
+            if (data.result === "ok") {
+                $('#div-carro-canasta').html(data.response.canastaHTML);
+                $('#div-carro-canasta').trigger("create");
+
+                if (data.response.mensajeHTML) {
+                    dialogoAnimado(data.response.mensajeHTML);
+                    $("#cantidad-productos").html(data.response.objetosCarro);
+                }
+                if (data.response.dialogoHTML) {
+                    bootbox.alert(data.response.dialogoHTML);
+                }
+            } else {
+                bootbox.alert(data.response);
+            }
+        },
+        error: function(jqXHR, textStatus, errorThrown) {
+            bootbox.alert('Error: ' + errorThrown);
+        }
+    });
+    
+    return false;
+});
 
 
 
 $(document).on('click', "#form-autenticar input[data-registro-desktop='autenticar']", function() {
     var form = $(this).parents("form");//"#form-autenticar"
     var boton = $(this);
-
-    $(document).on('click', "a[data-cargar='3']", function() {
-        var producto = $(this).attr('data-producto');
-
-        var cantidadUbicacion = $('#cantidad-producto-ubicacion-' + producto).val();
-        cantidadUbicacion = parseInt(cantidadUbicacion);
-        if (isNaN(cantidadUbicacion)) {
-            cantidadUbicacion = 0;
-        }
-
-        var cantidadBodega = parseInt($('#cantidad-producto-bodega-' + producto).val());
-        cantidadBodega = parseInt(cantidadBodega);
-        if (isNaN(cantidadBodega)) {
-            cantidadBodega = 0;
-        }
-
-        $.ajax({
-            type: 'POST',
-            dataType: 'json',
-            async: true,
-            url: requestUrl + '/carro/agregarBodega',
-            data: {producto: producto, cantidadU: cantidadUbicacion, cantidadB: cantidadBodega},
-            beforeSend: function() {
-                //  $.mobile.loading('show');
-            },
-            complete: function() {
-                //   $.mobile.loading('hide');
-            },
-            success: function(data) {
-                if (data.result === "ok") {
-                    $('#div-carro-canasta').html(data.response.canastaHTML);
-                    $('#div-carro-canasta').trigger("create");
-
-                    if (data.response.mensajeHTML) {
-                        dialogoAnimado(data.response.mensajeHTML);
-                        $("#cantidad-productos").html(data.response.objetosCarro);
-                    }
-                    if (data.response.dialogoHTML) {
-                        bootbox.alert(data.response.dialogoHTML);
-                    }
-                } else {
-                    bootbox.alert(data.response);
-                }
-            },
-            error: function(jqXHR, textStatus, errorThrown) {
-                bootbox.alert('Error: ' + errorThrown);
-            }
-        });
-    });
 
     $.ajax({
         type: 'POST',

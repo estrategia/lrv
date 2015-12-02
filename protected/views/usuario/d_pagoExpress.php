@@ -48,14 +48,14 @@
     </div>
 
     <div class="row">
-        <div class="col-md-8">
+        <div class="col-md-7">
             <div id="div-direcciones-lista">
                 <?php $this->renderPartial('/usuario/_d_direccionListaAcordeon', array('objPagoExpress'=>$objPagoExpress, 'listDirecciones' => $listDirecciones)); ?>
             </div>
             <?php echo $form->error($objPagoExpress, 'idDireccionDespacho'); ?>
         </div>
-        <div class="col-md-4">
-            <?php $this->renderPartial('/carro/_d_formaPago', array('form' => $form, 'model' => $objPagoExpress, 'listFormaPago' => $listFormaPago)) ?>
+        <div class="col-md-5">
+            <?php $this->renderPartial('/usuario/_d_formaPago', array('form' => $form, 'model' => $objPagoExpress, 'listFormaPago' => $listFormaPago)) ?>
         </div>
     </div>
 

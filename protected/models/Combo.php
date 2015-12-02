@@ -133,20 +133,29 @@ class Combo extends CActiveRecord {
         if($objImagen == null)
             return Yii::app()->params->producto['noImagen']['mini'];
         
-        return Yii::app()->params->carpetaImagen['combos'][YII::app()->params->producto['tipoImagen']['mini']] . $objImagen->rutaImagen;
+        $rutaImagen = Yii::app()->params->carpetaImagen['combos'][YII::app()->params->producto['tipoImagen']['mini']] . $objImagen->rutaImagen;
+        $directorio = Yii::getPathOfAlias('webroot'). $rutaImagen;
+        
+        if(!file_exists($directorio)){
+            return Yii::app()->params->producto['noImagen']['mini'];
+        }
+        
+        return $rutaImagen;
     }
 
     /**
-     * Retorna lista del tipo de imagen de un producto, si no se detecta
-     * @param int tipo de imagen
+     * Retorna lista de imagenes grandes del combo
      * @return array imagen del producto
      */
-    public function listImagen($tipo) {
+    public function listImagenesGrandes() {
         $list = array();
 
-        foreach ($this->listImagenesCombo as $imagen) {
-            if ($imagen->tipoImagen == $tipo && $imagen->estadoImagen == 1) {
-                $list[] = $imagen;
+        foreach ($this->listImagenesComboGrande as $objImagen) {
+            $rutaImagen = Yii::app()->params->carpetaImagen['combos'][YII::app()->params->producto['tipoImagen']['grande']] . $objImagen->rutaImagen;
+            $directorio = Yii::getPathOfAlias('webroot') . $rutaImagen;
+
+            if (file_exists($directorio)) {
+               $list[] = $objImagen;
             }
         }
         return $list;

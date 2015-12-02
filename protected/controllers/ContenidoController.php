@@ -15,6 +15,52 @@ class ContenidoController extends Controller {
         );
     }
 
+    public function actionCorporativo($tipo) {
+        if ($tipo == "horario") {
+            $this->verHorario();
+        } else if ($tipo == "polidescuento") {
+            $this->verPolidescuento();
+        } else if ($tipo == "pqrs") {
+            $this->verPqrs();
+        } else if ($tipo == "politerminos") {
+            $this->verPoliterminos();
+        }else{
+            throw new CHttpException(404, 'Contenido no existe.');
+        }
+    }
+
+    private function verHorario() {
+        $objHorarioCiudadSector = null;
+
+        if ($this->objSectorCiudad != null) {
+            $objHorarioCiudadSector = HorariosCiudadSector::model()->find(array(
+                'with' => 'objCiudad',
+                'condition' => 't.codigoCiudad=:ciudad AND t.codigoSector=:sector AND t.estadoCiudadSector=:estado',
+                'params' => array(
+                    ':estado' => 1,
+                    ':ciudad' => $this->objSectorCiudad->codigoCiudad,
+                    ':sector' => $this->objSectorCiudad->codigoSector
+                )
+            ));
+        }
+
+        $this->render('corporativoHorario', array(
+            'objHorarioCiudadSector' => $objHorarioCiudadSector
+        ));
+    }
+
+    private function verPolidescuento() {
+        $this->render('corporativoDescuento');
+    }
+
+    private function verPqrs() {
+        $this->render('corporativoPqrs');
+    }
+
+    private function verPoliterminos() {
+        $this->render('corporativoTerminos');
+    }
+
     public function actionVer($tipo, $contenido) {
         if ($tipo == "imagen") {
             $this->verContenidoImagen($contenido);
@@ -87,8 +133,8 @@ class ContenidoController extends Controller {
 
     private function verContenidoGrupo($idGrupo) {
         $listModulos = ModulosConfigurados::getModulosGrupo($idGrupo);
-        
-        if(empty($listModulos)){
+
+        if (empty($listModulos)) {
             throw new CHttpException(404, 'Contenido no disponible.');
         }
 

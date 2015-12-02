@@ -40,13 +40,12 @@ class Producto extends CActiveRecord {
     /**
      * @return string the associated database table name
      */
-
     public $id;
 
     public function tableName() {
         return 'm_Producto';
     }
-    
+
     /**
      * @return array validation rules for model attributes.
      */
@@ -81,7 +80,7 @@ class Producto extends CActiveRecord {
             'objImpuesto' => array(self::BELONGS_TO, 'Impuesto', 'codigoImpuesto'),
             'objDetalle' => array(self::HAS_ONE, 'ProductoDetalle', 'codigoProducto'),
             'listImagenes' => array(self::HAS_MANY, 'Imagen', 'codigoProducto'),
-            'listImagenesGrandes' => array(self::HAS_MANY, 'Imagen', 'codigoProducto', 'condition'=>'listImagenesGrandes.idImagen IS NULL OR (listImagenesGrandes.estadoImagen=1 AND listImagenesGrandes.tipoImagen='. YII::app()->params->producto['tipoImagen']['grande']  . ')' ),
+            'listImagenesGrandes' => array(self::HAS_MANY, 'Imagen', 'codigoProducto', 'condition' => 'listImagenesGrandes.idImagen IS NULL OR (listImagenesGrandes.estadoImagen=1 AND listImagenesGrandes.tipoImagen=' . YII::app()->params->producto['tipoImagen']['grande'] . ')'),
             'listCalificaciones' => array(self::HAS_MANY, 'ProductosCalificaciones', 'codigoProducto'),
             'listSaldos' => array(self::HAS_MANY, 'ProductosSaldos', 'codigoProducto'),
             'listPrecios' => array(self::HAS_MANY, 'ProductosPrecios', 'codigoProducto'),
@@ -93,8 +92,8 @@ class Producto extends CActiveRecord {
             'objMarca' => array(self::BELONGS_TO, 'Marca', 'idMarca'),
             'objCategoriaBI' => array(self::BELONGS_TO, 'Categoria', 'idCategoriaBI'),
             'objUnidadNegocioBI' => array(self::BELONGS_TO, 'Categoria', 'idUnidadNegocioBI'),
-            //'listCategoriasTienda' => array(self::MANY_MANY, 'CategoriaTienda', '', 'through' => 'CategoriasCategoriaTienda', 'condition' => 'CategoriasCategoriaTienda.idCategoriaBI=106'),
-            //'listCategoriasCategoriaTienda' => array(self::HAS_MANY, 'CategoriasCategoriaTienda', 'idCategoriaBI'),
+                //'listCategoriasTienda' => array(self::MANY_MANY, 'CategoriaTienda', '', 'through' => 'CategoriasCategoriaTienda', 'condition' => 'CategoriasCategoriaTienda.idCategoriaBI=106'),
+                //'listCategoriasCategoriaTienda' => array(self::HAS_MANY, 'CategoriasCategoriaTienda', 'idCategoriaBI'),
         );
     }
 
@@ -182,7 +181,7 @@ class Producto extends CActiveRecord {
     public static function model($className = __CLASS__) {
         return parent::model($className);
     }
-    
+
     public function afterFind() {
         $this->descripcionProducto = trim($this->descripcionProducto);
         parent::afterFind();
@@ -204,35 +203,45 @@ class Producto extends CActiveRecord {
         }
         return $obj;
     }
-    
-    public function rutaImagen(){
+
+    public function rutaImagen() {
         $objImagen = $this->objImagen(YII::app()->params->producto['tipoImagen']['mini']);
-        if($objImagen == null)
+        if ($objImagen == null)
             return Yii::app()->params->producto['noImagen']['mini'];
-        
-        return Yii::app()->params->carpetaImagen['productos'][YII::app()->params->producto['tipoImagen']['mini']] . $objImagen->rutaImagen;
+
+        $rutaImagen = Yii::app()->params->carpetaImagen['productos'][YII::app()->params->producto['tipoImagen']['mini']] . $objImagen->rutaImagen;
+        $directorio = Yii::getPathOfAlias('webroot') . $rutaImagen;
+
+        if (!file_exists($directorio)) {
+            return Yii::app()->params->producto['noImagen']['mini'];
+        }
+
+        return $rutaImagen;
     }
 
     /**
-     * Retorna lista del tipo de imagen de un producto, si no se detecta
-     * @param int tipo de imagen
+     * Retorna lista imagenes grandes de un producto, si no se detecta
      * @return array imagen del producto
      */
-    public function listImagen($tipo) {
+    public function listImagenesGrandes() {
         $list = array();
 
-        foreach ($this->listImagenes as $imagen) {
-            if ($imagen->tipoImagen == $tipo && $imagen->estadoImagen == 1) {
-                $list[] = $imagen;
+        foreach ($this->listImagenesGrandes as $objImagen) {
+            $rutaImagen = Yii::app()->params->carpetaImagen['productos'][YII::app()->params->producto['tipoImagen']['grande']] . $objImagen->rutaImagen;
+            $directorio = Yii::getPathOfAlias('webroot') . $rutaImagen;
+
+            if (file_exists($directorio)) {
+               $list[] = $objImagen;
             }
         }
+        
         return $list;
     }
-    
-    public function tieneRelacionados(){
+
+    public function tieneRelacionados() {
         $sql = "SELECT COUNT(*) FROM " . ProductosRelacionados::model()->tableName() . " WHERE codigoProducto=$this->codigoProducto";
         $numRelacionados = Yii::app()->db->createCommand($sql)->queryScalar();
-        return ($numRelacionados>0);
+        return ($numRelacionados > 0);
     }
 
     public function getCalificacion($arreglo = false) {
@@ -248,10 +257,10 @@ class Producto extends CActiveRecord {
 
         if ($votos > 0)
             $calificacion = $calificacion / $votos;
-        
+
         $calificacion = round($calificacion, 1);
-        
-        if($arreglo){
+
+        if ($arreglo) {
             return array(
                 'calificacion' => $calificacion,
                 'votos' => $votos
@@ -278,62 +287,67 @@ class Producto extends CActiveRecord {
 
         return null;
     }
-    
-    public function getCadenaUrl(){
-        return str_replace(" ","-", $this->descripcionProducto).".html";
+
+    public function getCadenaUrl() {
+        return str_replace(" ", "-", $this->descripcionProducto) . ".html";
     }
-    
-    public function getArrayCalificacion(){
-        $sumaCalificaciones=array("1"=>0,"2"=>0,"3"=>0,"4"=>0,"5"=>0);
-        $contadorCalificacion=0;
-        foreach ($this->listCalificaciones as $objComentario){
-                if ($objComentario->aprobado == 1){
-                      $contadorCalificacion++;
-                      if($objComentario->calificacion==5){$sumaCalificaciones[5]++;}
-                      else if($objComentario->calificacion==4){$sumaCalificaciones[4]++;}                                 
-                      else if($objComentario->calificacion==3){$sumaCalificaciones[3]++;}
-                      else if($objComentario->calificacion==2){$sumaCalificaciones[2]++;}
-                      else if($objComentario->calificacion==1){$sumaCalificaciones[1]++;}
+
+    public function getArrayCalificacion() {
+        $sumaCalificaciones = array("1" => 0, "2" => 0, "3" => 0, "4" => 0, "5" => 0);
+        $contadorCalificacion = 0;
+        foreach ($this->listCalificaciones as $objComentario) {
+            if ($objComentario->aprobado == 1) {
+                $contadorCalificacion++;
+                if ($objComentario->calificacion == 5) {
+                    $sumaCalificaciones[5] ++;
+                } else if ($objComentario->calificacion == 4) {
+                    $sumaCalificaciones[4] ++;
+                } else if ($objComentario->calificacion == 3) {
+                    $sumaCalificaciones[3] ++;
+                } else if ($objComentario->calificacion == 2) {
+                    $sumaCalificaciones[2] ++;
+                } else if ($objComentario->calificacion == 1) {
+                    $sumaCalificaciones[1] ++;
                 }
-         }
-            if($contadorCalificacion==0){
-                return  array(
-                "1"=>0,
-                "2"=>0,
-                "3"=>0,
-                "4"=>0,
-                "5"=>0,
-            );
-         }
-         
+            }
+        }
+        if ($contadorCalificacion == 0) {
             return array(
-                "1"=>($sumaCalificaciones[1]/$contadorCalificacion*100),
-                "2"=>($sumaCalificaciones[2]/$contadorCalificacion*100),
-                "3"=>($sumaCalificaciones[3]/$contadorCalificacion*100),
-                "4"=>($sumaCalificaciones[4]/$contadorCalificacion*100),
-                "5"=>($sumaCalificaciones[5]/$contadorCalificacion*100),
+                "1" => 0,
+                "2" => 0,
+                "3" => 0,
+                "4" => 0,
+                "5" => 0,
             );
-         
+        }
+
+        return array(
+            "1" => ($sumaCalificaciones[1] / $contadorCalificacion * 100),
+            "2" => ($sumaCalificaciones[2] / $contadorCalificacion * 100),
+            "3" => ($sumaCalificaciones[3] / $contadorCalificacion * 100),
+            "4" => ($sumaCalificaciones[4] / $contadorCalificacion * 100),
+            "5" => ($sumaCalificaciones[5] / $contadorCalificacion * 100),
+        );
     }
-    
-    public function getContadorCalificaciones(){
-         $contadorCalificacion=0;
-        foreach ($this->listCalificaciones as $objComentario){
-                if ($objComentario->aprobado == 1){
-                      $contadorCalificacion++;
-                }
-         }
-         return $contadorCalificacion;
+
+    public function getContadorCalificaciones() {
+        $contadorCalificacion = 0;
+        foreach ($this->listCalificaciones as $objComentario) {
+            if ($objComentario->aprobado == 1) {
+                $contadorCalificacion++;
+            }
+        }
+        return $contadorCalificacion;
     }
-    
+
     function object_to_array($object) {
         if (is_object($object)) {
-         return array_map(__FUNCTION__, get_object_vars($object));
+            return array_map(__FUNCTION__, get_object_vars($object));
         } else if (is_array($object)) {
-         return array_map(__FUNCTION__, $object);
+            return array_map(__FUNCTION__, $object);
         } else {
-         return $object;
+            return $object;
         }
-   }
-    
+    }
+
 }

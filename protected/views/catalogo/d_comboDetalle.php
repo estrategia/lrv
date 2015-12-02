@@ -2,32 +2,31 @@
     <div class="container">
         <div class="col-md-12">
             <div class="col-md-6">
-                <div class="">
-                    <div class="col-md-10">
-                        <?php if (empty($objCombo->listImagenesComboGrande)): ?>
-                            <div class="item"><img class='img-responsive' src="<?php echo Yii::app()->request->baseUrl . Yii::app()->params->producto['noImagen']['grande']; ?>" alt="<?php echo $objCombo->descripcionCombo ?>" title="<?php echo $objCombo->descripcionCombo ?>"></div>
-                        <?php else: ?>
-                            <div id="gallerycombo" class="ad-gallery">
-                                <div class="ad-image-wrapper">
-                                </div>
-                                <div class="ad-controls">
-                                </div>
-                                <div class="ad-nav">
-                                    <div class="ad-thumbs">
-                                        <ul class="ad-thumb-list">
-                                            <?php foreach ($objCombo->listImagenesComboGrande as $imagen): ?>
-                                                <li>
-                                                    <a style="width:60%" href="<?php echo Yii::app()->request->baseUrl . Yii::app()->params->carpetaImagen['productos'][YII::app()->params->producto['tipoImagen']['grande']] . $imagen->rutaImagen ?>">
-                                                        <img class="img-responsive" src="<?php echo Yii::app()->request->baseUrl . Yii::app()->params->carpetaImagen['productos'][YII::app()->params->producto['tipoImagen']['mini']] . $imagen->rutaImagen ?>" >
-                                                    </a>
-                                                </li>
-                                            <?php endforeach; ?>
-                                        </ul>
-                                    </div>
+                <div class="col-md-10">
+                    <?php $listImagenes = $objCombo->listImagenesGrandes() ?>
+                    <?php if (empty($listImagenes)): ?>
+                        <div class="item"><img class='img-responsive' src="<?php echo Yii::app()->request->baseUrl . Yii::app()->params->producto['noImagen']['grande']; ?>" alt="<?php echo $objCombo->descripcionCombo ?>" title="<?php echo $objCombo->descripcionCombo ?>"></div>
+                    <?php else: ?>
+                        <div id="gallerycombo" class="ad-gallery">
+                            <div class="ad-image-wrapper">
+                            </div>
+                            <div class="ad-controls">
+                            </div>
+                            <div class="ad-nav">
+                                <div class="ad-thumbs">
+                                    <ul class="ad-thumb-list">
+                                        <?php foreach ($listImagenes as $imagen): ?>
+                                            <li>
+                                                <a style="width:60%" href="<?php echo Yii::app()->request->baseUrl . Yii::app()->params->carpetaImagen['combos'][YII::app()->params->producto['tipoImagen']['grande']] . $imagen->rutaImagen ?>">
+                                                    <img class="img-responsive noimagenProduct product-prom" src="<?php echo Yii::app()->request->baseUrl . Yii::app()->params->carpetaImagen['combos'][YII::app()->params->producto['tipoImagen']['grande']] . $imagen->rutaImagen ?>" >
+                                                </a>
+                                            </li>
+                                        <?php endforeach; ?>
+                                    </ul>
                                 </div>
                             </div>
-                        <?php endif; ?>
-                    </div>
+                        </div>
+                    <?php endif; ?>
                 </div>
             </div>  
             <div class="col-md-6 content-txt2 border-left">
