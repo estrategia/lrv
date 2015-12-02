@@ -23,8 +23,8 @@ $form = $this->beginWidget('CActiveForm', array(
 <?php if ($model->isNewRecord): ?>
     <div class="form-group">
         <?php echo $form->labelEx($model, 'tipoCombo'); ?>
-        <?php echo CHtml::dropDownList('descripcionCombo', null, array(1 => 'Crear un combo manual', 2 => 'Crear a partir de un beneficio'), array('class' => 'form-control', 'data-role' => 'validar-tipo-combo')); ?>
-        <?php echo $form->error($model, 'descripcionCombo'); ?>
+        <?php echo CHtml::dropDownList('tipoCombo', null, array(1 => 'Crear un combo manual', 2 => 'Crear a partir de un beneficio'), array('class' => 'form-control', 'data-role' => 'validar-tipo-combo')); ?>
+        <?php echo $form->error($model, 'tipoCombo'); ?>
     </div>
 <?php endif; ?>
 
@@ -35,10 +35,11 @@ $form = $this->beginWidget('CActiveForm', array(
 
         <input type="hidden" value="" id="Combo_idBeneficio" name="Combo[idBeneficio]" />
         <input type="hidden" value="" id="Combo_tipoBeneficio" name="Combo[tipoBeneficio]" />
-
+        
         <a href="#" data-toggle="modal" data-target=".bs-example-modal-lg">Seleccione el beneficio</a>
 
-        <div class="modal fade bs-example-modal-lg" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel">
+        <div id='descripcion-combo'></div>
+        <div class="modal fade bs-example-modal-lg" id='modal-beneficios-combo' tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel">
             <div class="modal-dialog modal-lg">
                 <div class="modal-content">
                     <div class="modal-header">
@@ -73,9 +74,10 @@ $form = $this->beginWidget('CActiveForm', array(
                                     'header' => 'Tipo',
                                     'type' => 'raw',
                                     'value' => function($data) {
-                                return $data->tipo;
-                            },
-                                //'filter' =>  CHtml::activeTextField($beneficios, 'descripcionCombo', array('class' => 'form-control'))
+                                                    return Yii::app()->params->beneficios["recambioslabel"][$data->tipo];
+                                                },
+                                 'filter' => CHtml::dropDownList('Beneficios[tipo]','', Yii::app()->params->beneficios["recambioslabel"], array("class" => "form-control", 'prompt'=>'Seleccione'))
+
                                 ),
                                 array(
                                     'header' => 'Inicio',
@@ -90,33 +92,48 @@ $form = $this->beginWidget('CActiveForm', array(
                                 array('header' => 'Productos de compra',
                                     'type' => 'raw',
                                     'value' => function($data) {
-                                $text = "";
-                                foreach ($data->listBeneficiosProductos as $producto) {
-                                    if ($producto->unid > 0) {
-                                        $text.=$producto->objProducto->descripcionProducto . ". Unid: " . $producto->unid;
-                                    }
-                                }
-                                return $text;
-                            },
+                                        $text = "";
+                                        
+                                        foreach ($data->listBeneficiosProductos as $producto) {
+                                            if ($producto->unid > 0) {
+                                                if($producto->objProducto != null){
+                                                    $text.=$producto->objProducto->descripcionProducto . " ".$producto->objProducto->presentacionProducto.
+                                                            ". Unid: " . $producto->unid."<br/>";
+                                                }else{
+                                                    $text.=$producto->codigoProducto.": No se encontró en la base de datos <br/>";
+                                                }
+                                            }
+                                        }
+                                        return $text;
+                                    },
                                 // 'filter' => CHtml::activeTextField($beneficios, 'searchProductoUnidad', array('class' => 'form-control')),
                                 ),
                                 array('header' => 'Productos de obsequio',
                                     'type' => 'raw',
                                     'value' => function($data) {
-                                $text = "";
-                                foreach ($data->listBeneficiosProductos as $producto) {
-                                    if ($producto->obsequio > 0) {
-                                        $text.=$producto->objProducto->descripcionProducto . ". Unid: " . $producto->obsequio;
-                                    }
-                                }
-                                return $text;
-                            },
+                                                $text = "";
+                                                foreach ($data->listBeneficiosProductos as $producto) {
+                                                    if ($producto->obsequio > 0) {
+                                                        if($producto->objProducto != null){ 
+                                                            $text.=$producto->objProducto->descripcionProducto . " ".$producto->objProducto->presentacionProducto.
+                                                                    ". Unid: " . $producto->obsequio;
+                                                        }else{
+                                                            $text.=$producto->codigoProducto.": No se encontró en la base de datos <br/>";
+                                                        }
+                                                    }
+                                                }
+                                                return $text;
+                                            },
                                 ),
                                 array(
                                     'header' => '',
                                     'type' => 'raw',
                                     'value' => function($data) {
+                                        if( count($data->objCombo) ==  0){
                                         return CHtml::link("Añadir", '#', array('class' => 'link-beneficio', 'id' => 'link_beneficio_'.$data->idBeneficio, 'data-role' => 'add-beneficio', 'data-tipo'=> $data->tipo, 'data-beneficio' => $data->idBeneficio));
+                                        }else{
+                                            return "Ya añadido en otro combo";
+                                        }
                                     },
                                 ),
                             ),
@@ -164,6 +181,7 @@ $form = $this->beginWidget('CActiveForm', array(
             'size' => '10',
             'maxlength' => '10',
             'placeholder' => 'yyyy-mm-dd hh:mm',
+            'disabled' => ($model->idBeneficio != null)? true :false
         ),
     ));
     ?>
@@ -196,6 +214,7 @@ $form = $this->beginWidget('CActiveForm', array(
             'size' => '10',
             'maxlength' => '10',
             'placeholder' => 'yyyy-mm-dd hh:mm',
+            'disabled' => ($model->idBeneficio != null)? true :false
         ),
     ));
     ?>

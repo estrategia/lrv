@@ -64,6 +64,7 @@ class Beneficios extends CActiveRecord {
         // class name for the relations automatically generated below.
         return array(
             'objBeneficioTipo' => array(self::BELONGS_TO, 'BeneficioTipo', 'tipo'),
+            'objCombo' => array(self::BELONGS_TO, 'Combo', '', 'on' => 't.idBeneficio = objCombo.IdBeneficio'),
             'listPuntosVenta' => array(self::MANY_MANY, 'PuntoVenta', 't_BeneficiosPuntosVenta(idBeneficio, idComercial)'),
             'listBeneficiosProductos' => array(self::HAS_MANY, 'BeneficiosProductos', 'idBeneficio'),
         );
@@ -146,7 +147,7 @@ class Beneficios extends CActiveRecord {
     public function searchBeneficiosCombos(){
        $criteria = new CDbCriteria;
 
-       $criteria->with = array('listBeneficiosProductos' => array('with' => 'objProducto'));
+       $criteria->with = array('listBeneficiosProductos' => array('with' => 'objProducto',),'objCombo');
        $criteria->condition  =  't.fechaFin >=:fecha AND  t.tipo in ('.implode(",", Yii::app()->params->beneficios['recambios']).') ';
        $criteria->params  = array(
                     'fecha' => date("Y-m-d"),
@@ -158,7 +159,10 @@ class Beneficios extends CActiveRecord {
        
         $criteria->compare('idBeneficio', $this->idBeneficio);
         $criteria->compare('idBeneficioSincronizado', $this->idBeneficioSincronizado);
-        $criteria->compare('tipo', $this->tipo);
+        
+        if(!empty($this->tipo)){
+            $criteria->compare('t.tipo', $this->tipo);
+        }
         $criteria->compare('fechaIni', $this->fechaIni, true);   
         $criteria->compare('fechaFin', $this->fechaFin, true); 
         

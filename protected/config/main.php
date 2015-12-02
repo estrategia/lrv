@@ -261,6 +261,7 @@ return array(
         'beneficios' => array(
             'lrv' => array(21, 22, 23, 24),
             'recambios' => array(1, 10),
+            'recambioslabel' => array(1 => 'Recambio', 10 => 'Recambio Cruzado'),
             'recambio' => 1,
             'recambioCruzado' => 10,
             'swobligaCli' => array(0 => 'Todos', 2 => 'Cliente fiel'),

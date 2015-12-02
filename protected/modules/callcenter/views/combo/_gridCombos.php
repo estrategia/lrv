@@ -25,12 +25,12 @@ $this->widget('zii.widgets.grid.CGridView', array(
             'header' => 'Tipo',
             'type' => 'raw',
             'value' => '$data->descripcionCombo',
-            'filter' =>  CHtml::activeTextField($model, 'descripcionCombo', array('class' => 'form-control'))
+            'filter' => CHtml::activeTextField($model, 'descripcionCombo', array('class' => 'form-control'))
         ),
         array(
             'header' => 'Inicio',
             'value' => '$data->fechaInicio',
-            'filter' => CHtml::activeTextField($model, 'fechaInicio', array('class' => 'form-control')), 
+            'filter' => CHtml::activeTextField($model, 'fechaInicio', array('class' => 'form-control')),
         ),
         array(
             'header' => 'Fin',
@@ -38,13 +38,35 @@ $this->widget('zii.widgets.grid.CGridView', array(
             'filter' => CHtml::activeTextField($model, 'fechaFin', array('class' => 'form-control')),
         ),
         array(
+            'header' => 'Beneficio',
+            'type' => 'raw',
+            'value' => function($data) {
+        if ($data->idBeneficio != null) {
+            return $data->idBeneficio;
+        } else {
+            return "Combo creado manualmente";
+        }
+    },
+            'filter' => CHtml::activeTextField($model, 'idBeneficio', array('class' => 'form-control')),
+        ),
+        array(
+            'header' => 'Tipo Beneficio',
+            'type' => 'raw',
+            'value' => function($data) {
+        if ($data->idBeneficio != null && $data->tipoBeneficio != 0) {
+            return Yii::app()->params->beneficios['recambioslabel'][$data->tipoBeneficio];
+        } else {
+            return "No aplica";
+        }
+    },
+            'filter' => CHtml::dropDownList('Combo[tipoBeneficio]','', Yii::app()->params->beneficios["recambioslabel"], array("class" => "form-control", 'prompt'=>'Seleccione'))
+        ),
+        array(
             'header' => 'Editar',
             'type' => 'raw',
-            'value' => function($data){
-                 return  CHtml::link("Editar", CController::createUrl("/callcenter/combo/combo", array("idCombo" => $data->idCombo, "opcion" => 'editar')), array("data-ajax"=>"false"));
-
-            },
-          
+            'value' => function($data) {
+        return CHtml::link("Editar", CController::createUrl("/callcenter/combo/combo", array("idCombo" => $data->idCombo, "opcion" => 'editar')), array("data-ajax" => "false"));
+    },
         ),
     ),
 ));

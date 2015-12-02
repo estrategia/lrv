@@ -36,8 +36,8 @@ class ComboController extends ControllerOperator{
         $this->layout = "admin";
         $model = new Combo('search');
         $model->unsetAttributes();
-        if (isset($_GET['ModulosConfigurados']))
-            $model->attributes = $_GET['ModulosConfigurados'];
+        if (isset($_GET['Combo']))
+            $model->attributes = $_GET['Combo'];
         
         $this->render('index',array(
             'model' => $model
@@ -135,11 +135,11 @@ class ComboController extends ControllerOperator{
             if($_POST){
                 $params['model']->attributes = $_POST['Combo'];
                 if($params['model']->save()){
-                    Yii::app()->user->setFlash('alert alert-success', "El módulo ha sido guardado con éxito");
+                    Yii::app()->user->setFlash('alert alert-success', "El combo ha sido guardado con éxito");
                     $this->redirect($this->createUrl('combo/combo', array('idCombo' => $idCombo, 'opcion' => 'editar')));
                     Yii::app()->end();
                 }else{
-                    Yii::app()->user->setFlash('alert alert-danger', "Error al guardar el módulo");
+                    Yii::app()->user->setFlash('alert alert-danger', "Error al guardar el combo");
                 }
             }
             $params['vista'] = '_crearCombo';
@@ -293,22 +293,22 @@ class ComboController extends ControllerOperator{
         $descripción = "";
         if($beneficios->tipo == Yii::app()->params->beneficios['recambio']){
             foreach($beneficios->listBeneficiosProductos as $productos){
-                $descripcionProducto = $productos ->objProducto->descripcionProducto;
+               $descripcionProducto = $productos ->objProducto->descripcionProducto; 
                 $descripción = "PAGUE $productos->unid LLEVE ".($productos->unid+$productos->obsequio)." - $descripcionProducto";
             }
             
         }else if($beneficios->tipo == Yii::app()->params->beneficios['recambioCruzado']){
             $productoCompra= $productoObsequio = array();
             foreach($beneficios->listBeneficiosProductos as $productos){
-                if($productos->unid > 0 ){
-                    $productoCompra[]= $productos->objProducto->descripcionProducto." UNIDADES: ".$productos->unid;
+                if($productos->unid > 0 &&  $productos->tipo == 1){
+                    $productoCompra[]= $productos->objProducto->descripcionProducto." ".$productos->objProducto->presentacionProducto." UNIDADES: ".$productos->unid;
                 }
-                if($productos->obsequio > 0){
-                    $productoObsequio[] = $productos->objProducto->descripcionProducto." UNIDADES: ".$productos->obsequio;
+                if($productos->obsequio > 0 &&  $productos->tipo == 2){
+                    $productoObsequio[] = $productos->objProducto->descripcionProducto." ".$productos->objProducto->presentacionProducto." UNIDADES: ".$productos->obsequio;
                 }
             }
             $descripción = "COMPRE ".implode(", ",$productoCompra)." Y LLEVA GRATIS ".implode(", ",$productoObsequio);
-        }
+        }                                                       
         
         echo CJSON::encode(array(
             'result' => 'ok',
@@ -508,7 +508,7 @@ class ComboController extends ControllerOperator{
         $codigoCiudad = Yii::app()->getRequest()->getPost('codigoCiudad');
         $idCombo = Yii::app()->getRequest()->getPost('idCombo');
         
-        $moduloSector = ComboSectorCiudad::model()->find(array(
+        $comboSector = ComboSectorCiudad::model()->find(array(
             'condition' => 'codigoSector=:codigoSector AND codigoCiudad=:codigoCiudad AND idCombo=:idCombo',
             'params' => array(
                 'codigoSector' => $codigoSector,
@@ -517,8 +517,8 @@ class ComboController extends ControllerOperator{
             )
         ));
 
-        if ($moduloSector != null) {
-            $moduloSector->delete();
+        if ($comboSector != null) {
+            $comboSector->delete();
             $model = Combo::model()->findByPk($idCombo);
 
             $html = $this->renderPartial('_listaSectoresCiudades', array(

@@ -17,8 +17,8 @@
                                         <ul class="ad-thumb-list">
                                             <?php foreach ($objCombo->listImagenesComboGrande as $imagen): ?>
                                                 <li>
-                                                    <a style="width:60%" href="<?php echo Yii::app()->request->baseUrl . Yii::app()->params->carpetaImagen['productos'][YII::app()->params->producto['tipoImagen']['grande']] . $imagen->rutaImagen ?>">
-                                                        <img class="img-responsive" src="<?php echo Yii::app()->request->baseUrl . Yii::app()->params->carpetaImagen['productos'][YII::app()->params->producto['tipoImagen']['mini']] . $imagen->rutaImagen ?>" >
+                                                    <a style="width:60%" href="<?php echo Yii::app()->request->baseUrl . Yii::app()->params->carpetaImagen['combos'][YII::app()->params->producto['tipoImagen']['grande']] . $imagen->rutaImagen ?>">
+                                                        <img class="img-responsive" src="<?php echo Yii::app()->request->baseUrl . Yii::app()->params->carpetaImagen['combos'][YII::app()->params->producto['tipoImagen']['grande']] . $imagen->rutaImagen ?>" >
                                                     </a>
                                                 </li>
                                             <?php endforeach; ?>

@@ -886,14 +886,12 @@ $(document).on('click', "a[data-role='add-beneficio']", function(){
         },
         success: function(data){
             if (data.result == "ok") {
-                  $("#Combo_descripcionCombo").val(data.descripcion);
+                  $("#descripcion-combo").html(data.descripcion);
                   $("#Combo_fechaInicio").val(data.fechaInicio);
                   $("#Combo_fechaFin").val(data.fechaFin);
                   $("#Combo_tipoBeneficio").val(tipo);
                   $("#Combo_idBeneficio").val(val);
-                  $(".link-beneficio").css('display','none');
-                  $("#link_beneficio_"+val).html("Añadido");
-                  $("#link_beneficio_"+val).css("display","block");
+                  $("#modal-beneficios-combo").modal('hide');
                   
             }else if(data.result == "error"){
                 bootbox.alert(data.response);

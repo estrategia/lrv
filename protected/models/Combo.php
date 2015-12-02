@@ -93,8 +93,9 @@ class Combo extends CActiveRecord {
         $criteria->compare('fechaFin', $this->fechaFin, true);
         $criteria->compare('estadoCombo', $this->estadoCombo);
         $criteria->compare('idBeneficio', $this->idBeneficio);
-        $criteria->compare('tipoBeneficio', $this->tipoBeneficio);
-
+        if(!empty($this->tipoBeneficio)){
+            $criteria->compare('tipoBeneficio', $this->tipoBeneficio);
+        }
         return new CActiveDataProvider($this, array(
             'criteria' => $criteria,
         ));
