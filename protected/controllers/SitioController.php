@@ -11,6 +11,11 @@ class SitioController extends Controller {
                 'application.filters.SessionControlFilter + inicio, categorias',
                 'isMobile' => $this->isMobile
             ),
+            array(
+                'application.filters.SessionControlFilter + index',
+                'isMobile' => $this->isMobile,
+                'redirect' => false
+            ),
         );
     }
 
@@ -18,7 +23,7 @@ class SitioController extends Controller {
         if ($this->isMobile) {
             $this->showSeeker = false;
             $this->logoLinkMenu = false;
-            
+
             $tipoEntrega = null;
 
             if (isset(Yii::app()->session[Yii::app()->params->sesion['tipoEntrega']]) && Yii::app()->session[Yii::app()->params->sesion['tipoEntrega']] != null) {
@@ -32,18 +37,24 @@ class SitioController extends Controller {
             $this->render('index', array(
                 'listModulos' => ModulosConfigurados::getModulosBanner($this->objSectorCiudad, Yii::app()->shoppingCart->getCodigoPerfil(), UbicacionModulos::UBICACION_MOVIL_HOME)
             ));
-        }else{
-            $this->render('d_index',array(
+        } else {
+            $this->render('d_index', array(
                 'listModulos' => ModulosConfigurados::getModulos($this->objSectorCiudad, Yii::app()->shoppingCart->getCodigoPerfil(), UbicacionModulos::UBICACION_ESCRITORIO_HOME)
-            ));           
+            ));
         }
         Yii::app()->end();
     }
 
-    public function actionEntrega($tipo = null) {
-
+    public function actionEntrega($tipo) {
         if ($tipo != Yii::app()->params->entrega['tipo']['presencial'] && $tipo != Yii::app()->params->entrega['tipo']['domicilio']) {
-            $this->actionIndex();
+            if ($this->isMobile) {
+                $this->actionIndex();
+            } else {
+                return array(
+                    'result' => 'error',
+                    'response' => 'Tipo de entrega inv&aacute;lido'
+                );
+            }
         }
 
         Yii::app()->session[Yii::app()->params->sesion['tipoEntrega']] = $tipo;
@@ -52,179 +63,230 @@ class SitioController extends Controller {
         if ($this->isMobile) {
             $this->redirect($this->createUrl('/sitio/ubicacion/'));
         } else {
-            echo CJSON::encode(array(
+            return array(
                 'result' => 'ok',
-                'response' => 'SE HA SELECCIONADO EL TIPO DE ENTREGA ' . Yii::app()->params->entrega['tipo'][$tipo]
-            ));
-            Yii::app()->end();
+                'response' => 'Tipo de entrega ' . Yii::app()->params->entrega['tipo'][$tipo] . ' seleccionado'
+            );
         }
     }
 
     public function actionUbicacion() {
-        $this->showSeeker = false;
-        $this->logoLinkMenu = false;
-        $this->fixedFooter = true;
-
         if ((!isset(Yii::app()->session[Yii::app()->params->sesion['tipoEntrega']]) || Yii::app()->session[Yii::app()->params->sesion['tipoEntrega']] == null) && $this->isMobile) {
             $this->actionIndex();
         }
 
-        $tipo = Yii::app()->session[Yii::app()->params->sesion['tipoEntrega']];
+        $tipoEntrega = null;
 
-        $objSectorCiudad = null;
-        if (isset(Yii::app()->session[Yii::app()->params->sesion['sectorCiudadEntrega']])) {
-            $objSectorCiudad = Yii::app()->session[Yii::app()->params->sesion['sectorCiudadEntrega']];
+        if (isset(Yii::app()->session[Yii::app()->params->sesion['tipoEntrega']]) && Yii::app()->session[Yii::app()->params->sesion['tipoEntrega']] != null) {
+            $tipoEntrega = Yii::app()->session[Yii::app()->params->sesion['tipoEntrega']];
         }
-
-        if ($objSectorCiudad == null) {
-            $this->showHeaderIcons = false;
-        }
-
-        $listCiudadesSectores = Ciudad::model()->findAll(array(
-            'with' => array('listSectores'),
-            'order' => 't.orden, t.nombreCiudad',
-            'condition' => 'estadoCiudadSector=:estadoCiudadSector AND estadoSector=:estadoSector AND estadoCiudad=:estadoCiudad',
-            'params' => array(
-                ':estadoCiudadSector' => 1,
-                ':estadoSector' => 1,
-                ':estadoCiudad' => 1,
-            )
-        ));
-
-        $listCiudadesSubsectores = Ciudad::model()->findAll(array(
-            'with' => array(
-                'listSubSectores' => array(
-                    'order' => 'listSubSectores.nombreSubSector',
-                    'condition' => 'estadoSubSector=1',
-                    'with' => array(
-                        'listSectorReferencias' => array(
-                            'condition' => 'listSectorReferencias.estadoSectorReferencia=1',
-                            'with' => array(
-                                'objSectorCiudad' => array(
-                                    'condition' => 'objSectorCiudad.estadoCiudadSector=1',
-                                    'with' => array(
-                                        'objSector' => array(
-                                            'condition' => 'objSector.estadoSector=1',
-                                            'order' => 'objSector.nombreSector',
-                                        ))),
-                                'listPuntoReferencias' => array('condition' => 'listPuntoReferencias.estadoReferencia=1', 'order' => 'listPuntoReferencias.nombreReferencia')
-                            ))))),
-            'order' => 't.nombreCiudad'
-        ));
-
-        $idxCiudadesSubSectores = array();
-        foreach ($listCiudadesSubsectores as $indice => $ciudad) {
-            $idxCiudadesSubSectores[$ciudad->codigoCiudad] = $indice;
-        }
-
-        /* Yii::app()->session[Yii::app()->params->sesion['pdvEntrega']] = null;
-          Yii::app()->session[Yii::app()->params->sesion['sectorCiudadEntrega']] = null;
-          Yii::app()->session[Yii::app()->params->sesion['subSectorCiudadEntrega']] = null; */
 
         if ($this->isMobile) {
+            $this->showSeeker = false;
+            $this->logoLinkMenu = false;
+            $this->fixedFooter = true;
+
+            if ($this->objSectorCiudad == null) {
+                $this->showHeaderIcons = false;
+            }
+
+            $listCiudadesSectores = Ciudad::model()->findAll(array(
+                'with' => array('listSectores'),
+                'order' => 't.orden, t.nombreCiudad',
+                'condition' => 'estadoCiudadSector=:estadoCiudadSector AND estadoSector=:estadoSector AND estadoCiudad=:estadoCiudad',
+                'params' => array(
+                    ':estadoCiudadSector' => 1,
+                    ':estadoSector' => 1,
+                    ':estadoCiudad' => 1,
+                )
+            ));
+
+            $listCiudadesSubsectores = Ciudad::model()->findAll(array(
+                'with' => array(
+                    'listSubSectores' => array(
+                        'order' => 'listSubSectores.nombreSubSector',
+                        'condition' => 'estadoSubSector=1',
+                        'with' => array(
+                            'listSectorReferencias' => array(
+                                'condition' => 'listSectorReferencias.estadoSectorReferencia=1',
+                                'with' => array(
+                                    'objSectorCiudad' => array(
+                                        'condition' => 'objSectorCiudad.estadoCiudadSector=1',
+                                        'with' => array(
+                                            'objSector' => array(
+                                                'condition' => 'objSector.estadoSector=1',
+                                                'order' => 'objSector.nombreSector',
+                                            ))),
+                                    'listPuntoReferencias' => array('condition' => 'listPuntoReferencias.estadoReferencia=1', 'order' => 'listPuntoReferencias.nombreReferencia')
+                                ))))),
+                'order' => 't.nombreCiudad'
+            ));
+
+            $idxCiudadesSubSectores = array();
+            foreach ($listCiudadesSubsectores as $indice => $ciudad) {
+                $idxCiudadesSubSectores[$ciudad->codigoCiudad] = $indice;
+            }
+
             $this->render('ubicacion', array(
                 'listCiudadesSectores' => $listCiudadesSectores,
                 'listCiudadesSubsectores' => $listCiudadesSubsectores,
                 'idxCiudadesSubSectores' => $idxCiudadesSubSectores,
-                'tipoEntrega' => $tipo,
-                'objSectorCiudad' => $objSectorCiudad,
+                'tipoEntrega' => $tipoEntrega,
+                'objSectorCiudad' => $this->objSectorCiudad,
             ));
         } else {
             //si no fue redireccionado por sessionfilter, se redirecciona a la pagina anterior
-            if(!isset(Yii::app()->session[Yii::app()->params->sesion['redireccionUbicacion']]) || Yii::app()->session[Yii::app()->params->sesion['redireccionUbicacion']]==null){
+            if (!isset(Yii::app()->session[Yii::app()->params->sesion['redireccionUbicacion']]) || Yii::app()->session[Yii::app()->params->sesion['redireccionUbicacion']] == null) {
                 Yii::app()->session[Yii::app()->params->sesion['redireccionUbicacion']] = Yii::app()->request->urlReferrer;
             }
-            
-            /*echo '<p>';
-            CVarDumper::dump(Yii::app()->request->urlReferrer);
-            echo '</p>';
-            echo '<p>';
-            CVarDumper::dump(Yii::app()->request->url);
-            echo '</p>';
-            echo '<p>';
-            Yii::app()->session[Yii::app()->params->sesion['redireccionUbicacion']];
-            echo '</p>';*/
-            
+
+            Yii::app()->getClientScript()->registerScriptFile("https://maps.googleapis.com/maps/api/js", CClientScript::POS_HEAD);
+            Yii::app()->getClientScript()->registerScriptFile(Yii::app()->request->baseUrl . "/js/ubicacion.js", CClientScript::POS_HEAD);
+
+            /* echo '<p>';
+              CVarDumper::dump(Yii::app()->request->urlReferrer);
+              echo '</p>';
+              echo '<p>';
+              CVarDumper::dump(Yii::app()->request->url);
+              echo '</p>';
+              echo '<p>';
+              Yii::app()->session[Yii::app()->params->sesion['redireccionUbicacion']];
+              echo '</p>'; */
+
+            $listCiudadesSectores = Ciudad::model()->findAll(array(
+                'with' => array('listSectorCiudad' => array('with' => 'objSector')),
+                'order' => 't.orden, t.nombreCiudad',
+                'condition' => 'estadoCiudadSector=:estadoCiudadSector AND estadoSector=:estadoSector AND estadoCiudad=:estadoCiudad',
+                'params' => array(
+                    ':estadoCiudadSector' => 1,
+                    ':estadoSector' => 1,
+                    ':estadoCiudad' => 1,
+                )
+            ));
+
+            $listCiudadesSubsectores = Ciudad::model()->findAll(array(
+                'with' => array(
+                    'listSubSectores' => array(
+                        'order' => 'listSubSectores.nombreSubSector',
+                        'condition' => 'estadoSubSector=1',
+                        'with' => array(
+                            'listSectorReferencias' => array(
+                                'condition' => 'listSectorReferencias.estadoSectorReferencia=1',
+                                'with' => array(
+                                    'objSectorCiudad' => array(
+                                        'condition' => 'objSectorCiudad.estadoCiudadSector=1',
+                                        'with' => array(
+                                            'objSector' => array(
+                                                'condition' => 'objSector.estadoSector=1',
+                                                'order' => 'objSector.nombreSector',
+                                            ))),
+                                    'listPuntoReferencias' => array('condition' => 'listPuntoReferencias.estadoReferencia=1', 'order' => 'listPuntoReferencias.nombreReferencia')
+                                ))))),
+                'order' => 't.nombreCiudad'
+            ));
+
+            $idxCiudadesSubSectores = array();
+            foreach ($listCiudadesSubsectores as $indice => $ciudad) {
+                $idxCiudadesSubSectores[$ciudad->codigoCiudad] = $indice;
+            }
+
             $this->render('d_ubicacion', array(
                 'listCiudadesSectores' => $listCiudadesSectores,
                 'listCiudadesSubsectores' => $listCiudadesSubsectores,
                 'idxCiudadesSubSectores' => $idxCiudadesSubSectores,
-                'tipoEntrega' => $tipo,
-                'objSectorCiudad' => $objSectorCiudad,
+                'objSectorCiudad' => $this->objSectorCiudad,
+                'tipoEntrega' => $tipoEntrega,
+                'urlRedirect' => Yii::app()->session[Yii::app()->params->sesion['redireccionUbicacion']]
             ));
         }
     }
-     public function actionCargarUbicacion($codigoCiudad=null, $sector=0,$subsector = null){
-        if(isset($codigoCiudad)){
-            $objSectorCiudad = SectorCiudad::model()->find(array(
-            'with' => array('objCiudad', 'objSector'),
-            'condition' => 't.codigoCiudad=:ciudad AND t.codigoSector=:sector AND t.estadoCiudadSector=:estado',
-            'params' => array(
-                ':ciudad' => $codigoCiudad,
-                ':sector' => $sector,
-                ':estado' => 1,
-            )
-            ));
 
-             if ($objSectorCiudad == null) {
-                $this->actionIndex();
-            }
-            
-            $objSectorCiudadOld = null;
+    public function actionUbicacionSeleccion() {
+        $ciudad = null;
+        $sector = null;
+        $tipoEntrega = null;
+        $direccion = null;
 
-            if (isset(Yii::app()->session[Yii::app()->params->sesion['sectorCiudadEntrega']]))
-                $objSectorCiudadOld = Yii::app()->session[Yii::app()->params->sesion['sectorCiudadEntrega']];
-
-            $objSubSector = $subsector != null ? SubSector::model()->findByPk(array('codigoCiudad' => $codigoCiudad, 'codigoSubSector' => $sector)) : null;
-
-            $objSectorCiudad->objCiudad->getDomicilio();
-            Yii::app()->session[Yii::app()->params->sesion['sectorCiudadEntrega']] = $objSectorCiudad;
-         
-            $urlAnterior="";
-            
-            if(isset(Yii::app()->session[Yii::app()->params->sesion['redireccionAutenticacion']]) && Yii::app()->session[Yii::app()->params->sesion['redireccionAutenticacion']] != null){
-                $urlAnterior=Yii::app()->session[Yii::app()->params->sesion['redireccionAutenticacion']];
-            }else{
-                $urlAnterior=$this->createUrl('/sitio/index/');
-            }
-            echo CJSON::encode(array('result' => 'ok', 'response' => 'Se ha cambiado la ciudad de entrega por: '.$objSectorCiudad->objCiudad->nombreCiudad,
-                                     'urlAnterior' => $urlAnterior ));
-            Yii::app()->end();
-        }else{
-            echo CJSON::encode(array('result' => 'error', 'response' => 'Solicitud inválida.'));
+        if (isset($_REQUEST['ciudad'])) {
+            $ciudad = trim($_REQUEST['ciudad']);
         }
-    }
-    
-    public function actionUbicacionSeleccion($ciudad, $sector = null, $subsector = null) {
-        if(!$this->isMobile){
-            
-            if($sector == null){
-                $sector = 0;
-            }
-            
-            $arrayCiudad=explode("-",$ciudad);
-            if(count($arrayCiudad)>1){
-               $sectores= SectorPuntoReferencia::model()->findAll(array(
-                   'with' => array('objSector','listPuntoReferencias'),
-                    'condition' => 't.codigoSubsector=:codigosubsector AND t.estadoSectorReferencia=:estadoSector',
+
+        if (!empty_lrv($ciudad)) {
+            $arrayCiudad = explode("-", $ciudad);
+            if (count($arrayCiudad) > 1) {
+                $sectores = SectorPuntoReferencia::model()->findAll(array(
+                    'with' => array('objSectorCiudad' => array('with'=>'objSector'), 'listPuntoReferencias'),
+                    'condition' => 't.codigoCiudad=:ciudad AND t.codigoSubsector=:subsector AND t.estadoSectorReferencia=:estado',
                     'params' => array(
-                        'codigosubsector' => $arrayCiudad[1],
-                        'estadoSector' => 1
+                        ':ciudad' => $arrayCiudad[0],
+                        ':subsector' => $arrayCiudad[1],
+                        ':estado' => 1
                     )
                 ));
-               
-                 $htmlRender=$this->renderPartial('_d_ubicacionSector',array(
-                        'sectores' => $sectores,
-                        'ciudad' => $arrayCiudad[0]
-                 ),true,false);
-                 echo CJSON::encode(array('result' => 'select', 
-                                          'response' => $htmlRender
-                            ));
-                
+
+                $this->renderPartial('_d_ubicacionSector', array('sectores' => $sectores));
                 Yii::app()->end();
             }
         }
-        
+
+        if (isset($_REQUEST['sector'])) {
+            $sector = trim($_REQUEST['sector']);
+        }
+
+        if (!$this->isMobile) {
+            if (isset($_REQUEST['entrega'])) {
+                $tipoEntrega = trim($_REQUEST['entrega']);
+            }
+
+            if (empty($tipoEntrega)) {
+                echo CJSON::encode(array(
+                    'result' => 'error',
+                    'response' => 'Seleccionar tipo de entrega'
+                ));
+                Yii::app()->end();
+            }
+
+            if (isset($_REQUEST['direccion'])) {
+                $direccion = trim($_REQUEST['direccion']);
+            }
+
+            if (empty($tipoEntrega)) {
+                echo CJSON::encode(array(
+                    'result' => 'error',
+                    'response' => 'Seleccionar tipo de entrega'
+                ));
+                Yii::app()->end();
+            }
+
+            if (!empty($direccion)) {
+                $objDireccion = DireccionesDespacho::model()->find(array(
+                    'condition' => 'idDireccionDespacho=:direccion AND identificacionUsuario=:usuario AND activo=:activo',
+                    'params' => array(
+                        ':direccion' => $direccion,
+                        ':usuario' => Yii::app()->user->name,
+                        ':activo' => 1,
+                    )
+                ));
+
+                if ($objDireccion !== null) {
+                    $ciudad = $objDireccion->codigoCiudad;
+                    $sector = $objDireccion->codigoSector;
+                }
+            }
+        }
+
+        if (empty_lrv($ciudad) || empty_lrv($sector)) {
+            if ($this->isMobile) {
+                throw new CHttpException(404, 'P&aacute;gina solicitada no existe.');
+            } else {
+                echo CJSON::encode(array(
+                    'result' => 'error',
+                    'response' => 'Seleccionar ubicaci&oacute;n ddd'
+                ));
+                Yii::app()->end();
+            }
+        }
+
         $objSectorCiudad = SectorCiudad::model()->find(array(
             'with' => array('objCiudad', 'objSector'),
             'condition' => 't.codigoCiudad=:ciudad AND t.codigoSector=:sector AND t.estadoCiudadSector=:estado',
@@ -236,7 +298,15 @@ class SitioController extends Controller {
         ));
 
         if ($objSectorCiudad == null) {
-            $this->actionIndex();
+            if ($this->isMobile) {
+                $this->actionIndex();
+            } else {
+                echo CJSON::encode(array(
+                    'result' => 'error',
+                    'response' => 'Ubicaci&oacute;n no existente'
+                ));
+                Yii::app()->end();
+            }
         }
 
         $objSectorCiudadOld = null;
@@ -244,12 +314,17 @@ class SitioController extends Controller {
         if (isset(Yii::app()->session[Yii::app()->params->sesion['sectorCiudadEntrega']]))
             $objSectorCiudadOld = Yii::app()->session[Yii::app()->params->sesion['sectorCiudadEntrega']];
 
-        //$objSubSector = $subsector != null ? SubSector::model()->findByPk(array('codigoCiudad' => $ciudad, 'codigoSubSector' => $sector)) : null;
-        $objSubSector = null;
+        if (!$this->isMobile) {
+            $rsTipoEntrega = $this->actionEntrega($tipoEntrega);
+
+            if ($rsTipoEntrega['result'] == "error") {
+                echo CJSON::encode($rsTipoEntrega);
+                Yii::app()->end();
+            }
+        }
 
         $objSectorCiudad->objCiudad->getDomicilio();
         Yii::app()->session[Yii::app()->params->sesion['sectorCiudadEntrega']] = $objSectorCiudad;
-        Yii::app()->session[Yii::app()->params->sesion['subSectorCiudadEntrega']] = $objSubSector;
 
         if ($objSectorCiudadOld != null && ($objSectorCiudadOld->codigoCiudad != $objSectorCiudad->codigoCiudad || $objSectorCiudadOld->codigoSector != $objSectorCiudad->codigoSector)) {
             Yii::app()->shoppingCart->clear();
@@ -273,19 +348,31 @@ class SitioController extends Controller {
         if ($this->isMobile) {
             $this->redirect($this->createUrl('/sitio/inicio'));
         } else {
+            if (isset($objDireccion) && $objDireccion !== null) {
+                Yii::app()->session[Yii::app()->params->sesion['direccionEntrega']] = $objDireccion->idDireccionDespacho;
+            } else {
+                Yii::app()->session[Yii::app()->params->sesion['direccionEntrega']] = null;
+            }
+
             $redirect = $this->createUrl('/');
-            if(isset(Yii::app()->session[Yii::app()->params->sesion['redireccionUbicacion']]) && Yii::app()->session[Yii::app()->params->sesion['redireccionUbicacion']]!=null){
-                 $redirect = Yii::app()->session[Yii::app()->params->sesion['redireccionUbicacion']];
+            if (isset(Yii::app()->session[Yii::app()->params->sesion['redireccionUbicacion']]) && Yii::app()->session[Yii::app()->params->sesion['redireccionUbicacion']] != null) {
+                $redirect = Yii::app()->session[Yii::app()->params->sesion['redireccionUbicacion']];
             }
-                //se debe de eliminar url de sesion
+            //se debe de eliminar url de sesion
             Yii::app()->session[Yii::app()->params->sesion['redireccionUbicacion']] = null;
-            if(!Yii::app()->request->isAjaxRequest){
-                   $this->redirect($redirect);
-            }else{
-                 echo CJSON::encode(array('result' => 'ok', 'response' => 'Se ha cambiado la ciudad de entrega por: '.$objSectorCiudad->objCiudad->nombreCiudad,
-                                     'urlAnterior' => $redirect ));
-                Yii::app()->end();
-            }
+            echo CJSON::encode(array(
+                'result' => 'ok',
+                'response' => 'Se ha cambiado la ciudad de entrega por: ' . $objSectorCiudad->objCiudad->nombreCiudad,
+                'urlAnterior' => $redirect));
+            Yii::app()->end();
+
+            /* if (!Yii::app()->request->isAjaxRequest) {
+              $this->redirect($redirect);
+              } else {
+              echo CJSON::encode(array('result' => 'ok', 'response' => 'Se ha cambiado la ciudad de entrega por: ' . $objSectorCiudad->objCiudad->nombreCiudad,
+              'urlAnterior' => $redirect));
+              Yii::app()->end();
+              } */
         }
     }
 
@@ -403,7 +490,6 @@ class SitioController extends Controller {
                 //Yii::app()->session[Yii::app()->params->sesion['sectorCiudadEntrega']] = $sectorCiudad;
                 /* Yii::app()->session[Yii::app()->params->sesion['subSectorCiudadEntrega']] = null; */
 
-                $mensajeUbicacion = "";
                 if ($this->isMobile) {
                     $mensajeUbicacion = "<strong>" . $objCiudadSector->objCiudad->nombreCiudad . " - " . $objCiudadSector->objSector->nombreSector . "</strong>";
 
@@ -420,6 +506,14 @@ class SitioController extends Controller {
                             $mensajeUbicacion .= "<br/>No contamos con servicio de entrega a domicilio para esta ubicación, los pedidos deben ser recogidos en el Punto de Venta seleccionado por usted al momento de finalizar la compra.";
                         }
                     }
+
+                    echo CJSON::encode(array(
+                        'result' => 'ok',
+                        'response' => array(
+                            'ubicacion' => $mensajeUbicacion,
+                            'url' => CController::createUrl('/sitio/ubicacionSeleccion', array('ciudad' => $pdvCerca['pdv']->codigoCiudad, 'sector' => $pdvCerca['pdv']->idSectorLRV)))
+                    ));
+                    Yii::app()->end();
                 } else {
                     if (!isset(Yii::app()->session[Yii::app()->params->sesion['tipoEntrega']]) || Yii::app()->session[Yii::app()->params->sesion['tipoEntrega']] != Yii::app()->params->entrega['tipo']['presencial']) {
                         $objHorarioSecCiud = HorariosCiudadSector::model()->find(array(
@@ -429,23 +523,26 @@ class SitioController extends Controller {
                                 ':sector' => $objCiudadSector->codigoSector,
                             )
                         ));
-                        $mensajeUbicacion = $this->renderPartial('_mensajeUbicacion', array(
-                            "objCiudadSector" => $objCiudadSector,
-                            "objHorarioSecCiud" => $objHorarioSecCiud,
-                            "pdvCerca" => $pdvCerca
-                                ), true);
+
+                        if ($objHorarioSecCiud != null && $objHorarioSecCiud->sadCiudadSector == 0) {
+                            echo CJSON::encode(array(
+                                'result' => 'error',
+                                'response' => 'No contamos con servicio de entrega a domicilio para esta ubicación, los pedidos deben ser recogidos en el Punto de Venta seleccionado por usted al momento de finalizar la compra'
+                            ));
+                            Yii::app()->end();
+                        }
+
+                        echo CJSON::encode(array(
+                            'result' => 'ok',
+                            'response' => array(
+                                'mensaje' => "<strong>" . $objCiudadSector->objCiudad->nombreCiudad . " - " . $objCiudadSector->objSector->nombreSector . "</strong>",
+                                'ciudad' => $objCiudadSector->codigoCiudad,
+                                'sector' => $objCiudadSector->codigoSector
+                            )
+                        ));
+                        Yii::app()->end();
                     }
                 }
-
-
-
-                echo CJSON::encode(array(
-                    'result' => 'ok',
-                    'response' => array(
-                        'ubicacion' => $mensajeUbicacion,
-                        'url' => CController::createUrl('/sitio/ubicacionSeleccion', array('ciudad' => $pdvCerca['pdv']->codigoCiudad, 'sector' => $pdvCerca['pdv']->idSectorLRV)))
-                ));
-                Yii::app()->end();
             } catch (Exception $exc) {
                 Yii::log($exc->getMessage() . "\n" . $exc->getTraceAsString(), CLogger::LEVEL_ERROR, 'application');
                 echo CJSON::encode(array('result' => 'error', 'response' => 'Error: ' . $exc->getMessage()));
@@ -461,16 +558,77 @@ class SitioController extends Controller {
         if (!$this->isMobile) {
             $this->actionIndex();
         }
+        
+        $listaPromociones = array();
+
+        if (isset(Yii::app()->params->promociones)) {
+            foreach (Yii::app()->params->promociones as $idx => $promocion) {
+                $fActual = new DateTime;
+                $fInicio = DateTime::createFromFormat('Y-m-d H:i:s', $promocion['fechaInicio']);
+                $fFin = DateTime::createFromFormat('Y-m-d H:i:s', $promocion['fechaFin']);
+
+                $diffInicio = $fInicio->diff($fActual);
+                $diffFin = $fActual->diff($fFin);
+
+                if ($diffInicio->invert == 0 && $diffFin->invert == 0) {
+                    $listaPromociones[$idx] = $promocion;
+                }
+            }
+        }
 
         $this->render('inicio', array(
+            'listaPromociones' => $listaPromociones,
             'listModulos' => ModulosConfigurados::getModulosBanner($this->objSectorCiudad, Yii::app()->shoppingCart->getCodigoPerfil(), UbicacionModulos::UBICACION_MOVIL_INICIO)
         ));
     }
 
     public function actionCategorias() {
-        $this->render('categorias');
+        if ($this->isMobile) {
+            $this->render('categorias');
+        } else {
+            $this->actionIndex();
+        }
     }
     
+    public function actionPromocion($nombre) {
+        if (!$this->isMobile) {
+            $this->actionIndex();
+        }
+        
+        $promocion = $nombre;
+        if (!isset(Yii::app()->params->promociones[$promocion])) {
+            throw new CHttpException(404, 'Promoci&oacute;n no existe.');
+        }
+
+        $fActual = new DateTime;
+        $fInicio = DateTime::createFromFormat('Y-m-d H:i:s', Yii::app()->params->promociones[$promocion]['fechaInicio']);
+        $fFin = DateTime::createFromFormat('Y-m-d H:i:s', Yii::app()->params->promociones[$promocion]['fechaFin']);
+
+        $diffInicio = $fInicio->diff($fActual);
+        $diffFin = $fActual->diff($fFin);
+
+        if ($diffInicio->invert == 1 || $diffFin->invert == 1) {
+            throw new CHttpException(404, 'Promoci&oacute;n no existe.');
+        }
+
+        $listaItems = array();
+        $listaAgregados = array();
+        $nElementos = count(Yii::app()->params->promociones[$promocion]['elementos']);
+
+        for (;;) {
+            if (count($listaItems) == $nElementos)
+                break;
+
+            $random = mt_rand(0, $nElementos - 1);
+            if (!isset($listaAgregados[$random])) {
+                $listaAgregados[$random] = $random;
+                $listaItems[$random] = Yii::app()->params->promociones[$promocion]['elementos'][$random];
+            }
+        }
+
+        $this->render('promocion', array('promocion' => $promocion, 'listaItems' => $listaItems));
+    }
+
     /**
      * This is the action to handle external exceptions.
      */
@@ -483,4 +641,5 @@ class SitioController extends Controller {
                 $this->render('error');
         }
     }
+
 }

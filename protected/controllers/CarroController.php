@@ -1719,7 +1719,8 @@ class CarroController extends Controller {
 
             switch ($paso) {
                 case Yii::app()->params->pagar['pasos'][1]:
-                    $listDirecciones = DireccionesDespacho::model()->findAll(array(
+                    //Yii::app()->session[Yii::app()->params->sesion['direccionEntrega']]
+                    $criteriaDireccion = array(
                         'condition' => 'identificacionUsuario=:cedula AND (codigoCiudad=:ciudad AND (codigoSector=:sector OR codigoSector=0)) AND activo=:activo',
                         'params' => array(
                             ':cedula' => Yii::app()->user->name,
@@ -1727,7 +1728,15 @@ class CarroController extends Controller {
                             ':ciudad' => $objSectorCiudad->codigoCiudad,
                             ':sector' => $objSectorCiudad->codigoSector
                         )
-                    ));
+                    );
+                    
+                    if(isset(Yii::app()->session[Yii::app()->params->sesion['direccionEntrega']]) && Yii::app()->session[Yii::app()->params->sesion['direccionEntrega']]!=null){
+                        $criteriaDireccion['condition'] .= " AND idDireccionDespacho=:direccion";
+                        $criteriaDireccion['params'][':direccion'] = Yii::app()->session[Yii::app()->params->sesion['direccionEntrega']];
+                        $modelPago->idDireccionDespacho = Yii::app()->session[Yii::app()->params->sesion['direccionEntrega']];
+                    }
+                    
+                    $listDirecciones = DireccionesDespacho::model()->findAll($criteriaDireccion);
 
                     $params['parametros']['listDirecciones'] = $listDirecciones;
                     break;

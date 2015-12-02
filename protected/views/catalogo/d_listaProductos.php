@@ -37,8 +37,8 @@
                                 </select>
                             </div>  
                             <div class="btn-group viewsList">
-                                <button class="btn-white btn" data-type="cuadricula" type="button"><span  class="glyphicon glyphicon-th" alt="Cuadricula"></span></button>
-                                <button class="btn-white btn" data-type="lineal" type="button"><span  class="glyphicon glyphicon-th-list" alt="Cuadricula"></span></button>
+                                <button class="btn-white btn" data-role="tipovista-listaproductos" data-active="true" data-type="cuadricula" type="button"><span  class="glyphicon glyphicon-th" alt="Cuadricula"></span></button>
+                                <button class="btn-white btn" data-role="tipovista-listaproductos" data-active="false" data-type="lineal" type="button"><span  class="glyphicon glyphicon-th-list" alt="Cuadricula"></span></button>
                             </div>
                         <?php endif; ?>   
                     <?php endif; ?> 
@@ -118,8 +118,8 @@
                             //'summaryText' => "{start} - {end} из {count}",
                             'template' => "{summary}<ul class='listaProductos'>{items}</ul><div class='clear'></div>{pager}",
                             'itemView' => '_d_productoElemento',
-                            'beforeAjaxUpdate' => new CJavaScriptExpression("function() {/*loadingClass(2); Loading.show();*/}"),
-                            'afterAjaxUpdate' => new CJavaScriptExpression("function(id,data) { /*Loading.hide(); */raty();$('.pop_codigo').popover();}"),
+                            'beforeAjaxUpdate' => new CJavaScriptExpression("function() {Loading.show();}"),
+                            'afterAjaxUpdate' => new CJavaScriptExpression("function(id,data) { Loading.hide(); raty();$('.pop_codigo').popover(); listaProductoVistaActualizar();}"),
                             'pager' => array('class' => 'CLinkPager', 'header' => ''),
                         ));
                         ?>

@@ -1,6 +1,20 @@
 <?php
 
 class TestController extends Controller {
+    
+    public function actionEntrega(){
+        CVarDumper::dump(Yii::app()->session[Yii::app()->params->sesion['tipoEntrega']],10,true);
+    }
+
+    public function actionMapa() {
+        Yii::app()->getClientScript()->registerScriptFile("https://maps.googleapis.com/maps/api/js", CClientScript::POS_END);
+        Yii::app()->getClientScript()->registerScriptFile(Yii::app()->request->baseUrl . "/js/ubicacion.js", CClientScript::POS_END);
+        $this->render('mapa');
+    }
+
+    public function actionDirubica() {
+        CVarDumper::dump(Yii::app()->session[Yii::app()->params->sesion['direccionEntrega']], 10, true);
+    }
 
     public function actionModulogrupo() {
         $objModulo = ModulosConfigurados::model()->find(array(
@@ -604,7 +618,7 @@ class TestController extends Controller {
                 ':codigo' => $codigo,
             ),
         ));
-        
+
         CVarDumper::dump($objProducto->listImagenesGrandes, 10, true);
 
         //CVarDumper::dump($objProducto->listCategoriasTienda, 3, true);
@@ -787,8 +801,8 @@ class TestController extends Controller {
         ));
 
         $ciudades = Ciudad::model()->findAll(array(
-            'with' => array('listSectores'),
-            'order' => 't.orden',
+            'with' => array('listSectorCiudad' => array('with' => 'objSector')),
+            'order' => 't.orden, t.nombreCiudad',
             'condition' => 'estadoCiudadSector=:estadoCiudadSector AND estadoSector=:estadoSector AND estadoCiudad=:estadoCiudad',
             'params' => array(
                 ':estadoCiudadSector' => 1,
@@ -803,8 +817,8 @@ class TestController extends Controller {
 
         foreach ($ciudades as $indice => $ciudad) {
             echo "$indice: $ciudad->codigoCiudad|$ciudad->nombreCiudad<br/>";
-            foreach ($ciudad->listSectores as $sector) {
-                echo "    $sector->codigoSector|$sector->nombreSector<br/>";
+            foreach ($ciudad->listSectorCiudad as $sectorCiudad) {
+                echo "    $sectorCiudad->codigoSector|".$sectorCiudad->objSector->nombreSector."<br/>";
             }
             echo "<br/>";
         }

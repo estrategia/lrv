@@ -10,7 +10,7 @@
             'type' => 'raw',
             'value' => function($data){
 
-                return '<a href="'.CController::createUrl("/callcenter/productosRelacionados/crearrelacion", array("codigo" => $data->codigoProducto)).'" data-ajax="false"><img src="'.Yii::app()->request->baseUrl . $data->rutaImagen().'" title="'.$data->descripcionProducto.'"></a>';
+                return '<a href="'.CController::createUrl("/callcenter/productosRelacionados/crearrelacion", array("codigo" => $data->codigoProducto)).'"><img width="100px" src="'.Yii::app()->request->baseUrl . $data->rutaImagen().'" title="'.$data->descripcionProducto.'"></a>';
             },
         ),
         array(

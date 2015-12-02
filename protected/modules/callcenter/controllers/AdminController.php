@@ -485,7 +485,7 @@ class AdminController extends ControllerOperator {
                 try {
                     $contenido = $this->renderPartial('//common/mensajeHtml', array('mensaje' => $objObservacion->observacion), true, true);
                     $htmlCorreo = $this->renderPartial('//common/correo', array('contenido' => $contenido), true, true);
-                    sendHtmlEmail($objCompra->objUsuario->correoElectronico, Yii::app()->params->callcenter['observacion']['asuntoMensaje'], $htmlCorreo);
+                    sendHtmlEmail($objCompra->identificacionUsuario == null ? $objCompra->objCompraDireccion->correoElectronico : $objCompra->objUsuario->correoElectronico, Yii::app()->params->callcenter['observacion']['asuntoMensaje'], $htmlCorreo);
                 } catch (Exception $exc) {
                     
                 }
@@ -536,7 +536,7 @@ class AdminController extends ControllerOperator {
         else if ($hora >= 18 && $hora <= 23)
             $saludo = "Buenas noches";
 
-        $nombreUsuario = $objCompra->objUsuario->nombre . " " . $objCompra->objUsuario->apellido;
+        $nombreUsuario = ($objCompra->identificacionUsuario==null ? $objCompra->objCompraDireccion->nombre : $objCompra->objUsuario->nombre . " " . $objCompra->objUsuario->apellido );
         $nombrePdv = $objCompra->objPuntoVenta == null ? "<pdv>" : $objCompra->objPuntoVenta->nombrePuntoDeVenta;
         $direccionUsuario = $objCompra->objCompraDireccion == null ? "<direccion>" : $objCompra->objCompraDireccion->direccion . " " . $objCompra->objCompraDireccion->barrio;
         $nombreOperador = $objCompra->objOperador == null ? "<operador>" : $objCompra->objOperador->nombre;

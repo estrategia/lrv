@@ -172,9 +172,11 @@
             <?php echo $content; ?>
             <!-- </div> -->
             <!--banner footer-->
+            <!--
             <section class="img-footer">
                 <img src="<?php echo Yii::app()->request->baseUrl; ?>/images/desktop/entrega-pedido.png" alt="Entregamos tus pedidos en tan solo 1H -  o si prefieres programala la hora!">
             </section>
+            -->
             <!--fin banner footer-->
             <!--footer-->
             <footer>	
@@ -187,12 +189,12 @@
                                     <strong style="margin-left:10px;">Información</strong><br><strong class="title-footer2"> y servicios</strong>
                                 </div>
                                 <ul>	
-                                    <li><a href="#">Horarios de atención</a></li>
-                                    <li><a href="#">Politicas días de descuento 1,10,15 y 25</a></li>
-                                    <li><a href="#">PQRS (Pregunras, quejas, reclamos, sugerencias)</a></li>
-                                    <li><a href="#">Políticas y términos de uso</a></li>
-                                    <li><a href="#">SIC (Súper intendencia de industria y comercio)</a></li>
-                                    <li><a href="#">Tarjeta crediRebaja</a></li>
+                                    <li><a href="<?php echo $this->createUrl('/contenido/corporativo', array('tipo'=>'horario')) ?>">Horarios de atención</a></li>
+                                    <li><a href="<?php echo $this->createUrl('/contenido/corporativo', array('tipo'=>'polidescuento')) ?>">Politicas días de descuento 1,10,15 y 25</a></li>
+                                    <li><a href="<?php echo $this->createUrl('/contenido/corporativo', array('tipo'=>'pqrs')) ?>">PQRS (Pregunras, quejas, reclamos, sugerencias)</a></li>
+                                    <li><a href="<?php echo $this->createUrl('/contenido/corporativo', array('tipo'=>'politerminos')) ?>">Políticas y términos de uso</a></li>
+                                    <li><a target="_blank" href="http://www.sic.gov.co/es/">SIC (Súper intendencia de industria y comercio)</a></li>
+                                    <li><a target="_blank" href="http://www.credirebaja.com/">Tarjeta crediRebaja</a></li>
                                 </ul>
                             </div>
                             <div class="col-md-2">
@@ -201,10 +203,10 @@
                                     <strong style="margin-left:10px;">Club</strong><br><strong class="title-footer2">cliente fiel</strong>
                                 </div>
                                 <ul>	
-                                    <li><a href="#">Informaciíon del programa</a></li>
-                                    <li><a href="#">Beneficios del programa</a></li>
-                                    <li><a href="#">Términos y condiciones</a></li>
-                                    <li><a href="#">Actualiza datos</a></li>
+                                    <li><a target="_blank" href="http://www.copservir.com/clubclientefiel/index.php?option=com_content&view=category&layout=blog&id=78&Itemid=464">Informaci&oacute;n del programa</a></li>
+                                    <li><a target="_blank" href="http://www.copservir.com/clubclientefiel/index.php?option=com_content&view=category&layout=blog&id=78&Itemid=464&pest=2">Beneficios del programa</a></li>
+                                    <li><a target="_blank" href="http://www.copservir.com/clubclientefiel/index.php?option=com_content&view=category&layout=blog&id=78&Itemid=464&pest=6">Términos y condiciones</a></li>
+                                    <li><a target="_blank" href="http://www.copservir.com/clubclientefiel/index.php?option=com_users&view=login">Actualiza datos</a></li>
                                 </ul>
                             </div>
                             <div class="col-md-3">
@@ -213,8 +215,8 @@
                                     <strong style="margin-left:10px;">Actividades</strong><br><strong class="title-footer2">comerciales</strong>
                                 </div>
                                 <ul>	
-                                    <li><a href="#">Políticas y condiciones</a></li>
-                                    <li><a href="#">Ganadores de campañas</a></li>
+                                    <li><a target="_blank" href="http://www.copservir.com/clubclientefiel/index.php?option=com_content&view=featured&Itemid=444">Políticas y condiciones</a></li>
+                                    <li><a target="_blank" href="http://www.copservir.com/clubclientefiel/index.php?option=com_content&view=category&layout=blog&id=85&Itemid=476">Ganadores de campañas</a></li>
                                 </ul>
                             </div>
                             <div class="col-md-2">

@@ -55,20 +55,21 @@ $form = $this->beginWidget('CActiveForm', array(
 <?php if ($modelPago->bono !== null): ?>
     <div class="row">
         <div class="col-md-12">
-            <p style="margin-bottom:5px;"><?php echo $modelPago->getAttributeLabel('usoBono'); ?></p>
-            <div class="col-md-12" style="background-color: #fff;">
-                <div class="col-md-12" style="padding:10px;">
-                    <p>Nombre o tipo de bono: Bono cliente fiel</p>
-                    <p>Valor de bono: <?php echo Yii::app()->numberFormatter->format(Yii::app()->params->formatoMoneda['patron'], $modelPago->bono['valor'], Yii::app()->params->formatoMoneda['moneda']); ?></p>
-                    <p>Vigencia inicial del bono: <?php echo $modelPago->bono['vigenciaInicio'] ?></p>
-                    <p>Vigencia final del bono: <?php echo $modelPago->bono['vigenciaFin'] ?></p>
-                    <br>
-                    <p>¿Desea utilizar el bono?</p>
-                    <div class="radio">
-                        <label><input type="radio" id="FormaPagoForm_usoBono_1" name="FormaPagoForm[usoBono]" value="1" <?php echo ($modelPago->usoBono == 1 ? "checked" : "") ?>>Si</label>
-                        <label style="margin-left: 15px;"><input type="radio" id="FormaPagoForm_usoBono_0" name="FormaPagoForm[usoBono]" value="0" <?php echo ($modelPago->usoBono != 1 ? "checked" : "") ?>>No</label>
+            <div class="forma-pago">
+                <span>&bull;</span> Bono cliente fiel
+                <div class="row">
+                    <div class="col-md-12">
+                        <p>Valor de bono: <?php echo Yii::app()->numberFormatter->format(Yii::app()->params->formatoMoneda['patron'], $modelPago->bono['valor'], Yii::app()->params->formatoMoneda['moneda']); ?></p>
+                        <p>Vigencia inicial del bono: <?php echo $modelPago->bono['vigenciaInicio'] ?></p>
+                        <p>Vigencia final del bono: <?php echo $modelPago->bono['vigenciaFin'] ?></p>
+                        <br>
+                        <p>¿Desea utilizar el bono?</p>
+                        <div class="radio">
+                            <label><input type="radio" id="FormaPagoForm_usoBono_1" name="FormaPagoForm[usoBono]" value="1" <?php echo ($modelPago->usoBono == 1 ? "checked" : "") ?>>Si</label>
+                            <label style="margin-left: 15px;"><input type="radio" id="FormaPagoForm_usoBono_0" name="FormaPagoForm[usoBono]" value="0" <?php echo ($modelPago->usoBono != 1 ? "checked" : "") ?>>No</label>
+                        </div>
+                        <?php echo $form->error($modelPago, 'usoBono', array('class' => 'text-danger')); ?>
                     </div>
-                    <?php echo $form->error($modelPago, 'usoBono', array('class' => 'text-danger')); ?>
                 </div>
             </div>
         </div>
