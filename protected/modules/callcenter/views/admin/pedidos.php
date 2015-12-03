@@ -10,12 +10,14 @@
 
 <div class="box-inner">
     <div class="box-header well">
-        <div class="col-lg-1">
+        <div class="row">
+        <div class="col-lg-1 col-md-1 col-sm-2 col-xs-3">
             <h2><i class="glyphicon glyphicon-shopping-cart"></i> Pedidos</h2>
         </div>
         <!-- <div class="box-icon"> -->
-        <div class="col-lg-11">
+        <div class="col-lg-11 col-md-11 col-sm-10 col-xs-9">
             <?php $this->renderPartial('_pedidosCantidad', array('arrCantidadPedidos' => $arrCantidadPedidos)) ?>
+        </div>
         </div>
     </div>
     <div class="box-content row">

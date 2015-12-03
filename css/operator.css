@@ -122,3 +122,7 @@ img.center{
     margin-left: 0;
     margin-right: 0;
 }
+
+.box-inner > .box-header{
+    height:auto; overflow:hidden;
+}
