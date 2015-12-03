@@ -98,7 +98,6 @@
                     </div>
                 </header>
             </div>
-
             <!--menu-->
             <nav class="main_menu">
                 <ul class="nav nav-justified" role="tablist">
@@ -117,17 +116,21 @@
                                                         <?php else: ?>
                                                             <li class='title-submenu'><span class='glyphicon glyphicon-chevron-right' aria-hidden='true'></span><?php echo $subcategoria->nombreCategoriaTienda ?></li>
                                                         <?php endif; ?>
-                                                        <?php foreach ($subcategoria->listCategoriasHijasMenu as $categoriaHija): ?>
+                                                        <?php for ( $i=0;$i<count($subcategoria->listCategoriasHijasMenu) && $i<5;$i++): ?>
+                                                            <?php $categoriaHija = $subcategoria->listCategoriasHijasMenu[$i];?>
                                                             <?php if (count($subcategoria->listModulosConfigurados) > 0): ?>
                                                                 <li><?php echo $categoriaHija->nombreCategoriaTienda ?></li>
                                                             <?php else: ?>
-                                                                <li><?php echo CHtml::link("$categoriaHija->nombreCategoriaTienda", CController::createUrl('/catalogo/categoria', array('categoria' => $categoriaHija->idCategoriaTienda))); ?></li>
+                                                                <li><?php echo CHtml::link($categoriaHija->nombreCategoriaTienda, CController::createUrl('/catalogo/categoria', array('categoria' => $categoriaHija->idCategoriaTienda))); ?></li>
                                                             <?php endif; ?>
-                                                        <?php endforeach; ?>
+                                                        <?php endfor; ?>
+                                                        <?php if(count($subcategoria->listCategoriasHijasMenu)>5):?>
+                                                                <li class='title-submenu'><?php echo CHtml::link("Ver más...", CController::createUrl('/catalogo/division', array('division' => $subcategoria->idCategoriaTienda))); ?></li>
+                                                        <?php endif;?>        
                                                     </div>
                                                 <?php endforeach; ?>
                                             </ul>
-                                            <img class="img_categoria" src="<?php echo Yii::app()->request->baseUrl; ?>/images/menu/desktop/<?php echo $categoria->rutaImagenMenu ?>">
+                                            <img class="img_categoria" src="<?php echo Yii::app()->request->baseUrl; ?>/images/menu/desktop/<?php echo $categoria->rutaImagenMenu ?>"> 
                                         </div>
                                     <?php endif; ?>
                                 </li>
