@@ -77,7 +77,17 @@
                         <select class="form-control ciudades" data-role="ciudad-despacho-map" style="width: 100%">
                             <option value="">Seleccione ...</option>
                             <?php foreach ($listCiudadesSectores as $ciudad): ?>
-                                <option data-latitud="<?php echo $ciudad->latitudGoogle ?>" data-longitud="<?php echo $ciudad->longitudGoogle ?>" value="<?php echo $ciudad->codigoCiudad ?>-0"><?php echo $ciudad->nombreCiudad ?></option>
+                                <?php if (!empty($ciudad->listSectorCiudad)): ?>
+                                    <?php if (isset($idxCiudadesSubSectores[$ciudad->codigoCiudad])): ?>
+                                        <optgroup label="<?php echo $ciudad->nombreCiudad ?>">
+                                            <?php foreach ($listCiudadesSubsectores[$idxCiudadesSubSectores[$ciudad->codigoCiudad]]->listSubSectores as $subSector): ?>
+                                                <option data-latitud="<?php echo $subSector->latitudGoogle ?>" data-longitud="<?php echo $subSector->longitudGoogle ?>" data-tipo="1" value="<?php echo $subSector->codigoCiudad . "-" . $subSector->codigoSubSector ?>"><i><?php echo $subSector->nombreSubSector ?></option>
+                                            <?php endforeach; ?>
+                                        </optgroup> 
+                                    <?php elseif ($ciudad->listSectorCiudad[0]->codigoSector == 0): ?>
+                                        <option data-latitud="<?php echo $ciudad->listSectorCiudad[0]->latitudGoogle ?>" data-longitud="<?php echo $ciudad->listSectorCiudad[0]->longitudGoogle ?>" data-tipo="2" value="<?php echo $ciudad->listSectorCiudad[0]->codigoCiudad ?>"><?php echo $ciudad->nombreCiudad ?></option>   
+                                    <?php endif; ?>
+                                <?php endif; ?> 
                             <?php endforeach; ?>
                         </select>
                     </div>

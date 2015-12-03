@@ -393,33 +393,32 @@ $(document).on('change', 'select[data-role="ciudad-despacho-map"]', function() {
         if (map) {
             map.setCenter(new google.maps.LatLng(parseFloat(option.attr('data-latitud')), parseFloat(option.attr('data-longitud'))));
             $('#select-ubicacion-preferencia').remove();
-
-            if (option.attr('data-tipo') == 1) {
-                $('#select-ubicacion-psubsector').removeClass('div-center').addClass('float-left');
-                $.ajax({
-                    type: 'POST',
-                    async: true,
-                    url: requestUrl + '/sitio/ubicacionSeleccion',
-                    data: {ciudad: $(this).val()},
-                    dataType: 'html',
-                    beforeSend: function() {
-                        Loading.show();
-                    },
-                    complete: function() {
-                        Loading.hide();
-                    },
-                    success: function(data) {
+            $('#select-ubicacion-psubsector').removeClass('div-center').addClass('float-left');
+            $.ajax({
+                type: 'POST',
+                async: true,
+                url: requestUrl + '/sitio/ubicacionSeleccion',
+                data: {ciudad: val},
+                dataType: 'html',
+                beforeSend: function() {
+                    Loading.show();
+                },
+                complete: function() {
+                    Loading.hide();
+                },
+                success: function(data) {
+                    if (data.length > 0) {
                         $('#select-ubicacion-content').append(data);
                         $('#select-ubicacion-preferencia .ciudades').select2();
-                    },
-                    error: function(jqXHR, textStatus, errorThrown) {
-                        Loading.hide();
-                        bootbox.alert('Error: ' + errorThrown);
+                    } else {
+                        $('#select-ubicacion-psubsector').removeClass('float-left').addClass('div-center');
                     }
-                });
-            } else {
-                $('#select-ubicacion-psubsector').removeClass('float-left').addClass('div-center');
-            }
+                },
+                error: function(jqXHR, textStatus, errorThrown) {
+                    Loading.hide();
+                    bootbox.alert('Error: ' + errorThrown);
+                }
+            });
         }
     }
 });
@@ -657,7 +656,7 @@ $(document).on('click', "a[data-cargar='3']", function() {
             bootbox.alert('Error: ' + errorThrown);
         }
     });
-    
+
     return false;
 });
 
