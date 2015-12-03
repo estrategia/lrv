@@ -1832,3 +1832,13 @@ a.clst_slct_prod.active{display: inline-block !important;}
 .float-right{
     float: right;
 }
+
+.display-none {
+    display: none;
+}
+
+img.ajustada {
+    display: block;
+    margin: auto;
+    max-width: 100%;
+}
