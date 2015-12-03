@@ -1846,3 +1846,7 @@ img.ajustada {
     margin: auto;
     max-width: 100%;
 }
+
+.width-thumb-owl{
+    width: 60%;
+}
