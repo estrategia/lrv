@@ -29,7 +29,12 @@ $form = $this->beginWidget('CActiveForm', array(
             <span>&bull;</span> Datafono <i class="glyphicon glyphicon-chevron-right icon-right-pagar"></i>
         </div>
         <div data-role="formapago" data-tipo="3"  class="forma-pago<?php echo ($modelPago->idFormaPago == 3 ? " activo" : "" ) ?>">
-            <span>&bull;</span> Paga en linea <i class="glyphicon glyphicon-chevron-right icon-right-pagar"></i>
+            <span>&bull;</span> Pago en linea <i class="glyphicon glyphicon-chevron-right icon-right-pagar"></i>
+            <div data-role="formapago-logo-pagoenlinea" class="row<?php echo ($modelPago->idFormaPago == 3 ? "" : " display-none" ) ?>">
+                <div class="col-md-12 center">
+                    <img src="/lrv/images/iconos/logo_pse.png" />
+                </div>
+            </div>
         </div>
         <div data-role="formapago" data-tipo="2" class="forma-pago<?php echo ($modelPago->idFormaPago == 2 ? " activo" : "" ) ?>">
             <span>&bull;</span> Credirebaja <i class="glyphicon glyphicon-chevron-right icon-right-pagar"></i>
@@ -85,37 +90,67 @@ $form = $this->beginWidget('CActiveForm', array(
                 <h4 class="modal-title center" id="modal-formapago-label">Datafono</h4>
             </div>
             <div class="modal-body body-scroll">
-                <div>
-                    <input type="radio" value="11" id="idFormaPago_11" name="idFormaPago" checked="checked">
-                    <label for="idFormaPago_11">Tarjeta Big Pass</label>
-                </div>
-                <div>
-                    <input type="radio" value="10" id="idFormaPago_10" name="idFormaPago">
-                    <label for="idFormaPago_10">Tarjeta Éxito</label>
-                </div>
-                <div>
-                    <input type="radio" value="9" id="idFormaPago_9" name="idFormaPago">
-                    <label for="idFormaPago_9">Tarjeta Master Crédito</label>
-                </div>
-                <div>
-                    <input type="radio" value="8" id="idFormaPago_8" name="idFormaPago">
-                    <label for="idFormaPago_8">Tarjeta Master Debito</label>
-                </div>
-                <div>
-                    <input type="radio" value="12" id="idFormaPago_12" name="idFormaPago">
-                    <label for="idFormaPago_12">Tarjeta Sodexxo</label>
-                </div>
-                <div>
-                    <input type="radio" value="6" id="idFormaPago_6" name="idFormaPago">
-                    <label for="idFormaPago_6">Tarjeta Visa Crédito</label>
-                </div>
-                <div>
-                    <input type="radio" value="5" id="idFormaPago_5" name="idFormaPago">
-                    <label for="idFormaPago_5">Tarjeta Visa Debito</label>
-                </div>
-                <div>
-                    <input type="radio" value="7" id="idFormaPago_7" name="idFormaPago">
-                    <label for="idFormaPago_7">Tarjeta Visa Electron</label>
+                <div class="row">
+                    <div class="col-md-6">
+                        <div>
+                            <input type="radio" value="11" id="idFormaPago_11" name="idFormaPago">
+                            <label for="idFormaPago_11">Tarjeta Big Pass</label>
+                        </div>
+                        <div>
+                            <input type="radio" value="10" id="idFormaPago_10" name="idFormaPago">
+                            <label for="idFormaPago_10">Tarjeta Éxito</label>
+                        </div>
+                        <div>
+                            <input type="radio" value="9" id="idFormaPago_9" name="idFormaPago">
+                            <label for="idFormaPago_9">Tarjeta Master Crédito</label>
+                        </div>
+                        <div>
+                            <input type="radio" value="8" id="idFormaPago_8" name="idFormaPago">
+                            <label for="idFormaPago_8">Tarjeta Master Debito</label>
+                        </div>
+                        <div>
+                            <input type="radio" value="12" id="idFormaPago_12" name="idFormaPago">
+                            <label for="idFormaPago_12">Tarjeta Sodexxo</label>
+                        </div>
+                        <div>
+                            <input type="radio" value="6" id="idFormaPago_6" name="idFormaPago">
+                            <label for="idFormaPago_6">Tarjeta Visa Crédito</label>
+                        </div>
+                        <div>
+                            <input type="radio" value="5" id="idFormaPago_5" name="idFormaPago">
+                            <label for="idFormaPago_5">Tarjeta Visa Debito</label>
+                        </div>
+                        <div>
+                            <input type="radio" value="7" id="idFormaPago_7" name="idFormaPago">
+                            <label for="idFormaPago_7">Tarjeta Visa Electron</label>
+                        </div>
+                    </div>
+                    <div class="col-md-6 info-oficina">
+                        <div data-role="formapago-logo-11" class="display-none">
+                            <img src="/lrv/images/iconos/bigpass_logo.png" class="ajustada"/>
+                        </div>
+                        <div data-role="formapago-logo-10" class="display-none">
+                            <img src="/lrv/images/iconos/exito_logo.png" class="ajustada"/>
+                        </div>
+                        <div data-role="formapago-logo-9" class="display-none">
+                            <img src="/lrv/images/iconos/mastercard_logo.png" class="ajustada"/>
+                        </div>
+                        <div data-role="formapago-logo-8" class="display-none">
+                            <img src="/lrv/images/iconos/maestro_logo.png" class="ajustada"/>
+                        </div>
+                        <div data-role="formapago-logo-12" class="display-none">
+                            <img src="/lrv/images/iconos/sodexo_logo.png" class="ajustada"/>
+                        </div>
+                        <div data-role="formapago-logo-6" class="display-none">
+                            <img src="/lrv/images/iconos/visa_logo2.png" class="ajustada"/>
+                        </div>
+                        <div data-role="formapago-logo-5" class="display-none">
+                            <img src="/lrv/images/iconos/visa_logo2.png" class="ajustada"/>
+                        </div>
+                        <div data-role="formapago-logo-7" class="display-none">
+                            <img src="/lrv/images/iconos/visaelectron_logo.png" class="ajustada"/>
+                        </div>
+                    </div>
                 </div>
 
             </div>
