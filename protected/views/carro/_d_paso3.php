@@ -19,38 +19,44 @@ $form = $this->beginWidget('CActiveForm', array(
 ?>
 
 <?php //$this->renderPartial('/carro/_d_formaPago', array('form' => $form, 'model' => $modelPago, 'listFormaPago' => $listFormaPago)) ?>
-
+<?php $listDatafono = array(); ?>
 <div class="row">
     <div class="col-md-12 center">
-        <div data-role="formapago" data-tipo="1"class="forma-pago<?php echo ($modelPago->idFormaPago == 1 ? " activo" : "" ) ?>">
-            <span>&bull;</span> Efectivo <i class="glyphicon glyphicon-chevron-right icon-right-pagar"></i>
-        </div>
-        <div data-role="formapago" data-tipo="datafono" class="forma-pago<?php echo (in_array($modelPago->idFormaPago, Yii::app()->params->formaPago['tarjetasDatafono']) ? " activo" : "" ) ?>">
-            <span>&bull;</span> Datafono <i class="glyphicon glyphicon-chevron-right icon-right-pagar"></i>
-        </div>
-        <div data-role="formapago" data-tipo="3"  class="forma-pago<?php echo ($modelPago->idFormaPago == 3 ? " activo" : "" ) ?>">
-            <span>&bull;</span> Pago en linea <i class="glyphicon glyphicon-chevron-right icon-right-pagar"></i>
-            <div data-role="formapago-logo-pagoenlinea" class="row<?php echo ($modelPago->idFormaPago == 3 ? "" : " display-none" ) ?>">
-                <div class="col-md-12 center">
-                    <img src="/lrv/images/iconos/logo_pse.png" />
-                </div>
+        <?php foreach ($listFormaPago as $idx => $objFormaPago): ?>
+            <?php if (in_array($objFormaPago->idFormaPago, Yii::app()->params->formaPago['tarjetasDatafono'])): ?>
+                <?php $listDatafono[] = $objFormaPago; ?>
+                <?php continue; ?>
+            <?php endif; ?>
+            <div data-role="formapago" data-tipo="<?= $objFormaPago->idFormaPago ?>"class="forma-pago<?php echo ($modelPago->idFormaPago == $objFormaPago->idFormaPago ? " activo" : "" ) ?>">
+                <span>&bull;</span> <?php echo $objFormaPago->formaPago ?> <i class="glyphicon glyphicon-chevron-right icon-right-pagar"></i>
+                <?php if ($objFormaPago->idFormaPago == Yii::app()->params->formaPago['idCredirebaja']): ?>
+                    <div class="row">
+                        <div class="col-md-8 info-oficina">
+                            <?php echo $form->labelEx($modelPago, 'numeroTarjeta'); ?>
+                            <?php echo $form->textField($modelPago, 'numeroTarjeta', array('class' => 'form-control', 'placeholder' => '000000000000', 'maxlength' => 12)); ?>
+                            <?php echo $form->error($modelPago, 'numeroTarjeta', array('class' => 'text-danger')); ?>
+                        </div>
+                        <div class="col-md-3 info-oficina">
+                            <?php echo $form->labelEx($modelPago, 'cuotasTarjeta'); ?>
+                            <?php echo $form->dropDownList($modelPago, 'cuotasTarjeta', FormaPagoForm::listDataCuotas(), array('class' => 'form-control select', 'placeholder' => '0', 'style' => "border-radius:0px;")); ?>
+                            <?php echo $form->error($modelPago, 'cuotasTarjeta', array('class' => 'text-danger')); ?>
+                        </div>
+                    </div>
+                <?php elseif ($objFormaPago->idFormaPago == Yii::app()->params->formaPago['pasarela']['idPasarela']): ?>
+                    <div data-role="formapago-logo-pagoenlinea" class="row<?php echo ($modelPago->idFormaPago == Yii::app()->params->formaPago['pasarela']['idPasarela'] ? "" : " display-none" ) ?>">
+                        <div class="col-md-12 center">
+                            <img src="<?php echo Yii::app()->request->baseUrl; ?>/images/iconos/logo_pse.png" />
+                        </div>
+                    </div>
+                <?php endif; ?>
             </div>
-        </div>
-        <div data-role="formapago" data-tipo="2" class="forma-pago<?php echo ($modelPago->idFormaPago == 2 ? " activo" : "" ) ?>">
-            <span>&bull;</span> Credirebaja <i class="glyphicon glyphicon-chevron-right icon-right-pagar"></i>
-            <div class="row">
-                <div class="col-md-8 info-oficina">
-                    <?php echo $form->labelEx($modelPago, 'numeroTarjeta'); ?>
-                    <?php echo $form->textField($modelPago, 'numeroTarjeta', array('class' => 'form-control', 'placeholder' => '000000000000', 'maxlength' => 12)); ?>
-                    <?php echo $form->error($modelPago, 'numeroTarjeta', array('class' => 'text-danger')); ?>
-                </div>
-                <div class="col-md-3 info-oficina">
-                    <?php echo $form->labelEx($modelPago, 'cuotasTarjeta'); ?>
-                    <?php echo $form->dropDownList($modelPago, 'cuotasTarjeta', FormaPagoForm::listDataCuotas(), array('class' => 'form-control select', 'placeholder' => '0', 'style' => "border-radius:0px;")); ?>
-                    <?php echo $form->error($modelPago, 'cuotasTarjeta', array('class' => 'text-danger')); ?>
-                </div>
+
+        <?php endforeach; ?>
+        <?php if (!empty_lrv($listDatafono)): ?>
+            <div data-role="formapago" data-tipo="datafono" class="forma-pago<?php echo (in_array($modelPago->idFormaPago, Yii::app()->params->formaPago['tarjetasDatafono']) ? " activo" : "" ) ?>">
+                <span>&bull;</span> Datafono <i class="glyphicon glyphicon-chevron-right icon-right-pagar"></i>
             </div>
-        </div>
+        <?php endif; ?>
     </div>
 </div>
 
@@ -92,67 +98,21 @@ $form = $this->beginWidget('CActiveForm', array(
             <div class="modal-body body-scroll">
                 <div class="row">
                     <div class="col-md-6">
-                        <div>
-                            <input type="radio" value="11" id="idFormaPago_11" name="idFormaPago">
-                            <label for="idFormaPago_11">Tarjeta Big Pass</label>
-                        </div>
-                        <div>
-                            <input type="radio" value="10" id="idFormaPago_10" name="idFormaPago">
-                            <label for="idFormaPago_10">Tarjeta Éxito</label>
-                        </div>
-                        <div>
-                            <input type="radio" value="9" id="idFormaPago_9" name="idFormaPago">
-                            <label for="idFormaPago_9">Tarjeta Master Crédito</label>
-                        </div>
-                        <div>
-                            <input type="radio" value="8" id="idFormaPago_8" name="idFormaPago">
-                            <label for="idFormaPago_8">Tarjeta Master Debito</label>
-                        </div>
-                        <div>
-                            <input type="radio" value="12" id="idFormaPago_12" name="idFormaPago">
-                            <label for="idFormaPago_12">Tarjeta Sodexxo</label>
-                        </div>
-                        <div>
-                            <input type="radio" value="6" id="idFormaPago_6" name="idFormaPago">
-                            <label for="idFormaPago_6">Tarjeta Visa Crédito</label>
-                        </div>
-                        <div>
-                            <input type="radio" value="5" id="idFormaPago_5" name="idFormaPago">
-                            <label for="idFormaPago_5">Tarjeta Visa Debito</label>
-                        </div>
-                        <div>
-                            <input type="radio" value="7" id="idFormaPago_7" name="idFormaPago">
-                            <label for="idFormaPago_7">Tarjeta Visa Electron</label>
-                        </div>
+                        <?php foreach ($listDatafono as $idx => $objFormaPago): ?>
+                            <div>
+                                <input type="radio" value="<?= $objFormaPago->idFormaPago ?>" id="idFormaPago_<?= $objFormaPago->idFormaPago ?>" name="idFormaPago">
+                                <label for="idFormaPago_<?= $objFormaPago->idFormaPago ?>"><?= $objFormaPago->formaPago ?></label>
+                            </div>
+                        <?php endforeach; ?>
                     </div>
                     <div class="col-md-6 info-oficina">
-                        <div data-role="formapago-logo-11" class="display-none">
-                            <img src="/lrv/images/iconos/bigpass_logo.png" class="ajustada"/>
-                        </div>
-                        <div data-role="formapago-logo-10" class="display-none">
-                            <img src="/lrv/images/iconos/exito_logo.png" class="ajustada"/>
-                        </div>
-                        <div data-role="formapago-logo-9" class="display-none">
-                            <img src="/lrv/images/iconos/mastercard_logo.png" class="ajustada"/>
-                        </div>
-                        <div data-role="formapago-logo-8" class="display-none">
-                            <img src="/lrv/images/iconos/maestro_logo.png" class="ajustada"/>
-                        </div>
-                        <div data-role="formapago-logo-12" class="display-none">
-                            <img src="/lrv/images/iconos/sodexo_logo.png" class="ajustada"/>
-                        </div>
-                        <div data-role="formapago-logo-6" class="display-none">
-                            <img src="/lrv/images/iconos/visa_logo2.png" class="ajustada"/>
-                        </div>
-                        <div data-role="formapago-logo-5" class="display-none">
-                            <img src="/lrv/images/iconos/visa_logo2.png" class="ajustada"/>
-                        </div>
-                        <div data-role="formapago-logo-7" class="display-none">
-                            <img src="/lrv/images/iconos/visaelectron_logo.png" class="ajustada"/>
-                        </div>
+                        <?php foreach ($listDatafono as $idx => $objFormaPago): ?>
+                            <div data-role="formapago-logo-<?= $objFormaPago->idFormaPago ?>" class="display-none">
+                                <img src="<?php echo Yii::app()->request->baseUrl . Yii::app()->params->formaPago['tarjetasDatafonoLogo'][$objFormaPago->idFormaPago]; ?>" class="ajustada"/>
+                            </div>
+                        <?php endforeach; ?>
                     </div>
                 </div>
-
             </div>
             <div class="modal-footer center">
                 <button type="button" class="btn btn-default" data-dismiss="modal">Cerrar</button>

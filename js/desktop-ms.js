@@ -653,8 +653,10 @@ $(document).on('click', "div[data-role='formapago']", function() {
         $(this).addClass('activo');
         $('input[id="FormaPagoForm_idFormaPago"]').val(tipo);
         
-        if (tipo == 3) {
-            $(this).children("div[data-role='formapago-logo-pagoenlinea']").removeClass('display-none');
+        var logopagolinea = $(this).children("div[data-role='formapago-logo-pagoenlinea']");
+        
+        if (logopagolinea.length>0) {
+            logopagolinea.removeClass('display-none');
         }else{
             $("div[data-role='formapago-logo-pagoenlinea']").addClass('display-none');
         }
