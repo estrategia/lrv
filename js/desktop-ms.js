@@ -640,14 +640,26 @@ $(document).on('click', "a[id='btn-buscador-productos']", function() {
 });
 
 $(document).on('click', "div[data-role='formapago']", function() {
-    if ($(this).attr('data-tipo') == "datafono") {
+    var tipo = $(this).attr('data-tipo');
+    if (tipo == "datafono") {
         $("#modal-formapago input[type='radio']").removeAttr('checked');
         $("#modal-formapago #idFormaPago_"+$("#FormaPagoForm_idFormaPago").val()).prop('checked', true);
+        $("div[data-role^='formapago-logo-']").addClass('display-none');
+        $("div[data-role='formapago-logo-"+$("#FormaPagoForm_idFormaPago").val()+"']").removeClass('display-none');
+        
         $("#modal-formapago").modal("show");
     } else {
         $("div[data-role='formapago']").removeClass('activo');
         $(this).addClass('activo');
-        $('input[id="FormaPagoForm_idFormaPago"]').val($(this).attr('data-tipo'));
+        $('input[id="FormaPagoForm_idFormaPago"]').val(tipo);
+        
+        var logopagolinea = $(this).children("div[data-role='formapago-logo-pagoenlinea']");
+        
+        if (logopagolinea.length>0) {
+            logopagolinea.removeClass('display-none');
+        }else{
+            $("div[data-role='formapago-logo-pagoenlinea']").addClass('display-none');
+        }
     }
 });
 
@@ -656,6 +668,10 @@ $(document).on('click', "#modal-formapago input[type='radio']", function() {
         $("div[data-role='formapago']").removeClass('activo');
         $('div[data-tipo="datafono"]').addClass('activo');
         $('input[id="FormaPagoForm_idFormaPago"]').val($(this).val());
+        
+        $("div[data-role^='formapago-logo-']").addClass('display-none');
+        $("div[data-role='formapago-logo-"+$(this).val()+"']").removeClass('display-none');
+        $("div[data-role='formapago-logo-pagoenlinea']").addClass('display-none');
     }
 });
 
@@ -710,9 +726,13 @@ function capturarfiltrocalificacion(score, evt) {
 }
 
 $(document).on('change', '#form-pago-entrega #FormaPagoForm_fechaEntrega', function() {
-    var horas = $(this).val().split(" ")[1].split(":");
-    update_clock(horas[0], horas[1], horas[2]);
+    update_clock($(this).val());
 });
+
+function update_clock(value){
+    var horas = value.split(" ")[1].split(":");
+    update_clock_element('#clock_id', horas[0], horas[1], horas[2]);
+}
 
 function draw_clock() {
     canvas = Raphael('clock_id', 200, 200);
@@ -737,8 +757,8 @@ function draw_clock() {
     pin.attr("fill", "#000000");
 }
 
-function update_clock(hours, minutes, seconds) {
-    $('#clock_id').html('');
+function update_clock_element(element, hours, minutes, seconds) {
+    $(element).html('');
     draw_clock();
     hour_hand.rotate(30 * hours + (minutes / 2.5), 100, 100);
     minute_hand.rotate(6 * minutes, 100, 100);

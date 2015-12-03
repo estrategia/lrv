@@ -233,6 +233,16 @@ return array(
         'formaPago' => array(
             'idCredirebaja' => 2,
             'tarjetasDatafono' => array(5, 6, 7, 8, 9, 10, 11, 12),
+            'tarjetasDatafonoLogo' => array(
+                5 =>'/images/iconos/visa_logo.png',
+                6 =>'/images/iconos/visa_logo.png',
+                7 =>'/images/iconos/visaelectron_logo.png',
+                8 =>'/images/iconos/maestro_logo.png',
+                9 =>'/images/iconos/mastercard_logo.png',
+                10 =>'/images/iconos/exito_logo.png',
+                11 =>'/images/iconos/bigpass_logo.png',
+                12 =>'/images/iconos/sodexo_logo.png',
+            ),
             'pasarela' => array(
                 'valorMinimo' => 5000,
                 'idPasarela' => 3,

@@ -1837,6 +1837,12 @@ a.clst_slct_prod.active{display: inline-block !important;}
     float: right;
 }
 
-.width-thumb-owl{
-    width: 60%;
+.display-none {
+    display: none;
+}
+
+img.ajustada {
+    display: block;
+    margin: auto;
+    max-width: 100%;
 }

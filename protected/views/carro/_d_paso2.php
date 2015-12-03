@@ -70,5 +70,13 @@ $form = $this->beginWidget('CActiveForm', array(
 
 <?php $this->endWidget(); ?>
 
-<?php Yii::app()->clientScript->registerScript('draw_clock','draw_clock()', CClientScript::POS_END); ?>
+<?php Yii::app()->clientScript->registerScript('draw_clock', 'draw_clock()', CClientScript::POS_END); ?>
+
+<?php if (!empty($modelPago->fechaEntrega)): ?>
+    <?php Yii::app()->clientScript->registerScript('update_clock', "update_clock('$modelPago->fechaEntrega')", CClientScript::POS_END); ?>
+<?php endif; ?>
+
+
+
+
 

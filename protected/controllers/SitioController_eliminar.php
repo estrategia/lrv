@@ -154,8 +154,36 @@ class SitioController extends Controller {
                 )
             ));
 
+            $listCiudadesSubsectores = Ciudad::model()->findAll(array(
+                'with' => array(
+                    'listSubSectores' => array(
+                        'order' => 'listSubSectores.nombreSubSector',
+                        'condition' => 'estadoSubSector=1',
+                        'with' => array(
+                            'listSectorReferencias' => array(
+                                'condition' => 'listSectorReferencias.estadoSectorReferencia=1',
+                                'with' => array(
+                                    'objSectorCiudad' => array(
+                                        'condition' => 'objSectorCiudad.estadoCiudadSector=1',
+                                        'with' => array(
+                                            'objSector' => array(
+                                                'condition' => 'objSector.estadoSector=1',
+                                                'order' => 'objSector.nombreSector',
+                                            ))),
+                                    'listPuntoReferencias' => array('condition' => 'listPuntoReferencias.estadoReferencia=1', 'order' => 'listPuntoReferencias.nombreReferencia')
+                                ))))),
+                'order' => 't.nombreCiudad'
+            ));
+
+            $idxCiudadesSubSectores = array();
+            foreach ($listCiudadesSubsectores as $indice => $ciudad) {
+                $idxCiudadesSubSectores[$ciudad->codigoCiudad] = $indice;
+            }
+
             $this->render('d_ubicacion', array(
                 'listCiudadesSectores' => $listCiudadesSectores,
+                'listCiudadesSubsectores' => $listCiudadesSubsectores,
+                'idxCiudadesSubSectores' => $idxCiudadesSubSectores,
                 'objSectorCiudad' => $this->objSectorCiudad,
                 'tipoEntrega' => $tipoEntrega,
                 'urlRedirect' => Yii::app()->session[Yii::app()->params->sesion['redireccionUbicacion']]
