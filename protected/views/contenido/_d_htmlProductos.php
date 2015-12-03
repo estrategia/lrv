@@ -15,7 +15,7 @@
             <!-- Lista de productos -->
             <div class="col-md-8">
                 <div class="row">
-                    <ul class="listaProductosB">
+                    <ul class="listaProductos">
                             <div class="items">
                                 <?php foreach ($objModulo->getListaProductos($this->objSectorCiudad) as $objProducto): ?>
                         

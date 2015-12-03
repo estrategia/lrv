@@ -136,7 +136,7 @@ function format(input)
  $('#'+id).popover();
  }*/
 $(document).ready(function() {
-    $('.pop_codigo').popover();
+    $('[data-toggle="popover"]').popover(); 
     $("input[data-role='bootstrap-slider']").slider();
     $(".slide-productos").owlCarousel({
         items: 4,

@@ -203,9 +203,9 @@ class ContenidoController extends ControllerOperator {
 
                         if ($uploadedFile->getExtensionName() == "jpg" || $uploadedFile->getExtensionName() == "png" ||
                                 $uploadedFile->getExtensionName() == "jpeg" || $uploadedFile->getExtensionName() == "gif") {
-
-                            if ($uploadedFile->saveAs(Yii::app()->params->callcenter['modulosConfigurados']['urlImagenes'] . $uploadedFile->getName())) {
-                                $modelBanner->rutaImagen = "/" . Yii::app()->params->callcenter['modulosConfigurados']['urlImagenes'] . $uploadedFile->getName();
+                               
+                            if ($uploadedFile->saveAs(Yii::app()->params->callcenter['modulosConfigurados']['urlImagenes'] . $modelBanner->nombre.date("Ymdhis").".".$uploadedFile->getExtensionName())) {
+                                $modelBanner->rutaImagen = "/" . Yii::app()->params->callcenter['modulosConfigurados']['urlImagenes'] . $modelBanner->nombre.date("Ymdhis").".".$uploadedFile->getExtensionName();
                                 $modelBanner->idModulo = $idModulo;
                                 if ($modelBanner->save()) {
                                     Yii::app()->user->setFlash('alert alert-success', "La imagen ha sido guardada con éxito");

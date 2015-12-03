@@ -100,12 +100,16 @@
     top: 0;
     z-index: 1;
 }
-.iconos_right .itm_ico {
+.iconos_right .itm_ico,.itm_ico>.cod_puntos {
     margin-bottom: 5px !important;
 }
 .iconos_right .itm_ico:last-child {
     margin-bottom: 0 !important;
 }
+/*
+.itm_icon {
+    margin-bottom: 5px !important;
+}*/
 .cod_puntos span{
     color: #fff !important;
 }
@@ -1831,4 +1835,8 @@ a.clst_slct_prod.active{display: inline-block !important;}
 
 .float-right{
     float: right;
+}
+
+.width-thumb-owl{
+    width: 60%;
 }

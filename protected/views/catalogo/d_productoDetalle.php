@@ -18,7 +18,7 @@
                                         <?php foreach ($listImagenes as $imagen): ?>
                                             <li>
                                                 <a href="<?php echo Yii::app()->request->baseUrl . Yii::app()->params->carpetaImagen['productos'][YII::app()->params->producto['tipoImagen']['grande']] . $imagen->rutaImagen; ?>">
-                                                    <img   class="img-responsive noimagenProduct product-prom"src="<?php echo Yii::app()->request->baseUrl . Yii::app()->params->carpetaImagen['productos'][YII::app()->params->producto['tipoImagen']['grande']] . $imagen->rutaImagen; ?>" >
+                                                    <img   class="img-responsive width-thumb-owl product-prom"src="<?php echo Yii::app()->request->baseUrl . Yii::app()->params->carpetaImagen['productos'][YII::app()->params->producto['tipoImagen']['grande']] . $imagen->rutaImagen; ?>" >
                                                 </a>
                                             </li>
                                         <?php endforeach; ?>
@@ -37,7 +37,11 @@
                             <img src="<?php echo Yii::app()->request->baseUrl ?>/images/iconos/icon_seleccionado.png">
                         </a>
                         <!-- producto agregado -->
-                        <div class="cod_puntos itm_ico">pts<br><span>x2</span></div>
+                        <?php if($objPrecio->tienePuntos()):?>
+                        <a href="#" onclick="return false" class='itm_ico' data-toggle="popover" data-content="<?php echo implode(", ",$objPrecio->getPuntosDescripcion())?>"> <div class="cod_puntos"> Pts<br/><span></span></div> </a> 
+                       <!--  <div class="cod_puntos itm_ico">Pts<span></span></div> -->
+                        <?php endif;?>
+                        
                         <?php if ($objProducto->objCodigoEspecial->rutaIcono != ""): ?>
                             <!--codigo especial verde-->
                             <a class='itm_ico pop_codigo product-prom cod_especial' role="button" data-placement="left" data-toggle="popover" title="Codigo especial" data-content="<?php echo $objProducto->objCodigoEspecial->descripcion ?>" >

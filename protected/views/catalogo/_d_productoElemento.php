@@ -127,11 +127,14 @@
         <?php endif; ?>
         <div class="iconos_right"> 
         <!-- producto agregado -->
-            <a href="" class="clst_slct_prod<?php echo (Yii::app()->shoppingCart->contains($data->codigoProducto) ? " active" : "") ?>" id="icono-producto-agregado-<?php echo $data->codigoProducto ?>">
+            <a href="" class="itm_ico clst_slct_prod<?php echo (Yii::app()->shoppingCart->contains($data->codigoProducto) ? " active" : "") ?>" id="icono-producto-agregado-<?php echo $data->codigoProducto ?>">
                 <img src="<?php echo Yii::app()->request->baseUrl ?>/images/iconos/icon_seleccionado.png">
             </a>
-            <!-- producto agregado -->
-            <div class="itm_ico cod_puntos">pts<br><span>x2</span></div>
+            <!-- puntos agregado -->
+            <?php if($objPrecio->tienePuntos()):?>
+            <a class="itm_ico" href="#" onclick="return false" data-toggle="popover" data-content="<?php echo implode(", ",$objPrecio->getPuntosDescripcion())?>"><div class="cod_puntos">Pts<br/></div></a>  
+          <!--  <div class="itm_ico cod_puntos">Pts<br/><span></span></div> -->
+               <?php endif;?>
             <?php if ($data->objCodigoEspecial->rutaIcono != ""): ?>
             <!--codigo especial verde-->
                 <a class='itm_ico pop_codigo product-prom cod_especial' role="button" data-toggle="popover" title="Codigo especial" data-content="<?php echo $data->objCodigoEspecial->descripcion ?>" >
