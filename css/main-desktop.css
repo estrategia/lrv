@@ -1,3 +1,9 @@
+.result_bono {
+    color: #e90000;
+}
+.bonoBody > h4 {
+    color: #e90000;
+}
 #btn-carropagar-siguiente {
     float: right;
 }
