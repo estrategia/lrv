@@ -1646,9 +1646,10 @@ li.active .iconStep {
 }
 .section-submenu {
     float: left;
-    margin-right: 30px;
+    margin-right: 20px;
+    min-height: 154px;
     padding: 10px 0;
-    width: 160px;
+    width: 243px;
 }
 .title-submenu{
     border-bottom: 1px solid;
@@ -1678,10 +1679,9 @@ li.active .iconStep {
 }
 .submenu .glyphicon {
     font-size: 15px;
-    margin-left: -19px;
-    margin-right: 5px;
+    margin-left: -16px;
+    margin-right: 1px;
 }
-
 .todas-categorias{
     margin-top: -19px;
     border-radius: 0px;
