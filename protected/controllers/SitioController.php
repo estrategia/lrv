@@ -137,7 +137,7 @@ class SitioController extends Controller {
         } else {
             //si no fue redireccionado por sessionfilter, se redirecciona a la pagina anterior
             if (!isset(Yii::app()->session[Yii::app()->params->sesion['redireccionUbicacion']]) || Yii::app()->session[Yii::app()->params->sesion['redireccionUbicacion']] == null) {
-                Yii::app()->session[Yii::app()->params->sesion['redireccionUbicacion']] = Yii::app()->request->urlReferrer;
+                Yii::app()->session[Yii::app()->params->sesion['redireccionUbicacion']] = (Yii::app()->request->urlReferrer == null ? $this->createUrl('/') : Yii::app()->request->urlReferrer);
             }
 
             Yii::app()->getClientScript()->registerScriptFile("https://maps.googleapis.com/maps/api/js", CClientScript::POS_HEAD);
