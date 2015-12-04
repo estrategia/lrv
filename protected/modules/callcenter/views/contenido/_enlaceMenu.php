@@ -21,7 +21,7 @@
 
 <div class="form-group">
     <?php echo $form->labelEx($modelMenu, 'contenido'); ?>
-    <?php echo $form->textField($modelMenu, 'contenido', array('class' => 'orden form-control', 'size' => 20, 'maxlength' => 20, )); ?>
+    <?php echo $form->textField($modelMenu, 'contenido', array('class' => 'orden form-control', 'size' => 20, )); ?>
     <?php echo $form->error($modelMenu, 'contenido'); ?>
 </div>
 <div class="form-group">
