@@ -179,9 +179,11 @@
     color: #e90000 !important;
 }
 .img_categoria {
+    bottom: 0;
+    max-width: 100%;
     position: absolute;
     right: 0;
-    top: 0;
+    z-index: 1;
 }
 .submenu .title-submenu > a {
     padding: 0;
