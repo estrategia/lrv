@@ -1,7 +1,7 @@
 <?php if (!empty($sectores)): ?>
     <div id="select-ubicacion-preferencia" style="width: 49%;" class="float-right">
         <select data-role="sector-despacho-map" class='form-control ciudades' style="width: 100%">
-            <option value="">Seleccione ...</option>
+            <option value="">Seleccione sector ...</option>
             <?php foreach ($sectores as $sector): ?>
                 <optgroup label="<?php echo $sector->getNombreSector() ?>">
                     <?php foreach ($sector->listPuntoReferencias as $puntoReferencia): ?>

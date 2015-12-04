@@ -1710,8 +1710,8 @@ li.active .iconStep {
     position: fixed;
     right: 0;
     bottom: 0;
-    width: 50%;
-    z-index: 1000000;
+    width: 30%;
+    z-index: 9999999;
     opacity: 0;
     /*line-height: 14px;*/
     font-size: 1.1em;
@@ -1864,11 +1864,17 @@ a.clst_slct_prod.active{display: inline-block !important;}
   z-index: 99;
 }
 
-.modal.map .modal-title {
-  font-weight: 300;
+.modal.map .modal-header .modal-title {
+  font-weight: bold;
   font-size: 2em;
   color: #fff;
   line-height: 30px;
+}
+
+.modal.map .modal-header p {
+  font-weight: normal;
+  font-size: 1em;
+  color: #fff;
 }
 
 .modal.map .modal-content {

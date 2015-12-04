@@ -57,11 +57,12 @@
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">
-                <h1 class="modal-title center">Busca tu ubicaci&oacute;n</h1>
+                <h1 class="modal-title center">Ubicaci&oacute;n de entrega del pedido</h1>
+                <p class="center">Arrastra el mapa hasta tu ubicaci&oacute;n o utiliza la lista de ciudades y sectores</p>
                 <div id="select-ubicacion-content" style="width: 80%;" class="center-div">
                     <div id="select-ubicacion-psubsector" style="width: 49%;" class="center-div">
                         <select class="form-control ciudades" data-role="ciudad-despacho-map" style="width: 100%">
-                            <option value="">Seleccione ...</option>
+                            <option value="">Seleccione ciudad ...</option>
                             <?php foreach ($listCiudadesSectores as $ciudad): ?>
                                 <option data-latitud="<?php echo $ciudad->latitudGoogle  ?>" data-longitud="<?php echo $ciudad->longitudGoogle  ?>" value="<?php echo $ciudad->codigoCiudad ?>-0"><?php echo $ciudad->nombreCiudad ?></option>
                             <?php endforeach; ?>
@@ -74,8 +75,8 @@
                 <div class="map-content" id="map"></div>
             </div>
             <div class="modal-footer center">
-                <button type="button" class="btn btn-default" data-dismiss="modal" >Cerrar</button>
-                <button type="button" class="btn btn-primary" data-role="ubicacion-seleccion-mapa">Aceptar</button>
+                <button type="button" class="btn btn-default" data-dismiss="modal" >Cancelar</button>
+                <button type="button" class="btn btn-primary" data-role="ubicacion-seleccion-mapa">Confirmar ubicaci&oacute;n</button>
             </div>
         </div>
     </div>
