@@ -1,3 +1,22 @@
+.content_ubi .btn-ciudad span {
+    margin-right: 7px;
+}
+.btn-ciudad {
+    background: #f4f4f4 none repeat scroll 0 0;
+    color: #444;
+    font-size: 16px;
+    font-weight: bold;
+    padding: 13px;
+    width: 100%;
+}
+.btn-ciudad:hover {
+    background: #ea0001 none repeat scroll 0 0;
+    color: #fff;
+    font-weight: normal;
+}
+.blocktipoentrega .content_ubi .col-md-6:first-child {
+    border-right: 1px solid #e90000;
+}
 .inner_tipoentrega {
     line-height: 23px;
     padding: 15px 18px 15px 70px;
@@ -1638,9 +1657,7 @@ li.active .iconStep {
     height: auto;
 }
 
-.btn-ciudad{
-    width: 100%;
-}
+
 
 .list-view .items-float .view
 {       
