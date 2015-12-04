@@ -1671,7 +1671,7 @@ li.active .iconStep {
     height: 100%;
 }
 .section-submenu{
-    padding: 10px 0px;
+    padding: 10px 0px 0;
 }
 .dropdown-menu .submenu .section-submenu a li{
     font-size: 14px;
