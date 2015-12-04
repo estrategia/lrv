@@ -4,7 +4,7 @@
         <?php elseif ($vista == "comparacion"): ?>
         <li class="--col-md-<?php echo $colums; ?> border-left" id="comparacion-producto-<?php echo $data->codigoProducto ?>">
         <?php elseif ($vista == "grid"): ?>
-        <li class="col-md-4 border-left">        
+        <li class="border-left">        
         <?php endif; ?>
     <?php else: ?>    
     <li class="border-left" >
@@ -118,7 +118,8 @@
             </div>
         <?php elseif (!$objPrecio->inicializado()): ?>
             <div class="col-md-12">
-                <?php echo CHtml::link('<div class="button">Agotado</div>', '#', array('disabled' => 'true')); ?>
+                <div></div>
+                <?php echo CHtml::link('<div class="button">Agotado</div>', '#', array('disabled' => 'true', 'onclick'=>'return false;')); ?>
             </div>
         <?php else: ?>
             <div class="botones-list">
@@ -147,7 +148,7 @@
             <!--fraccionado-->
             <div class="itm_ico fraccion_text" title="Producto Fraccionado"><span>F</span></div>
             <?php endif; ?>
-            <?php if ($data->ventaVirtual == 1 && $objPrecio->inicializado()):  ?>
+            <?php if ($data->ventaVirtual == 1):  ?>
             <!--adicionar a lista-->
                 <a href="#" data-tipo="1" class="itm_ico button-lista" title="Añadir a lista" data-role="lstpersonalguardar" data-codigo="<?php echo $data->codigoProducto ?>"><span class="text_add_list">Añadir a lista</span> <span class="glyphicon glyphicon-pencil" aria-hidden="true"></span>
                 </a>

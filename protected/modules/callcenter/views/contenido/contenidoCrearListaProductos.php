@@ -11,8 +11,6 @@
             <div style="height:5px;background-color: #F5F5F5;border-top: 1px solid #E9E1E1;"></div>
             <div id="collapsible-cuerpo-productos-contenido" class="panel-collapse collapse in" role="tabpanel" aria-labelledby="encabezado-buscar-productos-contenido">
                 <div class="panel-body">
-
-
                     <div class="row">
                         <form id="addproducto" method="post" name="addproducto">
                             <div class="col-md-5 col-md-offset-3">
@@ -54,17 +52,6 @@
                             </div>
                         </form>
                     </div>
-
-                    <div class="panel-body">
-                        <div class="row">
-                            <div class="col-md-12">
-                                <div id="contenido-productos-lista">
-                                    <?php $this->renderPartial('_listaModuloProductos', array("model" => $model)); ?>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-
                 </div>
             </div>
         </div>
@@ -72,7 +59,7 @@
         <div class="panel panel-default">
             <div class="panel-heading head-desplegable" role="tab" id="encabezado-buscar-marcas-contenido">
                 <h4 class="panel-title">
-                    <a role="button" class="collapsed" id="" data-toggle="collapse" data-parent="#collapsibleset-marcas-contenido" href="#collapsible-cuerpo-marcas-contenido" aria-expanded="false" aria-controls="collapsible-cuerpo-marcas-contenido">
+                    <a role="button" class="collapsed" id="" data-toggle="collapse" data-parent="#collapsibleset-productos-contenido" href="#collapsible-cuerpo-marcas-contenido" aria-expanded="false" aria-controls="collapsible-cuerpo-marcas-contenido">
                         Agregar marca
                     </a>
                 </h4>
@@ -80,18 +67,37 @@
             <div style="height:5px;background-color: #F5F5F5;border-top: 1px solid #E9E1E1;"></div>
             <div id="collapsible-cuerpo-marcas-contenido" class="panel-collapse collapse" role="tabpanel" aria-labelledby="encabezado-buscar-marcas-contenido">
                 <div class="panel-body">
-
                     <?php $this->renderPartial('_listaMarcaCategorias', array("model" => $model, "arrayMarcas" => $arrayMarcas)); ?>
-                    
+                </div>
+            </div>
+        </div>
+
+        <div class="panel panel-default">
+            <div class="panel-heading head-desplegable" role="tab" id="encabezado-listaproductos">
+                <h4 class="panel-title">
+                    <a role="button" class="collapsed" id="" data-toggle="collapse" data-parent="#collapsibleset-productos-contenido" href="#collapsible-cuerpo-listaproductos" aria-expanded="false" aria-controls="collapsible-cuerpo-listaproductos">
+                        Productos agregados
+                    </a>
+                </h4>
+            </div>
+            <div style="height:5px;background-color: #F5F5F5;border-top: 1px solid #E9E1E1;"></div>
+            <div id="collapsible-cuerpo-listaproductos" class="panel-collapse collapse" role="tabpanel" aria-labelledby="encabezado-listaproductos">
+                <div class="panel-body">
                     <div class="row">
                         <div class="col-md-12">
-                            <?php echo CHtml::button('Guardar Contenidos', array('class' => "btn btn-default", "data-modulo" => $model->idModulo, 'data-role' => 'almacenar-html-producto-marcas')); ?>
+                            <div id="contenido-productos-lista">
+                                <?php $this->renderPartial('_listaModuloProductos', array("model" => $model)); ?>
+                            </div>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
-
     </div>
+</div>
 
+<div class="row">
+    <div class="col-md-12">
+        <?php echo CHtml::button('Guardar Contenidos', array('class' => "btn btn-default", "data-modulo" => $model->idModulo, 'data-role' => 'almacenar-html-producto-marcas')); ?>
+    </div>
 </div>

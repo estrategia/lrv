@@ -531,6 +531,13 @@ input#RegistroForm_condiciones[type="checkbox"] + label span {
     vertical-align: top;
     width: 24%;
 }
+.listaProductos .items2 li {
+    display: inline-block;
+    margin-bottom: 30px;
+    margin-top: 30px;
+    vertical-align: top;
+    width: 32%;
+}
 .content_product {
     min-height: 116px;
     color:#6c6363;
