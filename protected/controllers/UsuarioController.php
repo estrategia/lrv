@@ -1491,6 +1491,16 @@ class UsuarioController extends Controller {
             }
         }
     }
+    
+    public function actionBienvenida(){
+        $objUsuario = Usuario::model()->find(array(
+            'condition' => 'identificacionUsuario=:usuario',
+            'params' => array(
+                ':usuario'=> 1113618983
+            )
+        ));
+        $this->render("d_bienvenida", array('objUsuario' => $objUsuario, 'url' => $this->createUrl("/")));
+    }
 
     protected function gridDetallePedido($data, $row) {
         $clase = 'ui-btn ui-btn-inline ui-icon-view-circle ui-btn-icon-notext ui-icon-center ui-nodisc-icon';
