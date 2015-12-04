@@ -49,7 +49,6 @@
 
             <?php if ($dataprovider != null): ?> 
                 <?php if ($listCombos != null): ?>
-                    <p align="center">
                     <div id="slide-combos" class="owl-carousel slide-productos">
                         <?php foreach ($listCombos as $objCombo): ?>
                             <div class="item">
@@ -62,51 +61,6 @@
                             </div>
                         <?php endforeach; ?>
                     </div>
-                    </p>
-
-                    <?php /*     <section>
-                      <div id="carousel-example-generic" class="carousel slide" data-ride="carousel">
-                      <div class="carousel-inner" role="listbox">
-                      <div class="item active">
-                      <div class="container">
-                      <div class="col-md-12" style="margin-top:30px;">
-                      <?php $i=0;?>
-                      <?php foreach ($listCombos as $objCombo): ?>
-                      <div class="col-md-2 border-right">
-                      <?php
-
-                      $this->renderPartial('_d_comboElemento', array(
-                      'objCombo' => $objCombo,
-                      'objPrecio' => new PrecioCombo($objCombo),
-                      ));
-                      ?>
-
-                      </div>
-                      <?php $i++;?>
-                      <?php if($i==4):?>
-                      </div>
-                      </div>
-                      </div>
-                      <div class="item">
-                      <div class="container">
-                      <div class="col-md-12" style="margin-top:30px;">
-                      <?php endif;?>
-                      <?php endforeach; ?>
-
-                      </div>
-                      </div>
-                      </div>
-                      </div>
-                      <!-- Controls -->
-                      <a class="left carousel-control" href="#carousel-example-generic" role="button" data-slide="prev">
-                      <i class="prev-slide2"></i>
-                      </a>
-                      <a class="right carousel-control" href="#carousel-example-generic" role="button" data-slide="next">
-                      <i class="next-slide2"></i>
-                      </a>
-                      <!---->
-                      </div>
-                      </section> */ ?>
                 <?php endif; ?>
                 <div id="lista-productos" class="list_cuadricula">
                     <section>

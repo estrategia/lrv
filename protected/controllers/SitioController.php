@@ -177,7 +177,7 @@ class SitioController extends Controller {
             $arrayCiudad = explode("-", $ciudad);
             if (count($arrayCiudad) > 1) {
                 $sectores = SectorPuntoReferencia::model()->findAll(array(
-                    'with' => array('objSectorCiudad' => array('with'=>'objSector'), 'listPuntoReferencias'),
+                    'with' => array('objSectorCiudad' => array('with'=>'objSector')),
                     'condition' => 't.codigoCiudad=:ciudad AND t.estadoSectorReferencia=:estado',
                     'params' => array(
                         ':ciudad' => $arrayCiudad[0],
