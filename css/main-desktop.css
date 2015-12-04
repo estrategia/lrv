@@ -926,7 +926,7 @@ footer li a:hover{
 }
 .categorias li a:hover, .dropdown-menu.category > li:hover > a{
     color: #E90000;
-    background-color: #DADADA;
+    background-color: #ccc;
 }
 
 .prev-slide {
@@ -1063,7 +1063,10 @@ footer li a:hover{
     background: #dadada none repeat scroll 0 0;
     color: rgb(101, 101, 101);
     font-size: 17px;
-    padding: 0 0 11.5px 4%;
+    padding: 0 0 15px 4%;
+}
+.dropdown-menu.category > li:hover {
+    background-color: #ccc;
 }
 .dropdown-menu.category > li > a {
     padding: 3px 16px;
@@ -1649,7 +1652,7 @@ li.active .iconStep {
 .section-submenu {
     float: left;
     margin-right: 20px;
-    min-height: 154px;
+    min-height: 143px;
     padding: 10px 0;
     width: 243px;
 }
