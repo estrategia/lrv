@@ -43,7 +43,7 @@
                 </div>
                 <div class="space-1"></div>
                 <div class="row">
-                    <div class="col-sm-12">
+                    <div class="col-md-12">
                         <?php if ($pasoAnterior !== null): ?>
                             <button class="editar" id="btn-carropagar-anterior" data-origin="<?php echo $paso ?>" data-redirect="<?php echo $pasoAnterior ?>">Atr&aacute;s</button>
                         <?php endif; ?>
