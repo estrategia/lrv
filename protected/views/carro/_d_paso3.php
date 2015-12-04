@@ -63,16 +63,14 @@ $form = $this->beginWidget('CActiveForm', array(
 <input type="hidden" value="<?php echo $modelPago->idFormaPago ?>" id="FormaPagoForm_idFormaPago" name="FormaPagoForm[idFormaPago]">
 <?php echo $form->error($modelPago, 'idFormaPago', array('class' => 'text-danger center')); ?>
 
-<?php if ($modelPago->bono !== null): ?>
-    <div class="row">
-        <div class="col-md-12">
-            <div class="forma-pago">
-                <span>&bull;</span> Bono cliente fiel
+<?php  if ($modelPago->bono !== null): ?>
+<div class="bonoBody">
+                <h4>Bono cliente fiel</h4>
                 <div class="row">
                     <div class="col-md-12">
-                        <p>Valor de bono: <?php echo Yii::app()->numberFormatter->format(Yii::app()->params->formatoMoneda['patron'], $modelPago->bono['valor'], Yii::app()->params->formatoMoneda['moneda']); ?></p>
-                        <p>Vigencia inicial del bono: <?php echo $modelPago->bono['vigenciaInicio'] ?></p>
-                        <p>Vigencia final del bono: <?php echo $modelPago->bono['vigenciaFin'] ?></p>
+                        <p>Valor de bono: <span class="result_bono"><?php echo Yii::app()->numberFormatter->format(Yii::app()->params->formatoMoneda['patron'], $modelPago->bono['valor'], Yii::app()->params->formatoMoneda['moneda']); ?></span></p>
+                        <p>Vigencia inicial del bono: <span class="result_bono"><?php echo $modelPago->bono['vigenciaInicio'] ?></span></p>
+                        <p>Vigencia final del bono: <span class="result_bono"><?php echo $modelPago->bono['vigenciaFin'] ?></span></p>
                         <br>
                         <p>¿Desea utilizar el bono?</p>
                         <div class="radio">
@@ -83,9 +81,7 @@ $form = $this->beginWidget('CActiveForm', array(
                     </div>
                 </div>
             </div>
-        </div>
-    </div>
-<?php endif; ?>
+<?php endif;  ?>
 <?php $this->endWidget(); ?>
 
 <div class="modal fade" id="modal-formapago" tabindex="-1" role="dialog" aria-labelledby="modal-formapago-label">
