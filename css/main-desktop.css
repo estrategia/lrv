@@ -159,6 +159,7 @@
 .submenu .section-submenu > li {
     padding-left: 6px !important;
     color: #888888;
+    font-size: 13px;
 }
 .submenu .section-submenu > li a {
     color: #888888;
