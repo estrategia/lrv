@@ -1,6 +1,6 @@
 <h3 class="text-center title-desp">Confirmación del pedido</h3>
 <div class="row confirm">
-    <div class="col-md-12" style="margin-top:20px;">
+    <div class="" style="margin-top:20px;">
         <div class="col-md-4">
             <?php if ($objDireccion !== null): ?>
                 <p>Dirección de despacho:</p>
@@ -25,6 +25,7 @@
     </div>
 
     <div class="col-md-12" style="margin-top:20px;">
+        <div class="row">
         <div class="col-md-4">
             <p>Subtotal:</p>
             <p>Envío:</p>
@@ -57,6 +58,7 @@
             <?php if (Yii::app()->shoppingCart->getDiscountPrice(true) > 0): ?>
                 <p class="rojo"><?php echo Yii::app()->numberFormatter->format(Yii::app()->params->formatoMoneda['patron'], Yii::app()->shoppingCart->getDiscountPrice(true), Yii::app()->params->formatoMoneda['moneda']) ?></p>
             <?php endif; ?>
+        </div>
         </div>
     </div>
 </div>
@@ -100,7 +102,7 @@ $form = $this->beginWidget('CActiveForm', array(
                 <?php endforeach; ?>
             </tbody>
         </table>
-        <div class="col-md-12 coment">
+        <div class="coment">
             <div class="checkbox">
                 <?php echo $form->labelEx($modelPago, 'confirmacion'); ?>
                 <?php echo $form->checkBox($modelPago, 'confirmacion', array()); ?>
@@ -111,12 +113,12 @@ $form = $this->beginWidget('CActiveForm', array(
 </fieldset>
 
 
-<div class="col-md-12" style="margin-top:40px;">
+<div style="margin-top:40px;">
     <div class="row" style="background-color:#fff;">
-        <div class="col-md-6 col-md-offset-3">
+        <div class="col-sm-6 col-md-offset-3">
             <p class="text-center" style="margin-top:20px;color:#A4A4A4;font-size:20px;">TOTAL A PAGAR: <?php echo Yii::app()->numberFormatter->format(Yii::app()->params->formatoMoneda['patron'], Yii::app()->shoppingCart->getTotalCost(), Yii::app()->params->formatoMoneda['moneda']) ?></p>
         </div>
-        <div class="col-md-6 col-md-offset-3">
+        <div class="col-sm-6 col-md-offset-3">
             <button class="adicionar" style="width:100%;margin-bottom:26px;" id="btn-carropagar-siguiente" data-origin="<?php echo Yii::app()->params->pagar['pasos'][4] ?>" data-redirect="finalizar">Finalizar compra</button>
         </div>
     </div>
