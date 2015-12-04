@@ -36,7 +36,7 @@
 
        
         <div class="content_product">
-            <div class="line-bottom">
+            <div class="">
                 <p style="">
                     <?php if ($objPrecio->inicializado()):?>
                     <a href="<?php echo CController::createUrl('/catalogo/producto', array('producto' => $data->codigoProducto, 'descripcion' => $data->getCadenaUrl())) ?>" title='<?php echo $data->descripcionProducto ?>'>
