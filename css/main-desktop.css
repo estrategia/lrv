@@ -1,3 +1,52 @@
+.inner_tipoentrega {
+    line-height: 23px;
+    padding: 15px 18px 15px 70px;
+}
+.tipo-entrega.activo {
+    border: 1px solid #e90000;
+}
+.blocktipoentrega {
+    max-width: 800px;
+    margin: auto;
+}
+.ico_ubi.icoRecoger {
+    background: rgba(0, 0, 0, 0) url("../images/entrega/icon_recoger.png") repeat scroll 0 0;
+}
+.ico_ubi.icoRecoger:hover, .tipo-entrega:hover .ico_ubi.icoRecoger, .tipo-entrega.activo .ico_ubi.icoRecoger {
+    background: rgba(0, 0, 0, 0) url("../images/entrega/icon_recoger_hover.png") repeat scroll 0 0;
+}
+.ico_ubi.icoEntrega {
+    background: rgba(0, 0, 0, 0) url("../images/entrega/icon_domicilio.png") repeat scroll 0 0;
+}
+.ico_ubi.icoEntrega:hover, .tipo-entrega:hover .ico_ubi.icoEntrega, .tipo-entrega.activo .ico_ubi.icoEntrega {
+    background: rgba(0, 0, 0, 0) url("../images/entrega/icon_domicilio_hover.png") repeat scroll 0 0;
+}
+.tipo-entrega {
+    border: 1px solid #dadada;
+    border-radius: 0 15px 15px 0;
+    margin-left: 40px;
+    font-size: 23px;
+    cursor: pointer;
+}
+.ico_ubi {
+    background-size: 100% 100% !important;
+    display: block;
+    float: left;
+    height: 80px;
+    margin-bottom: -1px;
+    margin-left: -40px;
+    margin-top: -1px;
+    width: 80px;
+}
+.selectedUbicacion h3 {
+    font-size: 19px;
+}
+.selectedUbicacion h4 {
+    font-size: 15px;
+    margin-bottom: 20px;
+    margin-top: 25px;
+    text-align: center;
+}
 .result_bono {
     color: #e90000;
 }
@@ -1739,10 +1788,6 @@ a.clst_slct_prod.active{display: inline-block !important;}
 
 .tipo-entrega{
     border: 1px solid #dadada;
-}
-
-.tipo-entrega.activo{
-    border: 1px solid #000000;
 }
 
 .modal.map {
