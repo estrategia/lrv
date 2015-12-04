@@ -26,6 +26,10 @@
                         <a href="<?php echo $this->createUrl('/callcenter/contenido/editar', array('idModulo' => $params['model']->idModulo, 'opcion'=>'contenido')) ?>" class="btn btn-primary <?php echo ($params['opcion']=="contenido" ? "active" : "") ?>" >Contenido</a>
                         <a href="<?php echo $this->createUrl('/callcenter/contenido/editar', array('idModulo' => $params['model']->idModulo, 'opcion'=>'categoria')) ?>" class="btn btn-primary <?php echo ($params['opcion']=="categoria" ? "active" : "") ?>" >Categoria</a>
                     </div>
+                    <br/>
+                    <?php if($params['model']->tipo == ModulosConfigurados::TIPO_GRUPO_MODULOS):?>
+                        <?php echo Yii::app()->params->callcenter['modulosConfigurados']['urlModulosConfigurados']?><?php echo $params['model']->idModulo ?>
+                    <?php endif;?>    
                 </div>
 
                 <div id="div-detalle-pedido" style="padding-top: 20px">

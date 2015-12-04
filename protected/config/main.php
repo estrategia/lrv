@@ -451,6 +451,7 @@ return array(
                     0 => 'Inactivo',
                     1 => 'Activo'
                 ),
+                'urlModulosConfigurados' => '/contenido/ver/tipo/grupo/contenido/'
             ),
             'categorias' => array(
                 'visible'  => array(
