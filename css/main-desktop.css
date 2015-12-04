@@ -1,8 +1,17 @@
+.btnQuitarComparar.itm_ico,.btnComparar.itm_ico {
+    background: #ea0001 none repeat scroll 0 0;
+    color: #fff;
+    text-align: center;
+}
+.btnComparar.itm_ico a span,.btnQuitarComparar.itm_ico a span {
+    color: #fff;
+    padding-top: 6px;
+}
 .content_product p {
     margin: 0;
 }
 .ranking-list img {
-    width: 17%;
+    width: 26px;
 }
 .content_product a {
     font-size: 14px;
@@ -78,7 +87,7 @@
     color: #555 !important;
     font-size: 20px;
 }
-.btnComparar {
+.btnComparar,.btnQuitarComparar {
     margin-top: 5px;
 }
 .list_lineal .iconos_right {
@@ -958,10 +967,12 @@ footer li a:hover{
     text-decoration: none;
 }
 .button {
-    background-color: #EA0001;
-    color: #FFF;
-    padding: 6px 12px;
+    background-color: #ea0001;
+    color: #fff;
     cursor: pointer;
+    margin: 0 15px;
+    font-size: 18px;
+    padding: 2px 12px;
     text-align: center;
 }
 .button-resena {
