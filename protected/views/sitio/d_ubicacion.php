@@ -5,9 +5,12 @@
             <h3>SELECCIONA EL TIPO DE ENTREGA Y LA UBICACI&Oacute;N DONDE DESEAS QUE ENTREGUEMOS TU PEDIDO</h3>
         </div>
         <div class="blocktipoentrega">
-        <div class="row">
-            <div class="col-md-6">
-                    <h4>TIPO DE ENTREGA</h4>
+            <div class="row">
+                <div class="col-sm-6"><h4>TIPO DE ENTREGA</h4></div>
+                <div class="col-sm-6"><h4>UBICACI&Oacute;N DE ENTREGA</h4></div>
+            </div>
+        <div class="row content_ubi">
+            <div class="col-md-6">                    
                     <div data-role="tipoentrega" data-tipo="<?php echo Yii::app()->params->entrega['tipo']['presencial']; ?>" class="tipo-entrega<?php echo ($tipoEntrega == Yii::app()->params->entrega['tipo']['presencial'] ? " activo" : "") ?>">
                         <div class="ico_ubi icoRecoger"></div>
                         <div class="inner_tipoentrega">Quiero pasar por el pedido</div>
@@ -22,18 +25,18 @@
             </div>
 
             <div class="col-md-6">
-                <h4>UBICACI&Oacute;N DE ENTREGA</h4>
-                        <?php echo CHtml::htmlButton('Usar la ubicación de tu dispositivo', array('class' => 'btn btn-danger btn-ciudad', 'data-role' => 'ubicacion-gps')); ?>
+                
+                        <?php echo CHtml::htmlButton('<span class="glyphicon glyphicon-screenshot"></span>  Usar la ubicación de tu dispositivo', array('class' => 'btn  btn-ciudad', 'data-role' => 'ubicacion-gps')); ?>
                 <div class="space-1"></div>
                 <?php if (!Yii::app()->user->isGuest): ?>
-                            <?php echo CHtml::htmlButton('Usar tus direcciones', array('class' => 'btn btn-danger btn-ciudad', 'data-role' => 'ubicacion-direccion')); ?>
+                            <?php echo CHtml::htmlButton('<span class="glyphicon glyphicon-folder-open"></span>   Usar tus direcciones', array('class' => 'btn  btn-ciudad', 'data-role' => 'ubicacion-direccion')); ?>
                     <div class="space-1"></div>
                 <?php endif; ?>
-                        <?php echo CHtml::htmlButton('Buscar ubicaci&oacute;n', array('class' => 'btn btn-danger btn-ciudad', 'data-role' => 'ubicacion-mapa')); ?>
+                        <?php echo CHtml::htmlButton('<span class="glyphicon glyphicon-map-marker"></span>  Buscar ubicaci&oacute;n', array('class' => 'btn  btn-ciudad', 'data-role' => 'ubicacion-mapa')); ?>
                 <div class="space-1"></div>
                 <?php if ($objSectorCiudad != null): ?>
                     <div class="space-1"></div>
-                            <?php echo CHtml::link('Continuar en ' . $this->sectorName, $urlRedirect, array('class' => 'btn btn-warning btn-ciudad', 'data-mini' => 'true', 'data-ajax' => 'false')); ?>
+                            <?php echo CHtml::link('Continuar en ' . $this->sectorName, $urlRedirect, array('class' => 'btn  btn-ciudad2', 'data-mini' => 'true', 'data-ajax' => 'false')); ?>
                     </div>
                 <?php endif; ?>
                 <div class="space-1"></div>
