@@ -1643,10 +1643,10 @@ li.active .iconStep {
     width: 80% !important;
 }
 .section-submenu {
-    /*min-height: 250px;*/
-    padding: 10px 0;
-    width: 235px;
     float: left;
+    margin-right: 30px;
+    padding: 10px 0;
+    width: 160px;
 }
 .title-submenu{
     border-bottom: 1px solid;
