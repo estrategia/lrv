@@ -63,7 +63,7 @@
                         <select class="form-control ciudades" data-role="ciudad-despacho-map" style="width: 100%">
                             <option value="">Seleccione ...</option>
                             <?php foreach ($listCiudadesSectores as $ciudad): ?>
-                                <option data-latitud="<?php #echo $ciudad->latitudGoogle  ?>" data-longitud="<?php #echo $ciudad->longitudGoogle  ?>" value="<?php echo $ciudad->codigoCiudad ?>-0"><?php echo $ciudad->nombreCiudad ?></option>
+                                <option data-latitud="<?php echo $ciudad->latitudGoogle  ?>" data-longitud="<?php echo $ciudad->longitudGoogle  ?>" value="<?php echo $ciudad->codigoCiudad ?>-0"><?php echo $ciudad->nombreCiudad ?></option>
                             <?php endforeach; ?>
                         </select>
                     </div>
