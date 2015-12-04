@@ -34,12 +34,7 @@
                 <?php endif; ?>
                         <?php echo CHtml::htmlButton('<span class="glyphicon glyphicon-map-marker"></span>  Buscar ubicaci&oacute;n', array('class' => 'btn  btn-ciudad', 'data-role' => 'ubicacion-mapa')); ?>
                 <div class="space-1"></div>
-                <?php if ($objSectorCiudad != null): ?>
-                    <div class="space-1"></div>
-                            <?php echo CHtml::link('Continuar en ' . $this->sectorName, $urlRedirect, array('class' => 'btn  btn-ciudad2', 'data-mini' => 'true', 'data-ajax' => 'false')); ?>
-                    </div>
-                <?php endif; ?>
-                <div class="space-1"></div>
+                
             </div>
         </div>
         </div>
@@ -48,8 +43,12 @@
                 <input id="ubicacion-seleccion-direccion" type="hidden" name="direccion" value="">
                 <input id="ubicacion-seleccion-ciudad" type="hidden" name="ciudad" value="">
                 <input id="ubicacion-seleccion-sector" type="hidden" name="sector" value="">
-                <div class="center">
-                        <button data-role="ubicacion-seleccion" class="btn btn-default" type="button">Aceptar</button>
+                <div class="center" style="margin-bottom: 40px; margin-top: 40px;">
+                        <button data-role="ubicacion-seleccion" class="btn btn-aceptar" type="button">Aceptar</button>
+                        <?php if ($objSectorCiudad != null): ?>
+                            <?php echo CHtml::link('<span class="glyphicon glyphicon-ok-sign"></span> Continuar en ' . $this->sectorName, $urlRedirect, array('class' => 'btn  btn-ciudad2', 'data-mini' => 'true', 'data-ajax' => 'false')); ?>
+                    
+                <?php endif; ?>
                 </div>
             </form>
     </section>
