@@ -1,3 +1,12 @@
+.descripciones .iconos_right .itm_ico {
+    display: inline-block;
+    margin-right: 5px;
+    vertical-align: top;
+}
+.descripciones .iconos_right {
+    float: none;
+    position: inherit;
+}
 .content_ubi .btn-ciudad span {
     margin-right: 7px;
 }
@@ -1364,10 +1373,10 @@ label{
 }
 
 .min {
-    background-color: #EA0001;
-    color: #fff;
-    border: 1px solid #EA0001 !important;
-    height:27px;
+    background-color: #fff;
+    border: 1px solid #ccc !important;
+    color: #ea0001;
+    height: 27px;
 }
 .select-cantidad{
     padding-right: 5px;
