@@ -37,12 +37,12 @@
        
         <div class="content_product">
             <div class="line-bottom">
-                <p style="min-height: 41px">
+                <p style="">
                     <?php if ($objPrecio->inicializado()):?>
                     <a href="<?php echo CController::createUrl('/catalogo/producto', array('producto' => $data->codigoProducto, 'descripcion' => $data->getCadenaUrl())) ?>" title='<?php echo $data->descripcionProducto ?>'>
                     <?php endif;?>
-                        <?php if (strlen($data->descripcionProducto) > 20): ?>
-                            <?php echo substr($data->descripcionProducto, 0, 20) . "..." ?>
+                        <?php if (strlen($data->descripcionProducto) > 19): ?>
+                            <?php echo substr($data->descripcionProducto, 0, 19) . "..." ?>
                         <?php else: ?>
                             <?php echo $data->descripcionProducto ?>
                         <?php endif; ?>
