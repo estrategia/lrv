@@ -1,3 +1,7 @@
+.main_menu ul .title-viewmore_category > a {
+    color: #4f4f4f;
+    text-decoration: underline;
+}
 #loading{
     margin-left: -120px;
 }
