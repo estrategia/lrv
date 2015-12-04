@@ -1,3 +1,13 @@
+.content_product .line-bottom p {
+    margin: 0;
+}
+.ranking-list img {
+    width: 17%;
+}
+.content_product .line-bottom a {
+    font-size: 14px;
+    color: #555;
+}
 #form-pago-pago .forma-pago.activo {
     border: 1px solid red;
     color: red;
@@ -404,7 +414,7 @@ input#RegistroForm_condiciones[type="checkbox"] + label span {
     width: 24%;
 }
 .content_product {
-    min-height: 180px;
+    min-height: 143px;
     color:#6c6363;
 }
 .prices_status {
@@ -829,25 +839,25 @@ footer li a:hover{
     text-align: center;
 }
 .content-txt a {
-    color: #9f9f9f;
+    color: #555;
 }
 .content-txt a:hover {
     text-decoration: none;
 }
 .content-txt span{
-    color: #9f9f9f;
+    color: #555;
 }
 .content-txt2{
     text-align: left;
 }
 .content-txt2 a {
-    color: #9f9f9f;
+    color: #555;
 }
 .content-txt2 a:hover {
     text-decoration: none;
 }
 .content-txt2 span{
-    color: #9f9f9f;
+    color: #555;
 }
 .main_menu .nav-pills > li {
     height: 55px;
