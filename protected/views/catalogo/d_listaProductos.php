@@ -119,7 +119,7 @@
                             'template' => "{summary}<ul class='listaProductos'>{items}</ul><div class='clear'></div>{pager}",
                             'itemView' => '_d_productoElemento',
                             'beforeAjaxUpdate' => new CJavaScriptExpression("function() {Loading.show();}"),
-                            'afterAjaxUpdate' => new CJavaScriptExpression("function(id,data) { Loading.hide(); raty();$('.pop_codigo').popover(); listaProductoVistaActualizar();}"),
+                            'afterAjaxUpdate' => new CJavaScriptExpression("function(id,data) { Loading.hide(); raty();$('[data-toggle=\"popover\"]').popover();  listaProductoVistaActualizar();}"),
                             'pager' => array('class' => 'CLinkPager', 'header' => ''),
                         ));
                         ?>

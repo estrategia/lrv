@@ -37,9 +37,18 @@ class CatalogoController extends Controller {
             $objCategoria->nombreCategoriaTienda
         );
 
+        $modulosConfigurados = ModulosConfigurados::getModulos($this->objSectorCiudad, Yii::app()->shoppingCart->getCodigoPerfil(), UbicacionModulos::UBICACION_ESCRITORIO_DIVISION, $division);
+
+        $productos = array();
+        if ($modulosConfigurados == null) {
+            // buscar productos top 
+           $productos =  Categoria::productosDivision($division,$this->isMobile);
+         
+        }
         $this->render('d_division', array(
             'objCategoria' => $objCategoria,
-            'listModulos' => ModulosConfigurados::getModulos($this->objSectorCiudad, Yii::app()->shoppingCart->getCodigoPerfil(), UbicacionModulos::UBICACION_ESCRITORIO_DIVISION, $division)
+            'listModulos' => $modulosConfigurados,
+            'listProductos' => $productos
         ));
     }
 
@@ -1995,17 +2004,17 @@ class CatalogoController extends Controller {
             $this->render('d_listaProductos', $parametrosVista);
         }
     }
-    
+
     public function actionPromocion($nombre, $elemento) {
         if (!$this->isMobile) {
             $this->actionIndex();
         }
-        
+
         $promocion = $nombre;
         if (!isset(Yii::app()->params->promociones[$promocion]) && !isset(Yii::app()->params->promociones[$promocion][$elemento])) {
             throw new CHttpException(404, 'Promoci&oacute;n no existe.');
         }
-        
+
         $fActual = new DateTime;
         $fInicio = DateTime::createFromFormat('Y-m-d H:i:s', Yii::app()->params->promociones[$promocion]['fechaInicio']);
         $fFin = DateTime::createFromFormat('Y-m-d H:i:s', Yii::app()->params->promociones[$promocion]['fechaFin']);
@@ -2029,7 +2038,7 @@ class CatalogoController extends Controller {
                     ':activo' => 1,
                 )
             );
-            
+
             $criteria['condition'] .= " AND t.codigoProducto IN (" . implode(",", $listaCodigos) . ")";
             $criteria['with']['listSaldos'] = array('on' => 'listSaldos.codigoCiudad=:ciudad AND listSaldos.codigoSector=:sector OR listSaldos.idProductoSaldos IS NULL');
             $criteria['with']['listPrecios'] = array('on' => 'listPrecios.codigoCiudad=:ciudad AND listPrecios.codigoSector=:sector OR listPrecios.idProductoPrecios IS NULL');
@@ -2068,7 +2077,7 @@ class CatalogoController extends Controller {
         }
 
         $codigoPerfil = Yii::app()->shoppingCart->getCodigoPerfil();
-        
+
         $parametrosVista = array(
             'listProductos' => $listProductos,
             'listCombos' => array(),

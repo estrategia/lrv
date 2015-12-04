@@ -109,6 +109,7 @@
       .ad-gallery .ad-slideshow-controls .ad-slideshow-start, .ad-gallery .ad-slideshow-controls .ad-slideshow-stop {
         padding-left: 5px;
         cursor: pointer;
+        display: none
       }
       .ad-gallery .ad-slideshow-controls .ad-slideshow-countdown {
         padding-left: 5px;
@@ -117,7 +118,7 @@
     .ad-gallery .ad-slideshow-running .ad-slideshow-start {
       cursor: default;
       font-style: italic;
-    }
+    } 
   .ad-gallery .ad-nav {
     width: 100%;
     position: relative;

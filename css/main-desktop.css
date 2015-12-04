@@ -1,3 +1,130 @@
+.descripciones .iconos_right .itm_ico {
+    display: inline-block;
+    margin-right: 5px;
+    vertical-align: top;
+}
+.descripciones .iconos_right {
+    float: none;
+    position: inherit;
+}
+.content_ubi .btn-ciudad span {
+    margin-right: 7px;
+}
+.btn.btn-ciudad2 {
+    background: #ffdf1e none repeat scroll 0 0;
+    color: #333;
+    font-size: 17px;
+    font-weight: bold;
+    padding: 10px 15px;
+}
+
+.btn.btn-aceptar {
+    background: #f4f4f4 none repeat scroll 0 0;
+    color: #444;
+    font-size: 17px;
+    font-weight: bold;
+    padding: 10px 15px;
+}
+.btn.btn-aceptar:hover {
+    background: #e90000;
+    color: #fff;
+    }
+.btn-ciudad {
+    background: #f4f4f4 none repeat scroll 0 0;
+    color: #444;
+    font-size: 16px;
+    font-weight: bold;
+    padding: 13px;
+    width: 100%;
+}
+.btn-ciudad:hover {
+    background: #ea0001 none repeat scroll 0 0;
+    color: #fff;
+    font-weight: normal;
+}
+.blocktipoentrega .content_ubi .col-md-6:first-child {
+    border-right: 1px solid #e90000;
+}
+.inner_tipoentrega {
+    line-height: 23px;
+    padding: 15px 18px 15px 70px;
+}
+.tipo-entrega.activo {
+    border: 1px solid #e90000;
+}
+.blocktipoentrega {
+    max-width: 800px;
+    margin: auto;
+}
+.ico_ubi.icoRecoger {
+    background: rgba(0, 0, 0, 0) url("../images/entrega/icon_recoger.png") repeat scroll 0 0;
+}
+.ico_ubi.icoRecoger:hover, .tipo-entrega:hover .ico_ubi.icoRecoger, .tipo-entrega.activo .ico_ubi.icoRecoger {
+    background: rgba(0, 0, 0, 0) url("../images/entrega/icon_recoger_hover.png") repeat scroll 0 0;
+}
+.ico_ubi.icoEntrega {
+    background: rgba(0, 0, 0, 0) url("../images/entrega/icon_domicilio.png") repeat scroll 0 0;
+}
+.ico_ubi.icoEntrega:hover, .tipo-entrega:hover .ico_ubi.icoEntrega, .tipo-entrega.activo .ico_ubi.icoEntrega {
+    background: rgba(0, 0, 0, 0) url("../images/entrega/icon_domicilio_hover.png") repeat scroll 0 0;
+}
+.tipo-entrega {
+    border: 1px solid #dadada;
+    border-radius: 0 15px 15px 0;
+    margin-left: 40px;
+    font-size: 23px;
+    cursor: pointer;
+}
+.ico_ubi {
+    background-size: 100% 100% !important;
+    display: block;
+    float: left;
+    height: 80px;
+    margin-bottom: -1px;
+    margin-left: -40px;
+    margin-top: -1px;
+    width: 80px;
+}
+.selectedUbicacion h3 {
+    font-size: 19px;
+}
+.selectedUbicacion h4 {
+    font-size: 15px;
+    margin-bottom: 20px;
+    margin-top: 25px;
+    text-align: center;
+}
+.result_bono {
+    color: #e90000;
+}
+.bonoBody > h4 {
+    color: #e90000;
+}
+#btn-carropagar-siguiente {
+    float: right;
+}
+#btn-carropagar-anterior {
+    float: left;
+}
+.btnQuitarComparar.itm_ico,.btnComparar.itm_ico {
+    background: #ea0001 none repeat scroll 0 0;
+    color: #fff;
+    text-align: center;
+}
+.btnComparar.itm_ico a span,.btnQuitarComparar.itm_ico a span {
+    color: #fff;
+    padding-top: 6px;
+}
+.content_product p {
+    margin: 0;
+}
+.ranking-list img {
+    width: 26px;
+}
+.content_product a {
+    font-size: 14px;
+    color: #555;
+}
 #form-pago-pago .forma-pago.activo {
     border: 1px solid red;
     color: red;
@@ -12,6 +139,7 @@
 #form-pago-pago .forma-pago {
     background: #fff none repeat scroll 0 0;
     color: #555;
+    cursor: pointer;
     margin-bottom: 12px;
     padding: 5px;
     text-align: left;
@@ -68,7 +196,7 @@
     color: #555 !important;
     font-size: 20px;
 }
-.btnComparar {
+.btnComparar,.btnQuitarComparar {
     margin-top: 5px;
 }
 .list_lineal .iconos_right {
@@ -100,12 +228,16 @@
     top: 0;
     z-index: 1;
 }
-.iconos_right .itm_ico {
+.iconos_right .itm_ico,.itm_ico>.cod_puntos {
     margin-bottom: 5px !important;
 }
 .iconos_right .itm_ico:last-child {
     margin-bottom: 0 !important;
 }
+/*
+.itm_icon {
+    margin-bottom: 5px !important;
+}*/
 .cod_puntos span{
     color: #fff !important;
 }
@@ -113,11 +245,11 @@
     background: #00c2e2 none repeat scroll 0 0;
     color: #fff;
     font-size: 15px;
-    height: 40px;
+    height: 30px;
     line-height: 16px;
     padding-top: 5px;
     text-align: center;
-    width: 40px;
+    width: 30px;
 }
 .cod_especial {
     display: block;
@@ -400,7 +532,7 @@ input#RegistroForm_condiciones[type="checkbox"] + label span {
     width: 24%;
 }
 .content_product {
-    min-height: 180px;
+    min-height: 116px;
     color:#6c6363;
 }
 .prices_status {
@@ -423,9 +555,17 @@ input#RegistroForm_condiciones[type="checkbox"] + label span {
     background: #ff6316 none repeat scroll 0 0;
     color: #fff;
     font-size: 9px;
-    height: 40px;
+    height: 30px;
     text-align: center;
-    width: 40px;
+    width: 30px;
+}
+.iconos_right .itm_ico {
+    display: block;
+    height: 30px;
+    width: 30px;
+}
+.iconos_right .itm_ico  img {
+    max-width: 100%;
 }
 .fraccion_text > span {
     color: #fff !important;
@@ -433,7 +573,7 @@ input#RegistroForm_condiciones[type="checkbox"] + label span {
     font-size: 20px;
     font-weight: bold;
     line-height: 15px;
-    padding-top: 7px;
+    padding-top: 9px;
 }
 .btn-addless-cantidad {
     background: rgba(0, 0, 0, 0) none repeat scroll 0 0;
@@ -455,6 +595,7 @@ input#RegistroForm_condiciones[type="checkbox"] + label span {
     background: #EA0001 none repeat scroll 0 0;
     border: 0 none;
     border-radius: 0;
+    margin-top: 5px;
 }
 .carro-descripcion  a {
     color: #666666;
@@ -733,7 +874,7 @@ header {
 .price{
     font-size: 17px;
     color: #EA0001 !important;
-    padding:5px 0;
+   /* padding:5px 0 0;*/
 }
 
 .txt{
@@ -817,25 +958,25 @@ footer li a:hover{
     text-align: center;
 }
 .content-txt a {
-    color: #9f9f9f;
+    color: #555;
 }
 .content-txt a:hover {
     text-decoration: none;
 }
 .content-txt span{
-    color: #9f9f9f;
+    color: #555;
 }
 .content-txt2{
     text-align: left;
 }
 .content-txt2 a {
-    color: #9f9f9f;
+    color: #555;
 }
 .content-txt2 a:hover {
     text-decoration: none;
 }
 .content-txt2 span{
-    color: #9f9f9f;
+    color: #555;
 }
 .main_menu .nav-pills > li {
     height: 55px;
@@ -936,10 +1077,12 @@ footer li a:hover{
     text-decoration: none;
 }
 .button {
-    background-color: #EA0001;
-    color: #FFF;
-    padding: 6px 12px;
+    background-color: #ea0001;
+    color: #fff;
     cursor: pointer;
+    margin: 0 15px;
+    font-size: 16px;
+    padding: 2px 12px;
     text-align: center;
 }
 .button-resena {
@@ -958,9 +1101,9 @@ footer li a:hover{
     background-color: #d2cece;
     color: #6c6363;
     display: block;
-    font-size: 22px;
+    font-size: 19px;
     height: 40px;
-    line-height: 46px;
+    line-height: 36px;
     text-align: center;
     width: 40px;
 }
@@ -1060,7 +1203,7 @@ footer li a:hover{
 
 .line-bottom{
     border-bottom: 1px dashed #9F9F9F;
-    padding: 5px 0;
+    padding: 0 0 5px;
 }
 .increment {
     border: 1px solid #ccc;
@@ -1230,10 +1373,10 @@ label{
 }
 
 .min {
-    background-color: #EA0001;
-    color: #fff;
-    border: 1px solid #EA0001 !important;
-    height:27px;
+    background-color: #fff;
+    border: 1px solid #ccc !important;
+    color: #ea0001;
+    height: 27px;
 }
 .select-cantidad{
     padding-right: 5px;
@@ -1542,9 +1685,7 @@ li.active .iconStep {
     height: auto;
 }
 
-.btn-ciudad{
-    width: 100%;
-}
+
 
 .list-view .items-float .view
 {       
@@ -1694,10 +1835,6 @@ a.clst_slct_prod.active{display: inline-block !important;}
     border: 1px solid #dadada;
 }
 
-.tipo-entrega.activo{
-    border: 1px solid #000000;
-}
-
 .modal.map {
     position: fixed;
     top: 0;
@@ -1841,4 +1978,8 @@ img.ajustada {
     display: block;
     margin: auto;
     max-width: 100%;
+}
+
+.width-thumb-owl{
+    width: 60%;
 }

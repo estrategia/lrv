@@ -45,9 +45,9 @@
                                             </div>
                                             <div class="col-md-7 content-category">
                                                 <div class="controls">
-                                                    <span class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
-                                                        Todas las categor&iacute;as
-                                                        <i><a href="#"><img src="<?php echo Yii::app()->request->baseUrl; ?>/images/desktop/ico-filtro-categorias.png"></a></i></span>
+                                                    <span class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false" data-label-placement>
+                                                        Todas las categor&iacute;as</span>
+                                                        <a href="#" data-toggle="dropdown" class="dropdown-toggle"><i><img src="<?php echo Yii::app()->request->baseUrl; ?>/images/desktop/ico-filtro-categorias.png"></i></a>
                                                     <ul class="dropdown-menu todas-categorias" aria-labelledby="categorias">
                                                         <?php foreach ($this->categorias as $categoria): ?>
                                                             <li>

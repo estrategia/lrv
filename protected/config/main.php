@@ -423,7 +423,9 @@ return array(
                 'ubicacionModulos' => array(
                     1 => 'Inicio',
                     2 => 'División',
-                    3 => 'Categoria'
+                    3 => 'Categoria',
+                    10 => 'Móvil Home',
+                    11 => 'Móvil Inicio'
                 ),
                 'diasSemana' => array(
                     0 => 'Domingo',
