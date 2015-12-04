@@ -1,6 +1,25 @@
 .content_ubi .btn-ciudad span {
     margin-right: 7px;
 }
+.btn.btn-ciudad2 {
+    background: #ffdf1e none repeat scroll 0 0;
+    color: #333;
+    font-size: 17px;
+    font-weight: bold;
+    padding: 10px 15px;
+}
+
+.btn.btn-aceptar {
+    background: #f4f4f4 none repeat scroll 0 0;
+    color: #444;
+    font-size: 17px;
+    font-weight: bold;
+    padding: 10px 15px;
+}
+.btn.btn-aceptar:hover {
+    background: #e90000;
+    color: #fff;
+    }
 .btn-ciudad {
     background: #f4f4f4 none repeat scroll 0 0;
     color: #444;
