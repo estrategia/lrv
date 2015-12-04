@@ -125,7 +125,7 @@
                                                             <?php endif; ?>
                                                         <?php endfor; ?>
                                                         <?php if(count($subcategoria->listCategoriasHijasMenu)>5):?>
-                                                                <li class='title-submenu'><?php echo CHtml::link("Ver más...", CController::createUrl('/catalogo/division', array('division' => $subcategoria->idCategoriaTienda))); ?></li>
+                                                                <li class='title-viewmore_category'><?php echo CHtml::link("Ver más...", CController::createUrl('/catalogo/division', array('division' => $subcategoria->idCategoriaTienda))); ?></li>
                                                         <?php endif;?>        
                                                     </div>
                                                 <?php endforeach; ?>
