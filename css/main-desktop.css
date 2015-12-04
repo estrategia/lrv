@@ -1,6 +1,9 @@
 .main_menu ul .title-viewmore_category > a {
-    color: #4f4f4f;
+    color: #4f4f4f !important;
     text-decoration: underline;
+}
+.main_menu ul .title-viewmore_category > a:hover {
+    color: #ea0001 !important;
 }
 #loading{
     margin-left: -120px;
