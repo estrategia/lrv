@@ -486,6 +486,7 @@ input#RegistroForm_condiciones[type="checkbox"] + label span {
     background: #EA0001 none repeat scroll 0 0;
     border: 0 none;
     border-radius: 0;
+    margin-top: 5px;
 }
 .carro-descripcion  a {
     color: #666666;
