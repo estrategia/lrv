@@ -427,9 +427,17 @@ input#RegistroForm_condiciones[type="checkbox"] + label span {
     background: #ff6316 none repeat scroll 0 0;
     color: #fff;
     font-size: 9px;
-    height: 40px;
+    height: 30px;
     text-align: center;
-    width: 40px;
+    width: 30px;
+}
+.iconos_right .itm_ico {
+    display: block;
+    height: 30px;
+    width: 30px;
+}
+.iconos_right .itm_ico  img {
+    max-width: 100%;
 }
 .fraccion_text > span {
     color: #fff !important;
@@ -437,7 +445,7 @@ input#RegistroForm_condiciones[type="checkbox"] + label span {
     font-size: 20px;
     font-weight: bold;
     line-height: 15px;
-    padding-top: 7px;
+    padding-top: 9px;
 }
 .btn-addless-cantidad {
     background: rgba(0, 0, 0, 0) none repeat scroll 0 0;
