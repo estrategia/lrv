@@ -1,7 +1,7 @@
 <section>
     <div class="container-fluid">
         <div class="row">
-            <?php $dim = 12 / count($objModulo->listImagenesBanners) ?>
+            <?php $dim = round( 12 / count($objModulo->listImagenesBanners)) ?>
             <?php foreach ($objModulo->listImagenesBanners as $imagenes): ?>
                 <div class="col-md-<?php echo $dim ?> padding6px">
                     <?php if ($imagenes->tipoContenido == 1): ?>

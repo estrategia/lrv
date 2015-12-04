@@ -118,7 +118,7 @@
             </div>
         <?php elseif (!$objPrecio->inicializado()): ?>
             <div class="col-md-12">
-                <?php echo CHtml::link('<div class="button">Producto Agotado</div>', '#', array('disabled' => 'true')); ?>
+                <?php echo CHtml::link('<div class="button">Agotado</div>', '#', array('disabled' => 'true')); ?>
             </div>
         <?php else: ?>
             <div class="botones-list">
