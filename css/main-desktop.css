@@ -1063,7 +1063,7 @@ footer li a:hover{
     background: #dadada none repeat scroll 0 0;
     color: rgb(101, 101, 101);
     font-size: 17px;
-    padding: 0 0 15px 4%;
+    padding: 9px 0 9px 4%;
 }
 .dropdown-menu.category > li:hover {
     background-color: #ccc;
