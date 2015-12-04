@@ -97,7 +97,7 @@
                     <span>Impuestos incluidos <?php echo Yii::app()->numberFormatter->format(Yii::app()->params->formatoMoneda['patron'], Yii::app()->shoppingCart->getTaxPrice(), Yii::app()->params->formatoMoneda['moneda']) ?></span><br/>
                 <?php endif; ?>
                 <?php if (Yii::app()->shoppingCart->getDiscountPrice(true) > 0): ?>
-                    <span style="color:#EA0001;">Su ahorro<?php echo Yii::app()->numberFormatter->format(Yii::app()->params->formatoMoneda['patron'], Yii::app()->shoppingCart->getDiscountPrice(true), Yii::app()->params->formatoMoneda['moneda']) ?></span>
+                    <span style="color:#EA0001;">Su ahorro  <?php echo Yii::app()->numberFormatter->format(Yii::app()->params->formatoMoneda['patron'], Yii::app()->shoppingCart->getDiscountPrice(true), Yii::app()->params->formatoMoneda['moneda']) ?></span>
                 <?php endif; ?>
 
                 <?php if (!$lectura) : ?>
