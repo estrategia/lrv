@@ -8,8 +8,11 @@
 
 <div class="ui-content">
     <?php echo CHtml::htmlButton('Usar la ubicación de tu dispositivo', array('class' => 'ui-btn ui-corner-all ui-btn-icon-left ui-icon-ubi ui-alt-icon c_btn_ub', 'onclick' => 'ubicacionGPS();')); ?>
-    <h3 class="center" style="font-weight:bold;">ó</h3>
 
+    <?php if (!Yii::app()->user->isGuest): ?>
+        <?php echo CHtml::htmlButton('Usar tus direcciones', array('class' => 'ui-btn ui-btn-r ui-corner-all ui-alt-icon', 'data-role' => 'ubicacion-direccion')); ?>
+    <?php endif; ?>
+   
     <div data-role="collapsible" data-theme="n" data-collapsed-icon="carat-d" data-expanded-icon="carat-u" class="ui-nodisc-icon cbtn_ub_ciudad">
         <h1 class="cbtn_ubcd_titulo">Seleccionar ciudad</h1>
         <form class="btn_src_bsq_ubi">
@@ -54,10 +57,10 @@
             <?php endforeach; ?>
         </div>
     </div>
-    
-    <?php if($objSectorCiudad!=null):?>
+
+    <?php if ($objSectorCiudad != null): ?>
         <?php echo CHtml::link('Continuar en ' . $this->sectorName, $this->createUrl('/sitio/inicio'), array('class' => 'ui-btn ui-corner-all ui-shadow ui-btn-n btn_add_lst_pr', 'data-mini' => 'true', 'data-ajax' => 'false')); ?>
-    <?php endif;?>
+    <?php endif; ?>
 </div>
 
 <div data-role="popup" id="popup-ubicacion-gps" data-dismissible="false" data-position-to="window" data-theme="a">

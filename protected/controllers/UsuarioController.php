@@ -1174,7 +1174,7 @@ class UsuarioController extends Controller {
     }
 
     public function actionDireccionesUbicacion() {
-        $contenido = "prueba";
+        $contenido = "NA";
 
         if (Yii::app()->user->isGuest) {
             $contenido = "No hay usuario autenticado";
@@ -1183,11 +1183,15 @@ class UsuarioController extends Controller {
             if(empty($listDirecciones)){
                 $contenido = "No hay direcciones de despacho registradas";
             }else{
-                $contenido = $this->renderPartial('d_direcciones', array('listDirecciones' => $listDirecciones, 'modal'=>true), true);
+                if($this->isMobile){
+                    $contenido = $this->renderPartial('direcciones', array('listDirecciones' => $listDirecciones, 'editar'=>false), true);
+                }else{
+                    $contenido = $this->renderPartial('d_direcciones', array('listDirecciones' => $listDirecciones, 'modal'=>true), true);
+                }
             }
         }
 
-        $this->renderPartial('d_direccionesUbicacion', array(
+        $this->renderPartial($this->isMobile ? 'direccionesUbicacion' : 'd_direccionesUbicacion', array(
             'contenido' => $contenido
         ));
     }

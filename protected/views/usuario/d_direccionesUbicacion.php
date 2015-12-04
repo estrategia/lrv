@@ -9,7 +9,7 @@
                 <?php echo $contenido?>
             </div>
             <div class="modal-footer center">
-                <button type="button" class="btn btn-default" data-dismiss="modal">Cancelar</button>
+                <button type="button" class="btn btn-default" data-dismiss="modal">Cerrar</button>
             </div>
         </div>
     </div>

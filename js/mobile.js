@@ -101,6 +101,31 @@ function errorPosicion(error) {
     alert(mensaje);
 }
 
+$(document).on('click', 'button[data-role="ubicacion-direccion"]', function() {
+    $.ajax({
+        type: 'GET',
+        async: true,
+        url: requestUrl + '/usuario/direccionesUbicacion',
+        dataType: 'html',
+        beforeSend: function() {
+            $("div[id='page-direccionesubicacion']").remove();
+            $.mobile.loading('show');
+        },
+        complete: function(data) {
+            $.mobile.loading('hide');
+        },
+        success: function(data) {
+            $('body').append(data);
+            $.mobile.changePage('#page-direccionesubicacion', {transition: "pop", role: "dialog", reverse: false});
+        },
+        error: function(jqXHR, textStatus, errorThrown) {
+            Loading.hide();
+            bootbox.alert('Error: ' + errorThrown);
+        }
+    });
+    return false;
+});
+
 $(document).on('click', "a[data-ubicacion='verificacion-domicilio']", function() {
     $.ajax({
         type: 'POST',
