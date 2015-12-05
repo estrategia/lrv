@@ -48,6 +48,11 @@ $(document).ready(function() {
     $('.categorias .category > li .right-nav').width(widhtDocument);
    /* $('.categorias .category > li .right-nav .submenu').width(widhtDocument);*/
 });
+$(".main_menu .cuidado-personal > a").click(function() {
+    $(".main_menu .cuidado-personal .right-nav").hide();
+    $(this).next('.right-nav').show();
+    return false;
+});
 /*
 $(".categorias .cuidado-personal").hover(function() {
     $('.submenu').isotope({
