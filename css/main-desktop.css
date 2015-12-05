@@ -10,6 +10,76 @@
     url("fonts/geneva.ttf") format('truetype');  
   font-weight: normal;  
 }
+.sinDir .btn.btn-aceptar {
+    background: #fff none repeat scroll 0 0;
+    display: table;
+    margin: 15px auto auto;
+}
+.contentPagarPresnecial .blockPago.sinDir {
+    margin-top: 45px;
+}
+.contentPagarPresnecial .blockPago.sinDir .c_ndx_img {
+    display: block;
+    margin: -65px auto auto;
+    max-width: 100px;
+}
+.contentPagarPresnecial .icon_pag {
+    color: #e90000;
+}
+.contentPagarPresnecial .blockListProducts table {
+    color: #555;
+}
+.contentPagarPresnecial .blockListProducts {
+    border: 15px solid #e5e5e5;
+    border-radius: 0 0 5px 5px;
+    padding: 15px;
+}
+.contentPagarPresnecial .porcen {
+    border: 1px solid #e90000;
+    border-radius: 5px;
+    color: #e90000;
+    float: right;
+    margin-right: 10px;
+    padding: 6px;
+}
+.pedidoPasar {
+    background: #e90000 none repeat scroll 0 0;
+    border: 0 none;
+    border-radius: 5px;
+    color: #fff;
+    float: right;
+    padding: 6px;
+}
+.pedidoPasar:hover{
+    background: #fff;
+    color: #e90000;
+    border: 1px solid #e90000;
+}
+.contentPagarPresnecial h2 {
+    font-size: 17px;
+}
+.contentPagarPresnecial .blockPago {
+    background: #f4f4f4 none repeat scroll 0 0;
+    border: 1px solid #ccc;
+    border-radius: 5px 5px 0 0;
+    padding: 15px;
+}
+.contentPagarPresnecial h1 {
+    font-size: 22px;
+    margin: 40px 0;
+    text-align: center;
+}
+.blockPago p {
+    margin-bottom: 0;
+}
+.info-compra a > span.ico_compa {
+    color: #e90000;
+    float: left;
+    font-size: 20px;
+    margin-bottom: 4px;
+    margin-left: 8px;
+    margin-right: 5px;
+}
 .body_welcome .dis:first-child {
     border-right: 1px solid #e90000;
 }
