@@ -1,18 +1,26 @@
-<div class="">
-    <div class="">
-      <!--  <div class=""><img src="<?php echo Yii::app()->request->baseUrl; ?>/images/logo_lrv.png"></div> -->
-        <div class="">
-            <h1>BIENVENIDO</h1>
-            <h1 class=""><?php echo "$objUsuario->nombre $objUsuario->apellido" ?></h1>
-            <p><?php echo $objUsuario->objPerfil->mensajeBienvenida ?></p>
+<div class="content_welcome">
+    <div class="header_welcome">
+        <div class="container">
+            <h1><img class="img-responsive" src="<?php echo Yii::app()->request->baseUrl."/images/bienvenida/titulo_bievenida.png"; ?>" alt="Bienvenido"></h1>
+            <h2><?php echo "$objUsuario->nombre $objUsuario->apellido" ?></h2>
+            <div class="mensajeBienvenida"><?php echo $objUsuario->objPerfil->mensajeBienvenida ?></div>
         </div>
     </div>
-    <div class="">
-        <h2 class="">Ahora disfrutarás:</h2>
-        <ul data-role="listview" data-inset="true" class="">
-            <li><a href="#" class="">Descuentos permanentes</a></li>
-            <li><a href="#" class="">Paga tus pedidos en efectivo</a></li>
-        </ul>
-    </div>    
-    <?php echo CHtml::link('Continuar', $url, array('class' => 'btn btn-default')); ?>
+    <div class="container">
+    <div class="body_welcome">
+        <h3>Ahora disfrutarás:</h3>
+        <div class="row">
+            <div class="col-sm-6 dis">
+                <img src="<?php echo Yii::app()->request->baseUrl."/images/bienvenida/ico_b-1.png"; ?>" alt="Descuento permanentes">
+                <strong>Descuentos</strong><br>permanentes
+            </div>
+            <div class="col-sm-6 dis">
+                <img src="<?php echo Yii::app()->request->baseUrl."/images/bienvenida/ico_b-2.png"; ?>" alt="Paga tus pedidos en efectivo">
+                <strong>Paga tus pedidos</strong><br>en efectivo<br> y contra entrega
+            </div>
+        </div>
+    </div>
+    <div class="center"><?php echo CHtml::link('Continuar', $url, array('class' => 'btn btn-aceptar')); ?></div>
+    </div>
+    <img src="<?php echo Yii::app()->request->baseUrl."/images/bienvenida/fondo_footer.png"; ?>" class="img-responsive" alt="">
 </div>
