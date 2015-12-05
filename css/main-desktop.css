@@ -2006,9 +2006,10 @@ a.clst_slct_prod.active{display: inline-block !important;}
     position:absolute; 
     z-index:9999; 
     bottom: 10px; 
-    width:100%; 
+    width:80%; 
     height:50px;
     border: none;
+    margin-left: 10%;
 }
 
 .modal.map .btn {
