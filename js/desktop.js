@@ -46,12 +46,13 @@ $(document).ready(function() {
     widhtDocument = ($(window).width() - widht) - 4;
     $('.categorias .category > li').width(widht);
     $('.categorias .category > li .right-nav').width(widhtDocument);
-    $('.categorias .category > li .right-nav .submenu').width(widhtDocument);
+   /* $('.categorias .category > li .right-nav .submenu').width(widhtDocument);*/
 });
+/*
 $(".categorias .cuidado-personal").hover(function() {
     $('.submenu').isotope({
         layoutMode: 'masonryHorizontal',
         itemSelector: '.section-submenu'
     });
 
-});
+});*/
