@@ -1,4 +1,4 @@
-<div class="ui-content contentPagarPresnecial">
+<div class="container contentPagarPresnecial">
     <h1>Selecciona el Punto de Venta donde deseas pasar por tu pedido</h1>
 
     <?php $mensajes = Yii::app()->user->getFlashes(); ?>
@@ -44,11 +44,8 @@
 
                             <input type="hidden" name="pdv" value="<?php echo $pdv[1] ?>">
                             <input type="hidden" name="pos" value="<?php echo $idx ?>">
+                            <input type="submit" data-enhanced="true" value="Pasar por mi pedido aquí" class="pedidoPasar">
 
-                            <div class="ui-input-btn ui-btn ui-corner-all ui-shadow ui-btn-inline ui-btn-r">
-                                Pasar por mi pedido aquí
-                                <input type="submit" data-enhanced="true" value="<?php echo $pdv[1] ?>">
-                            </div>
                             <?php $this->endWidget(); ?>
                             <div class="porcen">Porcentaje del pedido: <?php echo $pdv[5] ?>%</div>
                         <?php endif; ?>
@@ -63,7 +60,8 @@
                             <td><?php echo $producto->CODIGO_PRODUCTO ?></td>
                             <td><?php echo $producto->DESCRIPCION ?></td>
                             <td><?php echo $producto->CANTIDAD_UNIDAD . "/" . $producto->SALDO_UNIDAD ?></td>
-                            <td><?php echo ($producto->COMPLETITUD_UNIDAD) ? "<img src='" . Yii::app()->request->baseUrl . "/images/iconos/checkmark.png'/>" : "<img src='" . Yii::app()->request->baseUrl . "/images/iconos/mistake.png'/>" ?></td>
+                            <!--<td class="icon_pag"><?php echo ($producto->COMPLETITUD_UNIDAD) ? "<img src='" . Yii::app()->request->baseUrl . "/images/iconos/checkmark.png'/>" : "<img src='" . Yii::app()->request->baseUrl . "/images/iconos/mistake.png'/>" ?></td>-->
+                            <td class="icon_pag"><?php echo ($producto->COMPLETITUD_UNIDAD) ? '<span class="glyphicon glyphicon-ok"></span>' : '<span class="glyphicon glyphicon-remove"></span>' ?></td>
                            <!-- <td><?php echo ($producto->CANTIDAD_FRACCION > 0 ? $producto->SALDO_FRACCION : "NA") ?></td> -->
                         </tr>
                     <?php endforeach; ?>
@@ -76,14 +74,14 @@
         <div class="blockPago sinDir">
             <img class="c_ndx_img" alt="Domicilio" src="<?php echo Yii::app()->request->baseUrl; ?>/images/entrega/icon_domicilio.png">
             <?php if ($listPuntosVenta[3] == 0): ?>
-                <h3 class="center">Lo sentimos, no tenemos disponible el 100% de tu pedido en un sólo punto de venta.</h3>
+                <h4 class="center">Lo sentimos, no tenemos disponible el 100% de tu pedido en un sólo punto de venta.</h4>
                 <p class="center">Te ofrecemos el total del pedido entrega a domicilio en 1 hora</p>
             <?php else: ?>
                 <h3 class="center">Si deseas, te ofrecemos el servicio de entrega a domicilio en 1 hora</h3>
             <?php endif; ?>
 
 
-            <?php echo CHtml::link('Entrega a domicilio', $this->createUrl('/carro/pagar', array('paso' => 0, 'post' => 0, 'cambio' => true)), array('class' => 'btn btn-default')); ?>
+            <?php echo CHtml::link('Entrega a domicilio', $this->createUrl('/carro/pagar', array('paso' => 0, 'post' => 0, 'cambio' => true)), array('class' => 'btn btn-aceptar')); ?>
         </div>
         <div class="space-2"></div>
         <?php /* endif; */ ?>
