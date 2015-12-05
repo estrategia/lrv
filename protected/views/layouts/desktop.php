@@ -47,7 +47,7 @@
                                                 <div class="controls">
                                                     <span class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false" data-label-placement>
                                                         Todas las categor&iacute;as</span>
-                                                        <a href="#" data-toggle="dropdown" class="dropdown-toggle"><i><img src="<?php echo Yii::app()->request->baseUrl; ?>/images/desktop/ico-filtro-categorias.png"></i></a>
+                                                    <a href="#" data-toggle="dropdown" class="dropdown-toggle"><i><img src="<?php echo Yii::app()->request->baseUrl; ?>/images/desktop/ico-filtro-categorias.png"></i></a>
                                                     <ul class="dropdown-menu todas-categorias" aria-labelledby="categorias">
                                                         <?php foreach ($this->categorias as $categoria): ?>
                                                             <li>
@@ -112,25 +112,27 @@
                                                 <?php foreach ($categoria->listCategoriasHijas as $subcategoria): ?>
                                                     <div class="section-submenu">
                                                         <?php if (count($subcategoria->listModulosConfigurados) > 0): ?>
-                                                           <li class='title-submenu'><?php echo CHtml::link("<span class='glyphicon glyphicon-chevron-right' aria-hidden='true'></span>$subcategoria->nombreCategoriaTienda", CController::createUrl('/catalogo/division', array('division' => $subcategoria->idCategoriaTienda))); ?></li>
+                                                            <li class='title-submenu'><?php echo CHtml::link("<span class='glyphicon glyphicon-chevron-right' aria-hidden='true'></span>$subcategoria->nombreCategoriaTienda", CController::createUrl('/catalogo/division', array('division' => $subcategoria->idCategoriaTienda))); ?></li>
                                                         <?php else: ?>
                                                             <li class='title-submenu'><span class='glyphicon glyphicon-chevron-right' aria-hidden='true'></span><?php echo $subcategoria->nombreCategoriaTienda ?></li>
                                                         <?php endif; ?>
-                                                        <?php for ( $i=0;$i<count($subcategoria->listCategoriasHijasMenu) && $i<5;$i++): ?>
-                                                            <?php $categoriaHija = $subcategoria->listCategoriasHijasMenu[$i];?>
+                                                        <?php for ($i = 0; $i < count($subcategoria->listCategoriasHijasMenu) && $i < 5; $i++): ?>
+                                                            <?php $categoriaHija = $subcategoria->listCategoriasHijasMenu[$i]; ?>
                                                             <?php if (count($subcategoria->listModulosConfigurados) > 0): ?>
                                                                 <li><?php echo $categoriaHija->nombreCategoriaTienda ?></li>
                                                             <?php else: ?>
                                                                 <li><?php echo CHtml::link($categoriaHija->nombreCategoriaTienda, CController::createUrl('/catalogo/categoria', array('categoria' => $categoriaHija->idCategoriaTienda))); ?></li>
                                                             <?php endif; ?>
                                                         <?php endfor; ?>
-                                                        <?php if(count($subcategoria->listCategoriasHijasMenu)>5):?>
-                                                                <li class='title-viewmore_category'><?php echo CHtml::link("Ver más...", CController::createUrl('/catalogo/division', array('division' => $subcategoria->idCategoriaTienda))); ?></li>
-                                                        <?php endif;?>        
+                                                        <?php if (count($subcategoria->listCategoriasHijasMenu) > 5): ?>
+                                                            <li class='title-viewmore_category'><?php echo CHtml::link("Ver más...", CController::createUrl('/catalogo/division', array('division' => $subcategoria->idCategoriaTienda))); ?></li>
+                                                        <?php endif; ?>        
                                                     </div>
                                                 <?php endforeach; ?>
                                             </ul>
-                                            <img class="img_categoria" src="<?php echo Yii::app()->request->baseUrl; ?>/images/menu/desktop/<?php echo $categoria->rutaImagenMenu ?>"> 
+                                            <?php if (!empty($categoria->rutaImagenMenu)): ?>
+                                                <img class="img_categoria" src="<?php echo Yii::app()->request->baseUrl; ?>/images/menu/desktop/<?php echo $categoria->rutaImagenMenu ?>"> 
+                                            <?php endif; ?>
                                         </div>
                                     <?php endif; ?>
                                 </li>
@@ -189,10 +191,10 @@
                                     <strong style="margin-left:10px;">Información</strong><br><strong class="title-footer2"> y servicios</strong>
                                 </div>
                                 <ul>	
-                                    <li><a href="<?php echo $this->createUrl('/contenido/corporativo', array('tipo'=>'horario')) ?>">Horarios de atención</a></li>
-                                    <li><a href="<?php echo $this->createUrl('/contenido/corporativo', array('tipo'=>'polidescuento')) ?>">Politicas días de descuento 1,10,15 y 25</a></li>
-                                    <li><a href="<?php echo $this->createUrl('/contenido/corporativo', array('tipo'=>'pqrs')) ?>">PQRS (Pregunras, quejas, reclamos, sugerencias)</a></li>
-                                    <li><a href="<?php echo $this->createUrl('/contenido/corporativo', array('tipo'=>'politerminos')) ?>">Políticas y términos de uso</a></li>
+                                    <li><a href="<?php echo $this->createUrl('/contenido/corporativo', array('tipo' => 'horario')) ?>">Horarios de atención</a></li>
+                                    <li><a href="<?php echo $this->createUrl('/contenido/corporativo', array('tipo' => 'polidescuento')) ?>">Politicas días de descuento 1,10,15 y 25</a></li>
+                                    <li><a href="<?php echo $this->createUrl('/contenido/corporativo', array('tipo' => 'pqrs')) ?>">PQRS (Pregunras, quejas, reclamos, sugerencias)</a></li>
+                                    <li><a href="<?php echo $this->createUrl('/contenido/corporativo', array('tipo' => 'politerminos')) ?>">Políticas y términos de uso</a></li>
                                     <li><a target="_blank" href="http://www.sic.gov.co/es/">SIC (Súper intendencia de industria y comercio)</a></li>
                                     <li><a target="_blank" href="http://www.credirebaja.com/">Tarjeta crediRebaja</a></li>
                                 </ul>
