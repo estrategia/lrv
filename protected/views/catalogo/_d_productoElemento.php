@@ -30,6 +30,8 @@
                         <div id="raty-lectura-producto-<?php echo $data->codigoProducto ?>" data-role="raty" data-readonly="true" data-score="<?php echo $data->getCalificacion() ?>"></div>                 
                     </div>
                 </div>
+            <?php else: ?>
+                <div style="height:46px;"></div>
              <?php endif; ?>
             
         </div>
