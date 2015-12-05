@@ -109,7 +109,8 @@
                                     <?php if ($categoria->listCategoriasHijas): ?>
                                         <div class="right-nav">
                                             <ul class="submenu">
-                                                <?php foreach ($categoria->listCategoriasHijas as $subcategoria): ?>
+                                                <div class="sub_float">
+                                                <?php $cpunte=0; foreach ($categoria->listCategoriasHijas as $subcategoria): $cpunte++; /*echo $cpunte;*/ ?>
                                                     <div class="section-submenu">
                                                         <?php if (count($subcategoria->listModulosConfigurados) > 0): ?>
                                                             <li class='title-submenu'><?php echo CHtml::link("<span class='glyphicon glyphicon-chevron-right' aria-hidden='true'></span>".ucfirst(strtolower($subcategoria->nombreCategoriaTienda)), CController::createUrl('/catalogo/division', array('division' => $subcategoria->idCategoriaTienda))); ?></li>
@@ -128,7 +129,13 @@
                                                             <li class='title-viewmore_category'><?php echo CHtml::link("Ver más...", CController::createUrl('/catalogo/division', array('division' => $subcategoria->idCategoriaTienda))); ?></li>
                                                         <?php endif; ?>        
                                                     </div>
-                                                <?php endforeach; ?>
+                                                <?php if ($cpunte==4 && count($categoria->listCategoriasHijas)!=4): ?>
+                                                        </div>
+                                                        <div class="sub_float">
+                                                    <?php $cpunte=0; endif;
+                                                        
+                                                    endforeach; ?>
+                                                </div>
                                             </ul>
                                             <?php if (!empty($categoria->rutaImagenMenu)): ?>
                                                 <img class="img_categoria" src="<?php echo Yii::app()->request->baseUrl; ?>/images/menu/desktop/<?php echo $categoria->rutaImagenMenu ?>"> 
