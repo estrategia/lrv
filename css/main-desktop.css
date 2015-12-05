@@ -1835,12 +1835,12 @@ li.active .iconStep {
 .dropdown-menu .submenu .section-submenu a li{
     font-size: 14px;
 }
-.cuidado-personal:hover .right-nav{
+/*.cuidado-personal:hover .right-nav{
     display: block;
 }
 .mundo-bebes:hover .right-nav{
     display: block;
-}
+}*/
 .submenu .glyphicon {
     font-size: 15px;
     margin-left: -16px;
