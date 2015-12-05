@@ -112,16 +112,16 @@
                                                 <?php foreach ($categoria->listCategoriasHijas as $subcategoria): ?>
                                                     <div class="section-submenu">
                                                         <?php if (count($subcategoria->listModulosConfigurados) > 0): ?>
-                                                            <li class='title-submenu'><?php echo CHtml::link("<span class='glyphicon glyphicon-chevron-right' aria-hidden='true'></span>$subcategoria->nombreCategoriaTienda", CController::createUrl('/catalogo/division', array('division' => $subcategoria->idCategoriaTienda))); ?></li>
+                                                            <li class='title-submenu'><?php echo CHtml::link("<span class='glyphicon glyphicon-chevron-right' aria-hidden='true'></span>".ucfirst(strtolower($subcategoria->nombreCategoriaTienda)), CController::createUrl('/catalogo/division', array('division' => $subcategoria->idCategoriaTienda))); ?></li>
                                                         <?php else: ?>
-                                                            <li class='title-submenu'><span class='glyphicon glyphicon-chevron-right' aria-hidden='true'></span><?php echo $subcategoria->nombreCategoriaTienda ?></li>
+                                                            <li class='title-submenu'><span class='glyphicon glyphicon-chevron-right' aria-hidden='true'></span><?php echo ucfirst(strtolower($subcategoria->nombreCategoriaTienda)); ?></li>
                                                         <?php endif; ?>
                                                         <?php for ($i = 0; $i < count($subcategoria->listCategoriasHijasMenu) && $i < 5; $i++): ?>
                                                             <?php $categoriaHija = $subcategoria->listCategoriasHijasMenu[$i]; ?>
                                                             <?php if (count($subcategoria->listModulosConfigurados) > 0): ?>
-                                                                <li><?php echo $categoriaHija->nombreCategoriaTienda ?></li>
+                                                                <li><?php echo ucfirst(strtolower($categoriaHija->nombreCategoriaTienda)); ?></li>
                                                             <?php else: ?>
-                                                                <li><?php echo CHtml::link($categoriaHija->nombreCategoriaTienda, CController::createUrl('/catalogo/categoria', array('categoria' => $categoriaHija->idCategoriaTienda))); ?></li>
+                                                                <li><?php echo CHtml::link(ucfirst(strtolower($categoriaHija->nombreCategoriaTienda)), CController::createUrl('/catalogo/categoria', array('categoria' => $categoriaHija->idCategoriaTienda))); ?></li>
                                                             <?php endif; ?>
                                                         <?php endfor; ?>
                                                         <?php if (count($subcategoria->listCategoriasHijasMenu) > 5): ?>
