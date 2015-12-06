@@ -856,10 +856,10 @@ input#RegistroForm_condiciones[type="checkbox"] + label span {
     line-height: 17px;
     text-align: left;
 }
-.content-category #btn-buscador-productos {
+/*.content-category #btn-buscador-productos {
     float: right;
     margin-right: 2%;
-}
+}*/
 .top_ubicacion {
     color: #6f6f6f;
     font-size: 13px;
