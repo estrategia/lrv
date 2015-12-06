@@ -918,11 +918,9 @@ header {
     font-size: 17px;
     height:34px;
 }
-.ico-buscar{
+.ico-buscar {
+    margin-top: -6px;
     width: 50px;
-    float: right;
-    position: absolute;
-    margin-top: -10px;
 }
 .content-search{padding-right: 0px;}
 .ico-user{
