@@ -448,13 +448,12 @@
     color: #ea0001 !important;
 }
 .fraccionado_columns table .min {
-    background: #ffdf20 none repeat scroll 0 0;
-    border: 0 none !important;
+    background: #fff none repeat scroll 0 0;
     color: #ea0001;
 }
 .fraccionado_columns table .increment {
-    background: #ea0001;
-    color: #fff;
+    background: #fff none repeat scroll 0 0;
+    color: #e90000;
 }
 .fraccionado_columns table .min span{
     color: #ea0001 !important;
