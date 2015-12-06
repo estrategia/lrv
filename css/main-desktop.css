@@ -10,6 +10,10 @@
     url("fonts/geneva.ttf") format('truetype');  
   font-weight: normal;  
 }
+.content-category .controls > span {
+    display: inline-block;
+    width: 161px;
+}
 .main_menu .nav > li.categorias {
     width: 340px;
 }
