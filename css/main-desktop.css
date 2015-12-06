@@ -10,6 +10,12 @@
     url("fonts/geneva.ttf") format('truetype');  
   font-weight: normal;  
 }
+.main_menu .nav > li.categorias {
+    width: 340px;
+}
+.main_menu .nav > li {
+    width: auto;
+}
 .sinDir .btn.btn-aceptar {
     background: #fff none repeat scroll 0 0;
     display: table;
