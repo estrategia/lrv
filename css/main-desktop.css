@@ -721,7 +721,7 @@ input#RegistroForm_condiciones[type="checkbox"] + label span {
     list-style: outside none none;
     margin: 0;
     padding: 0;
-    text-align: center;
+    /*text-align: center;*/
 }
 .container-fluid.group-botones-cantidad {
     padding: 5px 15px;
