@@ -50,7 +50,7 @@
                         <?php endif; ?>
                         <?php if ($objProducto->fraccionado == 1): ?>
                             <!--fraccionado-->
-                            <div class="itm_ico fraccion_text" title="Producto Fraccionado"><span>F</span>Fracci&oacute;n</div>
+                            <div class="itm_ico fraccion_text" title="Producto Fraccionado"><span>F</span></div>
                         <?php endif; ?>
                         <?php  if ($objProducto->ventaVirtual == 1 && $objPrecio->inicializado()): ?>
                             <!--adicionar a lista-->
