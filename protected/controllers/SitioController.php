@@ -81,6 +81,20 @@ class SitioController extends Controller {
             $tipoEntrega = Yii::app()->session[Yii::app()->params->sesion['tipoEntrega']];
         }
 
+        Yii::app()->getClientScript()->registerScriptFile("https://maps.googleapis.com/maps/api/js", CClientScript::POS_END);
+        Yii::app()->getClientScript()->registerScriptFile(Yii::app()->request->baseUrl . "/js/ubicacion.js", CClientScript::POS_END);
+
+        $listCiudadesSectores = Ciudad::model()->findAll(array(
+            'with' => array('listSectorCiudad' => array('with' => 'objSector')),
+            'order' => 't.orden, t.nombreCiudad',
+            'condition' => 'estadoCiudadSector=:estadoCiudadSector AND estadoSector=:estadoSector AND estadoCiudad=:estadoCiudad',
+            'params' => array(
+                ':estadoCiudadSector' => 1,
+                ':estadoSector' => 1,
+                ':estadoCiudad' => 1,
+            )
+        ));
+
         if ($this->isMobile) {
             $this->showSeeker = false;
             $this->logoLinkMenu = false;
@@ -90,72 +104,16 @@ class SitioController extends Controller {
                 $this->showHeaderIcons = false;
             }
 
-            $listCiudadesSectores = Ciudad::model()->findAll(array(
-                'with' => array('listSectores'),
-                'order' => 't.orden, t.nombreCiudad',
-                'condition' => 'estadoCiudadSector=:estadoCiudadSector AND estadoSector=:estadoSector AND estadoCiudad=:estadoCiudad',
-                'params' => array(
-                    ':estadoCiudadSector' => 1,
-                    ':estadoSector' => 1,
-                    ':estadoCiudad' => 1,
-                )
-            ));
-
-            $listCiudadesSubsectores = Ciudad::model()->findAll(array(
-                'with' => array(
-                    'listSubSectores' => array(
-                        'order' => 'listSubSectores.nombreSubSector',
-                        'condition' => 'estadoSubSector=1',
-                        'with' => array(
-                            'listSectorReferencias' => array(
-                                'condition' => 'listSectorReferencias.estadoSectorReferencia=1',
-                                'with' => array(
-                                    'objSectorCiudad' => array(
-                                        'condition' => 'objSectorCiudad.estadoCiudadSector=1',
-                                        'with' => array(
-                                            'objSector' => array(
-                                                'condition' => 'objSector.estadoSector=1',
-                                                'order' => 'objSector.nombreSector',
-                                            ))),
-                                    'listPuntoReferencias' => array('condition' => 'listPuntoReferencias.estadoReferencia=1', 'order' => 'listPuntoReferencias.nombreReferencia')
-                                ))))),
-                'order' => 't.nombreCiudad'
-            ));
-
-            $idxCiudadesSubSectores = array();
-            foreach ($listCiudadesSubsectores as $indice => $ciudad) {
-                $idxCiudadesSubSectores[$ciudad->codigoCiudad] = $indice;
-            }
-
-            Yii::app()->getClientScript()->registerScriptFile("https://maps.googleapis.com/maps/api/js", CClientScript::POS_END);
-            Yii::app()->getClientScript()->registerScriptFile(Yii::app()->request->baseUrl . "/js/ubicacion.js", CClientScript::POS_END);
-
             $this->render('ubicacion', array(
                 'listCiudadesSectores' => $listCiudadesSectores,
-                'listCiudadesSubsectores' => $listCiudadesSubsectores,
-                'idxCiudadesSubSectores' => $idxCiudadesSubSectores,
-                'tipoEntrega' => $tipoEntrega,
                 'objSectorCiudad' => $this->objSectorCiudad,
+                'tipoEntrega' => $tipoEntrega,
             ));
         } else {
             //si no fue redireccionado por sessionfilter, se redirecciona a la pagina anterior
             if (!isset(Yii::app()->session[Yii::app()->params->sesion['redireccionUbicacion']]) || Yii::app()->session[Yii::app()->params->sesion['redireccionUbicacion']] == null) {
                 Yii::app()->session[Yii::app()->params->sesion['redireccionUbicacion']] = (Yii::app()->request->urlReferrer == null ? $this->createUrl('/') : Yii::app()->request->urlReferrer);
             }
-
-            Yii::app()->getClientScript()->registerScriptFile("https://maps.googleapis.com/maps/api/js", CClientScript::POS_END);
-            Yii::app()->getClientScript()->registerScriptFile(Yii::app()->request->baseUrl . "/js/ubicacion.js", CClientScript::POS_END);
-
-            $listCiudadesSectores = Ciudad::model()->findAll(array(
-                'with' => array('listSectorCiudad' => array('with' => 'objSector')),
-                'order' => 't.orden, t.nombreCiudad',
-                'condition' => 'estadoCiudadSector=:estadoCiudadSector AND estadoSector=:estadoSector AND estadoCiudad=:estadoCiudad',
-                'params' => array(
-                    ':estadoCiudadSector' => 1,
-                    ':estadoSector' => 1,
-                    ':estadoCiudad' => 1,
-                )
-            ));
 
             $this->render('d_ubicacion', array(
                 'listCiudadesSectores' => $listCiudadesSectores,
@@ -306,7 +264,7 @@ class SitioController extends Controller {
         }
 
         $redirect = null;
-        
+
         if (!$this->isMobile) {
             $redirect = $this->createUrl('/');
             if (isset(Yii::app()->session[Yii::app()->params->sesion['redireccionUbicacion']]) && Yii::app()->session[Yii::app()->params->sesion['redireccionUbicacion']] != null) {

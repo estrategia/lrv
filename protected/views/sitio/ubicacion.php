@@ -38,6 +38,4 @@
     </div>
 </div>
 
-<?php $this->extraContentList[] = $this->renderPartial('_ubicacionSectores', array('listCiudadesSubsectores' => $listCiudadesSubsectores), true); ?>
-
-<?php $this->extraPageList[] = $this->renderPartial('_ubicacionMapa', null, true);?>
+<?php $this->extraPageList[] = $this->renderPartial('_ubicacionMapa', array('listCiudadesSectores' => $listCiudadesSectores,), true);?>
