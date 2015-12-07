@@ -46,11 +46,6 @@
                             <!--fraccionado-->
                             <div class="itm_ico fraccion_text" title="Producto Fraccionado"><span>F</span></div>
                         <?php endif; ?>
-                        <?php  if ($objProducto->ventaVirtual == 1 && $objPrecio->inicializado()): ?>
-                            <!--adicionar a lista-->
-                            <a href="#" data-tipo="1" class="itm_ico button-lista" title="Añadir a lista" data-role="lstpersonalguardar" data-codigo="<?php echo $objProducto->codigoProducto ?>"><span class="text_add_list">Añadir a lista</span> <span class="glyphicon glyphicon-pencil" aria-hidden="true"></span>
-                            </a>
-                        <?php endif;  ?>
                     </div>
                     <div class="" style="color:#A3A3A3;font-size: 16px;">
                         <h3 style="color: #ED1C24;"><?php echo $objProducto->descripcionProducto ?> <!-- Titulo del producto --></h3>
@@ -150,7 +145,7 @@
                         <?php if ($objSectorCiudad != null): ?>                                  
                             <div class="" style="margin-top: 13px;">
                                 <?php echo CHtml::link('<div class="button anadir">Añadir&nbsp;<img src="' . Yii::app()->baseUrl . '/images/desktop/carrito-amarillo.png" alt=""></div>', '#', array('data-producto' => $objProducto->codigoProducto, 'data-cargar' => 1, 'class' => '')); ?>
-                                <?php #echo CHtml::link('<div class="comprar-ahora" >Añadir a la lista</div>', '#', array('class' => '', 'data-tipo' => '1', 'data-role' => 'lstpersonalguardar', 'data-codigo' => $objProducto->codigoProducto)); ?>
+                                <?php echo CHtml::link('<div class="comprar-ahora" >Añadir a la lista</div>', '#', array('class' => '', 'data-tipo' => '1', 'data-role' => 'lstpersonalguardar', 'data-codigo' => $objProducto->codigoProducto)); ?>
                             </div>
                         <?php else: ?>
                             <div class="" style="margin-top: 13px;">                             
