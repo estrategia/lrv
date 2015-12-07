@@ -10,6 +10,33 @@
     url("fonts/geneva.ttf") format('truetype');  
   font-weight: normal;  
 }
+.botones-list {
+    padding: 0 13px;
+}
+.group-botones-cantidad .btn-addless-cantidad {
+    float: left;
+    margin-right: 2px;
+    padding: 1px 0;
+    text-align: center;
+    width: 25%;
+}
+.group-botones-cantidad .ressete {
+    float: left;
+    margin-right: 2px;
+    width: 46%;
+}
+.group-botones-cantidad .btn-addless-cantidad:last-child {
+    margin-right: 0;
+}
+.padd2 {
+    padding: 0 2px;
+}
+.botones-list .button {
+    font-size: 15px;
+    margin: 0;
+    padding: 0;
+    text-align: center;
+}
 .content-category .controls > span {
     display: inline-block;
     width: 161px;
