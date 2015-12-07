@@ -4,7 +4,7 @@
               <div class="item"><img class="img-responsive" src="<?php echo Yii::app()->request->baseUrl . $objCombo->rutaImagen(); ?>" ></div>      
         </div>
         <div id="productoAgregado" class="col-md-10">
-            Se ha adicionado <?php echo $objCombo->descripcionCombo ?> al carrito.
+            Se ha adicionado<br> <strong><?php echo $objCombo->descripcionCombo ?></strong> al carrito.
         </div>
     </div> 
 </div>
