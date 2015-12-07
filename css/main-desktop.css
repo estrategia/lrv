@@ -10,6 +10,9 @@
     url("fonts/geneva.ttf") format('truetype');  
   font-weight: normal;  
 }
+.iconos_right .popover {
+    width: 300px;
+}
 .botones-list {
     padding: 0 13px;
 }
@@ -425,7 +428,6 @@
     position: absolute;
     right: 0;
     top: 0;
-    z-index: 1;
 }
 .iconos_right .itm_ico,.itm_ico>.cod_puntos {
     margin-bottom: 5px !important;
