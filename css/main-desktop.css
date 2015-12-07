@@ -10,6 +10,86 @@
     url("fonts/geneva.ttf") format('truetype');  
   font-weight: normal;  
 }
+.content-category .controls > span {
+    display: inline-block;
+    width: 161px;
+}
+.main_menu .nav > li.categorias {
+    width: 340px;
+}
+.main_menu .nav > li {
+    width: auto;
+}
+.sinDir .btn.btn-aceptar {
+    background: #fff none repeat scroll 0 0;
+    display: table;
+    margin: 15px auto auto;
+}
+.contentPagarPresnecial .blockPago.sinDir {
+    margin-top: 45px;
+}
+.contentPagarPresnecial .blockPago.sinDir .c_ndx_img {
+    display: block;
+    margin: -65px auto auto;
+    max-width: 100px;
+}
+.contentPagarPresnecial .icon_pag {
+    color: #e90000;
+}
+.contentPagarPresnecial .blockListProducts table {
+    color: #555;
+}
+.contentPagarPresnecial .blockListProducts {
+    border: 15px solid #e5e5e5;
+    border-radius: 0 0 5px 5px;
+    padding: 15px;
+}
+.contentPagarPresnecial .porcen {
+    border: 1px solid #e90000;
+    border-radius: 5px;
+    color: #e90000;
+    float: right;
+    margin-right: 10px;
+    padding: 6px;
+}
+.pedidoPasar {
+    background: #e90000 none repeat scroll 0 0;
+    border: 0 none;
+    border-radius: 5px;
+    color: #fff;
+    float: right;
+    padding: 6px;
+}
+.pedidoPasar:hover{
+    background: #fff;
+    color: #e90000;
+    border: 1px solid #e90000;
+}
+.contentPagarPresnecial h2 {
+    font-size: 17px;
+}
+.contentPagarPresnecial .blockPago {
+    background: #f4f4f4 none repeat scroll 0 0;
+    border: 1px solid #ccc;
+    border-radius: 5px 5px 0 0;
+    padding: 15px;
+}
+.contentPagarPresnecial h1 {
+    font-size: 22px;
+    margin: 40px 0;
+    text-align: center;
+}
+.blockPago p {
+    margin-bottom: 0;
+}
+.info-compra a > span.ico_compa {
+    color: #e90000;
+    float: left;
+    font-size: 20px;
+    margin-bottom: 4px;
+    margin-left: 8px;
+    margin-right: 5px;
+}
 .body_welcome .dis:first-child {
     border-right: 1px solid #e90000;
 }
@@ -196,7 +276,7 @@
     float: left;
 }
 .btnQuitarComparar.itm_ico,.btnComparar.itm_ico {
-    background: #ea0001 none repeat scroll 0 0;
+    background: #00CAD4;
     color: #fff;
     text-align: center;
 }
@@ -372,13 +452,12 @@
     color: #ea0001 !important;
 }
 .fraccionado_columns table .min {
-    background: #ffdf20 none repeat scroll 0 0;
-    border: 0 none !important;
+    background: #fff none repeat scroll 0 0;
     color: #ea0001;
 }
 .fraccionado_columns table .increment {
-    background: #ea0001;
-    color: #fff;
+    background: #fff none repeat scroll 0 0;
+    color: #e90000;
 }
 .fraccionado_columns table .min span{
     color: #ea0001 !important;
@@ -645,7 +724,7 @@ input#RegistroForm_condiciones[type="checkbox"] + label span {
     list-style: outside none none;
     margin: 0;
     padding: 0;
-    text-align: center;
+    /*text-align: center;*/
 }
 .container-fluid.group-botones-cantidad {
     padding: 5px 15px;
@@ -781,10 +860,10 @@ input#RegistroForm_condiciones[type="checkbox"] + label span {
     line-height: 17px;
     text-align: left;
 }
-.content-category #btn-buscador-productos {
+/*.content-category #btn-buscador-productos {
     float: right;
     margin-right: 2%;
-}
+}*/
 .top_ubicacion {
     color: #6f6f6f;
     font-size: 13px;
@@ -838,16 +917,15 @@ header {
     border-left: none;
     border-radius:0px 4px 4px 0px;
     color: #EA0001;
-    padding: 4px 48px;
+    padding-left: 5px;
     margin: 18px 0 18px;
     font-size: 17px;
     height:34px;
 }
-.ico-buscar{
+.ico-buscar {
+    margin-left: -6px;
+    margin-top: -6px;
     width: 50px;
-    float: right;
-    position: absolute;
-    margin-top: -10px;
 }
 .content-search{padding-right: 0px;}
 .ico-user{
@@ -1735,12 +1813,15 @@ li.active .iconStep {
     /*width: 100%;*/
     z-index: 2;
 }
-.section-submenu {
+.submenu .sub_float {
     float: left;
+}
+.section-submenu {
+   /* float: left;*/
     margin-right: 20px;
     min-height: 143px;
     padding: 10px 0;
-    width: 243px;
+    width: 200px;
 }
 .title-submenu{
     border-bottom: 1px solid;
@@ -1762,12 +1843,12 @@ li.active .iconStep {
 .dropdown-menu .submenu .section-submenu a li{
     font-size: 14px;
 }
-.cuidado-personal:hover .right-nav{
+/*.cuidado-personal:hover .right-nav{
     display: block;
 }
 .mundo-bebes:hover .right-nav{
     display: block;
-}
+}*/
 .submenu .glyphicon {
     font-size: 15px;
     margin-left: -16px;

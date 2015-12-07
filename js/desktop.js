@@ -41,17 +41,32 @@ function listaProductoCuadricula() {
     $('#lista-productos.list_cuadricula .listaProductos li .content-txt2 .botones-list').removeClass('col-sm-4');
 }
 
+
 $(document).ready(function() {
+    ajuesmenu();
+});
+$( window ).resize(function() {
+  ajuesmenu();
+});
+function ajuesmenu(){
     widht = $('.main_menu .categorias').width() - 4;
     widhtDocument = ($(window).width() - widht) - 4;
     $('.categorias .category > li').width(widht);
     $('.categorias .category > li .right-nav').width(widhtDocument);
-    $('.categorias .category > li .right-nav .submenu').width(widhtDocument);
+    itemswidth=widhtDocument/3;
+    $('.main_menu .modulo-menu').width(itemswidth);
+}
+$(".main_menu .cuidado-personal > a").click(function() {
+    //alert($(this).next().attr('class'));
+    $(".main_menu .cuidado-personal .right-nav").hide();
+    $(this).next('.right-nav').show();
+    return false;
 });
+/*
 $(".categorias .cuidado-personal").hover(function() {
     $('.submenu').isotope({
         layoutMode: 'masonryHorizontal',
         itemSelector: '.section-submenu'
     });
 
-});
+});*/
