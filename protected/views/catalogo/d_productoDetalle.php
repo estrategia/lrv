@@ -59,7 +59,6 @@
                         <?php endif;  ?>
                     </div>
                     <?php if (!in_array($objProducto->idUnidadNegocioBI, Yii::app()->params->calificacion['categoriasNoCalificacion'])): ?>
-                        <h4>Califica el producto</h4>
                         <div id="raty-lectura-producto-<?php echo $objProducto->codigoProducto ?>" data-role="raty" data-readonly="true" data-score="<?php echo $objProducto->getCalificacion() ?>" class="clst_cal_str"></div>
                     <?php endif; ?>
                     <div class="" style="color:#A3A3A3;font-size: 16px;">
