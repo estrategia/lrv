@@ -34,42 +34,26 @@
                     <div class="iconos_right">
                         <!-- producto agregado -->
                         <a href="" class="itm_ico clst_slct_prod<?php echo (Yii::app()->shoppingCart->contains($objProducto->codigoProducto) ? " active" : "") ?>" id="icono-producto-agregado-<?php echo $objProducto->codigoProducto ?>">
-                            <img src="<?php echo Yii::app()->request->baseUrl ?>/images/iconos/icon_seleccionado.png">
+                            <img src="<?php echo Yii::app()->request->baseUrl ?>/images/desktop/icon_seleccionado.png">
                         </a>
                         <!-- producto agregado -->
                         <?php if($objPrecio->tienePuntos()):?>
                         <a href="#" onclick="return false" class='itm_ico' data-toggle="popover" data-content="<?php echo implode(", ",$objPrecio->getPuntosDescripcion())?>"> <div class="cod_puntos"> Pts<br/><span></span></div> </a> 
                        <!--  <div class="cod_puntos itm_ico">Pts<span></span></div> -->
                         <?php endif;?>
-                        
-                        <?php if ($objProducto->objCodigoEspecial->rutaIcono != ""): ?>
-                            <!--codigo especial verde-->
-                            <a class='itm_ico pop_codigo product-prom cod_especial' role="button" data-placement="left" data-toggle="popover" title="Codigo especial" data-content="<?php echo $objProducto->objCodigoEspecial->descripcion ?>" >
-                                <img src="<?php echo Yii::app()->request->baseUrl . Yii::app()->params->carpetaImagen['codigoEspecial'] . "/" . $objProducto->objCodigoEspecial->rutaIcono ?>"/>
-                            </a>
-                        <?php endif; ?>
-                        <?php if ($objProducto->fraccionado == 1): ?>
-                            <!--fraccionado-->
-                            <div class="itm_ico fraccion_text" title="Producto Fraccionado"><span>F</span></div>
-                        <?php endif; ?>
-                        <?php  if ($objProducto->ventaVirtual == 1 && $objPrecio->inicializado()): ?>
-                            <!--adicionar a lista-->
-                            <a href="#" data-tipo="1" class="itm_ico button-lista" title="Añadir a lista" data-role="lstpersonalguardar" data-codigo="<?php echo $objProducto->codigoProducto ?>"><span class="text_add_list">Añadir a lista</span> <span class="glyphicon glyphicon-pencil" aria-hidden="true"></span>
-                            </a>
-                        <?php endif;  ?>
-                        <?php if ($objPrecio->tieneBeneficio()): ?>
-                        <!--descuento-->
-                            <div class="cdiv_prod_desc"><?php echo $objPrecio->getPorcentajeDescuento() ?>% dcto</div>
-                        <?php endif; ?>    
                     </div>
-                    <?php if (!in_array($objProducto->idUnidadNegocioBI, Yii::app()->params->calificacion['categoriasNoCalificacion'])): ?>
-                        <h4>Califica el producto</h4>
-                        <div id="raty-lectura-producto-<?php echo $objProducto->codigoProducto ?>" data-role="raty" data-readonly="true" data-score="<?php echo $objProducto->getCalificacion() ?>" class="clst_cal_str"></div>
-                    <?php endif; ?>
                     <div class="" style="color:#A3A3A3;font-size: 16px;">
                         <h3 style="color: #ED1C24;"><?php echo $objProducto->descripcionProducto ?> <!-- Titulo del producto --></h3>
                         <div><span><?php echo $objProducto->presentacionProducto ?></span></div>
                         <div><span>Código: <?php echo $objProducto->codigoProducto ?></span></div>
+                        <?php if ($objProducto->objCodigoEspecial->rutaIcono != ""): ?>
+                        <div class="detail_especial">
+                            <?php echo $objProducto->objCodigoEspecial->descripcion ?>
+                        </div>
+                        <?php endif; ?>
+                        <?php if (!in_array($objProducto->idUnidadNegocioBI, Yii::app()->params->calificacion['categoriasNoCalificacion'])): ?>
+                            <div id="raty-lectura-producto-<?php echo $objProducto->codigoProducto ?>" data-role="raty" data-readonly="true" data-score="<?php echo $objProducto->getCalificacion() ?>" class="clst_cal_str detail_raty"></div>
+                        <?php endif; ?>
                         <?php if ($objPrecio->getFlete() > 0): ?>
                             <div><span>Flete: <?php echo Yii::app()->numberFormatter->format(Yii::app()->params->formatoMoneda['patron'], $objPrecio->getFlete(), Yii::app()->params->formatoMoneda['moneda']); ?></span></div>
                         <?php endif; ?>
@@ -126,9 +110,17 @@
                         <div class="descripciones">
                         <?php else: ?>
                             <?php if ($objProducto->mostrarAhorroVirtual == 1 && $objPrecio->getPorcentajeDescuento() > 0 && $objSectorCiudad->objCiudad->excentoImpuestos == 0): ?>
-                                <div style="margin-top: 15px;"><span class="strike2"><?php echo Yii::app()->numberFormatter->format(Yii::app()->params->formatoMoneda['patron'], $objPrecio->getPrecio(Precio::PRECIO_UNIDAD, false), Yii::app()->params->formatoMoneda['moneda']); ?></span></div>
-                                <div><span>Ahorro: <?php echo Yii::app()->numberFormatter->format(Yii::app()->params->formatoMoneda['patron'], $objPrecio->getAhorro(Precio::PRECIO_UNIDAD), Yii::app()->params->formatoMoneda['moneda']); ?></span></div>
-                                <div><span style="font-weight:bolder;"><?php echo Yii::app()->numberFormatter->format(Yii::app()->params->formatoMoneda['patron'], $objPrecio->getPrecio(Precio::PRECIO_UNIDAD), Yii::app()->params->formatoMoneda['moneda']); ?></span></div>	   
+                                <table style="margin-top: 15px;">
+                                <tr>
+                                    <td valing="middle">
+                                        <div>Antes: <span class="strike2"><?php echo Yii::app()->numberFormatter->format(Yii::app()->params->formatoMoneda['patron'], $objPrecio->getPrecio(Precio::PRECIO_UNIDAD, false), Yii::app()->params->formatoMoneda['moneda']); ?></span></div>
+                                        <div>Ahorro: <span><?php echo Yii::app()->numberFormatter->format(Yii::app()->params->formatoMoneda['patron'], $objPrecio->getAhorro(Precio::PRECIO_UNIDAD), Yii::app()->params->formatoMoneda['moneda']); ?></span></div>
+                                    </td>
+                                    <td  valing="middle">
+                                        <div class="pricened"><span style="font-weight:bolder;"><?php echo Yii::app()->numberFormatter->format(Yii::app()->params->formatoMoneda['patron'], $objPrecio->getPrecio(Precio::PRECIO_UNIDAD), Yii::app()->params->formatoMoneda['moneda']); ?></span></div>
+                                    </td>
+                                    </tr>
+                                </table>
                                 <?php if ($objProducto->objImpuesto != null && $objProducto->objImpuesto->codigoImpuesto != 0 && $objProducto->objImpuesto->codigoImpuesto != 20): ?>
                                     <?php if ($objSectorCiudad == null || ($objSectorCiudad != null && $objSectorCiudad->objCiudad->excentoImpuestos == 0)): ?>
                                         <p class="">Incluye <?php echo Yii::app()->numberFormatter->formatPercentage($objProducto->objImpuesto->porcentaje) ?> de impuestos</p>
@@ -156,7 +148,7 @@
                         <?php if ($objSectorCiudad != null): ?>                                  
                             <div class="" style="margin-top: 13px;">
                                 <?php echo CHtml::link('<div class="button anadir">Añadir&nbsp;<img src="' . Yii::app()->baseUrl . '/images/desktop/carrito-amarillo.png" alt=""></div>', '#', array('data-producto' => $objProducto->codigoProducto, 'data-cargar' => 1, 'class' => '')); ?>
-                                <?php #echo CHtml::link('<div class="comprar-ahora" >Añadir a la lista</div>', '#', array('class' => '', 'data-tipo' => '1', 'data-role' => 'lstpersonalguardar', 'data-codigo' => $objProducto->codigoProducto)); ?>
+                                <?php echo CHtml::link('<div class="comprar-ahora" >Añadir a la lista</div>', '#', array('class' => '', 'data-tipo' => '1', 'data-role' => 'lstpersonalguardar', 'data-codigo' => $objProducto->codigoProducto)); ?>
                             </div>
                         <?php else: ?>
                             <div class="" style="margin-top: 13px;">                             

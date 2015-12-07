@@ -10,6 +10,53 @@
     url("fonts/geneva.ttf") format('truetype');  
   font-weight: normal;  
 }
+.pricened > span {
+    color: #e90000;
+    margin-left: 20px;
+}
+.descripciones .button.anadir {
+    margin: 0;
+}
+.detail_especial {
+    color: #e90000;
+    font-size: 12px;
+    font-style: italic;
+    margin: 15px 0;
+    text-align: center;
+}
+.clst_cal_str.detail_raty {
+    text-align: center;
+}
+.iconos_right .popover {
+    width: 300px;
+}
+.botones-list {
+    padding: 0 13px;
+}
+.group-botones-cantidad .btn-addless-cantidad {
+    float: left;
+    margin-right: 2px;
+    padding: 1px 0;
+    text-align: center;
+    width: 25%;
+}
+.group-botones-cantidad .ressete {
+    float: left;
+    margin-right: 2px;
+    width: 46%;
+}
+.group-botones-cantidad .btn-addless-cantidad:last-child {
+    margin-right: 0;
+}
+.padd2 {
+    padding: 0 2px;
+}
+.botones-list .button {
+    font-size: 15px;
+    margin: 0;
+    padding: 1px 0;
+    text-align: center;
+}
 .content-category .controls > span {
     display: inline-block;
     width: 161px;
@@ -372,13 +419,13 @@
     margin-top: 5px;
 }
 .list_lineal .iconos_right {
-    bottom: 0;
     margin: 0;
     padding-right: 15px;
-    top: inherit;
+    top: 50px;
 }
 .list_lineal .iconos_right .itm_ico {
-    display: inline-block;
+    display: inline-block !important;
+    margin: 0;
     vertical-align: top;
 }
 .ranking-list {
@@ -398,7 +445,6 @@
     position: absolute;
     right: 0;
     top: 0;
-    z-index: 1;
 }
 .iconos_right .itm_ico,.itm_ico>.cod_puntos {
     margin-bottom: 5px !important;
@@ -1227,7 +1273,7 @@ footer li a:hover{
     background: #dadada none repeat scroll 0 0;
     color: rgb(101, 101, 101);
     font-size: 17px;
-    padding: 9px 0 9px 4%;
+    padding: 9px 0 9px 2%;
 }
 .dropdown-menu.category > li:hover {
     background-color: #ccc;

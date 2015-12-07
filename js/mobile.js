@@ -165,6 +165,44 @@ $(document).on('click', 'a[data-role="ubicacion-seleccion"]', function() {
     return false;
 });
 
+$(document).on('change', 'select[data-role="ciudad-despacho-map"]', function() {
+    var val = $(this).val().trim();
+    if (val.length > 0) {
+        var option = $('select[data-role="ciudad-despacho-map"] option[value="' + val + '"]').attr('selected', 'selected');
+
+        if (map) {
+            map.setCenter(new google.maps.LatLng(parseFloat(option.attr('data-latitud')), parseFloat(option.attr('data-longitud'))));
+            $('#select-ubicacion-preferencia').remove();
+            $('#select-ubicacion-psubsector').removeClass('div-center').addClass('float-left');
+            $.ajax({
+                type: 'POST',
+                async: true,
+                url: requestUrl + '/sitio/ubicacionSeleccion',
+                data: {ciudad: val},
+                dataType: 'html',
+                beforeSend: function() {
+                    $.mobile.loading('show');
+                },
+                complete: function() {
+                    $.mobile.loading('hide');
+                },
+                success: function(data) {
+                    if (data.length > 0) {
+                        $('#select-ubicacion-content').append(data);
+                        $('#select-ubicacion-content').trigger("create");
+                    } else {
+                        $('#select-ubicacion-psubsector').removeClass('float-left').addClass('div-center');
+                    }
+                },
+                error: function(jqXHR, textStatus, errorThrown) {
+                    $.mobile.loading('hide');
+                    alert('Error: ' + errorThrown);
+                }
+            });
+        }
+    }
+});
+
 $(document).on('click', 'button[data-role="ubicacion-mapa"]', function() {
     $.mobile.changePage('#page-ubicacion-map', {transition: "pop", role: "dialog", reverse: false});
     resizeMap();

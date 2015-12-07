@@ -2629,6 +2629,34 @@ div.clst_cont_top.top_frc {
     margin-left: 15%;
 }
 
+.map .page-header {
+  position: absolute;
+  top: 0;
+  right: 0;
+  left: 0;
+  height: auto;
+  padding: 2px;
+  background: #6598d9;
+  border: 0;
+  z-index: 99;
+}
+
+.map .page-header h1 {
+  font-weight: bold;
+  font-size: 1em;
+  color: #fff;
+  text-shadow: none;
+  margin: 0;
+}
+
+.map .page-header h2 {
+  font-weight: normal;
+  font-size: 0.8em;
+  color: #000;
+  text-shadow: none;
+  margin: 0;
+}
+
 .center-div{
     display: block;
     margin-left: auto;
