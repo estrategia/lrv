@@ -42,12 +42,6 @@
                        <!--  <div class="cod_puntos itm_ico">Pts<span></span></div> -->
                         <?php endif;?>
                         
-                        <?php if ($objProducto->objCodigoEspecial->rutaIcono != ""): ?>
-                            <!--codigo especial verde-->
-                            <a class='itm_ico pop_codigo product-prom cod_especial' role="button" data-placement="left" data-toggle="popover" title="Codigo especial" data-content="<?php echo $objProducto->objCodigoEspecial->descripcion ?>" >
-                                <img src="<?php echo Yii::app()->request->baseUrl . Yii::app()->params->carpetaImagen['codigoEspecial'] . 'desktop/' . $objProducto->objCodigoEspecial->rutaIcono ?>"/>
-                            </a>
-                        <?php endif; ?>
                         <?php if ($objProducto->fraccionado == 1): ?>
                             <!--fraccionado-->
                             <div class="itm_ico fraccion_text" title="Producto Fraccionado"><span>F</span></div>
@@ -58,14 +52,18 @@
                             </a>
                         <?php endif;  ?>
                     </div>
-                    <?php if (!in_array($objProducto->idUnidadNegocioBI, Yii::app()->params->calificacion['categoriasNoCalificacion'])): ?>
-                        <h4>Califica el producto</h4>
-                        <div id="raty-lectura-producto-<?php echo $objProducto->codigoProducto ?>" data-role="raty" data-readonly="true" data-score="<?php echo $objProducto->getCalificacion() ?>" class="clst_cal_str"></div>
-                    <?php endif; ?>
                     <div class="" style="color:#A3A3A3;font-size: 16px;">
                         <h3 style="color: #ED1C24;"><?php echo $objProducto->descripcionProducto ?> <!-- Titulo del producto --></h3>
                         <div><span><?php echo $objProducto->presentacionProducto ?></span></div>
                         <div><span>Código: <?php echo $objProducto->codigoProducto ?></span></div>
+                        <?php if ($objProducto->objCodigoEspecial->rutaIcono != ""): ?>
+                        <div class="detail_especial">
+                            <?php echo $objProducto->objCodigoEspecial->descripcion ?>
+                        </div>
+                        <?php endif; ?>
+                        <?php if (!in_array($objProducto->idUnidadNegocioBI, Yii::app()->params->calificacion['categoriasNoCalificacion'])): ?>
+                            <div id="raty-lectura-producto-<?php echo $objProducto->codigoProducto ?>" data-role="raty" data-readonly="true" data-score="<?php echo $objProducto->getCalificacion() ?>" class="clst_cal_str detail_raty"></div>
+                        <?php endif; ?>
                         <?php if ($objPrecio->getFlete() > 0): ?>
                             <div><span>Flete: <?php echo Yii::app()->numberFormatter->format(Yii::app()->params->formatoMoneda['patron'], $objPrecio->getFlete(), Yii::app()->params->formatoMoneda['moneda']); ?></span></div>
                         <?php endif; ?>
