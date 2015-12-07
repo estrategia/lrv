@@ -72,7 +72,7 @@
                 </div>
             </div>
             <div class="modal-body">
-                <div class="map-content" id="map" style="width:100%;height:400px;"></div>
+                <div class="map-content" id="map"></div>
             </div>
             <div class="modal-footer center">
                 <button type="button" class="btn btn-default" data-dismiss="modal" >Cancelar</button>
