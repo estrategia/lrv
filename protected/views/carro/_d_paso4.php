@@ -104,8 +104,8 @@ $form = $this->beginWidget('CActiveForm', array(
         </table>
         <div class="coment">
             <div class="checkbox">
-                <?php echo $form->labelEx($modelPago, 'confirmacion'); ?>
                 <?php echo $form->checkBox($modelPago, 'confirmacion', array()); ?>
+                <label class="clst_check" for="FormaPagoForm_confirmacion"><span></span> <?php echo $modelPago->getAttributeLabel('confirmacion')?></label>
                 <?php echo $form->error($modelPago, 'confirmacion', array('class'=>'text-danger')); ?>
             </div>
         </div>
