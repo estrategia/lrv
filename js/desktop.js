@@ -43,14 +43,17 @@ function listaProductoCuadricula() {
 
 
 $(document).ready(function() {
+    $('.main_menu .categorias').click(function(){
+        ajuesmenu();
+    });
     ajuesmenu();
 });
 $( window ).resize(function() {
   ajuesmenu();
 });
 function ajuesmenu(){
-    widht = $('.main_menu .categorias').width() - 4;
-    widhtDocument = ($(window).width() - widht) - 4;
+    widht = $('.main_menu .categorias').width();
+    widhtDocument = ($(window).width() - widht);
     $('.categorias .category > li').width(widht);
     $('.categorias .category > li .right-nav').width(widhtDocument);
     total=$('.main_menu .modulo-menu').length;
