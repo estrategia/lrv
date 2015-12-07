@@ -60,9 +60,13 @@ function obtenerPosicion(pos) {
         data: {lat: lat, lon: lon},
         success: function(data) {
             if (data.result == 'ok') {
-                $("#popup-ubicacion-gps [data-role='content'] div").html(data.response.ubicacion);
-                $("#popup-ubicacion-gps [data-role='content'] a").attr('href', data.response.url);
+                $("#popup-ubicacion-gps [data-role='content']").html(data.response);
                 $("#popup-ubicacion-gps").popup("open");
+
+                /*$("#popup-ubicacion-gps [data-role='content'] div").html(data.response.ubicacion);
+                 $("#popup-ubicacion-gps [data-role='content'] a").attr('href', data.response.url);
+                 $("#popup-ubicacion-gps").popup("open");*/
+
                 //$('[data-role= \"main\"]').html(data.response);
                 //window.location.href = data.response;
             } else {
@@ -78,6 +82,93 @@ function obtenerPosicion(pos) {
         }
     });
 }
+
+$(document).on('click', 'a[data-role="ubicacion-gps-seleccion"]', function() {
+    $('#ubicacion-seleccion-ciudad').val($(this).attr('data-ciudad'));
+    $('#ubicacion-seleccion-sector').val($(this).attr('data-sector'));
+    $('#ubicacion-seleccion-direccion').val('');
+    $("#popup-ubicacion-gps").popup("close");
+    $("#popup-ubicacion-gps [data-role='content']").html("");
+});
+
+$(document).on('click', 'a[data-role="ubicacion-seleccion-mapa"]', function() {
+    //$.mobile.loading('show');
+    var lat = 0;
+    var lon = 0;
+    if (map) {
+        lat = map.getCenter().lat();
+        lon = map.getCenter().lng();
+    }
+    $.ajax({
+        type: 'POST',
+        dataType: 'json',
+        async: true,
+        url: requestUrl + '/sitio/gps',
+        data: {lat: lat, lon: lon},
+        beforeSend: function() {
+            $.mobile.loading('show');
+        },
+        success: function(data) {
+            if (data.result == 'ok') {
+                $( "#page-ubicacion-map" ).dialog( "close" ); 
+                $('#ubicacion-seleccion-ciudad').val(data.response.ciudad);
+                $('#ubicacion-seleccion-sector').val(data.response.sector);
+                $('#ubicacion-seleccion-direccion').val('');
+            } else {
+                $('<div>').mdialog({
+                    content: "<div data-role='main'><div class='ui-content' data-role='content' role='main'>" + data.response + "<a class='ui-btn ui-btn-r ui-corner-all ui-shadow' data-rel='back' href='#'>Aceptar</a></div></div>"
+                });
+            }
+            $.mobile.loading('hide');
+        },
+        error: function(jqXHR, textStatus, errorThrown) {
+            $.mobile.loading('hide');
+            alert(errorThrown);
+        }
+    });
+});
+
+$(document).on('click', 'a[data-role="ubicacion-seleccion"]', function() {
+    var form = $(this).parents("form");
+    $.ajax({
+        type: 'POST',
+        async: true,
+        url: requestUrl + '/sitio/ubicacionSeleccion',
+        data: form.serialize(),
+        dataType: 'json',
+        beforeSend: function() {
+            $.mobile.loading('show');
+        },
+        complete: function(data) {
+            $.mobile.loading('hide');
+        },
+        success: function(data) {
+            if (data.result == 'ok') {
+                dialogoAnimado(data.response);
+                if (data.urlAnterior) {
+                    location.href = data.urlAnterior;
+                } else {
+                    location.href = requestUrl + '/sitio/inicio';
+                }
+            } else {
+                $('<div>').mdialog({
+                    content: "<div data-role='main'><div class='ui-content' data-role='content' role='main'>" + data.response + "<a class='ui-btn ui-btn-r ui-corner-all ui-shadow' data-rel='back' href='#'>Aceptar</a></div></div>"
+                });
+            }
+        },
+        error: function(jqXHR, textStatus, errorThrown) {
+            // boton.button('enable');
+            $.mobile.loading('hide');
+            alert(errorThrown);
+        }
+    });
+    return false;
+});
+
+$(document).on('click', 'button[data-role="ubicacion-mapa"]', function() {
+    $.mobile.changePage('#page-ubicacion-map', {transition: "pop", role: "dialog", reverse: false});
+    resizeMap();
+});
 
 function errorPosicion(error) {
     $.mobile.loading('hide');
@@ -947,6 +1038,12 @@ $(document).on('change', 'input[name="DireccionesDespacho[idDireccionDespacho]"]
     $('html,body').animate({
         scrollTop: $('#div-direccion-form-' + direccion).offset().top
     }, 200);
+
+    if ($('form[id="form-ubicacion"]').length > 0) {
+        $('#ubicacion-seleccion-ciudad').val('');
+        $('#ubicacion-seleccion-sector').val('');
+        $('#ubicacion-seleccion-direccion').val($(this).val());
+    }
 });
 
 $(document).on('click', "input[id^='btn-direccion-actualizar-']", function() {

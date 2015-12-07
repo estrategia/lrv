@@ -1,3 +1,5 @@
-<div id="googleMap" style="width:100%;height:400px;"></div>
+<div class="ui-content">
+<div id="map" style="width:100%;height:400px;"></div>
+</div>
 
 

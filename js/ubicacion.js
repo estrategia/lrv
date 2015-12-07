@@ -9,7 +9,7 @@ function initialize()
 {
     var mapProp = {
        center: {lat, lng},
-       zoom:12,
+       zoom:15,
        mapMarker: false,
        disableDefaultUI:true,       
        zoomControl:true,
