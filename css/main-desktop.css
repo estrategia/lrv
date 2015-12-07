@@ -10,6 +10,16 @@
     url("fonts/geneva.ttf") format('truetype');  
   font-weight: normal;  
 }
+.detail_especial {
+    color: #e90000;
+    font-size: 12px;
+    font-style: italic;
+    margin: 15px 0;
+    text-align: center;
+}
+.clst_cal_str.detail_raty {
+    text-align: center;
+}
 .iconos_right .popover {
     width: 300px;
 }
