@@ -108,6 +108,25 @@
                 <?php echo $form->error($model, 'dias'); ?>
             </div>
             
+            <?php if($model->tipo == ModulosConfigurados::TIPO_PRODUCTOS_CUADRICULA):?>
+                <div class="form-group">
+                     <!-- checkbox -->
+                    <?php echo $form->labelEx($model, 'aleatorio'); ?><div class="space-1"></div>
+                    <?php echo $form->dropDownList($model, 'aleatorio', Yii::app()->params->callcenter['modulosConfigurados']['booleanos'], array('id' => 'aleatorio', 'data-role' => 'aleatorio',  'class' => 'form-control'))?>
+                    <?php echo $form->error($model, 'aleatorio'); ?>
+                </div>
+                <div class="form-group"> <!-- calendario -->
+                    <?php echo $form->labelEx($model, 'lineas'); ?>
+                    <?php echo $form->textField($model, 'lineas', array('id' => 'lineas',  'class' => 'lineas form-control', 'disabled' => ($model->aleatorio == 1) ? false : true )); ?>
+                    <?php echo $form->error($model, 'lineas'); ?>
+                </div>
+                <div class="form-group">
+                     <!-- checkbox -->
+                    <?php echo $form->labelEx($model, 'agotado'); ?><div class="space-1"></div>
+                    <?php echo $form->dropDownList($model, 'agotado', Yii::app()->params->callcenter['modulosConfigurados']['booleanos'], array('id' => 'agotado', 'class' => 'form-control'))?>
+                    <?php echo $form->error($model, 'agotado'); ?>
+                </div>
+            <?php endif;?>
             <?php if(!$model->isNewRecord):?>
                 <div class="form-group">
                      <!-- checkbox -->
