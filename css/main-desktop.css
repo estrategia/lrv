@@ -399,13 +399,13 @@
     margin-top: 5px;
 }
 .list_lineal .iconos_right {
-    bottom: 0;
     margin: 0;
     padding-right: 15px;
-    top: inherit;
+    top: 50px;
 }
 .list_lineal .iconos_right .itm_ico {
-    display: inline-block;
+    display: inline-block !important;
+    margin: 0;
     vertical-align: top;
 }
 .ranking-list {
