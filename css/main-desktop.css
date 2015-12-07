@@ -10,6 +10,9 @@
     url("fonts/geneva.ttf") format('truetype');  
   font-weight: normal;  
 }
+.descripciones .button.anadir {
+    margin: 0;
+}
 .detail_especial {
     color: #e90000;
     font-size: 12px;
