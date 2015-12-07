@@ -41,11 +41,6 @@
                         <a href="#" onclick="return false" class='itm_ico' data-toggle="popover" data-content="<?php echo implode(", ",$objPrecio->getPuntosDescripcion())?>"> <div class="cod_puntos"> Pts<br/><span></span></div> </a> 
                        <!--  <div class="cod_puntos itm_ico">Pts<span></span></div> -->
                         <?php endif;?>
-                        
-                        <?php if ($objProducto->fraccionado == 1): ?>
-                            <!--fraccionado-->
-                            <div class="itm_ico fraccion_text" title="Producto Fraccionado"><span>F</span></div>
-                        <?php endif; ?>
                     </div>
                     <div class="" style="color:#A3A3A3;font-size: 16px;">
                         <h3 style="color: #ED1C24;"><?php echo $objProducto->descripcionProducto ?> <!-- Titulo del producto --></h3>
