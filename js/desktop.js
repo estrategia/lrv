@@ -53,7 +53,9 @@ function ajuesmenu(){
     widhtDocument = ($(window).width() - widht) - 4;
     $('.categorias .category > li').width(widht);
     $('.categorias .category > li .right-nav').width(widhtDocument);
-    itemswidth=widhtDocument/3;
+    total=$('.main_menu .modulo-menu').length;
+   // alert(total);
+    itemswidth=widhtDocument/total;
     $('.main_menu .modulo-menu').width(itemswidth);
 }
 $(".main_menu .cuidado-personal > a").click(function() {
