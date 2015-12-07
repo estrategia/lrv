@@ -107,7 +107,7 @@
                 </div>
                 </div>
                     <div class="col-xs-5 padd2">
-                <?php echo CHtml::link('<div class="button">Añadir <img src="' . Yii::app()->baseUrl . '/images/desktop/carrito-amarillo.png" alt=""></div>', '#', array('data-producto' => $data->codigoProducto, 'data-cargar' => 1)); ?>
+                <?php echo CHtml::link('<div class="button">Añadir <img src="' . Yii::app()->baseUrl . '/images/desktop/button-carrito.png" alt=""></div>', '#', array('data-producto' => $data->codigoProducto, 'data-cargar' => 1)); ?>
                 </div>
                 </div>
                 <?php if (isset($vista) && $vista == "comparacion"): /*?>
