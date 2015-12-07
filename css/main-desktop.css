@@ -10,8 +10,18 @@
     url("fonts/geneva.ttf") format('truetype');  
   font-weight: normal;  
 }
+.descripciones .detPproduct {
+    display: table;
+    margin: auto;
+}
+.descripciones .subtotal {
+    border-top: 1px dashed;
+    margin-bottom: 15px;
+    margin-top: 15px;
+    padding-top: 15px;
+}
 .pricened > span {
-    color: #e90000;
+    color: #e90000 !important;
     margin-left: 20px;
 }
 .descripciones .button.anadir {

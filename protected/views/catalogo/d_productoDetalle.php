@@ -36,15 +36,6 @@
                         <a href="" class="itm_ico clst_slct_prod<?php echo (Yii::app()->shoppingCart->contains($objProducto->codigoProducto) ? " active" : "") ?>" id="icono-producto-agregado-<?php echo $objProducto->codigoProducto ?>">
                             <img src="<?php echo Yii::app()->request->baseUrl ?>/images/desktop/icon_seleccionado.png">
                         </a>
-                        <!-- producto agregado -->
-                        <?php if($objPrecio->tienePuntos()):?>
-                        <a href="#" onclick="return false" class='itm_ico' data-toggle="popover" data-content="<?php echo implode(", ",$objPrecio->getPuntosDescripcion())?>"> <div class="cod_puntos"> Pts<br/><span></span></div> </a> 
-                       <!--  <div class="cod_puntos itm_ico">Pts<span></span></div> -->
-                        <?php endif;?>
-                         <?php if ($objPrecio->tieneBeneficio()): ?>
-                        <!--descuento-->
-                            <div class="cdiv_prod_desc"><?php echo $objPrecio->getPorcentajeDescuento() ?>% dcto</div>
-                        <?php endif; ?>    
                     </div>
                     <div class="" style="color:#A3A3A3;font-size: 16px;">
                         <h3 style="color: #ED1C24;"><?php echo $objProducto->descripcionProducto ?> <!-- Titulo del producto --></h3>
@@ -130,20 +121,24 @@
                                         <p class="">Incluye <?php echo Yii::app()->numberFormatter->formatPercentage($objProducto->objImpuesto->porcentaje) ?> de impuestos</p>
                                     <?php endif; ?>
                                 <?php endif; ?>
+                                <?php if($objPrecio->tienePuntos()):?>
+                                 <p><span>Por la compra de este producto recibe <?php echo implode(", ",$objPrecio->getPuntosDescripcion())?> puntos.</span></p>
+                                 <?php endif;?>
                             <?php else: ?>
                                 <div style="margin-top: 15px;"></div>
                                 <div><span style="font-weight:bolder;"><?php echo Yii::app()->numberFormatter->format(Yii::app()->params->formatoMoneda['patron'], $objPrecio->getPrecio(Precio::PRECIO_UNIDAD), Yii::app()->params->formatoMoneda['moneda']); ?></span></div>	
                             <?php endif; ?>
                             <?php if ($objProducto->ventaVirtual == 1): ?>
                                 <div>
-                                    <div class="line-bottom detPproduct">
+                                    <div class="subtotal"><span> Subtotal:<span id="subtotal-producto-unidad-<?php echo $objProducto->codigoProducto ?>"><?php echo Yii::app()->numberFormatter->format(Yii::app()->params->formatoMoneda['patron'], $objPrecio->getPrecio(Precio::PRECIO_UNIDAD), Yii::app()->params->formatoMoneda['moneda']); ?></span></span></div>
+                                    <div class="detPproduct">
                                         <button class=" min" style="border:1px solid;" id="disminuir_unidad_<?php echo $objProducto->codigoProducto ?>" data-role="disminuir-cantidad"  data-producto="<?php echo $objProducto->codigoProducto ?>" data-precio="<?= $objPrecio->getPrecio(Precio::PRECIO_UNIDAD) ?>"  type="button"><span  class="glyphicon glyphicon-minus"></span></button>
                                         <div class="input_cant ressete"><input id="cantidad-producto-unidad-<?php echo $objProducto->codigoProducto ?>"  class="increment" type="text" data-role="validar-cantidad-unidad"  data-producto="<?php echo $objProducto->codigoProducto ?>" data-precio="<?= $objPrecio->getPrecio(Precio::PRECIO_UNIDAD) ?>" maxlength="3" value="1" data-total="700"/></div>
                                         <button class=" min" style="border:1px solid;" id="aumentar_unidad_<?php echo $objProducto->codigoProducto ?>"  data-role="aumentar-cantidad"  data-producto="<?php echo $objProducto->codigoProducto ?>" data-precio="<?= $objPrecio->getPrecio(Precio::PRECIO_UNIDAD) ?>" type="button"><span  class="glyphicon glyphicon-plus"></span></button>
                                         <div class="clear"></div>
                                     </div>
 
-                                    <div class="subtotal"><span> Subtotal:<span id="subtotal-producto-unidad-<?php echo $objProducto->codigoProducto ?>"><?php echo Yii::app()->numberFormatter->format(Yii::app()->params->formatoMoneda['patron'], $objPrecio->getPrecio(Precio::PRECIO_UNIDAD), Yii::app()->params->formatoMoneda['moneda']); ?></span></span></div>
+                                    
                                 </div>
                             <?php endif; ?>
                         <?php endif; ?>
