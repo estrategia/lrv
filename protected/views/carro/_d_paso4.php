@@ -97,7 +97,7 @@ $form = $this->beginWidget('CActiveForm', array(
                 <?php foreach ($modelPago->listCodigoEspecial as $objEspecial): ?>
                     <tr>
                         <td></td>
-                        <td><img align="left" class="iconConfirmacion" src="<?php echo Yii::app()->request->baseUrl . Yii::app()->params->carpetaImagen['codigoEspecial'] . $objEspecial->rutaIcono; ?>" ><?php echo $objEspecial->condicionCompra ?></td>
+                        <td><img align="left" class="iconConfirmacion" src="<?php echo Yii::app()->request->baseUrl . Yii::app()->params->carpetaImagen['codigoEspecial'] . 'desktop/' . $objEspecial->rutaIcono; ?>" >&nbsp;<?php echo $objEspecial->condicionCompra ?></td>
                     </tr>
                 <?php endforeach; ?>
             </tbody>

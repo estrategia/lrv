@@ -9,7 +9,7 @@
         
         <!-- combo agregado -->
         <a href="" class="clst_slct_prod<?php echo (Yii::app()->shoppingCart->contains($objCombo->getCodigo()) ? " active" : "") ?>">
-            <img src="<?php echo Yii::app()->request->baseUrl ?>/images/iconos/icon_seleccionado.png">
+            <img src="<?php echo Yii::app()->request->baseUrl ?>/images/desktop/icon_seleccionado.png">
         </a>
         <!-- combo agregado -->
         
