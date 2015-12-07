@@ -144,7 +144,7 @@
                <?php endif;?>
             <?php if ($data->objCodigoEspecial->rutaIcono != ""): ?>
             <!--codigo especial verde-->
-                <a class='itm_ico pop_codigo product-prom cod_especial' role="button" data-toggle="popover" title="Codigo especial" data-content="<?php echo $data->objCodigoEspecial->descripcion ?>" >
+                <a class='itm_ico pop_codigo product-prom cod_especial' role="button" data-toggle="popover" data-content="<?php echo $data->objCodigoEspecial->descripcion ?>" >
                     <img src="<?php echo Yii::app()->request->baseUrl . Yii::app()->params->carpetaImagen['codigoEspecial'] . 'desktop/' . $data->objCodigoEspecial->rutaIcono ?>"/>
                 </a>
             <?php endif; ?>
