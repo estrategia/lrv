@@ -1,6 +1,6 @@
 <section class="block">
-    <div id="carousel-modulo-<?php echo $objModulo->idModulo ?>" class="carousel slide" data-interval="false">
-        <div class="carousel-inner">
+    <div id="carousel-modulo-<?php echo $objModulo->idModulo ?>" class="carousel slide"  data-ride="carousel">
+        <div class="carousel-inner" role="listbox">
             <?php foreach ($objModulo->listImagenesBanners as $i => $imagenes): ?>
                 <div class="item <?php echo ($i == 0) ? 'active' : '' ?>">
                     <?php if ($imagenes->tipoContenido == 1): ?>

@@ -47,13 +47,13 @@ class ModulosConfigurados extends CActiveRecord {
         // will receive user inputs.
         return array(
             array('tipo, inicio, fin, estado, dias', 'required'),
-            array('tipo, estado', 'numerical', 'integerOnly' => true),
+            array('tipo, estado, aleatorio, lineas, agotado', 'numerical', 'integerOnly' => true),
             array('dias', 'length', 'max' => 30),
             array('descripcion', 'length', 'max' => 255),
             array('contenido', 'required', 'on' => 'contenido'),
             // The following rule is used by search().
             // @todo Please remove those attributes that should not be searched.
-            array('idModulo, tipo, inicio, fin, dias, estado, descripcion, contenido, contenidoMovil', 'safe', 'on' => 'search'),
+            array('idModulo, tipo, inicio, fin, dias, estado, aleatorio, lineas, agotado, descripcion, contenido, contenidoMovil', 'safe', 'on' => 'search'),
         );
     }
 
@@ -89,6 +89,9 @@ class ModulosConfigurados extends CActiveRecord {
             'descripcion' => 'Descripcion',
             'contenido' => 'Contenido',
             'contenidoMovil' => 'contenidoMovil',
+            'aleatorio' => 'Aleatorio' ,
+            'lineas' => 'Número de líneas',
+            'Agotado' => 'Mostrar agotados'
         );
     }
 
@@ -176,14 +179,14 @@ class ModulosConfigurados extends CActiveRecord {
 
         if (!empty($listaCodigos) || !empty($listaCodigosCategoria) || !empty($listaCodigosMarca)) {
             $criteria = array(
-                'order' => 't.orden DESC',
+                'order' => (($this->aleatorio == 1)? 'rand()': 't.orden DESC'). (($this->lineas != NULL && $this->aleatorio == 1) ? ' LIMIT '.($this->lineas*4): ''),
                 'with' => array('listImagenes', 'objCodigoEspecial', 'listCalificaciones'),
                 'condition' => "t.activo=:activo AND (listImagenes.tipoImagen='" . Yii::app()->params->producto['tipoImagen']['mini'] . "' OR listImagenes.tipoImagen IS NULL)",
                 'params' => array(
                     ':activo' => 1,
                 )
             );
-
+            
             $condition = "";
 
             if (!empty($listaCodigos)) {
@@ -218,10 +221,13 @@ class ModulosConfigurados extends CActiveRecord {
             $criteria['condition'] .= " $condition";
 
             if ($objSectorCiudad !== null) {
-                $criteria['with']['listSaldos'] = array('on' => 'listSaldos.codigoCiudad=:ciudad AND listSaldos.codigoSector=:sector OR listSaldos.idProductoSaldos IS NULL');
-                $criteria['with']['listPrecios'] = array('on' => 'listPrecios.codigoCiudad=:ciudad AND listPrecios.codigoSector=:sector OR listPrecios.idProductoPrecios IS NULL');
-                $criteria['with']['listSaldosTerceros'] = array('on' => 'listSaldosTerceros.codigoCiudad=:ciudad AND listSaldosTerceros.codigoSector=:sector OR listSaldosTerceros.idProductoSaldo IS NULL');
+                $criteria['with']['listSaldos'] = array('on' => 'listSaldos.codigoCiudad=:ciudad AND listSaldos.codigoSector=:sector' );
+                $criteria['with']['listPrecios'] = array('on' => 'listPrecios.codigoCiudad=:ciudad AND listPrecios.codigoSector=:sector  OR listPrecios.idProductoPrecios IS NULL');
+                $criteria['with']['listSaldosTerceros'] = array('on' => ' listSaldosTerceros.codigoCiudad=:ciudad AND listSaldosTerceros.codigoSector=:sector OR listSaldosTerceros.idProductoSaldo IS NULL');
                 
+                if($this->agotado == 0 && $this->tipo == ModulosConfigurados::TIPO_PRODUCTOS_CUADRICULA){
+                     $criteria['condition'] .= " AND ( (listSaldos.saldoUnidad IS NOT NULL AND listPrecios.codigoCiudad IS NOT NULL) OR listSaldosTerceros.codigoCiudad IS NOT NULL)";
+                }
                 /*
                 $criteria['with']['listSaldos'] = 'listSaldos';
                 $criteria['with'][] = 'listPrecios';

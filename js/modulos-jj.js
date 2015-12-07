@@ -835,6 +835,16 @@ $(document).on('click', "a[data-role='estado-imagen-combo']", function(){
         }
     });
 });
+$(document).on('change', "select[data-role='aleatorio']", function(){
+   var valor = $(this).val();
+   
+   if(valor == 0){
+       $("#lineas").val("");
+       $("#lineas").prop("disabled", true);
+   }else{
+       $("#lineas").prop("disabled", false);
+   }
+});
 
 $(document).on('change', "select[data-role='validar-tipo-combo']", function(){
     var val=$(this).val();

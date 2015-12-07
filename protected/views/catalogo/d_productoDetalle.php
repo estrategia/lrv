@@ -57,6 +57,10 @@
                             <a href="#" data-tipo="1" class="itm_ico button-lista" title="Añadir a lista" data-role="lstpersonalguardar" data-codigo="<?php echo $objProducto->codigoProducto ?>"><span class="text_add_list">Añadir a lista</span> <span class="glyphicon glyphicon-pencil" aria-hidden="true"></span>
                             </a>
                         <?php endif;  ?>
+                        <?php if ($objPrecio->tieneBeneficio()): ?>
+                        <!--descuento-->
+                            <div class="cdiv_prod_desc"><?php echo $objPrecio->getPorcentajeDescuento() ?>% dcto</div>
+                        <?php endif; ?>    
                     </div>
                     <?php if (!in_array($objProducto->idUnidadNegocioBI, Yii::app()->params->calificacion['categoriasNoCalificacion'])): ?>
                         <h4>Califica el producto</h4>

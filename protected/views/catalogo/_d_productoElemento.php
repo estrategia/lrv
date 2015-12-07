@@ -15,7 +15,7 @@
         <div class="img-list-products">
             <?php if ($objPrecio->tieneBeneficio()): ?>
             <!--descuento-->
-                <div class="cdiv_prod_desc"><?php echo $objPrecio->getPorcentajeDescuento() ?>% <span>dcto</span></div>
+                <div class="cdiv_prod_desc"><?php echo $objPrecio->getPorcentajeDescuento() ?>% dcto</div>
             <?php endif; ?>
             <?php if ($objPrecio->inicializado()):?>
             <a href="<?php echo CController::createUrl('/catalogo/producto', array('producto' => $data->codigoProducto, 'descripcion' => $data->getCadenaUrl())) ?>">

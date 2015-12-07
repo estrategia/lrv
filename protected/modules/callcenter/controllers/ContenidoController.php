@@ -150,13 +150,13 @@ class ContenidoController extends ControllerOperator {
             $params['vista'] = '_categoria';
             $params['ubicacionModel'] = new UbicacionModulos();
             if ($_POST) {
-                $model = new UbicacionModulos();
-                $model->orden = $_POST['UbicacionModulos']['orden'];
-                $model->ubicacion = $_POST['UbicacionModulos']['ubicacion'];
-                $model->idModulo = $idModulo;
-
-                if ($model->save()) {
-                    $id = $model->idUbicacion;
+                $modelUbicacion = new UbicacionModulos();
+                $modelUbicacion->orden = $_POST['UbicacionModulos']['orden'];
+                $modelUbicacion->ubicacion = $_POST['UbicacionModulos']['ubicacion'];
+                $modelUbicacion->idModulo = $idModulo;
+               
+                if ($modelUbicacion->save()) {
+                    $id = $modelUbicacion->idUbicacion;
                     if (isset($_POST['UbicacionCategoria']) && !empty($_POST['UbicacionCategoria']['idCategoriaBi'])) {
                         $modelCategoria = new UbicacionCategoria();
                         $modelCategoria->attributes = $_POST['UbicacionCategoria'];
