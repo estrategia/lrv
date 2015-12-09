@@ -210,8 +210,8 @@ return array(
                 2 => 'grande'
             ),
             'noImagen' => array(
-                'mini' => '/images/productos/thumb/noimage.gif',
-                'grande' => '/images/productos/noimage.gif',
+                'mini' => '/images/productos/thumb/noimage.png',
+                'grande' => '/images/productos/noimage.png',
             )
         ),
         'calificacion' => array(
