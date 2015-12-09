@@ -531,6 +531,12 @@ class ContenidoController extends ControllerOperator {
                 echo CActiveForm::validate($imagenBanner);
                 Yii::app()->end();
             } else {
+
+                if ($imagenBanner->tipoContenido == ImagenBanner::CONTENIDO_NONE) {
+                    $imagenBanner->contenido = NULL;
+                    $imagenBanner->contenidoMovil = NULL;
+                }
+
                 if ($imagenBanner->save()) {
                     $listaImagenes = ImagenBanner::model()->findAll(array(
                         'condition' => 'idModulo =:idmodulo',
@@ -962,11 +968,6 @@ class ContenidoController extends ControllerOperator {
         foreach ($model as $indice => $fila) {
             $productosAgregados[] = $fila->codigoProducto;
         }
-
-
-        //print_r();
-
-
 
         $this->renderPartial('buscarProductos', array(
             'listProductos' => $listProductos,
