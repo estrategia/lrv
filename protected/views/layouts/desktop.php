@@ -37,13 +37,13 @@
                                         <?php echo CHtml::link('<span class="text-center title-desp"><br><span class="glyphicon glyphicon-map-marker" style="margin-right: 5px;"></span> Cambiar Ubicaci&oacute;n </span>', CController::createUrl('/sitio/ubicacion'), array()); ?>
                                     </div>
                                 </div>
-                                <div class="col-sm-5">
+                                <div class="col-sm-6">
                                     <form method="get" action="<?php echo CController::createUrl('/catalogo/buscar') ?>">
                                         <div class="row">
-                                            <div class="col-sm-5 content-search">
+                                            <div class="col-sm-6 content-search">
                                                 <input type="text" class="form-control" placeholder="Escriba el nombre del producto"  autocomplete="off" value="" id="busqueda" name="busqueda" > 
                                             </div>
-                                            <div class="col-sm-7 content-category">
+                                            <div class="col-sm-6 content-category">
                                                 <div class="controls">
                                                     <span class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false" data-label-placement>
                                                         Todas las categor&iacute;as</span>
@@ -63,7 +63,7 @@
                                         </div>
                                     </form>
                                 </div>
-                                <div class="col-sm-5">	
+                                <div class="col-sm-4">	
                                     <?php if (Yii::app()->user->isGuest): ?>
                                         <ul class="user">
                                             <li><a href="<?= Yii::app()->request->baseUrl; ?>/usuario/autenticar/opcion/inicio" ><img class="ico-user" src="<?php echo Yii::app()->request->baseUrl; ?>/images/desktop/ico-iniciar-sesion.png" alt=""> Iniciar Sesión</a></li>
