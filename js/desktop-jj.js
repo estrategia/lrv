@@ -38,6 +38,10 @@ function validarCantidadFraccionado(codigoProducto, numeroFracciones, unidadFrac
     var nroFracciones = $("#cantidad-producto-fraccion-" + codigoProducto).val();
     var nroUnidades = $("#cantidad-producto-unidad-" + codigoProducto).val();
 
+    
+    if(nroFracciones < 0 ){
+        nroFracciones = 0;
+    }
     if ((nroFracciones * unidadFraccionamiento) >= numeroFracciones) {
         var nroUnidadesAdicionales = Math.floor((nroFracciones * unidadFraccionamiento) / numeroFracciones);
         nroUnidades = nroUnidades * 1 + nroUnidadesAdicionales;
@@ -940,6 +944,10 @@ $(document).on('change', "input[data-role='validar-cantidad-unidad']", function(
     var codigoProducto = $(this).attr('data-producto');
     var valorUnidad = $(this).attr('data-precio');
     var nro = $(this).val();
+    
+    if(nro < 0 ){
+        nro = 0;
+    }
     $("#subtotal-producto-unidad-" + codigoProducto).html("$" + format(nro * valorUnidad));
     $("#cantidad-producto-unidad-" + codigoProducto).val(nro);
 });

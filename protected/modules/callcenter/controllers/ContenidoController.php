@@ -44,7 +44,7 @@ class ContenidoController extends ControllerOperator {
             $model->attributes = $_GET['ModulosConfigurados'];
 
 
-        Yii::app()->getClientScript()->registerCssFile(Yii::app()->request->baseUrl . "/css/main-desktop.css"); 
+        Yii::app()->getClientScript()->registerCssFile(Yii::app()->request->baseUrl . "/css/main-desktop.css");
         $this->render('index', array(
             'model' => $model
         ));
@@ -154,7 +154,7 @@ class ContenidoController extends ControllerOperator {
                 $modelUbicacion->orden = $_POST['UbicacionModulos']['orden'];
                 $modelUbicacion->ubicacion = $_POST['UbicacionModulos']['ubicacion'];
                 $modelUbicacion->idModulo = $idModulo;
-               
+
                 if ($modelUbicacion->save()) {
                     $id = $modelUbicacion->idUbicacion;
                     if (isset($_POST['UbicacionCategoria']) && !empty($_POST['UbicacionCategoria']['idCategoriaBi'])) {
@@ -203,9 +203,9 @@ class ContenidoController extends ControllerOperator {
 
                         if ($uploadedFile->getExtensionName() == "jpg" || $uploadedFile->getExtensionName() == "png" ||
                                 $uploadedFile->getExtensionName() == "jpeg" || $uploadedFile->getExtensionName() == "gif") {
-                               
-                            if ($uploadedFile->saveAs(Yii::app()->params->callcenter['modulosConfigurados']['urlImagenes'] . $modelBanner->nombre.date("Ymdhis").".".$uploadedFile->getExtensionName())) {
-                                $modelBanner->rutaImagen = "/" . Yii::app()->params->callcenter['modulosConfigurados']['urlImagenes'] . $modelBanner->nombre.date("Ymdhis").".".$uploadedFile->getExtensionName();
+
+                            if ($uploadedFile->saveAs(Yii::app()->params->callcenter['modulosConfigurados']['urlImagenes'] . $modelBanner->nombre . date("Ymdhis") . "." . $uploadedFile->getExtensionName())) {
+                                $modelBanner->rutaImagen = "/" . Yii::app()->params->callcenter['modulosConfigurados']['urlImagenes'] . $modelBanner->nombre . date("Ymdhis") . "." . $uploadedFile->getExtensionName();
                                 $modelBanner->idModulo = $idModulo;
                                 if ($modelBanner->save()) {
                                     Yii::app()->user->setFlash('alert alert-success', "La imagen ha sido guardada con éxito");
@@ -316,7 +316,7 @@ class ContenidoController extends ControllerOperator {
                 $params['vista'] = '_grupoModulos';
                 $params['modelModulos'] = new ModulosConfigurados('searchModulos');
                 $params['modelModulos']->unsetAttributes();
-                Yii::app()->getClientScript()->registerCssFile(Yii::app()->request->baseUrl . "/css/main-desktop.css"); 
+                Yii::app()->getClientScript()->registerCssFile(Yii::app()->request->baseUrl . "/css/main-desktop.css");
                 if (isset($_GET['ModulosConfigurados']))
                     $params['modelModulos']->attributes = $_GET['ModulosConfigurados'];
 
@@ -497,6 +497,65 @@ class ContenidoController extends ControllerOperator {
                 'response' => $this->renderPartial('_listaImagenes', array(
                     'listaImagenes' => $listaImagenes
                         ), true, false)
+            ));
+        }
+    }
+
+    public function actionEditarImagen($idBanner) {
+
+
+        $model = ImagenBanner::model()->findByPk($idBanner);
+
+        echo CJSON::encode(
+                array(
+                    'result' => 'ok',
+                    'response' => $this->renderPartial('_editarContenidoImagen', array(
+                        'modelImagen' => $model
+                            ), true, false)
+        ));
+
+        Yii::app()->end();
+    }
+
+    public function actionGuardarEditarImagen() {
+        if (!Yii::app()->request->isPostRequest) {
+            throw new CHttpException(404, 'Solicitud inválida.');
+        }
+
+        $idBanner = Yii::app()->getRequest()->getPost('idBanner');
+        $imagenBanner = ImagenBanner::model()->findByPk($idBanner);
+
+        if ($imagenBanner) {
+            $imagenBanner->attributes = $_POST['ImagenBanner'];
+            if (!$imagenBanner->validate()) {
+                echo CActiveForm::validate($imagenBanner);
+                Yii::app()->end();
+            } else {
+                if ($imagenBanner->save()) {
+                    $listaImagenes = ImagenBanner::model()->findAll(array(
+                        'condition' => 'idModulo =:idmodulo',
+                        'params' => array(
+                            'idmodulo' => $imagenBanner->idModulo
+                        )
+                    ));
+                    echo CJSON::encode(array(
+                        'result' => 'ok',
+                        'response' => 'Contenido de la imagen actualizada con éxito',
+                        'responseHtml' => $this->renderPartial('_listaImagenes', array(
+                            'listaImagenes' => $listaImagenes
+                                ), true, false)
+                    ));
+                } else {
+                    echo CJSON::encode(array(
+                        'result' => 'error',
+                        'response' => 'Error al actualizar el contenido'
+                    ));
+                }
+            }
+        } else {
+            echo CJSON::encode(array(
+                'result' => 'error',
+                'response' => 'Imagen no encontrada'
             ));
         }
     }
@@ -1255,7 +1314,7 @@ class ContenidoController extends ControllerOperator {
                     'response' => $this->renderPartial('_visualizarModulo', array(
                         'contenido' => $this->renderPartial('//contenido/d_modulos', array(
                             'listModulos' => $objModulo->listModulosGrupo
-                        ),true,false)), true, false)
+                                ), true, false)), true, false)
                 ));
             } else {
                 echo CJSON::encode(array(
@@ -1263,7 +1322,7 @@ class ContenidoController extends ControllerOperator {
                     'response' => $this->renderPartial('_visualizarModulo', array(
                         'contenido' => $this->renderPartial('//contenido/d_modulo', array(
                             'objModulo' => $objModulo
-                        ),true,false)), true, false)
+                                ), true, false)), true, false)
                 ));
             }
         } else {

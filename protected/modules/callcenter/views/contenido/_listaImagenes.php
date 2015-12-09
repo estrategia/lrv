@@ -23,6 +23,7 @@
                 <th>Orden</th>
                 <th>Contenido</th>
                 <th>Contenido Móvil</th>
+                <th>Editar Contenido</th>
                 <th></th>
             </tr>
             
@@ -37,6 +38,7 @@
                     <td><?php echo $dato->orden ?></td>
                     <td><?php echo CHtml::link('Visualizar Contenido', '#', array('data-contenido-modal' =>  $dato->contenido , 'data-role' => "modal-contenido", 'class' => 'btn btn-primary', ($dato->contenido == null || empty($dato->contenido))? 'disabled':'' => 'true')); ?></td>
                     <td><?php echo CHtml::link('Visualizar Contenido Móvil', '#', array('data-contenido-modal' =>  $dato->contenidoMovil , 'data-role' => "modal-contenido", 'class' => 'btn btn-primary',($dato->contenidoMovil == null || empty($dato->contenidoMovil))? 'disabled':'' => 'true')); ?></td>
+                    <td><?php echo CHtml::link('Editar Contenido', '#', array('data-modulo-imagen' =>  $dato->idBanner , 'data-role' => "modal-editar-imagen", 'class' => 'btn btn-success')); ?></td>
                     <td>
                         <?php echo CHtml::link('Eliminar', '#', array('data-modulo-imagen' => $dato->idBanner, 'data-role' => "eliminar-modulo-imagen", 'class' => 'btn btn-primary')); ?>
                     </td>
