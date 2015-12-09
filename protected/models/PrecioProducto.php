@@ -201,8 +201,29 @@ class PrecioProducto extends Precio {
             ));
 
             $this->porcentajeDescuentoBeneficio = 0;
-            foreach ($this->listBeneficios as $objBeneficio) {
-                $this->porcentajeDescuentoBeneficio += $objBeneficio->dsctoUnid;
+
+            if (Yii::app()->params->beneficios['configuracionActiva'] == Yii::app()->params->beneficios['configuracion']['acumulado']) {
+                foreach ($this->listBeneficios as $objBeneficio) {
+                    $this->porcentajeDescuentoBeneficio += $objBeneficio->dsctoUnid;
+                }
+            } else if (Yii::app()->params->beneficios['configuracionActiva'] == Yii::app()->params->beneficios['configuracion']['mayor']) {
+
+                $cantBeneficios = count($this->listBeneficios);
+
+                if ($cantBeneficios > 0) {
+                    $objBeneficioAux = $this->listBeneficios[0];
+                    for($idx=1; $idx<$cantBeneficios; $idx++) {
+                        $objBeneficio = $this->listBeneficios[$idx];
+                        if ($objBeneficio->dsctoUnid > $objBeneficioAux->dsctoUnid) {
+                            $objBeneficioAux = $objBeneficio;
+                        }
+                    }
+                    $this->porcentajeDescuentoBeneficio = $objBeneficioAux->dsctoUnid;
+                    $this->listBeneficios = array($objBeneficioAux);
+                }
+            } else {
+                $this->porcentajeDescuentoBeneficio = 0;
+                $this->listBeneficios = array();
             }
 
             //restriccion de maximo de beneficio

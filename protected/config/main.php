@@ -307,6 +307,11 @@ return array(
             'recambioCruzado' => 10,
             'swobligaCli' => array(0 => 'Todos', 2 => 'Cliente fiel'),
             'porcentajeMaximo' => 60,
+            'configuracion' => array(
+                'acumulado' => 1,
+                'mayor' => 2
+            ),
+            'configuracionActiva' => 2,
         ),
         'servicioVentaControlada' => 17,
         'gps' => array(
