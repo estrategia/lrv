@@ -10,6 +10,11 @@
     url("fonts/geneva.ttf") format('truetype');  
   font-weight: normal;  
 }
+.inner_tipoentrega .view_more_ubicacion {
+    display: block;
+    font-size: 13px;
+    line-height: 13px;
+}
 .descripciones .detPproduct {
     display: table;
     margin: auto;
@@ -312,7 +317,7 @@
 }
 .inner_tipoentrega {
     line-height: 23px;
-    padding: 15px 18px 15px 70px;
+    padding: 9px 18px 9px 70px;
 }
 .tipo-entrega.activo {
     border: 1px solid #e90000;
