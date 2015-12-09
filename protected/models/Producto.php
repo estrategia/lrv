@@ -80,7 +80,7 @@ class Producto extends CActiveRecord {
             'objImpuesto' => array(self::BELONGS_TO, 'Impuesto', 'codigoImpuesto'),
             'objDetalle' => array(self::HAS_ONE, 'ProductoDetalle', 'codigoProducto'),
             'listImagenes' => array(self::HAS_MANY, 'Imagen', 'codigoProducto'),
-            'listImagenesGrandes' => array(self::HAS_MANY, 'Imagen', 'codigoProducto', 'condition' => 'listImagenesGrandes.idImagen IS NULL OR (listImagenesGrandes.estadoImagen=1 AND listImagenesGrandes.tipoImagen=' . YII::app()->params->producto['tipoImagen']['grande'] . ')'),
+            'listImagenesGrandes' => array(self::HAS_MANY, 'Imagen', 'codigoProducto', 'on' => 'listImagenesGrandes.idImagen IS NULL OR (listImagenesGrandes.estadoImagen=1 AND listImagenesGrandes.tipoImagen=' . YII::app()->params->producto['tipoImagen']['grande'] . ')'),
             'listCalificaciones' => array(self::HAS_MANY, 'ProductosCalificaciones', 'codigoProducto'),
             'listSaldos' => array(self::HAS_MANY, 'ProductosSaldos', 'codigoProducto'),
             'listPrecios' => array(self::HAS_MANY, 'ProductosPrecios', 'codigoProducto'),
