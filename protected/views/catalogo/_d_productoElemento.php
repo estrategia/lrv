@@ -43,22 +43,32 @@
                     <?php if ($objPrecio->inicializado()): ?>
                         <a href="<?php echo CController::createUrl('/catalogo/producto', array('producto' => $data->codigoProducto, 'descripcion' => $data->getCadenaUrl())) ?>" title='<?php echo $data->descripcionProducto ?>'>
                         <?php endif; ?>
-                        <?php if (strlen($data->descripcionProducto) > 19): ?>
-                            <?php echo substr($data->descripcionProducto, 0, 19) . "..." ?>
-                        <?php else: ?>
+                        <div class="descripcion-grid">
+                            <?php if (strlen($data->descripcionProducto) > 19): ?>
+                                <?php echo substr($data->descripcionProducto, 0, 19) . "..." ?>
+                            <?php else: ?>
+                                <?php echo $data->descripcionProducto ?>
+                            <?php endif; ?>
+                        </div>
+                        <div class="descripcion-lineal" style="display:none">
                             <?php echo $data->descripcionProducto ?>
-                        <?php endif; ?>
+                        </div>
                         <?php if ($objPrecio->inicializado()): ?>    
                         </a>
                     <?php endif; ?>
                 </p>  
             </div>
             <div class="line-bottom">
-                <?php if (strlen($data->presentacionProducto) > 15): ?>
-                    <span><?php echo substr($data->presentacionProducto, 0, 14) ?>...</span>
-                <?php else: ?>
-                    <span><?php echo $data->presentacionProducto; ?></span>
-                <?php endif; ?>
+                <div class="descripcion-grid">
+                    <?php if (strlen($data->presentacionProducto) > 15): ?>
+                        <span><?php echo substr($data->presentacionProducto, 0, 14) ?>...</span>
+                    <?php else: ?>
+                        <span><?php echo $data->presentacionProducto; ?></span>
+                    <?php endif; ?>
+                </div>
+                <div class="descripcion-lineal" style="display:none">
+                    <?php echo $data->presentacionProducto ?>
+                </div>
             </div>
 
             <!-- Precio del producto -->

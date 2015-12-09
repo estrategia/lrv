@@ -130,6 +130,13 @@ function guardarCalificacion(codigoProducto, objCalificacion, url) {
     });
 }
 
+$(document).on('keypress', "#form-autenticar", function(e){
+    if(e.keyCode == 13)
+    {
+        $("#form-autenticar input[data-registro-desktop='autenticar']").trigger('click');
+        e.preventDefault();
+    }
+});
 
 function format(input)
 {
