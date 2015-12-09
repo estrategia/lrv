@@ -16,3 +16,4 @@
         <?php $this->renderPartial('_d_carro', array('lectura'=>false)); ?>
     <?php endif; ?>
 </div>
+<div class="space-1"></div>
