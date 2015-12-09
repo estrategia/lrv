@@ -17,8 +17,12 @@ function listaProductoVistaActualizar(){
 
 function listaProductoVista(tipo){
     if (tipo === 'lineal') {
+        $(".descripcion-grid").css('display','none');
+        $(".descripcion-lineal").css('display','block');
         listaProductoLineal();
     } else if (tipo === 'cuadricula') {
+        $(".descripcion-grid").css('display','block');
+        $(".descripcion-lineal").css('display','none');
         listaProductoCuadricula();
     }
 }
