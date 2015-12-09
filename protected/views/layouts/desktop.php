@@ -178,7 +178,10 @@
             <!--fin migas de pan-->
 
             <!-- <div class="container"> -->
+            <div id="main-content">
             <?php echo $content; ?>
+            </div>
+            <div class="space-1"></div>
             <!-- </div> -->
             <!--banner footer-->
             <!--
