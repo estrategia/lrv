@@ -150,7 +150,7 @@
             <a class="itm_ico" href="#" onclick="return false" data-toggle="popover" data-content="<?php echo implode(", ",$objPrecio->getPuntosDescripcion())?>"><div class="cod_puntos">Pts<br/></div></a>  
           <!--  <div class="itm_ico cod_puntos">Pts<br/><span></span></div> -->
                <?php endif;?>
-            <?php if ($data->objCodigoEspecial->rutaIcono != ""): ?>
+            <?php if ($data->objCodigoEspecial->codigoEspecial != 0): ?>
             <!--codigo especial verde-->
                 <a class='itm_ico pop_codigo product-prom cod_especial' role="button" data-toggle="popover" data-content="<?php echo $data->objCodigoEspecial->descripcion ?>" >
                     <img src="<?php echo Yii::app()->request->baseUrl . Yii::app()->params->carpetaImagen['codigoEspecial'] . 'desktop/' . $data->objCodigoEspecial->rutaIcono ?>"/>
