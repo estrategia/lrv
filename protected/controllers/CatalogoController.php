@@ -42,8 +42,7 @@ class CatalogoController extends Controller {
         $productos = array();
         if ($modulosConfigurados == null) {
             // buscar productos top 
-           $productos =  Categoria::productosDivision($division,$this->isMobile);
-         
+            $productos = Categoria::productosDivision($division, $this->isMobile);
         }
         $this->render('d_division', array(
             'objCategoria' => $objCategoria,
@@ -538,6 +537,11 @@ class CatalogoController extends Controller {
             $objSectorCiudad = Yii::app()->session[Yii::app()->params->sesion['sectorCiudadEntrega']];
 
         $codigoPerfil = Yii::app()->shoppingCart->getCodigoPerfil();
+
+        $this->breadcrumbs = array(
+            'Inicio' => array('/'),
+            "B&uacute;squeda $term"
+        );
 
         if (empty($codigosArray)) {
             try {

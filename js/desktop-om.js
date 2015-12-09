@@ -534,6 +534,7 @@ $(document).on('click', "a[data-role='lstpersonalguardar']", function() {
             bootbox.alert('Error: ' + errorThrown);
         }
     });
+    return false;
 });
 
 $(document).on('click', "input[data-role='lstpersonalguardar']", function() {
@@ -571,6 +572,7 @@ $(document).on('click', "input[data-role='lstpersonalguardar']", function() {
             bootbox.alert('Error: ' + errorThrown);
         }
     });
+    return false;
 });
 
 

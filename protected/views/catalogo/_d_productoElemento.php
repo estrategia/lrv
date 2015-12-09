@@ -150,7 +150,7 @@
             <a class="itm_ico" href="#" onclick="return false" data-toggle="popover" data-content="<?php echo implode(", ",$objPrecio->getPuntosDescripcion())?>"><div class="cod_puntos">Pts<br/></div></a>  
           <!--  <div class="itm_ico cod_puntos">Pts<br/><span></span></div> -->
                <?php endif;?>
-            <?php if ($data->objCodigoEspecial->rutaIcono != ""): ?>
+            <?php if ($data->objCodigoEspecial->codigoEspecial != 0): ?>
             <!--codigo especial verde-->
                 <a class='itm_ico pop_codigo product-prom cod_especial' role="button" data-toggle="popover" data-content="<?php echo $data->objCodigoEspecial->descripcion ?>" >
                     <img src="<?php echo Yii::app()->request->baseUrl . Yii::app()->params->carpetaImagen['codigoEspecial'] . 'desktop/' . $data->objCodigoEspecial->rutaIcono ?>"/>
@@ -162,7 +162,7 @@
             <?php endif; ?>
             <?php if ($data->ventaVirtual == 1):  ?>
             <!--adicionar a lista-->
-                <a href="#" data-tipo="1" class="itm_ico button-lista" title="Añadir a lista" data-role="lstpersonalguardar" data-codigo="<?php echo $data->codigoProducto ?>"><span class="text_add_list">Añadir a lista</span> <span class="glyphicon glyphicon-pencil" aria-hidden="true"></span>
+                <a href="#" data-tipo="1" class="itm_ico button-lista" title="Añadir a lista" data-role="lstpersonalguardar" data-codigo="<?php echo $data->codigoProducto ?>"><span class="text_add_list">Añadir a lista</span> <span class="glyphicon glyphicon-list-alt" aria-hidden="true"></span>
                 </a>
             <?php endif; ?>
 

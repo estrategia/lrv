@@ -860,6 +860,7 @@ $(document).on('click', "a[data-role='comparar']", function() {
             bootbox.alert('Error: ' + errorThrown);
         }
     });
+    return false;
 });
 
 $(document).on('click', "a[data-role='quitarComparar']", function() {
@@ -925,6 +926,7 @@ $(document).on('click', "a[data-role='compararProductos']", function() {
             bootbox.alert(textStatus + "");
         }
     });
+    return false;
 });
 
 

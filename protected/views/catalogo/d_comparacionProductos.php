@@ -13,7 +13,7 @@
                                 No hay productos para comparar
                             </div>
                         <?php else: ?>
-                            <ul class="listaProductos">
+                            <ul class="listaProductos center">
                                 <div class="items">
                                     <?php
                                     $countComparacion = count($listaProductos);
