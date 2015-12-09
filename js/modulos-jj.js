@@ -6,8 +6,11 @@ $(document).on('change', "select[data-role='modulo-ciudad']", function(){
         async: true,
         url: requestUrl + '/callcenter/contenido/comprobarciudad',
         data: {codigoCiudad : codigoCiudad},
-        beforeSend: function(){
-
+        beforeSend: function() {
+            Loading.show();
+        },
+        complete: function(data) {
+            Loading.hide();
         },
         success: function(data){
             var data = $.parseJSON(data);
@@ -21,9 +24,6 @@ $(document).on('change', "select[data-role='modulo-ciudad']", function(){
                     $("#sector-select").val(0);
                 }
             }
-        },
-        complete: function(){
-
         },
         error: function(jqXHR, textStatus, errorThrown){
 
@@ -46,8 +46,11 @@ $(document).on('click', "button[data-role='add-sector-ciudad']", function(){
         url: requestUrl + '/callcenter/contenido/guardarCiudadSector',
         data: {codigoCiudad : codigoCiudad,codigoSector: codigoSector, idModulo: idModulo},
         dataType: 'json',
-        beforeSend: function(data){
-           
+        beforeSend: function() {
+            Loading.show();
+        },
+        complete: function(data) {
+            Loading.hide();
         },
         success: function(data){
             if (data.result == "ok") {
@@ -56,9 +59,6 @@ $(document).on('click', "button[data-role='add-sector-ciudad']", function(){
             }else if(data.result == "error"){
                 bootbox.alert(data.response);
             }
-        },
-        complete: function(){
-
         },
         error: function(jqXHR, textStatus, errorThrown){
 
@@ -74,8 +74,11 @@ $(document).on('click', "a[data-role='eliminar-sector-modulo']", function(){
         url: requestUrl + '/callcenter/contenido/eliminarCiudadSector',
         data: {idModuloSectorCiudad : idSectorCiudad},
         dataType: 'json',
-        beforeSend: function(data){
-           
+        beforeSend: function() {
+            Loading.show();
+        },
+        complete: function(data) {
+            Loading.hide();
         },
         success: function(data){
             if (data.result == "ok") {
@@ -84,9 +87,6 @@ $(document).on('click', "a[data-role='eliminar-sector-modulo']", function(){
             }else if(data.result == "error"){
                 bootbox.alert(data.response);
             }
-        },
-        complete: function(){
-
         },
         error: function(jqXHR, textStatus, errorThrown){
 
@@ -102,8 +102,11 @@ $(document).on('change', "select[data-role='ubicacion-modulo']", function(){
         async: true,
         url: requestUrl + '/callcenter/contenido/formUbicacionCategoria',
         data: {ubicacion : ubicacion},
-        beforeSend: function(){
-
+        beforeSend: function() {
+            Loading.show();
+        },
+        complete: function(data) {
+            Loading.hide();
         },
         success: function(data){
             var data = $.parseJSON(data);
@@ -113,9 +116,6 @@ $(document).on('change', "select[data-role='ubicacion-modulo']", function(){
             }else{
                     $("#ubicacion-categoria").css('display','none');
             }
-        },
-        complete: function(){
-
         },
         error: function(jqXHR, textStatus, errorThrown){
 
@@ -131,8 +131,11 @@ $(document).on('click', "a[data-role='eliminar-modulo-ubicacion']", function(){
         async: true,
         url: requestUrl + '/callcenter/contenido/eliminarUbicacion',
         data: {ubicacion : idUbicacion},
-        beforeSend: function(){
-
+        beforeSend: function() {
+            Loading.show();
+        },
+        complete: function(data) {
+            Loading.hide();
         },
         success: function(data){
             var data = $.parseJSON(data);
@@ -142,9 +145,6 @@ $(document).on('click', "a[data-role='eliminar-modulo-ubicacion']", function(){
             }else if(data.result == "error"){
                 bootbox.alert(data.response);
             }
-        },
-        complete: function(){
-
         },
         error: function(jqXHR, textStatus, errorThrown){
 
@@ -159,8 +159,11 @@ $(document).on('change', "select[data-role='validar-contenido']", function(){
         async: true,
         url: requestUrl + '/callcenter/contenido/formContenidoImagen',
         data: {tipoContenido : tipoContenido},
-        beforeSend: function(){
-
+        beforeSend: function() {
+            Loading.show();
+        },
+        complete: function(data) {
+            Loading.hide();
         },
         success: function(data){
             var data = $.parseJSON(data);
@@ -171,9 +174,6 @@ $(document).on('change', "select[data-role='validar-contenido']", function(){
                     $("#div-contenido-imagen").css('display','none');
                 }
             }
-        },
-        complete: function(){
-
         },
         error: function(jqXHR, textStatus, errorThrown){
 
@@ -196,8 +196,11 @@ $(document).on('click', "a[data-role='eliminar-modulo-imagen']", function(){
         async: true,
         url: requestUrl + '/callcenter/contenido/eliminarImagen',
         data: {idBanner : idImagen},
-        beforeSend: function(){
-
+        beforeSend: function() {
+            Loading.show();
+        },
+        complete: function(data) {
+            Loading.hide();
         },
         success: function(data){
             var data = $.parseJSON(data);
@@ -207,9 +210,6 @@ $(document).on('click', "a[data-role='eliminar-modulo-imagen']", function(){
             }else if(data.result == "error"){
                 bootbox.alert(data.response);
             }
-        },
-        complete: function(){
-
         },
         error: function(jqXHR, textStatus, errorThrown){
 
@@ -366,8 +366,7 @@ $(document).on('click', "a[data-role='guardar-categoria']", function(){
      campo4.id = "scenario";
      formulario.appendChild(campo4);
      
-     /*form.serialize()+"&dispositivo="+dispositivo+"&idCategoriaRaiz="+idCategoriaRaiz+"&idCategoriaPadre="+idCategoriaPadre+"&scenario=crear"*/
-     $.ajax({
+    $.ajax({
         type: 'POST',
         async: true,
         url: requestUrl + '/callcenter/categoria/guardarCategoria',
@@ -376,7 +375,7 @@ $(document).on('click', "a[data-role='guardar-categoria']", function(){
         contentType: false,
         processData: false,
         beforeSend: function(){
-         //   Loading.show();
+            Loading.show();
         },
         success: function(data){
             var data = $.parseJSON(data);
@@ -393,7 +392,7 @@ $(document).on('click', "a[data-role='guardar-categoria']", function(){
             }
         },
         complete: function(){
-         //   Loading.hide();
+            Loading.hide();
         },
         error: function(jqXHR, textStatus, errorThrown){
 
@@ -525,7 +524,7 @@ $(document).on('click', "a[data-role='asociar-categorias']", function(){
         url: requestUrl + '/callcenter/categoria/asociarCategorias',
          data: {idCategoria: idCategoria, tipoDispositivo: dispositivo},
         beforeSend: function(){
-          //  Loading.show();
+            Loading.show();
         },
         success: function(data){
             var data = $.parseJSON(data);
@@ -538,7 +537,7 @@ $(document).on('click', "a[data-role='asociar-categorias']", function(){
             }
         },
         complete: function(){
-         //   Loading.hide();
+            Loading.hide();
         },
         error: function(jqXHR, textStatus, errorThrown){
 
@@ -725,8 +724,11 @@ $(document).on('click', "button[data-role='add-sector-ciudad-combo']", function(
         url: requestUrl + '/callcenter/combo/guardarCiudadSector',
         data: {codigoCiudad : codigoCiudad,codigoSector: codigoSector, idCombo: idCombo, saldo:saldo},
         dataType: 'json',
-        beforeSend: function(data){
-           
+        beforeSend: function() {
+            Loading.show();
+        },
+        complete: function(data) {
+            Loading.hide();
         },
         success: function(data){
             if (data.result == "ok") {
@@ -735,9 +737,6 @@ $(document).on('click', "button[data-role='add-sector-ciudad-combo']", function(
             }else if(data.result == "error"){
                 bootbox.alert(data.response);
             }
-        },
-        complete: function(){
-
         },
         error: function(jqXHR, textStatus, errorThrown){
 
@@ -756,8 +755,11 @@ $(document).on('click', "a[data-role='eliminar-combo-sector']", function(){
         url: requestUrl + '/callcenter/combo/eliminarCiudadSector',
         data: {idCombo : idCombo, codigoSector:codigoSector, codigoCiudad:codigoCiudad},
         dataType: 'json',
-        beforeSend: function(data){
-           
+        beforeSend: function() {
+            Loading.show();
+        },
+        complete: function(data) {
+            Loading.hide();
         },
         success: function(data){
             if (data.result == "ok") {
@@ -766,9 +768,6 @@ $(document).on('click', "a[data-role='eliminar-combo-sector']", function(){
             }else if(data.result == "error"){
                 bootbox.alert(data.response);
             }
-        },
-        complete: function(){
-
         },
         error: function(jqXHR, textStatus, errorThrown){
 
@@ -786,8 +785,11 @@ $(document).on('click', "a[data-role='eliminar-imagen-combo']", function(){
         url: requestUrl + '/callcenter/combo/eliminarImagenCombo',
         data: {imagenCombo : imagenCombo},
         dataType: 'json',
-        beforeSend: function(data){
-           
+        beforeSend: function() {
+            Loading.show();
+        },
+        complete: function(data) {
+            Loading.hide();
         },
         success: function(data){
             if (data.result == "ok") {
@@ -797,9 +799,7 @@ $(document).on('click', "a[data-role='eliminar-imagen-combo']", function(){
                 bootbox.alert(data.response);
             }
         },
-        complete: function(){
-
-        },
+        
         error: function(jqXHR, textStatus, errorThrown){
 
         }
@@ -816,8 +816,11 @@ $(document).on('click', "a[data-role='estado-imagen-combo']", function(){
         url: requestUrl + '/callcenter/combo/estadoImagenCombo',
         data: {imagenCombo : imagenCombo},
         dataType: 'json',
-        beforeSend: function(data){
-           
+        beforeSend: function() {
+            Loading.show();
+        },
+        complete: function(data) {
+            Loading.hide();
         },
         success: function(data){
             if (data.result == "ok") {
@@ -827,9 +830,7 @@ $(document).on('click', "a[data-role='estado-imagen-combo']", function(){
                 bootbox.alert(data.response);
             }
         },
-        complete: function(){
-
-        },
+        
         error: function(jqXHR, textStatus, errorThrown){
 
         }
@@ -839,7 +840,7 @@ $(document).on('change', "select[data-role='aleatorio']", function(){
    var valor = $(this).val();
    
    if(valor == 0){
-       $("#lineas").val("");
+       $("#lineas").val("")
        $("#lineas").prop("disabled", true);
    }else{
        $("#lineas").prop("disabled", false);
@@ -855,8 +856,11 @@ $(document).on('change', "select[data-role='validar-tipo-combo']", function(){
         url: requestUrl + '/callcenter/combo/validarComboBeneficio',
         data: {valor : val},
         dataType: 'json',
-        beforeSend: function(data){
-           
+        beforeSend: function() {
+            Loading.show();
+        },
+        complete: function(data) {
+            Loading.hide();
         },
         success: function(data){
             if (data.result == "ok") {
@@ -873,9 +877,6 @@ $(document).on('change', "select[data-role='validar-tipo-combo']", function(){
                 bootbox.alert(data.response);
             }
         },
-        complete: function(){
-
-        },
         error: function(jqXHR, textStatus, errorThrown){
 
         }
@@ -891,8 +892,11 @@ $(document).on('click', "a[data-role='add-beneficio']", function(){
         url: requestUrl + '/callcenter/combo/informacioBeneficio',
         data: {idBeneficio : val},
         dataType: 'json',
-        beforeSend: function(data){
-           
+        beforeSend: function() {
+            Loading.show();
+        },
+        complete: function(data) {
+            Loading.hide();
         },
         success: function(data){
             if (data.result == "ok") {
@@ -906,9 +910,6 @@ $(document).on('click', "a[data-role='add-beneficio']", function(){
             }else if(data.result == "error"){
                 bootbox.alert(data.response);
             }
-        },
-        complete: function(){
-
         },
         error: function(jqXHR, textStatus, errorThrown){
 

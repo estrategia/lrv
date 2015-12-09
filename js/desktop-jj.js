@@ -99,6 +99,9 @@ function guardarCalificacion(codigoProducto, objCalificacion, url) {
         url: url,
         data: 'codigo=' + codigoProducto + '&titulo=' + titulo + '&calificacion=' + calificacion + "&comentario=" + comentario + "&" + form.serialize(),
         dataType: 'json',
+        beforeSend: function() {
+            Loading.show();
+        },
         success: function(data) {
             if (data.result === 'ok') {
                 $("[data-role='calificacion']").remove();
@@ -112,7 +115,14 @@ function guardarCalificacion(codigoProducto, objCalificacion, url) {
                     $('#' + form.attr('id') + ' #' + element + '_em_').css('display', 'block');
                 });
             }
-        }
+        },
+        error: function(jqXHR, textStatus, errorThrown) {
+            Loading.hide();
+            bootbox.alert('Error: ' + errorThrown);
+        },
+        complete: function(data) {
+            Loading.hide();
+        },
     });
 }
 
@@ -520,11 +530,10 @@ $(document).on('click', "a[data-cargar='2']", function() {
         url: requestUrl + '/carro/agregarCombo',
         data: {combo: combo, cantidad: cantidad},
         beforeSend: function() {
-            //$.mobile.loading('show');
-            //quitarRelacionado();
+            Loading.show();
         },
-        complete: function() {
-            //$.mobile.loading('hide');
+        complete: function(data) {
+            Loading.hide();
         },
         success: function(data) {
             if (data.result === "ok") {
@@ -577,10 +586,10 @@ $(document).on('click', "a[data-cargar='1']", function() {
         url: requestUrl + '/carro/agregar',
         data: {producto: producto, cantidadU: cantidadU, cantidadF: cantidadF},
         beforeSend: function() {
-            //   $.mobile.loading('show');
+            Loading.show();
         },
         complete: function() {
-            //   $.mobile.loading('hide');
+            Loading.hide();
         },
         success: function(data) {
             if (data.result === "ok") {
@@ -631,10 +640,10 @@ $(document).on('click', "a[data-cargar='3']", function() {
         url: requestUrl + '/carro/agregarBodega',
         data: {producto: producto, cantidadU: cantidadUbicacion, cantidadB: cantidadBodega},
         beforeSend: function() {
-            //  $.mobile.loading('show');
+            Loading.show();
         },
-        complete: function() {
-            //   $.mobile.loading('hide');
+        complete: function(data) {
+            Loading.hide();
         },
         success: function(data) {
             if (data.result === "ok") {
@@ -672,23 +681,17 @@ $(document).on('click', "#form-autenticar input[data-registro-desktop='autentica
         url: requestUrl + '/usuario/ingresar',
         data: form.serialize(),
         beforeSend: function() {
-            //        boton.button('disable');
-            //         $.mobile.loading('show');
+            Loading.show();
         },
-        complete: function() {
-            //       $.mobile.loading('hide');
+        complete: function(data) {
+            Loading.hide();
         },
         success: function(data) {
             var obj = $.parseJSON(data);
             if (obj.result === 'ok') {
                 window.location.replace(obj.response.redirect);
             } else if (obj.result === 'error') {
-                /*  boton.button('enable');
-                 $('<div>').mdialog({
-                 content: "<div data-role='main'><div class='ui-content' data-role='content' role='main'>" + obj.response + "<a class='ui-btn ui-btn-r ui-corner-all ui-shadow' data-rel='back' href='#'>Aceptar</a></div></div>"
-                 });*/
             } else {
-                //  boton.button('enable');
                 $.each(obj, function(element, error) {
                     $('#' + form.attr('id') + ' #' + element + '_em_').html(error);
                     $('#' + form.attr('id') + ' #' + element + '_em_').css('display', 'block');
@@ -715,11 +718,10 @@ $(document).on('click', "#form-registro input[data-registro-desktop='registro']"
         url: requestUrl + '/usuario/registro',
         data: form.serialize(),
         beforeSend: function() {
-            //    boton.button('disable');
-            //    $.mobile.loading('show');
+            Loading.show();
         },
-        complete: function() {
-            //   $.mobile.loading('hide');
+        complete: function(data) {
+            Loading.hide();
         },
         success: function(data) {
             var obj = $.parseJSON(data);
@@ -728,12 +730,7 @@ $(document).on('click', "#form-registro input[data-registro-desktop='registro']"
                 $("#main-page").html(obj.response.bienvenidaHTML);
                 $("#main-page").trigger("create");
             } else if (obj.result === 'error') {
-                /*   boton.button('enable');
-                 $('<div>').mdialog({
-                 content: "<div data-role='main'><div class='ui-content' data-role='content' role='main'>" + obj.response + "<a class='ui-btn ui-btn-r ui-corner-all ui-shadow' data-rel='back' href='#'>Aceptar</a></div></div>"
-                 });*/
             } else {
-                //   boton.button('enable');
                 $.each(obj, function(element, error) {
                     $('#' + form.attr('id') + ' #' + element + '_em_').html(error);
                     $('#' + form.attr('id') + ' #' + element + '_em_').css('display', 'block');
@@ -759,26 +756,20 @@ $(document).on('click', "#form-registro input[data-registro-desktop='recordar']"
         url: requestUrl + '/usuario/registro',
         data: form.serialize(),
         beforeSend: function() {
-            //    boton.button('disable');
-            //    $.mobile.loading('show');
+            Loading.show();
         },
-        complete: function() {
-            //   $.mobile.loading('hide');
+        complete: function(data) {
+            Loading.hide();
         },
         success: function(data) {
             var obj = $.parseJSON(data);
 
             if (obj.result === 'ok') {
                 $("#main-page").html(obj.response.bienvenidaHTML);
-                //   $("#main-page").trigger("create");
             } else if (obj.result === 'error') {
                 bootbox.alert(obj.response);
-                /*   boton.button('enable');
-                 $('<div>').mdialog({
-                 content: "<div data-role='main'><div class='ui-content' data-role='content' role='main'>" + obj.response + "<a class='ui-btn ui-btn-r ui-corner-all ui-shadow' data-rel='back' href='#'>Aceptar</a></div></div>"
-                 });*/
+                
             } else {
-                //   boton.button('enable');
                 $.each(obj, function(element, error) {
                     $('#' + form.attr('id') + ' #' + element + '_em_').html(error);
                     $('#' + form.attr('id') + ' #' + element + '_em_').css('display', 'block');
@@ -786,7 +777,7 @@ $(document).on('click', "#form-registro input[data-registro-desktop='recordar']"
             }
         },
         error: function(jqXHR, textStatus, errorThrown) {
-            // boton.button('enable');
+            Loading.hide();
             alert('Error: ' + errorThrown);
         }
     });
@@ -804,28 +795,19 @@ $(document).on('click', "#form-recordar input[data-registro-desktop='recordar']"
         url: requestUrl + '/usuario/recordar',
         data: form.serialize(),
         beforeSend: function() {
-            //    boton.button('disable');
-            //    $.mobile.loading('show');
+            Loading.show();
         },
-        complete: function() {
-            //     $.mobile.loading('hide');
+        complete: function(data) {
+            Loading.hide();
         },
         success: function(data) {
             var obj = $.parseJSON(data);
 
             if (obj.result === 'ok') {
-                //     boton.button('enable');
-                form.trigger("reset");
+                 form.trigger("reset");
                 bootbox.alert(obj.response);
-                /*   $('<div>').mdialog({
-                 content: "<div data-role='main'><div class='ui-content' data-role='content' role='main'>" + obj.response + "<a class='ui-btn ui-btn-r ui-corner-all ui-shadow' data-rel='back' href='#'>Aceptar</a></div></div>"
-                 });*/
             } else if (obj.result === 'error') {
                 bootbox.alert(obj.response);
-                /*   boton.button('enable');
-                 $('<div>').mdialog({
-                 content: "<div data-role='main'><div class='ui-content' data-role='content' role='main'>" + obj.response + "<a class='ui-btn ui-btn-r ui-corner-all ui-shadow' data-rel='back' href='#'>Aceptar</a></div></div>"
-                 });*/
             } else {
                 //    boton.button('enable');
                 $.each(obj, function(element, error) {
@@ -853,10 +835,10 @@ $(document).on('click', "a[data-role='comparar']", function() {
         url: requestUrl + '/catalogo/agregarProductoComparar',
         data: {producto: producto},
         beforeSend: function() {
-            //  $.mobile.loading('show');
+            Loading.show();
         },
-        complete: function() {
-            //   $.mobile.loading('hide');
+        complete: function(data) {
+            Loading.hide();
         },
         success: function(data) {
             if (data.result === "ok") {
@@ -886,10 +868,10 @@ $(document).on('click', "a[data-role='quitarComparar']", function() {
         url: requestUrl + '/catalogo/quitarProductoComparar',
         data: {producto: producto},
         beforeSend: function() {
-            //  $.mobile.loading('show');
+            Loading.show();
         },
-        complete: function() {
-            //   $.mobile.loading('hide');
+        complete: function(data) {
+            Loading.hide();
         },
         success: function(data) {
             if (data.result === "ok") {
@@ -925,11 +907,11 @@ $(document).on('click', "a[data-role='compararProductos']", function() {
         async: true,
         url: requestUrl + '/catalogo/verProductosComparar',
         beforeSend: function() {
-            //  $.mobile.loading('show');
+            Loading.show();
             $('#modal-comparar-productos').remove();
         },
         complete: function() {
-            //   $.mobile.loading('hide');
+           Loading.hide();
         },
         success: function(data) {
             $('#main-page').append(data);
@@ -983,6 +965,12 @@ $(document).on('click', "button[data-role='guardarCalificacion']", function() {
         url: requestUrl + "/catalogo/calificar/",
         data: 'codigo=' + codigoProducto + "&" + form.serialize(),
         dataType: 'json',
+        beforeSend: function() {
+            Loading.show();
+        },
+        complete: function(data) {
+            Loading.hide();
+        },
         success: function(data) {
             if (data.result === 'ok') {
                 $("[data-role='calificacion']").remove();
