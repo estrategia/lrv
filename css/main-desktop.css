@@ -340,7 +340,7 @@
     float: left;
 }
 .btnQuitarComparar.itm_ico,.btnComparar.itm_ico {
-    background: #00CAD4;
+    background: #2E64FE;
     color: #fff;
     text-align: center;
 }
@@ -1341,7 +1341,7 @@ footer li a:hover{
     background-color:#E0151D; 
 }
 .button-lista {
-    background-color: #d2cece;
+    background-color: #FE9A2E;
     color: #6c6363;
     display: block;
     font-size: 19px;
@@ -1371,12 +1371,9 @@ footer li a:hover{
     background-color: #FFDF1E;
 }
 
-.button-lista .glyphicon {
-    color: #6C6363;
-}
-.button-lista:hover{
-    background-color: #B6B6B6;
-}
+/*.button-lista:hover{
+    background-color: #FFBF00;
+}*/
 .product-bebes .imagen{
     width: 141px;
 }
@@ -1516,7 +1513,7 @@ footer li a:hover{
     text-align: center;
 }
 .button-lista .glyphicon {
-    color: #6C6363;
+    color: #fff;
 }
 .image-interna{
     width: 300px;
