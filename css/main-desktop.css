@@ -38,8 +38,39 @@
     text-align: center;
 }
 .iconos_right .popover {
+    background-color: #000;
+    opacity: 0.8;
     width: 300px;
 }
+
+.iconos_right .popover > .arrow::after {
+    //opacity: 0.8;
+}
+
+.iconos_right .popover.bottom > .arrow::after {
+    border-bottom-color: #000;
+}
+
+.iconos_right .popover.top > .arrow::after {
+    border-top-color: #000;
+}
+
+.iconos_right .popover.left > .arrow::after {
+    border-left-color: #000;
+}
+
+.iconos_right .popover.right > .arrow::after {
+    border-right-color: #000;
+}
+
+.iconos_right .popover-content {
+    font-size: 12px;
+    color: #fff;
+    font-weight: bold;
+    padding: 5px 10px;
+    text-align: center;
+}
+
 .botones-list {
     padding: 0 13px;
 }

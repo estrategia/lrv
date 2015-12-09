@@ -738,8 +738,8 @@ $(document).on('click', "#form-registro input[data-registro-desktop='registro']"
             var obj = $.parseJSON(data);
 
             if (obj.result === 'ok') {
-                $("#main-page").html(obj.response.bienvenidaHTML);
-                $("#main-page").trigger("create");
+                $("#main-content").html(obj.response.bienvenidaHTML);
+                $("#main-content").trigger("create");
             } else if (obj.result === 'error') {
             } else {
                 $.each(obj, function(element, error) {
