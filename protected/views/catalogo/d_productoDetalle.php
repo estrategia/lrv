@@ -221,10 +221,46 @@
 <?php endif; ?>
 
 
-<div class="modal fade" id="modalBodegas" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"></div>
 <section>
     <div class="container">
         <?php ProductoView::generarDetalle($objProducto->objDetalle, 1) ?>
+    </div>
+</section>
+
+<?php if (!empty($listRelacionados)): ?>
+    <section>
+        <div class="container">
+            <div class="row">
+                <div class="col-md-12 title">
+                    <h2 class="productos-destacados"><span><i class="glyphicon glyphicon-chevron-right"></i></span> Productos relacionados</h2>
+                </div>
+                <div class="col-md-12"><br></div>
+            </div>
+        </div>
+        <div class="container-rel">
+            <div id="owl-relacionados" class="owl-carousel slide-productos">
+                <?php foreach ($listRelacionados as $objRelacionado): ?>
+                    <div class="item">
+                        <ul class="listaProductos">
+                            <?php
+                            $this->renderPartial('_d_productoElemento', array(
+                                'data' => $objRelacionado->objProductoRelacionado,
+                                'vista' => 'relacionado'
+                            ));
+                            ?>
+                        </ul>
+                    </div>
+                <?php endforeach; ?>
+            </div>
+        </div>
+    </section>
+<?php endif; ?>
+
+<div class="container"><div class="line-bottom2"></div></div>
+
+<div class="modal fade" id="modalBodegas" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"></div>
+<section>
+    <div class="container">
         <!-- Porcentaje de las calificaciones -->
         <?php if (!in_array($objProducto->idUnidadNegocioBI, Yii::app()->params->calificacion['categoriasNoCalificacion'])): ?>
             <?php $porcentajes = $objProducto->getArrayCalificacion(); ?>
@@ -348,6 +384,7 @@
                 </div>
             </div>
         <?php endif; ?>
+    </div>
 </section>
 
 <section>
@@ -372,29 +409,3 @@
     </div>
 </section>    
 
-<?php if (!empty($listRelacionados)): ?>
-    <section>
-        <div class="container">
-            <div class="row">
-                <div class="col-md-12 title">
-                    <h2 class="productos-destacados"><span><i class="glyphicon glyphicon-chevron-right"></i></span> Productos relacionados</h2>
-                </div>
-            </div>
-        </div>
-
-        <div id="owl-relacionados" class="owl-carousel slide-productos">
-            <?php foreach ($listRelacionados as $objRelacionado): ?>
-                <div class="item">
-                    <ul class="listaProductos">
-                        <?php
-                        $this->renderPartial('_d_productoElemento', array(
-                            'data' => $objRelacionado->objProductoRelacionado,
-                            'vista' => 'relacionado'
-                        ));
-                        ?>
-                    </ul>
-                </div>
-            <?php endforeach; ?>
-        </div>
-    </section>
-<?php endif; ?>

@@ -201,6 +201,13 @@
     position: relative;
     z-index: 2;
 }
+
+.container-rel {
+    padding-left:6%;
+    padding-right: 6%;
+    width: auto;
+}
+
 .header_welcome .container > h2 {
     background: #e90000 none repeat scroll 0 0;
     border-radius: 45px;
