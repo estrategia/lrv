@@ -180,13 +180,41 @@ $(document).on('change', "select[data-role='validar-contenido']", function(){
         }
     });
 });
+
+$(document).on('change', "select[data-role='validar-editar-contenido']", function(){ 
+    var tipoContenido=$(this).val();
+     $.ajax({
+        type: 'GET',
+        async: true,
+        url: requestUrl + '/callcenter/contenido/formContenidoImagen',
+        data: {tipoContenido : tipoContenido},
+        beforeSend: function() {
+            Loading.show();
+        },
+        complete: function(data) {
+            Loading.hide();
+        },
+        success: function(data){
+            var data = $.parseJSON(data);
+            if (data.result === "ok") {
+                if(data.response === 1){
+                    $("#div-contenido-imagen-editar").css('display','block');
+                }else{
+                    $("#div-contenido-imagen-editar").css('display','none');
+                }
+            }
+        },
+        error: function(jqXHR, textStatus, errorThrown){
+
+        }
+    });
+});
+
 $(document).on('click', "a[data-role='modal-contenido']", function(){
     var content=$(this).attr('data-contenido-modal');
     $("#pre-contenido-modal").html(content);
     $('#modal-contenido-visual').modal('show');
 });
-
-
 
 $(document).on('click', "a[data-role='eliminar-modulo-imagen']", function(){
 
@@ -196,6 +224,69 @@ $(document).on('click', "a[data-role='eliminar-modulo-imagen']", function(){
         async: true,
         url: requestUrl + '/callcenter/contenido/eliminarImagen',
         data: {idBanner : idImagen},
+        beforeSend: function(){
+
+        },
+        success: function(data){
+            var data = $.parseJSON(data);
+            if (data.result == "ok") {
+                bootbox.alert("Imagen eliminada con éxito");
+                $("#lista-imagenes").html(data.response);
+            }else if(data.result == "error"){
+                bootbox.alert(data.response);
+            }
+        },
+        complete: function(){
+
+        },
+        error: function(jqXHR, textStatus, errorThrown){
+
+        }
+    });
+});
+
+
+$(document).on('click', "a[data-role='modal-editar-imagen']", function(){
+    var idImagen=$(this).attr('data-modulo-imagen');
+    $.ajax({
+        type: 'GET',
+        async: true,
+        url: requestUrl + '/callcenter/contenido/editarImagen',
+        data: {idBanner : idImagen},
+        beforeSend: function() {
+            Loading.show();
+            $("#modal-editar-imagen").remove();
+        },
+        complete: function(data) {
+            Loading.hide();
+        },
+        success: function(data){
+            var data = $.parseJSON(data);
+            if (data.result == "ok") {
+               
+              $("#container").append(data.response);
+               $("#modal-editar-imagen").modal('show');
+            }else if(data.result == "error"){
+                bootbox.alert(data.response);
+            }
+        },
+        error: function(jqXHR, textStatus, errorThrown){
+
+        }
+    });
+    
+    
+});
+
+$(document).on('click', "a[data-role='guardar-editar-imagen']", function(){
+
+    var idImagen = $(this).attr("data-banner");
+    var form = $("#form-editar-imagen");
+     $.ajax({
+        type: 'POST',
+        async: true,
+        url: requestUrl + '/callcenter/contenido/guardarEditarImagen',
+        data: form.serialize()+"&idBanner="+idImagen,
         beforeSend: function() {
             Loading.show();
         },
@@ -205,10 +296,16 @@ $(document).on('click', "a[data-role='eliminar-modulo-imagen']", function(){
         success: function(data){
             var data = $.parseJSON(data);
             if (data.result == "ok") {
-                bootbox.alert("Imagen eliminada con éxito");
-                $("#lista-imagenes").html(data.response);
+                bootbox.alert("Contenido actualizado");
+                $("#lista-imagenes").html(data.responseHtml);
+                $("#modal-editar-imagen").modal('hide');
             }else if(data.result == "error"){
                 bootbox.alert(data.response);
+            }else {
+                $.each(data, function(element, error) {
+                    $('#' + form.attr('id') + ' #' + element + '_em_').html(error);
+                    $('#' + form.attr('id') + ' #' + element + '_em_').css('display', 'block');
+                });
             }
         },
         error: function(jqXHR, textStatus, errorThrown){
