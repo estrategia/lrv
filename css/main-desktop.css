@@ -10,6 +10,13 @@
     url("fonts/geneva.ttf") format('truetype');  
   font-weight: normal;  
 }
+.menu-categorias.cat-collapsables h3 {
+    border: 1px solid;
+    color: #555;
+    font-size: 19px;
+    padding: 6px 0;
+    text-align: center;
+}
 #form-filtro-listaproductos .button {
     margin: 0;
 }
