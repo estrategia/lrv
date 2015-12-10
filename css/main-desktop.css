@@ -10,6 +10,9 @@
     url("fonts/geneva.ttf") format('truetype');  
   font-weight: normal;  
 }
+.ordering_item{
+    margin-right: 10px;
+}
 .inner_tipoentrega .view_more_ubicacion {
     display: block;
     font-size: 13px;
