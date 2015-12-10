@@ -19,14 +19,12 @@
                 <?php echo $position->getQuantityStored() ?>
             </div>
         <?php else: ?>
-            <div class="input-group" style="width: 75%;margin:0 auto; margin-top: 15px;">
-                <span class="input-group-btn">
-                    <button class="btn glyphicon glyphicon-minus" style="color:#EA0001;" data-role="modificarcarro" data-modificar="3" data-position="<?php echo $position->getId(); ?>" data-operation="-"></button>
-                </span>
-                <input data-role="modificarcarro" data-modificar="3" data-position="<?php echo $position->getId(); ?>" type="text" value="<?php echo $position->getQuantityStored() ?>" id="cantidad-producto-bodega-<?php echo $position->getId() ?>" placeholder="0" class="form-control" style="margin:2px 0px;box-shadow:none;border: 1px solid #F0F0F0;"/>
-                <span class="input-group-btn">
-                    <button class="btn glyphicon glyphicon-plus" style="color:#EA0001;" data-role="modificarcarro" data-modificar="3" data-position="<?php echo $position->getId(); ?>" data-operation="+"></button>
-                </span>
+            <div class="group-botones-cantidad">
+                <button class="btn-addless-cantidad" data-role="modificarcarro" data-modificar="3" data-position="<?php echo $position->getId(); ?>" data-operation="-"><span class="glyphicon glyphicon-minus"></span></button>
+                <div class="ressete">
+                    <input class="increment" data-role="modificarcarro" data-modificar="3" data-position="<?php echo $position->getId(); ?>" type="text" value="<?php echo $position->getQuantityStored() ?>" id="cantidad-producto-bodega-<?php echo $position->getId() ?>" placeholder="0"/>
+                </div>
+                <button class="btn-addless-cantidad" data-role="modificarcarro" data-modificar="3" data-position="<?php echo $position->getId(); ?>" data-operation="+"><span class="glyphicon glyphicon-plus"></span></button>
             </div>
         <?php endif; ?>
 
@@ -34,7 +32,7 @@
             <?php echo CHtml::link('Eliminar', '#', array('data-eliminar' => 3, 'data-position' => $position->getId(), 'class' => 'btn btn-default')); ?>
         <?php endif; ?>
     </td>
-    <td>
+    <td class="text-right">
         <?php if ($position->objProducto->mostrarAhorroVirtual == 1 && $position->getDiscountPrice() > 0): ?>
             <?php echo Yii::app()->numberFormatter->format(Yii::app()->params->formatoMoneda['patron'], $position->getPrice(false, false), Yii::app()->params->formatoMoneda['moneda']); ?>
         <?php else: ?>
@@ -46,13 +44,13 @@
             Incluye <?php echo Yii::app()->numberFormatter->formatPercentage($position->getTax()) ?> IVA
         <?php endif; ?>
     </td>
-    <td>
+    <td class="text-right">
         <?php if ($position->objProducto->mostrarAhorroVirtual == 1 && $position->getDiscountPrice() > 0): ?>
             <?php echo Yii::app()->numberFormatter->format(Yii::app()->params->formatoMoneda['patron'], $position->getDiscountPrice(), Yii::app()->params->formatoMoneda['moneda']); ?>
         <?php else: ?>
             NA
         <?php endif; ?>
     </td>
-    <td><?php echo Yii::app()->numberFormatter->format(Yii::app()->params->formatoMoneda['patron'], $position->getPrice(), Yii::app()->params->formatoMoneda['moneda']); ?></td>
-    <td><?php echo Yii::app()->numberFormatter->format(Yii::app()->params->formatoMoneda['patron'], $position->getSumPriceStored(), Yii::app()->params->formatoMoneda['moneda']); ?></td>
+    <td class="text-right"><?php echo Yii::app()->numberFormatter->format(Yii::app()->params->formatoMoneda['patron'], $position->getPrice(), Yii::app()->params->formatoMoneda['moneda']); ?></td>
+    <td class="text-right"><?php echo Yii::app()->numberFormatter->format(Yii::app()->params->formatoMoneda['patron'], $position->getSumPriceStored(), Yii::app()->params->formatoMoneda['moneda']); ?></td>
 </tr>

@@ -55,8 +55,9 @@
 
         <div class="row">
             <div class="col-md-6 col-md-offset-3">
-                <?php echo $form->labelEx($model, 'estadoLista', array('class' => '')); ?>
+                <?php //echo $form->labelEx($model, 'estadoLista', array('class' => '')); ?>
                 <?php echo $form->checkBox($model, 'estadoLista', array('class' => 'form-control')); ?>
+                <label class="clst_check" for="ListasPersonales_estadoLista"><span></span> <?php echo $model->getAttributeLabel('estadoLista')?></label>
                 <?php echo $form->error($model, 'estadoLista', array('class' => 'text-danger')); ?>
             </div>
         </div>
@@ -114,15 +115,17 @@
             </div>
             <div class="row">
                 <div class="col-md-6 col-md-offset-3">
-                    <?php echo $form->labelEx($model, 'recordarCorreo', array('class' => '')); ?>
+                    <?php //echo $form->labelEx($model, 'recordarCorreo', array('class' => '')); ?>
                     <?php echo $form->checkBox($model, 'recordarCorreo', array('class' => 'form-control')); ?>
+                    <label class="clst_check" for="ListasPersonales_recordarCorreo"><span></span> <?php echo $model->getAttributeLabel('recordarCorreo')?></label>
                     <?php echo $form->error($model, 'recordarCorreo', array('class' => 'text-danger')); ?>
                 </div>
             </div>
             <div class="row">
                 <div class="col-md-6 col-md-offset-3">
-                    <?php echo $form->labelEx($model, 'recordarNotificacion', array('class' => '')); ?>
+                    <?php //echo $form->labelEx($model, 'recordarNotificacion', array('class' => '')); ?>
                     <?php echo $form->checkBox($model, 'recordarNotificacion', array('class' => 'form-control')); ?>
+                    <label class="clst_check" for="ListasPersonales_recordarNotificacion"><span></span> <?php echo $model->getAttributeLabel('recordarNotificacion')?></label>
                     <?php echo $form->error($model, 'recordarNotificacion', array('class' => 'text-danger')); ?>
                 </div>
             </div>

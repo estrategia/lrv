@@ -29,7 +29,7 @@
             <li>
                 <div class="row btn-pagar">
                        
-                            <?php echo CHtml::link('Pagar', CController::createUrl('/carro/pagar'), array('class' => 'btn btn-danger')); ?>
+                            <?php echo CHtml::link('Comprar', CController::createUrl('/carro/pagar'), array('class' => 'btn btn-danger')); ?>
                        
                         <?php if (Yii::app()->session[Yii::app()->params->sesion['tipoEntrega']] == Yii::app()->params->entrega['tipo']['domicilio'] && Yii::app()->shoppingCart->getObjExpress() != null): ?>
                            

@@ -58,8 +58,8 @@
         <div class="modal-content">
             <div class="modal-header">
                 <h1 class="modal-title center">Ubicaci&oacute;n de entrega del pedido</h1>
-                <p class="center">Arrastra el mapa hasta tu ubicaci&oacute;n o utiliza la lista de ciudades y sectores</p>
-                <div id="select-ubicacion-content" style="width: 80%;" class="center-div">
+                <p class="center">Arrastra el mapa hasta tu ubicaci&oacute;n aproximada</p>
+                <div id="select-ubicacion-content" style="width: 50%;" class="center-div">
                     <div id="select-ubicacion-psubsector" style="width: 49%;" class="center-div">
                         <select class="form-control ciudades" data-role="ciudad-despacho-map" style="width: 100%">
                             <option value="">Seleccione ciudad ...</option>

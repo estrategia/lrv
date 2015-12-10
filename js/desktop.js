@@ -1,3 +1,7 @@
+function alert(message){
+    bootbox.alert({ message:message,callback: function(){}, buttons: {ok : {label:'Aceptar'} } });
+}
+
 /* 
  * To change this license header, choose License Headers in Project Properties.
  * To change this template file, choose Tools | Templates
@@ -56,7 +60,7 @@ $( window ).resize(function() {
   ajuesmenu();
 });
 function ajuesmenu(){
-    widht = $('.main_menu .categorias').width();
+    widht = $('.main_menu .categorias').width()-2;
     widhtDocument = ($(window).width() - widht);
     $('.categorias .category > li').width(widht);
     $('.categorias .category > li .right-nav').width(widhtDocument);

@@ -122,7 +122,7 @@ function guardarCalificacion(codigoProducto, objCalificacion, url) {
         },
         error: function(jqXHR, textStatus, errorThrown) {
             Loading.hide();
-            bootbox.alert('Error: ' + errorThrown);
+            alert('Error: ' + errorThrown);
         },
         complete: function(data) {
             Loading.hide();
@@ -245,9 +245,10 @@ function cambioUnidadesBodega(codigoProducto, valorUnidad, op) {
 
 function ubicacionGPS() {
     if (navigator.geolocation) {
+        Loading.show();
         navigator.geolocation.getCurrentPosition(obtenerPosicion, errorPosicion, {'enableHighAccuracy': true, 'timeout': 30000, 'maximumAge': 0});
     } else {
-        bootbox.alert("Servicio no soportado por este navegador.");
+        alert("Servicio no soportado por este navegador.");
     }
 }
 
@@ -256,6 +257,7 @@ $(document).on('click', 'button[data-role="ubicacion-gps"]', function() {
 });
 
 function errorPosicion(error) {
+    Loading.hide();
     var mensaje = 'NA';
 
     switch (error.code) {
@@ -273,11 +275,10 @@ function errorPosicion(error) {
             break;
     }
 
-    bootbox.alert(mensaje);
+    alert(mensaje);
 }
 
 function obtenerPosicion(pos) {
-    Loading.show();
     var lat = 0;
     var lon = 0;
     if (pos) {
@@ -289,10 +290,10 @@ function obtenerPosicion(pos) {
         dataType: 'json',
         async: true,
         url: requestUrl + '/sitio/gps',
-        data: {lat: lat, lon: lon},
-        beforeSend: function() {
+        data: {entrega:$('input[id="ubicacion-seleccion-entrega"]').val().trim(), lat: lat, lon: lon},
+        /*beforeSend: function() {
             Loading.show();
-        },
+        },*/
         success: function(data) {
             if (data.result == 'ok') {
                 bootbox.dialog({
@@ -318,13 +319,13 @@ function obtenerPosicion(pos) {
                 });
 
             } else {
-                bootbox.alert(data.response);
+                alert(data.response);
             }
             Loading.hide();
         },
         error: function(jqXHR, textStatus, errorThrown) {
             Loading.hide();
-            bootbox.alert('Error: ' + errorThrown);
+            alert('Error: ' + errorThrown);
         }
     });
 }
@@ -354,7 +355,7 @@ $(document).on('click', 'button[data-role="ubicacion-direccion"]', function() {
         },
         error: function(jqXHR, textStatus, errorThrown) {
             Loading.hide();
-            bootbox.alert('Error: ' + errorThrown);
+            alert('Error: ' + errorThrown);
         }
     });
     return false;
@@ -395,13 +396,13 @@ $(document).on('click', 'button[data-role="ubicacion-seleccion-mapa"]', function
                 $('#ubicacion-seleccion-sector').val(data.response.sector);
                 $('#ubicacion-seleccion-direccion').val('');
             } else {
-                bootbox.alert(data.response);
+                alert(data.response);
             }
             Loading.hide();
         },
         error: function(jqXHR, textStatus, errorThrown) {
             Loading.hide();
-            bootbox.alert('Error: ' + errorThrown);
+            alert('Error: ' + errorThrown);
         }
     });
 });
@@ -437,7 +438,7 @@ $(document).on('change', 'select[data-role="ciudad-despacho-map"]', function() {
                 },
                 error: function(jqXHR, textStatus, errorThrown) {
                     Loading.hide();
-                    bootbox.alert('Error: ' + errorThrown);
+                    alert('Error: ' + errorThrown);
                 }
             });
         }
@@ -479,13 +480,13 @@ $(document).on('click', 'button[data-role="ubicacion-seleccion"]', function() {
                     location.href = requestUrl;
                 }
             } else {
-                bootbox.alert(data.response);
+                alert(data.response);
             }
         },
         error: function(jqXHR, textStatus, errorThrown) {
             // boton.button('enable');
             Loading.hide();
-            bootbox.alert('Error: ' + errorThrown);
+            alert('Error: ' + errorThrown);
         }
     });
     return false;
@@ -509,7 +510,7 @@ $(document).on('click', 'button[data-role="ubicacion-seleccion"]', function() {
  success: function(data) {
  if (data.result == 'ok') {
  $("#modal-sector").modal('hide');
- bootbox.alert(data.response);
+ alert(data.response);
  if (data.urlAnterior) {
  location.href = data.urlAnterior;
  } else {
@@ -558,15 +559,15 @@ $(document).on('click', "a[data-cargar='2']", function() {
                 }
 
                 if (data.response.dialogoHTML) {
-                    bootbox.alert(data.response.dialogoHTML);
+                    alert(data.response.dialogoHTML);
                 }
             } else {
-                bootbox.alert(data.response);
+                alert(data.response);
             }
 
         },
         error: function(jqXHR, textStatus, errorThrown) {
-            bootbox.alert('Error: ' + errorThrown);
+            alert('Error: ' + errorThrown);
         }
     });
 
@@ -616,14 +617,14 @@ $(document).on('click', "a[data-cargar='1']", function() {
                 if (data.response.dialogoHTML) {
                     $("#modalBodegas").html(data.response.dialogoHTML);
                     $("#modalBodegas").modal();
-                    // bootbox.alert(data.response.dialogoHTML);
+                    // alert(data.response.dialogoHTML);
                 }
             } else {
-                bootbox.alert(data.response);
+                alert(data.response);
             }
         },
         error: function(jqXHR, textStatus, errorThrown) {
-            bootbox.alert('Error: ' + errorThrown);
+            alert('Error: ' + errorThrown);
         }
     });
     return false;
@@ -666,14 +667,14 @@ $(document).on('click', "a[data-cargar='3']", function() {
                     $("#cantidad-productos").html(data.response.objetosCarro);
                 }
                 if (data.response.dialogoHTML) {
-                    bootbox.alert(data.response.dialogoHTML);
+                    alert(data.response.dialogoHTML);
                 }
             } else {
-                bootbox.alert(data.response);
+                alert(data.response);
             }
         },
         error: function(jqXHR, textStatus, errorThrown) {
-            bootbox.alert('Error: ' + errorThrown);
+            alert('Error: ' + errorThrown);
         }
     });
 
@@ -778,7 +779,7 @@ $(document).on('click', "#form-registro input[data-registro-desktop='recordar']"
             if (obj.result === 'ok') {
                 $("#main-page").html(obj.response.bienvenidaHTML);
             } else if (obj.result === 'error') {
-                bootbox.alert(obj.response);
+                alert(obj.response);
                 
             } else {
                 $.each(obj, function(element, error) {
@@ -816,9 +817,9 @@ $(document).on('click', "#form-recordar input[data-registro-desktop='recordar']"
 
             if (obj.result === 'ok') {
                  form.trigger("reset");
-                bootbox.alert(obj.response);
+                alert(obj.response);
             } else if (obj.result === 'error') {
-                bootbox.alert(obj.response);
+                alert(obj.response);
             } else {
                 //    boton.button('enable');
                 $.each(obj, function(element, error) {
@@ -864,7 +865,7 @@ $(document).on('click', "a[data-role='comparar']", function() {
             }
         },
         error: function(jqXHR, textStatus, errorThrown) {
-            bootbox.alert('Error: ' + errorThrown);
+            alert('Error: ' + errorThrown);
         }
     });
     return false;
@@ -899,7 +900,7 @@ $(document).on('click', "a[data-role='quitarComparar']", function() {
             }
         },
         error: function(jqXHR, textStatus, errorThrown) {
-            bootbox.alert('Error: ' + errorThrown);
+            alert('Error: ' + errorThrown);
         }
     });
 });
@@ -930,7 +931,7 @@ $(document).on('click', "a[data-role='compararProductos']", function() {
             $('#modal-comparar-productos').modal('show');
         },
         error: function(jqXHR, textStatus, errorThrown) {
-            bootbox.alert(textStatus + "");
+            alert(textStatus + "");
         }
     });
     return false;

@@ -4,7 +4,7 @@
 <section>
         <div class="row">
             <div class="col-md-9 border-right">
-                    <table class="table table-bordered table-hover table-striped">
+                    <table class="table table-bordered table-hover table-striped tabla-carro">
                         <thead class="cabecera-tabla">
                             <tr>
                                 <th  style="width: 27%;">Producto</th>
@@ -103,7 +103,7 @@
                 <?php if (!$lectura) : ?>
                 <div class="btn-pagar" align="center">
                     <br/>
-                    <?php echo CHtml::link('Pagar', $this->createUrl('/carro/pagar'), array('class' => 'btn btn-danger', 'role' => "button")); ?>
+                    <?php echo CHtml::link('Comprar', $this->createUrl('/carro/pagar'), array('class' => 'btn btn-danger', 'role' => "button")); ?>
                     <?php echo CHtml::link('Vaciar carrito', '#', array('data-role' => 'carrovaciar', 'class' => 'btn btn-danger', 'role' => "button")); ?>
                     <br/><br/>
                     <?php echo CHtml::link('Guardar en la lista personal', '#', array('data-role' => 'lstpersonalguardar', 'data-tipo' => 3, 'data-codigo' => 0, 'class' => 'btn btn-danger', 'role' => "button")); ?>

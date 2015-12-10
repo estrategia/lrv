@@ -131,7 +131,7 @@
                                             <div>Ahorro: <span><?php echo Yii::app()->numberFormatter->format(Yii::app()->params->formatoMoneda['patron'], $objPrecio->getAhorro(Precio::PRECIO_UNIDAD), Yii::app()->params->formatoMoneda['moneda']); ?></span></div>
                                         </td>
                                         <td  valing="middle">
-                                            <div class="pricened"><span style="font-weight:bolder;"><?php echo Yii::app()->numberFormatter->format(Yii::app()->params->formatoMoneda['patron'], $objPrecio->getPrecio(Precio::PRECIO_UNIDAD), Yii::app()->params->formatoMoneda['moneda']); ?></span></div>
+                                            <div class="pricened"><span><?php echo Yii::app()->numberFormatter->format(Yii::app()->params->formatoMoneda['patron'], $objPrecio->getPrecio(Precio::PRECIO_UNIDAD), Yii::app()->params->formatoMoneda['moneda']); ?></span></div>
                                         </td>
                                     </tr>
                                 </table>
@@ -145,6 +145,7 @@
                                 <div><span style="font-weight:bolder;"><?php echo Yii::app()->numberFormatter->format(Yii::app()->params->formatoMoneda['patron'], $objPrecio->getPrecio(Precio::PRECIO_UNIDAD), Yii::app()->params->formatoMoneda['moneda']); ?></span></div>	
                             <?php endif; ?>
                             <?php if ($objPrecio->tienePuntos()): ?>
+                                <div class="space-1"></div>
                                 <div>
                                     <?php foreach ($objPrecio->getPuntosDescripcion() as $arrPunto): ?>
                                         <div class="badge"><?php echo $arrPunto ?></div>
@@ -169,8 +170,10 @@
                     <?php if ($objProducto->ventaVirtual == 1): ?>
                         <?php if ($objSectorCiudad != null): ?>                                  
                             <div class="" style="margin-top: 13px;">
-                                <?php echo CHtml::link('<div class="button anadir">Añadir&nbsp;<img src="' . Yii::app()->baseUrl . '/images/desktop/carrito-amarillo.png" alt=""></div>', '#', array('data-producto' => $objProducto->codigoProducto, 'data-cargar' => 1, 'class' => '')); ?>
-                                <?php echo CHtml::link('<div class="comprar-ahora" >Añadir a la lista</div>', '#', array('class' => '', 'data-tipo' => '1', 'data-role' => 'lstpersonalguardar', 'data-codigo' => $objProducto->codigoProducto)); ?>
+                                <?php echo CHtml::link('<div class="button anadir">Añadir&nbsp;<img src="' . Yii::app()->baseUrl . '/images/desktop/button-carrito.png" alt=""></div>', '#', array('data-producto' => $objProducto->codigoProducto, 'data-cargar' => 1, 'class' => '')); ?>
+                                <?php if(!Yii::app()->user->isGuest): ?>
+                                    <?php echo CHtml::link('<div class="comprar-ahora" >Añadir a la lista</div>', '#', array('class' => '', 'data-tipo' => '1', 'data-role' => 'lstpersonalguardar', 'data-codigo' => $objProducto->codigoProducto)); ?>
+                                <?php endif;?>
                                 <!--adicionar a lista -->
                                 <?php echo CHtml::link('<div class="comprar-ahora" >Comparar</div>', '#', array('class' => '', 'data-producto' => $objProducto->codigoProducto, 'data-role' => 'comparar')); ?>
                             </div>

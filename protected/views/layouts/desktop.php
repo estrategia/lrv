@@ -90,7 +90,7 @@
                                         <span id="cantidad-productos-comparar" class="cantidad-productos">
                                             <?php echo (isset(Yii::app()->session[Yii::app()->params->sesion['productosComparar']])) ? count(Yii::app()->session[Yii::app()->params->sesion['productosComparar']]) : 0 ?>
                                         </span>
-                                        <p style="color: #A3A3A3;">Productos</p>
+                                        <p style="color: #A3A3A3;">Comparar</p>
                                     </div>
                                 </div>
                             </div>

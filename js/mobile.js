@@ -57,7 +57,7 @@ function obtenerPosicion(pos) {
         dataType: 'json',
         async: true,
         url: requestUrl + '/sitio/gps',
-        data: {lat: lat, lon: lon},
+        data: {entrega:$('input[id="ubicacion-seleccion-entrega"]').val().trim(), lat: lat, lon: lon},
         success: function(data) {
             if (data.result == 'ok') {
                 $("#popup-ubicacion-gps [data-role='content']").html(data.response);

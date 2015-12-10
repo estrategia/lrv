@@ -10,6 +10,11 @@
     url("fonts/geneva.ttf") format('truetype');  
   font-weight: normal;  
 }
+
+.container{
+    width: 99%;
+}
+
 .descripciones .detPproduct {
     display: table;
     margin: auto;
@@ -23,6 +28,8 @@
 .pricened > span {
     color: #e90000 !important;
     margin-left: 20px;
+    font-weight:bolder;
+    font-size: 1.5em;
 }
 .descripciones .button.anadir {
     margin: 0;
@@ -32,7 +39,7 @@
     font-size: 12px;
     font-style: italic;
     margin: 15px 0;
-    text-align: center;
+    text-align: justify;
 }
 .clst_cal_str.detail_raty {
     text-align: center;
@@ -80,6 +87,11 @@
     padding: 1px 0;
     text-align: center;
     width: 25%;
+    background-color: #fff;
+}
+
+table.tabla-carro .group-botones-cantidad{
+    width: 75%;
 }
 .group-botones-cantidad .ressete {
     float: left;
@@ -1101,7 +1113,7 @@ header {
 }
 
 .modulo-menu{
-    border-radius: 0px 10px 10px 0px;
+    //border-radius: 0px 10px 10px 0px;
 }
 
 .carousel-control.left {background-image: none !important;}
@@ -1689,9 +1701,17 @@ a:hover{
     width: 54px;
     height: 54px;
 }
+table.tabla-carro > tbody > tr > td, table.tabla-carro > tbody > tr > th, table.tabla-carro > tfoot > tr > td, table.tabla-carro > tfoot > tr > th, table.tabla-carro > thead > tr > td, table.tabla-carro > thead > tr > th {
+    vertical-align: middle;
+}
 .cabecera-tabla{
-    background-color: #EA0001;
+    background-color: #cfcfcf;
     color: #fff;
+    font-weight: bold;
+    font-size: 1.2em;
+}
+.text-right {
+    text-align: right;
 }
 .table > tbody > tr > td {
     border-top: 1px dashed #EDEDED;
@@ -1706,7 +1726,6 @@ a:hover{
     text-align: center;
 }
 .detalles span{
-    color: #ccc;
     font-size: 17px;
 }
 .detalles h3{

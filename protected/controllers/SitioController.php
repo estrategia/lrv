@@ -347,6 +347,7 @@ class SitioController extends Controller {
 
             $lat = Yii::app()->getRequest()->getPost('lat');
             $lon = Yii::app()->getRequest()->getPost('lon');
+            $tipoEntrega = Yii::app()->getRequest()->getPost('entrega');
 
             try {
                 $puntosv = PuntoVenta::model()->findAll();
@@ -394,7 +395,7 @@ class SitioController extends Controller {
                 //Yii::app()->session[Yii::app()->params->sesion['sectorCiudadEntrega']] = $sectorCiudad;
                 /* Yii::app()->session[Yii::app()->params->sesion['subSectorCiudadEntrega']] = null; */
 
-                if (!isset(Yii::app()->session[Yii::app()->params->sesion['tipoEntrega']]) || Yii::app()->session[Yii::app()->params->sesion['tipoEntrega']] != Yii::app()->params->entrega['tipo']['presencial']) {
+                if (empty($tipoEntrega) || $tipoEntrega != Yii::app()->params->entrega['tipo']['presencial']) {
                     $objHorarioSecCiud = HorariosCiudadSector::model()->find(array(
                         'condition' => 'codigoCiudad=:ciudad AND codigoSector=:sector',
                         'params' => array(
@@ -406,21 +407,21 @@ class SitioController extends Controller {
                     if ($objHorarioSecCiud != null && $objHorarioSecCiud->sadCiudadSector == 0) {
                         echo CJSON::encode(array(
                             'result' => 'error',
-                            'response' => 'No contamos con servicio de entrega a domicilio para esta ubicación, los pedidos deben ser recogidos en el Punto de Venta seleccionado por usted al momento de finalizar la compra'
+                            'response' => "No contamos con servicio de entrega a domicilio para <strong>".$objCiudadSector->objCiudad->nombreCiudad . " - " . $objCiudadSector->objSector->nombreSector."</strong>. Los pedidos deben ser recogidos en el Punto de Venta seleccionado por usted al momento de finalizar la compra. Para proceder con esta ubicaci&oacute;n, por favor seleccionar tipo de entrega \"Quiero pasar por el pedido\""
                         ));
                         Yii::app()->end();
                     }
-
-                    echo CJSON::encode(array(
-                        'result' => 'ok',
-                        'response' => array(
-                            'mensaje' => "<strong>" . $objCiudadSector->objCiudad->nombreCiudad . " - " . $objCiudadSector->objSector->nombreSector . "</strong>",
-                            'ciudad' => $objCiudadSector->codigoCiudad,
-                            'sector' => $objCiudadSector->codigoSector
-                        )
-                    ));
-                    Yii::app()->end();
                 }
+
+                echo CJSON::encode(array(
+                    'result' => 'ok',
+                    'response' => array(
+                        'mensaje' => "<strong>" . $objCiudadSector->objCiudad->nombreCiudad . " - " . $objCiudadSector->objSector->nombreSector . "</strong>",
+                        'ciudad' => $objCiudadSector->codigoCiudad,
+                        'sector' => $objCiudadSector->codigoSector
+                    )
+                ));
+                Yii::app()->end();
             } catch (Exception $exc) {
                 Yii::log($exc->getMessage() . "\n" . $exc->getTraceAsString(), CLogger::LEVEL_ERROR, 'application');
                 echo CJSON::encode(array('result' => 'error', 'response' => 'Error: ' . $exc->getMessage()));
