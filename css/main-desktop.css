@@ -108,6 +108,7 @@
     margin: 0;
     padding: 1px 0;
     text-align: center;
+    border-radius: 4px;
 }
 .content-category .controls > span {
     display: inline-block;
