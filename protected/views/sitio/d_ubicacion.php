@@ -13,13 +13,13 @@
                 <div class="col-md-6">                    
                     <div data-role="tipoentrega" data-tipo="<?php echo Yii::app()->params->entrega['tipo']['presencial']; ?>" class="tipo-entrega<?php echo ($tipoEntrega == Yii::app()->params->entrega['tipo']['presencial'] ? " activo" : "") ?>">
                         <div class="ico_ubi icoRecoger"></div>
-                        <div class="inner_tipoentrega">Quiero pasar por el pedido</div>
+                        <div class="inner_tipoentrega">Quiero pasar por el pedido <a class="view_more_ubicacion" href="#">Ver m&aacute;s</a></div>
                         <div class="clear"></div>
                     </div>
                     <div class="space-1"></div>
                     <div data-role="tipoentrega" data-tipo="<?php echo Yii::app()->params->entrega['tipo']['domicilio']; ?>" class="tipo-entrega<?php echo ($tipoEntrega == Yii::app()->params->entrega['tipo']['domicilio'] ? " activo" : "") ?>">
                         <div class="ico_ubi icoEntrega"></div>
-                        <div class="inner_tipoentrega">Quiero que me lo entreguen a domicilio</div>
+                        <div class="inner_tipoentrega">Quiero que me lo entreguen a domicilio <a class="view_more_ubicacion" href="#">Ver m&aacute;s</a></div>
                         <div class="clear"></div>
                     </div>
                 </div>
