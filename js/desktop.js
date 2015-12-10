@@ -60,7 +60,7 @@ $( window ).resize(function() {
   ajuesmenu();
 });
 function ajuesmenu(){
-    widht = $('.main_menu .categorias').width()-2;
+    widht = $('.main_menu .categorias').width();
     widhtDocument = ($(window).width() - widht);
     $('.categorias .category > li').width(widht);
     $('.categorias .category > li .right-nav').width(widhtDocument);

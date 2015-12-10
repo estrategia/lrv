@@ -21,10 +21,6 @@
                     </div>
                     <button class="btn-addless-cantidad" data-role="modificarcarro" data-modificar="1" data-fraction="0" data-position="<?php echo $position->getId(); ?>" data-operation="+"><span class="glyphicon glyphicon-plus"></span></button>
                 </div>
-
-                <button class="btn-addless-cantidad"  data-role="modificarcarro" data-modificar="1" data-fraction="0" data-position="<?php echo $position->getId(); ?>" data-operation="+"><span style="color:red" class="glyphicon glyphicon-plus"></span></button>
-
-            </div>
             <?php endif; ?>
 
             <?php if (!$lectura): ?>
@@ -74,10 +70,6 @@
                     </div>
                     <button class="btn-addless-cantidad" data-role="modificarcarro" data-modificar="1" data-fraction="1" data-position="<?php echo $position->getId(); ?>" data-operation="+"><span class="glyphicon glyphicon-plus"></span></button>
                 </div>
-
-                <button class="btn-addless-cantidad"  data-role="modificarcarro" data-modificar="1" data-fraction="1" data-position="<?php echo $position->getId(); ?>" data-operation="+"><span style="color:red" class="glyphicon glyphicon-plus"></span></button>
-
-            </div>
             <?php endif; ?>
 
             <?php if (!$lectura): ?>
@@ -136,10 +128,6 @@
                     </div>
                     <button class="btn-addless-cantidad"  data-role="modificarcarro" data-modificar="1" data-fraction="0" data-position="<?php echo $position->getId(); ?>" data-operation="+"><span class="glyphicon glyphicon-plus"></span></button>
                 </div>
-
-                <button class="btn-addless-cantidad"  data-role="modificarcarro" data-modificar="1" data-fraction="0" data-position="<?php echo $position->getId(); ?>" data-operation="+"><span style="color:red" class="glyphicon glyphicon-plus"></span></button>
-
-            </div>
             <?php endif; ?>
 
             <?php if (!$lectura): ?>

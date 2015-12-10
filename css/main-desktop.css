@@ -11,8 +11,33 @@
   font-weight: normal;  
 }
 
-.container{
-    width: 99%;
+.container {
+    min-width: 750px !important;
+}
+.container-fluid {
+    max-width: 1920px !important;
+}
+
+.menu-categorias.cat-collapsables h3 {
+    border: 1px solid;
+    color: #555;
+    font-size: 19px;
+    padding: 6px 0;
+    text-align: center;
+}
+
+#form-filtro-listaproductos .button {
+    margin: 0;
+}
+
+.ordering_item{
+    margin-right: 10px;
+}
+
+.inner_tipoentrega .view_more_ubicacion {
+    display: block;
+    font-size: 13px;
+    line-height: 13px;
 }
 
 .descripciones .detPproduct {
@@ -1328,7 +1353,7 @@ footer li a:hover{
 }*/
 .dropdown-menu.category {
     border-radius: 0;
-    margin-top: 0;
+    margin-top: 3px;
     padding-bottom: 9px;
 }
 
@@ -1725,16 +1750,23 @@ table.tabla-carro > tbody > tr > td, table.tabla-carro > tbody > tr > th, table.
     margin: 0 auto;
 }
 
+#div-carro section table td, #div-carro .detalles span{
+    color: #555;
+    font-size: 15px;
+}
+
 .cabecera-tabla th{
     text-align: center;
 }
-.detalles span{
-    color: #555;
+
+#div-carro .detalles span{
     font-size: 17px;
 }
-.detalles h3{
+
+#div-carro .detalles h3{
     color:#EA0001;
 }
+
 .steps ul {
     display: block;
     padding: 0;
