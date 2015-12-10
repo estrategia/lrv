@@ -10,6 +10,9 @@
     url("fonts/geneva.ttf") format('truetype');  
   font-weight: normal;  
 }
+#form-filtro-listaproductos .button {
+    margin: 0;
+}
 .ordering_item{
     margin-right: 10px;
 }
