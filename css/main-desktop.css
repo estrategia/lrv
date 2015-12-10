@@ -10,6 +10,9 @@
     url("fonts/geneva.ttf") format('truetype');  
   font-weight: normal;  
 }
+.container-fluid {
+    max-width: 1920px !important;
+}
 #div-carro section table td {
     color: #555;
     font-size: 15px;
