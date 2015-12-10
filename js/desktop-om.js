@@ -189,8 +189,10 @@ $(document).on('click', "a[data-role='pedidodetalle']", function() {
         url: requestUrl + '/carro/agregarcompra',
         data: {compra: compra},
         beforeSend: function() {
+            Loading.show();
         },
         complete: function() {
+            Loading.hide();
         },
         success: function(data) {
             if (data.result === "ok") {
@@ -227,7 +229,10 @@ $(document).on('click', "a[data-role='pedidolistaocultar']", function() {
         url: requestUrl + '/usuario/ocultarpedido',
         data: {compra: compra},
         beforeSend: function() {
-
+            Loading.show();
+        },
+        complete: function() {
+            Loading.hide();
         },
         success: function(data) {
             if (data.result === "ok") {
@@ -254,10 +259,10 @@ $(document).on('click', "a[data-role='cotizaciondetalle']", function() {
         url: requestUrl + '/carro/agregarcotizacion',
         data: {cotizacion: cotizacion},
         beforeSend: function() {
-
+            Loading.show();
         },
         complete: function() {
-
+            Loading.hide();
         },
         success: function(data) {
             if (data.result === "ok") {
@@ -313,10 +318,10 @@ $(document).on('click', "input[data-role='lstpersonalform']", function() {
             $('div[id^="ListasPersonales_"].has-error').html('');
             $('div[id^="ListasPersonales_"].has-error').css('display', 'none');
             $('#form-listapersonal input[type=button]').attr('disabled', 'disabled');
-            //$.mobile.loading('show');
+            Loading.show();
         },
         complete: function() {
-            //$.mobile.loading('hide');
+            Loading.hide();
             $('#form-listapersonal input[type=button]').removeAttr('disabled');
         },
         success: function(data) {
@@ -359,7 +364,10 @@ $(document).on('click', "a[data-role='listapersonaleliminar']", function() {
         url: requestUrl + '/usuario/listapersonaleliminar',
         data: {lista: lista},
         beforeSend: function() {
-
+            Loading.show();
+        },
+        complete: function() {
+            Loading.hide();
         },
         success: function(data) {
             if (data.result === "ok") {
@@ -385,10 +393,10 @@ $(document).on('click', "a[data-role='listapersonal']", function() {
         url: requestUrl + '/carro/agregarlista',
         data: {lista: lista},
         beforeSend: function() {
-            //$.mobile.loading('show');
+            Loading.show();
         },
         complete: function() {
-            //$.mobile.loading('hide');
+            Loading.hide();
         },
         success: function(data) {
             if (data.result === "ok") {
@@ -418,10 +426,10 @@ $(document).on('click', "a[data-role='eliminarlistadetalle']", function() {
         url: requestUrl + '/usuario/listadetalle/accion/eliminar',
         data: {detalle: detalle},
         beforeSend: function() {
-
+            Loading.show();
         },
         complete: function() {
-
+            Loading.hide();
         },
         success: function(data) {
             if (data.result === "ok") {
@@ -461,8 +469,10 @@ $(document).on('click', "a[data-role='actualizarlistadetalle']", function() {
         url: requestUrl + '/usuario/listadetalle/accion/actualizar',
         data: {detalle: detalle, unidades: unidades},
         beforeSend: function() {
+            Loading.show();
         },
         complete: function() {
+            Loading.hide();
         },
         success: function(data) {
             if (data.result === "ok") {
@@ -508,11 +518,10 @@ $(document).on('click', "a[data-role='lstpersonalguardar']", function() {
         url: requestUrl + '/usuario/listapersonal/lista/guardar',
         data: {codigo: codigo, tipo: tipo, unidades: unidades, render: true},
         beforeSend: function() {
-            //$("div[id^='page-listaguardar-']").remove();
-            //$.mobile.loading('show');
+            Loading.show();
         },
         complete: function() {
-            //$.mobile.loading('hide');
+            Loading.hide();
         },
         success: function(data) {
             if (data.result === 'ok') {
@@ -548,9 +557,11 @@ $(document).on('click', "input[data-role='lstpersonalguardar']", function() {
             $('div[id^="ListaGuardarForm_"].has-error').html('');
             $('div[id^="ListaGuardarForm_"].has-error').css('display', 'none');
             $('#form-listaguardar input[type=button]').attr('disabled', 'disabled');
+            Loading.show();
         },
         complete: function() {
             $('#form-listaguardar input[type=button]').removeAttr('disabled');
+            Loading.hide();
         },
         success: function(data) {
             var data = $.parseJSON(data);

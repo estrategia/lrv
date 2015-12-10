@@ -1,11 +1,12 @@
 <div class="space-1"></div>
-<div class="container">
+<div class="container-fluid">
     <div class="row">
         <!-- Menu de ordenamiento -->
 
         <!-- Menu de filtros -->
         <?php if (isset($formFiltro) || isset($formOrdenamiento)): ?>
             <div class="col-md-2 menu-categorias cat-collapsables">
+                <h3>Filtrar por:</h3>
                 <?php if (isset($formFiltro)): ?>
                     <div class="panel-group" id="accordion-filtros" role="tablist" aria-multiselectable="true">
                         <?php $this->renderPartial('_d_formFiltro', array('formFiltro' => $formFiltro, 'tipoBusqueda' => $tipoBusqueda)); ?>
@@ -39,6 +40,16 @@
                             <div class="btn-group viewsList">
                                 <button class="btn-white btn" data-role="tipovista-listaproductos" data-active="true" data-type="cuadricula" type="button"><span  class="glyphicon glyphicon-th" alt="Cuadricula"></span></button>
                                 <button class="btn-white btn" data-role="tipovista-listaproductos" data-active="false" data-type="lineal" type="button"><span  class="glyphicon glyphicon-th-list" alt="Cuadricula"></span></button>
+                            </div>
+                            <div class="option-list ordering_item">
+                                Ordenar por
+                                <select class="form-control" id="items-page">
+                                    <option value="0">Precio Ascendente</option>
+                                    <option value="">Precio Descendente</option>
+                                    <option value="">Nombre</option>
+                                    <option value="">Presentación</option>
+                                    <option value="">Ninguno</option>
+                                </select>
                             </div>
                         <?php endif; ?>   
                     <?php endif; ?> 

@@ -109,10 +109,12 @@ table.tabla-carro .group-botones-cantidad{
     margin: 0;
     padding: 1px 0;
     text-align: center;
+    border-radius: 4px;
 }
 .content-category .controls > span {
     display: inline-block;
     width: 161px;
+    margin-top:2px;
 }
 .main_menu .nav > li.categorias {
     width: 25%;
@@ -323,7 +325,7 @@ table.tabla-carro .group-botones-cantidad{
 }
 .inner_tipoentrega {
     line-height: 23px;
-    padding: 15px 18px 15px 70px;
+    padding: 9px 18px 9px 70px;
 }
 .tipo-entrega.activo {
     border: 1px solid #e90000;
@@ -348,7 +350,7 @@ table.tabla-carro .group-botones-cantidad{
     border: 1px solid #dadada;
     border-radius: 0 15px 15px 0;
     margin-left: 40px;
-    font-size: 23px;
+    font-size: 18px;
     cursor: pointer;
 }
 .ico_ubi {
@@ -398,7 +400,7 @@ table.tabla-carro .group-botones-cantidad{
     width: 26px;
 }
 .content_product a {
-    font-size: 14px;
+    font-size: 13px;
     color: #555;
 }
 #form-pago-pago .forma-pago.activo {
@@ -876,10 +878,11 @@ input#RegistroForm_condiciones[type="checkbox"] + label span {
     padding: 0 5%;
 }
 .btn-pagar a.btn {
-    background: #EA0001 none repeat scroll 0 0;
+    background: #ea0001 none repeat scroll 0 0;
     border: 0 none;
     border-radius: 0;
     margin-top: 5px;
+    padding: 2px 7px;
 }
 .carro-descripcion  a {
     color: #666666;
@@ -1496,7 +1499,7 @@ footer li a:hover{
     width: 100%;
 }
 .side{
-    font-size: 15px;
+    font-size: 13px;
 }
 .btn-primary{
     background-color: #979798;
@@ -1726,6 +1729,7 @@ table.tabla-carro > tbody > tr > td, table.tabla-carro > tbody > tr > th, table.
     text-align: center;
 }
 .detalles span{
+    color: #555;
     font-size: 17px;
 }
 .detalles h3{
