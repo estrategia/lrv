@@ -888,10 +888,11 @@ input#RegistroForm_condiciones[type="checkbox"] + label span {
     padding: 0 5%;
 }
 .btn-pagar a.btn {
-    background: #EA0001 none repeat scroll 0 0;
+    background: #ea0001 none repeat scroll 0 0;
     border: 0 none;
     border-radius: 0;
     margin-top: 5px;
+    padding: 2px 7px;
 }
 .carro-descripcion  a {
     color: #666666;
