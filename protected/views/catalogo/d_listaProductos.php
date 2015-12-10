@@ -6,6 +6,7 @@
         <!-- Menu de filtros -->
         <?php if (isset($formFiltro) || isset($formOrdenamiento)): ?>
             <div class="col-md-2 menu-categorias cat-collapsables">
+                <h3>Filtrar por:</h3>
                 <?php if (isset($formFiltro)): ?>
                     <div class="panel-group" id="accordion-filtros" role="tablist" aria-multiselectable="true">
                         <?php $this->renderPartial('_d_formFiltro', array('formFiltro' => $formFiltro, 'tipoBusqueda' => $tipoBusqueda)); ?>
