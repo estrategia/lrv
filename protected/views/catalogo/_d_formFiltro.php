@@ -124,8 +124,9 @@
     </div>
 
     <br>
-    <a href="#" data-role="filtro-listaproductos" ><div class="button">Filtrar</div></a>
-    <br>
-    <a href="#" data-role="filtro-listaproductos-reset" data-tipo="2"><div class="button">Limpiar filtros</div></a>
+    <div class="row">
+        <div class="col-sm-6"><a href="#" data-role="filtro-listaproductos" ><div class="button">Filtrar</div></a></div>
+        <div class="col-sm-6"><a href="#" data-role="filtro-listaproductos-reset" data-tipo="2"><div class="button">Limpiar</div></a></div>
+    </div>
     <?php $this->endWidget(); ?>
 <?php endif; ?>
