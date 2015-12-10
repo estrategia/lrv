@@ -132,9 +132,7 @@ function cargarCategoriasSeleccionadas(attrIdModulo)
             url: requestUrl + '/callcenter/contenido/obtenerlistacategorias',
             data: {idMarcas : idMarcas, idModulo : idModulo},
             beforeSend: function(){
-                
                     Loading.show();
-                
             },
             success: function(data){
                 var data = $.parseJSON(data);
@@ -331,7 +329,6 @@ $(document).on('click', "button[data-role='busqueda-relacionados']", function(){
             },
             success: function(data) {
                 $('#container').append(data);
-                //alert(data);
                 $('#modal-productos-busqueda').modal('show');
             },
             complete: function() {
@@ -466,9 +463,7 @@ $(document).on('click', "a[data-role='tarifa-domicilio']", function(){
         },
         success: function(data) {
             var data = $.parseJSON(data);
-            //alert(data);
             $('#container').append(data.response.htmlTarifa);
-            
             $('#modal-tarifas-domicilio').modal('show');
         },
         complete: function() {
