@@ -14,15 +14,16 @@
                     <?php echo $position->getQuantityUnit() ?>
                 </div>
             <?php else: ?>
-                <div class="input-group" style="width: 75%;margin:0 auto; margin-top: 15px;">
-                    <span class="input-group-btn">
-                        <button class="btn glyphicon glyphicon-minus" style="color:#EA0001;" data-role="modificarcarro" data-modificar="1" data-fraction="0" data-position="<?php echo $position->getId(); ?>" data-operation="-"></button>
-                    </span>
-                    <input data-role="modificarcarro" data-modificar="1" data-position="<?php echo $position->getId(); ?>" type="text" value="<?php echo $position->getQuantityUnit() ?>" id="cantidad-producto-unidad-<?php echo $position->getId() ?>" placeholder="0" class="form-control" style="margin:2px 0px;box-shadow:none;border: 1px solid #F0F0F0; text-align:center;"/>
-                    <span class="input-group-btn">
-                        <button class="btn glyphicon glyphicon-plus" style="color:#EA0001;" data-role="modificarcarro" data-modificar="1" data-fraction="0" data-position="<?php echo $position->getId(); ?>" data-operation="+"></button>
-                    </span>
+                <div class="group-botones-cantidad">
+                <button class="btn-addless-cantidad" data-role="modificarcarro" data-modificar="1" data-fraction="0" data-position="<?php echo $position->getId(); ?>" data-operation="-"><span style="color:red" class="glyphicon glyphicon-minus"></span></button>
+
+                <div class="ressete">
+                    <input data-role="modificarcarro" data-modificar="1" data-position="<?php echo $position->getId(); ?>" type="text" value="<?php echo $position->getQuantityUnit() ?>" id="cantidad-producto-unidad-<?php echo $position->getId() ?>" placeholder="0" class="increment"/>
                 </div>
+
+                <button class="btn-addless-cantidad"  data-role="modificarcarro" data-modificar="1" data-fraction="0" data-position="<?php echo $position->getId(); ?>" data-operation="+"><span style="color:red" class="glyphicon glyphicon-plus"></span></button>
+
+            </div>
             <?php endif; ?>
 
             <?php if (!$lectura): ?>
@@ -65,15 +66,16 @@
                     <?php echo $position->getQuantity(true) ?>
                 </div>
             <?php else: ?>
-                <div class="input-group" style="width: 75%;margin:0 auto; margin-top: 15px;">
-                    <span class="input-group-btn">
-                        <button class="btn glyphicon glyphicon-minus" style="color:#EA0001;" data-role="modificarcarro" data-modificar="1" data-fraction="1" data-position="<?php echo $position->getId(); ?>" data-operation="-"></button>
-                    </span>
-                    <input data-role="modificarcarro" data-modificar="1" data-position="<?php echo $position->getId(); ?>" type="text" value="<?php echo $position->getQuantity(true) ?>" id="cantidad-producto-fraccion-<?php echo $position->getId() ?>" data-nfracciones="<?php echo $position->objProducto->numeroFracciones ?>" data-ufraccionamiento="<?php echo $position->objProducto->unidadFraccionamiento ?>" placeholder="0" class="form-control" style="margin:2px 0px;box-shadow:none;border: 1px solid #F0F0F0;text-align:center;"/>
-                    <span class="input-group-btn">
-                        <button class="btn glyphicon glyphicon-plus" style="color:#EA0001;" data-role="modificarcarro" data-modificar="1" data-fraction="1" data-position="<?php echo $position->getId(); ?>" data-operation="+"></button>
-                    </span>
+                <div class="group-botones-cantidad">
+                <button class="btn-addless-cantidad" data-role="modificarcarro" data-modificar="1" data-fraction="1" data-position="<?php echo $position->getId(); ?>" data-operation="-"><span style="color:red" class="glyphicon glyphicon-minus"></span></button>
+
+                <div class="ressete">
+                    <input data-role="modificarcarro" data-modificar="1" data-position="<?php echo $position->getId(); ?>" type="text" value="<?php echo $position->getQuantity(true) ?>" id="cantidad-producto-fraccion-<?php echo $position->getId() ?>" data-nfracciones="<?php echo $position->objProducto->numeroFracciones ?>" data-ufraccionamiento="<?php echo $position->objProducto->unidadFraccionamiento ?>" placeholder="0"  class="increment"/>
                 </div>
+
+                <button class="btn-addless-cantidad"  data-role="modificarcarro" data-modificar="1" data-fraction="1" data-position="<?php echo $position->getId(); ?>" data-operation="+"><span style="color:red" class="glyphicon glyphicon-plus"></span></button>
+
+            </div>
             <?php endif; ?>
 
             <?php if (!$lectura): ?>
@@ -125,15 +127,16 @@
                     <?php echo $position->getQuantityUnit() ?>
                 </div>
             <?php else: ?>
-                <div class="input-group" style="width: 75%;margin:0 auto; margin-top: 15px;">
-                    <span class="input-group-btn">
-                        <button class="btn glyphicon glyphicon-minus" style="color:#EA0001;" data-role="modificarcarro" data-modificar="1" data-fraction="0" data-position="<?php echo $position->getId(); ?>" data-operation="-"></button>
-                    </span>
-                    <input data-role="modificarcarro" data-modificar="1" data-position="<?php echo $position->getId(); ?>" type="text" value="<?php echo $position->getQuantityUnit() ?>" id="cantidad-producto-unidad-<?php echo $position->getId() ?>" placeholder="0" class="form-control" style="margin:2px 0px;box-shadow:none;border: 1px solid #F0F0F0;text-align:center;"/>
-                    <span class="input-group-btn">
-                        <button class="btn glyphicon glyphicon-plus" style="color:#EA0001;" data-role="modificarcarro" data-modificar="1" data-fraction="0" data-position="<?php echo $position->getId(); ?>" data-operation="+"></button>
-                    </span>
+                <div class="group-botones-cantidad">
+                <button class="btn-addless-cantidad" data-role="modificarcarro" data-modificar="1" data-fraction="0" data-position="<?php echo $position->getId(); ?>" data-operation="-"><span style="color:red" class="glyphicon glyphicon-minus"></span></button>
+
+                <div class="ressete">
+                    <input data-role="modificarcarro" data-modificar="1" data-position="<?php echo $position->getId(); ?>" type="text" value="<?php echo $position->getQuantityUnit() ?>" id="cantidad-producto-unidad-<?php echo $position->getId() ?>" placeholder="0" class="increment"/>
                 </div>
+
+                <button class="btn-addless-cantidad"  data-role="modificarcarro" data-modificar="1" data-fraction="0" data-position="<?php echo $position->getId(); ?>" data-operation="+"><span style="color:red" class="glyphicon glyphicon-plus"></span></button>
+
+            </div>
             <?php endif; ?>
 
             <?php if (!$lectura): ?>
