@@ -40,6 +40,16 @@
                                 <button class="btn-white btn" data-role="tipovista-listaproductos" data-active="true" data-type="cuadricula" type="button"><span  class="glyphicon glyphicon-th" alt="Cuadricula"></span></button>
                                 <button class="btn-white btn" data-role="tipovista-listaproductos" data-active="false" data-type="lineal" type="button"><span  class="glyphicon glyphicon-th-list" alt="Cuadricula"></span></button>
                             </div>
+                            <div class="option-list ordering_item">
+                                Ordenar por
+                                <select class="form-control" id="items-page">
+                                    <option value="0">Precio Ascendente</option>
+                                    <option value="">Precio Descendente</option>
+                                    <option value="">Nombre</option>
+                                    <option value="">Presentación</option>
+                                    <option value="">Ninguno</option>
+                                </select>
+                            </div>
                         <?php endif; ?>   
                     <?php endif; ?> 
                     <div class="clear"></div>
