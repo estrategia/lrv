@@ -204,8 +204,42 @@ $(document).on('change', 'select[data-role="ciudad-despacho-map"]', function() {
 });
 
 $(document).on('click', 'button[data-role="ubicacion-mapa"]', function() {
-    $.mobile.changePage('#page-ubicacion-map', {transition: "pop", role: "dialog", reverse: false});
-    resizeMap();
+    if ($('#page-ubicacion-map').length > 0) {
+        $.mobile.changePage('#page-ubicacion-map', {transition: "pop", role: "dialog", reverse: false});
+        resizeMap();
+    } else {
+        $.ajax({
+            type: 'POST',
+            dataType: 'html',
+            async: true,
+            url: requestUrl + '/sitio/mapa',
+            beforeSend: function() {
+                $.mobile.loading('show');
+            },
+            success: function(data) {
+                $('body').append(data);
+                $.getScript("https://maps.googleapis.com/maps/api/js").done(function(script, textStatus) {
+                    $.getScript(requestUrl + "/js/ubicacion.js").done(function(script, textStatus) {
+                        inicializarMapa();
+                        $.mobile.changePage('#page-ubicacion-map', {transition: "pop", role: "dialog", reverse: false});
+                        resizeMap();
+                        $.mobile.loading('hide');
+                    }).fail(function(jqxhr, settings, exception) {
+                        $.mobile.loading('hide');
+                        alert("Error al inicializar mapa: " + exception);
+                    });
+                }).fail(function(jqxhr, settings, exception) {
+                    $.mobile.loading('hide');
+                    alert("Error al cargar mapa: " + exception);
+                });
+            },
+            error: function(jqXHR, textStatus, errorThrown) {
+                $.mobile.loading('hide');
+                alert('Error: ' + errorThrown);
+            }
+        });
+    }
+    return false;
 });
 
 function errorPosicion(error) {

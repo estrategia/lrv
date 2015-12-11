@@ -69,6 +69,21 @@ class SitioController extends Controller {
             );
         }
     }
+    
+    public function actionMapa(){
+        $listCiudadesSectores = Ciudad::model()->findAll(array(
+            'with' => array('listSectorCiudad' => array('with' => 'objSector')),
+            'order' => 't.orden, t.nombreCiudad',
+            'condition' => 'estadoCiudadSector=:estadoCiudadSector AND estadoSector=:estadoSector AND estadoCiudad=:estadoCiudad',
+            'params' => array(
+                ':estadoCiudadSector' => 1,
+                ':estadoSector' => 1,
+                ':estadoCiudad' => 1,
+            )
+        ));
+        
+        $this->renderPartial($this->isMobile ? '_ubicacionMapa' : '_d_ubicacionMapa', array('listCiudadesSectores' => $listCiudadesSectores));
+    }
 
     public function actionUbicacion() {
         if ((!isset(Yii::app()->session[Yii::app()->params->sesion['tipoEntrega']]) || Yii::app()->session[Yii::app()->params->sesion['tipoEntrega']] == null) && $this->isMobile) {
@@ -81,20 +96,6 @@ class SitioController extends Controller {
             $tipoEntrega = Yii::app()->session[Yii::app()->params->sesion['tipoEntrega']];
         }
 
-        Yii::app()->getClientScript()->registerScriptFile("https://maps.googleapis.com/maps/api/js", CClientScript::POS_END);
-        Yii::app()->getClientScript()->registerScriptFile(Yii::app()->request->baseUrl . "/js/ubicacion.js", CClientScript::POS_END);
-
-        $listCiudadesSectores = Ciudad::model()->findAll(array(
-            'with' => array('listSectorCiudad' => array('with' => 'objSector')),
-            'order' => 't.orden, t.nombreCiudad',
-            'condition' => 'estadoCiudadSector=:estadoCiudadSector AND estadoSector=:estadoSector AND estadoCiudad=:estadoCiudad',
-            'params' => array(
-                ':estadoCiudadSector' => 1,
-                ':estadoSector' => 1,
-                ':estadoCiudad' => 1,
-            )
-        ));
-
         if ($this->isMobile) {
             $this->showSeeker = false;
             $this->logoLinkMenu = false;
@@ -105,7 +106,6 @@ class SitioController extends Controller {
             }
 
             $this->render('ubicacion', array(
-                'listCiudadesSectores' => $listCiudadesSectores,
                 'objSectorCiudad' => $this->objSectorCiudad,
                 'tipoEntrega' => $tipoEntrega,
             ));
@@ -114,9 +114,8 @@ class SitioController extends Controller {
             if (!isset(Yii::app()->session[Yii::app()->params->sesion['redireccionUbicacion']]) || Yii::app()->session[Yii::app()->params->sesion['redireccionUbicacion']] == null) {
                 Yii::app()->session[Yii::app()->params->sesion['redireccionUbicacion']] = (Yii::app()->request->urlReferrer == null ? $this->createUrl('/') : Yii::app()->request->urlReferrer);
             }
-
+            
             $this->render('d_ubicacion', array(
-                'listCiudadesSectores' => $listCiudadesSectores,
                 'objSectorCiudad' => $this->objSectorCiudad,
                 'tipoEntrega' => $tipoEntrega,
                 'urlRedirect' => Yii::app()->session[Yii::app()->params->sesion['redireccionUbicacion']]

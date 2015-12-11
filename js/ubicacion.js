@@ -5,7 +5,7 @@ var marcador = new google.maps.LatLng(lat, lng);
 var locationMarker;
 var map;
 
-function initialize()
+function inicializarMapa()
 {
     var mapProp = {
        center: {lat, lng},
@@ -28,7 +28,7 @@ function initialize()
         locationMarker.setPosition(map.getCenter());
     });
 }
-google.maps.event.addDomListener(window, 'load', initialize); 
+google.maps.event.addDomListener(window, 'load', inicializarMapa); 
 
 
 function resizeMap() {

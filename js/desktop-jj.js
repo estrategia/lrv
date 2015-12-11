@@ -38,8 +38,8 @@ function validarCantidadFraccionado(codigoProducto, numeroFracciones, unidadFrac
     var nroFracciones = $("#cantidad-producto-fraccion-" + codigoProducto).val();
     var nroUnidades = $("#cantidad-producto-unidad-" + codigoProducto).val();
 
-    
-    if(nroFracciones < 0 ){
+
+    if (nroFracciones < 0) {
         nroFracciones = 0;
     }
     if ((nroFracciones * unidadFraccionamiento) >= numeroFracciones) {
@@ -130,8 +130,8 @@ function guardarCalificacion(codigoProducto, objCalificacion, url) {
     });
 }
 
-$(document).on('keypress', "#form-autenticar", function(e){
-    if(e.keyCode == 13)
+$(document).on('keypress', "#form-autenticar", function(e) {
+    if (e.keyCode == 13)
     {
         $("#form-autenticar input[data-registro-desktop='autenticar']").trigger('click');
         e.preventDefault();
@@ -157,7 +157,7 @@ function format(input)
  $('#'+id).popover();
  }*/
 $(document).ready(function() {
-    $('[data-toggle="popover"]').popover(); 
+    $('[data-toggle="popover"]').popover();
     $("input[data-role='bootstrap-slider']").slider();
     $(".slide-productos").owlCarousel({
         items: 4,
@@ -290,10 +290,10 @@ function obtenerPosicion(pos) {
         dataType: 'json',
         async: true,
         url: requestUrl + '/sitio/gps',
-        data: {entrega:$('input[id="ubicacion-seleccion-entrega"]').val().trim(), lat: lat, lon: lon},
+        data: {entrega: $('input[id="ubicacion-seleccion-entrega"]').val().trim(), lat: lat, lon: lon},
         /*beforeSend: function() {
-            Loading.show();
-        },*/
+         Loading.show();
+         },*/
         success: function(data) {
             if (data.result == 'ok') {
                 bootbox.dialog({
@@ -368,8 +368,42 @@ $(document).on('click', '#modal-ubicacion-direcciones input[type="radio"]', func
 });
 
 $(document).on('click', 'button[data-role="ubicacion-mapa"]', function() {
-    $('#modal-ubicacion-map').modal('show');
-    resizeMap();
+    if ($('#modal-ubicacion-map').length > 0) {
+        $('#modal-ubicacion-map').modal('show');
+        resizeMap();
+    } else {
+        $.ajax({
+            type: 'POST',
+            dataType: 'html',
+            async: true,
+            url: requestUrl + '/sitio/mapa',
+            beforeSend: function() {
+                Loading.show();
+            },
+            success: function(data) {
+                $('#main-page').append(data);
+                $.getScript("https://maps.googleapis.com/maps/api/js").done(function(script, textStatus) {
+                    $.getScript(requestUrl + "/js/ubicacion.js").done(function(script, textStatus) {
+                        inicializarMapa();
+                        $('#modal-ubicacion-map').modal('show');
+                        resizeMap();
+                        Loading.hide();
+                    }).fail(function(jqxhr, settings, exception) {
+                        Loading.hide();
+                        alert("Error al inicializar mapa: " + exception);
+                    });
+                }).fail(function(jqxhr, settings, exception) {
+                    Loading.hide();
+                    alert("Error al cargar mapa: " + exception);
+                });
+            },
+            error: function(jqXHR, textStatus, errorThrown) {
+                Loading.hide();
+                alert('Error: ' + errorThrown);
+            }
+        });
+    }
+    return false;
 });
 
 $(document).on('click', 'button[data-role="ubicacion-seleccion-mapa"]', function() {
@@ -405,6 +439,7 @@ $(document).on('click', 'button[data-role="ubicacion-seleccion-mapa"]', function
             alert('Error: ' + errorThrown);
         }
     });
+    return false;
 });
 
 $(document).on('change', 'select[data-role="ciudad-despacho-map"]', function() {
@@ -780,7 +815,7 @@ $(document).on('click', "#form-registro input[data-registro-desktop='recordar']"
                 $("#main-page").html(obj.response.bienvenidaHTML);
             } else if (obj.result === 'error') {
                 alert(obj.response);
-                
+
             } else {
                 $.each(obj, function(element, error) {
                     $('#' + form.attr('id') + ' #' + element + '_em_').html(error);
@@ -816,7 +851,7 @@ $(document).on('click', "#form-recordar input[data-registro-desktop='recordar']"
             var obj = $.parseJSON(data);
 
             if (obj.result === 'ok') {
-                 form.trigger("reset");
+                form.trigger("reset");
                 alert(obj.response);
             } else if (obj.result === 'error') {
                 alert(obj.response);
@@ -924,7 +959,7 @@ $(document).on('click', "a[data-role='compararProductos']", function() {
             $('#modal-comparar-productos').remove();
         },
         complete: function() {
-           Loading.hide();
+            Loading.hide();
         },
         success: function(data) {
             $('#main-page').append(data);
@@ -954,8 +989,8 @@ $(document).on('change', "input[data-role='validar-cantidad-unidad']", function(
     var codigoProducto = $(this).attr('data-producto');
     var valorUnidad = $(this).attr('data-precio');
     var nro = $(this).val();
-    
-    if(nro < 0 ){
+
+    if (nro < 0) {
         nro = 0;
     }
     $("#subtotal-producto-unidad-" + codigoProducto).html("$" + format(nro * valorUnidad));

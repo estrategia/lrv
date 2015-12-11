@@ -37,5 +37,3 @@
         </div>
     </div>
 </div>
-
-<?php $this->extraPageList[] = $this->renderPartial('_ubicacionMapa', array('listCiudadesSectores' => $listCiudadesSectores,), true);?>
