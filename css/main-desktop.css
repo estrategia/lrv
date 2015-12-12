@@ -365,6 +365,15 @@ table.tabla-carro .group-botones-cantidad{
 .btn-default {
     color: #d9534f;
 }
+.clst_check {
+    padding: 4px 8px !important;
+    text-transform: lowercase;
+    font-size: 12px;
+}
+.data-label {
+    margin-right: 8px;
+    width: 20px;
+}
 .btn-default:hover {
     color: #d9534f;
     border-color: #d43f3a;

@@ -44,9 +44,9 @@
             <input id="ubicacion-seleccion-ciudad" type="hidden" name="ciudad" value="<?php echo ($objSectorCiudad == null ? "" : $objSectorCiudad->codigoCiudad) ?>">
             <input id="ubicacion-seleccion-sector" type="hidden" name="sector" value="<?php echo ($objSectorCiudad == null ? "" : $objSectorCiudad->codigoSector) ?>">
             <div class="center" style="margin-bottom: 40px; margin-top: 70px;">
-                <button data-role="ubicacion-seleccion" class="btn btn-default" type="button">Aceptar</button>
+                <button data-role="ubicacion-seleccion" class="btn btn-danger" type="button">Aceptar</button>
                 <?php if ($objSectorCiudad != null): ?>
-                    <?php echo CHtml::link('<span class="glyphicon glyphicon-ok-sign"></span> Continuar en ' . $this->sectorName, $urlRedirect, array('class' => 'btn  btn-danger')); ?>
+                    <?php echo CHtml::link('<span class="glyphicon glyphicon-ok-sign"></span> Continuar en ' . $this->sectorName, $urlRedirect, array('class' => 'btn  btn-default')); ?>
                 <?php endif; ?>
             </div>
         </form>

@@ -40,10 +40,10 @@
                                 <div class="col-sm-6">
                                     <form method="get" action="<?php echo CController::createUrl('/catalogo/buscar') ?>">
                                         <div class="row">
-                                            <div class="col-sm-6 content-search">
+                                            <div class="col-sm-8 content-search">
                                                 <input type="text" class="form-control" placeholder="Escriba el nombre del producto"  autocomplete="off" value="" id="busqueda" name="busqueda" > 
                                             </div>
-                                            <div class="col-sm-6 content-category">
+                                            <div class="col-sm-4 content-category">
                                                 <div class="controls">
                                                     <span class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false" data-label-placement>
                                                         Todas las categor&iacute;as</span>
@@ -86,7 +86,7 @@
                                     </div>
                                     <div class="info-compra">
                                         <a href="#" data-role='compararProductos' data-opcion='comparar'>
-                                            <span><img class="ico-carrito" src="<?php echo Yii::app()->request->baseUrl; ?>/images/desktop/star-on.png" alt="Comparar productos" title="Comparar productos"></span>
+                                            <span><img class="ico-carrito" src="<?php echo Yii::app()->request->baseUrl; ?>/images/desktop/comprar.png" alt="Comparar productos" title="Comparar productos"></span>
                                         </a>
                                         <span id="cantidad-productos-comparar" class="cantidad-productos">
                                             <?php echo (isset(Yii::app()->session[Yii::app()->params->sesion['productosComparar']])) ? count(Yii::app()->session[Yii::app()->params->sesion['productosComparar']]) : 0 ?>
