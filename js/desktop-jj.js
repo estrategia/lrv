@@ -3,40 +3,40 @@ function actualizarNumerosPagina() {
     $.fn.yiiListView.update('id-productos-list', {data: {pageSize: items}});
 }
 
-function disminuirCantidadFraccionado(codigoProducto, numeroFracciones, unidadFraccionamiento, valorFraccionado, valorUnidad) {
-    var nro = $("#cantidad-producto-fraccion-" + codigoProducto).val();
+function disminuirCantidadFraccionado(codigoProducto, numeroFracciones, unidadFraccionamiento, valorFraccionado, valorUnidad, idUnico) {
+    var nro = $("#cantidad-producto-fraccion-" + codigoProducto + "-" + idUnico).val();
     nro--;
     if (nro < 0) {
-        var nro = $("#cantidad-producto-unidad-" + codigoProducto).val();
+        var nro = $("#cantidad-producto-unidad-" + codigoProducto+ "-" + idUnico).val();
         nro--;
         if (nro < 0) {
             nro = 0;
         }
-        $("#cantidad-producto-unidad-" + codigoProducto).val(nro);
+        $("#cantidad-producto-unidad-" + codigoProducto + "-" + idUnico).val(nro);
         $("#subtotal-producto-unidad-" + codigoProducto).html("$" + format(nro * valorUnidad));
         nro = (numeroFracciones / unidadFraccionamiento - 1);
     }
     $("#subtotal-producto-fraccion-" + codigoProducto).html("$" + format(nro * valorFraccionado));
-    $("#cantidad-producto-fraccion-" + codigoProducto).val(nro);
+    $("#cantidad-producto-fraccion-" + codigoProducto + "-" + idUnico).val(nro);
 }
 
-function aumentarCantidadFraccionado(codigoProducto, numeroFracciones, unidadFraccionamiento, valorFraccionado, valorUnidad) {
-    var nro = $("#cantidad-producto-fraccion-" + codigoProducto).val();
+function aumentarCantidadFraccionado(codigoProducto, numeroFracciones, unidadFraccionamiento, valorFraccionado, valorUnidad, idUnico) {
+    var nro = $("#cantidad-producto-fraccion-" + codigoProducto + "-" + idUnico).val();
     nro++;
     if ((nro * unidadFraccionamiento) == numeroFracciones) {
-        var nro = $("#cantidad-producto-unidad-" + codigoProducto).val();
+        var nro = $("#cantidad-producto-unidad-" + codigoProducto + "-" + idUnico).val();
         nro++;
-        $("#cantidad-producto-unidad-" + codigoProducto).val(nro);
+        $("#cantidad-producto-unidad-" + codigoProducto + "-" + idUnico).val(nro);
         $("#subtotal-producto-unidad-" + codigoProducto).html("$" + format(nro * valorUnidad));
         nro = 0;
     }
     $("#subtotal-producto-fraccion-" + codigoProducto).html("$" + format(nro * valorFraccionado));
-    $("#cantidad-producto-fraccion-" + codigoProducto).val(nro);
+    $("#cantidad-producto-fraccion-" + codigoProducto + "-" + idUnico).val(nro);
 }
 
-function validarCantidadFraccionado(codigoProducto, numeroFracciones, unidadFraccionamiento, valorFraccionado, valorUnidad) {
-    var nroFracciones = $("#cantidad-producto-fraccion-" + codigoProducto).val();
-    var nroUnidades = $("#cantidad-producto-unidad-" + codigoProducto).val();
+function validarCantidadFraccionado(codigoProducto, numeroFracciones, unidadFraccionamiento, valorFraccionado, valorUnidad, idUnico) {
+    var nroFracciones = $("#cantidad-producto-fraccion-" + codigoProducto + "-" + idUnico).val();
+    var nroUnidades = $("#cantidad-producto-unidad-" + codigoProducto + "-" + idUnico).val();
 
 
     if (nroFracciones < 0) {
@@ -45,12 +45,12 @@ function validarCantidadFraccionado(codigoProducto, numeroFracciones, unidadFrac
     if ((nroFracciones * unidadFraccionamiento) >= numeroFracciones) {
         var nroUnidadesAdicionales = Math.floor((nroFracciones * unidadFraccionamiento) / numeroFracciones);
         nroUnidades = nroUnidades * 1 + nroUnidadesAdicionales;
-        $("#cantidad-producto-unidad-" + codigoProducto).val(nroUnidades);
+        $("#cantidad-producto-unidad-" + codigoProducto + "-" + idUnico).val(nroUnidades);
         $("#subtotal-producto-unidad-" + codigoProducto).html("$" + format(nroUnidades * valorUnidad));
         nroFracciones = (nroFracciones * unidadFraccionamiento) % numeroFracciones;
     }
     $("#subtotal-producto-fraccion-" + codigoProducto).html("$" + format(nroFracciones * valorFraccionado));
-    $("#cantidad-producto-fraccion-" + codigoProducto).val(nroFracciones);
+    $("#cantidad-producto-fraccion-" + codigoProducto + "-" +idUnico).val(nroFracciones);
 }
 
 function aumentarCantidadUnidad(codigoProducto, valorUnidad) {
@@ -613,14 +613,15 @@ $(document).on('click', "a[data-cargar='2']", function() {
 $(document).on('click', "a[data-cargar='1']", function() {
 
     var producto = $(this).attr('data-producto');
-    var cantidadU = $('#cantidad-producto-unidad-' + producto).val();
+    var unique = $(this).attr('data-id');
+    var cantidadU = $('#cantidad-producto-unidad-' + producto+"-"+unique).val();
 
     cantidadU = parseInt(cantidadU);
     if (isNaN(cantidadU)) {
         cantidadU = -1;
     }
 
-    var cantidadF = parseInt($('#cantidad-producto-fraccion-' + producto).val());
+    var cantidadF = parseInt($('#cantidad-producto-fraccion-' + producto+"-"+unique).val());
     cantidadF = parseInt(cantidadF);
     if (isNaN(cantidadF)) {
         cantidadF = -1;
@@ -975,38 +976,41 @@ $(document).on('click', "a[data-role='compararProductos']", function() {
 
 $(document).on('click', "button[data-role='disminuir-cantidad']", function() {
     var codigoProducto = $(this).attr('data-producto');
+    var id = $(this).attr('data-id');
     var valorUnidad = $(this).attr('data-precio');
-    var nro = $("#cantidad-producto-unidad-" + codigoProducto).val();
+    var nro = $("#cantidad-producto-unidad-" + codigoProducto+"-"+id).val();
     nro--;
     if (nro < 0) {
         nro = 0;
     }
     $("#subtotal-producto-unidad-" + codigoProducto).html("$" + format(nro * valorUnidad));
-    $("#cantidad-producto-unidad-" + codigoProducto).val(nro);
+    $("#cantidad-producto-unidad-" + codigoProducto+"-"+id).val(nro);
 });
 
 $(document).on('change', "input[data-role='validar-cantidad-unidad']", function() {
     var codigoProducto = $(this).attr('data-producto');
     var valorUnidad = $(this).attr('data-precio');
+    var id = $(this).attr('data-id');
     var nro = $(this).val();
 
     if (nro < 0) {
         nro = 0;
     }
     $("#subtotal-producto-unidad-" + codigoProducto).html("$" + format(nro * valorUnidad));
-    $("#cantidad-producto-unidad-" + codigoProducto).val(nro);
+    $("#cantidad-producto-unidad-" + codigoProducto+"-"+id).val(nro);
 });
 
 $(document).on('click', "button[data-role='aumentar-cantidad']", function() {
     var codigoProducto = $(this).attr('data-producto');
     var valorUnidad = $(this).attr('data-precio');
-    var nro = $("#cantidad-producto-unidad-" + codigoProducto).val();
+    var id = $(this).attr('data-id');
+    var nro = $("#cantidad-producto-unidad-" + codigoProducto+"-"+id).val();
     nro++;
     if (nro < 0) {
         nro = 0;
     }
     $("#subtotal-producto-unidad-" + codigoProducto).html("$" + format(nro * valorUnidad));
-    $("#cantidad-producto-unidad-" + codigoProducto).val(nro);
+    $("#cantidad-producto-unidad-" + codigoProducto+"-"+id).val(nro);
 });
 
 $(document).on('click', "button[data-role='guardarCalificacion']", function() {

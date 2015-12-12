@@ -1,3 +1,5 @@
+<?php $idUnico = uniqid() ?>
+
 <?php if (isset($vista)): ?>
     <?php if ($vista == "relacionado"): ?>
         <li class="col-md-12 border-left">
@@ -116,17 +118,17 @@
                 <div class="row">
                     <div class="col-xs-7 padd2">
                         <div class="group-botones-cantidad">
-                            <button class="btn-addless-cantidad" data-role="disminuir-cantidad" id="disminuir-unidad-<?php echo $data->codigoProducto ?>" data-producto="<?php echo $data->codigoProducto ?>" data-precio="<?= $objPrecio->getPrecio(Precio::PRECIO_UNIDAD) ?>" type="button"><span style="color:red" class="glyphicon glyphicon-minus"></span></button>
+                            <button class="btn-addless-cantidad" data-role="disminuir-cantidad" data-id="<?php echo $idUnico?>" id="disminuir-unidad-<?php echo $data->codigoProducto ?>" data-producto="<?php echo $data->codigoProducto ?>" data-precio="<?= $objPrecio->getPrecio(Precio::PRECIO_UNIDAD) ?>" type="button"><span style="color:red" class="glyphicon glyphicon-minus"></span></button>
 
                             <div class="ressete">
-                                <input id="cantidad-producto-unidad-<?php echo $data->codigoProducto ?>" class="increment" type="text" data-role="validar-cantidad-unidad"  data-producto="<?php echo $data->codigoProducto ?>" data-precio="<?= $objPrecio->getPrecio(Precio::PRECIO_UNIDAD) ?>" maxlength="3" value="1" data-total="700"/>
+                                <input id="cantidad-producto-unidad-<?php echo $data->codigoProducto ?>-<?php echo $idUnico?>" data-id="<?php echo $idUnico?>"  class="increment" type="text" data-role="validar-cantidad-unidad"  data-producto="<?php echo $data->codigoProducto ?>" data-precio="<?= $objPrecio->getPrecio(Precio::PRECIO_UNIDAD) ?>" maxlength="3" value="1" data-total="700"/>
                             </div>
-                            <button class="btn-addless-cantidad" data-role="aumentar-cantidad"  id="aumentar-unidad-<?php echo $data->codigoProducto ?>" data-producto="<?php echo $data->codigoProducto ?>" data-precio="<?= $objPrecio->getPrecio(Precio::PRECIO_UNIDAD) ?>" type="button"><span style="color:red" class="glyphicon glyphicon-plus"></span></button>
+                            <button class="btn-addless-cantidad" data-role="aumentar-cantidad" data-id="<?php echo $idUnico?>"  id="aumentar-unidad-<?php echo $data->codigoProducto ?>" data-producto="<?php echo $data->codigoProducto ?>" data-precio="<?= $objPrecio->getPrecio(Precio::PRECIO_UNIDAD) ?>" type="button"><span style="color:red" class="glyphicon glyphicon-plus"></span></button>
 
                         </div>
                     </div>
                     <div class="col-xs-5 padd2">
-                        <?php echo CHtml::link('<div class="button">Añadir <img src="' . Yii::app()->baseUrl . '/images/desktop/button-carrito.png" alt=""></div>', '#', array('data-producto' => $data->codigoProducto, 'data-cargar' => 1)); ?>
+                        <?php echo CHtml::link('<div class="button">Añadir <img src="' . Yii::app()->baseUrl . '/images/desktop/button-carrito.png" alt=""></div>', '#', array('data-producto' => $data->codigoProducto, 'data-cargar' => 1, 'data-id' => $idUnico)); ?>
                     </div>
                 </div>
                 <?php if (isset($vista) && $vista == "comparacion"): /* ?>
