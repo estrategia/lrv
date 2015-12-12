@@ -328,6 +328,25 @@ table.tabla-carro .group-botones-cantidad{
     font-weight: bold;
     padding: 10px 15px;
 }
+
+.inactivo {
+    background-color: #fbfbfb;
+    border-left: 0 none !important;
+}
+.inactivo .inner_tipoentrega {
+    color: #b0b0b0;
+}
+
+.inactivo a {
+    opacity: 0.4;
+}
+
+.inactivo .ico_ubi {
+    opacity: 0.4;
+}
+.align_center {
+    text-align:center;
+}
 .btn.btn-aceptar:hover {
     background: #e90000;
     color: #fff;
@@ -336,24 +355,58 @@ table.tabla-carro .group-botones-cantidad{
     background: #f4f4f4 none repeat scroll 0 0;
     color: #444;
     font-size: 16px;
-    font-weight: bold;
     padding: 13px;
-    width: 100%;
+    display: inline-block;
+    transition: 0.5s;
 }
 .btn-ciudad:hover {
-    background: #ea0001 none repeat scroll 0 0;
-    color: #fff;
-    font-weight: normal;
+    
+}
+.btn-default {
+    color: #d9534f;
+}
+.btn-default:hover {
+    color: #d9534f;
+    border-color: #d43f3a;
+    background-color: #fff;
 }
 .blocktipoentrega .content_ubi .col-md-6:first-child {
     border-right: 1px solid #e90000;
+}
+
+.btn.activo {
+    box-shadow: 2px 3px 4px #dddddd;
+}
+.btn.inactivo {
+    opacity: 0.5;
+}
+.ico-btn .glyphicon {
+    background-color: #777;
+    border-radius: 50%;
+    color: #fff;
+    left: -30px;
+    padding: 15px;
+    position: absolute;
+    top: -6px;
+    transition: 0.5s;
+}
+.ico-btn {
+    margin-right: 50px;
+    padding: 5px 5px 5px 20px;
+    position: relative;
+}
+.ico-btn:last-child {
+    margin-right: 0;
+}
+.activo .glyphicon {
+    font-size: 18px;
 }
 .inner_tipoentrega {
     line-height: 23px;
     padding: 9px 18px 9px 70px;
 }
 .tipo-entrega.activo {
-    border: 1px solid #e90000;
+    box-shadow: 2px 3px 4px #dddddd;
 }
 .blocktipoentrega {
     max-width: 800px;
