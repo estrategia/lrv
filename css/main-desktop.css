@@ -2,7 +2,7 @@
   font-family: harabara;  
   src: local('harabara'), 
     url("fonts/harabara.ttf") format('truetype');  
-  font-weight: bold;  
+  font-weight: normal;  
 }
 @font-face {
   font-family: geneva;  
