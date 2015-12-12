@@ -221,7 +221,12 @@ function array_column_lrv($array, $valor, $clave) {
 }
 
 function empty_lrv($valor){
-    if($valor==0)
+    if($valor===0 || $valor==='0')
         return false;
+    
+    if($valor===null || $valor===""){
+        return true;
+    }
+    
     return empty($valor);
 }

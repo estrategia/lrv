@@ -362,10 +362,41 @@ $(document).on('click', 'button[data-role="ubicacion-direccion"]', function() {
 });
 
 $(document).on('click', '#modal-ubicacion-direcciones input[type="radio"]', function() {
+    var val = $(this).val().trim();
+    var option = $(this);
+
     $('#ubicacion-seleccion-ciudad').val('');
     $('#ubicacion-seleccion-sector').val('');
-    $('#ubicacion-seleccion-direccion').val($(this).val());
+    $('#ubicacion-seleccion-direccion').val(val);
+
+    $('#ubicacion-seleccion-resumen').html('');
+    $('#ubicacion-seleccion-resumen').removeClass('display-none');
+    var textEntrega = textoUbicacionEntregaSeleccionada();
+    
+    if(textEntrega!=null)
+        textEntrega += " en mi direcci&oacute;n ";
+    
+    $('#ubicacion-seleccion-resumen').html(textEntrega + textoUbicacionDireccionSeleccionada(option));
 });
+
+function textoUbicacionDireccionSeleccionada(option){
+    return option.attr('data-descripcion') + " (" + option.attr('data-ubicacion') + ")";
+}
+
+function textoUbicacionEntregaSeleccionada(){
+    var entrega = $('#ubicacion-seleccion-entrega').val();
+    
+    if(entrega.length<=0)
+        return null;
+    
+    var diventrega = $('div[data-role="tipoentrega"]div[data-tipo="'+entrega+'"]');
+
+    if(diventrega.length>0)
+      return diventrega.attr('data-descripcion');
+    else
+      return null;
+}
+
 
 $(document).on('click', 'button[data-role="ubicacion-mapa"]', function() {
     if ($('#modal-ubicacion-map').length > 0) {
