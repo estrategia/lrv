@@ -17,8 +17,6 @@ $form = $this->beginWidget('CActiveForm', array(
 ?>
 
 <?php $listDatafono = array(); ?>
-<div class="row">
-    <div class="col-md-12">
         <?php foreach ($listFormaPago as $idx => $objFormaPago): ?>
             <?php if (in_array($objFormaPago->idFormaPago, Yii::app()->params->formaPago['tarjetasDatafono'])): ?>
                 <?php $listDatafono[] = $objFormaPago; ?>
@@ -36,14 +34,13 @@ $form = $this->beginWidget('CActiveForm', array(
                 <label>Datafono</label>
             </div>
         <?php endif; ?>
-    </div>
-
-    <div class="col-md-12 center">
+<div class="space-2"></div>
+    <div class="center coment pad-sides">
         <?php foreach ($listFormaPago as $idx => $objFormaPago): ?>
             <?php if (!in_array($objFormaPago->idFormaPago, Yii::app()->params->formaPago['tarjetasDatafono'])): ?>
                 <?php if ($objFormaPago->idFormaPago == Yii::app()->params->formaPago['idCredirebaja']): ?>
                     <div data-role="formapago-descripcion" data-tipo="<?= $objFormaPago->idFormaPago ?>" class="row<?php echo ($modelPago->idFormaPago == $objFormaPago->idFormaPago ? "" : " display-none" ) ?>">
-                        <div class="col-md-8 info-oficina">
+                        <div class="col-md-9 info-oficina">
                             <?php echo $form->labelEx($modelPago, 'numeroTarjeta'); ?>
                             <?php echo $form->textField($modelPago, 'numeroTarjeta', array('class' => 'form-control', 'placeholder' => '000000000000', 'maxlength' => 12)); ?>
                             <?php echo $form->error($modelPago, 'numeroTarjeta', array('class' => 'text-danger')); ?>
@@ -64,7 +61,6 @@ $form = $this->beginWidget('CActiveForm', array(
             <?php endif; ?>
         <?php endforeach; ?>
     </div>
-</div>
 
 <?php echo $form->error($modelPago, 'idFormaPago', array('class' => 'text-danger center')); ?>
 <?php $this->endWidget(); ?>
