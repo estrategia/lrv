@@ -229,6 +229,11 @@ return array(
                 'domicilio' => array('despacho', 'entrega', 'pago', 'confirmacion'),
                 'presencial' => array('entrega', 'pago', 'confirmacion'),
             ),
+            'pasosDesktop' => array(
+                'informacion' => 1, 'confirmacion' => 2,
+                1 => 'informacion', 2 => 'confirmacion'
+            ),
+            'pasosDisponiblesDesktop' => array('informacion', 'confirmacion'),
         ),
         'formaPago' => array(
             'idCredirebaja' => 2,

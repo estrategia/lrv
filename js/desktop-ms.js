@@ -643,31 +643,31 @@ $(document).on('click', "div[data-role='formapago']", function() {
     var tipo = $(this).attr('data-tipo');
     if (tipo == "datafono") {
         $("#modal-formapago input[type='radio']").removeAttr('checked');
-        $("#modal-formapago #idFormaPago_"+$("#FormaPagoForm_idFormaPago").val()).prop('checked', true);
+        $("#modal-formapago #idFormaPago_"+$("#FormaPagoForm_idFormaPago_datafono").val()).prop('checked', true);
         $("div[data-role^='formapago-logo-']").addClass('display-none');
-        $("div[data-role='formapago-logo-"+$("#FormaPagoForm_idFormaPago").val()+"']").removeClass('display-none');
-        
+        $("div[data-role='formapago-logo-"+$("#FormaPagoForm_idFormaPago_datafono").val()+"']").removeClass('display-none');
         $("#modal-formapago").modal("show");
+        return false;
     } else {
-        $("div[data-role='formapago']").removeClass('activo');
+        /*$("div[data-role='formapago']").removeClass('activo');
         $(this).addClass('activo');
-        $('input[id="FormaPagoForm_idFormaPago"]').val(tipo);
+        $('input[id="FormaPagoForm_idFormaPago"]').val(tipo);*/
         
-        var logopagolinea = $(this).children("div[data-role='formapago-logo-pagoenlinea']");
+        var descripcion = $("div[data-role='formapago-descripcion']div[data-tipo='"+tipo+"']");
+        $("div[data-role='formapago-descripcion']").addClass('display-none');
         
-        if (logopagolinea.length>0) {
-            logopagolinea.removeClass('display-none');
-        }else{
-            $("div[data-role='formapago-logo-pagoenlinea']").addClass('display-none');
+        if (descripcion.length>0) {
+            descripcion.removeClass('display-none');
         }
     }
 });
 
 $(document).on('click', "#modal-formapago input[type='radio']", function() {
     if ($(this).is(':checked')) {
-        $("div[data-role='formapago']").removeClass('activo');
-        $('div[data-tipo="datafono"]').addClass('activo');
-        $('input[id="FormaPagoForm_idFormaPago"]').val($(this).val());
+        //$("div[data-role='formapago']").removeClass('activo');
+        //$('div[data-tipo="datafono"]').addClass('activo');
+        $('input[id="FormaPagoForm_idFormaPago_datafono"]').prop('checked', true);
+        $('input[id="FormaPagoForm_idFormaPago_datafono"]').val($(this).val());
         
         $("div[data-role^='formapago-logo-']").addClass('display-none');
         $("div[data-role='formapago-logo-"+$(this).val()+"']").removeClass('display-none');
@@ -730,7 +730,10 @@ $(document).on('change', '#form-pago-entrega #FormaPagoForm_fechaEntrega', funct
 });
 
 function update_clock(value){
+    value = value.trim();
+    var date = new Date(value.replace(' ','T'));
     var horas = value.split(" ")[1].split(":");
+    $('#div-reloj-seleccion').html(date.toLocaleTimeString());
     update_clock_element('#clock_id', horas[0], horas[1], horas[2]);
 }
 

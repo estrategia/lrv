@@ -1,3 +1,5 @@
+<?php $radio = (isset($radio) ? $radio : 0) ?>
+
 <div class="modal fade" id="modal-nueva-direccion" role="dialog">
     <div class="modal-dialog modal-lg" role="document">
         <div class="modal-content">
@@ -36,8 +38,13 @@
                         <div class="form-group">
                             <?php echo $form->labelEx($model, 'descripcion', array('class' => 'col-md-4 control-label')); ?>
                             <div class="col-md-8">
-                                <?php echo $form->textField($model, 'descripcion', array('maxlength' => 50, 'placeholder' => $model->getAttributeLabel('descripcion'), "class" => "form-control input-sm")); ?>
-                                <?php echo $form->error($model, 'descripcion', array('class' => 'text-danger')); ?>
+                                <?php if (!$model->isNewRecord && $radio == 'pasoscompra') : ?>
+                                <div class="form-control input-sm" disabled> <?php echo $model->descripcion ?> </div>
+                                <?php else: ?>
+                                    <?php echo $form->textField($model, 'descripcion', array('maxlength' => 50, 'placeholder' => $model->getAttributeLabel('descripcion'), "class" => "form-control input-sm")); ?>
+                                    <?php echo $form->error($model, 'descripcion', array('class' => 'text-danger')); ?>
+                                <?php endif; ?>
+
                             </div>
                         </div>
                         <div class="form-group">
@@ -107,7 +114,7 @@
                                 <?php if ($model->isNewRecord): ?>
                                     <input type="button" class="btn btn-default" data-role="direccion-adicionar" value="Guardar">
                                 <?php else: ?>
-                                    <input type="button" class="btn btn-default" value="Actualizar" data-role="direccion-actualizar" data-radio="<?php echo (isset($radio) ? $radio : 0) ?>">
+                                    <input type="button" class="btn btn-default" value="Actualizar" data-role="direccion-actualizar" data-radio="<?php echo $radio ?>">
                                 <?php endif; ?>
                             </div>
                         </div>

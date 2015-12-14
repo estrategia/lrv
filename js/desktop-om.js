@@ -22,8 +22,41 @@ $(document).on('click', "button[data-role='direccion-editar']", function() {
             Loading.hide();
         },
         success: function(data) {
-            $('body').append(data.response.dialogoHTML);
-            $("#modal-nueva-direccion").modal("show");
+            if (data.result == 'ok') {
+                $('body').append(data.response.dialogoHTML);
+                $("#modal-nueva-direccion").modal("show");
+            } else {
+                alert(data.response);
+            }
+        },
+        error: function(jqXHR, textStatus, errorThrown) {
+            Loading.hide();
+            bootbox.alert('Error: ' + errorThrown);
+        }
+    });
+});
+
+$(document).on('click', "div[data-role='direccion-editar']", function() {
+    $.ajax({
+        type: 'POST',
+        dataType: 'json',
+        async: true,
+        url: requestUrl + '/usuario/direccionActualizar',
+        data: {render: true, direccion: $(this).attr('data-direccion'), radio: $(this).attr('data-vista')},
+        beforeSend: function() {
+            $("#modal-nueva-direccion").remove();
+            Loading.show();
+        },
+        complete: function() {
+            Loading.hide();
+        },
+        success: function(data) {
+            if (data.result == 'ok') {
+                $('body').append(data.response.dialogoHTML);
+                $("#modal-nueva-direccion").modal("show");
+            } else {
+                alert(data.response);
+            }
         },
         error: function(jqXHR, textStatus, errorThrown) {
             Loading.hide();
@@ -51,7 +84,9 @@ $(document).on('click', "input[data-role='direccion-actualizar']", function() {
             if (data.result === 'ok') {
                 $("#modal-nueva-direccion").modal("hide");
                 dialogoAnimado(data.response.mensaje);
-                $('#div-direccion-interior-' + data.response.direccion).html(data.response.direccionHTML);
+                if (data.response.direccionHTML) {
+                    $('#div-direccion-interior-' + data.response.direccion).html(data.response.direccionHTML);
+                }
             } else if (data.result === 'error') {
                 bootbox.alert(data.response);
             } else {
@@ -120,7 +155,7 @@ $(document).on('click', "input[data-role='direccion-adicionar']", function() {
             if (data.result === 'ok') {
                 $("#modal-nueva-direccion").modal("hide");
                 dialogoAnimado(data.response.mensaje);
-                
+
                 if ($('#div-direcciones-pasoscompra').length) {
                     $('#div-direcciones-pasoscompra').html(data.response.direccionesHTML);
                     $('#div-direcciones-pasoscompra').trigger("create");
