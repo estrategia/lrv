@@ -35,7 +35,7 @@
                             <?php
                             $form = $this->beginWidget('CActiveForm', array(
                                 'id' => 'form-presencial-' . uniqid(),
-                                'action' => Yii::app()->createUrl('/carro/pagar', array('paso' => 'entrega')),
+                                'action' => Yii::app()->createUrl('/carro/pagar', array('paso' => 'informacion')),
                                 'htmlOptions' => array(
                                     'class' => "", 'data-ajax' => "false"
                                 ))

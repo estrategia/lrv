@@ -1,5 +1,5 @@
 function alert(message){
-    bootbox.alert({ message:message,callback: function(){}, buttons: {ok : {label:'Aceptar'} } });
+    bootbox.alert({ message:message,callback: function(){}, buttons: {ok : {label:'Aceptar', className:'btn-danger'} } });
 }
 
 /* 

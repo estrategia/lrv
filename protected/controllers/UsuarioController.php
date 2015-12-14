@@ -1180,13 +1180,13 @@ class UsuarioController extends Controller {
             $contenido = "No hay usuario autenticado";
         } else {
             $listDirecciones = DireccionesDespacho::consultarDireccionesUsuario(Yii::app()->user->name, true);
-            if(empty($listDirecciones)){
+            if (empty($listDirecciones)) {
                 $contenido = "No hay direcciones de despacho registradas";
-            }else{
-                if($this->isMobile){
-                    $contenido = $this->renderPartial('direcciones', array('listDirecciones' => $listDirecciones, 'editar'=>false), true);
-                }else{
-                    $contenido = $this->renderPartial('d_direcciones', array('listDirecciones' => $listDirecciones, 'modal'=>true), true);
+            } else {
+                if ($this->isMobile) {
+                    $contenido = $this->renderPartial('direcciones', array('listDirecciones' => $listDirecciones, 'editar' => false), true);
+                } else {
+                    $contenido = $this->renderPartial('d_direcciones', array('listDirecciones' => $listDirecciones, 'modal' => true), true);
                 }
             }
         }
@@ -1234,10 +1234,10 @@ class UsuarioController extends Controller {
         $render = Yii::app()->getRequest()->getPost('render', false);
         $radio = Yii::app()->getRequest()->getPost('radio', 0);
 
-        if ($render && !$this->isMobile) {
+        if ($render == true && !$this->isMobile) {
             $direccion = Yii::app()->getRequest()->getPost('direccion');
 
-            if ($direccion == null || $radio == null) {
+            if ($direccion == null) {
                 echo CJSON::encode(array('result' => 'error', 'response' => 'Solicitud inválida'));
                 Yii::app()->end();
             }
@@ -1274,7 +1274,10 @@ class UsuarioController extends Controller {
                 throw new CHttpException(404, 'Página solicitada no existe.');
             }
 
-            $model->descripcion = $form->descripcion;
+            if ($radio != 'pasoscompra') {
+                $model->descripcion = $form->descripcion;
+            }
+            
             $model->nombre = $form->nombre;
             $model->direccion = $form->direccion;
             $model->barrio = $form->barrio;
@@ -1302,13 +1305,20 @@ class UsuarioController extends Controller {
                     }
 
 
-                    echo CJSON::encode(array(
-                        'result' => 'ok',
-                        'response' => array(
-                            'mensaje' => 'Informaci&oacute;n actualizada',
-                            'direccion' => $model->idDireccionDespacho,
-                            'direccionHTML' => $this->renderPartial('/usuario/_d_direccionVista', array('model' => $model, 'radio' => $radio, 'idDireccionSeleccionada' => $idDireccionSeleccionada, 'editar' => true), true),
-                    )));
+                    if ($radio == 'pasoscompra') {
+                        echo CJSON::encode(array(
+                            'result' => 'ok',
+                            'response' => array('mensaje' => 'Informaci&oacute;n actualizada')
+                        ));
+                    } else {
+                        echo CJSON::encode(array(
+                            'result' => 'ok',
+                            'response' => array(
+                                'mensaje' => 'Informaci&oacute;n actualizada',
+                                'direccion' => $model->idDireccionDespacho,
+                                'direccionHTML' => $this->renderPartial('/usuario/_d_direccionVista', array('model' => $model, 'radio' => $radio, 'idDireccionSeleccionada' => $idDireccionSeleccionada, 'editar' => true), true),
+                        )));
+                    }
                     Yii::app()->end();
                 }
             } else {
@@ -1366,7 +1376,7 @@ class UsuarioController extends Controller {
         }
 
 
-        if ($render) {
+        if ($render==true) {
             echo CJSON::encode(array(
                 'result' => 'ok',
                 'response' => array(
@@ -1443,7 +1453,7 @@ class UsuarioController extends Controller {
                             $idDireccionSeleccionada = $modelPago->idDireccionDespacho;
                         }
 
-                        $direccionesHTML = $this->renderPartial('/usuario/_d_direccionesLista', array('listDirecciones' => $listDirecciones, 'radio' => true, 'idDireccionSeleccionada' => $idDireccionSeleccionada), true);
+                        $direccionesHTML = $this->renderPartial('/carro/_d_direccionesLista', array('listDirecciones' => $listDirecciones, 'idDireccionSeleccionada' => $idDireccionSeleccionada), true);
                     } else if ($vista == "pagoexpress") {
                         $objPagoExpress = PagoExpress::model()->find(array(
                             'with' => array('objDireccionDespacho' => array('condition' => 'objDireccionDespacho.codigoCiudad=:ciudad AND objDireccionDespacho.codigoSector=:sector')),
@@ -1491,12 +1501,12 @@ class UsuarioController extends Controller {
             }
         }
     }
-    
-    public function actionBienvenida(){
+
+    public function actionBienvenida() {
         $objUsuario = Usuario::model()->find(array(
             'condition' => 'identificacionUsuario=:usuario',
             'params' => array(
-                ':usuario'=> 1113618983
+                ':usuario' => 1113618983
             )
         ));
         $this->render("d_bienvenida", array('objUsuario' => $objUsuario, 'url' => $this->createUrl("/")));
