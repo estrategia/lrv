@@ -7,7 +7,7 @@ function disminuirCantidadFraccionado(codigoProducto, numeroFracciones, unidadFr
     var nro = $("#cantidad-producto-fraccion-" + codigoProducto + "-" + idUnico).val();
     nro--;
     if (nro < 0) {
-        var nro = $("#cantidad-producto-unidad-" + codigoProducto+ "-" + idUnico).val();
+        var nro = $("#cantidad-producto-unidad-" + codigoProducto + "-" + idUnico).val();
         nro--;
         if (nro < 0) {
             nro = 0;
@@ -50,7 +50,7 @@ function validarCantidadFraccionado(codigoProducto, numeroFracciones, unidadFrac
         nroFracciones = (nroFracciones * unidadFraccionamiento) % numeroFracciones;
     }
     $("#subtotal-producto-fraccion-" + codigoProducto).html("$" + format(nroFracciones * valorFraccionado));
-    $("#cantidad-producto-fraccion-" + codigoProducto + "-" +idUnico).val(nroFracciones);
+    $("#cantidad-producto-fraccion-" + codigoProducto + "-" + idUnico).val(nroFracciones);
 }
 
 function aumentarCantidadUnidad(codigoProducto, valorUnidad) {
@@ -307,6 +307,11 @@ function obtenerPosicion(pos) {
                                 $('#ubicacion-seleccion-ciudad').val(data.response.ciudad);
                                 $('#ubicacion-seleccion-sector').val(data.response.sector);
                                 $('#ubicacion-seleccion-direccion').val('');
+                                $('#div-ubicacion-tipoubicacion > button').removeClass('activo').addClass('inactivo');
+                                $('#div-ubicacion-tipoubicacion > button[data-role="ubicacion-gps"]').removeClass('inactivo').addClass('activo');
+                                $('button[data-role="ubicacion-seleccion"]').removeClass('display-none');
+                                $('#ubicacion-seleccion-resumen').attr('data-ubicacion', "en " + data.response.mensaje);
+                                textoResumenUbicacionSeleccionada();
                             }
                         },
                         close: {
@@ -331,9 +336,23 @@ function obtenerPosicion(pos) {
 }
 
 $(document).on('click', 'div[data-role="tipoentrega"]', function() {
+
+
     $('div[data-role="tipoentrega"]').removeClass('activo');
-    $('#ubicacion-seleccion-entrega').val($(this).attr('data-tipo'));
     $(this).addClass('activo');
+    $('div[data-role="tipoentrega"]').addClass('inactivo');
+    $(this).removeClass('inactivo');
+
+    $('#div-ubicacion-tipoubicacion').removeClass('display-none');
+    if ($('#ubicacion-seleccion-entrega').val().length <= 0) {
+        $('#div-ubicacion-tipoubicacion').css('opacity', 0);
+        $('#div-ubicacion-tipoubicacion').animate({opacity: 1}, 1000);
+    }
+
+    $('#ubicacion-seleccion-entrega').val($(this).attr('data-tipo'));
+    $('#ubicacion-seleccion-resumen').attr('data-entrega',textoUbicacionEntregaSeleccionada());
+    textoResumenUbicacionSeleccionada();
+
 });
 
 $(document).on('click', 'button[data-role="ubicacion-direccion"]', function() {
@@ -369,34 +388,32 @@ $(document).on('click', '#modal-ubicacion-direcciones input[type="radio"]', func
     $('#ubicacion-seleccion-sector').val('');
     $('#ubicacion-seleccion-direccion').val(val);
 
-    $('#ubicacion-seleccion-resumen').html('');
-    $('#ubicacion-seleccion-resumen').removeClass('display-none');
-    var textEntrega = textoUbicacionEntregaSeleccionada();
-    
-    if(textEntrega!=null)
-        textEntrega += " en mi direcci&oacute;n ";
-    
-    $('#ubicacion-seleccion-resumen').html(textEntrega + textoUbicacionDireccionSeleccionada(option));
+    $('#div-ubicacion-tipoubicacion > button').removeClass('activo').addClass('inactivo');
+    $('#div-ubicacion-tipoubicacion > button[data-role="ubicacion-direccion"]').removeClass('inactivo').addClass('activo');
+    $('button[data-role="ubicacion-seleccion"]').removeClass('display-none');
+    $('#ubicacion-seleccion-resumen').attr('data-ubicacion', "en mi direcci&oacute;n " + option.attr('data-descripcion') + " (" + option.attr('data-ubicacion') + ")");
+    textoResumenUbicacionSeleccionada();
 });
 
-function textoUbicacionDireccionSeleccionada(option){
-    return option.attr('data-descripcion') + " (" + option.attr('data-ubicacion') + ")";
-}
-
-function textoUbicacionEntregaSeleccionada(){
+function textoUbicacionEntregaSeleccionada() {
     var entrega = $('#ubicacion-seleccion-entrega').val();
-    
-    if(entrega.length<=0)
-        return null;
-    
-    var diventrega = $('div[data-role="tipoentrega"]div[data-tipo="'+entrega+'"]');
 
-    if(diventrega.length>0)
-      return diventrega.attr('data-descripcion');
+    if (entrega.length <= 0)
+        return null;
+
+    var diventrega = $('div[data-role="tipoentrega"]div[data-tipo="' + entrega + '"]');
+
+    if (diventrega.length > 0)
+        return diventrega.attr('data-descripcion');
     else
-      return null;
+        return null;
 }
 
+function textoResumenUbicacionSeleccionada() {
+    var texto = $('#ubicacion-seleccion-resumen').attr('data-entrega') + " " + $('#ubicacion-seleccion-resumen').attr('data-ubicacion');
+    $('#ubicacion-seleccion-resumen').html(texto);
+    $('#ubicacion-seleccion-resumen').removeClass('display-none');
+}
 
 $(document).on('click', 'button[data-role="ubicacion-mapa"]', function() {
     if ($('#modal-ubicacion-map').length > 0) {
@@ -460,6 +477,12 @@ $(document).on('click', 'button[data-role="ubicacion-seleccion-mapa"]', function
                 $('#ubicacion-seleccion-ciudad').val(data.response.ciudad);
                 $('#ubicacion-seleccion-sector').val(data.response.sector);
                 $('#ubicacion-seleccion-direccion').val('');
+
+                $('#div-ubicacion-tipoubicacion > button').removeClass('activo').addClass('inactivo');
+                $('#div-ubicacion-tipoubicacion > button[data-role="ubicacion-mapa"]').removeClass('inactivo').addClass('activo');
+                $('button[data-role="ubicacion-seleccion"]').removeClass('display-none');
+                $('#ubicacion-seleccion-resumen').attr('data-ubicacion', "en " + data.response.mensaje);
+                textoResumenUbicacionSeleccionada();
             } else {
                 alert(data.response);
             }
@@ -645,14 +668,14 @@ $(document).on('click', "a[data-cargar='1']", function() {
 
     var producto = $(this).attr('data-producto');
     var unique = $(this).attr('data-id');
-    var cantidadU = $('#cantidad-producto-unidad-' + producto+"-"+unique).val();
+    var cantidadU = $('#cantidad-producto-unidad-' + producto + "-" + unique).val();
 
     cantidadU = parseInt(cantidadU);
     if (isNaN(cantidadU)) {
         cantidadU = -1;
     }
 
-    var cantidadF = parseInt($('#cantidad-producto-fraccion-' + producto+"-"+unique).val());
+    var cantidadF = parseInt($('#cantidad-producto-fraccion-' + producto + "-" + unique).val());
     cantidadF = parseInt(cantidadF);
     if (isNaN(cantidadF)) {
         cantidadF = -1;
@@ -1009,13 +1032,13 @@ $(document).on('click', "button[data-role='disminuir-cantidad']", function() {
     var codigoProducto = $(this).attr('data-producto');
     var id = $(this).attr('data-id');
     var valorUnidad = $(this).attr('data-precio');
-    var nro = $("#cantidad-producto-unidad-" + codigoProducto+"-"+id).val();
+    var nro = $("#cantidad-producto-unidad-" + codigoProducto + "-" + id).val();
     nro--;
     if (nro < 0) {
         nro = 0;
     }
     $("#subtotal-producto-unidad-" + codigoProducto).html("$" + format(nro * valorUnidad));
-    $("#cantidad-producto-unidad-" + codigoProducto+"-"+id).val(nro);
+    $("#cantidad-producto-unidad-" + codigoProducto + "-" + id).val(nro);
 });
 
 $(document).on('change', "input[data-role='validar-cantidad-unidad']", function() {
@@ -1028,20 +1051,20 @@ $(document).on('change', "input[data-role='validar-cantidad-unidad']", function(
         nro = 0;
     }
     $("#subtotal-producto-unidad-" + codigoProducto).html("$" + format(nro * valorUnidad));
-    $("#cantidad-producto-unidad-" + codigoProducto+"-"+id).val(nro);
+    $("#cantidad-producto-unidad-" + codigoProducto + "-" + id).val(nro);
 });
 
 $(document).on('click', "button[data-role='aumentar-cantidad']", function() {
     var codigoProducto = $(this).attr('data-producto');
     var valorUnidad = $(this).attr('data-precio');
     var id = $(this).attr('data-id');
-    var nro = $("#cantidad-producto-unidad-" + codigoProducto+"-"+id).val();
+    var nro = $("#cantidad-producto-unidad-" + codigoProducto + "-" + id).val();
     nro++;
     if (nro < 0) {
         nro = 0;
     }
     $("#subtotal-producto-unidad-" + codigoProducto).html("$" + format(nro * valorUnidad));
-    $("#cantidad-producto-unidad-" + codigoProducto+"-"+id).val(nro);
+    $("#cantidad-producto-unidad-" + codigoProducto + "-" + id).val(nro);
 });
 
 $(document).on('click', "button[data-role='guardarCalificacion']", function() {
