@@ -160,7 +160,7 @@ $(document).ready(function() {
     $('[data-toggle="popover"]').popover();
     $("input[data-role='bootstrap-slider']").slider();
     $(".slide-productos").owlCarousel({
-        items: 4,
+        items: 5,
         lazyLoad: true,
         navigation: true,
         pagination: false,

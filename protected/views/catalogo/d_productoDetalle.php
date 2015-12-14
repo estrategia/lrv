@@ -83,9 +83,9 @@
                                         <?php endif; ?>         
 
                                         <div class="row control_cant_detalle">
-                                            <button class="col-md-3 min" style="border:1px solid;" id="disminuir-unidad-<?php echo $objProducto->codigoProducto ?>"  data-id="<?php echo $idUnico?>"  data-role="disminuir-cantidad"  data-producto="<?php echo $objProducto->codigoProducto ?>" data-precio="<?= $objPrecio->getPrecio(Precio::PRECIO_UNIDAD) ?>" type="button"><span class="glyphicon glyphicon-minus" ></span></button>
-                                            <div class="col-md-6 select-cantidad"><input id="cantidad-producto-unidad-<?php echo $objProducto->codigoProducto ?>-<?php echo $idUnico?>"  data-id="<?php echo $idUnico?>"  class="increment" type="text" data-role="validar-cantidad-unidad"  data-producto="<?php echo $objProducto->codigoProducto ?>" data-precio="<?= $objPrecio->getPrecio(Precio::PRECIO_UNIDAD) ?>"  maxlength="3" value="0" data-total="700"/></div>
-                                            <button class="col-md-3 min" style="border:1px solid;" id="aumentar-unidad-<?php echo $objProducto->codigoProducto ?>"  data-id="<?php echo $idUnico?>"   data-role="aumentar-cantidad"  data-producto="<?php echo $objProducto->codigoProducto ?>" data-precio="<?= $objPrecio->getPrecio(Precio::PRECIO_UNIDAD) ?>" type="button"><span class="glyphicon glyphicon-plus" ></span></button>
+                                            <button class="col-md-3 min" style="border:1px solid;" id="disminuir-unidad-<?php echo $objProducto->codigoProducto ?>"  data-id="<?php echo $idUnico ?>"  data-role="disminuir-cantidad"  data-producto="<?php echo $objProducto->codigoProducto ?>" data-precio="<?= $objPrecio->getPrecio(Precio::PRECIO_UNIDAD) ?>" type="button"><span class="glyphicon glyphicon-minus" ></span></button>
+                                            <div class="col-md-6 select-cantidad"><input id="cantidad-producto-unidad-<?php echo $objProducto->codigoProducto ?>-<?php echo $idUnico ?>"  data-id="<?php echo $idUnico ?>"  class="increment" type="text" data-role="validar-cantidad-unidad"  data-producto="<?php echo $objProducto->codigoProducto ?>" data-precio="<?= $objPrecio->getPrecio(Precio::PRECIO_UNIDAD) ?>"  maxlength="3" value="0" data-total="700"/></div>
+                                            <button class="col-md-3 min" style="border:1px solid;" id="aumentar-unidad-<?php echo $objProducto->codigoProducto ?>"  data-id="<?php echo $idUnico ?>"   data-role="aumentar-cantidad"  data-producto="<?php echo $objProducto->codigoProducto ?>" data-precio="<?= $objPrecio->getPrecio(Precio::PRECIO_UNIDAD) ?>" type="button"><span class="glyphicon glyphicon-plus" ></span></button>
                                         </div>
                                         <div class=" subtotal"><span class="">Subtotal: <span id="subtotal-producto-unidad-<?php echo $objProducto->codigoProducto ?>"><?php echo Yii::app()->numberFormatter->format(Yii::app()->params->formatoMoneda['patron'], 0, Yii::app()->params->formatoMoneda['moneda']); ?></span></span></div>
 
@@ -101,9 +101,9 @@
                                             <div style="margin-top:8px;margin-bottom:8px;"><span class="ahora"><?php echo Yii::app()->numberFormatter->format(Yii::app()->params->formatoMoneda['patron'], $objPrecio->getPrecio(Precio::PRECIO_FRACCION, false), Yii::app()->params->formatoMoneda['moneda']); ?></span><br></div>
                                         <?php endif; ?>  
                                         <div class="row control_cant_detalle">
-                                            <button class="col-md-3 min" style="border:1px solid;" id="disminuir-fraccion-<?php echo $objProducto->codigoProducto ?>" data-id="<?php echo $idUnico?>" onclick="disminuirCantidadFraccionado(<?php echo $objProducto->codigoProducto ?>,<?php echo $objProducto->numeroFracciones ?>,<?php echo $objProducto->unidadFraccionamiento ?>,<?= $objPrecio->getPrecio(Precio::PRECIO_FRACCION) ?>,<?= $objPrecio->getPrecio(Precio::PRECIO_UNIDAD, false) ?>,'<?= $idUnico?>')" type="button"><span  class="glyphicon glyphicon-minus"></span></button>
-                                            <div class="col-md-6 select-cantidad"><input id="cantidad-producto-fraccion-<?php echo $objProducto->codigoProducto ?>-<?php echo $idUnico?>" data-id="<?php echo $idUnico?>" class="increment" type="text" onchange="validarCantidadFraccionado(<?php echo $objProducto->codigoProducto ?>,<?php echo $objProducto->numeroFracciones ?>,<?php echo $objProducto->unidadFraccionamiento ?>,<?= $objPrecio->getPrecio(Precio::PRECIO_FRACCION) ?>,<?= $objPrecio->getPrecio(Precio::PRECIO_UNIDAD, false) ?>,'<?= $idUnico?>')" maxlength="3" value="0" data-total="700"/></div>
-                                            <button class="col-md-3 min" style="border:1px solid;" id="aumentar-fraccion-<?php echo $objProducto->codigoProducto ?>" data-id="<?php echo $idUnico?>"  onclick="aumentarCantidadFraccionado(<?php echo $objProducto->codigoProducto ?>,<?php echo $objProducto->numeroFracciones ?>,<?php echo $objProducto->unidadFraccionamiento ?>,<?= $objPrecio->getPrecio(Precio::PRECIO_FRACCION) ?>,<?= $objPrecio->getPrecio(Precio::PRECIO_UNIDAD, false) ?>,'<?= $idUnico?>')" type="button"><span  class="glyphicon glyphicon-plus"></span></button>
+                                            <button class="col-md-3 min" style="border:1px solid;" id="disminuir-fraccion-<?php echo $objProducto->codigoProducto ?>" data-id="<?php echo $idUnico ?>" onclick="disminuirCantidadFraccionado(<?php echo $objProducto->codigoProducto ?>,<?php echo $objProducto->numeroFracciones ?>,<?php echo $objProducto->unidadFraccionamiento ?>,<?= $objPrecio->getPrecio(Precio::PRECIO_FRACCION) ?>,<?= $objPrecio->getPrecio(Precio::PRECIO_UNIDAD, false) ?>, '<?= $idUnico ?>')" type="button"><span  class="glyphicon glyphicon-minus"></span></button>
+                                            <div class="col-md-6 select-cantidad"><input id="cantidad-producto-fraccion-<?php echo $objProducto->codigoProducto ?>-<?php echo $idUnico ?>" data-id="<?php echo $idUnico ?>" class="increment" type="text" onchange="validarCantidadFraccionado(<?php echo $objProducto->codigoProducto ?>,<?php echo $objProducto->numeroFracciones ?>,<?php echo $objProducto->unidadFraccionamiento ?>,<?= $objPrecio->getPrecio(Precio::PRECIO_FRACCION) ?>,<?= $objPrecio->getPrecio(Precio::PRECIO_UNIDAD, false) ?>, '<?= $idUnico ?>')" maxlength="3" value="0" data-total="700"/></div>
+                                            <button class="col-md-3 min" style="border:1px solid;" id="aumentar-fraccion-<?php echo $objProducto->codigoProducto ?>" data-id="<?php echo $idUnico ?>"  onclick="aumentarCantidadFraccionado(<?php echo $objProducto->codigoProducto ?>,<?php echo $objProducto->numeroFracciones ?>,<?php echo $objProducto->unidadFraccionamiento ?>,<?= $objPrecio->getPrecio(Precio::PRECIO_FRACCION) ?>,<?= $objPrecio->getPrecio(Precio::PRECIO_UNIDAD, false) ?>, '<?= $idUnico ?>')" type="button"><span  class="glyphicon glyphicon-plus"></span></button>
                                         </div>
                                         <div class=" subtotal"><span class="">Subtotal: <span id="subtotal-producto-fraccion-<?php echo $objProducto->codigoProducto ?>">$0</span></span></div>
                                     </td>  
@@ -157,9 +157,9 @@
                                 <div>
                                     <div class="subtotal"><span> Subtotal:<span id="subtotal-producto-unidad-<?php echo $objProducto->codigoProducto ?>"><?php echo Yii::app()->numberFormatter->format(Yii::app()->params->formatoMoneda['patron'], $objPrecio->getPrecio(Precio::PRECIO_UNIDAD), Yii::app()->params->formatoMoneda['moneda']); ?></span></span></div>
                                     <div class="detPproduct">
-                                        <button class=" min" style="border:1px solid;" id="disminuir_unidad_<?php echo $objProducto->codigoProducto ?>" data-id="<?php echo $idUnico?>" data-role="disminuir-cantidad"  data-producto="<?php echo $objProducto->codigoProducto ?>" data-precio="<?= $objPrecio->getPrecio(Precio::PRECIO_UNIDAD) ?>"  type="button"><span  class="glyphicon glyphicon-minus"></span></button>
-                                        <div class="input_cant ressete"><input id="cantidad-producto-unidad-<?php echo $objProducto->codigoProducto ?>-<?php echo $idUnico?>" data-id="<?php echo $idUnico?>"  class="increment" type="text" data-role="validar-cantidad-unidad"  data-producto="<?php echo $objProducto->codigoProducto ?>" data-precio="<?= $objPrecio->getPrecio(Precio::PRECIO_UNIDAD) ?>" maxlength="3" value="1" data-total="700"/></div>
-                                        <button class=" min" style="border:1px solid;" id="aumentar_unidad_<?php echo $objProducto->codigoProducto ?>" data-id="<?php echo $idUnico?>" data-role="aumentar-cantidad"  data-producto="<?php echo $objProducto->codigoProducto ?>" data-precio="<?= $objPrecio->getPrecio(Precio::PRECIO_UNIDAD) ?>" type="button"><span  class="glyphicon glyphicon-plus"></span></button>
+                                        <button class=" min" style="border:1px solid;" id="disminuir_unidad_<?php echo $objProducto->codigoProducto ?>" data-id="<?php echo $idUnico ?>" data-role="disminuir-cantidad"  data-producto="<?php echo $objProducto->codigoProducto ?>" data-precio="<?= $objPrecio->getPrecio(Precio::PRECIO_UNIDAD) ?>"  type="button"><span  class="glyphicon glyphicon-minus"></span></button>
+                                        <div class="input_cant ressete"><input id="cantidad-producto-unidad-<?php echo $objProducto->codigoProducto ?>-<?php echo $idUnico ?>" data-id="<?php echo $idUnico ?>"  class="increment" type="text" data-role="validar-cantidad-unidad"  data-producto="<?php echo $objProducto->codigoProducto ?>" data-precio="<?= $objPrecio->getPrecio(Precio::PRECIO_UNIDAD) ?>" maxlength="3" value="1" data-total="700"/></div>
+                                        <button class=" min" style="border:1px solid;" id="aumentar_unidad_<?php echo $objProducto->codigoProducto ?>" data-id="<?php echo $idUnico ?>" data-role="aumentar-cantidad"  data-producto="<?php echo $objProducto->codigoProducto ?>" data-precio="<?= $objPrecio->getPrecio(Precio::PRECIO_UNIDAD) ?>" type="button"><span  class="glyphicon glyphicon-plus"></span></button>
                                         <div class="clear"></div>
                                     </div>
 
@@ -172,9 +172,9 @@
                         <?php if ($objSectorCiudad != null): ?>                                  
                             <div class="" style="margin-top: 13px;">
                                 <?php echo CHtml::link('<div class="button anadir">Añadir&nbsp;<img src="' . Yii::app()->baseUrl . '/images/desktop/button-carrito.png" alt=""></div>', '#', array('data-producto' => $objProducto->codigoProducto, 'data-cargar' => 1, 'data-id' => $idUnico, 'class' => '')); ?>
-                                <?php if(!Yii::app()->user->isGuest): ?>
-                                    <?php echo CHtml::link('<div class="comprar-ahora" >Añadir a la lista</div>', '#', array('class' => '', 'data-tipo' => '1', 'data-role' => 'lstpersonalguardar', 'data-codigo' => $objProducto->codigoProducto, 'data-id' => $idUnico )); ?>
-                                <?php endif;?>
+                                <?php if (!Yii::app()->user->isGuest): ?>
+                                    <?php echo CHtml::link('<div class="comprar-ahora" >Añadir a la lista</div>', '#', array('class' => '', 'data-tipo' => '1', 'data-role' => 'lstpersonalguardar', 'data-codigo' => $objProducto->codigoProducto, 'data-id' => $idUnico)); ?>
+                                <?php endif; ?>
                                 <!--adicionar a lista -->
                                 <?php echo CHtml::link('<div class="comprar-ahora" >Comparar</div>', '#', array('class' => '', 'data-producto' => $objProducto->codigoProducto, 'data-role' => 'comparar')); ?>
                             </div>
@@ -242,21 +242,30 @@
             </div>
         </div>
         <div class="container-rel">
-            <div id="owl-relacionados" class="owl-carousel slide-productos">
-                <?php foreach ($listRelacionados as $objRelacionado): ?>
-                    <div class="item">
-                        <ul class="listaProductos">
-                            <?php
-                            $this->renderPartial('_d_productoElemento', array(
-                                'data' => $objRelacionado->objProductoRelacionado,
-                                'vista' => 'relacionado'
-                            ));
-                            ?>
-                        </ul>
+            <div class="row">
+                <div class="col-md-10">
+                    <div id="owl-relacionados" class="owl-carousel slide-productos">
+                        <?php foreach ($listRelacionados as $objRelacionado): ?>
+                            <div class="item">
+                                <ul class="listaProductos">
+                                    <?php
+                                    $this->renderPartial('_d_productoElemento', array(
+                                        'data' => $objRelacionado->objProductoRelacionado,
+                                        'vista' => 'slider'
+                                    ));
+                                    ?>
+                                </ul>
+                            </div>
+                        <?php endforeach; ?>
                     </div>
-                <?php endforeach; ?>
+                </div>
+                <div class="col-md-2" >
+                    <div  class="btn-ver-todos">
+                        <?php echo CHtml::link('<div class="button" style="padding:15px; border-radius:10px; font-size:1.5em;">Ver todos</div>', CController::createURL('catalogo/verTodosProductos',array('opcion' => 'relacionados', 'item' => $objProducto->codigoProducto ))); ?>
+                    </div>
+                </div>
             </div>
-        </div>
+
     </section>
 <?php endif; ?>
 
