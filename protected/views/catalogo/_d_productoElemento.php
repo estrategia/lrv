@@ -142,7 +142,7 @@
                   </div>
                   <?php */endif; ?>
             </div>
-        <?php elseif (!$objPrecio->inicializado() && $vista != 'slider'): ?>
+        <?php elseif (!$objPrecio->inicializado()): ?>
             <div class="col-md-12">
                 <?php echo CHtml::link('<div class="button">Agotado</div>', '#', array('disabled' => 'true', 'onclick' => 'return false;')); ?>
             </div>

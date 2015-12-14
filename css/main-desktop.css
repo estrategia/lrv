@@ -908,6 +908,10 @@ input#RegistroForm_condiciones[type="checkbox"] + label span {
     min-height: 116px;
     color:#6c6363;
 }
+
+.owl-carousel .content_product {
+    min-height: 70px;
+}
 .prices_status {
     color: #9f9f9f;
 }
