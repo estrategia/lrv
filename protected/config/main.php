@@ -434,6 +434,7 @@ return array(
                     1 => 'Inicio',
                     2 => 'División',
                     3 => 'Categoria',
+                    4 => 'Fin Compra',
                     10 => 'Móvil Home',
                     11 => 'Móvil Inicio'
                 ),
