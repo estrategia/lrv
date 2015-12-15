@@ -10,7 +10,12 @@
     url("fonts/geneva.ttf") format('truetype');  
   font-weight: normal;  
 }
-
+.nopaddingleft{
+  padding-left: 0 !important!;
+}
+.nopaddingright{
+  padding-right: 0 !important!;
+}
 .container {
     min-width: 750px !important;
 }
@@ -174,8 +179,9 @@ table.tabla-carro .group-botones-cantidad{
 }
 .content-category .controls > span {
     display: inline-block;
-    width: 161px;
+    width: auto;
     margin-top:2px;
+    font-size: 13px;
 }
 .main_menu .nav > li.categorias {
     width: 25%;

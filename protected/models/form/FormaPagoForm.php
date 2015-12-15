@@ -50,7 +50,7 @@ class FormaPagoForm extends CFormModel {
 
         $rules = array();
         $rules[] = array('identificacionUsuario', 'required', 'message' => '{attribute} no puede estar vacío');
-
+        
         if ($this->pagoInvitado) {
             //echo "<br/>PAGO INVITADO<br/>";
             //$rules[] = array('descripcion, nombre, direccion, barrio, telefono, extension, celular, correoElectronico', 'attributeTrim');
@@ -71,22 +71,22 @@ class FormaPagoForm extends CFormModel {
                 $rules[] = array('telefono', 'length', 'min' => 5, 'max' => 11, 'on' => 'despacho, finalizar');
                 $rules[] = array('extension', 'length', 'max' => 5, 'on' => 'despacho, finalizar');
             }
-
+            
             if (Yii::app()->session[Yii::app()->params->sesion['tipoEntrega']] == Yii::app()->params->entrega['tipo']['presencial']) {
                 // echo "<br/>PAGO PRESENCIAL<br/>";
                 $rules[] = array('correoElectronico', 'required', 'on' => 'entrega, finalizar', 'message' => '{attribute} no puede estar vacío');
                 $rules[] = array('correoElectronico', 'email', 'on' => 'entrega, finalizar');
                 $rules[] = array('correoElectronico', 'length', 'max' => 50, 'on' => 'entrega, finalizar');
             }
-
+            
 
             $rules[] = array('idDireccionDespacho', 'safe');
             $rules[] = array('celular, extension, idDireccionDespacho', 'default', 'value' => null);
         } else {
             $rules[] = array('descripcion, nombre, direccion, barrio, extension, telefono, celular, correoElectronico', 'safe');
             $rules[] = array('idDireccionDespacho', 'required', 'on' => 'despacho, finalizar', 'message' => '{attribute} no puede estar vacío');
-        }
-
+            }
+        
         $rules[] = array('fechaEntrega', 'required', 'on' => 'entrega, finalizar', 'message' => '{attribute} no puede estar vacío');
         $rules[] = array('comentario', 'length', 'max' => 250, 'on' => 'entrega, finalizar');
         $rules[] = array('fechaEntrega', 'fechaValidate', 'on' => 'entrega, finalizar');
@@ -105,11 +105,11 @@ class FormaPagoForm extends CFormModel {
             $rules[] = array('telefonoContacto', 'safe');
             $rules[] = array('telefonoContacto', 'default', 'value' => null);
         }
-
+        
         //array('clienteFielValidate', 'on' => 'pago, finalizar'),
         //array('codigoPromocion', 'promocionValidate', 'on' => 'pago, finalizar'),
         //array('descripcion, nombre, barrio, telefono, celular', 'length', 'max' => 50);
-
+        
         return $rules;
     }
 

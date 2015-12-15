@@ -1567,8 +1567,8 @@ class CarroController extends Controller {
         $modelPago->setScenario($paso);
 
         if ($post) {
-            
-        } else {
+
+                    } else {
             //validar pasos anteriores
             $modelPago->validarPasos(Yii::app()->params->pagar['pasosDisponiblesDesktop'], $paso);
 
@@ -2103,8 +2103,8 @@ class CarroController extends Controller {
         //$modelPago->setScenario($paso);
 
         if ($post) {
-            
-        } else {
+
+                    } else {
             //validar pasos anteriores
             $modelPago->validarPasos(Yii::app()->params->pagar['pasosDisponiblesDesktop'], $paso);
             $params = array();
