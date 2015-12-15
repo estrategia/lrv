@@ -34,6 +34,14 @@
     transform: translateY(-50%);
     width: 240px;
 }
+.red-circle {
+    border: 1px solid #d21107;
+    border-radius: 50%;
+    padding: 10px;
+}
+.font_18 {
+    font-size: 18px !important;
+}
 .menu-categorias.cat-collapsables h3 {
     border: 1px solid;
     color: #555;
