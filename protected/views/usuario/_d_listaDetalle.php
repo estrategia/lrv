@@ -8,8 +8,9 @@
             'prevPageLabel' => 'Anterior',
             'nextPageLabel' => 'Siguiente',
             'lastPageLabel' => '&gt;&gt;',
-            'maxButtonCount' => 8
+            'maxButtonCount' => 8,
         ),
+        'itemsCssClass' => 'table table-bordered  table-hover',
         'id' => 'gridview-listadetalle',
         'beforeAjaxUpdate' => new CJavaScriptExpression("function() {Loading.show();}"),
     'afterAjaxUpdate' => new CJavaScriptExpression("function() {Loading.hide();}"),
