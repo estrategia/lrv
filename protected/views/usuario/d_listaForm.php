@@ -136,12 +136,18 @@
                 <div class="modal-footer">
 <?php endif; ?>
 
+             <?php if(!$modal): ?>
+                    <div class="text-center">
+                    <?php endif;?>
     <?php if ($model->isNewRecord): ?>
-        <input type="button" class="btn btn-default" data-enhanced="true" data-role="lstpersonalform" value="Crear">
-        
+        <input type="button" class="btn btn-primary" data-enhanced="true" data-role="lstpersonalform" value="Crear">
     <?php else: ?>
-        <input type="button" class="btn btn-default" data-enhanced="true" data-role="lstpersonalform" value="Actualizar" data-lista="<?php echo $model->idLista ?>">
+        <input type="button" class="btn btn-primary" data-enhanced="true" data-role="lstpersonalform" value="Actualizar" data-lista="<?php echo $model->idLista ?>">
     <?php endif; ?>
+        
+        <?php if(!$modal): ?>
+                    <div class="text-center">
+                    <?php endif;?>
 
         
     <?php $this->endWidget(); ?>

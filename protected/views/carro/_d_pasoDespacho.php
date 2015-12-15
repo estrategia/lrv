@@ -81,7 +81,7 @@
 
         <?php $this->endWidget(); ?>
     <?php else: ?>
-        <?php echo CHtml::link('Adicionar direcci&oacute;n', "#", array('data-role' => 'direccion-adicionar-modal', 'data-vista' => 'pasoscompra', 'class' => 'btn btn-danger')); ?>
+        <?php echo CHtml::link('Adicionar direcci&oacute;n', "#", array('data-role' => 'direccion-adicionar-modal', 'data-vista' => 'pasoscompra', 'class' => 'btn btn-primary')); ?>
         <div class="space-1"></div>
 
         <div id="div-direcciones-pasoscompra" class="scroll-div">

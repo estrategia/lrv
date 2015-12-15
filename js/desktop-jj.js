@@ -302,7 +302,7 @@ function obtenerPosicion(pos) {
                     buttons: {
                         success: {
                             label: "Usar esta ubicación",
-                            className: "btn-success",
+                            className: "btn-primary",
                             callback: function() {
                                 $('#ubicacion-seleccion-ciudad').val(data.response.ciudad);
                                 $('#ubicacion-seleccion-sector').val(data.response.sector);
@@ -316,7 +316,7 @@ function obtenerPosicion(pos) {
                         },
                         close: {
                             label: "Cancelar",
-                            className: "btn-danger",
+                            className: "btn-default",
                             callback: function() {
                             }
                         }

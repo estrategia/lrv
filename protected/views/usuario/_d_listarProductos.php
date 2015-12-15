@@ -4,7 +4,7 @@
         <table class="table table-bordered table-hover">
             <thead>
                 <tr>
-                    <th colspan="6"><?php echo $tituloTabla; ?></th>
+                    <th colspan="6" class="text-center"><?php echo $tituloTabla; ?></th>
                 </tr>
                 <tr>
                     <th>Producto</th>
@@ -22,14 +22,14 @@
                     <?php if ($objItem->idCombo === null): ?>
                         <?php $ahorro = ($objItem->objProducto->mostrarAhorroVirtual == 1 && $objItem->descuentoUnidad > 0) ? $objItem->descuentoUnidad : 0 ?>
                         <tr>
-                            <td>
+                            <td class="text-center">
                                 <a href="<?php echo CController::createUrl('/catalogo/producto', array('producto' => $objItem->codigoProducto, 'descripcion' => $objItem->objProducto->getCadenaUrl())) ?>" data-ajax="false">
                                     <img src="<?php echo Yii::app()->request->baseUrl . $objItem->objProducto->rutaImagen() ?>" class="ui-li-thumb img-responsive img-table">
                                 </a>
                                 <h4><a href="<?php echo CController::createUrl('/catalogo/producto', array('producto' => $objItem->codigoProducto)) ?>" data-ajax="false"><?php echo $objItem->descripcion ?></a></h4>
                                 <p><?php echo $objItem->presentacion ?></p>
                             </td>
-                            <td>
+                            <td  class="text-center">
                                 <?php if ($objItem->unidades > 0): ?>
                                     <?php echo $objItem->unidades ?>
                                 <?php endif; ?>
@@ -40,19 +40,19 @@
                                     <p>Bodega: <?php echo $objItem->unidadesCedi ?></p>
                                 <?php endif; ?>
                             </td>
-                            <td>
-                    <strike><?php echo Yii::app()->numberFormatter->format(Yii::app()->params->formatoMoneda['patron'], $objItem->precioBaseUnidad, Yii::app()->params->formatoMoneda['moneda']); ?></strike>
-                    </td>
-                    <td>
-                        <?php echo Yii::app()->numberFormatter->format(Yii::app()->params->formatoMoneda['patron'], $ahorro, Yii::app()->params->formatoMoneda['moneda']); ?>
-                    </td>
-                    <td>
-                        <?php echo Yii::app()->numberFormatter->format(Yii::app()->params->formatoMoneda['patron'], ($objItem->precioBaseUnidad - $objItem->descuentoUnidad), Yii::app()->params->formatoMoneda['moneda']); ?>
-                    </td>
-                    <td>
-                        <?php $subtotal += ($objItem->precioTotalUnidad + $objItem->precioTotalFraccion) ?>
-                        <?php echo Yii::app()->numberFormatter->format(Yii::app()->params->formatoMoneda['patron'], $subtotal, Yii::app()->params->formatoMoneda['moneda']); ?>
-                    </td>
+                            <td class="text-right">
+                                <strike><?php echo Yii::app()->numberFormatter->format(Yii::app()->params->formatoMoneda['patron'], $objItem->precioBaseUnidad, Yii::app()->params->formatoMoneda['moneda']); ?></strike>
+                            </td>
+                            <td class="text-right">
+                                <?php echo Yii::app()->numberFormatter->format(Yii::app()->params->formatoMoneda['patron'], $ahorro, Yii::app()->params->formatoMoneda['moneda']); ?>
+                            </td>
+                            <td class="text-right">
+                                <?php echo Yii::app()->numberFormatter->format(Yii::app()->params->formatoMoneda['patron'], ($objItem->precioBaseUnidad - $objItem->descuentoUnidad), Yii::app()->params->formatoMoneda['moneda']); ?>
+                            </td>
+                            <td class="text-right">
+                                <?php $subtotal += ($objItem->precioTotalUnidad + $objItem->precioTotalFraccion) ?>
+                                <?php echo Yii::app()->numberFormatter->format(Yii::app()->params->formatoMoneda['patron'], $subtotal, Yii::app()->params->formatoMoneda['moneda']); ?>
+                            </td>
                     </tr>
                 <?php else: ?>
                     <?php $listCombos[$objItem->idCombo][0] = $objItem; ?>
@@ -91,7 +91,7 @@
                 <td></td>
                 <td></td>
                 <th>Subtotal</th>
-                <th><?php echo Yii::app()->numberFormatter->format(Yii::app()->params->formatoMoneda['patron'], $subtotal, Yii::app()->params->formatoMoneda['moneda']); ?></th>
+                <th  class="text-right"><?php echo Yii::app()->numberFormatter->format(Yii::app()->params->formatoMoneda['patron'], $subtotal, Yii::app()->params->formatoMoneda['moneda']); ?></th>
             </tr>
             </tbody>
         </table>
@@ -103,35 +103,35 @@
             <table class="table table-bordered table-hover">
                 <tr>
                     <th>Domicilio</th>
-                    <th><?php echo Yii::app()->numberFormatter->format(Yii::app()->params->formatoMoneda['patron'], $objeto->domicilio, Yii::app()->params->formatoMoneda['moneda']); ?></th>
+                    <th class="text-right"><?php echo Yii::app()->numberFormatter->format(Yii::app()->params->formatoMoneda['patron'], $objeto->domicilio, Yii::app()->params->formatoMoneda['moneda']); ?></th>
                 </tr>
                 <?php if (isset($objeto->donacionFundacion)): ?>
                     <tr>
                         <?php $donacion = $objeto->donacionFundacion > 0 ? $objeto->donacionFundacion : 0; ?>
                         <th>Donaci&oacute;n a la fundaci&oacute;n</th>
-                        <th><?php echo Yii::app()->numberFormatter->format(Yii::app()->params->formatoMoneda['patron'], $donacion, Yii::app()->params->formatoMoneda['moneda']); ?></th>
+                        <th class="text-right"><?php echo Yii::app()->numberFormatter->format(Yii::app()->params->formatoMoneda['patron'], $donacion, Yii::app()->params->formatoMoneda['moneda']); ?></th>
                     </tr>
                 <?php endif; ?>
                 <tr>
                     <?php $impuestos = ($objeto->objCiudad->excentoImpuestos == 0 && $objeto->impuestosCompra > 0) ? $objeto->impuestosCompra : 0 ?>
                     <th>Impuestos incluidos</th>
-                    <th><?php echo Yii::app()->numberFormatter->format(Yii::app()->params->formatoMoneda['patron'], $impuestos, Yii::app()->params->formatoMoneda['moneda']); ?></th>
+                    <th class="text-right"><?php echo Yii::app()->numberFormatter->format(Yii::app()->params->formatoMoneda['patron'], $impuestos, Yii::app()->params->formatoMoneda['moneda']); ?></th>
                 </tr>
                 <?php if ($objeto->flete > 0): ?>
                     <tr>
                         <th>Flete adicional</th>
-                        <th><?php echo Yii::app()->numberFormatter->format(Yii::app()->params->formatoMoneda['patron'], $objeto->flete, Yii::app()->params->formatoMoneda['moneda']); ?></th>
+                        <th class="text-right"><?php echo Yii::app()->numberFormatter->format(Yii::app()->params->formatoMoneda['patron'], $objeto->flete, Yii::app()->params->formatoMoneda['moneda']); ?></th>
                     </tr>
                 <?php endif; ?>
                 <?php if (isset($objeto->objFormaPagoCompra) && $objeto->objFormaPagoCompra->valorBono > 0): ?>
                     <tr>
                         <th>Bono</th>
-                        <th><?php echo Yii::app()->numberFormatter->format(Yii::app()->params->formatoMoneda['patron'], $objeto->objFormaPagoCompra->valorBono, Yii::app()->params->formatoMoneda['moneda']); ?></th>
+                        <th class="text-right"><?php echo Yii::app()->numberFormatter->format(Yii::app()->params->formatoMoneda['patron'], $objeto->objFormaPagoCompra->valorBono, Yii::app()->params->formatoMoneda['moneda']); ?></th>
                     </tr>
                 <?php endif; ?>
                 <tr>
                     <th>Total</th>
-                    <th><?php echo Yii::app()->numberFormatter->format(Yii::app()->params->formatoMoneda['patron'], $objeto->totalCompra, Yii::app()->params->formatoMoneda['moneda']); ?></th>
+                    <th class="text-right"><?php echo Yii::app()->numberFormatter->format(Yii::app()->params->formatoMoneda['patron'], $objeto->totalCompra, Yii::app()->params->formatoMoneda['moneda']); ?></th>
                 </tr>
             </table>
         </div>

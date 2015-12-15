@@ -1,7 +1,7 @@
 <div class="container">
     <div class="row">
         <div class="col-md-12">
-            <?php echo CHtml::link('Nueva lista personal', "#", array('class' => 'btn btn-default', 'data-toggle'=>"modal", 'data-target'=>"#modal-lista-personal")); ?>
+            <?php echo CHtml::link('Nueva lista personal', "#", array('class' => 'btn btn-primary', 'data-toggle'=>"modal", 'data-target'=>"#modal-lista-personal")); ?>
         </div>
     </div>
 </div>

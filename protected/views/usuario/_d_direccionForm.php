@@ -7,28 +7,29 @@
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
 
                 <?php if ($model->isNewRecord): ?>
-                    <h2>Esta dirección de despacho estará asociada a la ubicación <span style="text-transform: capitalize;"><?php echo strtolower($this->sectorName) ?></span></h2>
+                    <h4 class="text-center">Esta dirección de despacho estará asociada a la ubicación <span class="text-capitalize"><?php echo strtolower($this->sectorName) ?></span></h4>
                 <?php endif; ?>
             </div>
 
+            <?php
+            $form = $this->beginWidget('CActiveForm', array(
+                'enableClientValidation' => true,
+                'action' => ($model->isNewRecord ? Yii::app()->createUrl('/usuario/direccionCrear') : Yii::app()->createUrl('/usuario/direccionActualizar', array('id' => $model->idDireccionDespacho))),
+                'id' => ($model->isNewRecord ? "form-direccion" : "form-direccion-$model->idDireccionDespacho"),
+                'htmlOptions' => array(
+                    'class' => 'form-horizontal'
+                ),
+                'errorMessageCssClass' => 'has-error',
+                'clientOptions' => array(
+                    'validateOnSubmit' => true,
+                    'validateOnChange' => true,
+                    'errorCssClass' => 'has-error',
+                    'successCssClass' => 'has-success',
+                ))
+            );
+            ?>
+
             <div class="modal-body body-scroll">
-                <?php
-                $form = $this->beginWidget('CActiveForm', array(
-                    'enableClientValidation' => true,
-                    'action' => ($model->isNewRecord ? Yii::app()->createUrl('/usuario/direccionCrear') : Yii::app()->createUrl('/usuario/direccionActualizar', array('id' => $model->idDireccionDespacho))),
-                    'id' => ($model->isNewRecord ? "form-direccion" : "form-direccion-$model->idDireccionDespacho"),
-                    'htmlOptions' => array(
-                        'class' => 'form-horizontal'
-                    ),
-                    'errorMessageCssClass' => 'has-error',
-                    'clientOptions' => array(
-                        'validateOnSubmit' => true,
-                        'validateOnChange' => true,
-                        'errorCssClass' => 'has-error',
-                        'successCssClass' => 'has-success',
-                    ))
-                );
-                ?>
                 <?php if (!$model->isNewRecord): ?>
                     <?php echo $form->hiddenField($model, 'idDireccionDespacho'); ?>
                 <?php endif; ?>
@@ -39,7 +40,7 @@
                             <?php echo $form->labelEx($model, 'descripcion', array('class' => 'col-md-4 control-label')); ?>
                             <div class="col-md-8">
                                 <?php if (!$model->isNewRecord && $radio == 'pasoscompra') : ?>
-                                <div class="form-control input-sm" disabled> <?php echo $model->descripcion ?> </div>
+                                    <div class="form-control input-sm" disabled> <?php echo $model->descripcion ?> </div>
                                 <?php else: ?>
                                     <?php echo $form->textField($model, 'descripcion', array('maxlength' => 50, 'placeholder' => $model->getAttributeLabel('descripcion'), "class" => "form-control input-sm")); ?>
                                     <?php echo $form->error($model, 'descripcion', array('class' => 'text-danger')); ?>
@@ -107,25 +108,16 @@
                     </div>
                 </div>
 
-                <div class="row">
-                    <div class="col-md-6">
-                        <div class="form-group">
-                            <div class="col-md-offset-4 col-md-4">
-                                <?php if ($model->isNewRecord): ?>
-                                    <input type="button" class="btn btn-default" data-role="direccion-adicionar" value="Guardar">
-                                <?php else: ?>
-                                    <input type="button" class="btn btn-default" value="Actualizar" data-role="direccion-actualizar" data-radio="<?php echo $radio ?>">
-                                <?php endif; ?>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-                <?php $this->endWidget(); ?>
             </div>
             <div class="modal-footer center">
+                <?php if ($model->isNewRecord): ?>
+                    <input type="button" class="btn btn-primary" data-role="direccion-adicionar" value="Guardar">
+                <?php else: ?>
+                    <input type="button" class="btn btn-primary" value="Actualizar" data-role="direccion-actualizar" data-radio="<?php echo $radio ?>">
+                <?php endif; ?>
                 <button type="button" class="btn btn-default" data-dismiss="modal">Cerrar</button>
             </div>
+            <?php $this->endWidget(); ?>
         </div>
     </div>
 </div>

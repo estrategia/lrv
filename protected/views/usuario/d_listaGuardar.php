@@ -3,38 +3,36 @@
         <div class="modal-content">
             <div class="modal-header">
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                <h4>Seleccione la lista</h4>
+                <h4 class="text-center">Seleccione la lista</h4>
             </div>
+
             <div class="modal-body body-scroll">
                 <div class="panel-body">
                     <?php
-                        $form = $this->beginWidget('CActiveForm', array(
-                            'enableClientValidation' => true,
-                            'enableAjaxValidation' => false,
-                            'htmlOptions' => array(
-                                'id' => "form-listaguardar",
-                                'class' => "ui-bar ui-bar-a ui-corner-all",
-                                'data-ajax' => "false"
-                            ),
-                            'errorMessageCssClass' => 'has-error',
-                            'clientOptions' => array(
-                                'validateOnSubmit' => true,
-                                'validateOnChange' => true,
-                                'errorCssClass' => 'has-error',
-                                'successCssClass' => 'has-success',
-                            ))
-                        );
+                    $form = $this->beginWidget('CActiveForm', array(
+                        'enableClientValidation' => true,
+                        'enableAjaxValidation' => false,
+                        'htmlOptions' => array(
+                            'id' => "form-listaguardar",
+                            'class' => "",
+                        ),
+                        'errorMessageCssClass' => 'has-error',
+                        'clientOptions' => array(
+                            'validateOnSubmit' => true,
+                            'validateOnChange' => true,
+                            'errorCssClass' => 'has-error',
+                            'successCssClass' => 'has-success',
+                        ))
+                    );
                     ?>
                     <div class="row">
                         <div class="col-md-4 col-md-offset-4">
                             <?php echo $form->labelEx($model, 'idLista', array('class' => 'ui-hidden-accessible')); ?>
-                            <?php echo $form->dropDownList($model, 'idLista', CHtml::listData($model->listData(), 'idLista', 'nombreLista'), array('encode' => false, 'prompt' => 'Seleccione lista', 'placeholder' => $model->getAttributeLabel('idLista'), 'class' => 'form-control') ); ?>
-                            <?php echo $form->error($model, 'idLista'); ?>
+                            <?php echo $form->dropDownList($model, 'idLista', CHtml::listData($model->listData(), 'idLista', 'nombreLista'), array('encode' => false, 'prompt' => 'Seleccione lista', 'placeholder' => $model->getAttributeLabel('idLista'), 'class' => 'form-control')); ?>
+                            <?php echo $form->error($model, 'idLista', array('class'=>'text-danger')); ?>
                         </div>
-                        <div class="col-md-4">
-                            <input type="button" class="btn btn-default" data-enhanced="true" data-role="lstpersonalguardar" value="Guardar">
-                        </div>    
                     </div>
+                    
                     <div class="row">
                         <div class="col-md-4 col-md-offset-4">
                             <?php echo $form->hiddenField($model, 'tipo'); ?>
@@ -67,6 +65,7 @@
                 </div>
             </div>
             <div class="modal-footer">
+                <input type="button" class="btn btn-primary" data-enhanced="true" data-role="lstpersonalguardar" value="Guardar">
                 <button type="button" class="btn btn-default" data-dismiss="modal">Cerrar</button>
             </div>
         </div>

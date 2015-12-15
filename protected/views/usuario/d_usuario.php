@@ -1,4 +1,5 @@
-<div class="container content_user_info">
+<div class="space-1"></div>
+<div class="container-fluid">
     <div class="row">
         <div class="col-md-3">
             <?php $this->renderPartial('_d_menu', array('vista'=>$vista)); ?>
