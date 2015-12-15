@@ -2114,9 +2114,12 @@ textarea.form-control {
 }
 
 .scroll-div {
-    max-height: 225px;
+    border: 1px solid #a4a4a4;
+    max-height: 215px;
     overflow-y: scroll;
+    padding: 1px 5px;
 }
+
 .confirm p {
     font-size: 18px;
     color: #A4A4A4;

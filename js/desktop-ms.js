@@ -707,7 +707,7 @@ $(document).on('click', "div[data-role='formapago']", function() {
         /*$("div[data-role='formapago']").removeClass('activo');
         $(this).addClass('activo');
         $('input[id="FormaPagoForm_idFormaPago"]').val(tipo);*/
-        
+        //$('#div-formapago-vacio').remove();
         var descripcion = $("div[data-role='formapago-descripcion']div[data-tipo='"+tipo+"']");
         $("div[data-role='formapago-descripcion']").addClass('display-none');
         
@@ -721,6 +721,7 @@ $(document).on('click', "#modal-formapago input[type='radio']", function() {
     if ($(this).is(':checked')) {
         //$("div[data-role='formapago']").removeClass('activo');
         //$('div[data-tipo="datafono"]').addClass('activo');
+        //$('#div-formapago-vacio').remove();
         $('input[id="FormaPagoForm_idFormaPago_datafono"]').prop('checked', true);
         $('input[id="FormaPagoForm_idFormaPago_datafono"]').val($(this).val());
         
