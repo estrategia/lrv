@@ -23,8 +23,6 @@
                         <ul class="listaProductos">
                             <div class="items">
                                 <?php foreach ($listProductos as $objProducto): ?>
-
-
                                     <?php
                                     $this->renderPartial('//catalogo/_d_productoElemento', array(
                                         'data' => $objProducto,
@@ -37,7 +35,7 @@
                         </ul>
                     </div>
                 </div>
-<?php endif; ?>
+            <?php endif; ?>
         </div>
     </div>
 </div>
