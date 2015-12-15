@@ -68,11 +68,11 @@
         
                     }
 
-                    return '<a href="'.CController::createUrl($controlador, $params).'" data-ajax="false">
-                                <img src="'.Yii::app()->request->baseUrl . $urlImagen.'" class="">
+                    return '<a href="'.CController::createUrl($controlador, $params).'">
+                                <img src="'.Yii::app()->request->baseUrl . $urlImagen.'" class="img-responsive img-table">
                             </a>
                             <p>
-                                <a href="'.CController::createUrl($controlador, $params).'" data-ajax="false">
+                                <a href="'.CController::createUrl($controlador, $params).'">
                                     '.$descripcion.'
                                 </a>
                             </p>

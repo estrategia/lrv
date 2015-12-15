@@ -213,6 +213,7 @@ table.tabla-carro .group-botones-cantidad{
 }
 .main_menu .nav > li {
     width: auto;
+    display: table-cell;
 }
 .sinDir .btn.btn-aceptar {
     background: #fff none repeat scroll 0 0;
@@ -827,7 +828,7 @@ table.tabla-carro .group-botones-cantidad{
     border-bottom: 0;
 }
 #select2-RegistroForm_profesion-container {
-    color: #a3a3a3;
+    color: #555;
 }
 input#RegistroForm_condiciones[type="checkbox"] + label span {
     background: rgba(0, 0, 0, 0) none repeat scroll 0 0;
@@ -927,7 +928,7 @@ input#RegistroForm_condiciones[type="checkbox"] + label span {
     color: #EA0001;
 }
 .select2-container--default .select2-selection--single{
-    border-radius: 0;
+    //border-radius: 0;
 }
 .viewsList .btn-white {
     background: #a3a3a3 none repeat scroll 0 0;

@@ -1,7 +1,7 @@
 
 <div class="row">
     <div class="col-md-12">
-        <?php echo CHtml::link('Configurar recordación', "#", array('class' => 'btn btn-default', 'data-toggle'=>"modal", 'data-target'=>"#modal-lista-personal")); ?>
+        <?php echo CHtml::link('Configurar recordación', "#", array('class' => 'btn btn-primary', 'data-toggle'=>"modal", 'data-target'=>"#modal-lista-personal")); ?>
         <?php $this->renderPartial('d_listaForm', array('model' => $model, "modal" => true)); ?>
     </div>
 </div>

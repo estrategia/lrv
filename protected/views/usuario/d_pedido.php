@@ -2,37 +2,48 @@
     <div class="col-md-12">
 
         <div class="row">
-            <div class="col-md-9">
-                <?php if ($objCompra->tipoEntrega == Yii::app()->params->entrega['tipo']['domicilio']): ?>
-                    <h3>Datos Compra</h3>
-                <?php elseif ($objCompra->tipoEntrega == Yii::app()->params->entrega['tipo']['presencial']): ?>
-                    <h3>Datos Pedido</h3>
-                <?php endif; ?>
-
-            </div>
-            <div class="col-md-3">
-                <?php echo CHtml::link('Agregar al carro', "#", array("data-role" => "pedidodetalle", "data-compra" => $objCompra->idCompra, 'class' => 'btn btn-default', 'data-ajax' => "false")); ?>
+            <div class="col-md-12">
+                <?php echo CHtml::link('Agregar al carro', "#", array("data-role" => "pedidodetalle", "data-compra" => $objCompra->idCompra, 'class' => 'btn btn-primary')); ?>
             </div>
         </div>
+        
+        <div class="space-1"></div>
+
         <div class="row">
             <div class="col-md-12">
-                <h4>Fecha de la compra <?= $objCompra->fechaCompra ?></h4>
+                <table class="table table-bordered table-striped">
+                    <thead>
+                    <th colspan="2" class="text-center">
+                        <?php if ($objCompra->tipoEntrega == Yii::app()->params->entrega['tipo']['domicilio']): ?>
+                            Datos Compra
+                        <?php elseif ($objCompra->tipoEntrega == Yii::app()->params->entrega['tipo']['presencial']): ?>
+                            Datos Pedido
+                        <?php endif; ?>
+                    </th>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>Fecha de la compra</td>
+                            <td><?= $objCompra->fechaCompra ?></td>
+                        </tr>
+                        <tr>
+                            <td>Fecha de la entrega</td>
+                            <td><?= $objCompra->fechaEntrega ?></td>
+                        </tr>
+                        <tr>
+                            <td>Forma de Pago</td>
+                            <td><?= $objCompra->objFormaPagoCompra->objFormaPago->formaPago; ?></td>
+                        </tr>
+                    </tbody>
+                </table>
             </div>
         </div>
-        <?php if ($objCompra->tipoEntrega == Yii::app()->params->entrega['tipo']['domicilio']): ?>
-            <div class="row">
-                <div class="col-md-12">
-                    <h4>Fecha de la entrega <?= $objCompra->fechaEntrega ?></h4>
-                </div>
-            </div>
-        <?php endif; ?>
         <div class="row">
             <div class="col-md-12">
                 <table class="table table-bordered table-striped">
                     <?php if ($objCompra->tipoEntrega == Yii::app()->params->entrega['tipo']['domicilio']): ?>
-
                         <thead>
-                        <th colspan="2">Direcci&oacute;n de despacho</th>
+                        <th colspan="2"  class="text-center">Direcci&oacute;n de despacho</th>
                         </thead>
                         <tbody>
                             <tr>
@@ -70,11 +81,6 @@
                         </tbody>
                     <?php endif; ?>
                 </table>
-            </div>
-        </div>
-        <div class="row">
-            <div class="col-md-12">
-                <h4>Forma de Pago: </h4> <?php echo $objCompra->objFormaPagoCompra->objFormaPago->formaPago; ?>
             </div>
         </div>
 

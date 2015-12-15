@@ -92,7 +92,7 @@ $form = $this->beginWidget('CActiveForm', array(
                 </div>
             </div>
             <div class="modal-footer center">
-                <button type="button" class="btn btn-danger" data-dismiss="modal">Cerrar</button>
+                <button type="button" class="btn btn-default" data-dismiss="modal">Cerrar</button>
             </div>
         </div>
     </div>
