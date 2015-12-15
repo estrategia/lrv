@@ -10,30 +10,34 @@
             </ul>
         </div>
         <div class="col-md-10 ressete">
-            <?php if($listModulos != null):?>
-            <?php  $this->renderPartial('/contenido/d_modulos', array(
-                'listModulos' => $listModulos
-            ));?>
-            <?php else:?>
+            <?php if ($listModulos != null): ?>
+                <?php
+                $this->renderPartial('/contenido/d_modulos', array(
+                    'listModulos' => $listModulos
+                ));
+                ?>
+            <?php else: ?>
                 <!-- Lista de productos -->
                 <div class="container">
                     <div class="row">
-                        <?php foreach ($listProductos as $objProducto): ?>
-                        
-                            <ul class="listaProductos">
-                                <div class="items">
+                        <ul class="listaProductos">
+                            <div class="items">
+                                <?php foreach ($listProductos as $objProducto): ?>
+
+
                                     <?php
                                     $this->renderPartial('//catalogo/_d_productoElemento', array(
                                         'data' => $objProducto,
                                         'vista' => 'grid'
                                     ));
                                     ?>
-                                </div>
-                            </ul>
-                        <?php endforeach; ?>
+
+                                <?php endforeach; ?>
+                            </div>
+                        </ul>
                     </div>
                 </div>
-            <?php endif; ?>
+<?php endif; ?>
         </div>
     </div>
 </div>

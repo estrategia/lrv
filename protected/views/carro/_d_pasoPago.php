@@ -35,7 +35,7 @@ $form = $this->beginWidget('CActiveForm', array(
             </div>
         <?php endif; ?>
 <div class="space-2"></div>
-    <div class="center coment pad-sides">
+    <div class="center gray-text border-gray">Selecciona una forma de pago
         <?php foreach ($listFormaPago as $idx => $objFormaPago): ?>
             <?php if (!in_array($objFormaPago->idFormaPago, Yii::app()->params->formaPago['tarjetasDatafono'])): ?>
                 <?php if ($objFormaPago->idFormaPago == Yii::app()->params->formaPago['idCredirebaja']): ?>

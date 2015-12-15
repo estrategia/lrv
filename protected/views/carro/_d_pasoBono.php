@@ -30,6 +30,10 @@ $form = $this->beginWidget('CActiveForm', array(
         </div>
         <?php echo $form->error($modelPago, 'usoBono', array('class' => 'text-danger')); ?>
     </div>
+<?php else: ?>
+    <div class="sold-out">
+        <img class="border-gray" src="<?php echo Yii::app()->request->baseUrl; ?>/images/desktop/sold-out.png" alt="">
+    </div>
 <?php endif; ?>
 <?php $this->endWidget(); ?>
 
