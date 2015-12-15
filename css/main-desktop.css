@@ -1690,13 +1690,13 @@ footer li a:hover{
     background-color: #EA0001;
     background-image:none !important;
 }
-.slider-handle{width:13px !important; height:13px !important;}
+.slider-handle{width:15px !important; height:15px !important;}
 .slider-handle.round{
     border-radius: 0px !important;
 }
-.slider.slider-horizontal .slider-tick, .slider.slider-horizontal .slider-handle {margin-top: 0px !important;}
+.slider.slider-horizontal .slider-tick, .slider.slider-horizontal .slider-handle {margin-top: -2px !important;}
 .slider.slider-horizontal .slider-track {height: 13px !important;}
-.slider-handle {background-color: #FFDF1E !important;background-image:none !important;}
+.slider-handle {background-color: #b90d0d !important;background-image:none !important;}
 .search-priced {
     width: 45%;
     border-radius: 4px;
