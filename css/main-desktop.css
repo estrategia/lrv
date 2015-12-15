@@ -790,7 +790,7 @@ table.tabla-carro .group-botones-cantidad{
     width: 99%;
 }
 .nav.nav-pills.nav-stacked.menu-user li.active a {
-    background: #ea0001 none repeat scroll 0 0;
+    background: #d9534f none repeat scroll 0 0;
     color: #fff;
 }
 .nav.nav-pills.nav-stacked.menu-user li a {
@@ -2198,7 +2198,7 @@ li.active .iconStep {
 .grid-view-loading { background-image:none }
 
 .grid-view table.items th {
-    background: #b10000; /* Old browsers */
+    background: #d9534f; /* Old browsers */
     //background: -moz-linear-gradient(top,  #ff0000 0%, #ab0000 100%); /* FF3.6+ */
     //background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,#ff0000), color-stop(100%,#ab0000)); /* Chrome,Safari4+ */
     //background: -webkit-linear-gradient(top,  #ff0000 0%,#ab0000 100%); /* Chrome10+,Safari5.1+ */
@@ -2214,13 +2214,17 @@ li.active .iconStep {
     background: #FAF8F8 none repeat scroll 0 0;
 }
 .grid-view table.items tr.even:hover {
-    background: #FCC7C7 none repeat scroll 0 0;
+    background: #eee none repeat scroll 0 0;
 }
 .grid-view table.items tr.odd {
-    background: #e4e4e4 none repeat scroll 0 0;
+    background: #D6D6D6 none repeat scroll 0 0;
 }
 .grid-view table.items tr.odd:hover {
-    background: #FCC7C7 none repeat scroll 0 0;
+    background: #eee none repeat scroll 0 0;
+}
+
+.grid-view table.items td a .glyphicon {
+    font-size:16px;
 }
 
 .grid-view .summary {
@@ -2230,7 +2234,7 @@ li.active .iconStep {
 }
 
 ul.yiiPager a:link, ul.yiiPager a:visited {
-    border: 1px solid #FCC7C7;
+    border: 1px solid #d9534f;
     color: #000000;
     font-weight: bold;
     padding: 5px 15px;

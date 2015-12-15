@@ -1962,9 +1962,9 @@ class CarroController extends Controller {
             }
 
             $vistaDomicilio = "pagarDomicilio";
-            if (!$this->isMobile) {
+            /*if (!$this->isMobile) {
                 $vistaDomicilio = "d_pagarDomicilio";
-            }
+            }*/
 
             $params['parametros']['modelPago'] = $modelPago;
             $this->render($vistaDomicilio, $params);
@@ -2170,9 +2170,9 @@ class CarroController extends Controller {
             }
 
             $pasosPresencial = "pasosPresencial";
-            if (!$this->isMobile) {
+            /*if (!$this->isMobile) {
                 $pasosPresencial = "d_pasosPresencial";
-            }
+            }*/
 
             $params['parametros']['modelPago'] = $modelPago;
             $this->render($pasosPresencial, $params);

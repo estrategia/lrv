@@ -203,6 +203,17 @@ $(document).on('change', 'select[data-role="ciudad-despacho-map"]', function() {
     }
 });
 
+$(document).on('change', 'select[data-role="sector-despacho-map"]', function() {
+    var val = $(this).val().trim();
+    if (val.length > 0) {
+        var option = $('select[data-role="sector-despacho-map"] option[value="' + val + '"]').attr('selected', 'selected');
+
+        if (map) {
+            map.setCenter(new google.maps.LatLng(parseFloat(option.attr('data-latitud')), parseFloat(option.attr('data-longitud'))));
+        }
+    }
+});
+
 $(document).on('click', 'button[data-role="ubicacion-mapa"]', function() {
     if ($('#page-ubicacion-map').length > 0) {
         $.mobile.changePage('#page-ubicacion-map', {transition: "pop", role: "dialog", reverse: false});

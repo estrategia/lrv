@@ -160,16 +160,25 @@ class SitioController extends Controller {
         if (!empty_lrv($ciudad)) {
             $arrayCiudad = explode("-", $ciudad);
             if (count($arrayCiudad) > 1) {
-                $sectores = SectorPuntoReferencia::model()->findAll(array(
+                /*$sectores = SectorPuntoReferencia::model()->findAll(array(
                     'with' => array('objSectorCiudad' => array('with' => 'objSector')),
                     'condition' => 't.codigoCiudad=:ciudad AND t.estadoSectorReferencia=:estado',
                     'params' => array(
                         ':ciudad' => $arrayCiudad[0],
                         ':estado' => 1
                     )
+                ));*/
+                
+                $listSectorCiudad = SectorCiudad::model()->findAll(array(
+                    'with' => array('objSector','objCiudad'),
+                    'condition' => 't.codigoSector<>0 AND t.codigoCiudad=:ciudad AND t.estadoCiudadSector=:estado AND objSector.estadoSector=:estado AND objCiudad.estadoCiudad=:estado',
+                    'params' => array(
+                        ':ciudad' => $arrayCiudad[0],
+                        ':estado' => 1
+                    )
                 ));
 
-                $this->renderPartial('_d_ubicacionSector', array('sectores' => $sectores));
+                $this->renderPartial('_d_ubicacionSector', array('listSectorCiudad' => $listSectorCiudad));
                 Yii::app()->end();
             }
         }

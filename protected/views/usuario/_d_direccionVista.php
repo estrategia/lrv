@@ -41,8 +41,8 @@
 
     <?php if ($editar): ?>
         <tr>
-            <td><button class="editar" data-role="direccion-editar" data-direccion="<?php echo $model->idDireccionDespacho ?>" data-radio="<?php echo ($radio ? 1 : 0) ?>">Editar</button></td>
-            <td><button class="editar" data-role="direccion-eliminar" data-direccion="<?php echo $model->idDireccionDespacho ?>">Eliminar</button></td>
+            <td><button class="btn btn-primary" data-role="direccion-editar" data-direccion="<?php echo $model->idDireccionDespacho ?>" data-radio="<?php echo ($radio ? 1 : 0) ?>">Editar</button></td>
+            <td><button class="btn btn-default" data-role="direccion-eliminar" data-direccion="<?php echo $model->idDireccionDespacho ?>">Eliminar</button></td>
         </tr>
     <?php endif; ?>
 </table>
