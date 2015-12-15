@@ -56,7 +56,7 @@
     text-align: center;
     margin-top: 10px;
 }
-.sold-out img {
+.border-gray {
     background-color: #fff;
     border: 4px solid #eeeeee;
     border-radius: 8px;
@@ -1958,6 +1958,10 @@ li.active .iconStep {
     font-size: 22px;
     margin-top: 20px;
     vertical-align: middle;
+}
+.gray-text {
+    color: #a4a4a4;
+    font-size: 22px;
 }
 
 .desplegables{
