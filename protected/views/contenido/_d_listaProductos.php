@@ -8,6 +8,7 @@
                 </div>
             </div>
         </div>
+        <div class="container-fluid">
             <div class="row">
                 <div class="col-md-10">
                     <div id="owl-carousel" class="owl-carousel slide-productos">
@@ -31,5 +32,6 @@
                     </div>
                 </div>
             </div>
+        </div>
     </section>
 <?php endif; ?>
