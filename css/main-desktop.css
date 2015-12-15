@@ -213,6 +213,7 @@ table.tabla-carro .group-botones-cantidad{
 }
 .main_menu .nav > li {
     width: auto;
+    display: table-cell;
 }
 .sinDir .btn.btn-aceptar {
     background: #fff none repeat scroll 0 0;
