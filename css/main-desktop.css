@@ -11,10 +11,10 @@
   font-weight: normal;  
 }
 .nopaddingleft{
-  padding-left: 0 !important!;
+  padding-left: 0 !important;
 }
 .nopaddingright{
-  padding-right: 0 !important!;
+  padding-right: 0 !important;
 }
 .container {
     min-width: 750px !important;
@@ -2449,4 +2449,12 @@ img.ajustada {
 
 .btn-ver-todos{
     margin-top:35%;
+}
+
+#form-direccion-pagoinvitado .form-group {
+    margin-bottom: 0px;
+}
+
+#form-direccion-pagoinvitado .control-label {
+    padding-right: 0;
 }
