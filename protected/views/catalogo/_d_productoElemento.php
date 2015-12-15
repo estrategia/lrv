@@ -1,14 +1,15 @@
 <?php $idUnico = uniqid() ?>
 
 <?php if (isset($vista)): ?>
-    <?php if ($vista == "relacionado"): ?>
+    <?php if ($vista == "slider"): ?>
         <li class="col-md-12 border-left">
         <?php elseif ($vista == "comparacion"): ?>
         <li class="--col-md-<?php echo $colums; ?> border-left" id="comparacion-producto-<?php echo $data->codigoProducto ?>">
         <?php elseif ($vista == "grid"): ?>
         <li class="border-left">        
         <?php endif; ?>
-    <?php else: ?>    
+    <?php else: ?>  
+          <?php $vista = "busqueda"?>
     <li class="border-left" >
     <?php endif; ?>
 
@@ -26,13 +27,13 @@
                 <?php if ($objPrecio->inicializado()): ?>    
                 </a>
             <?php endif; ?>
-            <?php if (!in_array($data->idUnidadNegocioBI, Yii::app()->params->calificacion['categoriasNoCalificacion'])): ?>
+            <?php if (!in_array($data->idUnidadNegocioBI, Yii::app()->params->calificacion['categoriasNoCalificacion']) && $vista != 'slider'): ?>
                 <div class="" style="text-align:center">
                     <div class="ranking-list" >
                         <div id="raty-lectura-producto-<?php echo $data->codigoProducto ?>" data-role="raty" data-readonly="true" data-score="<?php echo $data->getCalificacion() ?>"></div>                 
                     </div>
                 </div>
-            <?php else: ?>
+            <?php elseif ($vista != 'slider'): ?>
                 <div style="height:46px;"></div>
             <?php endif; ?>
 
@@ -113,17 +114,17 @@
             <div class="col-md-12">
                 <?php echo CHtml::link('<div class="button">Cosultar precio</div>', $this->createUrl('/sitio/ubicacion'), array()); ?>
             </div>
-        <?php elseif ($data->ventaVirtual == 1 && $objPrecio->inicializado()): ?>
+        <?php elseif ($data->ventaVirtual == 1 && $objPrecio->inicializado() && $vista != 'slider'): ?>
             <div class="botones-list">
                 <div class="row">
                     <div class="col-xs-7 padd2">
                         <div class="group-botones-cantidad">
-                            <button class="btn-addless-cantidad" data-role="disminuir-cantidad" data-id="<?php echo $idUnico?>" id="disminuir-unidad-<?php echo $data->codigoProducto ?>" data-producto="<?php echo $data->codigoProducto ?>" data-precio="<?= $objPrecio->getPrecio(Precio::PRECIO_UNIDAD) ?>" type="button"><span style="color:red" class="glyphicon glyphicon-minus"></span></button>
+                            <button class="btn-addless-cantidad" data-role="disminuir-cantidad" data-id="<?php echo $idUnico ?>" id="disminuir-unidad-<?php echo $data->codigoProducto ?>" data-producto="<?php echo $data->codigoProducto ?>" data-precio="<?= $objPrecio->getPrecio(Precio::PRECIO_UNIDAD) ?>" type="button"><span style="color:red" class="glyphicon glyphicon-minus"></span></button>
 
                             <div class="ressete">
-                                <input id="cantidad-producto-unidad-<?php echo $data->codigoProducto ?>-<?php echo $idUnico?>" data-id="<?php echo $idUnico?>"  class="increment" type="text" data-role="validar-cantidad-unidad"  data-producto="<?php echo $data->codigoProducto ?>" data-precio="<?= $objPrecio->getPrecio(Precio::PRECIO_UNIDAD) ?>" maxlength="3" value="1" data-total="700"/>
+                                <input id="cantidad-producto-unidad-<?php echo $data->codigoProducto ?>-<?php echo $idUnico ?>" data-id="<?php echo $idUnico ?>"  class="increment" type="text" data-role="validar-cantidad-unidad"  data-producto="<?php echo $data->codigoProducto ?>" data-precio="<?= $objPrecio->getPrecio(Precio::PRECIO_UNIDAD) ?>" maxlength="3" value="1" data-total="700"/>
                             </div>
-                            <button class="btn-addless-cantidad" data-role="aumentar-cantidad" data-id="<?php echo $idUnico?>"  id="aumentar-unidad-<?php echo $data->codigoProducto ?>" data-producto="<?php echo $data->codigoProducto ?>" data-precio="<?= $objPrecio->getPrecio(Precio::PRECIO_UNIDAD) ?>" type="button"><span style="color:red" class="glyphicon glyphicon-plus"></span></button>
+                            <button class="btn-addless-cantidad" data-role="aumentar-cantidad" data-id="<?php echo $idUnico ?>"  id="aumentar-unidad-<?php echo $data->codigoProducto ?>" data-producto="<?php echo $data->codigoProducto ?>" data-precio="<?= $objPrecio->getPrecio(Precio::PRECIO_UNIDAD) ?>" type="button"><span style="color:red" class="glyphicon glyphicon-plus"></span></button>
 
                         </div>
                     </div>
@@ -145,49 +146,51 @@
             <div class="col-md-12">
                 <?php echo CHtml::link('<div class="button">Agotado</div>', '#', array('disabled' => 'true', 'onclick' => 'return false;')); ?>
             </div>
-        <?php else: ?>
+        <?php elseif ($vista != 'slider'): ?>
             <div class="botones-list">
                 <?php echo CHtml::link('<div class="button">Ver producto</div>', CController::createUrl('/catalogo/producto', array('producto' => $data->codigoProducto))); ?>
             </div>
         <?php endif; ?>
-        <div class="iconos_right"> 
+        <?php if ($vista != 'slider'): ?>
+            <div class="iconos_right"> 
 
 
-            <!-- producto agregado -->
-            <a href="" class="itm_ico clst_slct_prod<?php echo (Yii::app()->shoppingCart->contains($data->codigoProducto) ? " active" : "") ?>" id="icono-producto-agregado-<?php echo $data->codigoProducto ?>">
-                <img src="<?php echo Yii::app()->request->baseUrl ?>/images/desktop/icon_seleccionado.png">
-            </a>
-            <!-- puntos agregado -->
-            <?php if ($objPrecio->tienePuntos()): ?>
-                <a class="itm_ico" href="#" onclick="return false" data-toggle="popover" data-trigger="focus" data-placement="top" data-content="<?php echo implode(", ", $objPrecio->getPuntosDescripcion()) ?>"><div class="cod_puntos">Pts<br/></div></a>  
-              <!--  <div class="itm_ico cod_puntos">Pts<br/><span></span></div> -->
-            <?php endif; ?>
-            <?php if ($data->objCodigoEspecial->codigoEspecial != 0): ?>
-                <!--codigo especial-->
-                <a class="itm_ico pop_codigo product-prom cod_especial" href="#" onclick="return false" data-toggle="popover" data-trigger="focus" data-placement="bottom" data-content="<?php echo $data->objCodigoEspecial->descripcion ?>">
-                    <img src="<?php echo Yii::app()->request->baseUrl . Yii::app()->params->carpetaImagen['codigoEspecial'] . 'desktop/' . $data->objCodigoEspecial->rutaIcono ?>"/>
+                <!-- producto agregado -->
+                <a href="" class="itm_ico clst_slct_prod<?php echo (Yii::app()->shoppingCart->contains($data->codigoProducto) ? " active" : "") ?>" id="icono-producto-agregado-<?php echo $data->codigoProducto ?>">
+                    <img src="<?php echo Yii::app()->request->baseUrl ?>/images/desktop/icon_seleccionado.png">
                 </a>
-            <?php endif; ?>
-            <?php if ($data->fraccionado == 1): ?>
-                <!--fraccionado-->
-                <div class="itm_ico fraccion_text" title="Producto Fraccionado"><span>F</span></div>
-            <?php endif; ?>
-            <?php if ($data->ventaVirtual == 1 && !Yii::app()->user->isGuest): ?>
-                <!--adicionar a lista-->
-                <a href="#" data-tipo="1" class="itm_ico button-lista" title="Añadir a lista" data-role="lstpersonalguardar" data-codigo="<?php echo $data->codigoProducto ?>"><span class="text_add_list">Añadir a lista</span> <span class="glyphicon glyphicon-list-alt" aria-hidden="true"></span>
-                </a>
-            <?php endif; ?>
+                <!-- puntos agregado -->
+                <?php if ($objPrecio->tienePuntos()): ?>
+                    <a class="itm_ico" href="#" onclick="return false" data-toggle="popover" data-trigger="focus" data-placement="top" data-content="<?php echo implode(", ", $objPrecio->getPuntosDescripcion()) ?>"><div class="cod_puntos">Pts<br/></div></a>  
+                  <!--  <div class="itm_ico cod_puntos">Pts<br/><span></span></div> -->
+                <?php endif; ?>
+                <?php if ($data->objCodigoEspecial->codigoEspecial != 0): ?>
+                    <!--codigo especial-->
+                    <a class="itm_ico pop_codigo product-prom cod_especial" href="#" onclick="return false" data-toggle="popover" data-trigger="focus" data-placement="bottom" data-content="<?php echo $data->objCodigoEspecial->descripcion ?>">
+                        <img src="<?php echo Yii::app()->request->baseUrl . Yii::app()->params->carpetaImagen['codigoEspecial'] . 'desktop/' . $data->objCodigoEspecial->rutaIcono ?>"/>
+                    </a>
+                <?php endif; ?>
+                <?php if ($data->fraccionado == 1): ?>
+                    <!--fraccionado-->
+                    <div class="itm_ico fraccion_text" title="Producto Fraccionado"><span>F</span></div>
+                <?php endif; ?>
+                <?php if ($data->ventaVirtual == 1 && !Yii::app()->user->isGuest): ?>
+                    <!--adicionar a lista-->
+                    <a href="#" data-tipo="1" class="itm_ico button-lista" title="Añadir a lista" data-role="lstpersonalguardar" data-codigo="<?php echo $data->codigoProducto ?>"><span class="text_add_list">Añadir a lista</span> <span class="glyphicon glyphicon-list-alt" aria-hidden="true"></span>
+                    </a>
+                <?php endif; ?>
 
-            <!--comparar-->
-            <?php if (isset($vista) && $vista == "comparacion"): ?>
-                <div class=" btnQuitarComparar itm_ico">
-                    <?php echo CHtml::link('<span class="glyphicon glyphicon-remove"></span>', '#', array('data-producto' => $data->codigoProducto, 'data-role' => 'quitarComparar', 'title' => 'Quitar elemento')); ?>
-                </div>
-            <?php else: ?>
-                <div class=" btnComparar itm_ico">
-                    <?php echo CHtml::link('<span class="glyphicon glyphicon-duplicate"></span>', '#', array('data-producto' => $data->codigoProducto, 'data-role' => 'comparar', 'title' => 'Comparar')); ?>
-                </div>
-            <?php endif; ?>
-        </div>
+                <!--comparar-->
+                <?php if (isset($vista) && $vista == "comparacion"): ?>
+                    <div class=" btnQuitarComparar itm_ico">
+                        <?php echo CHtml::link('<span class="glyphicon glyphicon-remove"></span>', '#', array('data-producto' => $data->codigoProducto, 'data-role' => 'quitarComparar', 'title' => 'Quitar elemento')); ?>
+                    </div>
+                <?php else: ?>
+                    <div class=" btnComparar itm_ico">
+                        <?php echo CHtml::link('<span class="glyphicon glyphicon-duplicate"></span>', '#', array('data-producto' => $data->codigoProducto, 'data-role' => 'comparar', 'title' => 'Comparar')); ?>
+                    </div>
+                <?php endif; ?>
+            </div>
+        <?php endif; ?>
     </div>  
 </li>

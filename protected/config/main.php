@@ -157,6 +157,7 @@ return array(
                 )
             )
         ),
+        'minimoSlideProductos' => 5,
         'correoAdmin' => 'infolrv@copservir.com',
         'maximoComparacion' => 5,
         'urlSitio' => 'www.larebajavirtual.com',
@@ -434,6 +435,7 @@ return array(
                     1 => 'Inicio',
                     2 => 'División',
                     3 => 'Categoria',
+                    4 => 'Fin Compra',
                     10 => 'Móvil Home',
                     11 => 'Móvil Inicio'
                 ),

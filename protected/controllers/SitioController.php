@@ -91,9 +91,16 @@ class SitioController extends Controller {
         }
 
         $tipoEntrega = null;
+        $tipoEntregaTxt = "";
 
         if (isset(Yii::app()->session[Yii::app()->params->sesion['tipoEntrega']]) && Yii::app()->session[Yii::app()->params->sesion['tipoEntrega']] != null) {
             $tipoEntrega = Yii::app()->session[Yii::app()->params->sesion['tipoEntrega']];
+            
+            if($tipoEntrega==Yii::app()->params->entrega['tipo']['presencial']){
+                $tipoEntregaTxt = "Quiero pasar por el pedido";
+            }else if($tipoEntrega==Yii::app()->params->entrega['tipo']['domicilio']){
+                $tipoEntregaTxt = "Quiero que me lo entreguen a domicilio";
+            }
         }
         
         $objDireccion = null;
@@ -134,6 +141,7 @@ class SitioController extends Controller {
                 'objSectorCiudad' => $this->objSectorCiudad,
                 'objDireccion'=> $objDireccion,
                 'tipoEntrega' => $tipoEntrega,
+                'tipoEntregaTxt' => $tipoEntregaTxt,
                 'urlRedirect' => Yii::app()->session[Yii::app()->params->sesion['redireccionUbicacion']]
             ));
         }

@@ -8,7 +8,7 @@ class CatalogoController extends Controller {
     public function filters() {
         return array(
             array(
-                'application.filters.SessionControlFilter + categoria, buscar, relacionados, bodega, descuentos, masvendidos, masvistos',
+                'application.filters.SessionControlFilter + categoria, buscar, relacionados, bodega, descuentos, masvendidos, masvistos, verTodosProductos',
                 'isMobile' => $this->isMobile
             ),
         );
@@ -2097,4 +2097,36 @@ class CatalogoController extends Controller {
         $this->render('listaProductos', $parametrosVista);
     }
 
+    public function actionVerTodosProductos($opcion = null, $item = null) {
+        $listaProductos = array();
+
+        if ($opcion == 'relacionados') {
+            $relacionados = ProductosRelacionados::model()->findAll(array(
+                'with' => 'objProductoRelacionado',
+                'order' => 't.orden',
+                'condition' => 't.codigoProducto=:producto',
+                'params' => array(
+                    ':producto' => $item
+                )
+            ));
+            foreach ($relacionados as $objProducto) {
+                $listaProductos[] = $objProducto->objProductoRelacionado;
+            }
+        } else if ($opcion == 'lista') {
+            $modulo = ModulosConfigurados::getModulo($item);
+            $listaProductos = $modulo->getListaProductos($this->objSectorCiudad);
+        } else {
+            // error;
+            if ($objProducto == null) {
+                throw new CHttpException(404, 'Opción no encontrada.');
+            }
+        }
+
+        if ($listaProductos == null) {
+            throw new CHttpException(404, 'No existen productos.');
+        }
+        $this->render('d_gridProductos', array(
+            'listaProductos' => $listaProductos
+        ));
+    }
 }
