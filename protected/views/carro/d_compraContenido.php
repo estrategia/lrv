@@ -72,7 +72,7 @@
     <?php if ($objCompra->tipoEntrega == Yii::app()->params->entrega['tipo']['presencial']): ?>
         <div class="blockPago recuerdaPresencial">
             <p class="justify">RECUERDA:</p>
-            <p class="justify">debes pasar por tu pedido al punto de venta dentro de las siguientes 2 horas.</p>
+            <p class="justify">debes pasar por tu pedido al punto de venta.</p>
         </div>
     <?php endif; ?>
 

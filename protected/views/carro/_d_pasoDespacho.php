@@ -75,7 +75,9 @@
         <div id="FormaPagoForm_idDireccionDespacho_em_" class="text-danger" style="display: none;"></div>
     <?php endif; ?>
 <?php else: ?>
-        <div class="center">
-            <h4 class="grey">Ya está una dirección establecida</h4>
-        </div>
+    <div class="center">
+        <h4 class="grey">Punto de venta entrega</h4>
+        <p><?php echo $modelPago->listPuntosVenta[1][$modelPago->indicePuntoVenta][2] ?></p>
+        <p><?php echo $modelPago->listPuntosVenta[1][$modelPago->indicePuntoVenta][3] ?></p>
+    </div>
 <?php endif; ?>

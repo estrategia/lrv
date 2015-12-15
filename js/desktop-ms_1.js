@@ -256,7 +256,7 @@ $(document).on('click', "button[id='btn-carropagar-siguiente'], button[id='btn-c
     var actual = $(this).attr('data-origin');
     var siguiente = $(this).attr('data-redirect');
 
-    /*if (actual === 'despacho') {
+    if (actual === 'despacho') {
         pasoDespacho(actual, siguiente, $(this));
     } else if (actual === 'entrega') {
         pasoEntrega(actual, siguiente, $(this));
@@ -264,65 +264,11 @@ $(document).on('click', "button[id='btn-carropagar-siguiente'], button[id='btn-c
         pasoPago(actual, siguiente, $(this));
     } else if (actual === 'confirmacion') {
         pasoConfirmacion(actual, siguiente, $(this));
-    }*/
-    
-    if (actual === 'informacion') {
-        pasoInformacion(actual, siguiente, $(this));
-    } else if (actual === 'confirmacion') {
-        pasoConfirmacion(actual, siguiente, $(this));
     }
 
     return false;
 });
 
-function pasoInformacion(actual, siguiente, boton) {
-    var data = {
-        siguiente: siguiente,
-        direccion: $('input[name="FormaPagoForm[idDireccionDespacho]"]:checked').val()
-    };
-
-    $.ajax({
-        type: 'POST',
-        //dataType: 'json',
-        async: true,
-        url: requestUrl + '/carro/pagar/paso/' + actual + '/post/true',
-        data: $.param(data) + '&' + $('#form-direccion-pagoinvitado').serialize() + '&' + $('#form-pago-entrega').serialize() + '&' + $('#form-pago-pago').serialize() + '&' + $('#form-pago-bono').serialize() + '&' + $('#form-pago-comentario').serialize() ,
-        beforeSend: function() {
-            boton.prop('disabled', true);
-            $('div[id^="FormaPagoForm_"].text-danger').html('');
-            $('div[id^="FormaPagoForm_"].text-danger').css('display', 'none');
-            Loading.show();
-        },
-        complete: function() {
-            Loading.hide();
-        },
-        success: function(data) {
-            var obj = $.parseJSON(data);
-
-            if (obj.result === 'ok') {
-                window.location.replace(obj.redirect);
-            } else if (obj.result === 'error') {
-                Loading.hide();
-                bootbox.alert(obj.response);
-                boton.prop('disabled', false);
-            } else {
-                $.each(obj, function(element, error) {
-                    $('#' + element + '_em_').html(error);
-                    $('#' + element + '_em_').css('display', 'block');
-                });
-                boton.prop('disabled', false);
-                Loading.hide();
-            }
-        },
-        error: function(jqXHR, textStatus, errorThrown) {
-            Loading.hide();
-            bootbox.alert('Error: ' + errorThrown);
-            boton.prop('disabled', false);
-        }
-    });
-}
-
-/*
 function pasoDespacho(actual, siguiente, boton) {
     var data = {
         siguiente: siguiente,
@@ -449,7 +395,6 @@ function pasoPago(actual, siguiente, boton) {
         }
     });
 }
-*/
 
 function pasoConfirmacion(actual, siguiente, boton) {
     var data = {siguiente: siguiente};
@@ -727,7 +672,6 @@ $(document).on('click', "#modal-formapago input[type='radio']", function() {
         $("div[data-role^='formapago-logo-']").addClass('display-none');
         $("div[data-role='formapago-logo-"+$(this).val()+"']").removeClass('display-none');
         $("div[data-role='formapago-logo-pagoenlinea']").addClass('display-none');
-        $("div[data-role='formapago-descripcion']").addClass('display-none');
     }
 });
 

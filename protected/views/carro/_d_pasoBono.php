@@ -16,7 +16,7 @@ $form = $this->beginWidget('CActiveForm', array(
 );
 ?>
 
-<?php if (true): ?>
+<?php if ($modelPago->bono !== null): ?>
     <div class="bono">
         <div>Tipo de bono:<span class="result_bono">Cliente Fiel</span></div>
         <div>Valor de bono: <span class="result_bono"><?php echo Yii::app()->numberFormatter->format(Yii::app()->params->formatoMoneda['patron'], $modelPago->bono['valor'], Yii::app()->params->formatoMoneda['moneda']); ?></span></div>
