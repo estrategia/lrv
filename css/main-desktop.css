@@ -10,7 +10,12 @@
     url("fonts/geneva.ttf") format('truetype');  
   font-weight: normal;  
 }
-
+.nopaddingleft{
+  padding-left: 0 !important!;
+}
+.nopaddingright{
+  padding-right: 0 !important!;
+}
 .container {
     min-width: 750px !important;
 }
