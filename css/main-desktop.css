@@ -47,6 +47,11 @@
     border-radius: 50%;
     padding: 10px;
 }
+.yellow-circle {
+    border: 1px solid #f9a33d;
+    border-radius: 50%;
+    padding: 10px;
+}
 .font_18 {
     font-size: 18px !important;
 }
