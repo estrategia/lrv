@@ -111,9 +111,8 @@
         </div>
 
         <?php if ($this->objSectorCiudad == null): ?>
-            <div class="col-md-12">
                 <?php echo CHtml::link('<div class="button">Cosultar precio</div>', $this->createUrl('/sitio/ubicacion'), array()); ?>
-            </div>
+          
         <?php elseif ($data->ventaVirtual == 1 && $objPrecio->inicializado() && $vista != 'slider'): ?>
             <div class="botones-list">
                 <div class="row">
