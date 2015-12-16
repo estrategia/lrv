@@ -623,13 +623,13 @@ $(document).on('click', "a[data-role='filtro-listaproductos']", function() {
     });
 });
 
-$(document).on('click', "a[data-role='orden-listaproductos']", function() {
+$(document).on('change', "select[data-role='orden-listaproductos']", function() {
     $.ajax({
         type: 'POST',
         dataType: 'json',
         async: true,
         url: requestUrl + '/catalogo/filtrar',
-        data: $('#form-ordenamiento-listaproductos').serialize(),
+        data: {'OrdenamientoForm[orden]':$('#OrdenamientoForm_orden').val()},
         beforeSend: function() {
             //boton.button('disable');
             Loading.show();

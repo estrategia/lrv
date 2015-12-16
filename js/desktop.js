@@ -7,7 +7,6 @@ function alert(message){
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-$('body #items-page').select2();
 
 $(document).on('click', 'button[data-role="tipovista-listaproductos"]', function() {
     listaProductoVista($(this).attr('data-type'));

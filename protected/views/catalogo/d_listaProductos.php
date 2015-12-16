@@ -13,17 +13,10 @@
                         <?php $this->renderPartial('_d_formFiltro', array('formFiltro' => $formFiltro, 'tipoBusqueda' => $tipoBusqueda)); ?>
                     </div>
                 <?php endif; ?>
-
-                <?php if (isset($formOrdenamiento)): ?>
-                    <div class="panel-group" id="accordion-ordenamiento" role="tablist" aria-multiselectable="true">
-                        <?php $this->renderPartial('_d_formOrdenamiento', array('formOrdenamiento' => $formOrdenamiento, 'objSectorCiudad' => $objSectorCiudad)); ?>
-                    </div>
-                <?php endif; ?>
-
             </div>
         <?php endif; ?>
 
-        <div class="col-md-<?php echo (isset($formFiltro) || isset($formOrdenamiento)) ? "10" : "12" ?> side">
+        <div class="col-md-<?php echo (isset($formFiltro) || isset($formOrdenamiento)) ? "10" : "12" ?> side" <?php echo (empty($this->breadcrumbs) ? "" : "style='margin-top:-45px;'") ?>>
             <div class="row">
                 <div class="col-md-12">
                     <?php if ($imagenBusqueda != null): ?>
@@ -32,7 +25,7 @@
                         <?php if ($dataprovider != null /* && !empty($dataprovider->getData()) */): ?> 
                             <div class="option-list">
                                 Productos por página
-                                <select name="items-page" class="form-control"id="items-page" onchange="actualizarNumerosPagina()">
+                                <select name="items-page" class="form-control ciudades" id="items-page" onchange="actualizarNumerosPagina()">
                                     <?php foreach (Yii::app()->params->busqueda['productosPorPagina'] as $pagina): ?>
                                         <option value="<?php echo $pagina ?>" <?php echo (($dataprovider != null && $dataprovider->getPagination()->getPageSize() == $pagina) ? "selected" : "") ?>><?php echo $pagina ?></option>
                                     <?php endforeach; ?>
@@ -42,16 +35,10 @@
                                 <button class="btn-white btn" data-role="tipovista-listaproductos" data-active="true" data-type="cuadricula" type="button"><span  class="glyphicon glyphicon-th" alt="Cuadricula"></span></button>
                                 <button class="btn-white btn" data-role="tipovista-listaproductos" data-active="false" data-type="lineal" type="button"><span  class="glyphicon glyphicon-th-list" alt="Cuadricula"></span></button>
                             </div>
-                            <div class="option-list ordering_item">
-                                Ordenar por
-                                <select class="form-control" id="items-page">
-                                    <option value="0">Precio Ascendente</option>
-                                    <option value="">Precio Descendente</option>
-                                    <option value="">Nombre</option>
-                                    <option value="">Presentación</option>
-                                    <option value="">Ninguno</option>
-                                </select>
-                            </div>
+
+                            <?php if (isset($formOrdenamiento)): ?>
+                                <?php $this->renderPartial('_d_formOrdenamiento', array('formOrdenamiento' => $formOrdenamiento, 'objSectorCiudad' => $objSectorCiudad)); ?>
+                            <?php endif; ?>
                         <?php endif; ?>   
                     <?php endif; ?> 
                     <div class="clear"></div>

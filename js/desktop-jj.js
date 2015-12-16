@@ -193,8 +193,7 @@ $(document).ready(function() {
     });
     $('.ciudades').select2();
     $('#RegistroForm_profesion').select2();
-    $('#items-page').select2({});
-})
+});
 
 
 function cambioUnidadesUbicacion(codigoProducto, valorUnidad, op) {
