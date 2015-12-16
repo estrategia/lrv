@@ -106,7 +106,7 @@
                         <a id="categorias" href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Categorías<span class="ico-cat"></span></a>
                         <ul class="dropdown-menu category" aria-labelledby="categorias">
                             <?php foreach ($this->categorias as $categoria): ?>
-                                <li class="cuidado-personal"><a href="#"><img src="<?php echo Yii::app()->request->baseUrl; ?>/images/menu/desktop/<?php echo $categoria->rutaImagen ?>" alt=""><?php echo $categoria->nombreCategoriaTienda ?></a>
+                                <li class="cuidado-personal"><a href="#"><img class="data-label" src="<?php echo Yii::app()->request->baseUrl; ?>/images/menu/desktop/<?php echo $categoria->rutaImagen ?>" alt=""><?php echo $categoria->nombreCategoriaTienda ?></a>
                                     <?php if ($categoria->listCategoriasHijas): ?>
                                         <div class="right-nav">
                                             <ul class="submenu">

@@ -592,9 +592,9 @@ table.tabla-carro .group-botones-cantidad{
     padding: 0 !important;
 }
 .submenu .section-submenu > li {
-    padding-left: 6px !important;
+    padding-left: 5px !important;
     color: #888888;
-    font-size: 13px;
+    font-size: 12px;
 }
 .submenu .section-submenu > li a {
     color: #888888;
@@ -2151,7 +2151,7 @@ textarea.form-control {
 .section-submenu {
    /* float: left;*/
     margin-right: 20px;
-    min-height: 143px;
+    min-height: 135px;
     padding: 10px 0;
     width: 200px;
 }
@@ -2170,7 +2170,7 @@ textarea.form-control {
     height: 100%;
 }
 .section-submenu{
-    padding: 10px 0px 0;
+    padding: 1px 0px 0;
 }
 .dropdown-menu .submenu .section-submenu a li{
     font-size: 14px;
