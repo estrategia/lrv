@@ -206,8 +206,12 @@ table.tabla-carro .group-botones-cantidad{
 .content-category .controls > span {
     display: inline-block;
     width: auto;
-    margin-top:2px;
+    margin-top:5px;
     font-size: 13px;
+    white-space: nowrap;
+    width: 59%;
+    overflow: hidden;
+    text-overflow: ellipsis;
 }
 .main_menu .nav > li.categorias {
     width: 25%;
