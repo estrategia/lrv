@@ -1,3 +1,4 @@
+<div style="margin-top:120px;display:block"></div>
 <?php
 $form = $this->beginWidget('CActiveForm', array(
     'id' => 'form-pago-entrega',
@@ -26,7 +27,7 @@ $form = $this->beginWidget('CActiveForm', array(
 
 <div class="space-2"></div>
 
-
+<!--
 <div class="row">
     <div class="col-md-5">
         <div id="clock_id" class="center"></div>
@@ -36,12 +37,13 @@ $form = $this->beginWidget('CActiveForm', array(
     </div>
 </div>
 <div class="space-1"></div>
+-->
 
-<?php Yii::app()->clientScript->registerScript('draw_clock', 'draw_clock()', CClientScript::POS_END); ?>
+<?php //Yii::app()->clientScript->registerScript('draw_clock', 'draw_clock()', CClientScript::POS_END); ?>
 
-<?php if (!empty($modelPago->fechaEntrega)): ?>
-    <?php Yii::app()->clientScript->registerScript('update_clock', "update_clock('$modelPago->fechaEntrega')", CClientScript::POS_END); ?>
-<?php endif; ?>
+<?php //if (!empty($modelPago->fechaEntrega)): ?>
+    <?php //Yii::app()->clientScript->registerScript('update_clock', "update_clock('$modelPago->fechaEntrega')", CClientScript::POS_END); ?>
+<?php //endif; ?>
 
 
 

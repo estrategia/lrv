@@ -1971,7 +1971,7 @@ li.active .iconStep {
 }
 .gray-text {
     color: #a4a4a4;
-    font-size: 22px;
+    //font-size: 22px;
 }
 
 .desplegables{
@@ -2057,21 +2057,6 @@ li.active .iconStep {
     background-color: #F5F3F3;
 }
 
-.date-time {
-    -moz-appearance: none;
-    -webkit-appearance: none;
-    appearance: none;
-    background-attachment: scroll !important;
-    background-clip: border-box !important;
-    background-color: #fff !important;
-    background-image: url("../images/desktop/downArrow.png") !important;
-    background-origin: padding-box !important;
-    background-position: 99% center;
-    background-repeat: no-repeat !important;
-    background-size: auto auto !important;
-    color: #a4a4a4;
-}
-
 .coment{
     background-color: #EBEBEB;
     padding: 15px;
@@ -2108,7 +2093,7 @@ textarea.form-control {
 .bot-button button {
     float: none !important;
 }
-.select {
+.select, .date-time {
     -moz-appearance: none;
     -webkit-appearance: none;
     appearance: none;
@@ -2117,10 +2102,11 @@ textarea.form-control {
     background-color: #fff !important;
     background-image: url("../images/desktop/downArrow.png") !important;
     background-origin: padding-box !important;
-    background-position: 90% center;
+    background-position: 99% center;
     background-repeat: no-repeat !important;
-    background-size: auto auto !important;
+    background-size: 15px 15px !important;
     color: #a4a4a4;
+    padding: 0;
 }
 
 .scroll-div {
