@@ -168,18 +168,15 @@ class Controller extends CController {
     }
 
     public function getCategorias() {
-        $categorias = CategoriaTienda::model()->findAll(array(
+        $this->categorias = CategoriaTienda::model()->findAll(array(
             'order' => 't.orden',
             'condition' => 't.tipoDispositivo=:dispositivo AND t.visible=:visible AND t.idCategoriaPadre IS NULL ',
             'params' => array(
                 ':visible' => 1,
                 ':dispositivo' => CategoriaTienda::DISPOSITIVO_ESCRITORIO
             ),
-            'with' => array('listCategoriasHijas' => array(
-                    'with' => 'listModulosConfigurados'
-                )),
+            'with' => array('listCategoriasHijas' => array('order'=> 'listCategoriasHijas.nombreCategoriaTienda', 'with' => 'listModulosConfigurados')),
         ));
-        $this->categorias = $categorias;
     }
 
 }

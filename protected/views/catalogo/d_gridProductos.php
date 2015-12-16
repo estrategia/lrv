@@ -1,4 +1,4 @@
-<div class="container">
+<div class="container-fluid">
     <!-- Lista de productos -->
     <div class="row">
         <div class="col-md-12 side">
@@ -6,7 +6,7 @@
                 <section>
                     <div>
                         <ul class="listaProductos">
-                            <div class="items">
+                            <div class="items items5">
                                 <?php foreach ($listaProductos as $objProducto): ?>
 
                                     <?php

@@ -10,6 +10,10 @@
     url("fonts/geneva.ttf") format('truetype');  
   font-weight: normal;  
 }
+
+.text-truncate{
+    overflow:hidden;white-space:nowrap;text-overflow: ellipsis;
+}
 .nopaddingleft{
   padding-left: 0 !important;
 }
@@ -592,9 +596,9 @@ table.tabla-carro .group-botones-cantidad{
     padding: 0 !important;
 }
 .submenu .section-submenu > li {
-    padding-left: 6px !important;
+    padding-left: 5px !important;
     color: #888888;
-    font-size: 13px;
+    font-size: 12px;
 }
 .submenu .section-submenu > li a {
     color: #888888;
@@ -914,7 +918,7 @@ input#RegistroForm_condiciones[type="checkbox"] + label span {
 .list_lineal .listaProductos .content-txt2 {
     padding: inherit;
 }
-.list_lineal .listaProductos .items li {
+.list_lineal .listaProductos .items li, .list_lineal .listaProductos .items.items3 li, .list_lineal .listaProductos .items.items4 li, .list_lineal .listaProductos .items.items5 li {
     width: 100%;
 }
 .list-view .summary {
@@ -970,13 +974,16 @@ input#RegistroForm_condiciones[type="checkbox"] + label span {
     vertical-align: top;
     width: 24%;
 }
-.listaProductos .items2 li {
-    display: inline-block;
-    margin-bottom: 30px;
-    margin-top: 30px;
-    vertical-align: top;
+.listaProductos .items.items3 li{
     width: 32%;
 }
+.listaProductos .items.items4 li{
+    width: 24%;
+}
+.listaProductos .items.items5 li{
+    width: 19%;
+}
+
 .content_product {
     min-height: 116px;
     color:#6c6363;
@@ -989,7 +996,7 @@ input#RegistroForm_condiciones[type="checkbox"] + label span {
     color: #9f9f9f;
 }
 .listaProductos .content-txt2 {
-    padding: 0 20px;
+    padding: 0 5px;
     position:relative;
 }
 .listaProductos {
@@ -1961,7 +1968,7 @@ li.active .iconStep {
 }
 .gray-text {
     color: #a4a4a4;
-    font-size: 22px;
+    //font-size: 22px;
 }
 
 .desplegables{
@@ -2047,21 +2054,6 @@ li.active .iconStep {
     background-color: #F5F3F3;
 }
 
-.date-time {
-    -moz-appearance: none;
-    -webkit-appearance: none;
-    appearance: none;
-    background-attachment: scroll !important;
-    background-clip: border-box !important;
-    background-color: #fff !important;
-    background-image: url("../images/desktop/downArrow.png") !important;
-    background-origin: padding-box !important;
-    background-position: 99% center;
-    background-repeat: no-repeat !important;
-    background-size: auto auto !important;
-    color: #a4a4a4;
-}
-
 .coment{
     background-color: #EBEBEB;
     padding: 15px;
@@ -2099,7 +2091,7 @@ textarea.form-control {
 .bot-button button {
     float: none !important;
 }
-.select {
+.select, .date-time {
     -moz-appearance: none;
     -webkit-appearance: none;
     appearance: none;
@@ -2108,10 +2100,11 @@ textarea.form-control {
     background-color: #fff !important;
     background-image: url("../images/desktop/downArrow.png") !important;
     background-origin: padding-box !important;
-    background-position: 90% center;
+    background-position: 99% center;
     background-repeat: no-repeat !important;
-    background-size: auto auto !important;
+    background-size: 15px 15px !important;
     color: #a4a4a4;
+    padding: 0;
 }
 
 .scroll-div {
@@ -2145,7 +2138,7 @@ textarea.form-control {
 .section-submenu {
    /* float: left;*/
     margin-right: 20px;
-    min-height: 143px;
+    min-height: 135px;
     padding: 10px 0;
     width: 200px;
 }
@@ -2164,7 +2157,7 @@ textarea.form-control {
     height: 100%;
 }
 .section-submenu{
-    padding: 10px 0px 0;
+    padding: 1px 0px 0;
 }
 .dropdown-menu .submenu .section-submenu a li{
     font-size: 14px;

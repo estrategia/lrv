@@ -9,7 +9,7 @@
         <li class="border-left">        
         <?php endif; ?>
     <?php else: ?>  
-          <?php $vista = "busqueda"?>
+        <?php $vista = "busqueda" ?>
     <li class="border-left" >
     <?php endif; ?>
 
@@ -46,12 +46,8 @@
                     <?php if ($objPrecio->inicializado()): ?>
                         <a href="<?php echo CController::createUrl('/catalogo/producto', array('producto' => $data->codigoProducto, 'descripcion' => $data->getCadenaUrl())) ?>" title='<?php echo $data->descripcionProducto ?>'>
                         <?php endif; ?>
-                        <div class="descripcion-grid">
-                            <?php if (strlen($data->descripcionProducto) > 19): ?>
-                                <?php echo substr($data->descripcionProducto, 0, 19) . "..." ?>
-                            <?php else: ?>
-                                <?php echo $data->descripcionProducto ?>
-                            <?php endif; ?>
+                        <div class="descripcion-grid text-truncate">
+                            <?php echo $data->descripcionProducto ?>
                         </div>
                         <div class="descripcion-lineal" style="display:none">
                             <?php echo $data->descripcionProducto ?>
@@ -62,12 +58,8 @@
                 </p>  
             </div>
             <div class="line-bottom">
-                <div class="descripcion-grid">
-                    <?php if (strlen($data->presentacionProducto) > 15): ?>
-                        <span><?php echo substr($data->presentacionProducto, 0, 14) ?>...</span>
-                    <?php else: ?>
-                        <span><?php echo $data->presentacionProducto; ?></span>
-                    <?php endif; ?>
+                <div class="descripcion-grid text-truncate">
+                    <span><?php echo $data->presentacionProducto; ?></span>
                 </div>
                 <div class="descripcion-lineal" style="display:none">
                     <?php echo $data->presentacionProducto ?>
