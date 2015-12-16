@@ -1749,6 +1749,7 @@ class CatalogoController extends Controller {
             ));
 
             $parametrosVista['dataprovider'] = $dataProvider;
+            $parametrosVista['cantidadItems'] = 5;
             $this->render('d_listaProductos', $parametrosVista);
         }
     }
@@ -1877,6 +1878,7 @@ class CatalogoController extends Controller {
             ));
 
             $parametrosVista['dataprovider'] = $dataProvider;
+            $parametrosVista['cantidadItems'] = 5;
             $this->render('d_listaProductos', $parametrosVista);
         }
     }
@@ -2005,6 +2007,7 @@ class CatalogoController extends Controller {
             ));
 
             $parametrosVista['dataprovider'] = $dataProvider;
+            $parametrosVista['cantidadItems'] = 5;
             $this->render('d_listaProductos', $parametrosVista);
         }
     }

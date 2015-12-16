@@ -1,3 +1,4 @@
+<?php $cantidadItems = isset($cantidadItems) ? $cantidadItems : 4 ?>
 <div class="space-1"></div>
 <div class="container-fluid">
     <div class="row">
@@ -82,6 +83,7 @@
                             //'template' => "{items}\n{pager}",
                             //'summaryText' => "{start} - {end} из {count}",
                             'template' => "{summary}<ul class='listaProductos'>{items}</ul><div class='clear'></div>{pager}",
+                            'itemsCssClass' => "items items$cantidadItems",
                             'itemView' => '_d_productoElemento',
                             'beforeAjaxUpdate' => new CJavaScriptExpression("function() {Loading.show();}"),
                             'afterAjaxUpdate' => new CJavaScriptExpression("function(id,data) { Loading.hide(); raty();$('[data-toggle=\"popover\"]').popover();  listaProductoVistaActualizar();}"),

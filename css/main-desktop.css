@@ -914,7 +914,7 @@ input#RegistroForm_condiciones[type="checkbox"] + label span {
 .list_lineal .listaProductos .content-txt2 {
     padding: inherit;
 }
-.list_lineal .listaProductos .items li {
+.list_lineal .listaProductos .items li, .list_lineal .listaProductos .items.items3 li, .list_lineal .listaProductos .items.items4 li, .list_lineal .listaProductos .items.items5 li {
     width: 100%;
 }
 .list-view .summary {
@@ -970,13 +970,16 @@ input#RegistroForm_condiciones[type="checkbox"] + label span {
     vertical-align: top;
     width: 24%;
 }
-.listaProductos .items2 li {
-    display: inline-block;
-    margin-bottom: 30px;
-    margin-top: 30px;
-    vertical-align: top;
+.listaProductos .items.items3 li{
     width: 32%;
 }
+.listaProductos .items.items4 li{
+    width: 24%;
+}
+.listaProductos .items.items5 li{
+    width: 19%;
+}
+
 .content_product {
     min-height: 116px;
     color:#6c6363;
@@ -989,7 +992,7 @@ input#RegistroForm_condiciones[type="checkbox"] + label span {
     color: #9f9f9f;
 }
 .listaProductos .content-txt2 {
-    padding: 0 20px;
+    padding: 0 5px;
     position:relative;
 }
 .listaProductos {

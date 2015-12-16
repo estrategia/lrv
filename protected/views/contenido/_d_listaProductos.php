@@ -1,7 +1,7 @@
 <?php $listaProductos = $objModulo->getListaProductos($this->objSectorCiudad) ?>
 <?php if (count($listaProductos) >= Yii::app()->params->minimoSlideProductos): ?>
     <section>
-        <div class="container" >
+        <div class="container-fluid" >
             <div class="row">
                 <div class="col-md-12 title">
                     <h2 class="productos-destacados"><span><i class="glyphicon glyphicon-chevron-right"></i></span> <?php echo $objModulo->descripcion ?></h2>

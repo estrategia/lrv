@@ -10,7 +10,7 @@
         <?php endif; ?>
     <?php else: ?>  
           <?php $vista = "busqueda"?>
-    <li class="border-left" >
+        <li class="border-left" >
     <?php endif; ?>
 
     <div class=" content-txt2">

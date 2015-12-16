@@ -1,4 +1,4 @@
-<div class="container">
+<div class="container-fluid">
     <div class="row">
         <div class="row-fluid">
             <div class="col-md-12 title">
@@ -23,7 +23,7 @@
                             <section>
                                 <div>
                                     <ul class="listaProductos">
-                                        <div class="items2">
+                                        <div class="items items3">
                                             <?php foreach ($objModulo->getListaProductos($this->objSectorCiudad) as $objProducto): ?>
 
                                                 <?php
