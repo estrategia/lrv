@@ -20,7 +20,7 @@
             </div>
         </div>
     </div>
-    <div class="center"><?php echo CHtml::link('Continuar', $url, array('class' => 'btn btn-aceptar')); ?></div>
+    <div class="center"><?php echo CHtml::link('Continuar', $url, array('class' => 'btn btn-primary')); ?></div>
     </div>
     <img src="<?php echo Yii::app()->request->baseUrl."/images/bienvenida/fondo_footer.png"; ?>" class="img-responsive" alt="">
 </div>
