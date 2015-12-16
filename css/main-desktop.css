@@ -2522,6 +2522,11 @@ img.ajustada {
 #form-direccion-pagoinvitado .control-label {
     padding-right: 0;
 }
+@media (max-width: 1260px) { 
+    .user {
+        margin-left: -22px;
+    }
+}
 @media (max-width: 767px) {
     .main_menu .nav > li > a {
         color: #fff;
@@ -2530,6 +2535,15 @@ img.ajustada {
     .nav > li > a > img {
         max-width: none;
         width: 17px;
+    }
+    .info-compra {
+        font-size: 13px;
+    }
+    .user li {
+        font-size: 13px;
+    }
+    .user {
+        margin-left: -22px;
     }
 }
 @media (min-width: 768px) and (max-width: 991px) { 
@@ -2541,9 +2555,27 @@ img.ajustada {
         max-width: none;
         width: 17px;
     }
+    .info-compra {
+        font-size: 13px;
+    }
+    .user li {
+        font-size: 13px;
+    }
+    .user {
+        margin-left: -22px;
+    }
 }
 @media (min-width: 992px) and (max-width: 1199px) { 
-    
+    .info-compra {
+        font-size: 13px;
+    }
+    .user li {
+        font-size: 13px;
+    }
+    .user {
+        margin-left: -22px;
+    }
 }
+
 @media (min-width: 1200px) { 
 }
