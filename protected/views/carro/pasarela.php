@@ -19,7 +19,7 @@
     <?php else: ?>
         <div class="well center-block" style="max-width: 80%;">
             <?php echo CHtml::link('Cambiar Forma Pago', ($pagoExpress ? $this->createUrl('/usuario/pagoexpress') : $this->createUrl('/carro/pagar', array('paso' => 'pago'))), array('class' => 'btn btn-warning btn-lg btn-block', 'role' => 'button')); ?>
-            <button type="button" class="btn btn-danger btn-lg btn-block" data-role="pagopasarela">Continuar Pago en Línea</button>
+            <button type="button" class="btn btn-primary btn-lg btn-block" data-role="pagopasarela">Continuar Pago en Línea</button>
         </div>
     <?php endif; ?>
 

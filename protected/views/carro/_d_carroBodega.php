@@ -16,7 +16,7 @@
       </div>
       <div class="modal-footer">
         <a class='btn btn-success' href="<?php echo CController::createUrl('/catalogo/bodega', array('producto' => $objProducto->codigoProducto,'ubicacion' => $cantidadUbicacion, 'bodega'=> $cantidadBodega)) ?>" data-ajax='false'>Configurar pedido</a>
-        <a class='btn btn-danger' data-dismiss="modal" href='#'>Cancelar</a> 
+        <a class='btn btn-primary' data-dismiss="modal" href='#'>Cancelar</a> 
       </div>
     </div>
   </div>

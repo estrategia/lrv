@@ -45,9 +45,9 @@
                         <table class="table table-bordered table-hover table-striped">
                             <thead class="cabecera-tabla">
                                 <tr>
-                                    <th  style="width: 27%;">Producto</th>
-                                    <th  style="width: 25%;">Cantidad</th>
-                                    <th  style="width: 15%;">Antes</th>
+                                    <th style="width: 27%;">Producto</th>
+                                    <th style="width: 25%;">Cantidad</th>
+                                    <th style="width: 15%;">Antes</th>
                                     <th>Ahorro</th>
                                     <th>Ahora</th>
                                     <th>Subtotal</th>
@@ -101,12 +101,12 @@
                 <?php endif; ?>
 
                 <?php if (!$lectura) : ?>
-                <div class="btn-pagar" align="center">
+                <div class="center">
                     <br/>
-                    <?php echo CHtml::link('Comprar', $this->createUrl('/carro/pagar'), array('class' => 'btn btn-danger', 'role' => "button")); ?>
-                    <?php echo CHtml::link('Vaciar carrito', '#', array('data-role' => 'carrovaciar', 'class' => 'btn btn-danger', 'role' => "button")); ?>
+                    <?php echo CHtml::link('Comprar', $this->createUrl('/carro/pagar'), array('class' => 'btn btn-primary', 'role' => "button")); ?>
+                    <?php echo CHtml::link('Vaciar carrito', '#', array('data-role' => 'carrovaciar', 'class' => 'btn btn-primary', 'role' => "button")); ?>
                     <br/><br/>
-                    <?php echo CHtml::link('Guardar en la lista personal', '#', array('data-role' => 'lstpersonalguardar', 'data-tipo' => 3, 'data-codigo' => 0, 'class' => 'btn btn-danger', 'role' => "button")); ?>
+                    <?php echo CHtml::link('Guardar en la lista personal', '#', array('data-role' => 'lstpersonalguardar', 'data-tipo' => 3, 'data-codigo' => 0, 'class' => 'btn btn-primary', 'role' => "button")); ?>
                 </div>
                 <?php endif; ?>
 

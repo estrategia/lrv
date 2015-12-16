@@ -28,7 +28,7 @@
                 </div>
                 <div class="col-md-2" >
                     <div  class="btn-ver-todos">
-                        <?php echo CHtml::link('<div class="button" style="padding:15px; border-radius:10px; font-size:1.5em;">Ver todos</div>', CController::createURL('catalogo/verTodosProductos', array('opcion' => 'lista', 'item' => $objModulo->idModulo)), array()); ?>
+                        <?php echo CHtml::link('<div class="btn btn-primary btn-lg btn-block" style="padding:15px; border-radius:10px; font-size:1.5em;">Ver todos</div>', CController::createURL('catalogo/verTodosProductos', array('opcion' => 'lista', 'item' => $objModulo->idModulo)), array()); ?>
                     </div>
                 </div>
             </div>

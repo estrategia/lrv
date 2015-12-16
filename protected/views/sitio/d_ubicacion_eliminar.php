@@ -22,21 +22,21 @@
             <div class="col-md-6">
                 <div class="row">
                     <div class="col-md-12" >
-                        <?php echo CHtml::htmlButton('Usar la ubicación de tu dispositivo', array('class' => 'btn btn-danger btn-ciudad', 'data-role' => 'ubicacion-gps')); ?>
+                        <?php echo CHtml::htmlButton('Usar la ubicación de tu dispositivo', array('class' => 'btn btn-primary btn-ciudad', 'data-role' => 'ubicacion-gps')); ?>
                     </div>
                 </div>
                 <div class="space-1"></div>
                 <?php if (!Yii::app()->user->isGuest): ?>
                     <div class="row">
                         <div class="col-md-12" >
-                            <?php echo CHtml::htmlButton('Usar tus direcciones', array('class' => 'btn btn-danger btn-ciudad', 'data-role' => 'ubicacion-direccion')); ?>
+                            <?php echo CHtml::htmlButton('Usar tus direcciones', array('class' => 'btn btn-primary btn-ciudad', 'data-role' => 'ubicacion-direccion')); ?>
                         </div>
                     </div>
                     <div class="space-1"></div>
                 <?php endif; ?>
                 <div class="row">
                     <div class="col-md-12" >
-                        <?php echo CHtml::htmlButton('Buscar ubicaci&oacute;n', array('class' => 'btn btn-danger btn-ciudad', 'data-role' => 'ubicacion-mapa')); ?>
+                        <?php echo CHtml::htmlButton('Buscar ubicaci&oacute;n', array('class' => 'btn btn-primary btn-ciudad', 'data-role' => 'ubicacion-mapa')); ?>
                     </div>
                 </div>
                 <div class="space-1"></div>
