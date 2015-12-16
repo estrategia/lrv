@@ -1,6 +1,6 @@
 <?php $listPositionBodega = array(); ?>
 <?php $listPositionDelivery = array(); ?>
-
+<!-- Vista Carro -->
 <section>
         <div class="row">
             <div class="col-md-9 border-right">
