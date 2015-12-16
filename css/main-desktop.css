@@ -210,7 +210,7 @@ table.tabla-carro .group-botones-cantidad{
 }
 .group-botones-cantidad .ressete {
     display: inline-block;
-    width: 65%;
+    width: 40%;
 }
 .group-botones-cantidad .btn-addless-cantidad:last-child {
     margin-right: 0;
