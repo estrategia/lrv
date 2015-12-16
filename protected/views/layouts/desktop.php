@@ -57,7 +57,7 @@
                                                             </li>
                                                         <?php endforeach; ?>     
                                                     </ul>
-                                                   
+
                                                 </div>
                                             </div>
                                         </div>
@@ -111,40 +111,43 @@
                                         <div class="right-nav">
                                             <ul class="submenu">
                                                 <div class="sub_float">
-                                                <?php $cpunte=0; foreach ($categoria->listCategoriasHijas as $subcategoria): $cpunte++; /*echo $cpunte;*/ ?>
-                                                    <div class="section-submenu">
-                                                        <?php if (count($subcategoria->listModulosConfigurados) > 0): ?>
-                                                            <li class='title-submenu'><?php echo CHtml::link("<span class='glyphicon glyphicon-chevron-right' aria-hidden='true'></span>".ucfirst(strtolower($subcategoria->nombreCategoriaTienda)), CController::createUrl('/catalogo/division', array('division' => $subcategoria->idCategoriaTienda))); ?></li>
-                                                        <?php else: ?>
-                                                            <li class='title-submenu'><span class='glyphicon glyphicon-chevron-right' aria-hidden='true'></span><?php echo ucfirst(strtolower($subcategoria->nombreCategoriaTienda)); ?></li>
-                                                        <?php endif; ?>
-                                                        <?php for ($i = 0; $i < count($subcategoria->listCategoriasHijasMenu) && $i < 5; $i++): ?>
-                                                            <?php $categoriaHija = $subcategoria->listCategoriasHijasMenu[$i]; ?>
+                                                    <?php $cpunte = 0;
+                                                    foreach ($categoria->listCategoriasHijas as $subcategoria): $cpunte++; /* echo $cpunte; */ ?>
+                                                        <div class="section-submenu">
                                                             <?php if (count($subcategoria->listModulosConfigurados) > 0): ?>
-                                                                <li><?php echo ucfirst(strtolower($categoriaHija->nombreCategoriaTienda)); ?></li>
+                                                                <li class='title-submenu'><?php echo CHtml::link("<span class='glyphicon glyphicon-chevron-right' aria-hidden='true'></span>" . ucfirst(strtolower($subcategoria->nombreCategoriaTienda)), CController::createUrl('/catalogo/division', array('division' => $subcategoria->idCategoriaTienda))); ?></li>
                                                             <?php else: ?>
-                                                                <li><?php echo CHtml::link(ucfirst(strtolower($categoriaHija->nombreCategoriaTienda)), CController::createUrl('/catalogo/categoria', array('categoria' => $categoriaHija->idCategoriaTienda))); ?></li>
+                                                                <li class='title-submenu'><span class='glyphicon glyphicon-chevron-right' aria-hidden='true'></span><?php echo ucfirst(strtolower($subcategoria->nombreCategoriaTienda)); ?></li>
                                                             <?php endif; ?>
-                                                        <?php endfor; ?>
-                                                        <?php if (count($subcategoria->listCategoriasHijasMenu) > 5): ?>
-                                                            <li class='title-viewmore_category'><?php echo CHtml::link("Ver más...", CController::createUrl('/catalogo/division', array('division' => $subcategoria->idCategoriaTienda))); ?></li>
+                                                            <?php for ($i = 0; $i < count($subcategoria->listCategoriasHijasMenu) && $i < 5; $i++): ?>
+                                                                <?php $categoriaHija = $subcategoria->listCategoriasHijasMenu[$i]; ?>
+                                                                <?php if (count($subcategoria->listModulosConfigurados) > 0): ?>
+                                                                    <li><?php echo ucfirst(strtolower($categoriaHija->nombreCategoriaTienda)); ?></li>
+                                                                <?php else: ?>
+                                                                    <li><?php echo CHtml::link(ucfirst(strtolower($categoriaHija->nombreCategoriaTienda)), CController::createUrl('/catalogo/categoria', array('categoria' => $categoriaHija->idCategoriaTienda))); ?></li>
+                                                                <?php endif; ?>
+                                                            <?php endfor; ?>
+                                                            <?php if (count($subcategoria->listCategoriasHijasMenu) > 5): ?>
+                                                                <li class='title-viewmore_category'><?php echo CHtml::link("Ver más...", CController::createUrl('/catalogo/division', array('division' => $subcategoria->idCategoriaTienda))); ?></li>
                                                         <?php endif; ?>        
-                                                    </div>
-                                                <?php if ($cpunte==4 && count($categoria->listCategoriasHijas)!=4): ?>
+                                                        </div>
+            <?php if ($cpunte == 4 && count($categoria->listCategoriasHijas) != 4): ?>
                                                         </div>
                                                         <div class="sub_float">
-                                                    <?php $cpunte=0; endif;
-                                                        
-                                                    endforeach; ?>
+                                                            <?php $cpunte = 0;
+                                                        endif;
+
+                                                    endforeach;
+                                                    ?>
                                                 </div>
                                             </ul>
-                                            <?php if (!empty($categoria->rutaImagenMenu)): ?>
+                                        <?php if (!empty($categoria->rutaImagenMenu)): ?>
                                                 <img class="img_categoria" src="<?php echo Yii::app()->request->baseUrl; ?>/images/menu/desktop/<?php echo $categoria->rutaImagenMenu ?>"> 
-                                            <?php endif; ?>
-                                        </div>
                                     <?php endif; ?>
+                                        </div>
+    <?php endif; ?>
                                 </li>
-                            <?php endforeach; ?>
+                    <?php endforeach; ?>
                         </ul>
                     </li>
 
@@ -152,15 +155,15 @@
                         <li class="modulo-menu" style="background-color: <?php echo $objModulo->objMenuModulo->color; ?>;">
                             <a href="<?php echo $this->createUrl($objModulo->objMenuModulo->contenido) ?>"><img src="<?php echo Yii::app()->request->baseUrl . Yii::app()->params->carpetaImagen['menuDesktop'] . $objModulo->objMenuModulo->rutaImagen; ?>" /> <?php echo $objModulo->descripcion ?></a>
                         </li>
-                    <?php endforeach; ?>
+<?php endforeach; ?>
                 </ul>
             </nav>
             <!--fin menu-->
 
             <!--inicio migas de pan-->
-            <?php if (isset($this->breadcrumbs) && !(empty($this->breadcrumbs))): ?>
+                    <?php if (isset($this->breadcrumbs) && !(empty($this->breadcrumbs))): ?>
                 <section>
-                    <div class="container">
+                    <div class="container-fluid">
                         <?php
                         $this->widget('zii.widgets.CBreadcrumbs', array(
                             'links' => $this->breadcrumbs,
@@ -175,12 +178,12 @@
                         ?>
                     </div>
                 </section>
-            <?php endif ?>
+<?php endif ?>
             <!--fin migas de pan-->
 
             <!-- <div class="container"> -->
             <div id="main-content">
-            <?php echo $content; ?>
+<?php echo $content; ?>
             </div>
             <div class="space-1"></div>
             <!-- </div> -->

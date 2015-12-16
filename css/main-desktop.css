@@ -1,14 +1,14 @@
 @font-face {
-  font-family: harabara;  
-  src: local('harabara'), 
-    url("fonts/harabara.ttf") format('truetype');  
-  font-weight: normal;  
+    font-family: harabara;  
+    src: local('harabara'), 
+        url("fonts/harabara.ttf") format('truetype');  
+    font-weight: normal;  
 }
 @font-face {
-  font-family: geneva;  
-  src: local('geneva'), 
-    url("fonts/geneva.ttf") format('truetype');  
-  font-weight: normal;  
+    font-family: geneva;  
+    src: local('geneva'), 
+        url("fonts/geneva.ttf") format('truetype');  
+    font-weight: normal;  
 }
 
 .text-truncate{
@@ -18,16 +18,16 @@
     font-weight: bold;
 }
 .nopaddingleft{
-  padding-left: 0 !important;
+    padding-left: 0 !important;
 }
 .nopaddingright{
-  padding-right: 0 !important;
+    padding-right: 0 !important;
 }
 .container {
     min-width: 750px !important;
 }
 .container-fluid {
-  min-width: 750px !important;
+    min-width: 750px !important;
     max-width: 1920px !important;
 }
 .middle {
@@ -106,6 +106,10 @@
 
 .ordering_item{
     margin-right: 10px;
+}
+
+.ordering_item.option-list .select2.select2-container.select2-container--default {
+    min-width: 200px;
 }
 
 .inner_tipoentrega .view_more_ubicacion {
@@ -430,7 +434,7 @@ table.tabla-carro .group-botones-cantidad{
 .btn.btn-aceptar:hover {
     background: #e90000;
     color: #fff;
-    }
+}
 .btn-ciudad {
     background: #f4f4f4 none repeat scroll 0 0;
     color: #444;
@@ -440,7 +444,7 @@ table.tabla-carro .group-botones-cantidad{
     transition: 0.5s;
 }
 .btn-ciudad:hover {
-    
+
 }
 .btn-default {
     color: #d9534f;
@@ -1331,7 +1335,7 @@ header {
 .price{
     font-size: 17px;
     color: #EA0001 !important;
-   /* padding:5px 0 0;*/
+    /* padding:5px 0 0;*/
 }
 
 .txt{
@@ -2139,7 +2143,7 @@ textarea.form-control {
     float: left;
 }
 .section-submenu {
-   /* float: left;*/
+    /* float: left;*/
     margin-right: 20px;
     min-height: 135px;
     padding: 10px 0;
@@ -2364,28 +2368,28 @@ a.clst_slct_prod.active{display: inline-block !important;}
 }
 
 .modal.map .modal-header {
-  position: absolute;
-  top: 0;
-  right: 0;
-  left: 0;
-  height: auto;
-  padding: 10px;
-  background: #6598d9;
-  border: 0;
-  z-index: 99;
+    position: absolute;
+    top: 0;
+    right: 0;
+    left: 0;
+    height: auto;
+    padding: 10px;
+    background: #6598d9;
+    border: 0;
+    z-index: 99;
 }
 
 .modal.map .modal-header .modal-title {
-  font-weight: bold;
-  font-size: 2em;
-  color: #fff;
-  line-height: 30px;
+    font-weight: bold;
+    font-size: 2em;
+    color: #fff;
+    line-height: 30px;
 }
 
 .modal.map .modal-header p {
-  font-weight: normal;
-  font-size: 1em;
-  color: #fff;
+    font-weight: normal;
+    font-size: 1em;
+    color: #fff;
 }
 
 .modal.map .modal-content {
