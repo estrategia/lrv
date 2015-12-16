@@ -41,9 +41,24 @@
     border-color: #d43f3a;
     color: #fff;
 }
+.btn-primary.focus, .btn-primary:focus {
+    background-color: #d9534f;
+    border-color: #d43f3a;
+    color: #fff;
+}
 .btn-primary:hover {
     background-color: #c9302c;
     border-color: #ac2925;
+    color: #fff;
+}
+.btn-primary.active.focus, .btn-primary.active:focus, .btn-primary.active:hover, .btn-primary.focus:active, .btn-primary:active:focus, .btn-primary:active:hover, .open > .dropdown-toggle.btn-primary.focus, .open > .dropdown-toggle.btn-primary:focus, .open > .dropdown-toggle.btn-primary:hover {
+    background-color: #ac2925;
+    border-color: #761c19;
+    color: #fff;
+}
+.btn-primary.active, .btn-primary:active, .open > .dropdown-toggle.btn-primary {
+    background-color: #c9302c;
+    border-color: #761c19;
     color: #fff;
 }
 .reloj {
@@ -199,7 +214,7 @@ table.tabla-carro .group-botones-cantidad{
 }
 .group-botones-cantidad .ressete {
     display: inline-block;
-    width: 40%;
+    width: 65%;
 }
 .group-botones-cantidad .btn-addless-cantidad:last-child {
     margin-right: 0;
@@ -264,7 +279,7 @@ table.tabla-carro .group-botones-cantidad{
     padding: 6px;
 }
 .pedidoPasar {
-    background: #e90000 none repeat scroll 0 0;
+    background: #d9534f none repeat scroll 0 0;
     border: 0 none;
     border-radius: 5px;
     color: #fff;

@@ -135,7 +135,7 @@
             </div>
         <?php elseif (!$objPrecio->inicializado()): ?>
             <div class="col-md-12">
-                <?php echo CHtml::link('<div class="btn btn-primary btn-block">Agotado</div>', '#', array('disabled' => 'true', 'onclick' => 'return false;')); ?>
+                <?php echo CHtml::link('<div class="btn btn-primary btn-block btn-xs">Agotado</div>', '#', array('disabled' => 'true', 'onclick' => 'return false;')); ?>
             </div>
         <?php elseif ($vista != 'slider'): ?>
             <div class="botones-list">

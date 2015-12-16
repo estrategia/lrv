@@ -44,7 +44,7 @@
 
                             <input type="hidden" name="pdv" value="<?php echo $pdv[1] ?>">
                             <input type="hidden" name="pos" value="<?php echo $idx ?>">
-                            <input type="submit" data-enhanced="true" value="Pasar por mi pedido aquí" class="pedidoPasar">
+                            <input type="submit" data-enhanced="true" value="Pasar por mi pedido aquí" style="float: right;" class="btn btn-primary">
 
                             <?php $this->endWidget(); ?>
                             <div class="porcen">Porcentaje del pedido: <?php echo $pdv[5] ?>%</div>
@@ -71,7 +71,7 @@
         <?php endforeach; ?>
 
         <?php /* if ($listPuntosVenta[3] == 0): */ ?>
-        <div class="blockPago sinDir">
+        <div class="blockPago sinDir center">
             <img class="c_ndx_img" alt="Domicilio" src="<?php echo Yii::app()->request->baseUrl; ?>/images/entrega/icon_domicilio.png">
             <?php if ($listPuntosVenta[3] == 0): ?>
                 <h4 class="center">Lo sentimos, no tenemos disponible el 100% de tu pedido en un sólo punto de venta.</h4>
@@ -81,7 +81,7 @@
             <?php endif; ?>
 
 
-            <?php echo CHtml::link('Entrega a domicilio', $this->createUrl('/carro/pagar', array('paso' => 0, 'post' => 0, 'cambio' => true)), array('class' => 'btn btn-aceptar')); ?>
+            <?php echo CHtml::link('Entrega a domicilio', $this->createUrl('/carro/pagar', array('paso' => 0, 'post' => 0, 'cambio' => true)), array('class' => 'btn btn-primary')); ?>
         </div>
         <div class="space-2"></div>
         <?php /* endif; */ ?>
