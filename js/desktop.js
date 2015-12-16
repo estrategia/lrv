@@ -55,10 +55,19 @@ $(document).ready(function() {
         ajuesmenu();
     });
     ajuesmenu();
+    ajustebuscador()
 });
 $( window ).resize(function() {
   ajuesmenu();
+  ajustebuscador()
 });
+function ajustebuscador(){
+    widhtControl = $('.content-category .controls').width();
+    widhtBoton = $('.content-category .controls #btn-buscador-productos').width();
+    widhtDrop = $('.content-category .controls .float-right').width();
+    width=widhtControl-(widhtBoton+widhtDrop);
+    $('.content-category .controls >span').width(width+6);
+}
 function ajuesmenu(){
     widht = $('.main_menu .categorias').width();
     widhtDocument = ($(window).width() - widht);
