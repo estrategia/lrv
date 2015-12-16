@@ -228,9 +228,9 @@ $(document).on('click', 'button[data-role="ubicacion-mapa"]', function() {
                 $.mobile.loading('show');
             },
             success: function(data) {
-                $('body').append(data);
                 $.getScript("https://maps.googleapis.com/maps/api/js").done(function(script, textStatus) {
                     $.getScript(requestUrl + "/js/ubicacion.js").done(function(script, textStatus) {
+                        $('body').append(data);
                         inicializarMapa();
                         $.mobile.changePage('#page-ubicacion-map', {transition: "pop", role: "dialog", reverse: false});
                         resizeMap();

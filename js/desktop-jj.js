@@ -429,9 +429,10 @@ $(document).on('click', 'button[data-role="ubicacion-mapa"]', function() {
                 Loading.show();
             },
             success: function(data) {
-                $('#main-page').append(data);
                 $.getScript("https://maps.googleapis.com/maps/api/js").done(function(script, textStatus) {
                     $.getScript(requestUrl + "/js/ubicacion.js").done(function(script, textStatus) {
+                        $('#main-page').append(data);
+                        $('#select-ubicacion-psubsector .ciudades').select2();
                         inicializarMapa();
                         $('#modal-ubicacion-map').modal('show');
                         resizeMap();
