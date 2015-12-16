@@ -14,6 +14,9 @@
 .text-truncate{
     overflow:hidden;white-space:nowrap;text-overflow: ellipsis;
 }
+.text-bold{
+    font-weight: bold;
+}
 .nopaddingleft{
   padding-left: 0 !important;
 }
@@ -1215,7 +1218,7 @@ header {
 .user li{
     display: inline-block;
 }
-.orange {
+.orange, .text.orange {
     color: #FF6215;
 }
 .user li a {
