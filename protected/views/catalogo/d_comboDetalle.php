@@ -52,12 +52,13 @@
                         <div class=""><span class="txt_cant_total">Subtotal: </span> <span id="subtotal-producto-combo-<?php echo $objCombo->idCombo ?>"><?php echo Yii::app()->numberFormatter->format(Yii::app()->params->formatoMoneda['patron'], $objPrecio->getPrecio(), Yii::app()->params->formatoMoneda['moneda']); ?></span></div>
                         <?php if (isset(Yii::app()->session[Yii::app()->params->sesion['sectorCiudadEntrega']])): ?>                                  
                             <div class="col-md-12" style="margin-top: 13px;">
-                                <?php echo CHtml::link('<div class="button anadir">Añadir&nbsp;<img src="' . Yii::app()->baseUrl . '/images/desktop/carrito-amarillo.png" alt=""></div>', '#', array('data-combo' => $objCombo->idCombo, 'data-cargar' => 2, 'class' => '')); ?>
-                                <?php echo CHtml::link('<div class="comprar-ahora">Añadir a la lista</div>', '#', array('class' => '', 'data-tipo' => '2', 'data-role' => 'lstpersonalguardar', 'data-codigo' => $objCombo->idCombo)); ?>
+                                <?php echo CHtml::link('<div class="btn btn-primary btn-block">Añadir&nbsp;<img src="' . Yii::app()->baseUrl . '/images/desktop/carrito-amarillo.png" alt=""></div>', '#', array('data-combo' => $objCombo->idCombo, 'data-cargar' => 2, 'class' => '')); ?>
+                                <?php echo "<div class='space-1'></div>";?>
+                                <?php echo CHtml::link('<div class="btn btn-default btn-block">Añadir a la lista</div>', '#', array('class' => '', 'data-tipo' => '2', 'data-role' => 'lstpersonalguardar', 'data-codigo' => $objCombo->idCombo)); ?>
                             </div>
                         <?php else: ?>
                             <div class="col-md-12" style="margin-top: 13px;">                             
-                                <?php echo CHtml::link('<div class="button anadir">Consultar Precio&nbsp;', '#', array(/* 'data-producto' => $objProducto->codigoProducto, 'data-carro' => 1, 'class' => '' */)); ?>                           
+                                <?php echo CHtml::link('<div class="btn btn-primary btn-block">Consultar Precio&nbsp;', '#', array(/* 'data-producto' => $objProducto->codigoProducto, 'data-carro' => 1, 'class' => '' */)); ?>                           
                             </div>     
                         <?php endif; ?>
                     </div>

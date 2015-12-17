@@ -173,17 +173,19 @@
                             <div class="" style="margin-top: 13px;">
                                 <?php echo CHtml::link('<div class="btn btn-primary btn-block">Añadir&nbsp;<img src="' . Yii::app()->baseUrl . '/images/desktop/button-carrito.png" alt=""></div>', '#', array('data-producto' => $objProducto->codigoProducto, 'data-cargar' => 1, 'data-id' => $idUnico, 'class' => '')); ?>
                                 <?php if (!Yii::app()->user->isGuest): ?>
-                                    <?php echo CHtml::link('<div class="btn btn-primary btn-block" >Añadir a la lista</div>', '#', array('class' => '', 'data-tipo' => '1', 'data-role' => 'lstpersonalguardar', 'data-codigo' => $objProducto->codigoProducto, 'data-id' => $idUnico)); ?>
+                                    <?php echo "<div class='space-1'></div>" ?>
+                                    <?php echo CHtml::link('<div class="btn btn-default btn-block" >Añadir a la lista</div>', '#', array('class' => '', 'data-tipo' => '1', 'data-role' => 'lstpersonalguardar', 'data-codigo' => $objProducto->codigoProducto, 'data-id' => $idUnico)); ?>
                                 <?php endif; ?>
                                 <!--adicionar a lista -->
                                 <?php echo "<div class='space-1'></div>" ?>
                                 <?php echo CHtml::link('<div class="btn btn-default btn-block" >Comparar</div>', '#', array('class' => '', 'data-producto' => $objProducto->codigoProducto, 'data-role' => 'comparar')); ?>
                             </div>
                         <?php else: ?>
-                            <div class="" style="margin-top: 13px;">                             
-                                <?php echo CHtml::link('<div class="button anadir">Consultar Precio', $this->createUrl('/sitio/ubicacion'), array(/* 'data-producto' => $objProducto->codigoProducto, 'data-carro' => 1, 'class' => '' */)); ?>                           
+                            <div class="consultar_precio">
+                                <div class="space-1"></div>
+                                <?php echo CHtml::link('<div class="btn btn-default btn-block">Consultar Precio', $this->createUrl('/sitio/ubicacion'), array(/* 'data-producto' => $objProducto->codigoProducto, 'data-carro' => 1, 'class' => '' */)); ?>                           
                             </div>     
-                        <?php endif; ?>                                 
+                        <?php endif; ?>                               
                     <?php else: ?>
                         <div>Este producto lo puede adquirir en nuestros puntos de venta autorizados.</div>
                     <?php endif; ?>
@@ -344,7 +346,7 @@
                                     <?php if (Yii::app()->user->isGuest): ?>
                                         <p class="">Iniciar sesión para calificar este producto</p>
                                     <?php elseif ($objCalificacion == null): ?>
-                                        <a href="#" data-producto="<?php echo $objProducto->codigoProducto ?>" data-toggle="modal" data-target="#modal-calificacion"><div class="button-resena">Escribe una reseña&nbsp;<span class="glyphicon glyphicon-chevron-right" style="color:#fff;"></span></div></a>
+                                        <a href="#" data-producto="<?php echo $objProducto->codigoProducto ?>" data-toggle="modal" data-target="#modal-calificacion"><div class="btn btn-primary btn-block">Escribe una reseña&nbsp;<span class="glyphicon glyphicon-chevron-right" style="color:#fff;"></span></div></a>
                                     <?php else: ?>
                                         <table class="">
                                             <tr>
