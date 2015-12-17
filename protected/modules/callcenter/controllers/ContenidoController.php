@@ -1050,6 +1050,42 @@ class ContenidoController extends ControllerOperator {
             Yii::app()->end();
         }
     }
+    
+    
+    public function actionEliminartodosProductos() {
+        if (!Yii::app()->request->isPostRequest) {
+            throw new CHttpException(404, 'Solicitud inválida.');
+        }
+
+        $idModulo = Yii::app()->getRequest()->getPost('idModulo');
+
+        
+        if ($idModulo === null) {
+            throw new CHttpException(404, 'Solicitud inválida.');
+        }
+
+       
+
+        if (ProductosModulos::model()->deleteAll("idModulo =:idmodulo",
+                array(
+                    'idmodulo' => $idModulo
+                ))) {
+            $model = ModulosConfigurados::model()->findByPk($idModulo);
+
+            echo CJSON::encode(array('result' => 'ok',
+                'response' => array(
+                    'htmlProductosAgregados' => $this->renderPartial('_listaModuloProductos', array('model' => $model), true, false),
+                    'mensaje' => "Se eliminaron los productos"
+            )));
+            Yii::app()->end();
+        } else {
+            echo CJSON::encode(array(
+                'result' => 'error',
+                'response' => 'Error al eliminar los productos, por favor intente de nuevo',
+            ));
+            Yii::app()->end();
+        }
+    }
 
     public function actionCrearcontenidohtml() {
         //$model = new ModulosConfigurados;

@@ -97,7 +97,12 @@ $columns = array(
             'value' => '$data->descripcion',
             'filter' => CHtml::activeTextField($model, 'descripcion', array('class' => 'form-control')),
         ),
-        
+        array(
+            'header' => 'titulo',
+            'type' => 'raw',
+            'value' => '$data->titulo',
+            'filter' => CHtml::activeTextField($model, 'titulo', array('class' => 'form-control')),
+        ),
             ) ;
         
         if($vista == 'index'){    
