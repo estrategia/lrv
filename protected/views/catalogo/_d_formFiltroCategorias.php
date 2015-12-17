@@ -1,13 +1,13 @@
 <?php if (!empty($formFiltro->listCategoriasTienda)): ?>
     <div id="div-filtro-marcas" class="panel panel-default">
-        <div class="panel-heading" role="tab" id="heading-marcas">
+        <div class="panel-heading" role="tab" id="heading-categorias">
             <h4 class="panel-title">
-                <a role="button" data-toggle="collapse" data-parent="#accordion-filtros" href="#collapse-marcas" aria-expanded="true" aria-controls="collapse-marcas" style="background:none;">
-                    <?php echo $formFiltro->getAttributeLabel('listCategoriasTienda'); ?> <span class="glyphicon glyphicon-plus" aria-hidden="true"></span>
+                <a role="button" data-toggle="collapse" data-parent="#accordion-filtros" href="#collapse-categorias" aria-expanded="true" aria-controls="collapse-categorias" style="background:none;">
+                    <?php echo $formFiltro->getAttributeLabel('listCategoriasTienda'); ?>
                 </a>
             </h4>
         </div>
-        <div id="collapse-marcas" class="panel-collapse collapse" role="tabpanel" aria-labelledby="heading-marcas">
+        <div id="collapse-categorias-" class="panel-collapse collapse in" role="tabpanel" aria-labelledby="heading-categorias">
             <div class="panel-body">
                 <ul>
                     <?php foreach ($formFiltro->listCategoriasTienda as $idCategoria => $nombreCategoria): ?>

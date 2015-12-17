@@ -13,23 +13,23 @@
 
         <div><span>Tiempo de entrega: <?php echo Yii::app()->shoppingCart->getDeliveryStored() ?> hora(s)</span></div>
     </td>
-    <td>
+    <td class="btn-pagar" align="center">
         <?php if ($lectura): ?>
             <div style="text-align:center;vertical-align:top;">
                 <?php echo $position->getQuantityStored() ?>
             </div>
         <?php else: ?>
             <div class="group-botones-cantidad">
-                <button class="btn-addless-cantidad" data-role="modificarcarro" data-modificar="3" data-position="<?php echo $position->getId(); ?>" data-operation="-"><span class="glyphicon glyphicon-minus"></span></button>
+                <button class="btn btn-default btn-xs" data-role="modificarcarro" data-modificar="3" data-position="<?php echo $position->getId(); ?>" data-operation="-"><span class="glyphicon glyphicon-minus"></span></button>
                 <div class="ressete">
-                    <input class="increment" data-role="modificarcarro" data-modificar="3" data-position="<?php echo $position->getId(); ?>" type="text" value="<?php echo $position->getQuantityStored() ?>" id="cantidad-producto-bodega-<?php echo $position->getId() ?>" placeholder="0"/>
+                    <input class="increment btn-xs" data-role="modificarcarro" data-modificar="3" data-position="<?php echo $position->getId(); ?>" type="text" value="<?php echo $position->getQuantityStored() ?>" id="cantidad-producto-bodega-<?php echo $position->getId() ?>" placeholder="0"/>
                 </div>
-                <button class="btn-addless-cantidad" data-role="modificarcarro" data-modificar="3" data-position="<?php echo $position->getId(); ?>" data-operation="+"><span class="glyphicon glyphicon-plus"></span></button>
+                <button class="btn btn-default btn-xs" data-role="modificarcarro" data-modificar="3" data-position="<?php echo $position->getId(); ?>" data-operation="+"><span class="glyphicon glyphicon-plus"></span></button>
             </div>
         <?php endif; ?>
 
         <?php if (!$lectura): ?>
-            <?php echo CHtml::link('Eliminar', '#', array('data-eliminar' => 3, 'data-position' => $position->getId(), 'class' => 'btn btn-default')); ?>
+            <?php echo CHtml::link('Eliminar', '#', array('data-eliminar' => 3, 'data-position' => $position->getId(), 'class' => 'btn btn-primary btn-xs')); ?>
         <?php endif; ?>
     </td>
     <td class="text-right">

@@ -2,12 +2,12 @@
     <div class="panel panel-default">
         <div class="panel-heading" role="tab" id="heading-filtro-<?php echo $idFiltro ?>">
             <h4 class="panel-title">
-                <a class="collapsed" role="button" data-toggle="collapse" data-parent="#accordion-filtros" href="#collapse-filtro-<?php echo $idFiltro ?>" aria-expanded="false" aria-controls="collapse-filtro-<?php echo $idFiltro ?>" style="background:none;">
-                    <?php echo $filtro['nombreFiltro'] ?> <span class="glyphicon glyphicon-plus" aria-hidden="true"></span>
+                <a role="button" data-toggle="collapse" data-parent="#accordion-filtros" href="#collapse-filtro-<?php echo $idFiltro ?>" aria-expanded="true" aria-controls="collapse-filtro-<?php echo $idFiltro ?>" style="background:none;">
+                    <?php echo $filtro['nombreFiltro'] ?>
                 </a>
             </h4>
         </div>
-        <div id="collapse-filtro-<?php echo $idFiltro ?>" class="panel-collapse collapse" role="tabpanel" aria-labelledby="heading-filtro-<?php echo $idFiltro ?>">
+        <div id="collapse-filtro-<?php echo $idFiltro ?>-" class="panel-collapse collapse in" role="tabpanel" aria-labelledby="heading-filtro-<?php echo $idFiltro ?>">
             <div class="panel-body">
                 <ul>
                     <?php foreach ($filtro['listFiltros'] as $idFiltroDetalle => $nombreDetalle): ?>

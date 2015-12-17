@@ -257,15 +257,15 @@ $(document).on('click', "button[id='btn-carropagar-siguiente'], button[id='btn-c
     var siguiente = $(this).attr('data-redirect');
 
     /*if (actual === 'despacho') {
-        pasoDespacho(actual, siguiente, $(this));
-    } else if (actual === 'entrega') {
-        pasoEntrega(actual, siguiente, $(this));
-    } else if (actual === 'pago') {
-        pasoPago(actual, siguiente, $(this));
-    } else if (actual === 'confirmacion') {
-        pasoConfirmacion(actual, siguiente, $(this));
-    }*/
-    
+     pasoDespacho(actual, siguiente, $(this));
+     } else if (actual === 'entrega') {
+     pasoEntrega(actual, siguiente, $(this));
+     } else if (actual === 'pago') {
+     pasoPago(actual, siguiente, $(this));
+     } else if (actual === 'confirmacion') {
+     pasoConfirmacion(actual, siguiente, $(this));
+     }*/
+
     if (actual === 'informacion') {
         pasoInformacion(actual, siguiente, $(this));
     } else if (actual === 'confirmacion') {
@@ -286,7 +286,7 @@ function pasoInformacion(actual, siguiente, boton) {
         //dataType: 'json',
         async: true,
         url: requestUrl + '/carro/pagar/paso/' + actual + '/post/true',
-        data: $.param(data) + '&' + $('#form-direccion-pagoinvitado').serialize() + '&' + $('#form-pago-entrega').serialize() + '&' + $('#form-pago-pago').serialize() + '&' + $('#form-pago-bono').serialize() + '&' + $('#form-pago-comentario').serialize() ,
+        data: $.param(data) + '&' + $('#form-direccion-pagoinvitado').serialize() + '&' + $('#form-pago-entrega').serialize() + '&' + $('#form-pago-pago').serialize() + '&' + $('#form-pago-bono').serialize() + '&' + $('#form-pago-comentario').serialize(),
         beforeSend: function() {
             boton.prop('disabled', true);
             $('div[id^="FormaPagoForm_"].text-danger').html('');
@@ -323,133 +323,133 @@ function pasoInformacion(actual, siguiente, boton) {
 }
 
 /*
-function pasoDespacho(actual, siguiente, boton) {
-    var data = {
-        siguiente: siguiente,
-        direccion: $('input[name="FormaPagoForm[idDireccionDespacho]"]:checked').val()
-    };
-
-    $.ajax({
-        type: 'POST',
-        //dataType: 'json',
-        async: true,
-        url: requestUrl + '/carro/pagar/paso/' + actual + '/post/true',
-        data: $.param(data) + '&' + $('#form-direccion-pagoinvitado').serialize(),
-        beforeSend: function() {
-            boton.prop('disabled', true);
-            $('div[id^="FormaPagoForm_"].has-error').html('');
-            $('div[id^="FormaPagoForm_"].has-error').css('display', 'none');
-            Loading.show();
-        },
-        complete: function() {
-            Loading.hide();
-        },
-        success: function(data) {
-            var obj = $.parseJSON(data);
-
-            if (obj.result === 'ok') {
-                window.location.replace(obj.redirect);
-            } else if (obj.result === 'error') {
-                bootbox.alert(obj.response);
-                boton.prop('disabled', false);
-            } else {
-                $.each(obj, function(element, error) {
-                    $('#' + element + '_em_').html(error);
-                    $('#' + element + '_em_').css('display', 'block');
-                });
-                boton.prop('disabled', false);
-            }
-        },
-        error: function(jqXHR, textStatus, errorThrown) {
-            bootbox.alert('Error: ' + errorThrown);
-            boton.prop('disabled', false);
-        }
-    });
-}
-
-function pasoEntrega(actual, siguiente, boton) {
-    var data = {siguiente: siguiente};
-
-    $.ajax({
-        type: 'POST',
-        //dataType: 'json',
-        async: true,
-        url: requestUrl + '/carro/pagar/paso/' + actual + '/post/true',
-        data: $.param(data) + '&' + $('#form-pago-entrega').serialize(),
-        beforeSend: function() {
-            boton.prop('disabled', true);
-            $('div[id^="FormaPagoForm_"].has-error').html('');
-            $('div[id^="FormaPagoForm_"].has-error').css('display', 'none');
-            $('#form-pago-entrega').trigger("create");
-            Loading.show();
-        },
-        complete: function() {
-            Loading.hide();
-        },
-        success: function(data) {
-            var obj = $.parseJSON(data);
-
-            if (obj.result === 'ok') {
-                window.location.replace(obj.redirect);
-            } else if (obj.result === 'error') {
-                bootbox.alert(obj.response);
-                boton.prop('disabled', false);
-            } else {
-                $.each(obj, function(element, error) {
-                    $('#' + element + '_em_').html(error);
-                    $('#' + element + '_em_').css('display', 'block');
-                });
-                boton.prop('disabled', false);
-            }
-        },
-        error: function(jqXHR, textStatus, errorThrown) {
-            bootbox.alert('Error: ' + errorThrown);
-            boton.prop('disabled', false);
-        }
-    });
-}
-
-function pasoPago(actual, siguiente, boton) {
-    var data = {siguiente: siguiente};
-
-    $.ajax({
-        type: 'POST',
-        //dataType: 'json',
-        async: true,
-        url: requestUrl + '/carro/pagar/paso/' + actual + '/post/true',
-        data: $.param(data) + '&' + $('#form-pago-pago').serialize(),
-        beforeSend: function() {
-            boton.prop('disabled', true);
-            $('div[id^="FormaPagoForm_"].text-danger').html('');
-            $('div[id^="FormaPagoForm_"].text-danger').css('display', 'none');
-            Loading.show();
-        },
-        complete: function() {
-            Loading.hide();
-        },
-        success: function(data) {
-            var obj = $.parseJSON(data);
-
-            if (obj.result === 'ok') {
-                window.location.replace(obj.redirect);
-            } else if (obj.result === 'error') {
-                bootbox.alert(obj.response);
-                boton.prop('disabled', false);
-            } else {
-                $.each(obj, function(element, error) {
-                    $('#' + element + '_em_').html(error);
-                    $('#' + element + '_em_').css('display', 'block');
-                });
-                boton.prop('disabled', false);
-            }
-        },
-        error: function(jqXHR, textStatus, errorThrown) {
-            bootbox.alert('Error: ' + errorThrown);
-            boton.prop('disabled', false);
-        }
-    });
-}
-*/
+ function pasoDespacho(actual, siguiente, boton) {
+ var data = {
+ siguiente: siguiente,
+ direccion: $('input[name="FormaPagoForm[idDireccionDespacho]"]:checked').val()
+ };
+ 
+ $.ajax({
+ type: 'POST',
+ //dataType: 'json',
+ async: true,
+ url: requestUrl + '/carro/pagar/paso/' + actual + '/post/true',
+ data: $.param(data) + '&' + $('#form-direccion-pagoinvitado').serialize(),
+ beforeSend: function() {
+ boton.prop('disabled', true);
+ $('div[id^="FormaPagoForm_"].has-error').html('');
+ $('div[id^="FormaPagoForm_"].has-error').css('display', 'none');
+ Loading.show();
+ },
+ complete: function() {
+ Loading.hide();
+ },
+ success: function(data) {
+ var obj = $.parseJSON(data);
+ 
+ if (obj.result === 'ok') {
+ window.location.replace(obj.redirect);
+ } else if (obj.result === 'error') {
+ bootbox.alert(obj.response);
+ boton.prop('disabled', false);
+ } else {
+ $.each(obj, function(element, error) {
+ $('#' + element + '_em_').html(error);
+ $('#' + element + '_em_').css('display', 'block');
+ });
+ boton.prop('disabled', false);
+ }
+ },
+ error: function(jqXHR, textStatus, errorThrown) {
+ bootbox.alert('Error: ' + errorThrown);
+ boton.prop('disabled', false);
+ }
+ });
+ }
+ 
+ function pasoEntrega(actual, siguiente, boton) {
+ var data = {siguiente: siguiente};
+ 
+ $.ajax({
+ type: 'POST',
+ //dataType: 'json',
+ async: true,
+ url: requestUrl + '/carro/pagar/paso/' + actual + '/post/true',
+ data: $.param(data) + '&' + $('#form-pago-entrega').serialize(),
+ beforeSend: function() {
+ boton.prop('disabled', true);
+ $('div[id^="FormaPagoForm_"].has-error').html('');
+ $('div[id^="FormaPagoForm_"].has-error').css('display', 'none');
+ $('#form-pago-entrega').trigger("create");
+ Loading.show();
+ },
+ complete: function() {
+ Loading.hide();
+ },
+ success: function(data) {
+ var obj = $.parseJSON(data);
+ 
+ if (obj.result === 'ok') {
+ window.location.replace(obj.redirect);
+ } else if (obj.result === 'error') {
+ bootbox.alert(obj.response);
+ boton.prop('disabled', false);
+ } else {
+ $.each(obj, function(element, error) {
+ $('#' + element + '_em_').html(error);
+ $('#' + element + '_em_').css('display', 'block');
+ });
+ boton.prop('disabled', false);
+ }
+ },
+ error: function(jqXHR, textStatus, errorThrown) {
+ bootbox.alert('Error: ' + errorThrown);
+ boton.prop('disabled', false);
+ }
+ });
+ }
+ 
+ function pasoPago(actual, siguiente, boton) {
+ var data = {siguiente: siguiente};
+ 
+ $.ajax({
+ type: 'POST',
+ //dataType: 'json',
+ async: true,
+ url: requestUrl + '/carro/pagar/paso/' + actual + '/post/true',
+ data: $.param(data) + '&' + $('#form-pago-pago').serialize(),
+ beforeSend: function() {
+ boton.prop('disabled', true);
+ $('div[id^="FormaPagoForm_"].text-danger').html('');
+ $('div[id^="FormaPagoForm_"].text-danger').css('display', 'none');
+ Loading.show();
+ },
+ complete: function() {
+ Loading.hide();
+ },
+ success: function(data) {
+ var obj = $.parseJSON(data);
+ 
+ if (obj.result === 'ok') {
+ window.location.replace(obj.redirect);
+ } else if (obj.result === 'error') {
+ bootbox.alert(obj.response);
+ boton.prop('disabled', false);
+ } else {
+ $.each(obj, function(element, error) {
+ $('#' + element + '_em_').html(error);
+ $('#' + element + '_em_').css('display', 'block');
+ });
+ boton.prop('disabled', false);
+ }
+ },
+ error: function(jqXHR, textStatus, errorThrown) {
+ bootbox.alert('Error: ' + errorThrown);
+ boton.prop('disabled', false);
+ }
+ });
+ }
+ */
 
 function pasoConfirmacion(actual, siguiente, boton) {
     var data = {siguiente: siguiente};
@@ -575,9 +575,6 @@ function recalcularFiltros(tipo) {
         beforeSend: function() {
             Loading.show();
         },
-        complete: function() {
-            Loading.hide();
-        },
         success: function(data) {
             if (data.hasOwnProperty('marcas')) {
                 $('#div-filtro-marcas').html(data.marcas);
@@ -587,14 +584,42 @@ function recalcularFiltros(tipo) {
                 $('#div-filtro-atributos').html(data.atributos);
                 $('#div-filtro-atributos').trigger("create");
             }
+            
+            filtrarListaProductos();
         },
         error: function(jqXHR, textStatus, errorThrown) {
-            bootbox.alert('Error: ' + errorThrown);
+            Loading.hide();
+            alert('Error: ' + errorThrown);
         }
     });
 }
 
-$(document).on('click', "a[data-role='filtro-listaproductos']", function() {
+function filtrarListaProductos() {
+    $.ajax({
+        type: 'POST',
+        dataType: 'json',
+        async: true,
+        url: requestUrl + '/catalogo/filtrar',
+        data: $('#form-filtro-listaproductos').serialize(),
+        beforeSend: function() {
+            Loading.show();
+        },
+        success: function(data) {
+            if (data.result === 'ok') {
+                $.fn.yiiListView.update('id-productos-list');
+            } else {
+                Loading.hide();
+                alert(data.response);
+            }
+        },
+        error: function(jqXHR, textStatus, errorThrown) {
+            Loading.hide();
+            alert('Error: ' + errorThrown);
+        }
+    });
+}
+
+/*$(document).on('click', "a[data-role='filtro-listaproductos']", function() {
     $.ajax({
         type: 'POST',
         dataType: 'json',
@@ -621,7 +646,7 @@ $(document).on('click', "a[data-role='filtro-listaproductos']", function() {
             //boton.button('enable');
         }
     });
-});
+});*/
 
 $(document).on('change', "select[data-role='orden-listaproductos']", function() {
     $.ajax({
@@ -629,7 +654,7 @@ $(document).on('change', "select[data-role='orden-listaproductos']", function() 
         dataType: 'json',
         async: true,
         url: requestUrl + '/catalogo/filtrar',
-        data: {'OrdenamientoForm[orden]':$('#OrdenamientoForm_orden').val()},
+        data: {'OrdenamientoForm[orden]': $('#OrdenamientoForm_orden').val()},
         beforeSend: function() {
             //boton.button('disable');
             Loading.show();
@@ -662,6 +687,7 @@ function setPrecioFiltroForm(value) {
     $('#FiltroForm_precio_1_text').val("$" + format(value[1]));
     $('#FiltroForm_precio_0').val(value[0]);
     $('#FiltroForm_precio_1').val(value[1]);
+    filtrarListaProductos();
 }
 
 $(document).on('change', '#FiltroForm_precio_0_text', function() {
@@ -698,20 +724,20 @@ $(document).on('click', "div[data-role='formapago']", function() {
     var tipo = $(this).attr('data-tipo');
     if (tipo == "datafono") {
         $("#modal-formapago input[type='radio']").removeAttr('checked');
-        $("#modal-formapago #idFormaPago_"+$("#FormaPagoForm_idFormaPago_datafono").val()).prop('checked', true);
+        $("#modal-formapago #idFormaPago_" + $("#FormaPagoForm_idFormaPago_datafono").val()).prop('checked', true);
         $("div[data-role^='formapago-logo-']").addClass('display-none');
-        $("div[data-role='formapago-logo-"+$("#FormaPagoForm_idFormaPago_datafono").val()+"']").removeClass('display-none');
+        $("div[data-role='formapago-logo-" + $("#FormaPagoForm_idFormaPago_datafono").val() + "']").removeClass('display-none');
         $("#modal-formapago").modal("show");
         return false;
     } else {
         /*$("div[data-role='formapago']").removeClass('activo');
-        $(this).addClass('activo');
-        $('input[id="FormaPagoForm_idFormaPago"]').val(tipo);*/
+         $(this).addClass('activo');
+         $('input[id="FormaPagoForm_idFormaPago"]').val(tipo);*/
         //$('#div-formapago-vacio').remove();
-        var descripcion = $("div[data-role='formapago-descripcion']div[data-tipo='"+tipo+"']");
+        var descripcion = $("div[data-role='formapago-descripcion']div[data-tipo='" + tipo + "']");
         $("div[data-role='formapago-descripcion']").addClass('display-none');
-        
-        if (descripcion.length>0) {
+
+        if (descripcion.length > 0) {
             descripcion.removeClass('display-none');
         }
     }
@@ -724,9 +750,9 @@ $(document).on('click', "#modal-formapago input[type='radio']", function() {
         //$('#div-formapago-vacio').remove();
         $('input[id="FormaPagoForm_idFormaPago_datafono"]').prop('checked', true);
         $('input[id="FormaPagoForm_idFormaPago_datafono"]').val($(this).val());
-        
+
         $("div[data-role^='formapago-logo-']").addClass('display-none');
-        $("div[data-role='formapago-logo-"+$(this).val()+"']").removeClass('display-none');
+        $("div[data-role='formapago-logo-" + $(this).val() + "']").removeClass('display-none');
         $("div[data-role='formapago-logo-pagoenlinea']").addClass('display-none');
         $("div[data-role='formapago-descripcion']").addClass('display-none');
     }
@@ -780,48 +806,51 @@ function capturarfiltrocalificacion(score, evt) {
     }
     $('#FiltroForm_calificacion').val(calificacion);
     $('#calificacion-filtro-listaproductos').attr('data-score', calificacion);
+    filtrarListaProductos();
 }
 
-$(document).on('change', '#form-pago-entrega #FormaPagoForm_fechaEntrega', function() {
-    update_clock($(this).val());
-});
-
-function update_clock(value){
-    value = value.trim();
-    var date = new Date(value.replace(' ','T'));
-    var horas = value.split(" ")[1].split(":");
-    $('#div-reloj-seleccion').html(date.toLocaleTimeString());
-    update_clock_element('#clock_id', horas[0], horas[1], horas[2]);
-}
-
-function draw_clock() {
-    canvas = Raphael('clock_id', 200, 200);
-    var clock = canvas.circle(100, 100, 95);
-    clock.attr({"fill": "#f5f5f5", "stroke": "#444444", "stroke-width": "5"})
-    var hour_sign;
-    for (i = 0; i < 12; i++) {
-        var start_x = 100 + Math.round(80 * Math.cos(30 * i * Math.PI / 180));
-        var start_y = 100 + Math.round(80 * Math.sin(30 * i * Math.PI / 180));
-        var end_x = 100 + Math.round(90 * Math.cos(30 * i * Math.PI / 180));
-        var end_y = 100 + Math.round(90 * Math.sin(30 * i * Math.PI / 180));
-        hour_sign = canvas.path("M" + start_x + " " + start_y + "L" + end_x + " " + end_y);
-    }
-
-    hour_hand = canvas.path("M100 100L100 50");
-    hour_hand.attr({stroke: "#444444", "stroke-width": 6});
-    minute_hand = canvas.path("M100 100L100 40");
-    minute_hand.attr({stroke: "#444444", "stroke-width": 4});
-    second_hand = canvas.path("M100 110L100 25");
-    second_hand.attr({stroke: "#444444", "stroke-width": 2});
-    var pin = canvas.circle(100, 100, 5);
-    pin.attr("fill", "#000000");
-}
-
-function update_clock_element(element, hours, minutes, seconds) {
-    $(element).html('');
-    draw_clock();
-    hour_hand.rotate(30 * hours + (minutes / 2.5), 100, 100);
-    minute_hand.rotate(6 * minutes, 100, 100);
-    second_hand.rotate(6 * seconds, 100, 100);
-
-}
+/*
+ $(document).on('change', '#form-pago-entrega #FormaPagoForm_fechaEntrega', function() {
+ update_clock($(this).val());
+ });
+ 
+ function update_clock(value){
+ value = value.trim();
+ var date = new Date(value.replace(' ','T'));
+ var horas = value.split(" ")[1].split(":");
+ $('#div-reloj-seleccion').html(date.toLocaleTimeString());
+ update_clock_element('#clock_id', horas[0], horas[1], horas[2]);
+ }
+ 
+ function draw_clock() {
+ canvas = Raphael('clock_id', 200, 200);
+ var clock = canvas.circle(100, 100, 95);
+ clock.attr({"fill": "#f5f5f5", "stroke": "#444444", "stroke-width": "5"})
+ var hour_sign;
+ for (i = 0; i < 12; i++) {
+ var start_x = 100 + Math.round(80 * Math.cos(30 * i * Math.PI / 180));
+ var start_y = 100 + Math.round(80 * Math.sin(30 * i * Math.PI / 180));
+ var end_x = 100 + Math.round(90 * Math.cos(30 * i * Math.PI / 180));
+ var end_y = 100 + Math.round(90 * Math.sin(30 * i * Math.PI / 180));
+ hour_sign = canvas.path("M" + start_x + " " + start_y + "L" + end_x + " " + end_y);
+ }
+ 
+ hour_hand = canvas.path("M100 100L100 50");
+ hour_hand.attr({stroke: "#444444", "stroke-width": 6});
+ minute_hand = canvas.path("M100 100L100 40");
+ minute_hand.attr({stroke: "#444444", "stroke-width": 4});
+ second_hand = canvas.path("M100 110L100 25");
+ second_hand.attr({stroke: "#444444", "stroke-width": 2});
+ var pin = canvas.circle(100, 100, 5);
+ pin.attr("fill", "#000000");
+ }
+ 
+ function update_clock_element(element, hours, minutes, seconds) {
+ $(element).html('');
+ draw_clock();
+ hour_hand.rotate(30 * hours + (minutes / 2.5), 100, 100);
+ minute_hand.rotate(6 * minutes, 100, 100);
+ second_hand.rotate(6 * seconds, 100, 100);
+ 
+ }
+ */
