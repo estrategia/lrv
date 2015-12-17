@@ -280,7 +280,7 @@ return array(
                 'noExito' => '/images/sin_resultado.png',
                 'noExacta' => '/images/conicidedencias-no-exactas.jpg',
             ),
-            'productosPorPagina' => array(5, 10, 15, 20, 25)
+            'productosPorPagina' =>  array(4 => array(12, 24, 36, 48, 60), 5 => array(15, 30, 50, 100, 150)), 
         ),
         'ciudad' => array(
             '*' => 99999

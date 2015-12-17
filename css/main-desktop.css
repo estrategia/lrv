@@ -901,7 +901,9 @@ input#RegistroForm_condiciones[type="checkbox"] + label span {
     background: rgba(0, 0, 0, 0) url("../images/desktop/check-box.png") repeat scroll left center;
 }
 #calificacion-filtro-listaproductos > img {
-    width: 17%;
+    width: 15%;
+    min-width: 26px;
+    max-width: 50px;
 }
 
 .menu-categorias #form-filtro-listaproductos .panel .panel-body ul li label span {

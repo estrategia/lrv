@@ -186,10 +186,11 @@ $(document).ready(function() {
      navigation: true
      });*/
     $('.ad-gallery').adGallery({
-        //  loader_image: '../libs/ad-gallery/loader.gif',
+        loader_image: '../images/libs/ad-gallery/loader.gif',
+        update_window_hash: false,
         width: 400,
         height: 300,
-        thumb_opacity: 0.7,
+        thumb_opacity: 0.7
     });
 });
 
@@ -335,8 +336,6 @@ function obtenerPosicion(pos) {
 }
 
 $(document).on('click', 'div[data-role="tipoentrega"]', function() {
-
-
     $('div[data-role="tipoentrega"]').removeClass('activo');
     $(this).addClass('activo');
     $('div[data-role="tipoentrega"]').addClass('inactivo');
@@ -351,7 +350,10 @@ $(document).on('click', 'div[data-role="tipoentrega"]', function() {
     $('#ubicacion-seleccion-entrega').val($(this).attr('data-tipo'));
     $('#ubicacion-seleccion-resumen').attr('data-entrega',textoUbicacionEntregaSeleccionada());
     textoResumenUbicacionSeleccionada();
-
+    
+    if($('#ubicacion-seleccion-direccion').val().length>0 || ($('#ubicacion-seleccion-ciudad').val().length>0 && $('#ubicacion-seleccion-sector').val().length>0) ){
+        $('button[data-role="ubicacion-seleccion"]').removeClass('display-none');
+    }
 });
 
 $(document).on('click', 'button[data-role="ubicacion-direccion"]', function() {

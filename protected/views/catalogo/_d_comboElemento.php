@@ -26,7 +26,7 @@
                 <button class="col-md-3" style="border:0px solid;" id="btn-aumentar-combo-<?php echo $objCombo->idCombo ?>"  onclick="aumentarCantidadCombo('<?php echo $objCombo->idCombo ?>',<?php echo $objPrecio->getPrecio() ?>)" type="button"><span style="color:red" class="glyphicon glyphicon-plus"></span></button>
             </div>
             <div class=""><span class="txt_cant_total">Subtotal: </span> <span id="subtotal-producto-combo-<?php echo $objCombo->idCombo ?>"><?php echo Yii::app()->numberFormatter->format(Yii::app()->params->formatoMoneda['patron'], $objPrecio->getPrecio(), Yii::app()->params->formatoMoneda['moneda']); ?></span></div>
-            <?php echo CHtml::link('<div class="button anadir">Añadir&nbsp;<img src="' . Yii::app()->baseUrl . '/images/desktop/carrito-amarillo.png" alt=""></div>', '#', array('data-combo' => $objCombo->idCombo, 'data-cargar' => 2, 'class' => '')); ?>
+            <?php echo CHtml::link('<div class="btn btn-primary btn-block btn-xs">Añadir&nbsp;<img src="' . Yii::app()->baseUrl . '/images/desktop/button-carrito.png" alt=""></div>', '#', array('data-combo' => $objCombo->idCombo, 'data-cargar' => 2, 'class' => '')); ?>
         </div>
     </div>
 

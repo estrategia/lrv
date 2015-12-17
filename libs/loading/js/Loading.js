@@ -32,7 +32,9 @@ $(function() {
 
     LoadingConstructor.prototype = {
         show: function() {
-            this.$el.show().css('opacity', 0).animate({opacity: this.maxOpacity}, this.animationDuration);
+            if(this.$el.css('display') == 'none') {
+                this.$el.show().css('opacity', 0).animate({opacity: this.maxOpacity}, this.animationDuration);
+            }
         },
         hide: function() {
             this.$el.animate(
