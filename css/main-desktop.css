@@ -105,6 +105,13 @@
 .font_14 {
     font-size: 14px !important;
 }
+
+.slide-productos .prices_status{
+    font-size: 12px ;
+}
+.slide-productos .price{
+    font-size: 15px ;
+}
 .menu-categorias.cat-collapsables h3 {
     border: 1px solid;
     color: #555;

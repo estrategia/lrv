@@ -358,7 +358,7 @@ class CatalogoController extends Controller {
             $parametrosVista['listProductos'] = $listProductos;
             $this->render('listaProductos', $parametrosVista);
         } else {
-            $pagina = 10;
+            $pagina = 24;
             if (isset($_GET['pageSize']) and is_numeric($_GET['pageSize'])) {
                 $pagina = $_GET['pageSize'];
             }
@@ -766,7 +766,7 @@ class CatalogoController extends Controller {
             $parametrosVista['listProductos'] = $listProductos;
             $this->render('listaProductos', $parametrosVista);
         } else {
-            $pagina = 10;
+            $pagina = 24;
             if (isset($_GET['pageSize']) and is_numeric($_GET['pageSize'])) {
                 $pagina = $_GET['pageSize'];
             }
@@ -1731,7 +1731,7 @@ class CatalogoController extends Controller {
         if ($this->isMobile) {
             $this->render('listaProductos', $parametrosVista);
         } else {
-            $pagina = 25;
+            $pagina = 30;
             if (isset($_GET['pageSize']) and is_numeric($_GET['pageSize'])) {
                 $pagina = $_GET['pageSize'];
             }
@@ -1860,7 +1860,7 @@ class CatalogoController extends Controller {
         if ($this->isMobile) {
             $this->render('listaProductos', $parametrosVista);
         } else {
-            $pagina = 25;
+            $pagina = 30;
             if (isset($_GET['pageSize']) and is_numeric($_GET['pageSize'])) {
                 $pagina = $_GET['pageSize'];
             }
@@ -1989,7 +1989,7 @@ class CatalogoController extends Controller {
             $parametrosVista['listProductos'] = $listProductos;
             $this->render('listaProductos', $parametrosVista);
         } else {
-            $pagina = 25;
+            $pagina = 30;
             if (isset($_GET['pageSize']) and is_numeric($_GET['pageSize'])) {
                 $pagina = $_GET['pageSize'];
             }

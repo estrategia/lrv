@@ -26,7 +26,7 @@
                             <div class="option-list">
                                 Productos por página
                                 <select name="items-page" class="form-control ciudades" id="items-page" onchange="actualizarNumerosPagina()">
-                                    <?php foreach (Yii::app()->params->busqueda['productosPorPagina'] as $pagina): ?>
+                                    <?php foreach (Yii::app()->params->busqueda['productosPorPagina'][$cantidadItems] as $pagina): ?>
                                         <option value="<?php echo $pagina ?>" <?php echo (($dataprovider != null && $dataprovider->getPagination()->getPageSize() == $pagina) ? "selected" : "") ?>><?php echo $pagina ?></option>
                                     <?php endforeach; ?>
                                 </select>
@@ -91,4 +91,4 @@
     ));
     ?>
 
-<?php endif; ?>  
+<?php endif; ?>

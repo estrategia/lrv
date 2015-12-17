@@ -39,7 +39,7 @@ class FiltroForm extends CFormModel {
     }
     
     public function isRangoPrecioValido(){
-        return ($this->precioRango["min"]>0 && $this->precioRango["max"]>0);
+        return ($this->precioRango["min"]>0 && $this->precioRango["max"]>0 && ($this->precioRango["max"]-$this->precioRango["min"]>100));
     }
 
 

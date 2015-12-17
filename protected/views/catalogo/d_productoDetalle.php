@@ -274,7 +274,6 @@
 
 <div class="container"><div class="line-bottom2"></div></div>
 
-<div class="modal fade" id="modalBodegas" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"></div>
 <section>
     <div class="container">
         <!-- Porcentaje de las calificaciones -->

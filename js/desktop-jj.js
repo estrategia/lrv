@@ -335,8 +335,6 @@ function obtenerPosicion(pos) {
 }
 
 $(document).on('click', 'div[data-role="tipoentrega"]', function() {
-
-
     $('div[data-role="tipoentrega"]').removeClass('activo');
     $(this).addClass('activo');
     $('div[data-role="tipoentrega"]').addClass('inactivo');
@@ -351,7 +349,10 @@ $(document).on('click', 'div[data-role="tipoentrega"]', function() {
     $('#ubicacion-seleccion-entrega').val($(this).attr('data-tipo'));
     $('#ubicacion-seleccion-resumen').attr('data-entrega',textoUbicacionEntregaSeleccionada());
     textoResumenUbicacionSeleccionada();
-
+    
+    if($('#ubicacion-seleccion-direccion').val().length>0 || ($('#ubicacion-seleccion-ciudad').val().length>0 && $('#ubicacion-seleccion-sector').val().length>0) ){
+        $('button[data-role="ubicacion-seleccion"]').removeClass('display-none');
+    }
 });
 
 $(document).on('click', 'button[data-role="ubicacion-direccion"]', function() {
@@ -503,6 +504,7 @@ $(document).on('change', 'select[data-role="ciudad-despacho-map"]', function() {
 
         if (map) {
             map.setCenter(new google.maps.LatLng(parseFloat(option.attr('data-latitud')), parseFloat(option.attr('data-longitud'))));
+            map.setZoom(15);
             $('#select-ubicacion-preferencia').remove();
             $('#select-ubicacion-psubsector').removeClass('div-center').addClass('float-left');
             $.ajax({
@@ -541,6 +543,7 @@ $(document).on('change', 'select[data-role="sector-despacho-map"]', function() {
 
         if (map) {
             map.setCenter(new google.maps.LatLng(parseFloat(option.attr('data-latitud')), parseFloat(option.attr('data-longitud'))));
+            map.setZoom(15);
         }
     }
 });
@@ -705,9 +708,9 @@ $(document).on('click', "a[data-cargar='1']", function() {
                 }
 
                 if (data.response.dialogoHTML) {
-                    $("#modalBodegas").html(data.response.dialogoHTML);
-                    $("#modalBodegas").modal();
-                    // alert(data.response.dialogoHTML);
+                    $("#modalBodegas").remove();
+                    $("body").append(data.response.dialogoHTML);
+                    $("#modalBodegas").modal('show');
                 }
             } else {
                 alert(data.response);
