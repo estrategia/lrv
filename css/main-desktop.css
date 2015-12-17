@@ -794,7 +794,7 @@ table.tabla-carro .group-botones-cantidad{
     border: 3px solid #ea0001;
 }
 .product_detail #gallery .ad-thumb-list > li {
-    max-width: 33.3333%;
+    max-width: 15%;
 }
 .product_detail{
     margin: 10px 0 60px;
@@ -2528,10 +2528,6 @@ img.ajustada {
     display: block;
     margin: auto;
     max-width: 100%;
-}
-
-.width-thumb-owl{
-    width: 60%;
 }
 
 .btn-ver-todos{
