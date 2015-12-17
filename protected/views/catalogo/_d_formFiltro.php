@@ -46,7 +46,7 @@
         <div class="panel-heading" role="tab" id="headingFour">
             <h4 class="panel-title">
                 <a role="button" data-toggle="collapse" data-parent="#accordion-filtros" href="#collapseFour" aria-expanded="true" aria-controls="collapseFour" style="background:none;" >
-                    Calificaci&oacute;n <span class="glyphicon glyphicon-plus" aria-hidden="true"></span>
+                    Calificaci&oacute;n
                 </a>
             </h4>
         </div>
