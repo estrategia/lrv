@@ -179,7 +179,7 @@ class ModulosConfigurados extends CActiveRecord {
 
         if (!empty($listaCodigos) || !empty($listaCodigosCategoria) || !empty($listaCodigosMarca)) {
             $criteria = array(
-                'order' => (($this->aleatorio == 1)? 'rand()': 't.orden DESC'). (($this->lineas != NULL && $this->aleatorio == 1) ? ' LIMIT '.($this->lineas*4): ''),
+                'order' => (($this->aleatorio == 1)? 'rand()': 't.orden DESC'). (($this->lineas != NULL && $this->aleatorio == 1) ? ' LIMIT '.($this->lineas*5): ''),
                 'with' => array('listImagenes', 'objCodigoEspecial', 'listCalificaciones'),
                 'condition' => "t.activo=:activo AND (listImagenes.tipoImagen='" . Yii::app()->params->producto['tipoImagen']['mini'] . "' OR listImagenes.tipoImagen IS NULL)",
                 'params' => array(
