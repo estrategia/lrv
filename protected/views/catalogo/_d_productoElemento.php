@@ -167,7 +167,7 @@
                 <?php endif; ?>
                 <?php if ($data->ventaVirtual == 1 && !Yii::app()->user->isGuest): ?>
                     <!--adicionar a lista-->
-                    <a href="#" data-tipo="1" class="itm_ico button-lista" title="Añadir a lista" data-role="lstpersonalguardar" data-codigo="<?php echo $data->codigoProducto ?>"><span class="text_add_list">Añadir a lista</span> <span class="glyphicon glyphicon-list-alt" aria-hidden="true"></span>
+                    <a href="#" data-tipo="1" class="itm_ico button-lista" title="Añadir a lista" data-role="lstpersonalguardar" data-id="<?php echo $idUnico ?>" data-codigo="<?php echo $data->codigoProducto ?>"><span class="text_add_list">Añadir a lista</span> <span class="glyphicon glyphicon-list-alt" aria-hidden="true"></span>
                     </a>
                 <?php endif; ?>
 

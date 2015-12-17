@@ -178,7 +178,7 @@
                                 <?php endif; ?>
                                 <!--adicionar a lista -->
                                 <?php echo "<div class='space-1'></div>" ?>
-                                <?php echo CHtml::link('<div class="btn btn-default btn-block" >Comparar</div>', '#', array('class' => '', 'data-producto' => $objProducto->codigoProducto, 'data-role' => 'comparar')); ?>
+                                <?php echo CHtml::link('<div class="btn btn-default btn-block" >Comparar</div>', '#', array('class' => '', 'data-producto' => $objProducto->codigoProducto,'data-id'=> $idUnico, 'data-role' => 'comparar')); ?>
                             </div>
                         <?php else: ?>
                             <div class="consultar_precio">
