@@ -171,12 +171,13 @@
                     <?php if ($objProducto->ventaVirtual == 1): ?>
                         <?php if ($objSectorCiudad != null): ?>                                  
                             <div class="" style="margin-top: 13px;">
-                                <?php echo CHtml::link('<div class="button anadir">Añadir&nbsp;<img src="' . Yii::app()->baseUrl . '/images/desktop/button-carrito.png" alt=""></div>', '#', array('data-producto' => $objProducto->codigoProducto, 'data-cargar' => 1, 'data-id' => $idUnico, 'class' => '')); ?>
+                                <?php echo CHtml::link('<div class="btn btn-primary btn-block">Añadir&nbsp;<img src="' . Yii::app()->baseUrl . '/images/desktop/button-carrito.png" alt=""></div>', '#', array('data-producto' => $objProducto->codigoProducto, 'data-cargar' => 1, 'data-id' => $idUnico, 'class' => '')); ?>
                                 <?php if (!Yii::app()->user->isGuest): ?>
-                                    <?php echo CHtml::link('<div class="comprar-ahora" >Añadir a la lista</div>', '#', array('class' => '', 'data-tipo' => '1', 'data-role' => 'lstpersonalguardar', 'data-codigo' => $objProducto->codigoProducto, 'data-id' => $idUnico)); ?>
+                                    <?php echo CHtml::link('<div class="btn btn-primary btn-block" >Añadir a la lista</div>', '#', array('class' => '', 'data-tipo' => '1', 'data-role' => 'lstpersonalguardar', 'data-codigo' => $objProducto->codigoProducto, 'data-id' => $idUnico)); ?>
                                 <?php endif; ?>
                                 <!--adicionar a lista -->
-                                <?php echo CHtml::link('<div class="comprar-ahora" >Comparar</div>', '#', array('class' => '', 'data-producto' => $objProducto->codigoProducto, 'data-role' => 'comparar')); ?>
+                                <?php echo "<div class='space-1'></div>" ?>
+                                <?php echo CHtml::link('<div class="btn btn-default btn-block" >Comparar</div>', '#', array('class' => '', 'data-producto' => $objProducto->codigoProducto, 'data-role' => 'comparar')); ?>
                             </div>
                         <?php else: ?>
                             <div class="" style="margin-top: 13px;">                             
@@ -271,7 +272,6 @@
 
 <div class="container"><div class="line-bottom2"></div></div>
 
-<div class="modal fade" id="modalBodegas" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"></div>
 <section>
     <div class="container">
         <!-- Porcentaje de las calificaciones -->

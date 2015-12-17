@@ -503,6 +503,7 @@ $(document).on('change', 'select[data-role="ciudad-despacho-map"]', function() {
 
         if (map) {
             map.setCenter(new google.maps.LatLng(parseFloat(option.attr('data-latitud')), parseFloat(option.attr('data-longitud'))));
+            map.setZoom(15);
             $('#select-ubicacion-preferencia').remove();
             $('#select-ubicacion-psubsector').removeClass('div-center').addClass('float-left');
             $.ajax({
@@ -541,6 +542,7 @@ $(document).on('change', 'select[data-role="sector-despacho-map"]', function() {
 
         if (map) {
             map.setCenter(new google.maps.LatLng(parseFloat(option.attr('data-latitud')), parseFloat(option.attr('data-longitud'))));
+            map.setZoom(15);
         }
     }
 });
@@ -705,9 +707,9 @@ $(document).on('click', "a[data-cargar='1']", function() {
                 }
 
                 if (data.response.dialogoHTML) {
-                    $("#modalBodegas").html(data.response.dialogoHTML);
-                    $("#modalBodegas").modal();
-                    // alert(data.response.dialogoHTML);
+                    $("#modalBodegas").remove();
+                    $("body").append(data.response.dialogoHTML);
+                    $("#modalBodegas").modal('show');
                 }
             } else {
                 alert(data.response);

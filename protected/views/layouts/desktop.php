@@ -112,7 +112,8 @@
                                             <ul class="submenu">
                                                 <div class="sub_float">
                                                     <?php $cpunte = 0;
-                                                    foreach ($categoria->listCategoriasHijas as $subcategoria): $cpunte++; /* echo $cpunte; */ ?>
+                                                    foreach ($categoria->listCategoriasHijas as $subcategoria): $cpunte++; /* echo $cpunte; */
+                                                        ?>
                                                         <div class="section-submenu">
                                                             <?php if (count($subcategoria->listModulosConfigurados) > 0): ?>
                                                                 <li class='title-submenu'><?php echo CHtml::link("<span class='glyphicon glyphicon-chevron-right' aria-hidden='true'></span>" . ucfirst(strtolower($subcategoria->nombreCategoriaTienda)), CController::createUrl('/catalogo/division', array('division' => $subcategoria->idCategoriaTienda))); ?></li>
@@ -134,24 +135,25 @@
             <?php if ($cpunte == 4 && count($categoria->listCategoriasHijas) != 4): ?>
                                                         </div>
                                                         <div class="sub_float">
-                                                            <?php $cpunte = 0;
+                                                            <?php
+                                                            $cpunte = 0;
                                                         endif;
 
                                                     endforeach;
                                                     ?>
                                                 </div>
                                             </ul>
-                                        <?php if (!empty($categoria->rutaImagenMenu)): ?>
+                                            <?php if (!empty($categoria->rutaImagenMenu)): ?>
                                                 <img class="img_categoria" src="<?php echo Yii::app()->request->baseUrl; ?>/images/menu/desktop/<?php echo $categoria->rutaImagenMenu ?>"> 
-                                    <?php endif; ?>
+                                        <?php endif; ?>
                                         </div>
-    <?php endif; ?>
+                                <?php endif; ?>
                                 </li>
-                    <?php endforeach; ?>
+<?php endforeach; ?>
                         </ul>
                     </li>
 
-                    <?php foreach (ModulosConfigurados::getModulosMenu($this->objSectorCiudad) as $objModulo): ?>
+<?php foreach (ModulosConfigurados::getModulosMenu($this->objSectorCiudad) as $objModulo): ?>
                         <li class="modulo-menu" style="background-color: <?php echo $objModulo->objMenuModulo->color; ?>;">
                             <a href="<?php echo $this->createUrl($objModulo->objMenuModulo->contenido) ?>"><img src="<?php echo Yii::app()->request->baseUrl . Yii::app()->params->carpetaImagen['menuDesktop'] . $objModulo->objMenuModulo->rutaImagen; ?>" /> <?php echo $objModulo->descripcion ?></a>
                         </li>
@@ -196,7 +198,7 @@
             <!--fin banner footer-->
             <!--footer-->
             <footer>	
-                <div class="container">	
+                <div class="container-fluid">	
                     <div class="row">
                         <div class="col-sm-12" style="padding-top:20px;">	
                             <div class="col-sm-3">
@@ -206,14 +208,11 @@
                                 </div>
                                 <ul>	
                                     <li><a href="<?php echo $this->createUrl('/contenido/corporativo', array('tipo' => 'horario')) ?>">Horarios de atención</a></li>
-                                    <li><a href="<?php echo $this->createUrl('/contenido/corporativo', array('tipo' => 'polidescuento')) ?>">Politicas días de descuento 1,10,15 y 25</a></li>
-                                    <li><a href="<?php echo $this->createUrl('/contenido/corporativo', array('tipo' => 'pqrs')) ?>">PQRS (Pregunras, quejas, reclamos, sugerencias)</a></li>
                                     <li><a href="<?php echo $this->createUrl('/contenido/corporativo', array('tipo' => 'politerminos')) ?>">Políticas y términos de uso</a></li>
-                                    <li><a target="_blank" href="http://www.sic.gov.co/es/">SIC (Súper intendencia de industria y comercio)</a></li>
                                     <li><a target="_blank" href="http://www.credirebaja.com/">Tarjeta crediRebaja</a></li>
                                 </ul>
                             </div>
-                            <div class="col-sm-2">
+                            <div class="col-sm-3">
                                 <div class="titulo-footer">
                                     <img src="<?php echo Yii::app()->request->baseUrl; ?>/images/desktop/cliente-fiel.png" alt="">	
                                     <strong style="margin-left:10px;">Club</strong><br><strong class="title-footer2">cliente fiel</strong>
@@ -233,33 +232,32 @@
                                 <ul>	
                                     <li><a target="_blank" href="http://www.copservir.com/clubclientefiel/index.php?option=com_content&view=featured&Itemid=444">Políticas y condiciones</a></li>
                                     <li><a target="_blank" href="http://www.copservir.com/clubclientefiel/index.php?option=com_content&view=category&layout=blog&id=85&Itemid=476">Ganadores de campañas</a></li>
+                                    <li><a href="<?php echo $this->createUrl('/contenido/corporativo', array('tipo' => 'polidescuento')) ?>">Politicas días de descuento 1,10,15 y 25</a></li>
                                 </ul>
                             </div>
-                            <div class="col-sm-2">
-                                <div class="titulo-footer">	
-                                    <img src="<?php echo Yii::app()->request->baseUrl; ?>/images/desktop/coopervir.png" alt="">
-                                    <strong>Cooperservir</strong>
-                                </div>
-                            </div>
-                            <div class="col-sm-2">
+                            <div class="col-sm-3">
                                 <div class="titulo-footer-last">
                                     <img src="<?php echo Yii::app()->request->baseUrl; ?>/images/desktop/ico-contactanos.png" alt="">	
                                     <strong>Contactanos</strong>
                                 </div>
-                                <ul>	
+                                <ul>
                                     <li>Call center <br> 01 8000 93 99 00</li>
+                                    <li><a href="<?php echo $this->createUrl('/contenido/corporativo', array('tipo' => 'pqrs')) ?>">PQRS (Pregunras, quejas, reclamos, sugerencias)</a></li>
                                 </ul>
                             </div>
                         </div>	
+                        <div class="col-sm-12"><div class="space-1"></div></div>
+
 
                         <div class="col-sm-12">	
-                            <br>
-                            <br>
-                        </div>	
-
-                        <div class="col-sm-12">	
-                            <p align="center">Cooperativa Multiactiva &nbsp;de Servicios Solidarios Copservir  Ltda | NIT &nbsp;830.011.670-3 | LA REBAJA DROGUERIA | 01 8000 93 99  00 <br> Calle 13 No. 42 - 10 Bogotá, Colombia | <a href="mailto:infolrv@copservir.com">infolrv@copservir.com</a>
-                                Colombia © 2015 <a href="http://www.larebajavirtual.com">www.larebajavirtual.com <br> </a><a href="/contenido/index/opcion/param/99/">PQRS (preguntas, quejas, reclamos, sugerencias)</a></p>
+                            <p align="center">
+                                Cooperativa Multiactiva &nbsp;de Servicios Solidarios Copservir  Ltda | NIT &nbsp;830.011.670-3 | LA REBAJA DROGUERIA | 01 8000 93 99  00 
+                                <br>
+                                Calle 13 No. 42 - 10 Bogotá, Colombia | <a href="mailto:infolrv@copservir.com">infolrv@copservir.com</a>
+                                Colombia © 2015 <a href="http://www.larebajavirtual.com">www.larebajavirtual.com</a>
+                                <br> 
+                                <a target="_blank" href="http://www.sic.gov.co/es/">SIC (Súper intendencia de industria y comercio)</a>
+                            </p>
                         </div>
                     </div>
                 </div>
