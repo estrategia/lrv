@@ -539,6 +539,11 @@ $(document).on('change', "input[id^='FiltroForm_listFiltros_']", function() {
     recalcularFiltros(2);
 });
 
+$(document).on('click', "input[id^='FiltroForm_listCategoriasTienda_']", function() {
+    filtrarListaProductos();
+});
+
+
 $(document).on('click', "a[data-role='filtro-listaproductos-reset']", function() {
     $('#form-filtro-listaproductos').clearForm();
     var value = [parseInt($('#FiltroForm_precio').attr('data-slider-min')), parseInt($('#FiltroForm_precio').attr('data-slider-max'))];
