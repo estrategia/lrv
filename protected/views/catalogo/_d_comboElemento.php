@@ -1,18 +1,16 @@
 
 <div class="col-md-12 border-left content-txt2">
     <div class="col-md-12">
-        <div class="" style="text-align:center">
-            <a href="<?php echo CController::createUrl('/catalogo/combo', array('combo' => $objCombo->idCombo)) ?>" data-ajax="false">
-                <img src="<?php echo Yii::app()->request->baseUrl . $objCombo->rutaImagen(); ?>" class="ui-li-thumb">
-            </a>
-        </div>
-        
+        <a href="<?php echo CController::createUrl('/catalogo/combo', array('combo' => $objCombo->idCombo)) ?>">
+            <img src="<?php echo Yii::app()->request->baseUrl . $objCombo->rutaImagen(); ?>" class="img-responsive noimagenProduct product-prom">
+        </a>
+
         <!-- combo agregado -->
         <a href="" class="clst_slct_prod<?php echo (Yii::app()->shoppingCart->contains($objCombo->getCodigo()) ? " active" : "") ?>">
             <img src="<?php echo Yii::app()->request->baseUrl ?>/images/desktop/icon_seleccionado.png">
         </a>
         <!-- combo agregado -->
-        
+
         <div class="col-md-12">
             <div class="line-bottom">
                 <a href="<?php echo CController::createUrl('/catalogo/combo', array('combo' => $objCombo->idCombo)) ?>" data-ajax="false"><?php echo strtoupper($objCombo->descripcionCombo) ?></a> 
@@ -26,16 +24,8 @@
                 <button class="col-md-3" style="border:0px solid;" id="btn-aumentar-combo-<?php echo $objCombo->idCombo ?>"  onclick="aumentarCantidadCombo('<?php echo $objCombo->idCombo ?>',<?php echo $objPrecio->getPrecio() ?>)" type="button"><span style="color:red" class="glyphicon glyphicon-plus"></span></button>
             </div>
             <div class=""><span class="txt_cant_total">Subtotal: </span> <span id="subtotal-producto-combo-<?php echo $objCombo->idCombo ?>"><?php echo Yii::app()->numberFormatter->format(Yii::app()->params->formatoMoneda['patron'], $objPrecio->getPrecio(), Yii::app()->params->formatoMoneda['moneda']); ?></span></div>
-            <?php echo CHtml::link('<div class="btn btn-primary btn-block btn-xs">Añadir&nbsp;<img src="' . Yii::app()->baseUrl . '/images/desktop/button-carrito.png" alt=""></div>', '#', array('data-combo' => $objCombo->idCombo, 'data-cargar' => 2, 'class' => '')); ?>
+                <?php echo CHtml::link('<div class="btn btn-primary btn-block btn-xs">Añadir&nbsp;<img src="' . Yii::app()->baseUrl . '/images/desktop/button-carrito.png" alt=""></div>', '#', array('data-combo' => $objCombo->idCombo, 'data-cargar' => 2, 'class' => '')); ?>
         </div>
     </div>
-
-    <div class="">
-        <strong>
-            <a href="<?php echo CController::createUrl('/catalogo/combo', array('combo' => $objCombo->idCombo)) ?>" data-ajax="false"><?php echo strtoupper($objCombo->descripcionCombo) ?></a> COMBO
-            <div class="clst_pre_act" style="padding-bottom:1em;"><?php echo Yii::app()->numberFormatter->format(Yii::app()->params->formatoMoneda['patron'], $objPrecio->getPrecio(), Yii::app()->params->formatoMoneda['moneda']); ?> </div>
-        </strong>
-    </div>
-
     <br/>
 </div>

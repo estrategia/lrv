@@ -7,6 +7,7 @@
                 <th>Inicio</th>
                 <th>Fín</th>
                 <th>Días</th>
+                <th>Título</th>
                 <th>Descripción</th>
                 <th>Orden</th>
                 <th></th>
@@ -38,6 +39,7 @@
                     <?php echo $cadenaDias?>
                       <?php endif;?>
                     </td>
+                    <td><?php echo $modulos->objModulo->titulo ?></td>
                     <td><?php echo $modulos->objModulo->descripcion ?></td>
                     <td><?php echo CHtml::textField('orden',$modulos->orden, array('id' => 'orden_'.$modulos->idModulo)) ?></td>
                     <td><?php echo CHtml::link("Actualizar", '#', array("data-role" => "agregar-modulo-grupo","data-idModulo" => $modulos->idModulo, 'data-accion' => '2'));?></td>

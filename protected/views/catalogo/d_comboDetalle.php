@@ -1,13 +1,13 @@
-<section>
+<section class="product_detail">
     <div class="container">
-        <div class="col-md-12">
+        <div class="row">
             <div class="col-md-6">
-                <div class="col-md-10">
-                    <?php $listImagenes = $objCombo->listImagenesGrandes() ?>
-                    <?php if (empty($listImagenes)): ?>
-                        <div class="item"><img class='img-responsive' src="<?php echo Yii::app()->request->baseUrl . Yii::app()->params->producto['noImagen']['grande']; ?>" alt="<?php echo $objCombo->descripcionCombo ?>" title="<?php echo $objCombo->descripcionCombo ?>"></div>
-                    <?php else: ?>
-                        <div id="gallerycombo" class="ad-gallery">
+                <?php $listImagenes = $objCombo->listImagenesGrandes() ?>
+                <?php if (empty($listImagenes)): ?>
+                    <div class="item"><img class='img-responsive' src="<?php echo Yii::app()->request->baseUrl . Yii::app()->params->producto['noImagen']['grande']; ?>" alt="<?php echo $objCombo->descripcionCombo ?>" title="<?php echo $objCombo->descripcionCombo ?>"></div>
+                <?php else: ?>
+                    <div class="">
+                        <div id="gallery" class="ad-gallery">
                             <div class="ad-image-wrapper">
                             </div>
                             <div class="ad-controls">
@@ -17,8 +17,8 @@
                                     <ul class="ad-thumb-list">
                                         <?php foreach ($listImagenes as $imagen): ?>
                                             <li>
-                                                <a style="width:60%" href="<?php echo Yii::app()->request->baseUrl . Yii::app()->params->carpetaImagen['combos'][YII::app()->params->producto['tipoImagen']['grande']] . $imagen->rutaImagen ?>">
-                                                    <img class="img-responsive noimagenProduct product-prom" src="<?php echo Yii::app()->request->baseUrl . Yii::app()->params->carpetaImagen['combos'][YII::app()->params->producto['tipoImagen']['grande']] . $imagen->rutaImagen ?>" >
+                                                <a href="<?php echo Yii::app()->request->baseUrl . Yii::app()->params->carpetaImagen['combos'][YII::app()->params->producto['tipoImagen']['grande']] . $imagen->rutaImagen ?>">
+                                                    <img class="img-responsive width-thumb-owl product-prom" src="<?php echo Yii::app()->request->baseUrl . Yii::app()->params->carpetaImagen['combos'][YII::app()->params->producto['tipoImagen']['grande']] . $imagen->rutaImagen ?>" >
                                                 </a>
                                             </li>
                                         <?php endforeach; ?>
@@ -26,8 +26,8 @@
                                 </div>
                             </div>
                         </div>
-                    <?php endif; ?>
-                </div>
+                    </div>
+                <?php endif; ?>
             </div>  
             <div class="col-md-6 content-txt2 border-left">
                 <div class="descripciones">
@@ -52,8 +52,8 @@
                         <div class=""><span class="txt_cant_total">Subtotal: </span> <span id="subtotal-producto-combo-<?php echo $objCombo->idCombo ?>"><?php echo Yii::app()->numberFormatter->format(Yii::app()->params->formatoMoneda['patron'], $objPrecio->getPrecio(), Yii::app()->params->formatoMoneda['moneda']); ?></span></div>
                         <?php if (isset(Yii::app()->session[Yii::app()->params->sesion['sectorCiudadEntrega']])): ?>                                  
                             <div class="col-md-12" style="margin-top: 13px;">
-                                <?php echo CHtml::link('<div class="btn btn-primary btn-block">Añadir&nbsp;<img src="' . Yii::app()->baseUrl . '/images/desktop/carrito-amarillo.png" alt=""></div>', '#', array('data-combo' => $objCombo->idCombo, 'data-cargar' => 2, 'class' => '')); ?>
-                                <?php echo "<div class='space-1'></div>";?>
+                                <?php echo CHtml::link('<div class="btn btn-primary btn-block">Añadir&nbsp;<img src="' . Yii::app()->baseUrl . '/images/desktop/button-carrito.png" alt=""></div>', '#', array('data-combo' => $objCombo->idCombo, 'data-cargar' => 2, 'class' => '')); ?>
+                                <?php echo "<div class='space-1'></div>"; ?>
                                 <?php echo CHtml::link('<div class="btn btn-default btn-block">Añadir a la lista</div>', '#', array('class' => '', 'data-tipo' => '2', 'data-role' => 'lstpersonalguardar', 'data-codigo' => $objCombo->idCombo)); ?>
                             </div>
                         <?php else: ?>

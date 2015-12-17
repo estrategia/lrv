@@ -525,6 +525,7 @@ $(document).on('click', "a[data-role='actualizarlistadetalle']", function() {
 
 $(document).on('click', "a[data-role='lstpersonalguardar']", function() {
     var tipo = $(this).attr('data-tipo');
+    var idUnico = $(this).attr('data-id');
     tipo = parseInt(tipo);
     if (isNaN(tipo)) {
         tipo = -1;
@@ -533,7 +534,7 @@ $(document).on('click', "a[data-role='lstpersonalguardar']", function() {
     var unidades = 0;
 
     if (tipo === 1) {
-        unidades = $('#cantidad-producto-unidad-' + codigo).val();
+        unidades = $('#cantidad-producto-unidad-' + codigo + '-' + idUnico).val();
         unidades = parseInt(unidades);
         if (isNaN(unidades)) {
             unidades = 0;

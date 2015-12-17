@@ -19,6 +19,10 @@
         <div class="col-md-12">
             <div class="form-group">
                 <div class="center">
+                    <?php if(!empty($params['model']->titulo)):?>
+                    <strong><?php echo $params['model']->titulo ?></strong>
+                    <br/>
+                    <?php endif;?>
                     <div class="btn-group">
                         <a href="<?php echo $this->createUrl('/callcenter/contenido/editar', array('idModulo' => $params['model']->idModulo, 'opcion'=>'editar')) ?>" class="btn btn-primary <?php echo ($params['opcion']=="editar" ? "active" : "") ?>">Editar</a>
                         <a href="<?php echo $this->createUrl('/callcenter/contenido/editar', array('idModulo' => $params['model']->idModulo, 'opcion'=>'sector')) ?>" class="btn btn-primary <?php echo ($params['opcion']=="sector" ? "active" : "") ?>" >Sector</a>
