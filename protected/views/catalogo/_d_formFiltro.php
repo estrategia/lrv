@@ -95,7 +95,7 @@
             </div>
             <div id="collapse-precio-" class="panel-collapse collapse in" role="tabpanel" aria-labelledby="heading-precio">
                 <div class="panel-body">	
-                    <input id="FiltroForm_precio" class="span2" value="" data-role="bootstrap-slider" data-slider-min="<?php echo $formFiltro->precioRango["min"] ?>" data-slider-max="<?php echo $formFiltro->precioRango["max"] ?>" data-slider-step="50" data-slider-value="[<?php echo $formFiltro->precioRango["min"] ?>,<?php echo $formFiltro->precioRango["max"] ?>]"/>
+                    <input id="FiltroForm_precio" class="span2" value="" data-role="bootstrap-slider" data-slider-min="<?php echo $formFiltro->precioRango["min"] ?>" data-slider-max="<?php echo $formFiltro->precioRango["max"] ?>" data-slider-step="50" data-slider-min="<?php echo $formFiltro->precioRango["min"] ?>" data-slider-max="<?php echo $formFiltro->precioRango["max"] ?>" data-slider-value="[<?php echo $formFiltro->precioRango["min"] ?>,<?php echo $formFiltro->precioRango["max"] ?>]"/>
                     <input id="FiltroForm_precio_0_text" class="search-priced" value="<?php echo Yii::app()->numberFormatter->format(Yii::app()->params->formatoMoneda['patron'], $formFiltro->precioRango["min"], Yii::app()->params->formatoMoneda['moneda']) ?>" />
                     <span>-</span>
                     <input id="FiltroForm_precio_1_text" class="search-priced" value="<?php echo Yii::app()->numberFormatter->format(Yii::app()->params->formatoMoneda['patron'], $formFiltro->precioRango["max"], Yii::app()->params->formatoMoneda['moneda']) ?>" />

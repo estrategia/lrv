@@ -694,22 +694,24 @@ $(document).on('change', '#FiltroForm_precio_0_text', function() {
     var value = $(this).val();
     value = parseInt(value);
     if (isNaN(value)) {
-        value = 0;
+        value = parseInt($("#FiltroForm_precio").attr("data-slider-min"));
     }
     $('#FiltroForm_precio').slider('setValue', [value, $('#FiltroForm_precio').slider('getValue')[1]]);
     $('#FiltroForm_precio_0').val(value);
     $('#FiltroForm_precio_0_text').val("$" + format(value));
+    filtrarListaProductos();
 });
 
 $(document).on('change', '#FiltroForm_precio_1_text', function() {
     var value = $(this).val();
     value = parseInt(value);
     if (isNaN(value)) {
-        value = 200000;
+        value = parseInt($("#FiltroForm_precio").attr("data-slider-max"));
     }
     $('#FiltroForm_precio').slider('setValue', [$('#FiltroForm_precio').slider('getValue')[0], value]);
     $('#FiltroForm_precio_1').val(value);
     $('#FiltroForm_precio_1_text').val("$" + format(value));
+    filtrarListaProductos();
 });
 
 $(document).on('click', "a[id='btn-buscador-productos']", function() {
