@@ -127,7 +127,7 @@
     </div>
     <div class="space-1"></div>
     <div class="text-center">
-        <a href="#" data-role="filtro-listaproductos-reset" data-tipo="2"><div class="btn btn-primary">Limpiar filtros</div></a>
+        <a href="#" data-role="filtro-listaproductos-reset" data-tipo="2"><div class="button">Limpiar filtros</div></a>
     </div>
     <?php $this->endWidget(); ?>
 <?php endif; ?>
