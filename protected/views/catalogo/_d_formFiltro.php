@@ -23,12 +23,12 @@
         <div class="panel panel-default">
             <div class="panel-heading" role="tab" id="heading-precio">
                 <h4 class="panel-title">
-                    <a class="collapsed" role="button" data-toggle="collapse" data-parent="#accordion-filtros" href="#collapse-precio" aria-expanded="false" aria-controls="collapse-precio" style="background:none;" >
-                        Precio <span class="glyphicon glyphicon-plus" aria-hidden="true"></span>
+                    <a role="button" data-toggle="collapse" data-parent="#accordion-filtros" href="#collapse-precio" aria-expanded="false" aria-controls="collapse-precio" style="background:none;" >
+                        Precio
                     </a>
                 </h4>
             </div>
-            <div id="collapse-precio" class="panel-collapse collapse" role="tabpanel" aria-labelledby="heading-precio">
+            <div id="collapse-precio-" class="panel-collapse collapse in" role="tabpanel" aria-labelledby="heading-precio">
                 <div class="panel-body">	
                     <input id="FiltroForm_precio" class="span2" value="" data-role="bootstrap-slider" data-slider-min="<?php echo $formFiltro->precioRango["min"] ?>" data-slider-max="<?php echo $formFiltro->precioRango["max"] ?>" data-slider-step="50" data-slider-value="[<?php echo $formFiltro->precioRango["min"] ?>,<?php echo $formFiltro->precioRango["max"] ?>]"/>
                     <input id="FiltroForm_precio_0_text" class="search-priced" value="<?php echo Yii::app()->numberFormatter->format(Yii::app()->params->formatoMoneda['patron'], $formFiltro->precioRango["min"], Yii::app()->params->formatoMoneda['moneda']) ?>" />
@@ -45,21 +45,19 @@
     <div class="panel panel-default">
         <div class="panel-heading" role="tab" id="headingFour">
             <h4 class="panel-title">
-                <a class="collapsed" role="button" data-toggle="collapse" data-parent="#accordion-filtros" href="#collapseFour" aria-expanded="true" aria-controls="collapseFour" style="background:none;" >
+                <a role="button" data-toggle="collapse" data-parent="#accordion-filtros" href="#collapseFour" aria-expanded="true" aria-controls="collapseFour" style="background:none;" >
                     Calificaci&oacute;n <span class="glyphicon glyphicon-plus" aria-hidden="true"></span>
                 </a>
             </h4>
         </div>
-        <div id="collapseFour" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingFour">
+        <div id="collapseFour-" class="panel-collapse collapse in" role="tabpanel" aria-labelledby="headingFour">
             <div class="panel-body">
                 <div id="calificacion-filtro-listaproductos" data-role="raty" data-readonly="false" data-score="0" data-callback="capturarfiltrocalificacion"></div>
                 <input id="FiltroForm_calificacion" name="FiltroForm[calificacion]" value="-1" type="hidden"/>
             </div>
         </div>
     </div>
-    <br>
-    <a href="#" data-role="filtro-listaproductos" ><div class="button">Filtrar</div></a>
-    <br>
+    <div class="space-1"></div>
     <a href="#" data-role="filtro-listaproductos-reset" data-tipo="1" ><div class="button">Limpiar filtros</div></a>
 
     <?php $this->endWidget(); ?>
@@ -89,12 +87,12 @@
         <div class="panel panel-default">
             <div class="panel-heading" role="tab" id="heading-precio">
                 <h4 class="panel-title">
-                    <a class="collapsed" role="button" data-toggle="collapse" data-parent="#accordion-filtros" href="#collapse-precio" aria-expanded="false" aria-controls="collapse-precio" style="background:none;" >
-                        Precio <span class="glyphicon glyphicon-plus" aria-hidden="true"></span>
+                    <a role="button" data-toggle="collapse" data-parent="#accordion-filtros" href="#collapse-precio" aria-expanded="true" aria-controls="collapse-precio" style="background:none;" >
+                        Precio
                     </a>
                 </h4>
             </div>
-            <div id="collapse-precio" class="panel-collapse collapse" role="tabpanel" aria-labelledby="heading-precio">
+            <div id="collapse-precio-" class="panel-collapse collapse in" role="tabpanel" aria-labelledby="heading-precio">
                 <div class="panel-body">	
                     <input id="FiltroForm_precio" class="span2" value="" data-role="bootstrap-slider" data-slider-min="<?php echo $formFiltro->precioRango["min"] ?>" data-slider-max="<?php echo $formFiltro->precioRango["max"] ?>" data-slider-step="50" data-slider-value="[<?php echo $formFiltro->precioRango["min"] ?>,<?php echo $formFiltro->precioRango["max"] ?>]"/>
                     <input id="FiltroForm_precio_0_text" class="search-priced" value="<?php echo Yii::app()->numberFormatter->format(Yii::app()->params->formatoMoneda['patron'], $formFiltro->precioRango["min"], Yii::app()->params->formatoMoneda['moneda']) ?>" />
@@ -110,23 +108,20 @@
     <div class="panel panel-default">
         <div class="panel-heading" role="tab" id="headingFour">
             <h4 class="panel-title">
-                <a class="collapsed" role="button" data-toggle="collapse" data-parent="#accordion-filtros" href="#collapseFour" aria-expanded="true" aria-controls="collapseFour" style="background:none;" >
-                    Calificaci&oacute;n <span class="glyphicon glyphicon-plus" aria-hidden="true"></span>
+                <a role="button" data-toggle="collapse" data-parent="#accordion-filtros" href="#collapseFour" aria-expanded="true" aria-controls="collapseFour" style="background:none;" >
+                    Calificaci&oacute;n
                 </a>
             </h4>
         </div>
-        <div id="collapseFour" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingFour">
+        <div id="collapseFour-" class="panel-collapse collapse in" role="tabpanel" aria-labelledby="headingFour">
             <div class="panel-body">
                 <div id="calificacion-filtro-listaproductos" data-role="raty" data-readonly="false" data-score="0" data-callback="capturarfiltrocalificacion"></div>
                 <input id="FiltroForm_calificacion" name="FiltroForm[calificacion]" value="-1" type="hidden"/>
             </div>
         </div>
     </div>
+    <div class="space-1"></div>
+    <a href="#" data-role="filtro-listaproductos-reset" data-tipo="2"><div class="button">Limpiar filtros</div></a>
 
-    <br>
-    <div class="row">
-        <div class="col-sm-6"><a href="#" data-role="filtro-listaproductos" ><div class="button">Filtrar</div></a></div>
-        <div class="col-sm-6"><a href="#" data-role="filtro-listaproductos-reset" data-tipo="2"><div class="button">Limpiar</div></a></div>
-    </div>
     <?php $this->endWidget(); ?>
 <?php endif; ?>

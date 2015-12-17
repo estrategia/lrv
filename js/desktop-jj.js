@@ -191,9 +191,9 @@ $(document).ready(function() {
         height: 300,
         thumb_opacity: 0.7,
     });
-    $('.ciudades').select2();
-    $('#RegistroForm_profesion').select2();
 });
+
+$('.ciudades').select2();
 
 
 function cambioUnidadesUbicacion(codigoProducto, valorUnidad, op) {

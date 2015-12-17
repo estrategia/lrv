@@ -164,7 +164,7 @@ $form = $this->beginWidget('CActiveForm', array(
 
                 <div class="form-group">
                     <?php echo $form->labelEx($model, 'profesion', array('style' => 'display:block;')); ?>
-                    <?php echo $form->dropDownList($model, 'profesion', CHtml::listData(ProfesionCliente::listData(), 'codigoProfesion', 'nombreProfesion'), array('prompt' => $model->getAttributeLabel('profesion'), 'encode' => false)); ?>
+                    <?php echo $form->dropDownList($model, 'profesion', CHtml::listData(ProfesionCliente::listData(), 'codigoProfesion', 'nombreProfesion'), array('class'=>'ciudades', 'prompt' => $model->getAttributeLabel('profesion'), 'encode' => false)); ?>
                     <?php echo $form->error($model, 'profesion', array("class" => "text-danger")); ?>
                 </div>
 
