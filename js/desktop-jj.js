@@ -705,9 +705,9 @@ $(document).on('click', "a[data-cargar='1']", function() {
                 }
 
                 if (data.response.dialogoHTML) {
-                    $("#modalBodegas").html(data.response.dialogoHTML);
-                    $("#modalBodegas").modal();
-                    // alert(data.response.dialogoHTML);
+                    $("#modalBodegas").remove();
+                    $("body").append(data.response.dialogoHTML);
+                    $("#modalBodegas").modal('show');
                 }
             } else {
                 alert(data.response);
