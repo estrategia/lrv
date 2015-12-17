@@ -42,6 +42,12 @@
             </div>
             
             <div class="form-group"> <!-- calendario -->
+                <?php echo $form->labelEx($model, 'titulo'); ?>
+                <?php echo $form->textField($model, 'titulo', array('class' => 'titulo form-control', )); ?>
+                <?php echo $form->error($model, 'titulo'); ?>
+            </div>
+            
+            <div class="form-group"> <!-- calendario -->
                 <?php echo $form->labelEx($model, 'inicio'); ?>
                <?php 
                     $this->widget('application.extensions.CJuiDateTimePicker.CJuiDateTimePicker', array(
@@ -112,7 +118,7 @@
                 <div class="form-group">
                      <!-- checkbox -->
                     <?php echo $form->labelEx($model, 'aleatorio'); ?><div class="space-1"></div>
-                    <?php echo $form->dropDownList($model, 'aleatorio', Yii::app()->params->callcenter['modulosConfigurados']['booleanos'], array('id' => 'aleatorio', 'data-role' => 'aleatorio',  'class' => 'form-control'))?>
+                    <?php echo $form->dropDownList($model, 'aleatorio', Yii::app()->params->callcenter['modulosConfigurados']['booleanos'], array('prompt' => 'Seleccione...', 'id' => 'aleatorio', 'data-role' => 'aleatorio',  'class' => 'form-control'))?>
                     <?php echo $form->error($model, 'aleatorio'); ?>
                 </div>
                 <div class="form-group"> <!-- calendario -->

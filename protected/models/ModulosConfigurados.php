@@ -49,11 +49,11 @@ class ModulosConfigurados extends CActiveRecord {
             array('tipo, inicio, fin, estado, dias', 'required'),
             array('tipo, estado, aleatorio, lineas, agotado', 'numerical', 'integerOnly' => true),
             array('dias', 'length', 'max' => 30),
-            array('descripcion', 'length', 'max' => 255),
+            array('descripcion, titulo', 'length', 'max' => 255),
             array('contenido', 'required', 'on' => 'contenido'),
             // The following rule is used by search().
             // @todo Please remove those attributes that should not be searched.
-            array('idModulo, tipo, inicio, fin, dias, estado, aleatorio, lineas, agotado, descripcion, contenido, contenidoMovil', 'safe', 'on' => 'search'),
+            array('idModulo, tipo, inicio, fin, dias, estado, aleatorio, lineas, agotado, descripcion, titulo, contenido, contenidoMovil', 'safe', 'on' => 'search'),
         );
     }
 
@@ -82,6 +82,7 @@ class ModulosConfigurados extends CActiveRecord {
         return array(
             'idModulo' => 'Id Modulo',
             'tipo' => 'Tipo',
+            'titulo' => 'Titulo',
             'inicio' => 'Inicio',
             'fin' => 'Fin',
             'dias' => 'Dias',
@@ -119,6 +120,7 @@ class ModulosConfigurados extends CActiveRecord {
         $criteria->compare('dias', $this->dias, true);
         $criteria->compare('estado', $this->estado);
         $criteria->compare('descripcion', $this->descripcion, true);
+        $criteria->compare('titulo', $this->titulo, true);
         $criteria->compare('contenido', $this->contenido, true);
         $criteria->compare('contenidoMovil', $this->contenidoMovil, true);
 
@@ -144,6 +146,7 @@ class ModulosConfigurados extends CActiveRecord {
         $criteria->compare('inicio', $this->inicio, true);
         $criteria->compare('fin', $this->fin, true);
         $criteria->compare('descripcion', $this->descripcion, true); 
+        $criteria->compare('titulo', $this->titulo, true); 
         
         return new CActiveDataProvider($this, array(
             'criteria' => $criteria,

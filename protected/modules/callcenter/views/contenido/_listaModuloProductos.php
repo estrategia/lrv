@@ -21,4 +21,6 @@
             <?php endforeach; ?>
         </tbody>
     </table>
+    <!-- Boton de eliminar todo -->
+    <?php echo CHtml::link('Eliminar Todos los productos', '#', array('data-modulo' => $model->idModulo, 'data-role' => "eliminar-todos-productos", 'class' => 'btn btn-primary')); ?>                        
 <?php endif; ?>
