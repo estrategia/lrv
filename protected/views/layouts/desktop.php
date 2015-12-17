@@ -18,7 +18,11 @@
     </head>
 
     <body>
-        <div id="main-page" >
+        <div class="min-dsp">
+            <h2>Porfavor rota tu dispositivo.</h2>
+            <span>(o visita la versión móvil. <a href="http://m.larebajavirtual.com">m.larebajavirtual.com</a>)</span>
+        </div>
+        <div id="main-page">
             <div class="container-fluid">
                 <header>
                     <div class="row">
@@ -132,7 +136,7 @@
                                                                 <li class='title-viewmore_category'><?php echo CHtml::link("Ver más...", CController::createUrl('/catalogo/division', array('division' => $subcategoria->idCategoriaTienda))); ?></li>
                                                         <?php endif; ?>        
                                                         </div>
-            <?php if ($cpunte == 4 && count($categoria->listCategoriasHijas) != 4): ?>
+            <?php if ($cpunte == 3 && count($categoria->listCategoriasHijas) != 3): ?>
                                                         </div>
                                                         <div class="sub_float">
                                                             <?php

@@ -18,8 +18,6 @@
                 ?>
             <?php else: ?>
                 <!-- Lista de productos -->
-                <div class="container">
-                    <div class="row">
                         <ul class="listaProductos">
                             <div class="items">
                                 <?php foreach ($listProductos as $objProducto): ?>
@@ -33,8 +31,6 @@
                                 <?php endforeach; ?>
                             </div>
                         </ul>
-                    </div>
-                </div>
             <?php endif; ?>
         </div>
     </div>
