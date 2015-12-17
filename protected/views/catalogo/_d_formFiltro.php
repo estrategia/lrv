@@ -52,7 +52,9 @@
         </div>
         <div id="collapseFour-" class="panel-collapse collapse in" role="tabpanel" aria-labelledby="headingFour">
             <div class="panel-body">
-                <div id="calificacion-filtro-listaproductos" data-role="raty" data-readonly="false" data-score="0" data-callback="capturarfiltrocalificacion"></div>
+                <div class="center">
+                    <div id="calificacion-filtro-listaproductos" data-role="raty" data-readonly="false" data-score="0" data-callback="capturarfiltrocalificacion"></div>
+                </div>
                 <input id="FiltroForm_calificacion" name="FiltroForm[calificacion]" value="-1" type="hidden"/>
             </div>
         </div>
@@ -116,7 +118,9 @@
         </div>
         <div id="collapseFour-" class="panel-collapse collapse in" role="tabpanel" aria-labelledby="headingFour">
             <div class="panel-body">
-                <div id="calificacion-filtro-listaproductos" data-role="raty" data-readonly="false" data-score="0" data-callback="capturarfiltrocalificacion"></div>
+                <div class="center">
+                    <div id="calificacion-filtro-listaproductos" data-role="raty" data-readonly="false" data-score="0" data-callback="capturarfiltrocalificacion"></div>
+                </div>
                 <input id="FiltroForm_calificacion" name="FiltroForm[calificacion]" value="-1" type="hidden"/>
             </div>
         </div>
