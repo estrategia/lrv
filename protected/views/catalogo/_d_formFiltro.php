@@ -58,8 +58,9 @@
         </div>
     </div>
     <div class="space-1"></div>
-    <a href="#" data-role="filtro-listaproductos-reset" data-tipo="1" ><div class="button">Limpiar filtros</div></a>
-
+    <div class="text-center">
+        <a href="#" data-role="filtro-listaproductos-reset" data-tipo="1" ><div class="button">Limpiar filtros</div></a>
+    </div>
     <?php $this->endWidget(); ?>
 <?php endif; ?>
 <?php if ($tipoBusqueda == Yii::app()->params->busqueda['tipo']['buscador']): ?>
@@ -121,7 +122,8 @@
         </div>
     </div>
     <div class="space-1"></div>
-    <a href="#" data-role="filtro-listaproductos-reset" data-tipo="2"><div class="button">Limpiar filtros</div></a>
-
+    <div class="text-center">
+        <a href="#" data-role="filtro-listaproductos-reset" data-tipo="2"><div class="btn btn-primary">Limpiar filtros</div></a>
+    </div>
     <?php $this->endWidget(); ?>
 <?php endif; ?>
