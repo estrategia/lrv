@@ -817,8 +817,8 @@ table.tabla-carro .group-botones-cantidad{
 .ad-gallery .ad-thumbs li a.ad-active img {
     border: 3px solid #ea0001;
 }
-.product_detail #gallery .ad-thumb-list > li {
-    max-width: 15%;
+.ad-gallery .ad-thumbs li a img {
+    max-width: 70px;
 }
 .product_detail{
     margin: 10px 0 60px;
