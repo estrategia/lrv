@@ -37,7 +37,7 @@ $(document).on('click', "a[data-role='crearcotizacion']", function() {
             dialogoAnimado(data.response);
         },
         error: function(jqXHR, textStatus, errorThrown) {
-            bootbox.alert('Error: ' + errorThrown);
+            alert('Error: ' + errorThrown);
         }
     });
 });
@@ -65,11 +65,11 @@ $(document).on('click', "a[data-role='carrovaciar']", function() {
                 $('#div-carro-canasta').html(data.canasta);
                 $('#div-carro-canasta').trigger("create");
             } else {
-                bootbox.alert(data.response);
+                alert(data.response);
             }
         },
         error: function(jqXHR, textStatus, errorThrown) {
-            bootbox.alert('Error: ' + errorThrown);
+            alert('Error: ' + errorThrown);
         }
     });
 });
@@ -200,17 +200,17 @@ function modificarCarro(position, modificar) {
                 }
 
                 if (data.response.dialogoHTML) {
-                    bootbox.alert(data.response.dialogoHTML);//modal
+                    alert(data.response.dialogoHTML);//modal
                 }
             } else {
                 $('#div-carro').html(data.response.carroHTML);
                 $('#div-carro').trigger("create");
-                bootbox.alert(data.response.message);
+                alert(data.response.message);
             }
 
         },
         error: function(jqXHR, textStatus, errorThrown) {
-            bootbox.alert('Error: ' + errorThrown);
+            alert('Error: ' + errorThrown);
         }
     });
 }
@@ -238,11 +238,11 @@ $(document).on('click', "a[data-eliminar='1'], a[data-eliminar='2'], a[data-elim
                 $('#div-carro-canasta').html(data.canasta);
                 $('#div-carro-canasta').trigger("create");
             } else {
-                bootbox.alert(data.response);
+                alert(data.response);
             }
         },
         error: function(jqXHR, textStatus, errorThrown) {
-            bootbox.alert('Error: ' + errorThrown);
+            alert('Error: ' + errorThrown);
         }
     });
 
@@ -303,7 +303,7 @@ function pasoInformacion(actual, siguiente, boton) {
                 window.location.replace(obj.redirect);
             } else if (obj.result === 'error') {
                 Loading.hide();
-                bootbox.alert(obj.response);
+                alert(obj.response);
                 boton.prop('disabled', false);
             } else {
                 $.each(obj, function(element, error) {
@@ -316,7 +316,7 @@ function pasoInformacion(actual, siguiente, boton) {
         },
         error: function(jqXHR, textStatus, errorThrown) {
             Loading.hide();
-            bootbox.alert('Error: ' + errorThrown);
+            alert('Error: ' + errorThrown);
             boton.prop('disabled', false);
         }
     });
@@ -350,7 +350,7 @@ function pasoInformacion(actual, siguiente, boton) {
  if (obj.result === 'ok') {
  window.location.replace(obj.redirect);
  } else if (obj.result === 'error') {
- bootbox.alert(obj.response);
+ alert(obj.response);
  boton.prop('disabled', false);
  } else {
  $.each(obj, function(element, error) {
@@ -361,7 +361,7 @@ function pasoInformacion(actual, siguiente, boton) {
  }
  },
  error: function(jqXHR, textStatus, errorThrown) {
- bootbox.alert('Error: ' + errorThrown);
+ alert('Error: ' + errorThrown);
  boton.prop('disabled', false);
  }
  });
@@ -392,7 +392,7 @@ function pasoInformacion(actual, siguiente, boton) {
  if (obj.result === 'ok') {
  window.location.replace(obj.redirect);
  } else if (obj.result === 'error') {
- bootbox.alert(obj.response);
+ alert(obj.response);
  boton.prop('disabled', false);
  } else {
  $.each(obj, function(element, error) {
@@ -403,7 +403,7 @@ function pasoInformacion(actual, siguiente, boton) {
  }
  },
  error: function(jqXHR, textStatus, errorThrown) {
- bootbox.alert('Error: ' + errorThrown);
+ alert('Error: ' + errorThrown);
  boton.prop('disabled', false);
  }
  });
@@ -433,7 +433,7 @@ function pasoInformacion(actual, siguiente, boton) {
  if (obj.result === 'ok') {
  window.location.replace(obj.redirect);
  } else if (obj.result === 'error') {
- bootbox.alert(obj.response);
+ alert(obj.response);
  boton.prop('disabled', false);
  } else {
  $.each(obj, function(element, error) {
@@ -444,7 +444,7 @@ function pasoInformacion(actual, siguiente, boton) {
  }
  },
  error: function(jqXHR, textStatus, errorThrown) {
- bootbox.alert('Error: ' + errorThrown);
+ alert('Error: ' + errorThrown);
  boton.prop('disabled', false);
  }
  });
@@ -473,7 +473,7 @@ function pasoConfirmacion(actual, siguiente, boton) {
             if (obj.result === 'ok') {
                 window.location.replace(obj.redirect);
             } else if (obj.result === 'error') {
-                bootbox.alert(obj.response);
+                alert(obj.response);
                 boton.prop('disabled', false);
             } else {
                 $.each(obj, function(element, error) {
@@ -484,7 +484,7 @@ function pasoConfirmacion(actual, siguiente, boton) {
             }
         },
         error: function(jqXHR, textStatus, errorThrown) {
-            bootbox.alert('Error: ' + errorThrown);
+            alert('Error: ' + errorThrown);
             boton.prop('disabled', false);
         }
     });
@@ -516,13 +516,13 @@ $(document).on('click', "button[data-role='pagopasarela']", function() {
             } else {
                 boton.prop('disabled', false);
                 ;
-                bootbox.alert(data.response);
+                alert(data.response);
             }
         },
         error: function(jqXHR, textStatus, errorThrown) {
             boton.prop('disabled', false);
             ;
-            bootbox.alert('Error: ' + errorThrown);
+            alert('Error: ' + errorThrown);
         }
     });
 });
@@ -640,14 +640,14 @@ function filtrarListaProductos() {
         },
         success: function(data) {
             if (data.result === 'ok') {
-                //bootbox.alert(data.response);
+                //alert(data.response);
                 $.fn.yiiListView.update('id-productos-list');
             } else {
-                bootbox.alert(data.response);
+                alert(data.response);
             }
         },
         error: function(jqXHR, textStatus, errorThrown) {
-            bootbox.alert('Error: ' + errorThrown);
+            alert('Error: ' + errorThrown);
             //boton.button('enable');
         }
     });
@@ -669,14 +669,14 @@ $(document).on('change', "select[data-role='orden-listaproductos']", function() 
         },
         success: function(data) {
             if (data.result === 'ok') {
-                //bootbox.alert(data.response);
+                //alert(data.response);
                 $.fn.yiiListView.update('id-productos-list');
             } else {
-                bootbox.alert(data.response);
+                alert(data.response);
             }
         },
         error: function(jqXHR, textStatus, errorThrown) {
-            bootbox.alert('Error: ' + errorThrown);
+            alert('Error: ' + errorThrown);
             //boton.button('enable');
         }
     });

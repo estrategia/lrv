@@ -825,8 +825,8 @@ table.tabla-carro .group-botones-cantidad{
 .ad-gallery .ad-thumbs li a.ad-active img {
     border: 3px solid #ea0001;
 }
-.product_detail #gallery .ad-thumb-list > li {
-    max-width: 15%;
+.ad-gallery .ad-thumbs li a img {
+    max-width: 70px;
 }
 .product_detail{
     margin: 10px 0 60px;
@@ -1123,6 +1123,10 @@ input#RegistroForm_condiciones[type="checkbox"] + label span {
 }
 .row.btn-pagar{
     text-align: center;
+}
+.btn-pagar a.btn {
+    margin-top: 5px;
+    padding: 2px 7px;
 }
 .minicar .vermasc > a {
     background-color: #e6e6e6;
