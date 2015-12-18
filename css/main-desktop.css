@@ -2569,6 +2569,17 @@ img.ajustada {
     }
 }
 @media (max-width: 767px) {
+    .user {
+        margin-left: -6px;
+        margin-top: 17px;
+    }
+    .user li {
+        display: block;
+        font-size: 13px;
+    }
+    .user li:last-child {
+        margin-left: 20px;
+    }
     .dropdown-menu.category > li > a {
         overflow: hidden;
         text-overflow: ellipsis;
@@ -2599,6 +2610,17 @@ img.ajustada {
     }
 }
 @media (min-width: 768px) and (max-width: 991px) { 
+    .user {
+        margin-left: -6px;
+        margin-top: 17px;
+    }
+    .user li {
+        display: block;
+        font-size: 13px;
+    }
+    .user li:last-child {
+        margin-left: 20px;
+    }
     .main_menu .nav > li > a {
         color: #fff;
         font-size: 18px;
