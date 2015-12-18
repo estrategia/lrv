@@ -324,7 +324,7 @@ return array(
             'distanciaMaxima' => 20//kilometros
         ),
         'google' => array(
-            'llaveMapa' => 'aaaaaa'
+            'llaveMapa' => ''
         ),
         'asunto' => array(
             'recordatorioClave' => 'La Rebaja Virtual: Clave de ingreso',

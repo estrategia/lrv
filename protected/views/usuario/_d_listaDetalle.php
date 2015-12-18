@@ -10,7 +10,7 @@
             'lastPageLabel' => '&gt;&gt;',
             'maxButtonCount' => 8,
         ),
-        'itemsCssClass' => 'table table-bordered  table-hover',
+        'itemsCssClass' => 'table table-bordered  table-hover tabla-carro',
         'id' => 'gridview-listadetalle',
         'beforeAjaxUpdate' => new CJavaScriptExpression("function() {Loading.show();}"),
     'afterAjaxUpdate' => new CJavaScriptExpression("function() {Loading.hide();}"),
@@ -69,22 +69,20 @@
         
                     }
 
-                    return '<a href="'.CController::createUrl($controlador, $params).'">
+                    return '<div class="center"><a href="'.CController::createUrl($controlador, $params).'">
                                 <img src="'.Yii::app()->request->baseUrl . $urlImagen.'" class="img-responsive img-table">
                             </a>
-                            <p>
-                                <a href="'.CController::createUrl($controlador, $params).'">
-                                    '.$descripcion.'
-                                </a>
-                            </p>
-                            <p>'.$presentacion.'</p>
-                            <p>'.$estaEnCarro.'</p>
-                            <p>'.$fraccionado.'</p>
-                            <p>Calificación: '.$calificacion.'</p>';
+                            <div style="color:#ED1C24;">
+                                '.$descripcion.'
+                            </div>
+                            <div>'.$presentacion.'</div>
+                            <div>'.$estaEnCarro.'</div>
+                            <div>'.$fraccionado.'</div></div>';
                 },
             ),
             array(
                 'header' => 'Antes',
+                'htmlOptions'=> array('class'=>'text-right'),
                 'type' => 'raw',
                 'value' => function ($data){
                     if($data->idCombo != null)
@@ -113,6 +111,7 @@
             ),
             array(
                 'header' => 'Ahorro',
+                'htmlOptions'=> array('class'=>'text-right'),
                 'type' => 'raw',
                 'value' => function ($data){
                     if($data->idCombo != null)
@@ -140,6 +139,7 @@
             ),
             array(
                 'header' => 'Ahora',
+                'htmlOptions'=> array('class'=>'text-right'),
                 'type' => 'raw',
                 'value' => function ($data){
                     if($data->idCombo != null)
@@ -171,16 +171,19 @@
                 'header' => 'Cantidad',
                 'type' => 'raw',
                 'value' => function ($data){
-                        return CHtml::textField('unidades', $data->unidades, array('maxlength'=>50, 'class' => 'form-control', 'id' => 'campo-producto-'.$data->idListaDetalle));
+                        return CHtml::textField('unidades', $data->unidades, array('maxlength'=>50, 'class' => 'form-control center-div center', 'id' => 'campo-producto-'.$data->idListaDetalle));
                 },
+                'htmlOptions'=> array('width'=>'100px')
             ),
             array(
                 'header' => 'Actualizar ',
+                'htmlOptions'=> array('class'=>'text-center'),
                 'type' => 'raw',
                 'value' => ' \'<a href="#" class="" data-role="actualizarlistadetalle" data-detalle="\' . $data->idListaDetalle  . \'">Actualizar</a>\''
             ),
             array(
-                'header' => 'Cantidad',
+                'header' => 'Eliminar',
+                'htmlOptions'=> array('class'=>'text-center'),
                 'type' => 'raw',
                 'value' => ' \'<a href="#" class="" data-role="eliminarlistadetalle" data-detalle="\' . $data->idListaDetalle  . \'">Eliminar</a>\''
             ),
