@@ -2569,9 +2569,20 @@ img.ajustada {
     }
 }
 @media (max-width: 767px) {
+    .dropdown-menu.category > li > a {
+        overflow: hidden;
+        text-overflow: ellipsis;
+    }
     .main_menu .nav > li > a {
         color: #fff;
         font-size: 18px;
+        padding: 4px 15px;
+        margin: 0;
+    }
+    .ico-cat {
+        background-size: 100% auto;
+        height: 16px;
+        width: 30px;
     }
     .nav > li > a > img {
         max-width: none;
