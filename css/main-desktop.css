@@ -1116,6 +1116,10 @@ input#RegistroForm_condiciones[type="checkbox"] + label span {
 .row.btn-pagar{
     text-align: center;
 }
+.btn-pagar a.btn {
+    margin-top: 5px;
+    padding: 2px 7px;
+}
 .minicar .vermasc > a {
     background-color: #e6e6e6;
     color: #EA0001;
