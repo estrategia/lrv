@@ -2591,6 +2591,7 @@ img.ajustada {
     .main_menu .nav > li > a {
         color: #fff;
         font-size: 18px;
+        padding: 4px 15px;
     }
     .nav > li > a > img {
         max-width: none;
