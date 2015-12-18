@@ -33,10 +33,7 @@
             <div class="col-md-6 content-txt2 border-left">
                 <div class="descripciones">
                     <div style="height: auto; overflow: hidden;">
-                        <?php if ($objPrecio->tieneBeneficio()): ?>
-                            <!--descuento-->
-                            <div class="cdiv_prod_desc"><?php echo $objPrecio->getPorcentajeDescuento() ?>% dcto</div>
-                        <?php endif; ?>    
+                          
                     </div>
                     <div class="" style="color:#A3A3A3;font-size: 16px;">
                         <h3 style="color: #ED1C24;">
@@ -70,9 +67,13 @@
                             </div>
                         </div>
                         <div  class="descripciones fraccionado_columns">
-                            <table border="0" cellpadding="0" cellspacing="0" style="margin-top:12px;">
+                            <table border="0" cellpadding="0" cellspacing="0" style="margin-top:40px;">
                                 <tr>
-                                    <td valign="bottom" class="container_gray_fracc">
+                                    <td valign="bottom" class="container_gray_fracc td-dcto">
+                                        <?php if ($objPrecio->tieneBeneficio()): ?>
+                                                    <!--descuento-->
+                                                    <div class="cdiv_prod_desc"><?php echo $objPrecio->getPorcentajeDescuento() ?>% dcto</div>
+                                                <?php endif; ?>  
                                         <div class="sep-dashed"><label for="uno" checked=""><span></span><?php echo $objProducto->presentacionProducto ?></label><br/></div>
                                         <?php if ($objProducto->mostrarAhorroVirtual == 1 && $objPrecio->getPorcentajeDescuento() > 0 && $objSectorCiudad->objCiudad->excentoImpuestos == 0): ?> 
                                             <div class="sep-dashed"><span class="antes strike"><?php echo Yii::app()->numberFormatter->format(Yii::app()->params->formatoMoneda['patron'], $objPrecio->getPrecio(Precio::PRECIO_UNIDAD, false), Yii::app()->params->formatoMoneda['moneda']); ?></span><br></div>
@@ -91,6 +92,7 @@
 
                                     </td>
                                     <td  valign="bottom">
+                                                
                                         <p class="sep-dashed" style="font-size: 14px;">Unidad minima de venta (U.M.V)</p>
                                         <div class="sep-dashed"><label for="dos"><span></span> <?php echo $objProducto->objMedidaFraccion->descripcionMedidaFraccion ?> X <?php echo $objProducto->unidadFraccionamiento ?></label><br></div>
                                         <?php if ($objProducto->mostrarAhorroVirtual == 1 && $objPrecio->getPorcentajeDescuento() > 0 && $objSectorCiudad->objCiudad->excentoImpuestos == 0): ?> 
