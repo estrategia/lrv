@@ -2569,6 +2569,10 @@ img.ajustada {
     }
 }
 @media (max-width: 767px) {
+    .top_ubicacion {
+        margin-right:-30px;
+        text-align: center;
+    }
     .user {
         margin-left: -6px;
         margin-top: 17px;
@@ -2610,6 +2614,10 @@ img.ajustada {
     }
 }
 @media (min-width: 768px) and (max-width: 991px) { 
+    .top_ubicacion {
+        margin-right:-30px;
+        text-align: center;
+    }
     .user {
         margin-left: -6px;
         margin-top: 17px;
