@@ -104,6 +104,7 @@
                 </header>
             </div>
             <!--menu-->
+            <div class="container-fluid nopaddingleft nopaddingright">
             <nav class="main_menu">
                 <ul class="nav nav-justified" role="tablist">
                     <li class="dropdown categorias" role="presentation" style="position:inherit;">
@@ -164,6 +165,7 @@
 <?php endforeach; ?>
                 </ul>
             </nav>
+            </div>
             <!--fin menu-->
 
             <!--inicio migas de pan-->
