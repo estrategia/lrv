@@ -24,7 +24,7 @@
             Listas personales
         </a>
     </li>
-    <li class="<?php echo ($vista=="d_cotizaciones" ? "active" : "")?>">
+    <li class="<?php echo ($vista=="d_cotizaciones" || $vista == "d_cotizacion" ? "active" : "")?>">
         <a href="<?php echo CController::createUrl('/usuario/listacotizaciones') ?>" >
             Cotizaciones
         </a>

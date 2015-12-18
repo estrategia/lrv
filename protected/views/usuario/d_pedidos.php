@@ -13,7 +13,7 @@ $this->widget('application.widgets.PedidosGridView', array(
     'id' => 'grid-cuenta-listapedidos',
     'beforeAjaxUpdate' => new CJavaScriptExpression("function() {Loading.show();}"),
     'afterAjaxUpdate' => new CJavaScriptExpression("function() {Loading.hide();}"),
-    'ajaxUpdateError' => new CJavaScriptExpression("function() { Loading.hide(); bootbox.alert('Error, intente de nuevo');}"),
+    'ajaxUpdateError' => new CJavaScriptExpression("function() { Loading.hide(); alert('Error, intente de nuevo');}"),
     'dataProvider' => $model->search(array('order' => "t.fechaCompra DESC", 'pageSize' => 5)),
     //'columnToggle' => true,
     //'toggleText' => 'Columnas..',

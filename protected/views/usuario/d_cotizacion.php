@@ -1,7 +1,7 @@
 <div class="row">
     <div class="col-md-12">
-        <?php echo CHtml::link('Agregar al carro', "#", array("data-role" => "cotizaciondetalle", "data-cotizacion" => $objCotizacion->idCotizacion, 'class' => 'btn btn-primary', 'data-ajax' => "false")); ?>
-        <?php echo CHtml::link('Exportar cotizaci&oacute;n', $this->createUrl("/usuario/cotizacionpdf", array('cotizacion' => $objCotizacion->idCotizacion)), array('class' => 'btn btn-default', 'data-ajax' => "false")); ?>
+        <?php echo CHtml::link('Agregar al carro', "#", array("data-role" => "cotizaciondetalle", "data-cotizacion" => $objCotizacion->idCotizacion, 'class' => 'btn btn-primary')); ?>
+        <?php echo CHtml::link('Exportar cotizaci&oacute;n', $this->createUrl("/usuario/cotizacionpdf", array('cotizacion' => $objCotizacion->idCotizacion)), array('class' => 'btn btn-default')); ?>
     </div>
 </div>
 <div class="space-1"></div>

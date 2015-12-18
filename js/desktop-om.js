@@ -31,7 +31,7 @@ $(document).on('click', "button[data-role='direccion-editar']", function() {
         },
         error: function(jqXHR, textStatus, errorThrown) {
             Loading.hide();
-            bootbox.alert('Error: ' + errorThrown);
+            alert('Error: ' + errorThrown);
         }
     });
 });
@@ -60,7 +60,7 @@ $(document).on('click', "div[data-role='direccion-editar']", function() {
         },
         error: function(jqXHR, textStatus, errorThrown) {
             Loading.hide();
-            bootbox.alert('Error: ' + errorThrown);
+            alert('Error: ' + errorThrown);
         }
     });
 });
@@ -88,7 +88,7 @@ $(document).on('click', "input[data-role='direccion-actualizar']", function() {
                     $('#div-direccion-interior-' + data.response.direccion).html(data.response.direccionHTML);
                 }
             } else if (data.result === 'error') {
-                bootbox.alert(data.response);
+                alert(data.response);
             } else {
                 $.each(data, function(element, error) {
                     //$('#' + element + '_em_').html(error);
@@ -100,7 +100,7 @@ $(document).on('click', "input[data-role='direccion-actualizar']", function() {
         },
         error: function(jqXHR, textStatus, errorThrown) {
             Loading.hide();
-            bootbox.alert('Error: ' + errorThrown);
+            alert('Error: ' + errorThrown);
         }
     });
 
@@ -129,7 +129,7 @@ $(document).on('click', "a[data-role='direccion-adicionar-modal']", function() {
         },
         error: function(jqXHR, textStatus, errorThrown) {
             Loading.hide();
-            bootbox.alert('Error: ' + errorThrown);
+            alert('Error: ' + errorThrown);
         }
     });
 });
@@ -165,7 +165,7 @@ $(document).on('click', "input[data-role='direccion-adicionar']", function() {
                 }
 
             } else if (data.result === 'error') {
-                bootbox.alert(data.response);
+                alert(data.response);
             } else {
                 $.each(data, function(element, error) {
                     $('#' + form.attr('id') + ' #' + element + '_em_').html(error);
@@ -175,7 +175,7 @@ $(document).on('click', "input[data-role='direccion-adicionar']", function() {
         },
         error: function(jqXHR, textStatus, errorThrown) {
             Loading.hide();
-            bootbox.alert('Error: ' + errorThrown);
+            alert('Error: ' + errorThrown);
         }
     });
 
@@ -202,12 +202,12 @@ $(document).on('click', "button[data-role='direccion-eliminar']", function() {
                 $('#div-direccion-exterior-' + direccion).remove();
                 dialogoAnimado(data.response);
             } else if (data.result === 'error') {
-                bootbox.alert(data.response);
+                alert(data.response);
             }
         },
         error: function(jqXHR, textStatus, errorThrown) {
             Loading.hide();
-            bootbox.alert('Error: ' + errorThrown);
+            alert('Error: ' + errorThrown);
         }
     });
 
@@ -237,18 +237,18 @@ $(document).on('click', "a[data-role='pedidodetalle']", function() {
 
                 if (data.response.mensajeHTML) {
                     dialogoAnimado(data.response.mensajeHTML);
-                    //bootbox.alert(data.response.mensajeHTML);
+                    //alert(data.response.mensajeHTML);
                 }
             } else {
                 /*$('<div>').mdialog({
                  content: "<div data-role='main'><div class='ui-content' data-role='content' role='main'>" + data.response + "<a class='ui-btn ui-btn-r ui-corner-all ui-shadow' data-rel='back' href='#'>Aceptar</a></div></div>"
                  });*/
-                bootbox.alert(data.response);
+                alert(data.response);
             }
         },
         error: function(jqXHR, textStatus, errorThrown) {
             //$.mobile.loading('hide');
-            bootbox.alert('Error: ' + errorThrown);
+            alert('Error: ' + errorThrown);
             //alert('Error: ' + errorThrown);
         }
     });
@@ -274,11 +274,11 @@ $(document).on('click', "a[data-role='pedidolistaocultar']", function() {
                 $.fn.yiiGridView.update('grid-cuenta-listapedidos');
                 dialogoAnimado(data.response);
             } else {
-                bootbox.alert(data.response);
+                alert(data.response);
             }
         },
         error: function(jqXHR, textStatus, errorThrown) {
-            bootbox.alert('Error: ' + errorThrown);
+            alert('Error: ' + errorThrown);
         }
     });
 });
@@ -307,11 +307,11 @@ $(document).on('click', "a[data-role='cotizaciondetalle']", function() {
                     dialogoAnimado(data.response.mensajeHTML);
                 }
             } else {
-                bootbox.alert(data.response);
+                alert(data.response);
             }
         },
         error: function(jqXHR, textStatus, errorThrown) {
-            bootbox.alert('Error: ' + errorThrown);
+            alert('Error: ' + errorThrown);
         }
     });
 });
@@ -373,7 +373,7 @@ $(document).on('click', "input[data-role='lstpersonalform']", function() {
                 $("#modal-lista-personal").modal('hide');
                 dialogoAnimado(data.response.mensajeHtml);
             } else if (data.result === 'error') {
-                bootbox.alert(data.response);
+                alert(data.response);
             } else {
                 $.each(data, function(element, error) {
                     $('#' + element + '_em_').html(error);
@@ -383,7 +383,7 @@ $(document).on('click', "input[data-role='lstpersonalform']", function() {
         },
         error: function(jqXHR, textStatus, errorThrown) {
             //$.mobile.loading('hide');
-            bootbox.alert('Error: ' + errorThrown);
+            alert('Error: ' + errorThrown);
         }
     });
 });
@@ -409,11 +409,11 @@ $(document).on('click', "a[data-role='listapersonaleliminar']", function() {
                 $.fn.yiiGridView.update('gridview-listapersonal');
                 dialogoAnimado(data.response);
             } else {
-                bootbox.alert(data.response);
+                alert(data.response);
             }
         },
         error: function(jqXHR, textStatus, errorThrown) {
-            bootbox.alert('Error: ' + errorThrown);
+            alert('Error: ' + errorThrown);
         }
     });
 });
@@ -441,12 +441,12 @@ $(document).on('click', "a[data-role='listapersonal']", function() {
                     dialogoAnimado(data.response.mensajeHTML);
                 }
             } else {
-                bootbox.alert(data.response);
+                alert(data.response);
             }
         },
         error: function(jqXHR, textStatus, errorThrown) {
             //$.mobile.loading('hide');
-            bootbox.alert('Error: ' + errorThrown);
+            alert('Error: ' + errorThrown);
         }
     });
 });
@@ -473,12 +473,12 @@ $(document).on('click', "a[data-role='eliminarlistadetalle']", function() {
                 $('#div-listadetalle').html(data.response.detalleHTML);
                 $('#div-listadetalle').trigger("create");
             } else if (data.result === 'error') {
-                bootbox.alert(data.response);
+                alert(data.response);
             }
 
         },
         error: function(jqXHR, textStatus, errorThrown) {
-            bootbox.alert('Error: ' + errorThrown);
+            alert('Error: ' + errorThrown);
         }
     });
 });
@@ -513,11 +513,11 @@ $(document).on('click', "a[data-role='actualizarlistadetalle']", function() {
             if (data.result === "ok") {
                 dialogoAnimado(data.response.mensajeHTML);
             } else if (data.result === 'error') {
-                bootbox.alert(data.response);
+                alert(data.response);
             }
         },
         error: function(jqXHR, textStatus, errorThrown) {
-            bootbox.alert('Error: ' + errorThrown);
+            alert('Error: ' + errorThrown);
         }
     });
 });
@@ -572,11 +572,11 @@ $(document).on('click', "a[data-role='lstpersonalguardar']", function() {
                 }
                 $("#modal-lista-guardar").modal("show");
             } else if (data.result === 'error') {
-                bootbox.alert(data.response);
+                alert(data.response);
             }
         },
         error: function(jqXHR, textStatus, errorThrown) {
-            bootbox.alert('Error: ' + errorThrown);
+            alert('Error: ' + errorThrown);
         }
     });
     return false;
@@ -607,7 +607,7 @@ $(document).on('click', "input[data-role='lstpersonalguardar']", function() {
                 $("#modal-lista-guardar").modal("hide");
                 dialogoAnimado(data.response);
             } else if (data.result === 'error') {
-                bootbox.alert(data.response);
+                alert(data.response);
             } else {
                 $.each(data, function(element, error) {
                     $('#' + element + '_em_').html(error);
@@ -616,7 +616,7 @@ $(document).on('click', "input[data-role='lstpersonalguardar']", function() {
             }
         },
         error: function(jqXHR, textStatus, errorThrown) {
-            bootbox.alert('Error: ' + errorThrown);
+            alert('Error: ' + errorThrown);
         }
     });
     return false;

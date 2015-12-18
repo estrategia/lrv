@@ -14,7 +14,7 @@
         'id' => 'gridview-listadetalle',
         'beforeAjaxUpdate' => new CJavaScriptExpression("function() {Loading.show();}"),
     'afterAjaxUpdate' => new CJavaScriptExpression("function() {Loading.hide();}"),
-    'ajaxUpdateError' => new CJavaScriptExpression("function() { Loading.hide(); bootbox.alert('Error, intente de nuevo');}"),
+    'ajaxUpdateError' => new CJavaScriptExpression("function() { Loading.hide(); alert('Error, intente de nuevo');}"),
         'dataProvider' => new CArrayDataProvider($model->listDetalle, array(
             'keyField' => 'idListaDetalle',
         )),

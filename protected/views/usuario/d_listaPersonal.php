@@ -18,7 +18,7 @@ $this->widget('zii.widgets.grid.CGridView', array(
     'id' => 'gridview-listapersonal',
     'beforeAjaxUpdate' => new CJavaScriptExpression("function() {Loading.show();}"),
     'afterAjaxUpdate' => new CJavaScriptExpression("function() {Loading.hide();}"),
-    'ajaxUpdateError' => new CJavaScriptExpression("function() { Loading.hide(); bootbox.alert('Error, intente de nuevo');}"),
+    'ajaxUpdateError' => new CJavaScriptExpression("function() { Loading.hide(); alert('Error, intente de nuevo');}"),
     'dataProvider' => $model->search(array('order'=> "t.fechaCreacion DESC", 'pageSize' => 5)),
     'columns' => array(
         array(
@@ -44,13 +44,13 @@ $this->widget('zii.widgets.grid.CGridView', array(
         array(
             'header' => 'Agregar',
             'type' => 'raw',
-            'value' => ' \'<a href="#" class="" data-role="listapersonal" data-lista="\' . $data->idLista  . \'">Agregar</a>\''
+            'value' => ' \'<a href="#" class="center" title="Agregar al carro" data-role="listapersonal" data-lista="\' . $data->idLista  . \'"><span class="glyphicon glyphicon-shopping-cart center-div" aria-hidden="true"></a>\''
         ),
 
         array(
             'header' => 'Eliminar',
             'type' => 'raw',
-            'value' => ' \'<a href="#" class="" data-role="listapersonaleliminar" data-lista="\' . $data->idLista  . \'">Eliminar</a>\''
+            'value' => ' \'<a href="#" class="center" title="Ocultar" data-role="listapersonaleliminar" data-lista="\' . $data->idLista  . \'"><span class="glyphicon glyphicon-remove center-div" aria-hidden="true"></a>\''
         ),
     ),
 ));

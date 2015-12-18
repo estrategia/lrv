@@ -12,7 +12,7 @@ $this->widget('zii.widgets.grid.CGridView', array(
     'id' => 'grid-cuenta-listacotizaciones',
     'beforeAjaxUpdate' => new CJavaScriptExpression("function() {Loading.show();}"),
     'afterAjaxUpdate' => new CJavaScriptExpression("function() {Loading.hide();}"),
-    'ajaxUpdateError' => new CJavaScriptExpression("function() { Loading.hide(); bootbox.alert('Error, intente de nuevo');}"),
+    'ajaxUpdateError' => new CJavaScriptExpression("function() { Loading.hide(); alert('Error, intente de nuevo');}"),
     'dataProvider' => $model->search(array('order' => "t.fechaCotizacion DESC", 'pageSize' => 5, 'with'=>array('objCiudad'))),
     'columns' => array(
         array(
@@ -38,9 +38,9 @@ $this->widget('zii.widgets.grid.CGridView', array(
             'value' => array($this, 'gridDetalleCotizacion'),
         ),
         array(
-            'header' => 'Agregar Al Carro',
+            'header' => 'Agregar',
             'type' => 'raw',
-            'value' => ' \'<a href="#" title="Agregar al carro" data-role="cotizaciondetalle" data-cotizacion="\' . $data->idCotizacion  . \'">Agregar al carro</a>\''
+            'value' => ' \'<a href="#" class="center" title="Agregar al carro" data-role="cotizaciondetalle" data-cotizacion="\' . $data->idCotizacion  . \'"><span class="glyphicon glyphicon-shopping-cart center-div" aria-hidden="true"></a>\''
         ),
     ),
 ));

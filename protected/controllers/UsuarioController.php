@@ -641,6 +641,13 @@ class UsuarioController extends Controller {
         if ($this->isMobile) {
             $this->render('pedido', $params);
         } else {
+            $this->breadcrumbs = array(
+                'Inicio' => array('/'),
+                'Mi cuenta' => array('/usuario'),
+                'Listado de pedidos'  => array('/usuario/listapedidos'),
+                "#$compra"
+            );
+            
             $this->render('d_usuario', array('vista' => 'd_pedido', 'params' => $params));
         }
     }
@@ -697,6 +704,12 @@ class UsuarioController extends Controller {
         if ($this->isMobile) {
             $this->render('cotizacion', $params);
         } else {
+            $this->breadcrumbs = array(
+                'Inicio' => array('/'),
+                'Mi cuenta' => array('/usuario'),
+                'Listado de cotizaciones'  => array('/usuario/listapedidos'),
+                "#$cotizacion"
+            );
             $this->render('d_usuario', array('vista' => 'd_cotizacion', 'params' => $params));
         }
     }
@@ -886,6 +899,13 @@ class UsuarioController extends Controller {
         if ($this->isMobile) {
             $this->render('listaDetalle', $params);
         } else {
+            $this->breadcrumbs = array(
+                'Inicio' => array('/'),
+                'Mi cuenta' => array('/usuario'),
+                'Listas personales'  => array('/usuario/listapersonal'),
+                $model->nombreLista
+            );
+            
             $this->render('d_usuario', array('vista' => 'd_listaDetalle', 'params' => $params));
         }
     }
@@ -1532,8 +1552,8 @@ class UsuarioController extends Controller {
         $clase = 'ui-btn ui-btn-inline ui-icon-view-circle ui-btn-icon-notext ui-icon-center ui-nodisc-icon';
         $texto = 'Ver';
         if (!$this->isMobile) {
-            $clase = '';
-            $texto = 'Ver Detalle';
+            $clase = 'center';
+            $texto = '<span class="glyphicon glyphicon-eye-open center-div" aria-hidden="true">';
         }
 
 
@@ -1544,8 +1564,8 @@ class UsuarioController extends Controller {
         $clase = 'ui-btn ui-btn-inline ui-icon-view-circle ui-btn-icon-notext ui-icon-center ui-nodisc-icon';
         $texto = 'Ver';
         if (!$this->isMobile) {
-            $clase = '';
-            $texto = 'Ver Detalle';
+            $clase = 'center';
+            $texto = '<span class="glyphicon glyphicon-eye-open center-div" aria-hidden="true">';
         }
 
         return CHtml::link($texto, $this->createUrl('/usuario/cotizacion', array('cotizacion' => $data->idCotizacion)), array('class' => $clase, 'data-ajax' => 'false'));
