@@ -645,7 +645,9 @@ table.tabla-carro .group-botones-cantidad{
     margin-right: 10px;
 }
 .submenu .section-submenu > li > a {
+    overflow: hidden;
     padding: 0 !important;
+    text-overflow: ellipsis;
 }
 .submenu .section-submenu > li {
     padding-left: 5px !important;
