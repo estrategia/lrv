@@ -2569,6 +2569,18 @@ img.ajustada {
     }
 }
 @media (max-width: 767px) {
+    .navbar-brand {
+        display: block;
+        float: none;
+        height: auto;
+        margin: 17px auto auto;
+        padding: 0;
+        text-align: center;
+    }
+    .navbar-brand.logo-top > img {
+        margin: auto;
+        width: 190px;
+    }
     .top_ubicacion {
         margin-right:-30px;
         text-align: center;
@@ -2614,6 +2626,18 @@ img.ajustada {
     }
 }
 @media (min-width: 768px) and (max-width: 991px) { 
+    .navbar-brand {
+        display: block;
+        float: none;
+        height: auto;
+        margin: 17px auto auto;
+        padding: 0;
+        text-align: center;
+    }
+    .navbar-brand.logo-top > img {
+        margin: auto;
+        width: 190px;
+    }
     .top_ubicacion {
         margin-right:-30px;
         text-align: center;
