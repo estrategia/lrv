@@ -1,8 +1,7 @@
 <div class="clst_cont_top">
     <?php if ($position->isProduct()): ?>
-        <div class="container-fluid">
-            <div class="row">
-                <div class="col-sm-4">
+            <div class="row not_margin">
+                <div class="col-sm-4 center-verticaly-car">
                     <div class="clst_pro_img">
                         <a href="<?php echo CController::createUrl('/catalogo/producto', array('producto' => $position->objProducto->codigoProducto, 'descripcion' => $position->objProducto->getCadenaUrl())) ?>" >
                             <img class="img-responsive" src="<?php echo Yii::app()->request->baseUrl . $position->objProducto->rutaImagen(); ?>" class="ui-li-thumb">
@@ -21,11 +20,9 @@
                     </div>
                 </div>
             </div>
-        </div>
     <?php elseif ($position->isCombo()): ?>
-        <div class="container-fluid">
-            <div class="row">
-                <div class="col-sm-4">
+            <div class="row not_margin">
+                <div class="col-sm-4 center-verticaly-car">
                     <div class="clst_pro_img">
                         <a href="<?php echo CController::createUrl('/catalogo/combo', array('combo' => $position->objCombo->idCombo, 'descripcion' => $position->objCombo->getCadenaUrl())) ?>" >
                             <img class="img-responsive" src="<?php echo Yii::app()->request->baseUrl . $position->objCombo->rutaImagen(); ?>" class="ui-li-thumb">
@@ -41,6 +38,5 @@
                     </div>
                 </div>
             </div>
-        </div>
     <?php endif; ?>
 </div>

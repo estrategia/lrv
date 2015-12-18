@@ -10,7 +10,9 @@
         url("fonts/geneva.ttf") format('truetype');  
     font-weight: normal;  
 }
-
+.not_margin {
+    margin: 0;
+}
 .list-view-loading{
     background-image: none;
 }
@@ -2122,6 +2124,11 @@ textarea.form-control {
     position: relative;
     top: 50%;
     transform: translateY(-50%);
+}
+.center-verticaly-car {
+    padding-right: 0;
+    position: relative;
+    transform: translateY(15%);
 }
 .step-box {
     background-color: #EBEBEB;
