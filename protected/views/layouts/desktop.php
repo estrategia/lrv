@@ -27,11 +27,11 @@
                 <header>
                     <div class="row">
                         <!--logo-->
-                        <div class="col-xs-2">
+                        <div class="col-xs-12 col-md-2">
                             <a class="navbar-brand logo-top"  title="Drogueria - La Rebaja Virtual" alt="logo - La Rebaja" href="<?php echo Yii::app()->baseUrl ?>"><img src="<?php echo Yii::app()->request->baseUrl; ?>/images/logotop.png" alt="La rebaja virtual"></a>
                         </div>
 
-                        <div class="col-xs-10">
+                        <div class="col-xs-12 col-md-10">
                             <div class="row">
                                 <div class="col-xs-2">
                                     <div class="top_ubicacion">
@@ -71,7 +71,7 @@
                                     <?php if (Yii::app()->user->isGuest): ?>
                                         <ul class="user">
                                             <li><a href="<?= Yii::app()->request->baseUrl; ?>/usuario/autenticar/opcion/inicio" ><img class="ico-user" src="<?php echo Yii::app()->request->baseUrl; ?>/images/desktop/ico-iniciar-sesion.png" alt=""> Iniciar Sesión</a></li>
-                                            <span style="color:#A3A3A3;">|</span>
+                                            <span style="color:#A3A3A3;" class="hidden-xs hidden-sm">|</span>
                                             <li><a href="<?= Yii::app()->request->baseUrl; ?>/usuario/autenticar/opcion/registro">Registrate</a></li>
                                         </ul>
                                     <?php else: ?>
