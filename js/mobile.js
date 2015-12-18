@@ -230,7 +230,7 @@ $(document).on('click', 'button[data-role="ubicacion-mapa"]', function() {
                 $.mobile.loading('show');
             },
             success: function(data) {
-                $.getScript("https://maps.googleapis.com/maps/api/js").done(function(script, textStatus) {
+                $.getScript("https://maps.googleapis.com/maps/api/js?key="+gmapKey).done(function(script, textStatus) {
                     $.getScript(requestUrl + "/js/ubicacion.js").done(function(script, textStatus) {
                         $('body').append(data);
                         inicializarMapa();

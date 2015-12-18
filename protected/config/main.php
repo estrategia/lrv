@@ -323,6 +323,9 @@ return array(
         'gps' => array(
             'distanciaMaxima' => 20//kilometros
         ),
+        'google' => array(
+            'llaveMapa' => 'aaaaaa'
+        ),
         'asunto' => array(
             'recordatorioClave' => 'La Rebaja Virtual: Clave de ingreso',
             'bienvenida' => 'La Rebaja Virtual: Bienvenido(a)',
