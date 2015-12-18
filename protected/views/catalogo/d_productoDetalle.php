@@ -36,6 +36,11 @@
                           
                     </div>
                     <div class="" style="color:#A3A3A3;font-size: 16px;">
+                        <?php if ($objPrecio->tieneBeneficio()): ?>
+                            <!--descuento-->
+                            <div class="cdiv_prod_desc"><?php echo $objPrecio->getPorcentajeDescuento() ?>% dcto</div>
+                        <?php endif; ?>
+                            <div class="space-2"></div>
                         <h3 style="color: #ED1C24;">
                             <!-- producto agregado -->
                             <a href="" class="itm_ico clst_slct_prod<?php echo (Yii::app()->shoppingCart->contains($objProducto->codigoProducto) ? " active" : "") ?>" id="icono-producto-agregado-<?php echo $objProducto->codigoProducto ?>">
@@ -70,10 +75,7 @@
                             <table border="0" cellpadding="0" cellspacing="0" style="margin-top:40px;">
                                 <tr>
                                     <td valign="bottom" class="container_gray_fracc td-dcto">
-                                        <?php if ($objPrecio->tieneBeneficio()): ?>
-                                                    <!--descuento-->
-                                                    <div class="cdiv_prod_desc"><?php echo $objPrecio->getPorcentajeDescuento() ?>% dcto</div>
-                                                <?php endif; ?>  
+                                        
                                         <div class="sep-dashed"><label for="uno" checked=""><span></span><?php echo $objProducto->presentacionProducto ?></label><br/></div>
                                         <?php if ($objProducto->mostrarAhorroVirtual == 1 && $objPrecio->getPorcentajeDescuento() > 0 && $objSectorCiudad->objCiudad->excentoImpuestos == 0): ?> 
                                             <div class="sep-dashed"><span class="antes strike"><?php echo Yii::app()->numberFormatter->format(Yii::app()->params->formatoMoneda['patron'], $objPrecio->getPrecio(Precio::PRECIO_UNIDAD, false), Yii::app()->params->formatoMoneda['moneda']); ?></span><br></div>

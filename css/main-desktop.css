@@ -717,6 +717,20 @@ table.tabla-carro .group-botones-cantidad{
 .td-dcto {
     position: relative;
 }
+.owl-item .item .cdiv_prod_desc {
+    background-image: url("../images/iconos/etiqueta_descuentos_left.png");
+    color: #fff;
+    font-size: 14px;
+    font-weight: bold;
+    height: 50px;
+    left: -1px;
+    padding-top: 7px;
+    position: absolute;
+    text-align: center;
+    top: 0;
+    width: 144px;
+    z-index: 1;
+}
 .cdiv_prod_desc {
     background-image: url("../images/iconos/etiqueta_descuentos_left.png");
     color: #fff;
