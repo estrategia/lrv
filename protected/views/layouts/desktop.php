@@ -27,13 +27,13 @@
                 <header>
                     <div class="row">
                         <!--logo-->
-                        <div class="col-sm-2">
+                        <div class="col-xs-2">
                             <a class="navbar-brand logo-top"  title="Drogueria - La Rebaja Virtual" alt="logo - La Rebaja" href="<?php echo Yii::app()->baseUrl ?>"><img src="<?php echo Yii::app()->request->baseUrl; ?>/images/logotop.png" alt="La rebaja virtual"></a>
                         </div>
 
-                        <div class="col-sm-10">
+                        <div class="col-xs-10">
                             <div class="row">
-                                <div class="col-sm-2">
+                                <div class="col-xs-2">
                                     <div class="top_ubicacion">
                                         <?php if (isset($this->sectorName)): ?>
                                             <?php echo $this->sectorName ?>
@@ -41,13 +41,13 @@
                                         <?php echo CHtml::link('<span class="text-center title-desp"><br><span class="glyphicon glyphicon-map-marker" style="margin-right: 5px;"></span> Cambiar Ubicaci&oacute;n </span>', CController::createUrl('/sitio/ubicacion'), array()); ?>
                                     </div>
                                 </div>
-                                <div class="col-sm-6">
+                                <div class="col-xs-6">
                                     <form method="get" action="<?php echo CController::createUrl('/catalogo/buscar') ?>">
                                         <div class="row">
-                                            <div class="col-sm-7 content-search">
+                                            <div class="col-xs-7 content-search">
                                                 <input type="text" class="form-control" placeholder="Escriba el nombre del producto"  autocomplete="off" value="" id="busqueda" name="busqueda" > 
                                             </div>
-                                            <div class="col-sm-5 content-category">
+                                            <div class="col-xs-5 content-category">
                                                 <div class="controls">
                                                     <span class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false" data-label-placement>
                                                         Todas las categor&iacute;as</span>
@@ -67,7 +67,7 @@
                                         </div>
                                     </form>
                                 </div>
-                                <div class="col-sm-4">	
+                                <div class="col-xs-4">	
                                     <?php if (Yii::app()->user->isGuest): ?>
                                         <ul class="user">
                                             <li><a href="<?= Yii::app()->request->baseUrl; ?>/usuario/autenticar/opcion/inicio" ><img class="ico-user" src="<?php echo Yii::app()->request->baseUrl; ?>/images/desktop/ico-iniciar-sesion.png" alt=""> Iniciar Sesión</a></li>
@@ -204,8 +204,8 @@
             <footer>	
                 <div class="container-fluid">	
                     <div class="row">
-                        <div class="col-sm-12" style="padding-top:20px;">	
-                            <div class="col-sm-3">
+                        <div class="col-xs-12" style="padding-top:20px;">	
+                            <div class="col-xs-3">
                                 <div class="titulo-footer">	
                                     <img src="<?php echo Yii::app()->request->baseUrl; ?>/images/desktop/informacion-y-servicios.png" alt="">
                                     <strong style="margin-left:10px;">Información</strong><br><strong class="title-footer2"> y servicios</strong>
@@ -216,7 +216,7 @@
                                     <li><a target="_blank" href="http://www.credirebaja.com/">Tarjeta crediRebaja</a></li>
                                 </ul>
                             </div>
-                            <div class="col-sm-3">
+                            <div class="col-xs-3">
                                 <div class="titulo-footer">
                                     <img src="<?php echo Yii::app()->request->baseUrl; ?>/images/desktop/cliente-fiel.png" alt="">	
                                     <strong style="margin-left:10px;">Club</strong><br><strong class="title-footer2">cliente fiel</strong>
@@ -228,7 +228,7 @@
                                     <li><a target="_blank" href="http://www.copservir.com/clubclientefiel/index.php?option=com_users&view=login">Actualiza datos</a></li>
                                 </ul>
                             </div>
-                            <div class="col-sm-3">
+                            <div class="col-xs-3">
                                 <div class="titulo-footer">	
                                     <img src="<?php echo Yii::app()->request->baseUrl; ?>/images/desktop/ico-actividad-comercial.png" alt="">
                                     <strong style="margin-left:10px;">Actividades</strong><br><strong class="title-footer2">comerciales</strong>
@@ -239,7 +239,7 @@
                                     <li><a href="<?php echo $this->createUrl('/contenido/corporativo', array('tipo' => 'polidescuento')) ?>">Politicas días de descuento 1,10,15 y 25</a></li>
                                 </ul>
                             </div>
-                            <div class="col-sm-3">
+                            <div class="col-xs-3">
                                 <div class="titulo-footer-last">
                                     <img src="<?php echo Yii::app()->request->baseUrl; ?>/images/desktop/ico-contactanos.png" alt="">	
                                     <strong>Contactanos</strong>
@@ -250,10 +250,10 @@
                                 </ul>
                             </div>
                         </div>	
-                        <div class="col-sm-12"><div class="space-1"></div></div>
+                        <div class="col-xs-12"><div class="space-1"></div></div>
 
 
-                        <div class="col-sm-12">	
+                        <div class="col-xs-12">	
                             <p align="center">
                                 Cooperativa Multiactiva &nbsp;de Servicios Solidarios Copservir  Ltda | NIT &nbsp;830.011.670-3 | LA REBAJA DROGUERIA | 01 8000 93 99  00 
                                 <br>
