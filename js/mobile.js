@@ -231,7 +231,7 @@ $(document).on('click', 'button[data-role="ubicacion-mapa"]', function() {
             },
             success: function(data) {
                 $.getScript("https://maps.googleapis.com/maps/api/js?key="+gmapKey).done(function(script, textStatus) {
-                    $.getScript(requestUrl + "/js/ubicacion.js").done(function(script, textStatus) {
+                    $.getScript(requestUrl + "/js/ubicacion.min.js").done(function(script, textStatus) {
                         $('body').append(data);
                         inicializarMapa();
                         $.mobile.changePage('#page-ubicacion-map', {transition: "pop", role: "dialog", reverse: false});

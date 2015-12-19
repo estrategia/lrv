@@ -91,11 +91,11 @@ class Controller extends CController {
     public function getSectorName() {
         if (isset(Yii::app()->session[Yii::app()->params->sesion['sectorCiudadEntrega']]) && Yii::app()->session[Yii::app()->params->sesion['sectorCiudadEntrega']] != null) {
             $objSectorCiudad = Yii::app()->session[Yii::app()->params->sesion['sectorCiudadEntrega']];
-            $objSubSector = Yii::app()->session[Yii::app()->params->sesion['subSectorCiudadEntrega']];
+            //$objSubSector = Yii::app()->session[Yii::app()->params->sesion['subSectorCiudadEntrega']];
             $this->sectorName = $objSectorCiudad->objCiudad->nombreCiudad;
-            if ($objSubSector != null)
-                $this->sectorName .= " - " . $objSubSector->nombreSubSector;
-            else if ($objSectorCiudad->objSector->codigoSector != 0)
+            //if ($objSubSector != null)
+            //    $this->sectorName .= " - " . $objSubSector->nombreSubSector;
+            if ($objSectorCiudad->objSector->codigoSector != 0)
                 $this->sectorName .= " - " . $objSectorCiudad->objSector->nombreSector;
         }else {
             $this->sectorName = "Seleccionar ubicación";
@@ -117,8 +117,8 @@ class Controller extends CController {
             Yii::app()->getClientScript()->registerScriptFile(Yii::app()->request->baseUrl . "/libs/raty/jquery.raty.js", CClientScript::POS_HEAD);
             Yii::app()->getClientScript()->registerScriptFile(Yii::app()->request->baseUrl . "/libs/owl-carousel/owl.carousel.min.js", CClientScript::POS_HEAD);
             Yii::app()->getClientScript()->registerScriptFile(Yii::app()->request->baseUrl . "/libs/jquerymobile-windows/jqm-windows.mdialog.js", CClientScript::POS_HEAD);
-            Yii::app()->getClientScript()->registerScriptFile(Yii::app()->request->baseUrl . "/js/common.js", CClientScript::POS_HEAD);
-            Yii::app()->getClientScript()->registerScriptFile(Yii::app()->request->baseUrl . "/js/mobile.js", CClientScript::POS_HEAD);
+            Yii::app()->getClientScript()->registerScriptFile(Yii::app()->request->baseUrl . "/js/common.min.js", CClientScript::POS_HEAD);
+            Yii::app()->getClientScript()->registerScriptFile(Yii::app()->request->baseUrl . "/js/mobile.min.js", CClientScript::POS_HEAD);
         } else {
             //    Yii::app()->getClientScript()->registerScriptFile(Yii::app()->request->baseUrl . "/libs/jquery/jquery-1.10.0.min.js", CClientScript::POS_HEAD);
             Yii::app()->getClientScript()->registerScriptFile(Yii::app()->request->baseUrl . "/libs/bootstrap/js/bootstrap.min.js", CClientScript::POS_HEAD);
@@ -131,13 +131,13 @@ class Controller extends CController {
             Yii::app()->getClientScript()->registerScriptFile(Yii::app()->request->baseUrl . "/libs/ad-gallery/jquery.ad-gallery.js", CClientScript::POS_HEAD);
             Yii::app()->getClientScript()->registerScriptFile(Yii::app()->request->baseUrl . '/libs/bootbox.min.js', CClientScript::POS_END);
             Yii::app()->getClientScript()->registerScriptFile(Yii::app()->request->baseUrl . '/libs/raphael/raphael-min.js', CClientScript::POS_END);
-            Yii::app()->getClientScript()->registerScriptFile(Yii::app()->request->baseUrl . "/js/common.js", CClientScript::POS_HEAD);
-            Yii::app()->getClientScript()->registerScriptFile(Yii::app()->request->baseUrl . "/js/desktop.js", CClientScript::POS_END);
-            Yii::app()->getClientScript()->registerScriptFile(Yii::app()->request->baseUrl . "/js/desktop-om.js", CClientScript::POS_END);
-            Yii::app()->getClientScript()->registerScriptFile(Yii::app()->request->baseUrl . "/js/desktop-ms.js", CClientScript::POS_END);
-            Yii::app()->getClientScript()->registerScriptFile(Yii::app()->request->baseUrl . "/js/desktop-jj.js", CClientScript::POS_END);
-            Yii::app()->getClientScript()->registerScriptFile(Yii::app()->request->baseUrl . "/js/isotope.pkgd.js", CClientScript::POS_END);
-            Yii::app()->getClientScript()->registerScriptFile(Yii::app()->request->baseUrl . "/js/masonry-horizontal.js", CClientScript::POS_END);
+            Yii::app()->getClientScript()->registerScriptFile(Yii::app()->request->baseUrl . "/js/common.min.js", CClientScript::POS_HEAD);
+            Yii::app()->getClientScript()->registerScriptFile(Yii::app()->request->baseUrl . "/js/desktop.min.js", CClientScript::POS_END);
+            //Yii::app()->getClientScript()->registerScriptFile(Yii::app()->request->baseUrl . "/js/desktop-om.js", CClientScript::POS_END);
+            //Yii::app()->getClientScript()->registerScriptFile(Yii::app()->request->baseUrl . "/js/desktop-ms.js", CClientScript::POS_END);
+            //Yii::app()->getClientScript()->registerScriptFile(Yii::app()->request->baseUrl . "/js/desktop-jj.js", CClientScript::POS_END);
+            Yii::app()->getClientScript()->registerScriptFile(Yii::app()->request->baseUrl . "/libs/isotope.pkgd.js", CClientScript::POS_END);
+            Yii::app()->getClientScript()->registerScriptFile(Yii::app()->request->baseUrl . "/libs/masonry-horizontal.js", CClientScript::POS_END);
             Yii::app()->getClientScript()->registerScriptFile(Yii::app()->request->baseUrl . '/libs/loading/js/Loading.js', CClientScript::POS_END);
             /*     Yii::app()->getClientScript()->registerScriptFile(Yii::app()->request->baseUrl . "/js/npm.js", CClientScript::POS_END); */
         }
