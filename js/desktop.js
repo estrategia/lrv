@@ -1990,7 +1990,7 @@ $(document).on('click', 'button[data-role="ubicacion-mapa"]', function() {
                 Loading.show();
             },
             success: function(data) {
-                $.getScript("https://maps.googleapis.com/maps/api/js?key="+gmapKey).done(function(script, textStatus) {
+                $.getScript("https://maps.googleapis.com/maps/api/js?client="+gmapKey).done(function(script, textStatus) {
                     $.getScript(requestUrl + "/js/ubicacion.min.js").done(function(script, textStatus) {
                         $('#main-page').append(data);
                         $('#select-ubicacion-psubsector .ciudades').select2();

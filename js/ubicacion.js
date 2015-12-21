@@ -1,13 +1,11 @@
 var lat = 4.704009;
 var lng = -74.042832;
-
-var marcador = new google.maps.LatLng(lat, lng);
 var locationMarker;
 var map;
 
 function inicializarMapa(){
     var mapProp = {
-       center: {lat, lng},
+       center: new google.maps.LatLng(lat, lng),
        zoom:6,
        mapMarker: false,
        disableDefaultUI:true,       
