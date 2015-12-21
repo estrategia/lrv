@@ -230,6 +230,23 @@ class SitioController extends Controller {
                 Yii::app()->end();
             }
             
+            $objSectorCiudadDireccion = SectorCiudad::model()->find(array(
+                'condition' => 'codigoSector=:sector AND codigoCiudad=:ciudad AND estadoCiudadSector=:estado',
+                'params' => array(
+                    ':sector' => $objDireccion->codigoSector,
+                    ':ciudad' => $objDireccion->codigoCiudad,
+                    ':estado' => 1,
+                )
+            ));
+            
+            if($objSectorCiudadDireccion===null){
+                echo CJSON::encode(array(
+                    'result' => 'error',
+                    'response' => 'Direcci&oacute;n no configurada en ubicaci&oacute;n v&aacute;lida'
+                ));
+                Yii::app()->end();
+            }
+            
             $ciudad = $objDireccion->codigoCiudad;
             $sector = $objDireccion->codigoSector;
         }

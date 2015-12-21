@@ -2,13 +2,47 @@
 
 class TestController extends Controller {
     
-    public function actionEntrega(){
-        CVarDumper::dump(Yii::app()->session[Yii::app()->params->sesion['tipoEntrega']],10,true);
+    public function actionUrl(){
+        $urlProtocolo = 'http';
+
+        //Get domain portion
+        $urlHost = '://www.larebajavirtual.com';
+
+        //Get path to script
+        $urlRequest = "/lrv/";
+        
+        $urlFull = $urlProtocolo . $urlHost . $urlRequest;
+        $urlMovil = "://www.m.larebajavirtual.com";
+        $urlDesktop = "://www.larebajavirtual.com";
+        
+        echo "Protocolo: $urlProtocolo<br/>Host: $urlHost<br/>Request: $urlRequest<br/>UrlFull: $urlFull<br/><br/>";
+
+        //si el host es movil y el dispositivo es escritorio => cambiar host por escritorio
+        if (!$this->isMobile && strpos($urlHost, $urlMovil) !== FALSE) {
+            echo "Host movil y dispositivo escritorio<br/>";
+            $urlFull = str_replace($urlMovil, $urlDesktop, $urlFull);
+            echo "<br/>UrlFull: $urlFull<br/><br/>";
+            header("Location: $urlFull");
+        }
+
+        //si el host es escritorio y el dispositivo es movil => cambiar host por movil
+        if ($this->isMobile && strpos($urlHost, $urlDesktop) !== FALSE) {
+            echo "Host desktop y dispositivo movil<br/>";
+            $urlFull = str_replace($urlDesktop, $urlMovil, $urlFull);
+            echo "<br/>UrlFull: $urlFull<br/><br/>";
+            header("Location: $urlFull");
+        }
+        
+        echo "FIN<br/>";
+    }
+
+    public function actionEntrega() {
+        CVarDumper::dump(Yii::app()->session[Yii::app()->params->sesion['tipoEntrega']], 10, true);
     }
 
     public function actionMapa() {
-        Yii::app()->getClientScript()->registerScriptFile("https://maps.googleapis.com/maps/api/js", CClientScript::POS_END);
-        Yii::app()->getClientScript()->registerScriptFile(Yii::app()->request->baseUrl . "/js/ubicacion.js", CClientScript::POS_END);
+        Yii::app()->getClientScript()->registerScriptFile("https://maps.googleapis.com/maps/api/js?client=gme-copservir", CClientScript::POS_END);
+        Yii::app()->getClientScript()->registerScriptFile(Yii::app()->request->baseUrl . "/js/ubicacion.min.js", CClientScript::POS_END);
         $this->render('mapa');
     }
 
@@ -62,14 +96,14 @@ class TestController extends Controller {
         echo $script;
     }
 
-    public function actionUrl() {
+    /*public function actionUrl() {
         $url = "http://localhost/embebida/";
         $raw = rawurlencode($url);
         $encode = urlencode($url);
         echo "$url<br/>";
         echo "$raw<br/>";
         echo "$encode<br/>";
-    }
+    }*/
 
     public function actionDiff() {
         $datetime1 = new DateTime('2009-10-11');
@@ -818,7 +852,7 @@ class TestController extends Controller {
         foreach ($ciudades as $indice => $ciudad) {
             echo "$indice: $ciudad->codigoCiudad|$ciudad->nombreCiudad<br/>";
             foreach ($ciudad->listSectorCiudad as $sectorCiudad) {
-                echo "    $sectorCiudad->codigoSector|".$sectorCiudad->objSector->nombreSector."<br/>";
+                echo "    $sectorCiudad->codigoSector|" . $sectorCiudad->objSector->nombreSector . "<br/>";
             }
             echo "<br/>";
         }

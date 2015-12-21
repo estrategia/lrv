@@ -20,8 +20,7 @@ function inicializarMapa(){
         map: map, draggable: true, animation: google.maps.Animation.DROP
     });
 
-    google.maps.event.addListener(map, 'bounds_changed', function()
-    {
+    google.maps.event.addListener(map, 'bounds_changed', function(){
         locationMarker.setPosition(map.getCenter());
     });
 }

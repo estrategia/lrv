@@ -72,20 +72,26 @@ class Controller extends CController {
         $urlRequest = $_SERVER['REQUEST_URI'];
         
         $urlFull = $urlProtocolo . $urlHost . $urlRequest;
-        $urlMovil = "://m.larebajavirtual.com";
-        $urlDesktop = "://larebajavirtual.com";
+        $urlMovil = "://www.m.larebajavirtual.com";
+        $urlDesktop = "://www.larebajavirtual.com";
+        
+        //echo "Protocolo: $urlProtocolo<br/>Host: $urlHost<br/>Request: $urlRequest<br/>UrlFull: $urlFull<br/><br/>";
 
         //si el host es movil y el dispositivo es escritorio => cambiar host por escritorio
         if (!$this->isMobile && strpos($urlHost, $urlMovil) !== FALSE) {
+            //echo "Host movil y dispositivo escritorio<br/>";
             $urlFull = str_replace($urlMovil, $urlDesktop, $urlFull);
             header("Location: $urlFull");
         }
 
         //si el host es escritorio y el dispositivo es movil => cambiar host por movil
         if ($this->isMobile && strpos($urlHost, $urlDesktop) !== FALSE) {
+            //echo "Host desktop y dispositivo movil<br/>";
             $urlFull = str_replace($urlDesktop, $urlMovil, $urlFull);
             header("Location: $urlFull");
         }
+        
+        //echo "FIN<br/>";
     }
 
     public function getSectorName() {
