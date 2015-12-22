@@ -15,11 +15,7 @@
 
     <?php echo CHtml::htmlButton('Buscar ubicaci&oacute;n', array('class' => 'ui-btn ui-btn-n ui-corner-all ui-alt-icon', 'data-role' => 'ubicacion-mapa')); ?>
 
-    <?php if ($objSectorCiudad != null): ?>
-        <?php echo CHtml::link('Continuar en ' . $this->sectorName, $this->createUrl('/sitio/inicio'), array('class' => 'ui-btn ui-corner-all ui-shadow ui-btn-n btn_add_lst_pr', 'data-mini' => 'true', 'data-ajax' => 'false')); ?>
-    <?php endif; ?>
-
-    <div id="ubicacion-seleccion-resumen" data-entrega="<?php echo $tipoEntregaTxt ?>" data-ubicacion="<?php echo ($objSectorCiudad == null ? "" : $this->sectorName) ?>" class="display-none center" style="border-radius: 5px; margin: 40px 20px; padding: 20px; font-size:1em; font-weight:bold; background-color: #dddddd">
+    <div disabled="disabled" id="ubicacion-seleccion-resumen" data-role='ubicacion-seleccion' data-entrega="<?php echo $tipoEntregaTxt ?>" data-ubicacion="<?php echo ($objSectorCiudad == null ? "" : $this->sectorName) ?>" class="display-none ui-btn ui-corner-all ui-shadow ui-btn-n btn_add_lst_pr">
 
     </div>
 
@@ -29,10 +25,14 @@
         <input id="ubicacion-seleccion-ciudad" type="hidden" name="ciudad" value="<?php echo ($objSectorCiudad == null ? "" : $objSectorCiudad->codigoCiudad) ?>">
         <input id="ubicacion-seleccion-sector" type="hidden" name="sector" value="<?php echo ($objSectorCiudad == null ? "" : $objSectorCiudad->codigoSector) ?>">
 
-        <?php echo CHtml::link('Aceptar', '#', array('class' => 'ui-btn ui-btn-a ui-corner-all ui-alt-icon', 'data-role' => 'ubicacion-seleccion', 'data-mini' => 'true', 'data-ajax' => 'false')); ?>
+        <?php //echo CHtml::link('Aceptar', '#', array('class' => 'ui-btn ui-btn-a ui-corner-all ui-alt-icon', 'data-role' => 'ubicacion-seleccion', 'data-mini' => 'true', 'data-ajax' => 'false')); ?>
     </form>
+    
+    <?php if ($objSectorCiudad != null): ?>
+        <?php echo CHtml::link('Continuar en ' . $this->sectorName, $this->createUrl('/sitio/inicio'), array('class' => 'ui-btn ui-corner-all ui-shadow ui-btn-n btn_add_lst_pr', 'data-mini' => 'true', 'data-ajax' => 'false')); ?>
+    <?php endif; ?>
 </div>
 
 <?php if ($objSectorCiudad != null || !empty($tipoEntrega)): ?>
-    <?php Yii::app()->clientScript->registerScript('update_resumen_ubicacion', "textoResumenUbicacionSeleccionada();", CClientScript::POS_END); ?>
+    <?php //Yii::app()->clientScript->registerScript('update_resumen_ubicacion', "textoResumenUbicacionSeleccionada();", CClientScript::POS_END); ?>
 <?php endif; ?>

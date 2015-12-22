@@ -1431,7 +1431,7 @@ div.cprod_frc_total{ background: #e5e5e5; padding: .5em .9em; color: #505050; te
 div.cprod_frc_total span{ background: #FFF; color: #505050; padding: .1em .5em; border-radius: .4em; border: 1px solid #919191; }
 
 a.ui-btn.ui-corner-all.ui-shadow.ui-btn-r.btn_frc_add_car{ background: #b10000; /*border-radius: .6em;/*.8em;*/ margin-top: 1em; margin-bottom: 1em; text-shadow:none; }
-a.ui-btn.ui-corner-all.ui-shadow.ui-btn-n.btn_add_lst_pr{ background: #fff; /*border-radius: .6em;/*.8em;*/ border: 1px solid #ff0000; color: #505050; margin-bottom: 1em; text-shadow:none; }
+a.ui-btn.ui-corner-all.ui-shadow.ui-btn-n.btn_add_lst_pr,div.ui-btn.ui-corner-all.ui-shadow.ui-btn-n.btn_add_lst_pr{ background: #fff; /*border-radius: .6em;/*.8em;*/ border: 1px solid #ff0000; color: #505050; margin-bottom: 1em; text-shadow:none; }
 
 /*label.ui-btn.ui-checkbox-on.ctbl_chk_lb.ui-btn:after{}*/
 /*.ui-icon-check:after*/
@@ -2669,4 +2669,8 @@ div.clst_cont_top.top_frc {
 
 .float-right{
     float: right;
+}
+
+.display-none{
+    display: none;
 }

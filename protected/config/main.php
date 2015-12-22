@@ -44,10 +44,10 @@ return array(
             'loginUrl' => array('usuario/autenticar'),
             'allowAutoLogin' => true,
         ),
-        'session' => array(
+        /*'session' => array(
             'class' => 'CDbHttpSession',
             'timeout' => 2592000//1 dia 86400 --> 30 dias,
-        ),
+        ),*/
         'urlManager' => array(
             'urlFormat' => 'path',
             'showScriptName' => false,

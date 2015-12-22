@@ -132,7 +132,15 @@ $(document).on('click', 'a[data-role="ubicacion-seleccion-mapa"]', function() {
     });
 });
 
-$(document).on('click', 'a[data-role="ubicacion-seleccion"]', function() {
+$(document).on('click', 'div[data-role="ubicacion-seleccion"]', function() {
+    console.log("11");
+    if($(this).attr('disabled')){
+        console.log("22");
+        return false;
+    }
+    
+    console.log("33");
+    
     var form = $("#form-ubicacion");
     $.ajax({
         type: 'POST',
@@ -221,9 +229,25 @@ $(document).on('change', 'select[data-role="sector-despacho-map"]', function() {
 });
 
 function textoResumenUbicacionSeleccionada() {
-    var texto = $('#ubicacion-seleccion-resumen').attr('data-entrega') + " " + $('#ubicacion-seleccion-resumen').attr('data-ubicacion');
-    $('#ubicacion-seleccion-resumen').html(texto);
-    $('#ubicacion-seleccion-resumen').removeClass('display-none');
+    var textEntrega = $('#ubicacion-seleccion-resumen').attr('data-entrega').trim();
+    var textUbicacion = $('#ubicacion-seleccion-resumen').attr('data-ubicacion').trim();
+    
+    var texto = textEntrega + " " + textUbicacion;
+    texto = texto.trim();
+    
+    //$('#ubicacion-seleccion-resumen').html(texto);
+    //$('#ubicacion-seleccion-resumen').removeClass('display-none');
+    
+    if(texto.length>0){
+        $('#ubicacion-seleccion-resumen').html(texto);
+        $('#ubicacion-seleccion-resumen').removeClass('display-none');
+        
+        if(textEntrega.length>0 && textUbicacion.length>0){
+            $('#ubicacion-seleccion-resumen').removeAttr('disabled');
+        }else{
+            $('#ubicacion-seleccion-resumen').attr('disabled','disabled');
+        }
+    }
 }
 
 $(document).on('click', 'button[data-role="ubicacion-mapa"]', function() {
