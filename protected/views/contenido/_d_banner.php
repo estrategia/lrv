@@ -1,4 +1,5 @@
-<section class="block">
+<section class="block" style="margin:0">
+    <div class="container-fluid nopaddingleft nopaddingright">
     <div id="carousel-modulo-<?php echo $objModulo->idModulo ?>" class="carousel slide"  data-ride="carousel">
         <div class="carousel-inner" role="listbox">
             <?php foreach ($objModulo->listImagenesBanners as $i => $imagenes): ?>
@@ -21,5 +22,6 @@
         <a class="carousel-control right" href="#carousel-modulo-<?php echo $objModulo->idModulo ?>" data-slide="next">
             <i class="next-slide"></i>
         </a>
+    </div>
     </div>
 </section>
