@@ -18,17 +18,17 @@
     </head>
 
     <body>
-        <div class="min-dsp">
+        <!--<div class="min-dsp">
             <h2>Porfavor rota tu dispositivo.</h2>
             <span>(o visita la versión móvil. <a href="http://m.larebajavirtual.com">m.larebajavirtual.com</a>)</span>
-        </div>
+        </div>-->
         <div id="main-page">
             <div class="container-fluid">
                 <header>
                     <div class="row">
                         <!--logo-->
                         <div class="col-xs-12 col-md-2">
-                            <a class="navbar-brand logo-top"  title="Drogueria - La Rebaja Virtual" alt="logo - La Rebaja" href="<?php echo Yii::app()->baseUrl ?>"><img src="<?php echo Yii::app()->request->baseUrl; ?>/images/logotop.png" alt="La rebaja virtual"></a>
+                            <a class="navbar-brand logo-top"  title="Drogueria - La Rebaja Virtual" alt="logo - La Rebaja" href="<?php echo $this->createUrl('/'); ?>"><img src="<?php echo Yii::app()->request->baseUrl; ?>/images/logotop.png" alt="La rebaja virtual"></a>
                         </div>
 
                         <div class="col-xs-12 col-md-10">

@@ -7,7 +7,7 @@
             <?php foreach ($direccion['direcciones'] as $model): ?>
                 <div id="div-direccion-radio-<?php echo $model->idDireccionDespacho ?>">
                     <label for="DireccionesDespacho_idDireccionDespacho_<?php echo $model->idDireccionDespacho ?>"><?php echo $model->descripcion ?></label>
-                    <input type="radio" name="DireccionesDespacho[idDireccionDespacho]" id="DireccionesDespacho_idDireccionDespacho_<?php echo $model->idDireccionDespacho ?>" value="<?php echo $model->idDireccionDespacho ?>" >
+                    <input type="radio" data-descripcion="<?php echo $model->descripcion?>" data-ubicacion="<?php echo $model->objCiudad->nombreCiudad . (($model->codigoSector != 0) ? (" - " . $model->objSector->nombreSector) : "") ?>" name="DireccionesDespacho[idDireccionDespacho]" id="DireccionesDespacho_idDireccionDespacho_<?php echo $model->idDireccionDespacho ?>" value="<?php echo $model->idDireccionDespacho ?>" >
                     <div id="div-direccion-form-<?php echo $model->idDireccionDespacho ?>"  class="c_form_rgs ui-body-c" style="display: none">
                         <?php if ($editar): ?>
                             <?php $this->renderPartial('/usuario/_direccionForm', array('model' => $model)); ?>

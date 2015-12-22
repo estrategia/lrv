@@ -19,7 +19,7 @@
         <?php echo CHtml::link('Continuar en ' . $this->sectorName, $this->createUrl('/sitio/inicio'), array('class' => 'ui-btn ui-corner-all ui-shadow ui-btn-n btn_add_lst_pr', 'data-mini' => 'true', 'data-ajax' => 'false')); ?>
     <?php endif; ?>
 
-    <div id="ubicacion-seleccion-resumen" class="display-none">
+    <div id="ubicacion-seleccion-resumen" data-entrega="<?php echo $tipoEntregaTxt ?>" data-ubicacion="<?php echo ($objSectorCiudad == null ? "" : $this->sectorName) ?>" class="display-none center" style="border-radius: 5px; margin: 40px 20px; padding: 20px; font-size:1em; font-weight:bold; background-color: #dddddd">
 
     </div>
 
@@ -33,11 +33,6 @@
     </form>
 </div>
 
-<div data-role="popup" id="popup-ubicacion-gps" data-dismissible="false" data-position-to="window" data-theme="a">
-    <a href="#" data-rel="back" class="ui-btn ui-corner-all ui-shadow ui-btn ui-icon-delete ui-btn-icon-notext ui-btn-right">Close</a>
-    <div data-role="main">
-        <div data-role="content">
-
-        </div>
-    </div>
-</div>
+<?php if ($objSectorCiudad != null || !empty($tipoEntrega)): ?>
+    <?php Yii::app()->clientScript->registerScript('update_resumen_ubicacion', "textoResumenUbicacionSeleccionada();", CClientScript::POS_END); ?>
+<?php endif; ?>

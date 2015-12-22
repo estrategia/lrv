@@ -130,6 +130,7 @@ class SitioController extends Controller {
                 'objSectorCiudad' => $this->objSectorCiudad,
                 'objDireccion'=> $objDireccion,
                 'tipoEntrega' => $tipoEntrega,
+                'tipoEntregaTxt' => $tipoEntregaTxt,
             ));
         } else {
             //si no fue redireccionado por sessionfilter, se redirecciona a la pagina anterior

@@ -2,7 +2,7 @@
 <section class="product_detail">
     <div class="container">
         <div class="row">
-            <div class="col-md-6">
+            <div class="col-md-5">
                 <?php $listImagenes = $objProducto->listImagenesGrandes() ?>
                 <?php if (empty($listImagenes)): ?>
                     <div class="item"><img class='img-responsive' src="<?php echo Yii::app()->request->baseUrl . Yii::app()->params->producto['noImagen']['grande']; ?>" alt="<?php echo $objProducto->descripcionProducto ?>" title="<?php echo $objProducto->descripcionProducto ?>"></div>
@@ -30,7 +30,7 @@
                 <?php endif; ?>
             </div>  
 
-            <div class="col-md-6 content-txt2 border-left">
+            <div class="col-md-7 content-txt2 border-left">
                 <div class="descripciones">
                     <div style="height: auto; overflow: hidden;">
                           

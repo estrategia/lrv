@@ -32,9 +32,11 @@
                 <?php echo CHtml::htmlButton('<span class="glyphicon glyphicon-map-marker"></span>  Buscar ubicaci&oacute;n', array('class' => 'btn ico-btn  btn-ciudad', 'data-role' => 'ubicacion-mapa')); ?>
             </div>
         </div>
-        <div id="ubicacion-seleccion-resumen" data-entrega="<?php echo $tipoEntregaTxt?>" data-ubicacion="<?php echo ($objSectorCiudad == null ? "" : $this->sectorName) ?>" class="display-none text-center" style="border-radius: 5px; margin: 40px 20px; padding: 20px; font-size:1.2em; font-weight:bold; background-color: #dddddd">
+        <div disabled="disabled" id="ubicacion-seleccion-resumen" data-role="ubicacion-seleccion" data-entrega="<?php echo $tipoEntregaTxt?>" data-ubicacion="<?php echo ($objSectorCiudad == null ? "" : $this->sectorName) ?>" class="display-none text-center center-div btn btn-default" style="cursor: pointer; margin: 40px 20px; padding: 20px; font-size:1.2em; font-weight:bold;">
 
         </div>
+        
+        <?php //echo CHtml::link('<span class="glyphicon glyphicon-ok-sign"></span> Continuar en ' . $this->sectorName, $urlRedirect, array('data-role'=> 'ubicacion-seleccion', 'class' => 'btn  btn-default')); ?>
 
         <form id="form-ubicacion"  method="post" action="<?php echo $this->createUrl("/sitio/ubicacionSeleccion") ?>">
             <input id="ubicacion-seleccion-entrega" type="hidden" name="entrega" value="<?php echo $tipoEntrega ?>">
@@ -42,7 +44,9 @@
             <input id="ubicacion-seleccion-ciudad" type="hidden" name="ciudad" value="<?php echo ($objSectorCiudad == null ? "" : $objSectorCiudad->codigoCiudad) ?>">
             <input id="ubicacion-seleccion-sector" type="hidden" name="sector" value="<?php echo ($objSectorCiudad == null ? "" : $objSectorCiudad->codigoSector) ?>">
             <div class="center" style="margin-bottom: 40px;">
-                <button data-role="ubicacion-seleccion" class="btn btn-primary display-none" type="button">Aceptar</button>
+                
+                <!--<button data-role="ubicacion-seleccion" class="btn btn-primary display-none" type="button">Aceptar</button>-->
+                
                 <?php if ($objSectorCiudad != null): ?>
                     <?php echo CHtml::link('<span class="glyphicon glyphicon-ok-sign"></span> Continuar en ' . $this->sectorName, $urlRedirect, array('class' => 'btn  btn-default')); ?>
                 <?php endif; ?>
@@ -50,10 +54,6 @@
         </form>
     </section>
 </div>
-
-<?php if ($objSectorCiudad != null): ?>
-    <?php Yii::app()->clientScript->registerScript('update_resumen_ubicacion', "textoResumenUbicacionSeleccionada();", CClientScript::POS_END); ?>
-<?php endif; ?>
 
 <!-- modal info recoger -->
 
@@ -138,3 +138,6 @@
 
 <!-- fin modal info recoger -->
 
+<?php if ($objSectorCiudad != null): ?>
+    <?php Yii::app()->clientScript->registerScript('update_resumen_ubicacion', "textoResumenUbicacionSeleccionada();", CClientScript::POS_END); ?>
+<?php endif; ?>

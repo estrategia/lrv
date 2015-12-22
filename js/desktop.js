@@ -68,14 +68,18 @@ function ajustebuscador(){
     $('.content-category .controls >span').width(width+6);
 }
 function ajuesmenu(){
-    widht = $('.main_menu .categorias').width();
-    widhtDocument = ($(window).width() - widht);
-    $('.categorias .category > li').width(widht);
-    $('.categorias .category > li .right-nav').width(widhtDocument);
-    total=$('.main_menu .modulo-menu').length;
-   // alert(total);
-    itemswidth=widhtDocument/total;
-    $('.main_menu .modulo-menu').width(itemswidth);
+   widhtNav = $('nav.main_menu').width();
+   //console.log(widhtNav);
+   widtCat=widhtNav*0.25;
+   $('.main_menu .categorias').width(widtCat);
+   widht = $('.main_menu .categorias').width();
+   widhtDocument = (widhtNav - widht);
+   $('.categorias .category > li').width(widht);
+   $('.categorias .category > li .right-nav').width(widhtDocument);
+   total=$('.main_menu .modulo-menu').length;
+  // alert(total);
+   itemswidth=widhtDocument/total;
+   $('.main_menu .modulo-menu').width(itemswidth);
 }
 $(".main_menu .cuidado-personal > a").click(function() {
     //alert($(this).next().attr('class'));
@@ -1971,9 +1975,23 @@ function textoUbicacionEntregaSeleccionada() {
 }
 
 function textoResumenUbicacionSeleccionada() {
-    var texto = $('#ubicacion-seleccion-resumen').attr('data-entrega') + " " + $('#ubicacion-seleccion-resumen').attr('data-ubicacion');
-    $('#ubicacion-seleccion-resumen').html(texto);
-    $('#ubicacion-seleccion-resumen').removeClass('display-none');
+    var textEntrega = $('#ubicacion-seleccion-resumen').attr('data-entrega').trim();
+    var textUbicacion = $('#ubicacion-seleccion-resumen').attr('data-ubicacion').trim();
+    
+    var texto = textEntrega + " " + textUbicacion;
+    texto = texto.trim();
+    
+    if(texto.length>0){
+        texto = '<span class="glyphicon glyphicon-ok-sign"></span> ' + texto;
+        $('#ubicacion-seleccion-resumen').html(texto);
+        $('#ubicacion-seleccion-resumen').removeClass('display-none');
+        
+        if(textEntrega.length>0 && textUbicacion.length>0){
+            $('#ubicacion-seleccion-resumen').removeAttr('disabled');
+        }else{
+            $('#ubicacion-seleccion-resumen').attr('disabled','disabled');
+        }
+    }
 }
 
 $(document).on('click', 'button[data-role="ubicacion-mapa"]', function() {
@@ -2110,8 +2128,12 @@ $(document).on('change', 'select[data-role="sector-despacho-map"]', function() {
 });
 
 
-$(document).on('click', 'button[data-role="ubicacion-seleccion"]', function() {
-    var form = $(this).parents("form");
+$(document).on('click', 'div[data-role="ubicacion-seleccion"]', function() {
+    if($(this).attr('disabled')){
+        return false;
+    }
+    
+    var form = $("#form-ubicacion");
     $.ajax({
         type: 'POST',
         async: true,

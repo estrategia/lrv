@@ -58,17 +58,15 @@ function obtenerPosicion(pos) {
         async: true,
         url: requestUrl + '/sitio/gps',
         data: {entrega:$('input[id="ubicacion-seleccion-entrega"]').val().trim(), lat: lat, lon: lon},
+        beforeSend: function() {
+            $('#popup-ubicacion-gps').remove();
+        },
         success: function(data) {
             if (data.result == 'ok') {
-                $("#popup-ubicacion-gps [data-role='content']").html(data.response);
-                $("#popup-ubicacion-gps").popup("open");
-
-                /*$("#popup-ubicacion-gps [data-role='content'] div").html(data.response.ubicacion);
-                 $("#popup-ubicacion-gps [data-role='content'] a").attr('href', data.response.url);
-                 $("#popup-ubicacion-gps").popup("open");*/
-
-                //$('[data-role= \"main\"]').html(data.response);
-                //window.location.href = data.response;
+                $('<div>').mdialog({
+                    id: "popup-ubicacion-gps",
+                    content: "<div data-role='main'><div class='ui-content' data-role='content' role='main'>" + data.response.mensaje + "<a class='ui-btn ui-btn-r ui-corner-all ui-shadow' data-role='ubicacion-gps-seleccion' data-ciudad='"+data.response.ciudad+"' data-sector='"+data.response.sector+"' data-mensaje='"+data.response.mensaje+"' href='#'>Aceptar</a><a class='ui-btn ui-btn-n ui-corner-all ui-shadow' data-rel='back' href='#'>Cancelar</a></div></div>"
+                });
             } else {
                 $('<div>').mdialog({
                     content: "<div data-role='main'><div class='ui-content' data-role='content' role='main'>" + data.response + "<a class='ui-btn ui-btn-r ui-corner-all ui-shadow' data-rel='back' href='#'>Aceptar</a></div></div>"
@@ -88,7 +86,10 @@ $(document).on('click', 'a[data-role="ubicacion-gps-seleccion"]', function() {
     $('#ubicacion-seleccion-sector').val($(this).attr('data-sector'));
     $('#ubicacion-seleccion-direccion').val('');
     $("#popup-ubicacion-gps").popup("close");
-    $("#popup-ubicacion-gps [data-role='content']").html("");
+    $("#popup-ubicacion-gps").remove();
+    
+    $('#ubicacion-seleccion-resumen').attr('data-ubicacion', "en " + $(this).attr('data-mensaje'));
+    textoResumenUbicacionSeleccionada();
 });
 
 $(document).on('click', 'a[data-role="ubicacion-seleccion-mapa"]', function() {
@@ -114,6 +115,9 @@ $(document).on('click', 'a[data-role="ubicacion-seleccion-mapa"]', function() {
                 $('#ubicacion-seleccion-ciudad').val(data.response.ciudad);
                 $('#ubicacion-seleccion-sector').val(data.response.sector);
                 $('#ubicacion-seleccion-direccion').val('');
+                
+                $('#ubicacion-seleccion-resumen').attr('data-ubicacion', "en " + data.response.mensaje);
+                textoResumenUbicacionSeleccionada();
             } else {
                 $('<div>').mdialog({
                     content: "<div data-role='main'><div class='ui-content' data-role='content' role='main'>" + data.response + "<a class='ui-btn ui-btn-r ui-corner-all ui-shadow' data-rel='back' href='#'>Aceptar</a></div></div>"
@@ -129,7 +133,7 @@ $(document).on('click', 'a[data-role="ubicacion-seleccion-mapa"]', function() {
 });
 
 $(document).on('click', 'a[data-role="ubicacion-seleccion"]', function() {
-    var form = $(this).parents("form");
+    var form = $("#form-ubicacion");
     $.ajax({
         type: 'POST',
         async: true,
@@ -215,6 +219,12 @@ $(document).on('change', 'select[data-role="sector-despacho-map"]', function() {
         }
     }
 });
+
+function textoResumenUbicacionSeleccionada() {
+    var texto = $('#ubicacion-seleccion-resumen').attr('data-entrega') + " " + $('#ubicacion-seleccion-resumen').attr('data-ubicacion');
+    $('#ubicacion-seleccion-resumen').html(texto);
+    $('#ubicacion-seleccion-resumen').removeClass('display-none');
+}
 
 $(document).on('click', 'button[data-role="ubicacion-mapa"]', function() {
     if ($('#page-ubicacion-map').length > 0) {
@@ -1128,6 +1138,8 @@ $(document).on('change', 'input[name="DireccionesDespacho[idDireccionDespacho]"]
         $('#ubicacion-seleccion-ciudad').val('');
         $('#ubicacion-seleccion-sector').val('');
         $('#ubicacion-seleccion-direccion').val($(this).val());
+        $('#ubicacion-seleccion-resumen').attr('data-ubicacion', "en mi direcci&oacute;n " + $(this).attr('data-descripcion') + " (" + $(this).attr('data-ubicacion') + ")");
+        textoResumenUbicacionSeleccionada();
     }
 });
 
