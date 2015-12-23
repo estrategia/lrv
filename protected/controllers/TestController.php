@@ -2,18 +2,35 @@
 
 class TestController extends Controller {
     
+    public function actionUrl1(){
+        $urlProtocolo = (isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] && !in_array(strtolower($_SERVER['HTTPS']), array('off', 'no'))) ? 'https' : 'http';
+
+        //Get domain portion
+        $urlHost = '://' . $_SERVER['HTTP_HOST'];
+
+        //Get path to script
+        $urlRequest = $_SERVER['REQUEST_URI'];
+        
+        $urlFull = "$urlProtocolo | $urlHost | $urlRequest";
+        $urlMovil = "://m.larebajavirtual.com";
+        $urlDesktop = "://larebajavirtual.com";
+        
+        echo "Protocolo: $urlProtocolo<br/>Host: $urlHost<br/>Request: $urlRequest<br/>UrlFull: $urlFull<br/><br/>";
+    }
+    
     public function actionUrl(){
         $urlProtocolo = 'http';
 
         //Get domain portion
-        $urlHost = '://www.larebajavirtual.com';
+        $urlHost = '://www.m.larebajavirtual.com';
+        $urlHost = str_replace("://www.", "://", $urlHost);
 
         //Get path to script
         $urlRequest = "/lrv/";
         
         $urlFull = $urlProtocolo . $urlHost . $urlRequest;
-        $urlMovil = "://www.m.larebajavirtual.com";
-        $urlDesktop = "://www.larebajavirtual.com";
+        $urlMovil = "://m.larebajavirtual.com";
+        $urlDesktop = "://larebajavirtual.com";
         
         echo "Protocolo: $urlProtocolo<br/>Host: $urlHost<br/>Request: $urlRequest<br/>UrlFull: $urlFull<br/><br/>";
 
@@ -22,7 +39,7 @@ class TestController extends Controller {
             echo "Host movil y dispositivo escritorio<br/>";
             $urlFull = str_replace($urlMovil, $urlDesktop, $urlFull);
             echo "<br/>UrlFull: $urlFull<br/><br/>";
-            header("Location: $urlFull");
+            //header("Location: $urlFull");
         }
 
         //si el host es escritorio y el dispositivo es movil => cambiar host por movil
@@ -30,7 +47,7 @@ class TestController extends Controller {
             echo "Host desktop y dispositivo movil<br/>";
             $urlFull = str_replace($urlDesktop, $urlMovil, $urlFull);
             echo "<br/>UrlFull: $urlFull<br/><br/>";
-            header("Location: $urlFull");
+            //header("Location: $urlFull");
         }
         
         echo "FIN<br/>";

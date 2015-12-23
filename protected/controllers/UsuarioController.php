@@ -1316,6 +1316,7 @@ class UsuarioController extends Controller {
                     Yii::app()->end();
                 } else {
                     $idDireccionSeleccionada = 0;
+                    $modelPago = null;
                     if (isset(Yii::app()->session[Yii::app()->params->sesion['carroPagarForm']])) {
                         $modelPago = Yii::app()->session[Yii::app()->params->sesion['carroPagarForm']];
                     }
@@ -1323,7 +1324,6 @@ class UsuarioController extends Controller {
                     if ($modelPago != null) {
                         $idDireccionSeleccionada = $modelPago->idDireccionDespacho;
                     }
-
 
                     if ($radio == 'pasoscompra') {
                         echo CJSON::encode(array(

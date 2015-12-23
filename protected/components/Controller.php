@@ -67,6 +67,7 @@ class Controller extends CController {
 
         //Get domain portion
         $urlHost = '://' . $_SERVER['HTTP_HOST'];
+        $urlHost = str_replace("://www.", "://", $urlHost);
 
         //Get path to script
         $urlRequest = $_SERVER['REQUEST_URI'];

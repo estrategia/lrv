@@ -28,7 +28,7 @@
                     <div class="row">
                         <!--logo-->
                         <div class="col-xs-12 col-md-2">
-                            <a class="navbar-brand logo-top"  title="Drogueria - La Rebaja Virtual" alt="logo - La Rebaja" href="<?php echo $this->createUrl('/'); ?>"><img src="<?php echo Yii::app()->request->baseUrl; ?>/images/logotop.png" alt="La rebaja virtual"></a>
+                            <a class="navbar-brand logo-top"  title="Drogueria - La Rebaja Virtual" alt="logo - La Rebaja" href="/"><img src="<?php echo Yii::app()->request->baseUrl; ?>/images/logotop.png" alt="La rebaja virtual"></a>
                         </div>
 
                         <div class="col-xs-12 col-md-10">
