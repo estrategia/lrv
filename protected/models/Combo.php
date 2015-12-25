@@ -181,7 +181,7 @@ class Combo extends CActiveRecord {
     }
     
     public function getCadenaUrl(){
-        return str_replace(" ","-", $this->descripcionCombo).".html";
+        return str_replace(array(" ","/"),"-", $this->descripcionCombo).".html";
     }
 
 }

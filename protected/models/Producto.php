@@ -289,7 +289,7 @@ class Producto extends CActiveRecord {
     }
 
     public function getCadenaUrl() {
-        return str_replace(" ", "-", $this->descripcionProducto) . ".html";
+        return str_replace(array(" ","/"), "-", $this->descripcionProducto) . ".html";
     }
 
     public function getArrayCalificacion() {
