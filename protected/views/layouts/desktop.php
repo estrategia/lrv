@@ -10,7 +10,8 @@
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <?php Yii::app()->clientScript->registerCoreScript('jquery'); ?>
-        <script>requestUrl = "<?php echo Yii::app()->request->baseUrl; ?>"; gmapKey = "<?php echo Yii::app()->params['google']['llaveMapa']; ?>";</script>
+        <script>requestUrl = "<?php echo Yii::app()->request->baseUrl; ?>";
+            gmapKey = "<?php echo Yii::app()->params['google']['llaveMapa']; ?>";</script>
         <link rel="shortcut icon" href="<?php echo Yii::app()->request->baseUrl; ?>/images/favicon_16.ico" type="image/x-icon" />  
         <title><?php echo CHtml::encode($this->pageTitle); ?></title>
 
@@ -35,10 +36,12 @@
                             <div class="row">
                                 <div class="col-xs-2">
                                     <div class="top_ubicacion">
-                                        <?php if (isset($this->sectorName)): ?>
+                                        <?php if ($this->objSectorCiudad == null): ?>
+                                            <?php echo CHtml::link('<span class="text-center title-desp"><br><span class="glyphicon glyphicon-map-marker" style="margin-right: 5px;"></span> Seleccionar Ubicaci&oacute;n </span>', CController::createUrl('/sitio/ubicacion'), array()); ?>
+                                        <?php else: ?>
                                             <?php echo $this->sectorName ?>
+                                            <?php echo CHtml::link('<span class="text-center title-desp"><br><span class="glyphicon glyphicon-map-marker" style="margin-right: 5px;"></span> Cambiar Ubicaci&oacute;n </span>', CController::createUrl('/sitio/ubicacion'), array()); ?>
                                         <?php endif; ?>
-                                        <?php echo CHtml::link('<span class="text-center title-desp"><br><span class="glyphicon glyphicon-map-marker" style="margin-right: 5px;"></span> Cambiar Ubicaci&oacute;n </span>', CController::createUrl('/sitio/ubicacion'), array()); ?>
                                     </div>
                                 </div>
                                 <div class="col-xs-6">
@@ -105,71 +108,72 @@
             </div>
             <!--menu-->
             <div class="container-fluid nopaddingleft nopaddingright">
-            <nav class="main_menu">
-                <ul class="nav nav-justified" role="tablist">
-                    <li class="dropdown categorias" role="presentation" style="position:inherit;">
-                        <a id="categorias" href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Categorías<span class="ico-cat"></span></a>
-                        <ul class="dropdown-menu category" aria-labelledby="categorias">
-                            <?php foreach ($this->categorias as $categoria): ?>
-                                <li class="cuidado-personal"><a href="#"><img class="data-label" src="<?php echo Yii::app()->request->baseUrl; ?>/images/menu/desktop/<?php echo $categoria->rutaImagen ?>" alt=""><?php echo $categoria->nombreCategoriaTienda ?></a>
-                                    <?php if ($categoria->listCategoriasHijas): ?>
-                                        <div class="right-nav">
-                                            <ul class="submenu">
-                                                <div class="sub_float">
-                                                    <?php $cpunte = 0;
-                                                    foreach ($categoria->listCategoriasHijas as $subcategoria): $cpunte++; /* echo $cpunte; */
-                                                        ?>
-                                                        <div class="section-submenu">
-                                                            <?php if (count($subcategoria->listModulosConfigurados) > 0): ?>
-                                                                <li class='title-submenu'><?php echo CHtml::link("<span class='glyphicon glyphicon-chevron-right' aria-hidden='true'></span>" . ucfirst(strtolower($subcategoria->nombreCategoriaTienda)), CController::createUrl('/catalogo/division', array('division' => $subcategoria->idCategoriaTienda))); ?></li>
-                                                            <?php else: ?>
-                                                                <li class='title-submenu'><span class='glyphicon glyphicon-chevron-right' aria-hidden='true'></span><?php echo ucfirst(strtolower($subcategoria->nombreCategoriaTienda)); ?></li>
-                                                            <?php endif; ?>
-                                                            <?php for ($i = 0; $i < count($subcategoria->listCategoriasHijasMenu) && $i < 5; $i++): ?>
-                                                                <?php $categoriaHija = $subcategoria->listCategoriasHijasMenu[$i]; ?>
+                <nav class="main_menu">
+                    <ul class="nav nav-justified" role="tablist">
+                        <li class="dropdown categorias" role="presentation" style="position:inherit;">
+                            <a id="categorias" href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Categorías<span class="ico-cat"></span></a>
+                            <ul class="dropdown-menu category" aria-labelledby="categorias">
+                                <?php foreach ($this->categorias as $categoria): ?>
+                                    <li class="cuidado-personal"><a href="#"><img class="data-label" src="<?php echo Yii::app()->request->baseUrl; ?>/images/menu/desktop/<?php echo $categoria->rutaImagen ?>" alt=""><?php echo $categoria->nombreCategoriaTienda ?></a>
+                                        <?php if ($categoria->listCategoriasHijas): ?>
+                                            <div class="right-nav">
+                                                <ul class="submenu">
+                                                    <div class="sub_float">
+                                                        <?php
+                                                        $cpunte = 0;
+                                                        foreach ($categoria->listCategoriasHijas as $subcategoria): $cpunte++; /* echo $cpunte; */
+                                                            ?>
+                                                            <div class="section-submenu">
                                                                 <?php if (count($subcategoria->listModulosConfigurados) > 0): ?>
-                                                                    <li><?php echo ucfirst(strtolower($categoriaHija->nombreCategoriaTienda)); ?></li>
+                                                                    <li class='title-submenu'><?php echo CHtml::link("<span class='glyphicon glyphicon-chevron-right' aria-hidden='true'></span>" . ucfirst(strtolower($subcategoria->nombreCategoriaTienda)), CController::createUrl('/catalogo/division', array('division' => $subcategoria->idCategoriaTienda))); ?></li>
                                                                 <?php else: ?>
-                                                                    <li><?php echo CHtml::link(ucfirst(strtolower($categoriaHija->nombreCategoriaTienda)), CController::createUrl('/catalogo/categoria', array('categoria' => $categoriaHija->idCategoriaTienda))); ?></li>
+                                                                    <li class='title-submenu'><span class='glyphicon glyphicon-chevron-right' aria-hidden='true'></span><?php echo ucfirst(strtolower($subcategoria->nombreCategoriaTienda)); ?></li>
                                                                 <?php endif; ?>
-                                                            <?php endfor; ?>
-                                                            <?php if (count($subcategoria->listCategoriasHijasMenu) > 5): ?>
-                                                                <li class='title-viewmore_category'><?php echo CHtml::link("Ver más...", CController::createUrl('/catalogo/division', array('division' => $subcategoria->idCategoriaTienda))); ?></li>
-                                                        <?php endif; ?>        
-                                                        </div>
+                                                                <?php for ($i = 0; $i < count($subcategoria->listCategoriasHijasMenu) && $i < 5; $i++): ?>
+                                                                    <?php $categoriaHija = $subcategoria->listCategoriasHijasMenu[$i]; ?>
+                                                                    <?php if (count($subcategoria->listModulosConfigurados) > 0): ?>
+                                                                        <li><?php echo ucfirst(strtolower($categoriaHija->nombreCategoriaTienda)); ?></li>
+                                                                    <?php else: ?>
+                                                                        <li><?php echo CHtml::link(ucfirst(strtolower($categoriaHija->nombreCategoriaTienda)), CController::createUrl('/catalogo/categoria', array('categoria' => $categoriaHija->idCategoriaTienda))); ?></li>
+                                                                    <?php endif; ?>
+                                                                <?php endfor; ?>
+                                                                <?php if (count($subcategoria->listCategoriasHijasMenu) > 5): ?>
+                                                                    <li class='title-viewmore_category'><?php echo CHtml::link("Ver más...", CController::createUrl('/catalogo/division', array('division' => $subcategoria->idCategoriaTienda))); ?></li>
+                                                            <?php endif; ?>        
+                                                            </div>
             <?php if ($cpunte == 3 && count($categoria->listCategoriasHijas) != 3): ?>
-                                                        </div>
-                                                        <div class="sub_float">
-                                                            <?php
-                                                            $cpunte = 0;
-                                                        endif;
+                                                            </div>
+                                                            <div class="sub_float">
+                                                                <?php
+                                                                $cpunte = 0;
+                                                            endif;
 
-                                                    endforeach;
-                                                    ?>
-                                                </div>
-                                            </ul>
-                                            <?php if (!empty($categoria->rutaImagenMenu)): ?>
-                                                <img class="img_categoria" src="<?php echo Yii::app()->request->baseUrl; ?>/images/menu/desktop/<?php echo $categoria->rutaImagenMenu ?>"> 
-                                        <?php endif; ?>
-                                        </div>
-                                <?php endif; ?>
-                                </li>
+                                                        endforeach;
+                                                        ?>
+                                                    </div>
+                                                </ul>
+                                                <?php if (!empty($categoria->rutaImagenMenu)): ?>
+                                                    <img class="img_categoria" src="<?php echo Yii::app()->request->baseUrl; ?>/images/menu/desktop/<?php echo $categoria->rutaImagenMenu ?>"> 
+                                            <?php endif; ?>
+                                            </div>
+                                    <?php endif; ?>
+                                    </li>
 <?php endforeach; ?>
-                        </ul>
-                    </li>
+                            </ul>
+                        </li>
 
 <?php foreach (ModulosConfigurados::getModulosMenu($this->objSectorCiudad) as $objModulo): ?>
-                        <li class="modulo-menu" style="background-color: <?php echo $objModulo->objMenuModulo->color; ?>;">
-                            <a href="<?php echo $this->createUrl($objModulo->objMenuModulo->contenido) ?>"><img src="<?php echo Yii::app()->request->baseUrl . Yii::app()->params->carpetaImagen['menuDesktop'] . $objModulo->objMenuModulo->rutaImagen; ?>" /> <?php echo $objModulo->descripcion ?></a>
-                        </li>
+                            <li class="modulo-menu" style="background-color: <?php echo $objModulo->objMenuModulo->color; ?>;">
+                                <a href="<?php echo $this->createUrl($objModulo->objMenuModulo->contenido) ?>"><img src="<?php echo Yii::app()->request->baseUrl . Yii::app()->params->carpetaImagen['menuDesktop'] . $objModulo->objMenuModulo->rutaImagen; ?>" /> <?php echo $objModulo->descripcion ?></a>
+                            </li>
 <?php endforeach; ?>
-                </ul>
-            </nav>
+                    </ul>
+                </nav>
             </div>
             <!--fin menu-->
 
             <!--inicio migas de pan-->
-                    <?php if (isset($this->breadcrumbs) && !(empty($this->breadcrumbs))): ?>
+<?php if (isset($this->breadcrumbs) && !(empty($this->breadcrumbs))): ?>
                 <section>
                     <div class="container-fluid">
                         <?php
