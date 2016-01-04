@@ -29,3 +29,8 @@
     </tr>
 </table>
 
+<button class="ui-input-btn ui-btn ui-corner-all ui-shadow ui-btn-r ui-mini" data-role="ubicacion-seleccion-direccion" data-direccion="<?php echo $model->idDireccionDespacho ?>">
+    Usar esta direcci&oacute;n
+</button>
+
+

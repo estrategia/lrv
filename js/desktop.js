@@ -69,7 +69,6 @@ function ajustebuscador(){
 }
 function ajuesmenu(){
    widhtNav = $('nav.main_menu').width();
-   //console.log(widhtNav);
    widtCat=widhtNav*0.25;
    $('.main_menu .categorias').width(widtCat);
    widht = $('.main_menu .categorias').width();
@@ -77,12 +76,10 @@ function ajuesmenu(){
    $('.categorias .category > li').width(widht);
    $('.categorias .category > li .right-nav').width(widhtDocument);
    total=$('.main_menu .modulo-menu').length;
-  // alert(total);
    itemswidth=widhtDocument/total;
    $('.main_menu .modulo-menu').width(itemswidth);
 }
 $(".main_menu .cuidado-personal > a").click(function() {
-    //alert($(this).next().attr('class'));
     $(".main_menu .cuidado-personal .right-nav").hide();
     $(this).next('.right-nav').show();
     return false;
@@ -339,19 +336,14 @@ $(document).on('click', "a[data-role='pedidodetalle']", function() {
 
                 if (data.response.mensajeHTML) {
                     dialogoAnimado(data.response.mensajeHTML);
-                    //alert(data.response.mensajeHTML);
                 }
             } else {
-                /*$('<div>').mdialog({
-                 content: "<div data-role='main'><div class='ui-content' data-role='content' role='main'>" + data.response + "<a class='ui-btn ui-btn-r ui-corner-all ui-shadow' data-rel='back' href='#'>Aceptar</a></div></div>"
-                 });*/
                 alert(data.response);
             }
         },
         error: function(jqXHR, textStatus, errorThrown) {
-            //$.mobile.loading('hide');
+            Loading.hide();
             alert('Error: ' + errorThrown);
-            //alert('Error: ' + errorThrown);
         }
     });
 });
@@ -447,7 +439,6 @@ $(document).on('click', "input[data-role='lstpersonalform']", function() {
     }
     $.ajax({
         type: 'POST',
-        //dataType: 'json',
         async: true,
         url: requestUrl + '/usuario/listapersonal/lista/post',
         data: $.param(data) + '&' + $('#form-listapersonal').serialize(),
@@ -484,7 +475,7 @@ $(document).on('click', "input[data-role='lstpersonalform']", function() {
             }
         },
         error: function(jqXHR, textStatus, errorThrown) {
-            //$.mobile.loading('hide');
+            Loading.hide();
             alert('Error: ' + errorThrown);
         }
     });
@@ -547,7 +538,7 @@ $(document).on('click', "a[data-role='listapersonal']", function() {
             }
         },
         error: function(jqXHR, textStatus, errorThrown) {
-            //$.mobile.loading('hide');
+            Loading.hide();
             alert('Error: ' + errorThrown);
         }
     });
@@ -687,7 +678,6 @@ $(document).on('click', "a[data-role='lstpersonalguardar']", function() {
 $(document).on('click', "input[data-role='lstpersonalguardar']", function() {
     $.ajax({
         type: 'POST',
-        //dataType: 'json',
         async: true,
         url: requestUrl + '/usuario/listapersonal/lista/guardar',
         data: $('#form-listaguardar').serialize(),
@@ -1022,7 +1012,6 @@ function pasoInformacion(actual, siguiente, boton) {
 
     $.ajax({
         type: 'POST',
-        //dataType: 'json',
         async: true,
         url: requestUrl + '/carro/pagar/paso/' + actual + '/post/true',
         data: $.param(data) + '&' + $('#form-direccion-pagoinvitado').serialize() + '&' + $('#form-pago-entrega').serialize() + '&' + $('#form-pago-pago').serialize() + '&' + $('#form-pago-bono').serialize() + '&' + $('#form-pago-comentario').serialize(),
@@ -1061,141 +1050,11 @@ function pasoInformacion(actual, siguiente, boton) {
     });
 }
 
-/*
- function pasoDespacho(actual, siguiente, boton) {
- var data = {
- siguiente: siguiente,
- direccion: $('input[name="FormaPagoForm[idDireccionDespacho]"]:checked').val()
- };
- 
- $.ajax({
- type: 'POST',
- //dataType: 'json',
- async: true,
- url: requestUrl + '/carro/pagar/paso/' + actual + '/post/true',
- data: $.param(data) + '&' + $('#form-direccion-pagoinvitado').serialize(),
- beforeSend: function() {
- boton.prop('disabled', true);
- $('div[id^="FormaPagoForm_"].has-error').html('');
- $('div[id^="FormaPagoForm_"].has-error').css('display', 'none');
- Loading.show();
- },
- complete: function() {
- Loading.hide();
- },
- success: function(data) {
- var obj = $.parseJSON(data);
- 
- if (obj.result === 'ok') {
- window.location.replace(obj.redirect);
- } else if (obj.result === 'error') {
- alert(obj.response);
- boton.prop('disabled', false);
- } else {
- $.each(obj, function(element, error) {
- $('#' + element + '_em_').html(error);
- $('#' + element + '_em_').css('display', 'block');
- });
- boton.prop('disabled', false);
- }
- },
- error: function(jqXHR, textStatus, errorThrown) {
- alert('Error: ' + errorThrown);
- boton.prop('disabled', false);
- }
- });
- }
- 
- function pasoEntrega(actual, siguiente, boton) {
- var data = {siguiente: siguiente};
- 
- $.ajax({
- type: 'POST',
- //dataType: 'json',
- async: true,
- url: requestUrl + '/carro/pagar/paso/' + actual + '/post/true',
- data: $.param(data) + '&' + $('#form-pago-entrega').serialize(),
- beforeSend: function() {
- boton.prop('disabled', true);
- $('div[id^="FormaPagoForm_"].has-error').html('');
- $('div[id^="FormaPagoForm_"].has-error').css('display', 'none');
- $('#form-pago-entrega').trigger("create");
- Loading.show();
- },
- complete: function() {
- Loading.hide();
- },
- success: function(data) {
- var obj = $.parseJSON(data);
- 
- if (obj.result === 'ok') {
- window.location.replace(obj.redirect);
- } else if (obj.result === 'error') {
- alert(obj.response);
- boton.prop('disabled', false);
- } else {
- $.each(obj, function(element, error) {
- $('#' + element + '_em_').html(error);
- $('#' + element + '_em_').css('display', 'block');
- });
- boton.prop('disabled', false);
- }
- },
- error: function(jqXHR, textStatus, errorThrown) {
- alert('Error: ' + errorThrown);
- boton.prop('disabled', false);
- }
- });
- }
- 
- function pasoPago(actual, siguiente, boton) {
- var data = {siguiente: siguiente};
- 
- $.ajax({
- type: 'POST',
- //dataType: 'json',
- async: true,
- url: requestUrl + '/carro/pagar/paso/' + actual + '/post/true',
- data: $.param(data) + '&' + $('#form-pago-pago').serialize(),
- beforeSend: function() {
- boton.prop('disabled', true);
- $('div[id^="FormaPagoForm_"].text-danger').html('');
- $('div[id^="FormaPagoForm_"].text-danger').css('display', 'none');
- Loading.show();
- },
- complete: function() {
- Loading.hide();
- },
- success: function(data) {
- var obj = $.parseJSON(data);
- 
- if (obj.result === 'ok') {
- window.location.replace(obj.redirect);
- } else if (obj.result === 'error') {
- alert(obj.response);
- boton.prop('disabled', false);
- } else {
- $.each(obj, function(element, error) {
- $('#' + element + '_em_').html(error);
- $('#' + element + '_em_').css('display', 'block');
- });
- boton.prop('disabled', false);
- }
- },
- error: function(jqXHR, textStatus, errorThrown) {
- alert('Error: ' + errorThrown);
- boton.prop('disabled', false);
- }
- });
- }
- */
-
 function pasoConfirmacion(actual, siguiente, boton) {
     var data = {siguiente: siguiente};
 
     $.ajax({
         type: 'POST',
-        //dataType: 'json',
         async: true,
         url: requestUrl + '/carro/pagar/paso/' + actual + '/post/true',
         data: $.param(data) + '&' + $('#form-pago-confirmacion').serialize(),
@@ -1363,35 +1222,6 @@ function filtrarListaProductos() {
     });
 }
 
-/*$(document).on('click', "a[data-role='filtro-listaproductos']", function() {
-    $.ajax({
-        type: 'POST',
-        dataType: 'json',
-        async: true,
-        url: requestUrl + '/catalogo/filtrar',
-        data: $('#form-filtro-listaproductos').serialize(),
-        beforeSend: function() {
-            //boton.button('disable');
-            Loading.show();
-        },
-        complete: function() {
-            Loading.hide();
-        },
-        success: function(data) {
-            if (data.result === 'ok') {
-                //alert(data.response);
-                $.fn.yiiListView.update('id-productos-list');
-            } else {
-                alert(data.response);
-            }
-        },
-        error: function(jqXHR, textStatus, errorThrown) {
-            alert('Error: ' + errorThrown);
-            //boton.button('enable');
-        }
-    });
-});*/
-
 $(document).on('change', "select[data-role='orden-listaproductos']", function() {
     $.ajax({
         type: 'POST',
@@ -1400,7 +1230,6 @@ $(document).on('change', "select[data-role='orden-listaproductos']", function() 
         url: requestUrl + '/catalogo/filtrar',
         data: {'OrdenamientoForm[orden]': $('#OrdenamientoForm_orden').val()},
         beforeSend: function() {
-            //boton.button('disable');
             Loading.show();
         },
         complete: function() {
@@ -1415,8 +1244,8 @@ $(document).on('change', "select[data-role='orden-listaproductos']", function() 
             }
         },
         error: function(jqXHR, textStatus, errorThrown) {
+            Loading.hide();
             alert('Error: ' + errorThrown);
-            //boton.button('enable');
         }
     });
 });
@@ -1855,9 +1684,9 @@ function obtenerPosicion(pos) {
         async: true,
         url: requestUrl + '/sitio/gps',
         data: {entrega: $('input[id="ubicacion-seleccion-entrega"]').val().trim(), lat: lat, lon: lon},
-        /*beforeSend: function() {
+        beforeSend: function() {
          Loading.show();
-         },*/
+        },
         success: function(data) {
             if (data.result == 'ok') {
                 bootbox.dialog({
@@ -1874,8 +1703,7 @@ function obtenerPosicion(pos) {
                                 $('#div-ubicacion-tipoubicacion > button').removeClass('activo').addClass('inactivo');
                                 $('#div-ubicacion-tipoubicacion > button[data-role="ubicacion-gps"]').removeClass('inactivo').addClass('activo');
                                 $('button[data-role="ubicacion-seleccion"]').removeClass('display-none');
-                                $('#ubicacion-seleccion-resumen').attr('data-ubicacion', "en " + data.response.mensaje);
-                                textoResumenUbicacionSeleccionada();
+                                ubicacionSeleccion();
                             }
                         },
                         close: {
@@ -1912,8 +1740,6 @@ $(document).on('click', 'div[data-role="tipoentrega"]', function() {
     }
 
     $('#ubicacion-seleccion-entrega').val($(this).attr('data-tipo'));
-    $('#ubicacion-seleccion-resumen').attr('data-entrega',textoUbicacionEntregaSeleccionada());
-    textoResumenUbicacionSeleccionada();
     
     if($('#ubicacion-seleccion-direccion').val().length>0 || ($('#ubicacion-seleccion-ciudad').val().length>0 && $('#ubicacion-seleccion-sector').val().length>0) ){
         $('button[data-role="ubicacion-seleccion"]').removeClass('display-none');
@@ -1945,54 +1771,16 @@ $(document).on('click', 'button[data-role="ubicacion-direccion"]', function() {
     return false;
 });
 
-$(document).on('click', '#modal-ubicacion-direcciones input[type="radio"]', function() {
-    var val = $(this).val().trim();
-    var option = $(this);
-
+$(document).on('click', 'button[data-role="ubicacion-seleccion-direccion"]', function() {
     $('#ubicacion-seleccion-ciudad').val('');
     $('#ubicacion-seleccion-sector').val('');
-    $('#ubicacion-seleccion-direccion').val(val);
-
+    $('#ubicacion-seleccion-direccion').val($(this).attr('data-direccion'));
+    
     $('#div-ubicacion-tipoubicacion > button').removeClass('activo').addClass('inactivo');
     $('#div-ubicacion-tipoubicacion > button[data-role="ubicacion-direccion"]').removeClass('inactivo').addClass('activo');
-    $('button[data-role="ubicacion-seleccion"]').removeClass('display-none');
-    $('#ubicacion-seleccion-resumen').attr('data-ubicacion', "en mi direcci&oacute;n " + option.attr('data-descripcion') + " (" + option.attr('data-ubicacion') + ")");
-    textoResumenUbicacionSeleccionada();
+    
+    ubicacionSeleccion();
 });
-
-function textoUbicacionEntregaSeleccionada() {
-    var entrega = $('#ubicacion-seleccion-entrega').val();
-
-    if (entrega.length <= 0)
-        return null;
-
-    var diventrega = $('div[data-role="tipoentrega"]div[data-tipo="' + entrega + '"]');
-
-    if (diventrega.length > 0)
-        return diventrega.attr('data-descripcion');
-    else
-        return null;
-}
-
-function textoResumenUbicacionSeleccionada() {
-    var textEntrega = $('#ubicacion-seleccion-resumen').attr('data-entrega').trim();
-    var textUbicacion = $('#ubicacion-seleccion-resumen').attr('data-ubicacion').trim();
-    
-    var texto = textEntrega + " " + textUbicacion;
-    texto = texto.trim();
-    
-    if(texto.length>0){
-        texto = '<span class="glyphicon glyphicon-ok-sign"></span> ' + texto;
-        $('#ubicacion-seleccion-resumen').html(texto);
-        $('#ubicacion-seleccion-resumen').removeClass('display-none');
-        
-        if(textEntrega.length>0 && textUbicacion.length>0){
-            $('#ubicacion-seleccion-resumen').removeAttr('disabled');
-        }else{
-            $('#ubicacion-seleccion-resumen').attr('disabled','disabled');
-        }
-    }
-}
 
 $(document).on('click', 'button[data-role="ubicacion-mapa"]', function() {
     if ($('#modal-ubicacion-map').length > 0) {
@@ -2053,16 +1841,14 @@ $(document).on('click', 'button[data-role="ubicacion-seleccion-mapa"]', function
         },
         success: function(data) {
             if (data.result == 'ok') {
-                $('#modal-ubicacion-map').modal('hide');
+                //$('#modal-ubicacion-map').modal('hide');
                 $('#ubicacion-seleccion-ciudad').val(data.response.ciudad);
                 $('#ubicacion-seleccion-sector').val(data.response.sector);
                 $('#ubicacion-seleccion-direccion').val('');
 
                 $('#div-ubicacion-tipoubicacion > button').removeClass('activo').addClass('inactivo');
                 $('#div-ubicacion-tipoubicacion > button[data-role="ubicacion-mapa"]').removeClass('inactivo').addClass('activo');
-                $('button[data-role="ubicacion-seleccion"]').removeClass('display-none');
-                $('#ubicacion-seleccion-resumen').attr('data-ubicacion', "en " + data.response.mensaje);
-                textoResumenUbicacionSeleccionada();
+                ubicacionSeleccion();
             } else {
                 alert(data.response);
             }
@@ -2128,11 +1914,7 @@ $(document).on('change', 'select[data-role="sector-despacho-map"]', function() {
 });
 
 
-$(document).on('click', 'div[data-role="ubicacion-seleccion"]', function() {
-    if($(this).attr('disabled')){
-        return false;
-    }
-    
+function ubicacionSeleccion(){
     var form = $("#form-ubicacion");
     $.ajax({
         type: 'POST',
@@ -2164,42 +1946,7 @@ $(document).on('click', 'div[data-role="ubicacion-seleccion"]', function() {
             alert('Error: ' + errorThrown);
         }
     });
-    return false;
-});
-
-/*$(document).on('click', "button[data-role='cargar-sector']", function() {
- var codigoCiudad = $(this).attr('data-ciudad');
- var sector = $("#selectSectores").val();
- $.ajax({
- type: 'GET',
- async: true,
- url: requestUrl + '/sitio/ubicacionSeleccion',
- data: {ciudad: codigoCiudad, sector: sector},
- dataType: 'json',
- beforeSend: function() {
- 
- },
- complete: function(data) {
- 
- },
- success: function(data) {
- if (data.result == 'ok') {
- $("#modal-sector").modal('hide');
- alert(data.response);
- if (data.urlAnterior) {
- location.href = data.urlAnterior;
- } else {
- location.href = requestUrl;
- }
- }
- },
- error: function(jqXHR, textStatus, errorThrown) {
- // boton.button('enable');
- alert('Error: ' + errorThrown);
- }
- });
- return false;
- });*/
+}
 
 $(document).on('click', "a[data-cargar='2']", function() {
     var combo = $(this).attr('data-combo');

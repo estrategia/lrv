@@ -3,28 +3,30 @@
 
 <table class="table table-striped">
     <tr>
-        <td colspan="2">
-            <?php if ($radio): ?>
-                <input type="radio" data-descripcion="<?php echo $model->descripcion?>" data-ubicacion="<?php echo $model->objCiudad->nombreCiudad . (($model->codigoSector != 0) ? (" - " . $model->objSector->nombreSector) : "") ?>" name="FormaPagoForm[idDireccionDespacho]" id="direccion-<?php echo $model->idDireccionDespacho ?>" value="<?php echo $model->idDireccionDespacho ?>" <?php echo ($idDireccionSeleccionada == $model->idDireccionDespacho ? "checked" : "") ?>>
-            <?php endif; ?>
+        <td <?php echo ( $radio ? "" : 'colspan="2"') ?> class="text-truncate" title="<?php echo $model->descripcion ?>">
             <?php echo $model->descripcion ?>
         </td>
+        <?php if ($radio): ?>
+            <td>
+                <button type="button" class="btn btn-primary btn-xs" data-role="ubicacion-seleccion-direccion" data-direccion="<?php echo $model->idDireccionDespacho ?>">Usar esta direcci&oacute;n</button>
+            </td>
+        <?php endif; ?>
     </tr>
     <tr>
         <td>Destinatario</td>
-        <td><?php echo $model->nombre ?></td>
+        <td class="text-truncate" title="<?php echo $model->nombre ?>"><?php echo $model->nombre ?></td>
     </tr>
     <tr>
-        <td>Ciudad</td>
-        <td><?php echo $model->objCiudad->nombreCiudad . (($model->codigoSector != 0) ? (" - " . $model->objSector->nombreSector) : "") ?></td>
+        <td>Sector</td>
+        <td  class="text-truncate" title="<?php echo strtolower($model->objSector->nombreSector) ?>"><?php echo strtolower($model->objSector->nombreSector) ?></td>
     </tr>
     <tr>
         <td>Dirección</td>
-        <td><?php echo $model->direccion ?></td>
+        <td class="text-truncate" title="<?php echo $model->direccion ?>"><?php echo $model->direccion ?></td>
     </tr>
     <tr>
         <td>Barrio</td>
-        <td><?php echo $model->barrio ?></td>
+        <td class="text-truncate" title="<?php echo $model->barrio ?>"><?php echo $model->barrio ?></td>
     </tr>
     <tr>
         <td>Tel&eacute;fono</td>

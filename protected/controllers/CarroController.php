@@ -2481,6 +2481,10 @@ class CarroController extends Controller {
         $productosCompra = array();
         $transaction = Yii::app()->db->beginTransaction();
         try {
+            if ($modelPago->bono !== null && $modelPago->usoBono == 1) {
+                Yii::app()->shoppingCart->setBono($modelPago->bono['valor']);
+            }
+            
             //registrar compra compra
             $objCompra = new Compras;
             $objCompra->identificacionUsuario = ($modelPago->pagoInvitado ? null : $modelPago->identificacionUsuario);
@@ -2568,10 +2572,6 @@ class CarroController extends Controller {
                 if (!$objObservacion2->save()) {
                     throw new Exception("Error al guardar observación" . $objObservacion2->validateErrorsResponse());
                 }
-            }
-
-            if ($modelPago->bono !== null && $modelPago->usoBono == 1) {
-                Yii::app()->shoppingCart->setBono($modelPago->bono['valor']);
             }
 
             $objFormasPago = new FormasPago; //FormaPago::model()->findByPk($modelPago->idFormaPago);

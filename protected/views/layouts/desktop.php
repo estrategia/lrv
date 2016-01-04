@@ -10,8 +10,7 @@
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <?php Yii::app()->clientScript->registerCoreScript('jquery'); ?>
-        <script>requestUrl = "<?php echo Yii::app()->request->baseUrl; ?>";
-            gmapKey = "<?php echo Yii::app()->params['google']['llaveMapa']; ?>";</script>
+        <script>requestUrl = "<?php echo Yii::app()->request->baseUrl; ?>"; gmapKey = "<?php echo Yii::app()->params['google']['llaveMapa']; ?>";</script>
         <link rel="shortcut icon" href="<?php echo Yii::app()->request->baseUrl; ?>/images/favicon_16.ico" type="image/x-icon" />  
         <title><?php echo CHtml::encode($this->pageTitle); ?></title>
 
@@ -29,7 +28,7 @@
                     <div class="row">
                         <!--logo-->
                         <div class="col-xs-12 col-md-2">
-                            <a class="navbar-brand logo-top"  title="Drogueria - La Rebaja Virtual" alt="logo - La Rebaja" href="/"><img src="<?php echo Yii::app()->request->baseUrl; ?>/images/logotop.png" alt="La rebaja virtual"></a>
+                            <a class="navbar-brand logo-top"  title="Drogueria - La Rebaja Virtual" alt="logo - La Rebaja" href="<?php echo $this->createUrl('/') ?>"><img src="<?php echo Yii::app()->request->baseUrl; ?>/images/logotop.png" alt="La rebaja virtual"></a>
                         </div>
 
                         <div class="col-xs-12 col-md-10">
