@@ -126,3 +126,17 @@ img.center{
 .box-inner > .box-header{
     height:auto; overflow:hidden;
 }
+
+table.table-input > tbody > tr > td input{
+    padding:0px 5px;
+    text-align: center;
+}
+
+table.table > tbody > tr > th{
+    text-align: center;
+}
+
+table.table-bold{
+    font-weight: bold;
+    color: #333333;
+}

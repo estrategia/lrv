@@ -10,7 +10,7 @@
 </form>
 
 <h4> Productos del pedido</h4>
-<table class="table table-bordered table-hover table-striped">
+<table class="table table-input table-bordered table-hover table-striped">
     <tbody>
         <tr>
             <th>Código</th>
@@ -39,9 +39,9 @@
                             <br>
                         </td>
                         <td rowspan='2'><?php echo $objItem->descripcion ?><br></td>
-                        <td>
-                            <div class="form-inline">
-                                <input id="cantidad-item-unidad-<?php echo $objItem->idCompraItem ?>" type="text" class="col-xs-3" value="<?php echo $objItem->unidades ?>" >
+                        <td style="min-width:180px;">
+                            <div class="form-inline text-center">
+                                <input id="cantidad-item-unidad-<?php echo $objItem->idCompraItem ?>" type="text" style="width:100px" value="<?php echo $objItem->unidades ?>" >
                                 <button type="button" data-role="modificarpedido" data-action="11" data-item="<?php echo $objItem->idCompraItem ?>" class="btn btn-default btn-sm"><i class="glyphicon glyphicon-refresh"></i></button>
                             </div>
                         </td>
@@ -66,14 +66,14 @@
                         </td>
                     </tr>
                     <tr>
-                        <td>
+                        <td style="min-width:180px;">
                             U.M.V
                             <?php if ($objItem->objProducto->objMedidaFraccion !== null): ?>
                                 <br/>
                                 <?php echo $objItem->objProducto->objMedidaFraccion->descripcionMedidaFraccion ?> X <?php echo $objItem->objProducto->unidadFraccionamiento ?>
                             <?php endif; ?>
-                            <div class="form-inline">
-                                <input id="cantidad-item-fraccion-<?php echo $objItem->idCompraItem ?>" type="text" class="col-xs-3" value="<?php echo $objItem->fracciones ?>" >
+                            <div class="form-inline text-center">
+                                <input id="cantidad-item-fraccion-<?php echo $objItem->idCompraItem ?>" type="text" style="width:100px" value="<?php echo $objItem->fracciones ?>" >
                                 <button type="button" data-role="modificarpedido" data-action="12" data-item="<?php echo $objItem->idCompraItem ?>" class="btn btn-default btn-sm"><i class="glyphicon glyphicon-refresh"></i></button>
                             </div>
                         </td> 
@@ -99,9 +99,9 @@
                                 <br>
                             </td>
                             <td rowspan='2'><?php echo $objItem->descripcion ?><br></td>
-                            <td>
-                                <div class="form-inline">
-                                    <input id="cantidad-item-unidad-<?php echo $objItem->idCompraItem ?>" type="text" class="col-xs-3" value="<?php echo $objItem->unidades ?>" >
+                            <td style="min-width:180px">
+                                <div class="form-inline text-center">
+                                    <input id="cantidad-item-unidad-<?php echo $objItem->idCompraItem ?>" type="text" style="width:100px" value="<?php echo $objItem->unidades ?>" >
                                     <button type="button" data-role="modificarpedido" data-action="11" data-item="<?php echo $objItem->idCompraItem ?>" class="btn btn-default btn-sm"><i class="glyphicon glyphicon-refresh"></i></button>
                                 </div>
                             </td>
@@ -126,10 +126,10 @@
                             </td>
                         </tr>
                         <tr>
-                            <td>
+                            <td style="min-width:180px">
                                 Unidades bodega
-                                <div class="form-inline">
-                                    <input type="text" id="cantidad-item-bodega-<?php echo $objItem->idCompraItem ?>" class="col-xs-3" value="<?php echo $objItem->unidadesCedi ?>" >
+                                <div class="form-inline text-center">
+                                    <input type="text" id="cantidad-item-bodega-<?php echo $objItem->idCompraItem ?>" style="width:100px" value="<?php echo $objItem->unidadesCedi ?>" >
                                     <button type="button" data-role="modificarpedido" data-action="13" data-item="<?php echo $objItem->idCompraItem ?>" class="btn btn-default btn-sm"><i class="glyphicon glyphicon-refresh"></i></button>
                                 </div>
                             </td> 
@@ -146,9 +146,9 @@
                                 <br>
                             </td>
                             <td><?php echo $objItem->descripcion ?><br></td>
-                            <td>
-                                <div class="form-inline">
-                                    <input type="text" id="cantidad-item-unidad-<?php echo $objItem->idCompraItem ?>" class="col-xs-3" value="<?php echo $objItem->unidades ?>" >
+                            <td style="min-width:180px">
+                                <div class="form-inline text-center">
+                                    <input type="text" id="cantidad-item-unidad-<?php echo $objItem->idCompraItem ?>" style="width:100px" value="<?php echo $objItem->unidades ?>" >
                                     <button type="button" data-role="modificarpedido" data-action="11" data-item="<?php echo $objItem->idCompraItem ?>" class="btn btn-default btn-sm"><i class="glyphicon glyphicon-refresh"></i></button>
                                 </div>
                             </td>
@@ -188,9 +188,9 @@
                     <?php endif; ?>
                     <td><?php echo $objItem->descripcion ?><br></td>
                     <?php if ($indice == 0): ?>
-                        <td rowspan="<?php echo count($arrItem['items']) ?>">
-                            <div class="form-inline">
-                                <input type="text" id="cantidad-item-unidad-<?php echo $objItem->idCompra ?>" class="col-xs-3" value="<?php echo $objItem->unidades ?>" >
+                        <td rowspan="<?php echo count($arrItem['items']) ?>" style="min-width:180px">
+                            <div class="form-inline text-center">
+                                <input type="text" id="cantidad-item-unidad-<?php echo $objItem->idCompra ?>" style="width:100px" value="<?php echo $objItem->unidades ?>" >
                                 <button type="button" data-role="modificarpedido" data-action="2" data-compra="<?php echo $objItem->idCompra ?>" data-combo="<?php echo $objItem->idCombo ?>" class="btn btn-default btn-sm"><i class="glyphicon glyphicon-refresh"></i></button>
                             </div>
                         </td>
@@ -227,32 +227,32 @@
     </tbody>
 </table>
 
-<table class="table table-bordered table-hover table-striped">
+<table class="table table-bold table-bordered table-hover table-striped">
     <tbody>
         <tr>
-            <th colspan="4"></th>
-            <th width="20%"><strong>Servicio</strong></th>
-            <th width="20%"><span><?php echo Yii::app()->numberFormatter->format(Yii::app()->params->formatoMoneda['patron'], $objCompra->domicilio, Yii::app()->params->formatoMoneda['moneda']) ?></span></th>
+            <td colspan="4"></td>
+            <td width="20%"><strong>Servicio</strong></td>
+            <td width="20%" class="text-right"><span><?php echo Yii::app()->numberFormatter->format(Yii::app()->params->formatoMoneda['patron'], $objCompra->domicilio, Yii::app()->params->formatoMoneda['moneda']) ?></span></td>
         </tr>
         <tr>
-            <th colspan="4"></th>
-            <th><strong>Flete</strong></th>
-            <th><span><?php echo Yii::app()->numberFormatter->format(Yii::app()->params->formatoMoneda['patron'], $objCompra->flete, Yii::app()->params->formatoMoneda['moneda']) ?></span></th>
+            <td colspan="4"></td>
+            <td><strong>Flete</strong></td>
+            <td class="text-right"><span><?php echo Yii::app()->numberFormatter->format(Yii::app()->params->formatoMoneda['patron'], $objCompra->flete, Yii::app()->params->formatoMoneda['moneda']) ?></span></td>
         </tr> 
         <tr>
-            <th colspan="4"></th>
-            <th><strong>Bono</strong></th>
-            <th><span><?php echo Yii::app()->numberFormatter->format(Yii::app()->params->formatoMoneda['patron'], $objCompra->objFormaPagoCompra->valorBono, Yii::app()->params->formatoMoneda['moneda']) ?></span></th>
+            <td colspan="4"></td>
+            <td><strong>Bono</strong></td>
+            <td class="text-right"><span><?php echo Yii::app()->numberFormatter->format(Yii::app()->params->formatoMoneda['patron'], $objCompra->objFormaPagoCompra->valorBono, Yii::app()->params->formatoMoneda['moneda']) ?></span></td>
         </tr>
         <tr>
-            <th colspan="4"></th>
-            <th><strong>Total a pagar</strong></th>
-            <th><span><?php echo Yii::app()->numberFormatter->format(Yii::app()->params->formatoMoneda['patron'], $objCompra->totalCompra, Yii::app()->params->formatoMoneda['moneda']) ?></span></th>
+            <td colspan="4"></td>
+            <td><strong>Total a pagar</strong></td>
+            <td class="text-right"><span><?php echo Yii::app()->numberFormatter->format(Yii::app()->params->formatoMoneda['patron'], $objCompra->totalCompra, Yii::app()->params->formatoMoneda['moneda']) ?></span></td>
         </tr>
         <tr>
-            <th colspan="4"></th>
-            <th><strong>Impuestos incluidos</strong></th>
-            <th><span><?php echo Yii::app()->numberFormatter->format(Yii::app()->params->formatoMoneda['patron'], $objCompra->impuestosCompra, Yii::app()->params->formatoMoneda['moneda']) ?></span></th>
+            <td colspan="4"></td>
+            <td><strong>Impuestos incluidos</strong></td>
+            <td class="text-right"><span><?php echo Yii::app()->numberFormatter->format(Yii::app()->params->formatoMoneda['patron'], $objCompra->impuestosCompra, Yii::app()->params->formatoMoneda['moneda']) ?></span></td>
         </tr>  
     </tbody>
 </table>
