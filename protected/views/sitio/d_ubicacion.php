@@ -8,14 +8,14 @@
             <div id="div-ubicacion-tipoentrega" class="row">
                 <h4>TIPO DE ENTREGA</h4>
                 <div class="col-md-6">               
-                    <div data-role="tipoentrega" data-tipo="<?php echo Yii::app()->params->entrega['tipo']['presencial']; ?>" class="tipo-entrega<?php echo ($tipoEntrega === null ? "" : ($tipoEntrega == Yii::app()->params->entrega['tipo']['presencial'] ? " activo" : " inactivo")) ?>">
+                    <div data-role="tipoentrega" data-descripcion="pasar por el pedido" data-tipo="<?php echo Yii::app()->params->entrega['tipo']['presencial']; ?>" class="tipo-entrega<?php echo ($tipoEntrega === null ? "" : ($tipoEntrega == Yii::app()->params->entrega['tipo']['presencial'] ? " activo" : " inactivo")) ?>">
                         <div class="ico_ubi icoRecoger"></div>
                         <div class="inner_tipoentrega">Quiero pasar por el pedido <a class="view_more_ubicacion" href="#" data-toggle="modal" data-target="#info_recoger">Ver m&aacute;s</a></div>
                         <div class="clear"></div>
                     </div>
                 </div>
                 <div class="col-md-6">  
-                    <div data-role="tipoentrega" data-tipo="<?php echo Yii::app()->params->entrega['tipo']['domicilio']; ?>" class="tipo-entrega<?php echo ($tipoEntrega === null ? "" : ($tipoEntrega == Yii::app()->params->entrega['tipo']['domicilio'] ? " activo" : " inactivo")) ?>">
+                    <div data-role="tipoentrega" data-descripcion="entrega a domicilio" data-tipo="<?php echo Yii::app()->params->entrega['tipo']['domicilio']; ?>" class="tipo-entrega<?php echo ($tipoEntrega === null ? "" : ($tipoEntrega == Yii::app()->params->entrega['tipo']['domicilio'] ? " activo" : " inactivo")) ?>">
                         <div class="ico_ubi icoEntrega"></div>
                         <div class="inner_tipoentrega">Quiero que me lo entreguen a domicilio <a class="view_more_ubicacion" href="#" data-toggle="modal" data-target="#info_domicilio">Ver m&aacute;s</a></div>
                         <div class="clear"></div>
@@ -33,7 +33,14 @@
             </div>
         </div>
         <div class="space-1"></div>
-        
+
+        <div class="center">
+            <div data-role="ubicacion-cambiar" data-cambiar="<?php echo $objSectorCiudad == null ? 0 : 1 ?>" data-tipo="<?php echo $tipoEntrega ?>" data-ubicacion="<?php echo $ubicacionEntregaTxt ?>" class="display-none" style="margin: 10px 20px;">
+                <?php echo CHtml::link('<span class="glyphicon glyphicon-ok-sign"></span><span id="ubicacion-seleccion-cambiar"></span>', $this->createUrl('/sitio/cambiarentrega'), array('class' => 'btn  btn-default')); ?>
+                <?php echo CHtml::link('Aceptar', $this->createUrl('/sitio/cambiarentrega'), array('class' => 'btn  btn-primary')); ?>
+            </div>
+        </div>
+
         <form id="form-ubicacion"  method="post" action="<?php echo $this->createUrl("/sitio/ubicacionSeleccion") ?>">
             <input id="ubicacion-seleccion-entrega" type="hidden" name="entrega" value="<?php echo $tipoEntrega ?>">
             <input id="ubicacion-seleccion-direccion" type="hidden" name="direccion" value="<?php echo ($objDireccion == null ? "" : $objDireccion->idDireccionDespacho) ?>">
@@ -41,7 +48,7 @@
             <input id="ubicacion-seleccion-sector" type="hidden" name="sector" value="<?php echo ($objSectorCiudad == null ? "" : $objSectorCiudad->codigoSector) ?>">
             <div class="center" style="margin: 10px 0;">
                 <?php if ($objSectorCiudad != null): ?>
-                    <?php echo CHtml::link('<span class="glyphicon glyphicon-ok-sign"></span> Continuar con '. $ubicacionEntregaTxt, $urlRedirect, array('class' => 'btn  btn-default')); ?>
+                    <?php echo CHtml::link('<span class="glyphicon glyphicon-ok-sign"></span> Continuar con ' . $tipoEntregaTxt . $ubicacionEntregaTxt, $urlRedirect, array('class' => 'btn  btn-default')); ?>
                     <?php echo CHtml::link('Aceptar', $urlRedirect, array('class' => 'btn  btn-primary')); ?>
                 <?php endif; ?>
             </div>

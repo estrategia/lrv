@@ -2505,7 +2505,7 @@ class CarroController extends Controller {
             } else {
                 $objCompra->idEstadoCompra = Yii::app()->params->callcenter['estadoCompra']['estado']['pendiente'];
             }
-
+            
             $objCompra->idTipoVenta = 1;
             $objCompra->activa = 1;
             $objCompra->invitado = ($modelPago->pagoInvitado ? 1 : 0);
@@ -2608,6 +2608,12 @@ class CarroController extends Controller {
                     $objCompraDireccion->correoElectronico = $modelPago->correoElectronico;
                 } else {
                     $objDireccion = DireccionesDespacho::model()->findByPk($modelPago->idDireccionDespacho);
+                    
+                    if ($objDireccion->codigoSector == 0 && Yii::app()->shoppingCart->getCodigoSector() != 0) {
+                        $objDireccion->codigoSector = Yii::app()->shoppingCart->getCodigoSector();
+                        $objDireccion->save();
+                    }
+                    
                     $objCompraDireccion->idCompra = $objCompra->idCompra;
                     $objCompraDireccion->descripcion = $objDireccion->descripcion;
                     $objCompraDireccion->nombre = $objDireccion->nombre;
@@ -2618,11 +2624,6 @@ class CarroController extends Controller {
                     $objCompraDireccion->codigoCiudad = $objDireccion->codigoCiudad;
                     $objCompraDireccion->codigoSector = $objDireccion->codigoSector;
                     $objCompraDireccion->pdvAsignado = $objDireccion->pdvAsignado;
-
-                    if ($objDireccion->codigoSector == 0 && Yii::app()->shoppingCart->getCodigoSector() != 0) {
-                        $objDireccion->codigoSector = Yii::app()->shoppingCart->getCodigoSector();
-                        $objDireccion->save();
-                    }
                 }
             } else if ($tipoEntrega == Yii::app()->params->entrega['tipo']['presencial']) {
                 $objCompraDireccion = new ComprasDireccionesDespacho;

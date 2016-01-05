@@ -70,6 +70,36 @@ class SitioController extends Controller {
         }
     }
 
+    public function actionCambiarentrega() {
+        if ($this->isMobile) {
+            $this->redirect($this->createUrl('/'));
+        } else {
+            $tipoEntrega = null;
+
+            if (isset(Yii::app()->session[Yii::app()->params->sesion['tipoEntrega']]) && Yii::app()->session[Yii::app()->params->sesion['tipoEntrega']] != null) {
+                $tipoEntrega = Yii::app()->session[Yii::app()->params->sesion['tipoEntrega']];
+            }
+            
+            if($tipoEntrega != Yii::app()->params->entrega['tipo']['presencial'] && $tipoEntrega != Yii::app()->params->entrega['tipo']['domicilio']){
+                $this->redirect($this->createUrl('/sitio/ubicacion'));
+            }
+
+            if ($tipoEntrega == Yii::app()->params->entrega['tipo']['presencial']) {
+                Yii::app()->session[Yii::app()->params->sesion['tipoEntrega']] = Yii::app()->params->entrega['tipo']['domicilio'];
+            }else{
+                Yii::app()->session[Yii::app()->params->sesion['tipoEntrega']] = Yii::app()->params->entrega['tipo']['presencial'];
+            }
+            
+            Yii::app()->session[Yii::app()->params->sesion['carroPagarForm']] = null;
+            
+            if (!isset(Yii::app()->session[Yii::app()->params->sesion['redireccionUbicacion']]) || Yii::app()->session[Yii::app()->params->sesion['redireccionUbicacion']] == null) {
+                Yii::app()->session[Yii::app()->params->sesion['redireccionUbicacion']] = (Yii::app()->request->urlReferrer == null ? $this->createUrl('/') : Yii::app()->request->urlReferrer);
+            }
+            
+            $this->redirect(Yii::app()->session[Yii::app()->params->sesion['redireccionUbicacion']]);
+        }
+    }
+
     public function actionMapa() {
         $listCiudadesSectores = Ciudad::model()->findAll(array(
             'with' => array('listSectorCiudad' => array('with' => 'objSector')),
@@ -100,13 +130,7 @@ class SitioController extends Controller {
             if ($tipoEntrega == Yii::app()->params->entrega['tipo']['presencial']) {
                 $tipoEntregaTxt = "pasar por el pedido";
             } else if ($tipoEntrega == Yii::app()->params->entrega['tipo']['domicilio']) {
-                $tipoEntregaTxt = "entregua a domicilio";
-            }
-
-            if ($tipoEntrega == Yii::app()->params->entrega['tipo']['presencial']) {
-                $ubicacionEntregaTxt = "pasar por el pedido";
-            } else if ($tipoEntrega == Yii::app()->params->entrega['tipo']['domicilio']) {
-                $ubicacionEntregaTxt = "entrega a domicilio";
+                $tipoEntregaTxt = "entrega a domicilio";
             }
         }
 
@@ -125,9 +149,9 @@ class SitioController extends Controller {
         }
 
         if ($objDireccion == null) {
-            $ubicacionEntregaTxt .= " en $this->sectorName";
-        }else{
-            $ubicacionEntregaTxt .= " en mi direcci&oacute;n \"$objDireccion->descripcion\"";
+            $ubicacionEntregaTxt = " en $this->sectorName";
+        } else {
+            $ubicacionEntregaTxt = " en mi direcci&oacute;n \"$objDireccion->descripcion\"";
         }
 
         if ($this->isMobile) {
@@ -143,6 +167,7 @@ class SitioController extends Controller {
                 'objSectorCiudad' => $this->objSectorCiudad,
                 'objDireccion' => $objDireccion,
                 'tipoEntrega' => $tipoEntrega,
+                'tipoEntregaTxt' => $tipoEntregaTxt,
                 'ubicacionEntregaTxt' => $ubicacionEntregaTxt,
             ));
         } else {
@@ -155,6 +180,7 @@ class SitioController extends Controller {
                 'objSectorCiudad' => $this->objSectorCiudad,
                 'objDireccion' => $objDireccion,
                 'tipoEntrega' => $tipoEntrega,
+                'tipoEntregaTxt' => $tipoEntregaTxt,
                 'ubicacionEntregaTxt' => $ubicacionEntregaTxt,
                 'urlRedirect' => Yii::app()->session[Yii::app()->params->sesion['redireccionUbicacion']]
             ));

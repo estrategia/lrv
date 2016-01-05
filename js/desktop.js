@@ -1,5 +1,6 @@
-function alert(message){
-    bootbox.alert({ message:message,callback: function(){}, buttons: {ok : {label:'Aceptar', className:'btn-danger'} } });
+function alert(message) {
+    bootbox.alert({message: message, callback: function() {
+        }, buttons: {ok: {label: 'Aceptar', className: 'btn-danger'}}});
 }
 
 /* 
@@ -10,22 +11,22 @@ function alert(message){
 
 $(document).on('click', 'button[data-role="tipovista-listaproductos"]', function() {
     listaProductoVista($(this).attr('data-type'));
-    $('button[data-role="tipovista-listaproductos"]').attr('data-active','false');
-    $(this).attr('data-active','true');
+    $('button[data-role="tipovista-listaproductos"]').attr('data-active', 'false');
+    $(this).attr('data-active', 'true');
 });
 
-function listaProductoVistaActualizar(){
+function listaProductoVistaActualizar() {
     listaProductoVista($('button[data-role="tipovista-listaproductos"]button[data-active="true"]').attr('data-type'));
 }
 
-function listaProductoVista(tipo){
+function listaProductoVista(tipo) {
     if (tipo === 'lineal') {
-        $(".descripcion-grid").css('display','none');
-        $(".descripcion-lineal").css('display','block');
+        $(".descripcion-grid").css('display', 'none');
+        $(".descripcion-lineal").css('display', 'block');
         listaProductoLineal();
     } else if (tipo === 'cuadricula') {
-        $(".descripcion-grid").css('display','block');
-        $(".descripcion-lineal").css('display','none');
+        $(".descripcion-grid").css('display', 'block');
+        $(".descripcion-lineal").css('display', 'none');
         listaProductoCuadricula();
     }
 }
@@ -50,34 +51,34 @@ function listaProductoCuadricula() {
 
 
 $(document).ready(function() {
-    $('.main_menu .categorias').click(function(){
+    $('.main_menu .categorias').click(function() {
         ajuesmenu();
     });
     ajuesmenu();
     ajustebuscador()
 });
-$( window ).resize(function() {
-  ajuesmenu();
-  ajustebuscador()
+$(window).resize(function() {
+    ajuesmenu();
+    ajustebuscador()
 });
-function ajustebuscador(){
+function ajustebuscador() {
     widhtControl = $('.content-category .controls').width();
     widhtBoton = $('.content-category .controls #btn-buscador-productos').width();
     widhtDrop = $('.content-category .controls .float-right').width();
-    width=widhtControl-(widhtBoton+widhtDrop);
-    $('.content-category .controls >span').width(width+6);
+    width = widhtControl - (widhtBoton + widhtDrop);
+    $('.content-category .controls >span').width(width + 6);
 }
-function ajuesmenu(){
-   widhtNav = $('nav.main_menu').width();
-   widtCat=widhtNav*0.25;
-   $('.main_menu .categorias').width(widtCat);
-   widht = $('.main_menu .categorias').width();
-   widhtDocument = (widhtNav - widht);
-   $('.categorias .category > li').width(widht);
-   $('.categorias .category > li .right-nav').width(widhtDocument);
-   total=$('.main_menu .modulo-menu').length;
-   itemswidth=widhtDocument/total;
-   $('.main_menu .modulo-menu').width(itemswidth);
+function ajuesmenu() {
+    widhtNav = $('nav.main_menu').width();
+    widtCat = widhtNav * 0.25;
+    $('.main_menu .categorias').width(widtCat);
+    widht = $('.main_menu .categorias').width();
+    widhtDocument = (widhtNav - widht);
+    $('.categorias .category > li').width(widht);
+    $('.categorias .category > li .right-nav').width(widhtDocument);
+    total = $('.main_menu .modulo-menu').length;
+    itemswidth = widhtDocument / total;
+    $('.main_menu .modulo-menu').width(itemswidth);
 }
 $(".main_menu .cuidado-personal > a").click(function() {
     $(".main_menu .cuidado-personal .right-nav").hide();
@@ -85,13 +86,13 @@ $(".main_menu .cuidado-personal > a").click(function() {
     return false;
 });
 /*
-$(".categorias .cuidado-personal").hover(function() {
-    $('.submenu').isotope({
-        layoutMode: 'masonryHorizontal',
-        itemSelector: '.section-submenu'
-    });
-
-});*/
+ $(".categorias .cuidado-personal").hover(function() {
+ $('.submenu').isotope({
+ layoutMode: 'masonryHorizontal',
+ itemSelector: '.section-submenu'
+ });
+ 
+ });*/
 
 
 /*
@@ -1187,7 +1188,7 @@ function recalcularFiltros(tipo) {
                 $('#div-filtro-atributos').html(data.atributos);
                 $('#div-filtro-atributos').trigger("create");
             }
-            
+
             filtrarListaProductos();
         },
         error: function(jqXHR, textStatus, errorThrown) {
@@ -1685,7 +1686,7 @@ function obtenerPosicion(pos) {
         url: requestUrl + '/sitio/gps',
         data: {entrega: $('input[id="ubicacion-seleccion-entrega"]').val().trim(), lat: lat, lon: lon},
         beforeSend: function() {
-         Loading.show();
+            Loading.show();
         },
         success: function(data) {
             if (data.result == 'ok') {
@@ -1740,9 +1741,18 @@ $(document).on('click', 'div[data-role="tipoentrega"]', function() {
     }
 
     $('#ubicacion-seleccion-entrega').val($(this).attr('data-tipo'));
-    
-    if($('#ubicacion-seleccion-direccion').val().length>0 || ($('#ubicacion-seleccion-ciudad').val().length>0 && $('#ubicacion-seleccion-sector').val().length>0) ){
-        $('button[data-role="ubicacion-seleccion"]').removeClass('display-none');
+
+    var divcambiar = $('div[data-role="ubicacion-cambiar"]');
+    if (divcambiar.length > 0 && divcambiar.attr('data-cambiar')=='1') {
+        var diventrega = $('div[data-role="tipoentrega"]div[data-tipo="' + $(this).attr('data-tipo') + '"]');
+        if (diventrega.length > 0) {
+            $('#ubicacion-seleccion-cambiar').html(' Cambiar a ' + diventrega.attr('data-descripcion') + divcambiar.attr('data-ubicacion'));
+            divcambiar.removeClass('display-none');
+        }
+        
+        if(divcambiar.attr('data-tipo')==$(this).attr('data-tipo')){
+            divcambiar.addClass('display-none');
+        }
     }
 });
 
@@ -1775,10 +1785,10 @@ $(document).on('click', 'button[data-role="ubicacion-seleccion-direccion"]', fun
     $('#ubicacion-seleccion-ciudad').val('');
     $('#ubicacion-seleccion-sector').val('');
     $('#ubicacion-seleccion-direccion').val($(this).attr('data-direccion'));
-    
+
     $('#div-ubicacion-tipoubicacion > button').removeClass('activo').addClass('inactivo');
     $('#div-ubicacion-tipoubicacion > button[data-role="ubicacion-direccion"]').removeClass('inactivo').addClass('activo');
-    
+
     ubicacionSeleccion();
 });
 
@@ -1796,7 +1806,7 @@ $(document).on('click', 'button[data-role="ubicacion-mapa"]', function() {
                 Loading.show();
             },
             success: function(data) {
-                $.getScript("https://maps.googleapis.com/maps/api/js?client="+gmapKey).done(function(script, textStatus) {
+                $.getScript("https://maps.googleapis.com/maps/api/js?client=" + gmapKey).done(function(script, textStatus) {
                     $.getScript(requestUrl + "/js/ubicacion.min.js").done(function(script, textStatus) {
                         $('#main-page').append(data);
                         $('#select-ubicacion-psubsector .ciudades').select2();
@@ -1914,7 +1924,7 @@ $(document).on('change', 'select[data-role="sector-despacho-map"]', function() {
 });
 
 
-function ubicacionSeleccion(){
+function ubicacionSeleccion() {
     var form = $("#form-ubicacion");
     $.ajax({
         type: 'POST',
