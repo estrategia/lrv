@@ -73,7 +73,8 @@
                             'itemsCssClass' => "items items$cantidadItems",
                             'itemView' => '_d_productoElemento',
                             'beforeAjaxUpdate' => new CJavaScriptExpression("function() {Loading.show();}"),
-                            'afterAjaxUpdate' => new CJavaScriptExpression("function(id,data) { Loading.hide(); raty();$('[data-toggle=\"popover\"]').popover();  listaProductoVistaActualizar();}"),
+                            'afterAjaxUpdate' => new CJavaScriptExpression("function(id,data) { $('html, body').animate({ scrollTop: 0 }, 600);
+                                                        Loading.hide(); raty();$('[data-toggle=\"popover\"]').popover();  listaProductoVistaActualizar();}"),
                             'pager' => array('class' => 'CLinkPager', 'header' => ''),
                         ));
                         ?>
