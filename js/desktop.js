@@ -245,6 +245,8 @@ $(document).on('click', "input[data-role='direccion-adicionar']", function() {
         url: requestUrl + '/usuario/direccionCrear',
         data: $.param(data) + '&' + form.serialize(),
         beforeSend: function() {
+            $('div[id^="DireccionesDespacho_"].text-danger').html('');
+            $('div[id^="DireccionesDespacho_"].text-danger').css('display', 'none');
             Loading.show();
         },
         complete: function() {

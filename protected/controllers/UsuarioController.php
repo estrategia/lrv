@@ -1365,6 +1365,7 @@ class UsuarioController extends Controller {
             throw new CHttpException(404, 'Página solicitada no existe.');
         }
 
+        $model->setScenario('updateDelete');
         $model->activo = 0;
 
         if (!$model->save()) {
