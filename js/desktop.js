@@ -1838,16 +1838,20 @@ $(document).on('click', 'button[data-role="ubicacion-seleccion-mapa"]', function
     Loading.show();
     var lat = 0;
     var lon = 0;
+    var entrega = "";
     if (map) {
         lat = map.getCenter().lat();
         lon = map.getCenter().lng();
+    }
+    if($('#ubicacion-seleccion-entrega').length>0){
+        entrega = $('#ubicacion-seleccion-entrega').val();
     }
     $.ajax({
         type: 'POST',
         dataType: 'json',
         async: true,
         url: requestUrl + '/sitio/gps',
-        data: {lat: lat, lon: lon},
+        data: {lat: lat, lon: lon, entrega: entrega},
         beforeSend: function() {
             Loading.show();
         },

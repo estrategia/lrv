@@ -1495,6 +1495,7 @@ class CarroController extends Controller {
 
         if ($cambio) {
             Yii::app()->session[Yii::app()->params->sesion['tipoEntrega']] = Yii::app()->params->entrega['tipo']['domicilio'];
+            _setCookie(Yii::app()->params->sesion['tipoEntrega'], Yii::app()->params->entrega['tipo']['domicilio']);
             Yii::app()->session[Yii::app()->params->sesion['carroPagarForm']] = null;
             $paso = null;
             $post = false;

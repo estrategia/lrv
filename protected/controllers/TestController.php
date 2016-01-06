@@ -2,6 +2,13 @@
 
 class TestController extends Controller {
     
+    public function actionAutenticar(){
+        $model = new LoginForm;
+        $model->username = "1113618983";
+        $model->password = "12345";
+        $model->validate();
+    }
+    
     public function actionUrl1(){
         $urlProtocolo = (isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] && !in_array(strtolower($_SERVER['HTTPS']), array('off', 'no'))) ? 'https' : 'http';
 

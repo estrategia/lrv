@@ -174,6 +174,7 @@ return array(
             'estadoNombre' => array(0 => 'Inactivo', 1 => 'Activo'),
         ),
         'sesion' => array(
+            'cookieExpiracion' => 2592000, //1 dia 86400 --> 30 dias
             'usuario' => 'larebaja.online.usuario',
             'usuarioBienvenida' => 'larebaja.online.usuario.bienvenida',
             'tipoEntrega' => 'larebaja.online.entrega.tipoEntrega',

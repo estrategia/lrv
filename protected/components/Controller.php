@@ -50,6 +50,8 @@ class Controller extends CController {
         if (isset(Yii::app()->session[Yii::app()->params->sesion['sectorCiudadEntrega']]) && Yii::app()->session[Yii::app()->params->sesion['sectorCiudadEntrega']] != null) {
             $this->objSectorCiudad = Yii::app()->session[Yii::app()->params->sesion['sectorCiudadEntrega']];
         }
+        
+        $this->verificarSesion();
 
         $this->pageTitle = Yii::app()->name;
         $this->getSectorName();
@@ -59,6 +61,59 @@ class Controller extends CController {
         if (!$this->isMobile) {
             $this->getCategorias();
         }
+    }
+
+    public function verificarSesion() {
+        if (Yii::app()->user->isGuest) {
+            $cookieUsuario = _getCookie(Yii::app()->params->usuario['sesion']);
+            if ($cookieUsuario != null) {
+                $cookieUsuario = split("-", $cookieUsuario);
+                $password_desencriptado = decrypt($cookieUsuario[1],$cookieUsuario[0]);
+                $model = new LoginForm;
+                $model->username = $cookieUsuario[0];
+                $model->password = $password_desencriptado;
+                $model->validate();
+            }
+        }
+
+        if ($this->objSectorCiudad == null) {
+            $cookieSectorCiudad = _getCookie(Yii::app()->params->sesion['sectorCiudadEntrega']);
+            if ($cookieSectorCiudad != null) {
+                $cookieSectorCiudad = split("-", $cookieSectorCiudad);
+
+                $objSectorCiudad = SectorCiudad::model()->find(array(
+                    'with' => array('objCiudad', 'objSector'),
+                    'condition' => 't.codigoCiudad=:ciudad AND t.codigoSector=:sector AND t.estadoCiudadSector=:estado',
+                    'params' => array(
+                        ':ciudad' => $cookieSectorCiudad[0],
+                        ':sector' => $cookieSectorCiudad[1],
+                        ':estado' => 1,
+                    )
+                ));
+
+                if ($objSectorCiudad !== null) {
+                    $this->objSectorCiudad = $objSectorCiudad;
+                    Yii::app()->session[Yii::app()->params->sesion['sectorCiudadEntrega']] = $objSectorCiudad;
+                }
+            }
+        }
+
+
+        $tipoEntrega = null;
+        if (isset(Yii::app()->session[Yii::app()->params->sesion['tipoEntrega']]) && Yii::app()->session[Yii::app()->params->sesion['tipoEntrega']] != null) {
+            $tipoEntrega = Yii::app()->session[Yii::app()->params->sesion['tipoEntrega']];
+        }
+        
+        if($tipoEntrega==null){
+            $cookieTipoEntrega = _getCookie(Yii::app()->params->sesion['tipoEntrega']);
+            if ($cookieTipoEntrega != null) {
+                Yii::app()->session[Yii::app()->params->sesion['tipoEntrega']] = $cookieTipoEntrega;
+            }
+            
+            Yii::app()->session[Yii::app()->params->sesion['direccionEntrega']] = _getCookie(Yii::app()->params->sesion['direccionEntrega']);
+        }
+
+        
     }
 
     public function verificarDispositivo() {
@@ -71,13 +126,12 @@ class Controller extends CController {
 
         //Get path to script
         $urlRequest = $_SERVER['REQUEST_URI'];
-        
+
         $urlFull = $urlProtocolo . $urlHost . $urlRequest;
         $urlMovil = "://m.larebajavirtual.com";
         $urlDesktop = "://larebajavirtual.com";
-        
-        //echo "Protocolo: $urlProtocolo<br/>Host: $urlHost<br/>Request: $urlRequest<br/>UrlFull: $urlFull<br/><br/>";
 
+        //echo "Protocolo: $urlProtocolo<br/>Host: $urlHost<br/>Request: $urlRequest<br/>UrlFull: $urlFull<br/><br/>";
         //si el host es movil y el dispositivo es escritorio => cambiar host por escritorio
         if (!$this->isMobile && strpos($urlHost, $urlMovil) !== FALSE) {
             //echo "Host movil y dispositivo escritorio<br/>";
@@ -91,7 +145,7 @@ class Controller extends CController {
             $urlFull = str_replace($urlDesktop, $urlMovil, $urlFull);
             header("Location: $urlFull");
         }
-        
+
         //echo "FIN<br/>";
     }
 
@@ -182,7 +236,7 @@ class Controller extends CController {
                 ':visible' => 1,
                 ':dispositivo' => CategoriaTienda::DISPOSITIVO_ESCRITORIO
             ),
-            'with' => array('listCategoriasHijas' => array('order'=> 'listCategoriasHijas.nombreCategoriaTienda', 'with' => 'listModulosConfigurados')),
+            'with' => array('listCategoriasHijas' => array('order' => 'listCategoriasHijas.nombreCategoriaTienda', 'with' => 'listModulosConfigurados')),
         ));
     }
 
