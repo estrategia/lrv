@@ -87,15 +87,23 @@ function distanciaCoordenadas($lat1, $lon1, $lat2, $lon2, $unit = 'K') {
 }
 
 function GSASearch(&$term) {
-    $arr = array();
+    $arr1 = WebServiceSearch($term);
+    $arr2 = GSASearchAux($term);
 
-    if (Yii::app()->params->busqueda['buscadorActivo'] == Yii::app()->params->busqueda['tipoBuscador']['GSA']) {
-        return GSASearchAux($term);
-    } else if (Yii::app()->params->busqueda['buscadorActivo'] == Yii::app()->params->busqueda['tipoBuscador']['webService']) {
-        return WebServiceSearch($term);
-    } else {
-        return array();
-    }
+    $resultado = array();
+    foreach ($arr1 as $value)
+        $resultado[$value] = $value;
+    foreach ($arr2 as $value)
+        $resultado[$value] = $value;
+    return $resultado;
+
+    /* if (Yii::app()->params->busqueda['buscadorActivo'] == Yii::app()->params->busqueda['tipoBuscador']['GSA']) {
+      return GSASearchAux($term);
+      } else if (Yii::app()->params->busqueda['buscadorActivo'] == Yii::app()->params->busqueda['tipoBuscador']['webService']) {
+      return WebServiceSearch($term);
+      } else {
+      return array();
+      } */
 }
 
 function WebServiceSearch($term) {
@@ -220,51 +228,51 @@ function array_column_lrv($array, $valor, $clave) {
     return $arrayOrganizado;
 }
 
-function empty_lrv($valor){
-    if($valor===0 || $valor==='0')
+function empty_lrv($valor) {
+    if ($valor === 0 || $valor === '0')
         return false;
-    
-    if($valor===null || $valor===""){
+
+    if ($valor === null || $valor === "") {
         return true;
     }
-    
+
     return empty($valor);
 }
 
-function _setCookie($nombre, $valor){
+function _setCookie($nombre, $valor) {
     $nombre = str_replace(".", "_", $nombre);
-    Yii::app()->request->cookies[$nombre] = new CHttpCookie($nombre, $valor, array('expire'=>time()+Yii::app()->params->sesion['cookieExpiracion']));
+    Yii::app()->request->cookies[$nombre] = new CHttpCookie($nombre, $valor, array('expire' => time() + Yii::app()->params->sesion['cookieExpiracion']));
 }
 
-function _getCookie($nombre){
+function _getCookie($nombre) {
     $nombre = str_replace(".", "_", $nombre);
     return isset(Yii::app()->request->cookies[$nombre]) ? Yii::app()->request->cookies[$nombre]->value : null;
 }
 
-function _deleteCookie($nombre){
+function _deleteCookie($nombre) {
     $nombre = str_replace(".", "_", $nombre);
     unset(Yii::app()->request->cookies[$nombre]);
 }
 
 function encrypt($string, $key) {
-   $result = '';
-   for($i=0; $i<strlen($string); $i++) {
-      $char = substr($string, $i, 1);
-      $keychar = substr($key, ($i % strlen($key))-1, 1);
-      $char = chr(ord($char)+ord($keychar));
-      $result.=$char;
-   }
-   return base64_encode($result);
+    $result = '';
+    for ($i = 0; $i < strlen($string); $i++) {
+        $char = substr($string, $i, 1);
+        $keychar = substr($key, ($i % strlen($key)) - 1, 1);
+        $char = chr(ord($char) + ord($keychar));
+        $result.=$char;
+    }
+    return base64_encode($result);
 }
 
 function decrypt($string, $key) {
-   $result = '';
-   $string = base64_decode($string);
-   for($i=0; $i<strlen($string); $i++) {
-      $char = substr($string, $i, 1);
-      $keychar = substr($key, ($i % strlen($key))-1, 1);
-      $char = chr(ord($char)-ord($keychar));
-      $result.=$char;
-   }
-   return $result;
+    $result = '';
+    $string = base64_decode($string);
+    for ($i = 0; $i < strlen($string); $i++) {
+        $char = substr($string, $i, 1);
+        $keychar = substr($key, ($i % strlen($key)) - 1, 1);
+        $char = chr(ord($char) - ord($keychar));
+        $result.=$char;
+    }
+    return $result;
 }

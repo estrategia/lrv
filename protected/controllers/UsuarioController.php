@@ -224,16 +224,10 @@ class UsuarioController extends Controller {
         $sessions = Yii::app()->params->sesion;
         foreach ($sessions as $sesion) {
             unset(Yii::app()->session[$sesion]);
+            _deleteCookie($sesion);
         }
 
         Yii::app()->user->logout();
-        
-        _deleteCookie(Yii::app()->params->usuario['sesion']);
-        _deleteCookie(Yii::app()->params->sesion['sectorCiudadEntrega']);
-        _deleteCookie(Yii::app()->params->sesion['tipoEntrega']);
-        _deleteCookie(Yii::app()->params->sesion['direccionEntrega']);
-
-        //$this->redirect(Yii::app()->user->loginUrl);
         $this->redirect(Yii::app()->homeUrl);
     }
 

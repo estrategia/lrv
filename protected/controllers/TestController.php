@@ -1,15 +1,94 @@
 <?php
 
 class TestController extends Controller {
-    
-    public function actionAutenticar(){
+
+    function get_url_contents($url) {
+        /*$crl = curl_init();
+        $timeout = 5;
+        curl_setopt($crl, CURLOPT_URL, $url);
+        curl_setopt($crl, CURLOPT_RETURNTRANSFER, 1);
+        curl_setopt($crl, CURLOPT_CONNECTTIMEOUT, $timeout);
+        $ret = curl_exec($crl);
+        curl_close($crl);
+        return $ret;*/
+        
+        $ch = curl_init("REMOTE XML FILE");
+        curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+        curl_setopt($ch, CURLOPT_HEADER, 0);
+        $data = curl_exec($ch);
+        curl_close($ch);
+        return $data;
+    }
+
+    public function actionGsa($term) {
+        //GSASearchAux($term);
+        $url = "http://gsa.copservir.com/search?site=larebaja_collection&client=larebaja_frontend&output=xml_no_dtd&q=$term&filter=0&num=200&ie=UTF-8&ulang=es&sort=date:D:S:d1&entqr=3&entqrm=0&wc=20&wc_mc=1";
+
+        $result = $this->get_url_contents($url);
+        echo "<br><br>URL: $url<br>Result<br>";
+        CVarDumper::dump($result, 10, true);
+        echo "<br><br>";
+        
+        
+        /*$aContext = array(
+            'http' => array(
+                'request_fulluri' => true,
+            ),
+        );
+        
+        $cxContext = stream_context_create($aContext);
+        $result = file_get_contents($url, False, $cxContext);
+        echo "<br><br>URL: $url<br>Result<br>";
+        CVarDumper::dump($result, 10, true);
+        echo "<br><br>";*/
+
+
+        /* $result = implode('', file($url));
+          echo "<br><br>URL: $url<br>Result<br>";
+          CVarDumper::dump($result, 10, true);
+          echo "<br><br>"; */
+
+        /* $myfile = fopen($url, "r") or die("Unable to open file!");
+          CVarDumper::dump(fgets($myfile),10,true);
+          fclose($myfile); */
+
+        //echo '<pre>', htmlspecialchars(file_get_contents($url)), '</pre>';
+
+
+         /*$result = file_get_contents($url);
+          echo "<br><br>URL: $url<br>Result<br>";
+          CVarDumper::dump($result, 10, true);
+          echo "<br><br>"; */
+    }
+
+    public function actionMerge() {
+        $array1 = array(3, 5, 7, 9);
+        $array2 = array(5, 15, 25, 89);
+        //$resultado = array_merge($array1, $array2);
+        $resultado = array();
+
+        /* foreach ($array1 as $value) {
+          $resultado[$value] = $value;
+          }
+
+          foreach ($array2 as $value) {
+          $resultado[$value] = $value;
+          } */
+
+        $codigosStr = implode(",", $resultado);
+        CVarDumper::dump($resultado, 10, true);
+        echo "<br><br>";
+        CVarDumper::dump($codigosStr, 10, true);
+    }
+
+    public function actionAutenticar() {
         $model = new LoginForm;
         $model->username = "1113618983";
         $model->password = "12345";
         $model->validate();
     }
-    
-    public function actionUrl1(){
+
+    public function actionUrl1() {
         $urlProtocolo = (isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] && !in_array(strtolower($_SERVER['HTTPS']), array('off', 'no'))) ? 'https' : 'http';
 
         //Get domain portion
@@ -17,15 +96,15 @@ class TestController extends Controller {
 
         //Get path to script
         $urlRequest = $_SERVER['REQUEST_URI'];
-        
+
         $urlFull = "$urlProtocolo | $urlHost | $urlRequest";
         $urlMovil = "://m.larebajavirtual.com";
         $urlDesktop = "://larebajavirtual.com";
-        
+
         echo "Protocolo: $urlProtocolo<br/>Host: $urlHost<br/>Request: $urlRequest<br/>UrlFull: $urlFull<br/><br/>";
     }
-    
-    public function actionUrl(){
+
+    public function actionUrl() {
         $urlProtocolo = 'http';
 
         //Get domain portion
@@ -34,11 +113,11 @@ class TestController extends Controller {
 
         //Get path to script
         $urlRequest = "/lrv/";
-        
+
         $urlFull = $urlProtocolo . $urlHost . $urlRequest;
         $urlMovil = "://m.larebajavirtual.com";
         $urlDesktop = "://larebajavirtual.com";
-        
+
         echo "Protocolo: $urlProtocolo<br/>Host: $urlHost<br/>Request: $urlRequest<br/>UrlFull: $urlFull<br/><br/>";
 
         //si el host es movil y el dispositivo es escritorio => cambiar host por escritorio
@@ -56,7 +135,7 @@ class TestController extends Controller {
             echo "<br/>UrlFull: $urlFull<br/><br/>";
             //header("Location: $urlFull");
         }
-        
+
         echo "FIN<br/>";
     }
 
@@ -120,14 +199,14 @@ class TestController extends Controller {
         echo $script;
     }
 
-    /*public function actionUrl() {
-        $url = "http://localhost/embebida/";
-        $raw = rawurlencode($url);
-        $encode = urlencode($url);
-        echo "$url<br/>";
-        echo "$raw<br/>";
-        echo "$encode<br/>";
-    }*/
+    /* public function actionUrl() {
+      $url = "http://localhost/embebida/";
+      $raw = rawurlencode($url);
+      $encode = urlencode($url);
+      echo "$url<br/>";
+      echo "$raw<br/>";
+      echo "$encode<br/>";
+      } */
 
     public function actionDiff() {
         $datetime1 = new DateTime('2009-10-11');
