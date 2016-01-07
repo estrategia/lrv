@@ -14,7 +14,7 @@
 class GoogleAnalytics {
 
     //put your code here
-    public static function getScriptCompra(Compras $objCompra) {
+    public static function getScriptCompra_old(Compras $objCompra) {
         $actionField = array(
             'id' => $objCompra->idCompra,
             'affiliation' => 'Online Store',
@@ -46,8 +46,41 @@ class GoogleAnalytics {
                 ),
             )
         );
-        
+
         return CJSON::encode($script);
+    }
+
+    public static function getScriptCompra(Compras $objCompra, $isMobile) {
+        $script = "ga('require', 'ec');";
+        
+        foreach ($objCompra->listItems as $objItem) {
+            $product = array(
+                'id' => $objItem->codigoProducto,
+                'name' => $objItem->descripcion,
+                'category' => $objItem->objProducto->objCategoriaBI != null ? $objItem->objProducto->objCategoriaBI->nombreCategoria : "",
+                'brand' => $objItem->objProducto->objMarca != null ? $objItem->objProducto->objMarca->nombreMarca : "",
+                'variant' => $objItem->presentacion,
+                'price' => $objItem->precioTotalUnidad + $objItem->precioTotalFraccion,
+                'quantity' => $objItem->getTotalUnidades(),
+                'coupon' => ''
+            );
+            $script .= "ga('ec:addProduct'," . CJSON::encode($product) . ");";
+        }
+
+        $script .= "ga('ec:setAction', 'add');";
+
+        $purchase = array(
+            'id' => $objCompra->idCompra,
+            'affiliation' => 'La Rebaja Virtual - ' . ($isMobile ? 'Movil' : 'Desktop'),
+            'revenue' => $objCompra->totalCompra,
+            'tax' => $objCompra->impuestosCompra,
+            'shipping' => $objCompra->domicilio + $objCompra->flete,
+            'coupon' => ''
+        );
+
+        $script .= "ga('ec:setAction', 'purchase'," . CJSON::encode($purchase) . ");";
+        $script .= "ga('send', 'pageview');";
+        return $script;
     }
 
 }

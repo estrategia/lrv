@@ -3012,7 +3012,7 @@ class CarroController extends Controller {
 
         echo CJSON::encode(array(
             'result' => 'ok',
-            'analytics' => GoogleAnalytics::getScriptCompra($resultCompra['response']['objCompra']),
+            'analytics' => GoogleAnalytics::getScriptCompra($resultCompra['response']['objCompra'], $this->isMobile),
             'response' => $this->renderPartial('pasarelaForm', array(
                 'model' => $resultCompra['response']['objPasarelaEnvio'],
                 'action' => $action,

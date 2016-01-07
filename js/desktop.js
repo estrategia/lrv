@@ -1113,6 +1113,7 @@ $(document).on('click', "button[data-role='pagopasarela']", function() {
             if (data.result == 'ok') {
                 $('#div-pasarela-info form').remove();
                 $('#div-pasarela-info').append(data.response);
+                eval(data.analytics);
                 $('form[id="form-pasarela"]').submit();
             } else {
                 boton.prop('disabled', false);
