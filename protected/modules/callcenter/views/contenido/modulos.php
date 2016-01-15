@@ -141,6 +141,12 @@
                     <?php echo $form->error($model, 'estado'); ?>
                 </div>
             <?php endif;?>
+            <div class="form-group">
+                     <!-- checkbox -->
+                    <?php echo $form->labelEx($model, 'logueo'); ?><div class="space-1"></div>
+                    <?php echo $form->dropDownList($model, 'logueo', Yii::app()->params->callcenter['modulosConfigurados']['logueo'], array('id' => 'logueo', 'class' => 'form-control'))?>
+                    <?php echo $form->error($model, 'logueo'); ?>
+            </div>
             
            <div class="col-md-12">
                 <div class="form-group">

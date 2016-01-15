@@ -295,6 +295,9 @@ return array(
             'clienteFiel' => 3,
             '*' => 99
         ),
+        'logueo' => array(
+            '*' => 3
+        ),
         'puntos' => array(
             'categoria' => 101,
             'marca' => 102,
@@ -471,6 +474,11 @@ return array(
                 'booleanos' => array (
                     '1' => 'Si',
                     '0' => 'No'
+                ),
+                'logueo' => array (
+                    1 => 'Sin Logueo',
+                    2 => 'Con Logueo',
+                    3 => 'Ambos'
                 )
             ),
             'categorias' => array(
