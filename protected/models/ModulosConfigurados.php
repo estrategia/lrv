@@ -286,7 +286,7 @@ class ModulosConfigurados extends CActiveRecord {
             $criteria['params'][':sector'] = $objSectorCiudad->codigoSector;
             $criteria['params'][':ciudad'] = $objSectorCiudad->codigoCiudad;
         }
-
+     
         return ModulosConfigurados::model()->findAll($criteria);
     }
 
