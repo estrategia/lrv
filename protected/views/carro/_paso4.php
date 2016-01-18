@@ -85,24 +85,25 @@
             <?php echo $form->hiddenField($modelPago, 'confirmacion'); ?>
             <?php echo $form->error($modelPago, 'confirmacion'); ?>
         <?php else: ?>
-            <table data-role="table" class="ui-responsive">
-                <thead>
-                    <tr>
-                        <th></th>
-                        <th></th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <?php foreach ($modelPago->listCodigoEspecial as $objEspecial): ?>
+            <div class="space-2"></div>
+            <div class="ui-field-container blockPago">
+                <table data-role="table" class="ui-responsive">
+                    <thead>
                         <tr>
-                            <td></td>
-                            <td><img align="left" class="iconConfirmacion" src="<?php echo Yii::app()->request->baseUrl . Yii::app()->params->carpetaImagen['codigoEspecial'] . $objEspecial->rutaIcono; ?>" ><?php echo $objEspecial->condicionCompra ?></td>
+                            <th></th>
+                            <th></th>
                         </tr>
-                    <?php endforeach; ?>
-                </tbody>
-            </table>
-            <div class="ui-field-container">
-                <?php echo $form->labelEx($modelPago, 'confirmacion'); ?>
+                    </thead>
+                    <tbody>
+                        <?php foreach ($modelPago->listCodigoEspecial as $objEspecial): ?>
+                            <tr>
+                                <td></td>
+                                <td><img align="left" class="iconConfirmacion" src="<?php echo Yii::app()->request->baseUrl . Yii::app()->params->carpetaImagen['codigoEspecial'] . $objEspecial->rutaIcono; ?>" ><?php echo $objEspecial->condicionCompra ?></td>
+                            </tr>
+                        <?php endforeach; ?>
+                    </tbody>
+                </table>
+                <?php echo $form->labelEx($modelPago, 'confirmacion', array('style'=>'font-size:1.3em;')); ?>
                 <?php echo $form->checkBox($modelPago, 'confirmacion', array('data-mini' => 'true')); ?>
                 <?php echo $form->error($modelPago, 'confirmacion'); ?>
             </div>
