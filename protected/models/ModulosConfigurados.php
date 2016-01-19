@@ -13,6 +13,7 @@
  * @property string $descripcion
  * @property string $contenido
  * @property string $contenidoMovil
+ * @property integer $autenticacion
  *
  * The followings are the available model relations:
  * @property ImagenBanner[] $listImagenesBanners
@@ -46,14 +47,14 @@ class ModulosConfigurados extends CActiveRecord {
         // NOTE: you should only define rules for those attributes that
         // will receive user inputs.
         return array(
-            array('tipo, inicio, fin, estado, dias, logueo', 'required'),
-            array('tipo, estado, aleatorio, lineas, agotado, logueo', 'numerical', 'integerOnly' => true),
+            array('tipo, inicio, fin, estado, dias, autenticacion', 'required'),
+            array('tipo, estado, aleatorio, lineas, agotado, autenticacion', 'numerical', 'integerOnly' => true),
             array('dias', 'length', 'max' => 30),
             array('descripcion, titulo', 'length', 'max' => 255),
             array('contenido', 'required', 'on' => 'contenido'),
             // The following rule is used by search().
             // @todo Please remove those attributes that should not be searched.
-            array('idModulo, tipo, inicio, fin, dias, estado, aleatorio, lineas, agotado, descripcion, titulo, contenido, contenidoMovil, logueo', 'safe', 'on' => 'search'),
+            array('idModulo, tipo, inicio, fin, dias, estado, aleatorio, lineas, agotado, descripcion, titulo, contenido, contenidoMovil, autenticacion', 'safe', 'on' => 'search'),
         );
     }
 
@@ -93,7 +94,7 @@ class ModulosConfigurados extends CActiveRecord {
             'aleatorio' => 'Aleatorio' ,
             'lineas' => 'Número de líneas',
             'Agotado' => 'Mostrar agotados',
-            'logueo' => 'Tipo de logueo'
+            'autenticacion' => 'Tipo de autenticaci&oacute;n'
         );
     }
 
@@ -124,7 +125,7 @@ class ModulosConfigurados extends CActiveRecord {
         $criteria->compare('titulo', $this->titulo, true);
         $criteria->compare('contenido', $this->contenido, true);
         $criteria->compare('contenidoMovil', $this->contenidoMovil, true);
-        $criteria->compare('logueo', $this->logueo, true);
+        $criteria->compare('autenticacion', $this->autenticacion, true);
 
         return new CActiveDataProvider($this, array(
             'criteria' => $criteria,
@@ -264,7 +265,7 @@ class ModulosConfigurados extends CActiveRecord {
             'with' => array('listImagenesBanners', 'listUbicacionesModulos', 'listModulosSectoresCiudades', 'listPerfiles'),
             'order' => 'listUbicacionesModulos.orden, listImagenesBanners.orden',
             'condition' => 't.estado=:estado AND t.tipo =:tipo AND t.dias LIKE :dia AND t.inicio<=:fecha AND t.fin>=:fecha AND listUbicacionesModulos.ubicacion=:ubicacion AND (listPerfiles.idPerfil =:perfilA  OR listPerfiles.idPerfil =:perfil )'
-            . ' AND (t.logueo =:logueo OR t.logueo =:logueoA)',
+            . ' AND (t.autenticacion =:autenticacion OR t.autenticacion =:autenticacionA)',
             'params' => array(
                 ':estado' => 1,
                 ':tipo' => ModulosConfigurados::TIPO_BANNER,
@@ -273,8 +274,8 @@ class ModulosConfigurados extends CActiveRecord {
                 ':ubicacion' => $ubicacion,
                 ':perfil' => $codigoPerfil,
                 ':perfilA' => Yii::app()->params->perfil['*'],
-                ':logueo' => (Yii::app()->user->isGuest ? 1 : 2),
-                ':logueoA' => Yii::app()->params->logueo['*'], 
+                ':autenticacion' => (Yii::app()->user->isGuest ? 1 : 2),
+                ':autenticacionA' => Yii::app()->params->callcenter['modulosConfigurados']['autenticacion']['*'], 
             )
         );
 
@@ -402,7 +403,7 @@ class ModulosConfigurados extends CActiveRecord {
             'order' => 'listUbicacionesModulos.orden',
             'with' => array('listModulosSectoresCiudades', 'listPerfiles'),
             'condition' => "t.estado=:estado AND t.dias LIKE :dia AND t.inicio<=:fecha AND t.fin>=:fecha AND listUbicacionesModulos.ubicacion=:ubicacion AND (listPerfiles.idPerfil =:perfilA  OR listPerfiles.idPerfil =:perfil )"
-            . ' AND (t.logueo =:logueo OR t.logueo =:logueoA)',
+            . ' AND (t.autenticacion =:autenticacion OR t.autenticacion =:autenticacionA)',
             'params' => array(
                 ':estado' => 1,
                 ':dia' => "%" . $fecha->format("w") . "%",
@@ -410,8 +411,8 @@ class ModulosConfigurados extends CActiveRecord {
                 ':ubicacion' => $ubicacion,
                 ':perfil' => $codigoPerfil,
                 ':perfilA' => Yii::app()->params->perfil['*'],
-                ':logueo' => (Yii::app()->user->isGuest ? 1 : 2),
-                ':logueoA' => Yii::app()->params->logueo['*'], 
+                ':autenticacion' => (Yii::app()->user->isGuest ? 1 : 2),
+                ':autenticacionA' => Yii::app()->params->callcenter['modulosConfigurados']['autenticacion']['*'], 
             )
         );
 

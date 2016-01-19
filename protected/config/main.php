@@ -44,10 +44,10 @@ return array(
             'loginUrl' => array('usuario/autenticar'),
             'allowAutoLogin' => true,
         ),
-        /*'session' => array(
-            'class' => 'CDbHttpSession',
-            'timeout' => 2592000//1 dia 86400 --> 30 dias,
-        ),*/
+        /* 'session' => array(
+          'class' => 'CDbHttpSession',
+          'timeout' => 2592000//1 dia 86400 --> 30 dias,
+          ), */
         'urlManager' => array(
             'urlFormat' => 'path',
             'showScriptName' => false,
@@ -241,14 +241,14 @@ return array(
             'idCredirebaja' => 2,
             'tarjetasDatafono' => array(5, 6, 7, 8, 9, 10, 11, 12),
             'tarjetasDatafonoLogo' => array(
-                5 =>'/images/iconos/visa_logo.png',
-                6 =>'/images/iconos/visa_logo.png',
-                7 =>'/images/iconos/visaelectron_logo.png',
-                8 =>'/images/iconos/maestro_logo.png',
-                9 =>'/images/iconos/mastercard_logo.png',
-                10 =>'/images/iconos/exito_logo.png',
-                11 =>'/images/iconos/bigpass_logo.png',
-                12 =>'/images/iconos/sodexo_logo.png',
+                5 => '/images/iconos/visa_logo.png',
+                6 => '/images/iconos/visa_logo.png',
+                7 => '/images/iconos/visaelectron_logo.png',
+                8 => '/images/iconos/maestro_logo.png',
+                9 => '/images/iconos/mastercard_logo.png',
+                10 => '/images/iconos/exito_logo.png',
+                11 => '/images/iconos/bigpass_logo.png',
+                12 => '/images/iconos/sodexo_logo.png',
             ),
             'pasarela' => array(
                 'valorMinimo' => 5000,
@@ -281,7 +281,7 @@ return array(
                 'noExito' => '/images/sin_resultado.png',
                 'noExacta' => '/images/conicidedencias-no-exactas.jpg',
             ),
-            'productosPorPagina' =>  array(4 => array(12, 24, 36, 48, 60), 5 => array(15, 30, 50, 100, 150)), 
+            'productosPorPagina' => array(4 => array(12, 24, 36, 48, 60), 5 => array(15, 30, 50, 100, 150)),
         ),
         'ciudad' => array(
             '*' => 99999
@@ -294,9 +294,6 @@ return array(
             'defecto' => 1,
             'clienteFiel' => 3,
             '*' => 99
-        ),
-        'logueo' => array(
-            '*' => 3
         ),
         'puntos' => array(
             'categoria' => 101,
@@ -471,18 +468,21 @@ return array(
                     1 => 'Activo'
                 ),
                 'urlModulosConfigurados' => '/contenido/ver/tipo/grupo/contenido/',
-                'booleanos' => array (
+                'booleanos' => array(
                     '1' => 'Si',
                     '0' => 'No'
                 ),
-                'logueo' => array (
-                    1 => 'Sin Logueo',
-                    2 => 'Con Logueo',
-                    3 => 'Ambos'
-                )
+                'autenticacion' => array(
+                    'estados' => array(
+                        1 => 'Sin autenticaci&oacute;n',
+                        2 => 'Con autenticaci&oacute;n',
+                        3 => 'Ambos'
+                    ),
+                    '*' => 3
+                ),
             ),
             'categorias' => array(
-                'visible'  => array(
+                'visible' => array(
                     '0' => 'No visible',
                     '1' => 'Visible'
                 )
