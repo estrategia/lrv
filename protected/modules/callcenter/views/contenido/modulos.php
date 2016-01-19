@@ -31,7 +31,7 @@
 
             <div class="form-group">
                 <?php echo $form->labelEx($model, 'tipo'); ?>
-                <?php echo $form->dropDownList($model, 'tipo', Yii::app()->params->callcenter['modulosConfigurados']['tiposModulos'], array('class' => 'tipo form-control', 'disabled' => $model->isNewRecord ? false : true)); ?>
+                <?php echo $form->dropDownList($model, 'tipo', Yii::app()->params->callcenter['modulosConfigurados']['tiposModulos'], array('encode'=>false, 'class' => 'tipo form-control', 'disabled' => $model->isNewRecord ? false : true)); ?>
                 <?php echo $form->error($model, 'tipo'); ?>
             </div>
 
@@ -144,7 +144,7 @@
             <div class="form-group">
                 <!-- checkbox -->
                 <?php echo $form->labelEx($model, 'autenticacion'); ?><div class="space-1"></div>
-                <?php echo $form->dropDownList($model, 'autenticacion', Yii::app()->params->callcenter['modulosConfigurados']['autenticacion']['estados'], array('id' => 'autenticacion', 'class' => 'form-control')) ?>
+                <?php echo $form->dropDownList($model, 'autenticacion', Yii::app()->params->callcenter['modulosConfigurados']['autenticacion']['estados'], array('encode' => false, 'id' => 'autenticacion', 'class' => 'form-control')) ?>
                 <?php echo $form->error($model, 'autenticacion'); ?>
             </div>
 
