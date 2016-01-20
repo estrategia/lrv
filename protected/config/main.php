@@ -158,6 +158,7 @@ return array(
             )
         ),
         'minimoSlideProductos' => 5,
+        'minimoGridProductos' => 5,
         'correoAdmin' => 'infolrv@copservir.com',
         'maximoComparacion' => 5,
         'urlSitio' => 'www.larebajavirtual.com',

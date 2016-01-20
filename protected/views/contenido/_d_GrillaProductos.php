@@ -1,3 +1,6 @@
+<?php $listaProductos = $objModulo->getListaProductos($this->objSectorCiudad) ?>
+<?php if(count($listaProductos) >= Yii::app()->params->minimoGridProductos):?>
+
 <div class="container-fluid">
     <div class="row">
         <div class="row-fluid">
@@ -15,7 +18,7 @@
                     <div>
                         <ul class="listaProductos">
                             <div class="items items5">
-                                <?php foreach ($objModulo->getListaProductos($this->objSectorCiudad) as $objProducto): ?>
+                                <?php foreach ($listaProductos as $objProducto): ?>
 
                                     <?php
                                     $this->renderPartial('//catalogo/_d_productoElemento', array(
@@ -32,3 +35,5 @@
         </div>
     </div>
 </div>
+
+<?php endif?>
