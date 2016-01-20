@@ -2893,6 +2893,16 @@ class CarroController extends Controller {
                 if (!$objPasarelaEnvio->save()) {
                     throw new Exception("Error al guardar registro de pasarela. " . $objPasarelaEnvio->validateErrorsResponse());
                 }
+                
+                $objObservacionPasarela = new ComprasObservaciones;
+                $objObservacionPasarela->idCompra = $objCompra->idCompra;
+                $objObservacionPasarela->observacion = "Pendiente pasarela ";
+                $objObservacionPasarela->idOperador = 38;
+                $objObservacionPasarela->notificarCliente = 0;
+
+                if (!$objObservacionPasarela->save()) {
+                    throw new Exception("Error al guardar observación" . $objObservacion->validateErrorsResponse());
+                }
             }
 
             if (count($categoriasCompra) > 0) {

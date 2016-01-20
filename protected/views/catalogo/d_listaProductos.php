@@ -83,6 +83,22 @@
             <?php endif; ?>
         </div>
     </div>
+    <div class="row">
+        <div class="col-md-12">
+            <?php if (isset($msgCodigoEspecial) && !empty($msgCodigoEspecial)): ?>
+                <table class="codEspecial">
+                    <tbody>
+                        <?php foreach ($msgCodigoEspecial as $especial): ?>
+                            <tr>
+                                <td><img class="icon_codigo_especial" src="<?php echo Yii::app()->request->baseUrl . Yii::app()->params->carpetaImagen['codigoEspecial'] . 'desktop/' . $especial->rutaIcono; ?>" ></td>
+                                <td><?php echo $especial->descripcion ?></td>
+                            </tr>
+                        <?php endforeach; ?>
+                    </tbody>
+                </table>
+            <?php endif; ?>
+        </div>
+    </div>
 </div>
 
 <?php if (isset($listModulos)): ?>

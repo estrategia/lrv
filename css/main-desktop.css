@@ -501,6 +501,18 @@ table.tabla-carro .group-botones-cantidad{
     text-transform: lowercase;
     font-size: 12px;
 }
+
+.coment.confirmacioncompra > .checkbox > label.clst_check {
+    font-size: 20px;
+    color: #626262;
+    font-weight: bolder;
+}
+
+.coment.confirmacioncompra {
+    background-color: #ebebeb;
+    border: 2px solid #a4a4a4;
+}
+
 .data-label {
     margin-right: 8px;
     width: 20px;
@@ -1852,6 +1864,10 @@ input[type="checkbox"] + label span{
     margin: -1px 4px 0 0;
     vertical-align: middle;
     cursor:pointer;
+}
+
+.confirmacioncompra input[type="checkbox"] + label span{
+    background: #fff url(../images/desktop/check-box-white.png) right;
 }
 
 input[type="checkbox"]:checked + label span{
