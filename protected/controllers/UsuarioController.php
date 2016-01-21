@@ -622,6 +622,7 @@ class UsuarioController extends Controller {
 
     public function actionPedido($compra) {
         $objCompra = Compras::model()->find(array(
+            'with' => 'objPuntoVenta',
             'condition' => 'idCompra=:compra AND identificacionUsuario=:usuario',
             'params' => array(
                 ':compra' => $compra,
