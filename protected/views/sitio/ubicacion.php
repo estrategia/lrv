@@ -13,7 +13,7 @@
         <?php echo CHtml::htmlButton('Usar tus direcciones', array('class' => 'ui-btn ui-btn-r ui-corner-all ui-alt-icon', 'data-role' => 'ubicacion-direccion')); ?>
     <?php endif; ?>
 
-    <?php echo CHtml::htmlButton('Buscar ubicaci&oacute;n', array('class' => 'ui-btn ui-btn-n ui-corner-all ui-alt-icon', 'data-role' => 'ubicacion-mapa')); ?>
+    <?php echo CHtml::htmlButton('Seleccionar ciudad', array('class' => 'ui-btn ui-btn-n ui-corner-all ui-alt-icon', 'data-role' => 'ubicacion-mapa')); ?>
 
     <form id="form-ubicacion"  method="post" action="<?php echo $this->createUrl("/sitio/ubicacionSeleccion") ?>">
         <input id="ubicacion-seleccion-entrega" type="hidden" name="entrega" value="<?php echo $tipoEntrega ?>">

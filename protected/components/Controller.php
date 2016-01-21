@@ -159,7 +159,7 @@ class Controller extends CController {
             if ($objSectorCiudad->objSector->codigoSector != 0)
                 $this->sectorName .= " - " . $objSectorCiudad->objSector->nombreSector;
         }else {
-            $this->sectorName = "Seleccionar ubicaci&oacute;n";
+            $this->sectorName = "Seleccionar ciudad";
         }
     }
 

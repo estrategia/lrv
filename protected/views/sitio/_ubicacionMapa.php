@@ -1,8 +1,7 @@
 <div data-role='page' id='page-ubicacion-map' class="map">
     <div data-role='main' class='ui-content'>
         <div class="page-header center">
-            <h1 class="page-title center">Ubicaci&oacute;n de entrega del pedido</h1>
-            <h2 class="center">Arrastra el mapa hasta tu ubicaci&oacute;n o utiliza la lista de ciudades y sectores</h2>
+            <h1 class="page-title center">Ubica en el mapa el lugar donde deseas que entreguemos el pedido</h1>
             <div id="select-ubicacion-content" style="width: 80%;" class="center-div">
                 <div id="select-ubicacion-psubsector" style="width: 48%;" class="center-div ui-mini">
                     <select data-role="ciudad-despacho-map" style="width: 100%">

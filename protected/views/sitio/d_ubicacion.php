@@ -29,7 +29,7 @@
                 <?php if (!Yii::app()->user->isGuest): ?>
                     <?php echo CHtml::htmlButton('<span class="glyphicon glyphicon-folder-open"></span>   Usar tus direcciones', array('class' => 'btn ico-btn  btn-ciudad', 'data-role' => 'ubicacion-direccion')); ?>
                 <?php endif; ?>
-                <?php echo CHtml::htmlButton('<span class="glyphicon glyphicon-map-marker"></span>  Buscar ubicaci&oacute;n', array('class' => 'btn ico-btn  btn-ciudad', 'data-role' => 'ubicacion-mapa')); ?>
+                <?php echo CHtml::htmlButton('<span class="glyphicon glyphicon-map-marker"></span>  Seleccionar ciudad', array('class' => 'btn ico-btn  btn-ciudad', 'data-role' => 'ubicacion-mapa')); ?>
             </div>
         </div>
         <div class="space-1"></div>

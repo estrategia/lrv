@@ -41,10 +41,10 @@ header("Pragma: no-cache");
                                 <div class="col-xs-2">
                                     <div class="top_ubicacion">
                                         <?php if ($this->objSectorCiudad == null): ?>
-                                            <?php echo CHtml::link('<span class="text-center title-desp"><br><span class="glyphicon glyphicon-map-marker" style="margin-right: 5px;"></span> Seleccionar Ubicaci&oacute;n </span>', CController::createUrl('/sitio/ubicacion'), array()); ?>
+                                            <?php echo CHtml::link('<span class="text-center title-desp"><br><span class="glyphicon glyphicon-map-marker" style="margin-right: 5px;"></span> Seleccionar ciudad </span>', CController::createUrl('/sitio/ubicacion'), array()); ?>
                                         <?php else: ?>
                                             <?php echo $this->sectorName ?>
-                                            <?php echo CHtml::link('<span class="text-center title-desp"><br><span class="glyphicon glyphicon-map-marker" style="margin-right: 5px;"></span> Cambiar Ubicaci&oacute;n </span>', CController::createUrl('/sitio/ubicacion'), array()); ?>
+                                            <?php echo CHtml::link('<span class="text-center title-desp"><br><span class="glyphicon glyphicon-map-marker" style="margin-right: 5px;"></span> Cambiar ciudad </span>', CController::createUrl('/sitio/ubicacion'), array()); ?>
                                         <?php endif; ?>
                                     </div>
                                 </div>
@@ -119,7 +119,7 @@ header("Pragma: no-cache");
                             <ul class="dropdown-menu category" aria-labelledby="categorias">
                                 <?php foreach ($this->categorias as $categoria): ?>
                                     <li class="cuidado-personal"><a href="#"><img class="data-label" src="<?php echo Yii::app()->request->baseUrl; ?>/images/menu/desktop/<?php echo $categoria->rutaImagen ?>" alt=""><?php echo $categoria->nombreCategoriaTienda ?></a>
-                                        <?php if ($categoria->listCategoriasHijas): ?>
+                                        <?php //if ($categoria->listCategoriasHijas): ?>
                                             <div class="right-nav">
                                                 <ul class="submenu">
                                                     <div class="sub_float">
@@ -160,7 +160,7 @@ header("Pragma: no-cache");
                                                     <img class="img_categoria" src="<?php echo Yii::app()->request->baseUrl; ?>/images/menu/desktop/<?php echo $categoria->rutaImagenMenu ?>"> 
                                             <?php endif; ?>
                                             </div>
-                                    <?php endif; ?>
+                                    <?php //endif; ?>
                                     </li>
 <?php endforeach; ?>
                             </ul>

@@ -1886,7 +1886,7 @@ $(document).on('change', 'select[data-role="ciudad-despacho-map"]', function() {
 
         if (map) {
             map.setCenter(new google.maps.LatLng(parseFloat(option.attr('data-latitud')), parseFloat(option.attr('data-longitud'))));
-            map.setZoom(15);
+            map.setZoom(13);
             $('#select-ubicacion-preferencia').remove();
             $('#select-ubicacion-psubsector').removeClass('div-center').addClass('float-left');
             $.ajax({
@@ -1907,6 +1907,7 @@ $(document).on('change', 'select[data-role="ciudad-despacho-map"]', function() {
                         $('#select-ubicacion-preferencia .ciudades').select2();
                     } else {
                         $('#select-ubicacion-psubsector').removeClass('float-left').addClass('div-center');
+                        map.setZoom(15);
                     }
                 },
                 error: function(jqXHR, textStatus, errorThrown) {
@@ -1925,7 +1926,7 @@ $(document).on('change', 'select[data-role="sector-despacho-map"]', function() {
 
         if (map) {
             map.setCenter(new google.maps.LatLng(parseFloat(option.attr('data-latitud')), parseFloat(option.attr('data-longitud'))));
-            map.setZoom(15);
+            map.setZoom(14);
         }
     }
 });
