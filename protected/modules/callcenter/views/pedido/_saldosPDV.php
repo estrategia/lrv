@@ -18,12 +18,12 @@
                                     <tr>
                                         <td><?php echo $cuerpo[$i]['CODIGO']; ?></td> 
                                         <td><?php echo $cuerpo[$i]['DESCRIPCION']; ?></td> 
-                                        <td>(<?php echo $cuerpo[$i]['CANTIDAD_PEDIDA'].") ";if($cuerpo[$i]['SALDO_3']>=$cuerpo[$i]['CANTIDAD_PEDIDA']){?><i class="glyphicon glyphicon-ok"></i><?php }else{?><i class="glyphicon glyphicon-remove"></i><?php }; ?> (<?php echo $cuerpo[$i]['SALDO_3']; ?>)</td> 
-                                        <td>(<?php echo $cuerpo[$i]['CANTIDAD_PEDIDA'].") ";if($cuerpo[$i]['SALDO_4']>=$cuerpo[$i]['CANTIDAD_PEDIDA']){?><i class="glyphicon glyphicon-ok"></i><?php }else{?><i class="glyphicon glyphicon-remove"></i><?php }; ?> (<?php echo $cuerpo[$i]['SALDO_4']; ?>)</td> 
-                                        <td>(<?php echo $cuerpo[$i]['CANTIDAD_PEDIDA'].") ";if($cuerpo[$i]['SALDO_5']>=$cuerpo[$i]['CANTIDAD_PEDIDA']){?><i class="glyphicon glyphicon-ok"></i><?php }else{?><i class="glyphicon glyphicon-remove"></i><?php }; ?> (<?php echo $cuerpo[$i]['SALDO_5']; ?>)</td> 
-                                        <td>(<?php echo $cuerpo[$i]['CANTIDAD_PEDIDA'].") ";if($cuerpo[$i]['SALDO_6']>=$cuerpo[$i]['CANTIDAD_PEDIDA']){?><i class="glyphicon glyphicon-ok"></i><?php }else{?><i class="glyphicon glyphicon-remove"></i><?php }; ?> (<?php echo $cuerpo[$i]['SALDO_6']; ?>)</td> 
-                                        <td>(<?php echo $cuerpo[$i]['CANTIDAD_PEDIDA'].") ";if($cuerpo[$i]['SALDO_7']>=$cuerpo[$i]['CANTIDAD_PEDIDA']){?><i class="glyphicon glyphicon-ok"></i><?php }else{?><i class="glyphicon glyphicon-remove"></i><?php }; ?> (<?php echo $cuerpo[$i]['SALDO_7']; ?>)</td> 
-                                        <td>(<?php echo $cuerpo[$i]['CANTIDAD_PEDIDA'].") ";if($cuerpo[$i]['SALDO_8']>=$cuerpo[$i]['CANTIDAD_PEDIDA']){?><i class="glyphicon glyphicon-ok"></i><?php }else{?><i class="glyphicon glyphicon-remove"></i><?php }; ?> (<?php echo $cuerpo[$i]['SALDO_8']; ?>)</td>
+                                        <?php $j=3; ?>
+                                        <?php while(isset($cuerpo[$i]['SALDO_'.$j])): ?>
+                                           <td>(<?php echo $cuerpo[$i]['CANTIDAD_PEDIDA'].") ";if($cuerpo[$i]['SALDO_'.$j]>=$cuerpo[$i]['CANTIDAD_PEDIDA']){?><i class="glyphicon glyphicon-ok"></i><?php }else{?><i class="glyphicon glyphicon-remove"></i><?php }; ?> (<?php echo $cuerpo[$i]['SALDO_'.$j]; ?>)</td>  
+                                           <?php $j++; ?>
+                                        <?php endwhile;?>
+                                        
                                     </tr>
                                 <?php endfor; ?>
                             </table>
