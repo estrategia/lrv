@@ -2482,7 +2482,7 @@ a.clst_slct_prod.active{display: inline-block !important;}
     left: 0;
     height: auto;
     padding: 10px;
-    background: #6598d9;
+    background: #ea0001;
     border: 0;
     z-index: 99;
 }
@@ -2494,11 +2494,11 @@ a.clst_slct_prod.active{display: inline-block !important;}
     line-height: 30px;
 }
 
-.modal.map .modal-header p {
+/*.modal.map .modal-header p {
     font-weight: normal;
     font-size: 1em;
     color: #fff;
-}
+}*/
 
 .modal.map .modal-content {
     position: absolute;
@@ -2506,7 +2506,7 @@ a.clst_slct_prod.active{display: inline-block !important;}
     right: 0;
     bottom: 0;
     left: 0;
-    border: 2px solid #3c7dcf;
+    border: 2px solid #ea0001;
     border-radius: 0;
     box-shadow: none;
 }
@@ -2514,7 +2514,7 @@ a.clst_slct_prod.active{display: inline-block !important;}
 .modal.map .modal-body {
     position: absolute;
     top: 0;
-    bottom: 0;
+    bottom: 50px;
     margin: 0;
     padding: 0;
     width: 100%;
@@ -2525,61 +2525,20 @@ a.clst_slct_prod.active{display: inline-block !important;}
     position:absolute; 
     z-index:9999; 
     bottom: 10px; 
-    width:80%; 
+    width:100%; 
     height:50px;
     border: none;
-    margin-left: 10%;
-}
-
-.modal.map .btn {
-    height: 40px;
-    border-radius: 0;
-
-    // focus
-    &:focus,
-        &:active,
-        &:active:focus {
-        box-shadow: none;
-        outline: none;
-    }
-}
-
-.modal.map .btn-primary,.modal.map .btn-primary:hover, .modal.map .btn-primary:focus,.modal.map .btn-primary:active {
-    font-weight: 300;
-    font-size: 1.6rem;
-    color: #fff;
-    color: lighten(#484b5b, 20%);
-    color: #fff;
-    text-align: center;
-    background: #60cc69;
-    border: 1px solid #36a940;
-    border-bottom: 3px solid #36a940;
-    box-shadow: 0 2px 4px rgba(0,0,0,0.15);
-
-    // active
-    &:active {
-        border-bottom: 1px solid #36a940;
-    }
-}
-
-.modal.map .btn-default,.modal.map .btn-default:hover,.modal.map .btn-default:focus,.modal.map .btn-default:active {
-    font-weight: 300;
-    font-size: 1.6rem;
-    text-align: center;
-    background: darken(#dcdfe4, 10%);
-    border: 1px solid darken(#dcdfe4, 20%);
-    border-bottom: 3px solid darken(#dcdfe4, 20%);
-
-    // active
-    &:active {
-        border-bottom: 1px solid darken(#dcdfe4, 20%);
-    }
 }
 
 .modal.map .select2-container .select2-selection--single .select2-selection__rendered{
     color: #444;
     line-height: 28px;
     padding: 0;
+}
+
+.select2-results__option--highlighted[aria-selected]{
+    background-color:#ea0001 !important;
+    color:white !important;
 }
 
 .map-content{

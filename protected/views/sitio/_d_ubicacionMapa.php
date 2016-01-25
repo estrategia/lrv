@@ -2,8 +2,8 @@
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">
-                <h1 class="modal-title center">Ubicaci&oacute;n de entrega del pedido</h1>
-                <p class="center">Arrastra el mapa hasta tu ubicaci&oacute;n aproximada</p>
+                <h1 class="modal-title center">Ubica en el mapa el lugar donde deseas que entreguemos el pedido</h1>
+                <div class="space-1"></div>
                 <div id="select-ubicacion-content" style="width: 50%;" class="center-div">
                     <div id="select-ubicacion-psubsector" style="width: 49%;" class="center-div">
                         <select class="form-control ciudades" data-role="ciudad-despacho-map" style="width: 100%">

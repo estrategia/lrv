@@ -169,7 +169,7 @@ $(document).on('change', 'select[data-role="ciudad-despacho-map"]', function() {
 
         if (map) {
             map.setCenter(new google.maps.LatLng(parseFloat(option.attr('data-latitud')), parseFloat(option.attr('data-longitud'))));
-            map.setZoom(15);
+            map.setZoom(13);
             $('#select-ubicacion-preferencia').remove();
             $('#select-ubicacion-psubsector').removeClass('div-center').addClass('float-left');
             $.ajax({
@@ -208,7 +208,7 @@ $(document).on('change', 'select[data-role="sector-despacho-map"]', function() {
 
         if (map) {
             map.setCenter(new google.maps.LatLng(parseFloat(option.attr('data-latitud')), parseFloat(option.attr('data-longitud'))));
-            map.setZoom(15);
+            map.setZoom(14);
         }
     }
 });
