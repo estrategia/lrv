@@ -235,8 +235,10 @@ class ContenidoController extends ControllerOperator {
                 if (isset($_POST['ModulosConfigurados'])) {
                     $model = ModulosConfigurados::model()->findByPk($_POST['ModulosConfigurados']['idModulo']);
                     $model->scenario = 'contenido';
+                    
                     $model->attributes = $_POST['ModulosConfigurados'];
-                    //CVarDumper::dump($model->attributes,10,true);
+                    //CVarDumper::dump($_POST,10,true);
+                    $model->contenidoMovil = $_POST['ModulosConfigurados']['contenidoMovil'];
                     //Yii::app()->end();
                     if ($model->save()) {
                         Yii::app()->user->setFlash('alert alert-success', "El contenido ha sido agregado con exito, al modulo " . $model->idModulo);
