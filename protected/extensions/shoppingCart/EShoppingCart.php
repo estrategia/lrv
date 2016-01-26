@@ -29,6 +29,10 @@ class EShoppingCart extends CMap {
     protected $objPagoExpress = null;
 
     public function getObjExpress() {
+        if(Yii::app()->user->isGuest){
+            return null;
+        }
+        
         if ($this->objPagoExpress == null && $this->objSectorCiudad !== null && $this->objSectorCiudad instanceof SectorCiudad) {
             $this->objPagoExpress = PagoExpress::model()->find(array(
                 'with' => array('objDireccionDespacho' => array('condition' => 'objDireccionDespacho.codigoCiudad=:ciudad AND objDireccionDespacho.codigoSector=:sector')),

@@ -30,10 +30,10 @@
                 <div class="row btn-pagar">
                     <?php echo CHtml::link('Comprar', CController::createUrl('/carro/pagar'), array('class' => 'btn btn-primary')); ?>
 
-                    <?php //if (Yii::app()->session[Yii::app()->params->sesion['tipoEntrega']] == Yii::app()->params->entrega['tipo']['domicilio'] && Yii::app()->shoppingCart->getObjExpress() != null): ?>
-                        <?php //echo CHtml::link('Pago Express', CController::createUrl('/carro/pagoexpress'), array('class' => 'btn btn-primary')); ?>
-                    <?php //endif; ?>
-                    
+                    <?php if (Yii::app()->shoppingCart->getObjExpress() != null): ?>
+                        <?php echo CHtml::link('Pago Express', "#", array('class' => 'btn btn-primary', 'data-toggle' => "modal", 'data-target' => "#modal-pagoexpress")); ?>
+                    <?php endif; ?>
+
                     <?php if (!Yii::app()->user->isGuest): ?>
                         <?php echo CHtml::link('Cotizar', "#", array('data-role' => 'crearcotizacion', 'class' => 'btn btn-primary')); ?>
                     <?php endif; ?>
@@ -49,4 +49,27 @@
             </li>
         <?php endif; ?>
     </ul>
+</div>
+
+<!-- modal pago express -->
+<div class="modal fade" id="modal-pagoexpress" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title text-center" id="myModalLabel">Pago Express</h4>
+            </div>
+            <div class="modal-body">
+                <div class="row">
+                    <div class="col-sm-12">
+                        El pago express solo está disponible para los pedidos con tipo de entrega a Domicilio, si desea usar el pago express con tipo de entrega a Domicilio de clic en Aceptar
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer center">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Cerrar</button>
+                <a href="<?php echo CController::createUrl('/carro/pagoexpress') ?>" class="btn btn-primary">Aceptar</a>
+            </div>
+        </div>
+    </div>
 </div>

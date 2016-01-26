@@ -134,6 +134,7 @@
         </div>
     </div>
     <div class="space-1"></div>
+    <?php if (!$modelPago->pagoExpress):  ?>
     <div class="row">
         <div class="col-md-12">
             <?php if ($pasoAnterior !== null): ?>
@@ -144,4 +145,5 @@
             <?php endif; ?>
         </div>
     </div>
+    <?php endif; ?>
 </div>

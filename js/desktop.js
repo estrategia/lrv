@@ -1755,7 +1755,7 @@ function seleccionTipoEntrega(tipo, _tipo) {
     $('div[data-role="tipoentrega-habilitar"]div[data-habilitar="' + tipo + '"]').removeClass('display-none');
     $('div[data-role="tipoentrega-habilitar"]div[data-habilitar="' + tipo + '"] input').removeAttr('disabled');
     $('div[data-role="tipoentrega-habilitar"]div[data-habilitar="' + _tipo + '"]').addClass('display-none');
-    $('div[data-role="tipoentrega-habilitar"]div[data-habilitar="' + _tipo + '"] input').val('');
+    $('div[data-role="tipoentrega-habilitar"]div[data-habilitar="' + _tipo + '"] input[type="text"]').val('');
     $('div[data-role="tipoentrega-habilitar"]div[data-habilitar="' + _tipo + '"] input[type="radio"]').prop('checked', false);
     $('div[data-role="tipoentrega-habilitar"]div[data-habilitar="' + _tipo + '"] input').attr('disabled', 'disabled');
 }

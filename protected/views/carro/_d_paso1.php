@@ -11,14 +11,14 @@
     </div>
     <div class="col-sm-4" >
         <div class="iconStep step1"></div>
-        <div class="text orange"><p>2.Despacho</p></div>
+        <div class="text orange"><p>2.Direcci&oacute;n de despacho</p></div>
         <div class="step-box<?php echo ($modelPago->pagoInvitado ? ' invitado' : '') ?>">
             <?php $this->renderPartial('/carro/_d_pasoDespacho', array('listDirecciones' => isset($listDirecciones) ? $listDirecciones : null, 'modelPago' => $modelPago)) ?>
         </div>
     </div>
     <div class="col-sm-4" >
         <div class="iconStep step2"></div>
-        <div class="text orange"><p>&nbsp;3.Entrega</p></div>
+        <div class="text orange"><p>&nbsp;3.Fecha y hora de entrega</p></div>
         <div class="step-box<?php echo ($modelPago->pagoInvitado ? ' invitado' : '') ?>">
             <?php $this->renderPartial('/carro/_d_pasoEntrega', array('modelPago' => $modelPago, 'listHorarios' => $listHorarios)) ?>
         </div>
@@ -30,21 +30,21 @@
 <div class="row">
     <div class="col-sm-4" >
         <div class="iconStep step3"></div>
-        <div class="text orange"><p>4.Pago</p></div>
+        <div class="text orange"><p>4.Forma de pago</p></div>
         <div class="step-box<?php echo ($modelPago->pagoInvitado ? ' invitado' : '') ?>">
             <?php $this->renderPartial('/carro/_d_pasoPago', array('modelPago' => $modelPago, 'listFormaPago' => $listFormaPago)) ?>
         </div>
     </div>
     <div class="col-sm-4" >
         <div class="iconStep step5"></div>
-        <div class="text orange"><p>5.Bono</p></div>
+        <div class="text orange"><p>5.Bonos</p></div>
         <div class="step-box<?php echo ($modelPago->pagoInvitado ? ' invitado' : '') ?>">
             <?php $this->renderPartial('/carro/_d_pasoBono', array('modelPago' => $modelPago)) ?>
         </div>
     </div>
     <div class="col-sm-4" >
         <div class="iconStep step4"></div>
-        <div class="text orange"><p>&nbsp;6.Comentario</p></div>
+        <div class="text orange"><p>&nbsp;6.Comentarios</p></div>
         <div class="step-box<?php echo ($modelPago->pagoInvitado ? ' invitado' : '') ?>">
             <?php $this->renderPartial('/carro/_d_pasoComentario', array('modelPago' => $modelPago)) ?>
         </div>
