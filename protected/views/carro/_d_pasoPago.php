@@ -42,7 +42,7 @@ $form = $this->beginWidget('CActiveForm', array(
     <?php foreach ($listFormaPago as $idx => $objFormaPago): ?>
         <?php if (!in_array($objFormaPago->idFormaPago, Yii::app()->params->formaPago['tarjetasDatafono'])): ?>
             <?php if ($objFormaPago->idFormaPago == Yii::app()->params->formaPago['idCredirebaja']): ?>
-                <div data-role="formapago-descripcion" data-tipo="<?= $objFormaPago->idFormaPago ?>" class="border-gray row center-div<?php echo ($modelPago->idFormaPago == $objFormaPago->idFormaPago ? "" : " display-none" ) ?>">
+                <div data-role="formapago-descripcion" data-tipo="<?php echo $objFormaPago->idFormaPago ?>" class="border-gray row center-div<?php echo ($modelPago->idFormaPago == $objFormaPago->idFormaPago ? "" : " display-none" ) ?>">
                     <div class="col-md-8 info-oficina">
                         <?php echo $form->labelEx($modelPago, 'numeroTarjeta'); ?>
                         <?php echo $form->textField($modelPago, 'numeroTarjeta', array('class' => 'form-control', 'placeholder' => '000000000000', 'maxlength' => 12)); ?>
@@ -55,7 +55,7 @@ $form = $this->beginWidget('CActiveForm', array(
                     </div>
                 </div>
             <?php elseif ($objFormaPago->idFormaPago == Yii::app()->params->formaPago['pasarela']['idPasarela']): ?>
-                <div data-role="formapago-descripcion"  data-tipo="<?= $objFormaPago->idFormaPago ?>" class="border-gray row center-div<?php echo ($modelPago->idFormaPago == $objFormaPago->idFormaPago ? "" : " display-none" ) ?>">
+                <div data-role="formapago-descripcion"  data-tipo="<?php echo $objFormaPago->idFormaPago ?>" class="border-gray row center-div<?php echo ($modelPago->idFormaPago == $objFormaPago->idFormaPago ? "" : " display-none" ) ?>">
                     <div class="col-md-12 center">
                         <img class="ajustada" src="<?php echo Yii::app()->request->baseUrl; ?>/images/iconos/logo_pse.png" />
                     </div>
@@ -80,14 +80,14 @@ $form = $this->beginWidget('CActiveForm', array(
                     <div class="col-md-6">
                         <?php foreach ($listDatafono as $idx => $objFormaPago): ?>
                             <div>
-                                <input type="radio" value="<?= $objFormaPago->idFormaPago ?>" id="idFormaPago_<?= $objFormaPago->idFormaPago ?>" name="idFormaPago">
-                                <label for="idFormaPago_<?= $objFormaPago->idFormaPago ?>"><?= $objFormaPago->formaPago ?></label>
+                                <input type="radio" value="<?php echo $objFormaPago->idFormaPago ?>" id="idFormaPago_<?php echo $objFormaPago->idFormaPago ?>" name="idFormaPago">
+                                <label for="idFormaPago_<?php echo $objFormaPago->idFormaPago ?>"><?php echo $objFormaPago->formaPago ?></label>
                             </div>
                         <?php endforeach; ?>
                     </div>
                     <div class="col-md-6 info-oficina">
                         <?php foreach ($listDatafono as $idx => $objFormaPago): ?>
-                            <div data-role="formapago-logo-<?= $objFormaPago->idFormaPago ?>" class="display-none">
+                            <div data-role="formapago-logo-<?php echo $objFormaPago->idFormaPago ?>" class="display-none">
                                 <img src="<?php echo Yii::app()->request->baseUrl . Yii::app()->params->formaPago['tarjetasDatafonoLogo'][$objFormaPago->idFormaPago]; ?>" class="ajustada"/>
                             </div>
                         <?php endforeach; ?>

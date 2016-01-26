@@ -40,8 +40,6 @@ class FormaPagoForm extends CFormModel {
     public $extension;
     public $celular;
     public $correoElectronico;
-    public $tipoEntrega;
-    public $isMobil = true;
 
     /**
      * Declares the validation rules.
@@ -49,35 +47,22 @@ class FormaPagoForm extends CFormModel {
      * and password needs to be authenticated.
      */
     public function rules() {
-        //Yii::log("validacion 0\n", CLogger::LEVEL_INFO, 'application');
-        if ($this->isMobil) {
-            if (isset(Yii::app()->session[Yii::app()->params->sesion['tipoEntrega']]) && Yii::app()->session[Yii::app()->params->sesion['tipoEntrega']] != null) {
-                $this->tipoEntrega = Yii::app()->session[Yii::app()->params->sesion['tipoEntrega']];
-            }
-        }
+        Yii::log("validacion 0\n", CLogger::LEVEL_INFO, 'application');
 
         $rules = array();
-        $rules[] = array('tipoEntrega', 'required', 'message' => '{attribute} no puede estar vacío');
-        $rules[] = array('tipoEntrega', 'in', 'range' => Yii::app()->params->entrega['listaTipos'], 'allowEmpty' => false);
-        //$rules[] = array('idDireccionDespacho', 'default', 'value' => null);
+        $rules[] = array('identificacionUsuario', 'required', 'message' => '{attribute} no puede estar vacío');
+        
+        Yii::log("validacion 1\n", CLogger::LEVEL_INFO, 'application');
+        
+        Yii::log("this->pagoInvitado: " . $this->pagoInvitado . "\n", CLogger::LEVEL_INFO, 'application');
 
         if ($this->pagoInvitado) {
-            $rules[] = array('identificacionUsuario', 'safe');
-            $rules[] = array('identificacionUsuario', 'default', 'value' => null);
-        } else {
-            $rules[] = array('identificacionUsuario', 'required', 'message' => '{attribute} no puede estar vacío');
-        }
-
-        //Yii::log("validacion 1\n", CLogger::LEVEL_INFO, 'application');
-        //Yii::log("this->pagoInvitado: " . CVarDumper::dumpAsString($this->pagoInvitado) . "\n", CLogger::LEVEL_INFO, 'application');
-
-        if ($this->pagoInvitado) {
-            //Yii::log("validacion 2\n", CLogger::LEVEL_INFO, 'application');
+            Yii::log("validacion 2\n", CLogger::LEVEL_INFO, 'application');
             //echo "<br/>PAGO INVITADO<br/>";
             //$rules[] = array('descripcion, nombre, direccion, barrio, telefono, extension, celular, correoElectronico', 'attributeTrim');
 
-            if ($this->tipoEntrega == Yii::app()->params->entrega['tipo']['domicilio']) {
-                //Yii::log("validacion 3\n", CLogger::LEVEL_INFO, 'application');
+            if (Yii::app()->session[Yii::app()->params->sesion['tipoEntrega']] == Yii::app()->params->entrega['tipo']['domicilio']) {
+                Yii::log("validacion 3\n", CLogger::LEVEL_INFO, 'application');
                 //echo "<br/>PAGO INVITADO DOMICILIO<br/>";
                 $rules[] = array('descripcion, nombre, direccion, barrio, telefono', 'required', 'on' => 'despacho, informacion, finalizar', 'message' => '{attribute} no puede estar vacío');
 
@@ -92,36 +77,39 @@ class FormaPagoForm extends CFormModel {
                 $rules[] = array('celular', 'length', 'min' => 5, 'max' => 20, 'on' => 'despacho, informacion, finalizar');
                 $rules[] = array('telefono', 'length', 'min' => 5, 'max' => 11, 'on' => 'despacho, informacion, finalizar');
                 $rules[] = array('extension', 'length', 'max' => 5, 'on' => 'despacho, informacion, finalizar');
-            } else if ($this->tipoEntrega == Yii::app()->params->entrega['tipo']['presencial']) {
-                //Yii::log("validacion 5\n", CLogger::LEVEL_INFO, 'application');
+            }
+            
+            Yii::log("validacion 4\n", CLogger::LEVEL_INFO, 'application');
+
+            if (Yii::app()->session[Yii::app()->params->sesion['tipoEntrega']] == Yii::app()->params->entrega['tipo']['presencial']) {
+                Yii::log("validacion 5\n", CLogger::LEVEL_INFO, 'application');
                 // echo "<br/>PAGO PRESENCIAL<br/>";
-                $rules[] = array('descripcion, nombre, direccion, barrio, extension, telefono, celular', 'safe');
                 $rules[] = array('correoElectronico', 'required', 'on' => 'entrega, informacion, finalizar', 'message' => '{attribute} no puede estar vacío');
                 $rules[] = array('correoElectronico', 'email', 'on' => 'entrega, informacion, finalizar');
                 $rules[] = array('correoElectronico', 'length', 'max' => 50, 'on' => 'entrega, informacion, finalizar');
             }
-
-            //Yii::log("validacion 6\n", CLogger::LEVEL_INFO, 'application');
+            
+            Yii::log("validacion 6\n", CLogger::LEVEL_INFO, 'application');
 
 
             $rules[] = array('idDireccionDespacho', 'safe');
             $rules[] = array('celular, extension, idDireccionDespacho', 'default', 'value' => null);
         } else {
-            //Yii::log("validacion 7\n", CLogger::LEVEL_INFO, 'application');
-
+            Yii::log("validacion 7\n", CLogger::LEVEL_INFO, 'application');
+            
             $rules[] = array('descripcion, nombre, direccion, barrio, extension, telefono, celular, correoElectronico', 'safe');
             //$rules[] = array('idDireccionDespacho', 'required', 'on' => 'despacho, informacion, finalizar', 'message' => '{attribute} no puede estar vacío');
-
-            if ($this->tipoEntrega == Yii::app()->params->entrega['tipo']['domicilio']) {
-                //Yii::log("validacion 8\n", CLogger::LEVEL_INFO, 'application');
+            
+            if(Yii::app()->session[Yii::app()->params->sesion['tipoEntrega']] == Yii::app()->params->entrega['tipo']['domicilio']){
+                Yii::log("validacion 8\n", CLogger::LEVEL_INFO, 'application');
                 $rules[] = array('idDireccionDespacho', 'required', 'on' => 'despacho, informacion, finalizar', 'message' => '{attribute} no puede estar vacío');
-            } else if ($this->tipoEntrega == Yii::app()->params->entrega['tipo']['presencial']) {
-                //Yii::log("validacion 9\n", CLogger::LEVEL_INFO, 'application');
-                $rules[] = array('idDireccionDespacho', 'safe');
+            }else{
+                Yii::log("validacion 9\n", CLogger::LEVEL_INFO, 'application');
+                $rules[] = array('idDireccionDespacho', 'default', 'value' => null);
             }
         }
-
-        //Yii::log("validacion 10\n", CLogger::LEVEL_INFO, 'application');
+        
+        Yii::log("validacion 10\n", CLogger::LEVEL_INFO, 'application');
 
         $rules[] = array('fechaEntrega', 'required', 'on' => 'entrega, informacion, finalizar', 'message' => '{attribute} no puede estar vacío');
         $rules[] = array('comentario', 'length', 'max' => 250, 'on' => 'entrega, informacion, finalizar');
@@ -133,28 +121,24 @@ class FormaPagoForm extends CFormModel {
         $rules[] = array('usoBono', 'bonoValidate', 'on' => 'pago, informacion, finalizar');
         $rules[] = array('confirmacion', 'compare', 'compareValue' => 1, 'on' => 'confirmacion, finalizar', 'message' => 'Aceptar términos anteriores');
 
-        if ($this->tipoEntrega == Yii::app()->params->entrega['tipo']['presencial']) {
-            //Yii::log("validacion 11\n", CLogger::LEVEL_INFO, 'application');
-            $rules[] = array('telefonoContacto', 'required', 'on' => 'entrega, informacion, finalizar', 'message' => '{attribute} no puede estar vacío');
-            $rules[] = array('telefonoContacto', 'numerical', 'integerOnly' => true, 'on' => 'entrega, informacion, finalizar', 'message' => '{attribute} deber ser número');
-            $rules[] = array('telefonoContacto', 'length', 'min' => 5, 'max' => 50, 'on' => 'entrega, informacion, finalizar');
 
-            if ($this->isMobil) {
-                $rules[] = array('indicePuntoVenta', 'safe');
-            } else {
-                $rules[] = array('indicePuntoVenta', 'required', 'on' => 'informacion', 'message' => 'Seleccionar Punto de Venta');
-            }
-        } else if ($this->tipoEntrega == Yii::app()->params->entrega['tipo']['domicilio']) {
-            //Yii::log("validacion 12\n", CLogger::LEVEL_INFO, 'application');
+        if (Yii::app()->session[Yii::app()->params->sesion['tipoEntrega']] == Yii::app()->params->entrega['tipo']['presencial']) {
+            Yii::log("validacion 11\n", CLogger::LEVEL_INFO, 'application');
+            $rules[] = array('telefonoContacto', 'required', 'on' => 'entrega, informacion, finalizar', 'message' => '{attribute} no puede estar vacío');
+            $rules[] = array('telefonoContacto', 'length', 'max' => 50, 'on' => 'entrega, informacion, finalizar');
+        } else {
+            Yii::log("validacion 12\n", CLogger::LEVEL_INFO, 'application');
             $rules[] = array('telefonoContacto', 'safe');
             $rules[] = array('telefonoContacto', 'default', 'value' => null);
         }
+        
+        Yii::log("validacion 13\n", CLogger::LEVEL_INFO, 'application');
 
-        //Yii::log("validacion 13\n", CLogger::LEVEL_INFO, 'application');
         //array('clienteFielValidate', 'on' => 'pago, finalizar'),
         //array('codigoPromocion', 'promocionValidate', 'on' => 'pago, finalizar'),
         //array('descripcion, nombre, barrio, telefono, celular', 'length', 'max' => 50);
-        //Yii::log("Rules:\n" . CVarDumper::dumpAsString($rules), CLogger::LEVEL_INFO, 'application');
+        
+        Yii::log("Rules:\n" . CVarDumper::dumpAsString($rules), CLogger::LEVEL_INFO, 'application');
 
         return $rules;
     }
@@ -192,7 +176,6 @@ class FormaPagoForm extends CFormModel {
             'celular' => 'Celular',
             'extension' => 'Extensión',
             'correoElectronico' => 'Correo electrónico',
-            'indicePuntoVenta' => 'Punto de Venta',
         );
     }
 
@@ -238,7 +221,7 @@ class FormaPagoForm extends CFormModel {
                     if (strlen($this->numeroTarjeta) != 12) {
                         $this->addError('numeroTarjeta', $this->getAttributeLabel('numeroTarjeta') . " debe tener 12 dígitos");
                     }
-                } else {
+                }else{
                     $this->addError('numeroTarjeta', $this->getAttributeLabel('numeroTarjeta') . " debe ser numerico");
                 }
             }
@@ -296,28 +279,14 @@ class FormaPagoForm extends CFormModel {
     }
 
     public function consultarHorario($objSectorCiudad) {
-        if ($objSectorCiudad != null) {
-            if ($this->objHorarioCiudadSector == null || $this->objHorarioCiudadSector->codigoCiudad != $objSectorCiudad->codigoCiudad || $this->objHorarioCiudadSector->codigoSector != $objSectorCiudad->codigoSector) {
-                $this->objHorarioCiudadSector = HorariosCiudadSector::model()->find(array(
-                    'condition' => 'codigoCiudad=:ciudad AND codigoSector=:sector AND estadoCiudadSector=:estado',
-                    'params' => array(
-                        ':estado' => 1,
-                        ':ciudad' => $objSectorCiudad->codigoCiudad,
-                        ':sector' => $objSectorCiudad->codigoSector
-                    )
-                ));
-            }
-        }
-    }
-
-    public function tieneDomicilio($objSectorCiudad) {
-        $this->consultarHorario($objSectorCiudad);
-        
-        if ($this->objHorarioCiudadSector==null || ($this->objHorarioCiudadSector != null && $this->objHorarioCiudadSector->sadCiudadSector == 0)) {
-            return false;
-        }
-        
-        return true;
+        $this->objHorarioCiudadSector = HorariosCiudadSector::model()->find(array(
+            'condition' => 'codigoCiudad=:ciudad AND codigoSector=:sector AND estadoCiudadSector=:estado',
+            'params' => array(
+                ':estado' => 1,
+                ':ciudad' => $objSectorCiudad->codigoCiudad,
+                ':sector' => $objSectorCiudad->codigoSector
+            )
+        ));
     }
 
     public function consultarDisponibilidad($shoppingCart) {

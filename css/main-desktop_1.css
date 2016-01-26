@@ -103,8 +103,6 @@
 .sold-out {
     text-align: center;
     margin-top: 10px;
-    background-color: #fff;
-    border-radius: 5px;
 }
 .border-gray {
     background-color: #fff;
@@ -332,11 +330,11 @@ table.tabla-carro .group-botones-cantidad{
     background: #f4f4f4 none repeat scroll 0 0;
     border: 1px solid #ccc;
     border-radius: 5px 5px 0 0;
-    padding: 5px;
+    padding: 15px;
 }
 .contentPagarPresnecial h1 {
     font-size: 22px;
-    margin: 5px 0;
+    margin: 40px 0;
     text-align: center;
 }
 .blockPago p {
@@ -487,13 +485,10 @@ table.tabla-carro .group-botones-cantidad{
 .btn-ciudad {
     background: #f4f4f4 none repeat scroll 0 0;
     color: #444;
-    font-size: 18px;
+    font-size: 16px;
     padding: 13px;
-    display: block;
+    display: inline-block;
     transition: 0.5s;
-    display: block;
-    width: 100%;
-    margin-left: 15px;
 }
 .btn-ciudad:hover {
 
@@ -541,15 +536,15 @@ table.tabla-carro .group-botones-cantidad{
     background-color: #777;
     border-radius: 50%;
     color: #fff;
-    left: -25px;
-    padding: 25px;
+    left: -30px;
+    padding: 15px;
     position: absolute;
-    top: -5px;
+    top: -6px;
     transition: 0.5s;
 }
 .ico-btn {
     margin-right: 50px;
-    padding: 15px 5px 15px 20px;
+    padding: 5px 5px 5px 20px;
     position: relative;
 }
 .ico-btn:last-child {
@@ -566,11 +561,8 @@ table.tabla-carro .group-botones-cantidad{
     box-shadow: 2px 3px 4px #dddddd;
 }
 .blocktipoentrega {
-    width: 50%;
+    max-width: 800px;
     margin: auto;
-    border: 1px solid #dadada;
-    border-radius: 5px;
-    padding: 30px;
 }
 .ico_ubi.icoRecoger {
     background: rgba(0, 0, 0, 0) url("../images/entrega/icon_recoger.png") repeat scroll 0 0;
@@ -2183,22 +2175,9 @@ textarea.form-control {
 .step-box {
     background-color: #EBEBEB;
     padding: 15px;
-    height: 240px;
+    height: 300px;
     position: relative;
 }
-
-.step-box.invitado {
-    height: 300px;
-}
-
-.step-box > .sold-out > img {
-    max-height:190px;
-}
-
-.step-box.invitado > .sold-out > img {
-    max-height:100%;
-}
-
 .coment textarea{
     border: none;
     color: #A4A4A4;
@@ -2236,7 +2215,7 @@ textarea.form-control {
 
 .scroll-div {
     border: 1px solid #a4a4a4;
-    max-height: 150px;
+    max-height: 215px;
     overflow-y: scroll;
     padding: 1px 5px;
 }

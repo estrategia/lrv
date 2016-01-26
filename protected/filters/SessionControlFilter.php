@@ -32,23 +32,39 @@ class SessionControlFilter extends CFilter {
             $sesionTipo = true;
         }
 
-        if (!$sesionTipo) {
-            if ($this->isMobile) {
-                if($this->redirect)
+        if ($this->isMobile) {
+            if (!$sesionTipo) {
+                if ($this->redirect)
                     Yii::app()->request->redirect(Yii::app()->baseUrl . "/sitio");
-            } else {
-                Yii::app()->session[Yii::app()->params->sesion['redireccionUbicacion']] = Yii::app()->request->url;
-                if($this->redirect)
+            } else if (!$sesionUbicacion) {
+                if ($this->redirect)
                     Yii::app()->request->redirect(Yii::app()->baseUrl . "/sitio/ubicacion");
             }
-        } else if (!$sesionUbicacion) {
-            if (!$this->isMobile) {
+        }else {
+            if (!$sesionUbicacion) {
                 Yii::app()->session[Yii::app()->params->sesion['redireccionUbicacion']] = Yii::app()->request->url;
+                if ($this->redirect)
+                    Yii::app()->request->redirect(Yii::app()->baseUrl . "/sitio/ubicacion");
             }
-            if($this->redirect)
-                Yii::app()->request->redirect(Yii::app()->baseUrl . "/sitio/ubicacion");
         }
-        
+
+//        if (!$sesionTipo) {
+//            if ($this->isMobile) {
+//                if ($this->redirect)
+//                    Yii::app()->request->redirect(Yii::app()->baseUrl . "/sitio");
+//            } else {
+//                Yii::app()->session[Yii::app()->params->sesion['redireccionUbicacion']] = Yii::app()->request->url;
+//                if ($this->redirect)
+//                    Yii::app()->request->redirect(Yii::app()->baseUrl . "/sitio/ubicacion");
+//            }
+//        } else if (!$sesionUbicacion) {
+//            if (!$this->isMobile) {
+//                Yii::app()->session[Yii::app()->params->sesion['redireccionUbicacion']] = Yii::app()->request->url;
+//            }
+//            if ($this->redirect)
+//                Yii::app()->request->redirect(Yii::app()->baseUrl . "/sitio/ubicacion");
+//        }
+
         $filterChain->run();
     }
 

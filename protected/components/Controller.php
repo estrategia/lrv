@@ -33,6 +33,7 @@ class Controller extends CController {
     public $sectorName = "";
     public $categorias = array();
     public $objSectorCiudad = null;
+    public $tipoEntrega = null;
 
     public function init() {
         if (Yii::app()->detectMobileBrowser->showMobile) {
@@ -50,7 +51,11 @@ class Controller extends CController {
         if (isset(Yii::app()->session[Yii::app()->params->sesion['sectorCiudadEntrega']]) && Yii::app()->session[Yii::app()->params->sesion['sectorCiudadEntrega']] != null) {
             $this->objSectorCiudad = Yii::app()->session[Yii::app()->params->sesion['sectorCiudadEntrega']];
         }
-        
+
+        if ($this->isMobile && isset(Yii::app()->session[Yii::app()->params->sesion['tipoEntrega']]) && Yii::app()->session[Yii::app()->params->sesion['tipoEntrega']] != null) {
+            $this->tipoEntrega = Yii::app()->session[Yii::app()->params->sesion['tipoEntrega']];
+        }
+
         $this->verificarSesion();
 
         $this->pageTitle = Yii::app()->name;
@@ -68,7 +73,7 @@ class Controller extends CController {
             $cookieUsuario = _getCookie(Yii::app()->params->usuario['sesion']);
             if ($cookieUsuario != null) {
                 $cookieUsuario = split("-", $cookieUsuario);
-                $password_desencriptado = decrypt($cookieUsuario[1],$cookieUsuario[0]);
+                $password_desencriptado = decrypt($cookieUsuario[1], $cookieUsuario[0]);
                 $model = new LoginForm;
                 $model->username = $cookieUsuario[0];
                 $model->password = $password_desencriptado;
@@ -96,24 +101,33 @@ class Controller extends CController {
                     Yii::app()->session[Yii::app()->params->sesion['sectorCiudadEntrega']] = $objSectorCiudad;
                 }
             }
-        }
 
-
-        $tipoEntrega = null;
-        if (isset(Yii::app()->session[Yii::app()->params->sesion['tipoEntrega']]) && Yii::app()->session[Yii::app()->params->sesion['tipoEntrega']] != null) {
-            $tipoEntrega = Yii::app()->session[Yii::app()->params->sesion['tipoEntrega']];
-        }
-        
-        if($tipoEntrega==null){
-            $cookieTipoEntrega = _getCookie(Yii::app()->params->sesion['tipoEntrega']);
-            if ($cookieTipoEntrega != null) {
-                Yii::app()->session[Yii::app()->params->sesion['tipoEntrega']] = $cookieTipoEntrega;
+            $direccionEntrega = null;
+            if (isset(Yii::app()->session[Yii::app()->params->sesion['direccionEntrega']]) && Yii::app()->session[Yii::app()->params->sesion['direccionEntrega']] != null) {
+                $direccionEntrega = Yii::app()->session[Yii::app()->params->sesion['direccionEntrega']];
             }
-            
-            Yii::app()->session[Yii::app()->params->sesion['direccionEntrega']] = _getCookie(Yii::app()->params->sesion['direccionEntrega']);
+
+            if ($direccionEntrega == null) {
+                $cookieDireccionEntrega = _getCookie(Yii::app()->params->sesion['direccionEntrega']);
+                if ($cookieDireccionEntrega != null) {
+                    Yii::app()->session[Yii::app()->params->sesion['direccionEntrega']] = $cookieDireccionEntrega;
+                }
+            }
         }
 
-        
+        if ($this->isMobile) {
+            $tipoEntrega = null;
+            if (isset(Yii::app()->session[Yii::app()->params->sesion['tipoEntrega']]) && Yii::app()->session[Yii::app()->params->sesion['tipoEntrega']] != null) {
+                $tipoEntrega = Yii::app()->session[Yii::app()->params->sesion['tipoEntrega']];
+            }
+
+            if ($tipoEntrega == null) {
+                $cookieTipoEntrega = _getCookie(Yii::app()->params->sesion['tipoEntrega']);
+                if ($cookieTipoEntrega != null) {
+                    Yii::app()->session[Yii::app()->params->sesion['tipoEntrega']] = $cookieTipoEntrega;
+                }
+            }
+        }
     }
 
     public function verificarDispositivo() {

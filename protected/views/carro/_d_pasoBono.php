@@ -1,22 +1,21 @@
-<?php
-$form = $this->beginWidget('CActiveForm', array(
-    'id' => 'form-pago-bono',
-    'enableClientValidation' => true,
-    //'action' => Yii::app()->createUrl('/carro/pagar', array('paso' => $modelPago->getScenario(), 'post' => 'true')),
-    'htmlOptions' => array(
-    //'class' => "", 'data-ajax' => "false"
-    ),
-    'errorMessageCssClass' => 'has-error',
-    'clientOptions' => array(
-        'validateOnSubmit' => true,
-        'validateOnChange' => true,
-        'errorCssClass' => 'has-error',
-        'successCssClass' => 'has-success',
-    ))
-);
-?>
-
 <?php if ($modelPago->bono !== null): ?>
+    <?php
+    $form = $this->beginWidget('CActiveForm', array(
+        'id' => 'form-pago-bono',
+        'enableClientValidation' => true,
+        //'action' => Yii::app()->createUrl('/carro/pagar', array('paso' => $modelPago->getScenario(), 'post' => 'true')),
+        'htmlOptions' => array(
+        //'class' => "", 'data-ajax' => "false"
+        ),
+        'errorMessageCssClass' => 'has-error',
+        'clientOptions' => array(
+            'validateOnSubmit' => true,
+            'validateOnChange' => true,
+            'errorCssClass' => 'has-error',
+            'successCssClass' => 'has-success',
+        ))
+    );
+    ?>
     <div class="bono">
         <div>Tipo de bono:<span class="result_bono">Cliente Fiel</span></div>
         <div>Valor de bono: <span class="result_bono"><?php echo Yii::app()->numberFormatter->format(Yii::app()->params->formatoMoneda['patron'], $modelPago->bono['valor'], Yii::app()->params->formatoMoneda['moneda']); ?></span></div>
@@ -30,10 +29,11 @@ $form = $this->beginWidget('CActiveForm', array(
         </div>
         <?php echo $form->error($modelPago, 'usoBono', array('class' => 'text-danger')); ?>
     </div>
+    <?php $this->endWidget(); ?>
 <?php else: ?>
     <div class="sold-out">
-        <img class="border-gray ajustada" src="<?php echo Yii::app()->request->baseUrl; ?>/images/desktop/sold-out.png" alt="">
+        <img class="ajustada" src="<?php echo Yii::app()->request->baseUrl; ?>/images/desktop/sold-out.png" alt="">
     </div>
 <?php endif; ?>
-<?php $this->endWidget(); ?>
+
 

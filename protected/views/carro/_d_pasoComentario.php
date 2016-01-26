@@ -16,7 +16,7 @@ $form = $this->beginWidget('CActiveForm', array(
 );
 ?>
 
-<?php if (Yii::app()->session[Yii::app()->params->sesion['tipoEntrega']] == Yii::app()->params->entrega['tipo']['presencial']): ?>
+<div data-role="tipoentrega-habilitar" data-habilitar="<?php echo Yii::app()->params->entrega['tipo']['presencial'] ?>" class="<?php echo ($modelPago->tipoEntrega == Yii::app()->params->entrega['tipo']['presencial'] ? "" : "display-none") ?>">
     <div class="form-group">
         <?php echo $form->labelEx($modelPago, 'telefonoContacto', array('class' => 'control-label')); ?>
         <?php echo $form->textField($modelPago, 'telefonoContacto', array('class' => 'form-control input-sm', 'maxlength' => 50, 'placeholder' => $modelPago->getAttributeLabel('telefonoContacto'))); ?>
@@ -25,20 +25,19 @@ $form = $this->beginWidget('CActiveForm', array(
 
     <?php if ($modelPago->pagoInvitado): ?>
         <div class="form-group">
-            <?php echo $form->labelEx($modelPago, 'correoElectronico', array('class' => 'control-label')); ?>
-            <?php echo $form->emailField($modelPago, 'correoElectronico', array('class' => 'form-control input-sm', 'maxlength' => 50, 'placeholder' => $modelPago->getAttributeLabel('correoElectronico'))); ?>
-            <?php echo $form->error($modelPago, 'correoElectronico', array('class' => 'text-danger')); ?>
+            <?php echo $form->labelEx($modelPago, 'correoElectronicoContacto', array('class' => 'control-label')); ?>
+            <?php echo $form->emailField($modelPago, 'correoElectronicoContacto', array('class' => 'form-control input-sm', 'maxlength' => 50, 'placeholder' => $modelPago->getAttributeLabel('correoElectronicoContacto'))); ?>
+            <?php echo $form->error($modelPago, 'correoElectronicoContacto', array('class' => 'text-danger')); ?>
         </div>
     <?php endif; ?>
+</div>
 
-<?php endif; ?>
 
-    <div class="form-group">
-        <?php echo $form->labelEx($modelPago, 'comentario', array('class' => 'control-label')); ?>
-        <?php echo $form->textArea($modelPago, 'comentario', array('class' => 'form-control', 'rows' => 8, 'data-countchar' => 'div-comentario-contador', 'maxlength' => 250, /* 'placeholder' => $modelPago->getAttributeLabel('comentario') */)); ?>
-        <p>[Máximo 250 caracteres] <span id="div-comentario-contador"></span></p>
-            <?php echo $form->error($modelPago, 'comentario', array('class' => 'text-danger')); ?>
-    </div>
-
+<div class="form-group">
+    <?php echo $form->labelEx($modelPago, 'comentario', array('class' => 'control-label')); ?>
+    <?php echo $form->textArea($modelPago, 'comentario', array('class' => 'form-control', 'rows' => 8, 'data-countchar' => 'div-comentario-contador', 'maxlength' => 250, /* 'placeholder' => $modelPago->getAttributeLabel('comentario') */)); ?>
+    <p>[Máximo 250 caracteres] <span id="div-comentario-contador"></span></p>
+        <?php echo $form->error($modelPago, 'comentario', array('class' => 'text-danger')); ?>
+</div>
 
 <?php $this->endWidget(); ?>

@@ -1,4 +1,4 @@
-<?php if (Yii::app()->session[Yii::app()->params->sesion['tipoEntrega']] == Yii::app()->params->entrega['tipo']['domicilio']): ?>
+<div data-role="tipoentrega-habilitar" data-habilitar="<?php echo Yii::app()->params->entrega['tipo']['domicilio'] ?>" class="<?php echo ($modelPago->tipoEntrega == Yii::app()->params->entrega['tipo']['domicilio'] ? "" : "display-none") ?>">
     <?php if ($modelPago->pagoInvitado): ?>
         <?php
         $form = $this->beginWidget('CActiveForm', array(
@@ -80,7 +80,7 @@
         </div>
 
         <?php $this->endWidget(); ?>
-    <?php else: ?>
+    <?php elseif ($listDirecciones!=null): ?>
         <?php echo CHtml::link('Adicionar direcci&oacute;n', "#", array('data-role' => 'direccion-adicionar-modal', 'data-vista' => 'pasoscompra', 'class' => 'btn btn-primary')); ?>
         <div class="space-1"></div>
 
@@ -90,10 +90,13 @@
 
         <div id="FormaPagoForm_idDireccionDespacho_em_" class="text-danger" style="display: none;"></div>
     <?php endif; ?>
-<?php else: ?>
-    <div class="center center-verticaly border-gray">
-        <h4 class="grey">Punto de venta entrega</h4>
-        <p class="grey"><?php echo $modelPago->listPuntosVenta[1][$modelPago->indicePuntoVenta][2] ?></p>
-        <p class="grey"><?php echo $modelPago->listPuntosVenta[1][$modelPago->indicePuntoVenta][3] ?></p>
-    </div>
-<?php endif; ?>
+</div>
+
+<div data-role="tipoentrega-habilitar" data-habilitar="<?php echo Yii::app()->params->entrega['tipo']['presencial'] ?>" class="center center-verticaly border-gray<?php echo ($modelPago->tipoEntrega == Yii::app()->params->entrega['tipo']['presencial'] ? "" : " display-none") ?>">
+    <h4 class="grey">Punto de venta entrega</h4>
+    <p class="grey" id="pasoporel-seleccion-pdv-nombre"><?php echo ($modelPago->tipoEntrega == Yii::app()->params->entrega['tipo']['presencial'] && $modelPago->indicePuntoVenta!=null && isset($modelPago->listPuntosVenta[1][$modelPago->indicePuntoVenta])? $modelPago->listPuntosVenta[1][$modelPago->indicePuntoVenta][2] : "") ?></p>
+    <p class="grey" id="pasoporel-seleccion-pdv-direccion"><?php echo ($modelPago->tipoEntrega == Yii::app()->params->entrega['tipo']['presencial'] && $modelPago->indicePuntoVenta!=null && isset($modelPago->listPuntosVenta[1][$modelPago->indicePuntoVenta])? $modelPago->listPuntosVenta[1][$modelPago->indicePuntoVenta][3] : "")   ?></p>
+</div>
+
+<input type="hidden" id="FormaPagoForm_indicePuntoVenta" name="FormaPagoForm[indicePuntoVenta]" value="<?php echo ($modelPago->tipoEntrega == Yii::app()->params->entrega['tipo']['presencial'] ?  $modelPago->indicePuntoVenta : "") ?>">
+<div id="FormaPagoForm_indicePuntoVenta_em_" class="text-danger text-center" style="display: none;"></div>

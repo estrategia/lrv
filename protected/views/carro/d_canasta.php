@@ -30,9 +30,9 @@
                 <div class="row btn-pagar">
                     <?php echo CHtml::link('Comprar', CController::createUrl('/carro/pagar'), array('class' => 'btn btn-primary')); ?>
 
-                    <?php if (Yii::app()->session[Yii::app()->params->sesion['tipoEntrega']] == Yii::app()->params->entrega['tipo']['domicilio'] && Yii::app()->shoppingCart->getObjExpress() != null): ?>
-                        <?php echo CHtml::link('Pago Express', CController::createUrl('/carro/pagoexpress'), array('class' => 'btn btn-primary')); ?>
-                    <?php endif; ?>
+                    <?php //if (Yii::app()->session[Yii::app()->params->sesion['tipoEntrega']] == Yii::app()->params->entrega['tipo']['domicilio'] && Yii::app()->shoppingCart->getObjExpress() != null): ?>
+                        <?php //echo CHtml::link('Pago Express', CController::createUrl('/carro/pagoexpress'), array('class' => 'btn btn-primary')); ?>
+                    <?php //endif; ?>
                     
                     <?php if (!Yii::app()->user->isGuest): ?>
                         <?php echo CHtml::link('Cotizar', "#", array('data-role' => 'crearcotizacion', 'class' => 'btn btn-primary')); ?>

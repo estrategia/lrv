@@ -1,17 +1,68 @@
 <?php
 
 class TestController extends Controller {
+    
+    public function actionTipoentrega(){
+        CVarDumper::dump(Yii::app()->session[Yii::app()->params->sesion['tipoEntrega']], 10, true);
+    }
+
+    public function actionForm() {
+        echo "actionForm<br/>";
+        
+        $modelPago = null;
+        if (isset(Yii::app()->session[Yii::app()->params->sesion['carroPagarForm']]) && Yii::app()->session[Yii::app()->params->sesion['carroPagarForm']] != null) {
+            echo "si existia<br/>";
+            $modelPago = Yii::app()->session[Yii::app()->params->sesion['carroPagarForm']];
+            $modelPago->consultarHorario($this->objSectorCiudad);
+        }else{
+            echo "no existia<br/>";
+            $modelPago = new FormaPagoForm;
+            $modelPago->identificacionUsuario = Yii::app()->user->name;
+            $modelPago->consultarHorario($this->objSectorCiudad);
+        }
+        
+        echo "consultarHorario<br/>";
+        $modelPago->consultarHorario($this->objSectorCiudad);
+        
+        if($modelPago->tieneDomicilio($this->objSectorCiudad)){
+            echo "si tiene domicilio<br>";
+        }else{
+            echo "no tiene domicilio<br>";
+        }
+        exit();
+        
+        $form = new FormaPagoForm('informacion');
+        $form->pagoInvitado = false;
+        $form->identificacionUsuario = 1113618983;
+        $form->consultarHorario($this->objSectorCiudad);
+        $form->isMobil = false;
+        $form->tipoEntrega = Yii::app()->params->entrega['tipo']['domicilio'];
+        
+        $form->cuotasTarjeta = 1;
+        $form->idDireccionDespacho =  $form->fechaEntrega =  $form->comentario =  $form->numeroTarjeta = $form->telefonoContacto = $form->idDireccionDespacho = '';
+        
+        echo "FORM 1 --<br>" ;
+        CVarDumper::dump($form,10,true);echo "<br>";
+        
+        if ($form->validate()) {
+            echo "VALIDADO OK";
+        }  else {
+            echo "VALIDADO ERROR<br>";
+            echo CActiveForm::validate($form);
+        }
+        
+    }
 
     function get_url_contents($url) {
-        /*$crl = curl_init();
-        $timeout = 5;
-        curl_setopt($crl, CURLOPT_URL, $url);
-        curl_setopt($crl, CURLOPT_RETURNTRANSFER, 1);
-        curl_setopt($crl, CURLOPT_CONNECTTIMEOUT, $timeout);
-        $ret = curl_exec($crl);
-        curl_close($crl);
-        return $ret;*/
-        
+        /* $crl = curl_init();
+          $timeout = 5;
+          curl_setopt($crl, CURLOPT_URL, $url);
+          curl_setopt($crl, CURLOPT_RETURNTRANSFER, 1);
+          curl_setopt($crl, CURLOPT_CONNECTTIMEOUT, $timeout);
+          $ret = curl_exec($crl);
+          curl_close($crl);
+          return $ret; */
+
         $ch = curl_init("REMOTE XML FILE");
         curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
         curl_setopt($ch, CURLOPT_HEADER, 0);
@@ -28,19 +79,19 @@ class TestController extends Controller {
         echo "<br><br>URL: $url<br>Result<br>";
         CVarDumper::dump($result, 10, true);
         echo "<br><br>";
-        
-        
-        /*$aContext = array(
-            'http' => array(
-                'request_fulluri' => true,
-            ),
-        );
-        
-        $cxContext = stream_context_create($aContext);
-        $result = file_get_contents($url, False, $cxContext);
-        echo "<br><br>URL: $url<br>Result<br>";
-        CVarDumper::dump($result, 10, true);
-        echo "<br><br>";*/
+
+
+        /* $aContext = array(
+          'http' => array(
+          'request_fulluri' => true,
+          ),
+          );
+
+          $cxContext = stream_context_create($aContext);
+          $result = file_get_contents($url, False, $cxContext);
+          echo "<br><br>URL: $url<br>Result<br>";
+          CVarDumper::dump($result, 10, true);
+          echo "<br><br>"; */
 
 
         /* $result = implode('', file($url));
@@ -55,7 +106,7 @@ class TestController extends Controller {
         //echo '<pre>', htmlspecialchars(file_get_contents($url)), '</pre>';
 
 
-         /*$result = file_get_contents($url);
+        /* $result = file_get_contents($url);
           echo "<br><br>URL: $url<br>Result<br>";
           CVarDumper::dump($result, 10, true);
           echo "<br><br>"; */

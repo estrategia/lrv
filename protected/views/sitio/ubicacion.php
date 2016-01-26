@@ -16,17 +16,14 @@
     <?php echo CHtml::htmlButton('Seleccionar ciudad', array('class' => 'ui-btn ui-btn-n ui-corner-all ui-alt-icon', 'data-role' => 'ubicacion-mapa')); ?>
 
     <form id="form-ubicacion"  method="post" action="<?php echo $this->createUrl("/sitio/ubicacionSeleccion") ?>">
-        <input id="ubicacion-seleccion-entrega" type="hidden" name="entrega" value="<?php echo $tipoEntrega ?>">
         <input id="ubicacion-seleccion-direccion" type="hidden" name="direccion" value="<?php echo ($objDireccion == null ? "" : $objDireccion->idDireccionDespacho) ?>">
         <input id="ubicacion-seleccion-ciudad" type="hidden" name="ciudad" value="<?php echo ($objSectorCiudad == null ? "" : $objSectorCiudad->codigoCiudad) ?>">
         <input id="ubicacion-seleccion-sector" type="hidden" name="sector" value="<?php echo ($objSectorCiudad == null ? "" : $objSectorCiudad->codigoSector) ?>">
-
-        <?php //echo CHtml::link('Aceptar', '#', array('class' => 'ui-btn ui-btn-a ui-corner-all ui-alt-icon', 'data-role' => 'ubicacion-seleccion', 'data-mini' => 'true', 'data-ajax' => 'false')); ?>
     </form>
 
     <?php if ($objSectorCiudad != null): ?>
         <div class="space-2"></div>
-        <?php echo CHtml::link('Continuar con ' . $ubicacionEntregaTxt, $this->createUrl('/sitio/inicio'), array('class' => 'ui-btn ui-corner-all ui-shadow ui-btn-n btn_add_lst_pr', 'style' => 'white-space:normal;', 'data-ajax' => 'false')); ?>
-        <?php echo CHtml::link('Aceptar', $this->createUrl('/sitio/inicio'), array('class' => 'ui-btn ui-corner-all ui-shadow ui-btn-r', 'data-ajax' => 'false')); ?>
+        <?php //echo CHtml::link('Continuar con ' . $ubicacionEntregaTxt, $this->createUrl('/sitio/inicio'), array('class' => 'ui-btn ui-corner-all ui-shadow ui-btn-n btn_add_lst_pr', 'style' => 'white-space:normal;', 'data-ajax' => 'false')); ?>
+        <?php echo CHtml::link('Cancelar', $this->createUrl('/sitio/inicio'), array('class' => 'ui-btn ui-corner-all ui-shadow ui-btn-r', 'data-ajax' => 'false')); ?>
     <?php endif; ?>
 </div>

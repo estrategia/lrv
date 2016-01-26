@@ -85,14 +85,6 @@ $(".main_menu .cuidado-personal > a").click(function() {
     $(this).next('.right-nav').show();
     return false;
 });
-/*
- $(".categorias .cuidado-personal").hover(function() {
- $('.submenu').isotope({
- layoutMode: 'masonryHorizontal',
- itemSelector: '.section-submenu'
- });
- 
- });*/
 
 
 /*
@@ -988,16 +980,6 @@ $(document).on('click', "button[id='btn-carropagar-siguiente'], button[id='btn-c
     var actual = $(this).attr('data-origin');
     var siguiente = $(this).attr('data-redirect');
 
-    /*if (actual === 'despacho') {
-     pasoDespacho(actual, siguiente, $(this));
-     } else if (actual === 'entrega') {
-     pasoEntrega(actual, siguiente, $(this));
-     } else if (actual === 'pago') {
-     pasoPago(actual, siguiente, $(this));
-     } else if (actual === 'confirmacion') {
-     pasoConfirmacion(actual, siguiente, $(this));
-     }*/
-
     if (actual === 'informacion') {
         pasoInformacion(actual, siguiente, $(this));
     } else if (actual === 'confirmacion') {
@@ -1010,14 +992,16 @@ $(document).on('click', "button[id='btn-carropagar-siguiente'], button[id='btn-c
 function pasoInformacion(actual, siguiente, boton) {
     var data = {
         siguiente: siguiente,
-        direccion: $('input[name="FormaPagoForm[idDireccionDespacho]"]:checked').val()
+        "FormaPagoForm[idDireccionDespacho]": $('input[name="FormaPagoForm[idDireccionDespacho]"]:checked').val(),
+        "FormaPagoForm[indicePuntoVenta]": $('input[name="FormaPagoForm[indicePuntoVenta]"]').val(),
+        "FormaPagoForm[tipoEntrega]": $('input[name="FormaPagoForm[tipoEntrega]"]').val()
     };
 
     $.ajax({
         type: 'POST',
         async: true,
         url: requestUrl + '/carro/pagar/paso/' + actual + '/post/true',
-        data: $.param(data) + '&' + $('#form-direccion-pagoinvitado').serialize() + '&' + $('#form-pago-entrega').serialize() + '&' + $('#form-pago-pago').serialize() + '&' + $('#form-pago-bono').serialize() + '&' + $('#form-pago-comentario').serialize(),
+        data: $.param(data) + '&' + $('#form-pago-comentario').serialize() + '&' + $('#form-direccion-pagoinvitado').serialize() + '&' + $('#form-pago-entrega').serialize() + '&' + $('#form-pago-pago').serialize() + '&' + $('#form-pago-bono').serialize() ,
         beforeSend: function() {
             boton.prop('disabled', true);
             $('div[id^="FormaPagoForm_"].text-danger').html('');
@@ -1031,6 +1015,7 @@ function pasoInformacion(actual, siguiente, boton) {
             var obj = $.parseJSON(data);
 
             if (obj.result === 'ok') {
+                boton.prop('disabled', false);
                 window.location.replace(obj.redirect);
             } else if (obj.result === 'error') {
                 Loading.hide();
@@ -1566,22 +1551,6 @@ $(document).ready(function() {
             "<i class='glyphicon glyphicon-chevron-right'></i>"
         ]
     });
-    /*$("#owl-combos").owlCarousel({
-     items: 4,
-     lazyLoad: true,
-     navigation: true
-     });*/
-    /*$("#slide-combos").owlCarousel({
-     items: 4,
-     lazyLoad: true,
-     navigation: true
-     });*/
-
-    /*$("#carrousel-img-productos").owlCarousel({
-     items: 4,
-     lazyLoad: true,
-     navigation: true
-     });*/
     $('.ad-gallery').adGallery({
         loader_image: '../images/libs/ad-gallery/loader.gif',
         update_window_hash: false,
@@ -1687,7 +1656,7 @@ function obtenerPosicion(pos) {
         dataType: 'json',
         async: true,
         url: requestUrl + '/sitio/gps',
-        data: {entrega: $('input[id="ubicacion-seleccion-entrega"]').val().trim(), lat: lat, lon: lon},
+        data: {lat: lat, lon: lon},
         beforeSend: function() {
             Loading.show();
         },
@@ -1731,33 +1700,65 @@ function obtenerPosicion(pos) {
     });
 }
 
+$(document).on('click', 'button[data-role="pasoporel-seleccion-pdv"]', function() {
+    seleccionTipoEntrega(tipoEntrega.presencial, tipoEntrega.domicilio);
+    $('#pasoporel-seleccion-pdv-nombre').html($(this).attr('data-nombre'));
+    $('#pasoporel-seleccion-pdv-direccion').html($(this).attr('data-direccion'));
+    $("#modal-pasoporel-seleccionar").modal("hide");
+    $('input[name="FormaPagoForm[indicePuntoVenta]"]').val($(this).attr('data-idx'));
+ });
+
 $(document).on('click', 'div[data-role="tipoentrega"]', function() {
-    $('div[data-role="tipoentrega"]').removeClass('activo');
-    $(this).addClass('activo');
-    $('div[data-role="tipoentrega"]').addClass('inactivo');
-    $(this).removeClass('inactivo');
+    var tipo = $(this).attr('data-tipo');
+    var _tipo = tipo == tipoEntrega.presencial ? tipoEntrega.domicilio : tipoEntrega.presencial;
 
-    $('#div-ubicacion-tipoubicacion').removeClass('display-none');
-    if ($('#ubicacion-seleccion-entrega').val().length <= 0) {
-        $('#div-ubicacion-tipoubicacion').css('opacity', 0);
-        $('#div-ubicacion-tipoubicacion').animate({opacity: 1}, 1000);
+    if (tipo == tipoEntrega.presencial) {
+        $.ajax({
+            type: 'POST',
+            dataType: 'json',
+            async: true,
+            url: requestUrl + '/carro/pasoporel',
+            data: {opcion: 'modal'},
+            beforeSend: function() {
+                $("#modal-pasoporel-seleccionar").remove();
+                Loading.show();
+            },
+            success: function(data) {
+                if (data.result == "ok") {
+                    $('body').append(data.response);
+                    $("#modal-pasoporel-seleccionar").modal("show");
+                } else {
+                    alert(data.response);
+                }
+                Loading.hide();
+            },
+            error: function(jqXHR, textStatus, errorThrown) {
+                Loading.hide();
+                alert('Error: ' + errorThrown);
+            }
+        });
+    } else {
+        seleccionTipoEntrega(tipo, _tipo);
     }
 
-    $('#ubicacion-seleccion-entrega').val($(this).attr('data-tipo'));
-
-    var divcambiar = $('div[data-role="ubicacion-cambiar"]');
-    if (divcambiar.length > 0 && divcambiar.attr('data-cambiar')=='1') {
-        var diventrega = $('div[data-role="tipoentrega"]div[data-tipo="' + $(this).attr('data-tipo') + '"]');
-        if (diventrega.length > 0) {
-            $('#ubicacion-seleccion-cambiar').html(' Cambiar a ' + diventrega.attr('data-descripcion') + divcambiar.attr('data-ubicacion'));
-            divcambiar.removeClass('display-none');
-        }
-        
-        if(divcambiar.attr('data-tipo')==$(this).attr('data-tipo')){
-            divcambiar.addClass('display-none');
-        }
-    }
 });
+
+function seleccionTipoEntrega(tipo, _tipo) {
+    $('div[data-role="tipoentrega"]').removeClass('activo');
+    $('div[data-role="tipoentrega"]div[data-tipo="'+tipo+'"]').addClass('activo');
+    $('div[data-role="tipoentrega"]').addClass('inactivo');
+    $('div[data-role="tipoentrega"]div[data-tipo="'+tipo+'"]').removeClass('inactivo');
+
+    $('#pasoporel-seleccion-pdv-nombre').html("");
+    $('#pasoporel-seleccion-pdv-direccion').html("");
+    $('#FormaPagoForm_tipoEntrega').val(tipo);
+    $('div[data-role="tipoentrega-habilitar"]div[data-habilitar="' + tipo + '"]').removeClass('display-none');
+    $('div[data-role="tipoentrega-habilitar"]div[data-habilitar="' + tipo + '"] input').removeAttr('disabled');
+    $('div[data-role="tipoentrega-habilitar"]div[data-habilitar="' + _tipo + '"]').addClass('display-none');
+    $('div[data-role="tipoentrega-habilitar"]div[data-habilitar="' + _tipo + '"] input').val('');
+    $('div[data-role="tipoentrega-habilitar"]div[data-habilitar="' + _tipo + '"] input[type="radio"]').prop('checked', false);
+    $('div[data-role="tipoentrega-habilitar"]div[data-habilitar="' + _tipo + '"] input').attr('disabled', 'disabled');
+}
 
 $(document).on('click', 'button[data-role="ubicacion-direccion"]', function() {
     $.ajax({
@@ -1791,6 +1792,14 @@ $(document).on('click', 'button[data-role="ubicacion-seleccion-direccion"]', fun
 
     $('#div-ubicacion-tipoubicacion > button').removeClass('activo').addClass('inactivo');
     $('#div-ubicacion-tipoubicacion > button[data-role="ubicacion-direccion"]').removeClass('inactivo').addClass('activo');
+
+    ubicacionSeleccion();
+});
+
+$(document).on('click', 'a[data-role="ubicacion-seleccion-nodomicilio"]', function() {
+    $('#ubicacion-seleccion-ciudad').val($(this).attr('data-ciudad'));
+    $('#ubicacion-seleccion-sector').val($(this).attr('data-sector'));
+    $('#ubicacion-seleccion-direccion').val('');
 
     ubicacionSeleccion();
 });
@@ -1839,21 +1848,18 @@ $(document).on('click', 'button[data-role="ubicacion-seleccion-mapa"]', function
     Loading.show();
     var lat = 0;
     var lon = 0;
-    var entrega = "";
     if (map) {
         lat = map.getCenter().lat();
         lon = map.getCenter().lng();
-    }
-    if($('#ubicacion-seleccion-entrega').length>0){
-        entrega = $('#ubicacion-seleccion-entrega').val();
     }
     $.ajax({
         type: 'POST',
         dataType: 'json',
         async: true,
         url: requestUrl + '/sitio/gps',
-        data: {lat: lat, lon: lon, entrega: entrega},
+        data: {lat: lat, lon: lon},
         beforeSend: function() {
+            $("#modal-no-serviciodomicilio").remove();
             Loading.show();
         },
         success: function(data) {
@@ -1867,7 +1873,12 @@ $(document).on('click', 'button[data-role="ubicacion-seleccion-mapa"]', function
                 $('#div-ubicacion-tipoubicacion > button[data-role="ubicacion-mapa"]').removeClass('inactivo').addClass('activo');
                 ubicacionSeleccion();
             } else {
-                alert(data.response);
+                if(data.responseModal){
+                    $('body').append(data.responseModal);
+                    $("#modal-no-serviciodomicilio").modal("show");
+                }else{
+                    alert(data.response);
+                }
             }
             Loading.hide();
         },
@@ -1950,9 +1961,11 @@ function ubicacionSeleccion() {
             if (data.result == 'ok') {
                 dialogoAnimado(data.response);
                 if (data.urlAnterior) {
-                    location.href = data.urlAnterior;
+                    //location.href = data.urlAnterior;
+                    window.location.replace(data.urlAnterior);
                 } else {
-                    location.href = requestUrl;
+                    //location.href = requestUrl;
+                    window.location.replace(requestUrl);
                 }
             } else {
                 alert(data.response);

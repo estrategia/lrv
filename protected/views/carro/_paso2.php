@@ -28,13 +28,13 @@ $form = $this->beginWidget('CActiveForm', array(
         <?php if (Yii::app()->session[Yii::app()->params->sesion['tipoEntrega']] == Yii::app()->params->entrega['tipo']['presencial']): ?>
 
             <?php echo $form->labelEx($modelPago, 'telefonoContacto', array()); ?>
-            <?php echo $form->textField($modelPago, 'telefonoContacto', array('maxlength' => 50, 'placeholder' => $modelPago->getAttributeLabel('telefonoContacto'))); ?>
+            <?php echo $form->numberField($modelPago, 'telefonoContacto', array('maxlength' => 50, 'placeholder' => $modelPago->getAttributeLabel('telefonoContacto'))); ?>
             <?php echo $form->error($modelPago, 'telefonoContacto'); ?>
 
             <?php if ($modelPago->pagoInvitado): ?>
-                <?php echo $form->labelEx($modelPago, 'correoElectronico', array('class' => '')); ?>
-                <?php echo $form->emailField($modelPago, 'correoElectronico', array('maxlength' => 50, 'placeholder' => $modelPago->getAttributeLabel('correoElectronico'))); ?>
-                <?php echo $form->error($modelPago, 'correoElectronico'); ?>
+                <?php echo $form->labelEx($modelPago, 'correoElectronicoContacto', array('class' => '')); ?>
+                <?php echo $form->emailField($modelPago, 'correoElectronicoContacto', array('maxlength' => 50, 'placeholder' => $modelPago->getAttributeLabel('correoElectronicoContacto'))); ?>
+                <?php echo $form->error($modelPago, 'correoElectronicoContacto'); ?>
             <?php endif; ?>
 
         <?php endif; ?>

@@ -284,6 +284,11 @@ class EShoppingCart extends CMap {
             $objUsuario = Yii::app()->session[Yii::app()->params->usuario['sesion']];
             $codigoPerfil = $objUsuario->getCodigoPerfil();
         }
+        
+        //CVarDumper::dump($this->codigoPerfil, 10, true);echo "<br>";
+        //CVarDumper::dump($this->shipping, 10, true);echo "<br>";
+        //CVarDumper::dump($codigoPerfil, 10, true);echo "<br><br><br>";
+        
 
         if (is_array($data) || $data instanceof Traversable)
             foreach ($data as $key => $product)
@@ -291,9 +296,27 @@ class EShoppingCart extends CMap {
         
         $this->setCodigoPerfil($codigoPerfil);
         
-        if(isset(Yii::app()->session[Yii::app()->params->sesion['tipoEntrega']]) && Yii::app()->session[Yii::app()->params->sesion['tipoEntrega']] ==Yii::app()->params->entrega['tipo']['presencial']){
+        if($this->shipping<=0){
+             $this->CalculateShipping();
+        }
+        
+        //CVarDumper::dump($this->codigoPerfil, 10, true);echo "<br>";
+        //CVarDumper::dump($this->shipping, 10, true);echo "<br>";
+        
+        /*if(isset(Yii::app()->session[Yii::app()->params->sesion['tipoEntrega']]) && Yii::app()->session[Yii::app()->params->sesion['tipoEntrega']] ==Yii::app()->params->entrega['tipo']['presencial']){
+            $this->shipping = 0;
+        }*/
+        
+        $modelPago = null;
+
+        if (isset(Yii::app()->session[Yii::app()->params->sesion['carroPagarForm']]) && Yii::app()->session[Yii::app()->params->sesion['carroPagarForm']] != null)
+            $modelPago = Yii::app()->session[Yii::app()->params->sesion['carroPagarForm']];
+        
+        if($modelPago!=null && $modelPago->tipoEntrega==Yii::app()->params->entrega['tipo']['presencial']){
             $this->shipping = 0;
         }
+        
+        //CVarDumper::dump($this->shipping, 10, true);echo "<br>";
     }
 
     /**
