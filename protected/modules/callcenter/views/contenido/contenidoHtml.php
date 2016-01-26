@@ -33,6 +33,11 @@
                 <?php //echo CHtml::error($model, 'contenido'); ?>
                 <?php echo CHtml::activeHiddenField($model, 'idModulo'); ?>
             </div>
+            <div class="form-group">
+                <?php echo CHtml::activeLabelEx($model, 'contenidoMovil'); ?>
+                <?php echo CHtml::activeTextArea($model, 'contenidoMovil',  array('class' => 'tipo form-control', )); ?>
+                <?php //echo CHtml::error($model, 'contenido'); ?>
+            </div>
         </div>
     </div>
     
