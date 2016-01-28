@@ -1371,5 +1371,31 @@ class ContenidoController extends ControllerOperator {
             ));
         }
     }
+    
+     public function actionEliminarmodulo() {
+        if (!Yii::app()->request->isPostRequest) {
+            throw new CHttpException(404, 'Solicitud inválida.');
+        }
+
+        $idModulo = Yii::app()->getRequest()->getPost('idModulo');
+
+        if ($idModulo === null) {
+            throw new CHttpException(404, 'Solicitud inválida.');
+        }
+
+        $imagenes = ImagenBanner::model()->deleteAll("idModulo=:idmodulo", array('idmodulo'=> $idModulo));
+        $perfil = ModuloPerfil::model()->deleteAll("idModulo=:idmodulo", array('idmodulo'=> $idModulo));
+        $modulosector = ModuloSectorCiudad::model()->deleteAll("idModulo=:idmodulo", array('idmodulo'=> $idModulo));
+        $ubicacion = UbicacionModulos::model()->deleteAll("idModulo=:idmodulo", array('idmodulo'=> $idModulo));
+        $gruposModulo  = GruposModulos::model()->deleteAll("idModulo=:idmodulo OR idGrupoModulo=:idmodulo", array('idmodulo'=> $idModulo));
+        $productos = ProductosModulos::model()->deleteAll("idModulo=:idmodulo", array('idmodulo'=> $idModulo));
+        $menu = MenuModulo::model()->deleteAll("idModulo=:idmodulo", array('idmodulo'=> $idModulo));
+        $model = ModulosConfigurados::model()->deleteByPk($idModulo);
+      
+
+        echo CJSON::encode(array('result' => 'ok', 'response' => "La operaci&oacute;n se realizo con &eacute;xito"));
+        Yii::app()->end();
+    }
+    
 
 }

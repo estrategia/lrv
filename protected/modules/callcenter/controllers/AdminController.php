@@ -8,7 +8,7 @@ class AdminController extends ControllerOperator {
     public function filters() {
         return array(
             //'access',
-            'login + index, pedidos, detallepedido',
+            'login + index, pedidos, detallepedido, bonos',
                 //'loginajax + direccionActualizar',
         );
     }
