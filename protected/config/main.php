@@ -362,6 +362,10 @@ return array(
                 'estado' => array('activo' => 1, 'inactivo' => 0),
                 'estadoNombre' => array(0 => 'Inactivo', 1 => 'Activo'),
             ),
+            'reactivacionBono' => array(
+                'asuntoMensaje' => 'Activacion bono cliente fiel',
+                'destinatarios' => array ('juanjo.tecsis@gmail.com', 'juan.aragon@eiso.com.co' )
+            ),
             'observacion' => array(
                 'asuntoMensaje' => 'La rebaja virtual - información de su pedido',
                 'estado' => array(

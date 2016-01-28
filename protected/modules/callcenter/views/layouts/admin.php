@@ -61,6 +61,9 @@
                                     <a href="<?php echo $this->createUrl('/callcenter/admin/pedidos') ?>" class="ajax-link" target="_blank"><i class="glyphicon glyphicon-list-alt"></i><span> Pedidos</span></a>
                                 </li>
                                 <li class="">
+                                    <a href="<?php echo $this->createUrl('/callcenter/admin/bonos') ?>" class="ajax-link" ><i class="glyphicon glyphicon-credit-card"></i><span> Bonos</span></a>
+                                </li>
+                                <li class="">
                                     <a href="<?php echo $this->createUrl('/callcenter/admin/recordarclave') ?>" class="ajax-link"><i class="glyphicon glyphicon-lock"></i><span> Administrar claves</span></a>
                                 </li>
                                 <li>

@@ -978,6 +978,35 @@ $(document).on('change', "select[data-role='validar-tipo-combo']", function() {
     });
 });
 
+$(document).on('click', "a[data-role='activar-bono']", function() {
+    var identificacion = $(this).attr('data-identificacion');
+    var valor = $(this).attr('data-valor');
+    var comentario = $("#comentario").val();
+    $.ajax({
+        type: 'POST',
+        async: true,
+        url: requestUrl + '/callcenter/admin/actualizarBono',
+        data: {identificacion: identificacion, comentario: comentario, valor: valor},
+        dataType: 'json',
+        beforeSend: function() {
+            Loading.show();
+        },
+        complete: function(data) {
+            Loading.hide();
+        },
+        success: function(data) {
+            if (data.result == "ok") {
+                $("#result_bono").html(data.response);
+            } else if (data.result == "error") {
+                bootbox.alert(data.response);
+            }
+        },
+        error: function(jqXHR, textStatus, errorThrown) {
+
+        }
+    });
+});
+
 $(document).on('click', "a[data-role='add-beneficio']", function() {
     var val = $(this).attr('data-beneficio');
     var tipo = $(this).attr('data-tipo');
