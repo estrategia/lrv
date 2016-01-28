@@ -171,17 +171,93 @@ class ComprasItems extends CActiveRecord {
             ),
         );
     }
-    
-    public function getTotalUnidades(){
-        $unidades = $this->unidades+$this->unidadesCedi;
+
+    public function getTotalUnidades() {
+        $unidades = $this->unidades + $this->unidadesCedi;
         $fracciones = 0;
+
+        if ($this->fracciones > 0) {
+            $fracciones = round($this->objProducto->unidadFraccionamiento / $this->objProducto->numeroFracciones, 4);
+            $fracciones = $fracciones * $this->fracciones;
+        }
+
+        return $unidades + $fracciones;
+    }
+
+    public function modificarDescuento($descuento, $tipo, $idOperador) {
+        $precioDiff  = 0;
+        $descuentoAux = 0;
         
-        if($this->fracciones>0){
-            $fracciones = round($this->objProducto->unidadFraccionamiento/$this->objProducto->numeroFracciones,4);
-            $fracciones = $fracciones*$this->fracciones;
+        if ($tipo == 1) {
+            $precioDiff = ($this->descuentoUnidad - $descuento) * $this->unidades;
+            $descuentoAux = $this->descuentoUnidad;
+            $this->descuentoUnidad = $descuento;
+        }else if ($tipo == 2) {
+            $precioDiff = ($this->descuentoFraccion - $descuento) * $this->unidades;
+            $descuentoAux = $this->descuentoFraccion;
+            $this->descuentoFraccion = $descuento;
+        }else{
+            throw new Exception('Tipo de descuento inv&aacute;lido ');
+        }
+       
+        $this->precioTotalUnidad += $precioDiff;
+        $this->idEstadoItem = Yii::app()->params->callcenter['estadoItem']['estado']['modificado'];
+        $this->idOperador = $idOperador;
+
+        $objCompra = $this->objCompra;
+        $objCompra->subtotalCompra += $precioDiff;
+        $objCompra->impuestosCompra += round(Precio::calcularImpuesto($precioDiff, $this->objImpuesto->porcentaje));
+        $objCompra->baseImpuestosCompra += round(Precio::calcularBaseImpuesto($precioDiff, $this->objImpuesto->porcentaje));
+        $objCompra->totalCompra += $precioDiff;
+
+        $transaction = Yii::app()->db->beginTransaction();
+
+        if (!$this->save()) {
+            try {
+                $transaction->rollBack();
+            } catch (Exception $txexc) {
+                Yii::log($txexc->getMessage() . "\n" . $txexc->getTraceAsString(), CLogger::LEVEL_ERROR, 'application');
+            }
+            throw new Exception('Error de actualización item: ' . $this->validateErrorsResponse());
+        }
+
+        if ($objCompra->totalCompra < 0) {
+            try {
+                $transaction->rollBack();
+            } catch (Exception $txexc) {
+                Yii::log($txexc->getMessage() . "\n" . $txexc->getTraceAsString(), CLogger::LEVEL_ERROR, 'application');
+            }
+            throw new Exception('Total compra no puede ser negativo');
+        }
+
+        if (!$objCompra->save()) {
+            try {
+                $transaction->rollBack();
+            } catch (Exception $txexc) {
+                Yii::log($txexc->getMessage() . "\n" . $txexc->getTraceAsString(), CLogger::LEVEL_ERROR, 'application');
+            }
+            throw new Exception('Error de actualización compra: ' . $objCompra->validateErrorsResponse());
         }
         
-        return $unidades+$fracciones;
+        $objModificion = new ModificacionesDescuentoItems;
+        $objModificion->idOperador = $idOperador;
+        $objModificion->idCompra = $this->idCompra;
+        $objModificion->idCompraItem = $this->idCompraItem;
+        $objModificion->codigoProducto = $this->codigoProducto;
+        $objModificion->descuentoAnterior = $descuentoAux;
+        $objModificion->descuentoNuevo = $descuento;
+        $objModificion->tipoUnidad = $tipo;
+        
+        if (!$objModificion->save()) {
+            try {
+                $transaction->rollBack();
+            } catch (Exception $txexc) {
+                Yii::log($txexc->getMessage() . "\n" . $txexc->getTraceAsString(), CLogger::LEVEL_ERROR, 'application');
+            }
+            throw new Exception('Error al guardar traza: ' . $objModificion->validateErrorsResponse());
+        }
+        
+        $transaction->commit();
     }
 
     public function actualizarUnidades($cantidad) {
@@ -219,7 +295,7 @@ class ComprasItems extends CActiveRecord {
             if ($objSaldo === null) {
                 throw new Exception("La cantidad solicitada no está disponible en este momento. No hay unidades disponibles");
             }
-            
+
             if ($cantDiff > $objSaldo->saldoUnidad) {
                 throw new Exception("La cantidad solicitada no está disponible en este momento. Saldos disponibles: $objSaldo->saldoUnidad unidades");
             }
@@ -235,7 +311,7 @@ class ComprasItems extends CActiveRecord {
         $objCompra = $this->objCompra;
         $objCompra->subtotalCompra += $precioDiff;
         $objCompra->impuestosCompra += round(Precio::calcularImpuesto($precioDiff, $this->objImpuesto->porcentaje));
-        $objCompra->baseImpuestosCompra += round(Precio::calcularBaseImpuesto($precioDiff,$this->objImpuesto->porcentaje));
+        $objCompra->baseImpuestosCompra += round(Precio::calcularBaseImpuesto($precioDiff, $this->objImpuesto->porcentaje));
         $objCompra->totalCompra += $precioDiff;
 
         if ($this->unidades + $this->fracciones == 0) {
@@ -243,7 +319,7 @@ class ComprasItems extends CActiveRecord {
         }
 
         $transaction = Yii::app()->db->beginTransaction();
-        
+
         if (!$this->save()) {
             try {
                 $transaction->rollBack();
@@ -252,8 +328,8 @@ class ComprasItems extends CActiveRecord {
             }
             throw new Exception('Error de actualización item: ' . $this->validateErrorsResponse());
         }
-        
-        if($objCompra->totalCompra<0){
+
+        if ($objCompra->totalCompra < 0) {
             try {
                 $transaction->rollBack();
             } catch (Exception $txexc) {
@@ -261,7 +337,7 @@ class ComprasItems extends CActiveRecord {
             }
             throw new Exception('Total compra no puede ser negativo');
         }
-        
+
         if (!$objCompra->save()) {
             try {
                 $transaction->rollBack();
@@ -272,7 +348,7 @@ class ComprasItems extends CActiveRecord {
         }
         $transaction->commit();
     }
-    
+
     public function actualizarFracciones($cantidad) {
         $cantDiff = $cantidad - $this->fracciones;
         //igual
@@ -308,7 +384,7 @@ class ComprasItems extends CActiveRecord {
             if ($objSaldo === null) {
                 throw new Exception("La cantidad solicitada no está disponible en este momento. No hay unidades disponibles");
             }
-            
+
             if ($cantDiff > $objSaldo->saldoFraccion) {
                 throw new Exception("La cantidad solicitada no está disponible en este momento. Saldos disponibles: $objSaldo->saldoFraccion fracciones");
             }
@@ -324,7 +400,7 @@ class ComprasItems extends CActiveRecord {
         $objCompra = $this->objCompra;
         $objCompra->subtotalCompra += $precioDiff;
         $objCompra->impuestosCompra += round(Precio::calcularImpuesto($precioDiff, $this->objImpuesto->porcentaje));
-        $objCompra->baseImpuestosCompra += round(Precio::calcularBaseImpuesto($precioDiff,$this->objImpuesto->porcentaje));
+        $objCompra->baseImpuestosCompra += round(Precio::calcularBaseImpuesto($precioDiff, $this->objImpuesto->porcentaje));
         $objCompra->totalCompra += $precioDiff;
 
         if ($this->unidades + $this->fracciones == 0) {
@@ -332,7 +408,7 @@ class ComprasItems extends CActiveRecord {
         }
 
         $transaction = Yii::app()->db->beginTransaction();
-        
+
         if (!$this->save()) {
             try {
                 $transaction->rollBack();
@@ -341,8 +417,8 @@ class ComprasItems extends CActiveRecord {
             }
             throw new Exception('Error de actualización item: ' . $this->validateErrorsResponse());
         }
-        
-        if($objCompra->totalCompra<0){
+
+        if ($objCompra->totalCompra < 0) {
             try {
                 $transaction->rollBack();
             } catch (Exception $txexc) {
@@ -360,7 +436,7 @@ class ComprasItems extends CActiveRecord {
         }
         $transaction->commit();
     }
-    
+
     public function actualizarBodega($cantidad) {
         $cantDiff = $cantidad - $this->unidadesCedi;
         //igual
@@ -382,7 +458,7 @@ class ComprasItems extends CActiveRecord {
             if ($objSaldo === null) {
                 throw new Exception("La cantidad solicitada no está disponible en este momento. No hay unidades disponibles");
             }
-            
+
             if ($cantDiff > $objSaldo->saldoUnidad) {
                 throw new Exception("La cantidad solicitada no está disponible en este momento. Saldos disponibles: $objSaldo->saldoUnidad unidades");
             }
@@ -398,7 +474,7 @@ class ComprasItems extends CActiveRecord {
         $objCompra = $this->objCompra;
         $objCompra->subtotalCompra += $precioDiff;
         $objCompra->impuestosCompra += round(Precio::calcularImpuesto($precioDiff, $this->objImpuesto->porcentaje));
-        $objCompra->baseImpuestosCompra += round(Precio::calcularBaseImpuesto($precioDiff,$this->objImpuesto->porcentaje));
+        $objCompra->baseImpuestosCompra += round(Precio::calcularBaseImpuesto($precioDiff, $this->objImpuesto->porcentaje));
         $objCompra->totalCompra += $precioDiff;
 
         if ($this->unidades + $this->fracciones == 0) {
@@ -406,7 +482,7 @@ class ComprasItems extends CActiveRecord {
         }
 
         $transaction = Yii::app()->db->beginTransaction();
-        
+
         if (!$this->save()) {
             try {
                 $transaction->rollBack();
@@ -415,7 +491,7 @@ class ComprasItems extends CActiveRecord {
             }
             throw new Exception('Error de actualización item: ' . $this->validateErrorsResponse());
         }
-        if($objCompra->totalCompra<0){
+        if ($objCompra->totalCompra < 0) {
             try {
                 $transaction->rollBack();
             } catch (Exception $txexc) {

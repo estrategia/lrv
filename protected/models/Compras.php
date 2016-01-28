@@ -82,7 +82,7 @@ class Compras extends CActiveRecord {
             array('observacion', 'length', 'max' => 250),
             array('codigoCiudad, codigoSector', 'length', 'max' => 10),
             array('fechaCompra, fechaEntrega, saldosPdv', 'safe'),
-            array('identificacionUsuario', 'default', 'value'=>null),
+            array('identificacionUsuario', 'default', 'value' => null),
             // The following rule is used by search().
             // @todo Please remove those attributes that should not be searched.
             array('busquedaSearch, formaPagoSearch, idCompra, identificacionUsuario, documentoCruce, fechaCompra, fechaEntrega, tipoEntrega, donacionFundacion, idComercial, subtotalCompra, impuestosCompra, baseImpuestosCompra, totalCompra, idEstadoCompra, idOperador, observacion, idTipoVenta, activa, domicilio, flete, invitado, codigoPerfil, saldosPdv, seguimiento, codigoCiudad, codigoSector, tiempoDomicilioCedi, valorDomicilioCedi, codigoCedi', 'safe', 'on' => 'search'),
@@ -100,7 +100,7 @@ class Compras extends CActiveRecord {
             'objCiudad' => array(self::BELONGS_TO, 'Ciudad', 'codigoCiudad'),
             'objSector' => array(self::BELONGS_TO, 'Sector', 'codigoSector'),
             'listItems' => array(self::HAS_MANY, 'ComprasItems', 'idCompra'),
-            'objPuntoVenta' => array(self::BELONGS_TO, 'PuntoVenta', '','on' => 't.idComercial=objPuntoVenta.idComercial'),
+            'objPuntoVenta' => array(self::BELONGS_TO, 'PuntoVenta', '', 'on' => 't.idComercial=objPuntoVenta.idComercial'),
             'objCompraDireccion' => array(self::HAS_ONE, 'ComprasDireccionesDespacho', 'idCompra'),
             'objFormaPagoCompra' => array(self::HAS_ONE, 'FormasPago', 'idCompra'),
             'objUsuario' => array(self::BELONGS_TO, 'Usuario', 'identificacionUsuario'),
@@ -165,12 +165,12 @@ class Compras extends CActiveRecord {
      */
     public function search($params = null) {
         $criteria = new CDbCriteria;
-        $criteria->with=array("objOperador","objCiudad","objTipoVenta","objUsuario","objCompraDireccion","objFormaPagoCompra"=>array("with"=>"objFormaPago"),"objEstadoCompra");
+        $criteria->with = array("objOperador", "objCiudad", "objTipoVenta", "objUsuario", "objCompraDireccion", "objFormaPagoCompra" => array("with" => "objFormaPago"), "objEstadoCompra");
         if ($params != null && isset($params['operadorPedido'])) {
             $condition = "1=1";
             $paramsCondition = array();
-            
-            if(isset($params['formaPago'])){
+
+            if (isset($params['formaPago'])) {
                 $condition .= " AND objFormaPagoCompra.idFormaPago=:formaPago";
                 $paramsCondition[':formaPago'] = $params['formaPago'];
             }
@@ -196,14 +196,14 @@ class Compras extends CActiveRecord {
 
                 $fecha2 = new DateTime;
                 $fecha2->modify('+120 minutes');
-                
+
                 $condition .= " AND (t.idEstadoCompra=:estadoCompra OR (t.seguimiento=1 AND t.fechaEntrega BETWEEN '" . $fecha1->format('Y-m-d H:i:s') . "' AND '" . $fecha2->format('Y-m-d H:i:s') . "'))";
             } else {
-                if($this->idEstadoCompra != null && !empty($this->idEstadoCompra)){
+                if ($this->idEstadoCompra != null && !empty($this->idEstadoCompra)) {
                     $condition .= " AND t.idEstadoCompra=:estadoCompra";
                 }
             }
-            if($this->idEstadoCompra != null && !empty($this->idEstadoCompra)){
+            if ($this->idEstadoCompra != null && !empty($this->idEstadoCompra)) {
                 $paramsCondition[':estadoCompra'] = $this->idEstadoCompra;
             }
 
@@ -261,7 +261,7 @@ class Compras extends CActiveRecord {
 
     public function searchAnteriores() {
         $criteria = new CDbCriteria;
-        $criteria->with=array("objCompraDireccion","objCiudad","objSector","objPuntoVenta");
+        $criteria->with = array("objCompraDireccion", "objCiudad", "objSector", "objPuntoVenta");
         $criteria->condition = "t.tipoEntrega=:tipoEntrega AND t.identificacionUsuario=:usuario AND t.identificacionUsuario IS NOT NULL AND t.idComercial IS NOT NULL";
         $criteria->params = array(
             ':usuario' => $this->identificacionUsuario,
@@ -279,8 +279,8 @@ class Compras extends CActiveRecord {
     public function searchBusqueda($form) {
         $criteria = new CDbCriteria;
         $criteria->with = "objUsuario";
-    //    $condition = "t.tipoEntrega=:tipoEntrega";
-    //    $params = array(':tipoEntrega' => Yii::app()->params->entrega["tipo"]['domicilio']);
+        //    $condition = "t.tipoEntrega=:tipoEntrega";
+        //    $params = array(':tipoEntrega' => Yii::app()->params->entrega["tipo"]['domicilio']);
         $condition = "true ";
         $params = array();
         if ($form['tipo'] == 'criterio') {
@@ -341,17 +341,19 @@ class Compras extends CActiveRecord {
             $this->fechaCompra = date('Y-m-d H:i:s');
             $this->seguimiento = 0;
         }
-        
-        if (!$this->isNewRecord){
-            if($this->objFormaPagoCompra != null){
-                $this->objFormaPagoCompra->valor = $this->totalCompra;
-                
-                if(!$this->objFormaPagoCompra->save()){
-                    throw new Exception('Error de actualización forma pago: ' . $this->objFormaPagoCompra->validateErrorsResponse());
+
+        if (!$this->isNewRecord) {
+            if ($this->objFormaPagoCompra != null) {
+                if ($this->objFormaPagoCompra->idFormaPago != Yii::app()->params->formaPago['pasarela']['idPasarela']) {
+                    $this->objFormaPagoCompra->valor = $this->totalCompra;
+
+                    if (!$this->objFormaPagoCompra->save()) {
+                        throw new Exception('Error de actualización forma pago: ' . $this->objFormaPagoCompra->validateErrorsResponse());
+                    }
                 }
             }
         }
-        
+
         return parent::beforeSave();
     }
 
@@ -419,7 +421,7 @@ class Compras extends CActiveRecord {
             }
 
             $objSaldo = $objCombo->getSaldo($this->codigoCiudad, $this->codigoSector);
-            
+
             if ($objSaldo === null) {
                 throw new Exception("La cantidad solicitada no está disponible en este momento. No hay unidades disponibles");
             }
@@ -467,70 +469,70 @@ class Compras extends CActiveRecord {
     public static function cantidadComprasPorEstado($fecha, $idOperador = null) {
         $query1 = "";
         if ($idOperador == null) {
-         /*   $query1 = "SELECT eo.idEstadoCompra, COUNT(t.idCompra) cantidad
-            FROM t_Compras t  
-            RIGHT OUTER JOIN m_EstadoCompra eo ON (eo.idEstadoCompra=t.idEstadoCompra) AND (t.fechaCompra>='$fecha' AND t.tipoEntrega='" . Yii::app()->params->entrega["tipo"]['domicilio'] . "') OR (t.idOperador IS NULL AND t.fechaCompra IS NULL)
-            GROUP BY eo.idEstadoCompra
-            ORDER BY eo.idEstadoCompra";*/
-            
+            /*   $query1 = "SELECT eo.idEstadoCompra, COUNT(t.idCompra) cantidad
+              FROM t_Compras t
+              RIGHT OUTER JOIN m_EstadoCompra eo ON (eo.idEstadoCompra=t.idEstadoCompra) AND (t.fechaCompra>='$fecha' AND t.tipoEntrega='" . Yii::app()->params->entrega["tipo"]['domicilio'] . "') OR (t.idOperador IS NULL AND t.fechaCompra IS NULL)
+              GROUP BY eo.idEstadoCompra
+              ORDER BY eo.idEstadoCompra"; */
+
             $query1 = "SELECT eo.idEstadoCompra, COUNT(t.idCompra) cantidad
             FROM t_Compras t  
             INNER JOIN m_EstadoCompra eo ON (eo.idEstadoCompra=t.idEstadoCompra) 
 					WHERE (t.fechaCompra>='$fecha' )
             GROUP BY eo.idEstadoCompra
             ORDER BY eo.idEstadoCompra";
-            
+
             $fecha1 = new DateTime;
             $fecha1->modify('+90 minutes');
 
             $fecha2 = new DateTime;
             $fecha2->modify('+120 minutes');
-                
+
             $condition = " (t.seguimiento=1 AND t.fechaEntrega BETWEEN '" . $fecha1->format('Y-m-d H:i:s') . "' AND '" . $fecha2->format('Y-m-d H:i:s') . "')";
-             
+
             $query2 = "SELECT COUNT(t.idCompra) as cantidad
             FROM t_Compras as t  
             WHERE (t.fechaCompra>='$fecha' AND $condition)";
         } else {
-         /*   $query1 = "SELECT eo.idEstadoCompra, COUNT(t.idCompra) cantidad
-            FROM t_Compras t  
-            RIGHT OUTER JOIN m_EstadoCompra eo ON (eo.idEstadoCompra=t.idEstadoCompra) AND (t.idOperador=$idOperador AND t.fechaCompra>='$fecha' AND t.tipoEntrega='" . Yii::app()->params->entrega["tipo"]['domicilio'] . "') OR (t.idOperador IS NULL AND t.fechaCompra IS NULL)
-            GROUP BY t.idOperador, eo.idEstadoCompra
-            ORDER BY eo.idEstadoCompra";*/
-            
+            /*   $query1 = "SELECT eo.idEstadoCompra, COUNT(t.idCompra) cantidad
+              FROM t_Compras t
+              RIGHT OUTER JOIN m_EstadoCompra eo ON (eo.idEstadoCompra=t.idEstadoCompra) AND (t.idOperador=$idOperador AND t.fechaCompra>='$fecha' AND t.tipoEntrega='" . Yii::app()->params->entrega["tipo"]['domicilio'] . "') OR (t.idOperador IS NULL AND t.fechaCompra IS NULL)
+              GROUP BY t.idOperador, eo.idEstadoCompra
+              ORDER BY eo.idEstadoCompra"; */
+
             $query1 = "SELECT eo.idEstadoCompra, COUNT(t.idCompra) cantidad
             FROM t_Compras t  
             INNER JOIN m_EstadoCompra eo ON (eo.idEstadoCompra=t.idEstadoCompra) 
 					WHERE (t.idOperador=$idOperador AND t.fechaCompra>='$fecha' )
             GROUP BY eo.idEstadoCompra
             ORDER BY eo.idEstadoCompra";
-            
+
             $fecha1 = new DateTime;
             $fecha1->modify('+90 minutes');
 
             $fecha2 = new DateTime;
             $fecha2->modify('+120 minutes');
-                
+
             $condition = " (t.seguimiento=1 AND t.fechaEntrega BETWEEN '" . $fecha1->format('Y-m-d H:i:s') . "' AND '" . $fecha2->format('Y-m-d H:i:s') . "')";
-             
+
             $query2 = "SELECT COUNT(t.idCompra) as  cantidad
             FROM t_Compras  as t WHERE (t.idOperador=$idOperador AND t.fechaCompra>='$fecha' AND $condition)";
         }
         $resultAux1 = Yii::app()->db->createCommand($query1)->queryAll(true);
         $resultAux2 = Yii::app()->db->createCommand($query2)->queryAll(true);
         $result = array();
-        $estados=EstadoCompra::model()->findAll();
-        
+        $estados = EstadoCompra::model()->findAll();
+
         foreach ($resultAux1 as $arr) {
             $result[$arr['idEstadoCompra']] = $arr['cantidad'];
-            if($arr['idEstadoCompra']==Yii::app()->params->callcenter['estadoCompra']['estado']['pendiente']){
+            if ($arr['idEstadoCompra'] == Yii::app()->params->callcenter['estadoCompra']['estado']['pendiente']) {
                 $result[$arr['idEstadoCompra']]+=$resultAux2[0]['cantidad'];
             }
         }
-        
-        foreach($estados as $est){
-            if(!isset($result[$est->idEstadoCompra])){
-                $result[$est->idEstadoCompra]=0;
+
+        foreach ($estados as $est) {
+            if (!isset($result[$est->idEstadoCompra])) {
+                $result[$est->idEstadoCompra] = 0;
             }
         }
 
@@ -561,16 +563,16 @@ class Compras extends CActiveRecord {
         }
         $resultAux3 = Yii::app()->db->createCommand($query3)->queryRow(true);
         $result['seguimiento'] = $resultAux3['cantidad'];
-        
+
         $query4 = "";
         if ($idOperador == null) {
             $query4 = "SELECT COUNT(c.idCompra) cantidad
             FROM t_Compras c JOIN t_FormasPago fp ON fp.idCompra=c.idCompra
-            WHERE fp.idFormaPago='".Yii::app()->params->formaPago['pasarela']['idPasarela']."' AND c.fechaCompra>='$fecha' ";
+            WHERE fp.idFormaPago='" . Yii::app()->params->formaPago['pasarela']['idPasarela'] . "' AND c.fechaCompra>='$fecha' ";
         } else {
             $query4 = "SELECT COUNT(c.idCompra) cantidad
             FROM t_Compras c JOIN t_FormasPago fp ON fp.idCompra=c.idCompra
-            WHERE fp.idFormaPago='".Yii::app()->params->formaPago['pasarela']['idPasarela']."' AND c.idOperador=$idOperador AND c.fechaCompra>='$fecha' ";
+            WHERE fp.idFormaPago='" . Yii::app()->params->formaPago['pasarela']['idPasarela'] . "' AND c.idOperador=$idOperador AND c.fechaCompra>='$fecha' ";
         }
         $resultAux4 = Yii::app()->db->createCommand($query4)->queryRow(true);
         $result['enlinea'] = $resultAux4['cantidad'];
@@ -659,17 +661,17 @@ class Compras extends CActiveRecord {
             $this->documentoCruce = $digVeri;
         }
     }
-    
-    public function getSaldosPDV(){
+
+    public function getSaldosPDV() {
         return unserialize(preg_replace('!s:(\d+):"(.*?)";!e', "'s:'.strlen('$2').':\"$2\";'", $this->saldosPdv));
     }
-    
-    public function getPuntosCompra(){
-        $puntos=  ComprasPuntos::model()->find("idCompra=:idcompra",array("idcompra"=>$this->idCompra));
-        
-        if(!$puntos){
+
+    public function getPuntosCompra() {
+        $puntos = ComprasPuntos::model()->find("idCompra=:idcompra", array("idcompra" => $this->idCompra));
+
+        if (!$puntos) {
             return 0;
-        }else{
+        } else {
             return $puntos->cantidadPuntos;
         }
     }

@@ -550,6 +550,57 @@ $(document).on('click', "button[data-role='trazapasarela']", function() {
     });
 });
 
+$(document).on('click', "button[data-role='modificar-ahorro']", function() {
+    $('#modal-modificar-ahorro-label > span').html($(this).attr('data-opcion')==1 ? 'unidades' : 'fracciones');
+    $('#modal-modificar-ahorro-label > div').html($(this).attr('data-descripcion'));
+    $('#ModificarAhorroForm_descuento').val($(this).attr('data-ahorro'));
+    $('#ModificarAhorroForm_idCompraItem').val($(this).attr('data-item'));
+    $('#ModificarAhorroForm_opcion').val($(this).attr('data-opcion'));
+    $('#modal-modificar-ahorro').modal('show');
+});
+
+$(document).on('click', "button[data-role='modificar-ahorro-guardar']", function() {
+    var form = $("#form-modificar-ahorro");
+    var boton = $(this);
+    
+    $.ajax({
+        type: 'POST',
+        dataType: 'json',
+        async: true,
+        url: requestUrl + '/callcenter/pedido/modificarahorro',
+        data: form.serialize(),
+        beforeSend: function() {
+            boton.prop('disabled', true);
+            $('div[id^="ModificarAhorroForm_"].has-error').html('');
+            $('div[id^="ModificarAhorroForm_"].has-error').css('display', 'none');
+            Loading.show();
+        },
+        success: function(data) {
+            if (data.result === "ok") {
+                $('#modal-modificar-ahorro').modal('hide');
+                $('#div-detalle-pedido').html(data.response.htmlDetalle);
+                $('#div-encabezado-pedido').html(data.response.htmlEncabezado);
+            } else if (data.result === 'error') {
+                bootbox.alert(data.response);
+            } else {
+                $.each(data, function(element, error) {
+                    $('#' + element + '_em_').html(error);
+                    $('#' + element + '_em_').css('display', 'block');
+                });
+            }
+            
+            boton.prop('disabled', false);
+            Loading.hide();
+            
+        },
+        error: function(jqXHR, textStatus, errorThrown) {
+            Loading.hide();
+            boton.prop('disabled', false);
+            bootbox.alert('Error: ' + jqXHR.responseText);
+        }
+    });
+});
+
 function uniqueId() {
     var time = new Date().getTime();
     while (time == new Date().getTime())
