@@ -1,13 +1,14 @@
 <?php
 
 class AdminController extends ControllerOperator {
+
     /**
      * @return array action filters
      * */
     public function filters() {
         return array(
             //'access',
-            'login + index, pedidos, detallepedido',
+            'login + index, pedidos, detallepedido, bonos',
                 //'loginajax + direccionActualizar',
         );
     }
@@ -38,19 +39,19 @@ class AdminController extends ControllerOperator {
         $this->render('index');
     }
 
-    public function actionRecordarclave(){
+    public function actionRecordarclave() {
         $model = new ClaveForm;
-        if(isset($_POST['ClaveForm'])){
+        if (isset($_POST['ClaveForm'])) {
             $model->attributes = $_POST['ClaveForm'];
             $model->validate();
         }
-        
-        $this->render('recordarClave', array('model'=>$model));
+
+        $this->render('recordarClave', array('model' => $model));
     }
-    
+
     public function actionPedidos($parametro = 1) {
         $this->layout = "simple";
-        
+
         if (is_numeric($parametro)) {
             $model = new Compras('search');
             $model->unsetAttributes();
@@ -65,28 +66,28 @@ class AdminController extends ControllerOperator {
             $fecha->modify("-$dias days");
             $model->fechaCompra = $fecha->format('Y-m-d H:i:s');
 
-            $sort="";
-            switch ($parametro==1){
-                case 1:  $sort="t.seguimiento DESC, t.fechaCompra DESC";
+            $sort = "";
+            switch ($parametro == 1) {
+                case 1: $sort = "t.seguimiento DESC, t.fechaCompra DESC";
                     break;
-                case 2: $sort="t.fechaEntrega DESC";
-                    break; 
-                case 3: $sort="t.fechaEntrega DESC";
+                case 2: $sort = "t.fechaEntrega DESC";
                     break;
-                case 4: $sort="t.fechaEntrega DESC";
+                case 3: $sort = "t.fechaEntrega DESC";
                     break;
-                case 5: $sort="t.fechaCompra DESC";
+                case 4: $sort = "t.fechaEntrega DESC";
                     break;
-                case 6: $sort="t.fechaCompra DESC";
+                case 5: $sort = "t.fechaCompra DESC";
                     break;
-                case 7: $sort="t.fechaCompra DESC";
+                case 6: $sort = "t.fechaCompra DESC";
                     break;
-                case 10: $sort="t.fechaCompra DESC";
+                case 7: $sort = "t.fechaCompra DESC";
                     break;
-                default: $sort="t.fechaCompra DESC";
+                case 10: $sort = "t.fechaCompra DESC";
+                    break;
+                default: $sort = "t.fechaCompra DESC";
                     break;
             }
-            
+
             $this->render('pedidos', array(
                 'model' => $model,
                 'dataProvider' => $model->search(array('order' => $sort, 'operadorPedido' => true)),
@@ -129,10 +130,10 @@ class AdminController extends ControllerOperator {
                 $dias = Yii::app()->params->callcenter['pedidos']['diasVisualizar'];
                 $fecha->modify("-$dias days");
                 $model->fechaCompra = $fecha->format('Y-m-d H:i:s');
-                
+
                 $this->render('pedidos', array(
                     'model' => $model,
-                    'dataProvider' => $model->search(array('order' => 't.fechaCompra DESC', 'formaPago'=> Yii::app()->params->formaPago['pasarela']['idPasarela'], 'operadorPedido' => true)),
+                    'dataProvider' => $model->search(array('order' => 't.fechaCompra DESC', 'formaPago' => Yii::app()->params->formaPago['pasarela']['idPasarela'], 'operadorPedido' => true)),
                     'arrCantidadPedidos' => Compras::cantidadComprasPorEstado($fecha->format('Y-m-d H:i:s'))
                 ));
             }else {
@@ -161,14 +162,14 @@ class AdminController extends ControllerOperator {
 
         if ($post && $model === null)
             $model = new Compras('search');
-        
+
         $fecha = new DateTime;
-         $dias = Yii::app()->params->callcenter['pedidos']['diasVisualizar'];
-         $fecha->modify("-$dias days");
-         $fecha = $fecha->format('Y-m-d H:i:s');
+        $dias = Yii::app()->params->callcenter['pedidos']['diasVisualizar'];
+        $fecha->modify("-$dias days");
+        $fecha = $fecha->format('Y-m-d H:i:s');
 
         $this->render('busqueda', array(
-            'model' => $model, 
+            'model' => $model,
             'form' => $form,
             'arrCantidadPedidos' => Compras::cantidadComprasPorEstado($fecha)
         ));
@@ -179,92 +180,90 @@ class AdminController extends ControllerOperator {
 
         if (isset($_POST['RemisionForm'])) {
             $model->attributes = $_POST['RemisionForm'];
-            
+
             $model->attributes['idCompra'];
             $model->attributes['idComercial'];
-            
-            $objCompra = Compras::model()->findByPk($model->attributes['idCompra'],array("with"=>"objPuntoVenta"));
-            $objPuntoVenta = PuntoVenta::model()->find("idComercial=:idcomercial",
-                                            array("idcomercial"=>$model->attributes['idComercial']
-                                        ));
+
+            $objCompra = Compras::model()->findByPk($model->attributes['idCompra'], array("with" => "objPuntoVenta"));
+            $objPuntoVenta = PuntoVenta::model()->find("idComercial=:idcomercial", array("idcomercial" => $model->attributes['idComercial']
+            ));
 
             if ($objCompra === null) {
-                 // echo CJSON::encode(array('result' => 0, 'response' => 'Este pedido no existe o no existe el punto de venta registrado.'));
-                  Yii::app()->end();
+                // echo CJSON::encode(array('result' => 0, 'response' => 'Este pedido no existe o no existe el punto de venta registrado.'));
+                Yii::app()->end();
             }
 
-            try{
+            try {
                 $client = new SoapClient(null, array(
                     'location' => Yii::app()->params->webServiceUrl['remisionPosECommerce'],
                     'uri' => "",
                     'trace' => 1
                 ));
 
-               $result = $client->__soapCall("BorrarCongelada",  array('idPedido' => $model->attributes['idCompra'],'destino'=> $model->attributes['idComercial']));
+                $result = $client->__soapCall("BorrarCongelada", array('idPedido' => $model->attributes['idCompra'], 'destino' => $model->attributes['idComercial']));
 
-                  if(!$result[0]==1){
+                if (!$result[0] == 1) {
 
-                    Yii::app()->user->setFlash('alert alert-success', "La remisión ha sido borrada con éxito del punto de venta ".$model->attributes['idComercial']);
+                    Yii::app()->user->setFlash('alert alert-success', "La remisión ha sido borrada con éxito del punto de venta " . $model->attributes['idComercial']);
                     /*
-                    $transaction = Yii::app()->db->beginTransaction();
-                    try {
+                      $transaction = Yii::app()->db->beginTransaction();
+                      try {
 
-                        /*$objCompra->idEstadoCompra = Yii::app()->params->callcenter['estadoCompra']['estado']['remisionBorrada'];
-                        $objCompra->generarDocumentoCruce(Yii::app()->controller->module->user->id);
+                      /*$objCompra->idEstadoCompra = Yii::app()->params->callcenter['estadoCompra']['estado']['remisionBorrada'];
+                      $objCompra->generarDocumentoCruce(Yii::app()->controller->module->user->id);
 
-                        // Guardar el cambio de estado de la remisión
-                        if (!$objCompra->save()) {
-                            throw new Exception('Error de asignación: ' . $objCompra->validateErrorsResponse());
-                        }
+                      // Guardar el cambio de estado de la remisión
+                      if (!$objCompra->save()) {
+                      throw new Exception('Error de asignación: ' . $objCompra->validateErrorsResponse());
+                      }
 
-                        $objEstadoCompra = new ComprasEstados;
-                        $objEstadoCompra->idCompra = $objCompra->idCompra;
-                        $objEstadoCompra->idEstadoCompra = Yii::app()->params->callcenter['estadoCompra']['estado']['remisionBorrada'];
-                        $objEstadoCompra->idOperador = Yii::app()->controller->module->user->id;
+                      $objEstadoCompra = new ComprasEstados;
+                      $objEstadoCompra->idCompra = $objCompra->idCompra;
+                      $objEstadoCompra->idEstadoCompra = Yii::app()->params->callcenter['estadoCompra']['estado']['remisionBorrada'];
+                      $objEstadoCompra->idOperador = Yii::app()->controller->module->user->id;
 
-                        // guardar en ComprasEstados
-                        if (!$objEstadoCompra->save()) {
-                            throw new Exception("Error al guardar traza de estado: " . $objEstadoCompra->validateErrorsResponse());
-                        }
+                      // guardar en ComprasEstados
+                      if (!$objEstadoCompra->save()) {
+                      throw new Exception("Error al guardar traza de estado: " . $objEstadoCompra->validateErrorsResponse());
+                      }
 
 
-                        $objObservacion = new ComprasObservaciones;
-                        $objObservacion->idCompra = $objCompra->idCompra;
-                        $objObservacion->observacion = "Cambio de Estado: Remisión borrada del POS del PDV. " . $objPuntoVenta->nombrePuntoDeVenta;
-                        $objObservacion->idOperador = Yii::app()->controller->module->user->id;
-                        $objObservacion->notificarCliente = 0;
+                      $objObservacion = new ComprasObservaciones;
+                      $objObservacion->idCompra = $objCompra->idCompra;
+                      $objObservacion->observacion = "Cambio de Estado: Remisión borrada del POS del PDV. " . $objPuntoVenta->nombrePuntoDeVenta;
+                      $objObservacion->idOperador = Yii::app()->controller->module->user->id;
+                      $objObservacion->notificarCliente = 0;
 
-                        // Guardar las observaciones
-                        if (!$objObservacion->save()) {
-                            throw new Exception("Error al guardar observación" . $objObservacion->validateErrorsResponse());
-                        }
+                      // Guardar las observaciones
+                      if (!$objObservacion->save()) {
+                      throw new Exception("Error al guardar observación" . $objObservacion->validateErrorsResponse());
+                      }
 
-                        $transaction->commit();
+                      $transaction->commit();
 
-                    } catch (Exception $exc) {
-                        Yii::log($exc->getMessage() . "\n" . $exc->getTraceAsString(), CLogger::LEVEL_ERROR, 'application');
+                      } catch (Exception $exc) {
+                      Yii::log($exc->getMessage() . "\n" . $exc->getTraceAsString(), CLogger::LEVEL_ERROR, 'application');
 
-                        try {
-                            $transaction->rollBack();
-                        } catch (Exception $txexc) {
-                            Yii::log($txexc->getMessage() . "\n" . $txexc->getTraceAsString(), CLogger::LEVEL_ERROR, 'application');
-                        }
+                      try {
+                      $transaction->rollBack();
+                      } catch (Exception $txexc) {
+                      Yii::log($txexc->getMessage() . "\n" . $txexc->getTraceAsString(), CLogger::LEVEL_ERROR, 'application');
+                      }
 
-                        echo CJSON::encode(array('result' => 'error', 'response' => $exc->getMessage()));
-                        Yii::app()->end();
-                    }
+                      echo CJSON::encode(array('result' => 'error', 'response' => $exc->getMessage()));
+                      Yii::app()->end();
+                      }
                      *  */
-               }else{
-                   Yii::app()->user->setFlash('alert alert-danger', "La remisión no ha sido borrada con éxito del punto de venta ".$model->attributes['idComercial']."<br/>"
-                           .$result[1]);
-               }
+                } else {
+                    Yii::app()->user->setFlash('alert alert-danger', "La remisión no ha sido borrada con éxito del punto de venta " . $model->attributes['idComercial'] . "<br/>"
+                            . $result[1]);
+                }
 
                 //if ($model->save())
                 //    $this->redirect(array('admin', 'usuario' => $model->usuario));
-          }
-          catch(Exception $e){
-                  Yii::app()->user->setFlash('alert alert-danger', "Error  al borrar la remisión por problemas de conexión con el punto de venta ".$model->attributes['idComercial']);
-          }
+            } catch (Exception $e) {
+                Yii::app()->user->setFlash('alert alert-danger', "Error  al borrar la remisión por problemas de conexión con el punto de venta " . $model->attributes['idComercial']);
+            }
         }
         Yii::import('ext.select2.Select2');
         $listPdv = PuntoVenta::model()->findAll(array('order' => 'idComercial'));
@@ -274,14 +273,111 @@ class AdminController extends ControllerOperator {
         ));
     }
 
+    public function actionBonos() {
+        $model = new BonosForm;
+        $resultBono = null;
+        if (isset($_POST['BonosForm'])) {
+            $model->attributes = $_POST['BonosForm'];
+
+            try {
+                $clientBono = new SoapClient(null, array(
+                    'location' => Yii::app()->params->webServiceUrl['crmLrv'],
+                    'uri' => "",
+                    'trace' => 1
+                ));
+                //  $resultBono = $clientBono->__soapCall("ActualizarBono", array('identificacion' => $model->numeroDocumento));
+                $resultBono = $clientBono->__soapCall('ConsultarBono', array('identificacion' => $model->numeroDocumento, 'tipo' => '1'));
+            } catch (SoapFault $soapExc) {
+                // throw new Exception("Error al actualizar bono");
+            }
+        }
+
+        $this->render('bonos', array(
+            'model' => $model,
+            'bono' => $resultBono
+        ));
+    }
+
+    public function actionActualizarBono() {
+
+        if (!Yii::app()->request->isPostRequest) {
+            echo CJSON::encode(array('result' => 'error', 'response' => 'Solicitud invalida.'));
+            Yii::app()->end();
+        }
+
+        $identificacion = Yii::app()->getRequest()->getPost('identificacion');
+        $comentario = Yii::app()->getRequest()->getPost('comentario');
+        $valor = Yii::app()->getRequest()->getPost('valor');
+
+        try {
+            $clientBono = new SoapClient(null, array(
+                'location' => Yii::app()->params->webServiceUrl['crmLrv'],
+                'uri' => "",
+                'trace' => 1
+            ));
+
+            $resultBono = $clientBono->__soapCall('ActualizarBono', array('identificacion' => $identificacion, 'tipo' => '1'));
+
+            if ($resultBono[0]->ESTADO == 1) {
+                $modelLog = new LogBonos;
+                $modelLog->agente = Yii::app()->controller->module->user->id;
+                $modelLog->valorBono = $valor;
+                $modelLog->comentario = $comentario;
+                $modelLog->cedulaCliente = $identificacion;
+                $modelLog->fechaRegistro = Date("Y-m-d h:i:s");
+
+                if ($modelLog->save()) {
+                    $clientBono = new SoapClient(null, array(
+                        'location' => Yii::app()->params->webServiceUrl['crmLrv'],
+                        'uri' => "",
+                        'trace' => 1
+                    ));
+
+                    $bono = $clientBono->__soapCall('ConsultarBono', array('identificacion' => $identificacion, 'tipo' => '1'));
+
+                    try {
+                        $contenido = $this->renderPartial('_mensajeCorreoReactivacion', array('modelLog' => $modelLog, 'bono' => $bono), true, true);
+                        $htmlCorreo = $this->renderPartial('//common/correo', array('contenido' => $contenido), true, true);
+
+                        foreach (Yii::app()->params->callcenter['reactivacionBono']['destinatarios'] as $correo) {
+                            sendHtmlEmail($correo, Yii::app()->params->callcenter['reactivacionBono']['asuntoMensaje'], $htmlCorreo);
+                        }
+                    } catch (Exception $exc) {
+                        
+                    }
+
+                    echo CJSON::encode(array(
+                        'result' => 'ok',
+                        'response' => $this->renderPartial('_bono', array('bono' => $bono), true, false)
+                    ));
+                } else {
+                    echo CJSON::encode(array(
+                        'result' => 'error',
+                        'response' => 'Error al crear el log del registro '
+                    ));
+                }
+            } else {
+                echo CJSON::encode(array(
+                    'result' => 'error',
+                    'response' => 'Error al Cambiar el estado '
+                ));
+            }
+        } catch (SoapFault $soapExc) {
+            echo CJSON::encode(array(
+                'result' => 'error',
+                'response' => 'Error al llamar el webservice '
+            ));
+        }
+    }
+
     public function actionDetallepedido($pedido) {
         $this->layout = "simple";
         $objCompra = Compras::model()->find(array(
-            'with'=>array("objUsuario","objCompraDireccion"=>array("with"=>array("objCiudad","objSector")),
-                                        "objFormaPagoCompra"=>array("with"=>"objFormaPago"),
-                                        "objFormaPagoCompra","objEstadoCompra",
-                                        "objOperador","listItems"=>array("with"=>array("objProducto","listBeneficios","objImpuesto","objEstadoItem"),
-                                        "listObservaciones"=>array("with"=>array("objTipoObservacion")))),
+            'with' => array("objUsuario", "objCompraDireccion" => array("with" => array("objCiudad", "objSector")),
+                "objFormaPagoCompra" => array("with" => "objFormaPago"),
+                "objFormaPagoCompra", "objEstadoCompra",
+                "objOperador", "listItems" => array("with" => array("objProducto", "listBeneficios", "objImpuesto", "objEstadoItem"),
+                    "listObservaciones" => array("with" => array("objTipoObservacion")))),
             'condition' => 't.idCompra=:id',
             'params' => array(
                 ':id' => $pedido,
@@ -343,7 +439,7 @@ class AdminController extends ControllerOperator {
         } else if ($opcion == "cliente") {
             $params['vista'] = "_clienteDespacho";
             $listDirecciones = DireccionesDespacho::model()->findAll(array(
-                'with'=>'objCiudad',
+                'with' => 'objCiudad',
                 'condition' => 'identificacionUsuario=:usuario AND activo=:activo',
                 'params' => array(
                     ':usuario' => $objCompra->identificacionUsuario,
@@ -368,7 +464,7 @@ class AdminController extends ControllerOperator {
 
             $params['params']['modelCompra'] = $modelCompraAnteriores;
         }
-        
+
         $this->render('pedido', $params);
     }
 
@@ -383,7 +479,7 @@ class AdminController extends ControllerOperator {
                     echo CJSON::encode(array('result' => 'error', 'response' => 'Compra no existente'));
                     Yii::app()->end();
                 }
-                
+
                 $objObservacion = new ComprasObservaciones;
                 $objObservacion->idCompra = $model->idCompra;
                 $objObservacion->observacion = $model->observacion;
@@ -394,24 +490,24 @@ class AdminController extends ControllerOperator {
                 if ($model->estado != null) {
                     $transaction = Yii::app()->db->beginTransaction();
                     try {
-                        $estadoCompra=EstadoCompra::model()->findByPk($model->estado);
+                        $estadoCompra = EstadoCompra::model()->findByPk($model->estado);
 
-                        if($estadoCompra==null){
+                        if ($estadoCompra == null) {
                             throw new Exception('Estado inválido');
                         }
-                        
-                        $objObservacion->observacion = "<b>Cambio de estado: ".$estadoCompra->compraEstado.".</b> " . $objObservacion->observacion;
+
+                        $objObservacion->observacion = "<b>Cambio de estado: " . $estadoCompra->compraEstado . ".</b> " . $objObservacion->observacion;
 
                         if (!$objObservacion->save()) {
                             throw new Exception('Error al actualizar estado: ' . $objObservacion->validateErrorsResponse());
                         }
 
                         $objCompra->idEstadoCompra = $model->estado;
-                        
-                        if($model->estado == Yii::app()->params->callcenter['estadoCompra']['estado']['devolucion']){
+
+                        if ($model->estado == Yii::app()->params->callcenter['estadoCompra']['estado']['devolucion']) {
                             $objCompra->generarDocumentoCruce(Yii::app()->controller->module->user->id);
                         }
-                        
+
                         if (!$objCompra->save()) {
                             throw new Exception('Error al actualizar estado: ' . $objCompra->validateErrorsResponse());
                         }
@@ -518,7 +614,7 @@ class AdminController extends ControllerOperator {
             Yii::app()->end();
         }
 
-        $objCompra = Compras::model()->findByPk($compra,array("with"=>"objPuntoVenta"));
+        $objCompra = Compras::model()->findByPk($compra, array("with" => "objPuntoVenta"));
 
         if ($objCompra === null) {
             echo CJSON::encode(array('result' => 'error', 'response' => 'Compra no existente.'));
@@ -536,7 +632,7 @@ class AdminController extends ControllerOperator {
         else if ($hora >= 18 && $hora <= 23)
             $saludo = "Buenas noches";
 
-        $nombreUsuario = ($objCompra->identificacionUsuario==null ? $objCompra->objCompraDireccion->nombre : $objCompra->objUsuario->nombre . " " . $objCompra->objUsuario->apellido );
+        $nombreUsuario = ($objCompra->identificacionUsuario == null ? $objCompra->objCompraDireccion->nombre : $objCompra->objUsuario->nombre . " " . $objCompra->objUsuario->apellido );
         $nombrePdv = $objCompra->objPuntoVenta == null ? "<pdv>" : $objCompra->objPuntoVenta->nombrePuntoDeVenta;
         $direccionUsuario = $objCompra->objCompraDireccion == null ? "<direccion>" : $objCompra->objCompraDireccion->direccion . " " . $objCompra->objCompraDireccion->barrio;
         $nombreOperador = $objCompra->objOperador == null ? "<operador>" : $objCompra->objOperador->nombre;
@@ -548,13 +644,13 @@ class AdminController extends ControllerOperator {
         echo CJSON::encode(array('result' => 'ok', 'response' => $plantilla));
         Yii::app()->end();
     }
-    
-    public function actionGeoDireccion(){
+
+    public function actionGeoDireccion() {
         if (!Yii::app()->request->isPostRequest) {
             echo CJSON::encode(array('result' => 'error', 'response' => 'Solicitud invalida.'));
             Yii::app()->end();
         }
-        
+
         $direccion = Yii::app()->getRequest()->getPost('direccion');
         $ciudad = Yii::app()->getRequest()->getPost('ciudad');
 
@@ -565,7 +661,7 @@ class AdminController extends ControllerOperator {
         $direccion = trim($direccion);
         $ciudad = trim($ciudad);
         $llave = md5($direccion . $ciudad . "javela");
-        
+
         $client = new SoapClient(null, array(
             'location' => Yii::app()->params->webServiceUrl['serverGeo'],
             'uri' => "",
@@ -577,25 +673,25 @@ class AdminController extends ControllerOperator {
             "key" => $llave
         );
         $result = $client->__soapCall("ConsultarClienteLRV", $params);
-        
-        if(empty($result)){
+
+        if (empty($result)) {
             echo CJSON::encode(array('result' => 'ok', 'response' => "Error: no se obtuvo respuesta"));
-        }else{
+        } else {
             $result = $result[0];
-            if($result->RESPUESTA ==1){
-                 echo CJSON::encode(array('result' => 'ok', 'response' => "<strong> RESULTADO: </strong>". $result->PDV."-".$result->PDV_NOMBRE));
-            }else{
-                 echo CJSON::encode(array('result' => 'ok', 'response' => $result->DESCRIPCION));
+            if ($result->RESPUESTA == 1) {
+                echo CJSON::encode(array('result' => 'ok', 'response' => "<strong> RESULTADO: </strong>" . $result->PDV . "-" . $result->PDV_NOMBRE));
+            } else {
+                echo CJSON::encode(array('result' => 'ok', 'response' => $result->DESCRIPCION));
             }
         }
     }
-    
-    public function actionGeoBarrio(){
+
+    public function actionGeoBarrio() {
         if (!Yii::app()->request->isPostRequest) {
             echo CJSON::encode(array('result' => 'error', 'response' => 'Solicitud invalida.'));
             Yii::app()->end();
         }
-        
+
         $barrio = Yii::app()->getRequest()->getPost('barrio');
         $ciudad = Yii::app()->getRequest()->getPost('ciudad');
 
@@ -603,27 +699,27 @@ class AdminController extends ControllerOperator {
             echo CJSON::encode(array('result' => 'error', 'response' => 'Solicitud invalida.'));
             Yii::app()->end();
         }
-        
+
         $client = new SoapClient(null, array(
             'location' => Yii::app()->params->webServiceUrl['serverLRV'],
             'uri' => "",
             'trace' => 1
         ));
         $params = array(
-            'idCiudad' => trim($ciudad), 
+            'idCiudad' => trim($ciudad),
             'barrio' => trim($barrio)
         );
         $result = $client->__soapCall("LRVConsultarBarrio", $params);
-        
-        if(empty($result)){
+
+        if (empty($result)) {
             echo CJSON::encode(array('result' => 'ok', 'response' => "Error: no se obtuvo respuesta"));
-        }else{
+        } else {
             $result = $result[0];
-            if($result->RESPUESTA ==1){
-                 $infopdv=$result->PDV[0];
-                 echo CJSON::encode(array('result' => 'ok', 'response' => "<strong> RESULTADO: </strong>". $infopdv['PVTCODIG']."-".$infopdv['PVTNOMBR']));
-            }else{
-                 echo CJSON::encode(array('result' => 'ok', 'response' => $result->DESCRIPCION));
+            if ($result->RESPUESTA == 1) {
+                $infopdv = $result->PDV[0];
+                echo CJSON::encode(array('result' => 'ok', 'response' => "<strong> RESULTADO: </strong>" . $infopdv['PVTCODIG'] . "-" . $infopdv['PVTNOMBR']));
+            } else {
+                echo CJSON::encode(array('result' => 'ok', 'response' => $result->DESCRIPCION));
             }
         }
     }
@@ -662,10 +758,10 @@ class AdminController extends ControllerOperator {
     }
 
     protected function gridOrigenPedido($data, $row) {
-        if($data->identificacionUsuario == null){
+        if ($data->identificacionUsuario == null) {
             return $data->objCompraDireccion->nombre . "<br/>" . $data->objCompraDireccion->correoElectronico;
-        }else{
-            return "$data->identificacionUsuario<br/>" . $data->objUsuario->getNombreCompleto(). "<br/>" . $data->objUsuario->correoElectronico;
+        } else {
+            return "$data->identificacionUsuario<br/>" . $data->objUsuario->getNombreCompleto() . "<br/>" . $data->objUsuario->correoElectronico;
         }
     }
 
@@ -703,7 +799,7 @@ class AdminController extends ControllerOperator {
         $classes [] = $rowCssClass[$row % count($rowCssClass)];
         if ($data->seguimiento == 1)
             $classes[] = "seguimiento";
-        else if($data->tipoEntrega == 1){
+        else if ($data->tipoEntrega == 1) {
             $classes[] = "presencial";
         }
         return empty($classes) ? false : implode(' ', $classes);

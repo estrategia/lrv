@@ -162,6 +162,7 @@ return array(
         'correoAdmin' => 'infolrv@copservir.com',
         'maximoComparacion' => 5,
         'urlSitio' => 'www.larebajavirtual.com',
+        'urlChatLinea' => '/contenido/ver/tipo/grupo/contenido/41',
         'clienteFiel' => array(
             'correo' => 'cliente_fiel@copservir.com',
             'telefono' => '01 8000 93 99 00',
@@ -361,6 +362,10 @@ return array(
             'usuario' => array(
                 'estado' => array('activo' => 1, 'inactivo' => 0),
                 'estadoNombre' => array(0 => 'Inactivo', 1 => 'Activo'),
+            ),
+            'reactivacionBono' => array(
+                'asuntoMensaje' => 'Activacion bono cliente fiel',
+                'destinatarios' => array ('karen_charria@copservir.com', 'fernando_riasco@copservir.com' )
             ),
             'observacion' => array(
                 'asuntoMensaje' => 'La rebaja virtual - información de su pedido',

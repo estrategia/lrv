@@ -224,7 +224,7 @@
                             <ul style="color:#666666;font-size:14px;font-family:Arial">
                                 <li>
                                     Chat en línea
-                                    <a target="_blank" style="color:#ff0000" href="http://www.larebajavirtual.com/contenido/index/opcion/param/72"> Clic aqui </a>
+                                    <a target="_blank" style="color:#ff0000" href="http://<?php echo Yii::app()->params->urlSitio.Yii::app()->params->urlChatLinea?>"> Clic aqui </a>
                                 </li>
                                 <li>
                                     Sistema PQRS (preguntas, quejas, reclamos y solicitudes)

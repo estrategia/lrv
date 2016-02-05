@@ -978,6 +978,35 @@ $(document).on('change', "select[data-role='validar-tipo-combo']", function() {
     });
 });
 
+$(document).on('click', "a[data-role='activar-bono']", function() {
+    var identificacion = $(this).attr('data-identificacion');
+    var valor = $(this).attr('data-valor');
+    var comentario = $("#comentario").val();
+    $.ajax({
+        type: 'POST',
+        async: true,
+        url: requestUrl + '/callcenter/admin/actualizarBono',
+        data: {identificacion: identificacion, comentario: comentario, valor: valor},
+        dataType: 'json',
+        beforeSend: function() {
+            Loading.show();
+        },
+        complete: function(data) {
+            Loading.hide();
+        },
+        success: function(data) {
+            if (data.result == "ok") {
+                $("#result_bono").html(data.response);
+            } else if (data.result == "error") {
+                bootbox.alert(data.response);
+            }
+        },
+        error: function(jqXHR, textStatus, errorThrown) {
+
+        }
+    });
+});
+
 $(document).on('click', "a[data-role='add-beneficio']", function() {
     var val = $(this).attr('data-beneficio');
     var tipo = $(this).attr('data-tipo');
@@ -1053,7 +1082,7 @@ $(document).on('click', "a[data-role='eliminar-todos-productos']", function() {
                 label: "Cancelar",
                 className: "btn-default",
                 callback: function() {
-                   
+
                 }
             }
         }
@@ -1063,3 +1092,50 @@ $(document).on('click', "a[data-role='eliminar-todos-productos']", function() {
     return false;
 });
 
+$(document).on('click', 'a[data-role="modulo-eliminar"]', function() {
+
+    var idModulo = $(this).attr("data-modulo");
+
+    bootbox.dialog({
+        message: "Está seguro de eliminar el módulo",
+        title: "Eliminar Módulo",
+        buttons: {
+            success: {
+                label: "Aceptar",
+                className: "btn-primary",
+                callback: function() {
+                    $.ajax({
+                        type: 'POST',
+                        async: true,
+                        url: requestUrl + '/callcenter/contenido/eliminarmodulo',
+                        data: {idModulo: idModulo},
+                        beforeSend: function() {
+                            Loading.show();
+                        },
+                        complete: function() {
+                            Loading.hide();
+                        },
+                        success: function(data) {
+                            var data = $.parseJSON(data);
+                            if (data.result === "ok") {
+                                $.fn.yiiGridView.update('grid-modulos');
+                            } else if (data.result === 'error') {
+                                bootbox.alert(data.response);
+                            }
+                        },
+                        error: function(jqXHR, textStatus, errorThrown) {
+                            Loading.hide();
+                            bootbox.alert('Error: ' + errorThrown);
+                        }
+                    });
+                }
+            },
+            close: {
+                label: "Cancelar",
+                className: "btn-default",
+                callback: function() {
+                }
+            }
+        }
+    });
+});

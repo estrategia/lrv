@@ -118,6 +118,13 @@ $columns = array(
                     return '<a href="#" data-role="modulo-inactivar" data-modulo="'.$data->idModulo.'" >'.($data->estado == "1" ? "Inactivar": "Activar").'</a>';
                 }
             );
+            $columns[] = array(
+                'header' => 'Eliminar',
+                'type' => 'raw',
+                'value' => function($data){
+                    return '<a href="#" data-role="modulo-eliminar" data-modulo="'.$data->idModulo.'" >Eliminar</a>';
+                }
+            );
         }else{
             $columns[] =  array(
                 'header' => 'Opción',
