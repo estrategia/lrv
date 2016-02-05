@@ -3033,7 +3033,13 @@ class CarroController extends Controller {
                 'objFormasPago' => $objFormasPago,
                 'nombreUsuario' => $nombreUsuario), true, true);
             $htmlCorreo = $this->renderPartial('/usuario/_correo', array('contenido' => $contenidoCorreo), true, true);
-            sendHtmlEmail($correoUsuario, $asuntoCorreo, $htmlCorreo);
+            
+            try {
+                sendHtmlEmail($correoUsuario, $asuntoCorreo, $htmlCorreo);
+            } catch (Exception $ce) {
+                Yii::log("Error enviando correo al registrar compra #$objCompra->idCompra\n" . $ce->getMessage() . "\n" . $ce->getTraceAsString(), CLogger::LEVEL_INFO, 'application');
+            }
+            
             $transaction->commit();
 
             /* if ($modelPago->bono !== null && $modelPago->usoBono == 1) {
