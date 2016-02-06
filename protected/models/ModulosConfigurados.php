@@ -145,13 +145,13 @@ class ModulosConfigurados extends CActiveRecord {
             ':grupoModulo' => ModulosConfigurados::TIPO_GRUPO_MODULOS,
             ':idgrupoModulo' => $idGrupoModulo
         );
-        $criteria->order ="idModulo DESC";
+        $criteria->order ="t.idModulo DESC";
         
-        $criteria->compare('tipo', $this->tipo);
-        $criteria->compare('inicio', $this->inicio, true);
-        $criteria->compare('fin', $this->fin, true);
-        $criteria->compare('descripcion', $this->descripcion, true); 
-        $criteria->compare('titulo', $this->titulo, true); 
+        $criteria->compare('t.tipo', $this->tipo);
+        $criteria->compare('t.inicio', $this->inicio, true);
+        $criteria->compare('t.fin', $this->fin, true);
+        $criteria->compare('t.descripcion', $this->descripcion, true); 
+        $criteria->compare('t.titulo', $this->titulo, true); 
         
         return new CActiveDataProvider($this, array(
             'criteria' => $criteria,

@@ -466,6 +466,7 @@ class ContenidoController extends ControllerOperator {
             ':grupoModulo' => ModulosConfigurados::TIPO_GRUPO_MODULOS,
             ':idgrupoModulo' => $idGrupoModulo
         );
+        $criteria->order ="t.idModulo DESC";
 
         $modulos = ModulosConfigurados::model()->findAll($criteria);
 
