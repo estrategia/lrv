@@ -1001,7 +1001,7 @@ function pasoInformacion(actual, siguiente, boton) {
         type: 'POST',
         async: true,
         url: requestUrl + '/carro/pagar/paso/' + actual + '/post/true',
-        data: $.param(data) + '&' + $('#form-pago-comentario').serialize() + '&' + $('#form-direccion-pagoinvitado').serialize() + '&' + $('#form-pago-entrega').serialize() + '&' + $('#form-pago-pago').serialize() + '&' + $('#form-pago-bono').serialize() ,
+        data: $.param(data) + '&' + $('#form-pago-comentario').serialize() + '&' + $('#form-direccion-pagoinvitado').serialize() + '&' + $('#form-pago-entrega').serialize() + '&' + $('#form-pago-pago').serialize() + '&' + $('#form-pago-bono').serialize(),
         beforeSend: function() {
             boton.prop('disabled', true);
             $('div[id^="FormaPagoForm_"].text-danger').html('');
@@ -1186,6 +1186,34 @@ function recalcularFiltros(tipo) {
     });
 }
 
+function ListViewProductsUpdate() {
+    var href = $.fn.yiiListView.getUrl('id-productos-list');
+
+    if (href) {
+        var url = href.split('?');
+        var params = $.deparam.querystring('?' + (url[1] || ''));
+
+        if (params.categoriasBuscador) {
+            if (jQuery.type(params.categoriasBuscador) == "array") {
+                var text = "";
+                $.each(params.categoriasBuscador, function(index, value) {
+                    if (value) {
+                        if (text.length > 0)
+                            text += "_" + value;
+                        else
+                            text = "" + value;
+                    }
+                });
+                params.categoriasBuscador = text;
+            }
+        }
+
+        $.fn.yiiListView.update('id-productos-list', {data: params});
+    } else {
+        $.fn.yiiListView.update('id-productos-list');
+    }
+}
+
 function filtrarListaProductos() {
     $.ajax({
         type: 'POST',
@@ -1198,7 +1226,8 @@ function filtrarListaProductos() {
         },
         success: function(data) {
             if (data.result === 'ok') {
-                $.fn.yiiListView.update('id-productos-list');
+                //$.fn.yiiListView.update('id-productos-list');
+                ListViewProductsUpdate();
             } else {
                 Loading.hide();
                 alert(data.response);
@@ -1226,8 +1255,8 @@ $(document).on('change', "select[data-role='orden-listaproductos']", function() 
         },
         success: function(data) {
             if (data.result === 'ok') {
-                //alert(data.response);
-                $.fn.yiiListView.update('id-productos-list');
+                //$.fn.yiiListView.update('id-productos-list');
+                ListViewProductsUpdate();
             } else {
                 alert(data.response);
             }
@@ -1706,7 +1735,7 @@ $(document).on('click', 'button[data-role="pasoporel-seleccion-pdv"]', function(
     $('#pasoporel-seleccion-pdv-direccion').html($(this).attr('data-direccion'));
     $("#modal-pasoporel-seleccionar").modal("hide");
     $('input[name="FormaPagoForm[indicePuntoVenta]"]').val($(this).attr('data-idx'));
- });
+});
 
 $(document).on('click', 'div[data-role="tipoentrega"]', function() {
     var tipo = $(this).attr('data-tipo');
@@ -1745,9 +1774,9 @@ $(document).on('click', 'div[data-role="tipoentrega"]', function() {
 
 function seleccionTipoEntrega(tipo, _tipo) {
     $('div[data-role="tipoentrega"]').removeClass('activo');
-    $('div[data-role="tipoentrega"]div[data-tipo="'+tipo+'"]').addClass('activo');
+    $('div[data-role="tipoentrega"]div[data-tipo="' + tipo + '"]').addClass('activo');
     $('div[data-role="tipoentrega"]').addClass('inactivo');
-    $('div[data-role="tipoentrega"]div[data-tipo="'+tipo+'"]').removeClass('inactivo');
+    $('div[data-role="tipoentrega"]div[data-tipo="' + tipo + '"]').removeClass('inactivo');
 
     $('#pasoporel-seleccion-pdv-nombre').html("");
     $('#pasoporel-seleccion-pdv-direccion').html("");
@@ -1873,10 +1902,10 @@ $(document).on('click', 'button[data-role="ubicacion-seleccion-mapa"]', function
                 $('#div-ubicacion-tipoubicacion > button[data-role="ubicacion-mapa"]').removeClass('inactivo').addClass('activo');
                 ubicacionSeleccion();
             } else {
-                if(data.responseModal){
+                if (data.responseModal) {
                     $('body').append(data.responseModal);
                     $("#modal-no-serviciodomicilio").modal("show");
-                }else{
+                } else {
                     alert(data.response);
                 }
             }
