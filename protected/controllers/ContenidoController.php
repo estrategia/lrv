@@ -22,6 +22,8 @@ class ContenidoController extends Controller {
             $this->verPolidescuento();
         } else if ($tipo == "pqrs") {
             $this->verPqrs();
+        } else if ($tipo == "soat") {
+            $this->verSoat();
         } else if ($tipo == "politerminos") {
             $this->verPoliterminos();
         }else{
@@ -55,6 +57,10 @@ class ContenidoController extends Controller {
 
     private function verPqrs() {
         $this->render('corporativoPqrs');
+    }
+    
+    private function verSoat() {
+        $this->render('corporativoSoat');
     }
 
     private function verPoliterminos() {

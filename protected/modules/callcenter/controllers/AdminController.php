@@ -310,21 +310,29 @@ class AdminController extends ControllerOperator {
         $valor = Yii::app()->getRequest()->getPost('valor');
 
         try {
-            $clientBono = new SoapClient(null, array(
-                'location' => Yii::app()->params->webServiceUrl['crmLrv'],
-                'uri' => "",
-                'trace' => 1
-            ));
-
-            $resultBono = $clientBono->__soapCall('ActualizarBono', array('identificacion' => $identificacion, 'tipo' => '1'));
-
-            if ($resultBono[0]->ESTADO == 1) {
-                $modelLog = new LogBonos;
+            
+            $modelLog = new LogBonos;
                 $modelLog->agente = Yii::app()->controller->module->user->id;
                 $modelLog->valorBono = $valor;
                 $modelLog->comentario = $comentario;
                 $modelLog->cedulaCliente = $identificacion;
                 $modelLog->fechaRegistro = Date("Y-m-d h:i:s");
+                
+            $clientBono = new SoapClient(null, array(
+                'location' => Yii::app()->params->webServiceUrl['crmLrv'],
+                'uri' => "",
+                'trace' => 1
+            ));
+            
+            if(!$modelLog->validate()){
+                 echo CActiveForm::validate($modelLog);
+                 Yii::app()->end();
+            }
+
+          //  $resultBono = $clientBono->__soapCall('ActualizarBono', array('identificacion' => $identificacion, 'tipo' => '1'));
+
+            if ($resultBono[0]->ESTADO == 1) {
+                
 
                 if ($modelLog->save()) {
                     $clientBono = new SoapClient(null, array(
@@ -466,6 +474,41 @@ class AdminController extends ControllerOperator {
         }
 
         $this->render('pedido', $params);
+    }
+    
+    
+    public function actionCalificaciones(){
+        
+        $model = new ProductosCalificaciones('search');
+
+        $model->unsetAttributes();
+        if (isset($_GET['ProductosCalificaciones']))
+            $model->attributes = $_GET['ProductosCalificaciones'];
+
+        $this->render('calificaciones', array ('model' => $model ));
+    }
+    
+    public function actionAprobarCalificacion(){
+        
+        if (!Yii::app()->request->isPostRequest) {
+            echo CJSON::encode(array('result' => 'error', 'response' => 'Solicitud invalida.'));
+            Yii::app()->end();
+        }
+        
+        $calificacion = $_POST['calificacion'];
+        
+        $model = ProductosCalificaciones::model()->findByPk($calificacion);
+        
+        if(!$model){
+            echo CJSON::encode(array('result' => 'error', 'response' => 'Esta calificación no existe'));
+            Yii::app()->end();
+        }
+        
+        $model->aprobado = 1;
+        
+        $model->save();
+        
+        echo CJSON::encode(array('result' => 'ok', 'response' => 'Datos Actualizados'));
     }
 
     public function actionObservacionpedido() {

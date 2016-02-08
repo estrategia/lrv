@@ -75,6 +75,10 @@
                                 <li>
                                     <a href="#" class="ajax-link"><i class="glyphicon glyphicon-file"></i><span> Cotizaciones</span></a>
                                 </li>
+                                <li>
+                                    <a href="<?php echo $this->createUrl('/callcenter/admin/calificaciones') ?>" class="ajax-link"><i class="glyphicon glyphicon-ok"></i><span> Comentarios y Calificaciones</span></a>
+                                </li>
+                                
                             <?php endif; ?>
                             <?php if (Yii::app()->controller->module->user->profile == 2): ?>
                                 <li class="nav-header hidden-md">Admin</li>

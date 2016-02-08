@@ -103,8 +103,8 @@
         </div>
 
         <?php if ($this->objSectorCiudad == null): ?>
-                <?php echo CHtml::link('<div class="btn btn-primary btn-block">Cosultar precio</div>', $this->createUrl('/sitio/ubicacion'), array()); ?>
-          
+            <?php echo CHtml::link('<div class="btn btn-primary btn-block">Cosultar precio</div>', $this->createUrl('/sitio/ubicacion'), array()); ?>
+
         <?php elseif ($data->ventaVirtual == 1 && $objPrecio->inicializado() && $vista != 'slider'): ?>
             <div class="botones-list">
                 <div class="row">
@@ -177,9 +177,11 @@
                         <?php echo CHtml::link('<span class="glyphicon glyphicon-remove"></span>', '#', array('data-producto' => $data->codigoProducto, 'data-role' => 'quitarComparar', 'title' => 'Quitar elemento')); ?>
                     </div>
                 <?php else: ?>
-                    <div class=" btnComparar itm_ico">
-                        <?php echo CHtml::link('<span class="glyphicon glyphicon-duplicate"></span>', '#', array('data-producto' => $data->codigoProducto, 'data-role' => 'comparar', 'title' => 'Comparar')); ?>
-                    </div>
+                    <?php if ($data->ventaVirtual == 1): ?>
+                        <div class=" btnComparar itm_ico">
+                            <?php echo CHtml::link('<span class="glyphicon glyphicon-duplicate"></span>', '#', array('data-producto' => $data->codigoProducto, 'data-role' => 'comparar', 'title' => 'Comparar')); ?>
+                        </div>
+                    <?php endif; ?>
                 <?php endif; ?>
             </div>
         <?php endif; ?>

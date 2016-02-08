@@ -76,16 +76,18 @@
         <table class="ui-responsive ctable_list_prod">
             <tbody>
                 <tr>
-                    <td class="ctd_01">
-                        <input type="number" placeholder="0" id="cantidad-producto-unidad-<?php echo $objProducto->codigoProducto ?>" class="cbtn_cant" onchange="subtotalUnidadProducto(<?php echo $objProducto->codigoProducto ?>);" data-mini="true" value="1">
-                    </td>
-                    <td class="ctd_02">
-                        <p>Subtotal</p>
-                        <p id="subtotal-producto-unidad-<?php echo $objProducto->codigoProducto ?>" style="font-size:medium;"><?php echo Yii::app()->numberFormatter->format(Yii::app()->params->formatoMoneda['patron'], $objPrecio->getPrecio(Precio::PRECIO_UNIDAD), Yii::app()->params->formatoMoneda['moneda']); ?></p>
-                    </td>
+                    <?php if ($objProducto->ventaVirtual != 0): ?>
+                        <td class="ctd_01">
+                            <input type="number" placeholder="0" id="cantidad-producto-unidad-<?php echo $objProducto->codigoProducto ?>" class="cbtn_cant" onchange="subtotalUnidadProducto(<?php echo $objProducto->codigoProducto ?>);" data-mini="true" value="1">
+                        </td>
+                        <td class="ctd_02">
+                            <p>Subtotal</p>
+                            <p id="subtotal-producto-unidad-<?php echo $objProducto->codigoProducto ?>" style="font-size:medium;"><?php echo Yii::app()->numberFormatter->format(Yii::app()->params->formatoMoneda['patron'], $objPrecio->getPrecio(Precio::PRECIO_UNIDAD), Yii::app()->params->formatoMoneda['moneda']); ?></p>
+                        </td>
+                    <?php endif; ?>
                     <td class="ctd_03">
                         <?php if ($objProducto->ventaVirtual == 0): ?>
-                            <?php echo CHtml::link('Añadir al carro', "#popup-carro-controlada-$objProducto->codigoProducto", array('class' => 'ui-btn ui-corner-all ui-shadow ui-btn-inline ui-btn-r', 'data-rel' => 'popup', 'data-mini' => 'true')); ?>
+                            <?php echo CHtml::link('Ver producto', "#popup-carro-controlada-$objProducto->codigoProducto", array('class' => 'ui-btn ui-corner-all ui-shadow ui-btn-inline ui-btn-r', 'data-rel' => 'popup', 'data-mini' => 'true')); ?>
                         <?php else: ?>
                             <?php echo CHtml::link('Añadir al carro', '#', array('data-producto' => $objProducto->codigoProducto, 'data-cargar' => 1, 'class' => 'ui-btn ui-corner-all ui-shadow ui-btn-inline ui-btn-r', 'data-mini' => 'true')); ?>
                         <?php endif; ?>

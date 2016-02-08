@@ -113,8 +113,8 @@
                 <?php echo $form->checkboxList($model, 'dias', Yii::app()->params->callcenter['modulosConfigurados']['diasSemana'], array('class' => 'dias', 'style' => 'display:inline', 'separator' => '&nbsp;', 'template' => '<div class="col-md-1">{input}{label}</div>')) ?>
                 <?php echo $form->error($model, 'dias'); ?>
             </div>
-
-            <?php if ($model->tipo == ModulosConfigurados::TIPO_PRODUCTOS_CUADRICULA): ?>
+            
+            <?php if ($model->tipo == ModulosConfigurados::TIPO_PRODUCTOS_CUADRICULA || $model->tipo == ModulosConfigurados::TIPO_PRODUCTOS): ?>
                 <div class="form-group">
                     <!-- checkbox -->
                     <?php echo $form->labelEx($model, 'aleatorio'); ?><div class="space-1"></div>

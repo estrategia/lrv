@@ -396,6 +396,55 @@ $(document).on('click', "button[data-role='disponibilidaditem']", function() {
     });
 });
 
+$(document).on('click', "a[data-role='aprobar-calificacion']", function() {
+    var calificacion = $(this).attr('data-calificacion');
+
+    bootbox.dialog({
+        message: "¿ Está seguro de aprobar este comentario ?",
+        title: "Aprobar comentario",
+        buttons: {
+            success: {
+                label: "Aceptar",
+                className: "btn-primary",
+                callback: function() {
+                    $.ajax({
+                        type: 'POST',
+                        dataType: 'json',
+                        async: true,
+                        url: requestUrl + '/callcenter/admin/aprobarCalificacion',
+                        data: {calificacion: calificacion},
+                        beforeSend: function() {
+                            Loading.show();
+                        },
+                        success: function(data) {
+                            if (data.result === "ok") {
+                                $.fn.yiiGridView.update('grid-calificaciones');
+                                Loading.hide();
+                            } else {
+                                Loading.hide();
+                                bootbox.alert(data.response);
+                            }
+                        },
+                        error: function(jqXHR, textStatus, errorThrown) {
+                            Loading.hide();
+                            alert('Error: ' + jqXHR.responseText);
+                        }
+                    });
+                }
+            },
+            close: {
+                label: "Cancelar",
+                className: "btn-default",
+                callback: function() {
+                }
+            }
+        }
+    });
+
+
+});
+
+
 $(document).on('click', "a[data-cargar='1'], a[data-cargar='2']", function() {
     var tipo = $(this).attr('data-cargar');
     var pedido = $('#btn-pedido-buscar').attr('data-pedido');

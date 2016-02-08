@@ -7,7 +7,7 @@
             <th>Nombre</th>
             <th>Valor</th>
             <th>Vigencia</th>
-            <th>Mensaje</th>
+            <th>Comentario</th>
             <th>Estado bono</th>
             <th></th>
         </tr>

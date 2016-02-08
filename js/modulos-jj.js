@@ -999,6 +999,12 @@ $(document).on('click', "a[data-role='activar-bono']", function() {
                 $("#result_bono").html(data.response);
             } else if (data.result == "error") {
                 bootbox.alert(data.response);
+            }else{
+                var errores="";
+                 $.each(data, function(element, error) {
+                    errores+=error+"\n";
+                });
+                bootbox.alert(errores);
             }
         },
         error: function(jqXHR, textStatus, errorThrown) {

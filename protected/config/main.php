@@ -262,6 +262,12 @@ return array(
                 'descripcion' => 'La Rebaja Virtual - Pasarela de pago',
             )
         ),
+        'calificaciones' => array(
+            'estados' => array (
+                '0' => 'Sin aprobar',
+                '1' => 'Aprobado'
+            )
+        ),
         'carpetaImagen' => array(
             'categorias' => '/images/menu/',
             'codigoEspecial' => '/images/codigoespecial/',
@@ -336,7 +342,7 @@ return array(
             'recordatorioClave' => 'La Rebaja Virtual: Clave de ingreso',
             'bienvenida' => 'La Rebaja Virtual: Bienvenido(a)',
             'pedidoRealizado' => 'La Rebaja Virtual: Pedido realizado',
-            'pedidoRealizadoPasarela' => 'La Rebaja Virtual: Pedido por pago en línea en proceso de validación',
+            'pedidoRealizadoPasarela' => 'La Rebaja Virtual: Pendiente de Confirmación Pasarela',
             'pedidoRemitido' => 'La Rebaja Virtual: Pedido remitido',
         ),
         'asuntoRecordatorioClave' => 'Clave de Ingreso',

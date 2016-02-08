@@ -1549,7 +1549,8 @@ $(document).ready(function() {
         navigationText: [
             "<i class='glyphicon glyphicon-chevron-left'></i>",
             "<i class='glyphicon glyphicon-chevron-right'></i>"
-        ]
+        ],
+         autoPlay: 3000, 
     });
     $('.ad-gallery').adGallery({
         loader_image: '../images/libs/ad-gallery/loader.gif',

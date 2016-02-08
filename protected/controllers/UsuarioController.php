@@ -13,7 +13,7 @@ class UsuarioController extends Controller {
                 'isMobile' => $this->isMobile
             ),
             'access + autenticar, recordar, registro, restablecer',
-            'login + index, infoPersonal, contrasena, direcciones, pagoexpress, listapedidos, listapersonal, pedido, listadetalle, listacotizaciones',
+            'login + index, infoPersonal, contrasena, direcciones, pagoexpress, listapedidos, pedido, listadetalle, listacotizaciones',
             'loginajax + direccionCrear, direccionActualizar',
         );
     }
@@ -950,6 +950,11 @@ class UsuarioController extends Controller {
     private function listapersonalGuardar() {
         if (!Yii::app()->request->isPostRequest) {
             echo CJSON::encode(array('result' => 'error', 'response' => 'Solicitud inválida'));
+            Yii::app()->end();
+        }
+        
+        if(Yii::app()->user->isGuest){
+            echo CJSON::encode(array('result' => 'error', 'response' => 'Debe loguearse antes de crear lista'));
             Yii::app()->end();
         }
 

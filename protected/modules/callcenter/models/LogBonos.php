@@ -31,9 +31,10 @@ class LogBonos extends CActiveRecord
 		// NOTE: you should only define rules for those attributes that
 		// will receive user inputs.
 		return array(
-			array('valorBono, fechaRegistro, agente, cedulaCliente', 'required'),
+			array('valorBono, fechaRegistro, agente, cedulaCliente, comentario', 'required'),
 			array('valorBono, agente', 'numerical', 'integerOnly'=>true),
 			array('comentario', 'length', 'max'=>255),
+                        array('comentario', 'length', 'min'=>20),
 			// The following rule is used by search().
 			// @todo Please remove those attributes that should not be searched.
 			array('idLogBono, valorBono, fechaRegistro, agente, comentario, cedulaCliente', 'safe', 'on'=>'search'),

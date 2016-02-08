@@ -713,6 +713,7 @@ table.tabla-carro .group-botones-cantidad{
     padding-right: 0;
     padding-top: 0;
     width: 100%;
+    background-color: #e8e8e8;
 }
 .subtotal span {
     color: #555 !important;
@@ -2723,4 +2724,11 @@ img.ajustada {
 }
 
 @media (min-width: 1200px) { 
+}
+
+.cuidado-personal > .right-nav{
+    background-position: right center;
+    background-repeat: no-repeat;
+    background-size: contain;
+    position:absolute;
 }

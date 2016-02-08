@@ -1233,5 +1233,26 @@ class TestController extends Controller {
         echo "<br><br><br>";
         CVarDumper::dump(Yii::app()->session[Yii::app()->params->sesion['sectorCiudadEntrega']], 10, true);
     }
+    
+    public function actionRecordarCorreos(){
+       
+       $dia = Date("d");
+       $listasPersonales = ListasPersonales::model()->findAll(array(
+            'with' => array('listDetalle' => array('with' => array ('objProducto' => array ('with' => 'listImagenes'))),'objUsuario',),
+            'condition' => "(t.diaRecordar-t.diasAnticipacion =:diaRecordar OR ((DATEDIFF(now(),t.fechaRecordar)-t.diasAnticipacion)%t.diasRecordar) = 0 )AND 
+                             t.estadoLista = 1",
+            'params' => array(
+                'diaRecordar' => Date("d")
+            )
+        ));
+       
+       foreach ($listasPersonales as $listaPersonal){
+           
+          $correo = $this->renderPartial('\\common\correoRecordacion', array(
+                        'listasPersonales' => $listasPersonales
+                   ), true, false);
+       }
+       
+    }
 
 }

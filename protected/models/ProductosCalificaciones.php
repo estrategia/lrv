@@ -91,9 +91,10 @@ class ProductosCalificaciones extends CActiveRecord {
 
         $criteria = new CDbCriteria;
 
+        $criteria->with = array('objProducto', 'objUsuario');
         $criteria->compare('idCalificacion', $this->idCalificacion);
-        $criteria->compare('codigoProducto', $this->codigoProducto, true);
-        $criteria->compare('identificacionUsuario', $this->identificacionUsuario, true);
+        $criteria->compare('t.codigoProducto', $this->codigoProducto, true);
+        $criteria->compare('t.identificacionUsuario', $this->identificacionUsuario, true);
         $criteria->compare('calificacion', $this->calificacion);
         $criteria->compare('titulo', $this->titulo, true);
         $criteria->compare('comentario', $this->comentario, true);

@@ -51,9 +51,7 @@
     </div>
 </div>
 <div class="space-3"></div>
-<div class="bot-button">
-    <button data-redirect="confirmacion" data-origin="informacion" id="btn-carropagar-siguiente" class="btn btn-primary">Continuar</button>
-</div>
+
 <div class="space-3"></div>
 
 <!-- modal info recoger -->

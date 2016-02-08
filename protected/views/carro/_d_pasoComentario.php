@@ -40,4 +40,7 @@ $form = $this->beginWidget('CActiveForm', array(
         <?php echo $form->error($modelPago, 'comentario', array('class' => 'text-danger')); ?>
 </div>
 
+<div class="bot-button">
+    <button data-redirect="confirmacion" data-origin="informacion" id="btn-carropagar-siguiente" class="btn btn-primary">Continuar</button>
+</div>
 <?php $this->endWidget(); ?>

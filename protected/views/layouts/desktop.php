@@ -120,7 +120,10 @@ header("Pragma: no-cache");
                                 <?php foreach ($this->categorias as $categoria): ?>
                                     <li class="cuidado-personal"><a href="#"><img class="data-label" src="<?php echo Yii::app()->request->baseUrl; ?>/images/menu/desktop/<?php echo $categoria->rutaImagen ?>" alt=""><?php echo $categoria->nombreCategoriaTienda ?></a>
                                         <?php //if ($categoria->listCategoriasHijas): ?>
-                                            <div class="right-nav">
+                                        <div class="right-nav" style="<?php if (!empty($categoria->rutaImagenMenu)): ?>
+                                                                         background-image: url('<?php echo Yii::app()->request->baseUrl; ?>/images/menu/desktop/<?php echo $categoria->rutaImagenMenu ?>');
+                                                                        
+                                                                     <?php endif; ?>">
                                                 <ul class="submenu">
                                                     <div class="sub_float">
                                                         <?php
@@ -156,9 +159,6 @@ header("Pragma: no-cache");
                                                         ?>
                                                     </div>
                                                 </ul>
-                                                <?php if (!empty($categoria->rutaImagenMenu)): ?>
-                                                    <img class="img_categoria" src="<?php echo Yii::app()->request->baseUrl; ?>/images/menu/desktop/<?php echo $categoria->rutaImagenMenu ?>"> 
-                                            <?php endif; ?>
                                             </div>
                                     <?php //endif; ?>
                                     </li>

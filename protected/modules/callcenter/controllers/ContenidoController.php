@@ -7,7 +7,7 @@ class ContenidoController extends ControllerOperator {
     public function filters() {
         return array(
             //'access',
-            'login + index',
+            'login + index,crear,editar',
                 //'loginajax + direccionActualizar',
         );
     }
