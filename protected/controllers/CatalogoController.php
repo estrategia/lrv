@@ -527,13 +527,13 @@ class CatalogoController extends Controller {
     }
 
     public function actionBuscar() {
-        $term = trim(Yii::app()->request->getParam('busqueda', ''));//$term = isset($_REQUEST['busqueda']) ? $_REQUEST['busqueda'] : '';
-        $categoriasBuscador = Yii::app()->request->getParam('categoriasBuscador', array());//$categoriasBuscador = isset($_REQUEST['categoriasBuscador']) ? $_REQUEST['categoriasBuscador'] : array();
-        
-        if(is_string($categoriasBuscador)){
+        $term = trim(Yii::app()->request->getParam('busqueda', '')); //$term = isset($_REQUEST['busqueda']) ? $_REQUEST['busqueda'] : '';
+        $categoriasBuscador = Yii::app()->request->getParam('categoriasBuscador', array()); //$categoriasBuscador = isset($_REQUEST['categoriasBuscador']) ? $_REQUEST['categoriasBuscador'] : array();
+
+        if (is_string($categoriasBuscador)) {
             $categoriasBuscador = explode("_", $categoriasBuscador);
         }
-        
+
         $codigosArray = GSASearch($term);
         $codigosStr = implode(",", $codigosArray);
 
@@ -728,9 +728,11 @@ class CatalogoController extends Controller {
             if ($objProducto->codigoEspecial != null && $objProducto->codigoEspecial != 0) {
                 $msgCodigoEspecial[$objProducto->codigoEspecial] = $objProducto->objCodigoEspecial;
             }
-
-            foreach ($objProducto->objCategoriaBI->listCategoriasTienda as $objCategoriaTienda) {
-                $formFiltro->listCategoriasTienda[$objCategoriaTienda->idCategoriaTienda] = $objCategoriaTienda->nombreCategoriaTienda;
+            
+            if (!isset($_GET['ajax'])) {
+                foreach ($objProducto->objCategoriaBI->listCategoriasTienda as $objCategoriaTienda) {
+                    $formFiltro->listCategoriasTienda[$objCategoriaTienda->idCategoriaTienda] = $objCategoriaTienda->nombreCategoriaTienda;
+                }
             }
         }
 
