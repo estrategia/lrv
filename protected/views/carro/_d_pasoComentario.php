@@ -39,8 +39,7 @@ $form = $this->beginWidget('CActiveForm', array(
     <p>[Máximo 250 caracteres] <span id="div-comentario-contador"></span></p>
         <?php echo $form->error($modelPago, 'comentario', array('class' => 'text-danger')); ?>
 </div>
-
+<?php $this->endWidget(); ?>
 <div class="bot-button">
     <button data-redirect="confirmacion" data-origin="informacion" id="btn-carropagar-siguiente" class="btn btn-primary">Continuar</button>
 </div>
-<?php $this->endWidget(); ?>
