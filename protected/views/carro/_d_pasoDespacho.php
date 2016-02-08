@@ -80,7 +80,7 @@
         </div>
 
         <?php $this->endWidget(); ?>
-    <?php elseif ($listDirecciones!=null): ?>
+    <?php elseif ($listDirecciones!==null): ?>
         <?php echo CHtml::link('Adicionar direcci&oacute;n', "#", array('data-role' => 'direccion-adicionar-modal', 'data-vista' => 'pasoscompra', 'class' => 'btn btn-primary')); ?>
         <div class="space-1"></div>
 

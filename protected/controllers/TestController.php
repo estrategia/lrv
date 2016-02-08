@@ -1,56 +1,89 @@
 <?php
 
 class TestController extends Controller {
-    
-    public function actionTipoentrega(){
+
+    public function actionBono() {
+        //ini_set('default_socket_timeout', 5);
+        
+        $deftimeout = ini_get( 'default_socket_timeout' );
+        echo "deftimeout: $deftimeout <br><br><br>";
+        
+        $client = new SoapClient(null, array(
+            'location' => Yii::app()->params->webServiceUrl['crmLrv'],
+            'uri' => "",
+            //'exceptions' => 0,
+            'trace' => 1,
+            'connection_timeout'=>5,
+            //'default_socket_timeout' => 5
+        ));
+
+        try {
+            $result = $client->__soapCall("ConsultarBono", array('identificacion' => '12345'));
+
+            echo "REQUEST<br><br>";
+            $req = $client->__getLastRequest();
+            CVarDumper::dump($req, 10, true);
+
+            echo "<br><br>RESULT<br><br>";
+            CVarDumper::dump($result, 10, true);
+        } catch (SoapFault $exc) {
+            echo "SoapFault: " . $exc->getMessage();
+            echo "<br><br>__getLastResponse<br><br>";
+            CVarDumper::dump($client->__getLastResponse(), 10, true);
+        } catch (Exception $exc) {
+            echo "Exception: " . $exc->getMessage();
+        }
+    }
+
+    public function actionTipoentrega() {
         CVarDumper::dump(Yii::app()->session[Yii::app()->params->sesion['tipoEntrega']], 10, true);
     }
 
     public function actionForm() {
         echo "actionForm<br/>";
-        
+
         $modelPago = null;
         if (isset(Yii::app()->session[Yii::app()->params->sesion['carroPagarForm']]) && Yii::app()->session[Yii::app()->params->sesion['carroPagarForm']] != null) {
             echo "si existia<br/>";
             $modelPago = Yii::app()->session[Yii::app()->params->sesion['carroPagarForm']];
             $modelPago->consultarHorario($this->objSectorCiudad);
-        }else{
+        } else {
             echo "no existia<br/>";
             $modelPago = new FormaPagoForm;
             $modelPago->identificacionUsuario = Yii::app()->user->name;
             $modelPago->consultarHorario($this->objSectorCiudad);
         }
-        
+
         echo "consultarHorario<br/>";
         $modelPago->consultarHorario($this->objSectorCiudad);
-        
-        if($modelPago->tieneDomicilio($this->objSectorCiudad)){
+
+        if ($modelPago->tieneDomicilio($this->objSectorCiudad)) {
             echo "si tiene domicilio<br>";
-        }else{
+        } else {
             echo "no tiene domicilio<br>";
         }
         exit();
-        
+
         $form = new FormaPagoForm('informacion');
         $form->pagoInvitado = false;
         $form->identificacionUsuario = 1113618983;
         $form->consultarHorario($this->objSectorCiudad);
         $form->isMobil = false;
         $form->tipoEntrega = Yii::app()->params->entrega['tipo']['domicilio'];
-        
+
         $form->cuotasTarjeta = 1;
-        $form->idDireccionDespacho =  $form->fechaEntrega =  $form->comentario =  $form->numeroTarjeta = $form->telefonoContacto = $form->idDireccionDespacho = '';
-        
-        echo "FORM 1 --<br>" ;
-        CVarDumper::dump($form,10,true);echo "<br>";
-        
+        $form->idDireccionDespacho = $form->fechaEntrega = $form->comentario = $form->numeroTarjeta = $form->telefonoContacto = $form->idDireccionDespacho = '';
+
+        echo "FORM 1 --<br>";
+        CVarDumper::dump($form, 10, true);
+        echo "<br>";
+
         if ($form->validate()) {
             echo "VALIDADO OK";
-        }  else {
+        } else {
             echo "VALIDADO ERROR<br>";
             echo CActiveForm::validate($form);
         }
-        
     }
 
     function get_url_contents($url) {
@@ -387,9 +420,17 @@ class TestController extends Controller {
     }
 
     public function actionCorreo() {
+        $mail_body = '
+    <b>Message Num :</b> 769<br />
+    <b>Message Date :</b> 2013-04-08 09:03:21<br />
+    <b>Name :</b> John Doe<br />
+    <b>Phone :</b> 123456789<br />
+    <b>E-mail :</b> abcdf@somedomain.com<br />
+    <b>Message :</b> Here is the message info<br />
+';
 
         try {
-            sendHtmlEmail("pruebaeñe@gmail.com", "Prueba envio 1", "Esto es una prueba");
+            sendHtmlEmail("miguel.sanchez@eiso.com.co", "prueba correo", $mail_body);
             echo "Enviado";
         } catch (Exception $exc) {
             echo "Error: " . $exc->getMessage() . "<br/><br/>";

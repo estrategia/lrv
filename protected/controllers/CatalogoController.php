@@ -527,8 +527,13 @@ class CatalogoController extends Controller {
     }
 
     public function actionBuscar() {
-        $term = trim(Yii::app()->request->getParam('busqueda', ''));
-        $categoriasBuscador = Yii::app()->request->getParam('categoriasBuscador', array());
+        $term = trim(Yii::app()->request->getParam('busqueda', ''));//$term = isset($_REQUEST['busqueda']) ? $_REQUEST['busqueda'] : '';
+        $categoriasBuscador = Yii::app()->request->getParam('categoriasBuscador', array());//$categoriasBuscador = isset($_REQUEST['categoriasBuscador']) ? $_REQUEST['categoriasBuscador'] : array();
+        
+        if(is_string($categoriasBuscador)){
+            $categoriasBuscador = explode("_", $categoriasBuscador);
+        }
+        
         $codigosArray = GSASearch($term);
         $codigosStr = implode(",", $codigosArray);
 

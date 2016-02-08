@@ -22,3 +22,24 @@
 
     </div>
 </div>
+
+<div class="modal fade" id="modal-modificar-ahorro" tabindex="-1" role="dialog" aria-labelledby="modal-modificar-ahorro-label">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title text-center" id="modal-modificar-ahorro-label">
+                    Modificar ahorro <span></span>
+                    <div class="text-center"></div>
+                </h4>
+            </div>
+            <div class="modal-body">
+                <?php echo $this->renderPartial('_formModificarAhorro', array('model' => new ModificarAhorroForm)) ?>
+            </div>
+            <div class="modal-footer center">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Cancelar</button>
+                <button type="button" class="btn btn-primary" data-role="modificar-ahorro-guardar">Modificar</button>
+            </div>
+        </div>
+    </div>
+</div>

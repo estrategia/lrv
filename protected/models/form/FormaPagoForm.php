@@ -85,7 +85,7 @@ class FormaPagoForm extends CFormModel {
                 $rules[] = array('correoElectronico', 'required', 'on' => 'despacho, informacion, finalizar', 'message' => '{attribute} no puede estar vacío');
                 $rules[] = array('correoElectronico', 'email', 'on' => 'despacho, informacion, finalizar');
                 $rules[] = array('correoElectronico', 'length', 'max' => 50, 'on' => 'despacho, informacion, finalizar');
-                
+
                 $rules[] = array('correoElectronicoContacto', 'safe');
 
                 $rules[] = array('extension, telefono, celular', 'numerical', 'integerOnly' => true, 'on' => 'despacho, informacion, finalizar', 'message' => '{attribute} deber ser número');
@@ -99,9 +99,9 @@ class FormaPagoForm extends CFormModel {
                 //Yii::log("validacion 5\n", CLogger::LEVEL_INFO, 'application');
                 // echo "<br/>PAGO PRESENCIAL<br/>";
                 $rules[] = array('descripcion, nombre, direccion, barrio, extension, telefono, celular', 'safe');
-                
+
                 $rules[] = array('correoElectronico', 'safe');
-                
+
                 $rules[] = array('correoElectronicoContacto', 'required', 'on' => 'entrega, informacion, finalizar', 'message' => '{attribute} no puede estar vacío');
                 $rules[] = array('correoElectronicoContacto', 'email', 'on' => 'entrega, informacion, finalizar');
                 $rules[] = array('correoElectronicoContacto', 'length', 'max' => 50, 'on' => 'entrega, informacion, finalizar');
@@ -281,13 +281,16 @@ class FormaPagoForm extends CFormModel {
 
     public function consultarBono($total) {
         $this->bono = null;
+        //$deftimeout = ini_get('default_socket_timeout');
+        ini_set('default_socket_timeout', 5);
+        $client = new SoapClient(null, array(
+            'location' => Yii::app()->params->webServiceUrl['crmLrv'],
+            'uri' => "",
+            'trace' => 1,
+            'connection_timeout' => 5,
+        ));
 
         try {
-            $client = new SoapClient(null, array(
-                'location' => Yii::app()->params->webServiceUrl['crmLrv'],
-                'uri' => "",
-                'trace' => 1
-            ));
             $result = $client->__soapCall("ConsultarBono", array('identificacion' => $this->identificacionUsuario));
 
             if (!empty($result) && $result[0]->ESTADO == 1 && $result[0]->VALOR_BONO > 0 && $result[0]->VALOR_BONO <= $total) {
@@ -297,8 +300,43 @@ class FormaPagoForm extends CFormModel {
                     'vigenciaFin' => $result[0]->VIGENCIA_FINA
                 );
             }
+            //ini_set('default_socket_timeout', $deftimeout);
+        } catch (SoapFault $exc) {
+            //ini_set('default_socket_timeout', $deftimeout);
+            Yii::log("SoapFault WebService ConsultarBono [$this->identificacionUsuario]\n" . $exc->getMessage() . "\n" . $exc->getTraceAsString() . "\n" . $client->__getLastResponse(), CLogger::LEVEL_INFO, 'application');
         } catch (Exception $exc) {
-            Yii::log("Error WebService ConsultarBono\n" . $exc->getMessage() . "\n" . $exc->getTraceAsString(), CLogger::LEVEL_ERROR, 'application');
+            //ini_set('default_socket_timeout', $deftimeout);
+            Yii::log("Exception WebService ConsultarBono [$this->identificacionUsuario]\n" . $exc->getMessage() . "\n" . $exc->getTraceAsString(), CLogger::LEVEL_INFO, 'application');
+        }
+    }
+
+    public function actualizarBono() {
+        if ($this->bono !== null && $this->usoBono == 1) {
+            //$deftimeout = ini_get('default_socket_timeout');
+            ini_set('default_socket_timeout', 5);
+            $client = new SoapClient(null, array(
+                'location' => Yii::app()->params->webServiceUrl['crmLrv'],
+                'uri' => "",
+                'trace' => 1,
+                'connection_timeout' => 5,
+            ));
+
+            try {
+                $result = $client->__soapCall("ActualizarBono", array('identificacion' => $this->identificacionUsuario));
+                //ini_set('default_socket_timeout', $deftimeout);
+                
+                if (empty($result) || $result[0]->ESTADO == 0) {
+                    throw new Exception("Error al actualizar bono: " . CVarDumper::dumpAsString($result));
+                }
+            } catch (SoapFault $exc) {
+                //ini_set('default_socket_timeout', $deftimeout);
+                Yii::log("SoapFault WebService ActualizarBono [$this->identificacionUsuario]\n" . $exc->getMessage() . "\n" . $exc->getTraceAsString() . "\nRESPONSE WS:\n" . $client->__getLastResponse(), CLogger::LEVEL_INFO, 'application');
+            } catch (Exception $exc) {
+                //ini_set('default_socket_timeout', $deftimeout);
+                Yii::log("Exception WebService ActualizarBono [$this->identificacionUsuario]\n" . $exc->getMessage() . "\n" . $exc->getTraceAsString(), CLogger::LEVEL_INFO, 'application');
+            }
+        }else{
+            Yii::log("Error al actualizar bono - no existe bono consultado [$this->identificacionUsuario]\n" . $exc->getMessage() . "\n" . $exc->getTraceAsString(), CLogger::LEVEL_INFO, 'application');
         }
     }
 
@@ -319,11 +357,11 @@ class FormaPagoForm extends CFormModel {
 
     public function tieneDomicilio($objSectorCiudad) {
         $this->consultarHorario($objSectorCiudad);
-        
-        if ($this->objHorarioCiudadSector==null || ($this->objHorarioCiudadSector != null && $this->objHorarioCiudadSector->sadCiudadSector == 0)) {
+
+        if ($this->objHorarioCiudadSector == null || ($this->objHorarioCiudadSector != null && $this->objHorarioCiudadSector->sadCiudadSector == 0)) {
             return false;
         }
-        
+
         return true;
     }
 

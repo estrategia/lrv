@@ -45,15 +45,20 @@
                                 <button type="button" data-role="modificarpedido" data-action="11" data-item="<?php echo $objItem->idCompraItem ?>" class="btn btn-default btn-sm"><i class="glyphicon glyphicon-refresh"></i></button>
                             </div>
                         </td>
-                        <td>
+                        <td class="text-right">
                             <span style="text-decoration: line-through;"><?php echo Yii::app()->numberFormatter->format(Yii::app()->params->formatoMoneda['patron'], $objItem->precioBaseUnidad, Yii::app()->params->formatoMoneda['moneda']) ?></span>
                             <?php if ($objItem->objImpuesto->porcentaje > 0): ?>
                                 <div style="font-size: 10px;color: #000">Incluye <?php echo Yii::app()->numberFormatter->formatPercentage($objItem->objImpuesto->porcentaje) ?> IVA</div>
                             <?php endif; ?>
                         </td>
-                        <td><?php echo Yii::app()->numberFormatter->format(Yii::app()->params->formatoMoneda['patron'], $objItem->descuentoUnidad, Yii::app()->params->formatoMoneda['moneda']) ?></td>
-                        <td><?php echo Yii::app()->numberFormatter->format(Yii::app()->params->formatoMoneda['patron'], ($objItem->precioBaseUnidad - $objItem->descuentoUnidad), Yii::app()->params->formatoMoneda['moneda']) ?></td>
-                        <td rowspan='2'><?php echo Yii::app()->numberFormatter->format(Yii::app()->params->formatoMoneda['patron'], ($objItem->precioTotalUnidad + $objItem->precioTotalFraccion), Yii::app()->params->formatoMoneda['moneda']) ?></td>
+                        <td class="text-right">
+                            <?php if ($objCompra->objFormaPagoCompra->idFormaPago == Yii::app()->params->formaPago['pasarela']['idPasarela']): ?>
+                                <button style="float: left;" type="button" data-role="modificar-ahorro" data-ahorro="<?php echo $objItem->descuentoUnidad ?>" data-opcion="1" data-item="<?php echo $objItem->idCompraItem ?>" data-descripcion="<?php echo $objItem->descripcion?>" class="btn btn-default btn-sm"><i class="glyphicon glyphicon-refresh"></i></button>
+                            <?php endif; ?>
+                            <?php echo Yii::app()->numberFormatter->format(Yii::app()->params->formatoMoneda['patron'], $objItem->descuentoUnidad, Yii::app()->params->formatoMoneda['moneda']) ?>
+                        </td>
+                        <td class="text-right"><?php echo Yii::app()->numberFormatter->format(Yii::app()->params->formatoMoneda['patron'], ($objItem->precioBaseUnidad - $objItem->descuentoUnidad), Yii::app()->params->formatoMoneda['moneda']) ?></td>
+                        <td rowspan='2' class="text-right"><?php echo Yii::app()->numberFormatter->format(Yii::app()->params->formatoMoneda['patron'], ($objItem->precioTotalUnidad + $objItem->precioTotalFraccion), Yii::app()->params->formatoMoneda['moneda']) ?></td>
                         <td rowspan='2'>
                             <strong><?php echo $objItem->objEstadoItem->estadoItem ?></strong>
                             <?php if ($objItem->objOperador !== null): ?>
@@ -66,7 +71,7 @@
                         </td>
                     </tr>
                     <tr>
-                        <td style="min-width:180px;">
+                        <td style="min-width:180px;"  class="text-center">
                             U.M.V
                             <?php if ($objItem->objProducto->objMedidaFraccion !== null): ?>
                                 <br/>
@@ -77,14 +82,19 @@
                                 <button type="button" data-role="modificarpedido" data-action="12" data-item="<?php echo $objItem->idCompraItem ?>" class="btn btn-default btn-sm"><i class="glyphicon glyphicon-refresh"></i></button>
                             </div>
                         </td> 
-                        <td>
+                        <td class="text-right">
                             <span style="text-decoration: line-through;"><?php echo Yii::app()->numberFormatter->format(Yii::app()->params->formatoMoneda['patron'], $objItem->precioBaseFraccion, Yii::app()->params->formatoMoneda['moneda']) ?></span>
                             <?php if ($objItem->objImpuesto->porcentaje > 0): ?>
                                 <div style="font-size: 10px;color: #000">Incluye <?php echo Yii::app()->numberFormatter->formatPercentage($objItem->objImpuesto->porcentaje) ?> IVA</div>
                             <?php endif; ?>
                         </td>
-                        <td><?php echo Yii::app()->numberFormatter->format(Yii::app()->params->formatoMoneda['patron'], $objItem->descuentoFraccion, Yii::app()->params->formatoMoneda['moneda']) ?></td>
-                        <td><?php echo Yii::app()->numberFormatter->format(Yii::app()->params->formatoMoneda['patron'], ($objItem->precioBaseFraccion - $objItem->descuentoFraccion), Yii::app()->params->formatoMoneda['moneda']) ?></td>
+                        <td class="text-right">
+                            <?php if ($objCompra->objFormaPagoCompra->idFormaPago == Yii::app()->params->formaPago['pasarela']['idPasarela']): ?>
+                                <button style="float: left;" type="button" data-role="modificar-ahorro" data-ahorro="<?php echo $objItem->descuentoFraccion ?>" data-opcion="2" data-item="<?php echo $objItem->idCompraItem ?>" data-descripcion="<?php echo $objItem->descripcion?>" class="btn btn-default btn-sm"><i class="glyphicon glyphicon-refresh"></i></button>
+                            <?php endif; ?>
+                            <?php echo Yii::app()->numberFormatter->format(Yii::app()->params->formatoMoneda['patron'], $objItem->descuentoFraccion, Yii::app()->params->formatoMoneda['moneda']) ?>
+                        </td>
+                        <td class="text-right"><?php echo Yii::app()->numberFormatter->format(Yii::app()->params->formatoMoneda['patron'], ($objItem->precioBaseFraccion - $objItem->descuentoFraccion), Yii::app()->params->formatoMoneda['moneda']) ?></td>
                     </tr>
                 <?php else: ?>
                     <?php if ($objItem->unidadesCedi > 0): ?>
@@ -105,15 +115,20 @@
                                     <button type="button" data-role="modificarpedido" data-action="11" data-item="<?php echo $objItem->idCompraItem ?>" class="btn btn-default btn-sm"><i class="glyphicon glyphicon-refresh"></i></button>
                                 </div>
                             </td>
-                            <td rowspan='2'>
+                            <td rowspan='2' class="text-right">
                                 <span style="text-decoration: line-through;"><?php echo Yii::app()->numberFormatter->format(Yii::app()->params->formatoMoneda['patron'], $objItem->precioBaseUnidad, Yii::app()->params->formatoMoneda['moneda']) ?></span>
                                 <?php if ($objItem->objImpuesto->porcentaje > 0): ?>
                                     <div style="font-size: 10px;color: #000">Incluye <?php echo Yii::app()->numberFormatter->formatPercentage($objItem->objImpuesto->porcentaje) ?> IVA</div>
                                 <?php endif; ?>
                             </td>
-                            <td rowspan='2'><?php echo Yii::app()->numberFormatter->format(Yii::app()->params->formatoMoneda['patron'], $objItem->descuentoUnidad, Yii::app()->params->formatoMoneda['moneda']) ?></td>
-                            <td rowspan='2'><?php echo Yii::app()->numberFormatter->format(Yii::app()->params->formatoMoneda['patron'], ($objItem->precioBaseUnidad - $objItem->descuentoUnidad), Yii::app()->params->formatoMoneda['moneda']) ?></td>
-                            <td rowspan='2'><?php echo Yii::app()->numberFormatter->format(Yii::app()->params->formatoMoneda['patron'], ($objItem->precioTotalUnidad + $objItem->precioTotalFraccion), Yii::app()->params->formatoMoneda['moneda']) ?></td>
+                            <td rowspan='2' class="text-right">
+                                <?php if ($objCompra->objFormaPagoCompra->idFormaPago == Yii::app()->params->formaPago['pasarela']['idPasarela']): ?>
+                                    <button style="float: left;" type="button" data-role="modificar-ahorro" data-ahorro="<?php echo $objItem->descuentoUnidad ?>" data-opcion="1" data-item="<?php echo $objItem->idCompraItem ?>" data-descripcion="<?php echo $objItem->descripcion?>" class="btn btn-default btn-sm"><i class="glyphicon glyphicon-refresh"></i></button>
+                                <?php endif; ?>
+                                <?php echo Yii::app()->numberFormatter->format(Yii::app()->params->formatoMoneda['patron'], $objItem->descuentoUnidad, Yii::app()->params->formatoMoneda['moneda']) ?>
+                            </td>
+                            <td rowspan='2' class="text-right"><?php echo Yii::app()->numberFormatter->format(Yii::app()->params->formatoMoneda['patron'], ($objItem->precioBaseUnidad - $objItem->descuentoUnidad), Yii::app()->params->formatoMoneda['moneda']) ?></td>
+                            <td rowspan='2' class="text-right"><?php echo Yii::app()->numberFormatter->format(Yii::app()->params->formatoMoneda['patron'], ($objItem->precioTotalUnidad + $objItem->precioTotalFraccion), Yii::app()->params->formatoMoneda['moneda']) ?></td>
                             <td rowspan='2'>
                                 <strong><?php echo $objItem->objEstadoItem->estadoItem ?></strong>
                                 <?php if ($objItem->objOperador !== null): ?>
@@ -152,15 +167,20 @@
                                     <button type="button" data-role="modificarpedido" data-action="11" data-item="<?php echo $objItem->idCompraItem ?>" class="btn btn-default btn-sm"><i class="glyphicon glyphicon-refresh"></i></button>
                                 </div>
                             </td>
-                            <td>
+                            <td class="text-right">
                                 <span style="text-decoration: line-through;"><?php echo Yii::app()->numberFormatter->format(Yii::app()->params->formatoMoneda['patron'], $objItem->precioBaseUnidad, Yii::app()->params->formatoMoneda['moneda']) ?></span>
                                 <?php if ($objItem->objImpuesto->porcentaje > 0): ?>
                                     <div style="font-size: 10px;color: #000">Incluye <?php echo Yii::app()->numberFormatter->formatPercentage($objItem->objImpuesto->porcentaje) ?> IVA</div>
                                 <?php endif; ?>
                             </td>
-                            <td><?php echo Yii::app()->numberFormatter->format(Yii::app()->params->formatoMoneda['patron'], $objItem->descuentoUnidad, Yii::app()->params->formatoMoneda['moneda']) ?></td>
-                            <td><?php echo Yii::app()->numberFormatter->format(Yii::app()->params->formatoMoneda['patron'], ($objItem->precioBaseUnidad - $objItem->descuentoUnidad), Yii::app()->params->formatoMoneda['moneda']) ?></td>
-                            <td><?php echo Yii::app()->numberFormatter->format(Yii::app()->params->formatoMoneda['patron'], ($objItem->precioTotalUnidad + $objItem->precioTotalFraccion), Yii::app()->params->formatoMoneda['moneda']) ?></td>
+                            <td class="text-right">
+                                <?php if ($objCompra->objFormaPagoCompra->idFormaPago == Yii::app()->params->formaPago['pasarela']['idPasarela']): ?>
+                                    <button style="float: left;" type="button" data-role="modificar-ahorro" data-ahorro="<?php echo $objItem->descuentoUnidad ?>" data-opcion="1" data-item="<?php echo $objItem->idCompraItem ?>" data-descripcion="<?php echo $objItem->descripcion?>" class="btn btn-default btn-sm"><i class="glyphicon glyphicon-refresh"></i></button>
+                                <?php endif; ?>
+                                <?php echo Yii::app()->numberFormatter->format(Yii::app()->params->formatoMoneda['patron'], $objItem->descuentoUnidad, Yii::app()->params->formatoMoneda['moneda']) ?>
+                            </td>
+                            <td class="text-right"><?php echo Yii::app()->numberFormatter->format(Yii::app()->params->formatoMoneda['patron'], ($objItem->precioBaseUnidad - $objItem->descuentoUnidad), Yii::app()->params->formatoMoneda['moneda']) ?></td>
+                            <td class="text-right"><?php echo Yii::app()->numberFormatter->format(Yii::app()->params->formatoMoneda['patron'], ($objItem->precioTotalUnidad + $objItem->precioTotalFraccion), Yii::app()->params->formatoMoneda['moneda']) ?></td>
                             <td>
                                 <strong><?php echo $objItem->objEstadoItem->estadoItem ?></strong>
                                 <?php if ($objItem->objOperador !== null): ?>
@@ -194,10 +214,10 @@
                                 <button type="button" data-role="modificarpedido" data-action="2" data-compra="<?php echo $objItem->idCompra ?>" data-combo="<?php echo $objItem->idCombo ?>" class="btn btn-default btn-sm"><i class="glyphicon glyphicon-refresh"></i></button>
                             </div>
                         </td>
-                        <td rowspan="<?php echo count($arrItem['items']) ?>"><?php echo Yii::app()->numberFormatter->format(Yii::app()->params->formatoMoneda['patron'], $arrItem['valor'], Yii::app()->params->formatoMoneda['moneda']) ?></td>
+                        <td rowspan="<?php echo count($arrItem['items']) ?>" class="text-right"><?php echo Yii::app()->numberFormatter->format(Yii::app()->params->formatoMoneda['patron'], $arrItem['valor'], Yii::app()->params->formatoMoneda['moneda']) ?></td>
                         <td rowspan="<?php echo count($arrItem['items']) ?>">NA</td>
-                        <td rowspan="<?php echo count($arrItem['items']) ?>"><?php echo Yii::app()->numberFormatter->format(Yii::app()->params->formatoMoneda['patron'], $arrItem['valor'], Yii::app()->params->formatoMoneda['moneda']) ?></td>
-                        <td rowspan="<?php echo count($arrItem['items']) ?>"><?php echo Yii::app()->numberFormatter->format(Yii::app()->params->formatoMoneda['patron'], ($arrItem['valor'] * $objItem->unidades), Yii::app()->params->formatoMoneda['moneda']) ?><br></td>
+                        <td rowspan="<?php echo count($arrItem['items']) ?>" class="text-right"><?php echo Yii::app()->numberFormatter->format(Yii::app()->params->formatoMoneda['patron'], $arrItem['valor'], Yii::app()->params->formatoMoneda['moneda']) ?></td>
+                        <td rowspan="<?php echo count($arrItem['items']) ?>" class="text-right"><?php echo Yii::app()->numberFormatter->format(Yii::app()->params->formatoMoneda['patron'], ($arrItem['valor'] * $objItem->unidades), Yii::app()->params->formatoMoneda['moneda']) ?><br></td>
                         <td rowspan="<?php echo count($arrItem['items']) ?>">
                             <strong><?php echo $objItem->objEstadoItem->estadoItem ?></strong>
                             <?php if ($objItem->objOperador !== null): ?>
@@ -220,7 +240,7 @@
             <th></th>
             <th></th>
             <th><strong>Subtotal</strong></th>
-            <th><span><?php echo Yii::app()->numberFormatter->format(Yii::app()->params->formatoMoneda['patron'], $objCompra->subtotalCompra, Yii::app()->params->formatoMoneda['moneda']) ?></span></th>
+            <th style="text-align: right;"><span><?php echo Yii::app()->numberFormatter->format(Yii::app()->params->formatoMoneda['patron'], $objCompra->subtotalCompra, Yii::app()->params->formatoMoneda['moneda']) ?></span></th>
             <th></th>
             <th></th>
         </tr> 

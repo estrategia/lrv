@@ -167,6 +167,36 @@ class PedidoController extends ControllerOperator {
         }
     }
 
+    public function actionModificarahorro() {
+        if (!isset($_POST['ModificarAhorroForm'])) {
+            echo CJSON::encode(array('result' => 'error', 'response' => 'Solicitud invalida.'));
+            Yii::app()->end();
+        }
+
+        $model = new ModificarAhorroForm;
+        $model->attributes = $_POST['ModificarAhorroForm'];
+
+        if ($model->validate()) {
+            try {
+                $model->objItem->modificarDescuento($model->descuento, $model->opcion, Yii::app()->controller->module->user->id);
+                echo CJSON::encode(array(
+                    'result' => 'ok',
+                    'response' => array(
+                        'msg' => 'Ahorro modificado',
+                        'htmlDetalle' => $this->renderPartial('/admin/_adminPedido', array('objCompra' => $model->objItem->objCompra), true),
+                        'htmlEncabezado' => $this->renderPartial('/admin/_encabezadoPedido', array('objCompra' => $model->objItem->objCompra), true)
+                )));
+                Yii::app()->end();
+            } catch (Exception $exc) {
+                echo CJSON::encode(array('result' => 'error', 'response' => $exc->getMessage()));
+                Yii::app()->end();
+            }
+        } else {
+            echo CActiveForm::validate($model);
+            Yii::app()->end();
+        }
+    }
+
     public function actionModificar() {
         if (!Yii::app()->request->isPostRequest) {
             echo CJSON::encode(array('result' => 'error', 'response' => 'Solicitud invalida.'));
@@ -902,26 +932,26 @@ class PedidoController extends ControllerOperator {
         //sendHtmlEmail("juan.aragon@eiso.com.co, legnardz@hotmail.com, miguel.sanchez@eiso.com.co", Yii::app()->params->asunto['pedidoRemitido']  . " - " . date("YmdHis"), $htmlCorreo);
     }
 
-    /*public function actionCorreo($idCompra) {
-        try {
-            $objCompra = Compras::model()->find(array(
-                'with' => array("objUsuario", "objPuntoVenta", "objCompraDireccion" => array("with" => array("objCiudad", "objSector")),
-                    "objFormaPagoCompra" => array("with" => "objFormaPago"),
-                    "objFormaPagoCompra", "objEstadoCompra",
-                    "objOperador", "listItems" => array("with" => array("objProducto", "listBeneficios", "objImpuesto", "objEstadoItem"),
-                        "listObservaciones" => array("with" => array("objTipoObservacion")))),
-                'condition' => 't.idCompra=:id',
-                'params' => array(
-                    ':id' => $idCompra,
-                )
-            ));
+    /* public function actionCorreo($idCompra) {
+      try {
+      $objCompra = Compras::model()->find(array(
+      'with' => array("objUsuario", "objPuntoVenta", "objCompraDireccion" => array("with" => array("objCiudad", "objSector")),
+      "objFormaPagoCompra" => array("with" => "objFormaPago"),
+      "objFormaPagoCompra", "objEstadoCompra",
+      "objOperador", "listItems" => array("with" => array("objProducto", "listBeneficios", "objImpuesto", "objEstadoItem"),
+      "listObservaciones" => array("with" => array("objTipoObservacion")))),
+      'condition' => 't.idCompra=:id',
+      'params' => array(
+      ':id' => $idCompra,
+      )
+      ));
 
-            $this->enviarEmail($objCompra);
-            echo "";
-        } catch (Exception $exc) {
-            echo "Error: " . $exc->getMessage();
-        }
-    }*/
+      $this->enviarEmail($objCompra);
+      echo "";
+      } catch (Exception $exc) {
+      echo "Error: " . $exc->getMessage();
+      }
+      } */
 
     public function actionRemitirBorrar() {
         $idCompra = Yii::app()->getRequest()->getPost('idCompra');

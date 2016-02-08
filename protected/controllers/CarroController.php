@@ -3033,7 +3033,13 @@ class CarroController extends Controller {
                 'objFormasPago' => $objFormasPago,
                 'nombreUsuario' => $nombreUsuario), true, true);
             $htmlCorreo = $this->renderPartial('/usuario/_correo', array('contenido' => $contenidoCorreo), true, true);
-            sendHtmlEmail($correoUsuario, $asuntoCorreo, $htmlCorreo);
+            
+            try {
+                sendHtmlEmail($correoUsuario, $asuntoCorreo, $htmlCorreo);
+            } catch (Exception $ce) {
+                Yii::log("Error enviando correo al registrar compra #$objCompra->idCompra\n" . $ce->getMessage() . "\n" . $ce->getTraceAsString(), CLogger::LEVEL_INFO, 'application');
+            }
+            
             $transaction->commit();
 
             /* if ($modelPago->bono !== null && $modelPago->usoBono == 1) {
@@ -3041,20 +3047,7 @@ class CarroController extends Controller {
               } */
 
             if ($objFormasPago->valorBono > 0) {
-                try {
-                    $clientBono = new SoapClient(null, array(
-                        'location' => Yii::app()->params->webServiceUrl['crmLrv'],
-                        'uri' => "",
-                        'trace' => 1
-                    ));
-                    $resultBono = $clientBono->__soapCall("ActualizarBono", array('identificacion' => $objCompra->identificacionUsuario));
-
-                    if (empty($resultBono) || $resultBono[0]->ESTADO == 0) {
-                        throw new Exception("Error al actualizar bono");
-                    }
-                } catch (SoapFault $soapExc) {
-                    throw new Exception("Error al actualizar bono");
-                }
+                $modelPago->actualizarBono();
             }
 
             return array(
