@@ -954,7 +954,7 @@ class UsuarioController extends Controller {
         }
         
         if(Yii::app()->user->isGuest){
-            echo CJSON::encode(array('result' => 'error', 'response' => 'Debe loguearse antes de crear lista'));
+            echo CJSON::encode(array('result' => 'error', 'response' => 'Debe autenticarse antes de crear lista'));
             Yii::app()->end();
         }
 
