@@ -1130,18 +1130,20 @@ $(document).on('click', "input[id^='FiltroForm_listCategoriasTienda_']", functio
     filtrarListaProductos();
 });
 
-
 $(document).on('click', "a[data-role='filtro-listaproductos-reset']", function() {
     $('#form-filtro-listaproductos').clearForm();
     var value = [parseInt($('#FiltroForm_precio').attr('data-slider-min')), parseInt($('#FiltroForm_precio').attr('data-slider-max'))];
-    setPrecioFiltroForm(value);
+    setPrecioFiltroForm(value,false);
     $('#FiltroForm_precio').slider('setValue', value);
     $('#calificacion-filtro-listaproductos').raty('score', 0);
     $('#calificacion-filtro-listaproductos').attr('data-score', -1);
 
     if ($(this).attr('data-tipo') == '1') {
         recalcularFiltros(2);
+    }else{
+        filtrarListaProductos();
     }
+    
 });
 
 function recalcularFiltros(tipo) {
@@ -1268,17 +1270,23 @@ $(document).on('change', "select[data-role='orden-listaproductos']", function() 
     });
 });
 
-$(document).on('change', '#FiltroForm_precio', function() {
+$(document).on('slide', '#FiltroForm_precio', function() {
     var value = $('#FiltroForm_precio').slider('getValue');
-    setPrecioFiltroForm(value);
+    setPrecioFiltroForm(value,false);
 });
 
-function setPrecioFiltroForm(value) {
+$(document).on('slideStop', '#FiltroForm_precio', function() {
+    var value = $('#FiltroForm_precio').slider('getValue');
+    setPrecioFiltroForm(value,true);
+});
+
+function setPrecioFiltroForm(value,filtrar) {
     $('#FiltroForm_precio_0_text').val("$" + format(value[0]));
     $('#FiltroForm_precio_1_text').val("$" + format(value[1]));
     $('#FiltroForm_precio_0').val(value[0]);
     $('#FiltroForm_precio_1').val(value[1]);
-    filtrarListaProductos();
+    if(filtrar)
+        filtrarListaProductos();
 }
 
 $(document).on('change', '#FiltroForm_precio_0_text', function() {
