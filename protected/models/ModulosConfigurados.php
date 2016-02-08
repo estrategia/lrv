@@ -115,7 +115,7 @@ class ModulosConfigurados extends CActiveRecord {
 
         $criteria = new CDbCriteria;
 
-        $criteria->order ="idModulo DESC";
+        $criteria->order ="t.idModulo DESC";
         $criteria->compare('idModulo', $this->idModulo);
         $criteria->compare('tipo', $this->tipo);
         $criteria->compare('inicio', $this->inicio, true);
