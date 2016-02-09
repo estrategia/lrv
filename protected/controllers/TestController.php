@@ -1,6 +1,10 @@
 <?php
 
 class TestController extends Controller {
+    
+    public function actionIframe(){
+        $this->render('iframe');
+    }
 
     public function actionBono() {
         //ini_set('default_socket_timeout', 5);
