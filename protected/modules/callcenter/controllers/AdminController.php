@@ -329,7 +329,7 @@ class AdminController extends ControllerOperator {
                  Yii::app()->end();
             }
 
-          //  $resultBono = $clientBono->__soapCall('ActualizarBono', array('identificacion' => $identificacion, 'tipo' => '1'));
+            $resultBono = $clientBono->__soapCall('ActualizarBono', array('identificacion' => $identificacion, 'tipo' => '1'));
 
             if ($resultBono[0]->ESTADO == 1) {
                 
