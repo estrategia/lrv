@@ -4,17 +4,17 @@ class TestController extends Controller {
 
     public function actionBono() {
         //ini_set('default_socket_timeout', 5);
-        
+
         $deftimeout = ini_get( 'default_socket_timeout' );
         echo "deftimeout: $deftimeout <br><br><br>";
-        
+
         $client = new SoapClient(null, array(
             'location' => Yii::app()->params->webServiceUrl['crmLrv'],
             'uri' => "",
             //'exceptions' => 0,
             'trace' => 1,
             'connection_timeout'=>5,
-            //'default_socket_timeout' => 5
+                //'default_socket_timeout' => 5
         ));
 
         try {
@@ -1274,11 +1274,11 @@ class TestController extends Controller {
         echo "<br><br><br>";
         CVarDumper::dump(Yii::app()->session[Yii::app()->params->sesion['sectorCiudadEntrega']], 10, true);
     }
-    
+
     public function actionRecordarCorreos(){
-       
-       $dia = Date("d");
-       $listasPersonales = ListasPersonales::model()->findAll(array(
+
+        $dia = Date("d");
+        $listasPersonales = ListasPersonales::model()->findAll(array(
             'with' => array('listDetalle' => array('with' => array ('objProducto' => array ('with' => 'listImagenes'))),'objUsuario',),
             'condition' => "(t.diaRecordar-t.diasAnticipacion =:diaRecordar OR ((DATEDIFF(now(),t.fechaRecordar)-t.diasAnticipacion)%t.diasRecordar) = 0 )AND 
                              t.estadoLista = 1",
@@ -1286,13 +1286,13 @@ class TestController extends Controller {
                 'diaRecordar' => Date("d")
             )
         ));
-       
+
        foreach ($listasPersonales as $listaPersonal){
-           
-          $correo = $this->renderPartial('\\common\correoRecordacion', array(
-                        'listasPersonales' => $listasPersonales
-                   ), true, false);
-       }
+
+            $correo = $this->renderPartial('\\common\correoRecordacion', array(
+                'listasPersonales' => $listasPersonales
+                    ), true, false);
+        }
        
     }
 
