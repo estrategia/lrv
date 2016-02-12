@@ -22,7 +22,7 @@ class UserIdentity extends CUserIdentity {
      * y que corresponda con su password
      * @return boolean si autenticacion es correcta
      */
-    public function authenticate($invitado = false) {
+    public function authenticate($automatico = false) {
         $usuario = Usuario::model()->find(array(
             'with' => array('objUsuarioExtendida', 'objPerfil'),
             'condition' => 't.identificacionUsuario=:cedula',
@@ -46,7 +46,7 @@ class UserIdentity extends CUserIdentity {
             $this->errorCode = self::ERROR_USERNAME_INVALID;
         } else if ($usuario->activo != Yii::app()->params->usuario['estado']['activo']) {
             $this->errorCode = self::ERROR_USER_INACTIVE;
-        } else if (!$invitado && !$usuario->validarContrasena($this->password)) {
+        } else if (!$automatico && !$usuario->validarContrasena($this->password)) {
             $this->errorCode = self::ERROR_PASSWORD_INVALID;
         } else {
             $nombre = explode(' ', $usuario->nombre);
@@ -76,5 +76,48 @@ class UserIdentity extends CUserIdentity {
 
         return !$this->errorCode;
     }
+    
+    /*
+    public function authenticateAutomatic() {
+        $usuario = Usuario::model()->find(array(
+            'with' => array('objUsuarioExtendida', 'objPerfil'),
+            'condition' => 't.identificacionUsuario=:cedula',
+            'params' => array(
+                ':cedula' => $this->username
+            )
+        ));
+        
+        if ($usuario === null) {
+            $this->errorCode = self::ERROR_USERNAME_INVALID;
+        } else if ($usuario->activo != Yii::app()->params->usuario['estado']['activo']) {
+            $this->errorCode = self::ERROR_USER_INACTIVE;
+        } else {
+            $nombre = explode(' ', $usuario->nombre);
+            //$this->_shortName = $nombre[0];
 
+            $this->setState('lastLoginTime', $usuario->fechaUltimoAcceso);
+            $this->setState('shortName', $nombre[0]);
+
+            $this->errorCode = self::ERROR_NONE;
+            $usuario->fechaUltimoAcceso = new CDbExpression('NOW()');
+
+            if($usuario->validate()) {
+                try {
+                    $usuario->save(); //para actualizar hora de ultimo acceso
+                    Yii::app()->session[Yii::app()->params->usuario['sesion']] = $usuario;
+                    $password_encriptado = encrypt($this->password,$this->username);
+                    _setCookie(Yii::app()->params->usuario['sesion'], "$this->username-$password_encriptado");
+                    //Yii::app()->shoppingCart->setCodigoPerfil($usuario->codigoPerfil);
+                } catch (Exception $exc) {
+                    $this->errorCode = self::ERROR_USER_ACCESS;
+                    Yii::log($exc->getTraceAsString(), CLogger::LEVEL_ERROR, 'application');
+                }
+            } else {
+                $this->errorCode = self::ERROR_USER_VALIDATE;
+            }
+        }
+
+        return !$this->errorCode;
+    }
+*/
 }

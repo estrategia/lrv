@@ -10,11 +10,13 @@
                         <div>
                             <div class="space-1"></div>
                             <?php echo CHtml::link('Vaciar carrito', '#', array('data-role' => 'carrovaciar', 'class' => 'btn btn-default', 'role' => "button")); ?>
-                            <?php echo CHtml::link('Guardar en la lista personal', '#', array('data-role' => 'lstpersonalguardar', 'data-tipo' => 3, 'data-codigo' => 0, 'class' => 'btn btn-default', 'role' => "button")); ?>
+                            <?php if (!isset($opcion) || !$opcion == 1): ?>
+                                <?php echo CHtml::link('Guardar en la lista personal', '#', array('data-role' => 'lstpersonalguardar', 'data-tipo' => 3, 'data-codigo' => 0, 'class' => 'btn btn-default', 'role' => "button")); ?>
+                            <?php endif; ?>
                         </div>
                     </div>
                 </div>
-            <div class="space-1"></div>
+                <div class="space-1"></div>
             <?php endif; ?>
             <div class="row">
                 <div class="col-md-12">
@@ -102,7 +104,9 @@
                         <div>
                             <div class="space-1"></div>
                             <?php echo CHtml::link('Vaciar carrito', '#', array('data-role' => 'carrovaciar', 'class' => 'btn btn-default', 'role' => "button")); ?>
-                            <?php echo CHtml::link('Guardar en la lista personal', '#', array('data-role' => 'lstpersonalguardar', 'data-tipo' => 3, 'data-codigo' => 0, 'class' => 'btn btn-default', 'role' => "button")); ?>
+                            <?php if (!isset($opcion) || !$opcion == 1): ?>
+                                <?php echo CHtml::link('Guardar en la lista personal', '#', array('data-role' => 'lstpersonalguardar', 'data-tipo' => 3, 'data-codigo' => 0, 'class' => 'btn btn-default', 'role' => "button")); ?>
+                            <?php endif; ?>
                         </div>
                     </div>
                 </div>

@@ -175,6 +175,7 @@ return array(
             'estado' => array('activo' => 1, 'inactivo' => 0),
             'estadoNombre' => array(0 => 'Inactivo', 1 => 'Activo'),
         ),
+        'claveLista' => 'listapersonallrv', 
         'sesion' => array(
             'cookieExpiracion' => 2592000, //1 dia 86400 --> 30 dias
             'usuario' => 'larebaja.online.usuario',
@@ -191,7 +192,8 @@ return array(
             'productosBusquedaFiltro' => 'larebaja.online.productos.busqueda.filtro',
             'productosBusquedaCategoria' => 'larebaja.online.productos.busqueda.categoria',
             'carroPagarForm' => 'larebaja.online.carro.pagar.form',
-            'productosComparar' => 'larebaja.online.productos.agregarProductos'
+            'productosComparar' => 'larebaja.online.productos.agregarProductos',
+            'productosNoAgregados' => 'larebaja.online.productos.noAgregados',
         ),
         'entrega' => array(
             'listaTipos' => array(1, 2),

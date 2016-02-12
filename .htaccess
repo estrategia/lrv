@@ -1,3 +1,7 @@
+RewriteCond %{REQUEST_URI} catalogo/index/verproducto/producto/([A-Za-z0-9\s\-]+)/productoId/([0-9]+)
+RewriteRule ^.*$ http://localhost/lrv/catalogo/producto/producto/%2/descripcion/%1 [L,R=301]
+
+
 ## EXPIRES CACHING ##
 <IfModule mod_expires.c>
 ExpiresActive On

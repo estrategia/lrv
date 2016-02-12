@@ -55,7 +55,30 @@ return array(
     ),
     'params' => array(
         'webServiceUrl' => array(
-            'sincronizarBeneficiosSIICOP' => 'http://192.168.40.137/copservir/beneficios/sweb/wslrv'
+            'sincronizarBeneficiosSIICOP' => 'http://192.168.40.137/copservir/beneficios/sweb/wslrv',
+            'envioCorreosRecordatorios' => 'http://localhost/lrv/sweb/wslrv'
         ),
+        'claveLista' => 'listapersonallrv', 
+        'producto' => array(
+            'tipoImagen' => array(
+                'mini' => 1,
+                'grande' => 2,
+            ),
+            'tipoImagenSelect' => array(
+                1 => 'mini',
+                2 => 'grande'
+            ),
+            'noImagen' => array(
+                'mini' => '/images/productos/thumb/noimage.png',
+                'grande' => '/images/productos/noimage.png',
+            )
+        ),
+        'carpetaImagen' => array(
+            'categorias' => '/images/menu/',
+            'codigoEspecial' => '/images/codigoespecial/',
+            'productos' => array(1 => '/images/productos/thumb/', 2 => '/images/productos/'),
+            'combos' => array(1 => '/images/combos/thumb/', 2 => '/images/combos/'),
+            'menuDesktop' => '/images/menu/desktop/',
+        )
     ),
 );

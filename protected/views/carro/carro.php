@@ -24,7 +24,9 @@
             -->
             <?php echo CHtml::link('Pagar', CController::createUrl('/carro/pagar'), array('data-ajax' => 'false', 'class' => 'ui-btn ui-corner-all ui-shadow ui-btn-r')); ?>
             <?php echo CHtml::link('Vaciar carrito', '#', array('data-role' => 'carrovaciar', 'class' => 'ui-btn ui-corner-all ui-shadow ui-btn-n')); ?>
-            <?php echo CHtml::link('Guardar en la lista personal', '#', array('data-role' => 'lstpersonalguardar', 'data-tipo' => 3, 'data-codigo' => 0, 'class' => 'ui-btn ui-corner-all ui-shadow ui-btn-n btn_add_lst_pr')); ?>
+            <?php if (!isset($opcion) || $opcion != 1): ?>
+                <?php echo CHtml::link('Guardar en la lista personal', '#', array('data-role' => 'lstpersonalguardar', 'data-tipo' => 3, 'data-codigo' => 0, 'class' => 'ui-btn ui-corner-all ui-shadow ui-btn-n btn_add_lst_pr')); ?>
+            <?php endif;?>
         </div>
 
         <?php $listPositionBodega = array(); ?>
@@ -106,8 +108,27 @@
             -->
             <?php echo CHtml::link('Pagar', CController::createUrl('/carro/pagar'), array('data-ajax' => 'false', 'class' => 'ui-btn ui-corner-all ui-shadow ui-btn-r')); ?>
             <?php echo CHtml::link('Vaciar carrito', '#', array('data-role' => 'carrovaciar', 'class' => 'ui-btn ui-corner-all ui-shadow ui-btn-n')); ?>
-            <?php echo CHtml::link('Guardar en la lista personal', '#', array('data-role' => 'lstpersonalguardar', 'data-tipo' => 3, 'data-codigo' => 0, 'class' => 'ui-btn ui-corner-all ui-shadow ui-btn-n btn_add_lst_pr')); ?>
+            <?php if (!isset($opcion) || !$opcion == 1): ?>
+                <?php echo CHtml::link('Guardar en la lista personal', '#', array('data-role' => 'lstpersonalguardar', 'data-tipo' => 3, 'data-codigo' => 0, 'class' => 'ui-btn ui-corner-all ui-shadow ui-btn-n btn_add_lst_pr')); ?>
+            <?php endif;?>
         </div>
-
+        <?php if (isset($opcion) && $opcion == 1): ?>
+            <?php if (isset(Yii::app()->session[Yii::app()->params->sesion['productosNoAgregados']]) && count(Yii::app()->session[Yii::app()->params->sesion['productosNoAgregados']]) > 0): ?> 
+                <div class="productosRelacionados ui-content">
+                    <h3>Estos productos no se agregaron porque se encuentran agotados</h3>
+                    <div id="slide-relacionados" class="owl-carousel owl-theme">
+                        <?php foreach (Yii::app()->session[Yii::app()->params->sesion['productosNoAgregados']] as $position): ?>
+                            <div class="item"><?php
+                                $this->renderPartial('_productoAgotado', array(
+                                    'objProducto' => $position,
+                                    'objPrecio' => new PrecioProducto($position, Yii::app()->session[Yii::app()->params->sesion['sectorCiudadEntrega']], Yii::app()->shoppingCart->getCodigoPerfil()),
+                                ));
+                                ?>
+                            </div>
+                        <?php endforeach; ?>
+                    </div>
+                </div>
+            <?php endif; ?>
+        <?php endif; ?>
     <?php endif; ?>
 </div>

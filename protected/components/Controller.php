@@ -44,8 +44,8 @@ class Controller extends CController {
             $this->layout = '//layouts/desktop';
         }
 
-        //$this->isMobile = true;
-        //$this->layout = '//layouts/mobile';
+//        $this->isMobile = true;
+//        $this->layout = '//layouts/mobile';
         $this->verificarDispositivo();
 
         if (isset(Yii::app()->session[Yii::app()->params->sesion['sectorCiudadEntrega']]) && Yii::app()->session[Yii::app()->params->sesion['sectorCiudadEntrega']] != null) {
@@ -72,7 +72,7 @@ class Controller extends CController {
         if (Yii::app()->user->isGuest) {
             $cookieUsuario = _getCookie(Yii::app()->params->usuario['sesion']);
             if ($cookieUsuario != null) {
-                $cookieUsuario = split("-", $cookieUsuario);
+                $cookieUsuario = explode("-", $cookieUsuario);
                 $password_desencriptado = decrypt($cookieUsuario[1], $cookieUsuario[0]);
                 $model = new LoginForm;
                 $model->username = $cookieUsuario[0];
@@ -84,7 +84,7 @@ class Controller extends CController {
         if ($this->objSectorCiudad == null) {
             $cookieSectorCiudad = _getCookie(Yii::app()->params->sesion['sectorCiudadEntrega']);
             if ($cookieSectorCiudad != null) {
-                $cookieSectorCiudad = split("-", $cookieSectorCiudad);
+                $cookieSectorCiudad = explode("-", $cookieSectorCiudad);
 
                 $objSectorCiudad = SectorCiudad::model()->find(array(
                     'with' => array('objCiudad', 'objSector'),

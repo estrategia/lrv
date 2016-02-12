@@ -1051,8 +1051,8 @@ class CarroController extends Controller {
         Yii::app()->end();
     }
 
-    public function actionIndex() {
-        $this->render('index', array('vistaCarro' => $this->isMobile ? "/carro/carro" : "/carro/d_carro"));
+    public function actionIndex($opcion = null) {
+        $this->render('index', array('vistaCarro' => $this->isMobile ? "/carro/carro" : "/carro/d_carro", 'opcion' => $opcion));
         Yii::app()->end();
     }
 
