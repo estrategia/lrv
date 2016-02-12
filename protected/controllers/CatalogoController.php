@@ -394,18 +394,21 @@ class CatalogoController extends Controller {
 
         $formOrdenamiento = new OrdenamientoForm;
         $formFiltro = new FiltroForm;
-        Yii::app()->session[Yii::app()->params->sesion['productosBusquedaOrden']] = null;
-        Yii::app()->session[Yii::app()->params->sesion['productosBusquedaFiltro']] = null;
+        //Yii::log("Filtrar:Filtro0\n" . CVarDumper::dumpAsString(Yii::app()->session[Yii::app()->params->sesion['productosBusquedaFiltro']]), CLogger::LEVEL_INFO, 'application');
 
         if (isset($_POST['OrdenamientoForm'])) {
+            Yii::app()->session[Yii::app()->params->sesion['productosBusquedaOrden']] = null;
             $formOrdenamiento->attributes = $_POST['OrdenamientoForm'];
             Yii::app()->session[Yii::app()->params->sesion['productosBusquedaOrden']] = $formOrdenamiento;
         }
 
         if (isset($_POST['FiltroForm'])) {
+            Yii::app()->session[Yii::app()->params->sesion['productosBusquedaFiltro']] = null;
             $formFiltro->attributes = $_POST['FiltroForm'];
             Yii::app()->session[Yii::app()->params->sesion['productosBusquedaFiltro']] = $formFiltro;
         }
+        
+        //Yii::log("Filtrar:Filtro1\n" . CVarDumper::dumpAsString($formFiltro), CLogger::LEVEL_INFO, 'application');
 
         echo CJSON::encode(array("result" => "ok", "response" => "Filtro almacenado"));
         Yii::app()->end();
@@ -586,7 +589,7 @@ class CatalogoController extends Controller {
 
             Yii::app()->end();
         }
-
+        
         $formFiltro = new FiltroForm;
         $formOrdenamiento = new OrdenamientoForm;
 
@@ -604,18 +607,21 @@ class CatalogoController extends Controller {
                 Yii::app()->session[Yii::app()->params->sesion['productosBusquedaOrden']] = null;
                 Yii::app()->session[Yii::app()->params->sesion['productosBusquedaFiltro']] = null;
             }
-
+            //Yii::log("Buscar:Filtro0\n" . CVarDumper::dumpAsString(Yii::app()->session[Yii::app()->params->sesion['productosBusquedaFiltro']]), CLogger::LEVEL_INFO, 'application');
+            
             if (Yii::app()->session[Yii::app()->params->sesion['productosBusquedaFiltro']] != null) {
                 $formFiltro = Yii::app()->session[Yii::app()->params->sesion['productosBusquedaFiltro']];
                 $formFiltro->listCategoriasTiendaCheck = $formFiltro->listCategoriasTienda;
                 //$formFiltro->listMarcasCheck = $formFiltro->listMarcas;
                 //$formFiltro->listFiltrosCheck = $formFiltro->listFiltros;
+                //Yii::log("Buscar:Filtro02\n" . CVarDumper::dumpAsString($formFiltro), CLogger::LEVEL_INFO, 'application');
             }
 
             if (Yii::app()->session[Yii::app()->params->sesion['productosBusquedaOrden']] != null) {
                 $formOrdenamiento = Yii::app()->session[Yii::app()->params->sesion['productosBusquedaOrden']];
             }
         }
+        //Yii::log("Buscar:Filtro1\n" . CVarDumper::dumpAsString($formFiltro), CLogger::LEVEL_INFO, 'application');
 
         $parametrosProductos = array();
         $listCombos = array();
@@ -718,7 +724,10 @@ class CatalogoController extends Controller {
         ));
 
         $msgCodigoEspecial = array();
-        $formFiltro->listCategoriasTienda = array();
+        if (!isset($_GET['ajax'])){
+            $formFiltro->listCategoriasTienda = array();
+        }
+        
         foreach ($listProductos as $idxProd => $objProducto) {
             if ($formFiltro->calificacion > 0 && $objProducto->getCalificacion() < $formFiltro->calificacion) {
                 unset($listProductos[$idxProd]);
@@ -733,6 +742,7 @@ class CatalogoController extends Controller {
                 foreach ($objProducto->objCategoriaBI->listCategoriasTienda as $objCategoriaTienda) {
                     $formFiltro->listCategoriasTienda[$objCategoriaTienda->idCategoriaTienda] = $objCategoriaTienda->nombreCategoriaTienda;
                 }
+                natsort($formFiltro->listCategoriasTienda);
             }
         }
 
@@ -768,6 +778,7 @@ class CatalogoController extends Controller {
         }
 
         $parametrosVista['imagenBusqueda'] = $imagenBusqueda;
+        //Yii::log("Buscar:Filtro2\n" . CVarDumper::dumpAsString($formFiltro), CLogger::LEVEL_INFO, 'application');
 
         if ($this->isMobile) {
             $parametrosVista['listProductos'] = $listProductos;

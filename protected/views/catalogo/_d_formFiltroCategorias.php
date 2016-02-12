@@ -13,7 +13,7 @@
                     <?php foreach ($formFiltro->listCategoriasTienda as $idCategoria => $nombreCategoria): ?>
                         <li>
                             <input type="checkbox" name="FiltroForm[listCategoriasTienda][<?php echo $idCategoria ?>]" id="FiltroForm_listCategoriasTienda_<?php echo $idCategoria ?>" value="<?php echo $idCategoria ?>" <?php echo (isset($formFiltro->listCategoriasTiendaCheck[$idCategoria]) ? "checked" : "") ?>>
-                            <label for="FiltroForm_listCategoriasTienda_<?php echo $idCategoria ?>"><span></span> <?php echo $nombreCategoria ?></label>
+                            <label for="FiltroForm_listCategoriasTienda_<?php echo $idCategoria ?>"><span></span> <?php echo mb_strtolower($nombreCategoria, 'UTF-8') ?></label>
                         </li>
                     <?php endforeach; ?>
                 </ul>

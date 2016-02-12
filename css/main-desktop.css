@@ -978,6 +978,10 @@ input#RegistroForm_condiciones[type="checkbox"] + label span {
     margin-left: -29px;
 }
 
+.menu-categorias #form-filtro-listaproductos .panel .panel-body ul li label {
+    font-size: 12px;
+}
+
 .menu-categorias #form-filtro-listaproductos .panel .panel-body ul li label, #form-ordenamiento-listaproductos .panel .panel-body ul li label  {
     padding-left: 29px;
     cursor: pointer;

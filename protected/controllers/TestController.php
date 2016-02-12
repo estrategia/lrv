@@ -1,22 +1,26 @@
 <?php
 
 class TestController extends Controller {
+    
+    public function actionIframe(){
+        $this->render('iframe');
+    }
 
 
     
     public function actionBono() {
         //ini_set('default_socket_timeout', 5);
-        
+
         $deftimeout = ini_get( 'default_socket_timeout' );
         echo "deftimeout: $deftimeout <br><br><br>";
-        
+
         $client = new SoapClient(null, array(
             'location' => Yii::app()->params->webServiceUrl['crmLrv'],
             'uri' => "",
             //'exceptions' => 0,
             'trace' => 1,
             'connection_timeout'=>5,
-            //'default_socket_timeout' => 5
+                //'default_socket_timeout' => 5
         ));
 
         try {
