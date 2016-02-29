@@ -154,7 +154,7 @@ class AdminController extends ControllerOperator {
 
         $form = Yii::app()->session[Yii::app()->params->callcenter['sesion']['formPedidoBusqueda']];
 
-        if (isset($_GET['Compras_page'])) {
+        if (isset($_GET['ajax']) && $_GET['ajax']="pedidos-grid") {
             $post = true;
             $model = new Compras('search');
             $model->unsetAttributes();
