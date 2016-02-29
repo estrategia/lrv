@@ -178,6 +178,7 @@ return array(
         'claveLista' => 'listapersonallrv', 
         'sesion' => array(
             'cookieExpiracion' => 2592000, //1 dia 86400 --> 30 dias
+            'claveCookie' => 'l4r384j4cook13',
             'usuario' => 'larebaja.online.usuario',
             'usuarioBienvenida' => 'larebaja.online.usuario.bienvenida',
             'tipoEntrega' => 'larebaja.online.entrega.tipoEntrega',

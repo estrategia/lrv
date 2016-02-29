@@ -58,7 +58,7 @@ $this->widget('zii.widgets.grid.CGridView', array(
                     //'imageUrl' => Yii::app()->request->baseUrl.'/images/email.png', //Image URL of the button.
                     'options' => array('title'=>'Actualizar'), //HTML options for the button tag.
                     //'click' => '...', //A JS function to be invoked when the button is clicked.
-                    'visible' => ' Yii::app()->controller->module->user->profile == 2', //A PHP expression for determining whether the button is visible.
+                    'visible' => 'Yii::app()->controller->module->user->profile != 1', //A PHP expression for determining whether the button is visible.
                 ),
                 'reactivar' => array(
                     'label' => '<i class="glyphicon glyphicon-repeat"></i>', //Text label of the button.
@@ -66,9 +66,9 @@ $this->widget('zii.widgets.grid.CGridView', array(
                     //'imageUrl' => Yii::app()->request->baseUrl.'/images/email.png', //Image URL of the button.
                     'options' => array('title'=>'Reactivar', 'data-role'=>"bonotienda-reactivar"), //HTML options for the button tag.
                     //'click' => 'function(){console.log("reactivar bono");}', //A JS function to be invoked when the button is clicked.
-                    'visible' => '$data->estado==0', //A PHP expression for determining whether the button is visible.
+                    'visible' => '$data->estado==0 && Yii::app()->controller->module->user->profile != 1', //A PHP expression for determining whether the button is visible.
                 ),
-               
+
             )
         ),
     ),

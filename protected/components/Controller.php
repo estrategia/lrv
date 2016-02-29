@@ -71,13 +71,30 @@ class Controller extends CController {
     public function verificarSesion() {
         if (Yii::app()->user->isGuest) {
             $cookieUsuario = _getCookie(Yii::app()->params->usuario['sesion']);
+            
             if ($cookieUsuario != null) {
                 $cookieUsuario = explode("-", $cookieUsuario);
-                $password_desencriptado = decrypt($cookieUsuario[1], $cookieUsuario[0]);
-                $model = new LoginForm;
-                $model->username = $cookieUsuario[0];
-                $model->password = $password_desencriptado;
-                $model->validate();
+
+                if (count($cookieUsuario) == 1) {
+                    $usuario_desencriptado = decrypt($cookieUsuario[0], Yii::app()->params->sesion['claveCookie']);
+                    $objUsuario = Usuario::model()->findByPk($usuario_desencriptado);
+                    
+                    if ($objUsuario !== null) {
+                        $identity = new UserIdentity($objUsuario->identificacionUsuario, $objUsuario->clave);
+                        $identity->authenticate(true);
+                        Yii::app()->user->login($identity);
+                    }
+                } else if (count($cookieUsuario) == 2) {
+                    $objUsuario = Usuario::model()->findByPk($cookieUsuario[0]);
+
+                    if ($objUsuario !== null) {
+                        $usuario_encriptado = encrypt($objUsuario->identificacionUsuario, Yii::app()->params->sesion['claveCookie']);
+                        _setCookie(Yii::app()->params->usuario['sesion'], $usuario_encriptado);
+                        $identity = new UserIdentity($objUsuario->identificacionUsuario, $objUsuario->clave);
+                        $identity->authenticate(true);
+                        Yii::app()->user->login($identity);
+                    }
+                }
             }
         }
 

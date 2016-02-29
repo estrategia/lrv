@@ -62,8 +62,8 @@ class UserIdentity extends CUserIdentity {
                 try {
                     $usuario->save(); //para actualizar hora de ultimo acceso
                     Yii::app()->session[Yii::app()->params->usuario['sesion']] = $usuario;
-                    $password_encriptado = encrypt($this->password,$this->username);
-                    _setCookie(Yii::app()->params->usuario['sesion'], "$this->username-$password_encriptado");
+                    $usuario_encriptado = encrypt($this->username,Yii::app()->params->sesion['claveCookie']);
+                    _setCookie(Yii::app()->params->usuario['sesion'], $usuario_encriptado);
                     //Yii::app()->shoppingCart->setCodigoPerfil($usuario->codigoPerfil);
                 } catch (Exception $exc) {
                     $this->errorCode = self::ERROR_USER_ACCESS;

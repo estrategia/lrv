@@ -103,7 +103,7 @@
         </div>
 
         <?php if ($this->objSectorCiudad == null): ?>
-            <?php echo CHtml::link('<div class="btn btn-primary btn-block">Cosultar precio</div>', $this->createUrl('/sitio/ubicacion'), array()); ?>
+            <?php echo CHtml::link('<div class="btn btn-primary btn-block">Consultar precio</div>', $this->createUrl('/sitio/ubicacion'), array()); ?>
 
         <?php elseif ($data->ventaVirtual == 1 && $objPrecio->inicializado() && $vista != 'slider'): ?>
             <div class="botones-list">
