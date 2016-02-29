@@ -115,7 +115,7 @@
                 <tr style="vertical-align:middle; <?php echo ($indice % 2 != 0 ? "background-color:#f9f9f9;" : "") ?>">
                     <?php
                     if ($position->idCombo == null):
-                        $this->renderPartial('compraCorreoProducto', array(
+                        $this->renderPartial('application.modules.callcenter.views.pedido.compraCorreoProducto', array(
                             'objItem' => $position,
                             'indice' => $indice
                         ));
@@ -128,7 +128,7 @@
                 </tr>
             <?php endforeach; ?>
             <?php foreach ($listCombos as $idCombo => $arrItem):
-                $this->renderPartial('compraCorreoCombo', array(
+                $this->renderPartial('application.modules.callcenter.views.pedido.compraCorreoCombo', array(
                     'arrItem' => $arrItem,
                 ));
             endforeach; ?>
@@ -212,7 +212,7 @@
         <h3 style="color:#666666">
             Saldos de <span class="il">productos</span>
         </h3>
-        <?php $this->renderPartial("_saldosCorreo", array("respuesta" => $objCompra->getSaldosPDV())); ?>
+        <?php $this->renderPartial("application.modules.callcenter.views.pedido._saldosCorreo", array("respuesta" => $objCompra->getSaldosPDV())); ?>
     </div>
     <br/>
     <div class="adL"> </div>

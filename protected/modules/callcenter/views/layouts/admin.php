@@ -13,9 +13,9 @@
 
         <?php Yii::app()->clientScript->registerCoreScript('jquery'); ?>
         <?php //Yii::app()->clientScript->registerCoreScript('jquery.ui'); ?>
-        
-        <?php Yii::app()->getClientScript()->registerCssFile(Yii::app()->request->baseUrl . "/libs/owl-carousel/owl.carousel.css");?>
-        <?php Yii::app()->getClientScript()->registerCssFile(Yii::app()->request->baseUrl . "/libs/owl-carousel/owl.theme.css")?>
+
+        <?php Yii::app()->getClientScript()->registerCssFile(Yii::app()->request->baseUrl . "/libs/owl-carousel/owl.carousel.css"); ?>
+        <?php Yii::app()->getClientScript()->registerCssFile(Yii::app()->request->baseUrl . "/libs/owl-carousel/owl.theme.css") ?>
         <?php Yii::app()->getClientScript()->registerCssFile(Yii::app()->request->baseUrl . "/css/operator.css"); ?>
     </head>
 
@@ -52,7 +52,7 @@
                         <div class="nav-sm nav nav-stacked">
                         </div>
                         <ul class="nav nav-pills nav-stacked main-menu">
-                            <?php if (in_array(Yii::app()->controller->module->user->profile, array(1,2))): ?>
+                            <?php if (in_array(Yii::app()->controller->module->user->profile, array(1, 2))): ?>
                                 <li class="nav-header">CALLCENTER</li>
                                 <li class="">
                                     <a href="<?php echo $this->createUrl('/callcenter') ?>" class="ajax-link"><i class="glyphicon glyphicon-home"></i><span> Panel de control</span></a>
@@ -61,7 +61,10 @@
                                     <a href="<?php echo $this->createUrl('/callcenter/admin/pedidos') ?>" class="ajax-link" target="_blank"><i class="glyphicon glyphicon-list-alt"></i><span> Pedidos</span></a>
                                 </li>
                                 <li class="">
-                                    <a href="<?php echo $this->createUrl('/callcenter/admin/bonos') ?>" class="ajax-link" ><i class="glyphicon glyphicon-credit-card"></i><span> Bonos</span></a>
+                                    <a href="<?php echo $this->createUrl('/callcenter/admin/bonos') ?>" class="ajax-link" ><i class="glyphicon glyphicon-credit-card"></i><span> Bonos CRM</span></a>
+                                </li>
+                                <li class="">
+                                    <a href="<?php echo $this->createUrl('/callcenter/bonos') ?>" class="ajax-link"><i class="glyphicon glyphicon-credit-card"></i><span> Bonos tienda</span></a>
                                 </li>
                                 <li class="">
                                     <a href="<?php echo $this->createUrl('/callcenter/admin/recordarclave') ?>" class="ajax-link"><i class="glyphicon glyphicon-lock"></i><span> Administrar claves</span></a>
@@ -78,7 +81,6 @@
                                 <li>
                                     <a href="<?php echo $this->createUrl('/callcenter/admin/calificaciones') ?>" class="ajax-link"><i class="glyphicon glyphicon-ok"></i><span> Comentarios y Calificaciones</span></a>
                                 </li>
-                                
                             <?php endif; ?>
                             <?php if (Yii::app()->controller->module->user->profile == 2): ?>
                                 <li class="nav-header hidden-md">Admin</li>
@@ -110,24 +112,30 @@
             </div>
 
             <div id="content" class="col-lg-10 col-sm-10" style="display: block;">
-                <!--
-                <div>
-                    <ul class="breadcrumb">
-                        <li>
-                            <a href="#">Home</a>
-                        </li>
-                        <li>
-                            <a href="#">Dashboard</a>
-                        </li>
-                    </ul>
-                </div>
-                -->
+                <!--inicio migas de pan-->
+                <?php if (isset($this->breadcrumbs) && !(empty($this->breadcrumbs))): ?>
+                    <div>
+                        <?php
+                        $this->widget('zii.widgets.CBreadcrumbs', array(
+                            'links' => $this->breadcrumbs,
+                            'encodeLabel' => false,
+                            'homeLink' => false,
+                            'tagName' => 'ol',
+                            'separator' => '',
+                            'activeLinkTemplate' => '<li><a href="{url}">{label}</a></li>',
+                            'inactiveLinkTemplate' => '<li class="active">{label}</li>',
+                            'htmlOptions' => array('class' => 'breadcrumb')
+                        ));
+                        ?>
+                    </div>
+                <?php endif ?>
+                <!--fin migas de pan-->
 
                 <?php echo $content ?>
             </div>
         </div>
 
-        
+
     </body>
     <script src="<?php echo Yii::app()->request->baseUrl; ?>/libs/owl-carousel/owl.carousel.min.js"></script>
     <script src="<?php echo Yii::app()->request->baseUrl; ?>/js/operator.js"></script>

@@ -2,10 +2,10 @@
 /* @var $this OperadorController */
 /* @var $model Operador */
 
-/* $this->breadcrumbs = array(
-  'Operadors' => array('index'),
-  'Manage',
-  ); */
+$this->breadcrumbs = array(
+    'Inicio' => array('/callcenter'),
+    'Operadores',
+);
 ?>
 
 <h1>Administrar Operadores</h1>

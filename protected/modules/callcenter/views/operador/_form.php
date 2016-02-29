@@ -24,11 +24,11 @@ $form = $this->beginWidget('CActiveForm', array(
 
 <p class="note">Campos con <span class="required">*</span> son obligatorios.</p>
 
-<?php echo $form->errorSummary($model); ?>
+<?php echo $form->errorSummary($model, null, null, array('class' => 'text-danger')); ?>
 
 <div class="form-group">
     <?php echo $form->labelEx($model, 'nombre'); ?>
-    <?php echo $form->textField($model, 'nombre', array('class' => 'form-control', 'size' => 20, 'maxlength' => 20)); ?>
+    <?php echo $form->textField($model, 'nombre', array('class' => 'form-control', 'size' => 20, 'maxlength' => 50)); ?>
     <?php echo $form->error($model, 'nombre'); ?>
 </div>
 

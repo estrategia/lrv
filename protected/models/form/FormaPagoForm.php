@@ -21,8 +21,8 @@ class FormaPagoForm extends CFormModel {
     public $idFormaPago;
     public $numeroTarjeta;
     public $cuotasTarjeta;
-    public $bono;
-    public $usoBono = 0;
+    public $bono = array();
+    public $usoBono = array();
     public $confirmacion;
     public $listCodigoEspecial = array();
     public $pasoValidado = array();
@@ -43,6 +43,7 @@ class FormaPagoForm extends CFormModel {
     public $correoElectronicoContacto;
     public $tipoEntrega;
     public $isMobil = true;
+    public $totalCompra = null;
 
     /**
      * Declares the validation rules.
@@ -134,9 +135,9 @@ class FormaPagoForm extends CFormModel {
         $rules[] = array('fechaEntrega', 'fechaValidate', 'on' => 'entrega, informacion, finalizar');
         $rules[] = array('idFormaPago', 'required', 'on' => 'pago, informacion, finalizar', 'message' => 'Seleccionar forma de pago');
         $rules[] = array('numeroTarjeta, cuotasTarjeta', 'safe');
-        $rules[] = array('comentario, numeroTarjeta, cuotasTarjeta, usoBono', 'default', 'value' => null);
-        $rules[] = array('idFormaPago', 'pagoValidate', 'on' => 'pago, informacion, finalizar');
+        $rules[] = array('comentario, numeroTarjeta, cuotasTarjeta', 'default', 'value' => null);
         $rules[] = array('usoBono', 'bonoValidate', 'on' => 'pago, informacion, finalizar');
+        $rules[] = array('idFormaPago', 'pagoValidate', 'on' => 'pago, informacion, finalizar');
         $rules[] = array('confirmacion', 'compare', 'compareValue' => 1, 'on' => 'confirmacion, finalizar', 'message' => 'Aceptar términos anteriores');
 
         if ($this->tipoEntrega == Yii::app()->params->entrega['tipo']['presencial']) {
@@ -235,6 +236,8 @@ class FormaPagoForm extends CFormModel {
      * This is the 'authenticate' validator as declared in rules().
      */
     public function pagoValidate($attribute, $params) {
+        //Yii::log("pagoValidate IN\n", CLogger::LEVEL_INFO, 'application');
+        
         if ($this->idFormaPago == Yii::app()->params->formaPago['idCredirebaja']) {
             if ($this->numeroTarjeta === null) {
                 $this->addError('numeroTarjeta', $this->getAttributeLabel('numeroTarjeta') . " no puede estar vacío ");
@@ -259,10 +262,16 @@ class FormaPagoForm extends CFormModel {
                 }
             }
         } else {
+            $totalCompra = $this->totalCompra - $this->calcularBonoRedimido();
+            
+            //Yii::log("pagoValidate -- formapago:$this->idFormaPago -- total: " . $totalCompra , CLogger::LEVEL_INFO, 'application');
             $this->numeroTarjeta = null;
             $this->cuotasTarjeta = null;
             if ($this->idFormaPago == Yii::app()->params->formaPago['pasarela']['idPasarela']) {
-                if (Yii::app()->shoppingCart->getTotalCost() < Yii::app()->params->formaPago['pasarela']['valorMinimo']) {
+                //Yii::log("pagoValidate -- IN PASARELA " , CLogger::LEVEL_INFO, 'application');
+                
+                if ($totalCompra < Yii::app()->params->formaPago['pasarela']['valorMinimo']) {
+                    //Yii::log("pagoValidate -- IN VALOR MINIMO PASARELA " , CLogger::LEVEL_INFO, 'application');
                     $this->addError('idFormaPago', "Compra por pasarela debe ser mayor a " . Yii::app()->numberFormatter->format(Yii::app()->params->formatoMoneda['patron'], Yii::app()->params->formaPago['pasarela']['valorMinimo'], Yii::app()->params->formatoMoneda['moneda']));
                 }
             }
@@ -270,18 +279,77 @@ class FormaPagoForm extends CFormModel {
     }
 
     public function bonoValidate($attribute, $params) {
-        if ($this->bono !== null) {
-            if ($this->usoBono == null) {
-                $this->addError('usoBono', $this->getAttributeLabel('usoBono') . " no puede estar vacío");
-            } else if (!in_array($this->usoBono, array(1, 0))) {
-                $this->addError('usoBono', $this->getAttributeLabel('usoBono') . " inválido");
+        if (!empty($this->bono)) {
+            if (empty($this->usoBono)) {
+                $this->addError('usoBono', $this->getAttributeLabel('usoBono') . " no puede estar vac&iacute;o");
+            } else {
+                if (count($this->bono) == count($this->usoBono)) {
+                    $totalBono = 0;
+                    foreach ($this->bono as $idx => $bono) {
+                        if (!isset($this->usoBono[$idx])) {
+                            $this->addError('usoBono', $this->getAttributeLabel('usoBono') . " inv&aacute;lido");
+                            break;
+                        }
+                        
+                        if(!$this->bono[$idx]['disponibleCompra'] && $this->usoBono[$idx]==1){
+                            $this->usoBono[$idx]=0;
+                        }
+                        
+                        if($this->usoBono[$idx]==1){
+                            $totalBono+= $this->bono[$idx]['valor'];
+                        }
+                    }
+                    
+                    if($this->totalCompra !== null && $this->totalCompra<$totalBono){
+                        $this->addError('usoBono', "Total bono [$totalBono] excede total de compra [$this->totalCompra]");
+                    }
+                } else {
+                    $this->addError('usoBono', $this->getAttributeLabel('usoBono') . " inv&aacute;lido");
+                }
             }
         }
     }
 
-    public function consultarBono($total) {
-        $this->bono = null;
-        //$deftimeout = ini_get('default_socket_timeout');
+    public function consultarBono($total = null) {
+        $this->bono = array();
+        $auxUsoBono = $this->usoBono;
+        $this->usoBono = array();
+        $this->totalCompra = $total;
+
+        $fecha = date('Y-m-d');
+
+        //-- bonos propios de la tienda
+        $condicionBonos = "identificacionUsuario=:usuario AND vigenciaInicio<=:fecha AND vigenciaFin>=:fecha AND estado=:estado";
+        $paramsBonos = array(
+            ':usuario' => $this->identificacionUsuario,
+            ':fecha' => $fecha,
+            ':estado' => 1,
+        );
+
+        /* if ($total !== null) {
+          $condicionBonos .= " AND minimoCompra<=:total";
+          $paramsBonos[':total'] = $total;
+          } */
+
+        $listBonosTienda = BonosTienda::model()->findAll(array(
+            'condition' => $condicionBonos,
+            'params' => $paramsBonos
+        ));
+
+        foreach ($listBonosTienda as $objBono) {
+            $this->bono["$objBono->idBonoTienda"] = array(
+                'valor' => $objBono->valor,
+                'disponibleCompra' => ($this->totalCompra !== null && $this->totalCompra >= $objBono->minimoCompra),
+                'vigenciaInicio' => "$objBono->vigenciaInicio",
+                'vigenciaFin' => "$objBono->vigenciaFin",
+                'minimoCompra' => $objBono->minimoCompra,
+                'concepto' => $objBono->concepto,
+            );
+
+            $this->usoBono["$objBono->idBonoTienda"] = 0;
+        }
+        //-- bonos propios de la tienda
+        //-- bono crm
         ini_set('default_socket_timeout', 5);
         $client = new SoapClient(null, array(
             'location' => Yii::app()->params->webServiceUrl['crmLrv'],
@@ -293,24 +361,114 @@ class FormaPagoForm extends CFormModel {
         try {
             $result = $client->__soapCall("ConsultarBono", array('identificacion' => $this->identificacionUsuario));
 
-            if (!empty($result) && $result[0]->ESTADO == 1 && $result[0]->VALOR_BONO > 0 && $result[0]->VALOR_BONO <= $total) {
-                $this->bono = array(
-                    'valor' => $result[0]->VALOR_BONO,
-                    'vigenciaInicio' => $result[0]->VIGENCIA_INICIO,
-                    'vigenciaFin' => $result[0]->VIGENCIA_FINA
-                );
+            if (!empty($result) && $result[0]->ESTADO == 1 && $result[0]->VALOR_BONO > 0) {
+                $fechaDate = new DateTime;
+                $vigInicio = DateTime::createFromFormat('Y-m-d', $result[0]->VIGENCIA_INICIO);
+                $vigFin = DateTime::createFromFormat('Y-m-d', $result[0]->VIGENCIA_FINA);
+                $diff1 = $fechaDate->diff($vigFin);
+                $diff2 = $vigInicio->diff($fechaDate);
+
+                if ($diff1->invert == 0 && $diff2->invert == 0) {
+                    $this->bono['crm'] = array(
+                        'valor' => $result[0]->VALOR_BONO,
+                        'disponibleCompra' => ($this->totalCompra !== null && $this->totalCompra >= $result[0]->VALOR_BONO),
+                        'vigenciaInicio' => $result[0]->VIGENCIA_INICIO,
+                        'vigenciaFin' => $result[0]->VIGENCIA_FINA,
+                        'minimoCompra' => $result[0]->VALOR_BONO,
+                        'concepto' => 'Cliente Fiel',
+                    );
+                    $this->usoBono["crm"] = 0;
+                }
             }
-            //ini_set('default_socket_timeout', $deftimeout);
         } catch (SoapFault $exc) {
-            //ini_set('default_socket_timeout', $deftimeout);
             Yii::log("SoapFault WebService ConsultarBono [$this->identificacionUsuario]\n" . $exc->getMessage() . "\n" . $exc->getTraceAsString() . "\n" . $client->__getLastResponse(), CLogger::LEVEL_INFO, 'application');
         } catch (Exception $exc) {
-            //ini_set('default_socket_timeout', $deftimeout);
             Yii::log("Exception WebService ConsultarBono [$this->identificacionUsuario]\n" . $exc->getMessage() . "\n" . $exc->getTraceAsString(), CLogger::LEVEL_INFO, 'application');
+        }
+        //-- bono crm
+
+        foreach ($this->bono as $idx => $bono) {
+            if (isset($auxUsoBono[$idx]) && isset($this->usoBono[$idx])) {
+                $this->usoBono[$idx] = $auxUsoBono[$idx];
+            }
         }
     }
 
-    public function actualizarBono() {
+    public function actualizarBono(Compras $objCompra) {
+        if (empty($this->bono)) {
+            Yii::log("ActualizarBono: No existe bono consultado [$this->identificacionUsuario]", CLogger::LEVEL_INFO, 'application');
+        } else {
+            foreach ($this->bono as $idx => $bono) {
+                if ($this->usoBono[$idx] == 1) {
+                    if ($idx == 'crm') {
+                        ini_set('default_socket_timeout', 5);
+                        $client = new SoapClient(null, array(
+                            'location' => Yii::app()->params->webServiceUrl['crmLrv'],
+                            'uri' => "",
+                            'trace' => 1,
+                            'connection_timeout' => 5,
+                        ));
+
+                        try {
+                            $result = $client->__soapCall("ActualizarBono", array('identificacion' => $this->identificacionUsuario));
+                            if (empty($result) || $result[0]->ESTADO == 0) {
+                                throw new Exception("Error al actualizar bono: " . CVarDumper::dumpAsString($result));
+                            }
+                        } catch (SoapFault $exc) {
+                            Yii::log("ActualizarBono-CRM: SoapFault WebService [idCompra: $objCompra->idCompra -- idbono: $idx -- idUsuario: $objCompra->identificacionUsuario]\n" . $exc->getMessage() . "\n" . $exc->getTraceAsString() . "\nRESPONSE WS:\n" . $client->__getLastResponse(), CLogger::LEVEL_INFO, 'application');
+                        } catch (Exception $exc) {
+                            Yii::log("ActualizarBono-CRM: Exception WebService  [idCompra: $objCompra->idCompra -- idbono: $idx -- idUsuario: $objCompra->identificacionUsuario]\n" . $exc->getMessage() . "\n" . $exc->getTraceAsString(), CLogger::LEVEL_INFO, 'application');
+                        }
+                    } else {
+                        $valorCompra = $objCompra->totalCompra + $this->calcularBonoRedimido(); //$objCompra->subtotalCompra + $objCompra->domicilio + $objCompra->flete
+
+                        try {
+                            $fecha = DateTime::createFromFormat('Y-m-d H:i:s', $objCompra->fechaCompra)->format('Y-m-d');
+
+                            $objBonoTienda = BonosTienda::model()->find(array(
+                                'condition' => 'idBonoTienda=:idBono AND identificacionUsuario=:usuario  AND vigenciaInicio<=:fecha AND vigenciaFin>=:fecha AND estado=:estado AND minimoCompra<=:total',
+                                'params' => array(
+                                    ':idBono' => $idx,
+                                    ':usuario' => $objCompra->identificacionUsuario,
+                                    ':fecha' => $fecha,
+                                    ':estado' => 1,
+                                    ':total' => $valorCompra
+                                )
+                            ));
+
+                            if ($objBonoTienda === null) {
+                                Yii::log("ActualizarBono-Tienda: NULL [idCompra: $objCompra->idCompra -- idbono: $idx -- idUsuario: $objCompra->identificacionUsuario]", CLogger::LEVEL_INFO, 'application');
+                            } else {
+                                $objBonoTienda->estado = 0;
+                                $objBonoTienda->idCompra = $objCompra->idCompra;
+                                $objBonoTienda->valorCompra = $valorCompra;
+                                $objBonoTienda->fechaUso = $objCompra->fechaCompra;
+                                if (!$objBonoTienda->save()) {
+                                    Yii::log("ActualizarBono-Tienda: cambio estado [idCompra: $objCompra->idCompra -- idbono: $idx -- idUsuario: $objCompra->identificacionUsuario]\n" . CActiveForm::validate($objBonoTienda), CLogger::LEVEL_INFO, 'application');
+                                }
+                            }
+                        } catch (Exception $ex) {
+                            Yii::log("ActualizarBono-Tienda: Exception [idCompra: $objCompra->idCompra -- idbono: $idx -- idUsuario: $objCompra->identificacionUsuario]\n" . $ex->getMessage() . "\n" . $ex->getTraceAsString(), CLogger::LEVEL_INFO, 'application');
+                        }
+                    }
+                }
+            }
+        }
+    }
+
+    public function calcularBonoRedimido() {
+        $valorBono = 0;
+
+        foreach ($this->bono as $idx => $bono) {
+            if ($this->usoBono[$idx] == 1) {
+                $valorBono += $bono['valor'];
+            }
+        }
+
+        return $valorBono;
+    }
+
+    public function actualizarBono0() {
         if ($this->bono !== null && $this->usoBono == 1) {
             //$deftimeout = ini_get('default_socket_timeout');
             ini_set('default_socket_timeout', 5);
@@ -324,7 +482,7 @@ class FormaPagoForm extends CFormModel {
             try {
                 $result = $client->__soapCall("ActualizarBono", array('identificacion' => $this->identificacionUsuario));
                 //ini_set('default_socket_timeout', $deftimeout);
-                
+
                 if (empty($result) || $result[0]->ESTADO == 0) {
                     throw new Exception("Error al actualizar bono: " . CVarDumper::dumpAsString($result));
                 }
@@ -335,7 +493,7 @@ class FormaPagoForm extends CFormModel {
                 //ini_set('default_socket_timeout', $deftimeout);
                 Yii::log("Exception WebService ActualizarBono [$this->identificacionUsuario]\n" . $exc->getMessage() . "\n" . $exc->getTraceAsString(), CLogger::LEVEL_INFO, 'application');
             }
-        }else{
+        } else {
             Yii::log("Error al actualizar bono - no existe bono consultado [$this->identificacionUsuario]\n" . $exc->getMessage() . "\n" . $exc->getTraceAsString(), CLogger::LEVEL_INFO, 'application');
         }
     }

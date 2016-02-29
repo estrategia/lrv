@@ -23,12 +23,13 @@
                 <?php endforeach; ?>
             </div>
             <li class="vermasc">
-                <?php echo CHtml::link('Editar carro', CController::createUrl('/carro'), array('class' => '')); ?>
+                <?php echo CHtml::link(' ', '#', array('class' => '')); ?>
+                <?php //echo CHtml::link('Editar carro', CController::createUrl('/carro'), array('class' => '')); ?>
             </li>
             <li class="subtotal">Subtotal: <strong><?php echo Yii::app()->numberFormatter->format(Yii::app()->params->formatoMoneda['patron'], Yii::app()->shoppingCart->getCost(), Yii::app()->params->formatoMoneda['moneda']); ?></strong></li>
             <li>
                 <div class="row btn-pagar">
-                    <?php echo CHtml::link('Comprar', CController::createUrl('/carro/pagar'), array('class' => 'btn btn-primary')); ?>
+                    <?php echo CHtml::link('Comprar', CController::createUrl('/carro'), array('class' => 'btn btn-primary')); ?>
 
                     <?php if (Yii::app()->shoppingCart->getObjExpress() != null): ?>
                         <?php echo CHtml::link('Pago Express', "#", array('class' => 'btn btn-primary', 'data-toggle' => "modal", 'data-target' => "#modal-pagoexpress")); ?>

@@ -35,7 +35,7 @@ $form = $this->beginWidget('CActiveForm', array(
     </div>
 <?php endif; ?>
 
-<div class="space-2"></div>
+<div class="space-1"></div>
 
 <div class="gray-text">
     <!-- <div id="div-formapago-vacio">Selecciona una forma de pago</div> -->

@@ -30,7 +30,7 @@ class Operador extends CActiveRecord {
         return array(
             array('nombre, usuario, clave, perfil, activo', 'required', 'message'=>'{attribute} no puede estar vacío'),
             array('perfil, activo', 'numerical', 'integerOnly' => true),
-            array('nombre', 'length', 'min'=>5, 'max' => 20),
+            array('nombre', 'length', 'min'=>5, 'max' => 50),
             array('usuario, clave', 'length', 'min'=>5, 'max' => 15),
             array('email', 'email'),
             array('email', 'length', 'max' => 50),

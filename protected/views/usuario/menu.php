@@ -41,6 +41,11 @@
         </a>
     </li>
     <li>
+        <a href="<?php echo CController::createUrl('/usuario/bonos') ?>" data-ajax="false">
+            <h2>Bonos</h2>
+        </a>
+    </li>
+    <li>
         <a href="<?php echo CController::createUrl('/usuario/salir') ?>" data-ajax="false">
             <h2>Cerrar sesi&oacute;n</h2>
         </a>

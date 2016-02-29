@@ -34,6 +34,11 @@
             Pago express
         </a>
     </li>
+    <li class="<?php echo ($vista=="d_bonos" ? "active" : "")?>">
+        <a href="<?php echo CController::createUrl('/usuario/bonos') ?>">
+            Bonos
+        </a>
+    </li>
     <li class="<?php echo ($vista=="" ? "active" : "")?>">
         <a href="<?php echo CController::createUrl('/usuario/salir') ?>" >
             Cerrar sesi&oacute;n

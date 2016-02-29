@@ -1,17 +1,34 @@
 <?php
 
 class TestController extends Controller {
-    
-    public function actionIframe(){
+
+    public function actionReauto() {
+        $idCompra = -1;
+        
+        $client = new SoapClient(null, array(
+            'location' => Yii::app()->params->webServiceUrl['remisionPosECommerce'],
+            'uri' => "",
+            'trace' => 1
+        ));
+
+        try {
+            $result = $client->__soapCall("CongelarCompraAutomatica", array('idPedido' => $idCompra));
+            CVarDumper::dump($result, 10, true);
+        } catch (SoapFault $exc) {
+            echo("SoapFault WebService CongelarCompraAutomatica [compra: $idCompra]\n" . $exc->getMessage() . "\n" . $exc->getTraceAsString() . "\n" . $client->__getLastResponse());
+        } catch (Exception $exc) {
+            echo ("Exception WebService CongelarCompraAutomatica [compra: $idCompra]\n" . $exc->getMessage() . "\n" . $exc->getTraceAsString());
+        }
+    }
+
+    public function actionIframe() {
         $this->render('iframe');
     }
 
-
-    
     public function actionBono() {
         //ini_set('default_socket_timeout', 5);
 
-        $deftimeout = ini_get( 'default_socket_timeout' );
+        $deftimeout = ini_get('default_socket_timeout');
         echo "deftimeout: $deftimeout <br><br><br>";
 
         $client = new SoapClient(null, array(
@@ -19,7 +36,7 @@ class TestController extends Controller {
             'uri' => "",
             //'exceptions' => 0,
             'trace' => 1,
-            'connection_timeout'=>5,
+            'connection_timeout' => 5,
                 //'default_socket_timeout' => 5
         ));
 
@@ -40,13 +57,14 @@ class TestController extends Controller {
             echo "Exception: " . $exc->getMessage();
         }
     }
-    
-    public function actionProbar(){
-       try{ $client = new SoapClient("http://localhost/lrv/correo/wslrv", array("trace" => 1, 'cache_wsdl' => WSDL_CACHE_NONE, 'exceptions' => 0 ));//$result = $client->recordarCorreos();
-        CVarDumper::dump($client->__getLastRequest());
-       }catch(Exception $e){
-           
-       }
+
+    public function actionProbar() {
+        try {
+            $client = new SoapClient("http://localhost/lrv/correo/wslrv", array("trace" => 1, 'cache_wsdl' => WSDL_CACHE_NONE, 'exceptions' => 0)); //$result = $client->recordarCorreos();
+            CVarDumper::dump($client->__getLastRequest());
+        } catch (Exception $e) {
+            
+        }
     }
 
     public function actionTipoentrega() {
@@ -1288,39 +1306,37 @@ class TestController extends Controller {
         echo "<br><br><br>";
         CVarDumper::dump(Yii::app()->session[Yii::app()->params->sesion['sectorCiudadEntrega']], 10, true);
     }
-    
-    public function actionVerUsuario(){
+
+    public function actionVerUsuario() {
         echo "<pre>";
         print_r(Yii::app()->user->name);
         echo "</pre>";
     }
-    
-    
-    public function actionVerProductosNoAgregados(){
+
+    public function actionVerProductosNoAgregados() {
         echo "<pre>";
         print_r(Yii::app()->session[Yii::app()->params->sesion['productosNoAgregados']]);
         echo "</pre>";
     }
-    
+
     /**
      * @param none
      * @return int valor entero
      * @soap
      */
-    
-    public function recordarCorreos(){
-       
-       $dia = Date("d");
-       $listasPersonales = ListasPersonales::model()->findAll(array(
-            'with' => array('listDetalle' => 
-                            array('with' => 
-                                        array ('objProducto' => 
-                                                    array ('with' => 'listImagenes'), 
-                                               'objCombo' => 
-                                                    array('with' => '')
-                                              ) 
-                                ),
-                             'objUsuario',),
+    public function recordarCorreos() {
+
+        $dia = Date("d");
+        $listasPersonales = ListasPersonales::model()->findAll(array(
+            'with' => array('listDetalle' =>
+                array('with' =>
+                    array('objProducto' =>
+                        array('with' => 'listImagenes'),
+                        'objCombo' =>
+                        array('with' => '')
+                    )
+                ),
+                'objUsuario',),
             'condition' => "((t.diaRecordar-t.diasAnticipacion <=:diaRecordar  AND :diaRecordar <= t.diaRecordar) OR 
                              ((DATEDIFF(now(),date_format(t.fechaCreacion, '%Y-%m-%d'))-t.diasAnticipacion)%t.diasRecordar) = 0 OR
                                ( date_sub(date_add( date_sub(NOW(), INTERVAL ((DATEDIFF(now(),date_format(t.fechaCreacion, '%Y-%m-%d')))%t.diasRecordar) DAY) ,
@@ -1334,24 +1350,23 @@ class TestController extends Controller {
                 'diaRecordar' => Date("d")
             )
         ));
-      
-       foreach ($listasPersonales as $listaPersonal){
-          $claveEncriptada = encrypt("$listaPersonal->identificacionUsuario~$listaPersonal->idLista~$listaPersonal->fechaCreacion", Yii::app()->params->claveLista);
-          $contenidoCorreo = $this->renderPartial('//common/correoRecordacion', array(
-                        'listasPersonal' => $listaPersonal,
-                        'clave' => $claveEncriptada
-                   ),true,false);
-          $htmlCorreo = $this->renderPartial('/usuario/_correo', array('contenido' => $contenidoCorreo), true, true);
-           $asuntoCorreo = " LA REBAJA VIRTUAL - Recordar lista "; 
+
+        foreach ($listasPersonales as $listaPersonal) {
+            $claveEncriptada = encrypt("$listaPersonal->identificacionUsuario~$listaPersonal->idLista~$listaPersonal->fechaCreacion", Yii::app()->params->claveLista);
+            $contenidoCorreo = $this->renderPartial('//common/correoRecordacion', array(
+                'listasPersonal' => $listaPersonal,
+                'clave' => $claveEncriptada
+                    ), true, false);
+            $htmlCorreo = $this->renderPartial('/usuario/_correo', array('contenido' => $contenidoCorreo), true, true);
+            $asuntoCorreo = " LA REBAJA VIRTUAL - Recordar lista ";
             try {
                 sendHtmlEmail($listaPersonal->objUsuario->correoElectronico, $asuntoCorreo, $htmlCorreo);
             } catch (Exception $ce) {
                 Yii::log("Error enviando correo al recordar lista \n" . $ce->getMessage() . "\n" . $ce->getTraceAsString(), CLogger::LEVEL_INFO, 'application');
             }
-          
-       }
-       
-       return 1;
+        }
+
+        return 1;
     }
 
 }

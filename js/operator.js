@@ -650,6 +650,75 @@ $(document).on('click', "button[data-role='modificar-ahorro-guardar']", function
     });
 });
 
+$(document).on('click', "a[data-role='bonotienda-reactivar']", function() {
+    $.ajax({
+        type: 'POST',
+        dataType: 'json',
+        async: true,
+        url: $(this).attr('href'),
+        data: {render: true},
+        beforeSend: function() {
+            $("#modal-reactivar-bono").remove();
+            Loading.show();
+        },
+        complete: function() {
+            Loading.hide();
+        },
+        success: function(data) {
+            if (data.result == 'ok') {
+                $('body').append(data.response);
+                $("#modal-reactivar-bono").modal("show");
+            } else {
+                alert(data.response);
+            }
+        },
+        error: function(jqXHR, textStatus, errorThrown) {
+            Loading.hide();
+            alert('Error: ' + errorThrown);
+        }
+    });
+    return false;
+});
+
+$(document).on('click', "input[data-role='bonotienda-reactivar']", function() {
+    var form = $(this).parents("form");
+    $.ajax({
+        type: 'POST',
+        async: true,
+        url: requestUrl + '/callcenter/bonos/reactivar/id/' + $(this).attr('data-bono'),
+        data: form.serialize(),
+        beforeSend: function() {
+            $('div[id^="ReactivarBonoTiendaForm_"].text-danger').html('');
+            $('div[id^="ReactivarBonoTiendaForm_"].text-danger').css('display', 'none');
+            Loading.show();
+        },
+        complete: function() {
+            Loading.hide();
+        },
+        success: function(data) {
+            var data = $.parseJSON(data);
+            
+            if (data.result == 'ok') {
+                $.fn.yiiGridView.update('bonos-tienda-grid');
+                $("#modal-reactivar-bono").modal("hide");
+                dialogoAnimado(data.response);
+            } else if (data.result == 'error'){
+                bootbox.alert(data.response);
+            }else{
+                $.each(data, function(element, error) {
+                    $('#' + form.attr('id') + ' #' + element + '_em_').html(error);
+                    $('#' + form.attr('id') + ' #' + element + '_em_').css('display', 'block');
+                });
+            }
+            Loading.hide();
+        },
+        error: function(jqXHR, textStatus, errorThrown) {
+            Loading.hide();
+            bootbox.alert('Error: ' + errorThrown);
+        }
+    });
+});
+
 function uniqueId() {
     var time = new Date().getTime();
     while (time == new Date().getTime())

@@ -2,7 +2,9 @@
 <a class="btn btn-xs btn-<?php echo Yii::app()->params->callcenter['estadoCompra']['colorClass'][2] ?>" href="<?php echo $this->createUrl('/callcenter/admin/pedidos', array('parametro' => 2)) ?>">En Trámite [<?php echo $arrCantidadPedidos[2] ?>]</a>
 <a class="btn btn-xs btn-<?php echo Yii::app()->params->callcenter['estadoCompra']['colorClass'][3] ?>" href="<?php echo $this->createUrl('/callcenter/admin/pedidos', array('parametro' => 3)) ?>">Asignado PDV [<?php echo $arrCantidadPedidos[3] ?>]</a>
 <a class="btn btn-xs btn-<?php echo Yii::app()->params->callcenter['estadoCompra']['colorClass'][4] ?>" href="<?php echo $this->createUrl('/callcenter/admin/pedidos', array('parametro' => 4)) ?>">Remitido POS [<?php echo $arrCantidadPedidos[4] ?>]</a>
+<!--
 <a class="btn btn-xs btn-<?php echo Yii::app()->params->callcenter['estadoCompra']['colorClass'][10] ?>" href="<?php echo $this->createUrl('/callcenter/admin/pedidos', array('parametro' => 10)) ?>">Remision Automatica [<?php echo $arrCantidadPedidos[10] ?>]</a>
+-->
 <a class="btn btn-xs btn-<?php echo Yii::app()->params->callcenter['estadoCompra']['colorClass'][5] ?>" href="<?php echo $this->createUrl('/callcenter/admin/pedidos', array('parametro' => 5)) ?>">Facturado [<?php echo $arrCantidadPedidos[5] ?>]</a>
 <a class="btn btn-xs btn-<?php echo Yii::app()->params->callcenter['estadoCompra']['colorClass'][6] ?>" href="<?php echo $this->createUrl('/callcenter/admin/pedidos', array('parametro' => 6)) ?>">Entregado [<?php echo $arrCantidadPedidos[6] ?>]</a>
 <a class="btn btn-xs btn-<?php echo Yii::app()->params->callcenter['estadoCompra']['colorClass'][7] ?>" href="<?php echo $this->createUrl('/callcenter/admin/pedidos', array('parametro' => 7)) ?>">Cancelado [<?php echo $arrCantidadPedidos[7] ?>]</a>

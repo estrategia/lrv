@@ -1021,14 +1021,15 @@ class CatalogoController extends Controller {
             if ($objCategoria == null) {
                 $this->breadcrumbs = array(
                     'Inicio' => array('/'),
+                    $objProducto->descripcionProducto
                 );
             } else {
                 $this->breadcrumbs = array(
                     'Inicio' => array('/'),
-                    $objCategoria->objCategoriaTienda->nombreCategoriaTienda => array('/catalogo/categoria/categoria/' . $objCategoria->objCategoriaTienda->idCategoriaTienda)
+                    $objCategoria->objCategoriaTienda->nombreCategoriaTienda => array('/catalogo/categoria/categoria/' . $objCategoria->objCategoriaTienda->idCategoriaTienda),
+                    $objProducto->descripcionProducto
                 );
             }
-
 
             $objFormCalificacion = new CalificacionForm;
             $this->render('d_productoDetalle', array(

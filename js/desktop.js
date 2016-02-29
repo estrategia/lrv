@@ -1594,7 +1594,10 @@ $(document).ready(function() {
         update_window_hash: false,
         width: 400,
         height: 300,
-        thumb_opacity: 0.7
+        thumb_opacity: 0.7,
+        hooks: {
+            displayDescription: function(image) {}
+        }
     });
 });
 

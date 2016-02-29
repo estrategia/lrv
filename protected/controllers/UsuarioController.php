@@ -13,7 +13,7 @@ class UsuarioController extends Controller {
                 'isMobile' => $this->isMobile
             ),
             'access + autenticar, recordar, registro, restablecer',
-            'login + index, infoPersonal, contrasena, direcciones, pagoexpress, listapedidos, pedido, listadetalle, listacotizaciones',
+            'login + index, infoPersonal, contrasena, direcciones, pagoexpress, listapedidos, pedido, listadetalle, listacotizaciones, bonos',
             'loginajax + direccionCrear, direccionActualizar',
         );
     }
@@ -598,6 +598,27 @@ class UsuarioController extends Controller {
         }
     }
 
+    public function actionBonos(){
+        
+        $modelPago = new FormaPagoForm;
+        $modelPago->identificacionUsuario = Yii::app()->user->name;
+        $modelPago->consultarBono();
+        
+        
+        $params = array('bonos' => $modelPago->bono);
+        if ($this->isMobile) {
+            $this->render('bonos', $params);
+        } else {
+            $this->breadcrumbs = array(
+                'Inicio' => array('/'),
+                'Mi cuenta' => array('/usuario'),
+                'Bonos'
+            );
+
+            $this->render('d_usuario', array('vista' => 'd_bonos', 'params' => $params));
+        }
+    }
+    
     public function actionListapedidos() {
 
         $model = new Compras('search');
@@ -1528,7 +1549,7 @@ class UsuarioController extends Controller {
         }
     }
 
-    public function actionBienvenida() {
+    /*public function actionBienvenida() {
         $objUsuario = Usuario::model()->find(array(
             'condition' => 'identificacionUsuario=:usuario',
             'params' => array(
@@ -1536,7 +1557,7 @@ class UsuarioController extends Controller {
             )
         ));
         $this->render("d_bienvenida", array('objUsuario' => $objUsuario, 'url' => $this->createUrl("/")));
-    }
+    }*/
 
     protected function gridDetallePedido($data, $row) {
         $clase = 'ui-btn ui-btn-inline ui-icon-view-circle ui-btn-icon-notext ui-icon-center ui-nodisc-icon';

@@ -18,13 +18,13 @@
     text-align: center;
 }
 
-.grid-view table.items tr.even {
+.grid-view table.items tr.even, .grid-view table.detail-view tr.even {
     background: #FAF8F8 none repeat scroll 0 0;
 }
 .grid-view table.items tr.even:hover {
     background: #FCC7C7 none repeat scroll 0 0;
 }
-.grid-view table.items tr.odd {
+.grid-view table.items tr.odd, .grid-view table.detail-view tr.odd {
     background: #e4e4e4 none repeat scroll 0 0;
 }
 .grid-view table.items tr.odd:hover {

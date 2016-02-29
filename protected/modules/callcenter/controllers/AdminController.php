@@ -299,7 +299,6 @@ class AdminController extends ControllerOperator {
     }
 
     public function actionActualizarBono() {
-
         if (!Yii::app()->request->isPostRequest) {
             echo CJSON::encode(array('result' => 'error', 'response' => 'Solicitud invalida.'));
             Yii::app()->end();
@@ -310,30 +309,27 @@ class AdminController extends ControllerOperator {
         $valor = Yii::app()->getRequest()->getPost('valor');
 
         try {
-            
             $modelLog = new LogBonos;
-                $modelLog->agente = Yii::app()->controller->module->user->id;
-                $modelLog->valorBono = $valor;
-                $modelLog->comentario = $comentario;
-                $modelLog->cedulaCliente = $identificacion;
-                $modelLog->fechaRegistro = Date("Y-m-d h:i:s");
-                
+            $modelLog->idOperador = Yii::app()->controller->module->user->id;
+            $modelLog->valorBono = $valor;
+            $modelLog->comentario = $comentario;
+            $modelLog->concepto = 'Cliente Fiel';
+            $modelLog->identificacionUsuario = $identificacion;
+
             $clientBono = new SoapClient(null, array(
                 'location' => Yii::app()->params->webServiceUrl['crmLrv'],
                 'uri' => "",
                 'trace' => 1
             ));
-            
-            if(!$modelLog->validate()){
-                 echo CActiveForm::validate($modelLog);
-                 Yii::app()->end();
+
+            if (!$modelLog->validate()) {
+                echo CActiveForm::validate($modelLog);
+                Yii::app()->end();
             }
 
             $resultBono = $clientBono->__soapCall('ActualizarBono', array('identificacion' => $identificacion, 'tipo' => '1'));
 
             if ($resultBono[0]->ESTADO == 1) {
-                
-
                 if ($modelLog->save()) {
                     $clientBono = new SoapClient(null, array(
                         'location' => Yii::app()->params->webServiceUrl['crmLrv'],
@@ -346,10 +342,8 @@ class AdminController extends ControllerOperator {
                     try {
                         $contenido = $this->renderPartial('_mensajeCorreoReactivacion', array('modelLog' => $modelLog, 'bono' => $bono), true, true);
                         $htmlCorreo = $this->renderPartial('//common/correo', array('contenido' => $contenido), true, true);
-
-                        foreach (Yii::app()->params->callcenter['reactivacionBono']['destinatarios'] as $correo) {
-                            sendHtmlEmail($correo, Yii::app()->params->callcenter['reactivacionBono']['asuntoMensaje'], $htmlCorreo);
-                        }
+                        $correosDestinatario = implode(",", Yii::app()->params->callcenter['reactivacionBono']['destinatarios']);
+                        sendHtmlEmail($correosDestinatario, Yii::app()->params->callcenter['reactivacionBono']['asuntoMensaje'], $htmlCorreo);
                     } catch (Exception $exc) {
                         
                     }
@@ -475,39 +469,38 @@ class AdminController extends ControllerOperator {
 
         $this->render('pedido', $params);
     }
-    
-    
-    public function actionCalificaciones(){
-        
+
+    public function actionCalificaciones() {
+
         $model = new ProductosCalificaciones('search');
 
         $model->unsetAttributes();
         if (isset($_GET['ProductosCalificaciones']))
             $model->attributes = $_GET['ProductosCalificaciones'];
 
-        $this->render('calificaciones', array ('model' => $model ));
+        $this->render('calificaciones', array('model' => $model));
     }
-    
-    public function actionAprobarCalificacion(){
-        
+
+    public function actionAprobarCalificacion() {
+
         if (!Yii::app()->request->isPostRequest) {
             echo CJSON::encode(array('result' => 'error', 'response' => 'Solicitud invalida.'));
             Yii::app()->end();
         }
-        
+
         $calificacion = $_POST['calificacion'];
-        
+
         $model = ProductosCalificaciones::model()->findByPk($calificacion);
-        
-        if(!$model){
+
+        if (!$model) {
             echo CJSON::encode(array('result' => 'error', 'response' => 'Esta calificación no existe'));
             Yii::app()->end();
         }
-        
+
         $model->aprobado = 1;
-        
+
         $model->save();
-        
+
         echo CJSON::encode(array('result' => 'ok', 'response' => 'Datos Actualizados'));
     }
 

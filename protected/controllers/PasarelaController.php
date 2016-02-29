@@ -230,12 +230,17 @@ class PasarelaController extends Controller {
                 $this->correo(1, $objCompra->objPasarelaEnvio->nombre, $objCompra->idCompra, $objCompra->objPasarelaEnvio->valor, $objCompra->objPasarelaEnvio->correoElectronico);
             } else {
                 //ACTUALIZAR t_compras LA COLUMNA documento_cruce, id_punto_venta, id_estado_compra, codigo_operador, saldospdv
-                $objCompra->idEstadoCompra = Yii::app()->params->callcenter['estadoCompra']['estado']['negadoPasarela'];
+                if($objRespuesta->estadoPol == 7){
+                    $objCompra->idEstadoCompra = Yii::app()->params->callcenter['estadoCompra']['estado']['validacionManualPasarela'];
+                }else{
+                    $objCompra->idEstadoCompra = Yii::app()->params->callcenter['estadoCompra']['estado']['negadoPasarela'];
+                }
+                
                 $objCompra->idOperador = 50;
 
                 if (!$objCompra->save()) {
                     $this->log($objRespuesta->idCompra, 501, "ERROR ACTUALIZANDO LA TABLA t_Compras. " . $objCompra->validateErrorsResponse());
-                    $this->correo(3, $objCompra->objPasarelaEnvio->nombre, $objCompra->idCompra, $objCompra->objPasarelaEnvio->valor, $objCompra->objPasarelaEnvio->correoElectronico, "RECHAZADA");
+                    $this->correo(3, $objCompra->objPasarelaEnvio->nombre, $objCompra->idCompra, $objCompra->objPasarelaEnvio->valor, $objCompra->objPasarelaEnvio->correoElectronico, ($objRespuesta->estadoPol == 7 ? "VALIDACION PASARELA" : "RECHAZADA"));
 
                     try {
                         $transaction->rollBack();
@@ -253,7 +258,7 @@ class PasarelaController extends Controller {
 
                 if (!$objEstados->save()) {
                     $this->log($objRespuesta->idCompra, 502, "ERROR ACTUALIZANDO LA TABLA t_ComprasEstados. " . $objEstados->validateErrorsResponse());
-                    $this->correo(3, $objCompra->objPasarelaEnvio->nombre, $objCompra->idCompra, $objCompra->objPasarelaEnvio->valor, $objCompra->objPasarelaEnvio->correoElectronico, "RECHAZADA");
+                    $this->correo(3, $objCompra->objPasarelaEnvio->nombre, $objCompra->idCompra, $objCompra->objPasarelaEnvio->valor, $objCompra->objPasarelaEnvio->correoElectronico, ($objRespuesta->estadoPol == 7 ? "VALIDACION PASARELA" : "RECHAZADA"));
 
                     try {
                         $transaction->rollBack();
@@ -266,13 +271,17 @@ class PasarelaController extends Controller {
                 //INSERTAR EN t_ComprasObservaciones
                 $objObservacion = new ComprasObservaciones;
                 $objObservacion->idCompra = $objCompra->idCompra;
-                $objObservacion->observacion = 'Cambio de Estado Rechazada Pasarela';
                 $objObservacion->idOperador = $objCompra->idOperador;
                 $objObservacion->notificarCliente = 0;
+                
+                if($objRespuesta->estadoPol == 7)
+                    $objObservacion->observacion = 'Cambio de Estado Validacion Manual Pasarela';
+                else
+                    $objObservacion->observacion = 'Cambio de Estado Rechazada Pasarela';
 
                 if (!$objObservacion->save()) {
                     $this->log($objRespuesta->idCompra, 503, "ERROR ACTUALIZANDO LA TABLA t_ComprasObservaciones. " . $objObservacion->validateErrorsResponse());
-                    $this->correo(3, $objCompra->objPasarelaEnvio->nombre, $objCompra->idCompra, $objCompra->objPasarelaEnvio->valor, $objCompra->objPasarelaEnvio->correoElectronico, "RECHAZADA");
+                    $this->correo(3, $objCompra->objPasarelaEnvio->nombre, $objCompra->idCompra, $objCompra->objPasarelaEnvio->valor, $objCompra->objPasarelaEnvio->correoElectronico, ($objRespuesta->estadoPol == 7 ? "VALIDACION PASARELA" : "RECHAZADA"));
 
                     try {
                         $transaction->rollBack();
@@ -285,7 +294,7 @@ class PasarelaController extends Controller {
                 //REGISTRAR RESPUESTA
                 if (!$objRespuesta->save()) {
                     $this->log($objRespuesta->idCompra, 504, "ERROR INSERTANDO LA TABLA t_PasarelaRespuestas. " . $objRespuesta->validateErrorsResponse());
-                    $this->correo(3, $objCompra->objPasarelaEnvio->nombre, $objCompra->idCompra, $objCompra->objPasarelaEnvio->valor, $objCompra->objPasarelaEnvio->correoElectronico, "RECHAZADA");
+                    $this->correo(3, $objCompra->objPasarelaEnvio->nombre, $objCompra->idCompra, $objCompra->objPasarelaEnvio->valor, $objCompra->objPasarelaEnvio->correoElectronico, ($objRespuesta->estadoPol == 7 ? "VALIDACION PASARELA" : "RECHAZADA"));
 
                     try {
                         $transaction->rollBack();
@@ -294,9 +303,9 @@ class PasarelaController extends Controller {
                     }
                     Yii::app()->end();
                 }
-
+                
                 $this->log($objRespuesta->idCompra, 1000, "PROCESO EXITOSO TRANSACCION RECHAZADA.");
-                $this->correo(2, $objCompra->objPasarelaEnvio->nombre, $objCompra->idCompra, $objCompra->objPasarelaEnvio->valor, $objCompra->objPasarelaEnvio->correoElectronico);
+                $this->correo(($objRespuesta->estadoPol == 7 ? 5 : 2), $objCompra->objPasarelaEnvio->nombre, $objCompra->idCompra, $objCompra->objPasarelaEnvio->valor, $objCompra->objPasarelaEnvio->correoElectronico);
             }
 
             $transaction->commit();
@@ -357,7 +366,13 @@ class PasarelaController extends Controller {
                 break;
             case 4: //CORREO PARA REVISION DEL CALL CENETR
                 try{
-                    sendHtmlEmail(Yii::app()->params->callcenter['correo'], "La Rebaja Virtual: Verificacion Transaccion", $menEstado);
+                    sendHtmlEmail(Yii::app()->params->callcenter['correo'], "La Rebaja Virtual: Informacion Transaccion", $menEstado);
+                }  catch (Exception $exc){}
+                break;
+            case 5:
+                $contenido = $this->renderPartial('correoVerificacion', array('nombre'=>$nombre,'numeroPedido'=>$numeroPedido,'valorCompra'=>$valorCompra), true);
+                try{
+                    sendHtmlEmail($correoCliente, "La Rebaja Virtual: Informacion Transaccion", $contenido);
                 }  catch (Exception $exc){}
                 break;
         }

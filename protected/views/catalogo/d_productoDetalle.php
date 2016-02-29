@@ -1,3 +1,5 @@
+<?php $this->pageTitle = Yii::app()->name . " - " . $objProducto->descripcionProducto; ?>
+
 <?php $idUnico = uniqid() ?>
 <section class="product_detail">
     <div class="container">
@@ -19,7 +21,7 @@
                                         <?php foreach ($listImagenes as $imagen): ?>
                                             <li>
                                                 <a href="<?php echo Yii::app()->request->baseUrl . Yii::app()->params->carpetaImagen['productos'][YII::app()->params->producto['tipoImagen']['grande']] . $imagen->rutaImagen; ?>">
-                                                    <img   class="img-responsive width-thumb-owl product-prom"src="<?php echo Yii::app()->request->baseUrl . Yii::app()->params->carpetaImagen['productos'][YII::app()->params->producto['tipoImagen']['grande']] . $imagen->rutaImagen; ?>" >
+                                                    <img class="img-responsive width-thumb-owl product-prom"src="<?php echo Yii::app()->request->baseUrl . Yii::app()->params->carpetaImagen['productos'][YII::app()->params->producto['tipoImagen']['grande']] . $imagen->rutaImagen; ?>" alt="<?php echo $imagen->nombreImagen ?>" title="<?php echo $imagen->tituloImagen ?>">
                                                 </a>
                                             </li>
                                         <?php endforeach; ?>
@@ -41,14 +43,14 @@
                             <div class="cdiv_prod_desc"><?php echo $objPrecio->getPorcentajeDescuento() ?>% dcto</div>
                         <?php endif; ?>
                             <div class="space-2"></div>
-                        <h3 style="color: #ED1C24;">
+                        <h1 style="color: #ED1C24; font-size: 24px;">
                             <!-- producto agregado -->
                             <a href="" class="itm_ico clst_slct_prod<?php echo (Yii::app()->shoppingCart->contains($objProducto->codigoProducto) ? " active" : "") ?>" id="icono-producto-agregado-<?php echo $objProducto->codigoProducto ?>">
                                 <img src="<?php echo Yii::app()->request->baseUrl ?>/images/desktop/icon_seleccionado.png">
                             </a>
                             <!-- Titulo del producto -->
                             <?php echo $objProducto->descripcionProducto ?>
-                        </h3>
+                        </h1>
                         <div><span><?php echo $objProducto->presentacionProducto ?></span></div>
                         <div><span>Código: <?php echo $objProducto->codigoProducto ?></span></div>
                         <?php if ($objProducto->objCodigoEspecial->codigoEspecial != 0): ?>
@@ -386,7 +388,7 @@
                                         <div id="rating-<?php echo $objComentario->codigoProducto ?>" data-role="raty" data-readonly="true" data-score="<?php echo $objComentario->calificacion ?>" class="clst_cal_str"></div>
                                     </div>
                                     <div class="row">
-                                        <p style="color:#999;font-weight:bolder;" ><?php echo $objComentario->objUsuario->nombre; ?><br>
+                                        <p style="color:#999;font-weight:bolder;" ><?php echo $objComentario->objUsuario->getNombreCorto(); ?><br>
                                         </p>
                                     </div>
                                 </div>

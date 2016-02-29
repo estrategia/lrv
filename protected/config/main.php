@@ -371,6 +371,12 @@ return array(
                 'estado' => array('activo' => 1, 'inactivo' => 0),
                 'estadoNombre' => array(0 => 'Inactivo', 1 => 'Activo'),
             ),
+            'bonos' => array(
+                'estado' => array('activo' => 1, 'inactivo' => 0),
+                'estadoNombre' => array(1 => 'Activo', 0 => 'Inactivo'),
+                'tipo' => array('manual' => 1, 'cargue' => 2),
+                'tipoNombre' => array(1 => 'Manual', 2 => 'Cargue'),
+            ),
             'reactivacionBono' => array(
                 'asuntoMensaje' => 'Activacion bono cliente fiel',
                 'destinatarios' => array ('karen_charria@copservir.com', 'fernando_riasco@copservir.com' )
@@ -423,6 +429,7 @@ return array(
                     'pendientePasarela' => 11,
                     'aprobadoPasarela' => 12,
                     'negadoPasarela' => 13,
+                    'validacionManualPasarela' => 14
                 ),
                 'colorClass' => array(
                     1 => 'info',
@@ -438,6 +445,7 @@ return array(
                     11 => 'danger',
                     12 => 'success',
                     13 => 'warning',
+                    14 => 'danger',
                 )
             ),
             'modulosConfigurados' => array(
@@ -515,6 +523,7 @@ return array(
             'sesion' => array(
                 'usuario' => 'larebaja.online.callcenter.usuario',
                 'formPedidoBusqueda' => 'larebaja.online.callcenter.formpedidobusqueda',
+                'modelBonosAdminExport' => 'larebaja.online.callcenter.modelbonosadminexport',
             ),
         ),
     ),

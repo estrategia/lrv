@@ -47,7 +47,7 @@ class ReportePedidoForm extends CFormModel {
         $objWorksheet->setTitle('Compras');
 
         $listCompras = Compras::model()->findAll(array(
-            'with' => array('objUsuario', 'objFormaPago', 'objPerfil', 'objCiudad', 'objSector', 'objCompraDireccion'),
+            'with' => array('objUsuario', 'objFormaPagoCompra', 'objPerfil', 'objCiudad', 'objSector', 'objCompraDireccion'),
             'order' => 't.fechaEntrega',
             'condition' => 'fechaEntrega>=:fechaini AND fechaEntrega<=:fechafin',
             'params' => array(

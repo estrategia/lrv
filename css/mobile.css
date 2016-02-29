@@ -2220,8 +2220,13 @@ div.c_cont_com_prod.ui-collapsible.ui-collapsible-inset.ui-corner-all.ui-collaps
 
 .utilBono {
     font-style: italic;
-    padding: 1em 0;
+    font-weight: bold;
 }
+
+div.utilBono {
+    padding: 0.5em 0;
+}
+
 .contentConfirmacion > h1 {
     color: #b10000;
     font-size: large;

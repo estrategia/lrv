@@ -2,9 +2,10 @@
 /* @var $this OperadorController */
 /* @var $model Operador */
 
-$this->breadcrumbs=array(
-	'Operadors'=>array('index'),
-	'Create',
+$this->breadcrumbs = array(
+    'Inicio' => array('/callcenter'),
+    'Operadores' => array('/callcenter/operador'),
+    'Crear',
 );
 ?>
 
@@ -19,5 +20,4 @@ $this->breadcrumbs=array(
             </div>
         </div>
     </div>
-
 </div>

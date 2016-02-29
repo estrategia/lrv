@@ -116,7 +116,7 @@ class Usuario extends CActiveRecord {
     public static function model($className = __CLASS__) {
         return parent::model($className);
     }
-    
+
     /**
      * @param string $password password para validar
      * return boolean Valida si parametro $password corresponde a la clave del usuario
@@ -128,18 +128,18 @@ class Usuario extends CActiveRecord {
     public function hash($contrasena) {
         return md5($contrasena);
     }
-    
+
     public function beforeSave() {
-        if($this->isNewRecord){
+        if ($this->isNewRecord) {
             $this->esClienteFiel = 1;
         }
         return parent::beforeSave();
     }
-    
-    public function getCodigoPerfil(){
+
+    public function getCodigoPerfil() {
         $diaCF = in_array(date('j'), Yii::app()->params->clienteFiel['dias']) ? 1 : 0;
         $codigoPerfilCompra = $this->codigoPerfil;
-        
+
         $objParametro = ParametroCompra::model()->find(array(
             'condition' => 'codigoPerfil=:perfil AND esClienteFiel=:cf AND esDiaClienteFiel=:diacf',
             'params' => array(
@@ -148,20 +148,31 @@ class Usuario extends CActiveRecord {
                 ':diacf' => $diaCF,
             )
         ));
-        
-        /*if($this->codigoPerfil == 1 && $this->esClienteFiel == 1 && in_array(date('j'), Yii::app()->params->clienteFiel['dias']) && $this->invitado==0){
-            $codigoPerfilCompra = 3;
-        }*/
-        
-        if($objParametro!=null){
+
+        /* if($this->codigoPerfil == 1 && $this->esClienteFiel == 1 && in_array(date('j'), Yii::app()->params->clienteFiel['dias']) && $this->invitado==0){
+          $codigoPerfilCompra = 3;
+          } */
+
+        if ($objParametro != null) {
             $codigoPerfilCompra = $objParametro->codigoPerfilCompra;
         }
-        
+
         return $codigoPerfilCompra;
     }
-    
-    public function getNombreCompleto(){
+
+    public function getNombreCompleto() {
         return "$this->nombre $this->apellido";
+    }
+
+    public function getNombreCorto() {
+        $nombre = explode(' ', $this->nombre);
+        $nombreStr = trim($nombre[0]);
+
+        if(isset($nombre[1])){
+            $nombreStr .= " " . trim($nombre[1]);
+        }
+
+        return $nombreStr;
     }
 
 }
