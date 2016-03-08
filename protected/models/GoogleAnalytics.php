@@ -60,7 +60,7 @@ class GoogleAnalytics {
                 'category' => $objItem->objProducto->objCategoriaBI != null ? $objItem->objProducto->objCategoriaBI->nombreCategoria : "",
                 'brand' => $objItem->objProducto->objMarca != null ? $objItem->objProducto->objMarca->nombreMarca : "",
                 'variant' => $objItem->presentacion,
-                'price' => $objItem->precioTotalUnidad + $objItem->precioTotalFraccion,
+                'price' => $objItem->getPrecioUnidad(true),
                 'quantity' => $objItem->getTotalUnidades(),
                 'coupon' => ''
             );

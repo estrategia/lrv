@@ -183,6 +183,16 @@ class ComprasItems extends CActiveRecord {
 
         return $unidades + $fracciones;
     }
+    
+    public function getPrecioUnidad($descuento = false){
+        $precio = $this->precioBaseUnidad;
+        
+        if($descuento){
+            $precio -= $this->descuentoUnidad;
+        }
+        
+        return $precio;
+    }
 
     public function modificarDescuento($descuento, $tipo, $idOperador) {
         $precioDiff  = 0;
