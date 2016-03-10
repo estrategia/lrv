@@ -200,23 +200,47 @@ class ContenidoController extends ControllerOperator {
                         $modelBanner = new ImagenBanner();
                         $modelBanner->attributes = $_POST['ImagenBanner'];
                         $uploadedFile = CUploadedFile::getInstance($modelBanner, "rutaImagen");
-
+                        $error = false;
                         if ($uploadedFile->getExtensionName() == "jpg" || $uploadedFile->getExtensionName() == "png" ||
                                 $uploadedFile->getExtensionName() == "jpeg" || $uploadedFile->getExtensionName() == "gif") {
 
                             if ($uploadedFile->saveAs(Yii::app()->params->callcenter['modulosConfigurados']['urlImagenes'] . $modelBanner->nombre . date("Ymdhis") . "." . $uploadedFile->getExtensionName())) {
                                 $modelBanner->rutaImagen = "/" . Yii::app()->params->callcenter['modulosConfigurados']['urlImagenes'] . $modelBanner->nombre . date("Ymdhis") . "." . $uploadedFile->getExtensionName();
                                 $modelBanner->idModulo = $idModulo;
-                                if ($modelBanner->save()) {
-                                    Yii::app()->user->setFlash('alert alert-success', "La imagen ha sido guardada con éxito");
-                                } else {
-                                    Yii::app()->user->setFlash('alert alert-danger', "Error al subir la imagen");
-                                }
                             } else {
                                 Yii::app()->user->setFlash('alert alert-danger', 'Error al subir la imagen');
+                                $error = true;
                             }
                         } else {
                             Yii::app()->user->setFlash('alert alert-danger', 'Imagen no valida');
+                            $error = true;
+                        }
+
+                        // imagen móvil
+                        if (!$error) {
+                            $uploadedFile2 = CUploadedFile::getInstance($modelBanner, "rutaImagenMovil");
+
+                            if ($uploadedFile2) {
+                                if ($uploadedFile2->getExtensionName() == "jpg" || $uploadedFile2->getExtensionName() == "png" ||
+                                        $uploadedFile2->getExtensionName() == "jpeg" || $uploadedFile2->getExtensionName() == "gif") {
+                                    if ($uploadedFile2->saveAs(Yii::app()->params->callcenter['modulosConfigurados']['urlImagenes'] . $modelBanner->nombre . " movil_" . date("Ymdhis") . "." . $uploadedFile2->getExtensionName())) {
+                                        $modelBanner->rutaImagenMovil = "/" . Yii::app()->params->callcenter['modulosConfigurados']['urlImagenes'] . $modelBanner->nombre . " movil_" . date("Ymdhis") . "." . $uploadedFile2->getExtensionName();
+                                    } else {
+                                        Yii::app()->user->setFlash('alert alert-danger', 'Error al subir la imagen movil');
+                                        $error = true;
+                                    }
+                                } else {
+                                    Yii::app()->user->setFlash('alert alert-danger', 'Imagen movil no valida');
+                                    $error = true;
+                                }
+                            }
+                        }
+                        if (!$error) {
+                            if ($modelBanner->save()) {
+                                Yii::app()->user->setFlash('alert alert-success', "Las imagenes han sido guardadas con éxito");
+                            } else {
+                                Yii::app()->user->setFlash('alert alert-danger', "Error al guardar las imagenes");
+                            }
                         }
                     }
                 }
@@ -235,7 +259,7 @@ class ContenidoController extends ControllerOperator {
                 if (isset($_POST['ModulosConfigurados'])) {
                     $model = ModulosConfigurados::model()->findByPk($_POST['ModulosConfigurados']['idModulo']);
                     $model->scenario = 'contenido';
-                    
+
                     $model->attributes = $_POST['ModulosConfigurados'];
                     //CVarDumper::dump($_POST,10,true);
                     $model->contenidoMovil = $_POST['ModulosConfigurados']['contenidoMovil'];
@@ -466,7 +490,7 @@ class ContenidoController extends ControllerOperator {
             ':grupoModulo' => ModulosConfigurados::TIPO_GRUPO_MODULOS,
             ':idgrupoModulo' => $idGrupoModulo
         );
-        $criteria->order ="t.idModulo DESC";
+        $criteria->order = "t.idModulo DESC";
 
         $modulos = ModulosConfigurados::model()->findAll($criteria);
 
@@ -1053,8 +1077,7 @@ class ContenidoController extends ControllerOperator {
             Yii::app()->end();
         }
     }
-    
-    
+
     public function actionEliminartodosProductos() {
         if (!Yii::app()->request->isPostRequest) {
             throw new CHttpException(404, 'Solicitud inválida.');
@@ -1062,15 +1085,14 @@ class ContenidoController extends ControllerOperator {
 
         $idModulo = Yii::app()->getRequest()->getPost('idModulo');
 
-        
+
         if ($idModulo === null) {
             throw new CHttpException(404, 'Solicitud inválida.');
         }
 
-       
 
-        if (ProductosModulos::model()->deleteAll("idModulo =:idmodulo",
-                array(
+
+        if (ProductosModulos::model()->deleteAll("idModulo =:idmodulo", array(
                     'idmodulo' => $idModulo
                 ))) {
             $model = ModulosConfigurados::model()->findByPk($idModulo);
@@ -1372,8 +1394,8 @@ class ContenidoController extends ControllerOperator {
             ));
         }
     }
-    
-     public function actionEliminarmodulo() {
+
+    public function actionEliminarmodulo() {
         if (!Yii::app()->request->isPostRequest) {
             throw new CHttpException(404, 'Solicitud inválida.');
         }
@@ -1384,19 +1406,18 @@ class ContenidoController extends ControllerOperator {
             throw new CHttpException(404, 'Solicitud inválida.');
         }
 
-        $imagenes = ImagenBanner::model()->deleteAll("idModulo=:idmodulo", array('idmodulo'=> $idModulo));
-        $perfil = ModuloPerfil::model()->deleteAll("idModulo=:idmodulo", array('idmodulo'=> $idModulo));
-        $modulosector = ModuloSectorCiudad::model()->deleteAll("idModulo=:idmodulo", array('idmodulo'=> $idModulo));
-        $ubicacion = UbicacionModulos::model()->deleteAll("idModulo=:idmodulo", array('idmodulo'=> $idModulo));
-        $gruposModulo  = GruposModulos::model()->deleteAll("idModulo=:idmodulo OR idGrupoModulo=:idmodulo", array('idmodulo'=> $idModulo));
-        $productos = ProductosModulos::model()->deleteAll("idModulo=:idmodulo", array('idmodulo'=> $idModulo));
-        $menu = MenuModulo::model()->deleteAll("idModulo=:idmodulo", array('idmodulo'=> $idModulo));
+        $imagenes = ImagenBanner::model()->deleteAll("idModulo=:idmodulo", array('idmodulo' => $idModulo));
+        $perfil = ModuloPerfil::model()->deleteAll("idModulo=:idmodulo", array('idmodulo' => $idModulo));
+        $modulosector = ModuloSectorCiudad::model()->deleteAll("idModulo=:idmodulo", array('idmodulo' => $idModulo));
+        $ubicacion = UbicacionModulos::model()->deleteAll("idModulo=:idmodulo", array('idmodulo' => $idModulo));
+        $gruposModulo = GruposModulos::model()->deleteAll("idModulo=:idmodulo OR idGrupoModulo=:idmodulo", array('idmodulo' => $idModulo));
+        $productos = ProductosModulos::model()->deleteAll("idModulo=:idmodulo", array('idmodulo' => $idModulo));
+        $menu = MenuModulo::model()->deleteAll("idModulo=:idmodulo", array('idmodulo' => $idModulo));
         $model = ModulosConfigurados::model()->deleteByPk($idModulo);
-      
+
 
         echo CJSON::encode(array('result' => 'ok', 'response' => "La operaci&oacute;n se realizo con &eacute;xito"));
         Yii::app()->end();
     }
-    
 
 }
