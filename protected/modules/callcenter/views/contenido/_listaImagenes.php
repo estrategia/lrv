@@ -19,6 +19,7 @@
             <tr>
                 <th>Nombre</th>
                 <th>Imagen</th>
+                <th>Imagen Móvil</th>
                 <th>Tipo de Contenido</th>
                 <th>Orden</th>
                 <th>Contenido</th>
@@ -34,6 +35,7 @@
                     <td><?php echo $dato->nombre?> </td>
                     
                     <td><img class="img-responsive" width='200px' src="<?php echo Yii::app()->request->baseUrl . $dato->rutaImagen ?>" /></td>
+                    <td><?php if(!empty($dato->rutaImagenMovil)):?><img class="img-responsive" width='200px' src="<?php echo Yii::app()->request->baseUrl . $dato->rutaImagenMovil ?>" /><?php endif;?></td>
                     <td><?php echo Yii::app()->params->callcenter['modulosConfigurados']['tiposContenidos'][$dato->tipoContenido] ?></td>
                     <td><?php echo $dato->orden ?></td>
                     <td><?php echo CHtml::link('Visualizar Contenido', '#', array('data-contenido-modal' =>  $dato->contenido , 'data-role' => "modal-contenido", 'class' => 'btn btn-primary', ($dato->contenido == null || empty($dato->contenido))? 'disabled':'' => 'true')); ?></td>
