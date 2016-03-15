@@ -1988,8 +1988,8 @@ class CarroController extends Controller {
 
                     $listFormaPago = FormaPago::model()->findAll(array(
                         'order' => 'formaPago',
-                        'condition' => 'estadoFormaPago=:estado',
-                        'params' => array(':estado' => 1)
+                        'condition' => 'estadoFormaPago=:estado AND idFormaPago <> :credirebaja',
+                        'params' => array(':estado' => 1, ':credirebaja' => Yii::app()->params->formaPago['idCredirebaja'])
                     ));
                     $modelPago->consultarBono(Yii::app()->shoppingCart->getTotalCost());
                     Yii::app()->session[Yii::app()->params->sesion['carroPagarForm']] = $modelPago;
@@ -2219,11 +2219,22 @@ class CarroController extends Controller {
                     $params['parametros']['listHorarios'] = $modelPago->listDataHoras();
                     break;
                 case Yii::app()->params->pagar['pasos'][3]:
-                    $listFormaPago = FormaPago::model()->findAll(array(
-                        'order' => 'formaPago',
-                        'condition' => 'estadoFormaPago=:estado',
-                        'params' => array(':estado' => 1)
-                    ));
+                    $listFormaPago = array();
+
+                    if ($modelPago->pagoInvitado) {
+                        $listFormaPago = FormaPago::model()->findAll(array(
+                            'order' => 'formaPago',
+                            'condition' => 'estadoFormaPago=:estado AND idFormaPago <> :credirebaja',
+                            'params' => array(':estado' => 1, ':credirebaja' => Yii::app()->params->formaPago['idCredirebaja'])
+                        ));
+                    } else {
+                        $listFormaPago = FormaPago::model()->findAll(array(
+                            'order' => 'formaPago',
+                            'condition' => 'estadoFormaPago=:estado',
+                            'params' => array(':estado' => 1)
+                        ));
+                    }
+
                     $modelPago->consultarBono(Yii::app()->shoppingCart->getTotalCost());
                     Yii::app()->session[Yii::app()->params->sesion['carroPagarForm']] = $modelPago;
                     $params['parametros']['listFormaPago'] = $listFormaPago;
@@ -2408,11 +2419,21 @@ class CarroController extends Controller {
                 }
                 //$this->render('_paso2', $params);
             } else if ($paso == Yii::app()->params->pagar['pasos'][3]) {
-                $listFormaPago = FormaPago::model()->findAll(array(
-                    'order' => 'formaPago',
-                    'condition' => 'estadoFormaPago=:estado',
-                    'params' => array(':estado' => 1)
-                ));
+                $listFormaPago = array();
+
+                if ($modelPago->pagoInvitado) {
+                    $listFormaPago = FormaPago::model()->findAll(array(
+                        'order' => 'formaPago',
+                        'condition' => 'estadoFormaPago=:estado AND idFormaPago <> :credirebaja',
+                        'params' => array(':estado' => 1, ':credirebaja' => Yii::app()->params->formaPago['idCredirebaja'])
+                    ));
+                } else {
+                    $listFormaPago = FormaPago::model()->findAll(array(
+                        'order' => 'formaPago',
+                        'condition' => 'estadoFormaPago=:estado',
+                        'params' => array(':estado' => 1)
+                    ));
+                }
                 $modelPago->consultarBono(Yii::app()->shoppingCart->getTotalCost());
                 Yii::app()->session[Yii::app()->params->sesion['carroPagarForm']] = $modelPago;
                 $modelPago->setScenario('pago');
@@ -3033,7 +3054,7 @@ class CarroController extends Controller {
             }
 
             $transaction->commit();
-            
+
             if ($modelPago->idFormaPago != Yii::app()->params->formaPago['pasarela']['idPasarela']) {
                 ini_set('default_socket_timeout', 5);
                 $client = new SoapClient(null, array(
@@ -3044,7 +3065,7 @@ class CarroController extends Controller {
                 ));
 
                 try {
-                    $result = $client->__soapCall("CongelarCompraAutomatica", array('idPedido' => $objCompra->idCompra));//763759, 763743
+                    $result = $client->__soapCall("CongelarCompraAutomatica", array('idPedido' => $objCompra->idCompra)); //763759, 763743
                     if (!empty($result) && $result[0] == 1) {
                         $contenidoCorreo = $this->renderPartial('application.modules.callcenter.views.pedido.compraCorreo', array('objCompra' => $objCompra), true, true);
                         $htmlCorreo = $this->renderPartial('application.views.common.correo', array('contenido' => $contenidoCorreo), true, true);
@@ -3126,8 +3147,8 @@ class CarroController extends Controller {
         $descripcion = Yii::app()->params->formaPago['pasarela']['descripcion'];
         $prueba = Yii::app()->params->formaPago['pasarela']['prueba'];
 
-        $urlRespuesta = "http://www.larebajavirtual.com/pasarela/respuesta";//$this->createAbsoluteUrl('/pasarela/respuesta');
-        $urlConfirmacion = "http://www.larebajavirtual.com/pasarela/confirmacion";//$this->createAbsoluteUrl('/pasarela/confirmacion');
+        $urlRespuesta = "http://www.larebajavirtual.com/pasarela/respuesta"; //$this->createAbsoluteUrl('/pasarela/respuesta');
+        $urlConfirmacion = "http://www.larebajavirtual.com/pasarela/confirmacion"; //$this->createAbsoluteUrl('/pasarela/confirmacion');
         $llaveEncripcion = Yii::app()->params->formaPago['pasarela']['llaveEncripcion'];
 
         $firma = $llaveEncripcion . "~" . $usuarioId . "~" . $resultCompra['response']['objPasarelaEnvio']->idCompra . "~" . $resultCompra['response']['objPasarelaEnvio']->valor . "~" . $resultCompra['response']['objPasarelaEnvio']->moneda;

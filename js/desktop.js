@@ -1590,7 +1590,7 @@ $(document).ready(function() {
          autoPlay: 3000, 
     });
     $('.ad-gallery').adGallery({
-        loader_image: '../images/libs/ad-gallery/loader.gif',
+        loader_image: requestUrl + '/libs/ad-gallery/loader.gif',
         update_window_hash: false,
         width: 400,
         height: 300,

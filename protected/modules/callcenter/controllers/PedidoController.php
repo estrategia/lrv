@@ -900,7 +900,7 @@ class PedidoController extends ControllerOperator {
                 }
 
                 // Enviar Correo electronico al punto de venta
-                $this->enviarEmail($objCompra);
+                try{$this->enviarEmail($objCompra);}  catch (Exception $exc){};
                 $transaction->commit();
             } catch (Exception $exc) {
                 Yii::log($exc->getMessage() . "\n" . $exc->getTraceAsString(), CLogger::LEVEL_ERROR, 'application');

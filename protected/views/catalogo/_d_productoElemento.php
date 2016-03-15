@@ -20,13 +20,11 @@
                 <!--descuento-->
                 <div class="cdiv_prod_desc"><?php echo $objPrecio->getPorcentajeDescuento() ?>% dcto</div>
             <?php endif; ?>
-            <?php if ($objPrecio->inicializado()): ?>
-                <a href="<?php echo CController::createUrl('/catalogo/producto', array('producto' => $data->codigoProducto, 'descripcion' => $data->getCadenaUrl())) ?>">
-                <?php endif; ?>    
-                <img src="<?php echo Yii::app()->request->baseUrl . $data->rutaImagen(); ?>" class="img-responsive noimagenProduct product-prom">
-                <?php if ($objPrecio->inicializado()): ?>    
-                </a>
-            <?php endif; ?>
+                
+            <a href="<?php echo CController::createUrl('/catalogo/producto', array('producto' => $data->codigoProducto, 'descripcion' => $data->getCadenaUrl())) ?>">
+               <img src="<?php echo Yii::app()->request->baseUrl . $data->rutaImagen(); ?>" class="img-responsive noimagenProduct product-prom">
+            </a>
+            
             <?php if (!in_array($data->idUnidadNegocioBI, Yii::app()->params->calificacion['categoriasNoCalificacion']) && $vista != 'slider'): ?>
                 <div class="" style="text-align:center">
                     <div class="ranking-list" >
@@ -42,20 +40,14 @@
 
         <div class="content_product">
             <div class="">
-                <p style="">
-                    <?php if ($objPrecio->inicializado()): ?>
-                        <a href="<?php echo CController::createUrl('/catalogo/producto', array('producto' => $data->codigoProducto, 'descripcion' => $data->getCadenaUrl())) ?>" title='<?php echo $data->descripcionProducto ?>'>
-                        <?php endif; ?>
-                        <div class="descripcion-grid text-truncate">
-                            <?php echo $data->descripcionProducto ?>
-                        </div>
-                        <div class="descripcion-lineal" style="display:none">
-                            <?php echo $data->descripcionProducto ?>
-                        </div>
-                        <?php if ($objPrecio->inicializado()): ?>    
-                        </a>
-                    <?php endif; ?>
-                </p>  
+                <a href="<?php echo CController::createUrl('/catalogo/producto', array('producto' => $data->codigoProducto, 'descripcion' => $data->getCadenaUrl())) ?>" title="<?php echo $data->descripcionProducto ?>">
+                    <div class="descripcion-grid text-truncate">
+                        <?php echo $data->descripcionProducto ?>
+                    </div>
+                    <div class="descripcion-lineal" style="display:none">
+                        <?php echo $data->descripcionProducto ?>
+                    </div>
+                </a>
             </div>
             <div class="line-bottom">
                 <div class="descripcion-grid text-truncate">
@@ -135,7 +127,7 @@
             </div>
         <?php elseif (!$objPrecio->inicializado()): ?>
             <div class="col-md-12">
-                <?php echo CHtml::link('<div class="btn btn-primary btn-block btn-xs">Agotado</div>', '#', array('disabled' => 'true', 'onclick' => 'return false;')); ?>
+                <?php echo CHtml::link('<div class="btn btn-primary btn-block btn-xs">Agotado</div>', CController::createUrl('/catalogo/producto', array('producto' => $data->codigoProducto, 'descripcion' => $data->getCadenaUrl())), array()); ?>
             </div>
         <?php elseif ($vista != 'slider'): ?>
             <div class="botones-list">

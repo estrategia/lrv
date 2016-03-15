@@ -174,8 +174,14 @@
                             <?php endif; ?>
                         <?php endif; ?>
                     <?php endif; ?>   
-                    <?php if ($objProducto->ventaVirtual == 1): ?>
-                        <?php if ($objSectorCiudad != null): ?>                                  
+                    
+                                
+                    <?php if ($objSectorCiudad == null): ?>
+                        <div class="consultar_precio" style="margin-top: 13px;">
+                            <?php echo CHtml::link('<div class="btn btn-primary btn-block">Consultar Precio</div>', $this->createUrl('/sitio/ubicacion'), array()); ?>
+                        </div> 
+                    <?php elseif ($objProducto->ventaVirtual == 1): ?>
+                        <?php if($objPrecio->inicializado()): ?>
                             <div class="" style="margin-top: 13px;">
                                 <?php echo CHtml::link('<div class="btn btn-primary btn-block">Añadir&nbsp;<img src="' . Yii::app()->baseUrl . '/images/desktop/button-carrito.png" alt=""></div>', '#', array('data-producto' => $objProducto->codigoProducto, 'data-cargar' => 1, 'data-id' => $idUnico, 'class' => '')); ?>
                                 <?php if (!Yii::app()->user->isGuest): ?>
@@ -187,12 +193,11 @@
                                 <?php echo CHtml::link('<div class="btn btn-default btn-block" >Comparar</div>', '#', array('class' => '', 'data-producto' => $objProducto->codigoProducto,'data-id'=> $idUnico, 'data-role' => 'comparar')); ?>
                             </div>
                         <?php else: ?>
-                            <div class="consultar_precio">
-                                <div class="space-1"></div>
-                                <?php echo CHtml::link('<div class="btn btn-default btn-block">Consultar Precio', $this->createUrl('/sitio/ubicacion'), array(/* 'data-producto' => $objProducto->codigoProducto, 'data-carro' => 1, 'class' => '' */)); ?>                           
-                            </div>     
-                        <?php endif; ?>                               
-                    <?php else: ?>
+                            <div class="" style="margin-top: 13px;"
+                                <?php echo CHtml::link('<div class="btn btn-primary btn-block">Agotado</div>', '#', array('disabled' => 'true', 'onclick' => 'return false;')); ?>
+                            </div>
+                        <?php endif;?>
+                    <?php elseif ($objProducto->ventaVirtual == 0): ?>
                         <div>Este producto lo puede adquirir en nuestros puntos de venta autorizados.</div>
                     <?php endif; ?>
                 </div>

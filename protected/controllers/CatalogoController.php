@@ -910,11 +910,10 @@ class CatalogoController extends Controller {
     }
 
     public function actionProducto($producto) {
-        $objSectorCiudad = null;
-        if (isset(Yii::app()->session[Yii::app()->params->sesion['sectorCiudadEntrega']]))
-            $objSectorCiudad = Yii::app()->session[Yii::app()->params->sesion['sectorCiudadEntrega']];
+        $objSectorCiudad = $this->objSectorCiudad;
 
         if ($objSectorCiudad == null) {
+            Yii::app()->session[Yii::app()->params->sesion['redireccionUbicacion']] = null;
             $objProducto = Producto::model()->find(array(
                 'with' => array('listImagenesGrandes', 'objDetalle', 'objCodigoEspecial', 'listCalificaciones' => array('with' => 'objUsuario')),
                 'condition' => 't.activo=:activo AND t.codigoProducto=:codigo',
@@ -930,20 +929,24 @@ class CatalogoController extends Controller {
                     'objDetalle',
                     'objCodigoEspecial',
                     'listCalificaciones' => array('with' => 'objUsuario'),
-                    'listSaldos' => array('condition' => '(listSaldos.saldoUnidad>:saldo AND listSaldos.codigoCiudad=:ciudad AND listSaldos.codigoSector=:sector) OR (listSaldos.saldoUnidad IS NULL AND listSaldos.codigoCiudad IS NULL AND listSaldos.codigoSector IS NULL)'),
-                    'listPrecios' => array('condition' => '(listPrecios.codigoCiudad=:ciudad AND listPrecios.codigoSector=:sector) OR (listPrecios.codigoCiudad IS NULL AND listPrecios.codigoSector IS NULL)'),
-                    'listSaldosTerceros' => array('condition' => '(listSaldosTerceros.saldoUnidad>:saldo AND listSaldosTerceros.codigoCiudad=:ciudad AND listSaldosTerceros.codigoSector=:sector) OR (listSaldosTerceros.codigoCiudad IS NULL AND listSaldosTerceros.codigoSector IS NULL)')
+                    'listSaldos' => array('on' => 'listSaldos.codigoCiudad=:ciudad AND listSaldos.codigoSector=:sector OR listSaldos.idProductoSaldos IS NULL'),
+                    'listPrecios' => array('on' => 'listPrecios.codigoCiudad=:ciudad AND listPrecios.codigoSector=:sector OR listPrecios.idProductoPrecios IS NULL'),
+                    'listSaldosTerceros' => array('on' => 'listSaldosTerceros.codigoCiudad=:ciudad AND listSaldosTerceros.codigoSector=:sector OR listSaldosTerceros.idProductoSaldo IS NULL')
                 ),
-                'condition' => 't.activo=:activo AND t.codigoProducto=:codigo AND ( (listSaldos.saldoUnidad IS NOT NULL AND listPrecios.codigoCiudad IS NOT NULL) OR listSaldosTerceros.codigoCiudad IS NOT NULL)',
+                'condition' => 't.activo=:activo AND t.codigoProducto=:codigo',
                 'params' => array(
                     ':activo' => 1,
                     ':codigo' => $producto,
-                    ':saldo' => 0,
+                    //':saldo' => 0,
                     ':ciudad' => $objSectorCiudad->codigoCiudad,
                     ':sector' => $objSectorCiudad->codigoSector,
                 ),
             ));
         }
+        
+        //CVarDumper::dump($objProducto, 10, true);exit();
+        
+        //throw new CHttpException(404, 'Producto no existe.');
 
         if ($objProducto == null) {
             throw new CHttpException(404, 'Producto no existe.');
