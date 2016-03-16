@@ -1225,7 +1225,7 @@ class UsuarioController extends Controller {
         if (Yii::app()->user->isGuest) {
             $contenido = "No hay usuario autenticado";
         } else {
-            $listDirecciones = DireccionesDespacho::consultarDireccionesUsuario(Yii::app()->user->name, true);
+            $listDirecciones = DireccionesDespacho::consultarDireccionesUsuario(Yii::app()->user->name, true, true);
             if (empty($listDirecciones)) {
                 $contenido = "No hay direcciones de despacho registradas";
             } else {

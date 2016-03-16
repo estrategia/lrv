@@ -98,6 +98,7 @@ class DireccionesDespacho extends CActiveRecord {
             'objUsuario' => array(self::BELONGS_TO, 'Usuario', 'identificacionUsuario'),
             'objCiudad' => array(self::BELONGS_TO, 'Ciudad', 'codigoCiudad'),
             'objSector' => array(self::BELONGS_TO, 'Sector', 'codigoSector'),
+            'listSectorCiudad' => array(self::HAS_MANY, 'SectorCiudad', 'codigoCiudad'),
         );
     }
 
@@ -181,15 +182,29 @@ class DireccionesDespacho extends CActiveRecord {
         );
     }
 
-    public static function consultarDireccionesUsuario($identificacionUsuario, $agrupar=false) {
-        $models = DireccionesDespacho::model()->findAll(array(
-            'with' => array('objCiudad'),
-            'condition' => 'identificacionUsuario=:cedula AND activo=:activo',
-            'params' => array(
-                ':cedula' => $identificacionUsuario,
-                ':activo' => 1,
-            )
-        ));
+    public static function consultarDireccionesUsuario($identificacionUsuario, $agrupar=false, $validar = false) {
+        $models = array();
+        
+        if($validar){
+            $models = DireccionesDespacho::model()->findAll(array(
+                'with' => array('objCiudad'),
+                'join' => 'INNER JOIN m_SectorCiudad as sectorCiudad ON sectorCiudad.codigoCiudad=t.codigoCiudad AND sectorCiudad.codigoSector=t.codigoSector',
+                'condition' => 'identificacionUsuario=:cedula AND activo=:activo',
+                'params' => array(
+                    ':cedula' => $identificacionUsuario,
+                    ':activo' => 1,
+                )
+            ));
+        }else{
+            $models = DireccionesDespacho::model()->findAll(array(
+                'with' => array('objCiudad'),
+                'condition' => 'identificacionUsuario=:cedula AND activo=:activo',
+                'params' => array(
+                    ':cedula' => $identificacionUsuario,
+                    ':activo' => 1,
+                )
+            ));
+        }
         
         if($agrupar){
             return self::agruparDireccionesPorCiudad($models);

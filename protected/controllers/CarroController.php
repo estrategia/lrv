@@ -1817,8 +1817,8 @@ class CarroController extends Controller {
                     );
 
                     if (isset(Yii::app()->session[Yii::app()->params->sesion['direccionEntrega']]) && Yii::app()->session[Yii::app()->params->sesion['direccionEntrega']] != null) {
-                        $criteriaDireccion['condition'] .= " AND idDireccionDespacho=:direccion";
-                        $criteriaDireccion['params'][':direccion'] = Yii::app()->session[Yii::app()->params->sesion['direccionEntrega']];
+                        //$criteriaDireccion['condition'] .= " AND idDireccionDespacho=:direccion";
+                        //$criteriaDireccion['params'][':direccion'] = Yii::app()->session[Yii::app()->params->sesion['direccionEntrega']];
                         $modelPago->idDireccionDespacho = Yii::app()->session[Yii::app()->params->sesion['direccionEntrega']];
                     }
 
@@ -2206,8 +2206,8 @@ class CarroController extends Controller {
                     );
 
                     if (isset(Yii::app()->session[Yii::app()->params->sesion['direccionEntrega']]) && Yii::app()->session[Yii::app()->params->sesion['direccionEntrega']] != null) {
-                        $criteriaDireccion['condition'] .= " AND idDireccionDespacho=:direccion";
-                        $criteriaDireccion['params'][':direccion'] = Yii::app()->session[Yii::app()->params->sesion['direccionEntrega']];
+                        //$criteriaDireccion['condition'] .= " AND idDireccionDespacho=:direccion";
+                        //$criteriaDireccion['params'][':direccion'] = Yii::app()->session[Yii::app()->params->sesion['direccionEntrega']];
                         $modelPago->idDireccionDespacho = Yii::app()->session[Yii::app()->params->sesion['direccionEntrega']];
                     }
 
@@ -3069,7 +3069,11 @@ class CarroController extends Controller {
                     if (!empty($result) && $result[0] == 1) {
                         $contenidoCorreo = $this->renderPartial('application.modules.callcenter.views.pedido.compraCorreo', array('objCompra' => $objCompra), true, true);
                         $htmlCorreo = $this->renderPartial('application.views.common.correo', array('contenido' => $contenidoCorreo), true, true);
-                        sendHtmlEmail($result[2], Yii::app()->params->asunto['pedidoRemitido'], $htmlCorreo);
+                        try{
+                            sendHtmlEmail($result[2], Yii::app()->params->asunto['pedidoRemitido'], $htmlCorreo);
+                        } catch (Exception $ce) {
+                            Yii::log("Error enviando correo de remision automatica #$objCompra->idCompra\n" . $ce->getMessage() . "\n" . $ce->getTraceAsString(), CLogger::LEVEL_INFO, 'application');
+                        }
                     }
                 } catch (SoapFault $exc) {
                     Yii::log("SoapFault WebService CongelarCompraAutomatica [compra: $objCompra->idCompra]\n" . $exc->getMessage() . "\n" . $exc->getTraceAsString() . "\n" . $client->__getLastResponse(), CLogger::LEVEL_INFO, 'application');
