@@ -460,6 +460,7 @@ return array(
                     7 => 'Promoci&oacute;n flotante',
                     8 => 'Cuadricula de productos',
                     9 => 'Grupo de m&oacute;dulos',
+                    10 => 'Productos &uacute;ltimo antojo'
                 ),
                 'ubicacionModulos' => array(
                     1 => 'Inicio',

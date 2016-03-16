@@ -4,6 +4,9 @@ protected/runtime/*
 !protected/runtime/.gitignore
 /.project
 /images/productos/
+/images/desktop/
+/images/banner/
+/images/menu/
 /images/owl/
 /images/combos/
 /nbproject/private/
