@@ -67,7 +67,7 @@ class AdminController extends ControllerOperator {
             $model->fechaCompra = $fecha->format('Y-m-d H:i:s');
 
             $sort = "";
-            switch ($parametro == 1) {
+            switch ($parametro) {
                 case 1: $sort = "t.seguimiento DESC, t.fechaCompra DESC";
                     break;
                 case 2: $sort = "t.fechaEntrega DESC";
