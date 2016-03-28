@@ -74,9 +74,9 @@ class AdminController extends ControllerOperator {
                     break;
                 case 3: $sort = "t.fechaEntrega DESC";
                     break;
-                case 4: $sort = "t.fechaEntrega DESC";
+                case 4: $sort = "t.fechaEntrega ASC";
                     break;
-                case 5: $sort = "t.fechaCompra ASC";
+                case 5: $sort = "t.fechaCompra DESC";
                     break;
                 case 6: $sort = "t.fechaCompra DESC";
                     break;
