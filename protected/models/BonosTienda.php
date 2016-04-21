@@ -54,10 +54,19 @@ class BonosTienda extends CActiveRecord {
         if ($attribute == 'vigenciaFin') {
             $vigenciaInicio = DateTime::createFromFormat('Y-m-d', $this->vigenciaInicio);
             $vigenciaFin = DateTime::createFromFormat('Y-m-d', $this->vigenciaFin);
-            $diff = $vigenciaInicio->diff($vigenciaFin);
 
-            if ($diff->invert == 1) {
-                $this->addError($attribute, $this->getAttributeLabel($attribute) . ' debe ser mayor a vigencia inicio');
+            if ($vigenciaInicio == false || $vigenciaFin == false) {
+                $this->addError($attribute, "Fechas no v&aacute;lidas Inicio [$this->vigenciaInicio] Fin [$this->vigenciaFin]");
+            } else {
+                $diff = $vigenciaInicio->diff($vigenciaFin);
+
+                //if ($diff == false) {
+                //    $this->addError($attribute, "Fechas no validas Inicio [$this->vigenciaInicio] Fin [$this->vigenciaFin]");
+                //} else {
+                    if ($diff->invert == 1) {
+                        $this->addError($attribute, $this->getAttributeLabel($attribute) . ' debe ser mayor a vigencia inicio');
+                    }
+                //}
             }
         } else {
             $this->addError($attribute, $this->getAttributeLabel($attribute) . ' validaci&oacute;n incorrecta.');
@@ -162,7 +171,7 @@ class BonosTienda extends CActiveRecord {
             ),
         );
     }
-    
+
     public function beforeSave() {
         if ($this->isNewRecord) {
             //$this->fechaCreacion = new CDbExpression('NOW()');

@@ -236,6 +236,7 @@ class BonosController extends ControllerOperator {
         $model = new CargueExcelForm;
 
         if (isset($_POST['CargueExcelForm'])) {
+            ini_set("memory_limit","1024M");
             $model->attributes = $_POST['CargueExcelForm'];
 
             $uploadedFile = CUploadedFile::getInstance($model, 'archivo');
@@ -281,11 +282,11 @@ class BonosController extends ControllerOperator {
                             $objBonoTienda->minimoCompra = trim($objCelda[5]);
                             $objBonoTienda->estado = 1;
                             $objBonoTienda->tipo = 2;
-
+                            
                             if ($objBonoTienda->save()) {
                                 $total['cargado'] ++;
                             } else {
-                                $warnings .= "Error $registro: " . CVarDumper::dumpAsString($objBonoTienda->getErrors()) . "<br/>";
+                                $warnings .= "Error $registro:" . CVarDumper::dumpAsString($objBonoTienda->getErrors()) . "<br/>";
                             }
                         }
 

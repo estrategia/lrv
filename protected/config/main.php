@@ -127,6 +127,16 @@ return array(
         ),
     ),
     'params' => array(
+        'horarioEntrega' => array(
+            'deltaDefecto' => '0 1:00:0.000000',
+            'deltaHorarios' => array(
+                '76001' => array(
+                    'fechaInicio' => '2016-04-21 00:00:00',
+                    'fechaFin' => '2016-04-21 16:23:00',
+                    'deltaHorario' => '0 2:00:0.000000',
+                )
+            ),
+        ),
         'promociones' => array(
             'viernesnegro' => array(
                 'icono' => '/images/inicio/masvistos.png',
@@ -175,7 +185,7 @@ return array(
             'estado' => array('activo' => 1, 'inactivo' => 0),
             'estadoNombre' => array(0 => 'Inactivo', 1 => 'Activo'),
         ),
-        'claveLista' => 'listapersonallrv', 
+        'claveLista' => 'listapersonallrv',
         'sesion' => array(
             'cookieExpiracion' => 2592000, //1 dia 86400 --> 30 dias
             'claveCookie' => 'l4r384j4cook13',
@@ -266,7 +276,7 @@ return array(
             )
         ),
         'calificaciones' => array(
-            'estados' => array (
+            'estados' => array(
                 '0' => 'Sin aprobar',
                 '1' => 'Aprobado'
             )
@@ -361,7 +371,7 @@ return array(
         'callcenter' => array(
             'correo' => 'alexander_javela@copservir.com',
             'pedidos' => array(
-                'diasVisualizar' => 30,
+                'diasVisualizar' => 1,
                 'tiempoRecargarPagina' => 30000,
             ),
             'perfil' => array(
@@ -380,7 +390,7 @@ return array(
             ),
             'reactivacionBono' => array(
                 'asuntoMensaje' => 'Activacion bono cliente fiel',
-                'destinatarios' => array ('karen_charria@copservir.com', 'fernando_riasco@copservir.com' )
+                'destinatarios' => array('karen_charria@copservir.com', 'fernando_riasco@copservir.com')
             ),
             'observacion' => array(
                 'asuntoMensaje' => 'La rebaja virtual - información de su pedido',
@@ -430,7 +440,8 @@ return array(
                     'pendientePasarela' => 11,
                     'aprobadoPasarela' => 12,
                     'negadoPasarela' => 13,
-                    'validacionManualPasarela' => 14
+                    'validacionManualPasarela' => 14,
+                    'mensajeroAsignado' => 15,
                 ),
                 'colorClass' => array(
                     1 => 'info',
@@ -447,6 +458,7 @@ return array(
                     12 => 'success',
                     13 => 'warning',
                     14 => 'danger',
+                    15 => 'danger',
                 )
             ),
             'modulosConfigurados' => array(

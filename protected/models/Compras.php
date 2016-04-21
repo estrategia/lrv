@@ -466,7 +466,31 @@ class Compras extends CActiveRecord {
         $transaction->commit();
     }
 
+    public static function calcularFechaVisualizar() {
+        $fecha = new DateTime;
+        $dias = Yii::app()->params->callcenter['pedidos']['diasVisualizar'] - 1;
+        $fecha->modify("-$dias days");
+        return $fecha->format('Y-m-d 00:00:00');
+    }
+
     public static function cantidadComprasPorEstado($fecha, $idOperador = null) {
+        if($fecha===null){
+            $fecha = self::calcularFechaVisualizar();
+        }
+        
+        $queryPendiente = "";
+        $estadoPendiente = Yii::app()->params->callcenter['estadoCompra']['estado']['pendiente'];
+        if ($idOperador == null) {
+            $queryPendiente = "SELECT COUNT(t.idCompra) as cantidad
+            FROM t_Compras as t  
+            WHERE t.idEstadoCompra='$estadoPendiente'";
+        } else {
+            $queryPendiente = "SELECT COUNT(t.idCompra) as  cantidad
+            FROM t_Compras  as t WHERE t.idOperador=$idOperador AND t.idEstadoCompra='$estadoPendiente'";
+        }
+        $resultPendiente = Yii::app()->db->createCommand($queryPendiente)->queryRow(true);
+        
+        
         $query1 = "";
         if ($idOperador == null) {
             /*   $query1 = "SELECT eo.idEstadoCompra, COUNT(t.idCompra) cantidad
@@ -478,7 +502,7 @@ class Compras extends CActiveRecord {
             $query1 = "SELECT eo.idEstadoCompra, COUNT(t.idCompra) cantidad
             FROM t_Compras t  
             INNER JOIN m_EstadoCompra eo ON (eo.idEstadoCompra=t.idEstadoCompra) 
-					WHERE (t.fechaCompra>='$fecha' )
+            WHERE (t.fechaCompra>='$fecha' AND t.idEstadoCompra<>$estadoPendiente)
             GROUP BY eo.idEstadoCompra
             ORDER BY eo.idEstadoCompra";
 
@@ -503,7 +527,7 @@ class Compras extends CActiveRecord {
             $query1 = "SELECT eo.idEstadoCompra, COUNT(t.idCompra) cantidad
             FROM t_Compras t  
             INNER JOIN m_EstadoCompra eo ON (eo.idEstadoCompra=t.idEstadoCompra) 
-					WHERE (t.idOperador=$idOperador AND t.fechaCompra>='$fecha' )
+            WHERE (t.idOperador=$idOperador AND t.fechaCompra>='$fecha' AND t.idEstadoCompra<>$estadoPendiente)
             GROUP BY eo.idEstadoCompra
             ORDER BY eo.idEstadoCompra";
 
@@ -525,10 +549,9 @@ class Compras extends CActiveRecord {
 
         foreach ($resultAux1 as $arr) {
             $result[$arr['idEstadoCompra']] = $arr['cantidad'];
-            if ($arr['idEstadoCompra'] == Yii::app()->params->callcenter['estadoCompra']['estado']['pendiente']) {
-                $result[$arr['idEstadoCompra']]+=$resultAux2[0]['cantidad'];
-            }
         }
+        
+        $result[$estadoPendiente] = $resultPendiente['cantidad']+$resultAux2[0]['cantidad'];
 
         foreach ($estados as $est) {
             if (!isset($result[$est->idEstadoCompra])) {
