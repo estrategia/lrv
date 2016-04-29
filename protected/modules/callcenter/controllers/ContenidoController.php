@@ -609,13 +609,38 @@ class ContenidoController extends ControllerOperator {
                 'ciudad' => $codigoCiudad
             )
         ));
+        
+        $listSectorCiudad = SectorCiudad::model()->findAll(array(
+                    'with' => array('objSector', 'objCiudad'),
+                    'condition' => 't.codigoSector<>0 AND t.codigoCiudad=:ciudad AND t.estadoCiudadSector=:estado AND objSector.estadoSector=:estado AND objCiudad.estadoCiudad=:estado',
+                    'params' => array(
+                        ':ciudad' => $codigoCiudad,
+                        ':estado' => 1
+                    )
+                ));
+        
 
-        if (count($sectores) > 0 && count($sectores->listSubSectores) > 0) {
+//        if (count($sectores) > 0 && count($sectores->listSubSectores) > 0) {
+//            echo CJSON::encode(array(
+//                'result' => 'ok',
+//                'code' => 1,
+//                'htmlResponse' => $this->renderPartial('_sectorlista', array(
+//                    'sectores' => $sectores
+//                        ), true, false)));
+//        } else {
+//            echo CJSON::encode(array(
+//                'result' => 'ok',
+//                'code' => 2,
+//            ));
+//        }
+        
+        
+         if (count($listSectorCiudad) > 0) {
             echo CJSON::encode(array(
                 'result' => 'ok',
                 'code' => 1,
                 'htmlResponse' => $this->renderPartial('_sectorlista', array(
-                    'sectores' => $sectores
+                    'sectores' => $listSectorCiudad
                         ), true, false)));
         } else {
             echo CJSON::encode(array(

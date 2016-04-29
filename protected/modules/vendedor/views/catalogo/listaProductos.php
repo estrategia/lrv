@@ -39,7 +39,7 @@
             <li class="c_list_prod combo_list_item">
                 <div class="ui-field-contain clst_prod_cont">
                     <?php
-                    $this->renderPartial('//catalogo/_comboElemento', array(
+                    $this->renderPartial('_comboElemento', array(
                         'objCombo' => $objCombo,
                         'objPrecio' => new PrecioCombo($objCombo),
                         'vista' => 'listaCatalogo',
@@ -52,7 +52,7 @@
             <li class="c_list_prod combo_list_item">
                 <div class="ui-field-contain clst_prod_cont">
                     <?php
-                    $this->renderPartial('//catalogo/_productoElemento', array(
+                    $this->renderPartial('_productoElemento', array(
                         'objProducto' => $objProducto,
                         'objPrecio' => new PrecioProducto($objProducto, $objSectorCiudad, $codigoPerfil),
                         'vista' => 'listaCatalogo',
@@ -90,8 +90,8 @@
 
 <?php if(isset($objModulo)) $this->renderPartial('//sitio/_modulos', array('objModulo'=>$objModulo)); ?>
 
-<?php if (isset($formOrdenamiento)) $this->extraContentList[] = $this->renderPartial('//catalogo/_formOrdenamiento', array('formOrdenamiento' => $formOrdenamiento, 'objSectorCiudad' => $objSectorCiudad), true); ?>
-<?php if (isset($formFiltro)) $this->extraContentList[] = $this->renderPartial('//catalogo/_formFiltro', array('formFiltro' => $formFiltro, 'tipoBusqueda' => $tipoBusqueda), true); ?>
+<?php if (isset($formOrdenamiento)) $this->extraContentList[] = $this->renderPartial('_formOrdenamiento', array('formOrdenamiento' => $formOrdenamiento, 'objSectorCiudad' => $objSectorCiudad), true); ?>
+<?php if (isset($formFiltro)) $this->extraContentList[] = $this->renderPartial('_formFiltro', array('formFiltro' => $formFiltro, 'tipoBusqueda' => $tipoBusqueda), true); ?>
 
 <?php foreach ($listCodigoEspecial as $especial): ?>
     <div data-role="popup" id="popup-especial-<?php echo $especial->codigoEspecial ?>" data-dismissible="false" data-theme="a" data-position-to="window" class="c_lst_pop_cont">
