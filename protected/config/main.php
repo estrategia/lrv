@@ -134,6 +134,16 @@ return array(
         ),
     ),
     'params' => array(
+        'horarioEntrega' => array(
+            'deltaDefecto' => '0 1:00:0.000000',
+            'deltaHorarios' => array(
+                '76001' => array(
+                    'fechaInicio' => '2016-04-21 00:00:00',
+                    'fechaFin' => '2016-04-21 16:23:00',
+                    'deltaHorario' => '0 2:00:0.000000',
+                )
+            ),
+        ),
         'promociones' => array(
             'viernesnegro' => array(
                 'icono' => '/images/inicio/masvistos.png',
@@ -383,7 +393,7 @@ return array(
         'callcenter' => array(
             'correo' => 'alexander_javela@copservir.com',
             'pedidos' => array(
-                'diasVisualizar' => 30,
+                'diasVisualizar' => 1,
                 'tiempoRecargarPagina' => 30000,
             ),
             'perfil' => array(
@@ -453,7 +463,8 @@ return array(
                     'pendientePasarela' => 11,
                     'aprobadoPasarela' => 12,
                     'negadoPasarela' => 13,
-                    'validacionManualPasarela' => 14
+                    'validacionManualPasarela' => 14,
+                    'mensajeroAsignado' => 15,
                 ),
                 'colorClass' => array(
                     1 => 'info',
@@ -470,6 +481,7 @@ return array(
                     12 => 'success',
                     13 => 'warning',
                     14 => 'danger',
+                    15 => 'danger',
                 )
             ),
             'modulosConfigurados' => array(

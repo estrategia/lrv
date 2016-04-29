@@ -1,6 +1,12 @@
 <?php
 
 class TestController extends ControllerOperator {
+    
+    public function actionCantidad(){
+        $fecha = Compras::calcularFechaVisualizar();
+        $arr = Compras::cantidadComprasPorEstado($fecha);
+        CVarDumper::dump($arr, 10, true);
+    }
 
     public function actionAuth() {
         /*echo Yii::app()->user->isGuest ? "invitado" : "autenticado";

@@ -44,6 +44,7 @@ class FormaPagoForm extends CFormModel {
     public $tipoEntrega;
     public $isMobil = true;
     public $totalCompra = null;
+    public $objSectorCiudad = null;
 
     /**
      * Declares the validation rules.
@@ -333,7 +334,8 @@ class FormaPagoForm extends CFormModel {
 
         $listBonosTienda = BonosTienda::model()->findAll(array(
             'condition' => $condicionBonos,
-            'params' => $paramsBonos
+            'params' => $paramsBonos,
+            'order' => 'vigenciaInicio'
         ));
 
         foreach ($listBonosTienda as $objBono) {
@@ -510,6 +512,7 @@ class FormaPagoForm extends CFormModel {
                     )
                 ));
             }
+            $this->objSectorCiudad = $objSectorCiudad;
         }
     }
 
@@ -710,7 +713,26 @@ class FormaPagoForm extends CFormModel {
 
     public function
 
-    listDataHoras($deltaHorario = "0 1:00:0.000000") {
+    listDataHoras() {
+        $deltaHorario = Yii::app()->params->horarioEntrega['deltaDefecto'];
+        
+        if($this->objSectorCiudad !== null){
+            if(isset(Yii::app()->params->horarioEntrega['deltaHorarios'][$this->objSectorCiudad->codigoCiudad])){
+                $arrHorario = Yii::app()->params->horarioEntrega['deltaHorarios'][$this->objSectorCiudad->codigoCiudad];
+                
+                $fActual = new DateTime;
+                $fInicio = DateTime::createFromFormat('Y-m-d H:i:s', $arrHorario['fechaInicio']);
+                $fFin = DateTime::createFromFormat('Y-m-d H:i:s', $arrHorario['fechaFin']);
+                
+                $diffInicio = $fInicio->diff($fActual);
+                $diffFin = $fActual->diff($fFin);
+
+                if ($diffInicio->invert == 0 && $diffFin->invert == 0) {
+                   $deltaHorario = $arrHorario['deltaHorario'];
+                }
+            }
+        }
+        
         $horariosDia = array(
             '0' => array('inicio' => 'horaInicioDomingoFestivo', 'fin' => 'horaFinDomingoFestivo'),
             '1' => array('inicio' => 'horaInicioLunesASabado', 'fin' => 'horaFinLunesASabado'),

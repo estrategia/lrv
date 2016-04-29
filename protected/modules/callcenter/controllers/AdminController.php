@@ -61,28 +61,29 @@ class AdminController extends ControllerOperator {
             $model->idEstadoCompra = $parametro;
             //$model->tipoEntrega = Yii::app()->params->entrega["tipo"]['domicilio'];
             $model->seguimiento = null;
-            $fecha = new DateTime;
-            $dias = Yii::app()->params->callcenter['pedidos']['diasVisualizar'];
-            $fecha->modify("-$dias days");
-            $model->fechaCompra = $fecha->format('Y-m-d H:i:s');
+            $fecha = Compras::calcularFechaVisualizar();
+            $model->fechaCompra = $fecha;
 
             $sort = "";
             switch ($parametro) {
                 case 1: $sort = "t.seguimiento DESC, t.fechaCompra DESC";
+                    $model->fechaCompra = null;
                     break;
                 case 2: $sort = "t.fechaEntrega DESC";
                     break;
                 case 3: $sort = "t.fechaEntrega DESC";
                     break;
-                case 4: $sort = "t.fechaEntrega ASC";
+                case 4: $sort = "t.fechaCompra ASC";
                     break;
-                case 5: $sort = "t.fechaCompra DESC";
+                case 5: $sort = "t.fechaEntrega DESC";
                     break;
                 case 6: $sort = "t.fechaCompra DESC";
                     break;
                 case 7: $sort = "t.fechaCompra DESC";
                     break;
                 case 10: $sort = "t.fechaCompra DESC";
+                    break;
+                case 15: $sort = "t.fechaCompra ASC";
                     break;
                 default: $sort = "t.fechaCompra DESC";
                     break;
@@ -91,7 +92,7 @@ class AdminController extends ControllerOperator {
             $this->render('pedidos', array(
                 'model' => $model,
                 'dataProvider' => $model->search(array('order' => $sort, 'operadorPedido' => true)),
-                'arrCantidadPedidos' => Compras::cantidadComprasPorEstado($model->fechaCompra)
+                'arrCantidadPedidos' => Compras::cantidadComprasPorEstado($fecha)
             ));
         } else {
             if ($parametro == 'busqueda') {
@@ -110,15 +111,13 @@ class AdminController extends ControllerOperator {
                 //$model->tipoEntrega = Yii::app()->params->entrega["tipo"]['domicilio'];
                 $model->seguimiento = 1;
                 $model->fechaCompra = null;
-                $fecha = new DateTime;
-                $dias = Yii::app()->params->callcenter['pedidos']['diasVisualizar'];
-                $fecha->modify("-$dias days");
-                $model->fechaCompra = $fecha->format('Y-m-d H:i:s');
+                $fecha = Compras::calcularFechaVisualizar();
+                $model->fechaCompra = $fecha;
 
                 $this->render('pedidos', array(
                     'model' => $model,
                     'dataProvider' => $model->search(array('order' => 't.fechaCompra DESC', 'operadorPedido' => true)),
-                    'arrCantidadPedidos' => Compras::cantidadComprasPorEstado($fecha->format('Y-m-d H:i:s'))
+                    'arrCantidadPedidos' => Compras::cantidadComprasPorEstado($fecha)
                 ));
             } else if ($parametro == 'enlinea') {
                 $model = new Compras('search');
@@ -126,15 +125,13 @@ class AdminController extends ControllerOperator {
                 if (isset($_GET['Compras']))
                     $model->attributes = $_GET['Compras'];
 
-                $fecha = new DateTime;
-                $dias = Yii::app()->params->callcenter['pedidos']['diasVisualizar'];
-                $fecha->modify("-$dias days");
-                $model->fechaCompra = $fecha->format('Y-m-d H:i:s');
+                $fecha = Compras::calcularFechaVisualizar();
+                $model->fechaCompra = $fecha;
 
                 $this->render('pedidos', array(
                     'model' => $model,
                     'dataProvider' => $model->search(array('order' => 't.fechaCompra DESC', 'formaPago' => Yii::app()->params->formaPago['pasarela']['idPasarela'], 'operadorPedido' => true)),
-                    'arrCantidadPedidos' => Compras::cantidadComprasPorEstado($fecha->format('Y-m-d H:i:s'))
+                    'arrCantidadPedidos' => Compras::cantidadComprasPorEstado($fecha)
                 ));
             }else {
                 echo "NOT IMPLEMENTED YET";
@@ -163,15 +160,10 @@ class AdminController extends ControllerOperator {
         if ($post && $model === null)
             $model = new Compras('search');
 
-        $fecha = new DateTime;
-        $dias = Yii::app()->params->callcenter['pedidos']['diasVisualizar'];
-        $fecha->modify("-$dias days");
-        $fecha = $fecha->format('Y-m-d H:i:s');
-
         $this->render('busqueda', array(
             'model' => $model,
             'form' => $form,
-            'arrCantidadPedidos' => Compras::cantidadComprasPorEstado($fecha)
+            'arrCantidadPedidos' => Compras::cantidadComprasPorEstado(null)
         ));
     }
 

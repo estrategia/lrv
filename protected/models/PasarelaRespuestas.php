@@ -56,7 +56,7 @@ class PasarelaRespuestas extends CActiveRecord {
             array('valor, valorPesos, iva, valorAdicional', 'length', 'max' => 16),
             array('moneda', 'length', 'max' => 3),
             array('cus', 'length', 'max' => 15),
-            array('bancoPse', 'length', 'max' => 25),
+            array('bancoPse', 'length', 'max' => 50),
             array('fechaTransaccion', 'length', 'max' => 20),
             array('correoElectronico', 'length', 'max' => 100),
             array('mensaje, numeroVisible, codigoAutorizacion, correoElectronico', 'default', 'value' => null),
