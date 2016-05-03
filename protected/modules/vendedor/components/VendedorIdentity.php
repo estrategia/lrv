@@ -5,8 +5,9 @@
  * It contains the authentication method that checks if the provided
  * data can identity the user.
  */
-class OperatorIdentity extends CUserIdentity {
+class VendedorIdentity extends CUserIdentity {
     const ERROR_USER_INACTIVE = 3;
+    const PERFIL_VENDEDOR = 10;
     public $user = null;
     
     /**
@@ -17,9 +18,10 @@ class OperatorIdentity extends CUserIdentity {
      */
     public function authenticate() {
         $user = Operador::model()->find(array(
-            'condition' => 't.usuario=:usuario AND t.perfil IN ('.implode(", ",Yii::app()->params->callcenter['perfiles']).')',
+            'condition' => 't.usuario=:usuario AND t.perfil =:perfil',
             'params' => array(
-                ':usuario' => $this->username
+                ':usuario' => $this->username,
+                ':perfil' => self::PERFIL_VENDEDOR
             )
         ));
         
@@ -32,8 +34,10 @@ class OperatorIdentity extends CUserIdentity {
         } else {
             $this->errorCode = self::ERROR_NONE;
             $this->user = $user;
+            
+            $usuario_encriptado = encrypt($this->username,Yii::app()->params->sesion['claveCookie']);
+            _setCookie(Yii::app()->params->vendedor['sesion']['usuario'], $usuario_encriptado);
         }
-        
         return !$this->errorCode;
     }
 

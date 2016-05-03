@@ -30,6 +30,13 @@ return array(
                     'class' => 'callcenter.components.UserOperator',
                 ),
             )),
+        'vendedor' => array(
+            'defaultController' => 'usuario',
+            'components' => array(
+                'user' => array(
+                    'class' => 'vendedor.components.UserVendedor',
+                ),
+            )),
         'gii' => array(
             'class' => 'system.gii.GiiModule',
             'password' => '1',
@@ -368,6 +375,21 @@ return array(
             'remisionPos' => "http://www.copservir.com/webService/serverLRV.php",
             'remisionPosECommerce' => "http://www.copservir.com/webService/Pos/RemisionPosEcommerce.php"
         ),
+        'vendedor' => array(
+            'sesion' => array(
+                'usuario' => 'larebaja.online.vendedor.usuario',
+                'cliente' => 'larebaja.online.vendedor.cliente',
+                'sectorCiudadEntrega' => 'larebaja.online.vendedor.sectorciudadentrega',
+                'formPedidoBusqueda' => 'larebaja.online.vendedor.formpedidobusqueda',
+                'modelBonosAdminExport' => 'larebaja.online.vendedor.modelbonosadminexport',
+                'pdvEntrega' => 'larebaja.online.vendedor.pdventrega',
+                'carroPagarForm' => 'larebaja.online.vendedor.carropagarform',
+                'redireccionAutenticacion' => 'larebaja.online.vendedor.redireccionautenticacion',
+                'direccionEntrega' => 'larebaja.online.vendedor.direccionentrega',
+                'tipoEntrega' => 'larebaja.online.vendedor.tipoentrega',
+                'compraInvitado' => 'larebaja.online.vendedor.comprainvitado',
+            ),
+        ),
         'callcenter' => array(
             'correo' => 'alexander_javela@copservir.com',
             'pedidos' => array(
@@ -378,6 +400,7 @@ return array(
                 1 => 'Operador',
                 2 => 'Administrador',
             ),
+            'perfiles' => array(1,2),
             'usuario' => array(
                 'estado' => array('activo' => 1, 'inactivo' => 0),
                 'estadoNombre' => array(0 => 'Inactivo', 1 => 'Activo'),
