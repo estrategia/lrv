@@ -232,6 +232,7 @@ class Controller extends CController {
             Yii::app()->getClientScript()->registerScriptFile(Yii::app()->request->baseUrl . "/libs/masonry-horizontal.js", CClientScript::POS_END);
             Yii::app()->getClientScript()->registerScriptFile(Yii::app()->request->baseUrl . '/libs/loading/js/Loading.js', CClientScript::POS_END);
             /*     Yii::app()->getClientScript()->registerScriptFile(Yii::app()->request->baseUrl . "/js/npm.js", CClientScript::POS_END); */
+            Yii::app()->getClientScript()->registerScriptFile(Yii::app()->request->baseUrl . '/libs/iframe-resizer/js/iframeResizer.min.js', CClientScript::POS_HEAD);
         }
     }
 

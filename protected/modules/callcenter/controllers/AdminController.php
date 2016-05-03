@@ -110,9 +110,8 @@ class AdminController extends ControllerOperator {
 
                 //$model->tipoEntrega = Yii::app()->params->entrega["tipo"]['domicilio'];
                 $model->seguimiento = 1;
-                $model->fechaCompra = null;
                 $fecha = Compras::calcularFechaVisualizar();
-                $model->fechaCompra = $fecha;
+                $model->fechaCompra = null;
 
                 $this->render('pedidos', array(
                     'model' => $model,
