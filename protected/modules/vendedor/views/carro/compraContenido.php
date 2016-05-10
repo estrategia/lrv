@@ -78,7 +78,7 @@
         <?php $listPositionBodega = array(); ?>
         <?php $listPositionDelivery = array(); ?>
         <ul data-role="listview" data-inset="true" data-icon="false" class="c_list_prod_cont">
-            <?php foreach (Yii::app()->shoppingCart->getPositions() as $position): ?>
+            <?php foreach (Yii::app()->shoppingCartSalesman->getPositions() as $position): ?>
                 <?php if ($position->getDelivery() == 0): ?>
                     <li class="c_list_prod">
                         <div class="ui-field-contain clst_prod_cont">
@@ -146,38 +146,38 @@
         <table align="center">
             <tbody><tr>
                     <td>Subtotal</td>
-                    <td><?php echo Yii::app()->numberFormatter->format(Yii::app()->params->formatoMoneda['patron'], Yii::app()->shoppingCart->getCost(), Yii::app()->params->formatoMoneda['moneda']); ?></td>
+                    <td><?php echo Yii::app()->numberFormatter->format(Yii::app()->params->formatoMoneda['patron'], Yii::app()->shoppingCartSalesman->getCost(), Yii::app()->params->formatoMoneda['moneda']); ?></td>
                 </tr>
                 <tr>
                     <td>Servicio</td>
-                    <td><?php echo Yii::app()->numberFormatter->format(Yii::app()->params->formatoMoneda['patron'], Yii::app()->shoppingCart->getShipping(), Yii::app()->params->formatoMoneda['moneda']); ?></td>
+                    <td><?php echo Yii::app()->numberFormatter->format(Yii::app()->params->formatoMoneda['patron'], Yii::app()->shoppingCartSalesman->getShipping(), Yii::app()->params->formatoMoneda['moneda']); ?></td>
                 </tr>
-                <?php if (Yii::app()->shoppingCart->getExtraShipping() > 0): ?>
+                <?php if (Yii::app()->shoppingCartSalesman->getExtraShipping() > 0): ?>
                     <tr>
                         <td>Flete adicional</td>
-                        <td><?php echo Yii::app()->numberFormatter->format(Yii::app()->params->formatoMoneda['patron'], Yii::app()->shoppingCart->getExtraShipping(), Yii::app()->params->formatoMoneda['moneda']); ?></td>
+                        <td><?php echo Yii::app()->numberFormatter->format(Yii::app()->params->formatoMoneda['patron'], Yii::app()->shoppingCartSalesman->getExtraShipping(), Yii::app()->params->formatoMoneda['moneda']); ?></td>
                     </tr>
                 <?php endif; ?>
-                <?php if (Yii::app()->shoppingCart->getBono() > 0): ?>
+                <?php if (Yii::app()->shoppingCartSalesman->getBono() > 0): ?>
                     <tr>
                         <td>Bono</td>
-                        <td><?php echo Yii::app()->numberFormatter->format(Yii::app()->params->formatoMoneda['patron'], Yii::app()->shoppingCart->getBono(), Yii::app()->params->formatoMoneda['moneda']); ?></td>
+                        <td><?php echo Yii::app()->numberFormatter->format(Yii::app()->params->formatoMoneda['patron'], Yii::app()->shoppingCartSalesman->getBono(), Yii::app()->params->formatoMoneda['moneda']); ?></td>
                     </tr>
                 <?php endif; ?>
-                <?php if (Yii::app()->shoppingCart->getObjCiudad()->excentoImpuestos == 0 && Yii::app()->shoppingCart->getTaxPrice() > 0): ?>
+                <?php if (Yii::app()->shoppingCartSalesman->getObjCiudad()->excentoImpuestos == 0 && Yii::app()->shoppingCartSalesman->getTaxPrice() > 0): ?>
                     <tr>
                         <td>Impuestos incluidos</td>
-                        <td><?php echo Yii::app()->numberFormatter->format(Yii::app()->params->formatoMoneda['patron'], Yii::app()->shoppingCart->getTaxPrice(), Yii::app()->params->formatoMoneda['moneda']) ?></td>
+                        <td><?php echo Yii::app()->numberFormatter->format(Yii::app()->params->formatoMoneda['patron'], Yii::app()->shoppingCartSalesman->getTaxPrice(), Yii::app()->params->formatoMoneda['moneda']) ?></td>
                     </tr>
                 <?php endif; ?>
-                <?php if (Yii::app()->shoppingCart->getDiscountPrice(true) > 0): ?>
+                <?php if (Yii::app()->shoppingCartSalesman->getDiscountPrice(true) > 0): ?>
                     <tr class="rowRed">
                         <td>Su Ahorro</td>
-                        <td><?php echo Yii::app()->numberFormatter->format(Yii::app()->params->formatoMoneda['patron'], Yii::app()->shoppingCart->getDiscountPrice(true), Yii::app()->params->formatoMoneda['moneda']) ?></td>
+                        <td><?php echo Yii::app()->numberFormatter->format(Yii::app()->params->formatoMoneda['patron'], Yii::app()->shoppingCartSalesman->getDiscountPrice(true), Yii::app()->params->formatoMoneda['moneda']) ?></td>
                     </tr>
                 <?php endif; ?>
             </tbody>
         </table>
-        <p class="center TotalPagarCompra">Total a pagar <?php echo Yii::app()->numberFormatter->format(Yii::app()->params->formatoMoneda['patron'], Yii::app()->shoppingCart->getTotalCost(), Yii::app()->params->formatoMoneda['moneda']) ?></p>
+        <p class="center TotalPagarCompra">Total a pagar <?php echo Yii::app()->numberFormatter->format(Yii::app()->params->formatoMoneda['patron'], Yii::app()->shoppingCartSalesman->getTotalCost(), Yii::app()->params->formatoMoneda['moneda']) ?></p>
     </div>
 </div>

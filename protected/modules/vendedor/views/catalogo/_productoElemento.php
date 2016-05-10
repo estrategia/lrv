@@ -28,7 +28,7 @@
     <?php endif; ?>
 
     <!-- producto agregado -->
-    <a href="" class="clst_slct_prod<?php echo (Yii::app()->shoppingCart->contains($objProducto->codigoProducto) ? " active" : "") ?>" id="icono-producto-agregado-<?php echo $objProducto->codigoProducto ?>">
+    <a href="" class="clst_slct_prod<?php echo (Yii::app()->shoppingCartSalesman->contains($objProducto->codigoProducto) ? " active" : "") ?>" id="icono-producto-agregado-<?php echo $objProducto->codigoProducto ?>">
         <img src="<?php echo Yii::app()->request->baseUrl ?>/images/iconos/icon_seleccionado.png">
     </a>
     <!-- producto agregado -->
