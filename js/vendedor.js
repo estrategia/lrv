@@ -290,7 +290,7 @@ function obtenerPosicion(pos) {
             if (data.result == 'ok') {
                 $('<div>').mdialog({
                     id: "popup-ubicacion-gps",
-                    content: "<div data-role='main'><div class='ui-content' data-role='content' role='main'>" + data.response.mensaje + "<a class='ui-btn ui-btn-r ui-corner-all ui-shadow' data-role='ubicacion-gps-seleccion-vendedor' data-ciudad='" + data.response.ciudad + "' data-sector='" + data.response.sector + "' data-mensaje='" + data.response.mensaje + "' href='#'>Aceptar</a><a class='ui-btn ui-btn-n ui-corner-all ui-shadow' data-rel='back' href='#'>Cancelar</a></div></div>"
+                    content: "<div data-role='main'><div class='ui-content' data-role='content' role='main'>" + data.response.mensaje + "<a class='ui-btn ui-btn-r ui-corner-all ui-shadow' data-role='ubicacion-gps-seleccion-vendedor' data-ciudad='" + data.response.ciudad + "' data-sector='" + data.response.sector + "' data-mensaje='" + data.response.mensaje + "' href='#'>Aceptar</a><a class='ui-btn ui-btn-n ui-corner-all ui-shadow btn-y' data-rel='back' href='#'>Cancelar</a></div></div>"
                 });
             } else {
                 $('<div>').mdialog({
