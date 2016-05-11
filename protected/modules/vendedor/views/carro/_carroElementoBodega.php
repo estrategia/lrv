@@ -19,10 +19,10 @@
             <div class="clst_pre_act"><span>[Flete <?php echo Yii::app()->numberFormatter->format(Yii::app()->params->formatoMoneda['patron'], $position->getShipping(), Yii::app()->params->formatoMoneda['moneda']); ?>]</span></div>
         <?php endif; ?>
 
-        <?php if (Yii::app()->shoppingCart->getObjCiudad()->excentoImpuestos == 0 && $position->getTax() > 0): ?>
+        <?php if (Yii::app()->shoppingCartSalesman->getObjCiudad()->excentoImpuestos == 0 && $position->getTax() > 0): ?>
             <div class="clst_pre_act"><span>Incluye <?php echo Yii::app()->numberFormatter->formatPercentage($position->getTax()) ?> de impuestos [<?php echo Yii::app()->numberFormatter->format(Yii::app()->params->formatoMoneda['patron'], $position->getTaxPrice(), Yii::app()->params->formatoMoneda['moneda']); ?>]</span></div>
         <?php endif; ?>
-        <div class="clst_pre_act"><span>Tiempo de entrega: <?php echo Yii::app()->shoppingCart->getDeliveryStored() ?> hora(s)</span></div>
+        <div class="clst_pre_act"><span>Tiempo de entrega: <?php echo Yii::app()->shoppingCartSalesman->getDeliveryStored() ?> hora(s)</span></div>
     </div>
     <div class="clear"></div>
 </div>

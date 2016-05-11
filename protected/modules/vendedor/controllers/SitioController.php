@@ -235,10 +235,10 @@ class SitioController extends ControllerVendedor {
         _setCookie(Yii::app()->params->vendedor['sesion']['sectorCiudadEntrega'], "$objSectorCiudad->codigoCiudad-$objSectorCiudad->codigoSector");
 
 //        if ($objSectorCiudadOld != null && ($objSectorCiudadOld->codigoCiudad != $objSectorCiudad->codigoCiudad || $objSectorCiudadOld->codigoSector != $objSectorCiudad->codigoSector)) {
-//            Yii::app()->shoppingCart->clear();
+//            Yii::app()->shoppingCartSalesman->clear();
 //            Yii::app()->session[Yii::app()->params->sesion['carroPagarForm']] = null;
 //        }
-        //Yii::app()->shoppingCart->CalculateShipping();
+        //Yii::app()->shoppingCartSalesman->CalculateShipping();
 
         $objHorarioSecCiud = HorariosCiudadSector::model()->find(array(
             'condition' => 'codigoCiudad=:ciudad AND codigoSector=:sector',

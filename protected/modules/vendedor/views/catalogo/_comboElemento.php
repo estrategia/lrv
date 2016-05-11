@@ -12,7 +12,7 @@
     </div>
 
     <!-- combo agregado -->
-    <a href="" class="clst_slct_prod<?php echo (Yii::app()->shoppingCart->contains($objCombo->getCodigo()) ? " active" : "") ?> incombo" id="icono-combo-agregado-<?php echo $objCombo->idCombo ?>">
+    <a href="" class="clst_slct_prod<?php echo (Yii::app()->shoppingCartSalesman->contains($objCombo->getCodigo()) ? " active" : "") ?> incombo" id="icono-combo-agregado-<?php echo $objCombo->idCombo ?>">
         <img src="<?php echo Yii::app()->request->baseUrl ?>/images/iconos/icon_seleccionado.png">
     </a>
     <!-- combo agregado -->

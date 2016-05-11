@@ -26,7 +26,7 @@
     <!--
     <?php echo CHtml::submitButton('Ordenar', array('data-mini' => true, 'class' => 'cfil_btn')); ?>
     -->
-    <div class="ui-input-btn ui-btn ui-corner-all ui-shadow ui-btn-n ui-mini">
+    <div class="ui-input-btn ui-btn ui-corner-all ui-shadow ui-btn-n ui-mini btn-y">
         Ordenar
         <input type="submit" data-enhanced="true" value="Ordenar">
     </div>

@@ -24,12 +24,12 @@
             <?php echo CHtml::hiddenField('identicacionCliente', "", array('id' => 'identificacionCliente'));?>
         </div>
     </fieldset>
-    <div class="ui-input-btn ui-btn ui-corner-all ui-shadow ui-btn-r">
+    <div class="ui-input-btn ui-btn ui-corner-all ui-shadow ui-btn-r btn-y">
         Buscar cliente
         <input type="button" data-role='buscar-cliente' data-enhanced="true" value="Buscar">
     </div>
     
-    <div class="ui-input-btn ui-btn ui-corner-all ui-shadow ui-btn-r">
+    <div class="ui-input-btn ui-btn ui-corner-all ui-shadow ui-btn-r btn-y">
         Cliente invitado
         <input type="button" data-role='cliente-invitado' data-enhanced="true" value="Buscar">
     </div>

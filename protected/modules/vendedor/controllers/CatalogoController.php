@@ -39,7 +39,7 @@ class CatalogoController extends ControllerVendedor {
         if (isset(Yii::app()->session[Yii::app()->params->vendedor['sesion']['sectorCiudadEntrega']]))
             $objSectorCiudad = Yii::app()->session[Yii::app()->params->vendedor['sesion']['sectorCiudadEntrega']];
 
-        $codigoPerfil = Yii::app()->shoppingCart->getCodigoPerfil();
+        $codigoPerfil = Yii::app()->shoppingCartSalesman->getCodigoPerfil();
 
         $this->breadcrumbs = array(
             'Inicio' => array('/'),
@@ -255,7 +255,7 @@ class CatalogoController extends ControllerVendedor {
         if (isset(Yii::app()->session[Yii::app()->params->vendedor['sesion']['sectorCiudadEntrega']]))
             $objSectorCiudad = Yii::app()->session[Yii::app()->params->vendedor['sesion']['sectorCiudadEntrega']];
 
-        $codigoPerfil = Yii::app()->shoppingCart->getCodigoPerfil();
+        $codigoPerfil = Yii::app()->shoppingCartSalesman->getCodigoPerfil();
 
         $objCategoria = CategoriaTienda::model()->find(array(
             'with' => array('objCategoriaPadre', 'listCategoriasBI'),
@@ -317,7 +317,7 @@ class CatalogoController extends ControllerVendedor {
                 'objSectorCiudad' => $objSectorCiudad,
                 'codigoPerfil' => $codigoPerfil,
                 'nombreBusqueda' => 'NA',
-                'objModulo' => ModulosConfigurados::getModuloFlotante($this->objSectorCiudad, Yii::app()->shoppingCart->getCodigoPerfil(), UbicacionModulos::UBICACION_ESCRITORIO_CATEGORIA, $categoria)
+                'objModulo' => ModulosConfigurados::getModuloFlotante($this->objSectorCiudad, Yii::app()->shoppingCartSalesman->getCodigoPerfil(), UbicacionModulos::UBICACION_ESCRITORIO_CATEGORIA, $categoria)
             ));
 
 
@@ -563,7 +563,7 @@ class CatalogoController extends ControllerVendedor {
             throw new CHttpException(404, 'Producto no existe.');
         }
 
-        $codigoPerfil = Yii::app()->shoppingCart->getCodigoPerfil();
+        $codigoPerfil = Yii::app()->shoppingCartSalesman->getCodigoPerfil();
         $objCalificacion = null;
 
 
@@ -651,9 +651,9 @@ class CatalogoController extends ControllerVendedor {
             throw new CHttpException(404, 'Producto no disponible.');
         }
 
-        $codigoPerfil = Yii::app()->shoppingCart->getCodigoPerfil();
+        $codigoPerfil = Yii::app()->shoppingCartSalesman->getCodigoPerfil();
         $cantidadCarro = 0;
-        $position = Yii::app()->shoppingCart->itemAt($producto);
+        $position = Yii::app()->shoppingCartSalesman->itemAt($producto);
 
         if ($position != null) {
             $cantidadCarro = $position->getQuantity();

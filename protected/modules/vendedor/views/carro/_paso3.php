@@ -1,6 +1,6 @@
 
 <div class="ui-btn ui-corner-all ui-shadow ui-btn-n totalPagarbtn">
-    Total a pagar <?php echo Yii::app()->numberFormatter->format(Yii::app()->params->formatoMoneda['patron'], Yii::app()->shoppingCart->getTotalCost(), Yii::app()->params->formatoMoneda['moneda']) ?>
+    Total a pagar <?php echo Yii::app()->numberFormatter->format(Yii::app()->params->formatoMoneda['patron'], Yii::app()->shoppingCartSalesman->getTotalCost(), Yii::app()->params->formatoMoneda['moneda']) ?>
 </div>
 
 <?php

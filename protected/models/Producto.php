@@ -92,6 +92,7 @@ class Producto extends CActiveRecord {
             'objMarca' => array(self::BELONGS_TO, 'Marca', 'idMarca'),
             'objCategoriaBI' => array(self::BELONGS_TO, 'Categoria', 'idCategoriaBI'),
             'objUnidadNegocioBI' => array(self::BELONGS_TO, 'Categoria', 'idUnidadNegocioBI'),
+            'objBusqueda' => array(self::BELONGS_TO, 'RelevanciaTemp', '','on' => 't.codigoProducto = objBusqueda.codigoProducto'),
                 //'listCategoriasTienda' => array(self::MANY_MANY, 'CategoriaTienda', '', 'through' => 'CategoriasCategoriaTienda', 'condition' => 'CategoriasCategoriaTienda.idCategoriaBI=106'),
                 //'listCategoriasCategoriaTienda' => array(self::HAS_MANY, 'CategoriasCategoriaTienda', 'idCategoriaBI'),
         );
