@@ -13,7 +13,7 @@ class CargueExcelForm extends CFormModel {
         return array(
             // name, email, subject and body are required
             array('archivo', 'required', 'message' => '{attribute} no puede estar vac&iacute;o'),
-            array('archivo', 'file', 'safe'=>true, 'types' => 'xls, xlsx', 'allowEmpty' => false),
+            array('archivo', 'file', 'safe'=>true, 'types' => 'csv', 'allowEmpty' => false),
         );
     }
 
@@ -24,7 +24,7 @@ class CargueExcelForm extends CFormModel {
      */
     public function attributeLabels() {
         return array(
-            'archivo' => 'Archivo Excel',
+            'archivo' => 'Archivo CSV',
         );
     }
 

@@ -254,7 +254,7 @@ class Compras extends CActiveRecord {
         return new CActiveDataProvider($this, array(
             'criteria' => $criteria,
             'pagination' => array(
-                'pageSize' => isset($params['pageSize']) ? $params['pageSize'] : 10,
+                'pageSize' => isset($params['pageSize']) ? $params['pageSize'] : 50,
             ),
         ));
     }
@@ -578,11 +578,11 @@ class Compras extends CActiveRecord {
         if ($idOperador == null) {
             $query3 = "SELECT COUNT(c.idCompra) cantidad
             FROM t_Compras c
-            WHERE c.seguimiento=1 AND c.fechaCompra>='$fecha' ";
+            WHERE c.seguimiento=1";
         } else {
             $query3 = "SELECT COUNT(c.idCompra) cantidad
             FROM t_Compras c
-            WHERE c.seguimiento=1 AND c.idOperador=$idOperador AND c.fechaCompra>='$fecha' ";
+            WHERE c.seguimiento=1 AND c.idOperador=$idOperador";
         }
         $resultAux3 = Yii::app()->db->createCommand($query3)->queryRow(true);
         $result['seguimiento'] = $resultAux3['cantidad'];
