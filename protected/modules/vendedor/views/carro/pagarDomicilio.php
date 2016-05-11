@@ -38,7 +38,7 @@
         </div>
     <?php endif; ?>
     <?php if ($pasoSiguiente !== null): ?>
-        <div class="ui-input-btn btnContinuar ui-btn ui-corner-all ui-shadow ui-btn-r">
+        <div class="ui-input-btn btnContinuar ui-btn ui-corner-all ui-shadow ui-btn-r btn-y">
             Continuar
             <span class="caretcontinuar"></span>
             <input type="button" data-enhanced="true" value="Continuar" id="btn-carropagar-siguiente" data-origin="<?php echo $paso ?>" data-redirect="<?php echo $pasoSiguiente ?>">

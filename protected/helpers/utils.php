@@ -88,7 +88,7 @@ function distanciaCoordenadas($lat1, $lon1, $lat2, $lon2, $unit = 'K') {
 
 function GSASearch(&$term) {
     $arr1 = WebServiceSearch($term);
-    $arr2 = GSASearchAux($term);
+    $arr2 = array();//GSASearchAux($term);
 
     $resultado = array();
     foreach ($arr1 as $value)
