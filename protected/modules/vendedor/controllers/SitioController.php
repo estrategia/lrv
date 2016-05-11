@@ -47,6 +47,10 @@ class SitioController extends ControllerVendedor {
     }
     
     public function actionIndex(){
+        $this->render("index");
+    }
+    
+    public function actionInicio(){
         $listaPromociones = array();
 
         if (isset(Yii::app()->params->promociones)) {
@@ -64,7 +68,7 @@ class SitioController extends ControllerVendedor {
             }
         }
 
-        $this->render('index', array(
+        $this->render('inicio', array(
             'listaPromociones' => $listaPromociones,
             'listModulos' => ModulosConfigurados::getModulosBanner($this->objSectorCiudad, Yii::app()->params->perfil['defecto'], UbicacionModulos::UBICACION_MOVIL_INICIO)
         ));
