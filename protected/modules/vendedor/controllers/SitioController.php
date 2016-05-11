@@ -45,6 +45,69 @@ class SitioController extends ControllerVendedor {
         }
         $filter->run();
     }
+    
+    public function actionIndex(){
+        $listaPromociones = array();
+
+        if (isset(Yii::app()->params->promociones)) {
+            foreach (Yii::app()->params->promociones as $idx => $promocion) {
+                $fActual = new DateTime;
+                $fInicio = DateTime::createFromFormat('Y-m-d H:i:s', $promocion['fechaInicio']);
+                $fFin = DateTime::createFromFormat('Y-m-d H:i:s', $promocion['fechaFin']);
+
+                $diffInicio = $fInicio->diff($fActual);
+                $diffFin = $fActual->diff($fFin);
+
+                if ($diffInicio->invert == 0 && $diffFin->invert == 0) {
+                    $listaPromociones[$idx] = $promocion;
+                }
+            }
+        }
+
+        $this->render('index', array(
+            'listaPromociones' => $listaPromociones,
+            'listModulos' => ModulosConfigurados::getModulosBanner($this->objSectorCiudad, Yii::app()->params->perfil['defecto'], UbicacionModulos::UBICACION_MOVIL_INICIO)
+        ));
+    }
+    
+    public function actionPromocion($nombre) {
+        if (!$this->isMobile) {
+            $this->actionIndex();
+        }
+
+        $promocion = $nombre;
+        if (!isset(Yii::app()->params->promociones[$promocion])) {
+            throw new CHttpException(404, 'Promoci&oacute;n no existe.');
+        }
+
+        $fActual = new DateTime;
+        $fInicio = DateTime::createFromFormat('Y-m-d H:i:s', Yii::app()->params->promociones[$promocion]['fechaInicio']);
+        $fFin = DateTime::createFromFormat('Y-m-d H:i:s', Yii::app()->params->promociones[$promocion]['fechaFin']);
+
+        $diffInicio = $fInicio->diff($fActual);
+        $diffFin = $fActual->diff($fFin);
+        
+        if ($diffInicio->invert == 1 || $diffFin->invert == 1) {
+            throw new CHttpException(404, 'Promoci&oacute;n no existe.');
+        }
+
+        $listaItems = array();
+        $listaAgregados = array();
+        $nElementos = count(Yii::app()->params->promociones[$promocion]['elementos']);
+
+        for (;;) {
+            if (count($listaItems) == $nElementos)
+                break;
+
+            $random = mt_rand(0, $nElementos - 1);
+            if (!isset($listaAgregados[$random])) {
+                $listaAgregados[$random] = $random;
+                $listaItems[$random] = Yii::app()->params->promociones[$promocion]['elementos'][$random];
+            }
+        }
+
+        $this->render('promocion', array('promocion' => $promocion, 'listaItems' => $listaItems));
+    }
 
     public function actionUbicacion() {
 //        if ($this->tipoEntrega == null && $this->isMobile) {

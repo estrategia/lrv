@@ -37,8 +37,8 @@ $form = $this->beginWidget('CActiveForm', array(
 <?php echo $form->errorSummary($model, null, null, array('class' => 'text-danger')); ?>
 
 <div class="alert alert-info">
-    <p>El archivo debe ser en formato .xls, .xlsx</p>
-    <p>Descargar plantilla de cargue de ejemplo <?php echo CHtml::link('Aquí', Yii::app()->baseUrl . "/files/upload_bonos.xlsx"); ?></p>
+    <p>El archivo debe ser en formato .csv</p>
+    <p>Descargar plantilla de cargue de ejemplo <?php echo CHtml::link('Aquí', Yii::app()->baseUrl . "/files/upload_bonos.csv"); ?></p>
 </div>
 
 <div class="form-group">

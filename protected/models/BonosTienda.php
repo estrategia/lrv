@@ -63,9 +63,9 @@ class BonosTienda extends CActiveRecord {
                 //if ($diff == false) {
                 //    $this->addError($attribute, "Fechas no validas Inicio [$this->vigenciaInicio] Fin [$this->vigenciaFin]");
                 //} else {
-                    if ($diff->invert == 1) {
-                        $this->addError($attribute, $this->getAttributeLabel($attribute) . ' debe ser mayor a vigencia inicio');
-                    }
+                if ($diff->invert == 1) {
+                    $this->addError($attribute, $this->getAttributeLabel($attribute) . ' debe ser mayor a vigencia inicio');
+                }
                 //}
             }
         } else {
@@ -181,7 +181,7 @@ class BonosTienda extends CActiveRecord {
         return parent::beforeSave();
     }
 
-    public function exportar() {
+    public function exportarOld() {
         Yii::import('application.vendors.phpexcel.PHPExcel', true);
         $objPHPExcel = new PHPExcel();
         $objPHPExcel->getProperties()->setTitle("Reporte Bonos");
@@ -251,6 +251,20 @@ class BonosTienda extends CActiveRecord {
 
         $objWriter = PHPExcel_IOFactory::createWriter($objPHPExcel, 'Excel5');
         $objWriter->save('php://output');
+    }
+
+    public function exportar() {
+        $content = '"# Bono";"# Usuario";"Concepto";"Valor";"Vigencia Inicio";"Vigencia Fin";"Minimo Compra";"Tipo";"Estado";"Fecha Creacion";"# Compra";"Fecha Uso";"Valor Compra"\n';
+        $dataProvider = $this->search(true);
+
+        if ($dataProvider !== null) {
+            foreach ($dataProvider->getData() as $idx => $objBono) {
+                $content .= "$objBono->idBonoTienda;$objBono->identificacionUsuario;$objBono->concepto;$objBono->valor;$objBono->vigenciaInicio;$objBono->vigenciaFin;$objBono->minimoCompra;".Yii::app()->params->callcenter["bonos"]["tipoNombre"][$objBono->tipo]. ";". Yii::app()->params->callcenter["bonos"]["estadoNombre"][$objBono->estado] . ";" . "$objBono->fechaCreacion;$objBono->idCompra;$objBono->fechaUso;$objBono->valorCompra\n";
+            }
+        }
+        
+        Yii::app()->request->sendFile('BonosLRV_' . date('YmdHis') . '.csv', $content);
+        Yii::app()->end();
     }
 
 }

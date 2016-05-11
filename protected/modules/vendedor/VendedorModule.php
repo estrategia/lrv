@@ -1,7 +1,7 @@
 <?php
 
 class VendedorModule extends CWebModule {
-    public $homeUrl = array('/vendedor/default');
+    public $homeUrl = array('/vendedor/sitio');
     public function init() {
         // this method is called when the module is being created
         // you may place code here to customize the module or the application

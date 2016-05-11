@@ -1,13 +1,14 @@
 <?php
 
 class BonosController extends ControllerOperator {
+
     public function filters() {
         return array(
             //'access',
             'login + actualizar, exportar, index, reactivar, ver',
         );
     }
-    
+
     public function filterLogin($filter) {
         if (Yii::app()->controller->module->user->isGuest) {
             $this->redirect(Yii::app()->controller->module->user->loginUrl);
@@ -120,9 +121,9 @@ class BonosController extends ControllerOperator {
 
                     $transaction = Yii::app()->db->beginTransaction();
                     try {
-                        if(!$objBonoTienda->save())
+                        if (!$objBonoTienda->save())
                             throw new Exception(CActiveForm::validate($objBonoTienda));
-                        
+
                         if (!$modelLog->save())
                             throw new Exception(CActiveForm::validate($modelLog));
 
@@ -139,10 +140,10 @@ class BonosController extends ControllerOperator {
                         } catch (Exception $txexc) {
                             Yii::log($txexc->getMessage() . "\n" . $txexc->getTraceAsString(), CLogger::LEVEL_ERROR, 'application');
                         }
-                        
+
                         echo CJSON::encode(array(
                             'result' => 'error',
-                            'response' => "Exception: ". $exc->getMessage()
+                            'response' => "Exception: " . $exc->getMessage()
                         ));
                         Yii::app()->end();
                     }
@@ -236,7 +237,104 @@ class BonosController extends ControllerOperator {
         $model = new CargueExcelForm;
 
         if (isset($_POST['CargueExcelForm'])) {
-            ini_set("memory_limit","1024M");
+            ini_set("memory_limit", "1024M");
+            $model->attributes = $_POST['CargueExcelForm'];
+
+            $uploadedFile = CUploadedFile::getInstance($model, 'archivo');
+            $directorio = Yii::getPathOfAlias('application.modules.callcenter') . '/uploads/';
+            $fecha = new DateTime();
+            $nombreArchivo = $uploadedFile->getName();
+            $archivo = "bonos_" . $fecha->format("YmdHis") . "_" . Yii::app()->controller->module->user->name;
+            $model->archivo = "$directorio/$archivo." . $uploadedFile->getExtensionName();
+
+            if (!file_exists($directorio)) {
+                mkdir($directorio, 0777, true);
+            }
+
+            $total = array();
+            $total['cargado'] = 0;
+            $total['total'] = 0;
+
+            $warnings = "";
+
+            if ($model->validate()) {
+                if ($uploadedFile->saveAs($model->archivo)) {
+                    $stringBonos = file_get_contents($model->archivo);
+
+                    if ($stringBonos == false) {
+                        Yii::app()->user->setFlash('danger', "Error al leer archivo $model->archivo. ");
+                    } else {
+                        $arrBonos = explode("\n", $stringBonos);
+
+                        $transaction = Yii::app()->db->beginTransaction();
+                        try {
+                            foreach ($arrBonos as $registro => $lineaBono) {
+
+                                if ($registro == 0) {
+                                    continue;
+                                }
+                                
+                                $datosBono = explode(";", $lineaBono);
+                                $total['total'] ++;
+                                $objBonoTienda = new BonosTienda;
+                                $objBonoTienda->identificacionUsuario = trim($datosBono[0]);
+                                $objBonoTienda->concepto = trim($datosBono[1]);
+                                $objBonoTienda->valor = trim($datosBono[2]);
+                                $objBonoTienda->vigenciaInicio = trim($datosBono[3]);
+                                $objBonoTienda->vigenciaFin = trim($datosBono[4]);
+                                $objBonoTienda->minimoCompra = trim($datosBono[5]);
+                                $objBonoTienda->estado = 1;
+                                $objBonoTienda->tipo = 2;
+                                
+                                if ($objBonoTienda->save()) {
+                                    $total['cargado'] ++;
+                                } else {
+                                    $warnings .= "Error $registro:" . CVarDumper::dumpAsString($objBonoTienda->getErrors()) . "<br/>";
+                                }
+                            }
+
+                            $transaction->commit();
+                            $result = "Archivo $nombreArchivo cargado. <br/>";
+                            $result .= "Se cargaron " . $total['cargado'] . "/" . $total['total'] . " registro(s)<br/>";
+
+                            Yii::app()->user->setFlash('success', $result);
+
+                            if (!empty($warnings)) {
+                                Yii::app()->user->setFlash('warning', $warnings);
+                            }
+                        } catch (Exception $exc) {
+                            try {
+                                $transaction->rollBack();
+                            } catch (Exception $txexc) {
+                                Yii::log($txexc->getMessage() . "\n" . $txexc->getTraceAsString(), CLogger::LEVEL_ERROR, 'application');
+                            }
+
+                            Yii::log($exc->getMessage() . "\n" . $exc->getTraceAsString(), CLogger::LEVEL_ERROR, 'application');
+                            Yii::app()->user->setFlash('danger', "Error al cargar archivo $nombreArchivo. " . $exc->getMessage());
+                        }
+                    }
+                } else {
+                    Yii::app()->user->setFlash('danger', "Error al guardar archivo $nombreArchivo.");
+                }
+            }
+        }
+
+        $this->render('index', array(
+            'vista' => 'cargar',
+            'opcion' => 'cargar',
+            'params' => array(
+                'model' => $model,
+            )
+        ));
+
+        Yii::app()->end();
+    }
+
+    public function cargarOld() {
+        $model = new CargueExcelForm;
+
+        if (isset($_POST['CargueExcelForm'])) {
+            ini_set("memory_limit", "1024M");
             $model->attributes = $_POST['CargueExcelForm'];
 
             $uploadedFile = CUploadedFile::getInstance($model, 'archivo');
@@ -282,7 +380,7 @@ class BonosController extends ControllerOperator {
                             $objBonoTienda->minimoCompra = trim($objCelda[5]);
                             $objBonoTienda->estado = 1;
                             $objBonoTienda->tipo = 2;
-                            
+
                             if ($objBonoTienda->save()) {
                                 $total['cargado'] ++;
                             } else {
