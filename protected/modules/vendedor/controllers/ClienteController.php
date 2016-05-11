@@ -72,7 +72,7 @@ class ClienteController extends ControllerVendedor {
 
         unset(Yii::app()->session[Yii::app()->params->vendedor['sesion']['cliente']]);
         
-        Yii::app()->shoppingCart->clear();
+        Yii::app()->shoppingCartSalesman->clear();
         echo CJSON::encode(array(
             'result' => 'ok',
             'urlRefer' => Yii::app()->request->baseUrl . Yii::app()->controller->module->homeUrl[0]
@@ -152,7 +152,7 @@ class ClienteController extends ControllerVendedor {
         if ($usuario) {
             unset(Yii::app()->session[Yii::app()->params->vendedor['sesion']['compraInvitado']]);
             Yii::app()->session[Yii::app()->params->vendedor['sesion']['cliente']] = $usuario;
-            Yii::app()->shoppingCart->clear();
+            Yii::app()->shoppingCartSalesman->clear();
             echo CJSON::encode(array(
                 'result' => 'ok',
                 'urlRefer' => Yii::app()->request->baseUrl . Yii::app()->controller->module->homeUrl[0]

@@ -661,28 +661,28 @@ class FormaPagoVendedorForm extends CFormModel {
 
             //recorrer productos y actualiar carro
             foreach ($puntoVenta[4] as $indiceProd => $producto) {
-                $position = Yii::app()->shoppingCart->itemAt($producto->CODIGO_PRODUCTO);
+                $position = Yii::app()->shoppingCartSalesman->itemAt($producto->CODIGO_PRODUCTO);
 
                 if ($position !== null) {
                     $arrPositions[$producto->CODIGO_PRODUCTO] = $producto->CODIGO_PRODUCTO;
                     if ($producto->SALDO_UNIDAD >= $producto->CANTIDAD_UNIDAD) {
-                        Yii::app()->shoppingCart->update($position, false, $producto->CANTIDAD_UNIDAD);
+                        Yii::app()->shoppingCartSalesman->update($position, false, $producto->CANTIDAD_UNIDAD);
                     } else {
-                        Yii::app()->shoppingCart->update($position, false, $producto->SALDO_UNIDAD);
+                        Yii::app()->shoppingCartSalesman->update($position, false, $producto->SALDO_UNIDAD);
                     }
 
                     if ($producto->SALDO_FRACCION >= $producto->CANTIDAD_FRACCION) {
-                        Yii::app()->shoppingCart->update($position, true, $producto->CANTIDAD_FRACCION);
+                        Yii::app()->shoppingCartSalesman->update($position, true, $producto->CANTIDAD_FRACCION);
                     } else {
-                        Yii::app()->shoppingCart->update($position, true, $producto->SALDO_UNIDAD);
+                        Yii::app()->shoppingCartSalesman->update($position, true, $producto->SALDO_UNIDAD);
                     }
                 }
             }
 
-            foreach (Yii::app()->shoppingCart->getPositions() as $position) {
+            foreach (Yii::app()->shoppingCartSalesman->getPositions() as $position) {
                 if ($position->isProduct()) {
                     if (!isset($arrPositions[$position->objProducto->codigoProducto])) {
-                        Yii::app()->shoppingCart->remove($position->objProducto->codigoProducto);
+                        Yii::app()->shoppingCartSalesman->remove($position->objProducto->codigoProducto);
                     }
                 }
             }

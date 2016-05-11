@@ -47,7 +47,7 @@ class RelevanciaTemp extends CActiveRecord
 		// NOTE: you may need to adjust the relation name and the related
 		// class name for the relations automatically generated below.
 		return array(
-			'codigoProducto0' => array(self::BELONGS_TO, 'MProducto', 'codigoProducto'),
+			'objProducto' => array(self::BELONGS_TO, 'Producto', 'codigoProducto'),
 		);
 	}
 
