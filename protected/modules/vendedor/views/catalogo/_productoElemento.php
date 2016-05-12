@@ -16,7 +16,7 @@
 <?php endif; ?>
 <div class="clst_cont_top <?php echo ($objProducto->fraccionado == 1 ? ' top_frc' : '') ?> ">
     <div class="clst_pro_img">
-        <a href="<?php echo ($objPrecio->inicializado() ? CController::createUrl('/catalogo/producto', array('producto' => $objProducto->codigoProducto, 'descripcion' => $objProducto->getCadenaUrl())) : "#") ?>" data-ajax="false">
+        <a href="<?php echo ($objPrecio->inicializado() ? CController::createUrl('catalogo/producto', array('producto' => $objProducto->codigoProducto, 'descripcion' => $objProducto->getCadenaUrl())) : "#") ?>" data-ajax="false">
             <img src="<?php echo Yii::app()->request->baseUrl . $objProducto->rutaImagen() ?>" class="ui-li-thumb">
         </a>
     </div>

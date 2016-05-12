@@ -55,9 +55,10 @@ class UsuarioController extends ControllerVendedor {
 
     public function actionAutenticar() {
         
-        if(!Yii::app()->controller->module->user->isGuest){
+        if(!Yii::app()->controller->module->user->isGuest ){
             $this->redirect(Yii::app()->controller->module->homeUrl);
         }
+        $this->showSeeker = false;
         $this->showHeaderIcons = false;
         $this->render('autenticar');
     }

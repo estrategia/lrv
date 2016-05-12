@@ -47,7 +47,14 @@ class SitioController extends ControllerVendedor {
     }
     
     public function actionIndex(){
-        $this->render("index");
+        if(Yii::app()->controller->module->user->isGuest || (!Yii::app()->controller->module->user->getClienteLogueado() && !Yii::app()->controller->module->user->getIsClienteInvitado())){
+            $this->showSeeker = false;
+            $this->render("index");
+        }else{
+            $this->redirect(CController::createUrl('sitio/inicio'));
+            Yii::app()->end();
+        }
+        
     }
     
     public function actionInicio(){
