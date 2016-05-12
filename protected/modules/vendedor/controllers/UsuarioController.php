@@ -54,8 +54,8 @@ class UsuarioController extends ControllerVendedor {
     }
 
     public function actionAutenticar() {
-        
-        if(!Yii::app()->controller->module->user->isGuest ){
+
+        if (!Yii::app()->controller->module->user->isGuest) {
             $this->redirect(Yii::app()->controller->module->homeUrl);
         }
         $this->showSeeker = false;
@@ -96,7 +96,6 @@ class UsuarioController extends ControllerVendedor {
             Yii::app()->end();
         }
     }
-    
 
     public function actionRecordar() {
         if (!Yii::app()->request->isPostRequest) {
@@ -136,6 +135,59 @@ class UsuarioController extends ControllerVendedor {
     public function actionSalir() {
         Yii::app()->controller->module->user->logout();
         $this->redirect(Yii::app()->controller->module->homeUrl);
+    }
+
+    public function actionContrasena() {
+        $this->showSeeker = false;
+
+        if (!$this->isMobile) {
+            $this->breadcrumbs = array(
+                'Inicio' => array('/'),
+                'Mi cuenta' => array('/usuario'),
+                'Cambiar contrase&ntilde;a'
+            );
+        }
+
+        $model = new RegistroForm('contrasena');
+        //$usuario = Yii::app()->session[Yii::app()->params->usuario['sesion']];
+        $usuario = Operador::model()->find(array(
+            //'with' => array('objUsuarioExtendida', 'objPerfil'),
+            'condition' => 't.idOperador=:operador',
+            'params' => array(
+                ':operador' => Yii::app()->controller->module->user->id
+            )
+        ));
+        
+        if (isset($_POST['RegistroForm'])) {
+            $model->attributes = $_POST['RegistroForm'];
+            
+            if ($model->validate()) {
+                try {
+                    $usuario->clave = $model->clave;
+
+                    if ($usuario->save()) {
+                        Yii::app()->user->setFlash('success', "Información actualizada.");
+                        $model->clave = $model->claveConfirmar = null;
+                    } else {
+                        Yii::app()->user->setFlash('error', "Error al guardar contraseña, por favor, intente de nuevo.");
+                    }
+                    //Yii::app()->session[Yii::app()->params->usuario['sesion']] = $usuario;
+                } catch (Exception $exc) {
+                    Yii::log($exc->getMessage() . "\n" . $exc->getTraceAsString(), CLogger::LEVEL_ERROR, 'application');
+                    Yii::app()->user->setFlash('error', "Error al realizar registro, por favor intente de nuevo.");
+                    //$this->render('registro', array('model' => $model));
+                    if ($this->isMobile) {
+                        $this->render('registro', array('model' => $model));
+                    } else {
+                        $this->render('d_usuario', array('vista' => 'd_contrasena', 'params' => array('model' => $model)));
+                    }
+                    Yii::app()->end();
+                }
+            }
+        }
+
+        $this->render('registro', array('model' => $model));
+        
     }
 
 }

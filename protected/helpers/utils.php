@@ -86,7 +86,7 @@ function distanciaCoordenadas($lat1, $lon1, $lat2, $lon2, $unit = 'K') {
     }
 }
 
-function GSASearch(&$term) {
+function GSASearch(&$term, $sesion) {
 //    $arr1 = WebServiceSearch($term);
     $arr2 = GSASearchAux($term);
 
@@ -107,14 +107,31 @@ function GSASearch(&$term) {
 
     foreach ($arr2 as $key => $value) {
         if (in_array($key, $resultado)) {
-            if($resultado[$key] < $value){
+            if ($resultado[$key] < $value) {
                 $resultado[$key] = $value;
             }
         } else {
             $resultado[$key] = $value;
         }
     }
-    
+
+    RelevanciaTemp::model()->deleteAll(array(
+        'condition' => 'idSesion =:idSesion ',
+        'params' => array(
+            ':idSesion' => $sesion
+        )
+    ));
+
+    $ProductosRelevancia = array();
+    foreach ($resultado as $key => $relevancia) {
+        $ProductosRelevancia[] = "('$sesion','$key','$relevancia')";
+    }
+
+    if (!empty($ProductosRelevancia)) {
+        $sql = "SET FOREIGN_KEY_CHECKS = 0;
+                    INSERT INTO t_relevancia_temp (idSesion, codigoProducto, relevancia) VALUES " . implode(",", $ProductosRelevancia);
+        Yii::app()->db->createCommand($sql)->query();
+    }
 
     return $resultado;
 

@@ -32,9 +32,8 @@ class CatalogoController extends ControllerVendedor {
             $categoriasBuscador = explode("_", $categoriasBuscador);
         }
 
-
         $sesion = Yii::app()->getSession()->getSessionId();
-        $codigosArray = GSASearch($term);
+        $codigosArray = GSASearch($term,$sesion);
 
         //$codigosStr = implode(",", $codigosArray);
 
@@ -75,24 +74,6 @@ class CatalogoController extends ControllerVendedor {
 
 
             Yii::app()->end();
-        }
-
-        RelevanciaTemp::model()->deleteAll(array(
-            'condition' => 'idSesion =:idSesion ',
-            'params' => array(
-                ':idSesion' => $sesion
-            )
-        ));
-
-        $ProductosRelevancia = array();
-        foreach ($codigosArray as $key => $relevancia) {
-            $ProductosRelevancia[] = "('$sesion','$key','$relevancia')";
-        }
-
-        if (!empty($ProductosRelevancia)) {
-            $sql = "SET FOREIGN_KEY_CHECKS = 0;
-                    INSERT INTO t_relevancia_temp (idSesion, codigoProducto, relevancia) VALUES " . implode(",", $ProductosRelevancia);
-            Yii::app()->db->createCommand($sql)->query();
         }
 
         $codigosProductosArray = array();

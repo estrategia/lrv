@@ -538,7 +538,7 @@ class CatalogoController extends Controller {
         }
 
         $sesion = Yii::app()->getSession()->getSessionId();
-        $codigosArray = GSASearch($term);
+        $codigosArray = GSASearch($term,$sesion);
 
         //    $codigosStr = implode(",", $codigosArray);
         $objSectorCiudad = null;
@@ -591,24 +591,6 @@ class CatalogoController extends Controller {
             Yii::app()->end();
         }
 
-        RelevanciaTemp::model()->deleteAll(array(
-            'condition' => 'idSesion =:idSesion ',
-            'params' => array(
-                ':idSesion' => $sesion
-            )
-        ));
-
-        $ProductosRelevancia=array();
-        foreach ($codigosArray as $key => $relevancia) {
-            $ProductosRelevancia[] = "('$sesion','$key','$relevancia')";
-        }
-        
-        if(!empty($ProductosRelevancia)){ 
-            $sql = "SET FOREIGN_KEY_CHECKS = 0;
-                    INSERT INTO t_relevancia_temp (idSesion, codigoProducto, relevancia) VALUES ".implode(",", $ProductosRelevancia);
-            Yii::app()->db->createCommand($sql)->query();
-        }
-        
         $codigosProductosArray = array();
         foreach ($codigosArray as $key => $codigos) {
             $codigosProductosArray[] = $key;
@@ -669,7 +651,7 @@ class CatalogoController extends Controller {
         } else {
             $parametrosProductos = array(
                 'select' => '*, CASE WHEN (listImagenes.idImagen <> null) THEN 1 ELSE 0 END AS tieneImagen',
-                'order' => '/*tieneImagen DESC,*/ rel.relevancia DESC, t.orden DESC',
+                'order' => 'tieneImagen DESC, rel.relevancia DESC, t.orden DESC',
                 'with' => array('listImagenes', 'objCodigoEspecial', 'listCalificaciones',
                     'objCategoriaBI' => array('with' => array('listCategoriasTienda' => array('on' => 'listCategoriasTienda.tipoDispositivo=:dispositivo'))),
                     'listSaldos' => array('condition' => '(listSaldos.saldoUnidad>:saldo AND listSaldos.codigoCiudad=:ciudad AND listSaldos.codigoSector=:sector) OR (listSaldos.saldoUnidad IS NULL AND listSaldos.codigoCiudad IS NULL AND listSaldos.codigoSector IS NULL)'),
