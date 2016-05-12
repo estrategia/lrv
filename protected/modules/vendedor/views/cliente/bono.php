@@ -1,5 +1,5 @@
 <?php if (isset($bonos) && count($bonos) > 0): ?>
-    <div data-role="collapsibleset">
+<div data-role="collapsibleset" class="bonos">
         <?php foreach ($bonos as $idx => $bono): ?>
             <div data-role="collapsible">
                 <h3>Tipo de bono: <span class="result_bono"><?php echo $bono['concepto'] ?></span></h3>
