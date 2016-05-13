@@ -86,15 +86,53 @@ function distanciaCoordenadas($lat1, $lon1, $lat2, $lon2, $unit = 'K') {
     }
 }
 
-function GSASearch(&$term) {
-    $arr1 = WebServiceSearch($term);
-    $arr2 = array();//GSASearchAux($term);
+function GSASearch(&$term, $sesion) {
+//    $arr1 = WebServiceSearch($term);
+    $arr2 = GSASearchAux($term);
 
     $resultado = array();
-    foreach ($arr1 as $value)
-        $resultado[$value] = $value;
-    foreach ($arr2 as $value)
-        $resultado[$value] = $value;
+//    foreach ($arr1 as $value)
+//        $resultado[$value] = $value;
+
+    $sql = "SELECT codigoProducto, descripcion, MATCH(descripcion, keyword) AGAINST('(\"$term\") (+$term) ($term) ($term*)' IN BOOLEAN MODE) as relevancia
+                       FROM m_Keyword
+                       WHERE (MATCH(descripcion, keyword) AGAINST('(\"$term\") (+$term) ($term) ($term*)' IN BOOLEAN MODE)
+                      OR (descripcion LIKE '%$term%') /* OR (codigoProducto IN (10002, 44081, 59488, 13910))*/)
+                      order by relevancia DESC";
+
+    $arr1 = Yii::app()->db->createCommand($sql)->query();
+    foreach ($arr1 as $key => $value) {
+        $resultado[$value['codigoProducto']] = $value['relevancia'];
+    }
+
+    foreach ($arr2 as $key => $value) {
+        if (in_array($key, $resultado)) {
+            if ($resultado[$key] < $value) {
+                $resultado[$key] = $value;
+            }
+        } else {
+            $resultado[$key] = $value;
+        }
+    }
+
+    RelevanciaTemp::model()->deleteAll(array(
+        'condition' => 'idSesion =:idSesion ',
+        'params' => array(
+            ':idSesion' => $sesion
+        )
+    ));
+
+    $ProductosRelevancia = array();
+    foreach ($resultado as $key => $relevancia) {
+        $ProductosRelevancia[] = "('$sesion','$key','$relevancia')";
+    }
+
+    if (!empty($ProductosRelevancia)) {
+        $sql = "SET FOREIGN_KEY_CHECKS = 0;
+                    INSERT INTO t_relevancia_temp (idSesion, codigoProducto, relevancia) VALUES " . implode(",", $ProductosRelevancia);
+        Yii::app()->db->createCommand($sql)->query();
+    }
+
     return $resultado;
 
     /* if (Yii::app()->params->busqueda['buscadorActivo'] == Yii::app()->params->busqueda['tipoBuscador']['GSA']) {
@@ -155,8 +193,9 @@ function GSASearchAux(&$term) {
                     if ($cantidad == 1) {
                         if (isset($array["GSP"]["RES"]["R"]["S"])) {
                             $cod = obtenerProductoRefe($array["GSP"]["RES"]["R"]["S"]);
+                            $rank = $array["GSP"]["RES"]["R"]["RK"];
                             if ($cod !== null)
-                                $codigosArray[] = $cod;
+                                $codigosArray[$cod] = $rank;
                         }
                     }
                     else {
@@ -164,8 +203,9 @@ function GSASearchAux(&$term) {
                             foreach ($array["GSP"]["RES"]["R"] as $prod) {
                                 if (isset($prod["S"])) {
                                     $cod = obtenerProductoRefe($prod["S"]);
+                                    $rank = $prod["RK"];
                                     if ($cod !== null)
-                                        $codigosArray[] = $cod;
+                                        $codigosArray[$cod] = $rank;
                                 }
                             }
                         }
@@ -173,6 +213,39 @@ function GSASearchAux(&$term) {
                 }
             }
         }
+//        $codigosArray = array(
+//            '103709' => rand(1,5),
+//            '97412' => rand(1,5),
+//            '91298' => rand(1,5),
+//            '90990' => rand(1,5),
+//            '103707' => rand(1,5),
+//            '89480' => rand(1,5),
+//            '61362' => rand(1,5),
+//            '103705' => rand(1,5),
+//            
+//            Array
+//(
+//    [48269] => 7
+//    [32411] => 7
+//    [92189] => 7
+//    [97428] => 7
+//    [90995] => 7
+//    [91298] => 7
+//    [32412] => 7
+//    [32413] => 7
+//    [24863] => 7
+//    [24869] => 7
+//    [10760] => 7
+//    [24868] => 7
+//    [20866] => 7
+//    [59097] => 7
+//    [24866] => 7
+//    [20870] => 7
+//    [61362] => 7
+//    [90990] => 7
+//    [90999] => 6
+//)
+//        );
     }
 
     return $codigosArray;
@@ -193,7 +266,7 @@ function GSAResult(&$term, &$result) {
     $wc = 20;        //Numero de comodines
     $wc_mc = 1;       //Considerar los comodines (wildcards)
     //Se genera la url de busqueda y se invoca
-    $url = 'http://gsa.copservir.com/search?site=' . $site . '&client=' . $client . '&output=' . $output . '&q=' . $term . '&filter=' . $filter . '&num=' . $num . '&ie=' . $ie . '&ulang=' . $ulang . '&sort=' . $sort . '&entqr=' . $entqr . '&entqrm=' . $entqrm . '&wc=' . $wc . '&wc_mc=' . $wc_mc;
+    $url = 'http://gsa.copservir.com/search?site=' . $site . '&client=' . $client . '&output=' . $output . '&q=' . $term . '&filter=' . $filter . '&num=' . $num . '&ie=' . $ie . '&ulang=' . $ulang . '&entqr=' . $entqr . '&entqrm=' . $entqrm . '&wc=' . $wc . '&wc_mc=' . $wc_mc;
     $result = file_get_contents($url);
 }
 

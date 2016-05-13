@@ -7,8 +7,8 @@
         </li>
     <?php else: ?>
         <li>
-            <a href="<?php echo CController::createUrl('usuario/usuario') ?>" data-ajax="false">
-                <h2>Mi cuenta</h2>
+            <a href="<?php echo CController::createUrl('usuario/contrasena') ?>" data-ajax="false">
+                <h2>Cambiar contrase&ntilde;a</h2>
             </a>
         </li>
         <li>

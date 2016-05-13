@@ -407,7 +407,7 @@ class CatalogoController extends Controller {
             $formFiltro->attributes = $_POST['FiltroForm'];
             Yii::app()->session[Yii::app()->params->sesion['productosBusquedaFiltro']] = $formFiltro;
         }
-        
+
         //Yii::log("Filtrar:Filtro1\n" . CVarDumper::dumpAsString($formFiltro), CLogger::LEVEL_INFO, 'application');
 
         echo CJSON::encode(array("result" => "ok", "response" => "Filtro almacenado"));
@@ -537,9 +537,10 @@ class CatalogoController extends Controller {
             $categoriasBuscador = explode("_", $categoriasBuscador);
         }
 
-        $codigosArray = GSASearch($term);
-        $codigosStr = implode(",", $codigosArray);
+        $sesion = Yii::app()->getSession()->getSessionId();
+        $codigosArray = GSASearch($term,$sesion);
 
+        //    $codigosStr = implode(",", $codigosArray);
         $objSectorCiudad = null;
         if (isset(Yii::app()->session[Yii::app()->params->sesion['sectorCiudadEntrega']]))
             $objSectorCiudad = Yii::app()->session[Yii::app()->params->sesion['sectorCiudadEntrega']];
@@ -589,7 +590,13 @@ class CatalogoController extends Controller {
 
             Yii::app()->end();
         }
-        
+
+        $codigosProductosArray = array();
+        foreach ($codigosArray as $key => $codigos) {
+            $codigosProductosArray[] = $key;
+        }
+        $codigosStr = implode(",", $codigosProductosArray);
+
         $formFiltro = new FiltroForm;
         $formOrdenamiento = new OrdenamientoForm;
 
@@ -608,7 +615,7 @@ class CatalogoController extends Controller {
                 Yii::app()->session[Yii::app()->params->sesion['productosBusquedaFiltro']] = null;
             }
             //Yii::log("Buscar:Filtro0\n" . CVarDumper::dumpAsString(Yii::app()->session[Yii::app()->params->sesion['productosBusquedaFiltro']]), CLogger::LEVEL_INFO, 'application');
-            
+
             if (Yii::app()->session[Yii::app()->params->sesion['productosBusquedaFiltro']] != null) {
                 $formFiltro = Yii::app()->session[Yii::app()->params->sesion['productosBusquedaFiltro']];
                 $formFiltro->listCategoriasTiendaCheck = $formFiltro->listCategoriasTienda;
@@ -628,34 +635,41 @@ class CatalogoController extends Controller {
 
         if ($objSectorCiudad == null) {
             $parametrosProductos = array(
-                'order' => 't.orden DESC',
-                'with' => array('listImagenes', 'objCodigoEspecial', 'listCalificaciones',
+                'order' => 'rel.relevancia DESC,t.orden DESC',
+                'with' => array('objBusqueda', 'listImagenes', 'objCodigoEspecial', 'listCalificaciones',
                     'objCategoriaBI' => array('with' => array('listCategoriasTienda' => array('on' => 'listCategoriasTienda.tipoDispositivo=:dispositivo'))),
                 ),
-                'condition' => "t.activo=:activo AND t.codigoProducto IN ($codigosStr)",
+                'condition' => "t.activo=:activo and rel.idSesion =:sesion",
                 'params' => array(
                     ':activo' => 1,
-                    ':dispositivo' => $this->isMobile ? CategoriaTienda::DISPOSITIVO_MOVIL : CategoriaTienda::DISPOSITIVO_ESCRITORIO
+                    ':dispositivo' => $this->isMobile ? CategoriaTienda::DISPOSITIVO_MOVIL : CategoriaTienda::DISPOSITIVO_ESCRITORIO,
+                    ':sesion' => $sesion
+                   
                 )
             );
+            $parametrosProductos['join'] = "JOIN t_relevancia_temp rel ON rel.codigoProducto = t.codigoProducto" ;
         } else {
             $parametrosProductos = array(
-                'order' => 't.orden DESC',
+                'select' => '*, CASE WHEN (listImagenes.idImagen <> null) THEN 1 ELSE 0 END AS tieneImagen',
+                'order' => 'tieneImagen DESC, rel.relevancia DESC, t.orden DESC',
                 'with' => array('listImagenes', 'objCodigoEspecial', 'listCalificaciones',
                     'objCategoriaBI' => array('with' => array('listCategoriasTienda' => array('on' => 'listCategoriasTienda.tipoDispositivo=:dispositivo'))),
                     'listSaldos' => array('condition' => '(listSaldos.saldoUnidad>:saldo AND listSaldos.codigoCiudad=:ciudad AND listSaldos.codigoSector=:sector) OR (listSaldos.saldoUnidad IS NULL AND listSaldos.codigoCiudad IS NULL AND listSaldos.codigoSector IS NULL)'),
                     'listPrecios' => array('condition' => '(listPrecios.codigoCiudad=:ciudad AND listPrecios.codigoSector=:sector) OR (listPrecios.codigoCiudad IS NULL AND listPrecios.codigoSector IS NULL)'),
                     'listSaldosTerceros' => array('condition' => '(listSaldosTerceros.saldoUnidad>:saldo AND listSaldosTerceros.codigoCiudad=:ciudad AND listSaldosTerceros.codigoSector=:sector) OR (listSaldosTerceros.codigoCiudad IS NULL AND listSaldosTerceros.codigoSector IS NULL)')
                 ),
-                'condition' => "t.activo=:activo AND t.codigoProducto IN ($codigosStr) AND ( (listSaldos.saldoUnidad IS NOT NULL AND listPrecios.codigoCiudad IS NOT NULL) OR listSaldosTerceros.codigoCiudad IS NOT NULL)",
+                'condition' => "t.activo=:activo AND rel.idSesion =:sesion AND ( (listSaldos.saldoUnidad IS NOT NULL AND listPrecios.codigoCiudad IS NOT NULL) OR listSaldosTerceros.codigoCiudad IS NOT NULL)",
                 'params' => array(
                     ':activo' => 1,
                     ':dispositivo' => $this->isMobile ? CategoriaTienda::DISPOSITIVO_MOVIL : CategoriaTienda::DISPOSITIVO_ESCRITORIO,
                     ':saldo' => 0,
                     ':ciudad' => $objSectorCiudad->codigoCiudad,
                     ':sector' => $objSectorCiudad->codigoSector,
+                    ':sesion' => $sesion
                 )
             );
+            $parametrosProductos['join'] = "JOIN t_relevancia_temp rel ON rel.codigoProducto = t.codigoProducto" ;
+        //    $listProductos = Producto::model()->findAll($parametrosProductos);
 
             if (!$this->isMobile && !isset($_GET['ajax'])) {
                 $query = "SELECT  MIN(listPrecios.precioUnidad) minproducto, MAX(listPrecios.precioUnidad) maxproducto, MIN(listSaldosTerceros.precioUnidad) mintercero, MAX(listSaldosTerceros.precioUnidad) maxtercero ";
@@ -717,6 +731,7 @@ class CatalogoController extends Controller {
             $parametrosProductos['condition'] = $parametrosProductos['condition'] . " AND ((listPrecios.precioUnidad IS NOT NULL AND listPrecios.precioUnidad<=" . $formFiltro->getPrecioFin() . ") OR (listSaldosTerceros.precioUnidad IS NOT NULL AND listSaldosTerceros.precioUnidad<=" . $formFiltro->getPrecioFin() . ") )";
         }
 
+
         $listProductos = Producto::model()->findAll($parametrosProductos);
 
         $listCodigoEspecial = CodigoEspecial::model()->findAll(array(
@@ -724,10 +739,10 @@ class CatalogoController extends Controller {
         ));
 
         $msgCodigoEspecial = array();
-        if (!isset($_GET['ajax'])){
+        if (!isset($_GET['ajax'])) {
             $formFiltro->listCategoriasTienda = array();
         }
-        
+
         foreach ($listProductos as $idxProd => $objProducto) {
             if ($formFiltro->calificacion > 0 && $objProducto->getCalificacion() < $formFiltro->calificacion) {
                 unset($listProductos[$idxProd]);
@@ -737,7 +752,7 @@ class CatalogoController extends Controller {
             if ($objProducto->codigoEspecial != null && $objProducto->codigoEspecial != 0) {
                 $msgCodigoEspecial[$objProducto->codigoEspecial] = $objProducto->objCodigoEspecial;
             }
-            
+
             if (!isset($_GET['ajax'])) {
                 foreach ($objProducto->objCategoriaBI->listCategoriasTienda as $objCategoriaTienda) {
                     $formFiltro->listCategoriasTienda[$objCategoriaTienda->idCategoriaTienda] = $objCategoriaTienda->nombreCategoriaTienda;
@@ -943,9 +958,8 @@ class CatalogoController extends Controller {
                 ),
             ));
         }
-        
+
         //CVarDumper::dump($objProducto, 10, true);exit();
-        
         //throw new CHttpException(404, 'Producto no existe.');
 
         if ($objProducto == null) {
@@ -2154,4 +2168,5 @@ class CatalogoController extends Controller {
             'listaProductos' => $listaProductos
         ));
     }
+
 }

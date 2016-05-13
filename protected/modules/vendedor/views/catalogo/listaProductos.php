@@ -6,7 +6,7 @@
     <?php //if(isset($formFiltro) || isset($formOrdenamiento)):?>
         <div class="ccont_filtro">
             <div class="left">
-                <a href="<?php echo $this->createUrl("/sitio/categorias") ?>" data-ajax="false">
+                <a href="<?php echo $this->createUrl("sitio/categorias") ?>" data-ajax="false">
                     <img src="<?php echo Yii::app()->request->baseUrl ?>/images/iconos/icon_categorias.png" alt="Categorias" title="Categorias" >
                 </a>
                 <a id="link-relacionados-agregar" style="display:none;" href="#" data-ajax="false">
@@ -64,7 +64,7 @@
                         <div data-role="main">
                             <div data-role="content">
                                 Este producto requiere venta controlada. Por favor ver detalle del producto para mayor información.
-                                <?php echo CHtml::link('Ver detalle', CController::createUrl('/catalogo/producto', array('producto' => $objProducto->codigoProducto,'descripcion'=>  $objProducto->getCadenaUrl())), array('data-ajax' => "false", 'class' => 'ui-btn ui-corner-all ui-shadow cprod_add_car_spcl')); ?>
+                                <?php echo CHtml::link('Ver detalle', CController::createUrl('catalogo/producto', array('producto' => $objProducto->codigoProducto,'descripcion'=>  $objProducto->getCadenaUrl())), array('data-ajax' => "false", 'class' => 'ui-btn ui-corner-all ui-shadow cprod_add_car_spcl')); ?>
                                 <a href="#" data-rel="back" class="ui-btn ui-corner-all ui-shadow cprod_canc_spcl">Cancelar</a>
                             </div>
                         </div>

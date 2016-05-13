@@ -1000,17 +1000,22 @@ class ContenidoController extends ControllerOperator {
         }
 
         $listProductos = array();
-        $codigosArray = GSASearch($busqueda);
+        $sesion = Yii::app()->getSession()->getSessionId();
+        $codigosArray = GSASearch($busqueda,$sesion);
         $codigosStr = implode(",", $codigosArray);
 
         if (!empty($codigosArray)) {
             $listProductos = Producto::model()->findAll(array(
                 'with' => array('listImagenes', 'objCodigoEspecial', 'listCalificaciones', 'objCategoriaBI',),
-                'condition' => "t.activo=:activo AND t.codigoProducto IN ($codigosStr)",
+                'join' => ' JOIN t_relevancia_temp rel ON rel.codigoProducto = t.codigoProducto',
+                'condition' => "t.activo=:activo AND rel.idSesion =:sesion",
                 'params' => array(
                     ':activo' => 1,
-                )
+                    ':sesion' => $sesion,
+                ),
+                'order' => 'rel.relevancia DESC, t.orden'
             ));
+            
         }
 
         $model = ProductosModulos::model()->findAll('idModulo=:idModulo', array(':idModulo' => $idModulo));

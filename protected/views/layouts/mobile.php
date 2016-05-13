@@ -13,6 +13,7 @@ header("Pragma: no-cache");
 
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1">
+        <?=  (isset($this->metaTags))? $this->metaTags: ''?> 
         <?php Yii::app()->clientScript->registerCoreScript('jquery'); ?>
         <script>requestUrl = "<?php echo Yii::app()->request->baseUrl; ?>"; gmapKey = "<?php echo Yii::app()->params['google']['llaveMapa']; ?>";</script>
         <link rel="shortcut icon" href="<?php echo Yii::app()->request->baseUrl; ?>/images/favicon_16.ico" type="image/x-icon" />  
