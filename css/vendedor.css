@@ -1783,10 +1783,12 @@ html head + body .ui-body-n.ui-focus {
 }
 
 #main-content #div-carro .ui-content > h2 {
-    color: #b40000;
+    color: #fff;
     font-size: medium;
     margin-top: inherit;
 }
+
+ html head + body .ui-btn.ui-btn-r.line {border: 1px solid #fff;}
 #main-content #div-carro .ui-content p {
     color: #505050;
 }
@@ -1848,7 +1850,7 @@ div.c_cont_detail_prod {
     background-color:#fff;
 }
 
-#div-carro .ui-content {background-color:#fff;}
+
 
 .ui-content .content-car .blockPago .btnContinuar {background-color:#fff !important;}
 
@@ -2146,7 +2148,7 @@ div.c_cont_com_prod.ui-collapsible.ui-collapsible-inset.ui-corner-all.ui-collaps
     background-image: url("../images/iconos/carat-l-yellow.png");
     background-position: center center;
     background-repeat: no-repeat;
-    border: 1px solid #f9a33d;
+    border: 1px solid #b10000;
     border-radius: 100%;
     display: block;
     height: 14px;
@@ -2157,6 +2159,8 @@ div.c_cont_com_prod.ui-collapsible.ui-collapsible-inset.ui-corner-all.ui-collaps
     width: 14px;
     z-index: 10;
 }
+.ui-dialog-contain {background-color:#fff !important;}
+
 .btnContinuar {
     overflow: visible;
     width: 39%;
@@ -2706,3 +2710,5 @@ div.clst_cont_top.top_frc {
 
 .ui-overlay-a {background-color: #B10000;}
 #page-direccionesubicacion .ui-content {background-color: #fff;}
+#page-direccionesubicacion .ui-dialog-contain  .ui-content h2 {color:#B10000 !important;}
+.codEspecial {color:#fff;}
