@@ -2,7 +2,7 @@
     <div class="space-1"></div>
     <section class="selectedUbicacion">
         <div class="center">
-            <h3>SELECCIONA LA UBICACI&Oacute;N DONDE DESEAS QUE ENTREGUEMOS TU PEDIDO</h3>
+            <h3>SELECCIONA LA UBICACI&Oacute;N DONDE DESEAS RECOGER O QUE ENTREGUEMOS TU PEDIDO</h3>
         </div>
         <div class="blocktipoentrega">
             <div id="div-ubicacion-tipoubicacion" class="text-center">

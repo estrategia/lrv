@@ -32,6 +32,6 @@
             <h2>5. En el tiempo indicado <br>pasa por él</h2>
         </li>
     </ul>
-    <a href="<?php echo CController::createUrl('/sitio/entrega', array('tipo' => Yii::app()->params->entrega['tipo']['presencial'])) ?>" data-ajax="false" class="ui-btn ui-icon-presencial ui-btn-icon-right ui-btn-presencial ui-corner-all">S&iacute;, Quiero pasar <br>por el pedido.</a>
+    <a href="#" data-ajax="false" class="ui-btn ui-icon-presencial ui-btn-icon-right ui-btn-presencial ui-corner-all" data-role="tipoentrega" data-tipo="<?php echo Yii::app()->params->entrega['tipo']['presencial']; ?>">S&iacute;, Quiero pasar <br>por el pedido.</a>
     <!--  <button data-rel="close" class="ui-btn  ui-corner-all ui-btn-b  ">Cerrar</button>-->
 </div>

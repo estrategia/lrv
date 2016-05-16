@@ -1,6 +1,13 @@
 <?php
 
 class TestController extends Controller {
+    
+    public function actionData(){
+        //$data = Yii::app()->getUser()->getState("EShoppingCart");
+        $data = Yii::app()->shoppingCart->getPositions();
+        
+        CVarDumper::dump($data, 10, true);
+    }
 
     public function actionReauto() {
         $idCompra = -1;

@@ -4,8 +4,8 @@
     <input name="refVenta" type="hidden" value="<?php echo $model->idCompra ?>">
     <input name="moneda" type="hidden" value="<?php echo $model->moneda ?>">
     <input name="valor" type="hidden" value="<?php echo $model->valor ?>">
-    <input name="iva" type="hidden" value="<?php echo $model->iva ?>">
-    <input name="baseDevolucionIva" type="hidden" value="<?php echo $model->baseIva; ?>">
+    <input name="iva" type="hidden" value="0<?php //echo $model->iva ?>">
+    <input name="baseDevolucionIva" type="hidden" value="0<?php //echo $model->baseIva; ?>">
     <input name="firma" type="hidden" value="<?php echo $firma; ?>">
     <input name="emailComprador" type="hidden" value="<?php echo $model->correoElectronico; ?>">
     <input name="prueba" type="hidden" value="<?php echo $prueba; ?>">

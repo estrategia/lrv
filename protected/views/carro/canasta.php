@@ -7,11 +7,11 @@
                 <p class="center">Subtotal pedido <?php echo Yii::app()->numberFormatter->format(Yii::app()->params->formatoMoneda['patron'], Yii::app()->shoppingCart->getCost(), Yii::app()->params->formatoMoneda['moneda']); ?></p>
                 <?php echo CHtml::link('Pagar', CController::createUrl('/carro'), array('data-ajax' => 'false', 'class' => 'ui-btn ui-corner-all ui-shadow ui-btn-r')); ?>
 
-                <?php if (Yii::app()->session[Yii::app()->params->sesion['tipoEntrega']] == Yii::app()->params->entrega['tipo']['domicilio'] && Yii::app()->shoppingCart->getObjExpress() != null): ?>
-                    <?php echo CHtml::link('Pago Express', CController::createUrl('/carro/pagoexpress'), array('data-ajax' => 'false', 'class' => 'ui-btn ui-corner-all ui-shadow ui-btn-r')); ?>
+                <?php if (Yii::app()->shoppingCart->getObjExpress() != null): ?>
+                    <?php echo CHtml::link('Pago Express', "#", array('data-role' =>'popup-pagoexpress', 'data-ajax' => 'false', 'class' => 'ui-btn ui-corner-all ui-shadow ui-btn-r')); ?>
                 <?php endif; ?>
                 <?php if (!Yii::app()->user->isGuest): ?>
-                    <?php echo CHtml::link('Cotizar', "#", array('data-role' => 'crearcotizacion', 'data-ajax' => 'false', 'class' => 'ui-btn ui-corner-all ui-shadow ui-btn-r')); ?>
+                    <?php //echo CHtml::link('Cotizar', "#", array('data-role' => 'crearcotizacion', 'data-ajax' => 'false', 'class' => 'ui-btn ui-corner-all ui-shadow ui-btn-r')); ?>
                 <?php endif; ?>
             </div>
         <?php endif; ?>
@@ -36,12 +36,12 @@
             <p class="center">Subtotal pedido <?php echo Yii::app()->numberFormatter->format(Yii::app()->params->formatoMoneda['patron'], Yii::app()->shoppingCart->getCost(), Yii::app()->params->formatoMoneda['moneda']); ?></p>
             <?php echo CHtml::link('Pagar', CController::createUrl('/carro'), array('data-ajax' => 'false', 'class' => 'ui-btn ui-corner-all ui-shadow ui-btn-r')); ?>
 
-            <?php if (Yii::app()->session[Yii::app()->params->sesion['tipoEntrega']] == Yii::app()->params->entrega['tipo']['domicilio'] && Yii::app()->shoppingCart->getObjExpress() != null): ?>
-                <?php echo CHtml::link('Pago Express', CController::createUrl('/carro/pagoexpress'), array('data-ajax' => 'false', 'class' => 'ui-btn ui-corner-all ui-shadow ui-btn-r')); ?>
+            <?php if (Yii::app()->shoppingCart->getObjExpress() != null): ?>
+                <?php echo CHtml::link('Pago Express', "#", array('data-role' =>'popup-pagoexpress', 'data-ajax' => 'false', 'class' => 'ui-btn ui-corner-all ui-shadow ui-btn-r')); ?>
             <?php endif; ?>
 
             <?php if (!Yii::app()->user->isGuest): ?>
-                <?php echo CHtml::link('Cotizar', "#", array('data-role' => 'crearcotizacion', 'data-ajax' => 'false', 'class' => 'ui-btn ui-corner-all ui-shadow ui-btn-r')); ?>
+                <?php //echo CHtml::link('Cotizar', "#", array('data-role' => 'crearcotizacion', 'data-ajax' => 'false', 'class' => 'ui-btn ui-corner-all ui-shadow ui-btn-r')); ?>
             <?php endif; ?>
         </div>
     <?php endif; ?>

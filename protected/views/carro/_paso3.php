@@ -1,11 +1,6 @@
-
-<div class="ui-btn ui-corner-all ui-shadow ui-btn-n totalPagarbtn">
-    Total a pagar <?php echo Yii::app()->numberFormatter->format(Yii::app()->params->formatoMoneda['patron'], Yii::app()->shoppingCart->getTotalCost(), Yii::app()->params->formatoMoneda['moneda']) ?>
-</div>
-
 <?php
 $form = $this->beginWidget('CActiveForm', array(
-    'id' => 'form-pago-pago',
+    'id' => 'form-pago-entrega',
     'enableClientValidation' => true,
     'action' => Yii::app()->createUrl('/carro/pagar', array('paso' => $modelPago->getScenario(), 'post' => 'true')),
     'htmlOptions' => array(
@@ -21,45 +16,34 @@ $form = $this->beginWidget('CActiveForm', array(
 );
 ?>
 <fieldset>
-    <div class="ui-field-container ui-bar ui-bar-a contentPaso3 ui-corner-all">
-        <h2>Forma de pago</h2>
-        <?php $this->renderPartial('/carro/_formaPago', array('form' => $form, 'model' => $modelPago, 'listFormaPago' => $listFormaPago)) ?>
+    <div class="ui-field-container ui-bar ui-bar-a ui-corner-all">
+        <?php echo $form->labelEx($modelPago, 'fechaEntrega', array()); ?>
+        <?php echo $form->dropDownList($modelPago, 'fechaEntrega', CHtml::listData($listHorarios, 'fecha', 'etiqueta'), array('encode' => false, 'prompt' => $modelPago->getAttributeLabel('fechaEntrega'), 'data-native-menu' => "true", 'placeholder' => $modelPago->getAttributeLabel('fechaEntrega'))); ?>
+        <?php echo $form->error($modelPago, 'fechaEntrega'); ?>
     </div>
-    <div class="space-2"></div>
 
-    <?php if (!empty($modelPago->bono)): ?>
-        <div class="ui-field-container contentPaso3 ui-bar ui-bar-a ui-corner-all">
-            <?php echo $form->labelEx($modelPago, 'usoBono', array()); ?>
+    <div class="space-2"></div>    
+    <div class="ui-field-container ui-bar ui-bar-a ui-corner-all">
 
-            <?php foreach ($modelPago->bono as $idx => $bono): ?>
-                <div>
-                    <div>Tipo de bono: <span class="result_bono"><?php echo $bono['concepto'] ?></span></div>
-                    <div>Valor de bono: <span class="result_bono"><?php echo Yii::app()->numberFormatter->format(Yii::app()->params->formatoMoneda['patron'], $bono['valor'], Yii::app()->params->formatoMoneda['moneda']); ?></span></div>
-                    <div>Vigencia inicial del bono: <span class="result_bono"><?php echo $bono['vigenciaInicio'] ?></span></div>
-                    <div>Vigencia final del bono: <span class="result_bono"><?php echo $bono['vigenciaFin'] ?></span></div>
-                    <?php if ($bono['disponibleCompra']): ?>
-                        <div class="utilBono">¿Desea utilizar este bono?</div>
-                        <input type="radio" data-role="none" id="FormaPagoForm_usoBono_<?= $idx ?>_1" name="FormaPagoForm[usoBono][<?= $idx ?>]" value="1" <?php echo ($modelPago->usoBono[$idx] == 1 ? "checked" : "") ?>> <span class="utilBono">Si</span>
-                        <input type="radio" data-role="none" id="FormaPagoForm_usoBono_<?= $idx ?>_0" name="FormaPagoForm[usoBono][<?= $idx ?>]" value="0" <?php echo ($modelPago->usoBono[$idx] != 1 ? "checked" : "") ?>> <span class="utilBono">No</span>
-                    <?php else: ?>
-                        <div class="utilBono">Disponible por compra superior a <?php echo Yii::app()->numberFormatter->format(Yii::app()->params->formatoMoneda['patron'], $bono['minimoCompra'], Yii::app()->params->formatoMoneda['moneda']); ?></div>
-                        <input type="hidden" name="FormaPagoForm[usoBono][<?= $idx ?>]" value="0">
-                    <?php endif; ?>
-                </div>
-                <div class="space-2"></div>
-            <?php endforeach; ?>
+        <?php if ($modelPago->tipoEntrega == Yii::app()->params->entrega['tipo']['presencial']): ?>
+            <?php echo $form->labelEx($modelPago, 'telefonoContacto', array()); ?>
+            <?php echo $form->numberField($modelPago, 'telefonoContacto', array('maxlength' => 50, 'placeholder' => $modelPago->getAttributeLabel('telefonoContacto'))); ?>
+            <?php echo $form->error($modelPago, 'telefonoContacto'); ?>
 
-            <?php echo $form->error($modelPago, 'usoBono'); ?>
+            <?php if ($modelPago->pagoInvitado): ?>
+                <?php echo $form->labelEx($modelPago, 'correoElectronicoContacto', array('class' => '')); ?>
+                <?php echo $form->emailField($modelPago, 'correoElectronicoContacto', array('maxlength' => 50, 'placeholder' => $modelPago->getAttributeLabel('correoElectronicoContacto'))); ?>
+                <?php echo $form->error($modelPago, 'correoElectronicoContacto'); ?>
+            <?php endif; ?>
 
-        </div>
-    <?php endif; ?>
+        <?php endif; ?>
 
+        <?php echo $form->labelEx($modelPago, 'comentario', array()); ?>
+        <?php echo $form->textArea($modelPago, 'comentario', array('data-countchar' => 'div-comentario-contador', 'maxlength' => 250, 'placeholder' => $modelPago->getAttributeLabel('comentario'))); ?>
+        <div class="maxCaract">[Máximo 250 caracteres] <span id="div-comentario-contador"></span></div>
+            <?php echo $form->error($modelPago, 'comentario'); ?>
+
+    </div>
 </fieldset>
 
-<?php if (isset($submit) && $submit): ?>
-    <div class="ui-input-btn ui-btn ui-corner-all ui-shadow ui-btn-r">
-        Continuar
-        <input type="button" data-enhanced="true" value="Continuar" id="btn-carropagar-siguiente" data-origin="pago" data-redirect="confirmacion">
-    </div>
-<?php endif; ?>
 <?php $this->endWidget(); ?>

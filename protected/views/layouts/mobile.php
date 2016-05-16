@@ -14,7 +14,7 @@ header("Pragma: no-cache");
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <?php Yii::app()->clientScript->registerCoreScript('jquery'); ?>
-        <script>requestUrl = "<?php echo Yii::app()->request->baseUrl; ?>"; gmapKey = "<?php echo Yii::app()->params['google']['llaveMapa']; ?>";</script>
+        <script>requestUrl = "<?php echo Yii::app()->request->baseUrl; ?>"; gmapKey = "<?php echo Yii::app()->params['google']['llaveMapa']; ?>"; tipoEntrega = {presencial:<?=Yii::app()->params->entrega['tipo']['presencial']?>,domicilio:<?=Yii::app()->params->entrega['tipo']['domicilio']?>};</script>
         <link rel="shortcut icon" href="<?php echo Yii::app()->request->baseUrl; ?>/images/favicon_16.ico" type="image/x-icon" />  
         <title><?php echo CHtml::encode($this->pageTitle); ?></title>
 
@@ -73,7 +73,15 @@ header("Pragma: no-cache");
                         </div>
                     </div>
                 </div>
-
+                
+                <div data-role="popup" id="popup-pagoexpress" data-dismissible="false" data-theme="a" data-position-to="window" class="c_lst_pop_cont">
+                    <a href="#" data-rel="back" class="ui-btn ui-corner-all ui-shadow ui-btn ui-icon-delete ui-btn-icon-notext ui-btn-right">Close</a>
+                    <div data-role="main" class="ui-content">
+                        <p class="center">El pago express solo está disponible para los pedidos con tipo de entrega a Domicilio, si desea usar el pago express con tipo de entrega a Domicilio de clic en Aceptar </p>
+                        <?php echo CHtml::link('Aceptar', $this->createUrl('/carro/pagoexpress'), array('class' => 'ui-btn ui-corner-all ui-shadow ui-btn-n', 'data-mini' => 'true', 'data-ajax' => 'false')); ?>
+                            <?php echo CHtml::link('Cerrar', '#', array('class' => 'ui-btn ui-corner-all ui-shadow ui-btn-r', 'data-mini' => 'true', 'data-rel' => 'back')); ?>
+                    </div>
+                </div>
             </div>
             <!-- Fin main content -->
 

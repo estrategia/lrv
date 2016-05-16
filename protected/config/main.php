@@ -202,7 +202,7 @@ return array(
             'claveCookie' => 'l4r384j4cook13',
             'usuario' => 'larebaja.online.usuario',
             'usuarioBienvenida' => 'larebaja.online.usuario.bienvenida',
-            'tipoEntrega' => 'larebaja.online.entrega.tipoEntrega',
+            //'tipoEntrega' => 'larebaja.online.entrega.tipoEntrega',
             'redireccionEntrega' => 'larebaja.online.entrega.redireccion',
             'redireccionUbicacion' => 'larebaja.online.ubicacion.redireccion',
             'redireccionAutenticacion' => 'larebaja.online.usuario.autenticacion',
@@ -250,11 +250,11 @@ return array(
         ),
         'pagar' => array(
             'pasos' => array(
-                'despacho' => 1, 'entrega' => 2, 'pago' => 3, 'confirmacion' => 4,
-                1 => 'despacho', 2 => 'entrega', 3 => 'pago', 4 => 'confirmacion',
+                'tipoentrega'=>1, 'despacho' => 2, 'entrega' => 3, 'pago' => 4, 'confirmacion' => 5,
+                1=>'tipoentrega', 2 => 'despacho', 3 => 'entrega', 4 => 'pago', 5 => 'confirmacion',
             ),
             'pasosDisponibles' => array(
-                'domicilio' => array('despacho', 'entrega', 'pago', 'confirmacion'),
+                'domicilio' => array('tipoentrega', 'despacho', 'entrega', 'pago', 'confirmacion'),
                 'presencial' => array('entrega', 'pago', 'confirmacion'),
             ),
             'pasosDesktop' => array(
