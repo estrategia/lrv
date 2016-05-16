@@ -1824,16 +1824,16 @@ li.active .iconStep {
     background-position: center 49px;
 }
 .iconStep.step1{
-    background-image: url(../images/iconos/icons_carro/despacho2.png);
+    background-image: url(../images/iconos/icons_carro/vendedor/despacho.png);
 }
 .iconStep.step2{
-    background-image: url(../images/iconos/icons_carro/entrega2.png);
+    background-image: url(../images/iconos/icons_carro/vendedor/entrega.png);
 }
 .iconStep.step3{
-    background-image: url(../images/iconos/icons_carro/pago2.png);
+    background-image: url(../images/iconos/icons_carro/vendedor/pago.png);
 }
 .iconStep.step4{
-    background-image: url(../images/iconos/icons_carro/confirmacion2.png);
+    background-image: url(../images/iconos/icons_carro/vendedor/confirmacion.png);
 }
 .clear{
     clear: both;
