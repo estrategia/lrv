@@ -1797,7 +1797,7 @@ class CarroController extends ControllerVendedor {
                 $objCompra->idEstadoCompra = Yii::app()->params->callcenter['estadoCompra']['estado']['pendiente'];
             }
 
-            $objCompra->idTipoVenta = 1;
+            $objCompra->idTipoVenta = 3;
             $objCompra->activa = 1;
             $objCompra->invitado = ($modelPago->pagoInvitado ? 1 : 0);
             $objCompra->codigoPerfil = Yii::app()->shoppingCartSalesman->getCodigoPerfil();

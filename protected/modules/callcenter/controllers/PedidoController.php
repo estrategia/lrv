@@ -338,7 +338,8 @@ class PedidoController extends ControllerOperator {
 
         $listProductos = array();
         $listCombos = array();
-        $codigosArray = GSASearch($busqueda);
+        $sesion = Yii::app()->getSession()->getSessionId();
+        $codigosArray = GSASearch($busqueda,$sesion);
         //$codigosArray = array(10670, 21461, 22159, 410760, 301280, 10192, 30128, 36085);
         $codigosStr = implode(",", $codigosArray);
 
@@ -349,13 +350,16 @@ class PedidoController extends ControllerOperator {
                     'listPrecios' => array('condition' => '(listPrecios.codigoCiudad=:ciudad AND listPrecios.codigoSector=:sector) OR (listPrecios.codigoCiudad IS NULL AND listPrecios.codigoSector IS NULL)'),
                     'listSaldosTerceros' => array('condition' => '(listSaldosTerceros.codigoCiudad=:ciudad AND listSaldosTerceros.codigoSector=:sector) OR (listSaldosTerceros.codigoCiudad IS NULL AND listSaldosTerceros.codigoSector IS NULL)')
                 ),
-                'condition' => "t.activo=:activo AND t.codigoProducto IN ($codigosStr) AND ( (listSaldos.saldoUnidad IS NOT NULL AND listPrecios.codigoCiudad IS NOT NULL) OR listSaldosTerceros.codigoCiudad IS NOT NULL)",
+                'join' => 'JOIN t_relevancia_temp rel ON rel.codigoProducto = t.codigoProducto',
+                'condition' => "t.activo=:activo AND rel.idSesion =:sesion AND ( (listSaldos.saldoUnidad IS NOT NULL AND listPrecios.codigoCiudad IS NOT NULL) OR listSaldosTerceros.codigoCiudad IS NOT NULL)",
                 'params' => array(
                     ':activo' => 1,
                     ':saldo' => 0,
+                    ':sesion' => $sesion,
                     ':ciudad' => $objCompra->codigoCiudad,
                     ':sector' => $objCompra->codigoSector,
-                )
+                ),
+                'order' => 'rel.relevancia DESC, t.orden'
             ));
 
             $fecha = new DateTime;

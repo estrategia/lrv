@@ -32,8 +32,10 @@ class CatalogoController extends ControllerVendedor {
             $categoriasBuscador = explode("_", $categoriasBuscador);
         }
 
-        $codigosArray = GSASearch($term);
-        $codigosStr = implode(",", $codigosArray);
+        $sesion = Yii::app()->getSession()->getSessionId();
+        $codigosArray = GSASearch($term,$sesion);
+
+        //$codigosStr = implode(",", $codigosArray);
 
         $objSectorCiudad = null;
         if (isset(Yii::app()->session[Yii::app()->params->vendedor['sesion']['sectorCiudadEntrega']]))
@@ -74,6 +76,12 @@ class CatalogoController extends ControllerVendedor {
             Yii::app()->end();
         }
 
+        $codigosProductosArray = array();
+        foreach ($codigosArray as $key => $codigos) {
+            $codigosProductosArray[] = $key;
+        }
+        $codigosStr = implode(",", $codigosProductosArray);
+
         $formFiltro = new FiltroForm;
         $formOrdenamiento = new OrdenamientoForm;
 
@@ -94,34 +102,38 @@ class CatalogoController extends ControllerVendedor {
 
         if ($objSectorCiudad == null) {
             $parametrosProductos = array(
-                'order' => 't.orden DESC',
-                'with' => array('listImagenes', 'objCodigoEspecial', 'listCalificaciones',
+                'order' => 'rel.relevancia DESC,t.orden DESC',
+                'with' => array('objBusqueda', 'listImagenes', 'objCodigoEspecial', 'listCalificaciones',
                     'objCategoriaBI' => array('with' => array('listCategoriasTienda' => array('on' => 'listCategoriasTienda.tipoDispositivo=:dispositivo'))),
                 ),
-                'condition' => "t.activo=:activo AND t.codigoProducto IN ($codigosStr)",
+                'condition' => "t.activo=:activo and rel.idSesion =:sesion",
                 'params' => array(
                     ':activo' => 1,
-                    ':dispositivo' => $this->isMobile ? CategoriaTienda::DISPOSITIVO_MOVIL : CategoriaTienda::DISPOSITIVO_ESCRITORIO
-                )
-            );
+                    ':dispositivo' => $this->isMobile ? CategoriaTienda::DISPOSITIVO_MOVIL : CategoriaTienda::DISPOSITIVO_ESCRITORIO,
+                    ':sesion' => $sesion
+            ));
+            $parametrosProductos['join'] = "JOIN t_relevancia_temp rel ON rel.codigoProducto = t.codigoProducto";
         } else {
-            $parametrosProductos = array(
-                'order' => 't.orden DESC',
+             $parametrosProductos = array(
+                'select' => '*, CASE WHEN (listImagenes.idImagen <> null) THEN 1 ELSE 0 END AS tieneImagen',
+                'order' => '/*tieneImagen DESC,*/ rel.relevancia DESC, t.orden DESC',
                 'with' => array('listImagenes', 'objCodigoEspecial', 'listCalificaciones',
                     'objCategoriaBI' => array('with' => array('listCategoriasTienda' => array('on' => 'listCategoriasTienda.tipoDispositivo=:dispositivo'))),
                     'listSaldos' => array('condition' => '(listSaldos.saldoUnidad>:saldo AND listSaldos.codigoCiudad=:ciudad AND listSaldos.codigoSector=:sector) OR (listSaldos.saldoUnidad IS NULL AND listSaldos.codigoCiudad IS NULL AND listSaldos.codigoSector IS NULL)'),
                     'listPrecios' => array('condition' => '(listPrecios.codigoCiudad=:ciudad AND listPrecios.codigoSector=:sector) OR (listPrecios.codigoCiudad IS NULL AND listPrecios.codigoSector IS NULL)'),
                     'listSaldosTerceros' => array('condition' => '(listSaldosTerceros.saldoUnidad>:saldo AND listSaldosTerceros.codigoCiudad=:ciudad AND listSaldosTerceros.codigoSector=:sector) OR (listSaldosTerceros.codigoCiudad IS NULL AND listSaldosTerceros.codigoSector IS NULL)')
                 ),
-                'condition' => "t.activo=:activo AND t.codigoProducto IN ($codigosStr) AND ( (listSaldos.saldoUnidad IS NOT NULL AND listPrecios.codigoCiudad IS NOT NULL) OR listSaldosTerceros.codigoCiudad IS NOT NULL)",
+                'condition' => "t.activo=:activo AND rel.idSesion =:sesion AND ( (listSaldos.saldoUnidad IS NOT NULL AND listPrecios.codigoCiudad IS NOT NULL) OR listSaldosTerceros.codigoCiudad IS NOT NULL)",
                 'params' => array(
                     ':activo' => 1,
                     ':dispositivo' => $this->isMobile ? CategoriaTienda::DISPOSITIVO_MOVIL : CategoriaTienda::DISPOSITIVO_ESCRITORIO,
                     ':saldo' => 0,
                     ':ciudad' => $objSectorCiudad->codigoCiudad,
                     ':sector' => $objSectorCiudad->codigoSector,
+                    ':sesion' => $sesion
                 )
             );
+            $parametrosProductos['join'] = "JOIN t_relevancia_temp rel ON rel.codigoProducto = t.codigoProducto" ;
 
             if (!$this->isMobile && !isset($_GET['ajax'])) {
                 $query = "SELECT  MIN(listPrecios.precioUnidad) minproducto, MAX(listPrecios.precioUnidad) maxproducto, MIN(listSaldosTerceros.precioUnidad) mintercero, MAX(listSaldosTerceros.precioUnidad) maxtercero ";

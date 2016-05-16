@@ -13,32 +13,32 @@
         <li class="c_listini_first">
             <a href="<?php echo CController::createUrl('sitio/promocion',array('nombre'=>$idx)) ?>" data-ajax="false" class=" ui-nodisc-icon ui-alt-icon cbtn_menu_inicio">
                 <img src="<?php echo Yii::app()->request->baseUrl . $promocion['icono']; ?>">
-                <h2><?php echo $promocion['nombre']?></h2>
-                <p>&nbsp;</p>
+                <h2 style="color:#fff;"><?php echo $promocion['nombre']?></h2>
+                <p style="color:#fff;">&nbsp;</p>
             </a>
         </li>
     <?php endforeach; ?>
     <li class="<?php echo ($cantPromo==0 ? "c_listini_first" : "")?>">
         <a href="<?php echo CController::createUrl('sitio/categorias') ?>" data-ajax="false" class=" ui-nodisc-icon ui-alt-icon cbtn_menu_inicio">
             <img src="<?php echo Yii::app()->request->baseUrl; ?>/images/inicio/icon_categorias.png">
-            <h2>Categorías de productos</h2>
-            <p>Conozca nuestra oferta completa.</p>
+            <h2 style="color:#fff;">Categorías de productos</h2>
+            <p style="color:#fff;">Conozca nuestra oferta completa.</p>
         </a>
     </li>
     <?php if (Yii::app()->controller->module->user->isGuest): ?>
         <li>
             <a href="<?php echo CController::createUrl('/vendedor/usuario/autenticar') ?>" data-ajax="false" class=" ui-nodisc-icon ui-alt-icon cbtn_menu_inicio">
                 <img src="<?php echo Yii::app()->request->baseUrl; ?>/images/inicio/icon_cuenta.png">
-                <h2>Mi cuenta</h2>
-                <p>Información personal.</p>
+                <h2 style="color:#fff;">Mi cuenta</h2>
+                <p style="color:#fff;">Información personal.</p>
             </a>
         </li>
     <?php else: ?>
         <li>
             <a href="#panel-menu-usuario" class=" ui-nodisc-icon ui-alt-icon cbtn_menu_inicio">
                 <img src="<?php echo Yii::app()->request->baseUrl; ?>/images/inicio/icon_cuenta.png">
-                <h2>Mi cuenta</h2>
-                <p>Información personal.</p>
+                <h2 style="color:#fff;">Mi cuenta</h2>
+                <p style="color:#fff;">Información personal.</p>
             </a>
         </li>
     <?php endif; ?>

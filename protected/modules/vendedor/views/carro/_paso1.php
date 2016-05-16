@@ -81,7 +81,7 @@
                     <div class="clear"></div>
                 </div>
             <?php endforeach; ?>
-            <div data-role="collapsible" id="collapsible-direccion-crear" data-theme="n">
+            <div  data-role="collapsible" id="collapsible-direccion-crear" data-theme="n">
                 <h3>Adicionar direcci&oacute;n</h3>
                 <div class="ui-content c_form_rgs ui-body-c">
                     <?php $this->renderPartial('/usuario/_direccionForm', array('model' => new DireccionesDespacho)); ?>

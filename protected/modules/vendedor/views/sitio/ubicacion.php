@@ -1,5 +1,5 @@
 <div class="ui-content">
-    <?php echo CHtml::htmlButton('Usar la ubicación de tu dispositivo', array('class' => 'ui-btn ui-corner-all ui-btn-icon-left ui-icon-ubi ui-alt-icon c_btn_ub ', 'onclick' => 'ubicacionGPSVendedor();')); ?>
+    <?php echo CHtml::htmlButton('Usar la ubicación de tu dispositivo', array('class' => 'ui-btn ui-corner-all ui-btn-icon-left ui-icon-ubi ui-alt-icon c_btn_ub btn-y', 'onclick' => 'ubicacionGPSVendedor();')); ?>
     <?php if (Yii::app()->controller->module->user->getClienteLogueado()): ?>
         <?php echo CHtml::htmlButton('Usar las direcciones del cliente', array('class' => 'ui-btn ui-btn-r ui-corner-all ui-alt-icon btn-wh', 'data-role' => 'ubicacion-direccion-cliente')); ?>
     <?php endif; ?>

@@ -1782,7 +1782,7 @@ html head + body .ui-body-n.ui-focus {
     font-size: small;
     letter-spacing: -1px;
     list-style: outside none none;
-    width: 78px;
+    width: 64px;
     text-align: center;
 }
 .steps ul li.active {
@@ -1799,17 +1799,21 @@ li.active .iconStep {
     background-position: center 49px;
 }
 .iconStep.step1{
-    background-image: url(../images/iconos/icons_carro/despacho.png);
+    background-image: url(../images/iconos/icons_carro/tipo-entrega.png);
 }
 .iconStep.step2{
-    background-image: url(../images/iconos/icons_carro/entrega.png);
+    background-image: url(../images/iconos/icons_carro/despacho.png);
 }
 .iconStep.step3{
-    background-image: url(../images/iconos/icons_carro/pago.png);
+    background-image: url(../images/iconos/icons_carro/entrega.png);
 }
 .iconStep.step4{
-    background-image: url(../images/iconos/icons_carro/confirmacion.png);
+    background-image: url(../images/iconos/icons_carro/pago.png);
 }
+
+.iconStep.step5{
+    background-image: url(../images/iconos/icons_carro/confirmacion.png);
+} 
 .clear{
     clear: both;
 }

@@ -26,9 +26,13 @@ class ContenidoController extends Controller {
             $this->verSoat();
         } else if ($tipo == "politerminos") {
             $this->verPoliterminos();
-        }else{
+        } else {
             throw new CHttpException(404, 'Contenido no existe.');
         }
+    }
+
+    public function actionCampana($tipo) {
+        $this->render($tipo);
     }
 
     private function verHorario() {
@@ -58,7 +62,7 @@ class ContenidoController extends Controller {
     private function verPqrs() {
         $this->render('corporativoPqrs');
     }
-    
+
     private function verSoat() {
         $this->render('corporativoSoat');
     }
