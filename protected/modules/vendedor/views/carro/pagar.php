@@ -35,14 +35,14 @@
 <div class="ui-content content-car">
     <?php $this->renderPartial('_paso' . Yii::app()->params->pagar['pasos'][$paso], $parametros); ?>
     <?php if ($pasoAnterior !== null): ?>
-        <div class="ui-input-btn btnAtras ui-btn ui-corner-all ui-shadow ui-btn-n">
+        <div class="ui-input-btn btnAtras ui-btn ui-corner-all ui-shadow ui-btn-n ">
             Atrás
             <span class="caretatras"></span>
             <input type="button" data-enhanced="true" value="Atras" id="btn-carropagar-anterior" data-origin="<?php echo $paso ?>" data-redirect="<?php echo $pasoAnterior ?>">
         </div>
     <?php endif; ?>
     <?php if ($pasoSiguiente !== null): ?>
-        <div class="ui-input-btn btnContinuar ui-btn ui-corner-all ui-shadow ui-btn-r">
+        <div class="ui-input-btn btnContinuar ui-btn ui-corner-all ui-shadow ui-btn-r btn-wh">
             Continuar
             <span class="caretcontinuar"></span>
             <input type="button" data-enhanced="true" value="Continuar" id="btn-carropagar-siguiente" data-origin="<?php echo $paso ?>" data-redirect="<?php echo $pasoSiguiente ?>">
