@@ -7,9 +7,9 @@
                 <p class="center">Subtotal pedido <?php echo Yii::app()->numberFormatter->format(Yii::app()->params->formatoMoneda['patron'], Yii::app()->shoppingCartSalesman->getCost(), Yii::app()->params->formatoMoneda['moneda']); ?></p>
                 <?php echo CHtml::link('Pagar', CController::createUrl('carro/index'), array('data-ajax' => 'false', 'class' => 'ui-btn ui-corner-all ui-shadow ui-btn-r btn-y')); ?>
 
-           <!--     <?php if (!Yii::app()->user->isGuest): ?>
-                    <?php echo CHtml::link('Cotizar', "#", array('data-role' => 'crearcotizacion', 'data-ajax' => 'false', 'class' => 'ui-btn ui-corner-all ui-shadow ui-btn-r')); ?>
-                <?php endif; ?> -->
+                <?php //if (!Yii::app()->user->isGuest): ?>
+                    <?php //echo CHtml::link('Cotizar', "#", array('data-role' => 'crearcotizacion', 'data-ajax' => 'false', 'class' => 'ui-btn ui-corner-all ui-shadow ui-btn-r')); ?>
+                <?php //endif; ?>
             </div>
         <?php endif; ?>
 
@@ -32,7 +32,6 @@
         <div class="subtotalCanasta">
             <p class="center">Subtotal pedido <?php echo Yii::app()->numberFormatter->format(Yii::app()->params->formatoMoneda['patron'], Yii::app()->shoppingCartSalesman->getCost(), Yii::app()->params->formatoMoneda['moneda']); ?></p>
             <?php echo CHtml::link('Pagar', CController::createUrl('carro/index'), array('data-ajax' => 'false', 'class' => 'ui-btn ui-corner-all ui-shadow ui-btn-r btn-y')); ?>
-           
         </div>
     <?php endif; ?>
 </div>

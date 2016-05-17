@@ -44,6 +44,7 @@ class FormaPagoVendedorForm extends CFormModel {
     public $tipoEntrega;
     public $isMobil = true;
     public $totalCompra = null;
+    public $objSectorCiudad = null;
 
     /**
      * Declares the validation rules.
@@ -52,16 +53,10 @@ class FormaPagoVendedorForm extends CFormModel {
      */
     public function rules() {
         //Yii::log("validacion 0\n", CLogger::LEVEL_INFO, 'application');
-        if ($this->isMobil) {
-            
-            if (isset(Yii::app()->session[Yii::app()->params->vendedor['sesion']['tipoEntrega']]) && Yii::app()->session[Yii::app()->params->vendedor['sesion']['tipoEntrega']] != null) {
-                $this->tipoEntrega = Yii::app()->session[Yii::app()->params->vendedor['sesion']['tipoEntrega']];
-            }
-        }
-
         $rules = array();
         $rules[] = array('tipoEntrega', 'required', 'message' => '{attribute} no puede estar vacío');
         $rules[] = array('tipoEntrega', 'in', 'range' => Yii::app()->params->entrega['listaTipos'], 'allowEmpty' => false);
+        $rules[] = array('tipoEntrega', 'tipoEntregaValidate');
         //$rules[] = array('idDireccionDespacho', 'default', 'value' => null);
 
         if ($this->pagoInvitado) {
@@ -148,14 +143,14 @@ class FormaPagoVendedorForm extends CFormModel {
             $rules[] = array('telefonoContacto', 'length', 'min' => 5, 'max' => 50, 'on' => 'entrega, informacion, finalizar');
 
             if ($this->isMobil) {
-                $rules[] = array('indicePuntoVenta', 'safe');
+                $rules[] = array('indicePuntoVenta', 'required', 'on' => 'tipoentrega', 'message' => 'Seleccionar Punto de Venta');
             } else {
                 $rules[] = array('indicePuntoVenta', 'required', 'on' => 'informacion', 'message' => 'Seleccionar Punto de Venta');
             }
         } else if ($this->tipoEntrega == Yii::app()->params->entrega['tipo']['domicilio']) {
             //Yii::log("validacion 12\n", CLogger::LEVEL_INFO, 'application');
-            $rules[] = array('telefonoContacto', 'safe');
-            $rules[] = array('telefonoContacto', 'default', 'value' => null);
+            $rules[] = array('telefonoContacto,indicePuntoVenta', 'safe');
+            $rules[] = array('telefonoContacto,indicePuntoVenta', 'default', 'value' => null);
         }
 
         //Yii::log("validacion 13\n", CLogger::LEVEL_INFO, 'application');
@@ -711,7 +706,26 @@ class FormaPagoVendedorForm extends CFormModel {
 
     public function
 
-    listDataHoras($deltaHorario = "0 1:00:0.000000") {
+    listDataHoras() {
+        $deltaHorario = Yii::app()->params->horarioEntrega['deltaDefecto'];
+        
+        if ($this->objSectorCiudad !== null) {
+            if (isset(Yii::app()->params->horarioEntrega['deltaHorarios'][$this->objSectorCiudad->codigoCiudad])) {
+                $arrHorario = Yii::app()->params->horarioEntrega['deltaHorarios'][$this->objSectorCiudad->codigoCiudad];
+
+                $fActual = new DateTime;
+                $fInicio = DateTime::createFromFormat('Y-m-d H:i:s', $arrHorario['fechaInicio']);
+                $fFin = DateTime::createFromFormat('Y-m-d H:i:s', $arrHorario['fechaFin']);
+
+                $diffInicio = $fInicio->diff($fActual);
+                $diffFin = $fActual->diff($fFin);
+
+                if ($diffInicio->invert == 0 && $diffFin->invert == 0) {
+                    $deltaHorario = $arrHorario['deltaHorario'];
+                }
+            }
+        }
+        
         $horariosDia = array(
             '0' => array('inicio' => 'horaInicioDomingoFestivo', 'fin' => 'horaFinDomingoFestivo'),
             '1' => array('inicio' => 'horaInicioLunesASabado', 'fin' => 'horaFinLunesASabado'),
@@ -758,6 +772,16 @@ class FormaPagoVendedorForm extends CFormModel {
         }
 
         return $rows;
+    }
+    
+    public function tipoEntregaValidate($attribute, $params) {
+        if($this->tipoEntrega == Yii::app()->params->entrega['tipo']['presencial'] && Yii::app()->shoppingCartSalesman->getStoredItemsCount() > 0){
+            $this->addError($attribute, "Pasar por el pedido no diponible");
+        }
+        
+        if ($this->tipoEntrega == Yii::app()->params->entrega['tipo']['domicilio'] && !$this->tieneDomicilio($this->objSectorCiudad)) {
+            $this->addError($attribute, "La ubicaci&oacute;n seleccionada no cuenta con entrega a domicilio");
+        }
     }
 
     public function fechaValidate($attribute, $params) {

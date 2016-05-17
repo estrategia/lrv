@@ -281,7 +281,7 @@ function obtenerPosicion(pos) {
         type: 'POST',
         dataType: 'json',
         async: true,
-        url: requestUrl + '/sitio/gps',
+        url: requestUrl + '/vendedor/sitio/gps',
         data: {lat: lat, lon: lon},
         beforeSend: function () {
             $('#popup-ubicacion-gps').remove();
@@ -415,13 +415,14 @@ $(document).on('click', 'button[data-role="ubicacion-direccion-cliente"]', funct
 
 
 $(document).on('click', 'button[data-role="ubicacion-seleccion-direccion-cliente"]', function () {
-
     var direccion = $(this).attr('data-direccion');
-
     $('#div-ubicacion-tipoubicacion > button').removeClass('activo').addClass('inactivo');
     $('#div-ubicacion-tipoubicacion > button[data-role="ubicacion-direccion"]').removeClass('inactivo').addClass('activo');
-
     ubicacionSeleccion("", "", direccion);
+});
+
+$(document).on('click', 'a[data-role="ubicacion-seleccion-nodomicilio"]', function() {
+    ubicacionSeleccion($(this).attr('data-ciudad'),$(this).attr('data-sector'),"");
 });
 
 
@@ -588,7 +589,7 @@ $(document).on('change', 'select[data-role="ciudad-despacho-map"]', function() {
             $.ajax({
                 type: 'POST',
                 async: true,
-                url: requestUrl + '/sitio/ubicacionSeleccion',
+                url: requestUrl + '/vendedor/sitio/ubicacionSeleccion',
                 data: {ciudad: val},
                 dataType: 'html',
                 beforeSend: function() {
@@ -649,9 +650,15 @@ $(document).on('click', 'a[data-role="ubicacion-seleccion-mapa"]', function() {
                 /*$( "#page-ubicacion-map" ).dialog( "close" ); */
                 ubicacionSeleccion(data.response.ciudad,data.response.sector,"");
             } else {
-                $('<div>').mdialog({
-                    content: "<div data-role='main'><div class='ui-content' data-role='content' role='main'>" + data.response + "<a class='ui-btn ui-btn-r ui-corner-all ui-shadow' data-rel='back' href='#'>Aceptar</a></div></div>"
-                });
+                if (data.responseModal) {
+                    $('<div>').mdialog({
+                        content: data.responseModal
+                    });
+                } else {
+                    $('<div>').mdialog({
+                        content: "<div data-role='main'><div class='ui-content' data-role='content' role='main'>" + data.response + "<a class='ui-btn ui-btn-r ui-corner-all ui-shadow' data-rel='back' href='#'>Aceptar</a></div></div>"
+                    });
+                }
             }
             $.mobile.loading('hide');
         },
@@ -813,7 +820,7 @@ $(document).on('click', "a[data-cargar='1']", function() {
                 }
 
                 if (data.response.relacionados && $("#link-relacionados-agregar").length > 0) {
-                    $("#link-relacionados-agregar").attr("href", requestUrl + "/catalogo/relacionados/producto/" + producto);
+                    $("#link-relacionados-agregar").attr("href", requestUrl + "/vendedor/catalogo/relacionados/producto/" + producto);
                     animarRelacionado();
                 }
             } else {
@@ -967,7 +974,9 @@ $(document).on('click', "input[id='btn-carropagar-siguiente'], input[id='btn-car
     var actual = $(this).attr('data-origin');
     var siguiente = $(this).attr('data-redirect');
 
-    if (actual === 'despacho') {
+    if (actual == 'tipoentrega') {
+        pasoTipoEntrega(actual, siguiente, $(this));
+    } else if (actual === 'despacho') {
         pasoDespacho(actual, siguiente, $(this));
     } else if (actual === 'entrega') {
         pasoEntrega(actual, siguiente, $(this));
@@ -980,6 +989,50 @@ $(document).on('click', "input[id='btn-carropagar-siguiente'], input[id='btn-car
     return false;
 });
 
+function pasoTipoEntrega(actual, siguiente, boton){
+    var data = {
+        siguiente: siguiente,
+        "FormaPagoVendedorForm[indicePuntoVenta]": $('input[name="FormaPagoVendedorForm[indicePuntoVenta]"]').val(),
+        "FormaPagoVendedorForm[tipoEntrega]": $('input[name="FormaPagoVendedorForm[tipoEntrega]"]').val()
+    };
+
+    $.ajax({
+        type: 'POST',
+        //dataType: 'json',
+        async: true,
+        url: requestUrl + '/vendedor/carro/pagar/paso/' + actual + '/post/true',
+        data: $.param(data),
+        beforeSend: function () {
+            boton.button('disable');
+            $('div[id^="FormaPagoVendedorForm_"].has-error').html('');
+            $('div[id^="FormaPagoVendedorForm_"].has-error').css('display', 'none');
+            $.mobile.loading('show');
+        },
+        complete: function () {
+            $.mobile.loading('hide');
+        },
+        success: function (data) {
+            var obj = $.parseJSON(data);
+
+            if (obj.result === 'ok') {
+                window.location.replace(obj.redirect);
+            } else if (obj.result === 'error') {
+                alerta(obj.response);
+                boton.button('enable');
+            } else {
+                $.each(obj, function (element, error) {
+                    $('#' + element + '_em_').html(error);
+                    $('#' + element + '_em_').css('display', 'block');
+                });
+                boton.button('enable');
+            }
+        },
+        error: function (jqXHR, textStatus, errorThrown) {
+            alert('Error: ' + errorThrown);
+            boton.button('enable');
+        }
+    });
+}
 
 function pasoDespacho(actual, siguiente, boton) {
     var data = {
@@ -1147,7 +1200,6 @@ function pasoConfirmacion(actual, siguiente, boton) {
     });
 }
 
-
 $(document).on('click', "a[data-role='listapersonal']", function () {
     var lista = $(this).attr('data-lista');
     $.ajax({
@@ -1180,11 +1232,72 @@ $(document).on('click', "a[data-role='listapersonal']", function () {
                     content: "<div data-role='main'><div class='ui-content' data-role='content' role='main'>" + data.response + "<a class='ui-btn ui-btn-r ui-corner-all ui-shadow' data-rel='back' href='#'>Aceptar</a></div></div>"
                 });
             }
-
         },
         error: function (jqXHR, textStatus, errorThrown) {
             $.mobile.loading('hide');
             alert('Error: ' + errorThrown);
         }
     });
+});
+
+$(document).on('click', 'div[data-role="tipoentrega"], a[data-role="tipoentrega"]', function () {
+    var tipo = $(this).attr('data-tipo');
+    var _tipo = tipo == tipoEntrega.presencial ? tipoEntrega.domicilio : tipoEntrega.presencial;
+
+    if (tipo == tipoEntrega.presencial) {
+        $.ajax({
+            type: 'POST',
+            dataType: 'json',
+            async: true,
+            url: requestUrl + '/vendedor/carro/pasoporel',
+            data: {opcion: 'modal'},
+            beforeSend: function () {
+                $("#page-pasoporel").remove();
+                $.mobile.loading('show');
+            },
+            success: function (data) {
+                if (data.result == "ok") {
+                    $('body').append(data.response);
+                    $.mobile.changePage('#page-pasoporel', {transition: "pop", role: "dialog", reverse: false});
+                } else {
+                    alert(data.response);
+                }
+                $.mobile.loading('hide');
+            },
+            error: function (jqXHR, textStatus, errorThrown) {
+                $.mobile.loading('hide');
+                alert('Error: ' + errorThrown);
+            }
+        });
+    } else {
+        seleccionTipoEntrega(tipo, _tipo);
+    }
+
+});
+
+function seleccionTipoEntrega(tipo, _tipo) {
+    $('div[data-role="tipoentrega"]').removeClass('activo');
+    $('div[data-role="tipoentrega"]div[data-tipo="' + tipo + '"]').addClass('activo');
+    $('div[data-role="tipoentrega"]').addClass('inactivo');
+    $('div[data-role="tipoentrega"]div[data-tipo="' + tipo + '"]').removeClass('inactivo');
+
+    $('#FormaPagoVendedorForm_tipoEntrega').val(tipo);
+    $('input[name="FormaPagoVendedorForm[indicePuntoVenta]"]').val("");
+}
+
+$(document).on('click', 'button[data-role="pasoporel-seleccion-pdv"]', function () {
+    seleccionTipoEntrega(tipoEntrega.presencial, tipoEntrega.domicilio);
+    //$('#pasoporel-seleccion-pdv-nombre').html($(this).attr('data-nombre'));
+    //$('#pasoporel-seleccion-pdv-direccion').html($(this).attr('data-direccion'));
+    $("#page-pasoporel").dialog("close");
+    //$("#page-pasoporel").remove();
+    $('input[name="FormaPagoVendedorForm[indicePuntoVenta]"]').val($(this).attr('data-idx'));
+});
+
+$(document).on('click','a[data-role="tipoentrega-info"]',function(){
+    var target = $(this).attr('href');
+    if(target){
+        $(target).panel('open');
+        return false;
+    }
 });
