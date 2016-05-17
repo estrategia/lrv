@@ -1200,6 +1200,46 @@ function pasoConfirmacion(actual, siguiente, boton) {
     });
 }
 
+$(document).on('click', "a[data-role='listapersonal']", function () {
+    var lista = $(this).attr('data-lista');
+    $.ajax({
+        type: 'POST',
+        dataType: 'json',
+        async: true,
+        url: requestUrl + '/vendedor/carro/agregarlista',
+        data: {lista: lista},
+        beforeSend: function () {
+            $.mobile.loading('show');
+        },
+        complete: function () {
+            $.mobile.loading('hide');
+        },
+        success: function (data) {
+            if (data.result === "ok") {
+                $('#panel-carro-canasta').html(data.response.canastaHTML);
+                $('#panel-carro-canasta').trigger("create");
+                if (data.response.mensajeHTML) {
+                    dialogoAnimado(data.response.mensajeHTML);
+                }
+
+                if (data.response.dialogoHTML) {
+                    $('<div>').mdialog({
+                        content: data.response.dialogoHTML
+                    });
+                }
+            } else {
+                $('<div>').mdialog({
+                    content: "<div data-role='main'><div class='ui-content' data-role='content' role='main'>" + data.response + "<a class='ui-btn ui-btn-r ui-corner-all ui-shadow' data-rel='back' href='#'>Aceptar</a></div></div>"
+                });
+            }
+        },
+        error: function (jqXHR, textStatus, errorThrown) {
+            $.mobile.loading('hide');
+            alert('Error: ' + errorThrown);
+        }
+    });
+});
+
 $(document).on('click', 'div[data-role="tipoentrega"], a[data-role="tipoentrega"]', function () {
     var tipo = $(this).attr('data-tipo');
     var _tipo = tipo == tipoEntrega.presencial ? tipoEntrega.domicilio : tipoEntrega.presencial;

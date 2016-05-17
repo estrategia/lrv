@@ -189,6 +189,12 @@ class Compras extends CActiveRecord {
                 $condition .= " AND t.seguimiento=:seguimiento";
                 $paramsCondition[':seguimiento'] = $this->seguimiento;
             }
+            
+            if ($this->codigoSector !== null && $this->codigoCiudad !== null) {
+                $condition .= " AND t.codigoSector=:codigoSector AND t.codigoCiudad=:codigoCiudad";
+                $paramsCondition[':codigoSector'] = $this->codigoSector;
+                $paramsCondition[':codigoCiudad'] = $this->codigoCiudad;
+            }
 
             if ($this->idEstadoCompra == Yii::app()->params->callcenter['estadoCompra']['estado']['pendiente']) {
                 $fecha1 = new DateTime;
@@ -602,7 +608,7 @@ class Compras extends CActiveRecord {
 
         return $result;
     }
-
+    
     public function generarDocumentoCruce($idOperador = null) {
         $consecutivo = rand(100000, 999999);
         $pdv = $this->idComercial;

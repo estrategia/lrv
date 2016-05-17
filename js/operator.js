@@ -93,6 +93,33 @@ function buscarProductos(text, obj, request) {
 }
 
 
+$(document).on('click', 'a[data-role="completitud-pdv"]', function() {
+    $.ajax({
+        type: 'POST',
+        dataType: 'json',
+        async: true,
+        url: requestUrl + '/subasta/admin/completitudPdv',
+        data: {compra: $(this).attr('data-compra')},
+        beforeSend: function() {
+            Loading.show();
+        },
+        complete: function() {
+            Loading.hide();
+        },
+        success: function(data) {
+            if (data.result == 'ok') {
+                
+            } else {
+                bootbox.alert(data.response);
+            }
+        },
+        error: function(jqXHR, textStatus, errorThrown) {
+            Loading.hide();
+            bootbox.alert('Error: ' + errorThrown);
+        }
+    });
+
+});
 $(document).on('click', 'button[data-action="asignar-pdv"]', function() {
     $.ajax({
         type: 'POST',
