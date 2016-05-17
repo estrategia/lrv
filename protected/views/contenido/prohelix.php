@@ -1,6 +1,55 @@
-<?php if ($this->isMobile): ?>
-<?php //codigo mobil ?>
 
+<?php if ($this->isMobile): ?>
+<!--contenido movíl-->
+<style>
+   .title {font-size: 15pt;display: inline-block;color:#054220;font-weight: bolder;margin-top: 0px;margin-bottom: 0px;position: absolute;}
+   .texto{color: #054220;margin: 0px 19px 0px 32px;text-align:justify;}
+   .btn-blank {background-color: initial;border-top:1px solid #ccc;border-left:1px solid #ccc;border-right:1px solid #ccc;padding: 5px 50px;color: #E90000;font-family: NewJune-Bold;}
+   .registro {color: #054220;font-size:12px;}        
+   .custom_listview_img {
+    margin:0px; 
+    padding:0px;
+    background-image:url('<?= Yii::app()->request->baseUrl ?>/images/contenido/prohelix/banner-movil.jpg');
+    background-repeat:no-repeat;
+    background-size:100%;
+    height:200px;
+    }
+    .col {width: 100%;margin-top:15px;}
+    
+</style>
+
+
+   <div class="custom_listview_img"></div>
+   
+     <center><a href="#" data-role="button" data-inline="true"><img src="<?= Yii::app()->request->baseUrl ?>/images/contenido/prohelix/btn-compra.png" width="250" alt=""></a></center>
+     <center><img src="<?= Yii::app()->request->baseUrl ?>/images/contenido/prohelix/domicilio.png" width="180" alt=""></center>
+   
+   <div class="ui-content c_form_rgs ui-body-c">
+       <div class="col"><img src="<?= Yii::app()->request->baseUrl ?>/images/contenido/prohelix/ico-natural.png" alt=""><p class="title">Fórmula</p></div>
+       <p class="texto">Cada 100 ml de solución contiene Extracto <br>seco de Hedera Helix 4.8.1 en etanol <br>al 96% 0.729009 g</p>
+       
+       <div class="col"><img src="<?= Yii::app()->request->baseUrl ?>/images/contenido/prohelix/ico-natural.png" alt=""><p class="title">Indicaciones</p></div>
+       <p class="texto">Tratamiento sintomático de la tos.<br> Expectorante natural y tos seca.</p>
+           
+       <div class="col"><img src="<?= Yii::app()->request->baseUrl ?>/images/contenido/prohelix/ico-natural.png" alt=""><p class="title">Posolog&iacute;a y forma de administrar</p></div>
+       <p class="texto">Se administra vía oral. Niños de 2 a 6 años, 2,5 ml (medidos con el vasito adjunto), 2 veces por día y niños mayores de 12 años y adultos,5 hm, 3 veces por día. Estas dosis pueden ser modificadas según criterio médico. Agitar siempre bien el frasco antes de usar.</p>
+               
+       <div class="col"><img src="<?= Yii::app()->request->baseUrl ?>/images/contenido/prohelix/ico-natural.png" alt=""><p class="title">Contraindicaciones</p></div>
+       <p class="texto">Reacciones de hipersensibilidad</p>
+       
+       <p class="registro">REGISTRO SANITARIO No. INVIMA PFM 2010-0001569</p>
+       
+         
+
+
+   </div>
+
+   
+   
+   
+   
+   
+   
 <?php else: ?>
     <div class="container">
         <div class="row">
@@ -30,7 +79,7 @@
         </div>
         <div class="row">
             <div class="col-md-8">
-                <img src="<?= Yii::app()->request->baseUrl ?>/images/contenido/prohelix/ico-natural.png" alt=""><p class="title">Posologia y forma de administrar</p>
+                <img src="<?= Yii::app()->request->baseUrl ?>/images/contenido/prohelix/ico-natural.png" alt=""><p class="title">Posolog&iacute;a y forma de administrar</p>
                 <p class="texto">Se administra vía oral. Niños de 2 a 6 años, <br>
                     2,5 ml (medidos con el vasito adjunto), 2 veces<br>
                     por dia y niños mayores de 12 años y adultos, <br>
