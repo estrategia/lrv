@@ -992,8 +992,8 @@ $(document).on('click', "input[id='btn-carropagar-siguiente'], input[id='btn-car
 function pasoTipoEntrega(actual, siguiente, boton){
     var data = {
         siguiente: siguiente,
-        "FormaPagoForm[indicePuntoVenta]": $('input[name="FormaPagoVendedorForm[indicePuntoVenta]"]').val(),
-        "FormaPagoForm[tipoEntrega]": $('input[name="FormaPagoVendedorForm[tipoEntrega]"]').val()
+        "FormaPagoVendedorForm[indicePuntoVenta]": $('input[name="FormaPagoVendedorForm[indicePuntoVenta]"]').val(),
+        "FormaPagoVendedorForm[tipoEntrega]": $('input[name="FormaPagoVendedorForm[tipoEntrega]"]').val()
     };
 
     $.ajax({
