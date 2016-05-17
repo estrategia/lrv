@@ -44,8 +44,8 @@ class Controller extends CController {
             $this->layout = '//layouts/desktop';
         }
 
-        $this->isMobile = true;
-        $this->layout = '//layouts/mobile';
+//        $this->isMobile = true;
+//        $this->layout = '//layouts/mobile';
         $this->verificarDispositivo();
 
         if (isset(Yii::app()->session[Yii::app()->params->sesion['sectorCiudadEntrega']]) && Yii::app()->session[Yii::app()->params->sesion['sectorCiudadEntrega']] != null) {
