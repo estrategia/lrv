@@ -26,7 +26,7 @@ class ControllerVendedor extends Controller {
             $this->objSectorCiudad = Yii::app()->session[Yii::app()->params->vendedor['sesion']['sectorCiudadEntrega']];
         }
         $this->verificarSesion();
-        Yii::app()->session[Yii::app()->params->vendedor['sesion']['tipoEntrega']] = 2;
+        //Yii::app()->session[Yii::app()->params->vendedor['sesion']['tipoEntrega']] = 2;
         $this->pageTitle = Yii::app()->name;
         $this->getSectorName();
         $this->registerJs();

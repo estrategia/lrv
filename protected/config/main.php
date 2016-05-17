@@ -390,7 +390,7 @@ return array(
                 'carroPagarForm' => 'larebaja.online.vendedor.carropagarform',
                 'redireccionAutenticacion' => 'larebaja.online.vendedor.redireccionautenticacion',
                 'direccionEntrega' => 'larebaja.online.vendedor.direccionentrega',
-                'tipoEntrega' => 'larebaja.online.vendedor.tipoentrega',
+                //'tipoEntrega' => 'larebaja.online.vendedor.tipoentrega',
                 'compraInvitado' => 'larebaja.online.vendedor.comprainvitado',
             ),
         ),

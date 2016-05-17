@@ -14,8 +14,7 @@ header("Pragma: no-cache");
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <?php Yii::app()->clientScript->registerCoreScript('jquery'); ?>
-        <script>requestUrl = "<?php echo Yii::app()->request->baseUrl; ?>";
-            gmapKey = "<?php echo Yii::app()->params['google']['llaveMapa']; ?>";</script>
+        <script>requestUrl = "<?php echo Yii::app()->request->baseUrl; ?>"; gmapKey = "<?php echo Yii::app()->params['google']['llaveMapa']; ?>"; tipoEntrega = {presencial:<?=Yii::app()->params->entrega['tipo']['presencial']?>,domicilio:<?=Yii::app()->params->entrega['tipo']['domicilio']?>};</script>
         <link rel="shortcut icon" href="<?php echo Yii::app()->request->baseUrl; ?>/images/favicon_16.ico" type="image/x-icon" />  
         <title><?php echo CHtml::encode($this->pageTitle); ?></title>
 

@@ -2,19 +2,23 @@
     <ul>
         <li class="<?php echo (Yii::app()->params->pagar['pasos'][$paso] == 1 ? "active" : "") ?>">
             <div class="iconStep step1"></div>
-            <p>1. Despacho</p>
+            <p>Tipo entrega</p>
         </li>
         <li class="<?php echo (Yii::app()->params->pagar['pasos'][$paso] == 2 ? "active" : "") ?>">
             <div class="iconStep step2"></div>
-            <p>2. Entrega</p>
+            <p>Despacho</p>
         </li>
         <li class="<?php echo (Yii::app()->params->pagar['pasos'][$paso] == 3 ? "active" : "") ?>">
             <div class="iconStep step3"></div>
-            <p>3. Pago</p>
+            <p>Entrega</p>
         </li>
         <li class="<?php echo (Yii::app()->params->pagar['pasos'][$paso] == 4 ? "active" : "") ?>">
             <div class="iconStep step4"></div>
-            <p>4. Confirmaci&oacute;n</p>
+            <p>Pago</p>
+        </li>
+        <li class="<?php echo (Yii::app()->params->pagar['pasos'][$paso] == 5 ? "active" : "") ?>">
+            <div class="iconStep step5"></div>
+            <p>Confirmaci&oacute;n</p>
         </li>
     </ul>
 </div>

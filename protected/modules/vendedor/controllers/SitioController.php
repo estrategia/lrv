@@ -82,10 +82,6 @@ class SitioController extends ControllerVendedor {
     }
     
     public function actionPromocion($nombre) {
-        if (!$this->isMobile) {
-            $this->actionIndex();
-        }
-
         $promocion = $nombre;
         if (!isset(Yii::app()->params->promociones[$promocion])) {
             throw new CHttpException(404, 'Promoci&oacute;n no existe.');
@@ -121,10 +117,6 @@ class SitioController extends ControllerVendedor {
     }
 
     public function actionUbicacion() {
-//        if ($this->tipoEntrega == null && $this->isMobile) {
-//            $this->actionIndex();
-//        }
-
         $this->showSeeker = false;
         $this->logoLinkMenu = false;
         $this->fixedFooter = true;
@@ -159,6 +151,7 @@ class SitioController extends ControllerVendedor {
                     )
                 ));
 
+                $this->renderPartial('_ubicacionSector', array('listSectorCiudad' => $listSectorCiudad));
                 Yii::app()->end();
             }
         }
@@ -305,16 +298,7 @@ class SitioController extends ControllerVendedor {
 
             $lat = Yii::app()->getRequest()->getPost('lat');
             $lon = Yii::app()->getRequest()->getPost('lon');
-            /* $tipoEntrega = null;
-
-              if ($this->isMobile) {
-              if (isset(Yii::app()->session[Yii::app()->params->sesion['tipoEntrega']]) && Yii::app()->session[Yii::app()->params->sesion['tipoEntrega']] != null) {
-              $tipoEntrega = Yii::app()->session[Yii::app()->params->sesion['tipoEntrega']];
-              }
-              } else {
-              $tipoEntrega = Yii::app()->getRequest()->getPost('entrega');
-              } */
-
+            
             try {
                 $puntosv = PuntoVenta::model()->findAll();
                 $pdvCerca = array('pdv' => null, 'dist' => -1);
@@ -366,7 +350,6 @@ class SitioController extends ControllerVendedor {
                 //Yii::app()->session[Yii::app()->params->sesion['sectorCiudadEntrega']] = $sectorCiudad;
                 /* Yii::app()->session[Yii::app()->params->sesion['subSectorCiudadEntrega']] = null; */
 
-
                 $objHorarioSecCiud = HorariosCiudadSector::model()->find(array(
                     'condition' => 'codigoCiudad=:ciudad AND codigoSector=:sector',
                     'params' => array(
@@ -378,7 +361,7 @@ class SitioController extends ControllerVendedor {
                 if ($objHorarioSecCiud == null || ($objHorarioSecCiud != null && $objHorarioSecCiud->sadCiudadSector == 0)) {
                     echo CJSON::encode(array(
                         'result' => 'error',
-                        'response' => "No contamos con servicio de entrega a domicilio para <strong>$nombreUbicacion</strong>. Los pedidos deben ser recogidos en el Punto de Venta seleccionado por usted al momento de finalizar la compra. Para proceder con esta ubicaci&oacute;n, por favor seleccionar tipo de entrega \"Quiero pasar por el pedido\""
+                        'responseModal' => $this->renderPartial("_noServicioDomicilio", array('nombreUbicacion' => $nombreUbicacion, 'objCiudadSector' => $objCiudadSector), true)
                     ));
                     Yii::app()->end();
                 }
