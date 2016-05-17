@@ -38,6 +38,13 @@ return array(
                     'class' => 'vendedor.components.UserVendedor',
                 ),
             )),
+        'subasta' => array(
+            'defaultController' => 'usuario',
+            'components' => array(
+                'user' => array(
+                    'class' => 'subasta.components.UserSubasta',
+                ),
+            )),
         'gii' => array(
             'class' => 'system.gii.GiiModule',
             'password' => '1',
@@ -394,6 +401,13 @@ return array(
                 'compraInvitado' => 'larebaja.online.vendedor.comprainvitado',
             ),
         ),
+        'subasta' => array('sesion' => array(
+                'usuario' => 'larebaja.online.subasta.usuario',
+                'formPedidoBusqueda' => 'larebaja.online.subasta.formpedidobusqueda',
+                'objCiudadSector'  => 'larebaja.online.subasta.objciudadsector',
+                'pdv' => 'larebaja.online.subasta.pdv',
+            ),
+        ),
         'callcenter' => array(
             'correo' => 'alexander_javela@copservir.com',
             'pedidos' => array(
@@ -404,7 +418,7 @@ return array(
                 1 => 'Operador',
                 2 => 'Administrador',
             ),
-            'perfiles' => array(1,2),
+            'perfiles' => array(1, 2),
             'usuario' => array(
                 'estado' => array('activo' => 1, 'inactivo' => 0),
                 'estadoNombre' => array(0 => 'Inactivo', 1 => 'Activo'),
