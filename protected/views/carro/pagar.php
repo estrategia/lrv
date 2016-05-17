@@ -2,19 +2,23 @@
     <ul>
         <li class="<?php echo (Yii::app()->params->pagar['pasos'][$paso] == 1 ? "active" : "") ?>">
             <div class="iconStep step1"></div>
-            <p>1. Despacho</p>
+            <p>Tipo entrega</p>
         </li>
         <li class="<?php echo (Yii::app()->params->pagar['pasos'][$paso] == 2 ? "active" : "") ?>">
             <div class="iconStep step2"></div>
-            <p>2. Entrega</p>
+            <p>Despacho</p>
         </li>
         <li class="<?php echo (Yii::app()->params->pagar['pasos'][$paso] == 3 ? "active" : "") ?>">
             <div class="iconStep step3"></div>
-            <p>3. Pago</p>
+            <p>Entrega</p>
         </li>
         <li class="<?php echo (Yii::app()->params->pagar['pasos'][$paso] == 4 ? "active" : "") ?>">
             <div class="iconStep step4"></div>
-            <p>4. Confirmaci&oacute;n</p>
+            <p>Pago</p>
+        </li>
+        <li class="<?php echo (Yii::app()->params->pagar['pasos'][$paso] == 5 ? "active" : "") ?>">
+            <div class="iconStep step5"></div>
+            <p>Confirmaci&oacute;n</p>
         </li>
     </ul>
 </div>
@@ -31,14 +35,14 @@
 <div class="ui-content content-car">
     <?php $this->renderPartial('_paso' . Yii::app()->params->pagar['pasos'][$paso], $parametros); ?>
     <?php if ($pasoAnterior !== null): ?>
-        <div class="ui-input-btn btnAtras ui-btn ui-corner-all ui-shadow ui-btn-r btn-y">
+        <div class="ui-input-btn btnAtras ui-btn ui-corner-all ui-shadow ui-btn-n">
             Atrás
             <span class="caretatras"></span>
             <input type="button" data-enhanced="true" value="Atras" id="btn-carropagar-anterior" data-origin="<?php echo $paso ?>" data-redirect="<?php echo $pasoAnterior ?>">
         </div>
     <?php endif; ?>
     <?php if ($pasoSiguiente !== null): ?>
-        <div class="ui-input-btn btnContinuar ui-btn ui-corner-all ui-shadow ui-btn-r btn-y">
+        <div class="ui-input-btn btnContinuar ui-btn ui-corner-all ui-shadow ui-btn-r">
             Continuar
             <span class="caretcontinuar"></span>
             <input type="button" data-enhanced="true" value="Continuar" id="btn-carropagar-siguiente" data-origin="<?php echo $paso ?>" data-redirect="<?php echo $pasoSiguiente ?>">

@@ -62,7 +62,7 @@
             <tr>
                 <th>
         <div class="ctbl_presentacion">
-            <label data-icon="false" class="ctbl_chk_lb">Entrega <?php echo Yii::app()->shoppingCart->getDeliveryStored() ?> hrs</label>                            
+            <label data-icon="false" class="ctbl_chk_lb">Domicilio <?php echo Yii::app()->shoppingCart->getDeliveryStored() ?> hrs</label>                            
         </div>
         </th>
         <th  align="right">

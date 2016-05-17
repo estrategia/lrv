@@ -53,15 +53,10 @@ class FormaPagoForm extends CFormModel {
      */
     public function rules() {
         //Yii::log("validacion 0\n", CLogger::LEVEL_INFO, 'application');
-        if ($this->isMobil) {
-            if (isset(Yii::app()->session[Yii::app()->params->sesion['tipoEntrega']]) && Yii::app()->session[Yii::app()->params->sesion['tipoEntrega']] != null) {
-                $this->tipoEntrega = Yii::app()->session[Yii::app()->params->sesion['tipoEntrega']];
-            }
-        }
-
         $rules = array();
         $rules[] = array('tipoEntrega', 'required', 'message' => '{attribute} no puede estar vacío');
         $rules[] = array('tipoEntrega', 'in', 'range' => Yii::app()->params->entrega['listaTipos'], 'allowEmpty' => false);
+        $rules[] = array('tipoEntrega', 'tipoEntregaValidate');
         //$rules[] = array('idDireccionDespacho', 'default', 'value' => null);
 
         if ($this->pagoInvitado) {
@@ -148,14 +143,14 @@ class FormaPagoForm extends CFormModel {
             $rules[] = array('telefonoContacto', 'length', 'min' => 5, 'max' => 50, 'on' => 'entrega, informacion, finalizar');
 
             if ($this->isMobil) {
-                $rules[] = array('indicePuntoVenta', 'safe');
+                $rules[] = array('indicePuntoVenta', 'required', 'on' => 'tipoentrega', 'message' => 'Seleccionar Punto de Venta');
             } else {
                 $rules[] = array('indicePuntoVenta', 'required', 'on' => 'informacion', 'message' => 'Seleccionar Punto de Venta');
             }
         } else if ($this->tipoEntrega == Yii::app()->params->entrega['tipo']['domicilio']) {
             //Yii::log("validacion 12\n", CLogger::LEVEL_INFO, 'application');
-            $rules[] = array('telefonoContacto', 'safe');
-            $rules[] = array('telefonoContacto', 'default', 'value' => null);
+            $rules[] = array('telefonoContacto,indicePuntoVenta', 'safe');
+            $rules[] = array('telefonoContacto,indicePuntoVenta', 'default', 'value' => null);
         }
 
         //Yii::log("validacion 13\n", CLogger::LEVEL_INFO, 'application');
@@ -238,7 +233,7 @@ class FormaPagoForm extends CFormModel {
      */
     public function pagoValidate($attribute, $params) {
         //Yii::log("pagoValidate IN\n", CLogger::LEVEL_INFO, 'application');
-        
+
         if ($this->idFormaPago == Yii::app()->params->formaPago['idCredirebaja']) {
             if ($this->numeroTarjeta === null) {
                 $this->addError('numeroTarjeta', $this->getAttributeLabel('numeroTarjeta') . " no puede estar vacío ");
@@ -264,13 +259,13 @@ class FormaPagoForm extends CFormModel {
             }
         } else {
             $totalCompra = $this->totalCompra - $this->calcularBonoRedimido();
-            
+
             //Yii::log("pagoValidate -- formapago:$this->idFormaPago -- total: " . $totalCompra , CLogger::LEVEL_INFO, 'application');
             $this->numeroTarjeta = null;
             $this->cuotasTarjeta = null;
             if ($this->idFormaPago == Yii::app()->params->formaPago['pasarela']['idPasarela']) {
                 //Yii::log("pagoValidate -- IN PASARELA " , CLogger::LEVEL_INFO, 'application');
-                
+
                 if ($totalCompra < Yii::app()->params->formaPago['pasarela']['valorMinimo']) {
                     //Yii::log("pagoValidate -- IN VALOR MINIMO PASARELA " , CLogger::LEVEL_INFO, 'application');
                     $this->addError('idFormaPago', "Compra por pasarela debe ser mayor a " . Yii::app()->numberFormatter->format(Yii::app()->params->formatoMoneda['patron'], Yii::app()->params->formaPago['pasarela']['valorMinimo'], Yii::app()->params->formatoMoneda['moneda']));
@@ -291,17 +286,17 @@ class FormaPagoForm extends CFormModel {
                             $this->addError('usoBono', $this->getAttributeLabel('usoBono') . " inv&aacute;lido");
                             break;
                         }
-                        
-                        if(!$this->bono[$idx]['disponibleCompra'] && $this->usoBono[$idx]==1){
-                            $this->usoBono[$idx]=0;
+
+                        if (!$this->bono[$idx]['disponibleCompra'] && $this->usoBono[$idx] == 1) {
+                            $this->usoBono[$idx] = 0;
                         }
-                        
-                        if($this->usoBono[$idx]==1){
+
+                        if ($this->usoBono[$idx] == 1) {
                             $totalBono+= $this->bono[$idx]['valor'];
                         }
                     }
-                    
-                    if($this->totalCompra !== null && $this->totalCompra<$totalBono){
+
+                    if ($this->totalCompra !== null && $this->totalCompra < $totalBono) {
                         $this->addError('usoBono', "Total bono [$totalBono] excede total de compra [$this->totalCompra]");
                     }
                 } else {
@@ -715,24 +710,24 @@ class FormaPagoForm extends CFormModel {
 
     listDataHoras() {
         $deltaHorario = Yii::app()->params->horarioEntrega['deltaDefecto'];
-        
-        if($this->objSectorCiudad !== null){
-            if(isset(Yii::app()->params->horarioEntrega['deltaHorarios'][$this->objSectorCiudad->codigoCiudad])){
+
+        if ($this->objSectorCiudad !== null) {
+            if (isset(Yii::app()->params->horarioEntrega['deltaHorarios'][$this->objSectorCiudad->codigoCiudad])) {
                 $arrHorario = Yii::app()->params->horarioEntrega['deltaHorarios'][$this->objSectorCiudad->codigoCiudad];
-                
+
                 $fActual = new DateTime;
                 $fInicio = DateTime::createFromFormat('Y-m-d H:i:s', $arrHorario['fechaInicio']);
                 $fFin = DateTime::createFromFormat('Y-m-d H:i:s', $arrHorario['fechaFin']);
-                
+
                 $diffInicio = $fInicio->diff($fActual);
                 $diffFin = $fActual->diff($fFin);
 
                 if ($diffInicio->invert == 0 && $diffFin->invert == 0) {
-                   $deltaHorario = $arrHorario['deltaHorario'];
+                    $deltaHorario = $arrHorario['deltaHorario'];
                 }
             }
         }
-        
+
         $horariosDia = array(
             '0' => array('inicio' => 'horaInicioDomingoFestivo', 'fin' => 'horaFinDomingoFestivo'),
             '1' => array('inicio' => 'horaInicioLunesASabado', 'fin' => 'horaFinLunesASabado'),
@@ -779,6 +774,16 @@ class FormaPagoForm extends CFormModel {
         }
 
         return $rows;
+    }
+
+    public function tipoEntregaValidate($attribute, $params) {
+        if($this->tipoEntrega == Yii::app()->params->entrega['tipo']['presencial'] && Yii::app()->shoppingCart->getStoredItemsCount() > 0){
+            $this->addError($attribute, "Pasar por el pedido no diponible");
+        }
+        
+        if ($this->tipoEntrega == Yii::app()->params->entrega['tipo']['domicilio'] && !$this->tieneDomicilio($this->objSectorCiudad)) {
+            $this->addError($attribute, "La ubicaci&oacute;n seleccionada no cuenta con entrega a domicilio");
+        }
     }
 
     public function fechaValidate($attribute, $params) {

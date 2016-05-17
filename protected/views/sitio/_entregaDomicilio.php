@@ -27,6 +27,6 @@
             <h2>4. En el tiempo indicado<br> entregamos tu pedido</h2>
         </li>
     </ul>
-    <a href="<?php echo CController::createUrl('/sitio/entrega', array('tipo' => Yii::app()->params->entrega['tipo']['domicilio'])) ?>" data-ajax="false" class="ui-btn ui-icon-domicilio ui-btn-icon-right ui-btn-domicilio ui-corner-all">S&iacute;, quiero que me lo <br>entreguen a domicilio.</a>
+    <a href="#" data-ajax="false" class="ui-btn ui-icon-domicilio ui-btn-icon-right ui-btn-domicilio ui-corner-all" data-role="tipoentrega" data-tipo="<?php echo Yii::app()->params->entrega['tipo']['domicilio']; ?>">S&iacute;, quiero que me lo <br>entreguen a domicilio.</a>
     <!-- <button data-rel="close" class="ui-btn  ui-corner-all ui-btn-b  ">Cerrar</button>-->
 </div>

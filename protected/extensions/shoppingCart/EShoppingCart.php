@@ -473,6 +473,11 @@ class EShoppingCart extends CMap {
      */
     public function updateStored(IECartPosition $position, $quantity) {
         if ($this->objSectorCiudad !== null) {
+            
+            $objPagoForm = new FormaPagoForm;
+            if (!$objPagoForm->tieneDomicilio($this->objSectorCiudad)) {
+                return false;
+            }
 
             $key = $position->getId();
 
@@ -519,6 +524,19 @@ class EShoppingCart extends CMap {
         $count = 0;
         foreach ($this as $position) {
             $count += $position->getQuantity() + $position->getQuantity(true);
+        }
+
+        return $count;
+    }
+    
+    /**
+     * Returns count of items in shopping cart
+     * @return int
+     */
+    public function getStoredItemsCount() {
+        $count = 0;
+        foreach ($this as $position) {
+                $count += $position->getQuantityStored();
         }
 
         return $count;

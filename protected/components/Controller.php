@@ -33,7 +33,6 @@ class Controller extends CController {
     public $sectorName = "";
     public $categorias = array();
     public $objSectorCiudad = null;
-    public $tipoEntrega = null;
     public $metaTags = null;
 
     public function init() {
@@ -45,16 +44,12 @@ class Controller extends CController {
             $this->layout = '//layouts/desktop';
         }
 
-//        $this->isMobile = true;
-//        $this->layout = '//layouts/mobile';
+        $this->isMobile = true;
+        $this->layout = '//layouts/mobile';
         $this->verificarDispositivo();
 
         if (isset(Yii::app()->session[Yii::app()->params->sesion['sectorCiudadEntrega']]) && Yii::app()->session[Yii::app()->params->sesion['sectorCiudadEntrega']] != null) {
             $this->objSectorCiudad = Yii::app()->session[Yii::app()->params->sesion['sectorCiudadEntrega']];
-        }
-
-        if ($this->isMobile && isset(Yii::app()->session[Yii::app()->params->sesion['tipoEntrega']]) && Yii::app()->session[Yii::app()->params->sesion['tipoEntrega']] != null) {
-            $this->tipoEntrega = Yii::app()->session[Yii::app()->params->sesion['tipoEntrega']];
         }
 
         $this->verificarSesion();
@@ -132,20 +127,6 @@ class Controller extends CController {
                 }
             }
         }
-
-        if ($this->isMobile) {
-            $tipoEntrega = null;
-            if (isset(Yii::app()->session[Yii::app()->params->sesion['tipoEntrega']]) && Yii::app()->session[Yii::app()->params->sesion['tipoEntrega']] != null) {
-                $tipoEntrega = Yii::app()->session[Yii::app()->params->sesion['tipoEntrega']];
-            }
-
-            if ($tipoEntrega == null) {
-                $cookieTipoEntrega = _getCookie(Yii::app()->params->sesion['tipoEntrega']);
-                if ($cookieTipoEntrega != null) {
-                    Yii::app()->session[Yii::app()->params->sesion['tipoEntrega']] = $cookieTipoEntrega;
-                }
-            }
-        }
     }
 
     public function verificarDispositivo() {
@@ -211,7 +192,7 @@ class Controller extends CController {
             Yii::app()->getClientScript()->registerScriptFile(Yii::app()->request->baseUrl . "/libs/owl-carousel/owl.carousel.min.js", CClientScript::POS_HEAD);
             Yii::app()->getClientScript()->registerScriptFile(Yii::app()->request->baseUrl . "/libs/jquerymobile-windows/jqm-windows.mdialog.js", CClientScript::POS_HEAD);
             Yii::app()->getClientScript()->registerScriptFile(Yii::app()->request->baseUrl . "/js/common.min.js", CClientScript::POS_HEAD);
-            Yii::app()->getClientScript()->registerScriptFile(Yii::app()->request->baseUrl . "/js/mobile.min.js", CClientScript::POS_HEAD);
+            Yii::app()->getClientScript()->registerScriptFile(Yii::app()->request->baseUrl . "/js/mobile.js", CClientScript::POS_HEAD);
         } else {
             //    Yii::app()->getClientScript()->registerScriptFile(Yii::app()->request->baseUrl . "/libs/jquery/jquery-1.10.0.min.js", CClientScript::POS_HEAD);
             Yii::app()->getClientScript()->registerScriptFile(Yii::app()->request->baseUrl . "/libs/bootstrap/js/bootstrap.min.js", CClientScript::POS_HEAD);

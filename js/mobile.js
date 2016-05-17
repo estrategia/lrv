@@ -9,13 +9,13 @@ intervalRelacionados = null;
 function animarRelacionado() {
     $("html, body").animate({scrollTop: 0}, 600);
     $("#link-relacionados-agregar").css("opacity", "");
-    intervalRelacionados = setInterval(function() {
-        $("#link-relacionados-agregar").animate({opacity: '0.5'}, 400, function() {
+    intervalRelacionados = setInterval(function () {
+        $("#link-relacionados-agregar").animate({opacity: '0.5'}, 400, function () {
             $("#link-relacionados-agregar").animate({opacity: '1'}, 400);
         });
     }, 1000);
     $("#link-relacionados-agregar").css("display", "");
-    setTimeout(function() {
+    setTimeout(function () {
         if (intervalRelacionados != null) {
             clearInterval(intervalRelacionados);
             intervalRelacionados = null;
@@ -58,30 +58,36 @@ function obtenerPosicion(pos) {
         async: true,
         url: requestUrl + '/sitio/gps',
         data: {lat: lat, lon: lon},
-        beforeSend: function() {
+        beforeSend: function () {
             $('#popup-ubicacion-gps').remove();
         },
-        success: function(data) {
+        success: function (data) {
             if (data.result == 'ok') {
                 $('<div>').mdialog({
                     id: "popup-ubicacion-gps",
-                    content: "<div data-role='main'><div class='ui-content' data-role='content' role='main'>" + data.response.mensaje + "<a class='ui-btn ui-btn-r ui-corner-all ui-shadow' data-role='ubicacion-gps-seleccion' data-ciudad='"+data.response.ciudad+"' data-sector='"+data.response.sector+"' data-mensaje='"+data.response.mensaje+"' href='#'>Aceptar</a><a class='ui-btn ui-btn-n ui-corner-all ui-shadow' data-rel='back' href='#'>Cancelar</a></div></div>"
+                    content: "<div data-role='main'><div class='ui-content' data-role='content' role='main'>" + data.response.mensaje + "<a class='ui-btn ui-btn-r ui-corner-all ui-shadow' data-role='ubicacion-gps-seleccion' data-ciudad='" + data.response.ciudad + "' data-sector='" + data.response.sector + "' data-mensaje='" + data.response.mensaje + "' href='#'>Aceptar</a><a class='ui-btn ui-btn-n ui-corner-all ui-shadow' data-rel='back' href='#'>Cancelar</a></div></div>"
                 });
             } else {
-                $('<div>').mdialog({
-                    content: "<div data-role='main'><div class='ui-content' data-role='content' role='main'>" + data.response + "<a class='ui-btn ui-btn-r ui-corner-all ui-shadow' data-rel='back' href='#'>Aceptar</a></div></div>"
-                });
+                if (data.responseModal) {
+                    $('<div>').mdialog({
+                        content: data.responseModal
+                    });
+                } else {
+                    $('<div>').mdialog({
+                        content: "<div data-role='main'><div class='ui-content' data-role='content' role='main'>" + data.response + "<a class='ui-btn ui-btn-r ui-corner-all ui-shadow' data-rel='back' href='#'>Aceptar</a></div></div>"
+                    });
+                }
             }
             $.mobile.loading('hide');
         },
-        error: function(jqXHR, textStatus, errorThrown) {
+        error: function (jqXHR, textStatus, errorThrown) {
             $.mobile.loading('hide');
             alert('Error: ' + errorThrown);
         }
     });
 }
 
-$(document).on('click', 'a[data-role="ubicacion-gps-seleccion"]', function() {
+$(document).on('click', 'a[data-role="ubicacion-gps-seleccion"]', function () {
     $('#ubicacion-seleccion-ciudad').val($(this).attr('data-ciudad'));
     $('#ubicacion-seleccion-sector').val($(this).attr('data-sector'));
     $('#ubicacion-seleccion-direccion').val('');
@@ -90,7 +96,7 @@ $(document).on('click', 'a[data-role="ubicacion-gps-seleccion"]', function() {
     ubicacionSeleccion();
 });
 
-$(document).on('click', 'a[data-role="ubicacion-seleccion-mapa"]', function() {
+$(document).on('click', 'a[data-role="ubicacion-seleccion-mapa"]', function () {
     //$.mobile.loading('show');
     var lat = 0;
     var lon = 0;
@@ -104,10 +110,10 @@ $(document).on('click', 'a[data-role="ubicacion-seleccion-mapa"]', function() {
         async: true,
         url: requestUrl + '/sitio/gps',
         data: {lat: lat, lon: lon},
-        beforeSend: function() {
+        beforeSend: function () {
             $.mobile.loading('show');
         },
-        success: function(data) {
+        success: function (data) {
             if (data.result == 'ok') {
                 /*$( "#page-ubicacion-map" ).dialog( "close" ); */
                 $('#ubicacion-seleccion-ciudad').val(data.response.ciudad);
@@ -115,19 +121,25 @@ $(document).on('click', 'a[data-role="ubicacion-seleccion-mapa"]', function() {
                 $('#ubicacion-seleccion-direccion').val('');
                 ubicacionSeleccion();
             } else {
-                $('<div>').mdialog({
-                    content: "<div data-role='main'><div class='ui-content' data-role='content' role='main'>" + data.response + "<a class='ui-btn ui-btn-r ui-corner-all ui-shadow' data-rel='back' href='#'>Aceptar</a></div></div>"
-                });
+                if (data.responseModal) {
+                    $('<div>').mdialog({
+                        content: data.responseModal
+                    });
+                } else {
+                    $('<div>').mdialog({
+                        content: "<div data-role='main'><div class='ui-content' data-role='content' role='main'>" + data.response + "<a class='ui-btn ui-btn-r ui-corner-all ui-shadow' data-rel='back' href='#'>Aceptar</a></div></div>"
+                    });
+                }
             }
             $.mobile.loading('hide');
         },
-        error: function(jqXHR, textStatus, errorThrown) {
+        error: function (jqXHR, textStatus, errorThrown) {
             $.mobile.loading('hide');
             alert(errorThrown);
         }
     });
 });
-function ubicacionSeleccion(){
+function ubicacionSeleccion() {
     var form = $("#form-ubicacion");
     $.ajax({
         type: 'POST',
@@ -135,13 +147,13 @@ function ubicacionSeleccion(){
         url: requestUrl + '/sitio/ubicacionSeleccion',
         data: form.serialize(),
         dataType: 'json',
-        beforeSend: function() {
+        beforeSend: function () {
             $.mobile.loading('show');
         },
-        complete: function(data) {
+        complete: function (data) {
             $.mobile.loading('hide');
         },
-        success: function(data) {
+        success: function (data) {
             if (data.result == 'ok') {
                 dialogoAnimado(data.response);
                 if (data.urlAnterior) {
@@ -155,14 +167,15 @@ function ubicacionSeleccion(){
                 });
             }
         },
-        error: function(jqXHR, textStatus, errorThrown) {
+        error: function (jqXHR, textStatus, errorThrown) {
             $.mobile.loading('hide');
             alert(errorThrown);
         }
     });
-};
+}
+;
 
-$(document).on('change', 'select[data-role="ciudad-despacho-map"]', function() {
+$(document).on('change', 'select[data-role="ciudad-despacho-map"]', function () {
     var val = $(this).val().trim();
     if (val.length > 0) {
         var option = $('select[data-role="ciudad-despacho-map"] option[value="' + val + '"]').attr('selected', 'selected');
@@ -178,13 +191,13 @@ $(document).on('change', 'select[data-role="ciudad-despacho-map"]', function() {
                 url: requestUrl + '/sitio/ubicacionSeleccion',
                 data: {ciudad: val},
                 dataType: 'html',
-                beforeSend: function() {
+                beforeSend: function () {
                     $.mobile.loading('show');
                 },
-                complete: function() {
+                complete: function () {
                     $.mobile.loading('hide');
                 },
-                success: function(data) {
+                success: function (data) {
                     if (data.length > 0) {
                         $('#select-ubicacion-content').append(data);
                         $('#select-ubicacion-content').trigger("create");
@@ -192,7 +205,7 @@ $(document).on('change', 'select[data-role="ciudad-despacho-map"]', function() {
                         $('#select-ubicacion-psubsector').removeClass('float-left').addClass('div-center');
                     }
                 },
-                error: function(jqXHR, textStatus, errorThrown) {
+                error: function (jqXHR, textStatus, errorThrown) {
                     $.mobile.loading('hide');
                     alert('Error: ' + errorThrown);
                 }
@@ -201,7 +214,7 @@ $(document).on('change', 'select[data-role="ciudad-despacho-map"]', function() {
     }
 });
 
-$(document).on('change', 'select[data-role="sector-despacho-map"]', function() {
+$(document).on('change', 'select[data-role="sector-despacho-map"]', function () {
     var val = $(this).val().trim();
     if (val.length > 0) {
         var option = $('select[data-role="sector-despacho-map"] option[value="' + val + '"]').attr('selected', 'selected');
@@ -213,7 +226,7 @@ $(document).on('change', 'select[data-role="sector-despacho-map"]', function() {
     }
 });
 
-$(document).on('click', 'button[data-role="ubicacion-mapa"]', function() {
+$(document).on('click', 'button[data-role="ubicacion-mapa"]', function () {
     if ($('#page-ubicacion-map').length > 0) {
         $.mobile.changePage('#page-ubicacion-map', {transition: "pop", role: "dialog", reverse: false});
         resizeMap();
@@ -223,27 +236,27 @@ $(document).on('click', 'button[data-role="ubicacion-mapa"]', function() {
             dataType: 'html',
             async: true,
             url: requestUrl + '/sitio/mapa',
-            beforeSend: function() {
+            beforeSend: function () {
                 $.mobile.loading('show');
             },
-            success: function(data) {
-                $.getScript("https://maps.googleapis.com/maps/api/js?client="+gmapKey).done(function(script, textStatus) {
-                    $.getScript(requestUrl + "/js/ubicacion.min.js").done(function(script, textStatus) {
+            success: function (data) {
+                $.getScript("https://maps.googleapis.com/maps/api/js?client=" + gmapKey).done(function (script, textStatus) {
+                    $.getScript(requestUrl + "/js/ubicacion.min.js").done(function (script, textStatus) {
                         $('body').append(data);
                         inicializarMapa();
                         $.mobile.changePage('#page-ubicacion-map', {transition: "pop", role: "dialog", reverse: false});
                         resizeMap();
                         $.mobile.loading('hide');
-                    }).fail(function(jqxhr, settings, exception) {
+                    }).fail(function (jqxhr, settings, exception) {
                         $.mobile.loading('hide');
                         alert("Error al inicializar mapa: " + exception);
                     });
-                }).fail(function(jqxhr, settings, exception) {
+                }).fail(function (jqxhr, settings, exception) {
                     $.mobile.loading('hide');
                     alert("Error al cargar mapa: " + exception);
                 });
             },
-            error: function(jqXHR, textStatus, errorThrown) {
+            error: function (jqXHR, textStatus, errorThrown) {
                 $.mobile.loading('hide');
                 alert('Error: ' + errorThrown);
             }
@@ -274,24 +287,24 @@ function errorPosicion(error) {
     alert(mensaje);
 }
 
-$(document).on('click', 'button[data-role="ubicacion-direccion"]', function() {
+$(document).on('click', 'button[data-role="ubicacion-direccion"]', function () {
     $.ajax({
         type: 'GET',
         async: true,
         url: requestUrl + '/usuario/direccionesUbicacion',
         dataType: 'html',
-        beforeSend: function() {
+        beforeSend: function () {
             $("div[id='page-direccionesubicacion']").remove();
             $.mobile.loading('show');
         },
-        complete: function(data) {
+        complete: function (data) {
             $.mobile.loading('hide');
         },
-        success: function(data) {
+        success: function (data) {
             $('body').append(data);
             $.mobile.changePage('#page-direccionesubicacion', {transition: "pop", role: "dialog", reverse: false});
         },
-        error: function(jqXHR, textStatus, errorThrown) {
+        error: function (jqXHR, textStatus, errorThrown) {
             Loading.hide();
             bootbox.alert('Error: ' + errorThrown);
         }
@@ -299,28 +312,36 @@ $(document).on('click', 'button[data-role="ubicacion-direccion"]', function() {
     return false;
 });
 
-$(document).on('click', 'button[data-role="ubicacion-seleccion-direccion"]', function() {
+$(document).on('click', 'button[data-role="ubicacion-seleccion-direccion"]', function () {
     $('#ubicacion-seleccion-ciudad').val('');
     $('#ubicacion-seleccion-sector').val('');
     $('#ubicacion-seleccion-direccion').val($(this).attr('data-direccion'));
-    
+
     ubicacionSeleccion();
 });
 
-$(document).on('click', "a[data-ubicacion='verificacion-domicilio']", function() {
+$(document).on('click', 'a[data-role="ubicacion-seleccion-nodomicilio"]', function() {
+    $('#ubicacion-seleccion-ciudad').val($(this).attr('data-ciudad'));
+    $('#ubicacion-seleccion-sector').val($(this).attr('data-sector'));
+    $('#ubicacion-seleccion-direccion').val('');
+
+    ubicacionSeleccion();
+});
+
+/*$(document).on('click', "a[data-ubicacion='verificacion-domicilio']", function () {
     $.ajax({
         type: 'POST',
         dataType: 'json',
         async: true,
         url: requestUrl + '/sitio/ubicacionVerificacion',
         data: {ciudad: $(this).attr('data-ciudad'), sector: $(this).attr('data-sector')},
-        beforeSend: function() {
+        beforeSend: function () {
             $.mobile.loading('show');
         },
-        complete: function() {
+        complete: function () {
             $.mobile.loading('hide');
         },
-        success: function(data) {
+        success: function (data) {
             if (data.result == "ok") {
                 if (data.response.domicilio) {
                     window.location.replace(data.response.url);
@@ -335,12 +356,12 @@ $(document).on('click', "a[data-ubicacion='verificacion-domicilio']", function()
                 });
             }
         },
-        error: function(jqXHR, textStatus, errorThrown) {
+        error: function (jqXHR, textStatus, errorThrown) {
             $.mobile.loading('hide');
             alert('Error: ' + errorThrown);
         }
     });
-});
+});*/
 
 function subtotalUnidadProducto(codigo) {
     var cantidad = $('#cantidad-producto-unidad-' + codigo).val();
@@ -362,13 +383,13 @@ function subtotalUnidadProducto(codigo) {
         async: true,
         url: requestUrl + '/catalogo/subtotalUnidad',
         data: {codigo: codigo, cantidad: cantidad},
-        beforeSend: function() {
+        beforeSend: function () {
             $.mobile.loading('show');
         },
-        complete: function() {
+        complete: function () {
             $.mobile.loading('hide');
         },
-        success: function(data) {
+        success: function (data) {
             if (data.result == 'ok') {
                 $('#subtotal-producto-unidad-' + codigo).html(data.response.valorFormato);
             } else {
@@ -378,7 +399,7 @@ function subtotalUnidadProducto(codigo) {
             }
             //$.mobile.loading('hide');
         },
-        error: function(jqXHR, textStatus, errorThrown) {
+        error: function (jqXHR, textStatus, errorThrown) {
             //$.mobile.loading('hide');
             alert('Error: ' + errorThrown);
         }
@@ -426,13 +447,13 @@ function subtotalParcialProductoFraccion(codigo, numeroFracciones, unidadFraccio
         async: true,
         url: requestUrl + '/catalogo/subtotalFraccion',
         data: {codigo: codigo, cantidadUnidad: cantidadUnidad, cantidadFraccion: cantidad},
-        beforeSend: function() {
+        beforeSend: function () {
             $.mobile.loading('show');
         },
-        complete: function() {
+        complete: function () {
             $.mobile.loading('hide');
         },
-        success: function(data) {
+        success: function (data) {
             //$.mobile.loading('hide');
             if (data.result == 'ok') {
                 $('#subtotal-producto-unidad-' + codigo).html(data.response.valorUnidadFormato);
@@ -444,7 +465,7 @@ function subtotalParcialProductoFraccion(codigo, numeroFracciones, unidadFraccio
                 });
             }
         },
-        error: function(jqXHR, textStatus, errorThrown) {
+        error: function (jqXHR, textStatus, errorThrown) {
             //$.mobile.loading('hide');
             alert('Error: ' + errorThrown);
         }
@@ -481,13 +502,13 @@ function subtotalProductoBodega(codigo) {
         async: true,
         url: requestUrl + '/catalogo/subtotalBodega',
         data: {codigo: codigo, bodega: cantidadBodega, ubicacion: cantidadUbicacion},
-        beforeSend: function() {
+        beforeSend: function () {
             $.mobile.loading('show');
         },
-        complete: function() {
+        complete: function () {
             $.mobile.loading('hide');
         },
-        success: function(data) {
+        success: function (data) {
             if (data.result == 'ok') {
                 $('#subtotal-producto-bodega-' + codigo).html(data.response.valorBodegaFormato);
                 $('#subtotal-producto-ubicacion-' + codigo).html(data.response.valorUbicacionFormato);
@@ -498,7 +519,7 @@ function subtotalProductoBodega(codigo) {
                 });
             }
         },
-        error: function(jqXHR, textStatus, errorThrown) {
+        error: function (jqXHR, textStatus, errorThrown) {
             alert('Error: ' + errorThrown);
         }
     });
@@ -524,13 +545,13 @@ function subtotalCombo(codigo) {
         async: true,
         url: requestUrl + '/catalogo/subtotalCombo',
         data: {codigo: codigo, cantidad: cantidad},
-        beforeSend: function() {
+        beforeSend: function () {
             $.mobile.loading('show');
         },
-        complete: function() {
+        complete: function () {
             $.mobile.loading('hide');
         },
-        success: function(data) {
+        success: function (data) {
             if (data.result == 'ok') {
                 $('#subtotal-combo-' + codigo).html(data.response.valorFormato);
             } else {
@@ -540,7 +561,7 @@ function subtotalCombo(codigo) {
             }
             //$.mobile.loading('hide');
         },
-        error: function(jqXHR, textStatus, errorThrown) {
+        error: function (jqXHR, textStatus, errorThrown) {
             //$.mobile.loading('hide');
             alert('Error: ' + errorThrown);
         }
@@ -567,13 +588,13 @@ function subtotalProductoCarro(id) {
         async: true,
         url: requestUrl + '/carro/modificar',
         data: {id: id, cantidad: cantidad},
-        beforeSend: function() {
+        beforeSend: function () {
             $.mobile.loading('show');
         },
-        complete: function() {
+        complete: function () {
             $.mobile.loading('hide');
         },
-        success: function(data) {
+        success: function (data) {
             if (data.result == 'ok') {
                 $('#div-carro').html(data.carro);
                 $('#div-carro').trigger("create");
@@ -585,13 +606,13 @@ function subtotalProductoCarro(id) {
                 });
             }
         },
-        error: function(jqXHR, textStatus, errorThrown) {
+        error: function (jqXHR, textStatus, errorThrown) {
             alert('Error: ' + errorThrown);
         }
     });
 }
 
-$(document).on('click', "a[data-eliminar='1'], a[data-eliminar='2'], a[data-eliminar='3']", function() {
+$(document).on('click', "a[data-eliminar='1'], a[data-eliminar='2'], a[data-eliminar='3']", function () {
     var position = $(this).attr('data-position');
     var eliminar = $(this).attr('data-eliminar');
 
@@ -601,13 +622,13 @@ $(document).on('click', "a[data-eliminar='1'], a[data-eliminar='2'], a[data-elim
         async: true,
         url: requestUrl + '/carro/eliminar',
         data: {id: position, eliminar: eliminar},
-        beforeSend: function() {
+        beforeSend: function () {
             $.mobile.loading('show');
         },
-        complete: function() {
+        complete: function () {
             $.mobile.loading('hide');
         },
-        success: function(data) {
+        success: function (data) {
             if (data.result == 'ok') {
                 $('#div-carro').html(data.carro);
                 $('#div-carro').trigger("create");
@@ -619,26 +640,26 @@ $(document).on('click', "a[data-eliminar='1'], a[data-eliminar='2'], a[data-elim
                 });
             }
         },
-        error: function(jqXHR, textStatus, errorThrown) {
+        error: function (jqXHR, textStatus, errorThrown) {
             alert('Error: ' + errorThrown);
         }
     });
 
 });
 
-$(document).on('click', "a[data-role='carrovaciar']", function() {
+$(document).on('click', "a[data-role='carrovaciar']", function () {
     $.ajax({
         type: 'POST',
         dataType: 'json',
         async: true,
         url: requestUrl + '/carro/vaciar',
-        beforeSend: function() {
+        beforeSend: function () {
             $.mobile.loading('show');
         },
-        complete: function() {
+        complete: function () {
             $.mobile.loading('hide');
         },
-        success: function(data) {
+        success: function (data) {
             if (data.result == 'ok') {
                 $('#div-carro').html(data.carro);
                 $('#div-carro').trigger("create");
@@ -650,16 +671,16 @@ $(document).on('click', "a[data-role='carrovaciar']", function() {
                 });
             }
         },
-        error: function(jqXHR, textStatus, errorThrown) {
+        error: function (jqXHR, textStatus, errorThrown) {
             alert('Error: ' + errorThrown);
         }
     });
 });
 
-$(document).on("pagecreate", function(event) {
-    $(function() {
+$(document).on("pagecreate", function (event) {
+    $(function () {
         //Se activa cuando el scroll supera los 100px
-        $(window).scroll(function() {
+        $(window).scroll(function () {
             if ($(this).scrollTop() > 100) {
                 $('a.scroll-top').fadeIn();
             } else {
@@ -667,7 +688,7 @@ $(document).on("pagecreate", function(event) {
             }
         });
         //Crea la animacion al dar clic sobre el boton
-        $('a.scroll-top').click(function() {
+        $('a.scroll-top').click(function () {
             $("html, body").animate({scrollTop: 0}, 600);
             return false;
         });
@@ -682,16 +703,16 @@ $(document).on("pagecreate", function(event) {
         hints: ['mala', 'deficiente', 'regular', 'buena', 'excelente'],
         noRatedMsg: 'Sin calificación',
         /*round: { down: 0.25, full: 0.6, up: 0.76 },*/
-        readOnly: function() {
+        readOnly: function () {
             return $(this).attr('data-readonly') === "true";
         },
-        click: function(score, evt) {
+        click: function (score, evt) {
             if ($(this).attr('data-callback')) {
                 var funcion = $(this).attr('data-callback');
                 window[funcion](score, evt);
             }
         },
-        score: function() {
+        score: function () {
             return $(this).attr('data-score');
         }
     });
@@ -727,14 +748,14 @@ $(document).on("pagecreate", function(event) {
     colapseDireccion();
     //$('[data-role=main]:visible').css('margin-top',($(window).height() - $('[data-role=header]:visible').height() - $('[data-role=footer]:visible').height() - $('[data-role=main]:visible').outerHeight())/2);
 
-    $(function() {
+    $(function () {
         var elementArea = $("textarea[data-countchar]");
         if (elementArea.length) {
             countChar(elementArea, elementArea.attr('data-countchar'));
         }
     });
 
-    $("div[id^='collapsible-direccion-ciudad-']").on("collapsiblecollapse", function(event, ui) {
+    $("div[id^='collapsible-direccion-ciudad-']").on("collapsiblecollapse", function (event, ui) {
         $("div[id^='div-direccion-form-']").css('display', 'none');
         $("input[id^='DireccionesDespacho_idDireccionDespacho_']").removeAttr("checked");
         $("input[id^='DireccionesDespacho_idDireccionDespacho_']").checkboxradio("refresh");
@@ -747,7 +768,7 @@ function ratyclic(score, evt) {
 }
 
 
-$(document).on('click', "button[data-role='calificacion']", function() {
+$(document).on('click', "button[data-role='calificacion']", function () {
     var codigo = $(this).attr('data-producto');
     var titulo = $('#calificacion-titulo-' + codigo);
     var comentario = $('#calificacion-comentario-' + codigo);
@@ -764,13 +785,13 @@ $(document).on('click', "button[data-role='calificacion']", function() {
         async: true,
         url: requestUrl + '/catalogo/calificar',
         data: {codigo: codigo.trim(), titulo: titulo.val().trim(), comentario: comentario.val().trim(), calificacion: calificacion},
-        beforeSend: function() {
+        beforeSend: function () {
             $.mobile.loading('show');
         },
-        complete: function() {
+        complete: function () {
             $.mobile.loading('hide');
         },
-        success: function(data) {
+        success: function (data) {
             if (data.result === 'ok') {
                 $("[data-role='calificacion']").remove();
                 $('#calificacion-raty-' + codigo).raty('readOnly', true);
@@ -783,7 +804,7 @@ $(document).on('click', "button[data-role='calificacion']", function() {
                 });
             }
         },
-        error: function(jqXHR, textStatus, errorThrown) {
+        error: function (jqXHR, textStatus, errorThrown) {
             alert('Error: ' + errorThrown);
         }
     });
@@ -791,23 +812,23 @@ $(document).on('click', "button[data-role='calificacion']", function() {
     return false;
 });
 
-$(document).on('change', "input[id^='FiltroForm_listMarcas_']", function() {
+$(document).on('change', "input[id^='FiltroForm_listMarcas_']", function () {
     recalcularFiltros(1);
 });
 
-$(document).on('change', "input[id^='FiltroForm_listFiltros_']", function() {
+$(document).on('change', "input[id^='FiltroForm_listFiltros_']", function () {
     recalcularFiltros(2);
 });
 
 function recalcularFiltros(tipo) {
     var marcas = {};
-    $("input[id^='FiltroForm_listMarcas_']").each(function() {
+    $("input[id^='FiltroForm_listMarcas_']").each(function () {
         if ($(this).is(":checked")) {
             marcas[$(this).val()] = parseInt($(this).val());
         }
     });
     var atributos = {};
-    $("input[id^='FiltroForm_listFiltros_']").each(function() {
+    $("input[id^='FiltroForm_listFiltros_']").each(function () {
         if ($(this).is(":checked")) {
             atributos[$(this).val()] = parseInt($(this).attr('data-filtro'));
         }
@@ -819,13 +840,13 @@ function recalcularFiltros(tipo) {
         async: true,
         url: requestUrl + '/catalogo/filtro',
         data: {marcas: marcas, atributos: atributos, tipo: tipo},
-        beforeSend: function() {
+        beforeSend: function () {
             $.mobile.loading('show');
         },
-        complete: function() {
+        complete: function () {
             $.mobile.loading('hide');
         },
-        success: function(data) {
+        success: function (data) {
             if (data.hasOwnProperty('marcas')) {
                 $('#div-filtro-marcas').html(data.marcas);
                 $('#div-filtro-marcas').trigger("create");
@@ -835,7 +856,7 @@ function recalcularFiltros(tipo) {
                 $('#div-filtro-atributos').trigger("create");
             }
         },
-        error: function(jqXHR, textStatus, errorThrown) {
+        error: function (jqXHR, textStatus, errorThrown) {
             alert('Error: ' + errorThrown);
         }
     });
@@ -854,7 +875,7 @@ function verUbicacion() {
     }
 }
 
-$(document).on('click', "a[data-cargar='1']", function() {
+$(document).on('click', "a[data-cargar='1']", function () {
     var producto = $(this).attr('data-producto');
 
     var cantidadU = $('#cantidad-producto-unidad-' + producto).val();
@@ -875,14 +896,14 @@ $(document).on('click', "a[data-cargar='1']", function() {
         async: true,
         url: requestUrl + '/carro/agregar',
         data: {producto: producto, cantidadU: cantidadU, cantidadF: cantidadF},
-        beforeSend: function() {
+        beforeSend: function () {
             quitarRelacionado();
             $.mobile.loading('show');
         },
-        complete: function() {
+        complete: function () {
             $.mobile.loading('hide');
         },
-        success: function(data) {
+        success: function (data) {
             if (data.result === "ok") {
                 $('#panel-carro-canasta').html(data.response.canastaHTML);
                 $('#panel-carro-canasta').trigger("create");
@@ -909,13 +930,13 @@ $(document).on('click', "a[data-cargar='1']", function() {
             }
 
         },
-        error: function(jqXHR, textStatus, errorThrown) {
+        error: function (jqXHR, textStatus, errorThrown) {
             alert('Error: ' + errorThrown);
         }
     });
 });
 
-$(document).on('click', "a[data-cargar='2']", function() {
+$(document).on('click', "a[data-cargar='2']", function () {
     var combo = $(this).attr('data-combo');
 
     var cantidad = $('#cantidad-combo-' + combo).val();
@@ -930,14 +951,14 @@ $(document).on('click', "a[data-cargar='2']", function() {
         async: true,
         url: requestUrl + '/carro/agregarCombo',
         data: {combo: combo, cantidad: cantidad},
-        beforeSend: function() {
+        beforeSend: function () {
             $.mobile.loading('show');
             quitarRelacionado();
         },
-        complete: function() {
+        complete: function () {
             $.mobile.loading('hide');
         },
-        success: function(data) {
+        success: function (data) {
             if (data.result === "ok") {
                 $('#panel-carro-canasta').html(data.response.canastaHTML);
                 $('#panel-carro-canasta').trigger("create");
@@ -959,13 +980,13 @@ $(document).on('click', "a[data-cargar='2']", function() {
             }
 
         },
-        error: function(jqXHR, textStatus, errorThrown) {
+        error: function (jqXHR, textStatus, errorThrown) {
             alert('Error: ' + errorThrown);
         }
     });
 });
 
-$(document).on('click', "a[data-cargar='3']", function() {
+$(document).on('click', "a[data-cargar='3']", function () {
     var producto = $(this).attr('data-producto');
 
     var cantidadUbicacion = $('#cantidad-producto-ubicacion-' + producto).val();
@@ -986,13 +1007,13 @@ $(document).on('click', "a[data-cargar='3']", function() {
         async: true,
         url: requestUrl + '/carro/agregarBodega',
         data: {producto: producto, cantidadU: cantidadUbicacion, cantidadB: cantidadBodega},
-        beforeSend: function() {
+        beforeSend: function () {
             $.mobile.loading('show');
         },
-        complete: function() {
+        complete: function () {
             $.mobile.loading('hide');
         },
-        success: function(data) {
+        success: function (data) {
             if (data.result === "ok") {
                 $('#panel-carro-canasta').html(data.response.canastaHTML);
                 $('#panel-carro-canasta').trigger("create");
@@ -1012,13 +1033,13 @@ $(document).on('click', "a[data-cargar='3']", function() {
             }
 
         },
-        error: function(jqXHR, textStatus, errorThrown) {
+        error: function (jqXHR, textStatus, errorThrown) {
             alert('Error: ' + errorThrown);
         }
     });
 });
 
-$(document).on('change', "input[data-modificar='1'], input[data-modificar='2'], input[data-modificar='3']", function() {
+$(document).on('change', "input[data-modificar='1'], input[data-modificar='2'], input[data-modificar='3']", function () {
     var position = $(this).attr('data-position');
     var modificar = $(this).attr('data-modificar');
     var data = {
@@ -1081,13 +1102,13 @@ $(document).on('change', "input[data-modificar='1'], input[data-modificar='2'], 
         async: true,
         url: requestUrl + '/carro/modificar',
         data: data,
-        beforeSend: function() {
+        beforeSend: function () {
             $.mobile.loading('show');
         },
-        complete: function() {
+        complete: function () {
             $.mobile.loading('hide');
         },
-        success: function(data) {
+        success: function (data) {
             if (data.result === "ok") {
                 $('#div-carro').html(data.response.carroHTML);
                 $('#div-carro').trigger("create");
@@ -1115,13 +1136,13 @@ $(document).on('change', "input[data-modificar='1'], input[data-modificar='2'], 
             }
 
         },
-        error: function(jqXHR, textStatus, errorThrown) {
+        error: function (jqXHR, textStatus, errorThrown) {
             alert('Error: ' + errorThrown);
         }
     });
 });
 
-$(document).on('change', 'input[name="DireccionesDespacho[idDireccionDespacho]"]:radio', function(e) {
+$(document).on('change', 'input[name="DireccionesDespacho[idDireccionDespacho]"]:radio', function (e) {
     var direccion = $('input[name="DireccionesDespacho[idDireccionDespacho]"]:checked').val();
     $("div[id^='div-direccion-form-']").css('display', 'none');
     $('#div-direccion-form-' + direccion).css('display', 'block');
@@ -1130,27 +1151,27 @@ $(document).on('change', 'input[name="DireccionesDespacho[idDireccionDespacho]"]
     }, 200);
 });
 
-$(document).on('click', "input[id^='btn-direccion-actualizar-']", function() {
+$(document).on('click', "input[id^='btn-direccion-actualizar-']", function () {
     var form = $(this).parents("form");
     $.ajax({
         type: 'POST',
         async: true,
         url: requestUrl + '/usuario/direccionActualizar',
         data: form.serialize(),
-        beforeSend: function() {
+        beforeSend: function () {
             $.mobile.loading('show');
         },
-        complete: function() {
+        complete: function () {
             $.mobile.loading('hide');
         },
-        success: function(data) {
+        success: function (data) {
             var obj = $.parseJSON(data);
 
             if (obj.result === 'ok') {
             } else if (obj.result === 'error') {
                 alert(obj.response);
             } else {
-                $.each(obj, function(element, error) {
+                $.each(obj, function (element, error) {
                     //$('#' + element + '_em_').html(error);
                     //$('#' + element + '_em_').css('display', 'block');
                     $('#' + form.attr('id') + ' #' + element + '_em_').html(error);
@@ -1158,7 +1179,7 @@ $(document).on('click', "input[id^='btn-direccion-actualizar-']", function() {
                 });
             }
         },
-        error: function(jqXHR, textStatus, errorThrown) {
+        error: function (jqXHR, textStatus, errorThrown) {
             alert('Error: ' + errorThrown);
         }
     });
@@ -1168,33 +1189,33 @@ $(document).on('click', "input[id^='btn-direccion-actualizar-']", function() {
 });
 
 
-$(document).on('click', "a[data-role='direccion-adicionar-modal']", function() {
+$(document).on('click', "a[data-role='direccion-adicionar-modal']", function () {
     $.ajax({
         type: 'POST',
         dataType: 'json',
         async: true,
         url: requestUrl + '/usuario/direccionCrear',
         data: {render: true},
-        beforeSend: function() {
+        beforeSend: function () {
             $.mobile.loading('show');
         },
-        complete: function() {
+        complete: function () {
             $.mobile.loading('hide');
         },
-        success: function(data) {
+        success: function (data) {
             var id = "page-direccion-crear-" + uniqueId();
             var page = "<div data-role='page' id='" + id + "'><div data-role='main' class='ui-content'>" + data.response.dialogoHTML + "<a href='#' class='ui-btn ui-btn-n ui-corner-all ui-shadow' data-rel='back'>Cerrar</a></div></div>";
             $('body').append(page);
             $.mobile.changePage('#' + id, {transition: "pop", role: "dialog", reverse: false});
         },
-        error: function(jqXHR, textStatus, errorThrown) {
+        error: function (jqXHR, textStatus, errorThrown) {
             $.mobile.loading('hide');
             alert('Error: ' + errorThrown);
         }
     });
 });
 
-$(document).on('click', "input[data-role='direccion-adicionar']", function() {
+$(document).on('click', "input[data-role='direccion-adicionar']", function () {
     var form = $(this).parents("form");
     var modal = $(this).attr("data-modal");
     var data = {modal: modal};
@@ -1204,13 +1225,13 @@ $(document).on('click', "input[data-role='direccion-adicionar']", function() {
         async: true,
         url: requestUrl + '/usuario/direccionCrear',
         data: $.param(data) + '&' + form.serialize(),
-        beforeSend: function() {
+        beforeSend: function () {
             $.mobile.loading('show');
         },
-        complete: function() {
+        complete: function () {
             $.mobile.loading('hide');
         },
-        success: function(data) {
+        success: function (data) {
             var data = $.parseJSON(data);
             if (data.result === 'ok') {
                 if (modal == 1) {
@@ -1226,13 +1247,13 @@ $(document).on('click', "input[data-role='direccion-adicionar']", function() {
                     content: "<div data-role='main'><div class='ui-content' data-role='content' role='main'>" + data.response + "<a class='ui-btn ui-btn-r ui-corner-all ui-shadow' data-rel='back' href='#'>Aceptar</a></div></div>"
                 });
             } else {
-                $.each(data, function(element, error) {
+                $.each(data, function (element, error) {
                     $('#' + form.attr('id') + ' #' + element + '_em_').html(error);
                     $('#' + form.attr('id') + ' #' + element + '_em_').css('display', 'block');
                 });
             }
         },
-        error: function(jqXHR, textStatus, errorThrown) {
+        error: function (jqXHR, textStatus, errorThrown) {
             alert('Error: ' + errorThrown);
         }
     });
@@ -1241,7 +1262,7 @@ $(document).on('click', "input[data-role='direccion-adicionar']", function() {
 
 });
 
-$(document).on('click', "input[id^='btn-direccion-eliminar-']", function() {
+$(document).on('click', "input[id^='btn-direccion-eliminar-']", function () {
     var direccion = $(this).attr('data-direccion');
     $.ajax({
         type: 'POST',
@@ -1249,13 +1270,13 @@ $(document).on('click', "input[id^='btn-direccion-eliminar-']", function() {
         async: true,
         url: requestUrl + '/usuario/direccionEliminar',
         data: {direccion: direccion},
-        beforeSend: function() {
+        beforeSend: function () {
             $.mobile.loading('show');
         },
-        complete: function() {
+        complete: function () {
             $.mobile.loading('hide');
         },
-        success: function(data) {
+        success: function (data) {
             if (data.result === 'ok') {
                 $('#div-direccion-radio-' + direccion).remove();
             } else if (data.result === 'error') {
@@ -1264,13 +1285,58 @@ $(document).on('click', "input[id^='btn-direccion-eliminar-']", function() {
                 });
             }
         },
-        error: function(jqXHR, textStatus, errorThrown) {
+        error: function (jqXHR, textStatus, errorThrown) {
             alert('Error: ' + errorThrown);
         }
     });
 
     return false;
 });
+
+function pasoTipoEntrega(actual, siguiente, boton){
+    var data = {
+        siguiente: siguiente,
+        "FormaPagoForm[indicePuntoVenta]": $('input[name="FormaPagoForm[indicePuntoVenta]"]').val(),
+        "FormaPagoForm[tipoEntrega]": $('input[name="FormaPagoForm[tipoEntrega]"]').val()
+    };
+
+    $.ajax({
+        type: 'POST',
+        //dataType: 'json',
+        async: true,
+        url: requestUrl + '/carro/pagar/paso/' + actual + '/post/true',
+        data: $.param(data),
+        beforeSend: function () {
+            boton.button('disable');
+            $('div[id^="FormaPagoForm_"].has-error').html('');
+            $('div[id^="FormaPagoForm_"].has-error').css('display', 'none');
+            $.mobile.loading('show');
+        },
+        complete: function () {
+            $.mobile.loading('hide');
+        },
+        success: function (data) {
+            var obj = $.parseJSON(data);
+
+            if (obj.result === 'ok') {
+                window.location.replace(obj.redirect);
+            } else if (obj.result === 'error') {
+                alerta(obj.response);
+                boton.button('enable');
+            } else {
+                $.each(obj, function (element, error) {
+                    $('#' + element + '_em_').html(error);
+                    $('#' + element + '_em_').css('display', 'block');
+                });
+                boton.button('enable');
+            }
+        },
+        error: function (jqXHR, textStatus, errorThrown) {
+            alert('Error: ' + errorThrown);
+            boton.button('enable');
+        }
+    });
+}
 
 function pasoDespacho(actual, siguiente, boton) {
     var data = {
@@ -1284,16 +1350,16 @@ function pasoDespacho(actual, siguiente, boton) {
         async: true,
         url: requestUrl + '/carro/pagar/paso/' + actual + '/post/true',
         data: $.param(data) + '&' + $('#form-direccion-pagoinvitado').serialize(),
-        beforeSend: function() {
+        beforeSend: function () {
             boton.button('disable');
             $('div[id^="FormaPagoForm_"].has-error').html('');
             $('div[id^="FormaPagoForm_"].has-error').css('display', 'none');
             $.mobile.loading('show');
         },
-        complete: function() {
+        complete: function () {
             $.mobile.loading('hide');
         },
-        success: function(data) {
+        success: function (data) {
             var obj = $.parseJSON(data);
 
             if (obj.result === 'ok') {
@@ -1302,14 +1368,14 @@ function pasoDespacho(actual, siguiente, boton) {
                 alerta(obj.response);
                 boton.button('enable');
             } else {
-                $.each(obj, function(element, error) {
+                $.each(obj, function (element, error) {
                     $('#' + element + '_em_').html(error);
                     $('#' + element + '_em_').css('display', 'block');
                 });
                 boton.button('enable');
             }
         },
-        error: function(jqXHR, textStatus, errorThrown) {
+        error: function (jqXHR, textStatus, errorThrown) {
             alert('Error: ' + errorThrown);
             boton.button('enable');
         }
@@ -1325,17 +1391,17 @@ function pasoEntrega(actual, siguiente, boton) {
         async: true,
         url: requestUrl + '/carro/pagar/paso/' + actual + '/post/true',
         data: $.param(data) + '&' + $('#form-pago-entrega').serialize(),
-        beforeSend: function() {
+        beforeSend: function () {
             boton.button('disable');
             $('div[id^="FormaPagoForm_"].has-error').html('');
             $('div[id^="FormaPagoForm_"].has-error').css('display', 'none');
             $('#form-pago-entrega').trigger("create");
             $.mobile.loading('show');
         },
-        complete: function() {
+        complete: function () {
             $.mobile.loading('hide');
         },
-        success: function(data) {
+        success: function (data) {
             var obj = $.parseJSON(data);
 
             if (obj.result === 'ok') {
@@ -1344,14 +1410,14 @@ function pasoEntrega(actual, siguiente, boton) {
                 alerta(obj.response);
                 boton.button('enable');
             } else {
-                $.each(obj, function(element, error) {
+                $.each(obj, function (element, error) {
                     $('#' + element + '_em_').html(error);
                     $('#' + element + '_em_').css('display', 'block');
                 });
                 boton.button('enable');
             }
         },
-        error: function(jqXHR, textStatus, errorThrown) {
+        error: function (jqXHR, textStatus, errorThrown) {
             alert('Error: ' + errorThrown);
             boton.button('enable');
         }
@@ -1367,16 +1433,16 @@ function pasoPago(actual, siguiente, boton) {
         async: true,
         url: requestUrl + '/carro/pagar/paso/' + actual + '/post/true',
         data: $.param(data) + '&' + $('#form-pago-pago').serialize(),
-        beforeSend: function() {
+        beforeSend: function () {
             boton.button('disable');
             $('div[id^="FormaPagoForm_"].has-error').html('');
             $('div[id^="FormaPagoForm_"].has-error').css('display', 'none');
             $.mobile.loading('show');
         },
-        complete: function() {
+        complete: function () {
             $.mobile.loading('hide');
         },
-        success: function(data) {
+        success: function (data) {
             var obj = $.parseJSON(data);
 
             if (obj.result === 'ok') {
@@ -1385,14 +1451,14 @@ function pasoPago(actual, siguiente, boton) {
                 alerta(obj.response);
                 boton.button('enable');
             } else {
-                $.each(obj, function(element, error) {
+                $.each(obj, function (element, error) {
                     $('#' + element + '_em_').html(error);
                     $('#' + element + '_em_').css('display', 'block');
                 });
                 boton.button('enable');
             }
         },
-        error: function(jqXHR, textStatus, errorThrown) {
+        error: function (jqXHR, textStatus, errorThrown) {
             alert('Error: ' + errorThrown);
             boton.button('enable');
         }
@@ -1408,14 +1474,14 @@ function pasoConfirmacion(actual, siguiente, boton) {
         async: true,
         url: requestUrl + '/carro/pagar/paso/' + actual + '/post/true',
         data: $.param(data) + '&' + $('#form-pago-confirmacion').serialize(),
-        beforeSend: function() {
+        beforeSend: function () {
             boton.button('disable');
             $.mobile.loading('show');
         },
-        complete: function() {
+        complete: function () {
             $.mobile.loading('hide');
         },
-        success: function(data) {
+        success: function (data) {
             var obj = $.parseJSON(data);
 
             if (obj.result === 'ok') {
@@ -1424,14 +1490,14 @@ function pasoConfirmacion(actual, siguiente, boton) {
                 alerta(obj.response);
                 boton.button('enable');
             } else {
-                $.each(obj, function(element, error) {
+                $.each(obj, function (element, error) {
                     $('#' + element + '_em_').html(error);
                     $('#' + element + '_em_').css('display', 'block');
                 });
                 boton.button('enable');
             }
         },
-        error: function(jqXHR, textStatus, errorThrown) {
+        error: function (jqXHR, textStatus, errorThrown) {
             alert('Error: ' + errorThrown);
             boton.button('enable');
         }
@@ -1439,11 +1505,13 @@ function pasoConfirmacion(actual, siguiente, boton) {
 }
 
 
-$(document).on('click', "input[id='btn-carropagar-siguiente'], input[id='btn-carropagar-anterior']", function() {
+$(document).on('click', "input[id='btn-carropagar-siguiente'], input[id='btn-carropagar-anterior']", function () {
     var actual = $(this).attr('data-origin');
     var siguiente = $(this).attr('data-redirect');
 
-    if (actual === 'despacho') {
+    if (actual == 'tipoentrega') {
+        pasoTipoEntrega(actual, siguiente, $(this));
+    } else if (actual === 'despacho') {
         pasoDespacho(actual, siguiente, $(this));
     } else if (actual === 'entrega') {
         pasoEntrega(actual, siguiente, $(this));
@@ -1456,11 +1524,11 @@ $(document).on('click', "input[id='btn-carropagar-siguiente'], input[id='btn-car
     return false;
 });
 
-$(document).on('change', 'input[name="FormaPagoForm[idFormaPago]"]:radio', function(e) {
+$(document).on('change', 'input[name="FormaPagoForm[idFormaPago]"]:radio', function (e) {
     pagoCredirebaja('#form-pago-pago', 'FormaPagoForm');
 });
 
-$(document).on('change', 'input[name="PagoExpress[idFormaPago]"]:radio', function(e) {
+$(document).on('change', 'input[name="PagoExpress[idFormaPago]"]:radio', function (e) {
     pagoCredirebaja('#form-pagoexpess', 'PagoExpress');
     $('#PagoExpress_idFormaPago_em_').html('');
 });
@@ -1481,7 +1549,7 @@ function pagoCredirebaja(form, name) {
     }
 }
 
-$(document).on('change', 'input[name="PagoExpress[idDireccionDespacho]"]:radio', function(e) {
+$(document).on('change', 'input[name="PagoExpress[idDireccionDespacho]"]:radio', function (e) {
     colapseDireccion();
     $('#PagoExpress_idDireccionDespacho_em_').html('');
 });
@@ -1496,7 +1564,7 @@ function colapseDireccion() {
     }
 }
 
-$(document).on('change', "#FormaPagoForm_numeroTarjeta", function() {
+$(document).on('change', "#FormaPagoForm_numeroTarjeta", function () {
     var cantidad = $(this).val();
     cantidad = parseInt(cantidad);
     if (isNaN(cantidad)) {
@@ -1504,7 +1572,7 @@ $(document).on('change', "#FormaPagoForm_numeroTarjeta", function() {
     }
 });
 
-$(document).on('click', "a[data-role='pedidodetalle']", function() {
+$(document).on('click', "a[data-role='pedidodetalle']", function () {
     var compra = $(this).attr('data-compra');
 
     $.ajax({
@@ -1513,13 +1581,13 @@ $(document).on('click', "a[data-role='pedidodetalle']", function() {
         async: true,
         url: requestUrl + '/carro/agregarcompra',
         data: {compra: compra},
-        beforeSend: function() {
+        beforeSend: function () {
             $.mobile.loading('show');
         },
-        complete: function() {
+        complete: function () {
             $.mobile.loading('hide');
         },
-        success: function(data) {
+        success: function (data) {
             if (data.result === "ok") {
                 $('#panel-carro-canasta').html(data.response.canastaHTML);
                 $('#panel-carro-canasta').trigger("create");
@@ -1538,14 +1606,14 @@ $(document).on('click', "a[data-role='pedidodetalle']", function() {
                 });
             }
         },
-        error: function(jqXHR, textStatus, errorThrown) {
+        error: function (jqXHR, textStatus, errorThrown) {
             $.mobile.loading('hide');
             alert('Error: ' + errorThrown);
         }
     });
 });
 
-$(document).on('click', "a[data-role='cotizaciondetalle']", function() {
+$(document).on('click', "a[data-role='cotizaciondetalle']", function () {
     var cotizacion = $(this).attr('data-cotizacion');
 
     $.ajax({
@@ -1554,13 +1622,13 @@ $(document).on('click', "a[data-role='cotizaciondetalle']", function() {
         async: true,
         url: requestUrl + '/carro/agregarcotizacion',
         data: {cotizacion: cotizacion},
-        beforeSend: function() {
+        beforeSend: function () {
             $.mobile.loading('show');
         },
-        complete: function() {
+        complete: function () {
             $.mobile.loading('hide');
         },
-        success: function(data) {
+        success: function (data) {
             if (data.result === "ok") {
                 $('#panel-carro-canasta').html(data.response.canastaHTML);
                 $('#panel-carro-canasta').trigger("create");
@@ -1579,14 +1647,14 @@ $(document).on('click', "a[data-role='cotizaciondetalle']", function() {
                 });
             }
         },
-        error: function(jqXHR, textStatus, errorThrown) {
+        error: function (jqXHR, textStatus, errorThrown) {
             $.mobile.loading('hide');
             alert('Error: ' + errorThrown);
         }
     });
 });
 
-$(document).on('click', "a[data-role='pedidolistaocultar']", function() {
+$(document).on('click', "a[data-role='pedidolistaocultar']", function () {
     var compra = $(this).attr('data-compra');
 
     $.ajax({
@@ -1595,10 +1663,10 @@ $(document).on('click', "a[data-role='pedidolistaocultar']", function() {
         async: true,
         url: requestUrl + '/usuario/ocultarpedido',
         data: {compra: compra},
-        beforeSend: function() {
+        beforeSend: function () {
             $.mobile.loading('show');
         },
-        success: function(data) {
+        success: function (data) {
             if (data.result === "ok") {
                 $.fn.yiiGridView.update('grid-cuenta-listapedidos');
                 $.mobile.loading('hide');
@@ -1609,20 +1677,20 @@ $(document).on('click', "a[data-role='pedidolistaocultar']", function() {
                 });
             }
         },
-        error: function(jqXHR, textStatus, errorThrown) {
+        error: function (jqXHR, textStatus, errorThrown) {
             $.mobile.loading('hide');
             alert('Error: ' + errorThrown);
         }
     });
 });
 
-$(document).on('click', "a[data-role='pedidogridestado']", function() {
+$(document).on('click', "a[data-role='pedidogridestado']", function () {
     $('<div>').mdialog({
         content: "<div data-role='main'><div class='ui-content' data-role='content' role='main'>" + $(this).attr('data-estado') + "<a class='ui-btn ui-btn-r ui-corner-all ui-shadow' data-rel='back' href='#'>Aceptar</a></div></div>"
     });
 });
 
-$(document).on('click', "a[data-role='listapersonal']", function() {
+$(document).on('click', "a[data-role='listapersonal']", function () {
     var lista = $(this).attr('data-lista');
     $.ajax({
         type: 'POST',
@@ -1630,13 +1698,13 @@ $(document).on('click', "a[data-role='listapersonal']", function() {
         async: true,
         url: requestUrl + '/carro/agregarlista',
         data: {lista: lista},
-        beforeSend: function() {
+        beforeSend: function () {
             $.mobile.loading('show');
         },
-        complete: function() {
+        complete: function () {
             $.mobile.loading('hide');
         },
-        success: function(data) {
+        success: function (data) {
             if (data.result === "ok") {
                 $('#panel-carro-canasta').html(data.response.canastaHTML);
                 $('#panel-carro-canasta').trigger("create");
@@ -1656,14 +1724,14 @@ $(document).on('click', "a[data-role='listapersonal']", function() {
             }
 
         },
-        error: function(jqXHR, textStatus, errorThrown) {
+        error: function (jqXHR, textStatus, errorThrown) {
             $.mobile.loading('hide');
             alert('Error: ' + errorThrown);
         }
     });
 });
 
-$(document).on('click', "input[data-role='lstpersonalform']", function() {
+$(document).on('click', "input[data-role='lstpersonalform']", function () {
     var data = {};
     var lista = $(this).attr('data-lista');
     if (lista !== undefined) {
@@ -1675,17 +1743,17 @@ $(document).on('click', "input[data-role='lstpersonalform']", function() {
         async: true,
         url: requestUrl + '/usuario/listapersonal/lista/post',
         data: $.param(data) + '&' + $('#form-listapersonal').serialize(),
-        beforeSend: function() {
+        beforeSend: function () {
             $('div[id^="ListasPersonales_"].has-error').html('');
             $('div[id^="ListasPersonales_"].has-error').css('display', 'none');
             $('#form-listapersonal input[type=button]').attr('disabled', 'disabled');
             $.mobile.loading('show');
         },
-        complete: function() {
+        complete: function () {
             $.mobile.loading('hide');
             $('#form-listapersonal input[type=button]').removeAttr('disabled');
         },
-        success: function(data) {
+        success: function (data) {
             var data = $.parseJSON(data);
             if (data.result === "ok") {
                 if ($('#ListaGuardarForm_idLista').length) {
@@ -1703,20 +1771,20 @@ $(document).on('click', "input[data-role='lstpersonalform']", function() {
                     content: "<div data-role='main'><div class='ui-content' data-role='content' role='main'>" + data.response + "<a class='ui-btn ui-btn-r ui-corner-all ui-shadow' data-rel='back' href='#'>Aceptar</a></div></div>"
                 });
             } else {
-                $.each(data, function(element, error) {
+                $.each(data, function (element, error) {
                     $('#' + element + '_em_').html(error);
                     $('#' + element + '_em_').css('display', 'block');
                 });
             }
         },
-        error: function(jqXHR, textStatus, errorThrown) {
+        error: function (jqXHR, textStatus, errorThrown) {
             $.mobile.loading('hide');
             alert('Error: ' + errorThrown);
         }
     });
 });
 
-$(document).on('change', "input[data-role='actualizarlistadetalle']", function() {
+$(document).on('change', "input[data-role='actualizarlistadetalle']", function () {
     var detalle = $(this).attr('data-detalle');
     var unidades = $(this).val();
     unidades = parseInt(unidades);
@@ -1735,13 +1803,13 @@ $(document).on('change', "input[data-role='actualizarlistadetalle']", function()
         async: true,
         url: requestUrl + '/usuario/listadetalle/accion/actualizar',
         data: {detalle: detalle, unidades: unidades},
-        beforeSend: function() {
+        beforeSend: function () {
             $.mobile.loading('show');
         },
-        complete: function() {
+        complete: function () {
             $.mobile.loading('hide');
         },
-        success: function(data) {
+        success: function (data) {
             if (data.result === "ok") {
                 $('#div-listadetalle').html(data.response.detalleHTML);
                 $('#div-listadetalle').trigger("create");
@@ -1753,14 +1821,14 @@ $(document).on('change', "input[data-role='actualizarlistadetalle']", function()
             }
 
         },
-        error: function(jqXHR, textStatus, errorThrown) {
+        error: function (jqXHR, textStatus, errorThrown) {
             $.mobile.loading('hide');
             alert('Error: ' + errorThrown);
         }
     });
 });
 
-$(document).on('click', "a[data-role='eliminarlistadetalle']", function() {
+$(document).on('click', "a[data-role='eliminarlistadetalle']", function () {
     var detalle = $(this).attr('data-detalle');
     $.ajax({
         type: 'POST',
@@ -1768,13 +1836,13 @@ $(document).on('click', "a[data-role='eliminarlistadetalle']", function() {
         async: true,
         url: requestUrl + '/usuario/listadetalle/accion/eliminar',
         data: {detalle: detalle},
-        beforeSend: function() {
+        beforeSend: function () {
             $.mobile.loading('show');
         },
-        complete: function() {
+        complete: function () {
             $.mobile.loading('hide');
         },
-        success: function(data) {
+        success: function (data) {
             if (data.result === "ok") {
                 $('#div-listadetalle').html(data.response.detalleHTML);
                 $('#div-listadetalle').trigger("create");
@@ -1786,14 +1854,14 @@ $(document).on('click', "a[data-role='eliminarlistadetalle']", function() {
             }
 
         },
-        error: function(jqXHR, textStatus, errorThrown) {
+        error: function (jqXHR, textStatus, errorThrown) {
             $.mobile.loading('hide');
             alert('Error: ' + errorThrown);
         }
     });
 });
 
-$(document).on('click', "a[data-role='lstpersonalguardar']", function() {
+$(document).on('click', "a[data-role='lstpersonalguardar']", function () {
     var tipo = $(this).attr('data-tipo');
     tipo = parseInt(tipo);
     if (isNaN(tipo)) {
@@ -1822,14 +1890,14 @@ $(document).on('click', "a[data-role='lstpersonalguardar']", function() {
         async: true,
         url: requestUrl + '/usuario/listapersonal/lista/guardar',
         data: {codigo: codigo, tipo: tipo, unidades: unidades, render: true},
-        beforeSend: function() {
+        beforeSend: function () {
             $("div[id^='page-listaguardar-']").remove();
             $.mobile.loading('show');
         },
-        complete: function() {
+        complete: function () {
             $.mobile.loading('hide');
         },
-        success: function(data) {
+        success: function (data) {
             if (data.result === 'ok') {
                 var id = "page-listaguardar-" + uniqueId();
                 var page = "<div data-role='page' id='" + id + "'><div data-role='main' class='ui-content'>" + data.response.dialogoHTML + "<a href='#' class='ui-btn ui-btn-r ui-corner-all ui-shadow' data-rel='back'>Cerrar</a></div></div>";
@@ -1841,31 +1909,31 @@ $(document).on('click', "a[data-role='lstpersonalguardar']", function() {
                 });
             }
         },
-        error: function(jqXHR, textStatus, errorThrown) {
+        error: function (jqXHR, textStatus, errorThrown) {
             $.mobile.loading('hide');
             alert('Error: ' + errorThrown);
         }
     });
 });
 
-$(document).on('click', "input[data-role='lstpersonalguardar']", function() {
+$(document).on('click', "input[data-role='lstpersonalguardar']", function () {
     $.ajax({
         type: 'POST',
         //dataType: 'json',
         async: true,
         url: requestUrl + '/usuario/listapersonal/lista/guardar',
         data: $('#form-listaguardar').serialize(),
-        beforeSend: function() {
+        beforeSend: function () {
             $('div[id^="ListaGuardarForm_"].has-error').html('');
             $('div[id^="ListaGuardarForm_"].has-error').css('display', 'none');
             $('#form-listaguardar input[type=button]').attr('disabled', 'disabled');
             $.mobile.loading('show');
         },
-        complete: function() {
+        complete: function () {
             $.mobile.loading('hide');
             $('#form-listaguardar input[type=button]').removeAttr('disabled');
         },
-        success: function(data) {
+        success: function (data) {
             var data = $.parseJSON(data);
             if (data.result === "ok") {
                 //$('#form-listaguardar')[0].reset();
@@ -1877,33 +1945,33 @@ $(document).on('click', "input[data-role='lstpersonalguardar']", function() {
                     content: "<div data-role='main'><div class='ui-content' data-role='content' role='main'>" + data.response + "<a class='ui-btn ui-btn-r ui-corner-all ui-shadow' data-rel='back' href='#'>Aceptar</a></div></div>"
                 });
             } else {
-                $.each(data, function(element, error) {
+                $.each(data, function (element, error) {
                     $('#' + element + '_em_').html(error);
                     $('#' + element + '_em_').css('display', 'block');
                 });
             }
         },
-        error: function(jqXHR, textStatus, errorThrown) {
+        error: function (jqXHR, textStatus, errorThrown) {
             $.mobile.loading('hide');
             alert('Error: ' + errorThrown);
         }
     });
 });
 
-$(document).on('click', "a[data-role='cambioubicacion']", function() {
+$(document).on('click', "a[data-role='cambioubicacion']", function () {
     $.ajax({
         type: 'POST',
         dataType: 'json',
         async: true,
         url: requestUrl + '/carro/vacio',
         data: $('#form-listaguardar').serialize(),
-        beforeSend: function() {
+        beforeSend: function () {
             $.mobile.loading('show');
         },
-        complete: function() {
+        complete: function () {
             $.mobile.loading('hide');
         },
-        success: function(data) {
+        success: function (data) {
             if (data.result == "ok") {
                 if (data.response) {
                     window.location.replace(requestUrl + '/sitio/ubicacion');
@@ -1916,14 +1984,14 @@ $(document).on('click', "a[data-role='cambioubicacion']", function() {
                 });
             }
         },
-        error: function(jqXHR, textStatus, errorThrown) {
+        error: function (jqXHR, textStatus, errorThrown) {
             $.mobile.loading('hide');
             alert('Error: ' + errorThrown);
         }
     });
 });
 
-$(document).on('keyup', "input[type='number']", function() {
+$(document).on('keyup', "input[type='number']", function () {
     var max = -1;
     if ($(this).attr('maxlength')) {
         max = parseInt($(this).attr('maxlength'));
@@ -1941,21 +2009,21 @@ $(document).on('keyup', "input[type='number']", function() {
     }
 });
 
-$(document).on('click', "input[data-role='pagopasarela']", function() {
+$(document).on('click', "input[data-role='pagopasarela']", function () {
     var boton = $(this);
     $.ajax({
         type: 'POST',
         dataType: 'json',
         async: true,
         url: requestUrl + '/carro/pagopasarela',
-        beforeSend: function() {
+        beforeSend: function () {
             boton.button('disable');
             $.mobile.loading('show');
         },
-        complete: function() {
+        complete: function () {
             $.mobile.loading('hide');
         },
-        success: function(data) {
+        success: function (data) {
             if (data.result == 'ok') {
                 $('#div-pasarela-info form').remove();
                 $('#div-pasarela-info').append(data.response);
@@ -1968,37 +2036,37 @@ $(document).on('click', "input[data-role='pagopasarela']", function() {
                 });
             }
         },
-        error: function(jqXHR, textStatus, errorThrown) {
+        error: function (jqXHR, textStatus, errorThrown) {
             boton.button('enable');
             alert('Error: ' + errorThrown);
         }
     });
 });
 
-$(document).on('click', "a[data-role='crearcotizacion']", function() {
+$(document).on('click', "a[data-role='crearcotizacion']", function () {
     $.ajax({
         type: 'POST',
         dataType: 'json',
         async: true,
         url: requestUrl + '/carro/crearcotizacion',
-        beforeSend: function() {
+        beforeSend: function () {
             $.mobile.loading('show');
         },
-        complete: function() {
+        complete: function () {
             $.mobile.loading('hide');
         },
-        success: function(data) {
+        success: function (data) {
             $('<div>').mdialog({
                 content: "<div data-role='main'><div class='ui-content' data-role='content' role='main'>" + data.response + "<a class='ui-btn ui-btn-r ui-corner-all ui-shadow' data-rel='back' href='#'>Aceptar</a></div></div>"
             });
         },
-        error: function(jqXHR, textStatus, errorThrown) {
+        error: function (jqXHR, textStatus, errorThrown) {
             alert('Error: ' + errorThrown);
         }
     });
 });
 
-$(document).on('click', "#form-registro input[data-registro='registro']", function() {
+$(document).on('click', "#form-registro input[data-registro='registro']", function () {
     var form = $(this).parents("form");//"#form-registro"
     var boton = $(this);
 
@@ -2007,14 +2075,14 @@ $(document).on('click', "#form-registro input[data-registro='registro']", functi
         async: true,
         url: requestUrl + '/usuario/registro',
         data: form.serialize(),
-        beforeSend: function() {
+        beforeSend: function () {
             boton.button('disable');
             $.mobile.loading('show');
         },
-        complete: function() {
+        complete: function () {
             $.mobile.loading('hide');
         },
-        success: function(data) {
+        success: function (data) {
             var obj = $.parseJSON(data);
 
             if (obj.result === 'ok') {
@@ -2027,13 +2095,13 @@ $(document).on('click', "#form-registro input[data-registro='registro']", functi
                 });
             } else {
                 boton.button('enable');
-                $.each(obj, function(element, error) {
+                $.each(obj, function (element, error) {
                     $('#' + form.attr('id') + ' #' + element + '_em_').html(error);
                     $('#' + form.attr('id') + ' #' + element + '_em_').css('display', 'block');
                 });
             }
         },
-        error: function(jqXHR, textStatus, errorThrown) {
+        error: function (jqXHR, textStatus, errorThrown) {
             boton.button('enable');
             alert('Error: ' + errorThrown);
         }
@@ -2041,7 +2109,7 @@ $(document).on('click', "#form-registro input[data-registro='registro']", functi
     return false;
 });
 
-$(document).on('click', "#form-autenticar input[data-registro='autenticar']", function() {
+$(document).on('click', "#form-autenticar input[data-registro='autenticar']", function () {
     var form = $(this).parents("form");//"#form-autenticar"
     var boton = $(this);
 
@@ -2050,14 +2118,14 @@ $(document).on('click', "#form-autenticar input[data-registro='autenticar']", fu
         async: true,
         url: requestUrl + '/usuario/ingresar',
         data: form.serialize(),
-        beforeSend: function() {
+        beforeSend: function () {
             boton.button('disable');
             $.mobile.loading('show');
         },
-        complete: function() {
+        complete: function () {
             $.mobile.loading('hide');
         },
-        success: function(data) {
+        success: function (data) {
             var obj = $.parseJSON(data);
 
             if (obj.result === 'ok') {
@@ -2069,13 +2137,13 @@ $(document).on('click', "#form-autenticar input[data-registro='autenticar']", fu
                 });
             } else {
                 boton.button('enable');
-                $.each(obj, function(element, error) {
+                $.each(obj, function (element, error) {
                     $('#' + form.attr('id') + ' #' + element + '_em_').html(error);
                     $('#' + form.attr('id') + ' #' + element + '_em_').css('display', 'block');
                 });
             }
         },
-        error: function(jqXHR, textStatus, errorThrown) {
+        error: function (jqXHR, textStatus, errorThrown) {
             boton.button('enable');
             alert('Error: ' + errorThrown);
         }
@@ -2083,7 +2151,7 @@ $(document).on('click', "#form-autenticar input[data-registro='autenticar']", fu
     return false;
 });
 
-$(document).on('click', "#form-recordar input[data-registro='recordar']", function() {
+$(document).on('click', "#form-recordar input[data-registro='recordar']", function () {
     var form = $(this).parents("form");//"#form-recordar"
     var boton = $(this);
 
@@ -2092,14 +2160,14 @@ $(document).on('click', "#form-recordar input[data-registro='recordar']", functi
         async: true,
         url: requestUrl + '/usuario/recordar',
         data: form.serialize(),
-        beforeSend: function() {
+        beforeSend: function () {
             boton.button('disable');
             $.mobile.loading('show');
         },
-        complete: function() {
+        complete: function () {
             $.mobile.loading('hide');
         },
-        success: function(data) {
+        success: function (data) {
             var obj = $.parseJSON(data);
 
             if (obj.result === 'ok') {
@@ -2115,13 +2183,13 @@ $(document).on('click', "#form-recordar input[data-registro='recordar']", functi
                 });
             } else {
                 boton.button('enable');
-                $.each(obj, function(element, error) {
+                $.each(obj, function (element, error) {
                     $('#' + form.attr('id') + ' #' + element + '_em_').html(error);
                     $('#' + form.attr('id') + ' #' + element + '_em_').css('display', 'block');
                 });
             }
         },
-        error: function(jqXHR, textStatus, errorThrown) {
+        error: function (jqXHR, textStatus, errorThrown) {
             boton.button('enable');
             alert('Error: ' + errorThrown);
         }
@@ -2129,7 +2197,7 @@ $(document).on('click', "#form-recordar input[data-registro='recordar']", functi
     return false;
 });
 
-$(document).on('change', "#form-listapersonal input[id='ListasPersonales_estadoLista']", function() {
+$(document).on('change', "#form-listapersonal input[id='ListasPersonales_estadoLista']", function () {
     if ($(this).is(":checked")) {
         $('#div-lista-config-recordacion').removeClass('hide');
     } else {
@@ -2137,26 +2205,101 @@ $(document).on('change', "#form-listapersonal input[id='ListasPersonales_estadoL
     }
 });
 
-$(document).on('click', "a[data-role='tooltip']", function() {
+$(document).on('click', "a[data-role='tooltip']", function () {
     var id = 'autotooltip-' + uniqueId();
     var arrow = $(this).attr('data-arrow') ? $(this).attr('data-arrow') : "t";
     var html = "<div data-role='popup' id='" + id + "' class='ui-content' data-arrow='" + arrow + "' data-theme='a'><p>" + $(this).attr('data-msg') + "</p></div>";
     $('body').append(html);
     $("#" + id).popup({
         positionTo: $(this),
-        afterclose: function(event, ui) {
+        afterclose: function (event, ui) {
             $("#" + id).remove();
         }
     });
     $("#" + id).popup("open");
 });
 
-$(document).ready(function() {
-    $('.lst_ub_cdd .ui-collapsible-heading-toggle').click(function() {
+$(document).on('click', 'div[data-role="tipoentrega"], a[data-role="tipoentrega"]', function () {
+    var tipo = $(this).attr('data-tipo');
+    var _tipo = tipo == tipoEntrega.presencial ? tipoEntrega.domicilio : tipoEntrega.presencial;
+
+    if (tipo == tipoEntrega.presencial) {
+        $.ajax({
+            type: 'POST',
+            dataType: 'json',
+            async: true,
+            url: requestUrl + '/carro/pasoporel',
+            data: {opcion: 'modal'},
+            beforeSend: function () {
+                $("#page-pasoporel").remove();
+                $.mobile.loading('show');
+            },
+            success: function (data) {
+                if (data.result == "ok") {
+                    $('body').append(data.response);
+                    $.mobile.changePage('#page-pasoporel', {transition: "pop", role: "dialog", reverse: false});
+                } else {
+                    alert(data.response);
+                }
+                $.mobile.loading('hide');
+            },
+            error: function (jqXHR, textStatus, errorThrown) {
+                $.mobile.loading('hide');
+                alert('Error: ' + errorThrown);
+            }
+        });
+    } else {
+        seleccionTipoEntrega(tipo, _tipo);
+    }
+
+});
+
+function seleccionTipoEntrega(tipo, _tipo) {
+    $('div[data-role="tipoentrega"]').removeClass('activo');
+    $('div[data-role="tipoentrega"]div[data-tipo="' + tipo + '"]').addClass('activo');
+    $('div[data-role="tipoentrega"]').addClass('inactivo');
+    $('div[data-role="tipoentrega"]div[data-tipo="' + tipo + '"]').removeClass('inactivo');
+
+    //$('#pasoporel-seleccion-pdv-nombre').html("");
+    //$('#pasoporel-seleccion-pdv-direccion').html("");
+    $('#FormaPagoForm_tipoEntrega').val(tipo);
+    $('input[name="FormaPagoForm[indicePuntoVenta]"]').val("");
+    /*$('div[data-role="tipoentrega-habilitar"]div[data-habilitar="' + tipo + '"]').removeClass('display-none');
+     $('div[data-role="tipoentrega-habilitar"]div[data-habilitar="' + tipo + '"] input').removeAttr('disabled');
+     $('div[data-role="tipoentrega-habilitar"]div[data-habilitar="' + _tipo + '"]').addClass('display-none');
+     $('div[data-role="tipoentrega-habilitar"]div[data-habilitar="' + _tipo + '"] input[type="text"]').val('');
+     $('div[data-role="tipoentrega-habilitar"]div[data-habilitar="' + _tipo + '"] input[type="radio"]').prop('checked', false);
+     $('div[data-role="tipoentrega-habilitar"]div[data-habilitar="' + _tipo + '"] input').attr('disabled', 'disabled');*/
+}
+
+$(document).on('click', 'button[data-role="pasoporel-seleccion-pdv"]', function () {
+    seleccionTipoEntrega(tipoEntrega.presencial, tipoEntrega.domicilio);
+    //$('#pasoporel-seleccion-pdv-nombre').html($(this).attr('data-nombre'));
+    //$('#pasoporel-seleccion-pdv-direccion').html($(this).attr('data-direccion'));
+    $("#page-pasoporel").dialog("close");
+    //$("#page-pasoporel").remove();
+    $('input[name="FormaPagoForm[indicePuntoVenta]"]').val($(this).attr('data-idx'));
+});
+
+$(document).on('click','a[data-role="popup-pagoexpress"]',function(){
+    $("#popup-pagoexpress").popup("open");
+    return false;
+});
+
+$(document).on('click','a[data-role="tipoentrega-info"]',function(){
+    var target = $(this).attr('href');
+    if(target){
+        $(target).panel('open');
+        return false;
+    }
+});
+
+$(document).ready(function () {
+    $('.lst_ub_cdd .ui-collapsible-heading-toggle').click(function () {
         $('li a.c_btn_sel').removeClass('ui-btn-active2');
         $('.list_ciud.ui-listview li').removeClass('active2');
     });
-    $('a.c_btn_sel').click(function() {
+    $('a.c_btn_sel').click(function () {
         $('li a.c_btn_sel').removeClass('ui-btn-active2');
         $('.list_ciud.ui-listview li').removeClass('active2');
         $(this).addClass('ui-btn-active2');

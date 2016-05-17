@@ -29,15 +29,10 @@ class CarroController extends Controller {
     }
 
     public function actionPasoporel() {
-        if ($this->isMobile) {
-            echo CJSON::encode(array('result' => 'error', 'response' => 'Solicitud env&aacute;lida'));
-            Yii::app()->end();
-        }
-
         $opcion = Yii::app()->getRequest()->getPost('opcion');
 
         if ($opcion == null) {
-            echo CJSON::encode(array('result' => 'error', 'response' => 'Solicitud env&aacute;lida'));
+            echo CJSON::encode(array('result' => 'error', 'response' => 'Solicitud inv&aacute;lida'));
             Yii::app()->end();
         }
 
@@ -57,7 +52,7 @@ class CarroController extends Controller {
 
             echo CJSON::encode(array(
                 'result' => 'ok',
-                'response' => $this->renderPartial("d_pagarPresencial", array('listPuntosVenta' => $modelPago->listPuntosVenta), true)
+                'response' => $this->renderPartial($this->isMobile ? "_pagarPresencial" : "d_pagarPresencial", array('listPuntosVenta' => $modelPago->listPuntosVenta), true)
             ));
             Yii::app()->end();
         } else if ($opcion == "seleccion") {
@@ -171,7 +166,8 @@ class CarroController extends Controller {
                 $objProductoCarro = new ProductoCarro($objProducto);
                 Yii::app()->shoppingCart->put($objProductoCarro, false, $cantidadU);
             } else {
-                if (Yii::app()->session[Yii::app()->params->sesion['tipoEntrega']] == Yii::app()->params->entrega['tipo']['presencial']) {
+                $objPagoForm = new FormaPagoForm;
+                if (!$objPagoForm->tieneDomicilio($this->objSectorCiudad)) {
                     echo CJSON::encode(array('result' => 'error', 'response' => "La cantidad solicitada no está disponible en este momento. Saldos disponibles: $objSaldo->saldoUnidad unidades"));
                     Yii::app()->end();
                 }
@@ -428,9 +424,12 @@ class CarroController extends Controller {
                         $agregadoCompleto = false;
                     } else {
                         $objProductoCarro = new ProductoCarro($objProducto);
-                        Yii::app()->shoppingCart->putStored($objProductoCarro, $objItem->unidadesCedi);
-                        $agregadoItem = true;
-                        $nUnidadesCarro += $objItem->unidadesCedi;
+                        if(Yii::app()->shoppingCart->putStored($objProductoCarro, $objItem->unidadesCedi)){
+                            $agregadoItem = true;
+                            $nUnidadesCarro += $objItem->unidadesCedi;
+                        }else{
+                            $agregadoCompleto = false;
+                        }
                     }
                 }
             }
@@ -651,9 +650,12 @@ class CarroController extends Controller {
                     if ($objSaldoBodega === null) {
                         $agregadoCompleto = false;
                     } else {
-                        Yii::app()->shoppingCart->putStored($objProductoCarro, $objItem->unidadesCedi);
-                        $agregadoItem = true;
-                        $nUnidadesCarro += $objItem->unidadesCedi;
+                        if(Yii::app()->shoppingCart->putStored($objProductoCarro, $objItem->unidadesCedi)){
+                            $agregadoItem = true;
+                            $nUnidadesCarro += $objItem->unidadesCedi;
+                        }else{
+                            $agregadoCompleto = false;
+                        }
                     }
 
                     if ($agregadoItem) {
@@ -945,12 +947,16 @@ class CarroController extends Controller {
             Yii::app()->end();
         }
 
-        $objSectorCiudad = null;
-        if (isset(Yii::app()->session[Yii::app()->params->sesion['sectorCiudadEntrega']]))
-            $objSectorCiudad = Yii::app()->session[Yii::app()->params->sesion['sectorCiudadEntrega']];
+        $objSectorCiudad = $this->objSectorCiudad;
 
         if ($objSectorCiudad == null) {
             echo CJSON::encode(array('result' => 'error', 'response' => 'No se detecta ubicación'));
+            Yii::app()->end();
+        }
+        
+        $objPagoForm = new FormaPagoForm;
+        if (!$objPagoForm->tieneDomicilio($objSectorCiudad)) {
+            echo CJSON::encode(array('result' => 'error', 'response' => "La cantidad solicitada no está disponible en este momento. Saldos disponibles: $objSaldo->saldoUnidad unidades"));
             Yii::app()->end();
         }
 
@@ -1183,7 +1189,8 @@ class CarroController extends Controller {
             if ($cantidadU <= $objSaldo->saldoUnidad) {
                 $agregarU = true;
             } else {
-                if (Yii::app()->session[Yii::app()->params->sesion['tipoEntrega']] == Yii::app()->params->entrega['tipo']['presencial']) {
+                $objPagoForm = new FormaPagoForm;
+                if (!$objPagoForm->tieneDomicilio($this->objSectorCiudad)) {
                     echo CJSON::encode(array('result' => 'error', 'response' => array(
                             'message' => "La cantidad solicitada no está disponible en este momento. Saldos disponibles: $objSaldo->saldoUnidad unidades",
                             'carroHTML' => $this->renderPartial($carroVista, null, true),
@@ -1317,6 +1324,15 @@ class CarroController extends Controller {
         if (!$this->isMobile) {
             $carroVista = "d_carro";
         }
+        
+        $objPagoForm = new FormaPagoForm;
+        if (!$objPagoForm->tieneDomicilio($this->objSectorCiudad)) {
+            echo CJSON::encode(array('result' => 'error', 'response' => array(
+                    'message' => 'Solicitud inválida, entrega de bodega no disponible',
+                    'carroHTML' => $this->renderPartial($carroVista, null, true),
+            )));
+            Yii::app()->end();
+        }
 
         $cantidad = Yii::app()->getRequest()->getPost('cantidad', null);
 
@@ -1430,11 +1446,6 @@ class CarroController extends Controller {
             Yii::app()->end();
         }
 
-        if ($this->isMobile && $this->tipoEntrega != Yii::app()->params->entrega['tipo']['domicilio']) {
-            Yii::app()->user->setFlash('error', "Tipo de entrega no válido");
-            $this->redirect($this->createUrl('/carro'));
-        }
-
         $objPagoExpress = PagoExpress::model()->find(array(
             'with' => array('objDireccionDespacho' => array('condition' => 'objDireccionDespacho.codigoCiudad=:ciudad AND objDireccionDespacho.codigoSector=:sector')),
             'condition' => 't.identificacionUsuario=:cedula AND t.activo=:activo',
@@ -1473,6 +1484,7 @@ class CarroController extends Controller {
             $modelPago->pasoValidado[Yii::app()->params->pagar['pasos'][1]] = Yii::app()->params->pagar['pasos'][1];
             $modelPago->pasoValidado[Yii::app()->params->pagar['pasos'][2]] = Yii::app()->params->pagar['pasos'][2];
             $modelPago->pasoValidado[Yii::app()->params->pagar['pasos'][3]] = Yii::app()->params->pagar['pasos'][3];
+            $modelPago->pasoValidado[Yii::app()->params->pagar['pasos'][4]] = Yii::app()->params->pagar['pasos'][4];
         } else {
             $modelPago->pasoValidado[Yii::app()->params->pagar['pasosDesktop'][1]] = Yii::app()->params->pagar['pasosDesktop'][1];
         }
@@ -1483,43 +1495,27 @@ class CarroController extends Controller {
             $objDireccion = DireccionesDespacho::model()->findByPk($modelPago->idDireccionDespacho);
             $objFormaPago = FormaPago::model()->findByPk($modelPago->idFormaPago);
             $modelPago->pagoExpress = true;
-
+            
             $params = array();
             $params['objDireccion'] = $objDireccion;
             $params['objFormaPago'] = $objFormaPago;
             $params['modelPago'] = $modelPago;
+            $params['paso'] = $this->isMobile ? Yii::app()->params->pagar['pasos'][5] : Yii::app()->params->pagar['pasosDesktop'][2];
             Yii::app()->session[Yii::app()->params->sesion['carroPagarForm']] = $modelPago;
 
-            $this->render($this->isMobile ? '_paso4' : '_d_paso2', $params);
+            $this->render($this->isMobile ? '_paso5' : '_d_paso2', $params);
             Yii::app()->end();
         } else {
             $modelPago->pagoExpress = true;
 
             if ($this->isMobile) {
-                $modelPago->pasoValidado[Yii::app()->params->pagar['pasos'][4]] = Yii::app()->params->pagar['pasos'][4];
+                $modelPago->pasoValidado[Yii::app()->params->pagar['pasos'][4]] = Yii::app()->params->pagar['pasos'][5];
             } else {
                 $modelPago->pasoValidado[Yii::app()->params->pagar['pasosDesktop'][2]] = Yii::app()->params->pagar['pasosDesktop'][2];
             }
 
             Yii::app()->session[Yii::app()->params->sesion['carroPagarForm']] = $modelPago;
             $this->actionComprar();
-        }
-    }
-
-    public function verficiarDomicilio($objSectorCiudad, $tipoEntrega) {
-        if ($tipoEntrega != Yii::app()->params->entrega['tipo']['presencial']) {
-            $objHorarioSecCiud = HorariosCiudadSector::model()->find(array(
-                'condition' => 'codigoCiudad=:ciudad AND codigoSector=:sector',
-                'params' => array(
-                    ':ciudad' => $objSectorCiudad->codigoCiudad,
-                    ':sector' => $objSectorCiudad->codigoSector,
-                )
-            ));
-
-            if ($objHorarioSecCiud != null && $objHorarioSecCiud->sadCiudadSector == 0) {
-                Yii::app()->session[Yii::app()->params->sesion['tipoEntrega']] = $this->tipoEntrega = Yii::app()->params->entrega['tipo']['presencial'];
-                Yii::app()->session[Yii::app()->params->sesion['carroPagarForm']] = null;
-            }
         }
     }
 
@@ -1534,19 +1530,19 @@ class CarroController extends Controller {
         $this->actionPagar();
     }
 
-    public function actionPagar($paso = null, $post = false, $cambio = false) {
+    public function actionPagar($paso = null, $post = false) {
         if ($this->isMobile) {
-            $this->pagarMovil($paso, $post, $cambio);
+            $this->pagarMovil($paso, $post);
         } else {
             $this->pagarDesktop($paso, $post);
         }
     }
 
-    private function pagarMovil($paso, $post, $cambio) {
+    private function pagarMovil($paso, $post) {
         if (is_string($post)) {
             $post = ($post == "true");
         }
-
+        
         if ($this->objSectorCiudad === null) {
             if ($post) {
                 echo CJSON::encode(array('result' => 'ok', 'response' => 'Seleccionar ubicaci&oacute;n', 'redirect' => $this->createUrl('/sitio/ubicacion')));
@@ -1568,14 +1564,6 @@ class CarroController extends Controller {
             }
         }
 
-        if ($cambio) {
-            Yii::app()->session[Yii::app()->params->sesion['tipoEntrega']] = $this->tipoEntrega = Yii::app()->params->entrega['tipo']['domicilio'];
-            _setCookie(Yii::app()->params->sesion['tipoEntrega'], Yii::app()->params->entrega['tipo']['domicilio']);
-            Yii::app()->session[Yii::app()->params->sesion['carroPagarForm']] = null;
-            $paso = null;
-            $post = false;
-        }
-
         if (Yii::app()->shoppingCart->isEmpty()) {
             Yii::app()->session[Yii::app()->params->sesion['carroPagarForm']] = null;
 
@@ -1587,6 +1575,10 @@ class CarroController extends Controller {
                 Yii::app()->end();
             }
         }
+        
+        if ($modelPago!=null && $modelPago->pagoExpress) {
+            $modelPago = null;
+        }
 
         if (Yii::app()->user->isGuest && $modelPago == null) {
             Yii::app()->session[Yii::app()->params->sesion['redireccionAutenticacion']] = $this->createAbsoluteUrl('pagar');
@@ -1594,14 +1586,40 @@ class CarroController extends Controller {
             Yii::app()->end();
         }
 
-        $this->verficiarDomicilio($this->objSectorCiudad, $this->tipoEntrega);
+        if ($modelPago == null) {
+            $modelPago = new FormaPagoForm;
+            $modelPago->isMobil = true;
 
-        if ($this->tipoEntrega == Yii::app()->params->entrega['tipo']['domicilio']) {
-            $this->pagarDomicilioMovil($paso, $post);
-        } else if ($this->tipoEntrega == Yii::app()->params->entrega['tipo']['presencial']) {
-            $this->pagarPresencialMovil($paso, $post);
+            if (Yii::app()->user->isGuest) {
+                $modelPago->identificacionUsuario = null;
+                $modelPago->pagoInvitado = true;
+            } else {
+                $modelPago->identificacionUsuario = Yii::app()->user->name;
+                $modelPago->pagoInvitado = false;
+            }
+
+            $modelPago->consultarHorario($this->objSectorCiudad);
+            $modelPago->tipoEntrega = Yii::app()->params->entrega['tipo']['domicilio'];
+            Yii::app()->session[Yii::app()->params->sesion['carroPagarForm']] = $modelPago;
+        }
+
+        if ($modelPago->tipoEntrega == null) {
+            $modelPago->tipoEntrega = Yii::app()->params->entrega['tipo']['domicilio'];
+            Yii::app()->session[Yii::app()->params->sesion['carroPagarForm']] = $modelPago;
+        }
+
+        //verificar si tiene domicilio
+        if (!$modelPago->tieneDomicilio($this->objSectorCiudad)) {
+            $modelPago->tipoEntrega = Yii::app()->params->entrega['tipo']['presencial'];
+        }
+
+        if (Yii::app()->user->isGuest) {
+            $modelPago->pagoInvitado = true;
+            $modelPago->identificacionUsuario = null;
+            Yii::app()->session[Yii::app()->params->sesion['carroPagarForm']] = $modelPago;
+            $this->pagarInvitadoMovil($paso, $post, $modelPago);
         } else {
-            $this->redirect($this->createUrl('/sitio'));
+            $this->pagarAutenticadoMovil($paso, $post, $modelPago);
         }
     }
 
@@ -1643,7 +1661,11 @@ class CarroController extends Controller {
                 Yii::app()->end();
             }
         }
-
+        
+        if ($modelPago!=null && $modelPago->pagoExpress) {
+            $modelPago = null;
+        }
+        
         if (Yii::app()->user->isGuest && $modelPago == null) {
             Yii::app()->session[Yii::app()->params->sesion['redireccionAutenticacion']] = $this->createAbsoluteUrl('pagar');
             $this->render('/usuario/d_autenticar', array('pagar' => true));
@@ -1761,6 +1783,7 @@ class CarroController extends Controller {
                     $form = new FormaPagoForm($paso);
                     $form->identificacionUsuario = Yii::app()->user->name;
                     $form->pagoInvitado = false;
+                    $form->objHorarioCiudadSector = $modelPago->objHorarioCiudadSector;
                     $form->tipoEntrega = $modelPago->tipoEntrega;
                     $form->isMobil = false;
 
@@ -1789,7 +1812,7 @@ class CarroController extends Controller {
         } else {
             //validar pasos anteriores
             $modelPago->validarPasos(Yii::app()->params->pagar['pasosDisponiblesDesktop'], $paso);
-
+            
             $params = array();
             $params['parametros']['paso'] = $paso;
             $params['paso'] = $paso;
@@ -1939,6 +1962,7 @@ class CarroController extends Controller {
                     $form = new FormaPagoForm($paso);
                     $form->identificacionUsuario = null;
                     $form->pagoInvitado = true;
+                    $form->objHorarioCiudadSector = $modelPago->objHorarioCiudadSector;
                     $form->tipoEntrega = $modelPago->tipoEntrega;
                     $form->isMobil = false;
 
@@ -2016,7 +2040,572 @@ class CarroController extends Controller {
         }
     }
 
-    private function pagarDomicilioMovil($paso, $post) {
+    private function pagarAutenticadoMovil($paso, $post, $modelPago) {
+        if ($paso === null)
+            $paso = Yii::app()->params->pagar['pasos'][1];
+
+        if (!in_array($paso, Yii::app()->params->pagar['pasosDisponibles']['domicilio'])) {
+            throw new CHttpException(404, 'Página solicitada no existe.');
+        }
+
+        $modelPago->setScenario($paso);
+
+        if ($post) {
+            $siguiente = Yii::app()->getRequest()->getPost('siguiente', null);
+
+            if ($siguiente === null) {
+                echo CJSON::encode(array('result' => 'error', 'response' => 'Solicitud inválida'));
+                Yii::app()->end();
+            }
+
+            switch ($paso) {
+                case Yii::app()->params->pagar['pasos'][1]:
+                    $form = new FormaPagoForm($paso);
+                    $form->pagoInvitado = $modelPago->pagoInvitado;
+                    $form->identificacionUsuario = Yii::app()->user->name;
+                    $form->objHorarioCiudadSector = $modelPago->objHorarioCiudadSector;
+                    //$form->objSectorCiudad = $modelPago->objSectorCiudad;
+                    $form->tipoEntrega = $modelPago->tipoEntrega;
+
+                    if (isset($_POST['FormaPagoForm'])) {
+                        foreach ($_POST['FormaPagoForm'] as $atributo => $valor) {
+                            $form->$atributo = is_string($valor) ? trim($valor) : $valor;
+                        }
+                        //$form->attributes = $_POST['FormaPagoForm'];
+                    }
+
+                    if ($form->validate()) {
+                        $modelPago->tipoEntrega = $form->tipoEntrega;
+
+                        if ($modelPago->tipoEntrega == Yii::app()->params->entrega['tipo']['presencial']) {
+                            $modelPago->indicePuntoVenta = $form->indicePuntoVenta;
+                            $modelPago->seleccionarPdv($form->indicePuntoVenta);
+                        }
+
+                        $modelPago->pasoValidado[$paso] = $paso;
+                        Yii::app()->session[Yii::app()->params->sesion['carroPagarForm']] = $modelPago;
+                        echo CJSON::encode(array('result' => 'ok', 'response' => 'Datos guardados', 'redirect' => $this->createUrl("/carro/pagar", array('paso' => $siguiente))));
+                        Yii::app()->end();
+                    } else {
+                        echo CActiveForm::validate($form);
+                        Yii::app()->end();
+                    }
+                    break;
+                case Yii::app()->params->pagar['pasos'][2]:
+                    $form = new FormaPagoForm($paso);
+                    $form->identificacionUsuario = Yii::app()->user->name;
+                    $form->pagoInvitado = $modelPago->pagoInvitado;
+                    $form->tipoEntrega = $modelPago->tipoEntrega;
+                    $form->idDireccionDespacho = Yii::app()->getRequest()->getPost('direccion', null);
+                    $form->objHorarioCiudadSector = $modelPago->objHorarioCiudadSector;
+                    //$form->objSectorCiudad = $modelPago->objSectorCiudad;
+
+                    if (isset($_POST['FormaPagoForm'])) {
+                        foreach ($_POST['FormaPagoForm'] as $atributo => $valor) {
+                            $form->$atributo = is_string($valor) ? trim($valor) : $valor;
+                        }
+                        //$form->attributes = $_POST['FormaPagoForm'];
+                    }
+
+                    if ($form->validate()) {
+                        $modelPago->idDireccionDespacho = $form->idDireccionDespacho;
+                        $modelPago->pasoValidado[$paso] = $paso;
+                        Yii::app()->session[Yii::app()->params->sesion['carroPagarForm']] = $modelPago;
+                        echo CJSON::encode(array('result' => 'ok', 'response' => 'Datos guardados', 'redirect' => $this->createUrl("/carro/pagar", array('paso' => $siguiente))));
+                        Yii::app()->end();
+                    } else {
+                        echo CActiveForm::validate($form);
+                        Yii::app()->end();
+                    }
+                    break;
+                case Yii::app()->params->pagar['pasos'][3]:
+
+                    $form = new FormaPagoForm($paso);
+                    $form->identificacionUsuario = Yii::app()->user->name;
+                    $form->pagoInvitado = $modelPago->pagoInvitado;
+                    $form->tipoEntrega = $modelPago->tipoEntrega;
+                    $form->objHorarioCiudadSector = $modelPago->objHorarioCiudadSector;
+                    //$form->objSectorCiudad = $modelPago->objSectorCiudad;
+
+                    if (isset($_POST['FormaPagoForm'])) {
+                        foreach ($_POST['FormaPagoForm'] as $atributo => $valor) {
+                            $form->$atributo = is_string($valor) ? trim($valor) : $valor;
+                        }
+                        //$form->attributes = $_POST['FormaPagoForm'];
+                    }
+
+                    if ($form->validate()) {
+                        $modelPago->fechaEntrega = $form->fechaEntrega;
+                        $modelPago->comentario = $form->comentario;
+                        $modelPago->telefonoContacto = $form->telefonoContacto;
+                        $modelPago->pasoValidado[$paso] = $paso;
+                        Yii::app()->session[Yii::app()->params->sesion['carroPagarForm']] = $modelPago;
+                        echo CJSON::encode(array('result' => 'ok', 'response' => 'Datos guardados', 'redirect' => $this->createUrl("/carro/pagar", array('paso' => $siguiente))));
+                        Yii::app()->end();
+                    } else {
+                        echo CActiveForm::validate($form);
+                        Yii::app()->end();
+                    }
+                    break;
+                case Yii::app()->params->pagar['pasos'][4]:
+                    $form = new FormaPagoForm($paso);
+                    $form->identificacionUsuario = Yii::app()->user->name;
+                    $form->pagoInvitado = $modelPago->pagoInvitado;
+                    $form->tipoEntrega = $modelPago->tipoEntrega;
+                    $form->bono = $modelPago->bono;
+                    $form->totalCompra = $modelPago->totalCompra;
+                    $form->objHorarioCiudadSector = $modelPago->objHorarioCiudadSector;
+                    //$form->objSectorCiudad = $modelPago->objSectorCiudad;
+
+                    if (isset($_POST['FormaPagoForm'])) {
+                        foreach ($_POST['FormaPagoForm'] as $atributo => $valor) {
+                            $form->$atributo = is_string($valor) ? trim($valor) : $valor;
+                        }
+                        //$form->attributes = $_POST['FormaPagoForm'];
+                    }
+
+                    if ($form->validate()) {
+                        //$modelPago->attributes = $_POST['FormaPagoForm'];
+                        $modelPago->idFormaPago = $form->idFormaPago;
+                        $modelPago->numeroTarjeta = $form->numeroTarjeta;
+                        $modelPago->cuotasTarjeta = $form->cuotasTarjeta;
+                        $modelPago->usoBono = $form->usoBono;
+                        //$modelPago->codigoCliente = $form->codigoCliente;
+                        //$modelPago->codigoPromocion = $form->codigoPromocion;
+                        $modelPago->pasoValidado[$paso] = $paso;
+                        Yii::app()->session[Yii::app()->params->sesion['carroPagarForm']] = $modelPago;
+                        echo CJSON::encode(array('result' => 'ok', 'response' => 'Datos guardados', 'redirect' => $this->createUrl("/carro/pagar", array('paso' => $siguiente))));
+                        Yii::app()->end();
+                    } else {
+                        echo CActiveForm::validate($form);
+                        Yii::app()->end();
+                    }
+                    break;
+                case Yii::app()->params->pagar['pasos'][5]:
+                    Yii::app()->session[Yii::app()->params->sesion['carroPagarForm']] = $modelPago;
+
+                    if ($siguiente == "finalizar") {
+                        if (isset($_POST['FormaPagoForm'])) {
+                            $form = new FormaPagoForm($paso);
+                            $form->identificacionUsuario = Yii::app()->user->name;
+                            $form->pagoInvitado = $modelPago->pagoInvitado;
+                            $form->tipoEntrega = $modelPago->tipoEntrega;
+                            $form->objHorarioCiudadSector = $modelPago->objHorarioCiudadSector;
+                            //$form->objSectorCiudad = $modelPago->objSectorCiudad;
+
+                            if (isset($_POST['FormaPagoForm'])) {
+                                foreach ($_POST['FormaPagoForm'] as $atributo => $valor) {
+                                    $form->$atributo = is_string($valor) ? trim($valor) : $valor;
+                                }
+                                //$form->attributes = $_POST['FormaPagoForm'];
+                            }
+
+                            if ($form->validate()) {
+                                //$modelPago->attributes = $_POST['FormaPagoForm'];
+                                $modelPago->confirmacion = $form->confirmacion;
+                                $modelPago->pasoValidado[$paso] = $paso;
+                                Yii::app()->session[Yii::app()->params->sesion['carroPagarForm']] = $modelPago;
+                                echo CJSON::encode(array('result' => 'ok', 'response' => "Datos guardados", 'redirect' => $this->createUrl("/carro/comprar")));
+                                Yii::app()->end();
+                            } else {
+                                echo CActiveForm::validate($form);
+                                Yii::app()->end();
+                            }
+                        } else {
+                            echo CJSON::encode(array('result' => 'error', 'response' => 'Solicitud inválida'));
+                            Yii::app()->end();
+                        }
+                    }
+
+                    echo CJSON::encode(array('result' => 'ok', 'response' => 'Datos guardados', 'redirect' => $this->createUrl("/carro/pagar", array('paso' => $siguiente))));
+                    Yii::app()->end();
+                    break;
+            }
+
+            echo CJSON::encode(array('result' => 'error', 'response' => 'ERROR'));
+            Yii::app()->end();
+        } else {
+            //CVarDumper::dump($modelPago, 3);
+            $this->fixedFooter = true;
+
+            /* if ($modelPago->pagoExpress) {
+              $paso = Yii::app()->params->pagar['pasos'][1];
+              $modelPago = new FormaPagoForm;
+              $modelPago->identificacionUsuario = Yii::app()->user->name;
+              $modelPago->consultarHorario($this->objSectorCiudad);
+              Yii::app()->session[Yii::app()->params->sesion['carroPagarForm']] = $modelPago;
+              } */
+
+            //validar pasos anteriores
+            $modelPago->validarPasos(Yii::app()->params->pagar['pasosDisponibles']['domicilio'], $paso);
+
+            $params = array();
+            $params['paso'] = $paso;
+            $params['parametros']['paso'] = $paso;
+
+            $nPasoActual = Yii::app()->params->pagar['pasos'][$paso];
+            $nPasoAnterior = $nPasoActual - 1;
+            $nPasoSiguiente = $nPasoActual + 1;
+            $pasoSiguiente = isset(Yii::app()->params->pagar['pasos'][$nPasoSiguiente]) ? Yii::app()->params->pagar['pasos'][$nPasoSiguiente] : null;
+            $pasoAnterior = isset(Yii::app()->params->pagar['pasos'][$nPasoAnterior]) ? Yii::app()->params->pagar['pasos'][$nPasoAnterior] : null;
+
+            $params['pasoAnterior'] = $pasoAnterior;
+            $params['pasoSiguiente'] = $pasoSiguiente;
+            $params['nPasoActual'] = $nPasoActual;
+
+            switch ($paso) {
+                case Yii::app()->params->pagar['pasos'][2]:
+                    //Yii::app()->session[Yii::app()->params->sesion['direccionEntrega']]
+                    $criteriaDireccion = array(
+                        'condition' => 'identificacionUsuario=:cedula AND (codigoCiudad=:ciudad AND (codigoSector=:sector OR codigoSector=0)) AND activo=:activo',
+                        'params' => array(
+                            ':cedula' => Yii::app()->user->name,
+                            ':activo' => 1,
+                            ':ciudad' => $this->objSectorCiudad->codigoCiudad,
+                            ':sector' => $this->objSectorCiudad->codigoSector
+                        )
+                    );
+
+                    if (isset(Yii::app()->session[Yii::app()->params->sesion['direccionEntrega']]) && Yii::app()->session[Yii::app()->params->sesion['direccionEntrega']] != null) {
+                        //$criteriaDireccion['condition'] .= " AND idDireccionDespacho=:direccion";
+                        //$criteriaDireccion['params'][':direccion'] = Yii::app()->session[Yii::app()->params->sesion['direccionEntrega']];
+                        $modelPago->idDireccionDespacho = Yii::app()->session[Yii::app()->params->sesion['direccionEntrega']];
+                    }
+
+                    $listDirecciones = DireccionesDespacho::model()->findAll($criteriaDireccion);
+
+                    $params['parametros']['listDirecciones'] = $listDirecciones;
+                    break;
+                case Yii::app()->params->pagar['pasos'][3]:
+                    $params['parametros']['listHorarios'] = $modelPago->listDataHoras();
+                    break;
+                case Yii::app()->params->pagar['pasos'][4]:
+                    $listFormaPago = array();
+
+                    if ($modelPago->pagoInvitado) {
+                        $listFormaPago = FormaPago::model()->findAll(array(
+                            'order' => 'formaPago',
+                            'condition' => 'estadoFormaPago=:estado AND idFormaPago <> :credirebaja',
+                            'params' => array(':estado' => 1, ':credirebaja' => Yii::app()->params->formaPago['idCredirebaja'])
+                        ));
+                    } else {
+                        $listFormaPago = FormaPago::model()->findAll(array(
+                            'order' => 'formaPago',
+                            'condition' => 'estadoFormaPago=:estado',
+                            'params' => array(':estado' => 1)
+                        ));
+                    }
+
+                    $modelPago->consultarBono(Yii::app()->shoppingCart->getTotalCost());
+                    Yii::app()->session[Yii::app()->params->sesion['carroPagarForm']] = $modelPago;
+                    $params['parametros']['listFormaPago'] = $listFormaPago;
+
+                    break;
+                case Yii::app()->params->pagar['pasos'][5]:
+                    $objDireccion = DireccionesDespacho::model()->findByPk($modelPago->idDireccionDespacho);
+                    $objFormaPago = FormaPago::model()->findByPk($modelPago->idFormaPago);
+                    $params['parametros']['objDireccion'] = $objDireccion;
+                    $params['parametros']['objFormaPago'] = $objFormaPago;
+
+                    Yii::app()->shoppingCart->setBono($modelPago->calcularBonoRedimido());
+                    $modelPago->calcularConfirmacion(Yii::app()->shoppingCart->getPositions());
+                    break;
+            }
+
+            $params['parametros']['modelPago'] = $modelPago;
+            $this->render("pagar", $params);
+        }
+    }
+
+    
+    private function pagarInvitadoMovil($paso, $post, $modelPago) {
+        if ($paso === null)
+            $paso = Yii::app()->params->pagar['pasos'][1];
+
+        if (!in_array($paso, Yii::app()->params->pagar['pasosDisponibles']['domicilio'])) {
+            throw new CHttpException(404, 'Página solicitada no existe.');
+        }
+
+        $modelPago->setScenario($paso);
+
+        if ($post) {
+            $siguiente = Yii::app()->getRequest()->getPost('siguiente', null);
+
+            if ($siguiente === null) {
+                echo CJSON::encode(array('result' => 'error', 'response' => 'Solicitud inválida'));
+                Yii::app()->end();
+            }
+
+            switch ($paso) {
+                case Yii::app()->params->pagar['pasos'][1]:
+                    $form = new FormaPagoForm($paso);
+                    $form->pagoInvitado = $modelPago->pagoInvitado;
+                    $form->identificacionUsuario = Yii::app()->user->name;
+                    $form->objHorarioCiudadSector = $modelPago->objHorarioCiudadSector;
+                    //$form->objSectorCiudad = $modelPago->objSectorCiudad;
+                    $form->tipoEntrega = $modelPago->tipoEntrega;
+
+                    if (isset($_POST['FormaPagoForm'])) {
+                        foreach ($_POST['FormaPagoForm'] as $atributo => $valor) {
+                            $form->$atributo = is_string($valor) ? trim($valor) : $valor;
+                        }
+                        //$form->attributes = $_POST['FormaPagoForm'];
+                    }
+
+                    if ($form->validate()) {
+                        $modelPago->tipoEntrega = $form->tipoEntrega;
+
+                        if ($modelPago->tipoEntrega == Yii::app()->params->entrega['tipo']['presencial']) {
+                            $modelPago->indicePuntoVenta = $form->indicePuntoVenta;
+                            $modelPago->seleccionarPdv($form->indicePuntoVenta);
+                        }
+
+                        $modelPago->pasoValidado[$paso] = $paso;
+                        Yii::app()->session[Yii::app()->params->sesion['carroPagarForm']] = $modelPago;
+                        echo CJSON::encode(array('result' => 'ok', 'response' => 'Datos guardados', 'redirect' => $this->createUrl("/carro/pagar", array('paso' => $siguiente))));
+                        Yii::app()->end();
+                    } else {
+                        echo CActiveForm::validate($form);
+                        Yii::app()->end();
+                    }
+                    break;
+                case Yii::app()->params->pagar['pasos'][2]:
+                    $form = new FormaPagoForm($paso);
+                    $form->identificacionUsuario = Yii::app()->user->name;
+                    $form->pagoInvitado = $modelPago->pagoInvitado;
+                    $form->tipoEntrega = $modelPago->tipoEntrega;
+                    $form->idDireccionDespacho = Yii::app()->getRequest()->getPost('direccion', null);
+                    $form->objHorarioCiudadSector = $modelPago->objHorarioCiudadSector;
+                    //$form->objSectorCiudad = $modelPago->objSectorCiudad;
+
+                    if (isset($_POST['FormaPagoForm'])) {
+                        foreach ($_POST['FormaPagoForm'] as $atributo => $valor) {
+                            $form->$atributo = is_string($valor) ? trim($valor) : $valor;
+                        }
+                        //$form->attributes = $_POST['FormaPagoForm'];
+                    }
+
+                    if ($form->validate()) {
+                        if ($modelPago->tipoEntrega == Yii::app()->params->entrega['tipo']['domicilio']) {
+                            $modelPago->descripcion = $form->descripcion;
+                            $modelPago->nombre = $form->nombre;
+                            $modelPago->correoElectronico = $form->correoElectronico;
+                            $modelPago->direccion = $form->direccion;
+                            $modelPago->barrio = $form->barrio;
+                            $modelPago->telefono = $form->telefono;
+                            $modelPago->extension = $form->extension;
+                            $modelPago->celular = $form->celular;
+                        }
+                        $modelPago->pasoValidado[$paso] = $paso;
+                        Yii::app()->session[Yii::app()->params->sesion['carroPagarForm']] = $modelPago;
+                        echo CJSON::encode(array('result' => 'ok', 'response' => 'Datos guardados', 'redirect' => $this->createUrl("/carro/pagar", array('paso' => $siguiente))));
+                        Yii::app()->end();
+                    } else {
+                        echo CActiveForm::validate($form);
+                        Yii::app()->end();
+                    }
+                    break;
+                case Yii::app()->params->pagar['pasos'][3]:
+
+                    $form = new FormaPagoForm($paso);
+                    $form->identificacionUsuario = Yii::app()->user->name;
+                    $form->pagoInvitado = $modelPago->pagoInvitado;
+                    $form->tipoEntrega = $modelPago->tipoEntrega;
+                    $form->objHorarioCiudadSector = $modelPago->objHorarioCiudadSector;
+                    //$form->objSectorCiudad = $modelPago->objSectorCiudad;
+
+                    if (isset($_POST['FormaPagoForm'])) {
+                        foreach ($_POST['FormaPagoForm'] as $atributo => $valor) {
+                            $form->$atributo = is_string($valor) ? trim($valor) : $valor;
+                        }
+                        //$form->attributes = $_POST['FormaPagoForm'];
+                    }
+
+                    if ($form->validate()) {
+                        $modelPago->fechaEntrega = $form->fechaEntrega;
+                        $modelPago->comentario = $form->comentario;
+                        $modelPago->telefonoContacto = $form->telefonoContacto;
+                        $modelPago->correoElectronicoContacto = $form->correoElectronicoContacto;
+                        $modelPago->pasoValidado[$paso] = $paso;
+                        Yii::app()->session[Yii::app()->params->sesion['carroPagarForm']] = $modelPago;
+                        echo CJSON::encode(array('result' => 'ok', 'response' => 'Datos guardados', 'redirect' => $this->createUrl("/carro/pagar", array('paso' => $siguiente))));
+                        Yii::app()->end();
+                    } else {
+                        echo CActiveForm::validate($form);
+                        Yii::app()->end();
+                    }
+                    break;
+                case Yii::app()->params->pagar['pasos'][4]:
+                    $form = new FormaPagoForm($paso);
+                    $form->identificacionUsuario = Yii::app()->user->name;
+                    $form->pagoInvitado = $modelPago->pagoInvitado;
+                    $form->tipoEntrega = $modelPago->tipoEntrega;
+                    $form->bono = $modelPago->bono;
+                    $form->totalCompra = $modelPago->totalCompra;
+                    $form->objHorarioCiudadSector = $modelPago->objHorarioCiudadSector;
+                    //$form->objSectorCiudad = $modelPago->objSectorCiudad;
+
+                    if (isset($_POST['FormaPagoForm'])) {
+                        foreach ($_POST['FormaPagoForm'] as $atributo => $valor) {
+                            $form->$atributo = is_string($valor) ? trim($valor) : $valor;
+                        }
+                        //$form->attributes = $_POST['FormaPagoForm'];
+                    }
+
+                    if ($form->validate()) {
+                        //$modelPago->attributes = $_POST['FormaPagoForm'];
+                        $modelPago->idFormaPago = $form->idFormaPago;
+                        $modelPago->numeroTarjeta = $form->numeroTarjeta;
+                        $modelPago->cuotasTarjeta = $form->cuotasTarjeta;
+                        $modelPago->usoBono = $form->usoBono;
+                        //$modelPago->codigoCliente = $form->codigoCliente;
+                        //$modelPago->codigoPromocion = $form->codigoPromocion;
+                        $modelPago->pasoValidado[$paso] = $paso;
+                        Yii::app()->session[Yii::app()->params->sesion['carroPagarForm']] = $modelPago;
+                        echo CJSON::encode(array('result' => 'ok', 'response' => 'Datos guardados', 'redirect' => $this->createUrl("/carro/pagar", array('paso' => $siguiente))));
+                        Yii::app()->end();
+                    } else {
+                        echo CActiveForm::validate($form);
+                        Yii::app()->end();
+                    }
+                    break;
+                case Yii::app()->params->pagar['pasos'][5]:
+                    Yii::app()->session[Yii::app()->params->sesion['carroPagarForm']] = $modelPago;
+
+                    if ($siguiente == "finalizar") {
+                        if (isset($_POST['FormaPagoForm'])) {
+                            $form = new FormaPagoForm($paso);
+                            $form->identificacionUsuario = Yii::app()->user->name;
+                            $form->pagoInvitado = $modelPago->pagoInvitado;
+                            $form->tipoEntrega = $modelPago->tipoEntrega;
+                            $form->objHorarioCiudadSector = $modelPago->objHorarioCiudadSector;
+                            //$form->objSectorCiudad = $modelPago->objSectorCiudad;
+
+                            if (isset($_POST['FormaPagoForm'])) {
+                                foreach ($_POST['FormaPagoForm'] as $atributo => $valor) {
+                                    $form->$atributo = is_string($valor) ? trim($valor) : $valor;
+                                }
+                                //$form->attributes = $_POST['FormaPagoForm'];
+                            }
+
+                            if ($form->validate()) {
+                                $modelPago->confirmacion = $form->confirmacion;
+                                $modelPago->pasoValidado[$paso] = $paso;
+                                Yii::app()->session[Yii::app()->params->sesion['carroPagarForm']] = $modelPago;
+                                echo CJSON::encode(array('result' => 'ok', 'response' => "Datos guardados", 'redirect' => $this->createUrl("/carro/comprar")));
+                                Yii::app()->end();
+                            } else {
+                                echo CActiveForm::validate($form);
+                                Yii::app()->end();
+                            }
+                        } else {
+                            echo CJSON::encode(array('result' => 'error', 'response' => 'Solicitud inválida'));
+                            Yii::app()->end();
+                        }
+                    }
+
+                    echo CJSON::encode(array('result' => 'ok', 'response' => 'Datos guardados', 'redirect' => $this->createUrl("/carro/pagar", array('paso' => $siguiente))));
+                    Yii::app()->end();
+                    break;
+            }
+
+            echo CJSON::encode(array('result' => 'error', 'response' => 'ERROR'));
+            Yii::app()->end();
+        } else {
+            //CVarDumper::dump($modelPago, 3);
+            $this->fixedFooter = true;
+
+            /* if ($modelPago->pagoExpress) {
+              $paso = Yii::app()->params->pagar['pasos'][1];
+              $modelPago = new FormaPagoForm;
+              $modelPago->identificacionUsuario = Yii::app()->user->name;
+              $modelPago->consultarHorario($this->objSectorCiudad);
+              Yii::app()->session[Yii::app()->params->sesion['carroPagarForm']] = $modelPago;
+              } */
+
+            //validar pasos anteriores
+            $modelPago->validarPasos(Yii::app()->params->pagar['pasosDisponibles']['domicilio'], $paso);
+
+            $params = array();
+            $params['paso'] = $paso;
+            $params['parametros']['paso'] = $paso;
+
+            $nPasoActual = Yii::app()->params->pagar['pasos'][$paso];
+            $nPasoAnterior = $nPasoActual - 1;
+            $nPasoSiguiente = $nPasoActual + 1;
+            $pasoSiguiente = isset(Yii::app()->params->pagar['pasos'][$nPasoSiguiente]) ? Yii::app()->params->pagar['pasos'][$nPasoSiguiente] : null;
+            $pasoAnterior = isset(Yii::app()->params->pagar['pasos'][$nPasoAnterior]) ? Yii::app()->params->pagar['pasos'][$nPasoAnterior] : null;
+
+            $params['pasoAnterior'] = $pasoAnterior;
+            $params['pasoSiguiente'] = $pasoSiguiente;
+            $params['nPasoActual'] = $nPasoActual;
+
+            switch ($paso) {
+                case Yii::app()->params->pagar['pasos'][2]:
+                    //Yii::app()->session[Yii::app()->params->sesion['direccionEntrega']]
+                    $criteriaDireccion = array(
+                        'condition' => 'identificacionUsuario=:cedula AND (codigoCiudad=:ciudad AND (codigoSector=:sector OR codigoSector=0)) AND activo=:activo',
+                        'params' => array(
+                            ':cedula' => Yii::app()->user->name,
+                            ':activo' => 1,
+                            ':ciudad' => $this->objSectorCiudad->codigoCiudad,
+                            ':sector' => $this->objSectorCiudad->codigoSector
+                        )
+                    );
+
+                    if (isset(Yii::app()->session[Yii::app()->params->sesion['direccionEntrega']]) && Yii::app()->session[Yii::app()->params->sesion['direccionEntrega']] != null) {
+                        //$criteriaDireccion['condition'] .= " AND idDireccionDespacho=:direccion";
+                        //$criteriaDireccion['params'][':direccion'] = Yii::app()->session[Yii::app()->params->sesion['direccionEntrega']];
+                        $modelPago->idDireccionDespacho = Yii::app()->session[Yii::app()->params->sesion['direccionEntrega']];
+                    }
+
+                    $listDirecciones = DireccionesDespacho::model()->findAll($criteriaDireccion);
+
+                    $params['parametros']['listDirecciones'] = $listDirecciones;
+                    break;
+                case Yii::app()->params->pagar['pasos'][3]:
+                    $params['parametros']['listHorarios'] = $modelPago->listDataHoras();
+                    break;
+                case Yii::app()->params->pagar['pasos'][4]:
+                    $listFormaPago = array();
+
+                    if ($modelPago->pagoInvitado) {
+                        $listFormaPago = FormaPago::model()->findAll(array(
+                            'order' => 'formaPago',
+                            'condition' => 'estadoFormaPago=:estado AND idFormaPago <> :credirebaja',
+                            'params' => array(':estado' => 1, ':credirebaja' => Yii::app()->params->formaPago['idCredirebaja'])
+                        ));
+                    } else {
+                        $listFormaPago = FormaPago::model()->findAll(array(
+                            'order' => 'formaPago',
+                            'condition' => 'estadoFormaPago=:estado',
+                            'params' => array(':estado' => 1)
+                        ));
+                    }
+
+                    $modelPago->consultarBono(Yii::app()->shoppingCart->getTotalCost());
+                    Yii::app()->session[Yii::app()->params->sesion['carroPagarForm']] = $modelPago;
+                    $params['parametros']['listFormaPago'] = $listFormaPago;
+
+                    break;
+                case Yii::app()->params->pagar['pasos'][5]:
+                    $objDireccion = DireccionesDespacho::model()->findByPk($modelPago->idDireccionDespacho);
+                    $objFormaPago = FormaPago::model()->findByPk($modelPago->idFormaPago);
+                    $params['parametros']['objDireccion'] = $objDireccion;
+                    $params['parametros']['objFormaPago'] = $objFormaPago;
+
+                    Yii::app()->shoppingCart->setBono($modelPago->calcularBonoRedimido());
+                    $modelPago->calcularConfirmacion(Yii::app()->shoppingCart->getPositions());
+                    break;
+            }
+
+            $params['parametros']['modelPago'] = $modelPago;
+            $this->render("pagar", $params);
+        }
+    }
+    
+    
+    private function pagarDomicilioMovilOld($paso, $post) {
         $modelPago = null;
 
         if ($paso === null)
@@ -2488,15 +3077,7 @@ class CarroController extends Controller {
             //se valida que cada paso este realizado
             $modelPago->validarConfirmacion(Yii::app()->shoppingCart->getPositions());
             $pasosDisponibles = $modelPago->isMobil ? Yii::app()->params->pagar['pasosDisponibles']['domicilio'] : Yii::app()->params->pagar['pasosDisponiblesDesktop'];
-
             Yii::app()->session[Yii::app()->params->sesion['carroPagarForm']] = $modelPago;
-            /* foreach ($pasosDisponibles as $idx => $paso) {
-              $modelPago->setScenario($paso);
-              if (!$modelPago->validate()) {
-              $pasoValidacion = $paso;
-              break;
-              }
-              } */
 
             foreach ($pasosDisponibles as $idx => $paso) {
                 $modelPago->setScenario($paso);
@@ -2529,7 +3110,7 @@ class CarroController extends Controller {
             $pasoValidacion = null;
             //se valida que cada paso este realizado
             $modelPago->validarConfirmacion(Yii::app()->shoppingCart->getPositions());
-            $pasosDisponibles = $modelPago->isMobil ? Yii::app()->params->pagar['pasosDisponibles']['presencial'] : Yii::app()->params->pagar['pasosDisponiblesDesktop'];
+            $pasosDisponibles = $modelPago->isMobil ? Yii::app()->params->pagar['pasosDisponibles']['domicilio'] : Yii::app()->params->pagar['pasosDisponiblesDesktop'];
             Yii::app()->session[Yii::app()->params->sesion['carroPagarForm']] = $modelPago;
 
             foreach ($pasosDisponibles as $idx => $paso) {
@@ -3070,7 +3651,7 @@ class CarroController extends Controller {
                         $objCompraRemision = Compras::model()->findByPk($objCompra->idCompra, array("with" => "objPuntoVenta"));
                         $contenidoCorreo = $this->renderPartial('application.modules.callcenter.views.pedido.compraCorreo', array('objCompra' => $objCompraRemision), true, true);
                         $htmlCorreo = $this->renderPartial('application.views.common.correo', array('contenido' => $contenidoCorreo), true, true);
-                        try{
+                        try {
                             sendHtmlEmail($result[2], Yii::app()->params->asunto['pedidoRemitido'], $htmlCorreo);
                         } catch (Exception $ce) {
                             Yii::log("Error enviando correo de remision automatica #$objCompra->idCompra\n" . $ce->getMessage() . "\n" . $ce->getTraceAsString(), CLogger::LEVEL_INFO, 'application');

@@ -792,6 +792,8 @@ label.ui-btn.ui-checkbox-on.c_cond_rg.ui-btn:after{
 }
 div.cdt_line_spc{ background-color: #ccc; margin: .3em 0;/*20px 0px;*/ min-height: 1px; }
 div.ui-bar.ui-bar-c.ui-corner-all.center.ccont_index{ background: transparent; border: 0px; margin: 0px; padding: 0px; }
+div.ui-bar.ui-bar-c.ui-corner-all.center.ccont_index.activo{ opacity: 1; }
+div.ui-bar.ui-bar-c.ui-corner-all.center.ccont_index.inactivo{ opacity: 0.5; }
 a.c_btn_img.ui-btn.ui-btn-inline.ui-shadow.ui-corner-all{ margin: 0 0 0 -5px; padding: 0px; float: left; z-index: 1000;/*1002;*/ width: 100px;/*90px;*/ overflow: visible; }
 div.ctxt_pedido h2 > a {
     background-color: #f9f9f9;
@@ -961,7 +963,6 @@ div.cbtn_ub_ciudad h1.cbtn_ubcd_titulo a.ui-btn{ text-align: center; background-
 /*div.cpanel_domicilio .ui-panel-inner{ padding: 0; }*/
 div.cpanel_domicilio .ui-panel-inner .ui-btn-domicilio{
     font-weight: normal;
-    text-align: left;
     color: #FFF;
     background: #fac70e; /* Old browsers */
     background: -moz-linear-gradient(top,  #fac70e 0%, #f9a33d 100%); /* FF3.6+ */
@@ -1015,7 +1016,6 @@ div.cpanel_domicilio .ui-panel-inner div span{ margin-top: 6%;/*10%;*/ color: #5
 /*div.cpanel_pasarxel .ui-panel-inner{ padding: 0; }*/
 div.cpanel_pasarxel .ui-panel-inner .ui-btn-presencial{
     font-weight: normal;
-    text-align: left;
     color: #FFF;
     background: #ff0000; /* Old browsers */
     background: -moz-linear-gradient(top,  #ff0000 0%, #ab0000 100%); /* FF3.6+ */
@@ -2325,7 +2325,7 @@ div.utilBono {
     padding: 0.4em;
     margin: 0 1em;
 }
-.contentPagarPresnecial form .ui-input-btn {
+.contentPagarPresnecial .ui-input-btn {
     float: right;
     font-size: small;
     font-weight: normal;

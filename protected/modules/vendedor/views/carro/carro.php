@@ -13,7 +13,7 @@
     <?php if (Yii::app()->shoppingCartSalesman->isEmpty()): ?>
         <?php $this->renderPartial('carroVacio'); ?>
     <?php else: ?>
-        <div>
+        <div class="subtotalCanasta">
             <p class="center">Subtotal <?php echo Yii::app()->numberFormatter->format(Yii::app()->params->formatoMoneda['patron'], Yii::app()->shoppingCartSalesman->getCost(), Yii::app()->params->formatoMoneda['moneda']); ?></p>
             <!--
             <p class="center">Servicio <?php echo Yii::app()->numberFormatter->format(Yii::app()->params->formatoMoneda['patron'], Yii::app()->shoppingCartSalesman->getShipping(), Yii::app()->params->formatoMoneda['moneda']); ?></p>
@@ -23,7 +23,7 @@
             <p class="center">Ahorro <?php echo Yii::app()->numberFormatter->format(Yii::app()->params->formatoMoneda['patron'], Yii::app()->shoppingCartSalesman->getDiscountPrice(true), Yii::app()->params->formatoMoneda['moneda']) ?></p>
             -->
             <?php echo CHtml::link('Pagar', CController::createUrl('carro/pagar'), array('data-ajax' => 'false', 'class' => 'ui-btn ui-corner-all ui-shadow ui-btn-r')); ?>
-            <?php echo CHtml::link('Vaciar carrito', '#', array('data-role' => 'carrovaciar', 'class' => 'ui-btn ui-corner-all ui-shadow ui-btn-n')); ?>
+            <?php echo CHtml::link('Vaciar carrito', '#', array('data-role' => 'carrovaciar', 'class' => 'ui-btn ui-corner-all ui-shadow ui-btn-r btn-y')); ?>
             <?php if (!isset($opcion) || $opcion != 1): ?>
                 <?php // echo CHtml::link('Guardar en la lista personal', '#', array('data-role' => 'lstpersonalguardar', 'data-tipo' => 3, 'data-codigo' => 0, 'class' => 'ui-btn ui-corner-all ui-shadow ui-btn-n btn_add_lst_pr')); ?>
             <?php endif;?>
@@ -107,7 +107,7 @@
             <p class="center">Ahorro <?php echo Yii::app()->numberFormatter->format(Yii::app()->params->formatoMoneda['patron'], Yii::app()->shoppingCartSalesman->getDiscountPrice(true), Yii::app()->params->formatoMoneda['moneda']) ?></p>
             -->
             <?php echo CHtml::link('Pagar', CController::createUrl('carro/pagar'), array('data-ajax' => 'false', 'class' => 'ui-btn ui-corner-all ui-shadow ui-btn-r')); ?>
-            <?php echo CHtml::link('Vaciar carrito', '#', array('data-role' => 'carrovaciar', 'class' => 'ui-btn ui-corner-all ui-shadow ui-btn-n')); ?>
+            <?php echo CHtml::link('Vaciar carrito', '#', array('data-role' => 'carrovaciar', 'class' => 'ui-btn ui-corner-all ui-shadow ui-btn-n btn-y')); ?>
             <?php if (!isset($opcion) || !$opcion == 1): ?>
                 <?php // echo CHtml::link('Guardar en la lista personal', '#', array('data-role' => 'lstpersonalguardar', 'data-tipo' => 3, 'data-codigo' => 0, 'class' => 'ui-btn ui-corner-all ui-shadow ui-btn-n btn_add_lst_pr')); ?>
             <?php endif;?>
