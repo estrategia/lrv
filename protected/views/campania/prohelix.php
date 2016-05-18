@@ -1,28 +1,11 @@
 <?php
-/*$this->metaTags = "<meta charset='utf-8'>
-    <meta http-equiv='X-UA-Compatible' content='IE=edge'>
-    <meta name='viewport' content='width=device-width, initial-scale=1'>
-    <meta name='description' content=''>
-    <meta name='author' content=''>
-	<title>Prohelix - La rebaja virtual</title>
-	<!-- styles -->
-	<link rel='stylesheet' href='http://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css'>
-	
-	<style>
-		@font-face {
-		    font-family: NewJune-Bold;
-		    src: url(" . Yii::app()->request->baseUrl . "/images/contenido/prohelix/Fonts/NewJune-Bold.otf);
-		}
-		@font-face {
-		    font-family: NewJune-Regular;
-		    src: url(" . Yii::app()->request->baseUrl . "/images/contenido/prohelix/Fonts/NewJune-Regular.otf);
-		}
-		.title {font-size: 15pt;display: inline-block;color:#054220;font-weight: bolder;font-family: NewJune-Bold !important;}
-		.texto{color: #054220;margin-left: 32px;font-family: NewJune-Regular;}
-		.btn-blank {background-color: initial;border-top:1px solid #ccc;border-left:1px solid #ccc;border-right:1px solid #ccc;padding: 5px 50px;color: #E90000;font-family: NewJune-Bold;}
-		.registro {font-family: NewJune-Regular;color: #054220;}
-	</style>";*/
+/* $this->metaTags = "<meta charset='utf-8'>
+  <meta http-equiv='X-UA-Compatible' content='IE=edge'>
+  <meta name='description' content=''>
+  <meta name='author' content=''>"; */
 ?>
+
+<?php $this->pageTitle = "Prohelix - La Rebaja Virtual"; ?>
 
 <?php if ($this->isMobile): ?>
     <style>
@@ -62,6 +45,20 @@
     </div>
 
 <?php else: ?>
+    <style>
+        @font-face {
+            font-family: NewJune-Bold;
+            src: url("<?php echo Yii::app()->request->baseUrl?>/images/contenido/prohelix/Fonts/NewJune-Bold.otf");
+        }
+        @font-face {
+            font-family: NewJune-Regular;
+            src: url("<?php echo Yii::app()->request->baseUrl?>/images/contenido/prohelix/Fonts/NewJune-Regular.otf");
+        }
+        .title {font-size: 15pt;display: inline-block;color:#054220;font-weight: bolder;font-family: NewJune-Bold !important;}
+        .texto{color: #054220;margin-left: 32px;font-family: NewJune-Regular;}
+        .btn-blank {background-color: initial;border-top:1px solid #ccc;border-left:1px solid #ccc;border-right:1px solid #ccc;padding: 5px 50px;color: #E90000;font-family: NewJune-Bold;}
+        .registro {font-family: NewJune-Regular;color: #054220;}
+    </style>
     <div class="container">
         <div class="row">
             <img src="<?= Yii::app()->request->baseUrl ?>/images/contenido/prohelix/banner.jpg" class="img-responsive">
