@@ -31,10 +31,6 @@ class ContenidoController extends Controller {
         }
     }
 
-    public function actionCampana($tipo) {
-        $this->render($tipo);
-    }
-
     private function verHorario() {
         $objHorarioCiudadSector = null;
 

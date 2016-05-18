@@ -32,7 +32,12 @@ class CampaniaController extends Controller {
             throw new CHttpException(404, 'Campaña no existente.');
         }
 
-        $this->render($campania);
+        try{
+            $this->render($campania);
+        }  catch (Exception $exc){
+            Yii::log($exc->getMessage(),  CLogger::LEVEL_WARNING);
+            throw new CHttpException(404, "Error al abrir campaña");
+        }
     }
 
 }
