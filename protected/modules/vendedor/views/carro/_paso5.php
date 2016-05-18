@@ -2,7 +2,7 @@
     <div class="ui-content content-car">
     <?php endif; ?>
     <div class="contentConfirmacion">
-        <h1>Confirmación del pedido</h1>
+        <h1 style="color:#fff;">Confirmación del pedido</h1>
 
         <div class="blockPago">
             <table>
@@ -115,7 +115,7 @@
 
         <div class="btnPagarConfirmacion ui-field-container ui-bar ui-bar-a ui-corner-all">
             <div>Total a pagar <?php echo Yii::app()->numberFormatter->format(Yii::app()->params->formatoMoneda['patron'], Yii::app()->shoppingCartSalesman->getTotalCost(), Yii::app()->params->formatoMoneda['moneda']) ?></div>
-            <div class="ui-input-btn ui-btn ui-corner-all ui-shadow ui-btn-r">
+            <div class="ui-input-btn ui-btn ui-corner-all ui-btn-r btn-y">
                 Finalizar compra
                 <input type="button" data-enhanced="true" value="Finalizar compra" id="btn-carropagar-siguiente" data-origin="<?php echo $paso ?>" data-redirect="finalizar">
             </div>

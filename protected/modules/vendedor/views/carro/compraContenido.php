@@ -1,5 +1,5 @@
 <div class="ui-content finalCompra">
-    <h2>¡Gracias por su compra!</h2>
+    <h2 style="color:#fff;">¡Gracias por su compra!</h2>
 
     <div class="blockPago">
         <?php if ($objCompra->tipoEntrega == Yii::app()->params->entrega['tipo']['domicilio']): ?>
@@ -73,7 +73,7 @@
         </div>
     <?php endif; ?>
     <div class="listProductPedidos">
-        <h2>Productos del pedido</h2>
+        <h2 style="color:#fff;">Productos del pedido</h2>
 
         <?php $listPositionBodega = array(); ?>
         <?php $listPositionDelivery = array(); ?>
