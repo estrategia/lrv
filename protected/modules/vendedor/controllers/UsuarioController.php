@@ -36,6 +36,7 @@ class UsuarioController extends ControllerVendedor {
 
     public function filterLogin($filter) {
         if (Yii::app()->controller->module->user->isGuest) {
+            Yii::app()->session[Yii::app()->params->vendedor['sesion']['redireccionVendedor']] = Yii::app()->request->url;
             $this->redirect(Yii::app()->user->loginUrl);
         }
         $filter->run();
@@ -75,6 +76,11 @@ class UsuarioController extends ControllerVendedor {
             $model->attributes = $_POST['LoginVendedorForm'];
 
             $redirect = Yii::app()->homeUrl . Yii::app()->controller->module->homeUrl[0];
+
+            if (isset(Yii::app()->session[Yii::app()->params->vendedor['sesion']['redireccionVendedor']])) {
+                $redirect = Yii::app()->session[Yii::app()->params->vendedor['sesion']['redireccionVendedor']];
+                Yii::app()->session[Yii::app()->params->vendedor['sesion']['redireccionVendedor']] = null; // variable de sesión en el módulo
+            }
             //echo CJSON::encode(array("result"=>"error","response"=>"redirect: $redirect"));exit();
 
             if ($model->validate()) {
@@ -157,10 +163,10 @@ class UsuarioController extends ControllerVendedor {
                 ':operador' => Yii::app()->controller->module->user->id
             )
         ));
-        
+
         if (isset($_POST['RegistroForm'])) {
             $model->attributes = $_POST['RegistroForm'];
-            
+
             if ($model->validate()) {
                 try {
                     $usuario->clave = $model->clave;
@@ -187,7 +193,6 @@ class UsuarioController extends ControllerVendedor {
         }
 
         $this->render('registro', array('model' => $model));
-        
     }
 
 }

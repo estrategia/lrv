@@ -27,11 +27,13 @@ class SitioController extends ControllerVendedor {
 
     public function filterCliente($filter) {
         if (Yii::app()->controller->module->user->isGuest) {
+            Yii::app()->session[Yii::app()->params->vendedor['sesion']['redireccionVendedor']] = Yii::app()->request->url;
             $this->redirect(CController::createUrl('usuario/autenticar'));
             Yii::app()->end();
         }
-        
+
         if (!Yii::app()->controller->module->user->getClienteLogueado() && !Yii::app()->controller->module->user->getIsClienteInvitado()) {
+            Yii::app()->session[Yii::app()->params->vendedor['sesion']['redireccionCliente']] = Yii::app()->request->url;
             $this->redirect(CController::createUrl('cliente/cliente'));
             Yii::app()->end();
         }
@@ -40,24 +42,24 @@ class SitioController extends ControllerVendedor {
 
     public function filterUbicacion($filter) {
         if (!Yii::app()->session[Yii::app()->params->vendedor['sesion']['sectorCiudadEntrega']]) {
+            Yii::app()->session[Yii::app()->params->vendedor['sesion']['redireccionUbicacion']] = Yii::app()->request->url;
             $this->redirect(CController::createUrl('sitio/ubicacion'));
             Yii::app()->end();
         }
         $filter->run();
     }
-    
-    public function actionIndex(){
-        if(Yii::app()->controller->module->user->isGuest || (!Yii::app()->controller->module->user->getClienteLogueado() && !Yii::app()->controller->module->user->getIsClienteInvitado())){
+
+    public function actionIndex() {
+        if (Yii::app()->controller->module->user->isGuest) {
             $this->showSeeker = false;
             $this->render("index");
-        }else{
+        } else {
             $this->redirect(CController::createUrl('sitio/inicio'));
             Yii::app()->end();
         }
-        
     }
-    
-    public function actionInicio(){
+
+    public function actionInicio() {
         $listaPromociones = array();
 
         if (isset(Yii::app()->params->promociones)) {
@@ -80,7 +82,7 @@ class SitioController extends ControllerVendedor {
             'listModulos' => ModulosConfigurados::getModulosBanner($this->objSectorCiudad, Yii::app()->params->perfil['defecto'], UbicacionModulos::UBICACION_MOVIL_INICIO)
         ));
     }
-    
+
     public function actionPromocion($nombre) {
         if (!$this->isMobile) {
             $this->actionIndex();
@@ -97,7 +99,7 @@ class SitioController extends ControllerVendedor {
 
         $diffInicio = $fInicio->diff($fActual);
         $diffFin = $fActual->diff($fFin);
-        
+
         if ($diffInicio->invert == 1 || $diffFin->invert == 1) {
             throw new CHttpException(404, 'Promoci&oacute;n no existe.');
         }
@@ -121,14 +123,14 @@ class SitioController extends ControllerVendedor {
     }
 
     public function actionUbicacion() {
-//        if ($this->tipoEntrega == null && $this->isMobile) {
-//            $this->actionIndex();
-//        }
 
         $this->showSeeker = false;
         $this->logoLinkMenu = false;
         $this->fixedFooter = true;
-
+        
+        if (!isset(Yii::app()->session[Yii::app()->params->vendedor['sesion']['redireccionUbicacion']]) || Yii::app()->session[Yii::app()->params->vendedor['sesion']['redireccionUbicacion']] == null) {
+                Yii::app()->session[Yii::app()->params->vendedor['sesion']['redireccionUbicacion']] = (Yii::app()->request->urlReferrer == null ? Yii::app()->homeUrl . Yii::app()->controller->module->homeUrl[0] : Yii::app()->request->urlReferrer);
+        }
         if ($this->objSectorCiudad == null) {
             $this->showHeaderIcons = false;
         }
@@ -261,16 +263,19 @@ class SitioController extends ControllerVendedor {
 
         if (isset($objDireccion) && $objDireccion !== null) {
             Yii::app()->session[Yii::app()->params->vendedor['sesion']['direccionEntrega']] = $objDireccion->idDireccionDespacho;
-           // _setCookie(Yii::app()->params->sesion['direccionEntrega'], $objDireccion->idDireccionDespacho);
+            // _setCookie(Yii::app()->params->sesion['direccionEntrega'], $objDireccion->idDireccionDespacho);
         } else {
             Yii::app()->session[Yii::app()->params->vendedor['sesion']['direccionEntrega']] = null;
-          //  _deleteCookie(Yii::app()->params->sesion['direccionEntrega']);
+            //  _deleteCookie(Yii::app()->params->sesion['direccionEntrega']);
         }
 
         $redirect = null;
 
         //se debe de eliminar url de sesion
-        Yii::app()->session[Yii::app()->params->sesion['redireccionUbicacion']] = null; // variable de sesión en el módulo
+        if (isset(Yii::app()->session[Yii::app()->params->vendedor['sesion']['redireccionUbicacion']])) {
+            $redirect = Yii::app()->session[Yii::app()->params->vendedor['sesion']['redireccionUbicacion']];
+            Yii::app()->session[Yii::app()->params->vendedor['sesion']['redireccionUbicacion']] = null; // variable de sesión en el módulo
+        }
         echo CJSON::encode(array(
             'result' => 'ok',
             'response' => 'Se ha cambiado la ciudad de entrega por: ' . $objSectorCiudad->objCiudad->nombreCiudad,

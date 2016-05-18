@@ -70,9 +70,9 @@ $(document).on('click', "input[data-role='buscar-cliente']", function () {
                 // window.location.replace(obj.response.redirect);
                 $("#identificacionCliente").val(obj.response.identificacion);
                 $("#informacionCliente").html("<div data-role='main'><div class='ui-content' data-role='content' role='main'>" +
-                        "Identificación cliente: " + obj.response.identificacion + "<br/>" +
-                        "Nombre cliente: " + obj.response.nombre + " " + obj.response.apellido +
-                        "<a href='#' class='ui-btn ui-btn-r ui-corner-all ui-shadow' data-role='autenticar-cliente' >Aceptar</a></div></div>");
+                        "Identificación cliente: <strong>" + obj.response.identificacion + "</strong><br/>" +
+                        "Nombre cliente: <strong>" + obj.response.nombre + " " + obj.response.apellido +
+                        "</strong><a href='#' class='ui-btn ui-btn-r ui-corner-all ui-shadow' data-role='autenticar-cliente' >Aceptar</a></div></div>");
                 boton.button('enable');
             } else if (obj.result === 'error') {
                 boton.button('enable');
@@ -477,17 +477,17 @@ $(document).on("pagecreate", function (event) {
         singleItem: true,
         autoPlay: 10000
     });
-//
-//    $("[id^='slide-relacionados']").owlCarousel({
-//        slideSpeed: 300,
-//        paginationSpeed: 400,
-//        autoPlay: 3000,
-//        items: 4, //10 items above 1000px browser width
-//        itemsDesktop: [1000, 5], //5 items between 1000px and 901px
-//        itemsDesktopSmall: [900, 3], // betweem 900px and 601px
-//        itemsTablet: [600, 2], //2 items between 600 and 0
-//        itemsMobile: [300, 2] // itemsMobile disabled - inherit from itemsTablet option
-//    });
+
+    $("[id^='slide-relacionados']").owlCarousel({
+        slideSpeed: 300,
+        paginationSpeed: 400,
+        autoPlay: 3000,
+        items: 4, //10 items above 1000px browser width
+        itemsDesktop: [1000, 5], //5 items between 1000px and 901px
+        itemsDesktopSmall: [900, 3], // betweem 900px and 601px
+        itemsTablet: [600, 2], //2 items between 600 and 0
+        itemsMobile: [300, 2] // itemsMobile disabled - inherit from itemsTablet option
+    });
 //
 //    $("[id^='slide-imagenes']").owlCarousel({
 //        autoPlay: 3000, //Set AutoPlay to 3 seconds
@@ -813,7 +813,7 @@ $(document).on('click', "a[data-cargar='1']", function() {
                 }
 
                 if (data.response.relacionados && $("#link-relacionados-agregar").length > 0) {
-                    $("#link-relacionados-agregar").attr("href", requestUrl + "/catalogo/relacionados/producto/" + producto);
+                    $("#link-relacionados-agregar").attr("href", requestUrl + "/vendedor/catalogo/relacionados/producto/" + producto);
                     animarRelacionado();
                 }
             } else {
@@ -1188,3 +1188,435 @@ $(document).on('click', "a[data-role='listapersonal']", function () {
         }
     });
 });
+
+
+$(document).on('click', "a[data-role='pedidodetalle']", function () {
+    var compra = $(this).attr('data-compra');
+
+    $.ajax({
+        type: 'POST',
+        dataType: 'json',
+        async: true,
+        url: requestUrl + '/vendedor/carro/agregarcompra',
+        data: {compra: compra},
+        beforeSend: function () {
+            $.mobile.loading('show');
+        },
+        complete: function () {
+            $.mobile.loading('hide');
+        },
+        success: function (data) {
+            if (data.result === "ok") {
+                $('#panel-carro-canasta').html(data.response.canastaHTML);
+                $('#panel-carro-canasta').trigger("create");
+                if (data.response.mensajeHTML) {
+                    dialogoAnimado(data.response.mensajeHTML);
+                }
+
+                if (data.response.dialogoHTML) {
+                    $('<div>').mdialog({
+                        content: data.response.dialogoHTML
+                    });
+                }
+            } else {
+                $('<div>').mdialog({
+                    content: "<div data-role='main'><div class='ui-content' data-role='content' role='main'>" + data.response + "<a class='ui-btn ui-btn-r ui-corner-all ui-shadow' data-rel='back' href='#'>Aceptar</a></div></div>"
+                });
+            }
+        },
+        error: function (jqXHR, textStatus, errorThrown) {
+            $.mobile.loading('hide');
+            alert('Error: ' + errorThrown);
+        }
+    });
+});
+
+$(document).on('change', "input[data-modificar='1'], input[data-modificar='2'], input[data-modificar='3']", function () {
+    var position = $(this).attr('data-position');
+    var modificar = $(this).attr('data-modificar');
+    var data = {
+        modificar: modificar,
+        position: position
+    };
+
+    if (modificar == 1) {
+        var cantidadF = parseInt($('#cantidad-producto-fraccion-' + position).val());
+        if (isNaN(cantidadF)) {
+            cantidadF = -1;
+        } else if (cantidadF < 1) {
+            cantidadF = 1;
+        }
+
+        var cantidadU = parseInt($('#cantidad-producto-unidad-' + position).val());
+
+        if (isNaN(cantidadU) || cantidadU < 1) {
+            //if(cantidadF==-1){
+            cantidadU = 1;
+            //}else{
+            //cantidadU = 0;
+            //}
+        }
+
+        if (cantidadF > 0) {
+            var numeroFracciones = parseInt($(this).attr('data-nfracciones'));
+            var unidadFraccionamiento = parseInt($(this).attr('data-ufraccionamiento'));
+            var fraccionesMaximas = Math.floor(numeroFracciones / unidadFraccionamiento);
+
+            if (cantidadF >= fraccionesMaximas) {
+                var unidades = Math.floor(cantidadF / fraccionesMaximas);
+                var fracciones = cantidadF % fraccionesMaximas;
+                cantidadU += unidades;
+                cantidadF = fracciones;
+            }
+        }
+
+        data['cantidadU'] = cantidadU;
+        data['cantidadF'] = cantidadF;
+    } else if (modificar == 2) {
+        var cantidad = parseInt($('#cantidad-producto-' + position).val());
+        if (isNaN(cantidad) || cantidad < 1) {
+            cantidad = 1;
+        }
+        data['cantidad'] = cantidad;
+    } else if (modificar == 3) {
+        var cantidad = parseInt($('#cantidad-producto-bodega-' + position).val());
+        if (isNaN(cantidad) || cantidad < 1) {
+            cantidad = 1;
+        }
+        data['cantidad'] = cantidad;
+    }
+
+    //console.log(data);
+
+    $.ajax({
+        type: 'POST',
+        dataType: 'json',
+        async: true,
+        url: requestUrl + '/vendedor/carro/modificar',
+        data: data,
+        beforeSend: function () {
+            $.mobile.loading('show');
+        },
+        complete: function () {
+            $.mobile.loading('hide');
+        },
+        success: function (data) {
+            if (data.result === "ok") {
+                $('#div-carro').html(data.response.carroHTML);
+                $('#div-carro').trigger("create");
+
+                if (data.response.canastaHTML) {
+                    $('#panel-carro-canasta').html(data.response.canastaHTML);
+                    $('#panel-carro-canasta').trigger("create");
+                }
+
+                if (data.response.mensajeHTML) {
+                    dialogoAnimado(data.response.mensajeHTML);
+                }
+
+                if (data.response.dialogoHTML) {
+                    $('<div>').mdialog({
+                        content: data.response.dialogoHTML
+                    });
+                }
+            } else {
+                $('#div-carro').html(data.response.carroHTML);
+                $('#div-carro').trigger("create");
+                $('<div>').mdialog({
+                    content: "<div data-role='main'><div class='ui-content' data-role='content' role='main'>" + data.response.message + "<a class='ui-btn ui-btn-r ui-corner-all ui-shadow' data-rel='back' href='#'>Aceptar</a></div></div>"
+                });
+            }
+
+        },
+        error: function (jqXHR, textStatus, errorThrown) {
+            alert('Error: ' + errorThrown);
+        }
+    });
+});
+
+
+$(document).on('click', "a[data-eliminar='1'], a[data-eliminar='2'], a[data-eliminar='3']", function () {
+    var position = $(this).attr('data-position');
+    var eliminar = $(this).attr('data-eliminar');
+
+    $.ajax({
+        type: 'POST',
+        dataType: 'json',
+        async: true,
+        url: requestUrl + '/vendedor/carro/eliminar',
+        data: {id: position, eliminar: eliminar},
+        beforeSend: function () {
+            $.mobile.loading('show');
+        },
+        complete: function () {
+            $.mobile.loading('hide');
+        },
+        success: function (data) {
+            if (data.result == 'ok') {
+                $('#div-carro').html(data.carro);
+                $('#div-carro').trigger("create");
+                $('#panel-carro-canasta').html(data.canasta);
+                $('#panel-carro-canasta').trigger("create");
+            } else {
+                $('<div>').mdialog({
+                    content: "<div data-role='main'><div class='ui-content' data-role='content' role='main'>" + data.response + "<a class='ui-btn ui-btn-r ui-corner-all ui-shadow' data-rel='back' href='#'>Aceptar</a></div></div>"
+                });
+            }
+        },
+        error: function (jqXHR, textStatus, errorThrown) {
+            alert('Error: ' + errorThrown);
+        }
+    });
+
+});
+
+
+
+function subtotalUnidadProducto(codigo) {
+    var cantidad = $('#cantidad-producto-unidad-' + codigo).val();
+    cantidad = parseInt(cantidad);
+
+    if (isNaN(cantidad)) {
+        cantidad = 1;
+    }
+
+    if (cantidad <= 1) {
+        cantidad = 1;
+    }
+
+    $('#cantidad-producto-unidad-' + codigo).val(cantidad);
+
+    $.ajax({
+        type: 'POST',
+        dataType: 'json',
+        async: true,
+        url: requestUrl + '/catalogo/subtotalUnidad',
+        data: {codigo: codigo, cantidad: cantidad},
+        beforeSend: function () {
+            $.mobile.loading('show');
+        },
+        complete: function () {
+            $.mobile.loading('hide');
+        },
+        success: function (data) {
+            if (data.result == 'ok') {
+                $('#subtotal-producto-unidad-' + codigo).html(data.response.valorFormato);
+            } else {
+                $('<div>').mdialog({
+                    content: "<div data-role='main'><div class='ui-content' data-role='content' role='main'>" + data.response + "<a class='ui-btn ui-btn-r ui-corner-all ui-shadow' data-rel='back' href='#'>Aceptar</a></div></div>"
+                });
+            }
+            //$.mobile.loading('hide');
+        },
+        error: function (jqXHR, textStatus, errorThrown) {
+            //$.mobile.loading('hide');
+            alert('Error: ' + errorThrown);
+        }
+    });
+}
+
+function subtotalParcialProductoFraccion(codigo, numeroFracciones, unidadFraccionamiento) {
+    var cantidad = parseInt($('#cantidad-producto-fraccion-' + codigo).val());
+
+    if (isNaN(cantidad)) {
+        cantidad = 0;
+    }
+
+    if (cantidad < 0) {
+        cantidad = 0;
+    }
+
+    $('#cantidad-producto-fraccion-' + codigo).val(cantidad);
+    var fraccionesMaximas = Math.floor(numeroFracciones / unidadFraccionamiento);
+
+    var cantidadUnidad = $('#cantidad-producto-unidad-' + codigo).val();
+    cantidadUnidad = parseInt(cantidadUnidad);
+    if (isNaN(cantidadUnidad)) {
+        cantidadUnidad = 0;
+    }
+
+    if (cantidadUnidad < 0) {
+        cantidadUnidad = 0;
+    }
+
+    if (cantidad >= fraccionesMaximas) {
+        var unidades = Math.floor(cantidad / fraccionesMaximas);
+        var fracciones = cantidad % fraccionesMaximas;
+        cantidadUnidad += unidades;
+        cantidad = fracciones;
+    }
+
+    $('#cantidad-producto-unidad-' + codigo).val(cantidadUnidad);
+    $('#cantidad-producto-fraccion-' + codigo).val(cantidad);
+
+    //$.mobile.loading('show');
+    $.ajax({
+        type: 'POST',
+        dataType: 'json',
+        async: true,
+        url: requestUrl + '/catalogo/subtotalFraccion',
+        data: {codigo: codigo, cantidadUnidad: cantidadUnidad, cantidadFraccion: cantidad},
+        beforeSend: function () {
+            $.mobile.loading('show');
+        },
+        complete: function () {
+            $.mobile.loading('hide');
+        },
+        success: function (data) {
+            //$.mobile.loading('hide');
+            if (data.result == 'ok') {
+                $('#subtotal-producto-unidad-' + codigo).html(data.response.valorUnidadFormato);
+                $('#subtotal-producto-fraccion-' + codigo).html(data.response.valorFraccionFormato);
+                $('#total-producto-' + codigo).html(data.response.valorTotalFormato);
+            } else {
+                $('<div>').mdialog({
+                    content: "<div data-role='main'><div class='ui-content' data-role='content' role='main'>" + data.response + "<a class='ui-btn ui-btn-r ui-corner-all ui-shadow' data-rel='back' href='#'>Aceptar</a></div></div>"
+                });
+            }
+        },
+        error: function (jqXHR, textStatus, errorThrown) {
+            //$.mobile.loading('hide');
+            alert('Error: ' + errorThrown);
+        }
+    });
+}
+
+function subtotalProductoBodega(codigo) {
+    var cantidadUbicacion = parseInt($('#cantidad-producto-ubicacion-' + codigo).val());
+
+    if (isNaN(cantidadUbicacion)) {
+        cantidadUbicacion = 0;
+    }
+
+    if (cantidadUbicacion < 0) {
+        cantidadUbicacion = 0;
+    }
+
+    var cantidadBodega = $('#cantidad-producto-bodega-' + codigo).val();
+    cantidadBodega = parseInt(cantidadBodega);
+    if (isNaN(cantidadBodega)) {
+        cantidadBodega = 0;
+    }
+
+    if (cantidadBodega < 0) {
+        cantidadBodega = 0;
+    }
+
+    $('#cantidad-producto-ubicacion-' + codigo).val(cantidadUbicacion);
+    $('#cantidad-producto-bodega-' + codigo).val(cantidadBodega);
+
+    $.ajax({
+        type: 'POST',
+        dataType: 'json',
+        async: true,
+        url: requestUrl + '/catalogo/subtotalBodega',
+        data: {codigo: codigo, bodega: cantidadBodega, ubicacion: cantidadUbicacion},
+        beforeSend: function () {
+            $.mobile.loading('show');
+        },
+        complete: function () {
+            $.mobile.loading('hide');
+        },
+        success: function (data) {
+            if (data.result == 'ok') {
+                $('#subtotal-producto-bodega-' + codigo).html(data.response.valorBodegaFormato);
+                $('#subtotal-producto-ubicacion-' + codigo).html(data.response.valorUbicacionFormato);
+                $('#total-producto-' + codigo).html(data.response.valorTotalFormato);
+            } else {
+                $('<div>').mdialog({
+                    content: "<div data-role='main'><div class='ui-content' data-role='content' role='main'>" + data.response + "<a class='ui-btn ui-btn-r ui-corner-all ui-shadow' data-rel='back' href='#'>Aceptar</a></div></div>"
+                });
+            }
+        },
+        error: function (jqXHR, textStatus, errorThrown) {
+            alert('Error: ' + errorThrown);
+        }
+    });
+}
+
+function subtotalCombo(codigo) {
+    var cantidad = $('#cantidad-combo-' + codigo).val();
+    cantidad = parseInt(cantidad);
+
+    if (isNaN(cantidad)) {
+        cantidad = 1;
+    }
+
+    if (cantidad <= 1) {
+        cantidad = 1;
+    }
+
+    $('#cantidad-combo-' + codigo).val(cantidad);
+
+    $.ajax({
+        type: 'POST',
+        dataType: 'json',
+        async: true,
+        url: requestUrl + '/catalogo/subtotalCombo',
+        data: {codigo: codigo, cantidad: cantidad},
+        beforeSend: function () {
+            $.mobile.loading('show');
+        },
+        complete: function () {
+            $.mobile.loading('hide');
+        },
+        success: function (data) {
+            if (data.result == 'ok') {
+                $('#subtotal-combo-' + codigo).html(data.response.valorFormato);
+            } else {
+                $('<div>').mdialog({
+                    content: "<div data-role='main'><div class='ui-content' data-role='content' role='main'>" + data.response + "<a class='ui-btn ui-btn-r ui-corner-all ui-shadow' data-rel='back' href='#'>Aceptar</a></div></div>"
+                });
+            }
+            //$.mobile.loading('hide');
+        },
+        error: function (jqXHR, textStatus, errorThrown) {
+            //$.mobile.loading('hide');
+            alert('Error: ' + errorThrown);
+        }
+    });
+}
+
+function subtotalProductoCarro(id) {
+    var cantidad = $('#cantidad-producto-' + id).val();
+    cantidad = parseInt(cantidad);
+
+    if (isNaN(cantidad)) {
+        cantidad = 1;
+    }
+
+    if (cantidad <= 1) {
+        cantidad = 1;
+    }
+
+    $('#cantidad-producto-' + id).val(cantidad);
+
+    $.ajax({
+        type: 'POST',
+        dataType: 'json',
+        async: true,
+        url: requestUrl + '/carro/modificar',
+        data: {id: id, cantidad: cantidad},
+        beforeSend: function () {
+            $.mobile.loading('show');
+        },
+        complete: function () {
+            $.mobile.loading('hide');
+        },
+        success: function (data) {
+            if (data.result == 'ok') {
+                $('#div-carro').html(data.carro);
+                $('#div-carro').trigger("create");
+                $('#panel-carro-canasta').html(data.canasta);
+                $('#panel-carro-canasta').trigger("create");
+            } else {
+                $('<div>').mdialog({
+                    content: "<div data-role='main'><div class='ui-content' data-role='content' role='main'>" + data.response + "<a class='ui-btn ui-btn-r ui-corner-all ui-shadow' data-rel='back' href='#'>Aceptar</a></div></div>"
+                });
+            }
+        },
+        error: function (jqXHR, textStatus, errorThrown) {
+            alert('Error: ' + errorThrown);
+        }
+    });
+}

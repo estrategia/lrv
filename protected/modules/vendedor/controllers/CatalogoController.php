@@ -18,6 +18,7 @@ class CatalogoController extends ControllerVendedor {
 
     public function filterUbicacion($filter) {
         if (!Yii::app()->session[Yii::app()->params->vendedor['sesion']['sectorCiudadEntrega']]) {
+            Yii::app()->session[Yii::app()->params->vendedor['sesion']['redireccionUbicacion']] = Yii::app()->request->url;
             $this->redirect(CController::createUrl('sitio/ubicacion'));
             Yii::app()->end();
         }
@@ -619,6 +620,106 @@ class CatalogoController extends ControllerVendedor {
             'listRelacionados' => $listRelacionados,
             'tipoBusqueda' => Yii::app()->params->busqueda['tipo']['buscador'],
         ));
+    }
+    
+    
+    public function actionRelacionados($producto) {
+        $objSectorCiudad = null;
+        if (isset(Yii::app()->session[Yii::app()->params->sesion['sectorCiudadEntrega']]))
+            $objSectorCiudad = Yii::app()->session[Yii::app()->params->sesion['sectorCiudadEntrega']];
+
+        $codigoPerfil = Yii::app()->shoppingCartSalesman->getCodigoPerfil();
+        $parametrosProductos = array();
+        $listCombos = array();
+
+        if ($objSectorCiudad == null) {
+            $parametrosProductos = array(
+                'order' => 't.orden DESC',
+                'with' => array('listImagenes', 'objCodigoEspecial', 'listCalificaciones'),
+                'condition' => 't.activo=:activo AND r.codigoProducto=:producto',
+                'join' => 'JOIN t_ProductosRelacionados r ON (t.codigoProducto=r.codigoRelacionado)',
+                'params' => array(
+                    ':activo' => 1,
+                    ':producto' => $producto
+                )
+            );
+        } else {
+            $parametrosProductos = array(
+                'order' => 't.orden DESC',
+                'with' => array(
+                    'listImagenes', 'objCodigoEspecial', 'listCalificaciones',
+                    'listSaldos' => array('condition' => '(listSaldos.saldoUnidad>:saldo AND listSaldos.codigoCiudad=:ciudad AND listSaldos.codigoSector=:sector) OR (listSaldos.saldoUnidad IS NULL AND listSaldos.codigoCiudad IS NULL AND listSaldos.codigoSector IS NULL)'),
+                    'listPrecios' => array('condition' => '(listPrecios.codigoCiudad=:ciudad AND listPrecios.codigoSector=:sector) OR (listPrecios.codigoCiudad IS NULL AND listPrecios.codigoSector IS NULL)'),
+                    'listSaldosTerceros' => array('condition' => '(listSaldosTerceros.saldoUnidad>:saldo AND listSaldosTerceros.codigoCiudad=:ciudad AND listSaldosTerceros.codigoSector=:sector) OR (listSaldosTerceros.codigoCiudad IS NULL AND listSaldosTerceros.codigoSector IS NULL)')
+                ),
+                'condition' => 't.activo=:activo AND r.codigoProducto=:producto AND ( (listSaldos.saldoUnidad IS NOT NULL AND listPrecios.codigoCiudad IS NOT NULL) OR listSaldosTerceros.codigoCiudad IS NOT NULL)',
+                'join' => 'JOIN t_ProductosRelacionados r ON (t.codigoProducto=r.codigoRelacionado)',
+                'params' => array(
+                    ':activo' => 1,
+                    ':saldo' => 0,
+                    ':ciudad' => $objSectorCiudad->codigoCiudad,
+                    ':sector' => $objSectorCiudad->codigoSector,
+                    ':producto' => $producto
+                )
+            );
+
+            $fecha = new DateTime;
+
+            $listCombos = Combo::model()->findAll(array(
+                'with' => array('listComboSectorCiudad', 'listProductos' => array('condition' => "listProductos.codigoProducto = $producto")),
+                'condition' => 't.estadoCombo=:estado AND t.fechaInicio<=:fecha AND t.fechaFin>=:fecha AND listComboSectorCiudad.saldo>:saldo AND listComboSectorCiudad.codigoCiudad=:ciudad AND listComboSectorCiudad.codigoSector=:sector',
+                'params' => array(
+                    ':estado' => 1,
+                    ':fecha' => $fecha->format('Y-m-d H:i:s'),
+                    'saldo' => 0,
+                    ':ciudad' => $objSectorCiudad->codigoCiudad,
+                    ':sector' => $objSectorCiudad->codigoSector,
+                )
+            ));
+        }
+
+        $listProductos = Producto::model()->findAll($parametrosProductos);
+
+        $listCodigoEspecial = CodigoEspecial::model()->findAll(array(
+            'condition' => 'codigoEspecial<>0'
+        ));
+
+        $msgCodigoEspecial = array();
+        foreach ($listProductos as $objProducto) {
+            if ($objProducto->codigoEspecial != null && $objProducto->codigoEspecial != 0) {
+                $msgCodigoEspecial[$objProducto->codigoEspecial] = $objProducto->objCodigoEspecial;
+            }
+        }
+
+        $parametrosVista = array(
+            'listProductos' => $listProductos,
+            'listCombos' => $listCombos,
+            'msgCodigoEspecial' => $msgCodigoEspecial,
+            'listCodigoEspecial' => $listCodigoEspecial,
+            'objSectorCiudad' => $objSectorCiudad,
+            'codigoPerfil' => $codigoPerfil,
+            'tipoBusqueda' => -1,
+            'nombreBusqueda' => "productos relacionados",
+        );
+
+        $imagenBusqueda = null;
+        if (empty($listProductos)) {
+            $imagenBusqueda = Yii::app()->params->busqueda['imagen']['noExito'];
+            try {
+                Busquedas::registrarBusqueda(array(
+                    'idenficacionUsuario' => Yii::app()->user->isGuest ? null : Yii::app()->controller->module->user->id,
+                    'tipoBusqueda' => Yii::app()->params->busqueda['tipo']['categoria'],
+                    'msgBusqueda' => "Producto: $producto. No tiene productos relacionados",
+                    'codigoCiudad' => $objSectorCiudad == null ? null : $objSectorCiudad->codigoCiudad,
+                    'codigoSector' => $objSectorCiudad == null ? null : $objSectorCiudad->codigoSector,
+                ));
+            } catch (Exception $exc) {
+                Yii::log($exc->getMessage() . "\n" . $exc->getTraceAsString(), CLogger::LEVEL_ERROR, 'application');
+            }
+        }
+
+        $parametrosVista['imagenBusqueda'] = $imagenBusqueda;
+        $this->render('listaProductos', $parametrosVista);
     }
 
     public function actionBodega($producto, $ubicacion, $bodega) {

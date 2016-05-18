@@ -378,7 +378,7 @@ class CarroController extends ControllerVendedor {
             'result' => 'ok',
             'response' => array(
                 'canastaHTML' => $this->renderPartial($canasta, null, true),
-                'mensajeHTML' => $this->renderPartial('/common/mensajeHtml', array('mensaje' => "$porcentajeCarro% de lista agregada"), true),
+                'mensajeHTML' => $this->renderPartial('//common/mensajeHtml', array('mensaje' => "$porcentajeCarro% de lista agregada"), true),
             ),
         ));
         Yii::app()->end();
