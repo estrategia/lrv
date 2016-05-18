@@ -1,3 +1,7 @@
+<h3 class="ui-bar ui-bar-h center title_h tpad">
+    Selecciona la ubicación donde deseas recoger o que te entreguemos el pedido
+</h3>
+
 <div class="ui-content">
     <?php echo CHtml::htmlButton('Usar la ubicación de tu dispositivo', array('class' => 'ui-btn ui-corner-all ui-btn-icon-left ui-icon-ubi ui-alt-icon c_btn_ub btn-y', 'onclick' => 'ubicacionGPSVendedor();')); ?>
     <?php if (Yii::app()->controller->module->user->getClienteLogueado()): ?>

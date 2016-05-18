@@ -33,6 +33,6 @@
 
 <?php //CVarDumper::dump($modelPago->attributes, 10, true); ?>
 <?php if ($modelPago->tieneDomicilio($this->objSectorCiudad)): ?>
-    <?php $this->extraContentList[] = $this->renderPartial('/sitio/_entregaDomicilio', null, true) ?>
+    <?php $this->extraContentList[] = $this->renderPartial('_entregaDomicilio', null, true) ?>
 <?php endif; ?>
-<?php $this->extraContentList[] = $this->renderPartial('/sitio/_entregaPresencial', null, true) ?>
+<?php $this->extraContentList[] = $this->renderPartial('_entregaPresencial', null, true) ?>

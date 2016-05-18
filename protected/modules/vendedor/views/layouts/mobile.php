@@ -14,8 +14,7 @@ header("Pragma: no-cache");
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <?php Yii::app()->clientScript->registerCoreScript('jquery'); ?>
-        <script>requestUrl = "<?php echo Yii::app()->request->baseUrl; ?>";
-            gmapKey = "<?php echo Yii::app()->params['google']['llaveMapa']; ?>";</script>
+        <script>requestUrl = "<?php echo Yii::app()->request->baseUrl; ?>"; gmapKey = "<?php echo Yii::app()->params['google']['llaveMapa']; ?>"; tipoEntrega = {presencial:<?=Yii::app()->params->entrega['tipo']['presencial']?>,domicilio:<?=Yii::app()->params->entrega['tipo']['domicilio']?>};</script>
         <link rel="shortcut icon" href="<?php echo Yii::app()->request->baseUrl; ?>/images/favicon_16.ico" type="image/x-icon" />  
         <title><?php echo CHtml::encode($this->pageTitle); ?></title>
 
@@ -37,7 +36,7 @@ header("Pragma: no-cache");
                         <?php endif; ?>
                         <div class="c_icon c_icon_ub"><a href="#" onclick="verUbicacionVendedor();"><img src="<?php echo Yii::app()->request->baseUrl; ?>/images/iconos/icon_ub.png"></a></div>                            
                     <?php endif; ?>  
-                    <a href="<?php echo ($this->showHeaderIcons ? $this->createUrl('/sitio/inicio') : $this->createUrl('/')) ?>" class="<?php echo ($this->showHeaderIcons ? "logo-main" : "logo-home") ?>" data-ajax="false"><img src="<?php echo Yii::app()->request->baseUrl; ?>/images/logotop.png" alt="logo - La Rebaja" title="<?php echo CHtml::encode(Yii::app()->name) ?>"></a>                 
+                    <a href="<?php echo ($this->showHeaderIcons ? $this->createUrl('/vendedor/sitio/inicio') : $this->createUrl('/')) ?>" class="<?php echo ($this->showHeaderIcons ? "logo-main" : "logo-home") ?>" data-ajax="false"><img src="<?php echo Yii::app()->request->baseUrl; ?>/images/logotop.png" alt="logo - La Rebaja" title="<?php echo CHtml::encode(Yii::app()->name) ?>"></a>                 
                 </div>
 
                 <?php if ($this->showHeaderIcons): ?>

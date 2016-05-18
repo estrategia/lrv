@@ -28,6 +28,28 @@ class CarroController extends Controller {
         );
     }
 
+    public function filterLogin($filter) {
+        if (Yii::app()->user->isGuest) {
+            $this->redirect(Yii::app()->user->loginUrl);
+        }
+        $filter->run();
+    }
+
+    public function filterAccess($filter) {
+        if (!Yii::app()->user->isGuest) {
+            $this->redirect(Yii::app()->homeUrl);
+        }
+        $filter->run();
+    }
+
+    public function filterLoginajax($filter) {
+        if (Yii::app()->user->isGuest) {
+            echo CJSON::encode(array('result' => 'error', 'response' => 'No se detecta usuario autenticado, por favor iniciar sesión para continuar'));
+            Yii::app()->end();
+        }
+        $filter->run();
+    }
+
     public function actionPasoporel() {
         $opcion = Yii::app()->getRequest()->getPost('opcion');
 
@@ -79,34 +101,8 @@ class CarroController extends Controller {
         }
     }
 
-    public function filterLogin($filter) {
-        if (Yii::app()->user->isGuest) {
-            $this->redirect(Yii::app()->user->loginUrl);
-        }
-        $filter->run();
-    }
-
-    public function filterAccess($filter) {
-        if (!Yii::app()->user->isGuest) {
-            $this->redirect(Yii::app()->homeUrl);
-        }
-        $filter->run();
-    }
-
-    public function filterLoginajax($filter) {
-        if (Yii::app()->user->isGuest) {
-            echo CJSON::encode(array('result' => 'error', 'response' => 'No se detecta usuario autenticado, por favor iniciar sesión para continuar'));
-            Yii::app()->end();
-        }
-        $filter->run();
-    }
-
     public function actionAgregar() {
-        $objSectorCiudad = null;
-        if (isset(Yii::app()->session[Yii::app()->params->sesion['sectorCiudadEntrega']]))
-            $objSectorCiudad = Yii::app()->session[Yii::app()->params->sesion['sectorCiudadEntrega']];
-
-        if ($objSectorCiudad == null) {
+        if ($this->objSectorCiudad == null) {
             echo CJSON::encode(array('result' => 'error', 'response' => 'No se detecta ubicación'));
             Yii::app()->end();
         }
@@ -136,8 +132,8 @@ class CarroController extends Controller {
                 ':activo' => 1,
                 ':codigo' => $producto,
                 ':saldo' => 0,
-                ':ciudad' => $objSectorCiudad->codigoCiudad,
-                ':sector' => $objSectorCiudad->codigoSector,
+                ':ciudad' => $this->objSectorCiudad->codigoCiudad,
+                ':sector' => $this->objSectorCiudad->codigoSector,
             ),
         ));
 
@@ -146,7 +142,7 @@ class CarroController extends Controller {
             Yii::app()->end();
         }
 
-        $objSaldo = $objProducto->getSaldo($objSectorCiudad->codigoCiudad, $objSectorCiudad->codigoSector);
+        $objSaldo = $objProducto->getSaldo($this->objSectorCiudad->codigoCiudad, $this->objSectorCiudad->codigoSector);
 
         if ($objSaldo === null) {
             echo CJSON::encode(array('result' => 'error', 'response' => 'Producto no disponible'));
@@ -180,7 +176,7 @@ class CarroController extends Controller {
                     'condition' => 'codigoProducto=:producto AND codigoCedi=:cedi AND saldoUnidad>=:saldo',
                     'params' => array(
                         ':producto' => $producto,
-                        ':cedi' => $objSectorCiudad->objCiudad->codigoSucursal,
+                        ':cedi' => $this->objSectorCiudad->objCiudad->codigoSucursal,
                         ':saldo' => $cantidadBodega
                     )
                 ));
@@ -249,11 +245,7 @@ class CarroController extends Controller {
     }
 
     public function actionAgregarcompra() {
-        $objSectorCiudad = null;
-        if (isset(Yii::app()->session[Yii::app()->params->sesion['sectorCiudadEntrega']]))
-            $objSectorCiudad = Yii::app()->session[Yii::app()->params->sesion['sectorCiudadEntrega']];
-
-        if ($objSectorCiudad === null) {
+        if ($this->objSectorCiudad === null) {
             echo CJSON::encode(array('result' => 'error', 'response' => 'Para agregar este pedido al carro de compras, debes seleccionar ciudad.'));
             Yii::app()->end();
         }
@@ -298,8 +290,8 @@ class CarroController extends Controller {
                             ':estado' => 1,
                             ':fecha' => $fecha->format('Y-m-d H:i:s'),
                             ':saldo' => 0,
-                            ':ciudad' => $objSectorCiudad->codigoCiudad,
-                            ':sector' => $objSectorCiudad->codigoSector,
+                            ':ciudad' => $this->objSectorCiudad->codigoCiudad,
+                            ':sector' => $this->objSectorCiudad->codigoSector,
                         )
                     ));
 
@@ -308,7 +300,7 @@ class CarroController extends Controller {
                         continue;
                     }
 
-                    $objSaldo = $objCombo->getSaldo($objSectorCiudad->codigoCiudad, $objSectorCiudad->codigoSector);
+                    $objSaldo = $objCombo->getSaldo($this->objSectorCiudad->codigoCiudad, $this->objSectorCiudad->codigoSector);
 
                     if ($objSaldo === null) {
                         $agregadoCompleto = false;
@@ -350,8 +342,8 @@ class CarroController extends Controller {
                     'params' => array(
                         ':activo' => 1,
                         ':codigo' => $objItem->codigoProducto,
-                        ':ciudad' => $objSectorCiudad->codigoCiudad,
-                        ':sector' => $objSectorCiudad->codigoSector,
+                        ':ciudad' => $this->objSectorCiudad->codigoCiudad,
+                        ':sector' => $this->objSectorCiudad->codigoSector,
                     ),
                 ));
 
@@ -360,7 +352,7 @@ class CarroController extends Controller {
                     continue;
                 }
 
-                $objSaldo = $objProducto->getSaldo($objSectorCiudad->codigoCiudad, $objSectorCiudad->codigoSector);
+                $objSaldo = $objProducto->getSaldo($this->objSectorCiudad->codigoCiudad, $this->objSectorCiudad->codigoSector);
 
                 if ($objSaldo === null) {
                     $agregadoCompleto = false;
@@ -415,7 +407,7 @@ class CarroController extends Controller {
                         'condition' => 'codigoProducto=:producto AND codigoCedi=:cedi AND saldoUnidad>=:saldo',
                         'params' => array(
                             ':producto' => $objItem->codigoProducto,
-                            ':cedi' => $objSectorCiudad->objCiudad->codigoSucursal,
+                            ':cedi' => $this->objSectorCiudad->objCiudad->codigoSucursal,
                             ':saldo' => $objItem->unidadesCedi + $cantidadCarroBodega
                         )
                     ));
@@ -424,10 +416,10 @@ class CarroController extends Controller {
                         $agregadoCompleto = false;
                     } else {
                         $objProductoCarro = new ProductoCarro($objProducto);
-                        if(Yii::app()->shoppingCart->putStored($objProductoCarro, $objItem->unidadesCedi)){
+                        if (Yii::app()->shoppingCart->putStored($objProductoCarro, $objItem->unidadesCedi)) {
                             $agregadoItem = true;
                             $nUnidadesCarro += $objItem->unidadesCedi;
-                        }else{
+                        } else {
                             $agregadoCompleto = false;
                         }
                     }
@@ -458,11 +450,7 @@ class CarroController extends Controller {
     }
 
     public function actionAgregarcotizacion() {
-        $objSectorCiudad = null;
-        if (isset(Yii::app()->session[Yii::app()->params->sesion['sectorCiudadEntrega']]))
-            $objSectorCiudad = Yii::app()->session[Yii::app()->params->sesion['sectorCiudadEntrega']];
-
-        if ($objSectorCiudad === null) {
+        if ($this->objSectorCiudad === null) {
             echo CJSON::encode(array('result' => 'error', 'response' => 'Seleccionar ubicaci&oacute;n.'));
             Yii::app()->end();
         }
@@ -483,8 +471,8 @@ class CarroController extends Controller {
                 ':cotizacion' => $cotizacion,
                 ':usuario' => Yii::app()->user->name,
                 ':fecha' => $fecha->format('Y-m-d H:i:s'),
-                ':ciudad' => Yii::app()->shoppingCart->getCodigoCiudad(),
-                ':sector' => Yii::app()->shoppingCart->getCodigoSector()
+                ':ciudad' => $this->objSectorCiudad->codigoCiudad,
+                ':sector' => $this->objSectorCiudad->codigoSector,
             )
         ));
 
@@ -514,8 +502,8 @@ class CarroController extends Controller {
                             ':estado' => 1,
                             ':fecha' => $fecha->format('Y-m-d H:i:s'),
                             ':saldo' => 0,
-                            ':ciudad' => $objSectorCiudad->codigoCiudad,
-                            ':sector' => $objSectorCiudad->codigoSector,
+                            ':ciudad' => $this->objSectorCiudad->codigoCiudad,
+                            ':sector' => $this->objSectorCiudad->codigoSector,
                         )
                     ));
 
@@ -524,7 +512,7 @@ class CarroController extends Controller {
                         continue;
                     }
 
-                    $objSaldo = $objCombo->getSaldo($objSectorCiudad->codigoCiudad, $objSectorCiudad->codigoSector);
+                    $objSaldo = $objCombo->getSaldo($this->objSectorCiudad->codigoCiudad, $this->objSectorCiudad->codigoSector);
 
                     if ($objSaldo === null) {
                         $agregadoCompleto = false;
@@ -578,8 +566,8 @@ class CarroController extends Controller {
                     'params' => array(
                         ':activo' => 1,
                         ':codigo' => $objItem->codigoProducto,
-                        ':ciudad' => $objSectorCiudad->codigoCiudad,
-                        ':sector' => $objSectorCiudad->codigoSector,
+                        ':ciudad' => $this->objSectorCiudad->codigoCiudad,
+                        ':sector' => $this->objSectorCiudad->codigoSector,
                     ),
                 ));
 
@@ -588,7 +576,7 @@ class CarroController extends Controller {
                     continue;
                 }
 
-                $objSaldo = $objProducto->getSaldo($objSectorCiudad->codigoCiudad, $objSectorCiudad->codigoSector);
+                $objSaldo = $objProducto->getSaldo($this->objSectorCiudad->codigoCiudad, $this->objSectorCiudad->codigoSector);
 
                 if ($objSaldo === null) {
                     $agregadoCompleto = false;
@@ -650,10 +638,10 @@ class CarroController extends Controller {
                     if ($objSaldoBodega === null) {
                         $agregadoCompleto = false;
                     } else {
-                        if(Yii::app()->shoppingCart->putStored($objProductoCarro, $objItem->unidadesCedi)){
+                        if (Yii::app()->shoppingCart->putStored($objProductoCarro, $objItem->unidadesCedi)) {
                             $agregadoItem = true;
                             $nUnidadesCarro += $objItem->unidadesCedi;
-                        }else{
+                        } else {
                             $agregadoCompleto = false;
                         }
                     }
@@ -953,10 +941,10 @@ class CarroController extends Controller {
             echo CJSON::encode(array('result' => 'error', 'response' => 'No se detecta ubicación'));
             Yii::app()->end();
         }
-        
+
         $objPagoForm = new FormaPagoForm;
         if (!$objPagoForm->tieneDomicilio($objSectorCiudad)) {
-            echo CJSON::encode(array('result' => 'error', 'response' => "La cantidad solicitada no está disponible en este momento. Saldos disponibles: $objSaldo->saldoUnidad unidades"));
+            echo CJSON::encode(array('result' => 'error', 'response' => "La cantidad solicitada no está disponible en este momento."));
             Yii::app()->end();
         }
 
@@ -1324,7 +1312,7 @@ class CarroController extends Controller {
         if (!$this->isMobile) {
             $carroVista = "d_carro";
         }
-        
+
         $objPagoForm = new FormaPagoForm;
         if (!$objPagoForm->tieneDomicilio($this->objSectorCiudad)) {
             echo CJSON::encode(array('result' => 'error', 'response' => array(
@@ -1495,7 +1483,7 @@ class CarroController extends Controller {
             $objDireccion = DireccionesDespacho::model()->findByPk($modelPago->idDireccionDespacho);
             $objFormaPago = FormaPago::model()->findByPk($modelPago->idFormaPago);
             $modelPago->pagoExpress = true;
-            
+
             $params = array();
             $params['objDireccion'] = $objDireccion;
             $params['objFormaPago'] = $objFormaPago;
@@ -1542,7 +1530,7 @@ class CarroController extends Controller {
         if (is_string($post)) {
             $post = ($post == "true");
         }
-        
+
         if ($this->objSectorCiudad === null) {
             if ($post) {
                 echo CJSON::encode(array('result' => 'ok', 'response' => 'Seleccionar ubicaci&oacute;n', 'redirect' => $this->createUrl('/sitio/ubicacion')));
@@ -1575,8 +1563,8 @@ class CarroController extends Controller {
                 Yii::app()->end();
             }
         }
-        
-        if ($modelPago!=null && $modelPago->pagoExpress) {
+
+        if ($modelPago != null && $modelPago->pagoExpress) {
             $modelPago = null;
         }
 
@@ -1661,11 +1649,11 @@ class CarroController extends Controller {
                 Yii::app()->end();
             }
         }
-        
-        if ($modelPago!=null && $modelPago->pagoExpress) {
+
+        if ($modelPago != null && $modelPago->pagoExpress) {
             $modelPago = null;
         }
-        
+
         if (Yii::app()->user->isGuest && $modelPago == null) {
             Yii::app()->session[Yii::app()->params->sesion['redireccionAutenticacion']] = $this->createAbsoluteUrl('pagar');
             $this->render('/usuario/d_autenticar', array('pagar' => true));
@@ -1812,7 +1800,7 @@ class CarroController extends Controller {
         } else {
             //validar pasos anteriores
             $modelPago->validarPasos(Yii::app()->params->pagar['pasosDisponiblesDesktop'], $paso);
-            
+
             $params = array();
             $params['parametros']['paso'] = $paso;
             $params['paso'] = $paso;
@@ -2021,9 +2009,9 @@ class CarroController extends Controller {
 
                     break;
                 case Yii::app()->params->pagar['pasosDesktop'][2]:
-                    $objDireccion = DireccionesDespacho::model()->findByPk($modelPago->idDireccionDespacho);
+                    //$objDireccion = DireccionesDespacho::model()->findByPk($modelPago->idDireccionDespacho);
                     $objFormaPago = FormaPago::model()->findByPk($modelPago->idFormaPago);
-                    $params['parametros']['objDireccion'] = $objDireccion;
+                    $params['parametros']['objDireccion'] = null;
                     $params['parametros']['objFormaPago'] = $objFormaPago;
 
                     Yii::app()->shoppingCart->setBono($modelPago->calcularBonoRedimido());
@@ -2280,21 +2268,11 @@ class CarroController extends Controller {
                     $params['parametros']['listHorarios'] = $modelPago->listDataHoras();
                     break;
                 case Yii::app()->params->pagar['pasos'][4]:
-                    $listFormaPago = array();
-
-                    if ($modelPago->pagoInvitado) {
-                        $listFormaPago = FormaPago::model()->findAll(array(
-                            'order' => 'formaPago',
-                            'condition' => 'estadoFormaPago=:estado AND idFormaPago <> :credirebaja',
-                            'params' => array(':estado' => 1, ':credirebaja' => Yii::app()->params->formaPago['idCredirebaja'])
-                        ));
-                    } else {
-                        $listFormaPago = FormaPago::model()->findAll(array(
-                            'order' => 'formaPago',
-                            'condition' => 'estadoFormaPago=:estado',
-                            'params' => array(':estado' => 1)
-                        ));
-                    }
+                    $listFormaPago = FormaPago::model()->findAll(array(
+                        'order' => 'formaPago',
+                        'condition' => 'estadoFormaPago=:estado',
+                        'params' => array(':estado' => 1)
+                    ));
 
                     $modelPago->consultarBono(Yii::app()->shoppingCart->getTotalCost());
                     Yii::app()->session[Yii::app()->params->sesion['carroPagarForm']] = $modelPago;
@@ -2317,7 +2295,6 @@ class CarroController extends Controller {
         }
     }
 
-    
     private function pagarInvitadoMovil($paso, $post, $modelPago) {
         if ($paso === null)
             $paso = Yii::app()->params->pagar['pasos'][1];
@@ -2542,46 +2519,16 @@ class CarroController extends Controller {
 
             switch ($paso) {
                 case Yii::app()->params->pagar['pasos'][2]:
-                    //Yii::app()->session[Yii::app()->params->sesion['direccionEntrega']]
-                    $criteriaDireccion = array(
-                        'condition' => 'identificacionUsuario=:cedula AND (codigoCiudad=:ciudad AND (codigoSector=:sector OR codigoSector=0)) AND activo=:activo',
-                        'params' => array(
-                            ':cedula' => Yii::app()->user->name,
-                            ':activo' => 1,
-                            ':ciudad' => $this->objSectorCiudad->codigoCiudad,
-                            ':sector' => $this->objSectorCiudad->codigoSector
-                        )
-                    );
-
-                    if (isset(Yii::app()->session[Yii::app()->params->sesion['direccionEntrega']]) && Yii::app()->session[Yii::app()->params->sesion['direccionEntrega']] != null) {
-                        //$criteriaDireccion['condition'] .= " AND idDireccionDespacho=:direccion";
-                        //$criteriaDireccion['params'][':direccion'] = Yii::app()->session[Yii::app()->params->sesion['direccionEntrega']];
-                        $modelPago->idDireccionDespacho = Yii::app()->session[Yii::app()->params->sesion['direccionEntrega']];
-                    }
-
-                    $listDirecciones = DireccionesDespacho::model()->findAll($criteriaDireccion);
-
-                    $params['parametros']['listDirecciones'] = $listDirecciones;
-                    break;
+                     break;
                 case Yii::app()->params->pagar['pasos'][3]:
                     $params['parametros']['listHorarios'] = $modelPago->listDataHoras();
                     break;
                 case Yii::app()->params->pagar['pasos'][4]:
-                    $listFormaPago = array();
-
-                    if ($modelPago->pagoInvitado) {
-                        $listFormaPago = FormaPago::model()->findAll(array(
-                            'order' => 'formaPago',
-                            'condition' => 'estadoFormaPago=:estado AND idFormaPago <> :credirebaja',
-                            'params' => array(':estado' => 1, ':credirebaja' => Yii::app()->params->formaPago['idCredirebaja'])
-                        ));
-                    } else {
-                        $listFormaPago = FormaPago::model()->findAll(array(
-                            'order' => 'formaPago',
-                            'condition' => 'estadoFormaPago=:estado',
-                            'params' => array(':estado' => 1)
-                        ));
-                    }
+                    $listFormaPago = FormaPago::model()->findAll(array(
+                        'order' => 'formaPago',
+                        'condition' => 'estadoFormaPago=:estado AND idFormaPago <> :credirebaja',
+                        'params' => array(':estado' => 1, ':credirebaja' => Yii::app()->params->formaPago['idCredirebaja'])
+                    ));
 
                     $modelPago->consultarBono(Yii::app()->shoppingCart->getTotalCost());
                     Yii::app()->session[Yii::app()->params->sesion['carroPagarForm']] = $modelPago;
@@ -2589,9 +2536,9 @@ class CarroController extends Controller {
 
                     break;
                 case Yii::app()->params->pagar['pasos'][5]:
-                    $objDireccion = DireccionesDespacho::model()->findByPk($modelPago->idDireccionDespacho);
+                    //$objDireccion = DireccionesDespacho::model()->findByPk($modelPago->idDireccionDespacho);
                     $objFormaPago = FormaPago::model()->findByPk($modelPago->idFormaPago);
-                    $params['parametros']['objDireccion'] = $objDireccion;
+                    $params['parametros']['objDireccion'] = null;
                     $params['parametros']['objFormaPago'] = $objFormaPago;
 
                     Yii::app()->shoppingCart->setBono($modelPago->calcularBonoRedimido());
@@ -2603,8 +2550,7 @@ class CarroController extends Controller {
             $this->render("pagar", $params);
         }
     }
-    
-    
+
     private function pagarDomicilioMovilOld($paso, $post) {
         $modelPago = null;
 

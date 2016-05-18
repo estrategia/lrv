@@ -414,7 +414,7 @@ div.c_src_page div.ui-btn.ui-input-btn.ui-corner-all.ui-shadow.ui-btn-inline{
     /*background: url("../images/success_msg_icon.gif") no-repeat scroll 10px 10px #eff5ea !important;*/
     /*border: 1px solid #BA3B3D !important;
     color: #FD0000 !important;*/
-    color: #cc0000;
+    color: #fff;
     font-size: 1.06em;
     font-weight: 100;
 }
@@ -817,6 +817,8 @@ label.ui-btn.ui-checkbox-on.c_cond_rg.ui-btn:after{
 }
 div.cdt_line_spc{ background-color: #ccc; margin: .3em 0;/*20px 0px;*/ min-height: 1px; }
 div.ui-bar.ui-bar-c.ui-corner-all.center.ccont_index{ background: transparent; border: 0px; margin: 0px; padding: 0px; }
+div.ui-bar.ui-bar-c.ui-corner-all.center.ccont_index.activo{ opacity: 1; }
+div.ui-bar.ui-bar-c.ui-corner-all.center.ccont_index.inactivo{ opacity: 0.5; }
 a.c_btn_img.ui-btn.ui-btn-inline.ui-shadow.ui-corner-all{ margin: 0 0 0 -5px; padding: 0px; float: left; z-index: 1000;/*1002;*/ width: 100px;/*90px;*/ overflow: visible; }
 div.ctxt_pedido h2 > a {
     background-color: #f9f9f9;
@@ -857,7 +859,7 @@ div.ctxt_pedido.bg_yellow h2 > a{
     filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#fac70e', endColorstr='#f9a33d',GradientType=0 ); /* IE6-9 */
 }
 
-.c_cont_slc_ntg .ui-bar-c img.c_ndx_img{ position: relative; width: 100%; /*70%;*/ /*50%;*/ border: 5px solid #FFF; border-radius: 50%; background: #FFF; }
+.c_cont_slc_ntg .ui-bar-c img.c_ndx_img{ position: relative; width: 100%; /*70%;*/ /*50%;*/ border: 5px solid #B10D0E; border-radius: 50%; background: #B10D0E; }
 .c_cont_slc_ntg .ui-bar-c h2{
     font-size: medium;/*1.2em;*/
     color: #b40000;
@@ -1575,8 +1577,8 @@ html .ui-body-r .ui-btn:visited,
 html body .ui-group-theme-r .ui-btn:visited,
 html head + body .ui-btn.ui-btn-r:visited {
     background-color: #b10000; /*{r-bup-background-color}*/;
-    border-color: #f75454; /*{r-bup-border}*/;
-    color: #ffffff; /*{r-bup-color}*/;
+    border-color: #b10000; /*{r-bup-border}*/;
+    color: #fff; /*{r-bup-color}*/;
     text-shadow: none; /*{r-bup-shadow-x}*/ /*1px*/ /*{r-bup-shadow-y}*/ /*0*/ /*{r-bup-shadow-radius}*/ /*#444444*/ /*{r-bup-shadow-color}*//*;*/
     box-shadow: none;
     /*  border-radius: .6em;*/
@@ -1587,9 +1589,9 @@ html .ui-bar-r .ui-btn:hover,
 html .ui-body-r .ui-btn:hover,
 html body .ui-group-theme-r .ui-btn:hover,
 html head + body .ui-btn.ui-btn-r:hover {
-    background-color: #cb4545; /*{r-bhover-background-color}*/;
-    border-color: #FF6060; /*{r-bhover-border}*/;
-    color: #ffffff; /*{r-bhover-color}*/;
+    background-color: #b10000; /*{r-bup-background-color}*/;
+    border-color: #b10000; /*{r-bup-border}*/;
+    color: #fff; /*{r-bup-color}*/;
     text-shadow: none; /*{r-bup-shadow-x}*/ /*1px*/ /*{r-bup-shadow-y}*/ /*0*/ /*{r-bup-shadow-radius}*/ /*#444444*/ /*{r-bup-shadow-color}*//*;*/
     box-shadow: none;
 }
@@ -1680,18 +1682,7 @@ html head + body .ui-btn.ui-btn-n:visited {
     /*//opacity: 1;*/ /*font-weight: bold;*/
     text-shadow: none; /*{r-bup-shadow-x}*/ /*1px*/ /*{r-bup-shadow-y}*/ /*0*/ /*{r-bup-shadow-radius}*/ /*#000000*/ /*{r-bup-shadow-color}*//*;*/
 }
-/* Button hover */
-.ui-page-theme-n .ui-btn:hover,
-html .ui-bar-n .ui-btn:hover,
-html .ui-body-n .ui-btn:hover,
-html body .ui-group-theme-n .ui-btn:hover,
-html head + body .ui-btn.ui-btn-n:hover {
-    background-color: #FFbb46; /*{n-bhover-background-color}*/;
-    border-color: #8c6626; /*{n-bhover-border}*/;
-    color: #ffffff; /*{n-bhover-color}*/;
-    /*text-shadow: 0*/ /*{n-bhover-shadow-x}*/ /*1px*/ /*{n-bhover-shadow-y}*/ /*0*/ /*{n-bhover-shadow-radius}*/ /*#000000*/ /*{n-bhover-shadow-color} ;*/
-    text-shadow:none;
-}
+
 /* Button down */
 .ui-page-theme-n .ui-btn:active,
 html .ui-bar-n .ui-btn:active,
@@ -1807,7 +1798,7 @@ html head + body .ui-body-n.ui-focus {
     font-size: 10pt;
     letter-spacing: -1px;
     list-style: outside none none;
-    width: 78px;
+    width: 66px;
     text-align: center;
 }
 .steps ul li.active {
@@ -1824,15 +1815,18 @@ li.active .iconStep {
     background-position: center 49px;
 }
 .iconStep.step1{
-    background-image: url(../images/iconos/icons_carro/vendedor/despacho.png);
+    background-image: url(../images/iconos/icons_carro/vendedor/tipo-entrega.png);
 }
 .iconStep.step2{
-    background-image: url(../images/iconos/icons_carro/vendedor/entrega.png);
+    background-image: url(../images/iconos/icons_carro/vendedor/despacho.png);
 }
 .iconStep.step3{
-    background-image: url(../images/iconos/icons_carro/vendedor/pago.png);
+    background-image: url(../images/iconos/icons_carro/vendedor/entrega.png);
 }
 .iconStep.step4{
+    background-image: url(../images/iconos/icons_carro/vendedor/pago.png);
+}
+.iconStep.step5{
     background-image: url(../images/iconos/icons_carro/vendedor/confirmacion.png);
 }
 .clear{
