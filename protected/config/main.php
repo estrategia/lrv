@@ -32,7 +32,7 @@ return array(
                 ),
             )),
         'vendedor' => array(
-            'defaultController' => 'usuario',
+            'defaultController' => 'sitio',
             'components' => array(
                 'user' => array(
                     'class' => 'vendedor.components.UserVendedor',
@@ -395,6 +395,9 @@ return array(
                 'modelBonosAdminExport' => 'larebaja.online.vendedor.modelbonosadminexport',
                 'pdvEntrega' => 'larebaja.online.vendedor.pdventrega',
                 'carroPagarForm' => 'larebaja.online.vendedor.carropagarform',
+                'redireccionUbicacion' => 'larebaja.online.vendedor.redireccionubicacion',
+                'redireccionVendedor' => 'larebaja.online.vendedor.redireccionvendedor',
+                'redireccionCliente' => 'larebaja.online.vendedor.redireccioncliente',
                 'redireccionAutenticacion' => 'larebaja.online.vendedor.redireccionautenticacion',
                 'direccionEntrega' => 'larebaja.online.vendedor.direccionentrega',
                 //'tipoEntrega' => 'larebaja.online.vendedor.tipoentrega',

@@ -254,10 +254,12 @@
         </p>
     <?php endif; ?>
 </div>
+
 <?php if (!empty($listRelacionados)): ?>
     <div class="productosRelacionados ui-content">
         <h2>Productos Relacionados</h2>
         <div id="slide-relacionados" class="owl-carousel owl-theme">
+            
             <?php foreach ($listRelacionados as $objRelacionado): ?>
                 <div class="item"><?php
                     $this->renderPartial('_productoSlide', array(

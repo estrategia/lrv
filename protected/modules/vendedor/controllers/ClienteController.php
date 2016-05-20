@@ -10,7 +10,8 @@ class ClienteController extends ControllerVendedor {
 
     public function filters() {
         return array(
-            'cliente + direcciones, listapedidos, pedido',
+            'cliente + infopersonal, direcciones, listapersonal, listapedidos, pedido, bonos',
+            'ubicacion + direcciones'
                 //'login + index, infoPersonal, direcciones, direccionCrear, pagoexpress, listapedidos, pedido, listapersonal, listadetalle',
                 //'loginajax + direccionActualizar',
         );
@@ -18,7 +19,17 @@ class ClienteController extends ControllerVendedor {
 
     public function filterCliente($filter) {
         if (!Yii::app()->controller->module->user->getClienteLogueado()) {
+            Yii::app()->session[Yii::app()->params->vendedor['sesion']['redireccionCliente']] = Yii::app()->request->url;
             $this->redirect(CController::createUrl('cliente/cliente'));
+            Yii::app()->end();
+        }
+        $filter->run();
+    }
+    
+    public function filterUbicacion($filter){
+        if (!Yii::app()->session[Yii::app()->params->vendedor['sesion']['sectorCiudadEntrega']]) {
+            Yii::app()->session[Yii::app()->params->vendedor['sesion']['redireccionUbicacion']] = Yii::app()->request->url;
+            $this->redirect(CController::createUrl('sitio/ubicacion'));
             Yii::app()->end();
         }
         $filter->run();
@@ -33,7 +44,7 @@ class ClienteController extends ControllerVendedor {
         $this->render('autenticarCliente', array(
             'model' => new Usuario()
                 )
-        ); 
+        );
     }
 
     public function actionInfopersonal() {
@@ -71,11 +82,17 @@ class ClienteController extends ControllerVendedor {
         Yii::app()->session[Yii::app()->params->vendedor['sesion']['compraInvitado']] = true;
 
         unset(Yii::app()->session[Yii::app()->params->vendedor['sesion']['cliente']]);
-        
+
         Yii::app()->shoppingCartSalesman->clear();
+
+        $redirect = Yii::app()->request->baseUrl . Yii::app()->controller->module->homeUrl[0];
+        if (isset(Yii::app()->session[Yii::app()->params->vendedor['sesion']['redireccionCliente']])) {
+            $redirect = Yii::app()->session[Yii::app()->params->vendedor['sesion']['redireccionCliente']];
+            Yii::app()->session[Yii::app()->params->vendedor['sesion']['redireccionCliente']] = null; // variable de sesión en el módulo
+        }
         echo CJSON::encode(array(
             'result' => 'ok',
-            'urlRefer' => Yii::app()->request->baseUrl . Yii::app()->controller->module->homeUrl[0]
+            'urlRefer' => $redirect
         ));
     }
 
@@ -92,7 +109,6 @@ class ClienteController extends ControllerVendedor {
             )
         ));
         if ($usuario) {
-
             if ($usuario->activo != 1) {
                 echo CJSON::encode(array(
                     'result' => 'error',
@@ -153,9 +169,15 @@ class ClienteController extends ControllerVendedor {
             unset(Yii::app()->session[Yii::app()->params->vendedor['sesion']['compraInvitado']]);
             Yii::app()->session[Yii::app()->params->vendedor['sesion']['cliente']] = $usuario;
             Yii::app()->shoppingCartSalesman->clear();
+            
+            $redirect = Yii::app()->request->baseUrl . Yii::app()->controller->module->homeUrl[0];
+            if (isset(Yii::app()->session[Yii::app()->params->vendedor['sesion']['redireccionCliente']])) {
+                $redirect = Yii::app()->session[Yii::app()->params->vendedor['sesion']['redireccionCliente']];
+                Yii::app()->session[Yii::app()->params->vendedor['sesion']['redireccionCliente']] = null; // variable de sesión en el módulo
+            }
             echo CJSON::encode(array(
                 'result' => 'ok',
-                'urlRefer' => Yii::app()->request->baseUrl . Yii::app()->controller->module->homeUrl[0]
+                'urlRefer' => $redirect
             ));
         } else {
             echo CJSON::encode(array(
@@ -170,11 +192,7 @@ class ClienteController extends ControllerVendedor {
         if (isset(Yii::app()->session[Yii::app()->params->vendedor['sesion']['sectorCiudadEntrega']]))
             $objSectorCiudad = Yii::app()->session[Yii::app()->params->vendedor['sesion']['sectorCiudadEntrega']];
 
-        if ($objSectorCiudad === null) {
-            Yii::app()->user->setFlash('error', "Seleccionar ubicación.");
-            $this->redirect($this->createUrl('sitio/ubicacion'));
-        }
-
+        
         $this->showSeeker = false;
         $this->fixedFooter = true;
 
@@ -521,8 +539,8 @@ class ClienteController extends ControllerVendedor {
             'bonos' => $bonos
         ));
     }
-    
-    public function actionSalirCliente(){
+
+    public function actionSalirCliente() {
         Yii::app()->controller->module->user->logoutCliente();
         $this->redirect(Yii::app()->controller->module->homeUrl);
     }

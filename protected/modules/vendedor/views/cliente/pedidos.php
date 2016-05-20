@@ -48,11 +48,6 @@ $this->widget('zii.widgets.grid.CGridView', array(
             'type' => 'raw',
             'value' => array($this, 'gridDetallePedido'),
         ),
-        array(
-            'header' => 'Ocultar',
-            'type' => 'raw',
-            'value' => ' \'<a href="#" class="ui-btn ui-btn-inline ui-icon-cancel ui-btn-icon-notext ui-corner-all ui-icon-center ui-nodisc-icon" data-role="pedidolistaocultar" data-compra="\' . $data->idCompra  . \'"></a>\''
-        ),
     ),
 ));
 ?>
