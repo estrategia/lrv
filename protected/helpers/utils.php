@@ -88,8 +88,9 @@ function distanciaCoordenadas($lat1, $lon1, $lat2, $lon2, $unit = 'K') {
 
 function GSASearch(&$term, $sesion) {
 //    $arr1 = WebServiceSearch($term);
-    // $arr2 = GSASearchAux($term);
-    $arr2 = array();
+     $arr2 = GSASearchAux($term);
+     
+   // $arr2 = array();
 
     $resultado = array();
 //    foreach ($arr1 as $value)
@@ -116,12 +117,22 @@ function GSASearch(&$term, $sesion) {
         }
     }
 
-    RelevanciaTemp::model()->deleteAll(array(
-        'condition' => 'idSesion =:idSesion ',
-        'params' => array(
-            ':idSesion' => $sesion
-        )
-    ));
+//    RelevanciaTemp::model()->deleteAll(array(
+//        'condition' => 'idSesion =:idSesion ',
+//        'params' => array(
+//            ':idSesion' => $sesion
+//        )
+//    ));
+
+    $sql = " CREATE TEMPORARY TABLE t_relevancia_temp_$sesion (
+            idSesion varchar(60) NOT NULL,
+            codigoProducto int(10) unsigned NOT NULL,
+            relevancia int(11) NOT NULL,
+            KEY `idx_t_relevancia_temp_idSesion` (`idSesion`),
+            KEY `idx_t_relevancia_temp_codigoProducto` (`codigoProducto`)
+         
+          ) ";
+    Yii::app()->db->createCommand($sql)->query();
 
     $ProductosRelevancia = array();
     foreach ($resultado as $key => $relevancia) {
@@ -130,7 +141,7 @@ function GSASearch(&$term, $sesion) {
 
     if (!empty($ProductosRelevancia)) {
         $sql = "SET FOREIGN_KEY_CHECKS = 0;
-                    INSERT INTO t_relevancia_temp (idSesion, codigoProducto, relevancia) VALUES " . implode(",", $ProductosRelevancia);
+                    INSERT INTO t_relevancia_temp_$sesion (idSesion, codigoProducto, relevancia) VALUES " . implode(",", $ProductosRelevancia);
         Yii::app()->db->createCommand($sql)->query();
     }
 

@@ -10,20 +10,8 @@
 <?php endif; ?>
 
 <ul data-role="listview" data-inset="true" class="cpanel_menu_ppal ui-nodisc-icon ui-alt-icon">
+    
     <?php if (Yii::app()->controller->module->user->getClienteLogueado()): ?>
-        <li>
-            <a href="<?php echo CController::createUrl('cliente/infoPersonal') ?>" data-ajax="false">
-                <h2>Informaci&oacute;n personal</h2>
-            </a>
-        </li>
-    <?php endif; ?>
-
-    <?php if (Yii::app()->controller->module->user->getClienteLogueado()): ?>
-        <li>
-            <a href="<?php echo CController::createUrl('cliente/direcciones') ?>" data-ajax="false">
-                <h2>Direcciones de despacho</h2>
-            </a>
-        </li>
         <li>
             <a href="<?php echo CController::createUrl('cliente/listapedidos') ?>" data-ajax="false">
                 <h2>Buscar pedidos</h2>
@@ -44,20 +32,5 @@
                 <h2>Consultar Bonos</h2>
             </a>
         </li>
-        <li>
-            <a href="<?php echo CController::createUrl('cliente/cliente') ?>" data-ajax="false">
-                <h2>Cambiar Cliente</h2>
-            </a>
-        </li>
-        <li>
-            <a href="<?php echo CController::createUrl('cliente/salirCliente') ?>" data-ajax="false">
-                <h2>Cerrar cliente</h2>
-            </a>
-        </li>
     <?php endif; ?>
-    <li>
-        <a href="<?php echo CController::createUrl('usuario/salir') ?>" data-ajax="false">
-            <h2>Cerrar sesi&oacute;n vendedor</h2>
-        </a>
-    </li>
 </ul>

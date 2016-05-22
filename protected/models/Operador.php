@@ -114,8 +114,8 @@ class Operador extends CActiveRecord {
     }
 
     public function hash($contrasena) {
-        return $contrasena;
-        //return md5($contrasena);
+     //   return $contrasena;
+        return md5($contrasena);
     }
     
     public static function listData(){

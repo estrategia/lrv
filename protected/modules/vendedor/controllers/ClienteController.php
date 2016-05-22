@@ -542,7 +542,7 @@ class ClienteController extends ControllerVendedor {
 
     public function actionSalirCliente() {
         Yii::app()->controller->module->user->logoutCliente();
-        $this->redirect(Yii::app()->controller->module->homeUrl);
+        $this->redirect($this->createUrl('cliente/cliente'));
     }
 
 }

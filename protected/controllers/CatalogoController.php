@@ -647,7 +647,7 @@ class CatalogoController extends Controller {
                    
                 )
             );
-            $parametrosProductos['join'] = "JOIN t_relevancia_temp rel ON rel.codigoProducto = t.codigoProducto" ;
+            $parametrosProductos['join'] = "JOIN t_relevancia_temp_$sesion rel ON rel.codigoProducto = t.codigoProducto" ;
         } else {
             $parametrosProductos = array(
                 'select' => '*, CASE WHEN (listImagenes.idImagen <> null) THEN 1 ELSE 0 END AS tieneImagen',
@@ -668,7 +668,7 @@ class CatalogoController extends Controller {
                     ':sesion' => $sesion
                 )
             );
-            $parametrosProductos['join'] = "JOIN t_relevancia_temp rel ON rel.codigoProducto = t.codigoProducto" ;
+            $parametrosProductos['join'] = "JOIN t_relevancia_temp_$sesion rel ON rel.codigoProducto = t.codigoProducto" ;
         //    $listProductos = Producto::model()->findAll($parametrosProductos);
 
             if (!$this->isMobile && !isset($_GET['ajax'])) {

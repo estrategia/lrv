@@ -75,8 +75,10 @@ class UsuarioController extends ControllerVendedor {
         if (isset($_POST['LoginVendedorForm'])) {
             $model->attributes = $_POST['LoginVendedorForm'];
 
-            $redirect = Yii::app()->homeUrl . Yii::app()->controller->module->homeUrl[0];
+            //$redirect = Yii::app()->homeUrl . Yii::app()->controller->module->homeUrl[0];
 
+            $redirect = $this->createUrl('cliente/cliente');
+            
             if (isset(Yii::app()->session[Yii::app()->params->vendedor['sesion']['redireccionVendedor']])) {
                 $redirect = Yii::app()->session[Yii::app()->params->vendedor['sesion']['redireccionVendedor']];
                 Yii::app()->session[Yii::app()->params->vendedor['sesion']['redireccionVendedor']] = null; // variable de sesión en el módulo
@@ -169,7 +171,7 @@ class UsuarioController extends ControllerVendedor {
 
             if ($model->validate()) {
                 try {
-                    $usuario->clave = $model->clave;
+                    $usuario->clave = md5($model->clave);
 
                     if ($usuario->save()) {
                         Yii::app()->user->setFlash('success', "Información actualizada.");
