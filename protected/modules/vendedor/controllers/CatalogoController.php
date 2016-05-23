@@ -113,11 +113,11 @@ class CatalogoController extends ControllerVendedor {
                     ':dispositivo' => $this->isMobile ? CategoriaTienda::DISPOSITIVO_MOVIL : CategoriaTienda::DISPOSITIVO_ESCRITORIO,
                     ':sesion' => $sesion
             ));
-            $parametrosProductos['join'] = "JOIN t_relevancia_temp rel ON rel.codigoProducto = t.codigoProducto";
+            $parametrosProductos['join'] = "JOIN t_relevancia_temp_$sesion rel ON rel.codigoProducto = t.codigoProducto";
         } else {
              $parametrosProductos = array(
                 'select' => '*, CASE WHEN (listImagenes.idImagen <> null) THEN 1 ELSE 0 END AS tieneImagen',
-                'order' => '/*tieneImagen DESC,*/ rel.relevancia DESC, t.orden DESC',
+                'order' => 'tieneImagen DESC, rel.relevancia DESC, t.orden DESC',
                 'with' => array('listImagenes', 'objCodigoEspecial', 'listCalificaciones',
                     'objCategoriaBI' => array('with' => array('listCategoriasTienda' => array('on' => 'listCategoriasTienda.tipoDispositivo=:dispositivo'))),
                     'listSaldos' => array('condition' => '(listSaldos.saldoUnidad>:saldo AND listSaldos.codigoCiudad=:ciudad AND listSaldos.codigoSector=:sector) OR (listSaldos.saldoUnidad IS NULL AND listSaldos.codigoCiudad IS NULL AND listSaldos.codigoSector IS NULL)'),
@@ -134,7 +134,7 @@ class CatalogoController extends ControllerVendedor {
                     ':sesion' => $sesion
                 )
             );
-            $parametrosProductos['join'] = "JOIN t_relevancia_temp rel ON rel.codigoProducto = t.codigoProducto" ;
+            $parametrosProductos['join'] = "JOIN t_relevancia_temp_$sesion rel ON rel.codigoProducto = t.codigoProducto" ;
 
             if (!$this->isMobile && !isset($_GET['ajax'])) {
                 $query = "SELECT  MIN(listPrecios.precioUnidad) minproducto, MAX(listPrecios.precioUnidad) maxproducto, MIN(listSaldosTerceros.precioUnidad) mintercero, MAX(listSaldosTerceros.precioUnidad) maxtercero ";

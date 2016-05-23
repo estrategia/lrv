@@ -96,7 +96,7 @@ header("Pragma: no-cache");
             <?php endforeach; ?>
 
             <div data-role="footer" data-theme="f" <?php echo ($this->fixedFooter ? 'data-position="fixed" data-visible-on-page-show="false" data-tap-toggle="false"' : "") ?> >
-                <?php echo $this->renderPartial("//layouts/footer"); ?>
+                <?php // echo $this->renderPartial("//layouts/footer"); ?>
             </div>
             <!-- Fin footer -->
         </div>

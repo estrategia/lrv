@@ -1007,7 +1007,7 @@ class ContenidoController extends ControllerOperator {
         if (!empty($codigosArray)) {
             $listProductos = Producto::model()->findAll(array(
                 'with' => array('listImagenes', 'objCodigoEspecial', 'listCalificaciones', 'objCategoriaBI',),
-                'join' => ' JOIN t_relevancia_temp rel ON rel.codigoProducto = t.codigoProducto',
+                'join' => ' JOIN t_relevancia_temp_'.$sesion.' rel ON rel.codigoProducto = t.codigoProducto',
                 'condition' => "t.activo=:activo AND rel.idSesion =:sesion",
                 'params' => array(
                     ':activo' => 1,
