@@ -18,6 +18,7 @@
  * @property Compras[] $lisCompras
  */
 class BloqueosUsuarios extends CActiveRecord {
+
     const ESTADO_BLOQUEADO = 1;
     const ESTADO_DESBLOQUEADO = 2;
 
@@ -53,6 +54,7 @@ class BloqueosUsuarios extends CActiveRecord {
         // NOTE: you may need to adjust the relation name and the related
         // class name for the relations automatically generated below.
         return array(
+            'objUsuario' => array(self::BELONGS_TO, 'Usuario', 'identificacionUsuario'),
             'listCompras' => array(self::MANY_MANY, 'Compras', 't_ComprasBloqueoUsuarios(idBloqueoUsuario, idCompra)'),
         );
     }
@@ -115,7 +117,7 @@ class BloqueosUsuarios extends CActiveRecord {
     public static function model($className = __CLASS__) {
         return parent::model($className);
     }
-    
+
     /**
      * Metodo que hereda comportamiento de ValidateModelBehavior
      * @return void
@@ -127,6 +129,30 @@ class BloqueosUsuarios extends CActiveRecord {
                 'model' => $this
             ),
         );
+    }
+
+    public function desbloquearCuenta() {
+        if ($this->objUsuario !== null) {
+            $objUsuario = $this->objUsuario;
+            $objUsuario->activo=Usuario::ESTADO_ACTIVO;
+            $this->estado = self::ESTADO_DESBLOQUEADO;
+
+            if ($this->save()) {
+                if ($objUsuario->save() > 0) {
+                    $contenidoCorreo = Yii::app()->controller->renderPartial('//common/correoDesbloqueo', array('identificacionUsuario' => $this->identificacionUsuario), true);
+                    try {
+                        sendHtmlEmail($objUsuario->correoElectronico, "La Rebaja Virtual: Desbloqueo de cuenta", $contenidoCorreo, Yii::app()->params->callcenter['correo']);
+                    } catch (Exception $exc) {
+                    }
+                } else {
+                    Yii::log("BloqueosUsuarios::desbloquearCuenta - Error al activar usuario [$this->identificacionUsuario]" . "\nBloqueoUsuario:\n" .  CVarDumper::dumpAsString($this->attributes),CLogger::LEVEL_INFO, 'bloqueo_usuario');
+                }
+            } else {
+                Yii::log("BloqueosUsuarios::desbloquearCuenta - Error al actualizar bloqueo [$this->identificacionUsuario]" . "\nBloqueoUsuario:\n" .  CVarDumper::dumpAsString($this->attributes),CLogger::LEVEL_INFO, 'bloqueo_usuario');
+            }
+        }else{
+            Yii::log("BloqueosUsuarios::desbloquearCuenta - Usuario no existe [$this->identificacionUsuario]" . "\nBloqueoUsuario:\n" .  CVarDumper::dumpAsString($this->attributes),CLogger::LEVEL_INFO, 'bloqueo_usuario');
+        }
     }
 
 }

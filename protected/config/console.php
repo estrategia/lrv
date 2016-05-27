@@ -34,26 +34,42 @@ return array(
                     'class' => 'CFileLogRoute',
                     'levels' => CLogger::LEVEL_ERROR,
                     'logFile' => 'cron_error.log',
+                    'categories' => 'application',
                 ),
                 array(
                     'class' => 'CFileLogRoute',
                     'levels' => CLogger::LEVEL_WARNING,
                     'logFile' => 'cron_warning.log',
+                    'categories' => 'application',
                 ),
                 array(
                     'class' => 'CFileLogRoute',
                     'levels' => CLogger::LEVEL_INFO,
                     'logFile' => 'cron_info.log',
+                    'categories' => 'application',
                 ),
                 array(
                     'class' => 'CFileLogRoute',
                     'logFile' => 'cron_trace.log',
                     'levels' => 'trace, vardump',
+                    'categories' => 'application',
+                ),
+                array(
+                    'class'=> 'CFileLogRoute',
+                    'levels'=> CLogger::LEVEL_INFO,
+                    'logFile' => 'cron_bloqueo_info.log',
+                    'categories'=> 'bloqueo_usuario',
                 ),
             ),
         ),
     ),
     'params' => array(
+        'correoAdmin' => 'infolrv@copservir.com',
+        'bloqueoUsuario' => array(
+            'diasBloqueo' => 3,
+            'cantidadCompras' => 14,
+            'acumuladoCompras' => 200000,
+        ),
         'webServiceUrl' => array(
             'sincronizarBeneficiosSIICOP' => 'http://192.168.40.137/copservir/beneficios/sweb/wslrv',
             'envioCorreosRecordatorios' => 'http://localhost/lrv/sweb/wslrv'
@@ -81,6 +97,7 @@ return array(
             'menuDesktop' => '/images/menu/desktop/',
         ),
         'callcenter' => array(
+            'correo' => 'miguel.sanchez@eiso.com.co',
             'estadoCompra' => array(
                 'estado' => array(
                     'pendiente' => 1,
