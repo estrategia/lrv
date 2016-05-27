@@ -189,7 +189,7 @@ class Compras extends CActiveRecord {
                 $condition .= " AND t.seguimiento=:seguimiento";
                 $paramsCondition[':seguimiento'] = $this->seguimiento;
             }
-            
+
             if ($this->codigoSector !== null && $this->codigoCiudad !== null) {
                 $condition .= " AND t.codigoSector=:codigoSector AND t.codigoCiudad=:codigoCiudad";
                 $paramsCondition[':codigoSector'] = $this->codigoSector;
@@ -205,11 +205,13 @@ class Compras extends CActiveRecord {
 
                 $condition .= " AND (t.idEstadoCompra=:estadoCompra OR (t.seguimiento=1 AND t.fechaEntrega BETWEEN '" . $fecha1->format('Y-m-d H:i:s') . "' AND '" . $fecha2->format('Y-m-d H:i:s') . "'))";
             } else {
-                if ($this->idEstadoCompra != null && !empty($this->idEstadoCompra)) {
+
+                if (($this->idEstadoCompra !== null && !empty($this->idEstadoCompra)) || $this->idEstadoCompra == 0) {
+
                     $condition .= " AND t.idEstadoCompra=:estadoCompra";
                 }
             }
-            if ($this->idEstadoCompra != null && !empty($this->idEstadoCompra)) {
+            if (($this->idEstadoCompra !== null && !empty($this->idEstadoCompra)) || $this->idEstadoCompra == 0) {
                 $paramsCondition[':estadoCompra'] = $this->idEstadoCompra;
             }
 
@@ -480,10 +482,10 @@ class Compras extends CActiveRecord {
     }
 
     public static function cantidadComprasPorEstado($fecha, $idOperador = null) {
-        if($fecha===null){
+        if ($fecha === null) {
             $fecha = self::calcularFechaVisualizar();
         }
-        
+
         $queryPendiente = "";
         $estadoPendiente = Yii::app()->params->callcenter['estadoCompra']['estado']['pendiente'];
         if ($idOperador == null) {
@@ -495,8 +497,8 @@ class Compras extends CActiveRecord {
             FROM t_Compras  as t WHERE t.idOperador=$idOperador AND t.idEstadoCompra='$estadoPendiente'";
         }
         $resultPendiente = Yii::app()->db->createCommand($queryPendiente)->queryRow(true);
-        
-        
+
+
         $query1 = "";
         if ($idOperador == null) {
             /*   $query1 = "SELECT eo.idEstadoCompra, COUNT(t.idCompra) cantidad
@@ -556,8 +558,8 @@ class Compras extends CActiveRecord {
         foreach ($resultAux1 as $arr) {
             $result[$arr['idEstadoCompra']] = $arr['cantidad'];
         }
-        
-        $result[$estadoPendiente] = $resultPendiente['cantidad']+$resultAux2[0]['cantidad'];
+
+        $result[$estadoPendiente] = $resultPendiente['cantidad'] + $resultAux2[0]['cantidad'];
 
         foreach ($estados as $est) {
             if (!isset($result[$est->idEstadoCompra])) {
@@ -608,7 +610,7 @@ class Compras extends CActiveRecord {
 
         return $result;
     }
-    
+
     public function generarDocumentoCruce($idOperador = null) {
         $consecutivo = rand(100000, 999999);
         $pdv = $this->idComercial;

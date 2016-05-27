@@ -14,6 +14,7 @@
  */
 class Operador extends CActiveRecord {
 
+    public $idComercial;
     /**
      * @return string the associated database table name
      */
@@ -31,12 +32,14 @@ class Operador extends CActiveRecord {
             array('nombre, usuario, clave, perfil, activo', 'required', 'message'=>'{attribute} no puede estar vacío'),
             array('perfil, activo', 'numerical', 'integerOnly' => true),
             array('nombre', 'length', 'min'=>5, 'max' => 50),
-            array('usuario, clave', 'length', 'min'=>5, 'max' => 15),
+            array('usuario', 'length', 'min'=>5, 'max' => 15),
+            array('clave', 'length', 'min'=>5, 'max' => 32),
             array('email', 'email'),
             array('email', 'length', 'max' => 50),
             // The following rule is used by search().
             // @todo Please remove those attributes that should not be searched.
             array('idOperador, nombre, usuario, clave, perfil, email, activo', 'safe', 'on' => 'search'),
+   //         array('idComercial','required', 'message'=>'{attribute} no puede estar vacío', 'on' => function ($model){return $model->idPerfil == Yii::app()->params->callcenter['perfilVendedorPDV'];})
         );
     }
 
@@ -62,6 +65,7 @@ class Operador extends CActiveRecord {
             'perfil' => 'Perfil',
             'email' => 'Email',
             'activo' => 'Activo',
+            'idComercial' => 'Punto de venta',
         );
     }
 
