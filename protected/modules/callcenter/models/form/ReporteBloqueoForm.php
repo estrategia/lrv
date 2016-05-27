@@ -59,11 +59,15 @@ class ReporteBloqueoForm extends CFormModel {
         $objWorksheet->setCellValueByColumnAndRow($col++, 1, 'Subtotal Compra');
         $objWorksheet->setCellValueByColumnAndRow($col++, 1, 'Total Compra');
         $objWorksheet->setCellValueByColumnAndRow($col++, 1, 'Fecha Compra');
+        $objWorksheet->setCellValueByColumnAndRow($col++, 1, 'Ciudad');
+        $objWorksheet->setCellValueByColumnAndRow($col++, 1, 'Sector');
+        $objWorksheet->setCellValueByColumnAndRow($col++, 1, 'Tipo Entrega');
+        $objWorksheet->setCellValueByColumnAndRow($col++, 1, 'Punto Venta');
 //        $objWorksheet->setCellValueByColumnAndRow($col++, 1, '# Compra');
 //        $objWorksheet->setCellValueByColumnAndRow($col++, 1, 'Fecha Uso');
 //        $objWorksheet->setCellValueByColumnAndRow($col++, 1, 'Valor Compra');
 
-        for ($col = 0; $col < 13; $col++) {
+        for ($col = 0; $col < 20; $col++) {
             $objWorksheet->getStyleByColumnAndRow($col, 1)->getFont()->setBold(true);
         }
 
@@ -71,7 +75,7 @@ class ReporteBloqueoForm extends CFormModel {
         foreach ($listUsuariosBloqueados as $usuario) {
             $col = 0;
             $objWorksheet->setCellValueByColumnAndRow($col++, $fila, $usuario->identificacionUsuario);
-            $objWorksheet->setCellValueByColumnAndRow($col++, $fila, $usuario->identificacionUsuario);
+            $objWorksheet->setCellValueByColumnAndRow($col++, $fila, $usuario->objUsuario->nombre." ".$usuario->objUsuario->apellido);
             $objWorksheet->setCellValueByColumnAndRow($col++, $fila, $usuario->numeroCompras);
             $objWorksheet->setCellValueByColumnAndRow($col++, $fila, $usuario->acumuladoCompras);
             $objWorksheet->setCellValueByColumnAndRow($col++, $fila, $usuario->anho);
@@ -82,11 +86,17 @@ class ReporteBloqueoForm extends CFormModel {
                 $objWorksheet->setCellValueByColumnAndRow($columnaCompras++, $fila, $listaCompras->subtotalCompra);
                 $objWorksheet->setCellValueByColumnAndRow($columnaCompras++, $fila, $listaCompras->totalCompra);
                 $objWorksheet->setCellValueByColumnAndRow($columnaCompras++, $fila, $listaCompras->fechaCompra);
+                $objWorksheet->setCellValueByColumnAndRow($columnaCompras++, $fila, $listaCompras->objCiudad->nombreCiudad);
+                $objWorksheet->setCellValueByColumnAndRow($columnaCompras++, $fila, $listaCompras->objSector->nombreSector);
+                $objWorksheet->setCellValueByColumnAndRow($columnaCompras++, $fila, Yii::app()->params->entrega['tipo'][$listaCompras->tipoEntrega]);
+                $objWorksheet->setCellValueByColumnAndRow($columnaCompras++, $fila, $listaCompras->idComercial);
                 $fila++;
             }
-            
-            
         }
+        
+        for ($i = 0; $i <= 13; $i++) {
+                $objPHPExcel->getActiveSheet()->getColumnDimensionByColumn($i)->setAutoSize(true);
+            }
 
         $objPHPExcel->setActiveSheetIndex(0);
 
