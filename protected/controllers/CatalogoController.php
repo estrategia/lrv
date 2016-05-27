@@ -535,12 +535,12 @@ class CatalogoController extends Controller {
         if (is_string($categoriasBuscador)) {
             $categoriasBuscador = explode("_", $categoriasBuscador);
         }
-        
-        $h1=  round(microtime(true) * 1000);
+
+        $h1 = round(microtime(true) * 1000);
 
         $sesion = Yii::app()->getSession()->getSessionId();
-        $codigosArray = GSASearch($term,$sesion);
-        $h2 =  round(microtime(true) * 1000);
+        $codigosArray = GSASearch($term, $sesion);
+        $h2 = round(microtime(true) * 1000);
         //    $codigosStr = implode(",", $codigosArray);
         $objSectorCiudad = null;
         if (isset(Yii::app()->session[Yii::app()->params->sesion['sectorCiudadEntrega']]))
@@ -644,10 +644,9 @@ class CatalogoController extends Controller {
                 'params' => array(
                     ':activo' => 1,
                     ':dispositivo' => $this->isMobile ? CategoriaTienda::DISPOSITIVO_MOVIL : CategoriaTienda::DISPOSITIVO_ESCRITORIO,
-                   
                 )
             );
-            $parametrosProductos['join'] = "JOIN t_relevancia_temp_$sesion rel ON t.codigoProducto = rel.codigoProducto " ;
+            $parametrosProductos['join'] = "JOIN t_relevancia_temp_$sesion rel ON t.codigoProducto = rel.codigoProducto ";
         } else {
             $parametrosProductos = array(
                 'select' => '*, CASE WHEN (listImagenes.idImagen <> null) THEN 1 ELSE 0 END AS tieneImagen',
@@ -667,8 +666,8 @@ class CatalogoController extends Controller {
                     ':sector' => $objSectorCiudad->codigoSector
                 )
             );
-            $parametrosProductos['join'] = "JOIN t_relevancia_temp_$sesion rel ON t.codigoProducto  = rel.codigoProducto " ;
-        //    $listProductos = Producto::model()->findAll($parametrosProductos);
+            $parametrosProductos['join'] = "JOIN t_relevancia_temp_$sesion rel ON t.codigoProducto  = rel.codigoProducto ";
+            //    $listProductos = Producto::model()->findAll($parametrosProductos);
 
             if (!$this->isMobile && !isset($_GET['ajax'])) {
                 $query = "SELECT  MIN(listPrecios.precioUnidad) minproducto, MAX(listPrecios.precioUnidad) maxproducto, MIN(listSaldosTerceros.precioUnidad) mintercero, MAX(listSaldosTerceros.precioUnidad) maxtercero ";
@@ -730,11 +729,10 @@ class CatalogoController extends Controller {
             $parametrosProductos['condition'] = $parametrosProductos['condition'] . " AND ((listPrecios.precioUnidad IS NOT NULL AND listPrecios.precioUnidad<=" . $formFiltro->getPrecioFin() . ") OR (listSaldosTerceros.precioUnidad IS NOT NULL AND listSaldosTerceros.precioUnidad<=" . $formFiltro->getPrecioFin() . ") )";
         }
 
-       $h1=  round(microtime(true) * 1000);
+        $h1 = round(microtime(true) * 1000);
         $listProductos = Producto::model()->findAll($parametrosProductos);
-                        $h2=  round(microtime(true) * 1000);
-echo ($h2-$h1);
-exit();
+        $h2 = round(microtime(true) * 1000);
+
         $listCodigoEspecial = CodigoEspecial::model()->findAll(array(
             'condition' => 'codigoEspecial<>0'
         ));
