@@ -91,6 +91,9 @@
                                     <a href="<?php echo $this->createUrl('/callcenter/categoria') ?>" class="ajax-link"><i class="glyphicon glyphicon-glass"></i><span> Categorías</span></a>
                                 </li>
                                 <li>
+                                    <a href="<?php echo $this->createUrl('/callcenter/cuentasInactivas') ?>" class="ajax-link"><i class="glyphicon glyphicon-user"></i><span> Cuentas inactivas</span></a>
+                                </li>
+                                <li>
                                     <a href="<?php echo $this->createUrl('/callcenter/pedido/exportar') ?>" class="ajax-link"><i class="glyphicon glyphicon-download-alt"></i><span> Pedidos</span></a>
                                 </li>
                                 <li>

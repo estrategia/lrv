@@ -20,15 +20,21 @@ class SessionControlFilter extends CFilter {
         //Yii::app()->request->urlReferrer
         $sesionUbicacion = false;
 
-        if (!$this->isMobile) {
+        //if (!$this->isMobile) {
             Yii::app()->session[Yii::app()->params->sesion['redireccionUbicacion']] = null;
-        }
+        //}
 
         if (isset(Yii::app()->session[Yii::app()->params->sesion['sectorCiudadEntrega']]) && Yii::app()->session[Yii::app()->params->sesion['sectorCiudadEntrega']] != null) {
             $sesionUbicacion = true;
         }
+        
+        if (!$sesionUbicacion) {
+            Yii::app()->session[Yii::app()->params->sesion['redireccionUbicacion']] = Yii::app()->request->url;
+            if ($this->redirect)
+                Yii::app()->request->redirect(Yii::app()->baseUrl . "/sitio/ubicacion");
+        }
 
-        if ($this->isMobile) {
+        /*if ($this->isMobile) {
             if (!$sesionUbicacion) {
                 if ($this->redirect)
                     Yii::app()->request->redirect(Yii::app()->baseUrl . "/sitio/ubicacion");
@@ -39,7 +45,7 @@ class SessionControlFilter extends CFilter {
                 if ($this->redirect)
                     Yii::app()->request->redirect(Yii::app()->baseUrl . "/sitio/ubicacion");
             }
-        }
+        }*/
 
 //        if (!$sesionTipo) {
 //            if ($this->isMobile) {

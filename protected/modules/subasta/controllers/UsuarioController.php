@@ -81,7 +81,7 @@ class UsuarioController extends ControllerOperator {
         if (isset($_POST['RegistroForm'])) {
             $model->attributes = $_POST['RegistroForm'];
             if ($model->validate()) {
-                $operador->clave = $model->clave;
+                $operador->clave = md5($model->clave);
                 if ($operador->save()) {
                      Yii::app()->user->setFlash('alert alert-success', "Datos actualizados ");
                      $model->clave = "";

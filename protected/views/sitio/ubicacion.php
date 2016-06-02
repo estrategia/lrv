@@ -20,6 +20,6 @@
     <?php if ($objSectorCiudad != null): ?>
         <div class="space-2"></div>
         <?php //echo CHtml::link('Continuar con ' . $ubicacionEntregaTxt, $this->createUrl('/sitio/inicio'), array('class' => 'ui-btn ui-corner-all ui-shadow ui-btn-n btn_add_lst_pr', 'style' => 'white-space:normal;', 'data-ajax' => 'false')); ?>
-        <?php echo CHtml::link('Cancelar', $this->createUrl('/sitio/inicio'), array('class' => 'ui-btn ui-corner-all ui-shadow ui-btn-r', 'data-ajax' => 'false')); ?>
+        <?php echo CHtml::link('Cancelar', $urlRedirect, array('class' => 'ui-btn ui-corner-all ui-shadow ui-btn-r', 'data-ajax' => 'false')); ?>
     <?php endif; ?>
 </div>

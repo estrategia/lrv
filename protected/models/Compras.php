@@ -189,7 +189,7 @@ class Compras extends CActiveRecord {
                 $condition .= " AND t.seguimiento=:seguimiento";
                 $paramsCondition[':seguimiento'] = $this->seguimiento;
             }
-            
+
             if ($this->codigoSector !== null && $this->codigoCiudad !== null) {
                 $condition .= " AND t.codigoSector=:codigoSector AND t.codigoCiudad=:codigoCiudad";
                 $paramsCondition[':codigoSector'] = $this->codigoSector;
@@ -205,11 +205,13 @@ class Compras extends CActiveRecord {
 
                 $condition .= " AND (t.idEstadoCompra=:estadoCompra OR (t.seguimiento=1 AND t.fechaEntrega BETWEEN '" . $fecha1->format('Y-m-d H:i:s') . "' AND '" . $fecha2->format('Y-m-d H:i:s') . "'))";
             } else {
-                if ($this->idEstadoCompra != null && !empty($this->idEstadoCompra)) {
+
+                if (($this->idEstadoCompra !== null && !empty($this->idEstadoCompra)) || $this->idEstadoCompra == 0) {
+
                     $condition .= " AND t.idEstadoCompra=:estadoCompra";
                 }
             }
-            if ($this->idEstadoCompra != null && !empty($this->idEstadoCompra)) {
+            if (($this->idEstadoCompra !== null && !empty($this->idEstadoCompra)) || $this->idEstadoCompra == 0) {
                 $paramsCondition[':estadoCompra'] = $this->idEstadoCompra;
             }
 
@@ -372,7 +374,122 @@ class Compras extends CActiveRecord {
     public function afterSave() {
         $this->_fechaCompraDate = DateTime::createFromFormat('Y-m-d H:i:s', $this->fechaCompra);
         $this->_fechaEntregaDate = DateTime::createFromFormat('Y-m-d H:i:s', $this->fechaEntrega);
+
+        if ($this->isNewRecord) {
+            $this->verificarBloqueoUsuario();
+        }
+
         return parent::afterSave();
+    }
+
+    /*
+     * 
+     */
+    public function verificarBloqueoUsuario() {
+        if ($this->invitado == 0 && !empty($this->identificacionUsuario)) {
+            $objUsuario = Usuario::model()->find(array(
+                'with' => array('objUsuarioExtendida', 'objPerfil'),
+                'condition' => 't.identificacionUsuario=:cedula',
+                'params' => array(
+                    ':cedula' => $this->identificacionUsuario
+                )
+            ));
+            
+            if($objUsuario!==null && $objUsuario->codigoPerfil == Yii::app()->params['perfil']['asociado']){            
+                try{
+                    $anho = $this->fechaCompraDate->format('Y');
+                    $mes = $this->fechaCompraDate->format('n');
+
+                    //consultar si ya tenia compras bloqueadas
+                    $sql = "select max(idCompra) idCompra "
+                            . "from t_BloqueosUsuarios bu "
+                            . "join t_ComprasBloqueoUsuarios cbu on bu.idBloqueoUsuario=cbu.idBloqueoUsuario "
+                            . "where bu.estado=:desbloqueado AND bu.identificacionUsuario=:usuario and anho=:anho and mes=:mes";
+
+                    $command = Yii::app()->db->createCommand();
+                    $command->text = $sql;
+                    $command->bindValue(':desbloqueado', BloqueosUsuarios::ESTADO_DESBLOQUEADO, PDO::PARAM_INT);
+                    $command->bindValue(':usuario', $this->identificacionUsuario, PDO::PARAM_STR);
+                    $command->bindValue(':anho', $anho, PDO::PARAM_INT);
+                    $command->bindValue(':mes', $mes, PDO::PARAM_INT);
+                    $idCompra = $command->queryScalar();
+
+                    $condition = "identificacionUsuario=:usuario AND YEAR(fechaCompra)=:anho AND MONTH(fechaCompra)=:mes";
+                    $params = array(':usuario' => $this->identificacionUsuario, ':anho' => $anho, ':mes' => $mes);
+
+                    if ($idCompra != null) {
+                        $condition .=" AND idCompra>:idCompra";
+                        $params[':idCompra'] = $idCompra;
+                    }
+
+                    //consultar compras para evaluar comportamiento
+                    $listCompras = self::model()->findAll(array(
+                        'condition' => $condition,
+                        'params' => $params
+                    ));
+
+                    $cantidadCompras = 0;
+                    $acumuladoCompras = 0;
+                    $limiteCantidad = Yii::app()->params->bloqueoUsuario['cantidadCompras'];
+                    $limiteAcumulado = Yii::app()->params->bloqueoUsuario['acumuladoCompras'];
+
+                    $arrValoresInsertar = array();
+                    foreach($listCompras as $objCompra){
+                        $cantidadCompras++;
+                        $acumuladoCompras += $objCompra->totalCompra;
+                        $arrValoresInsertar[] = "(:idBloqueoUsuario,$objCompra->idCompra)";
+                    }
+
+                    //si comportamiento de compra excede los limites establecidos se procede con bloqueo de usuario
+                    if( $cantidadCompras>0 && (($limiteCantidad>0 && $cantidadCompras>$limiteCantidad) || ($limiteAcumulado>0 && $acumuladoCompras>$limiteAcumulado)) ){
+                        $objUsuario->activo=Usuario::ESTADO_BLOQUEADO;
+                        
+                        if(isset(Yii::app()->session[Yii::app()->params->usuario['sesion']]) && Yii::app()->session[Yii::app()->params->usuario['sesion']] instanceof Usuario){
+                            Yii::app()->session[Yii::app()->params->usuario['sesion']] = $objUsuario;
+                        }
+
+                        $objBloqueoUsuario = new BloqueosUsuarios;
+                        $objBloqueoUsuario->identificacionUsuario = $this->identificacionUsuario;
+                        $objBloqueoUsuario->numeroCompras = $cantidadCompras;
+                        $objBloqueoUsuario->acumuladoCompras = $acumuladoCompras;
+                        $objBloqueoUsuario->anho = $anho;
+                        $objBloqueoUsuario->mes = $mes;
+                        $objBloqueoUsuario->estado = BloqueosUsuarios::ESTADO_BLOQUEADO;
+                        $fechaHoy = date('Y-m-d H:i:s');
+                        $objBloqueoUsuario->fechaRegistro = $fechaHoy;
+                        $objBloqueoUsuario->fechaActualizacion = $fechaHoy;
+
+                        if($objBloqueoUsuario->save()){
+                            //$rowsInactivacion = Yii::app()->db->createCommand("UPDATE m_Usuario SET activo=:activo WHERE identificacionUsuario=:usuario")->bindValue(':activo', Usuario::ESTADO_BLOQUEADO, PDO::PARAM_INT)->bindValue(':usuario', $this->identificacionUsuario, PDO::PARAM_STR)->execute();
+                            //$rowsInactivacion>0
+                            if($objUsuario->save()){
+                                $contenidoCorreo = Yii::app()->controller->renderPartial('//common/correoBloqueo', array('identificacionUsuario'=>$objUsuario->identificacionUsuario), true);
+                                try{
+                                    sendHtmlEmail($objUsuario->correoElectronico, "La Rebaja Virtual: Bloqueo de cuenta", $contenidoCorreo,Yii::app()->params->callcenter['correo']);
+                                }  catch (Exception $exc){}
+
+                                $sqlBloqueoCompra = "INSERT INTO t_ComprasBloqueoUsuarios (idBloqueoUsuario,idCompra) VALUES " . implode(",",$arrValoresInsertar);
+                                $command = Yii::app()->db->createCommand($sqlBloqueoCompra);
+                                $command->bindValue(':idBloqueoUsuario', $objBloqueoUsuario->idBloqueoUsuario, PDO::PARAM_INT);
+                                $rowsBloqueoCompra = $command->execute();
+
+                                if($rowsBloqueoCompra<=0){
+                                    Yii::log("Compras::verificarBloqueoUsuario - Error al guardar compras de bloqueo de usuario: \n". CVarDumper::dumpAsString($objBloqueoUsuario->attributes) . "\nCompras:\n" . CVarDumper::dumpAsString($arrValoresInsertar) . "\nErrores:\n" . CVarDumper::dumpAsString($objBloqueoUsuario->validateErrorsResponse()) ,CLogger::LEVEL_INFO, 'bloqueo_usuario');
+                                }
+                            }else{
+                                Yii::log("Compras::verificarBloqueoUsuario - Error al inactivar usuario: \n". CVarDumper::dumpAsString($objUsuario->validateErrorsResponse()) . "\nBloqueoUsuario:\n" .  CVarDumper::dumpAsString($objBloqueoUsuario->attributes) . "\nCompras:\n" . CVarDumper::dumpAsString($arrValoresInsertar) ,CLogger::LEVEL_INFO, 'bloqueo_usuario');
+                            }
+                        }else{
+                            Yii::log("Compras::verificarBloqueoUsuario - Error al guardar bloqueo de usuario: \n". CVarDumper::dumpAsString($objBloqueoUsuario->attributes) . "\nCompras:\n" . CVarDumper::dumpAsString($arrValoresInsertar) . "\nErrores:\n" . CVarDumper::dumpAsString($objBloqueoUsuario->validateErrorsResponse()) ,CLogger::LEVEL_INFO, 'bloqueo_usuario');
+                        }
+                    }else{
+                        Yii::log("Compras::verificarBloqueoUsuario - PRUEBA 100" ,CLogger::LEVEL_INFO, 'bloqueo_usuario');
+                    }
+                }catch(Exception $exc){
+                    Yii::log("Compras::verificarBloqueoUsuario - Exception para compra [$this->idCompra]:\n" . $exc->getMessage() . "\n" . $exc->getTraceAsString() ,CLogger::LEVEL_INFO, 'bloqueo_usuario');
+                }
+            }
+        }
     }
 
     /**
@@ -480,10 +597,10 @@ class Compras extends CActiveRecord {
     }
 
     public static function cantidadComprasPorEstado($fecha, $idOperador = null) {
-        if($fecha===null){
+        if ($fecha === null) {
             $fecha = self::calcularFechaVisualizar();
         }
-        
+
         $queryPendiente = "";
         $estadoPendiente = Yii::app()->params->callcenter['estadoCompra']['estado']['pendiente'];
         if ($idOperador == null) {
@@ -495,8 +612,8 @@ class Compras extends CActiveRecord {
             FROM t_Compras  as t WHERE t.idOperador=$idOperador AND t.idEstadoCompra='$estadoPendiente'";
         }
         $resultPendiente = Yii::app()->db->createCommand($queryPendiente)->queryRow(true);
-        
-        
+
+
         $query1 = "";
         if ($idOperador == null) {
             /*   $query1 = "SELECT eo.idEstadoCompra, COUNT(t.idCompra) cantidad
@@ -556,8 +673,8 @@ class Compras extends CActiveRecord {
         foreach ($resultAux1 as $arr) {
             $result[$arr['idEstadoCompra']] = $arr['cantidad'];
         }
-        
-        $result[$estadoPendiente] = $resultPendiente['cantidad']+$resultAux2[0]['cantidad'];
+
+        $result[$estadoPendiente] = $resultPendiente['cantidad'] + $resultAux2[0]['cantidad'];
 
         foreach ($estados as $est) {
             if (!isset($result[$est->idEstadoCompra])) {
@@ -608,7 +725,7 @@ class Compras extends CActiveRecord {
 
         return $result;
     }
-    
+
     public function generarDocumentoCruce($idOperador = null) {
         $consecutivo = rand(100000, 999999);
         $pdv = $this->idComercial;

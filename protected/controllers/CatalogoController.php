@@ -532,14 +532,15 @@ class CatalogoController extends Controller {
     public function actionBuscar() {
         $term = trim(Yii::app()->request->getParam('busqueda', '')); //$term = isset($_REQUEST['busqueda']) ? $_REQUEST['busqueda'] : '';
         $categoriasBuscador = Yii::app()->request->getParam('categoriasBuscador', array()); //$categoriasBuscador = isset($_REQUEST['categoriasBuscador']) ? $_REQUEST['categoriasBuscador'] : array();
-
         if (is_string($categoriasBuscador)) {
             $categoriasBuscador = explode("_", $categoriasBuscador);
         }
 
-        $sesion = Yii::app()->getSession()->getSessionId();
-        $codigosArray = GSASearch($term,$sesion);
+        $h1 = round(microtime(true) * 1000);
 
+        $sesion = Yii::app()->getSession()->getSessionId();
+        $codigosArray = GSASearch($term, $sesion);
+        $h2 = round(microtime(true) * 1000);
         //    $codigosStr = implode(",", $codigosArray);
         $objSectorCiudad = null;
         if (isset(Yii::app()->session[Yii::app()->params->sesion['sectorCiudadEntrega']]))
@@ -636,18 +637,16 @@ class CatalogoController extends Controller {
         if ($objSectorCiudad == null) {
             $parametrosProductos = array(
                 'order' => 'rel.relevancia DESC,t.orden DESC',
-                'with' => array('objBusqueda', 'listImagenes', 'objCodigoEspecial', 'listCalificaciones',
+                'with' => array('listImagenes', 'objCodigoEspecial', 'listCalificaciones',
                     'objCategoriaBI' => array('with' => array('listCategoriasTienda' => array('on' => 'listCategoriasTienda.tipoDispositivo=:dispositivo'))),
                 ),
-                'condition' => "t.activo=:activo and rel.idSesion =:sesion",
+                'condition' => "t.activo=:activo ",
                 'params' => array(
                     ':activo' => 1,
                     ':dispositivo' => $this->isMobile ? CategoriaTienda::DISPOSITIVO_MOVIL : CategoriaTienda::DISPOSITIVO_ESCRITORIO,
-                    ':sesion' => $sesion
-                   
                 )
             );
-            $parametrosProductos['join'] = "JOIN t_relevancia_temp_$sesion rel ON rel.codigoProducto = t.codigoProducto" ;
+            $parametrosProductos['join'] = "JOIN t_relevancia_temp_$sesion rel ON t.codigoProducto = rel.codigoProducto ";
         } else {
             $parametrosProductos = array(
                 'select' => '*, CASE WHEN (listImagenes.idImagen <> null) THEN 1 ELSE 0 END AS tieneImagen',
@@ -658,18 +657,17 @@ class CatalogoController extends Controller {
                     'listPrecios' => array('condition' => '(listPrecios.codigoCiudad=:ciudad AND listPrecios.codigoSector=:sector) OR (listPrecios.codigoCiudad IS NULL AND listPrecios.codigoSector IS NULL)'),
                     'listSaldosTerceros' => array('condition' => '(listSaldosTerceros.saldoUnidad>:saldo AND listSaldosTerceros.codigoCiudad=:ciudad AND listSaldosTerceros.codigoSector=:sector) OR (listSaldosTerceros.codigoCiudad IS NULL AND listSaldosTerceros.codigoSector IS NULL)')
                 ),
-                'condition' => "t.activo=:activo AND rel.idSesion =:sesion AND ( (listSaldos.saldoUnidad IS NOT NULL AND listPrecios.codigoCiudad IS NOT NULL) OR listSaldosTerceros.codigoCiudad IS NOT NULL)",
+                'condition' => "t.activo=:activo AND ( (listSaldos.saldoUnidad IS NOT NULL AND listPrecios.codigoCiudad IS NOT NULL) OR listSaldosTerceros.codigoCiudad IS NOT NULL)",
                 'params' => array(
                     ':activo' => 1,
                     ':dispositivo' => $this->isMobile ? CategoriaTienda::DISPOSITIVO_MOVIL : CategoriaTienda::DISPOSITIVO_ESCRITORIO,
                     ':saldo' => 0,
                     ':ciudad' => $objSectorCiudad->codigoCiudad,
-                    ':sector' => $objSectorCiudad->codigoSector,
-                    ':sesion' => $sesion
+                    ':sector' => $objSectorCiudad->codigoSector
                 )
             );
-            $parametrosProductos['join'] = "JOIN t_relevancia_temp_$sesion rel ON rel.codigoProducto = t.codigoProducto" ;
-        //    $listProductos = Producto::model()->findAll($parametrosProductos);
+            $parametrosProductos['join'] = "JOIN t_relevancia_temp_$sesion rel ON t.codigoProducto  = rel.codigoProducto ";
+            //    $listProductos = Producto::model()->findAll($parametrosProductos);
 
             if (!$this->isMobile && !isset($_GET['ajax'])) {
                 $query = "SELECT  MIN(listPrecios.precioUnidad) minproducto, MAX(listPrecios.precioUnidad) maxproducto, MIN(listSaldosTerceros.precioUnidad) mintercero, MAX(listSaldosTerceros.precioUnidad) maxtercero ";
@@ -731,8 +729,9 @@ class CatalogoController extends Controller {
             $parametrosProductos['condition'] = $parametrosProductos['condition'] . " AND ((listPrecios.precioUnidad IS NOT NULL AND listPrecios.precioUnidad<=" . $formFiltro->getPrecioFin() . ") OR (listSaldosTerceros.precioUnidad IS NOT NULL AND listSaldosTerceros.precioUnidad<=" . $formFiltro->getPrecioFin() . ") )";
         }
 
-
+        $h1 = round(microtime(true) * 1000);
         $listProductos = Producto::model()->findAll($parametrosProductos);
+        $h2 = round(microtime(true) * 1000);
 
         $listCodigoEspecial = CodigoEspecial::model()->findAll(array(
             'condition' => 'codigoEspecial<>0'

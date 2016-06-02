@@ -254,7 +254,7 @@ class BonosTienda extends CActiveRecord {
     }
 
     public function exportar() {
-        $content = '"# Bono";"# Usuario";"Concepto";"Valor";"Vigencia Inicio";"Vigencia Fin";"Minimo Compra";"Tipo";"Estado";"Fecha Creacion";"# Compra";"Fecha Uso";"Valor Compra"\n';
+        $content = '"# Bono";"# Usuario";"Concepto";"Valor";"Vigencia Inicio";"Vigencia Fin";"Minimo Compra";"Tipo";"Estado";"Fecha Creacion";"# Compra";"Fecha Uso";"Valor Compra"'."\n";
         $dataProvider = $this->search(true);
 
         if ($dataProvider !== null) {
