@@ -39,8 +39,8 @@
        <div class="col"><img src="<?= Yii::app()->request->baseUrl ?>/images/contenido/prohelix/ico-natural.png" alt=""><p class="title">Contraindicaciones</p></div>
        <p class="texto">Reacciones de hipersensibilidad</p>
        
-       <div style="width:100%;">
-           <video  height="310" controls style="margin-top: 20px;">
+       <div>
+           <video style="width:100%;" controls style="margin-top: 20px;">
              <source src="<?= Yii::app()->request->baseUrl ?>/images/contenido/prohelix/comercial.mp4" type="video/mp4">
             Your browser does not support the video tag.
          </video>  
