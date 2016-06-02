@@ -9,6 +9,12 @@
  * @property string $estadoCiudadSector
  * @property string $horaInicioLunesASabado
  * @property string $horaFinLunesASabado
+ * @property string $horaInicioAdicionalLunesASabado
+ * @property string $horaFinAdicionalLunesASabado
+ * @property string $horaInicioDomingoFestivo
+ * @property string $horaFinDomingoFestivo
+ * @property string $horaInicioAdicionalDomingoFestivo
+ * @property string $horaFinAdicionalDomingoFestivo
  * @property string $sadCiudadSector
  */
 class HorariosCiudadSector extends CActiveRecord {
@@ -29,10 +35,11 @@ class HorariosCiudadSector extends CActiveRecord {
         return array(
             array('codigoCiudad, codigoSector', 'required'),
             array('codigoCiudad, codigoSector, estadoCiudadSector, sadCiudadSector', 'length', 'max' => 10),
-            array('horaInicioLunesASabado, horaFinLunesASabado', 'safe'),
+            array('horaInicioLunesASabado, horaFinLunesASabado, horaInicioDomingoFestivo, horaFinDomingoFestivo', 'safe'),
+            array('horaInicioAdicionalLunesASabado, horaFinAdicionalLunesASabado, horaInicioAdicionalDomingoFestivo, horaFinAdicionalDomingoFestivo', 'safe'),
             // The following rule is used by search().
             // @todo Please remove those attributes that should not be searched.
-            array('codigoCiudad, codigoSector, estadoCiudadSector, horaInicioLunesASabado, horaFinLunesASabado, sadCiudadSector', 'safe', 'on' => 'search'),
+            array('codigoCiudad, codigoSector, estadoCiudadSector, horaInicioLunesASabado, horaFinLunesASabado, horaInicioAdicionalLunesASabado, horaFinAdicionalLunesASabado, horaInicioDomingoFestivo, horaFinDomingoFestivo, horaInicioAdicionalDomingoFestivo, horaFinAdicionalDomingoFestivo, sadCiudadSector', 'safe', 'on' => 'search'),
         );
     }
 
@@ -58,6 +65,12 @@ class HorariosCiudadSector extends CActiveRecord {
             'estadoCiudadSector' => 'Estado Ciudad Sector',
             'horaInicioLunesASabado' => 'Hora Inicio',
             'horaFinLunesASabado' => 'Hora Fin',
+            'horaInicioAdicionalLunesASabado' => 'Hora Inicio Adicional Lunes Asabado',
+            'horaFinAdicionalLunesASabado' => 'Hora Fin Adicional Lunes Asabado',
+            'horaInicioDomingoFestivo' => 'Hora Inicio Domingo Festivo',
+            'horaFinDomingoFestivo' => 'Hora Fin Domingo Festivo',
+            'horaInicioAdicionalDomingoFestivo' => 'Hora Inicio Adicional Domingo Festivo',
+            'horaFinAdicionalDomingoFestivo' => 'Hora Fin Adicional Domingo Festivo',
             'sadCiudadSector' => 'Sad Ciudad Sector',
         );
     }
@@ -84,6 +97,12 @@ class HorariosCiudadSector extends CActiveRecord {
         $criteria->compare('estadoCiudadSector', $this->estadoCiudadSector, true);
         $criteria->compare('horaInicioLunesASabado', $this->horaInicioLunesASabado, true);
         $criteria->compare('horaFinLunesASabado', $this->horaFinLunesASabado, true);
+        $criteria->compare('horaInicioAdicionalLunesASabado', $this->horaInicioAdicionalLunesASabado, true);
+        $criteria->compare('horaFinAdicionalLunesASabado', $this->horaFinAdicionalLunesASabado, true);
+        $criteria->compare('horaInicioDomingoFestivo', $this->horaInicioDomingoFestivo, true);
+        $criteria->compare('horaFinDomingoFestivo', $this->horaFinDomingoFestivo, true);
+        $criteria->compare('horaInicioAdicionalDomingoFestivo', $this->horaInicioAdicionalDomingoFestivo, true);
+        $criteria->compare('horaFinAdicionalDomingoFestivo', $this->horaFinAdicionalDomingoFestivo, true);
         $criteria->compare('sadCiudadSector', $this->sadCiudadSector, true);
 
         return new CActiveDataProvider($this, array(

@@ -11,7 +11,7 @@
             <article style="display: inline-block;">
                 <h2 style="background: #FB1818; border-radius: 5px; padding: 5px 5px; border-top: 1px solid #B10F0F; border-bottom: 1px solid #B10F0F; text-align: center; color: #FFFFFF; margin-bottom: 20px;">Bloqueo de cuenta</h2>	
                 <figure style="float: left; margin: 5px; max-width: 260px;"> 
-                    <img src="http://localhost/lrv/images/bloqueo/cuenta_bloqueada.png" width="200" height="186"> 
+                    <img src="http://www.larebajavirtual.com/images/pasarela/pago_noaceptado.png" width="200" height="186"> 
                 </figure>
                 <p style="margin: 0 0 1.2em; padding: 0; text-align: justify;">Tu cuenta de usuario <strong><?=$identificacionUsuario?></strong> ha sido bloqueada por un periodo de <?= Yii::app()->params->bloqueoUsuario['diasBloqueo'] ?> días por el motivo de exceder los limites de compra permitidos. </p>
                 <p style="margin: 0 0 1.2em; padding: 0; text-align: justify;">Si tienes alguna duda o inquietud contactemos a través del chat de nuestra página <a href="http://www.larebajavirtual.com/contenido/index/opcion/param/72/" title="la reabaja Virtual" style="color:#FF0202;" onMouseOver="this.style.cssText = 'color: #FF0000'; this.style.textDecoration = 'none'" onMouseOut="this.style.cssText = 'color: #FF0202'; this.style.textDecoration = 'none'">www.larebajavirtual.com.</a></p>

@@ -727,18 +727,20 @@ class FormaPagoVendedorForm extends CFormModel {
         }
         
         $horariosDia = array(
-            '0' => array('inicio' => 'horaInicioDomingoFestivo', 'fin' => 'horaFinDomingoFestivo'),
-            '1' => array('inicio' => 'horaInicioLunesASabado', 'fin' => 'horaFinLunesASabado'),
-            '2' => array('inicio' => 'horaInicioLunesASabado', 'fin' => 'horaFinLunesASabado'),
-            '3' => array('inicio' => 'horaInicioLunesASabado', 'fin' => 'horaFinLunesASabado'),
-            '4' => array('inicio' => 'horaInicioLunesASabado', 'fin' => 'horaFinLunesASabado'),
-            '5' => array('inicio' => 'horaInicioLunesASabado', 'fin' => 'horaFinLunesASabado'),
-            '6' => array('inicio' => 'horaInicioLunesASabado', 'fin' => 'horaFinLunesASabado'),
-            'festivo' => array('inicio' => 'horaInicioDomingoFestivo', 'fin' => 'horaFinDomingoFestivo')
+            '0' => array('inicio' => 'horaInicioDomingoFestivo', 'fin' => 'horaFinDomingoFestivo', 'inicioAdicional' => 'horaInicioAdicionalDomingoFestivo', 'finAdicional'=>'horaFinAdicionalDomingoFestivo'),
+            '1' => array('inicio' => 'horaInicioLunesASabado', 'fin' => 'horaFinLunesASabado', 'inicioAdicional' => 'horaInicioAdicionalLunesASabado', 'finAdicional'=>'horaFinAdicionalLunesASabado'),
+            '2' => array('inicio' => 'horaInicioLunesASabado', 'fin' => 'horaFinLunesASabado', 'inicioAdicional' => 'horaInicioAdicionalLunesASabado', 'finAdicional'=>'horaFinAdicionalLunesASabado'),
+            '3' => array('inicio' => 'horaInicioLunesASabado', 'fin' => 'horaFinLunesASabado', 'inicioAdicional' => 'horaInicioAdicionalLunesASabado', 'finAdicional'=>'horaFinAdicionalLunesASabado'),
+            '4' => array('inicio' => 'horaInicioLunesASabado', 'fin' => 'horaFinLunesASabado', 'inicioAdicional' => 'horaInicioAdicionalLunesASabado', 'finAdicional'=>'horaFinAdicionalLunesASabado'),
+            '5' => array('inicio' => 'horaInicioLunesASabado', 'fin' => 'horaFinLunesASabado', 'inicioAdicional' => 'horaInicioAdicionalLunesASabado', 'finAdicional'=>'horaFinAdicionalLunesASabado'),
+            '6' => array('inicio' => 'horaInicioLunesASabado', 'fin' => 'horaFinLunesASabado', 'inicioAdicional' => 'horaInicioAdicionalLunesASabado', 'finAdicional'=>'horaFinAdicionalLunesASabado'),
+            'festivo' => array('inicio' => 'horaInicioDomingoFestivo', 'fin' => 'horaFinDomingoFestivo', 'inicioAdicional' => 'horaInicioAdicionalDomingoFestivo', 'finAdicional'=>'horaFinAdicionalDomingoFestivo')
         );
 
         $horaIniServicio = "07:00:00";
         $horaFinServicio = "23:00:00";
+        $horaInicioAdicional = null;
+        $horaFinAdicional = null;
 
         if ($this->objHorarioCiudadSector != null) {
             $dia = 'festivo';
@@ -749,13 +751,25 @@ class FormaPagoVendedorForm extends CFormModel {
             }
             $horaIniServicio = $this->objHorarioCiudadSector->$horariosDia[$dia]['inicio'];
             $horaFinServicio = $this->objHorarioCiudadSector->$horariosDia[$dia]['fin'];
+            $horaInicioAdicional = $this->objHorarioCiudadSector->$horariosDia[$dia]['inicioAdicional'];
+            $horaFinAdicional = $this->objHorarioCiudadSector->$horariosDia[$dia]['finAdicional'];
+        }
+
+        $sqlAdicional = "";
+        
+        if(!empty($horaInicioAdicional) && !empty($horaFinAdicional)){
+            $sqlAdicional = "SELECT idHorario, concat('Ma&ntilde;ana a las ', DATE_FORMAT(hora, '%h:%i %p')) as etiqueta, concat(DATE_ADD(CURDATE(), INTERVAL 1 DAY), ' ', DATE_FORMAT(hora, '%H:%i:%s')) as fecha, hora 
+                FROM   m_Horario 
+                WHERE hora between '$horaInicioAdicional' and '$horaFinAdicional' 
+                UNION
+                ";
         }
 
         $sql = "SELECT idHorario, concat('Hoy a las ', DATE_FORMAT(hora, '%h:%i %p')) as etiqueta, concat(curdate(), ' ', DATE_FORMAT(hora, '%H:%i:%s')) as fecha, hora
              FROM   m_Horario
              WHERE  hora between ADDTIME('" . $horaIniServicio . "', '" . $deltaHorario . "') and '" . $horaFinServicio . "' and (hora >= ADDTIME(CURTIME(), '" . $deltaHorario . "'))
-             UNION
-             SELECT idHorario, concat('Ma&ntilde;ana a las ', DATE_FORMAT(hora, '%h:%i %p')) as etiqueta, concat(DATE_ADD(CURDATE(), INTERVAL 1 DAY), ' ', DATE_FORMAT(hora, '%H:%i:%s')) as fecha, hora
+             UNION 
+             $sqlAdicional SELECT idHorario, concat('Ma&ntilde;ana a las ', DATE_FORMAT(hora, '%h:%i %p')) as etiqueta, concat(DATE_ADD(CURDATE(), INTERVAL 1 DAY), ' ', DATE_FORMAT(hora, '%H:%i:%s')) as fecha, hora
              FROM m_Horario
              WHERE (hora between ADDTIME('" . $horaIniServicio . "', '" . $deltaHorario . "') and '12:00') ORDER BY fecha";
 
