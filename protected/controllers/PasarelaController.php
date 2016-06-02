@@ -236,7 +236,7 @@ class PasarelaController extends Controller {
                 }
 
                 //AQUI VUELVE Y SE COLOCA EN ESTADO 1 PENDIENTE PARA QUE SEA TRAMITADO POR EL CALL CENTER
-                $objCompra->idEstadoCompra = Yii::app()->params->callcenter['estadoCompra']['estado']['pendiente'];
+                $objCompra->idEstadoCompra = Yii::app()->params->callcenter['estadoCompra']['estado']['subasta'];
 
                 if (!$objCompra->save()) {
                     $this->log($objRespuesta->idCompra, 501, "ERROR ACTUALIZANDO LA TABLA t_Compras. " . $objCompra->validateErrorsResponse());

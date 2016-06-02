@@ -101,6 +101,7 @@ $(document).on('click', 'a[data-role="completitud-pdv"]', function() {
         url: requestUrl + '/subasta/admin/completitudPdv',
         data: {compra: $(this).attr('data-compra')},
         beforeSend: function() {
+            $('#modalSubasta').remove();
             Loading.show();
         },
         complete: function() {
@@ -108,7 +109,8 @@ $(document).on('click', 'a[data-role="completitud-pdv"]', function() {
         },
         success: function(data) {
             if (data.result == 'ok') {
-                
+                $('#container').append(data.response);
+                $("#modalSubasta").modal({keyboard:false, backdrop: 'static'});
             } else {
                 bootbox.alert(data.response);
             }
@@ -118,8 +120,45 @@ $(document).on('click', 'a[data-role="completitud-pdv"]', function() {
             bootbox.alert('Error: ' + errorThrown);
         }
     });
-
 });
+
+$(document).on('click', "a[data-role='asignar-pedido-pdv']", function() {
+   
+   var dataPedido = $(this).attr('data-pedido');
+   var dataPdv = $(this).attr('data-pdv');
+   
+    $.ajax({
+        type: 'POST',
+        async: true,
+        url: requestUrl + '/subasta/admin/asignarPdv',
+        data: {dataPedido: dataPedido, dataPdv: dataPdv},
+        beforeSend: function() {
+            Loading.show();
+        },
+        complete: function() {
+            Loading.hide();
+        },
+        success: function(data) {
+            var data = $.parseJSON(data);
+            if (data.result == 'ok') {
+                bootbox.alert(data.response);
+                $.fn.yiiGridView.update('pedidos-grid');
+                $("#modalSubasta").modal('hide');
+            } else if (data.result == 'error'){
+                bootbox.alert(data.response);
+            }else{
+               
+            }
+            Loading.hide();
+        },
+        error: function(jqXHR, textStatus, errorThrown) {
+            Loading.hide();
+            bootbox.alert('Error: ' + errorThrown);
+        }
+    });
+});
+
+
 $(document).on('click', 'button[data-action="asignar-pdv"]', function() {
     $.ajax({
         type: 'POST',
@@ -562,6 +601,38 @@ $(document).on('click', "button[data-role='pdvgeodireccion']", function() {
         success: function(data) {
             if (data.result === "ok") {
                 $('#div-pedido-georeferencia-direcion').html(data.response);
+                Loading.hide();
+            } else {
+                Loading.hide();
+                bootbox.alert(data.response);
+            }
+        },
+        error: function(jqXHR, textStatus, errorThrown) {
+            Loading.hide();
+            bootbox.alert('Error: ' + jqXHR.responseText);
+        }
+    });
+});
+
+
+$(document).on('change', "#Operador_perfil", function() {
+    $.ajax({
+        type: 'POST',
+        dataType: 'json',
+        async: true,
+        url: requestUrl + '/callcenter/operador/verificarPerfil',
+        data: {perfil: $(this).val()},
+        beforeSend: function() {
+            
+            Loading.show();
+        },
+        success: function(data) {
+            if (data.result === "ok") {
+                if(data.response == 2){
+                    $("#form-pdv-vendedor").css('display','block');
+                }else{
+                    $("#form-pdv-vendedor").css('display','none');
+                }
                 Loading.hide();
             } else {
                 Loading.hide();

@@ -125,10 +125,8 @@ function GSASearch(&$term, $sesion) {
 //    ));
 
     $sql = " CREATE TEMPORARY TABLE t_relevancia_temp_$sesion (
-            idSesion varchar(60) NOT NULL,
             codigoProducto int(10) unsigned NOT NULL,
             relevancia int(11) NOT NULL,
-            KEY `idx_t_relevancia_temp_idSesion` (`idSesion`),
             KEY `idx_t_relevancia_temp_codigoProducto` (`codigoProducto`)
          
           ) ";
@@ -136,12 +134,12 @@ function GSASearch(&$term, $sesion) {
 
     $ProductosRelevancia = array();
     foreach ($resultado as $key => $relevancia) {
-        $ProductosRelevancia[] = "('$sesion','$key','$relevancia')";
+        $ProductosRelevancia[] = "('$key','$relevancia')";
     }
 
     if (!empty($ProductosRelevancia)) {
         $sql = "SET FOREIGN_KEY_CHECKS = 0;
-                    INSERT INTO t_relevancia_temp_$sesion (idSesion, codigoProducto, relevancia) VALUES " . implode(",", $ProductosRelevancia);
+                    INSERT INTO t_relevancia_temp_$sesion (codigoProducto, relevancia) VALUES " . implode(",", $ProductosRelevancia);
         Yii::app()->db->createCommand($sql)->query();
     }
 

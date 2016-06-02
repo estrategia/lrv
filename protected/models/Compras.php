@@ -205,11 +205,13 @@ class Compras extends CActiveRecord {
 
                 $condition .= " AND (t.idEstadoCompra=:estadoCompra OR (t.seguimiento=1 AND t.fechaEntrega BETWEEN '" . $fecha1->format('Y-m-d H:i:s') . "' AND '" . $fecha2->format('Y-m-d H:i:s') . "'))";
             } else {
-                if ($this->idEstadoCompra != null && !empty($this->idEstadoCompra)) {
+
+                if (($this->idEstadoCompra !== null && !empty($this->idEstadoCompra)) || $this->idEstadoCompra == 0) {
+
                     $condition .= " AND t.idEstadoCompra=:estadoCompra";
                 }
             }
-            if ($this->idEstadoCompra != null && !empty($this->idEstadoCompra)) {
+            if (($this->idEstadoCompra !== null && !empty($this->idEstadoCompra)) || $this->idEstadoCompra == 0) {
                 $paramsCondition[':estadoCompra'] = $this->idEstadoCompra;
             }
 

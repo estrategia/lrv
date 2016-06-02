@@ -16,7 +16,7 @@
         </div>
         <!-- <div class="box-icon"> -->
         <div class="col-lg-11 col-md-11 col-sm-10 col-xs-9">
-            <?php $this->renderPartial('_pedidosCantidad', array('arrCantidadPedidos' => $arrCantidadPedidos)) ?>
+            <?php //$this->renderPartial('_pedidosCantidad', array('arrCantidadPedidos' => $arrCantidadPedidos)) ?>
         </div>
         </div>
     </div>
@@ -110,4 +110,4 @@
 
 <?php
 if ($model->idEstadoCompra == 1)
-   // Yii::app()->clientScript->registerScript(uniqid(), "setTimeout(function(){ location.reload(); }, " . Yii::app()->params->callcenter['pedidos']['tiempoRecargarPagina'] . ");"); ?>
+ //   Yii::app()->clientScript->registerScript(uniqid(), "setTimeout(function(){ location.reload(); }, " . Yii::app()->params->callcenter['pedidos']['tiempoRecargarPagina'] . ");"); ?>

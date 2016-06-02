@@ -266,8 +266,8 @@ return array(
         ),
         'pagar' => array(
             'pasos' => array(
-                'tipoentrega'=>1, 'despacho' => 2, 'entrega' => 3, 'pago' => 4, 'confirmacion' => 5,
-                1=>'tipoentrega', 2 => 'despacho', 3 => 'entrega', 4 => 'pago', 5 => 'confirmacion',
+                'tipoentrega' => 1, 'despacho' => 2, 'entrega' => 3, 'pago' => 4, 'confirmacion' => 5,
+                1 => 'tipoentrega', 2 => 'despacho', 3 => 'entrega', 4 => 'pago', 5 => 'confirmacion',
             ),
             'pasosDisponibles' => array(
                 'domicilio' => array('tipoentrega', 'despacho', 'entrega', 'pago', 'confirmacion'),
@@ -422,7 +422,7 @@ return array(
         'subasta' => array('sesion' => array(
                 'usuario' => 'larebaja.online.subasta.usuario',
                 'formPedidoBusqueda' => 'larebaja.online.subasta.formpedidobusqueda',
-                'objCiudadSector'  => 'larebaja.online.subasta.objciudadsector',
+                'objCiudadSector' => 'larebaja.online.subasta.objciudadsector',
                 'pdv' => 'larebaja.online.subasta.pdv',
             ),
         ),
@@ -435,8 +435,17 @@ return array(
             'perfil' => array(
                 1 => 'Operador',
                 2 => 'Administrador',
+                3 => 'Vendedor punto de venta',
+                10 => 'Mensajero Vendedor',
             ),
-            'perfiles' => array(1, 2),
+            'perfilesOperador' => array(
+                'operador' => 1,
+                'administrador' => 2,
+                'vendedorPDV' => 3,
+                'mensajeroVendedor' => 10
+            ),
+            
+            'perfiles' => array(1, 2, 3, 10),
             'usuario' => array(
                 'estado' => array('activo' => 1, 'inactivo' => 0),
                 'estadoNombre' => array(0 => 'Inactivo', 1 => 'Activo'),
@@ -501,8 +510,10 @@ return array(
                     'negadoPasarela' => 13,
                     'validacionManualPasarela' => 14,
                     'mensajeroAsignado' => 15,
+                    'subasta' => 0,
                 ),
                 'colorClass' => array(
+                    0 => 'info',
                     1 => 'info',
                     2 => 'primary',
                     3 => 'success',
