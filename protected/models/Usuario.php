@@ -19,7 +19,10 @@
  * @property Perfilcompras $objPerfilCompras
  */
 class Usuario extends CActiveRecord {
-
+    const ESTADO_INACTIVO = 0;
+    const ESTADO_ACTIVO = 1;
+    const ESTADO_BLOQUEADO = 2;
+    
     /**
      * @return string the associated database table name
      */
@@ -116,7 +119,7 @@ class Usuario extends CActiveRecord {
     public static function model($className = __CLASS__) {
         return parent::model($className);
     }
-
+    
     /**
      * @param string $password password para validar
      * return boolean Valida si parametro $password corresponde a la clave del usuario

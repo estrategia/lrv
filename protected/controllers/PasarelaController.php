@@ -16,6 +16,16 @@ class PasarelaController extends Controller {
     //put your code here
 
     public function actionRespuesta() {
+        $llavesArreglo = array_keys($_REQUEST);
+        $cadenaLog = "";
+
+        for ($i = 0; $i < sizeof($llavesArreglo); $i++) {
+            $cadenaLog .= $llavesArreglo[$i] . " -> " . $_REQUEST[$llavesArreglo[$i]];
+            if (isset($llavesArreglo[$i + 1])) {
+                $cadenaLog .= " | ";
+            }
+        }
+        
         $model = new PasarelaRespuestas;
         $model->tipoRespuesta = PasarelaRespuestas::TIPO_RESPUESTA;
         
@@ -36,10 +46,37 @@ class PasarelaController extends Controller {
         $model->bancoPse = isset($_REQUEST['banco_pse']) ? $_REQUEST['banco_pse'] : "";
         $model->fechaTransaccion = isset($_REQUEST['fecha_procesamiento']) ? $_REQUEST['fecha_procesamiento'] : "";
         
+        $this->log($model->idCompra, 201, $cadenaLog); //Guardar los datos GET de invocacion.
+        
         if($model->idCompra == null){
             $this->log(0, 500, "NUMERO DE COMPRA NO DETECTADO");
         }else{
             try {
+                //si estado en validacion
+                if($model->estadoPol==7){
+                    $objCompra = Compras::model()->findByPk($model->idCompra);
+                    
+                    if($objCompra===null){
+                        $mensaje = "El pedido No. " . $model->idCompra . " ha obtenido respuesta en validacion de pago por la Pasarela de Pagos, pero se ha generado un NO EXISTE LA COMPRA "
+                                . "por lo que la transaccion debe ser verificada en el modulo de administracion. CUS " . $model->cus;
+                        $this->log($model->idCompra, 202, $mensaje);
+                        $this->correo(4, "", 0, 0, "", $mensaje);
+                    }else{
+                        $objCompra->idEstadoCompra = Yii::app()->params['callcenter']['estadoCompra']['estado']['validacionManualPasarela'];
+                        
+                        if($objCompra->save()){
+                            $this->log($model->idCompra, 2000, "RESPUESTA EN VALIDACION: PROCESO EXITOSO.");
+                            $this->correo(6, $objCompra->objPasarelaEnvio->nombre, $objCompra->idCompra, $objCompra->objPasarelaEnvio->valor, $objCompra->objPasarelaEnvio->correoElectronico);
+                        }else{
+                            $this->log($model->idCompra, 500, "RESPUESTA EN VALIDACION: ERROR AL ACTUALIZAR COMPRA.\n" . $objCompra->validateErrorsResponse());
+                            $mensaje = "El pedido No. " . $model->idCompra . " ha obtenido respuesta en validacion de pago por la Pasarela de Pagos, pero no se genero ERROR AL ACTUALIZAR COMPRA "
+                                    . "por lo que la transaccion debe ser verificada en el modulo de administracion. CUS " . $model->cus;
+                            $this->log($model->idCompra, 203, $mensaje);
+                            $this->correo(4, "", 0, 0, "", $mensaje);
+                        }
+                    }
+                }
+                
                 if (!$model->save()) {
                     $this->log($model->idCompra, 504, "ERROR RESPUESTA: INSERTANDO LA TABLA t_PasarelaRespuestas. " . $model->validateErrorsResponse());
                 }
@@ -345,6 +382,8 @@ class PasarelaController extends Controller {
     }
 
     protected function correo($tipo_correo = 1, $nombre = "", $numeroPedido = 0, $valorCompra = 0, $correoCliente = "", $menEstado = "") {
+        $this->log($numeroPedido, 9999, "ENTRA LOG.");
+        
         switch ($tipo_correo) {
             case 1: // TRANSACCION APROBADA.
                 $contenido = $this->renderPartial('correoAprobada', array('nombre'=>$nombre,'numeroPedido'=>$numeroPedido,'valorCompra'=>$valorCompra), true);
@@ -373,6 +412,12 @@ class PasarelaController extends Controller {
                 $contenido = $this->renderPartial('correoVerificacion', array('nombre'=>$nombre,'numeroPedido'=>$numeroPedido,'valorCompra'=>$valorCompra), true);
                 try{
                     sendHtmlEmail($correoCliente, "La Rebaja Virtual: Informacion Transaccion", $contenido);
+                }  catch (Exception $exc){}
+                break;
+            case 6: // TRANSACCION EN VALIDACION.
+                $contenido = $this->renderPartial('correoValidacion', array('nombre'=>$nombre,'numeroPedido'=>$numeroPedido,'valorCompra'=>$valorCompra), true);
+                try{
+                    sendHtmlEmail($correoCliente, "La Rebaja Virtual: Informacion Transaccion", $contenido,Yii::app()->params->callcenter['correo']);
                 }  catch (Exception $exc){}
                 break;
         }

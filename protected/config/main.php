@@ -120,16 +120,19 @@ return array(
                     'class' => 'CFileLogRoute',
                     'levels' => CLogger::LEVEL_ERROR,
                     'logFile' => 'app_error.log',
+                    'categories' => 'application',
                 ),
                 array(
                     'class' => 'CFileLogRoute',
                     'levels' => CLogger::LEVEL_WARNING,
                     'logFile' => 'app_warning.log',
+                    'categories' => 'application',
                 ),
                 array(
                     'class' => 'CFileLogRoute',
                     'levels' => CLogger::LEVEL_INFO,
                     'logFile' => 'app_info.log',
+                    'categories' => 'application',
                 ),
                 array(
                     'class' => 'CFileLogRoute',
@@ -140,6 +143,12 @@ return array(
                     'enabled' => YII_DEBUG,
                     'levels' => 'error, warning',
                     'showInFireBug' => true,
+                ),
+                array(
+                    'class'=> 'CFileLogRoute',
+                    'levels'=> CLogger::LEVEL_INFO,
+                    'logFile' => 'app_bloqueo_info.log',
+                    'categories'=> 'bloqueo_usuario',
                 ),
             ),
         ),
@@ -331,8 +340,14 @@ return array(
         ),
         'perfil' => array(
             'defecto' => 1,
+            'asociado' => 2,
             'clienteFiel' => 3,
             '*' => 99
+        ),
+        'bloqueoUsuario' => array(
+            'diasBloqueo' => 15,
+            'cantidadCompras' => 14,
+            'acumuladoCompras' => 200000,
         ),
         'logueo' => array(
             '*' => 3

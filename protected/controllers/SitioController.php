@@ -68,6 +68,15 @@ class SitioController extends Controller {
                 )
             ));
         }
+        
+        //CVarDumper::dump(Yii::app()->session[Yii::app()->params->sesion['redireccionUbicacion']]);
+        //si no fue redireccionado por sessionfilter, se redirecciona a la pagina anterior
+        if (!isset(Yii::app()->session[Yii::app()->params->sesion['redireccionUbicacion']]) || Yii::app()->session[Yii::app()->params->sesion['redireccionUbicacion']] == null) {
+            Yii::app()->session[Yii::app()->params->sesion['redireccionUbicacion']] = (Yii::app()->request->urlReferrer == null ? $this->createUrl('/') : Yii::app()->request->urlReferrer);
+        }
+
+        //echo "<br><br>";
+        //CVarDumper::dump(Yii::app()->session[Yii::app()->params->sesion['redireccionUbicacion']]);
 
         if ($this->isMobile) {
             $this->showSeeker = false;
@@ -80,18 +89,10 @@ class SitioController extends Controller {
 
             $this->render('ubicacion', array(
                 'objSectorCiudad' => $this->objSectorCiudad,
-                'objDireccion' => $objDireccion
+                'objDireccion' => $objDireccion,
+                'urlRedirect' => Yii::app()->session[Yii::app()->params->sesion['redireccionUbicacion']]
             ));
         } else {
-            //CVarDumper::dump(Yii::app()->session[Yii::app()->params->sesion['redireccionUbicacion']]);
-            //si no fue redireccionado por sessionfilter, se redirecciona a la pagina anterior
-            if (!isset(Yii::app()->session[Yii::app()->params->sesion['redireccionUbicacion']]) || Yii::app()->session[Yii::app()->params->sesion['redireccionUbicacion']] == null) {
-                Yii::app()->session[Yii::app()->params->sesion['redireccionUbicacion']] = (Yii::app()->request->urlReferrer == null ? $this->createUrl('/') : Yii::app()->request->urlReferrer);
-            }
-
-            //echo "<br><br>";
-            //CVarDumper::dump(Yii::app()->session[Yii::app()->params->sesion['redireccionUbicacion']]);
-
             $this->render('d_ubicacion', array(
                 'objSectorCiudad' => $this->objSectorCiudad,
                 'objDireccion' => $objDireccion,
@@ -233,11 +234,9 @@ class SitioController extends Controller {
 
         $redirect = null;
 
-        if (!$this->isMobile) {
-            $redirect = $this->createUrl('/');
-            if (isset(Yii::app()->session[Yii::app()->params->sesion['redireccionUbicacion']]) && Yii::app()->session[Yii::app()->params->sesion['redireccionUbicacion']] != null) {
-                $redirect = Yii::app()->session[Yii::app()->params->sesion['redireccionUbicacion']];
-            }
+        $redirect = $this->createUrl('/');
+        if (isset(Yii::app()->session[Yii::app()->params->sesion['redireccionUbicacion']]) && Yii::app()->session[Yii::app()->params->sesion['redireccionUbicacion']] != null) {
+            $redirect = Yii::app()->session[Yii::app()->params->sesion['redireccionUbicacion']];
         }
         //se debe de eliminar url de sesion
         Yii::app()->session[Yii::app()->params->sesion['redireccionUbicacion']] = null;

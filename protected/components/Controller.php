@@ -44,6 +44,19 @@ class Controller extends CController {
             $this->layout = '//layouts/desktop';
         }
 
+        if (isset(Yii::app()->session[Yii::app()->params->usuario['sesion']]) && Yii::app()->session[Yii::app()->params->usuario['sesion']] instanceof Usuario) {
+            $objUsuairo = Yii::app()->session[Yii::app()->params->usuario['sesion']];
+
+            if ($objUsuairo->activo != Usuario::ESTADO_ACTIVO) {
+                $sessions = Yii::app()->params->sesion;
+                foreach ($sessions as $sesion) {
+                    unset(Yii::app()->session[$sesion]);
+                    _deleteCookie($sesion);
+                }
+                Yii::app()->user->logout();
+            }
+        }
+
         //$this->isMobile = true;
         //$this->layout = '//layouts/mobile';
         $this->verificarDispositivo();
@@ -67,14 +80,14 @@ class Controller extends CController {
     public function verificarSesion() {
         if (Yii::app()->user->isGuest) {
             $cookieUsuario = _getCookie(Yii::app()->params->usuario['sesion']);
-            
+
             if ($cookieUsuario != null) {
                 $cookieUsuario = explode("-", $cookieUsuario);
 
                 if (count($cookieUsuario) == 1) {
                     $usuario_desencriptado = decrypt($cookieUsuario[0], Yii::app()->params->sesion['claveCookie']);
                     $objUsuario = Usuario::model()->findByPk($usuario_desencriptado);
-                    
+
                     if ($objUsuario !== null) {
                         $identity = new UserIdentity($objUsuario->identificacionUsuario, $objUsuario->clave);
                         $identity->authenticate(true);
