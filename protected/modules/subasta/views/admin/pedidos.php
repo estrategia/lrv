@@ -107,7 +107,6 @@
         </div>
     </div>
 </div>
-
+<input type='hidden' value='<?= Yii::app()->params->callcenter['pedidos']['tiempoRecargarPagina']?>' id='recargar-pagina'>
 <?php
-if ($model->idEstadoCompra == 1)
- //   Yii::app()->clientScript->registerScript(uniqid(), "setTimeout(function(){ location.reload(); }, " . Yii::app()->params->callcenter['pedidos']['tiempoRecargarPagina'] . ");"); ?>
+    Yii::app()->clientScript->registerScript(uniqid(), "refresh = setTimeout(function(){ location.reload(); }, " . Yii::app()->params->callcenter['pedidos']['tiempoRecargarPagina'] . ");"); ?>

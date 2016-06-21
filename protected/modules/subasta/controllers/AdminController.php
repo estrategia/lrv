@@ -52,27 +52,27 @@ class AdminController extends ControllerOperator {
         $this->layout = "simple";
         $objCiudadSector = Yii::app()->session[Yii::app()->params->subasta['sesion']['objCiudadSector']];
         $idComercial = Yii::app()->session[Yii::app()->params->subasta['sesion']['pdv']];
-       // if (is_numeric($parametro)) {
-            $model = new Compras('search');
-            $model->unsetAttributes();
-            if (isset($_GET['Compras']))
-                $model->attributes = $_GET['Compras'];
+        // if (is_numeric($parametro)) {
+        $model = new Compras('search');
+        $model->unsetAttributes();
+        if (isset($_GET['Compras']))
+            $model->attributes = $_GET['Compras'];
 
-            $model->idEstadoCompra = Yii::app()->params->callcenter['estadoCompra']['estado']['subasta'];
-            
-            //$model->tipoEntrega = Yii::app()->params->entrega["tipo"]['domicilio'];
-            $model->seguimiento = null;
+        $model->idEstadoCompra = Yii::app()->params->callcenter['estadoCompra']['estado']['subasta'];
+
+        //$model->tipoEntrega = Yii::app()->params->entrega["tipo"]['domicilio'];
+        $model->seguimiento = null;
         //    $fecha = Compras::calcularFechaVisualizar();
         //    $model->fechaCompra = $fecha;
-            
-            $model->codigoSector = $objCiudadSector->codigoSector;
-            $model->codigoCiudad = $objCiudadSector->codigoCiudad;
-            $sort = "t.fechaCompra DESC";
-            $this->render('pedidos', array(
-                'model' => $model,
-                'dataProvider' => $model->search(array('order' => $sort, 'operadorPedido' => true)),
-                    // 'arrCantidadPedidos' => Compras::cantidadComprasPDVPorEstado($fecha, null, $idComercial, $objCiudadSector->codigoSector, $objCiudadSector->codigoCiudad)
-            ));
+
+        $model->codigoSector = $objCiudadSector->codigoSector;
+        $model->codigoCiudad = $objCiudadSector->codigoCiudad;
+        $sort = "t.fechaCompra DESC";
+        $this->render('pedidos', array(
+            'model' => $model,
+            'dataProvider' => $model->search(array('order' => $sort, 'operadorPedido' => true)),
+                // 'arrCantidadPedidos' => Compras::cantidadComprasPDVPorEstado($fecha, null, $idComercial, $objCiudadSector->codigoSector, $objCiudadSector->codigoCiudad)
+        ));
 //        } else {
 //            if ($parametro == 'busqueda') {
 //                if (!isset(Yii::app()->session[Yii::app()->params->callcenter['sesion']['formPedidoBusqueda']])) {
@@ -242,7 +242,6 @@ class AdminController extends ControllerOperator {
 //            'listPdv' => $listPdv,
 //        ));
 //    }
-
 //    public function actionObservacionpedido() {
 //        if (isset($_POST['ObservacionForm'])) {
 //            $model = new ObservacionForm;
@@ -374,7 +373,6 @@ class AdminController extends ControllerOperator {
 //            throw new CHttpException(404, 'Solicitud invalida.');
 //        }
 //    }
-
 //    public function actionObservacionmensaje() {
 //        if (!Yii::app()->request->isPostRequest) {
 //            echo CJSON::encode(array('result' => 'error', 'response' => 'Solicitud invalida.'));
@@ -419,7 +417,6 @@ class AdminController extends ControllerOperator {
 //        echo CJSON::encode(array('result' => 'ok', 'response' => $plantilla));
 //        Yii::app()->end();
 //    }
-
 //    public function actionGeoDireccion() {
 //        if (!Yii::app()->request->isPostRequest) {
 //            echo CJSON::encode(array('result' => 'error', 'response' => 'Solicitud invalida.'));
@@ -614,13 +611,17 @@ class AdminController extends ControllerOperator {
                     'sector' => $objCiudadSector->codigoSector
                 ));
 
+
                 $puntoVenta = null;
-                foreach ($puntosVenta[1] as $pdv) {
-                    if ($pdv[1] == $idComercial) {
-                        $puntoVenta = $pdv;
-                        break;
+                if (!empty($puntosVenta)) {
+                    foreach ($puntosVenta[1] as $pdv) {
+                        if ($pdv[1] == $idComercial) {
+                            $puntoVenta = $pdv;
+                            break;
+                        }
                     }
                 }
+                
                 echo CJSON::encode(
                         array(
                             'result' => 'ok',
@@ -631,7 +632,11 @@ class AdminController extends ControllerOperator {
                 ));
             } catch (Exception $exc) {
                 Yii::log($exc->getMessage() . "\n" . $exc->getTraceAsString(), CLogger::LEVEL_ERROR, 'application');
-                $this->listPuntosVenta = array(0 => 0, 1 => 'Error al consultar disponibilidad de productos');
+                //  $this->listPuntosVenta = array(0 => 0, 1 => 'Error al consultar disponibilidad de productos');
+                echo CJSON::encode(array(
+                    'result' => 'error',
+                    'response' => 'No se puede consultar la totalidad del pedido'
+                ));
             }
         } else {
             echo CJSON::encode(array(
@@ -643,11 +648,11 @@ class AdminController extends ControllerOperator {
 
     public function actionAsignarPdv() {
         $idCompra = $_POST['dataPedido'];
-        $idPuntoVenta = $_POST['dataPdv'];
-        
+        $idPuntoVenta = Yii::app()->session[Yii::app()->params->subasta['sesion']['pdv']];
+
         $objCompra = Compras::model()->findByPk($idCompra);
-        
-        if($objCompra===null){
+
+        if ($objCompra === null) {
             echo CJSON::encode(array(
                 'result' => 'error',
                 'response' => 'Compra no existe'
@@ -666,8 +671,8 @@ class AdminController extends ControllerOperator {
         $transaction = Yii::app()->db->beginTransaction();
 
         $objCompra->idComercial = $idPuntoVenta;
-        
-        if(!$objCompra->save()){
+
+        if (!$objCompra->save()) {
             echo CJSON::encode(array(
                 'result' => 'error',
                 'response' => $objCompra->validateErrorsResponse()
@@ -683,7 +688,7 @@ class AdminController extends ControllerOperator {
         $result = $client->__soapCall("CongelarCompraManual", array('idPedido' => $idCompra));
         //$result = array(0=>0,1=>'congelar prueba error');
         //$result = array(0=>1,1=>'congelar prueba ok', 2 =>'miguel.sanchez@eiso.com.co');
-        if($result[0] != 1){
+        if ($result[0] != 1) {
             echo CJSON::encode(array(
                 'result' => 'error',
                 'response' => $result[1]
@@ -732,7 +737,7 @@ class AdminController extends ControllerOperator {
             try {
                 $this->enviarEmail($objCompra);
             } catch (Exception $exc) {
-
+                
             }
             $transaction->commit();
 

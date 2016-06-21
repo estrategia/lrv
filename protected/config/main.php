@@ -430,7 +430,7 @@ return array(
             'correo' => 'alexander_javela@copservir.com',
             'pedidos' => array(
                 'diasVisualizar' => 1,
-                'tiempoRecargarPagina' => 30000,
+                'tiempoRecargarPagina' => 10000,
             ),
             'perfil' => array(
                 1 => 'Operador',
