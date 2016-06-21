@@ -120,19 +120,19 @@ return array(
                     'class' => 'CFileLogRoute',
                     'levels' => CLogger::LEVEL_ERROR,
                     'logFile' => 'app_error.log',
-                    'categories' => 'application',
+                    //'categories' => 'application',
                 ),
                 array(
                     'class' => 'CFileLogRoute',
                     'levels' => CLogger::LEVEL_WARNING,
                     'logFile' => 'app_warning.log',
-                    'categories' => 'application',
+                    //'categories' => 'application',
                 ),
                 array(
                     'class' => 'CFileLogRoute',
                     'levels' => CLogger::LEVEL_INFO,
                     'logFile' => 'app_info.log',
-                    'categories' => 'application',
+                    //'categories' => 'application',
                 ),
                 array(
                     'class' => 'CFileLogRoute',

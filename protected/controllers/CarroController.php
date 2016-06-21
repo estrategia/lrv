@@ -3149,7 +3149,7 @@ class CarroController extends Controller {
             if ($modelPago->idFormaPago == Yii::app()->params->formaPago['pasarela']['idPasarela']) {
                 $objCompra->idEstadoCompra = Yii::app()->params->callcenter['estadoCompra']['estado']['pendientePasarela'];
             } else {
-                $objCompra->idEstadoCompra = Yii::app()->params->callcenter['estadoCompra']['estado']['subasta'];
+                $objCompra->idEstadoCompra = Yii::app()->params->callcenter['estadoCompra']['estado']['pendiente'];
             }
 
             $objCompra->idTipoVenta = 1;
@@ -3177,7 +3177,7 @@ class CarroController extends Controller {
             $objCompra->totalCompra = Yii::app()->shoppingCart->getTotalCost();
 
             if (!$objCompra->save()) {
-                throw new Exception("Error al guardar compra" . $objCompra->validateErrorsResponse());
+                throw new Exception("Error al guardar compra [0]" . $objCompra->validateErrorsResponse());
             }
 
             if ($tipoEntrega == Yii::app()->params->entrega['tipo']['presencial']) {
@@ -3593,6 +3593,8 @@ class CarroController extends Controller {
 
                 try {
                     $result = $client->__soapCall("CongelarCompraAutomatica", array('idPedido' => $objCompra->idCompra)); //763759, 763743
+                    //$result = array(0=>0,1=>'congelar prueba error');
+                    //$result = array(0=>1,1=>'congelar prueba ok', 2 =>'miguel.sanchez@eiso.com.co');
                     if (!empty($result) && $result[0] == 1) {
                         $objCompraRemision = Compras::model()->findByPk($objCompra->idCompra, array("with" => "objPuntoVenta"));
                         $contenidoCorreo = $this->renderPartial('application.modules.callcenter.views.pedido.compraCorreo', array('objCompra' => $objCompraRemision), true, true);
@@ -3601,6 +3603,11 @@ class CarroController extends Controller {
                             sendHtmlEmail($result[2], Yii::app()->params->asunto['pedidoRemitido'], $htmlCorreo);
                         } catch (Exception $ce) {
                             Yii::log("Error enviando correo de remision automatica #$objCompra->idCompra\n" . $ce->getMessage() . "\n" . $ce->getTraceAsString(), CLogger::LEVEL_INFO, 'application');
+                        }
+                    }else{
+                        $objCompra->idEstadoCompra = Yii::app()->params->callcenter['estadoCompra']['estado']['subasta'];
+                        if (!$objCompra->save()) {
+                            throw new Exception("Error al guardar compra [1]" . $objCompra->validateErrorsResponse());
                         }
                     }
                 } catch (SoapFault $exc) {

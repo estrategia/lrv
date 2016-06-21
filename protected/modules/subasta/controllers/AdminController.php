@@ -644,100 +644,115 @@ class AdminController extends ControllerOperator {
     public function actionAsignarPdv() {
         $idCompra = $_POST['dataPedido'];
         $idPuntoVenta = $_POST['dataPdv'];
-
+        
         $objCompra = Compras::model()->findByPk($idCompra);
+        
+        if($objCompra===null){
+            echo CJSON::encode(array(
+                'result' => 'error',
+                'response' => 'Compra no existe'
+            ));
+            Yii::app()->end();
+        }
 
-        if (isset($objCompra)) {
+        if ($objCompra->idComercial != null) {
+            echo CJSON::encode(array(
+                'result' => 'error',
+                'response' => 'El pedido ya tiene asignado punto de venta'
+            ));
+            Yii::app()->end();
+        }
 
-            if ($objCompra->idComercial != null) {
-                echo CJSON::encode(
-                        array(
-                            'result' => 'error',
-                            'response' => 'El pedido ya tiene asignado punto de venta'
-                ));
-                Yii::app()->end();
+        $transaction = Yii::app()->db->beginTransaction();
+
+        $objCompra->idComercial = $idPuntoVenta;
+        
+        if(!$objCompra->save()){
+            echo CJSON::encode(array(
+                'result' => 'error',
+                'response' => $objCompra->validateErrorsResponse()
+            ));
+            Yii::app()->end();
+        }
+
+        $client = new SoapClient(null, array(
+            'location' => Yii::app()->params->webServiceUrl['remisionPosECommerce'],
+            'uri' => "",
+            'trace' => 1
+        ));
+        $result = $client->__soapCall("CongelarCompraManual", array('idPedido' => $idCompra));
+        //$result = array(0=>0,1=>'congelar prueba error');
+        //$result = array(0=>1,1=>'congelar prueba ok', 2 =>'miguel.sanchez@eiso.com.co');
+        if($result[0] != 1){
+            echo CJSON::encode(array(
+                'result' => 'error',
+                'response' => $result[1]
+            ));
+            Yii::app()->end();
+        }
+
+        $objCompra = Compras::model()->find(array(
+            'with' => 'objPuntoVenta',
+            'condition' => "idCompra =:idCompra",
+            'params' => array(
+                ':idCompra' => $idCompra
+        )));
+
+        try {
+            $objCompra->idEstadoCompra = Yii::app()->params->callcenter['estadoCompra']['estado']['remitido'];
+            $objCompra->generarDocumentoCruce(Yii::app()->controller->module->user->id);
+
+            // Guardar el cambio de estado de la remisión
+            if (!$objCompra->save()) {
+                throw new Exception('Error de asignación: ' . $objCompra->validateErrorsResponse());
             }
 
-            $transaction = Yii::app()->db->beginTransaction();
+            $objEstadoCompra = new ComprasEstados;
+            $objEstadoCompra->idCompra = $objCompra->idCompra;
+            $objEstadoCompra->idEstadoCompra = Yii::app()->params->callcenter['estadoCompra']['estado']['remitido'];
+            $objEstadoCompra->idOperador = Yii::app()->controller->module->user->id;
 
-            $objCompra->idComercial = $idPuntoVenta;
-
-            if ($objCompra->save()) {
-//                $client = new SoapClient(null, array(
-//                    'location' => Yii::app()->params->webServiceUrl['remisionPosECommerce'],
-//                    'uri' => "",
-//                    'trace' => 1
-//                ));
-//                $result = $client->__soapCall("CongelarCompraManual", array('idPedido' => $idCompra));
-
-                
-                $result = array(1);
-                if ($result[0] == 1) {
-
-                    $objCompra = Compras::model()->find(array(
-                        'with' => 'objPuntoVenta',
-                        'condition' => "idCompra =:idCompra",
-                        'params' => array(
-                            ':idCompra' => $idCompra
-                        )));
-                    try {
-                        $objCompra->idEstadoCompra = Yii::app()->params->callcenter['estadoCompra']['estado']['remitido'];
-                        $objCompra->generarDocumentoCruce(Yii::app()->controller->module->user->id);
-
-                        // Guardar el cambio de estado de la remisión
-                        if (!$objCompra->save()) {
-                            throw new Exception('Error de asignación: ' . $objCompra->validateErrorsResponse());
-                        }
-
-                        $objEstadoCompra = new ComprasEstados;
-                        $objEstadoCompra->idCompra = $objCompra->idCompra;
-                        $objEstadoCompra->idEstadoCompra = Yii::app()->params->callcenter['estadoCompra']['estado']['remitido'];
-                        $objEstadoCompra->idOperador = Yii::app()->controller->module->user->id;
-
-                        // guardar en ComprasEstados
-                        if (!$objEstadoCompra->save()) {
-                            throw new Exception("Error al guardar traza de estado: " . $objEstadoCompra->validateErrorsResponse());
-                        }
-
-                        $objObservacion = new ComprasObservaciones;
-                        $objObservacion->idCompra = $objCompra->idCompra;
-                        $objObservacion->observacion = "Cambio de Estado: Remitido al POS PDV. " . $objCompra->objPuntoVenta->nombrePuntoDeVenta;
-                        $objObservacion->idOperador = Yii::app()->controller->module->user->id;
-                        $objObservacion->notificarCliente = 0;
-
-                        // Guardar las observaciones
-                        if (!$objObservacion->save()) {
-                            throw new Exception("Error al guardar observación" . $objObservacion->validateErrorsResponse());
-                        }
-
-                        // Enviar Correo electronico al punto de venta
-                        try {
-                            $this->enviarEmail($objCompra);
-                        } catch (Exception $exc) {
-                            
-                        };
-                        $transaction->commit();
-
-                        echo CJSON::encode(
-                                array(
-                                    'result' => 'ok',
-                                    'response' => "Se ha remitido la compra al punto de venta $idPuntoVenta"
-                        ));
-                        Yii::app()->end();
-                    } catch (Exception $exc) {
-                        Yii::log($exc->getMessage() . "\n" . $exc->getTraceAsString(), CLogger::LEVEL_ERROR, 'application');
-
-                        try {
-                            $transaction->rollBack();
-                        } catch (Exception $txexc) {
-                            Yii::log($txexc->getMessage() . "\n" . $txexc->getTraceAsString(), CLogger::LEVEL_ERROR, 'application');
-                        }
-
-                        echo CJSON::encode(array('result' => 'error', 'response' => $exc->getMessage()));
-                        Yii::app()->end();
-                    }
-                }
+            // guardar en ComprasEstados
+            if (!$objEstadoCompra->save()) {
+                throw new Exception("Error al guardar traza de estado: " . $objEstadoCompra->validateErrorsResponse());
             }
+
+            $objObservacion = new ComprasObservaciones;
+            $objObservacion->idCompra = $objCompra->idCompra;
+            $objObservacion->observacion = "Cambio de Estado: Remitido por subasta al POS PDV. " . $objCompra->objPuntoVenta->nombrePuntoDeVenta;
+            $objObservacion->idOperador = Yii::app()->controller->module->user->id;
+            $objObservacion->notificarCliente = 0;
+
+            // Guardar las observaciones
+            if (!$objObservacion->save()) {
+                throw new Exception("Error al guardar observación" . $objObservacion->validateErrorsResponse());
+            }
+
+            // Enviar Correo electronico al punto de venta
+            try {
+                $this->enviarEmail($objCompra);
+            } catch (Exception $exc) {
+
+            }
+            $transaction->commit();
+
+            echo CJSON::encode(
+                    array(
+                        'result' => 'ok',
+                        'response' => "Se ha remitido la compra al punto de venta $idPuntoVenta"
+            ));
+            Yii::app()->end();
+        } catch (Exception $exc) {
+            Yii::log($exc->getMessage() . "\n" . $exc->getTraceAsString(), CLogger::LEVEL_ERROR, 'application');
+
+            try {
+                $transaction->rollBack();
+            } catch (Exception $txexc) {
+                Yii::log($txexc->getMessage() . "\n" . $txexc->getTraceAsString(), CLogger::LEVEL_ERROR, 'application');
+            }
+
+            echo CJSON::encode(array('result' => 'error', 'response' => $exc->getMessage()));
+            Yii::app()->end();
         }
     }
 

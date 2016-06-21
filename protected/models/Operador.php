@@ -33,6 +33,7 @@ class Operador extends CActiveRecord {
             array('perfil, activo', 'numerical', 'integerOnly' => true),
             array('nombre', 'length', 'min'=>5, 'max' => 50),
             array('usuario', 'length', 'min'=>5, 'max' => 15),
+            array('usuario','validateExist'),
             array('clave', 'length', 'min'=>5, 'max' => 32),
             array('email', 'email'),
             array('email', 'length', 'max' => 50),
@@ -41,6 +42,32 @@ class Operador extends CActiveRecord {
             array('idOperador, nombre, usuario, clave, perfil, email, activo', 'safe', 'on' => 'search'),
    //         array('idComercial','required', 'message'=>'{attribute} no puede estar vacío', 'on' => function ($model){return $model->idPerfil == Yii::app()->params->callcenter['perfilVendedorPDV'];})
         );
+    }
+    
+    public function validateExist($attribute, $params) {
+        if (!$this->hasErrors()) {
+            $model = null;
+
+            if ($this->isNewRecord) {
+                $model = self::model()->find(array(
+                    'condition' => "$attribute=:value",
+                    'params' => array(
+                        'value' => $this->getAttribute($attribute)
+                    )
+                ));
+            } else {
+                $model = self::model()->find(array(
+                    'condition' => "idOperador<>:id AND $attribute=:value",
+                    'params' => array(
+                        'id' => $this->idOperador,
+                        'value' => $this->getAttribute($attribute)
+                    )
+                ));
+            }
+
+            if ($model !== null)
+                $this->addError($attribute, $this->getAttributeLabel($attribute) . ' ya existe.');
+        }
     }
 
     /**
@@ -124,6 +151,15 @@ class Operador extends CActiveRecord {
     
     public static function listData(){
         return self::model()->findAll(array('condition'=>'activo=:activo','params'=>array(':activo'=>1)));
+    }
+    
+    public function beforeSave() {
+        if ($this->isNewRecord) {
+            //$this->fechaCreacion = new CDbExpression('NOW()');
+            $this->clave = $this->hash($this->clave);
+        }
+
+        return parent::beforeSave();
     }
 
 }

@@ -41,12 +41,8 @@ class OperadorController extends ControllerOperator {
     public function actionCreate() {
         Yii::import('ext.select2.Select2');
         $model = new Operador;
-        $model->clave = $model->hash($model->clave);
-        // Uncomment the following line if AJAX validation is needed
-        // $this->performAjaxValidation($model);
 
         if (isset($_POST['Operador'])) {
-
             $model->attributes = $_POST['Operador'];
 
             if ($model->save()) {
