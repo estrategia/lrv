@@ -280,7 +280,7 @@ function errorPosicion(error) {
             mensaje = "Expiró el tiempo de espera.";
             break;
         case error.UNKNOWN_ERROR:
-            mensaje = "Error desconocido: " + erro.message;
+            mensaje = "Error desconocido: " + error.message;
             break;
     }
 

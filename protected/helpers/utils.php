@@ -86,8 +86,7 @@ function distanciaCoordenadas($lat1, $lon1, $lat2, $lon2, $unit = 'K') {
     }
 }
 
-function GSASearch(&$term, $sesion) {
-    $arr2 = array();//GSASearchAux($term);
+function GSASearch($term, $sesion) {
     $resultado = array();
 
     $sql = "SELECT codigoProducto, descripcion, MATCH(descripcion, keyword) AGAINST('(\"$term\") (+$term) ($term) ($term*)' IN BOOLEAN MODE) as relevancia
@@ -100,6 +99,8 @@ function GSASearch(&$term, $sesion) {
     foreach ($arr1 as $key => $value) {
         $resultado[$value['codigoProducto']] = $value['relevancia'];
     }
+    
+    $arr2 = array();//GSASearchAux($term);
 
     foreach ($arr2 as $key => $value) {
         if (in_array($key, $resultado)) {
@@ -155,7 +156,7 @@ function WebServiceSearch($term) {
     }
 }
 
-function GSASearchAux(&$term) {
+function GSASearchAux($term) {
     $codigosArray = array();
 
     if ($term != "") {

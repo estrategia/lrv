@@ -497,7 +497,7 @@ class FormaPagoForm extends CFormModel {
 
     public function consultarHorario($objSectorCiudad) {
         if ($objSectorCiudad != null) {
-            if ($this->objHorarioCiudadSector == null || $this->objHorarioCiudadSector->codigoCiudad != $objSectorCiudad->codigoCiudad || $this->objHorarioCiudadSector->codigoSector != $objSectorCiudad->codigoSector) {
+            //if ($this->objHorarioCiudadSector == null || $this->objHorarioCiudadSector->codigoCiudad != $objSectorCiudad->codigoCiudad || $this->objHorarioCiudadSector->codigoSector != $objSectorCiudad->codigoSector) {
                 $this->objHorarioCiudadSector = HorariosCiudadSector::model()->find(array(
                     'condition' => 'codigoCiudad=:ciudad AND codigoSector=:sector AND estadoCiudadSector=:estado',
                     'params' => array(
@@ -506,7 +506,7 @@ class FormaPagoForm extends CFormModel {
                         ':sector' => $objSectorCiudad->codigoSector
                     )
                 ));
-            }
+            //}
             $this->objSectorCiudad = $objSectorCiudad;
         }
     }
@@ -706,6 +706,7 @@ class FormaPagoForm extends CFormModel {
 
     public function listDataHoras() {
         $deltaHorario = Yii::app()->params->horarioEntrega['deltaDefecto'];
+        $this->consultarHorario($this->objSectorCiudad);
 
         if ($this->objSectorCiudad !== null) {
             if (isset(Yii::app()->params->horarioEntrega['deltaHorarios'][$this->objSectorCiudad->codigoCiudad])) {

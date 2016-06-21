@@ -3610,10 +3610,6 @@ class CarroController extends Controller {
                 }
             }
 
-            /* if ($modelPago->bono !== null && $modelPago->usoBono == 1) {
-              $objFormasPago->valorBono = $modelPago->bono['valor'];
-              } */
-
             if ($objFormasPago->valorBono > 0) {
                 $modelPago->actualizarBono($objCompra);
             }
