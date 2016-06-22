@@ -100,7 +100,7 @@ function GSASearch($term, $sesion) {
         $resultado[$value['codigoProducto']] = $value['relevancia'];
     }
     
-    $arr2 = array();//GSASearchAux($term);
+    $arr2 = GSASearchAux($term);
 
     foreach ($arr2 as $key => $value) {
         if (in_array($key, $resultado)) {
