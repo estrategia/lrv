@@ -497,8 +497,55 @@ class ClienteController extends ControllerVendedor {
                 'vigenciaFin' => "$objBono->vigenciaFin",
                 'minimoCompra' => $objBono->minimoCompra,
                 'concepto' => $objBono->concepto,
+                'modoUso' => 1
             );
         }
+        
+        
+             $listBonosProductos = Producto::model()->findAll(array(
+            'with' => array('objBeneficioProducto' => 
+                                    array(
+                                            'with' => array (
+                                                    'objBeneficio' => array (
+                                                        'with' => 'listCedulas'
+                                                    )))),
+            'condition' => 'objBeneficio.tipo = 25 AND 
+             listCedulas.numeroDocumento =:numeroDocumento AND 
+             objBeneficio.fechaIni <= now() AND 
+             objBeneficio.fechaFin >= now() AND
+             listCedulas.estado = 1',
+             'params' => array(
+                 ':numeroDocumento' => Yii::app()->controller->module->user->getCedulaCliente()
+             )    
+        //    'params' => $paramsBonos,
+        //    'order' => 'vigenciaInicio'
+        ));
+        
+          $codigosProductos = array ();
+          $productosCant = array ();
+          foreach (Yii::app()->shoppingCartSalesman->getPositions() as $position){
+              if ($position->getDelivery() == 0 && $position->getShipping() == 0){
+                  if($position->isProduct()){
+                      $codigosProductos[] = $position->objProducto->codigoProducto;
+                      $productosCant[$position->objProducto->codigoProducto] = $position->getQuantity();
+                  }
+              }
+          }
+             
+        foreach ($listBonosProductos as $objProducto) {
+                 $bonos[$objProducto->objBeneficioProducto->idBeneficio] = array(
+                     'valor' => $objProducto->objBeneficioProducto->objBeneficio->dsctoUnid * (in_array($objProducto->codigoProducto, $codigosProductos)?$productosCant[$objProducto->codigoProducto]:1),
+                     'vigenciaInicio' => $objProducto->objBeneficioProducto->objBeneficio->fechaIni,
+                     'vigenciaFin' => $objProducto->objBeneficioProducto->objBeneficio->fechaFin,
+                     'minimoCompra' =>  $objProducto->objBeneficioProducto->objBeneficio->dsctoUnid,
+                     'concepto' => 'Por la compra de '.$objProducto->codigoProducto.' - '.$objProducto->descripcionProducto. " recibe un bono de ".$objProducto->objBeneficioProducto->objBeneficio->dsctoUnid,
+                   //  'concepto' => $objProducto->objBeneficioProducto->objBeneficio->mensaje,
+                     'modoUso' => 2,
+                     'codigoProducto' => $objProducto->codigoProducto
+                 );
+        }
+        
+        
         //-- bonos propios de la tienda
         //-- bono crm
         ini_set('default_socket_timeout', 5);

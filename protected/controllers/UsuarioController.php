@@ -604,7 +604,7 @@ class UsuarioController extends Controller {
         $modelPago->identificacionUsuario = Yii::app()->user->name;
         $modelPago->consultarBono();
         
-        
+     
         $params = array('bonos' => $modelPago->bono);
         if ($this->isMobile) {
             $this->render('bonos', $params);

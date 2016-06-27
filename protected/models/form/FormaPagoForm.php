@@ -332,7 +332,7 @@ class FormaPagoForm extends CFormModel {
             'params' => $paramsBonos,
             'order' => 'vigenciaInicio'
         ));
-
+        
         foreach ($listBonosTienda as $objBono) {
             $this->bono["$objBono->idBonoTienda"] = array(
                 'valor' => $objBono->valor,
@@ -341,10 +341,58 @@ class FormaPagoForm extends CFormModel {
                 'vigenciaFin' => "$objBono->vigenciaFin",
                 'minimoCompra' => $objBono->minimoCompra,
                 'concepto' => $objBono->concepto,
+                'modoUso' => 1
             );
 
             $this->usoBono["$objBono->idBonoTienda"] = 0;
         }
+        
+        $listBonosProductos = Producto::model()->findAll(array(
+            'with' => array('objBeneficioProducto' => 
+                                    array(
+                                            'with' => array (
+                                                    'objBeneficio' => array (
+                                                        'with' => 'listCedulas'
+                                                    )))),
+            'condition' => 'objBeneficio.tipo = 25 AND 
+             listCedulas.numeroDocumento =:numeroDocumento AND 
+             objBeneficio.fechaIni <= now() AND 
+             objBeneficio.fechaFin >= now() AND
+             listCedulas.estado = 1',
+            'params' => array(
+                ':numeroDocumento' => Yii::app()->user->name
+            ),
+        //    'params' => $paramsBonos,
+        //    'order' => 'vigenciaInicio'
+        ));
+        
+          $codigosProductos = array ();
+          $productosCant = array ();
+          foreach (Yii::app()->shoppingCart->getPositions() as $position){
+              if ($position->getDelivery() == 0 && $position->getShipping() == 0){
+                  if($position->isProduct()){
+                      $codigosProductos[] = $position->objProducto->codigoProducto;
+                      $productosCant[$position->objProducto->codigoProducto] = $position->getQuantity();
+                  }
+              }
+          }
+             
+            foreach ($listBonosProductos as $objProducto) {
+                 $this->bono[$objProducto->objBeneficioProducto->idBeneficio] = array(
+                     'valor' => $objProducto->objBeneficioProducto->objBeneficio->dsctoUnid * (in_array($objProducto->codigoProducto, $codigosProductos)?$productosCant[$objProducto->codigoProducto]:1),
+                     'disponibleCompra' => ($this->totalCompra !== null && $this->totalCompra >= $objProducto->objBeneficioProducto->objBeneficio->dsctoUnid && in_array($objProducto->codigoProducto, $codigosProductos) ),
+                     'vigenciaInicio' => $objProducto->objBeneficioProducto->objBeneficio->fechaIni,
+                     'vigenciaFin' => $objProducto->objBeneficioProducto->objBeneficio->fechaFin,
+                     'minimoCompra' =>  $objProducto->objBeneficioProducto->objBeneficio->dsctoUnid,
+                     'concepto' => 'Por la compra de '.$objProducto->codigoProducto.' - '.$objProducto->descripcionProducto. " recibe un bono de ".$objProducto->objBeneficioProducto->objBeneficio->dsctoUnid,
+                   //  'concepto' => $objProducto->objBeneficioProducto->objBeneficio->mensaje,
+                     'modoUso' => 2,
+                     'codigoProducto' => $objProducto->codigoProducto
+                 );
+
+                 $this->usoBono[$objProducto->objBeneficioProducto->idBeneficio] = 0;
+             }
+             
         //-- bonos propios de la tienda
         //-- bono crm
         ini_set('default_socket_timeout', 5);
@@ -373,6 +421,7 @@ class FormaPagoForm extends CFormModel {
                         'vigenciaFin' => $result[0]->VIGENCIA_FINA,
                         'minimoCompra' => $result[0]->VALOR_BONO,
                         'concepto' => 'Cliente Fiel',
+                        'modoUso' => 1
                     );
                     $this->usoBono["crm"] = 0;
                 }
@@ -416,9 +465,9 @@ class FormaPagoForm extends CFormModel {
                         } catch (Exception $exc) {
                             Yii::log("ActualizarBono-CRM: Exception WebService  [idCompra: $objCompra->idCompra -- idbono: $idx -- idUsuario: $objCompra->identificacionUsuario]\n" . $exc->getMessage() . "\n" . $exc->getTraceAsString(), CLogger::LEVEL_INFO, 'application');
                         }
-                    } else {
+                    } else if($this->bono[$idx]['modoUso'] == 1 ) {
                         $valorCompra = $objCompra->totalCompra + $this->calcularBonoRedimido(); //$objCompra->subtotalCompra + $objCompra->domicilio + $objCompra->flete
-
+                      
                         try {
                             $fecha = DateTime::createFromFormat('Y-m-d H:i:s', $objCompra->fechaCompra)->format('Y-m-d');
 
@@ -448,6 +497,11 @@ class FormaPagoForm extends CFormModel {
                             Yii::log("ActualizarBono-Tienda: Exception [idCompra: $objCompra->idCompra -- idbono: $idx -- idUsuario: $objCompra->identificacionUsuario]\n" . $ex->getMessage() . "\n" . $ex->getTraceAsString(), CLogger::LEVEL_INFO, 'application');
                         }
                     }
+//                    else{
+//                        
+//                        $objBeneficioComprasItems = new BeneficiosComprasItems();
+//                        
+//                    }
                 }
             }
         }

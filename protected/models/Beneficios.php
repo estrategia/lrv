@@ -67,6 +67,7 @@ class Beneficios extends CActiveRecord {
             'objCombo' => array(self::BELONGS_TO, 'Combo', '', 'on' => 't.idBeneficio = objCombo.IdBeneficio'),
             'listPuntosVenta' => array(self::MANY_MANY, 'PuntoVenta', 't_BeneficiosPuntosVenta(idBeneficio, idComercial)'),
             'listBeneficiosProductos' => array(self::HAS_MANY, 'BeneficiosProductos', 'idBeneficio'),
+            'listCedulas' => array(self::HAS_MANY, 'BeneficiosCedulas', 'idBeneficio'),
         );
     }
 
