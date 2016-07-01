@@ -190,6 +190,7 @@ class PrecioProducto extends Precio {
             } else {
                 $condition .= " AND swobligaCli=0";
             }
+            $condition .= " AND t.tipo != 25";
 
             $this->listBeneficios = Beneficios::model()->findAll(array(
                 'with' => array(

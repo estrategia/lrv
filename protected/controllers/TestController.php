@@ -88,6 +88,17 @@ class TestController extends Controller {
             echo ("Exception WebService CongelarCompraAutomatica [compra: $idCompra]\n" . $exc->getMessage() . "\n" . $exc->getTraceAsString());
         }
     }
+    
+    public function actionRemanu(){
+        $idCompra = -1;
+        $client = new SoapClient(null, array(
+            'location' => Yii::app()->params->webServiceUrl['remisionPosECommerce'],
+            'uri' => "",
+            'trace' => 1
+        ));
+        $result = $client->__soapCall("CongelarCompraManual", array('idPedido' => $idCompra));
+        CVarDumper::dump($result, 10, true);
+    }
 
     public function actionIframe() {
         $this->render('iframe');

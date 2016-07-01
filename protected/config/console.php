@@ -71,7 +71,7 @@ return array(
             'acumuladoCompras' => 200000,
         ),
         'webServiceUrl' => array(
-            'sincronizarBeneficiosSIICOP' => 'http://192.168.40.137/copservir/beneficios/sweb/wslrv',
+            'sincronizarBeneficiosSIICOP' => 'http://localhost/copservir/beneficios/sweb/wslrv',
             'envioCorreosRecordatorios' => 'http://localhost/lrv/sweb/wslrv'
         ),
         'claveLista' => 'listapersonallrv',
