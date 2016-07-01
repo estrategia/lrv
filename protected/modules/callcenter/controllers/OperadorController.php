@@ -40,23 +40,40 @@ class OperadorController extends ControllerOperator {
      */
     public function actionCreate() {
         Yii::import('ext.select2.Select2');
-        $model = new Operador;
+        $model = new Operador('create');
 
         if (isset($_POST['Operador'])) {
             $model->attributes = $_POST['Operador'];
+            $model->clave = $model->hash($model->clave);
+            $model->codigoVendedor = isset($_POST["Operador"]["codigoVendedor"]) ? $_POST["Operador"]["codigoVendedor"] : null;
+            $model->idComercial = isset($_POST["select-pdv-asignar"]) ? $_POST["select-pdv-asignar"] : null;
 
             if ($model->save()) {
                 if ($model->perfil == Yii::app()->params->callcenter['perfilesOperador']['vendedorPDV']) {
-                    $puntoVenta = new OperadorSubasta;
-                    $puntoVenta->idComercial = $_POST['select-pdv-asignar'];
-                    $puntoVenta->idOperador = $model->idOperador;
-                    if ($puntoVenta->save()) {
+                    $operadorSubasta = new OperadorSubasta;
+                    $operadorSubasta->idComercial = $model->idComercial;
+                    $operadorSubasta->idOperador = $model->idOperador;
+                    if ($operadorSubasta->save()) {
                         $this->redirect(array('admin', 'usuario' => $model->usuario));
                     } else {
-                        throw new CHttpException(404, 'Error al guardar el vendedor.');
+                        Yii::app()->user->setFlash('danger', "Error al guardar vendedor: " . $operadorSubasta->validateErrorsResponse());
+                        $this->redirect(array('update', 'id' => $model->idOperador));
+                    }
+                }else if($model->perfil == Yii::app()->params->callcenter['perfilesOperador']['mensajeroVendedor']){
+                    $operadorVendedor = new OperadorVendedor;
+                    $operadorVendedor->codigoVendedor = $model->codigoVendedor;
+                    $operadorVendedor->idOperador = $model->idOperador;
+                    if ($operadorVendedor->save()) {
+                        $this->redirect(array('admin', 'usuario' => $model->usuario));
+                    } else {
+                        Yii::app()->user->setFlash('danger', "Error al guardar vendedor: " . $operadorVendedor->validateErrorsResponse());
+                        $this->redirect(array('update', 'id' => $model->idOperador));
                     }
                 }
                 $this->redirect(array('admin', 'usuario' => $model->usuario));
+            }else{
+                //Yii::app()->user->setFlash('danger', "Error al guardar operador: ".  $model->validateErrorsResponse());
+                $model->clave = null;
             }
         }
 
@@ -72,35 +89,90 @@ class OperadorController extends ControllerOperator {
      */
     public function actionUpdate($id) {
         Yii::import('ext.select2.Select2');
-        $model = $this->loadModel($id);
+        $objOperador = $this->loadModel($id);
+        
+        $model = new Operador('update');
+        
+        foreach($objOperador->attributes as $attribute => $value){
+            $model->$attribute = $value;
+        }
+        
+        $model->clave = null;
+        
         $operadorSubasta = OperadorSubasta::model()->find('idOperador =:operador', array(':operador' => $id));
 
         if ($operadorSubasta) {
             $model->idComercial = $operadorSubasta->idComercial;
         }
+        
+        $operadorVendedor = OperadorVendedor::model()->find('idOperador =:operador', array(':operador' => $id));
+
+        if ($operadorVendedor) {
+            $model->codigoVendedor = $operadorVendedor->codigoVendedor;
+        }
         // Uncomment the following line if AJAX validation is needed
         // $this->performAjaxValidation($model);
 
         if (isset($_POST['Operador'])) {
-
             $model->attributes = $_POST['Operador'];
+            $model->codigoVendedor = isset($_POST["Operador"]["codigoVendedor"]) ? $_POST["Operador"]["codigoVendedor"] : null;
+            $model->idComercial = isset($_POST["select-pdv-asignar"]) ? $_POST["select-pdv-asignar"] : null;
             
-            if ($model->save()) {
-               
-                if ($model->perfil == Yii::app()->params->callcenter['perfilesOperador']['vendedorPDV']) {
-                    $operadorSubasta = OperadorSubasta::model()->deleteALl('idOperador =:operador', array(':operador' => $model->idOperador));
+            if($model->validate()){
+                $objOperador->nombre = $model->nombre;
 
-                    $operadorSubasta = new OperadorSubasta();
-                    $operadorSubasta->idOperador = $model->idOperador;
-                    $operadorSubasta->idComercial = $_POST['select-pdv-asignar'];
-                    if ($operadorSubasta->save()) {
-                        $this->redirect(array('admin', 'usuario' => $model->usuario));
-                    } else {
-                        throw new CHttpException(404, 'Error al actualizar el vendedor.');
+                if(!empty($model->clave))
+                    $objOperador->clave = $objOperador->hash($model->clave);
+
+                $objOperador->perfil = $model->perfil;
+                $objOperador->email = $model->email;
+                $objOperador->activo = $model->activo;
+                
+                if($objOperador->perfil == Yii::app()->params->callcenter['perfilesOperador']['vendedorPDV'])
+                    $objOperador->idComercial = $model->idComercial;
+                else
+                    $objOperador->idComercial = null;
+                
+                if($objOperador->perfil == Yii::app()->params->callcenter['perfilesOperador']['mensajeroVendedor'])
+                    $objOperador->codigoVendedor = $model->codigoVendedor;
+                else
+                    $objOperador->codigoVendedor = null;
+                
+                if ($objOperador->save()) {
+                    if ($objOperador->perfil == Yii::app()->params->callcenter['perfilesOperador']['vendedorPDV']) {
+                        if($operadorSubasta===null){
+                            $operadorSubasta = new OperadorSubasta;
+                            $operadorSubasta->idOperador = $objOperador->idOperador;
+                        }
+                        
+                        $operadorSubasta->idComercial = $model->idComercial;
+                        if ($operadorSubasta->save()) {
+                            $this->redirect(array('admin', 'usuario' => $objOperador->usuario));
+                        }else{
+                            Yii::app()->user->setFlash('danger', "Error al guardar vendedor: " . $operadorSubasta->validateErrorsResponse());
+                            $model->clave = null;
+                        }
+                    }else if($model->perfil == Yii::app()->params->callcenter['perfilesOperador']['mensajeroVendedor']){
+                        if($operadorVendedor===null){
+                            $operadorVendedor = new OperadorSubasta;
+                            $operadorVendedor->idOperador = $objOperador->idOperador;
+                        }
+                        
+                        $operadorVendedor->codigoVendedor = $model->codigoVendedor;
+                        if ($operadorVendedor->save()) {
+                            $this->redirect(array('admin', 'usuario' => $objOperador->usuario));
+                        } else {
+                            Yii::app()->user->setFlash('danger', "Error al guardar vendedor: " . $operadorVendedor->validateErrorsResponse());
+                            $model->clave = null;
+                        }
                     }
+                    $this->redirect(array('admin', 'usuario' => $objOperador->usuario));
+                }else{
+                    Yii::app()->user->setFlash('danger', "Error al guardar operador: " . $objOperador->validateErrorsResponse());
+                    $model->clave = null;
                 }
+                
             }
-            $this->redirect(array('admin', 'usuario' => $model->usuario));
         }
 
         $this->render('update', array(

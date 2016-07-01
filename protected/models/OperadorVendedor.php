@@ -1,22 +1,22 @@
 <?php
 
 /**
- * This is the model class for table "m_OperadorSubasta".
+ * This is the model class for table "m_OperadorVendedor".
  *
- * The followings are the available columns in table 'm_OperadorSubasta':
+ * The followings are the available columns in table 'm_OperadorVendedor':
  * @property integer $idOperador
- * @property string $idComercial
+ * @property string $codigoVendedor
  *
  * The followings are the available model relations:
- * @property MOperador $idOperador0
+ * @property Operador $objOperador
  */
-class OperadorSubasta extends CActiveRecord {
+class OperadorVendedor extends CActiveRecord {
 
     /**
      * @return string the associated database table name
      */
     public function tableName() {
-        return 'm_OperadorSubasta';
+        return 'm_OperadorVendedor';
     }
 
     /**
@@ -26,12 +26,12 @@ class OperadorSubasta extends CActiveRecord {
         // NOTE: you should only define rules for those attributes that
         // will receive user inputs.
         return array(
-            array('idOperador, idComercial', 'required'),
-            array('idOperador', 'numerical', 'integerOnly' => true),
-            array('idComercial', 'length', 'max' => 10),
+            array('idOperador, codigoVendedor', 'required'),
+            array('codigoVendedor', 'length', 'max' => 10),
+            array('idOperador,codigoVendedor', 'numerical', 'integerOnly' => true),
             // The following rule is used by search().
             // @todo Please remove those attributes that should not be searched.
-            array('idOperador, idComercial', 'safe', 'on' => 'search'),
+            array('idOperador, codigoVendedor', 'safe', 'on' => 'search'),
         );
     }
 
@@ -42,7 +42,7 @@ class OperadorSubasta extends CActiveRecord {
         // NOTE: you may need to adjust the relation name and the related
         // class name for the relations automatically generated below.
         return array(
-            'idOperador0' => array(self::BELONGS_TO, 'MOperador', 'idOperador'),
+            'objOperador' => array(self::BELONGS_TO, 'Operador', 'idOperador'),
         );
     }
 
@@ -52,7 +52,7 @@ class OperadorSubasta extends CActiveRecord {
     public function attributeLabels() {
         return array(
             'idOperador' => 'Id Operador',
-            'idComercial' => 'Id Comercial',
+            'codigoVendedor' => 'Codigo Vendedor',
         );
     }
 
@@ -74,7 +74,7 @@ class OperadorSubasta extends CActiveRecord {
         $criteria = new CDbCriteria;
 
         $criteria->compare('idOperador', $this->idOperador);
-        $criteria->compare('idComercial', $this->idComercial, true);
+        $criteria->compare('codigoVendedor', $this->codigoVendedor, true);
 
         return new CActiveDataProvider($this, array(
             'criteria' => $criteria,
@@ -85,7 +85,7 @@ class OperadorSubasta extends CActiveRecord {
      * Returns the static model of the specified AR class.
      * Please note that you should have this exact method in all your CActiveRecord descendants!
      * @param string $className active record class name.
-     * @return OperadorSubasta the static model class
+     * @return OperadorVendedor the static model class
      */
     public static function model($className = __CLASS__) {
         return parent::model($className);

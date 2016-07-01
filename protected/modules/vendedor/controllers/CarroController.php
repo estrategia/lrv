@@ -2071,6 +2071,7 @@ class CarroController extends ControllerVendedor {
             $objCompra->identificacionUsuario = ($modelPago->pagoInvitado ? null : $modelPago->identificacionUsuario);
             $objCompra->tipoEntrega = $tipoEntrega;
             $objCompra->idVendedor = Yii::app()->controller->module->user->id;
+            $objCompra->codigoVendedor = Yii::app()->controller->module->user->code;
 
             //if($tipoEntrega==Yii::app()->params->entrega['tipo']['domicilio']){
             $objCompra->fechaEntrega = $modelPago->fechaEntrega;

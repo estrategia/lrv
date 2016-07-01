@@ -651,6 +651,11 @@ $(document).on('change', "#Operador_perfil", function () {
                 } else {
                     $("#form-pdv-vendedor").css('display', 'none');
                 }
+                if (data.response == 3) {
+                    $("#form-pdv-mensajero").css('display', 'block');
+                } else {
+                    $("#form-pdv-mensajero").css('display', 'none');
+                }
                 Loading.hide();
             } else {
                 Loading.hide();

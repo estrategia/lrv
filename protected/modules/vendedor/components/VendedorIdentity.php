@@ -18,6 +18,7 @@ class VendedorIdentity extends CUserIdentity {
      */
     public function authenticate() {
         $user = Operador::model()->find(array(
+            'with' => array('objOperadorVendedor'),
             'condition' => 't.usuario=:usuario AND t.perfil =:perfil',
             'params' => array(
                 ':usuario' => $this->username,
