@@ -33,12 +33,18 @@
                             </div>
                         </td>
                         <td class="text-center" style="width:40%">
-                            <?php if ($bono['disponibleCompra']): ?>
+                            <?php if ($bono['disponibleCompra'] && $bono['modoUso'] == 1): ?>
                                 <label><input type="radio" id="FormaPagoForm_usoBono_<?= $idx ?>_1" name="FormaPagoForm[usoBono][<?= $idx ?>]" value="1" <?php echo ($modelPago->usoBono[$idx] == 1 ? "checked" : "") ?>>Si</label>
                                 <label style="margin-left: 15px;"><input type="radio" id="FormaPagoForm_usoBono_<?= $idx ?>_0" name="FormaPagoForm[usoBono][<?= $idx ?>]" value="0" <?php echo ($modelPago->usoBono[$idx] != 1 ? "checked" : "") ?>>No</label>
-                            <?php else: ?>
+                             <?php elseif($bono['disponibleCompra'] && $bono['modoUso'] == 2): ?> 
+                                <label><input type="radio" id="FormaPagoForm_usoBono_<?= $idx ?>_1" name="FormaPagoForm[usoBono][<?= $idx ?>]" value="1" checked disabled>Si</label>
+                                <label style="margin-left: 15px;"><input type="radio" id="FormaPagoForm_usoBono_<?= $idx ?>_0" name="FormaPagoForm[usoBono][<?= $idx ?>]" value="0" disabled>No</label>
+                                <input type="hidden" name="FormaPagoForm[usoBono][<?= $idx ?>]" value="1">
+                            <?php elseif($bono['modoUso'] == 1): ?>
                                 <div class="">Disponible por compra superior a <?php echo Yii::app()->numberFormatter->format(Yii::app()->params->formatoMoneda['patron'], $bono['minimoCompra'], Yii::app()->params->formatoMoneda['moneda']); ?></div>
-                                <input type="hidden" name="FormaPagoForm[usoBono][<?= $idx ?>]" value="0">
+                                 <input type="hidden" name="FormaPagoForm[usoBono][<?= $idx ?>]" value="0">
+                            <?php else:?>    
+                                 <input type="hidden" name="FormaPagoForm[usoBono][<?= $idx ?>]" value="0">
                             <?php endif; ?>
                         </td>
                     </tr>

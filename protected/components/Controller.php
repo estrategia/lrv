@@ -57,9 +57,8 @@ class Controller extends CController {
             }
         }
 
-        //$this->isMobile = true;
-        //$this->layout = '//layouts/mobile';
-        
+//        $this->isMobile = true;
+//        $this->layout = '//layouts/mobile';
         $this->verificarDispositivo();
 
         if (isset(Yii::app()->session[Yii::app()->params->sesion['sectorCiudadEntrega']]) && Yii::app()->session[Yii::app()->params->sesion['sectorCiudadEntrega']] != null) {
@@ -206,7 +205,7 @@ class Controller extends CController {
             Yii::app()->getClientScript()->registerScriptFile(Yii::app()->request->baseUrl . "/libs/owl-carousel/owl.carousel.min.js", CClientScript::POS_HEAD);
             Yii::app()->getClientScript()->registerScriptFile(Yii::app()->request->baseUrl . "/libs/jquerymobile-windows/jqm-windows.mdialog.js", CClientScript::POS_HEAD);
             Yii::app()->getClientScript()->registerScriptFile(Yii::app()->request->baseUrl . "/js/common.min.js", CClientScript::POS_HEAD);
-            Yii::app()->getClientScript()->registerScriptFile(Yii::app()->request->baseUrl . "/js/mobile.js", CClientScript::POS_HEAD);
+            Yii::app()->getClientScript()->registerScriptFile(Yii::app()->request->baseUrl . "/js/mobile.min.js", CClientScript::POS_HEAD);
         } else {
             //    Yii::app()->getClientScript()->registerScriptFile(Yii::app()->request->baseUrl . "/libs/jquery/jquery-1.10.0.min.js", CClientScript::POS_HEAD);
             Yii::app()->getClientScript()->registerScriptFile(Yii::app()->request->baseUrl . "/libs/bootstrap/js/bootstrap.min.js", CClientScript::POS_HEAD);
@@ -269,3 +268,4 @@ class Controller extends CController {
     }
 
 }
+

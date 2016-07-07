@@ -15,6 +15,7 @@
 class Operador extends CActiveRecord {
 
     public $idComercial;
+    public $codigoVendedor;
     /**
      * @return string the associated database table name
      */
@@ -29,18 +30,65 @@ class Operador extends CActiveRecord {
         // NOTE: you should only define rules for those attributes that
         // will receive user inputs.
         return array(
-            array('nombre, usuario, clave, perfil, activo', 'required', 'message'=>'{attribute} no puede estar vacío'),
+            array('nombre, perfil, activo', 'required', 'message'=>'{attribute} no puede estar vacío'),
+            array('usuario, clave', 'required', 'on'=>'create', 'message'=>'{attribute} no puede estar vacío'),
+            array('usuario, clave', 'safe', 'on' => 'update'),
             array('perfil, activo', 'numerical', 'integerOnly' => true),
             array('nombre', 'length', 'min'=>5, 'max' => 50),
-            array('usuario', 'length', 'min'=>5, 'max' => 15),
+            array('usuario', 'length', 'min'=>5, 'max' => 15, 'on'=>'create'),
+            array('usuario','validateExist', 'on'=>'create'),
             array('clave', 'length', 'min'=>5, 'max' => 32),
             array('email', 'email'),
             array('email', 'length', 'max' => 50),
+            array('idComercial','validarIdComercial'),
+            array('codigoVendedor','validarCodigoVendedor'),
             // The following rule is used by search().
             // @todo Please remove those attributes that should not be searched.
             array('idOperador, nombre, usuario, clave, perfil, email, activo', 'safe', 'on' => 'search'),
    //         array('idComercial','required', 'message'=>'{attribute} no puede estar vacío', 'on' => function ($model){return $model->idPerfil == Yii::app()->params->callcenter['perfilVendedorPDV'];})
         );
+    }
+    
+    public function validarIdComercial($attribute, $params) {
+        if ($this->perfil==Yii::app()->params->callcenter['perfilesOperador']['vendedorPDV']) {
+            if(empty($this->idComercial)){
+                $this->addError($attribute, $this->getAttributeLabel($attribute) . ' no puede estar vac&iacute;o.');
+            }
+        }
+    }
+    
+    public function validarCodigoVendedor($attribute, $params) {
+        if ($this->perfil==Yii::app()->params->callcenter['perfilesOperador']['mensajeroVendedor']) {
+            if(empty($this->codigoVendedor)){
+                $this->addError($attribute, $this->getAttributeLabel($attribute) . ' no puede estar vac&iacute;o.');
+            }
+        }
+    }
+    
+    public function validateExist($attribute, $params) {
+        if (!$this->hasErrors()) {
+            $model = null;
+
+            if ($this->isNewRecord) {
+                $model = self::model()->find(array(
+                    'condition' => "$attribute=:value",
+                    'params' => array(
+                        'value' => $this->getAttribute($attribute)
+                    )
+                ));
+            } else {
+                $model = self::model()->find(array(
+                    'condition' => "idOperador<>:id AND $attribute=:value",
+                    'params' => array(
+                        'id' => $this->idOperador,
+                        'value' => $this->getAttribute($attribute)
+                    )
+                ));
+            }
+
+            if ($model !== null)
+                $this->addError($attribute, $this->getAttributeLabel($attribute) . ' ya existe.');
+        }
     }
 
     /**
@@ -50,6 +98,8 @@ class Operador extends CActiveRecord {
         // NOTE: you may need to adjust the relation name and the related
         // class name for the relations automatically generated below.
         return array(
+            'objOperadorSubasta' => array(self::HAS_ONE, 'OperadorSubasta', 'idOperador'),
+            'objOperadorVendedor' => array(self::HAS_ONE, 'OperadorVendedor', 'idOperador'),
         );
     }
 
@@ -66,6 +116,7 @@ class Operador extends CActiveRecord {
             'email' => 'Email',
             'activo' => 'Activo',
             'idComercial' => 'Punto de venta',
+            'codigoVendedor' => 'Código vendedor',
         );
     }
 
@@ -124,6 +175,27 @@ class Operador extends CActiveRecord {
     
     public static function listData(){
         return self::model()->findAll(array('condition'=>'activo=:activo','params'=>array(':activo'=>1)));
+    }
+    
+    public function beforeSave() {
+        if ($this->isNewRecord) {
+            //$this->fechaCreacion = new CDbExpression('NOW()');
+        }
+
+        return parent::beforeSave();
+    }
+    
+    /**
+     * Metodo que hereda comportamiento de ValidateModelBehavior
+     * @return void
+     */
+    public function behaviors() {
+        return array(
+            'ValidateModelBehavior' => array(
+                'class' => 'application.components.behaviors.ValidateModelBehavior',
+                'model' => $this
+            ),
+        );
     }
 
 }

@@ -3149,7 +3149,7 @@ class CarroController extends Controller {
             if ($modelPago->idFormaPago == Yii::app()->params->formaPago['pasarela']['idPasarela']) {
                 $objCompra->idEstadoCompra = Yii::app()->params->callcenter['estadoCompra']['estado']['pendientePasarela'];
             } else {
-                $objCompra->idEstadoCompra = Yii::app()->params->callcenter['estadoCompra']['estado']['subasta'];
+                $objCompra->idEstadoCompra = Yii::app()->params->callcenter['estadoCompra']['estado']['pendiente'];
             }
 
             $objCompra->idTipoVenta = 1;
@@ -3177,7 +3177,7 @@ class CarroController extends Controller {
             $objCompra->totalCompra = Yii::app()->shoppingCart->getTotalCost();
 
             if (!$objCompra->save()) {
-                throw new Exception("Error al guardar compra" . $objCompra->validateErrorsResponse());
+                throw new Exception("Error al guardar compra [0]" . $objCompra->validateErrorsResponse());
             }
 
             if ($tipoEntrega == Yii::app()->params->entrega['tipo']['presencial']) {
@@ -3407,7 +3407,7 @@ class CarroController extends Controller {
                     //$objItem->idEstadoItemTercero = null;
                     $objItem->flete = $position->getShipping();
                     $objItem->disponible = 1;
-
+              
                     if ($objCompra->identificacionUsuario !== null) {
                         $categoriasCompra[] = "('" . $objCompra->identificacionUsuario . "','" . $position->objProducto->idCategoriaBI . "')";
                     }
@@ -3416,6 +3416,46 @@ class CarroController extends Controller {
 
                     if (!$objItem->save()) {
                         throw new Exception("Error al guardar item de compra $objItem->codigoProducto. " . $objItem->validateErrorsResponse());
+                    }
+                    
+                    
+                    foreach($modelPago->usoBono as $idx => $usoBono){
+                        if($usoBono == 1 && $modelPago->bono[$idx]['modoUso'] == 2){
+                            if($modelPago->bono[$idx]['codigoProducto'] ==  $objItem->codigoProducto){
+                                
+                                $beneficio = Beneficios::model()->find("idBeneficio = $idx");
+                                
+                                if($beneficio){
+                                    $objBeneficioItem = new BeneficiosComprasItems;
+                                    $objBeneficioItem->idBeneficio = $beneficio->idBeneficio;
+                                    $objBeneficioItem->idBeneficioSincronizado = $beneficio->idBeneficioSincronizado;
+                                    $objBeneficioItem->idCompraItem = $objItem->idCompraItem;
+                                    $objBeneficioItem->tipo = $beneficio->tipo;
+                                    $objBeneficioItem->fechaIni = $beneficio->fechaIni;
+                                    $objBeneficioItem->fechaFin = $beneficio->fechaFin;
+                                    $objBeneficioItem->dsctoUnid = $beneficio->dsctoUnid;
+                                    $objBeneficioItem->dsctoFrac = $beneficio->dsctoFrac;
+                                    $objBeneficioItem->vtaUnid = $beneficio->vtaUnid;
+                                    $objBeneficioItem->vtaFrac = $beneficio->vtaFrac;
+                                    $objBeneficioItem->pagoUnid = $beneficio->pagoUnid;
+                                    $objBeneficioItem->pagoFrac = $beneficio->pagoFrac;
+                                    $objBeneficioItem->cuentaCop = $beneficio->cuentaCop;
+                                    $objBeneficioItem->nitCop = $beneficio->nitCop;
+                                    $objBeneficioItem->porcCop = $beneficio->porcCop;
+                                    $objBeneficioItem->cuentaProv = $beneficio->cuentaProv;
+                                    $objBeneficioItem->nitProv = $beneficio->nitProv;
+                                    $objBeneficioItem->porcProv = $beneficio->porcProv;
+                                    $objBeneficioItem->promoFiel = $beneficio->promoFiel;
+                                    $objBeneficioItem->mensaje = $beneficio->mensaje;
+                                    $objBeneficioItem->swobligaCli = $beneficio->swobligaCli;
+                                    $objBeneficioItem->fechaCreacionBeneficio = $beneficio->fechaCreacionBeneficio;
+                                    
+                                     if (!$objBeneficioItem->save()) {
+                                        throw new Exception("Error al guardar beneficio de compra $objBeneficioItem->idCompraItem. " . $objBeneficioItem->validateErrorsResponse());
+                                    }
+                                }
+                            }
+                        }
                     }
 
                     //beneficios
@@ -3593,6 +3633,8 @@ class CarroController extends Controller {
 
                 try {
                     $result = $client->__soapCall("CongelarCompraAutomatica", array('idPedido' => $objCompra->idCompra)); //763759, 763743
+                    //$result = array(0=>0,1=>'congelar prueba error');
+                    //$result = array(0=>1,1=>'congelar prueba ok', 2 =>'miguel.sanchez@eiso.com.co');
                     if (!empty($result) && $result[0] == 1) {
                         $objCompraRemision = Compras::model()->findByPk($objCompra->idCompra, array("with" => "objPuntoVenta"));
                         $contenidoCorreo = $this->renderPartial('application.modules.callcenter.views.pedido.compraCorreo', array('objCompra' => $objCompraRemision), true, true);
@@ -3602,6 +3644,11 @@ class CarroController extends Controller {
                         } catch (Exception $ce) {
                             Yii::log("Error enviando correo de remision automatica #$objCompra->idCompra\n" . $ce->getMessage() . "\n" . $ce->getTraceAsString(), CLogger::LEVEL_INFO, 'application');
                         }
+                    }else{
+                        $objCompra->idEstadoCompra = Yii::app()->params->callcenter['estadoCompra']['estado']['subasta'];
+                        if (!$objCompra->save()) {
+                            throw new Exception("Error al guardar compra [1]" . $objCompra->validateErrorsResponse());
+                        }
                     }
                 } catch (SoapFault $exc) {
                     Yii::log("SoapFault WebService CongelarCompraAutomatica [compra: $objCompra->idCompra]\n" . $exc->getMessage() . "\n" . $exc->getTraceAsString() . "\n" . $client->__getLastResponse(), CLogger::LEVEL_INFO, 'application');
@@ -3609,10 +3656,6 @@ class CarroController extends Controller {
                     Yii::log("Exception WebService CongelarCompraAutomatica [compra: $objCompra->idCompra]\n" . $exc->getMessage() . "\n" . $exc->getTraceAsString(), CLogger::LEVEL_INFO, 'application');
                 }
             }
-
-            /* if ($modelPago->bono !== null && $modelPago->usoBono == 1) {
-              $objFormasPago->valorBono = $modelPago->bono['valor'];
-              } */
 
             if ($objFormasPago->valorBono > 0) {
                 $modelPago->actualizarBono($objCompra);

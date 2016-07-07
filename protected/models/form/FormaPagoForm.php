@@ -332,7 +332,7 @@ class FormaPagoForm extends CFormModel {
             'params' => $paramsBonos,
             'order' => 'vigenciaInicio'
         ));
-
+        
         foreach ($listBonosTienda as $objBono) {
             $this->bono["$objBono->idBonoTienda"] = array(
                 'valor' => $objBono->valor,
@@ -341,10 +341,58 @@ class FormaPagoForm extends CFormModel {
                 'vigenciaFin' => "$objBono->vigenciaFin",
                 'minimoCompra' => $objBono->minimoCompra,
                 'concepto' => $objBono->concepto,
+                'modoUso' => 1
             );
 
             $this->usoBono["$objBono->idBonoTienda"] = 0;
         }
+        
+        $listBonosProductos = Producto::model()->findAll(array(
+            'with' => array('objBeneficioProducto' => 
+                                    array(
+                                            'with' => array (
+                                                    'objBeneficio' => array (
+                                                        'with' => 'listCedulas'
+                                                    )))),
+            'condition' => 'objBeneficio.tipo = 25 AND 
+             listCedulas.numeroDocumento =:numeroDocumento AND 
+             objBeneficio.fechaIni <= now() AND 
+             objBeneficio.fechaFin >= now() AND
+             listCedulas.estado = 1',
+            'params' => array(
+                ':numeroDocumento' => Yii::app()->user->name
+            ),
+        //    'params' => $paramsBonos,
+        //    'order' => 'vigenciaInicio'
+        ));
+        
+          $codigosProductos = array ();
+          $productosCant = array ();
+          foreach (Yii::app()->shoppingCart->getPositions() as $position){
+              if ($position->getDelivery() == 0 && $position->getShipping() == 0){
+                  if($position->isProduct()){
+                      $codigosProductos[] = $position->objProducto->codigoProducto;
+                      $productosCant[$position->objProducto->codigoProducto] = $position->getQuantity();
+                  }
+              }
+          }
+             
+            foreach ($listBonosProductos as $objProducto) {
+                 $this->bono[$objProducto->objBeneficioProducto->idBeneficio] = array(
+                     'valor' => $objProducto->objBeneficioProducto->objBeneficio->dsctoUnid * (in_array($objProducto->codigoProducto, $codigosProductos)?$productosCant[$objProducto->codigoProducto]:1),
+                     'disponibleCompra' => ($this->totalCompra !== null && $this->totalCompra >= $objProducto->objBeneficioProducto->objBeneficio->dsctoUnid && in_array($objProducto->codigoProducto, $codigosProductos) ),
+                     'vigenciaInicio' => $objProducto->objBeneficioProducto->objBeneficio->fechaIni,
+                     'vigenciaFin' => $objProducto->objBeneficioProducto->objBeneficio->fechaFin,
+                     'minimoCompra' =>  $objProducto->objBeneficioProducto->objBeneficio->dsctoUnid,
+                     'concepto' => 'Por la compra de '.$objProducto->codigoProducto.' - '.$objProducto->descripcionProducto. " recibe un bono de ".$objProducto->objBeneficioProducto->objBeneficio->dsctoUnid,
+                   //  'concepto' => $objProducto->objBeneficioProducto->objBeneficio->mensaje,
+                     'modoUso' => 2,
+                     'codigoProducto' => $objProducto->codigoProducto
+                 );
+
+                 $this->usoBono[$objProducto->objBeneficioProducto->idBeneficio] = 0;
+             }
+             
         //-- bonos propios de la tienda
         //-- bono crm
         ini_set('default_socket_timeout', 5);
@@ -373,6 +421,7 @@ class FormaPagoForm extends CFormModel {
                         'vigenciaFin' => $result[0]->VIGENCIA_FINA,
                         'minimoCompra' => $result[0]->VALOR_BONO,
                         'concepto' => 'Cliente Fiel',
+                        'modoUso' => 1
                     );
                     $this->usoBono["crm"] = 0;
                 }
@@ -416,9 +465,9 @@ class FormaPagoForm extends CFormModel {
                         } catch (Exception $exc) {
                             Yii::log("ActualizarBono-CRM: Exception WebService  [idCompra: $objCompra->idCompra -- idbono: $idx -- idUsuario: $objCompra->identificacionUsuario]\n" . $exc->getMessage() . "\n" . $exc->getTraceAsString(), CLogger::LEVEL_INFO, 'application');
                         }
-                    } else {
+                    } else if($this->bono[$idx]['modoUso'] == 1 ) {
                         $valorCompra = $objCompra->totalCompra + $this->calcularBonoRedimido(); //$objCompra->subtotalCompra + $objCompra->domicilio + $objCompra->flete
-
+                      
                         try {
                             $fecha = DateTime::createFromFormat('Y-m-d H:i:s', $objCompra->fechaCompra)->format('Y-m-d');
 
@@ -448,6 +497,11 @@ class FormaPagoForm extends CFormModel {
                             Yii::log("ActualizarBono-Tienda: Exception [idCompra: $objCompra->idCompra -- idbono: $idx -- idUsuario: $objCompra->identificacionUsuario]\n" . $ex->getMessage() . "\n" . $ex->getTraceAsString(), CLogger::LEVEL_INFO, 'application');
                         }
                     }
+//                    else{
+//                        
+//                        $objBeneficioComprasItems = new BeneficiosComprasItems();
+//                        
+//                    }
                 }
             }
         }
@@ -497,7 +551,7 @@ class FormaPagoForm extends CFormModel {
 
     public function consultarHorario($objSectorCiudad) {
         if ($objSectorCiudad != null) {
-            if ($this->objHorarioCiudadSector == null || $this->objHorarioCiudadSector->codigoCiudad != $objSectorCiudad->codigoCiudad || $this->objHorarioCiudadSector->codigoSector != $objSectorCiudad->codigoSector) {
+            //if ($this->objHorarioCiudadSector == null || $this->objHorarioCiudadSector->codigoCiudad != $objSectorCiudad->codigoCiudad || $this->objHorarioCiudadSector->codigoSector != $objSectorCiudad->codigoSector) {
                 $this->objHorarioCiudadSector = HorariosCiudadSector::model()->find(array(
                     'condition' => 'codigoCiudad=:ciudad AND codigoSector=:sector AND estadoCiudadSector=:estado',
                     'params' => array(
@@ -506,7 +560,7 @@ class FormaPagoForm extends CFormModel {
                         ':sector' => $objSectorCiudad->codigoSector
                     )
                 ));
-            }
+            //}
             $this->objSectorCiudad = $objSectorCiudad;
         }
     }
@@ -700,16 +754,13 @@ class FormaPagoForm extends CFormModel {
         );
     }
 
-    public static function
-
-    listDataCuotas() {
+    public static function listDataCuotas() {
         return array('1' => 1, '2' => 2, '3' => 3, '4' => 4, '5' => 5);
     }
 
-    public function
-
-    listDataHoras() {
+    public function listDataHoras() {
         $deltaHorario = Yii::app()->params->horarioEntrega['deltaDefecto'];
+        $this->consultarHorario($this->objSectorCiudad);
 
         if ($this->objSectorCiudad !== null) {
             if (isset(Yii::app()->params->horarioEntrega['deltaHorarios'][$this->objSectorCiudad->codigoCiudad])) {
@@ -729,18 +780,20 @@ class FormaPagoForm extends CFormModel {
         }
 
         $horariosDia = array(
-            '0' => array('inicio' => 'horaInicioDomingoFestivo', 'fin' => 'horaFinDomingoFestivo'),
-            '1' => array('inicio' => 'horaInicioLunesASabado', 'fin' => 'horaFinLunesASabado'),
-            '2' => array('inicio' => 'horaInicioLunesASabado', 'fin' => 'horaFinLunesASabado'),
-            '3' => array('inicio' => 'horaInicioLunesASabado', 'fin' => 'horaFinLunesASabado'),
-            '4' => array('inicio' => 'horaInicioLunesASabado', 'fin' => 'horaFinLunesASabado'),
-            '5' => array('inicio' => 'horaInicioLunesASabado', 'fin' => 'horaFinLunesASabado'),
-            '6' => array('inicio' => 'horaInicioLunesASabado', 'fin' => 'horaFinLunesASabado'),
-            'festivo' => array('inicio' => 'horaInicioDomingoFestivo', 'fin' => 'horaFinDomingoFestivo')
+            '0' => array('inicio' => 'horaInicioDomingoFestivo', 'fin' => 'horaFinDomingoFestivo', 'inicioAdicional' => 'horaInicioAdicionalDomingoFestivo', 'finAdicional'=>'horaFinAdicionalDomingoFestivo'),
+            '1' => array('inicio' => 'horaInicioLunesASabado', 'fin' => 'horaFinLunesASabado', 'inicioAdicional' => 'horaInicioAdicionalLunesASabado', 'finAdicional'=>'horaFinAdicionalLunesASabado'),
+            '2' => array('inicio' => 'horaInicioLunesASabado', 'fin' => 'horaFinLunesASabado', 'inicioAdicional' => 'horaInicioAdicionalLunesASabado', 'finAdicional'=>'horaFinAdicionalLunesASabado'),
+            '3' => array('inicio' => 'horaInicioLunesASabado', 'fin' => 'horaFinLunesASabado', 'inicioAdicional' => 'horaInicioAdicionalLunesASabado', 'finAdicional'=>'horaFinAdicionalLunesASabado'),
+            '4' => array('inicio' => 'horaInicioLunesASabado', 'fin' => 'horaFinLunesASabado', 'inicioAdicional' => 'horaInicioAdicionalLunesASabado', 'finAdicional'=>'horaFinAdicionalLunesASabado'),
+            '5' => array('inicio' => 'horaInicioLunesASabado', 'fin' => 'horaFinLunesASabado', 'inicioAdicional' => 'horaInicioAdicionalLunesASabado', 'finAdicional'=>'horaFinAdicionalLunesASabado'),
+            '6' => array('inicio' => 'horaInicioLunesASabado', 'fin' => 'horaFinLunesASabado', 'inicioAdicional' => 'horaInicioAdicionalLunesASabado', 'finAdicional'=>'horaFinAdicionalLunesASabado'),
+            'festivo' => array('inicio' => 'horaInicioDomingoFestivo', 'fin' => 'horaFinDomingoFestivo', 'inicioAdicional' => 'horaInicioAdicionalDomingoFestivo', 'finAdicional'=>'horaFinAdicionalDomingoFestivo')
         );
 
         $horaIniServicio = "07:00:00";
         $horaFinServicio = "23:00:00";
+        $horaInicioAdicional = null;
+        $horaFinAdicional = null;
 
         if ($this->objHorarioCiudadSector != null) {
             $dia = 'festivo';
@@ -751,13 +804,25 @@ class FormaPagoForm extends CFormModel {
             }
             $horaIniServicio = $this->objHorarioCiudadSector->$horariosDia[$dia]['inicio'];
             $horaFinServicio = $this->objHorarioCiudadSector->$horariosDia[$dia]['fin'];
+            $horaInicioAdicional = $this->objHorarioCiudadSector->$horariosDia[$dia]['inicioAdicional'];
+            $horaFinAdicional = $this->objHorarioCiudadSector->$horariosDia[$dia]['finAdicional'];
+        }
+        
+        $sqlAdicional = "";
+        
+        if(!empty($horaInicioAdicional) && !empty($horaFinAdicional)){
+            $sqlAdicional = "SELECT idHorario, concat('Ma&ntilde;ana a las ', DATE_FORMAT(hora, '%h:%i %p')) as etiqueta, concat(DATE_ADD(CURDATE(), INTERVAL 1 DAY), ' ', DATE_FORMAT(hora, '%H:%i:%s')) as fecha, hora 
+                FROM   m_Horario 
+                WHERE hora between '$horaInicioAdicional' and '$horaFinAdicional' 
+                UNION
+                ";
         }
 
         $sql = "SELECT idHorario, concat('Hoy a las ', DATE_FORMAT(hora, '%h:%i %p')) as etiqueta, concat(curdate(), ' ', DATE_FORMAT(hora, '%H:%i:%s')) as fecha, hora
              FROM   m_Horario
              WHERE  hora between ADDTIME('" . $horaIniServicio . "', '" . $deltaHorario . "') and '" . $horaFinServicio . "' and (hora >= ADDTIME(CURTIME(), '" . $deltaHorario . "'))
-             UNION
-             SELECT idHorario, concat('Ma&ntilde;ana a las ', DATE_FORMAT(hora, '%h:%i %p')) as etiqueta, concat(DATE_ADD(CURDATE(), INTERVAL 1 DAY), ' ', DATE_FORMAT(hora, '%H:%i:%s')) as fecha, hora
+             UNION 
+             $sqlAdicional SELECT idHorario, concat('Ma&ntilde;ana a las ', DATE_FORMAT(hora, '%h:%i %p')) as etiqueta, concat(DATE_ADD(CURDATE(), INTERVAL 1 DAY), ' ', DATE_FORMAT(hora, '%H:%i:%s')) as fecha, hora
              FROM m_Horario
              WHERE (hora between ADDTIME('" . $horaIniServicio . "', '" . $deltaHorario . "') and '12:00') ORDER BY fecha";
 

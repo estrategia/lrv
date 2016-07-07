@@ -382,8 +382,6 @@ class PasarelaController extends Controller {
     }
 
     protected function correo($tipo_correo = 1, $nombre = "", $numeroPedido = 0, $valorCompra = 0, $correoCliente = "", $menEstado = "") {
-        $this->log($numeroPedido, 9999, "ENTRA LOG.");
-        
         switch ($tipo_correo) {
             case 1: // TRANSACCION APROBADA.
                 $contenido = $this->renderPartial('correoAprobada', array('nombre'=>$nombre,'numeroPedido'=>$numeroPedido,'valorCompra'=>$valorCompra), true);

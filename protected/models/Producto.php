@@ -90,6 +90,8 @@ class Producto extends CActiveRecord {
             //'listPerfiles' => array(self::MANY_MANY, 'Perfil', 't_ProductosDescuentosPerfiles(codigoProducto, codigoPerfil)'),
             'listFiltros' => array(self::MANY_MANY, 'FiltroDetalle', 't_ProductosFiltros(codigoProducto, idFiltroDetalle)'),
             'objMarca' => array(self::BELONGS_TO, 'Marca', 'idMarca'),
+            'listBeneficios' => array(self::HAS_MANY, 'BeneficiosProductos', 'codigoProducto'),
+            'objBeneficioProducto' => array(self::HAS_ONE, 'BeneficiosProductos', 'codigoProducto'),
             'objCategoriaBI' => array(self::BELONGS_TO, 'Categoria', 'idCategoriaBI'),
             'objUnidadNegocioBI' => array(self::BELONGS_TO, 'Categoria', 'idUnidadNegocioBI'),
             'objBusqueda' => array(self::BELONGS_TO, 'RelevanciaTemp', '','on' => 't.codigoProducto = objBusqueda.codigoProducto'),

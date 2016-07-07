@@ -2071,6 +2071,7 @@ class CarroController extends ControllerVendedor {
             $objCompra->identificacionUsuario = ($modelPago->pagoInvitado ? null : $modelPago->identificacionUsuario);
             $objCompra->tipoEntrega = $tipoEntrega;
             $objCompra->idVendedor = Yii::app()->controller->module->user->id;
+            $objCompra->codigoVendedor = Yii::app()->controller->module->user->code;
 
             //if($tipoEntrega==Yii::app()->params->entrega['tipo']['domicilio']){
             $objCompra->fechaEntrega = $modelPago->fechaEntrega;
@@ -2352,6 +2353,46 @@ class CarroController extends ControllerVendedor {
 
                     if (!$objItem->save()) {
                         throw new Exception("Error al guardar item de compra $objItem->codigoProducto. " . $objItem->validateErrorsResponse());
+                    }
+                    
+                    
+                    foreach($modelPago->usoBono as $idx => $usoBono){
+                        if($usoBono == 1 && $modelPago->bono[$idx]['modoUso'] == 2){
+                            if($modelPago->bono[$idx]['codigoProducto'] ==  $objItem->codigoProducto){
+                                
+                                $beneficio = Beneficios::model()->find("idBeneficio = $idx");
+                                
+                                if($beneficio){
+                                    $objBeneficioItem = new BeneficiosComprasItems;
+                                    $objBeneficioItem->idBeneficio = $beneficio->idBeneficio;
+                                    $objBeneficioItem->idBeneficioSincronizado = $beneficio->idBeneficioSincronizado;
+                                    $objBeneficioItem->idCompraItem = $objItem->idCompraItem;
+                                    $objBeneficioItem->tipo = $beneficio->tipo;
+                                    $objBeneficioItem->fechaIni = $beneficio->fechaIni;
+                                    $objBeneficioItem->fechaFin = $beneficio->fechaFin;
+                                    $objBeneficioItem->dsctoUnid = $beneficio->dsctoUnid;
+                                    $objBeneficioItem->dsctoFrac = $beneficio->dsctoFrac;
+                                    $objBeneficioItem->vtaUnid = $beneficio->vtaUnid;
+                                    $objBeneficioItem->vtaFrac = $beneficio->vtaFrac;
+                                    $objBeneficioItem->pagoUnid = $beneficio->pagoUnid;
+                                    $objBeneficioItem->pagoFrac = $beneficio->pagoFrac;
+                                    $objBeneficioItem->cuentaCop = $beneficio->cuentaCop;
+                                    $objBeneficioItem->nitCop = $beneficio->nitCop;
+                                    $objBeneficioItem->porcCop = $beneficio->porcCop;
+                                    $objBeneficioItem->cuentaProv = $beneficio->cuentaProv;
+                                    $objBeneficioItem->nitProv = $beneficio->nitProv;
+                                    $objBeneficioItem->porcProv = $beneficio->porcProv;
+                                    $objBeneficioItem->promoFiel = $beneficio->promoFiel;
+                                    $objBeneficioItem->mensaje = $beneficio->mensaje;
+                                    $objBeneficioItem->swobligaCli = $beneficio->swobligaCli;
+                                    $objBeneficioItem->fechaCreacionBeneficio = $beneficio->fechaCreacionBeneficio;
+                                    
+                                     if (!$objBeneficioItem->save()) {
+                                        throw new Exception("Error al guardar beneficio de compra $objBeneficioItem->idCompraItem. " . $objBeneficioItem->validateErrorsResponse());
+                                    }
+                                }
+                            }
+                        }
                     }
 
                     //beneficios

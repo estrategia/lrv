@@ -8,7 +8,7 @@
 
 class PedidosCommand extends CConsoleCommand{
     
-    
+    //php /Users/eiso/htdocs/lrv/protected/cron.php pedidos cambiarEstadoPedidosSubasta
     public function actionCambiarEstadoPedidosSubasta(){
         date_default_timezone_set ('America/Bogota');
         Yii::import('application.models.*');

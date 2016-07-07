@@ -21,16 +21,7 @@ class SitioController extends Controller {
 
     public function actionIndex() {
         if ($this->isMobile) {
-            $this->showSeeker = false;
-            $this->logoLinkMenu = false;
-
-            if ($this->objSectorCiudad == null) {
-                $this->showHeaderIcons = false;
-            }
-
-            $this->render('index', array(
-                'listModulos' => ModulosConfigurados::getModulosBanner($this->objSectorCiudad, Yii::app()->shoppingCart->getCodigoPerfil(), UbicacionModulos::UBICACION_MOVIL_HOME)
-            ));
+            $this->actionInicio();
         } else {
             $this->render('d_index', array(
                 'listModulos' => ModulosConfigurados::getModulos($this->objSectorCiudad, Yii::app()->shoppingCart->getCodigoPerfil(), UbicacionModulos::UBICACION_ESCRITORIO_HOME)
@@ -364,10 +355,12 @@ class SitioController extends Controller {
                 }
             }
         }
+        
+        $listModulos = ModulosConfigurados::getModulosBanner($this->objSectorCiudad, Yii::app()->shoppingCart->getCodigoPerfil(), UbicacionModulos::UBICACION_MOVIL_INICIO);
 
         $this->render('inicio', array(
             'listaPromociones' => $listaPromociones,
-            'listModulos' => ModulosConfigurados::getModulosBanner($this->objSectorCiudad, Yii::app()->shoppingCart->getCodigoPerfil(), UbicacionModulos::UBICACION_MOVIL_INICIO)
+            'listModulos' => $listModulos
         ));
     }
 

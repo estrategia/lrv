@@ -4,6 +4,7 @@ class UserVendedor {
 
     public $isGuest = true;
     public $id = null;
+    public $code = null;
     public $shortName = null;
     
     public $clienteInvitado =  false;
@@ -79,6 +80,7 @@ class UserVendedor {
         if ($user !== null && $user instanceof Operador) {
             $this->isGuest = false;
             $this->id = $user->idOperador;
+            $this->code = $user->objOperadorVendedor->codigoVendedor;
             $this->name = $user->usuario;
             $nombre = explode(" ", $user->nombre);
             $this->shortName = $nombre[0];

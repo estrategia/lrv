@@ -25,5 +25,5 @@
             </div>
         </div>
     </body>
-    <script src="<?php echo Yii::app()->request->baseUrl; ?>/js/operator.js"></script>
+    <script src="<?php echo Yii::app()->request->baseUrl; ?>/js/operator.min.js"></script>
 </html>

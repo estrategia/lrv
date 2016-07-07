@@ -34,25 +34,25 @@ return array(
                     'class' => 'CFileLogRoute',
                     'levels' => CLogger::LEVEL_ERROR,
                     'logFile' => 'cron_error.log',
-                    'categories' => 'application',
+                    //'categories' => 'application',
                 ),
                 array(
                     'class' => 'CFileLogRoute',
                     'levels' => CLogger::LEVEL_WARNING,
                     'logFile' => 'cron_warning.log',
-                    'categories' => 'application',
+                    //'categories' => 'application',
                 ),
                 array(
                     'class' => 'CFileLogRoute',
                     'levels' => CLogger::LEVEL_INFO,
                     'logFile' => 'cron_info.log',
-                    'categories' => 'application',
+                    //'categories' => 'application',
                 ),
                 array(
                     'class' => 'CFileLogRoute',
                     'logFile' => 'cron_trace.log',
                     'levels' => 'trace, vardump',
-                    'categories' => 'application',
+                    //'categories' => 'application',
                 ),
                 array(
                     'class'=> 'CFileLogRoute',
@@ -71,7 +71,7 @@ return array(
             'acumuladoCompras' => 200000,
         ),
         'webServiceUrl' => array(
-            'sincronizarBeneficiosSIICOP' => 'http://192.168.40.137/copservir/beneficios/sweb/wslrv',
+            'sincronizarBeneficiosSIICOP' => 'http://localhost/copservir/beneficios/sweb/wslrv',
             'envioCorreosRecordatorios' => 'http://localhost/lrv/sweb/wslrv'
         ),
         'claveLista' => 'listapersonallrv',

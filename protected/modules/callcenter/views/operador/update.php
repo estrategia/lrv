@@ -3,9 +3,9 @@
 /* @var $model Operador */
 
 $this->breadcrumbs = array(
-    'Operadors' => array('index'),
-    $model->idOperador => array('view', 'id' => $model->idOperador),
-    'Update',
+    'Inicio' => array('/callcenter'),
+    'Operadores' => array('/callcenter/operador'),
+    'Actualizar #'.$model->idOperador,
 );
 ?>
 

@@ -25,30 +25,56 @@
                     En tu ciudad no contamos con Servicio a Domicilio, por lo que los pedidos realizados a traves de esta p&aacute;gina deben ser recogidos en uno de nuestros Puntos de Venta. 
                     El Punto de Venta a donde debes pasar a recoger tu pedido ser&aacute; notificado por nuestro Centro de Contactos despu&eacute;s de realizado tu compra. 
                     <br> <br> 
-                    El horario de Entrega es de Lunes a Sabado de 
+                    El horario de Entrega es de 
+                    Lunes a Sabado de 
                     <span style="color: #E10019; font-weight: bold;"> 
                         <?php echo $objHorarioCiudadSector->horaInicioLunesASabado ?> a <?php echo $objHorarioCiudadSector->horaFinLunesASabado ?>
                     </span> 
-                    y Domingos y festivos de 
+                    <?php if(!empty($objHorarioCiudadSector->horaInicioAdicionalLunesASabado) && !empty($objHorarioCiudadSector->horaFinAdicionalLunesASabado)): ?>
+                     y de 
+                     <span style="color: #E10019; font-weight: bold;"> 
+                        <?php echo $objHorarioCiudadSector->horaInicioAdicionalLunesASabado ?> a <?php echo $objHorarioCiudadSector->horaFinAdicionalLunesASabado ?>
+                    </span> 
+                    <?php endif;?>
+                    y Domingos/festivos de 
                     <span style="color: #E10019; font-weight: bold;"> 
                         <?php echo $objHorarioCiudadSector->horaInicioDomingoFestivo ?> a <?php echo $objHorarioCiudadSector->horaFinDomingoFestivo ?>
                     </span> 
+                    <?php if(!empty($objHorarioCiudadSector->horaInicioAdicionalDomingoFestivo) && !empty($objHorarioCiudadSector->horaFinAdicionalDomingoFestivo)): ?>
+                     y de 
+                     <span style="color: #E10019; font-weight: bold;"> 
+                        <?php echo $objHorarioCiudadSector->horaInicioAdicionalDomingoFestivo ?> a <?php echo $objHorarioCiudadSector->horaFinAdicionalDomingoFestivo ?>
+                    </span> 
+                    <?php endif;?>
                 </span>
 
             </span>
         </p>
     <?php elseif ($objHorarioCiudadSector->sadCiudadSector == 1): ?>
         <p class="center"> 
-            <span style="font-size: 12pt"><span style="font-family: Arial,Helvetica,sans-serif">
+            <span style="font-size: 12pt">
+                <span style="font-family: Arial,Helvetica,sans-serif">
                     El horario de despacho para tu ciudad es de 
                     Lunes a Sabado de 
                     <span style="color: #E10019; font-weight: bold;"> 
                         <?php echo $objHorarioCiudadSector->horaInicioLunesASabado ?> a <?php echo $objHorarioCiudadSector->horaFinLunesASabado ?>
                     </span> 
-                    y Domingos y festivos de 
+                    <?php if(!empty($objHorarioCiudadSector->horaInicioAdicionalLunesASabado) && !empty($objHorarioCiudadSector->horaFinAdicionalLunesASabado)): ?>
+                     y de 
+                     <span style="color: #E10019; font-weight: bold;"> 
+                        <?php echo $objHorarioCiudadSector->horaInicioAdicionalLunesASabado ?> a <?php echo $objHorarioCiudadSector->horaFinAdicionalLunesASabado ?>
+                    </span> 
+                    <?php endif;?>
+                    y Domingos/festivos de 
                     <span style="color: #E10019; font-weight: bold;"> 
                         <?php echo $objHorarioCiudadSector->horaInicioDomingoFestivo ?> a <?php echo $objHorarioCiudadSector->horaFinDomingoFestivo ?>
                     </span> 
+                    <?php if(!empty($objHorarioCiudadSector->horaInicioAdicionalDomingoFestivo) && !empty($objHorarioCiudadSector->horaFinAdicionalDomingoFestivo)): ?>
+                     y de 
+                     <span style="color: #E10019; font-weight: bold;"> 
+                        <?php echo $objHorarioCiudadSector->horaInicioAdicionalDomingoFestivo ?> a <?php echo $objHorarioCiudadSector->horaFinAdicionalDomingoFestivo ?>
+                    </span> 
+                    <?php endif;?>
                 </span>
 
             </span>

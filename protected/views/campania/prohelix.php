@@ -67,11 +67,12 @@ $this->metaTags = "<meta charset='utf-8'>
     <style>
         @font-face {
             font-family: NewJune-Bold;
+
             src: url("<?= Yii::app()->request->baseUrl?>/images/contenido/prohelix/Fonts/NewJune-Bold.otf");
         }
         @font-face {
             font-family: NewJune-Regular;
-            src: url("<?= Yii::app()->request->baseUrl?>/images/contenido/prohelix/Fonts/NewJune-Regular.otf");
+            src: url("<?= Yii::app()->request->baseUrl?>/images/contenido/prohelix/Fonts/NewJune-Regular.otf");           
         }
         .title {font-size: 15pt;display: inline-block;color:#054220;font-weight: bolder;font-family: NewJune-Bold !important;margin: 0 !important;}
         .texto{color: #054220;margin-left: 32px;font-family: NewJune-Regular;}
@@ -84,16 +85,17 @@ $this->metaTags = "<meta charset='utf-8'>
         <div class="row">
             <img src="<?= Yii::app()->request->baseUrl ?>/images/contenido/prohelix/banner.jpg" class="img-responsive">
         </div>
+    </div>
 
 
-        <div class="container" style="margin-top:40px;">
-            <div class="row">
-                <div class="col-md-12">
-                    <img src="<?= Yii::app()->request->baseUrl ?>/images/contenido/prohelix/ico-natural.png" alt=""><p class="title">Fórmula</p>
-                    <p class="texto">Cada 100 ml contiene: Extracto de Hiedra 4.8:1 <br> (Hedera Helix L) 0,72 g. Excipientes c.s.
-                        <img width="250" style="float: right;margin-top: -94px;margin-right: 7%;" src="<?= Yii::app()->request->baseUrl ?>/images/contenido/prohelix/sello-prohelix.png" alt="Prohelix">
-                    </p>
-                </div>
+    <div class="container" style="margin-top:40px;">
+        <div class="row">
+            <div class="col-md-12">
+                <img src="<?= Yii::app()->request->baseUrl ?>/images/contenido/prohelix/ico-natural.png" alt=""><p class="title">Fórmula</p>
+                <p class="texto">Cada 100 ml contiene: Extracto de Hiedra 4.8:1 <br> (Hedera Helix L) 0,72 g. Excipientes c.s.
+                    <img width="250" style="float: right;margin-top: -94px;margin-right: 7%;" src="<?= Yii::app()->request->baseUrl ?>/images/contenido/prohelix/sello-prohelix.png" alt="Prohelix">
+                </p>
+
             </div>
 
             <div class="row">
@@ -140,6 +142,4 @@ $this->metaTags = "<meta charset='utf-8'>
 
         </div>
     </div>
-
-
 <?php endif; ?>

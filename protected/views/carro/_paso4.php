@@ -37,11 +37,16 @@ $form = $this->beginWidget('CActiveForm', array(
                     <div>Valor de bono: <span class="result_bono"><?php echo Yii::app()->numberFormatter->format(Yii::app()->params->formatoMoneda['patron'], $bono['valor'], Yii::app()->params->formatoMoneda['moneda']); ?></span></div>
                     <div>Vigencia inicial del bono: <span class="result_bono"><?php echo $bono['vigenciaInicio'] ?></span></div>
                     <div>Vigencia final del bono: <span class="result_bono"><?php echo $bono['vigenciaFin'] ?></span></div>
-                    <?php if ($bono['disponibleCompra']): ?>
+                    <?php if ($bono['disponibleCompra'] && $bono['modoUso'] == 1): ?>
                         <div class="utilBono">¿Desea utilizar este bono?</div>
                         <input type="radio" data-role="none" id="FormaPagoForm_usoBono_<?= $idx ?>_1" name="FormaPagoForm[usoBono][<?= $idx ?>]" value="1" <?php echo ($modelPago->usoBono[$idx] == 1 ? "checked" : "") ?>> <span class="utilBono">Si</span>
                         <input type="radio" data-role="none" id="FormaPagoForm_usoBono_<?= $idx ?>_0" name="FormaPagoForm[usoBono][<?= $idx ?>]" value="0" <?php echo ($modelPago->usoBono[$idx] != 1 ? "checked" : "") ?>> <span class="utilBono">No</span>
-                    <?php else: ?>
+                    <?php elseif ($bono['disponibleCompra'] && $bono['modoUso'] == 2): ?>
+                        <div class="utilBono">¿Desea utilizar este bono?</div>
+                        <input type="radio" data-role="none" id="FormaPagoForm_usoBono_<?= $idx ?>_1" name="FormaPagoForm[usoBono][<?= $idx ?>]" value="1" checked disabled > <span class="utilBono">Si</span>
+                        <input type="radio" data-role="none" id="FormaPagoForm_usoBono_<?= $idx ?>_0" name="FormaPagoForm[usoBono][<?= $idx ?>]" value="0" disabled> <span class="utilBono">No</span>
+                        <input type='hidden' id="FormaPagoForm_usoBono_<?= $idx ?>_1" name="FormaPagoForm[usoBono][<?= $idx ?>]" value="1"/>
+                    <?php else:?>    
                         <div class="utilBono">Disponible por compra superior a <?php echo Yii::app()->numberFormatter->format(Yii::app()->params->formatoMoneda['patron'], $bono['minimoCompra'], Yii::app()->params->formatoMoneda['moneda']); ?></div>
                         <input type="hidden" name="FormaPagoForm[usoBono][<?= $idx ?>]" value="0">
                     <?php endif; ?>

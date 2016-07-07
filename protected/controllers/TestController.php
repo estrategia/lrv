@@ -1,17 +1,78 @@
 <?php
 
 class TestController extends Controller {
-    
-    public function actionData(){
+
+    public function actionBloqueo() {
+        /* $usuario = '1113618983';
+          $sql="select max(idCompra) idCompra from t_BloqueosUsuarios bu join t_ComprasBloqueoUsuarios cbu on bu.idBloqueoUsuario=cbu.idBloqueoUsuario where bu.identificacionUsuario=:usuario and anho=:anho and mes=:mes";
+          $command=Yii::app()->db->createCommand();
+          $command->text=$sql;
+          $command->bindValue(':usuario',$usuario, PDO::PARAM_STR);
+          $command->bindValue(':anho',2016, PDO::PARAM_INT);
+          $command->bindValue(':mes',1, PDO::PARAM_INT);
+          $valor = $command->queryScalar();
+          CVarDumper::dump($valor,10,true); */
+
+        /*$sqlBloqueoCompra = "INSERT INTO t_ComprasBloqueoUsuarios (idBloqueoUsuario,idCompra) VALUES ";
+        $arrValoresInsertar = array();
+
+        $arrValoresInsertar[] = "(:idBloqueo,40)";
+        $arrValoresInsertar[] = "(:idBloqueo,41)";
+        $arrValoresInsertar[] = "(:idBloqueo,42)";
+        $arrValoresInsertar[] = "(:idBloqueo,43)";
+        $arrValoresInsertar[] = "(:idBloqueo,44)";
+        $arrValoresInsertar[] = "(:idBloqueo,45)";
+        
+        $sqlBloqueoCompra.= implode(",",$arrValoresInsertar);
+        
+        $command = Yii::app()->db->createCommand($sqlBloqueoCompra);
+        $command->bindValue(':idBloqueo', 1, PDO::PARAM_INT);
+        $rows = $command->execute();
+        CVarDumper::dump($rows,10,true);*/
+        
+        /*$objCompra = Compras::model()->findByPk(150);
+        CVarDumper::dump($objCompra->fechaCompraDate,10,true);
+        $anho = $objCompra->fechaCompraDate->format('Y');
+        $mes = $objCompra->fechaCompraDate->format('j');
+        CVarDumper::dump("Ano: $anho - Mes: $mes",10,true);*/
+        
+        /*$rows = Yii::app()->db->createCommand("UPDATE m_Usuario SET activo=:activo WHERE identificacionUsuario=:usuario")->bindValue(':activo', 1, PDO::PARAM_INT)->bindValue(':usuario', "1113618983", PDO::PARAM_STR)->execute();
+        CVarDumper::dump($rows,10,true);*/
+        
+        /*$fecha = new DateTime;
+        $diasBloqueo = Yii::app()->params->bloqueoUsuario['diasBloqueo'];
+        $fecha->modify("-$diasBloqueo days");
+        
+        $listBloqueoUsuarios = BloqueosUsuarios::model()->findAll(array(
+            'with' => 'objUsuario',
+            'condition' => 'estado=:estado AND fechaRegistro<=:fecha',
+            'params' => array(
+                ':estado' => BloqueosUsuarios::ESTADO_BLOQUEADO,
+                ':fecha' => $fecha->format('Y-m-d H:i:s')
+            )
+        ));
+        
+        foreach($listBloqueoUsuarios as $idx=> $objBloqueoUsuario){
+            echo "IDX: $idx <br>";
+            CVarDumper::dump($objBloqueoUsuario->attributes,5,true);
+            echo "<br><br>";
+            $objBloqueoUsuario->desbloquearCuenta();
+        }*/
+        
+        echo $this->renderPartial('//common/correoDesbloqueo', array('identificacionUsuario' => '1113618983'));
+        
+    }
+
+    public function actionData() {
         //$data = Yii::app()->getUser()->getState("EShoppingCart");
         $data = Yii::app()->shoppingCart->getPositions();
-        
+
         CVarDumper::dump($data, 10, true);
     }
 
     public function actionReauto() {
         $idCompra = -1;
-        
+
         $client = new SoapClient(null, array(
             'location' => Yii::app()->params->webServiceUrl['remisionPosECommerce'],
             'uri' => "",
@@ -26,6 +87,17 @@ class TestController extends Controller {
         } catch (Exception $exc) {
             echo ("Exception WebService CongelarCompraAutomatica [compra: $idCompra]\n" . $exc->getMessage() . "\n" . $exc->getTraceAsString());
         }
+    }
+    
+    public function actionRemanu(){
+        $idCompra = -1;
+        $client = new SoapClient(null, array(
+            'location' => Yii::app()->params->webServiceUrl['remisionPosECommerce'],
+            'uri' => "",
+            'trace' => 1
+        ));
+        $result = $client->__soapCall("CongelarCompraManual", array('idPedido' => $idCompra));
+        CVarDumper::dump($result, 10, true);
     }
 
     public function actionIframe() {

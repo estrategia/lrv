@@ -8,16 +8,16 @@
  */
 function sendHtmlEmail($toStr, $subject, $content, $ccStr = null) {
     /* ini_set("SMTP", "mailserver.copservir.com");
-      ini_set("smtp_port", "25");
-      ini_set("sendmail_from", "mailserver.copservir.com");
-      Yii::import('application.extensions.phpmailer.JPhpMailer');
-      $mail = new JPhpMailer;
-      $mail->isSMTP();
-      $mail->Host = 'mailserver.copservir.com';
-      $mail->Port = 25;
-      $mail->SMTPAuth = false;
-      $mail->isHTML(true);
-      $mail->CharSet = "UTF-8";
+    ini_set("smtp_port", "25");
+    ini_set("sendmail_from", "mailserver.copservir.com");
+    Yii::import('application.extensions.phpmailer.JPhpMailer');
+    $mail = new JPhpMailer;
+    $mail->isSMTP();
+    $mail->Host = 'mailserver.copservir.com';
+    $mail->Port = 25;
+    $mail->SMTPAuth = false;
+    $mail->isHTML(true);
+    $mail->CharSet = "UTF-8";
      */
 
     Yii::import('application.extensions.phpmailer.JPhpMailer');
@@ -86,15 +86,8 @@ function distanciaCoordenadas($lat1, $lon1, $lat2, $lon2, $unit = 'K') {
     }
 }
 
-function GSASearch(&$term, $sesion) {
-//    $arr1 = WebServiceSearch($term);
-     $arr2 = array();//GSASearchAux($term);
-     
-   // $arr2 = array();
-
+function GSASearch($term, $sesion) {
     $resultado = array();
-//    foreach ($arr1 as $value)
-//        $resultado[$value] = $value;
 
     $sql = "SELECT codigoProducto, descripcion, MATCH(descripcion, keyword) AGAINST('(\"$term\") (+$term) ($term) ($term*)' IN BOOLEAN MODE) as relevancia
                        FROM m_Keyword
@@ -106,6 +99,8 @@ function GSASearch(&$term, $sesion) {
     foreach ($arr1 as $key => $value) {
         $resultado[$value['codigoProducto']] = $value['relevancia'];
     }
+    
+    $arr2 = GSASearchAux($term);
 
     foreach ($arr2 as $key => $value) {
         if (in_array($key, $resultado)) {
@@ -116,13 +111,6 @@ function GSASearch(&$term, $sesion) {
             $resultado[$key] = $value;
         }
     }
-
-//    RelevanciaTemp::model()->deleteAll(array(
-//        'condition' => 'idSesion =:idSesion ',
-//        'params' => array(
-//            ':idSesion' => $sesion
-//        )
-//    ));
 
     $sql = " CREATE TEMPORARY TABLE t_relevancia_temp_$sesion (
             codigoProducto int(10) unsigned NOT NULL,
@@ -168,7 +156,7 @@ function WebServiceSearch($term) {
     }
 }
 
-function GSASearchAux(&$term) {
+function GSASearchAux($term) {
     $codigosArray = array();
 
     if ($term != "") {
@@ -223,39 +211,6 @@ function GSASearchAux(&$term) {
                 }
             }
         }
-//        $codigosArray = array(
-//            '103709' => rand(1,5),
-//            '97412' => rand(1,5),
-//            '91298' => rand(1,5),
-//            '90990' => rand(1,5),
-//            '103707' => rand(1,5),
-//            '89480' => rand(1,5),
-//            '61362' => rand(1,5),
-//            '103705' => rand(1,5),
-//            
-//            Array
-//(
-//    [48269] => 7
-//    [32411] => 7
-//    [92189] => 7
-//    [97428] => 7
-//    [90995] => 7
-//    [91298] => 7
-//    [32412] => 7
-//    [32413] => 7
-//    [24863] => 7
-//    [24869] => 7
-//    [10760] => 7
-//    [24868] => 7
-//    [20866] => 7
-//    [59097] => 7
-//    [24866] => 7
-//    [20870] => 7
-//    [61362] => 7
-//    [90990] => 7
-//    [90999] => 6
-//)
-//        );
     }
 
     return $codigosArray;
