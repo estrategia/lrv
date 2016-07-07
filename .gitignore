@@ -8,3 +8,5 @@ protected/runtime/*
 /images/combos/
 /nbproject/private/
 /html/
+/protected/modules/callcenter/uploads/
+.DS_Store
