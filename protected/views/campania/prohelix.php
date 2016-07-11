@@ -1,19 +1,10 @@
-<?php
-/* $this->metaTags = "<meta charset='utf-8'>
-  <meta http-equiv='X-UA-Compatible' content='IE=edge'>
-  <meta name='description' content=''>
-  <meta name='author' content=''>"; */
-?>
-
 <?php $this->pageTitle = "Prohelix - La Rebaja Virtual"; ?>
 
 
 <?php
-$this->metaTags = "<meta charset='utf-8'>
-    <meta http-equiv='X-UA-Compatible' content='IE=edge'>
-    <meta name='viewport' content='width=device-width, initial-scale=1'>
-    <meta name='description' content=''>
-    <meta name='author' content=''>";
+$this->metaTags = "<meta http-equiv='X-UA-Compatible' content='IE=edge'>
+    <meta name='description' content='Jarabe para la tos a base de Hedera Helix, es un expectorante natural y ayuda al tratamiento de la tos seca. No contiene alcohol, azúcar ni colorantes'>
+    <meta name='keywords' content='Hedera helix, expectorante natural, tos'>";
 ?>
 
 <?php if ($this->isMobile): ?>
