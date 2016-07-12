@@ -23,7 +23,7 @@ $this->metaTags = "<meta http-equiv='X-UA-Compatible' content='IE=edge'>
     <img width="100%" src="<?= Yii::app()->request->baseUrl ?>/images/contenido/prohelix/banner-movil.png" alt="Prohelix">
     <!--<center><img width="150" style="margin-top:-5px;" src="<?= Yii::app()->request->baseUrl ?>/images/contenido/prohelix/sello-prohelix.png" alt="Prohelix"></center>-->
 
-    <center><a href="#" data-role="button" data-inline="true"><img src="<?= Yii::app()->request->baseUrl ?>/images/contenido/prohelix/btn-compra.png" width="250" alt=""></a></center>
+    <center><a href="<?php echo CController::createUrl('/catalogo/producto', array('producto' => 91937, 'descripcion' => 'PROHELIX.html')) ?>" data-ajax="false" data-role="button" data-inline="true"><img src="<?= Yii::app()->request->baseUrl ?>/images/contenido/prohelix/btn-compra.png" width="250" alt=""></a></center>
     <center><img src="<?= Yii::app()->request->baseUrl ?>/images/contenido/prohelix/domicilio.png" width="180" alt=""></center>
 
     <div class="ui-content c_form_rgs ui-body-c">
@@ -102,8 +102,8 @@ $this->metaTags = "<meta http-equiv='X-UA-Compatible' content='IE=edge'>
                     </p>
                 </div>
                 <div class="col-md-4">
-                    <button type="button" class="btn btn-link btn-lg"><img src="<?= Yii::app()->request->baseUrl ?>/images/contenido/prohelix/btn-compra.png" width="300" alt="Comprar prohelix"></button>
-
+                    <a class="btn btn-link btn-lg" href="<?php echo CController::createUrl('/catalogo/producto', array('producto' => 91937, 'descripcion' => 'PROHELIX.html')) ?>"><img src="<?= Yii::app()->request->baseUrl ?>/images/contenido/prohelix/btn-compra.png" width="300" alt="Comprar prohelix"></a>
+    
                 </div>
 
             </div>

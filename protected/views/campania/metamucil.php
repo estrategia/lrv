@@ -55,7 +55,7 @@
             <div class="space"></div>
             <section>
                 <center>
-                    <a href="#"><img src="<?= Yii::app()->request->baseUrl ?>/images/contenido/metamucil/entrega.png" class="img-responsive img-entrega"></a>
+                    <a href="<?php echo CController::createUrl('/catalogo/producto', array('producto' => 111298, 'descripcion' => 'METAMUCIL-NARANJA.html')) ?>"  data-ajax="false"><img src="<?= Yii::app()->request->baseUrl ?>/images/contenido/metamucil/entrega.png" class="img-responsive img-entrega"></a>
                 </center>
             </section>
             <section style="padding-left: 28px;padding-right: 41px;">
@@ -77,7 +77,7 @@
                 <div class="sobre-metamucil_m texto">
                     <div class="title"> Sobre Metamucil</div>
                     <p style="margin-top: 10px;">Hay muchos productos basados en fibra. ¿Pero estos productos usan la fibra qué es multi-beneficios?</p>
-                    <a href="<?= Yii::app()->request->baseUrl ?>/campania/contenido/sobre-metamucil"><span class="leer-mas">Leer más</span></a>
+                    <a href="<?= Yii::app()->request->baseUrl ?>/campania/contenido/sobre-metamucil" data-ajax="false"><span class="leer-mas">Leer más</span></a>
                 </div>
             </section>        
             <div class="space"></div>    
@@ -86,7 +86,7 @@
                     <div class="title"> ¿Porqué elegir Metamucil?</div>
                     <p style="margin-top: 10px;"><span style="font-weight:bolder;color:#EF8A00;">1.</span> Quiere estar en forma y esbelto naturalmente <br>
                     <span style="font-weight:bolder;color:#EF8A00;">2.</span> Un modo sencillo de agregar fibras a su dieta..</p>
-                    <a href="<?= Yii::app()->request->baseUrl ?>/campania/contenido/porque-elejir-metamucil"><span class="leer-mas">Leer más</span></a>
+                    <a href="<?= Yii::app()->request->baseUrl ?>/campania/contenido/porque-elejir-metamucil" data-ajax="false"><span class="leer-mas">Leer más</span></a>
                 </div>  
             </section>
             
@@ -109,12 +109,12 @@
                 <div class="contenedor-filtros texto">
                     <div class="filtro">
                         <span>Productos relacionados</span>
-                        <a href="#"><img width="34" src="<?= Yii::app()->request->baseUrl ?>/images/contenido/metamucil/ico-filtro.png" ></a>
+                        <a href="<?php echo CController::createUrl('/catalogo/buscar', array('busqueda' => 'metamucil')) ?>" data-ajax="false"><img width="34" src="<?= Yii::app()->request->baseUrl ?>/images/contenido/metamucil/ico-filtro.png" ></a>
                     </div>
                     <div class="space"></div>
                     <div class="filtro">
                         Más información&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                        <a href="<?= Yii::app()->request->baseUrl ?>/campania/contenido/mas-informacion-metamucil"><img width="34" style="margin-left: 17px;" src="<?= Yii::app()->request->baseUrl ?>/images/contenido/metamucil/ico-filtro.png" ></a>
+                        <a href="<?= Yii::app()->request->baseUrl ?>/campania/contenido/mas-informacion-metamucil" data-ajax="false"><img width="34" style="margin-left: 17px;" src="<?= Yii::app()->request->baseUrl ?>/images/contenido/metamucil/ico-filtro.png" ></a>
                     </div>
                 </div>
             </section>
@@ -152,7 +152,7 @@
                 <div class="space"></div>
             </div>
             <div class="col-md-6" style="margin-top: 30px;">
-                <a href="#"><img src="<?= Yii::app()->request->baseUrl ?>/images/contenido/metamucil/entrega.png" class="img-responsive img-entrega"></a> 
+                <a href="<?php echo CController::createUrl('/catalogo/producto', array('producto' => 111298, 'descripcion' => 'METAMUCIL-NARANJA.html')) ?>"><img src="<?= Yii::app()->request->baseUrl ?>/images/contenido/metamucil/entrega.png" class="img-responsive img-entrega"></a> 
                 <div class="sobre-metamucil texto">
                     <div class="title"> Sobre Metamucil</div>
                     <p style="margin-top: 10px;">Hay muchos productos basados en fibra. ¿Pero estos productos usan la fibra qué es multi-beneficios?</p>
@@ -169,7 +169,7 @@
                 <div class="contenedor-filtros texto">
                     <div class="col-md-6 filtro">
                         <span>Productos relacionados</span>
-                        <a href="#"><img width="34" src="<?= Yii::app()->request->baseUrl ?>/images/contenido/metamucil/ico-filtro.png" ></a>
+                        <a href="<?php echo CController::createUrl('/catalogo/buscar', array('busqueda' => 'metamucil')) ?>"><img width="34" src="<?= Yii::app()->request->baseUrl ?>/images/contenido/metamucil/ico-filtro.png" ></a>
                     </div>
                     <div class="col-md-6 filtro">
                         Más información
