@@ -114,7 +114,7 @@
                     <div class="space"></div>
                     <div class="filtro">
                         Más información&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                        <a href="#"><img width="34" style="margin-left: 17px;" src="<?= Yii::app()->request->baseUrl ?>/images/contenido/metamucil/ico-filtro.png" ></a>
+                        <a href="<?= Yii::app()->request->baseUrl ?>/campania/contenido/mas-informacion-metamucil"><img width="34" style="margin-left: 17px;" src="<?= Yii::app()->request->baseUrl ?>/images/contenido/metamucil/ico-filtro.png" ></a>
                     </div>
                 </div>
             </section>
@@ -173,7 +173,7 @@
                     </div>
                     <div class="col-md-6 filtro">
                         Más información
-                        <a href="#"><img width="34" src="<?= Yii::app()->request->baseUrl ?>/images/contenido/metamucil/ico-filtro.png" ></a>
+                        <a href="<?= Yii::app()->request->baseUrl ?>/campania/contenido/mas-informacion-metamucil"><img width="34" src="<?= Yii::app()->request->baseUrl ?>/images/contenido/metamucil/ico-filtro.png" ></a>
                     </div>
                 </div>
             </div>
