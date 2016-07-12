@@ -2,12 +2,9 @@
 <?php $this->pageTitle = "Más información Metamucil - La Rebaja Virtual"; ?>
 
 <?php
-    $this->metaTags = "<meta charset='utf-8'>
-    <meta http-equiv='X-UA-Compatible' content='IE=edge'>
-    <meta name='viewport' content='width=device-width, initial-scale=1'>
-    <meta name='description' content='La fibra es esencial para el funcionamiento adecuado de su sistema digestivo y puede ayudarlo a tener evacuaciones regulares. '>
-    <meta name='keywords' content='fibra dietética, dieta, alimentos ricos en fibra.'>
-    <meta name='author' content='La rebaja virtual'>
+    $this->metaTags = "<meta http-equiv='X-UA-Compatible' content='IE=edge'>
+    <meta name='description' content='La fibra es esencial para el funcionamiento adecuado de su sistema digestivo y puede ayudarlo a tener evacuaciones regulares.'>
+    <meta name='keywords' content='fibra dietética, dieta, alimentos ricos en fibra'>
 	<!-- styles -->
 	<style>
             @font-face {
