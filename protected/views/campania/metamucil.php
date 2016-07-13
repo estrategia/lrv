@@ -55,7 +55,7 @@
             <div class="space"></div>
             <section>
                 <center>
-                    <a href="<?php echo CController::createUrl('/catalogo/producto', array('producto' => 111298, 'descripcion' => 'METAMUCIL-NARANJA.html')) ?>"  data-ajax="false"><img src="<?= Yii::app()->request->baseUrl ?>/images/contenido/metamucil/entrega.png" class="img-responsive img-entrega"></a>
+                    <a href="<?php echo CController::createUrl('/catalogo/buscar', array('busqueda' => 'metamucil')) ?>"  data-ajax="false"><img src="<?= Yii::app()->request->baseUrl ?>/images/contenido/metamucil/entrega.png" class="img-responsive img-entrega"></a>
                 </center>
             </section>
             <section style="padding-left: 28px;padding-right: 41px;">
@@ -152,7 +152,7 @@
                 <div class="space"></div>
             </div>
             <div class="col-md-6" style="margin-top: 30px;">
-                <a href="<?php echo CController::createUrl('/catalogo/producto', array('producto' => 111298, 'descripcion' => 'METAMUCIL-NARANJA.html')) ?>"><img src="<?= Yii::app()->request->baseUrl ?>/images/contenido/metamucil/entrega.png" class="img-responsive img-entrega"></a> 
+                <a href="<?php echo CController::createUrl('/catalogo/buscar', array('busqueda' => 'metamucil')) ?>"><img src="<?= Yii::app()->request->baseUrl ?>/images/contenido/metamucil/entrega.png" class="img-responsive img-entrega"></a> 
                 <div class="sobre-metamucil texto">
                     <div class="title"> Sobre Metamucil</div>
                     <p style="margin-top: 10px;">Hay muchos productos basados en fibra. ¿Pero estos productos usan la fibra qué es multi-beneficios?</p>
