@@ -2,12 +2,9 @@
 <?php $this->pageTitle = "Sobre Metamucil - La Rebaja Virtual"; ?>
 
 <?php
-    $this->metaTags = "<meta charset='utf-8'>
-    <meta http-equiv='X-UA-Compatible' content='IE=edge'>
-    <meta name='viewport' content='width=device-width, initial-scale=1'>
+    $this->metaTags = "<meta http-equiv='X-UA-Compatible' content='IE=edge'>
     <meta name='description' content='Metamucil es una fibra soluble con muchos beneficios basado en plantago Psyllium, una fuente de fibra de origen 100% natural.'>
     <meta name='keywords' content='plantago Psyllium, fibra de origen de natural, fibra multi-beneficios.'>
-    <meta name='author' content='La rebaja virtual'>
 	<!-- styles -->
 	<style>
             @font-face {

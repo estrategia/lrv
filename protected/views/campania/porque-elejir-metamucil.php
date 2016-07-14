@@ -2,12 +2,9 @@
 <?php $this->pageTitle = "Porqué Metamucil - La Rebaja Virtual"; ?>
 
 <?php
-    $this->metaTags = "<meta charset='utf-8'>
-    <meta http-equiv='X-UA-Compatible' content='IE=edge'>
-    <meta name='viewport' content='width=device-width, initial-scale=1'>
+    $this->metaTags = "<meta http-equiv='X-UA-Compatible' content='IE=edge'>
     <meta name='description' content='Agrega Metamucil a tu dieta para que consumas fibra regularmente. Es fácil de preparar, tiene gran sabor y lo puedes llevar a todas partes.'>
-    <meta name='keywords' content='fibra dietética, fibra de origen natural, fuente de fibra.'>
-    <meta name='author' content='La rebaja virtual'>
+    <meta name='keywords' content='fibra dietética, fibra de origen natural, fuente de fibra'>
 	<!-- styles -->
 	<style>
             @font-face {
