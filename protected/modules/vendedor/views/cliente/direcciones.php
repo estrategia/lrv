@@ -1,7 +1,7 @@
 <?php $editar = isset($editar) ? $editar : true; ?>
 
 <div class="ui-body-c">
-    <h2 style="color:#fff;">Direcciones de despacho</h2>
+    <h2>Direcciones de despacho</h2>
 </div>
 
 <?php if ($editar): ?>

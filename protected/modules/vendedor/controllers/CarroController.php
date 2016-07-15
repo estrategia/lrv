@@ -2086,7 +2086,7 @@ class CarroController extends ControllerVendedor {
             if ($modelPago->idFormaPago == Yii::app()->params->formaPago['pasarela']['idPasarela']) {
                 $objCompra->idEstadoCompra = Yii::app()->params->callcenter['estadoCompra']['estado']['pendientePasarela'];
             } else {
-                $objCompra->idEstadoCompra = Yii::app()->params->callcenter['estadoCompra']['estado']['subasta'];
+                $objCompra->idEstadoCompra = Yii::app()->params->callcenter['estadoCompra']['estado']['pendiente'];
             }
 
             $objCompra->idTipoVenta = 3;
@@ -2570,6 +2570,8 @@ class CarroController extends ControllerVendedor {
 
                 try {
                     $result = $client->__soapCall("CongelarCompraAutomatica", array('idPedido' => $objCompra->idCompra)); //763759, 763743
+                    //$result = array(0=>0,1=>'congelar prueba error');
+                    //$result = array(0=>1,1=>'congelar prueba ok', 2 =>'miguel.sanchez@eiso.com.co');
                     if (!empty($result) && $result[0] == 1) {
                         $objCompraRemision = Compras::model()->findByPk($objCompra->idCompra, array("with" => "objPuntoVenta"));
                         $contenidoCorreo = $this->renderPartial('application.modules.callcenter.views.pedido.compraCorreo', array('objCompra' => $objCompraRemision), true, true);
@@ -2579,6 +2581,11 @@ class CarroController extends ControllerVendedor {
                         } catch (Exception $ce) {
                             Yii::log("Error enviando correo de remision automatica #$objCompra->idCompra\n" . $ce->getMessage() . "\n" . $ce->getTraceAsString(), CLogger::LEVEL_INFO, 'application');
                         }
+                    }else{
+                        $objCompra->idEstadoCompra = Yii::app()->params->callcenter['estadoCompra']['estado']['subasta'];
+                        if (!$objCompra->save()) {
+                            throw new Exception("Error al guardar compra [1]" . $objCompra->validateErrorsResponse());
+                        }
                     }
                 } catch (SoapFault $exc) {
                     Yii::log("SoapFault WebService CongelarCompraAutomatica [compra: $objCompra->idCompra]\n" . $exc->getMessage() . "\n" . $exc->getTraceAsString() . "\n" . $client->__getLastResponse(), CLogger::LEVEL_INFO, 'application');
@@ -2586,10 +2593,6 @@ class CarroController extends ControllerVendedor {
                     Yii::log("Exception WebService CongelarCompraAutomatica [compra: $objCompra->idCompra]\n" . $exc->getMessage() . "\n" . $exc->getTraceAsString(), CLogger::LEVEL_INFO, 'application');
                 }
             }
-
-            /* if ($modelPago->bono !== null && $modelPago->usoBono == 1) {
-              $objFormasPago->valorBono = $modelPago->bono['valor'];
-              } */
 
             if ($objFormasPago->valorBono > 0) {
                 $modelPago->actualizarBono($objCompra);

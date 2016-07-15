@@ -7,22 +7,22 @@
         <div class="ccont_filtro">
             <div class="left">
                 <a href="<?php echo $this->createUrl("sitio/categorias") ?>" data-ajax="false">
-                    <img src="<?php echo Yii::app()->request->baseUrl ?>/images/iconos/vendedor/icon_categorias.png" alt="Categorias" title="Categorias" >
+                    <img src="<?php echo Yii::app()->request->baseUrl ?>/images/iconos/icon_categorias.png" alt="Categorias" title="Categorias" >
                 </a>
                 <a id="link-relacionados-agregar" style="display:none;" href="#" data-ajax="false">
-                    <img src="<?php echo Yii::app()->request->baseUrl ?>/images/iconos/vendedor/icon_relacionados.png" alt="Relacionados" title="Relacionados" >
+                    <img src="<?php echo Yii::app()->request->baseUrl ?>/images/iconos/icon_relacionados.png" alt="Relacionados" title="Relacionados" >
                 </a>
             </div>
             <div class="right">
                 <?php if (isset($formFiltro)): ?>
                     <a href="#panel-filtro">
-                        <img src="<?php echo Yii::app()->request->baseUrl ?>/images/iconos/vendedor/icon_filtrar.png" alt="Filtrar" >
+                        <img src="<?php echo Yii::app()->request->baseUrl ?>/images/iconos/icon_filtrar.png" alt="Filtrar" >
                     </a>
                 <?php endif; ?>
 
                 <?php if (isset($formOrdenamiento)): ?>
                     <a href="#panel-ordenamiento">
-                        <img src="<?php echo Yii::app()->request->baseUrl ?>/images/iconos/vendedor/icon_ordenar.png" alt="Ordenar">
+                        <img src="<?php echo Yii::app()->request->baseUrl ?>/images/iconos/icon_ordenar.png" alt="Ordenar">
                     </a>
                 <?php endif; ?>
             </div>
