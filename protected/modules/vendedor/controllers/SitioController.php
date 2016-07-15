@@ -10,8 +10,8 @@ class SitioController extends ControllerVendedor {
 
     public function filters() {
         return array(
-            'cliente + ubicacion',
-            'ubicacion + categorias'
+            'cliente + ubicacion, inicio',
+            'ubicacion + categorias, inicio'
                 //'login + index, infoPersonal, direcciones, direccionCrear, pagoexpress, listapedidos, pedido, listapersonal, listadetalle',
                 //'loginajax + direccionActualizar',
         );
@@ -60,26 +60,10 @@ class SitioController extends ControllerVendedor {
     }
 
     public function actionInicio() {
-        $listaPromociones = array();
-
-        if (isset(Yii::app()->params->promociones)) {
-            foreach (Yii::app()->params->promociones as $idx => $promocion) {
-                $fActual = new DateTime;
-                $fInicio = DateTime::createFromFormat('Y-m-d H:i:s', $promocion['fechaInicio']);
-                $fFin = DateTime::createFromFormat('Y-m-d H:i:s', $promocion['fechaFin']);
-
-                $diffInicio = $fInicio->diff($fActual);
-                $diffFin = $fActual->diff($fFin);
-
-                if ($diffInicio->invert == 0 && $diffFin->invert == 0) {
-                    $listaPromociones[$idx] = $promocion;
-                }
-            }
-        }
-
+        $codigoPerfil = Yii::app()->shoppingCartSalesman->getCodigoPerfil();
+        
         $this->render('inicio', array(
-            'listaPromociones' => $listaPromociones,
-            'listModulos' => ModulosConfigurados::getModulosBanner($this->objSectorCiudad, Yii::app()->params->perfil['defecto'], UbicacionModulos::UBICACION_MOVIL_INICIO)
+            'listModulosPromociones' => ModulosConfigurados::getModulos($this->objSectorCiudad, $codigoPerfil, UbicacionModulos::UBICACION_VENDEDOR_INICIO)
         ));
     }
 
@@ -391,6 +375,16 @@ class SitioController extends ControllerVendedor {
         } else {
             echo CJSON::encode(array('result' => 'error', 'response' => 'Solicitud invalida.'));
             Yii::app()->end();
+        }
+    }
+    
+    public function actionError() {
+        $this->layout = "//m_error";
+        if ($error = Yii::app()->errorHandler->error) {
+            if (Yii::app()->request->isAjaxRequest)
+                echo $error['message'];
+            else
+                $this->render('error');
         }
     }
 

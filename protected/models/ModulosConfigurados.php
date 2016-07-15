@@ -33,6 +33,7 @@ class ModulosConfigurados extends CActiveRecord {
     const TIPO_PRODUCTOS_CUADRICULA = 8;
     const TIPO_GRUPO_MODULOS = 9;
     const TIPO_PRODUCTOS_CARRO = 10;
+    const TIPO_PRODUCTOS_BANNER = 11;
 
     /**
      * @return string the associated database table name
@@ -454,5 +455,41 @@ class ModulosConfigurados extends CActiveRecord {
                     ':idmodulo' => $idModulo
                 )
          ));
+    }
+    
+    public static function getModuloVigente($idModulo, $codigoPerfil, $objSectorCiudad = null){
+        $fecha = new DateTime;
+        
+        $criteria = array(
+            'with' => array('listModulosSectoresCiudades', 'listPerfiles'),
+            'condition' => "t.idModulo =:idmodulo AND t.estado=:estado AND t.dias LIKE :dia AND t.inicio<=:fecha AND t.fin>=:fecha AND (listPerfiles.idPerfil =:perfilA  OR listPerfiles.idPerfil =:perfil )",
+            'params' => array(
+                ':idmodulo' => $idModulo,
+                ':estado' => 1,
+                ':dia' => "%" . $fecha->format("w") . "%",
+                ':fecha' => $fecha->format("Y-m-d"),
+                ':perfil' => $codigoPerfil,
+                ':perfilA' => Yii::app()->params->perfil['*'],
+            )
+        );
+        
+        if ($objSectorCiudad == null) {
+            $criteria['condition'] .= " AND listModulosSectoresCiudades.codigoCiudad=:ciudad AND listModulosSectoresCiudades.codigoSector=:sector";
+            $criteria['params'][':sector'] = Yii::app()->params->sector['*'];
+            $criteria['params'][':ciudad'] = Yii::app()->params->ciudad['*'];
+        } else {
+            $condicion = " AND ( (listModulosSectoresCiudades.codigoCiudad=:ciudadA AND listModulosSectoresCiudades.codigoSector=:sectorA)";
+            $condicion .= " OR (listModulosSectoresCiudades.codigoCiudad=:ciudad AND listModulosSectoresCiudades.codigoSector=:sectorA)";
+            $condicion .= " OR (listModulosSectoresCiudades.codigoCiudad=:ciudad AND listModulosSectoresCiudades.codigoSector=:sector))";
+
+            $criteria['condition'] .= $condicion;
+            $criteria['params'][':sectorA'] = Yii::app()->params->sector['*'];
+            $criteria['params'][':ciudadA'] = Yii::app()->params->ciudad['*'];
+            $criteria['params'][':sector'] = $objSectorCiudad->codigoSector;
+            $criteria['params'][':ciudad'] = $objSectorCiudad->codigoCiudad;
+        }
+        
+        return ModulosConfigurados::model()->find($criteria);
+        
     }
 }

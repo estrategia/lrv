@@ -19,6 +19,7 @@ class UbicacionModulos extends CActiveRecord {
     const UBICACION_ESCRITORIO_CATEGORIA = 3;
     const UBICACION_MOVIL_HOME = 10;
     const UBICACION_MOVIL_INICIO = 11;
+    const UBICACION_VENDEDOR_INICIO = 12;
 
     /**
      * @return string the associated database table name

@@ -10,10 +10,26 @@ class CatalogoController extends ControllerVendedor {
 
     public function filters() {
         return array(
-            'ubicacion + buscar,categoria',
+            'cliente + promocion',
+            'ubicacion + buscar, categoria, promocion',
                 //'login + index, infoPersonal, direcciones, direccionCrear, pagoexpress, listapedidos, pedido, listapersonal, listadetalle',
                 //'loginajax + direccionActualizar',
         );
+    }
+    
+    public function filterCliente($filter) {
+        if (Yii::app()->controller->module->user->isGuest) {
+            Yii::app()->session[Yii::app()->params->vendedor['sesion']['redireccionVendedor']] = Yii::app()->request->url;
+            $this->redirect(CController::createUrl('usuario/autenticar'));
+            Yii::app()->end();
+        }
+
+        if (!Yii::app()->controller->module->user->getClienteLogueado() && !Yii::app()->controller->module->user->getIsClienteInvitado()) {
+            Yii::app()->session[Yii::app()->params->vendedor['sesion']['redireccionCliente']] = Yii::app()->request->url;
+            $this->redirect(CController::createUrl('cliente/cliente'));
+            Yii::app()->end();
+        }
+        $filter->run();
     }
 
     public function filterUbicacion($filter) {
@@ -821,6 +837,59 @@ class CatalogoController extends ControllerVendedor {
                 'objPrecio' => new PrecioCombo($objCombo),
             ));
         }
+    }
+    
+    public function actionProductos($modulo) {
+        $codigoPerfil = Yii::app()->shoppingCartSalesman->getCodigoPerfil();
+        
+        $objModulo = ModulosConfigurados::getModuloVigente($modulo, $codigoPerfil, $this->objSectorCiudad);
+        
+        if ($objModulo===null) {
+            throw new CHttpException(404, 'Promoci&oacute;n no existe.');
+        }
+
+        $listProductos = $objModulo->getListaProductos($this->objSectorCiudad);
+        
+        $listCodigoEspecial = CodigoEspecial::model()->findAll(array(
+            'condition' => 'codigoEspecial<>0'
+        ));
+
+        $msgCodigoEspecial = array();
+        foreach ($listProductos as $objProducto) {
+            if ($objProducto->codigoEspecial != null && $objProducto->codigoEspecial != 0) {
+                $msgCodigoEspecial[$objProducto->codigoEspecial] = $objProducto->objCodigoEspecial;
+            }
+        }
+
+        $imagenBusqueda = null;
+        if (empty($listProductos)) {
+            $imagenBusqueda = Yii::app()->params->busqueda['imagen']['noExito'];
+            try {
+                Busquedas::registrarBusqueda(array(
+                    'idenficacionUsuario' => Yii::app()->user->isGuest ? null : Yii::app()->user->name,
+                    'tipoBusqueda' => Yii::app()->params->busqueda['tipo']['categoria'],
+                    'msgBusqueda' => "Promocion mensajeros [$objModulo->idModulo]",
+                    'codigoCiudad' => $this->objSectorCiudad == null ? null : $this->objSectorCiudad->codigoCiudad,
+                    'codigoSector' => $this->objSectorCiudad == null ? null : $this->objSectorCiudad->codigoSector,
+                ));
+            } catch (Exception $exc) {
+                Yii::log($exc->getMessage() . "\n" . $exc->getTraceAsString(), CLogger::LEVEL_ERROR, 'application');
+            }
+        }
+
+        $parametrosVista = array(
+            'listProductos' => $listProductos,
+            'listCombos' => array(),
+            'msgCodigoEspecial' => $msgCodigoEspecial,
+            'listCodigoEspecial' => $listCodigoEspecial,
+            'objSectorCiudad' => $this->objSectorCiudad,
+            'codigoPerfil' => $codigoPerfil,
+            'tipoBusqueda' => Yii::app()->params->busqueda['tipo']['categoria'],
+            'nombreBusqueda' => $objModulo->descripcion,
+        );
+
+        $parametrosVista['imagenBusqueda'] = $imagenBusqueda;
+        $this->render('listaProductos', $parametrosVista);
     }
 
 }

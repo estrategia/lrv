@@ -542,7 +542,8 @@ return array(
                     7 => 'Promoci&oacute;n flotante',
                     8 => 'Cuadricula de productos',
                     9 => 'Grupo de m&oacute;dulos',
-                    10 => 'Productos &uacute;ltimo antojo'
+                    10 => 'Productos &uacute;ltimo antojo',
+                    11 => 'Productos banner'
                 ),
                 'ubicacionModulos' => array(
                     1 => 'Inicio',
@@ -550,7 +551,8 @@ return array(
                     3 => 'Categoria',
                     4 => 'Fin Compra',
                     10 => 'Móvil Home',
-                    11 => 'Móvil Inicio'
+                    11 => 'Móvil Inicio',
+                    12 => 'Vendedor Inicio',
                 ),
                 'diasSemana' => array(
                     0 => 'Domingo',
