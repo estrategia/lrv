@@ -14,7 +14,7 @@
             @font-face {
                 font-family: Interstate regular;
                 src: url(".Yii::app()->request->baseUrl."/images/contenido/metamucil/fonts/interstate-regular.ttf);
-            }   
+            }
             .texto {font-family:Interstate regular;}
             .font-title{font-family:HelveticaBold;}
             .space{margin-top:30px;}
@@ -38,18 +38,6 @@
             .contenedor-filtros {padding: 22px;}
             .title {background-color: rgb(239, 138, 0);margin: 0px;color: rgb(255, 255, 255);font-weight: bolder;font-size: 23px;text-align: center;}
 	</style>
-
-    <!--Codigo google analitycs-->
-    <script>
-      (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
-      (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
-      m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
-      })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
-
-      ga('create', 'UA-80765083-1', 'auto');
-      ga('send', 'pageview');
-    </script>
-
     ";
 ?>
 
@@ -212,3 +200,5 @@
     </div>
  <!--Fin versión escritorio-->   
 <?php endif;?>
+
+ <?php Yii::app()->clientScript->registerScript('analytics-campania', "ga('create', 'UA-80765083-1', 'auto'); ga('send', 'pageview');"); ?>
