@@ -1,7 +1,7 @@
 <?php
 
 class TestController extends Controller {
-
+    
     public function actionBloqueo() {
         /* $usuario = '1113618983';
           $sql="select max(idCompra) idCompra from t_BloqueosUsuarios bu join t_ComprasBloqueoUsuarios cbu on bu.idBloqueoUsuario=cbu.idBloqueoUsuario where bu.identificacionUsuario=:usuario and anho=:anho and mes=:mes";
@@ -951,19 +951,32 @@ class TestController extends Controller {
     }
 
     public function actionProducto($codigo) {
+        /*$objProducto = Producto::model()->find(array(
+            'with' => array('listImagenesGrandes'),
+            'condition' => 't.codigoProducto=:codigo',
+            'params' => array(
+                ':codigo' => $codigo,
+            ),
+        ));*/
+        
         $objProducto = Producto::model()->find(array(
-            //'with' => 'listImagenesGrandes',
+            'with' => array('listImagenes' => array('on' => 'listImagenes.idImagen IS NULL OR (listImagenes.estadoImagen=1 AND listImagenes.tipoImagen=' . YII::app()->params->producto['tipoImagen']['mini'] . ')')),
             'condition' => 't.codigoProducto=:codigo',
             'params' => array(
                 ':codigo' => $codigo,
             ),
         ));
+        
+        
+        
 
-        CVarDumper::dump($objProducto->listImagenesGrandes, 10, true);
+        CVarDumper::dump($objProducto, 10, true);
 
         //CVarDumper::dump($objProducto->listCategoriasTienda, 3, true);
 
         echo "<br/><br/>";
+        
+        ///CVarDumper::dump($objProducto->listImagenesGrandes, 10, true);
 
         //CVarDumper::dump($objProducto->objCategoriaBI->listCategoriasTienda);
     }

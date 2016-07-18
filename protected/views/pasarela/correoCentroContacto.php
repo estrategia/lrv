@@ -2,7 +2,7 @@
 <head>
     <meta charset="utf-8">
 </head>
-<body style="background: #FFFFFF url(http://www.larebajavirtual.com/pasarela/html/img/fondohome.jpg) repeat-x center top; font: 0.81em/150% Arial, Helvetica, sans-serif; color: #333333;">
+<body style="background: #FFFFFF url(http://www.larebajavirtual.com/pasarela/images/pasarela/fondohome.jpg) repeat-x center top; font: 0.81em/150% Arial, Helvetica, sans-serif; color: #333333;">
     <div id="pagewrap">
         <header style="position: relative; height: 65px; text-align: center;">
             <a href="http://www.larebajavirtual.com"><img src="http://www.larebajavirtual.com/images/pasarela/logotop.png" alt="logo" border="0" id="logo"  ></a>
