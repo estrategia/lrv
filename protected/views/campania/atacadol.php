@@ -45,7 +45,7 @@
             .img-entrega{width: 300px;margin: 0px auto;}
             .texto-intro{background-color:#004F9F;padding:5px;}
             .texto-intro p {border:4px solid #F7B800;margin:0px;color:#fff;text-align:center;font-size:30px;}
-            .title{background-color: #009CDE; color:#fff;display:inline-block;font-family:Helvetica Neue !important;padding:5px 15px;font-weight:bolder;}
+            .title{margin-bottom: 20px;}            
             .list{list-style:none;list-style-image: url('../../images/contenido/atacadol/ico.png');text-align:justify;}
             .list-m {padding: 0px 10px 0px 36px;}
             .filtro {background-color:#fff;border-radius: 5px;border: 1px solid red;padding: 0 !important;}
@@ -60,27 +60,21 @@
 <!--Versión movil-->
 <?php if ($this->isMobile): ?>
     <section style="background-color:#001781;">
-  		<img width="100%" src="<?= Yii::app()->request->baseUrl ?>/images/contenido/atacadol/banner-movil.png">
-    
+  		<img width="100%" src="<?= Yii::app()->request->baseUrl ?>/images/contenido/atacadol/banner-movil.png">  
+    	
    		<div class="background-m">
-	    	<div class="texto-intro">
-	    	    <p>
-	    		Llega <strong>ATACADOL</strong> <span style="color:#DF040F;">Activo</span>,<br>
-	    		para el alivio de dolores de <br>
-	    		cabeza como la migraña	                		
-	    	    </p>
-	    	</div>
+   			<img width="100%" src="<?= Yii::app()->request->baseUrl ?>/images/contenido/atacadol/descripcion.png">
 	    	<center>
 	    		<a href=""><img src="<?= Yii::app()->request->baseUrl ?>/images/contenido/metamucil/entrega.png" class="img-responsive img-entrega"></a>
 	    	</center>
 	    	<section >
-	    		<h2 class="title">¿Qué es AtacaDol</h2>
+	    		<img src="<?= Yii::app()->request->baseUrl ?>/images/contenido/atacadol/titulo-1.png" alt="¿Que es atacadol?">
 	    		<ul class="list list-m">
 	    			<li>El nuevo AtacaDol es un analgésico que alivia múltiples síntomas del dolor sin causar somnolencia.</li>
 	    		</ul>
 	    	</section>
 	    	<section>
-	    		<h2 class="title">Beneficios de AtacaDol</h2>
+	    		<img src="<?= Yii::app()->request->baseUrl ?>/images/contenido/atacadol/titulo-2.png" alt="Beneficios de AtacaDol">
 	    		<p>Alivio de la fiebre y de los dolores más comunes como:</p>
 	    		<ul class="list list-m">
 	    			<li>Dolores del resfriado</li>
@@ -91,7 +85,7 @@
 	    		</ul>
 	    	</section>
 	    	<section>
-	    		<h2 class="title">¿Cómo se utiliza atacaDol?</h2>
+	    		<img src="<?= Yii::app()->request->baseUrl ?>/images/contenido/atacadol/titulo-3.png" alt="¿Cómo se utiliza atacaDol?">
 	    		<p>Administrar por vía oral. Adultos (incluyendo la edad avanzada) y niños mayores de 12 años:</p>
 	    		<ul class="list list-m">
 	    			<li>1 a 2 tabletas cada 4 a 6 horas. Si es necesario repetir la dosis cada 4 horas tome únicamente una tableta.</li>
@@ -103,14 +97,14 @@
 	    		</ul>
 	    	</section>	
 	    	<section>
-	    		<h2 class="title">¿Qué contiene AtacaDol?</h2>
+	    		<img src="<?= Yii::app()->request->baseUrl ?>/images/contenido/atacadol/titulo-4.png" alt="¿Qué contiene AtacaDol?">
 	    		<ul class="list">
 	    			<li>Paracetamol 500mg</li>
 	    			<li>Cafeína 50mg</li>
 	    		</ul>
 	    	</section> 
 	    	<section>
-	    	    <h2 class="title">Contraindicaciones y Advertencias</h2>
+	    	    <img width=100% src="<?= Yii::app()->request->baseUrl ?>/images/contenido/atacadol/titulo-5.png" alt="Contraindicaciones y Advertencias">
 	    	    <ul class="list list-m">
 	    	        <li>Hipersensibilidad a los componentes, adminístrese con precaución a pacientes con insuficiencia hepática o renal.</li>
 	    	      	<li><strong>Precauciones:</strong> <br>
@@ -125,7 +119,7 @@
 	    	    </ul>	    		
 	    	</section>
 	    	<section>
-    			<h2 class="title">Sobredosificación:</h2>
+    			<img src="<?= Yii::app()->request->baseUrl ?>/images/contenido/atacadol/titulo-6.png" alt="Sobredosificación">
 	    	        <ul class="list list-m">
 	    	        	<li>La sobredosificación con acetaminofén puede causar falla hepática. Cualquier tipo de sobredosis debe ser manejada médicamente en forma inmediata, así no se encuentren presentes en el momento signos o síntomas de sobredosificación.</li>
 	    	        	<li>La sobredosificación con cafeína puede causar dolor epigástrico, vómitos, diuresis, taquicardia o arritmia cardíaca, estimulación del SNC (insomnio, inquietud, excitación, agitación, nerviosismos, temblor y convulsiones). Debe tenerse en cuenta que si aparecen síntomas clínicamente significativos de sobredosis de cafeína por este producto, la cantidad ingerida podría estar asociada con una severa toxicidad hepática producida por el acetaminofén.</li>
@@ -137,7 +131,7 @@
 	    	        </ul>
 	    	</section> 
 	    	<section>
-	    		<h2 class="title">Reacciones Adversas:</h2>
+	    		<img src="<?= Yii::app()->request->baseUrl ?>/images/contenido/atacadol/titulo-7.png" alt="Reacciones Adversas">
         		<p>Suspenda la medicación y consulte a su médico inmediatamente si:</p>
         		<ul class="list list-m">
         			<li>Presenta una reacción alérgica con problemas respiratorios o inflamación de labios, lengua, garganta o cara.</li>
@@ -183,13 +177,14 @@
         <div class="row background">
         	<div class="col-md-12">
 	            <div class="col-md-6">
-	                <div class="texto-intro">
+	            <img width="100%" src="<?= Yii::app()->request->baseUrl ?>/images/contenido/atacadol/descripcion.png">
+	              <!--   <div class="texto-intro">
 	                	<p>
 		                	Llega <strong>ATACADOL</strong> <span style="color:#DF040F;">Activo</span>,<br>
 		                	para el alivio de dolores de <br>
 		                	cabeza como la migraña	                		
 	                	</p>
-	                </div>
+	                </div> -->
 	                <div class="space"></div>
 	            </div>
 	            <div class="col-md-6">
@@ -199,14 +194,14 @@
         	</div>
 
         	<div class="col-md-12">
-        		<h2 class="title">¿Qué es AtacaDol</h2>
+        		<img class="title" src="<?= Yii::app()->request->baseUrl ?>/images/contenido/atacadol/titulo-1.png" alt="¿Que es atacadol?">
         		<ul class="list">
         			<li>El nuevo AtacaDol es un analgésico que alivia múltiples síntomas del dolor sin causar somnolencia.</li>
         		</ul>
         	</div>
 
         	<div class="col-md-12">
-        		<h2 class="title">Beneficios de AtacaDol</h2>
+        		<img class="title" src="<?= Yii::app()->request->baseUrl ?>/images/contenido/atacadol/titulo-2.png" alt="Beneficios de AtacaDol">
         		<p>Alivio de la fiebre y de los dolores más comunes como:</p>
         		<ul class="list">
         			<li>Dolores del resfriado</li>
@@ -218,7 +213,7 @@
         	</div>
 
         	<div class="col-md-12">
-        		<h2 class="title">¿Cómo se utiliza atacaDol?</h2>
+        		<img class="title" src="<?= Yii::app()->request->baseUrl ?>/images/contenido/atacadol/titulo-3.png" alt="¿Cómo se utiliza atacaDol?">
         		<p>Administrar por vía oral. Adultos (incluyendo la edad avanzada) y niños mayores de 12 años:</p>
         		<ul class="list">
         			<li>1 a 2 tabletas cada 4 a 6 horas. Si es necesario repetir la dosis cada 4 horas tome únicamente una tableta.</li>
@@ -231,7 +226,7 @@
         	</div>
 
         	<div class="col-md-12">
-        		<h2 class="title">¿Qué contiene AtacaDol?</h2>
+        		<img class="title" src="<?= Yii::app()->request->baseUrl ?>/images/contenido/atacadol/titulo-4.png" alt="¿Qué contiene AtacaDol?">
         		<ul class="list">
         			<li>Paracetamol 500mg</li>
         			<li>Cafeína 50mg</li>
@@ -239,7 +234,7 @@
         	</div>
 
         	<div class="col-md-12">
-        		<h2 class="title">Contraindicaciones y Advertencias</h2>
+        		<img class="title" src="<?= Yii::app()->request->baseUrl ?>/images/contenido/atacadol/titulo-5.png" alt="Contraindicaciones y Advertencias">
         		<ul class="list">
         			<li>Hipersensibilidad a los componentes, adminístrese con precaución a pacientes con insuficiencia hepática o renal.</li>
         			<li><strong>Precauciones:</strong> <br>
@@ -256,7 +251,7 @@
 
 
         	<div class="col-md-12">
-        		<h2 class="title">Sobredosificación:</h2>
+        		<img class="title" src="<?= Yii::app()->request->baseUrl ?>/images/contenido/atacadol/titulo-6.png" alt="Sobredosificación">
         		<ul class="list">
         			<li>La sobredosificación con acetaminofén puede causar falla hepática. Cualquier tipo de sobredosis debe ser manejada médicamente en forma inmediata, así no se encuentren presentes en el momento signos o síntomas de sobredosificación.</li>
         			<li>La sobredosificación con cafeína puede causar dolor epigástrico, vómitos, diuresis, taquicardia o arritmia cardíaca, estimulación del SNC (insomnio, inquietud, excitación, agitación, nerviosismos, temblor y convulsiones). Debe tenerse en cuenta que si aparecen síntomas clínicamente significativos de sobredosis de cafeína por este producto, la cantidad ingerida podría estar asociada con una severa toxicidad hepática producida por el acetaminofén.</li>
@@ -269,7 +264,7 @@
         	</div>
 
         	<div class="col-md-12">
-        		<h2 class="title">Reacciones Adversas:</h2>
+        		<img class="title" src="<?= Yii::app()->request->baseUrl ?>/images/contenido/atacadol/titulo-7.png" alt="Reacciones Adversas">
         		<p>Suspenda la medicación y consulte a su médico inmediatamente si:</p>
         		<ul class="list">
         			<li>Presenta una reacción alérgica con problemas respiratorios o inflamación de labios, lengua, garganta o cara.</li>
