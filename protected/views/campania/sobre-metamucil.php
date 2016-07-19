@@ -41,7 +41,7 @@
                    <img style="width: 80%;" src="<?= Yii::app()->request->baseUrl ?>/images/contenido/metamucil/imagen-blog1.png" class="img-responsive"> 
                 </center>                 
             </div>
-             <div style="padding: 0px 30px;">
+            <div style="padding: 0px 30px;">
                 <div class="space"></div>
                 <p class="texto_m" style="text-align:justify;">Hay dos tipos de fibras: las solubles y las insolubles. Todas estas fibras son extremamente saludables y deben ser consumidas regularmente. Sin embargo, solamente las fibras solubles viscosas, como las que contiene Metamucil®, le proporciona más beneficios que las demás fibras. Metamucil® es basado en Plantago psyllium, una fibra 100% de origen natural. Metamucil® le da muchos beneficios, y es por eso que llamamos Plantago psyllium una fibra ¡multi-beneficios!</p>
             </div>   
