@@ -107,12 +107,12 @@ class AdminController extends ControllerOperator {
                 $model->unsetAttributes();
                 if (isset($_GET['Compras']))
                     $model->attributes = $_GET['Compras'];
-
+                
                 //$model->tipoEntrega = Yii::app()->params->entrega["tipo"]['domicilio'];
                 $model->seguimiento = 1;
                 $fecha = Compras::calcularFechaVisualizar();
                 $model->fechaCompra = null;
-
+                
                 $this->render('pedidos', array(
                     'model' => $model,
                     'dataProvider' => $model->search(array('order' => 't.fechaCompra DESC', 'operadorPedido' => true)),
