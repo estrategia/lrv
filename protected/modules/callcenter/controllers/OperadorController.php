@@ -154,7 +154,7 @@ class OperadorController extends ControllerOperator {
                         }
                     }else if($model->perfil == Yii::app()->params->callcenter['perfilesOperador']['mensajeroVendedor']){
                         if($operadorVendedor===null){
-                            $operadorVendedor = new OperadorSubasta;
+                            $operadorVendedor = new OperadorVendedor;
                             $operadorVendedor->idOperador = $objOperador->idOperador;
                         }
                         

@@ -10,7 +10,7 @@
             <tbody style="text-align:justify;font-size:10.5pt;font-family:Helvetica,sans-serif;color:rgb(51,51,51)">
                 <tr>
                     <td>
-                        <img style="display: block; width: 100%;height: auto;" src="http://www.eiso.co/test/larebajavirtual/images/mailing_header.png">
+                        <img style="display: block; width: 100%;height: auto;" src="http://www.larebajavirtual.com/images/mailing_header.png">
                     </td>
                 </tr>
                 <tr>
@@ -27,7 +27,7 @@
                 <tr>
                     <td>
                         <div style="height: 20px;"></div>
-                        <img style="display: block; width: 100%;height: auto;" src="http://www.eiso.co/test/larebajavirtual/images/mailing_footer.png">
+                        <img style="display: block; width: 100%;height: auto;" src="http://www.larebajavirtual.com/images/mailing_footer.png">
                     </td>
                 </tr>
             </tbody>

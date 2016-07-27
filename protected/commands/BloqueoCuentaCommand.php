@@ -34,11 +34,15 @@ class BloqueoCuentaCommand extends CConsoleCommand {
 
                 if ($objBloqueoUsuario->save()) {
                     if ($objUsuario->save()) {
-                        $vista = Yii::getPathOfAlias('application.views.common.correoDesbloqueo').'.php';
-                        if(file_exists($vista)){
-                            $contenidoCorreo = $this->renderFile($vista, array('identificacionUsuario' => $objBloqueoUsuario->identificacionUsuario), true);
+                        $vistaDesbloqueo = Yii::getPathOfAlias('application.views.common.correoDesbloqueo').'.php';
+                        $vistaCorreo = Yii::getPathOfAlias('application.views.common.correo').'.php';
+                        
+                        if(file_exists($vistaCorreo) && file_exists($vistaDesbloqueo)){
+                            $contenidoCorreo = $this->renderFile($vistaDesbloqueo, array('objUsuario' => $objUsuario), true);
+                            $htmlCorreo = $this->renderFile($vistaCorreo, array('contenido' => $contenidoCorreo), true); 
+                            
                             try {
-                                sendHtmlEmail($objUsuario->correoElectronico, "La Rebaja Virtual: Desbloqueo de cuenta", $contenidoCorreo, Yii::app()->params->callcenter['correo']);
+                                sendHtmlEmail($objUsuario->correoElectronico, "La Rebaja Virtual: Desbloqueo de cuenta", $htmlCorreo, Yii::app()->params->callcenter['correo']);
                             } catch (Exception $exc) {
                                 Yii::log("BloqueoCuentaCommand::desbloquearCuenta - Error envio correo [".$exc->getMessage()."] usuario [$objBloqueoUsuario->identificacionUsuario]" . "\nBloqueoUsuario:\n" .  CVarDumper::dumpAsString($objBloqueoUsuario->attributes),CLogger::LEVEL_INFO, 'bloqueo_usuario');
                             }

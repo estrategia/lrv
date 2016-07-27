@@ -2260,25 +2260,14 @@ function seleccionTipoEntrega(tipo, _tipo) {
     $('div[data-role="tipoentrega"]').addClass('inactivo');
     $('div[data-role="tipoentrega"]div[data-tipo="' + tipo + '"]').removeClass('inactivo');
 
-    //$('#pasoporel-seleccion-pdv-nombre').html("");
-    //$('#pasoporel-seleccion-pdv-direccion').html("");
     $('#FormaPagoForm_tipoEntrega').val(tipo);
     $('input[name="FormaPagoForm[indicePuntoVenta]"]').val("");
-    /*$('div[data-role="tipoentrega-habilitar"]div[data-habilitar="' + tipo + '"]').removeClass('display-none');
-     $('div[data-role="tipoentrega-habilitar"]div[data-habilitar="' + tipo + '"] input').removeAttr('disabled');
-     $('div[data-role="tipoentrega-habilitar"]div[data-habilitar="' + _tipo + '"]').addClass('display-none');
-     $('div[data-role="tipoentrega-habilitar"]div[data-habilitar="' + _tipo + '"] input[type="text"]').val('');
-     $('div[data-role="tipoentrega-habilitar"]div[data-habilitar="' + _tipo + '"] input[type="radio"]').prop('checked', false);
-     $('div[data-role="tipoentrega-habilitar"]div[data-habilitar="' + _tipo + '"] input').attr('disabled', 'disabled');*/
 }
 
 $(document).on('click', 'button[data-role="pasoporel-seleccion-pdv"]', function () {
     seleccionTipoEntrega(tipoEntrega.presencial, tipoEntrega.domicilio);
-    //$('#pasoporel-seleccion-pdv-nombre').html($(this).attr('data-nombre'));
-    //$('#pasoporel-seleccion-pdv-direccion').html($(this).attr('data-direccion'));
-    $("#page-pasoporel").dialog("close");
-    //$("#page-pasoporel").remove();
     $('input[name="FormaPagoForm[indicePuntoVenta]"]').val($(this).attr('data-idx'));
+    $("#page-pasoporel").dialog("close");
 });
 
 $(document).on('click','a[data-role="popup-pagoexpress"]',function(){

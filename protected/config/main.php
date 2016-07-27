@@ -59,10 +59,6 @@ return array(
             'loginUrl' => array('usuario/autenticar'),
             'allowAutoLogin' => true,
         ),
-        /* 'session' => array(
-          'class' => 'CDbHttpSession',
-          'timeout' => 2592000//1 dia 86400 --> 30 dias,
-          ), */
         'urlManager' => array(
             'urlFormat' => 'path',
             'showScriptName' => false,
@@ -77,15 +73,6 @@ return array(
             'enableProfiling' => true,
             'enableParamLogging' => true,
         ),
-        /* 'db' => array(
-          'connectionString' => 'mysql:host=66.147.244.236;port=3306;dbname=promarca_tmp_lrv',
-          'emulatePrepare' => true,
-          'username' => 'promarca_tmp',
-          'password' => 'T3mp0r4l',
-          'charset' => 'utf8',
-          'enableProfiling' => true,
-          'enableParamLogging' => true,
-          ), */
         'errorHandler' => array(
             'errorAction' => 'sitio/error',
         ),
@@ -510,10 +497,10 @@ return array(
                     'negadoPasarela' => 13,
                     'validacionManualPasarela' => 14,
                     'mensajeroAsignado' => 15,
-                    'subasta' => 0,
+                    'subasta' => 16,
                 ),
                 'colorClass' => array(
-                    0 => 'info',
+                    16 => 'info',
                     1 => 'info',
                     2 => 'primary',
                     3 => 'success',

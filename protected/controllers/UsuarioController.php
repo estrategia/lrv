@@ -170,7 +170,7 @@ class UsuarioController extends Controller {
                     }
 
                     $contenido = $this->renderPartial('_correoBienvenida', array('objUsuario' => $usuario), true, true);
-                    $htmlCorreo = $this->renderPartial('_correo', array('contenido' => $contenido), true, true);
+                    $htmlCorreo = $this->renderPartial('//common/correo', array('contenido' => $contenido), true, true);
                     // sendHtmlEmail($usuario->correoElectronico, Yii::app()->params->asuntoBienvenida, $htmlCorreo);
                     $transaction->commit();
 
@@ -254,7 +254,7 @@ class UsuarioController extends Controller {
                     $model->usuario->objUsuarioExtendida = $objUsuarioExtendida;
 
                     $contenido = $this->renderPartial('_correoRecordar', array('objUsuario' => $model->usuario), true, true);
-                    $htmlCorreo = $this->renderPartial('_correo', array('contenido' => $contenido), true, true);
+                    $htmlCorreo = $this->renderPartial('//common/correo', array('contenido' => $contenido), true, true);
                     sendHtmlEmail($model->correoElectronico, Yii::app()->params->asuntoRecordatorioClave, $htmlCorreo);
 
                     echo CJSON::encode(array("result" => "ok", "response" => "Se ha enviado a su correo los datos de restauración de clave"));

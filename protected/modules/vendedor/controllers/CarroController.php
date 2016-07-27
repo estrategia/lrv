@@ -2549,7 +2549,7 @@ class CarroController extends ControllerVendedor {
                 'objFormaPago' => $objFormaPago,
                 'objFormasPago' => $objFormasPago,
                 'nombreUsuario' => $nombreUsuario), true, true);
-            $htmlCorreo = $this->renderPartial('/usuario/_correo', array('contenido' => $contenidoCorreo), true, true);
+            $htmlCorreo = $this->renderPartial('application.views.common.correo', array('contenido' => $contenidoCorreo), true, true);
 
             try {
                 sendHtmlEmail($correoUsuario, $asuntoCorreo, $htmlCorreo);

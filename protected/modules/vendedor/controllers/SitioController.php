@@ -52,6 +52,7 @@ class SitioController extends ControllerVendedor {
     public function actionIndex() {
         if (Yii::app()->controller->module->user->isGuest) {
             $this->showSeeker = false;
+            $this->showHeaderIcons = false;
             $this->render("index");
         } else {
             $this->redirect(CController::createUrl('sitio/inicio'));

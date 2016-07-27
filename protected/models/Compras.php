@@ -463,9 +463,10 @@ class Compras extends CActiveRecord {
                             //$rowsInactivacion = Yii::app()->db->createCommand("UPDATE m_Usuario SET activo=:activo WHERE identificacionUsuario=:usuario")->bindValue(':activo', Usuario::ESTADO_BLOQUEADO, PDO::PARAM_INT)->bindValue(':usuario', $this->identificacionUsuario, PDO::PARAM_STR)->execute();
                             //$rowsInactivacion>0
                             if($objUsuario->save()){
-                                $contenidoCorreo = Yii::app()->controller->renderPartial('//common/correoBloqueo', array('identificacionUsuario'=>$objUsuario->identificacionUsuario), true);
+                                $contenidoCorreo = Yii::app()->controller->renderPartial('//common/correoBloqueo', array('objUsuario' => $objUsuario), true);
+                                $htmlCorreo = Yii::app()->controller->renderPartial('//common/correo', array('contenido' => $contenidoCorreo), true);   
                                 try{
-                                    sendHtmlEmail($objUsuario->correoElectronico, "La Rebaja Virtual: Bloqueo de cuenta", $contenidoCorreo,Yii::app()->params->callcenter['correo']);
+                                    sendHtmlEmail($objUsuario->correoElectronico, "La Rebaja Virtual: Bloqueo de cuenta", $htmlCorreo,Yii::app()->params->callcenter['correo']);
                                 }  catch (Exception $exc){}
 
                                 $sqlBloqueoCompra = "INSERT INTO t_ComprasBloqueoUsuarios (idBloqueoUsuario,idCompra) VALUES " . implode(",",$arrValoresInsertar);
@@ -483,7 +484,7 @@ class Compras extends CActiveRecord {
                             Yii::log("Compras::verificarBloqueoUsuario - Error al guardar bloqueo de usuario: \n". CVarDumper::dumpAsString($objBloqueoUsuario->attributes) . "\nCompras:\n" . CVarDumper::dumpAsString($arrValoresInsertar) . "\nErrores:\n" . CVarDumper::dumpAsString($objBloqueoUsuario->validateErrorsResponse()) ,CLogger::LEVEL_INFO, 'bloqueo_usuario');
                         }
                     }else{
-                        Yii::log("Compras::verificarBloqueoUsuario - PRUEBA 100" ,CLogger::LEVEL_INFO, 'bloqueo_usuario');
+                        //Yii::log("Compras::verificarBloqueoUsuario - PRUEBA 100" ,CLogger::LEVEL_INFO, 'bloqueo_usuario');
                     }
                 }catch(Exception $exc){
                     Yii::log("Compras::verificarBloqueoUsuario - Exception para compra [$this->idCompra]:\n" . $exc->getMessage() . "\n" . $exc->getTraceAsString() ,CLogger::LEVEL_INFO, 'bloqueo_usuario');

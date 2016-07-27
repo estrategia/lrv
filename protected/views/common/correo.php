@@ -10,7 +10,7 @@
             <tbody style="text-align:justify;font-size:10.5pt;font-family:Helvetica,sans-serif;color:rgb(51,51,51)">
                 <tr>
                     <td>
-                        <img style="display: block;" src="<?php echo CController::createAbsoluteUrl('/')?>/images/mailing_header.png"> 
+                        <img style="display: block;" src="http://www.larebajavirtual.com/images/mailing_header.png"> 
                    <!--     <img style="display: block; width: 100%;height: 30%;" src="http://m.larebajavirtual.com/images/mailing_header.png"> -->
                     </td>
                 </tr>
@@ -28,8 +28,7 @@
                 <tr>
                     <td>
                         <div style="height: 20px;"></div>
-                        <img style="display: block;" src="<?php echo CController::createAbsoluteUrl('/')?>/images/mailing_footer.png"> 
-                       <!-- <img style="display: block; width: 100%;height: auto;" src="http://m.larebajavirtual.com/images/mailing_footer.png"> -->
+                        <img style="display: block;" src="http://www.larebajavirtual.com/images/mailing_footer.png">
                     </td>
                 </tr>
             </tbody>

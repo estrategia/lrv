@@ -59,8 +59,13 @@ class TestController extends Controller {
             $objBloqueoUsuario->desbloquearCuenta();
         }*/
         
-        echo $this->renderPartial('//common/correoDesbloqueo', array('identificacionUsuario' => '1113618983'));
+        $objUsuario = Usuario::model()->find(array(
+            "condition" => "identificacionUsuario=:usuario",
+            "params"=> array(":usuario"=>1113618983)
+        ));
         
+        $contenidoCorreo = $this->renderPartial('//common/correoDesbloqueo', array('objUsuario' => $objUsuario), true, true);
+        echo $this->renderPartial('//common/correo', array('contenido' => $contenidoCorreo));   
     }
 
     public function actionData() {
@@ -1449,7 +1454,7 @@ class TestController extends Controller {
                 'listasPersonal' => $listaPersonal,
                 'clave' => $claveEncriptada
                     ), true, false);
-            $htmlCorreo = $this->renderPartial('/usuario/_correo', array('contenido' => $contenidoCorreo), true, true);
+            $htmlCorreo = $this->renderPartial('//common/correo', array('contenido' => $contenidoCorreo), true, true);
             $asuntoCorreo = " LA REBAJA VIRTUAL - Recordar lista ";
             try {
                 sendHtmlEmail($listaPersonal->objUsuario->correoElectronico, $asuntoCorreo, $htmlCorreo);

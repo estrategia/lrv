@@ -54,7 +54,7 @@ class SwebController extends CController {
                 'listasPersonal' => $listaPersonal,
                 'clave' => $claveEncriptada
                     ), true, false);
-            $htmlCorreo = $this->renderPartial('/usuario/_correo', array('contenido' => $contenidoCorreo), true, true);
+            $htmlCorreo = $this->renderPartial('//common/correo', array('contenido' => $contenidoCorreo), true, true);
             $asuntoCorreo = " LA REBAJA VIRTUAL - Recordar lista ";
             try {
                 sendHtmlEmail($listaPersonal->objUsuario->correoElectronico, $asuntoCorreo, $htmlCorreo);

@@ -115,7 +115,7 @@ return array(
                     'negadoPasarela' => 13,
                     'validacionManualPasarela' => 14,
                     'mensajeroAsignado' => 15,
-                    'subasta' => 0,
+                    'subasta' => 16,
                 ),
             )
         ),
