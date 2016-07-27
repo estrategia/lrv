@@ -10,13 +10,10 @@ $this->metaTags = "<meta http-equiv='X-UA-Compatible' content='IE=edge'>
 	<style>
             @font-face {
                 font-family: Interstate regular;
-                src: url(" . Yii::app()->request->baseUrl . "/images/contenido/atacadol/fonts/interstate-regular.ttf);
-            }
-            @font-face {
-                font-family: Helvetica Neue ;
-                src: url(" . Yii::app()->request->baseUrl . "/images/contenido/atacadol/fonts/HelveticaNeue.otf);
-            }   
-            body {color:#fff !important;font-family:Interstate regular !important;font-size:18px !important;}
+                src: url(".Yii::app()->request->baseUrl."/images/contenido/atacadol/fonts/interstate-regular.ttf);
+            }  
+           
+
             .space{margin-top:30px;}
             .background{
 				background: rgba(0,25,130,1);
@@ -28,6 +25,7 @@ $this->metaTags = "<meta http-equiv='X-UA-Compatible' content='IE=edge'>
 				background: linear-gradient(to bottom, rgba(0,25,130,1) 0%, rgba(0,151,218,1) 100%);
 				filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#001982', endColorstr='#0097da', GradientType=0 );
 				padding: 0px 45px;
+				color:#fff !important;font-family:Interstate regular !important;font-size:18px !important;
             }
             .background-m{
             	background: rgba(0,25,130,1);
@@ -40,6 +38,7 @@ $this->metaTags = "<meta http-equiv='X-UA-Compatible' content='IE=edge'>
             	filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#001982', endColorstr='#0097da', GradientType=0 );
             	padding: 0px 18px;
             	margin-top:-5px;
+            	color:#fff !important;font-family:Interstate regular !important;font-size:18px !important;
             }
 
             .img-entrega{width: 300px;margin: 0px auto;}
