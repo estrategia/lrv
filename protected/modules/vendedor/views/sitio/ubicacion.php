@@ -1,5 +1,5 @@
 <h3 class="ui-bar ui-bar-h center title_h tpad">
-    Selecciona la ubicación donde deseas recoger o que te entreguemos el pedido
+    Selecciona la ubicación donde el cliente desea recoger o que le entreguemos el pedido.
 </h3>
 
 <div class="ui-content">

@@ -348,6 +348,7 @@ class Compras extends CActiveRecord {
             //$this->fechaCompra = new CDbExpression('NOW()');
             $this->fechaCompra = date('Y-m-d H:i:s');
             $this->seguimiento = 0;
+            $this->codigoVendedor = 0;
         }
 
         if (!$this->isNewRecord) {
