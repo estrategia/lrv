@@ -2046,22 +2046,27 @@ table.tabla-carro > tbody > tr > td, table.tabla-carro > tbody > tr > th, table.
     width: 100px;
 }
 .iconStep.step1 {
-    background-image: url("../images/iconos/icons_carro/desktop/despacho.png");
+    background-image: url("../images/iconos/icons_carro/desktop/tipo_entrega.png");
 }
 
 .iconStep.step2 {
-    background-image: url("../images/iconos/icons_carro/desktop/entrega.png");
+    background-image: url("../images/iconos/icons_carro/desktop/despacho.png");
 }
 
 .iconStep.step3 {
-    background-image: url("../images/iconos/icons_carro/desktop/pago.png");
+    background-image: url("../images/iconos/icons_carro/desktop/entrega.png");
 }
 .iconStep.step4 {
-    background-image: url("../images/iconos/icons_carro/desktop/confirmacion.png");
+    background-image: url("../images/iconos/icons_carro/desktop/pago.png");
 }
 .iconStep.step5 {
     background-image: url("../images/iconos/icons_carro/desktop/bono.png");
 }
+
+.iconStep.step6 {
+    background-image: url("../images/iconos/icons_carro/desktop/confirmacion.png");
+}
+
 .steps ul li.active p{
     color: #FF1500;
 }

@@ -184,7 +184,7 @@ class ContenidoController extends ControllerOperator {
         } else if ($opcion == 'contenido') {
 
 
-            if ($model->tipo == ModulosConfigurados::TIPO_PRODUCTOS || $model->tipo == ModulosConfigurados::TIPO_PRODUCTOS_CUADRICULA || $model->tipo == ModulosConfigurados::TIPO_PRODUCTOS_CARRO) {
+            if ( in_array($model->tipo, array($model->tipo == ModulosConfigurados::TIPO_PRODUCTOS, ModulosConfigurados::TIPO_PRODUCTOS_CUADRICULA, ModulosConfigurados::TIPO_PRODUCTOS_CARRO, ModulosConfigurados::TIPO_PRODUCTOS_BANNER)) ) {
                 $params['vista'] = 'contenidoCrearListaProductos';
 
                 $params['arrayMarcas'] = $this->obtenerMarcas();

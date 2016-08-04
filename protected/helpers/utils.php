@@ -89,26 +89,30 @@ function distanciaCoordenadas($lat1, $lon1, $lat2, $lon2, $unit = 'K') {
 function GSASearch($term, $sesion) {
     $resultado = array();
     
-    $sql = "SELECT codigoProducto, descripcion, MATCH(descripcion, keyword) AGAINST('(\"$term\") (+$term) ($term) ($term*)' IN BOOLEAN MODE) as relevancia
+    if(is_numeric($term)){
+        $resultado = array($term=>4);
+    }else{
+        $sql = "SELECT codigoProducto, descripcion, MATCH(descripcion, keyword) AGAINST('(\"$term\") (+$term) ($term) ($term*)' IN BOOLEAN MODE) as relevancia
                        FROM m_Keyword
                        WHERE (MATCH(descripcion, keyword) AGAINST('(\"$term\") (+$term) ($term) ($term*)' IN BOOLEAN MODE)
                       OR (descripcion LIKE '%$term%') /* OR (codigoProducto IN (10002, 44081, 59488, 13910))*/)
                       order by relevancia DESC";
 
-    $arr1 = Yii::app()->db->createCommand($sql)->query();
-    foreach ($arr1 as $key => $value) {
-        $resultado[$value['codigoProducto']] = $value['relevancia'];
-    }
-    
-    $arr2 = GSASearchAux($term);
+        $arr1 = Yii::app()->db->createCommand($sql)->query();
+        foreach ($arr1 as $key => $value) {
+            $resultado[$value['codigoProducto']] = $value['relevancia'];
+        }
 
-    foreach ($arr2 as $key => $value) {
-        if (in_array($key, $resultado)) {
-            if ($resultado[$key] < $value) {
+        $arr2 = GSASearchAux($term);
+
+        foreach ($arr2 as $key => $value) {
+            if (in_array($key, $resultado)) {
+                if ($resultado[$key] < $value) {
+                    $resultado[$key] = $value;
+                }
+            } else {
                 $resultado[$key] = $value;
             }
-        } else {
-            $resultado[$key] = $value;
         }
     }
 

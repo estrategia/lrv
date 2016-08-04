@@ -423,16 +423,16 @@ return array(
                 1 => 'Operador',
                 2 => 'Administrador',
                 3 => 'Vendedor punto de venta',
-                10 => 'Mensajero Vendedor',
+                4 => 'Mensajero Vendedor',
             ),
             'perfilesOperador' => array(
                 'operador' => 1,
                 'administrador' => 2,
                 'vendedorPDV' => 3,
-                'mensajeroVendedor' => 10
+                'mensajeroVendedor' => 4
             ),
             
-            'perfiles' => array(1, 2, 3, 10),
+            'perfiles' => array(1, 2, 3, 4),
             'usuario' => array(
                 'estado' => array('activo' => 1, 'inactivo' => 0),
                 'estadoNombre' => array(0 => 'Inactivo', 1 => 'Activo'),

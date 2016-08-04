@@ -13,7 +13,7 @@ class OperadorController extends ControllerOperator {
     }
 
     public function filterAccess($filter) {
-        if (Yii::app()->controller->module->user->isGuest || Yii::app()->controller->module->user->profile != 2) {
+        if (Yii::app()->controller->module->user->isGuest || !in_array(Yii::app()->controller->module->user->profile, array(2, 3))) {
             $this->redirect(Yii::app()->controller->module->homeUrl);
         }
         $filter->run();

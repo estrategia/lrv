@@ -48,7 +48,7 @@ class ControllerVendedor extends Controller {
                         'condition' => 't.usuario=:usuario AND t.perfil =:perfil',
                         'params' => array(
                             ':usuario' => $usuario_desencriptado,
-                            ':perfil' => VendedorIdentity::PERFIL_VENDEDOR
+                            ':perfil' => Yii::app()->params->callcenter['perfilesOperador']['mensajeroVendedor']
                         )
                     ));
 

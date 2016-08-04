@@ -6,8 +6,7 @@
  * data can identity the user.
  */
 class VendedorIdentity extends CUserIdentity {
-    const ERROR_USER_INACTIVE = 3;
-    const PERFIL_VENDEDOR = 10;
+    const ERROR_USER_INACTIVE = 20;
     public $user = null;
     
     /**
@@ -22,7 +21,7 @@ class VendedorIdentity extends CUserIdentity {
             'condition' => 't.usuario=:usuario AND t.perfil =:perfil',
             'params' => array(
                 ':usuario' => $this->username,
-                ':perfil' => self::PERFIL_VENDEDOR
+                ':perfil' => Yii::app()->params->callcenter['perfilesOperador']['mensajeroVendedor']
             )
         ));
         
