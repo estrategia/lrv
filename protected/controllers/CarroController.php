@@ -1763,6 +1763,7 @@ class CarroController extends Controller {
 
                     break;
                 case Yii::app()->params->pagar['pasosDesktop'][2]:
+
                     if ($siguiente != "finalizar") {
                         echo CJSON::encode(array('result' => 'ok', 'response' => 'Datos guardados', 'redirect' => $this->createUrl("/carro/pagar", array('paso' => $siguiente))));
                         Yii::app()->end();
@@ -2519,7 +2520,7 @@ class CarroController extends Controller {
 
             switch ($paso) {
                 case Yii::app()->params->pagar['pasos'][2]:
-                     break;
+                    break;
                 case Yii::app()->params->pagar['pasos'][3]:
                     $params['parametros']['listHorarios'] = $modelPago->listDataHoras();
                     break;
@@ -3180,6 +3181,27 @@ class CarroController extends Controller {
                 throw new Exception("Error al guardar compra [0]" . $objCompra->validateErrorsResponse());
             }
 
+            if (isset(Yii::app()->session[Yii::app()->params->sesion['formulaMedica']])) {
+                foreach (Yii::app()->session[Yii::app()->params->sesion['formulaMedica']] as $formula) {
+                    $formulaMedica = new FormulasMedicas();
+                    $formulaMedica->idCompra = $objCompra->idCompra;
+                    $formulaMedica->nombreMedico = $formula['nombreMedico'];
+                    $formulaMedica->institucion = $formula['institucion'];
+                    $formulaMedica->registroMedico = $formula['registroMedico'];
+                    $formulaMedica->telefono = $formula['telefono'];
+                    $formulaMedica->correoElectronico = $formula['correoElectronico'];					
+                    $formulaMedica->formulaMedica = $formula['formulaMedica'];
+
+                    if (!$formulaMedica->save()) {
+                        echo "<pre>";
+                        print_r($formulaMedica->getErrors());exit();
+                        throw new Exception("Error al formula medica" . implode(",",$formulaMedica->getErrors()));
+                    }
+                }
+                
+                unset(Yii::app()->session[Yii::app()->params->sesion['formulaMedica']]);
+            }
+
             if ($tipoEntrega == Yii::app()->params->entrega['tipo']['presencial']) {
                 $puntoVenta = $modelPago->listPuntosVenta[1][$modelPago->indicePuntoVenta];
 
@@ -3407,7 +3429,7 @@ class CarroController extends Controller {
                     //$objItem->idEstadoItemTercero = null;
                     $objItem->flete = $position->getShipping();
                     $objItem->disponible = 1;
-              
+
                     if ($objCompra->identificacionUsuario !== null) {
                         $categoriasCompra[] = "('" . $objCompra->identificacionUsuario . "','" . $position->objProducto->idCategoriaBI . "')";
                     }
@@ -3417,15 +3439,15 @@ class CarroController extends Controller {
                     if (!$objItem->save()) {
                         throw new Exception("Error al guardar item de compra $objItem->codigoProducto. " . $objItem->validateErrorsResponse());
                     }
-                    
-                    
-                    foreach($modelPago->usoBono as $idx => $usoBono){
-                        if($usoBono == 1 && $modelPago->bono[$idx]['modoUso'] == 2){
-                            if($modelPago->bono[$idx]['codigoProducto'] ==  $objItem->codigoProducto){
-                                
+
+
+                    foreach ($modelPago->usoBono as $idx => $usoBono) {
+                        if ($usoBono == 1 && $modelPago->bono[$idx]['modoUso'] == 2) {
+                            if ($modelPago->bono[$idx]['codigoProducto'] == $objItem->codigoProducto) {
+
                                 $beneficio = Beneficios::model()->find("idBeneficio = $idx");
-                                
-                                if($beneficio){
+
+                                if ($beneficio) {
                                     $objBeneficioItem = new BeneficiosComprasItems;
                                     $objBeneficioItem->idBeneficio = $beneficio->idBeneficio;
                                     $objBeneficioItem->idBeneficioSincronizado = $beneficio->idBeneficioSincronizado;
@@ -3449,8 +3471,8 @@ class CarroController extends Controller {
                                     $objBeneficioItem->mensaje = $beneficio->mensaje;
                                     $objBeneficioItem->swobligaCli = $beneficio->swobligaCli;
                                     $objBeneficioItem->fechaCreacionBeneficio = $beneficio->fechaCreacionBeneficio;
-                                    
-                                     if (!$objBeneficioItem->save()) {
+
+                                    if (!$objBeneficioItem->save()) {
                                         throw new Exception("Error al guardar beneficio de compra $objBeneficioItem->idCompraItem. " . $objBeneficioItem->validateErrorsResponse());
                                     }
                                 }
@@ -3644,7 +3666,7 @@ class CarroController extends Controller {
                         } catch (Exception $ce) {
                             Yii::log("Error enviando correo de remision automatica #$objCompra->idCompra\n" . $ce->getMessage() . "\n" . $ce->getTraceAsString(), CLogger::LEVEL_INFO, 'application');
                         }
-                    }else{
+                    } else {
                         $objCompra->idEstadoCompra = Yii::app()->params->callcenter['estadoCompra']['estado']['subasta'];
                         if (!$objCompra->save()) {
                             throw new Exception("Error al guardar compra [1]" . $objCompra->validateErrorsResponse());
@@ -3974,6 +3996,64 @@ class CarroController extends Controller {
 
         if ($limpiar)
             Yii::app()->session[Yii::app()->params->sesion['carroPagarForm']] = null;
+    }
+
+    public function actionAdicionarFormula() {
+
+
+        $array = array();
+        if (isset(Yii::app()->session[Yii::app()->params->sesion['formulaMedica']])) {
+            $array = Yii::app()->session[Yii::app()->params->sesion['formulaMedica']];
+        }
+        $ruta = "";
+
+        if ($_FILES) {
+            $model = new FormulasMedicas();
+            $model->attributes = $_POST['FormulasMedicas'];
+            $uploadedFile = CUploadedFile::getInstance($model, "formulaMedica");
+
+            if ($_FILES['FormulasMedicas']['size']['formulaMedica'] > 0) {
+                $directorio = 'images/formulamedica/' . Date("Ymdhis") . $uploadedFile->getName();
+                if ($uploadedFile->saveAs($directorio)) {
+                    $ruta = $directorio;
+                } else {
+                    echo CJSON::encode(
+                            array(
+                                'result' => 'ok',
+                                'response' => 'Error al cargar la imagen de la categoría'
+                    ));
+                    Yii::app()->end();
+                }
+            }
+        }
+
+		
+		
+		if($_POST['tipo-formula'] == 1){
+		   $modelFormula = new FormulasMedicas('datosMedico');
+		}else {
+		  $modelFormula = new FormulasMedicas();
+		}
+		
+		$modelFormula->attributes = $_POST['FormulasMedicas'];
+		
+		if (!$modelFormula->validate()) {
+            echo CActiveForm::validate($modelFormula);
+            Yii::app()->end();
+        }
+		
+        $array[] = array('nombreMedico' => $_POST['FormulasMedicas']['nombreMedico'],
+            'institucion' => $_POST['FormulasMedicas']['institucion'],
+            'registroMedico' => $_POST['FormulasMedicas']['registroMedico'],
+            'telefono' => $_POST['FormulasMedicas']['telefono'],
+            'correoElectronico' => $_POST['FormulasMedicas']['correoElectronico'],			
+            'formulaMedica' => $ruta);
+		
+        Yii::app()->session[Yii::app()->params->sesion['formulaMedica']] = $array;
+        echo CJSON::encode(array(
+            'result' => 'ok',
+            'response' => $this->isMobile ? $this->renderPartial('_formulasMedicasAdicionadas', null, true, false) : $this->renderPartial('_d_formulasMedicasAdicionadas', null, true, false),
+        ));
     }
 
     /* public function actionPuntos(){

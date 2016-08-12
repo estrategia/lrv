@@ -151,6 +151,7 @@ return array(
                 )
             ),
         ),
+        'tipoFormulaMedica' => '2',
         'promociones' => array(
             'viernesnegro' => array(
                 'icono' => '/images/inicio/masvistos.png',
@@ -219,6 +220,7 @@ return array(
             'carroPagarForm' => 'larebaja.online.carro.pagar.form',
             'productosComparar' => 'larebaja.online.productos.agregarProductos',
             'productosNoAgregados' => 'larebaja.online.productos.noAgregados',
+            'formulaMedica' => 'larebaja.online.compra.formulaMedica',
         ),
         'entrega' => array(
             'listaTipos' => array(1, 2),
@@ -404,6 +406,7 @@ return array(
                 'direccionEntrega' => 'larebaja.online.vendedor.direccionentrega',
                 //'tipoEntrega' => 'larebaja.online.vendedor.tipoentrega',
                 'compraInvitado' => 'larebaja.online.vendedor.comprainvitado',
+                'formulaMedica' => 'larebaja.online.vendedor.compra.formulamedica',
             ),
         ),
         'subasta' => array('sesion' => array(

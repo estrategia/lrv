@@ -320,7 +320,7 @@ $(document).on('click', 'button[data-role="ubicacion-seleccion-direccion"]', fun
     ubicacionSeleccion();
 });
 
-$(document).on('click', 'a[data-role="ubicacion-seleccion-nodomicilio"]', function() {
+$(document).on('click', 'a[data-role="ubicacion-seleccion-nodomicilio"]', function () {
     $('#ubicacion-seleccion-ciudad').val($(this).attr('data-ciudad'));
     $('#ubicacion-seleccion-sector').val($(this).attr('data-sector'));
     $('#ubicacion-seleccion-direccion').val('');
@@ -329,39 +329,39 @@ $(document).on('click', 'a[data-role="ubicacion-seleccion-nodomicilio"]', functi
 });
 
 /*$(document).on('click', "a[data-ubicacion='verificacion-domicilio']", function () {
-    $.ajax({
-        type: 'POST',
-        dataType: 'json',
-        async: true,
-        url: requestUrl + '/sitio/ubicacionVerificacion',
-        data: {ciudad: $(this).attr('data-ciudad'), sector: $(this).attr('data-sector')},
-        beforeSend: function () {
-            $.mobile.loading('show');
-        },
-        complete: function () {
-            $.mobile.loading('hide');
-        },
-        success: function (data) {
-            if (data.result == "ok") {
-                if (data.response.domicilio) {
-                    window.location.replace(data.response.url);
-                } else {
-                    $("#popup-ubicacion-gps [data-role='content'] div").html(data.response.mensaje);
-                    $("#popup-ubicacion-gps [data-role='content'] a").attr('href', data.response.url);
-                    $("#popup-ubicacion-gps").popup("open");
-                }
-            } else {
-                $('<div>').mdialog({
-                    content: "<div data-role='main'><div class='ui-content' data-role='content' role='main'>" + data.response + "<a class='ui-btn ui-btn-r ui-corner-all ui-shadow' data-rel='back' href='#'>Aceptar</a></div></div>"
-                });
-            }
-        },
-        error: function (jqXHR, textStatus, errorThrown) {
-            $.mobile.loading('hide');
-            alert('Error: ' + errorThrown);
-        }
-    });
-});*/
+ $.ajax({
+ type: 'POST',
+ dataType: 'json',
+ async: true,
+ url: requestUrl + '/sitio/ubicacionVerificacion',
+ data: {ciudad: $(this).attr('data-ciudad'), sector: $(this).attr('data-sector')},
+ beforeSend: function () {
+ $.mobile.loading('show');
+ },
+ complete: function () {
+ $.mobile.loading('hide');
+ },
+ success: function (data) {
+ if (data.result == "ok") {
+ if (data.response.domicilio) {
+ window.location.replace(data.response.url);
+ } else {
+ $("#popup-ubicacion-gps [data-role='content'] div").html(data.response.mensaje);
+ $("#popup-ubicacion-gps [data-role='content'] a").attr('href', data.response.url);
+ $("#popup-ubicacion-gps").popup("open");
+ }
+ } else {
+ $('<div>').mdialog({
+ content: "<div data-role='main'><div class='ui-content' data-role='content' role='main'>" + data.response + "<a class='ui-btn ui-btn-r ui-corner-all ui-shadow' data-rel='back' href='#'>Aceptar</a></div></div>"
+ });
+ }
+ },
+ error: function (jqXHR, textStatus, errorThrown) {
+ $.mobile.loading('hide');
+ alert('Error: ' + errorThrown);
+ }
+ });
+ });*/
 
 function subtotalUnidadProducto(codigo) {
     var cantidad = $('#cantidad-producto-unidad-' + codigo).val();
@@ -1293,7 +1293,7 @@ $(document).on('click', "input[id^='btn-direccion-eliminar-']", function () {
     return false;
 });
 
-function pasoTipoEntrega(actual, siguiente, boton){
+function pasoTipoEntrega(actual, siguiente, boton) {
     var data = {
         siguiente: siguiente,
         "FormaPagoForm[indicePuntoVenta]": $('input[name="FormaPagoForm[indicePuntoVenta]"]').val(),
@@ -2270,14 +2270,14 @@ $(document).on('click', 'button[data-role="pasoporel-seleccion-pdv"]', function 
     $("#page-pasoporel").dialog("close");
 });
 
-$(document).on('click','a[data-role="popup-pagoexpress"]',function(){
+$(document).on('click', 'a[data-role="popup-pagoexpress"]', function () {
     $("#popup-pagoexpress").popup("open");
     return false;
 });
 
-$(document).on('click','a[data-role="tipoentrega-info"]',function(){
+$(document).on('click', 'a[data-role="tipoentrega-info"]', function () {
     var target = $(this).attr('href');
-    if(target){
+    if (target) {
         $(target).panel('open');
         return false;
     }
@@ -2303,3 +2303,57 @@ $(document).ready(function () {
  console.log(data.state.url);
  console.log(data.state.hash);
  });*/
+function visualizarFormulaMedica() {
+    if ($('#FormaPagoForm_confirmacion').prop('checked')) {
+        $("#form-formula-medica").removeClass('display-none');
+    } else {
+        $("#form-formula-medica").addClass('display-none');
+    }
+}
+
+$(document).on('click', "#btn-adicionar-formula", function () {
+
+    var form = document.getElementById("form-pago-confirmacion");
+    var campo5 = document.createElement("input");
+    campo5.type = 'hidden';
+    campo5.value = $(this).attr('data-tipo');
+    campo5.name = "tipo-formula";
+    campo5.id = "tipo-formula";
+    form.appendChild(campo5);
+    $.ajax({
+        type: 'POST',
+        url: requestUrl + "/carro/adicionarFormula/",
+        data: new FormData(form),
+        dataType: 'json',
+        cache: false,
+        contentType: false,
+        processData: false,
+        beforeSend: function () {
+            $.mobile.loading('show');
+        },
+        complete: function (data) {
+            $.mobile.loading('hide');
+        },
+        success: function (data) {
+            if (data.result === 'ok') {
+                $("#formulasAdicionadas").html(data.response);
+                $("#FormulasMedicas_nombreMedico").val("");
+                $("#FormulasMedicas_institucion").val("");
+                $("#FormulasMedicas_registroMedico").val("");
+                $("#FormulasMedicas_descripcion").val("");
+                $("#FormulasMedicas_formulaMedica").val("");
+				$("#FormulasMedicas_telefono").val("");
+				$("#FormulasMedicas_correoElectronico").val("");
+            } else if (data.result === 'error') {
+
+            } else {
+
+                $.each(data, function (element, error) {
+                    $('#' + element + '_em_').html(error);
+                    $('#' + element + '_em_').css('display', 'block');
+                });
+            }
+        }
+    });
+    return false;
+});

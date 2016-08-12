@@ -83,9 +83,64 @@
                         <?php echo $objCompra->observacion ?> 
                     </td>
                 </tr>
+                <?php if (count($objCompra->listFormulas) > 0): ?>
+                    <tr>
+                        <td colspan="3">
+                            <button id="btn-formula-buscar" class="btn btn-danger btn-sm" data-pedido="61" data-toggle="modal" data-target="#myModal">Ver formula médica</button>
+                        </td>
+                    </tr>
+
+                <?php endif; ?>
             </tbody>
         </table>
     </div>
+    <?php if (count($objCompra->listFormulas) > 0): ?>
+        <div id="myModal" class="modal fade" role="dialog">
+            <div class="modal-dialog">
+                <!-- Modal content-->
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal">&times;</button>
+                        <h4 class="modal-title">Formulas médicas</h4>
+                    </div>
+                    <div class="modal-body">
+                        <table class="table table-input table-bordered table-hover table-striped">
+                            <tbody>
+                                <tr>
+                                    <th>#</th>
+                                    <th>Nombre médico</th>
+                                    <th>Institución</th>
+                                    <th>Registro médico</th>
+                                    <th>Teléfono</th>
+                                    <th>Correo Electrónico</th>									
+                                    <th>Formula médica</th>
+
+                                </tr>
+                                <?php $i = 1 ?>
+                            <?php foreach($objCompra->listFormulas as $formula):?>
+                                <tr>
+                                    <td> <?= $i++ ?> </td>
+                                    <td><?= $formula->nombreMedico?></td>
+                                    <td><?= $formula->institucion?></td>
+                                    <td><?= $formula->registroMedico?></td>
+                                    <td><?= $formula->telefono?></td>
+                                    <td><?= $formula->correoElectronico?></td>									
+                                    <td><?php if(!empty($formula->formulaMedica)): ?>
+                                        <a href="<?php echo Yii::app()->request->baseUrl; ?> <?= "/".$formula->formulaMedica?>" target="_blank" >Ver formula</a>
+                                    <?php endif;?></td>  
+                                </tr>
+                            <?php endforeach;?>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-default" data-dismiss="modal">Cerrar</button>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    <?php endif; ?>
 
     <div class="col-md-4">
         <strong> Datos de Asignación </strong><br><br>
@@ -162,7 +217,7 @@
     <div class="row">
         <div class="col-md-12">
             <div class="alert alert-danger">
-                <strong>ADVERTENCIA: EL VALOR TOTAL DE LA COMPRA ES SUPERIOR A LA FORMA DE PAGO, POR FAVOR ADICIONE UNA FORMA DE PAGO PARA CUBRIR EL EXCEDENTE DE <?php echo  Yii::app()->numberFormatter->format(Yii::app()->params->formatoMoneda['patron'], ($objCompra->totalCompra-$objCompra->objFormaPagoCompra->valor), Yii::app()->params->formatoMoneda['moneda']) ?></strong>
+                <strong>ADVERTENCIA: EL VALOR TOTAL DE LA COMPRA ES SUPERIOR A LA FORMA DE PAGO, POR FAVOR ADICIONE UNA FORMA DE PAGO PARA CUBRIR EL EXCEDENTE DE <?php echo Yii::app()->numberFormatter->format(Yii::app()->params->formatoMoneda['patron'], ($objCompra->totalCompra - $objCompra->objFormaPagoCompra->valor), Yii::app()->params->formatoMoneda['moneda']) ?></strong>
             </div>
         </div>
     </div>

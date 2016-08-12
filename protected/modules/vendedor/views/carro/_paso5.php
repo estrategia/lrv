@@ -98,7 +98,11 @@
                             </tr>
                         </thead>
                         <tbody>
+                             <?php $confirmacion = array('data-mini' => 'true') ?>
                             <?php foreach ($modelPago->listCodigoEspecial as $objEspecial): ?>
+                                 <?php if ($objEspecial->codigoEspecial == Yii::app()->params->tipoFormulaMedica): ?>
+                                    <?php $confirmacion['onChange'] = 'visualizarFormulaMedica()'; ?>
+                                <?php endif; ?>
                                 <tr>
                                     <td></td>
                                     <td><img align="left" class="iconConfirmacion" src="<?php echo Yii::app()->request->baseUrl . Yii::app()->params->carpetaImagen['codigoEspecial'] . $objEspecial->rutaIcono; ?>" ><?php echo $objEspecial->condicionCompra ?></td>
@@ -107,8 +111,12 @@
                         </tbody>
                     </table>
                     <?php echo $form->labelEx($modelPago, 'confirmacion', array('style' => 'font-size:1.3em;')); ?>
-                    <?php echo $form->checkBox($modelPago, 'confirmacion', array('data-mini' => 'true')); ?>
+                    <?php echo $form->checkBox($modelPago, 'confirmacion', $confirmacion); ?>
                     <?php echo $form->error($modelPago, 'confirmacion'); ?>
+                     <span id="form-formula-medica" class="display-none">
+                            <div class="space-2"></div>
+                           <?php $this->renderPartial('_formFormulaMedica', array('form' => $form, 'model' => new FormulasMedicas())) ?>
+                    </span>
                 </div>
             <?php endif; ?>
         </fieldset>

@@ -112,6 +112,7 @@ class Compras extends CActiveRecord {
             'listObservaciones' => array(self::HAS_MANY, 'ComprasObservaciones', 'idCompra'),
             'objPasarelaEnvio' => array(self::HAS_ONE, 'PasarelaEnvios', 'idCompra'),
             'listPasarelaRespuestas' => array(self::HAS_MANY, 'PasarelaRespuestas', 'idCompra'),
+            'listFormulas' => array(self::HAS_MANY, 'FormulasMedicas', 'idCompra'),
         );
     }
 

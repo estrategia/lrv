@@ -906,7 +906,7 @@ class CarroController extends ControllerVendedor {
             echo CJSON::encode(array('result' => 'error', 'response' => 'No se detecta ubicación'));
             Yii::app()->end();
         }
-        
+
         $objPagoForm = new FormaPagoVendedorForm;
         if (!$objPagoForm->tieneDomicilio($objSectorCiudad)) {
             echo CJSON::encode(array('result' => 'error', 'response' => "La cantidad solicitada no está disponible en este momento."));
@@ -1245,7 +1245,7 @@ class CarroController extends ControllerVendedor {
 
     private function modificarBodega($position, $objSectorCiudad) {
         $carroVista = "carro";
-        
+
         $objPagoForm = new FormaPagoVendedorForm;
         if (!$objPagoForm->tieneDomicilio($this->objSectorCiudad)) {
             echo CJSON::encode(array('result' => 'error', 'response' => array(
@@ -1355,7 +1355,7 @@ class CarroController extends ControllerVendedor {
         if (is_string($post)) {
             $post = ($post == "true");
         }
-        
+
         if ($this->objSectorCiudad === null) {
             if ($post) {
                 echo CJSON::encode(array('result' => 'ok', 'response' => 'Seleccionar ubicaci&oacute;n', 'redirect' => $this->createUrl('/vendedor/sitio/ubicacion')));
@@ -1366,7 +1366,7 @@ class CarroController extends ControllerVendedor {
                 Yii::app()->end();
             }
         }
-        
+
         $modelPago = null;
         if (isset(Yii::app()->session[Yii::app()->params->vendedor['sesion']['carroPagarForm']]) && Yii::app()->session[Yii::app()->params->vendedor['sesion']['carroPagarForm']] != null) {
             $modelPago = Yii::app()->session[Yii::app()->params->vendedor['sesion']['carroPagarForm']];
@@ -1388,21 +1388,21 @@ class CarroController extends ControllerVendedor {
                 Yii::app()->end();
             }
         }
-        
+
         if (!Yii::app()->controller->module->user->getClienteLogueado() && !Yii::app()->controller->module->user->getIsClienteInvitado() && $modelPago == null) {
             Yii::app()->session[Yii::app()->params->vendedor['sesion']['redireccionAutenticacion']] = $this->createAbsoluteUrl('pagar');
             $this->render('/vendedor/usuario/autenticar', array('pagar' => true));
             Yii::app()->end();
         }
-        
+
         if ($modelPago == null) {
             $modelPago = new FormaPagoVendedorForm;
             $modelPago->isMobil = true;
-            
+
             if (Yii::app()->controller->module->user->getIsClienteInvitado()) {
                 $modelPago->identificacionUsuario = null;
                 $modelPago->pagoInvitado = true;
-            }else {
+            } else {
                 $modelPago->identificacionUsuario = Yii::app()->controller->module->user->getCedulaCliente();
                 $modelPago->pagoInvitado = false;
             }
@@ -1431,7 +1431,7 @@ class CarroController extends ControllerVendedor {
             $this->pagarAutenticadoMovil($paso, $post, $modelPago);
         }
     }
-    
+
     private function pagarAutenticadoMovil($paso, $post, $modelPago) {
         if ($paso === null)
             $paso = Yii::app()->params->pagar['pasos'][1];
@@ -1689,7 +1689,7 @@ class CarroController extends ControllerVendedor {
             $this->render("pagar", $params);
         }
     }
-    
+
     private function pagarInvitadoMovil($paso, $post, $modelPago) {
         if ($paso === null)
             $paso = Yii::app()->params->pagar['pasos'][1];
@@ -1885,7 +1885,7 @@ class CarroController extends ControllerVendedor {
             Yii::app()->end();
         } else {
             $this->fixedFooter = true;
-            
+
             //validar pasos anteriores
             $modelPago->validarPasos(Yii::app()->params->pagar['pasosDisponibles']['domicilio'], $paso);
 
@@ -2115,6 +2115,27 @@ class CarroController extends ControllerVendedor {
 
             if (!$objCompra->save()) {
                 throw new Exception("Error al guardar compra" . $objCompra->validateErrorsResponse());
+            }
+            
+            if (isset(Yii::app()->session[Yii::app()->params->vendedor['sesion']['formulaMedica']])) {
+                foreach (Yii::app()->session[Yii::app()->params->vendedor['sesion']['formulaMedica']] as $formula) {
+                    $formulaMedica = new FormulasMedicas();
+                    $formulaMedica->idCompra = $objCompra->idCompra;
+                    $formulaMedica->nombreMedico = $formula['nombreMedico'];
+                    $formulaMedica->institucion = $formula['institucion'];
+                    $formulaMedica->registroMedico = $formula['registroMedico'];
+                    $formulaMedica->telefono = $formula['telefono'];
+                    $formulaMedica->correoElectronico = $formula['correoElectronico'];
+                    $formulaMedica->formulaMedica = $formula['formulaMedica'];
+
+                    if (!$formulaMedica->save()) {
+                        echo "<pre>";
+                        print_r($formulaMedica->getErrors());exit();
+                        throw new Exception("Error al formula medica" . implode(",",$formulaMedica->getErrors()));
+                    }
+                }
+                
+                unset(Yii::app()->session[Yii::app()->params->vendedor['sesion']['formulaMedica']]);
             }
 
             if ($tipoEntrega == Yii::app()->params->entrega['tipo']['presencial']) {
@@ -2354,15 +2375,15 @@ class CarroController extends ControllerVendedor {
                     if (!$objItem->save()) {
                         throw new Exception("Error al guardar item de compra $objItem->codigoProducto. " . $objItem->validateErrorsResponse());
                     }
-                    
-                    
-                    foreach($modelPago->usoBono as $idx => $usoBono){
-                        if($usoBono == 1 && $modelPago->bono[$idx]['modoUso'] == 2){
-                            if($modelPago->bono[$idx]['codigoProducto'] ==  $objItem->codigoProducto){
-                                
+
+
+                    foreach ($modelPago->usoBono as $idx => $usoBono) {
+                        if ($usoBono == 1 && $modelPago->bono[$idx]['modoUso'] == 2) {
+                            if ($modelPago->bono[$idx]['codigoProducto'] == $objItem->codigoProducto) {
+
                                 $beneficio = Beneficios::model()->find("idBeneficio = $idx");
-                                
-                                if($beneficio){
+
+                                if ($beneficio) {
                                     $objBeneficioItem = new BeneficiosComprasItems;
                                     $objBeneficioItem->idBeneficio = $beneficio->idBeneficio;
                                     $objBeneficioItem->idBeneficioSincronizado = $beneficio->idBeneficioSincronizado;
@@ -2386,8 +2407,8 @@ class CarroController extends ControllerVendedor {
                                     $objBeneficioItem->mensaje = $beneficio->mensaje;
                                     $objBeneficioItem->swobligaCli = $beneficio->swobligaCli;
                                     $objBeneficioItem->fechaCreacionBeneficio = $beneficio->fechaCreacionBeneficio;
-                                    
-                                     if (!$objBeneficioItem->save()) {
+
+                                    if (!$objBeneficioItem->save()) {
                                         throw new Exception("Error al guardar beneficio de compra $objBeneficioItem->idCompraItem. " . $objBeneficioItem->validateErrorsResponse());
                                     }
                                 }
@@ -2581,7 +2602,7 @@ class CarroController extends ControllerVendedor {
                         } catch (Exception $ce) {
                             Yii::log("Error enviando correo de remision automatica #$objCompra->idCompra\n" . $ce->getMessage() . "\n" . $ce->getTraceAsString(), CLogger::LEVEL_INFO, 'application');
                         }
-                    }else{
+                    } else {
                         $objCompra->idEstadoCompra = Yii::app()->params->callcenter['estadoCompra']['estado']['subasta'];
                         if (!$objCompra->save()) {
                             throw new Exception("Error al guardar compra [1]" . $objCompra->validateErrorsResponse());
@@ -2851,6 +2872,62 @@ class CarroController extends ControllerVendedor {
 
         if ($limpiar)
             Yii::app()->session[Yii::app()->params->vendedor['sesion']['carroPagarForm']] = null;
+    }
+
+    public function actionAdicionarFormula() {
+
+        $array = array();
+        if (isset(Yii::app()->session[Yii::app()->params->vendedor['sesion']['formulaMedica']])) {
+            $array = Yii::app()->session[Yii::app()->params->vendedor['sesion']['formulaMedica']];
+        }
+        $ruta = "";
+
+        if ($_FILES) {
+            $model = new FormulasMedicas();
+            $model->attributes = $_POST['FormulasMedicas'];
+            $uploadedFile = CUploadedFile::getInstance($model, "formulaMedica");
+
+            if ($_FILES['FormulasMedicas']['size']['formulaMedica'] > 0) {
+                $directorio = 'images/formulamedica/' . Date("Ymdhis") . $uploadedFile->getName();
+                if ($uploadedFile->saveAs($directorio)) {
+                    $ruta = $directorio;
+                } else {
+                    echo CJSON::encode(
+                            array(
+                                'result' => 'ok',
+                                'response' => 'Error al cargar la imagen de la categoría'
+                    ));
+                    Yii::app()->end();
+                }
+            }
+        }
+		
+		
+		if($_POST['tipo-formula'] == 1){
+		   $modelFormula = new FormulasMedicas('datosMedico');
+		}else {
+		  $modelFormula = new FormulasMedicas();
+		}
+		
+		$modelFormula->attributes = $_POST['FormulasMedicas'];
+		
+		if (!$modelFormula->validate()) {
+            echo CActiveForm::validate($modelFormula);
+            Yii::app()->end();
+        }
+
+        $array[] = array('nombreMedico' => $_POST['FormulasMedicas']['nombreMedico'],
+            'institucion' => $_POST['FormulasMedicas']['institucion'],
+            'registroMedico' => $_POST['FormulasMedicas']['registroMedico'],
+            'telefono' => $_POST['FormulasMedicas']['telefono'],
+            'correoElectronico' => $_POST['FormulasMedicas']['correoElectronico'],
+            'formulaMedica' => $ruta);
+
+        Yii::app()->session[Yii::app()->params->vendedor['sesion']['formulaMedica']] = $array;
+        echo CJSON::encode(array(
+            'result' => 'ok',
+            'response' => $this->isMobile ? $this->renderPartial('_formulasMedicasAdicionadas', null, true, false) : $this->renderPartial('_d_formulasMedicasAdicionadas', null, true, false),
+        ));
     }
 
     /* public function actionPuntos(){

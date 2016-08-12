@@ -1732,3 +1732,58 @@ $(document).on('click','a[data-role="tipoentrega-info"]',function(){
         return false;
     }
 });
+
+function visualizarFormulaMedica() {
+    if ($('#FormaPagoVendedorForm_confirmacion').prop('checked')) {
+        $("#form-formula-medica").removeClass('display-none');
+    } else {
+        $("#form-formula-medica").addClass('display-none');
+    }
+}
+
+$(document).on('click', "#btn-adicionar-formula", function () {
+
+    var form = document.getElementById("form-pago-confirmacion");
+    var campo5 = document.createElement("input");
+    campo5.type = 'hidden';
+    campo5.value = $(this).attr('data-tipo');
+    campo5.name = "tipo-formula";
+    campo5.id = "tipo-formula";
+    form.appendChild(campo5);
+	
+    //   var form = $("#form-pago-confirmacion");
+    $.ajax({
+        type: 'POST',
+        url: requestUrl + "/vendedor/carro/adicionarFormula/",
+        data: new FormData(form),
+        dataType: 'json',
+        cache: false,
+        contentType: false,
+        processData: false,
+        beforeSend: function () {
+            $.mobile.loading('show');
+        },
+        complete: function (data) {
+            $.mobile.loading('hide');
+        },
+        success: function (data) {
+            if (data.result === 'ok') {
+                $("#formulasAdicionadas").html(data.response);
+                $("#FormulasMedicas_nombreMedico").val("");
+                $("#FormulasMedicas_institucion").val("");
+                $("#FormulasMedicas_registroMedico").val("");
+                $("#FormulasMedicas_telefono").val("");
+                $("#FormulasMedicas_correoElectronico").val("");				
+                $("#FormulasMedicas_formulaMedica").val("");
+            } else if (data.result === 'error') {
+
+            } else {
+                $.each(data, function (element, error) {
+                    $('#' +  element + '_em_').html(error);
+                    $('#' +  element + '_em_').css('display', 'block');
+                });
+            }
+        }
+    });
+    return false;
+});

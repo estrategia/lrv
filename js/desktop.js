@@ -2517,3 +2517,67 @@ function capturarcalificacionproducto(score, evt) {
 /*
  * JSJJ-FIN
  */
+
+function visualizarFormulaMedica(){
+    if( $('#FormaPagoForm_confirmacion').prop('checked') ) {
+        $("#form-formula-medica").removeClass('display-none');
+    }else{
+        $("#form-formula-medica").addClass('display-none');
+    }
+}
+
+
+$(document).on('click', "#btn-adicionar-formula", function() {
+
+    var form = document.getElementById("form-pago-confirmacion");
+    
+ //   var form = $("#form-pago-confirmacion");
+
+    $.ajax({
+        type: 'POST',
+        url: requestUrl + "/carro/adicionarFormula/",
+        data: new FormData(form),
+        dataType: 'json',
+        cache: false,
+        contentType: false,
+        processData: false,
+        beforeSend: function() {
+            Loading.show();
+        },
+        complete: function(data) {
+            Loading.hide();
+        },
+        success: function(data) {
+            if (data.result === 'ok') {
+                $("#FormulasMedicas_nombreMedico").val("");
+                $("#FormulasMedicas_institucion").val("");
+                $("#FormulasMedicas_registroMedico").val("");
+                $("#FormulasMedicas_descripcion").val("");
+                $("#FormulasMedicas_formulaMedica").val("");
+				$("#FormulasMedicas_telefono").val("");
+				$("#FormulasMedicas_correoElectronico").val("");
+                $("#formulasAdicionadas").html(data.response);
+            } else if (data.result === 'error') {
+            
+            } else {
+                $.each(data, function(element, error) {
+                    $('#' + element + '_em_').html(error);
+                    $('#' + element + '_em_').css('display', 'block');
+                });
+            }
+        }
+    });
+    return false;
+});
+
+
+function mostrarTipoFormula(val){
+    if(val == 1){
+        $("#describir-formula").removeClass('display-none');
+        $("#anexar-formula").addClass('display-none');
+    }else if(val == 2){
+        $("#describir-formula").addClass('display-none');
+        $("#anexar-formula").removeClass('display-none');
+    }
+    
+}
