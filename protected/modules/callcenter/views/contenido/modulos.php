@@ -113,6 +113,7 @@
                 <?php echo $form->checkboxList($model, 'dias', Yii::app()->params->callcenter['modulosConfigurados']['diasSemana'], array('class' => 'dias', 'style' => 'display:inline', 'separator' => '&nbsp;', 'template' => '<div class="col-md-1">{input}{label}</div>')) ?>
                 <?php echo $form->error($model, 'dias'); ?>
             </div>
+            <div style="height: 10px"></div>
             
             <?php if ($model->tipo == ModulosConfigurados::TIPO_PRODUCTOS_CUADRICULA || $model->tipo == ModulosConfigurados::TIPO_PRODUCTOS): ?>
                 <div class="form-group">
@@ -126,6 +127,14 @@
                     <?php echo $form->textField($model, 'lineas', array('id' => 'lineas', 'class' => 'lineas form-control', 'disabled' => ($model->aleatorio == 1) ? false : true)); ?>
                     <?php echo $form->error($model, 'lineas'); ?>
                 </div>
+                <div class="form-group">
+                    <!-- checkbox -->
+                    <?php echo $form->labelEx($model, 'agotado'); ?><div class="space-1"></div>
+                    <?php echo $form->dropDownList($model, 'agotado', Yii::app()->params->callcenter['modulosConfigurados']['booleanos'], array('id' => 'agotado', 'class' => 'form-control')) ?>
+                    <?php echo $form->error($model, 'agotado'); ?>
+                </div>
+            <?php endif; ?>
+            <?php if ($model->tipo == ModulosConfigurados::TIPO_PRODUCTOS_BANNER): ?>
                 <div class="form-group">
                     <!-- checkbox -->
                     <?php echo $form->labelEx($model, 'agotado'); ?><div class="space-1"></div>

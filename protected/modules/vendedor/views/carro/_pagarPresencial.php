@@ -47,9 +47,8 @@
                             <tr>
                                 <td><?php echo $producto->CODIGO_PRODUCTO ?></td>
                                 <td><?php echo $producto->DESCRIPCION ?></td>
-                                <td><?php echo $producto->CANTIDAD_UNIDAD . "/" . $producto->SALDO_UNIDAD ?></td>
-                                <td><?php echo ($producto->COMPLETITUD_UNIDAD) ? "<img src='" . Yii::app()->request->baseUrl . "/images/iconos/checkmark.png'/>" : "<img src='" . Yii::app()->request->baseUrl . "/images/iconos/mistake.png'/>" ?></td>
-                               <!-- <td><?php echo ($producto->CANTIDAD_FRACCION > 0 ? $producto->SALDO_FRACCION : "NA") ?></td> -->
+                                <td><?php echo "$producto->CANTIDAD_UNIDAD.$producto->CANTIDAD_FRACCION / $producto->SALDO_UNIDAD.$producto->SALDO_FRACCION" ?></td>
+                                <td><?php echo ($producto->COMPLETITUD_UNIDAD && $producto->COMPLETITUD_FRACCION) ? "<img src='" . Yii::app()->request->baseUrl . "/images/iconos/checkmark.png'/>" : "<img src='" . Yii::app()->request->baseUrl . "/images/iconos/mistake.png'/>" ?></td>
                             </tr>
                         <?php endforeach; ?>
                     </table>

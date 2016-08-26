@@ -235,7 +235,7 @@ class ModulosConfigurados extends CActiveRecord {
                 $criteria['with']['listPrecios'] = array('on' => 'listPrecios.codigoCiudad=:ciudad AND listPrecios.codigoSector=:sector OR listPrecios.idProductoPrecios IS NULL');
                 $criteria['with']['listSaldosTerceros'] = array('on' => ' listSaldosTerceros.codigoCiudad=:ciudad AND listSaldosTerceros.codigoSector=:sector OR listSaldosTerceros.idProductoSaldo IS NULL');
                 
-                if($this->agotado == 0 && ($this->tipo==self::TIPO_PRODUCTOS_CUADRICULA || $this->tipo==self::TIPO_PRODUCTOS)){
+                if($this->agotado == 0 && in_array($this->tipo, array(self::TIPO_PRODUCTOS_CUADRICULA, $this->tipo==self::TIPO_PRODUCTOS, $this->tipo==self::TIPO_PRODUCTOS_BANNER))){
                      $criteria['condition'] .= " AND ( (listSaldos.idProductoSaldos IS NOT NULL AND listSaldos.saldoUnidad>0 AND listPrecios.idProductoPrecios IS NOT NULL) OR (listSaldosTerceros.idProductoSaldo IS NOT NULL AND listSaldosTerceros.saldoUnidad>0))";
                 }
                 /*

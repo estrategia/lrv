@@ -20,7 +20,7 @@
 
     <fieldset>
         <h3 class="ui-bar ui-bar-h center title_h tpad">
-            Ingresa la cédula del cliente si es usuario de la rebaja virtual, de lo contrario continua como Cliente Invitado
+            Solicita el número de cédula del cliente y haz la búsqueda, si no lo encuentras continúa como Cliente Invitado
         </h3>
         <div class="ui-field-container" data-theme="c">
             <?php echo $form->labelEx($model, 'identificacionUsuario', array('class' => 'ui-hidden-accessible')); ?>
