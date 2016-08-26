@@ -50,10 +50,9 @@
                                         <tr>
                                             <td><?php echo $producto->CODIGO_PRODUCTO ?></td>
                                             <td><?php echo $producto->DESCRIPCION ?></td>
-                                            <td><?php echo $producto->CANTIDAD_UNIDAD . "/" . $producto->SALDO_UNIDAD ?></td>
+                                            <td><?php echo "$producto->CANTIDAD_UNIDAD.$producto->CANTIDAD_FRACCION / $producto->SALDO_UNIDAD.$producto->SALDO_FRACCION" ?></td>
                                             <!--<td class="icon_pag"><?php echo ($producto->COMPLETITUD_UNIDAD) ? "<img src='" . Yii::app()->request->baseUrl . "/images/iconos/checkmark.png'/>" : "<img src='" . Yii::app()->request->baseUrl . "/images/iconos/mistake.png'/>" ?></td>-->
-                                            <td class="icon_pag"><?php echo ($producto->COMPLETITUD_UNIDAD) ? '<span class="glyphicon glyphicon-ok"></span>' : '<span class="glyphicon glyphicon-remove"></span>' ?></td>
-                                           <!-- <td><?php echo ($producto->CANTIDAD_FRACCION > 0 ? $producto->SALDO_FRACCION : "NA") ?></td> -->
+                                            <td class="icon_pag"><?php echo ($producto->COMPLETITUD_UNIDAD && $producto->COMPLETITUD_FRACCION) ? '<span class="glyphicon glyphicon-ok"></span>' : '<span class="glyphicon glyphicon-remove"></span>' ?></td>
                                         </tr>
                                     <?php endforeach; ?>
                                 </table>

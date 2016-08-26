@@ -579,6 +579,8 @@ class FormaPagoForm extends CFormModel {
         //$positions = $shoppingCart->getPositions();
         $this->indicePuntoVenta = null;
         $this->listPuntosVenta = array(0 => 0, 1 => 'Consulta no exitosa');
+        
+        $arrUnidadFracc = array();
 
         $productos = array();
         foreach ($shoppingCart->getPositions() as $position) {
@@ -586,10 +588,13 @@ class FormaPagoForm extends CFormModel {
                 $productos[] = array(
                     "CODIGO_PRODUCTO" => $position->objProducto->codigoProducto,
                     "ID_PRODUCTO" => $position->objProducto->codigoProducto,
-                    "CANTIDAD" => $position->getQuantityUnit(),
+                    "CANTIDAD" => intval($position->getQuantityUnit()),
+                    "FRACCION" => $position->getQuantity(true)*$position->objProducto->unidadFraccionamiento,
                     "DESCRIPCION" => $position->objProducto->descripcionProducto,
                 );
             }
+            
+            $arrUnidadFracc[$position->objProducto->codigoProducto] = $position->objProducto->unidadFraccionamiento;
         }
 
         /* CVarDumper::dump($productos,10,true);
@@ -601,7 +606,7 @@ class FormaPagoForm extends CFormModel {
                 'uri' => "",
                 'trace' => 1
             ));
-            $this->listPuntosVenta = $client->__soapCall("LRVConsultarSaldoMovil", array(
+            $this->listPuntosVenta = $client->__soapCall("LRVConsultarSaldoMovilNEW", array(
                 'productos' => $productos,
                 'ciudad' => $shoppingCart->getCodigoCiudad(),
                 'sector' => $shoppingCart->getCodigoSector()
@@ -650,6 +655,12 @@ class FormaPagoForm extends CFormModel {
                     }
 
                     $objPdv = PuntoVenta::model()->find(array("condition" => "idComercial=:comercial", 'params' => array(':comercial' => $pdv[1])));
+                    
+                    if($objPdv===null){
+                        unset($this->listPuntosVenta[1][$indicePdv]);
+                        continue;
+                    }
+                    
                     $this->listPuntosVenta[1][$indicePdv]['HORA_INICIO'] = null;
                     $this->listPuntosVenta[1][$indicePdv]['HORA_FIN'] = null;
                     $dia = 'festivo';
@@ -680,18 +691,14 @@ class FormaPagoForm extends CFormModel {
                     }
 
                     foreach ($pdv[4] as $indiceProd => $producto) {
-                        $arrSaldo = $this->decimalToUnidFracc($producto->SALDO);
-                        if ($arrSaldo['UNIDAD'] <= 0 && $arrSaldo['FRACCION'] <= 0) {
-                            unset($this->listPuntosVenta[1][$indicePdv][4][$indiceProd]);
-                        } else {
-                            $arrCantidad = $this->decimalToUnidFracc($producto->CANTIDAD);
-                            $this->listPuntosVenta[1][$indicePdv][4][$indiceProd]->CANTIDAD_UNIDAD = $arrCantidad['UNIDAD'];
-                            $this->listPuntosVenta[1][$indicePdv][4][$indiceProd]->CANTIDAD_FRACCION = $arrCantidad['FRACCION'];
-                            $this->listPuntosVenta[1][$indicePdv][4][$indiceProd]->SALDO_UNIDAD = $arrSaldo['UNIDAD'];
-                            $this->listPuntosVenta[1][$indicePdv][4][$indiceProd]->SALDO_FRACCION = $arrSaldo['FRACCION'];
-                            $this->listPuntosVenta[1][$indicePdv][4][$indiceProd]->COMPLETITUD_UNIDAD = $arrSaldo['UNIDAD'] >= $arrCantidad['UNIDAD'];
-                            $this->listPuntosVenta[1][$indicePdv][4][$indiceProd]->COMPLETITUD_FRACCION = $arrSaldo['FRACCION'] >= $arrCantidad['FRACCION'];
-                        }
+                        $arrSaldo = $this->decimalToUnidFracc($producto->SALDO,$arrUnidadFracc[$producto->CODIGO_PRODUCTO]);
+                        $arrCantidad = $this->decimalToUnidFracc($producto->CANTIDAD . "." . $producto->FRACCION,$arrUnidadFracc[$producto->CODIGO_PRODUCTO]);
+                        $this->listPuntosVenta[1][$indicePdv][4][$indiceProd]->CANTIDAD_UNIDAD = $arrCantidad['UNIDAD'];
+                        $this->listPuntosVenta[1][$indicePdv][4][$indiceProd]->CANTIDAD_FRACCION = $arrCantidad['FRACCION'];
+                        $this->listPuntosVenta[1][$indicePdv][4][$indiceProd]->SALDO_UNIDAD = $arrSaldo['UNIDAD'];
+                        $this->listPuntosVenta[1][$indicePdv][4][$indiceProd]->SALDO_FRACCION = $arrSaldo['FRACCION'];
+                        $this->listPuntosVenta[1][$indicePdv][4][$indiceProd]->COMPLETITUD_UNIDAD = $arrSaldo['UNIDAD'] >= $arrCantidad['UNIDAD'];
+                        $this->listPuntosVenta[1][$indicePdv][4][$indiceProd]->COMPLETITUD_FRACCION = $arrSaldo['FRACCION'] >= $arrCantidad['FRACCION'];
                     }
                 } else {
                     unset($this->listPuntosVenta[1][$indicePdv]);
@@ -740,18 +747,33 @@ class FormaPagoForm extends CFormModel {
         }
     }
 
-    private function decimalToUnidFracc($n) {
-        /* $aux = (string) $n;
-          $n = explode(".", $aux);
-          return array(
-          'UNIDAD' => isset($n[0]) ? $n[0] : 0,
-          'FRACCION' => isset($n[1]) ? $n[1] : 0
-          ); */
+    private function decimalToUnidFracc($n,$uFracc) {
+        $aux = (string) $n;
+        $n = explode(".", $aux);
+        
+        $arrCantidad = array(
+          'UNIDAD' => 0,
+          'FRACCION' => 0
+        );
+        
+        if(isset($n[0])){
+            $arrCantidad['UNIDAD'] = intval($n[0]);
+        }
+        
+        if(isset($n[1])){
+            $arrCantidad['FRACCION'] = intval($n[1]);
+        }
+        
+        if($arrCantidad['FRACCION']>0){
+            $arrCantidad['FRACCION'] = intval($arrCantidad['FRACCION']/$uFracc);
+        }
+        
+        return $arrCantidad;
 
-        return array(
+        /*return array(
             'UNIDAD' => $n,
             'FRACCION' => 0
-        );
+        );*/
     }
 
     public static function listDataCuotas() {
