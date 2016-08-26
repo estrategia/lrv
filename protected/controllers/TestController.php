@@ -2,6 +2,14 @@
 
 class TestController extends Controller {
     
+    public function actionListprod(){
+        $objModulo = ModulosConfigurados::model()->find(array(
+            'condition' => 'idModulo=2',
+        ));
+        
+        $listProductos = $objModulo->getListaProductos($this->objSectorCiudad);
+    }
+    
     public function actionBloqueo() {
         /* $usuario = '1113618983';
           $sql="select max(idCompra) idCompra from t_BloqueosUsuarios bu join t_ComprasBloqueoUsuarios cbu on bu.idBloqueoUsuario=cbu.idBloqueoUsuario where bu.identificacionUsuario=:usuario and anho=:anho and mes=:mes";
@@ -92,6 +100,16 @@ class TestController extends Controller {
         } catch (Exception $exc) {
             echo ("Exception WebService CongelarCompraAutomatica [compra: $idCompra]\n" . $exc->getMessage() . "\n" . $exc->getTraceAsString());
         }
+    }
+    
+    public function actionPdvsweb(){
+        $client = new SoapClient("http://sii.copservir.com/puntoventa/sweb/puntoventa");
+        
+        $result = $client->getPuntoVenta(array('codciudad'=>76001));
+        CVarDumper::dump($result, 10, true);
+        
+        
+       
     }
     
     public function actionRemanu(){
@@ -680,7 +698,7 @@ class TestController extends Controller {
     }
 
     public function actionWsdisponibilidad() {
-        $productos = array();
+        /*$productos = array();
         $productos[0]["CODIGO_PRODUCTO"] = 26255;
         $productos[0]["ID_PRODUCTO"] = 26255;
         $productos[0]["CANTIDAD"] = 5;
@@ -699,7 +717,25 @@ class TestController extends Controller {
         $productos[3]["CODIGO_PRODUCTO"] = 22667;
         $productos[3]["ID_PRODUCTO"] = 22667;
         $productos[3]["CANTIDAD"] = 2;
-        $productos[3]["DESCRIPCION"] = "NA";
+        $productos[3]["DESCRIPCION"] = "NA";*/
+        
+        $shoppingCart = Yii::app()->shoppingCart;
+        $productos = array();
+        foreach ($shoppingCart->getPositions() as $position) {
+            if ($position->isProduct()) {
+                $productos[] = array(
+                    "CODIGO_PRODUCTO" => $position->objProducto->codigoProducto,
+                    "ID_PRODUCTO" => $position->objProducto->codigoProducto,
+                    "CANTIDAD" => intval($position->getQuantityUnit()),
+                    "FRACCION" => $position->getQuantity(true)*$position->objProducto->unidadFraccionamiento,
+                    "DESCRIPCION" => $position->objProducto->descripcionProducto,
+                );
+            }
+        }
+        
+        echo "Productos:<br><br>";
+        CVarDumper::dump($productos, 10, true);
+        echo "<br><br>";
 
         $client = new SoapClient(null, array(
             'location' => "http://www.copservir.com/webService/serverLRV.php",
@@ -707,7 +743,7 @@ class TestController extends Controller {
             'trace' => 1
         ));
 
-        $return = $client->__soapCall("LRVConsultarSaldoMovil", array('productos' => $productos, 'ciudad' => 76001, 'sector' => 22));
+        $return = $client->__soapCall("LRVConsultarSaldoMovilNEW", array('productos' => $productos, 'ciudad' => 76001, 'sector' => 22));
 
         /*     for($i=0;$i<count($return[1]);$i++){
           for($j=0;$j<count($return[1])-1;$j++){

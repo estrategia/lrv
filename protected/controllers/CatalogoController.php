@@ -683,7 +683,7 @@ class CatalogoController extends Controller {
                     'listSaldosTerceros' => array('on' => 'listSaldosTerceros.codigoCiudad=:ciudad AND listSaldosTerceros.codigoSector=:sector')
                 ),
                 //'condition' => "t.activo=:activo AND (listSaldos.saldoUnidad>:saldo OR listSaldosTerceros.saldoUnidad>:saldo)",
-                'condition' => "t.activo=:activo AND (listSaldos.saldoUnidad>:saldo OR listSaldosTerceros.saldoUnidad>:saldo)",
+                'condition' => "t.activo=:activo AND (listSaldos.saldoUnidad>:saldo OR listSaldos.saldoFraccion>:saldo OR listSaldosTerceros.saldoUnidad>:saldo)",
                 //'condition' => "t.activo=:activo AND ( (listSaldos.saldoUnidad IS NOT NULL AND listPrecios.codigoCiudad IS NOT NULL) OR listSaldosTerceros.codigoCiudad IS NOT NULL)",
                 'params' => array(
                     ':tipoImagen' => YII::app()->params->producto['tipoImagen']['mini'],

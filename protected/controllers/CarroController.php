@@ -123,15 +123,15 @@ class CarroController extends Controller {
 
         $objProducto = Producto::model()->find(array(
             'with' => array(
-                'listSaldos' => array('condition' => '(listSaldos.saldoUnidad>:saldo AND listSaldos.codigoCiudad=:ciudad AND listSaldos.codigoSector=:sector) OR (listSaldos.saldoUnidad IS NULL AND listSaldos.codigoCiudad IS NULL AND listSaldos.codigoSector IS NULL)'),
+                'listSaldos' => array('condition' => '(listSaldos.codigoCiudad=:ciudad AND listSaldos.codigoSector=:sector) OR (listSaldos.saldoUnidad IS NULL AND listSaldos.codigoCiudad IS NULL AND listSaldos.codigoSector IS NULL)'),
                 'listPrecios' => array('condition' => '(listPrecios.codigoCiudad=:ciudad AND listPrecios.codigoSector=:sector) OR (listPrecios.codigoCiudad IS NULL AND listPrecios.codigoSector IS NULL)'),
-                'listSaldosTerceros' => array('condition' => '(listSaldosTerceros.saldoUnidad>:saldo AND listSaldosTerceros.codigoCiudad=:ciudad AND listSaldosTerceros.codigoSector=:sector) OR (listSaldosTerceros.codigoCiudad IS NULL AND listSaldosTerceros.codigoSector IS NULL)')
+                'listSaldosTerceros' => array('condition' => '(listSaldosTerceros.codigoCiudad=:ciudad AND listSaldosTerceros.codigoSector=:sector) OR (listSaldosTerceros.codigoCiudad IS NULL AND listSaldosTerceros.codigoSector IS NULL)')
             ),
             'condition' => 't.activo=:activo AND t.codigoProducto=:codigo AND ( (listSaldos.saldoUnidad IS NOT NULL AND listPrecios.codigoCiudad IS NOT NULL) OR listSaldosTerceros.codigoCiudad IS NOT NULL)',
             'params' => array(
                 ':activo' => 1,
                 ':codigo' => $producto,
-                ':saldo' => 0,
+                //':saldo' => 0,
                 ':ciudad' => $this->objSectorCiudad->codigoCiudad,
                 ':sector' => $this->objSectorCiudad->codigoSector,
             ),
@@ -3994,8 +3994,10 @@ class CarroController extends Controller {
         CVarDumper::dump($modelPago->rules(), 10, true);
         echo "<br/><br/>SCENARIO: " . $modelPago->getScenario();
 
-        if ($limpiar)
+        if ($limpiar){
             Yii::app()->session[Yii::app()->params->sesion['carroPagarForm']] = null;
+            //unset(Yii::app()->session[Yii::app()->params->sesion['carroPagarForm']]);
+        }
     }
 
     public function actionAdicionarFormula() {
