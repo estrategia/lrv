@@ -197,7 +197,7 @@ function GSASearchAux($term) {
                             $cod = obtenerProductoRefe($array["GSP"]["RES"]["R"]["S"]);
                             $rank = $array["GSP"]["RES"]["R"]["RK"];
                             if ($cod !== null)
-                                $codigosArray[$cod] = $rank;
+                                $codigosArray[$cod] = convertRanking($rank);
                         }
                     }
                     else {
@@ -207,7 +207,7 @@ function GSASearchAux($term) {
                                     $cod = obtenerProductoRefe($prod["S"]);
                                     $rank = $prod["RK"];
                                     if ($cod !== null)
-                                        $codigosArray[$cod] = $rank;
+                                        $codigosArray[$cod] = convertRanking($rank);
                                 }
                             }
                         }
@@ -218,6 +218,10 @@ function GSASearchAux($term) {
     }
 
     return $codigosArray;
+}
+
+function convertRanking($rank){
+    return round(0.4*$rank);
 }
 
 function GSAResult(&$term, &$result) {
