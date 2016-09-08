@@ -12,7 +12,7 @@ $this->metaTags = "<meta http-equiv='X-UA-Compatible' content='IE=edge'>
 		    font-family: Gotham-Bold;
 		    src: url(" . Yii::app()->request->baseUrl . "/images/contenido/coca-cola/Gotham-Bold.otf);
 		}  
-        p {font-family: Gotham-Bold;}
+        .texto-cocacola {font-family: Gotham-Bold;font-size: 25px;text-align: center;padding: 15px;}
         .btn-entrega{margin:0 auto;width:400px;}  
         .space {height: 60px;} 
         .owl-carousel.owl-theme.owl-productodetalle.cocacola .owl-pagination{margin-top: 50px !important;}
@@ -27,7 +27,7 @@ $this->metaTags = "<meta http-equiv='X-UA-Compatible' content='IE=edge'>
         <img width="100%" src="<?= Yii::app()->request->baseUrl ?>/images/contenido/coca-cola/banner-movil.jpg">  
     </section>
     <section>
-        <p style="font-size: 13px;text-align: center;padding: 15px;">Identifícalas por su descriptor, el color de su tapa y el de su etiqueta: </p>
+        <p class="texto-cocacola">Identifícalas por su descriptor, el color de su tapa y el de su etiqueta: </p>
     </section>
     <section>
         <div id="owl-productodetalle-inicio" class="owl-carousel owl-theme owl-productodetalle cocacola">
@@ -77,29 +77,37 @@ $this->metaTags = "<meta http-equiv='X-UA-Compatible' content='IE=edge'>
             </div>
         </div>
         <div class="row">
-            <p style="font-size: 25px;text-align: center;">Identifícalas por su descriptor, el color de su tapa y el de su etiqueta: </p>
+            <p class="texto-cocacola">Identifícalas por su descriptor, el color de su tapa y el de su etiqueta: </p>
             <div class="space"></div>
             <div class="col-md-3 col-sm-3">
-                <img src="<?= Yii::app()->request->baseUrl ?>/images/contenido/coca-cola/coca-cola-sabor-original.jpg" class="img-responsive" alt="Coca-Cola sabor original">
+                <a href="">
+                   <img src="<?= Yii::app()->request->baseUrl ?>/images/contenido/coca-cola/coca-cola-sabor-original.jpg" class="img-responsive" alt="Coca-Cola sabor original"> 
+                </a>
                 <a href="">
                     <img style="margin-top: 14px;" src="<?= Yii::app()->request->baseUrl ?>/images/contenido/coca-cola/comprar.png" class="img-responsive" alt="comprar">
                 </a>
 
             </div>
             <div class="col-md-3 col-sm-3">
-                    <img src="<?= Yii::app()->request->baseUrl ?>/images/contenido/coca-cola/coca-cola-azucar-estebia.jpg" class="img-responsive" alt="Coca-Cola con azúcar y estebia">                    
                 <a href="">
-                    <img style="margin-top: 14px;" src="<?= Yii::app()->request->baseUrl ?>/images/contenido/coca-cola/comprar.png" class="img-responsive" alt="comprar">
+                    <img src="<?= Yii::app()->request->baseUrl ?>/images/contenido/coca-cola/coca-cola-azucar-estebia.jpg" class="img-responsive" alt="Coca-Cola con azúcar y estebia">   
+                </a>                 
+                <a href="">
+                    <img style="margin-top: 14px;" src="<?= Yii::app()->request->baseUrl ?>/images/contenido/coca-cola/proximamente.png" class="img-responsive" alt="comprar">
                 </a>
             </div>
             <div class="col-md-3 col-sm-3">
+                <a href="">
                     <img src="<?= Yii::app()->request->baseUrl ?>/images/contenido/coca-cola/coca-cola-sin-azucar.jpg" class="img-responsive" alt="Coca-Cola sin azúcar">
+                </a>
                 <a href="">
                     <img style="margin-top: 14px;" src="<?= Yii::app()->request->baseUrl ?>/images/contenido/coca-cola/comprar.png" class="img-responsive" alt="comprar">
                 </a>
             </div>
             <div class="col-md-3 col-sm-3">
+                <a href="">
                     <img src="<?= Yii::app()->request->baseUrl ?>/images/contenido/coca-cola/coca-cola-sabor-ligero.jpg" class="img-responsive" alt="Coca-Cola sabor ligero">
+                </a>
                 <a href="">
                     <img style="margin-top: 14px;" src="<?= Yii::app()->request->baseUrl ?>/images/contenido/coca-cola/comprar.png" class="img-responsive" alt="comprar">
                 </a>
