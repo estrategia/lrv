@@ -31,14 +31,14 @@ $this->metaTags = "<meta http-equiv='X-UA-Compatible' content='IE=edge'>
     </section>
     <section>
         <div id="owl-productodetalle-inicio" class="owl-carousel owl-theme owl-productodetalle cocacola">
-            <div class="item"><a href="#" ><img src="<?= Yii::app()->request->baseUrl ?>/images/contenido/coca-cola/coca-cola-sabor-original-movil.jpg" alt=""></a></div> 
+            <div class="item"><a href="<?php echo CController::createUrl('/catalogo/producto', array('producto' => 36085, 'descripcion' => 'GASEOSA-COCA-COLA.html')) ?>" data-ajax="false"><img src="<?= Yii::app()->request->baseUrl ?>/images/contenido/coca-cola/coca-cola-sabor-original-movil.jpg" alt=""></a></div> 
             <div class="item"><a href="#" ><img src="<?= Yii::app()->request->baseUrl ?>/images/contenido/coca-cola/coca-cola-azucar-estebia-movil.jpg" alt=""></a></div>  
-            <div class="item"><a href="#" ><img src="<?= Yii::app()->request->baseUrl ?>/images/contenido/coca-cola/coca-cola-sin-azucar-movil.jpg" alt=""></a></div>  
-            <div class="item"><a href="#" ><img src="<?= Yii::app()->request->baseUrl ?>/images/contenido/coca-cola/coca-cola-sabor-ligero-movil.jpg" alt=""></a></div>        
+            <div class="item"><a href="<?php echo CController::createUrl('/catalogo/producto', array('producto' => 56832, 'descripcion' => 'GASEOSA-COCA-COLA-ZERO.html')) ?>" data-ajax="false"><img src="<?= Yii::app()->request->baseUrl ?>/images/contenido/coca-cola/coca-cola-sin-azucar-movil.jpg" alt=""></a></div>  
+            <div class="item"><a href="<?php echo CController::createUrl('/catalogo/producto', array('producto' => 36086, 'descripcion' => 'GASEOSA-COCA-COLA-LIGHT.html')) ?>" data-ajax="false"><img src="<?= Yii::app()->request->baseUrl ?>/images/contenido/coca-cola/coca-cola-sabor-ligero-movil.jpg" alt=""></a></div>        
         </div>    	
     </section>
     <center>
-        <a href="">
+        <a href="<?php echo CController::createUrl('/contenido/ver', array('tipo' => 'grupo', 'contenido' => 1153)) ?>" data-ajax="false">
             <img style="margin-top: 25px; margin-bottom:20px;width: 70%;" src="<?= Yii::app()->request->baseUrl ?>/images/contenido/coca-cola/boton-compra.png" alt="Btón compra online">
         </a> 
     </center>
@@ -46,12 +46,12 @@ $this->metaTags = "<meta http-equiv='X-UA-Compatible' content='IE=edge'>
         <img width="100%" src="<?= Yii::app()->request->baseUrl ?>/images/contenido/coca-cola/banner2-movil.jpg" class="img-responsive" alt="Banner Promocional Coca-Cola">
     </section>
     <center style="margin-top: 10px;margin-bottom: 10px;">
-        <a href="">
+        <a href="#" onclick="return false;">
             <img style="width: 90%;margin: 0px auto;" src="<?= Yii::app()->request->baseUrl ?>/images/contenido/coca-cola/btn-mas-info.jpg" class="img-responsive" alt="Botón más información">
         </a>
     </center>
     <center style="margin-top: 10px;margin-bottom: 10px;">
-        <a href="">
+        <a href="<?php echo CController::createUrl('/contenido/ver', array('tipo' => 'grupo', 'contenido' => 1153)) ?>" data-ajax="false">
             <img style="width: 90%;margin: 0px auto;" src="<?= Yii::app()->request->baseUrl ?>/images/contenido/coca-cola/btn-productos-relacionados.jpg" class="img-responsive" alt="Botón productos relacionados">  
         </a>    	
     </center>
@@ -68,7 +68,7 @@ $this->metaTags = "<meta http-equiv='X-UA-Compatible' content='IE=edge'>
         <div class="row" style="padding: 40px 0px;">
             <div class="col-md-7 col-sm-8">
                 <img style="width:290px;" class="img-responsive btn-entrega" src="<?= Yii::app()->request->baseUrl ?>/images/contenido/coca-cola/larebaja.png" alt="La rebaja virtual">
-                <a href="">
+                <a href="<?php echo CController::createUrl('/contenido/ver', array('tipo' => 'grupo', 'contenido' => 1153)) ?>">
                     <img style="margin-top: 25px; margin-bottom:45px;" src="<?= Yii::app()->request->baseUrl ?>/images/contenido/coca-cola/compra-online.png" class="img-responsive btn-entrega" alt="Btón compra online">
                 </a> 
             </div>
@@ -80,35 +80,35 @@ $this->metaTags = "<meta http-equiv='X-UA-Compatible' content='IE=edge'>
             <p class="texto-cocacola">Identifícalas por su descriptor, el color de su tapa y el de su etiqueta: </p>
             <div class="space"></div>
             <div class="col-md-3 col-sm-3">
-                <a href="">
+                <a href="<?php echo CController::createUrl('/catalogo/producto', array('producto' => 36085, 'descripcion' => 'GASEOSA-COCA-COLA.html')) ?>">
                    <img src="<?= Yii::app()->request->baseUrl ?>/images/contenido/coca-cola/coca-cola-sabor-original.jpg" class="img-responsive" alt="Coca-Cola sabor original"> 
                 </a>
-                <a href="">
+                <a href="<?php echo CController::createUrl('/catalogo/producto', array('producto' => 36085, 'descripcion' => 'GASEOSA-COCA-COLA.html')) ?>">
                     <img style="margin-top: 14px;" src="<?= Yii::app()->request->baseUrl ?>/images/contenido/coca-cola/comprar.png" class="img-responsive" alt="comprar">
                 </a>
 
             </div>
             <div class="col-md-3 col-sm-3">
-                <a href="">
+                <a href="#" onclick="return false;">
                     <img src="<?= Yii::app()->request->baseUrl ?>/images/contenido/coca-cola/coca-cola-azucar-estebia.jpg" class="img-responsive" alt="Coca-Cola con azúcar y estebia">   
                 </a>                 
-                <a href="">
+                <a href="#" onclick="return false;">
                     <img style="margin-top: 14px;" src="<?= Yii::app()->request->baseUrl ?>/images/contenido/coca-cola/proximamente.png" class="img-responsive" alt="comprar">
                 </a>
             </div>
             <div class="col-md-3 col-sm-3">
-                <a href="">
+                <a href="<?php echo CController::createUrl('/catalogo/producto', array('producto' => 56832, 'descripcion' => 'GASEOSA-COCA-COLA-ZERO.html')) ?>">
                     <img src="<?= Yii::app()->request->baseUrl ?>/images/contenido/coca-cola/coca-cola-sin-azucar.jpg" class="img-responsive" alt="Coca-Cola sin azúcar">
                 </a>
-                <a href="">
+                <a href="<?php echo CController::createUrl('/catalogo/producto', array('producto' => 56832, 'descripcion' => 'GASEOSA-COCA-COLA-ZERO.html')) ?>">
                     <img style="margin-top: 14px;" src="<?= Yii::app()->request->baseUrl ?>/images/contenido/coca-cola/comprar.png" class="img-responsive" alt="comprar">
                 </a>
             </div>
             <div class="col-md-3 col-sm-3">
-                <a href="">
+                <a href="<?php echo CController::createUrl('/catalogo/producto', array('producto' => 36086, 'descripcion' => 'GASEOSA-COCA-COLA-LIGHT.html')) ?>">
                     <img src="<?= Yii::app()->request->baseUrl ?>/images/contenido/coca-cola/coca-cola-sabor-ligero.jpg" class="img-responsive" alt="Coca-Cola sabor ligero">
                 </a>
-                <a href="">
+                <a href="<?php echo CController::createUrl('/catalogo/producto', array('producto' => 36086, 'descripcion' => 'GASEOSA-COCA-COLA-LIGHT.html')) ?>">
                     <img style="margin-top: 14px;" src="<?= Yii::app()->request->baseUrl ?>/images/contenido/coca-cola/comprar.png" class="img-responsive" alt="comprar">
                 </a>
             </div>
@@ -119,12 +119,12 @@ $this->metaTags = "<meta http-equiv='X-UA-Compatible' content='IE=edge'>
         </div>
         <div class="row" style="margin-top: 40px;margin-bottom: 40px;">
             <div class="col-md-6">
-                <a href="">
+                <a href="#" onclick="return false;">
                     <img style="width: 300px;margin: 0px auto;" src="<?= Yii::app()->request->baseUrl ?>/images/contenido/coca-cola/btn-mas-info.jpg" class="img-responsive" alt="Botón más información">
                 </a>
             </div>
             <div class="col-md-6">
-                <a href="">
+                <a href="<?php echo CController::createUrl('/contenido/ver', array('tipo' => 'grupo', 'contenido' => 1153)) ?>">
                     <img style="width: 393px;margin: 0px auto;" src="<?= Yii::app()->request->baseUrl ?>/images/contenido/coca-cola/btn-productos-relacionados.jpg" class="img-responsive" alt="Botón productos relacionados">  
                 </a>
             </div>
