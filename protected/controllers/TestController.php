@@ -1501,5 +1501,9 @@ class TestController extends Controller {
 
         return 1;
     }
+    
+    public function actionCantidadproductos(){
+        echo count(Yii::app()->shoppingCart->getPositions());
+    }
 
 }
