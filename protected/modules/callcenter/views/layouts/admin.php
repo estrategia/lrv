@@ -81,6 +81,17 @@
                                 <li>
                                     <a href="<?php echo $this->createUrl('/callcenter/admin/calificaciones') ?>" class="ajax-link"><i class="glyphicon glyphicon-ok"></i><span> Comentarios y Calificaciones</span></a>
                                 </li>
+                                
+                                <li class="nav-header">VITAL CALL</li>
+                                <li class="">
+                                    <a href="<?php echo $this->createUrl('/callcenter/') ?>" class="ajax-link" ><i class="glyphicon glyphicon-usd"></i><span> Cotizar</span></a>
+                                </li>
+                                <li class="">
+                                    <a href="<?php echo $this->createUrl('/callcenter') ?>" class="ajax-link"><i class="glyphicon glyphicon-list-alt"></i><span> Productos</span></a>
+                                </li>
+                                <li class="">
+                                    <a href="<?php echo $this->createUrl('/callcenter/') ?>" class="ajax-link" target="_blank"><i class="glyphicon glyphicon-user"></i><span> Pacientes</span></a>
+                                </li>
                             <?php endif; ?>
                             <?php if (Yii::app()->controller->module->user->profile == 2): ?>
                                 <li class="nav-header hidden-md">Admin</li>

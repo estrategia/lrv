@@ -766,7 +766,7 @@ class AdminController extends ControllerOperator {
         return $model;
     }
 
-    protected function gridDetallePedido($data, $row) {
+    /*protected function gridDetallePedido($data, $row) {
         $params = array('pedido' => $data->idCompra);
 
         if ($data->idOperador == null && $data->idEstadoCompra == Yii::app()->params->callcenter ['estadoCompra']['estado']['pendiente']) {
@@ -830,6 +830,6 @@ class AdminController extends ControllerOperator {
             $classes[] = "presencial";
         }
         return empty($classes) ? false : implode(' ', $classes);
-    }
+    }*/
 
 }

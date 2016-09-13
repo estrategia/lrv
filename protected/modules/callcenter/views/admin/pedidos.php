@@ -40,13 +40,13 @@
                 'ajaxUrl' => $this->createUrl('pedidos', array('parametro' => $model->idEstadoCompra)),
                 'dataProvider' => $dataProvider,
                 //'rowCssClass'=>array('odd','even'),
-                'rowCssClassExpression' => array($this, 'rowCssClassFunction'), //'$data->seguimiento==1?"seguimiento":"jajaj"',
+                'rowCssClassExpression' => array($model, 'gridRowCssClassFunction'), //'$data->seguimiento==1?"seguimiento":"jajaj"',
                 //'filter' => $model,
                 'columns' => array(
                     array(
                         'header' => "",
                         'type' => 'raw',
-                        'value' => array($this, 'gridDetallePedido'),
+                        'value' => array($model, 'gridDetallePedido'),
                     //'cssClassExpression' => '$data->seguimiento==1?"seguimiento":"jajaj"',
                     ),
                     array(
@@ -56,12 +56,12 @@
                     array(
                         'header' => 'Origen',
                         'type' => 'raw',
-                        'value' => array($this, 'gridOrigenPedido'),
+                        'value' => array($model, 'gridOrigenPedido'),
                     ),
                     array(
                         'header' => 'Destino',
                         'type' => 'raw',
-                        'value' => array($this, 'gridDestinoPedido'),
+                        'value' => array($model, 'gridDestinoPedido'),
                     ),
                     array(
                         'header' => 'Fecha Compra',
@@ -86,7 +86,7 @@
                     array(
                         'header' => 'Pago',
                         'type' => 'raw',
-                        'value' => array($this, 'gridPagoPedido'),
+                        'value' => array($model, 'gridPagoPedido'),
                     ),
                     array(
                         'header' => 'Tipo Usuario',
@@ -99,7 +99,7 @@
                     array(
                         'header' => 'Estado',
                         'type' => 'raw',
-                        'value' => array($this, 'gridEstadoPedido'),
+                        'value' => array($model, 'gridEstadoPedido'),
                     ),
                 ),
             ));

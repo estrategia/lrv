@@ -30,7 +30,18 @@ return array(
                 'user' => array(
                     'class' => 'callcenter.components.UserOperator',
                 ),
-            )),
+            ),
+            'modules' => array(
+                'vitalcall' => array(
+                    'defaultController' => 'sitio',
+                    'components' => array(
+                        'user' => array(
+                            'class' => 'callcenter.components.UserOperator',
+                        ),
+                    ),
+                )
+            ),
+        ),
         'vendedor' => array(
             'defaultController' => 'sitio',
             'components' => array(
@@ -331,7 +342,14 @@ return array(
             'defecto' => 1,
             'asociado' => 2,
             'clienteFiel' => 3,
+            'vitalCall' => 20,
             '*' => 99
+        ),
+        'tipoVenta' => array(
+            'virtual' => 1,
+            'nacional' => 2,
+            'asistida' => 3,
+            'vitalCall' => 4
         ),
         'bloqueoUsuario' => array(
             'diasBloqueo' => 15,
