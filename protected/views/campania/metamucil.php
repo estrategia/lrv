@@ -46,6 +46,9 @@
             .title-principal {color:#640B34;text-align:center;font-family: DIN alternate bold;font-size:2em !important;}
             .title-principal span {color:#fff;font-family: helvetica;font-style: italic;}
             .elementos {color: rgb(136, 17, 60);font-size: 19px;font-family: interstate regular;padding-top: 15px;}
+            .modelo {margin: 0px 7%;width: 66.8%;float: right;}
+            @media (max-width:1199px) {
+                .modelo{margin: 21px 0% 0%;width: 72.8%;}
 	</style>
     ";
 ?>
@@ -148,7 +151,7 @@
             </div>
             <div class="row">
                 <div class="col-md-4">
-                    <img style="margin: 0px 7%;width: 66.8%;float: right;" src="<?= Yii::app()->request->baseUrl ?>/images/contenido/metamucil/modelo.png" class="img-responsive" alt="Presentación metamucil">
+                    <img src="<?= Yii::app()->request->baseUrl ?>/images/contenido/metamucil/modelo.png" class="img-responsive modelo" alt="Presentación metamucil">
                 </div>
                 <div class="col-md-4 elementos">
                     <p><img class="ico-imagen" src="<?= Yii::app()->request->baseUrl ?>/images/contenido/metamucil/icon1.png" alt="">
