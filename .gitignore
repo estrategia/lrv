@@ -12,3 +12,4 @@ protected/runtime/*
 .DS_Store
 /.buildpath
 /images/banner/
+images/banner/*
