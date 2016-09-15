@@ -1,799 +1,132 @@
-var refresh = null;
-
-$(document).on('change', 'input[id=check-pedido-seguimiento]', function () {
-    $.ajax({
-        type: 'POST',
-        dataType: 'json',
-        async: true,
-        url: requestUrl + '/callcenter/pedido/seguimiento',
-        data: {seguimiento: $('input[id=check-pedido-seguimiento]:checked').is(':checked') ? 1 : 0, compra: $(this).attr('data-compra')},
-        beforeSend: function () {
-            Loading.show();
-        },
-        complete: function () {
-            Loading.hide();
-        },
-        success: function (data) {
-            if (data.result == 'error') {
-                bootbox.alert(data.response);
-            }
-        },
-        error: function (jqXHR, textStatus, errorThrown) {
-            Loading.hide();
-            bootbox.alert('Error: ' + errorThrown);
-        }
-    });
-});
-
-/*
- $(document).on('change', 'input[data-role="adminpedido"]', function() {
- var accion = $(this).attr('data-action');
- 
- if (accion === 'pedido-pdv') {
- gestionPedido('/callcenter/admin/pedidopdv', {compra: $(this).attr('data-compra')});
- } else if (accion === 'pedido-pedido') {
- gestionPedido('/callcenter/admin/pedidoadmin', {compra: $(this).attr('data-compra')});
- } else if (accion === 'pedido-cliente') {
- gestionPedido('/callcenter/admin/clientedespacho', {compra: $(this).attr('data-compra'), usuario: $(this).attr('data-usuario')});
- } else if (accion === 'pedido-observaciones') {
- gestionPedido('/callcenter/admin/observacionpedido', {compra: $(this).attr('data-compra'), render: true});
- }
- });
- */
-
-function gestionPedido(url, data) {
-    $.ajax({
-        type: 'POST',
-        //dataType: 'json',
-        async: true,
-        url: requestUrl + url,
-        data: data,
-        beforeSend: function () {
-            Loading.show();
-        },
-        complete: function () {
-            Loading.hide();
-        },
-        success: function (data) {
-            $('#div-detalle-pedido').html(data);
-            /*if (data.result == 'ok') {
-             bootbox.alert(data.response);
-             }else {
-             bootbox.alert(data.response);
-             }*/
-        },
-        error: function (jqXHR, textStatus, errorThrown) {
-            Loading.hide();
-            bootbox.alert('Error: ' + errorThrown);
-        }
-    });
-}
-
-
-function buscarProductos(text, obj, request) {
-    $.ajax({
-        type: 'POST',
-        async: true,
-        url: request + '/callcenter/pedido/buscar',
-        data: {busqueda: text, compra: $(obj).attr('data-pedido')},
-        beforeSend: function () {
-            $('#modal-productos-busqueda').remove();
-            Loading.show();
-        },
-        success: function (data) {
-            $('#container').append(data);
-            $('#modal-productos-busqueda').modal('show');
-        },
-        complete: function () {
-            Loading.hide();
-        },
-        error: function (jqXHR, textStatus, errorThrown) {
-            Loading.hide();
-            bootbox.alert('Error: ' + jqXHR.responseText);
-        }
-    });
-}
-
-
-$(document).on('click', 'a[data-role="completitud-pdv"]', function () {
-    $.ajax({
-        type: 'POST',
-        dataType: 'json',
-        async: true,
-        url: requestUrl + '/subasta/admin/completitudPdv',
-        data: {compra: $(this).attr('data-compra')},
-        beforeSend: function () {
-            $('#modalSubasta').remove();
-            // detener refresh
-            clearTimeout(refresh);
-            Loading.show();
-        },
-        complete: function () {
-            Loading.hide();
-        },
-        success: function (data) {
-            if (data.result == 'ok') {
-                $('#container').append(data.response);
-                $("#modalSubasta").modal({keyboard: false, backdrop: 'static'});
-            } else {
-                bootbox.alert(data.response);
-            }
-        },
-        error: function (jqXHR, textStatus, errorThrown) {
-            Loading.hide();
-            bootbox.alert('Error: ' + errorThrown);
-        }
-    });
-});
-
-
-$(document).on('click', "a[data-action='modal']", function () {
-
-    var tiempoRefresh = $("#recargar-pagina").val();
-    $.fn.yiiGridView.update('pedidos-grid');
-    $("#modalSubasta").modal('hide');
-    refresh = setTimeout(function () {
-        location.reload();
-    }, tiempoRefresh);
-
-});
-
-$(document).on('click', "a[data-role='asignar-pedido-pdv']", function () {
-
-    var dataPedido = $(this).attr('data-pedido');
-    var tiempoRefresh = $("#recargar-pagina").val();
-    $.ajax({
-        type: 'POST',
-        async: true,
-        url: requestUrl + '/subasta/admin/asignarPdv',
-        data: {dataPedido: dataPedido},
-        beforeSend: function () {
-            Loading.show();
-        },
-        complete: function () {
-            Loading.hide();
-
-        },
-        success: function (data) {
-            var data = $.parseJSON(data);
-            if (data.result == 'ok') {
-                bootbox.alert(data.response);
-                $.fn.yiiGridView.update('pedidos-grid');
-                $("#modalSubasta").modal('hide');
-                refresh = setTimeout(function () {
-                    location.reload();
-                }, tiempoRefresh);
-            } else if (data.result == 'error') {
-                bootbox.alert(data.response);
-            }
-            Loading.hide();
-        },
-        error: function (jqXHR, textStatus, errorThrown) {
-            Loading.hide();
-            bootbox.alert('Error: ' + errorThrown);
-            //     refresh = setTimeout(function(){ location.reload(); }, tiempoRefresh);
-        }
-    });
-});
-
-
-$(document).on('click', 'button[data-action="asignar-pdv"]', function () {
-    $.ajax({
-        type: 'POST',
-        dataType: 'json',
-        async: true,
-        url: requestUrl + '/callcenter/pedido/asignarpdv',
-        data: {compra: $(this).attr('data-compra'), pdv: $('#select-pdv-asignar').val()},
-        beforeSend: function () {
-            Loading.show();
-        },
-        complete: function () {
-            Loading.hide();
-        },
-        success: function (data) {
-            if (data.result == 'ok') {
-                $('#div-encabezado-pedido').html(data.response.htmlEncabezado);
-            } else {
-                bootbox.alert(data.response);
-            }
-        },
-        error: function (jqXHR, textStatus, errorThrown) {
-            Loading.hide();
-            bootbox.alert('Error: ' + errorThrown);
-        }
-    });
-
-});
-
-$(document).on('click', 'button[data-action="saldo-pdv"]', function () {
-    $.ajax({
-        type: 'POST',
-        dataType: 'json',
-        async: true,
-        url: requestUrl + '/callcenter/pedido/buscarsaldo',
-        data: {idCompra: $(this).attr('data-compra'), pdv: $('#select-pdv-saldo').val()},
-        beforeSend: function () {
-            Loading.show();
-        },
-        complete: function () {
-            Loading.hide();
-        },
-        success: function (data) {
-            if (data.result == '1') {
-                $('#div-saldos-pdv').html(data.response.htmlSaldo);
-            } else {
-                bootbox.alert(data.response.descripcion);
-            }
-        },
-        error: function (jqXHR, textStatus, errorThrown) {
-            Loading.hide();
-            bootbox.alert('Error: ' + errorThrown);
-        }
-    });
-
-});
-
-$(document).on('click', 'button[data-action="remitir"]', function () {
-    $.ajax({
-        type: 'POST',
-        dataType: 'json',
-        async: true,
-        url: requestUrl + '/callcenter/pedido/remitir',
-        data: {idCompra: $(this).attr('data-compra')},
-        beforeSend: function () {
-            Loading.show();
-        },
-        complete: function () {
-            Loading.hide();
-        },
-        success: function (data) {
-            if (data.result == 1) {
-                $('#div-encabezado-pedido').html(data.encabezado);
-                $('#div-pedido-observaciones').html(data.htmlObservaciones);
-            }
-            bootbox.alert(data.response);
-
-        },
-        error: function (jqXHR, textStatus, errorThrown) {
-            Loading.hide();
-            bootbox.alert('Error: ' + errorThrown);
-        }
-    });
-});
-
-$(document).on('click', 'button[data-action="remitirborrar"]', function () {
-    $.ajax({
-        type: 'POST',
-        dataType: 'json',
-        async: true,
-        url: requestUrl + '/callcenter/pedido/remitirBorrar',
-        data: {idCompra: $(this).attr('data-compra')},
-        beforeSend: function () {
-            Loading.show();
-        },
-        complete: function () {
-            Loading.hide();
-        },
-        success: function (data) {
-            if (data.result == 1) {
-                $('#div-encabezado-pedido').html(data.encabezado);
-                $('#div-pedido-observaciones').html(data.htmlObservaciones);
-            }
-            bootbox.alert(data.response);
-
-        },
-        error: function (jqXHR, textStatus, errorThrown) {
-            Loading.hide();
-            bootbox.alert('Error: ' + errorThrown);
-        }
-    });
-
-});
-
-$(document).on('click', "button[data-role='modificarpedido']", function () {
-    var action = $(this).attr('data-action');
-    var data = {accion: action};
-
-    if (action == 11) {
-        var item = $(this).attr('data-item');
-        var cantidadU = parseInt($('#cantidad-item-unidad-' + item).val());
-        if (isNaN(cantidadU)) {
-            cantidadU = -1;
-        } else if (cantidadU < 0) {
-            // cantidadU = 0;
-        }
-        data['cantidad'] = cantidadU;
-        data['item'] = item;
-    } else if (action == 12) {
-        var item = $(this).attr('data-item');
-        var cantidadF = parseInt($('#cantidad-item-fraccion-' + item).val());
-        if (isNaN(cantidadF)) {
-            cantidadF = -1;
-        } else if (cantidadF < 0) {
-            //   cantidadF = 0;
-        }
-        data['cantidad'] = cantidadF;
-        data['item'] = item;
-    } else if (action == 13) {
-        var item = $(this).attr('data-item');
-        var cantidadB = parseInt($('#cantidad-item-bodega-' + item).val());
-        if (isNaN(cantidadB)) {
-            cantidadB = -1;
-        } else if (cantidadB < 0) {
-            cantidadB = 0;
-        }
-        data['cantidad'] = cantidadB;
-        data['item'] = item;
-    } else if (action == 2) {
-        var compra = $(this).attr('data-compra');
-        var combo = $(this).attr('data-combo');
-        var cantidad = parseInt($('#cantidad-item-unidad-' + compra).val());
-        if (isNaN(cantidad)) {
-            cantidad = -1;
-        } else if (cantidad < 0) {
-            cantidad = 0;
-        }
-        data['compra'] = compra;
-        data['combo'] = combo;
-        data['cantidad'] = cantidad;
-    }
-
-    $.ajax({
-        type: 'POST',
-        dataType: 'json',
-        async: true,
-        url: requestUrl + '/callcenter/pedido/modificar',
-        data: data,
-        beforeSend: function () {
-            Loading.show();
-        },
-        success: function (data) {
-            if (data.result === "ok") {
-                $('#div-detalle-pedido').html(data.response.htmlDetalle);
-                $('#div-encabezado-pedido').html(data.response.htmlEncabezado);
-                Loading.hide();
-            } else {
-                Loading.hide();
-                bootbox.alert(data.response);
-            }
-        },
-        error: function (jqXHR, textStatus, errorThrown) {
-            Loading.hide();
-            bootbox.alert('Error: ' + errorThrown);
-        }
-    });
-});
-
-$(document).on('change', "#notificacion-form #NotificacionForm_tipoObservacion", function () {
-    var tipo = $(this).val();
-
-    if (tipo) {
+$(document).on('click', 'button[data-role="ubicacion-mapa"]', function() {
+    if ($('#modal-ubicacion-map').length > 0) {
+        $('#modal-ubicacion-map').modal('show');
+        resizeMap();
+    } else {
         $.ajax({
             type: 'POST',
-            dataType: 'json',
+            dataType: 'html',
             async: true,
-            url: requestUrl + '/callcenter/admin/observacionmensaje',
-            data: {tipo: tipo, compra: $(this).attr('data-compra')},
-            beforeSend: function () {
+            url: requestUrl + '/sitio/mapa',
+            beforeSend: function() {
                 Loading.show();
             },
-            success: function (data) {
-                if (data.result === "ok") {
-                    $('#notificacion-form #NotificacionForm_observacion').val(data.response);
+            success: function(data) {
+                $.getScript("https://maps.googleapis.com/maps/api/js?client=" + gmapKey).done(function(script, textStatus) {
+                    $.getScript(requestUrl + "/js/ubicacion.min.js").done(function(script, textStatus) {
+                        $('#container').append(data);
+                        $('#select-ubicacion-psubsector .ciudades').select2();
+                        inicializarMapa();
+                        $('#modal-ubicacion-map').modal('show');
+                        resizeMap();
+                        Loading.hide();
+                    }).fail(function(jqxhr, settings, exception) {
+                        Loading.hide();
+                        alert("Error al inicializar mapa: " + exception);
+                    });
+                }).fail(function(jqxhr, settings, exception) {
                     Loading.hide();
-                } else {
-                    Loading.hide();
-                    bootbox.alert(data.response);
-                }
+                    alert("Error al cargar mapa: " + exception);
+                });
             },
-            error: function (jqXHR, textStatus, errorThrown) {
+            error: function(jqXHR, textStatus, errorThrown) {
                 Loading.hide();
-                bootbox.alert('Error: ' + errorThrown);
+                alert('Error: ' + errorThrown);
             }
         });
-    } else {
-        $('#notificacion-form #NotificacionForm_observacion').val("");
     }
+    return false;
 });
 
-$("#busqueda-buscar").keypress(function (event) {
-    if (event.which == 13) {
+$(document).on('change', 'select[data-role="ciudad-despacho-map"]', function() {
+    var val = $(this).val().trim();
+    if (val.length > 0) {
+        var option = $('select[data-role="ciudad-despacho-map"] option[value="' + val + '"]').attr('selected', 'selected');
 
-        var text = $.trim($('#busqueda-buscar').val());
-        if (!text) {
-            bootbox.alert('Búsqueda no puede estar vacío');
-        } else {
-            buscarProductos(text, this, requestUrl);
-
-        }
-        return false;
-    }
-});
-
-
-
-
-$(document).on('click', "button[data-role='busquedapedido']", function () {
-    var text = $.trim($('#busqueda-buscar').val());
-    if (!text) {
-        bootbox.alert('Búsqueda no puede estar vacío');
-    } else {
-        buscarProductos(text, this, requestUrl);
-    }
-});
-
-$(document).on('click', "a[data-role='beneficiositem']", function () {
-    $.ajax({
-        type: 'POST',
-        async: true,
-        url: requestUrl + '/callcenter/pedido/beneficios',
-        data: {item: $(this).attr('data-item')},
-        beforeSend: function () {
-            $('#modal-beneficios-compra').remove();
-            Loading.show();
-        },
-        success: function (data) {
-            $('#container').append(data);
-            $('#modal-beneficios-compra').modal('show');
-        },
-        complete: function () {
-            Loading.hide();
-        },
-        error: function (jqXHR, textStatus, errorThrown) {
-            Loading.hide();
-            bootbox.alert('Error: ' + jqXHR.responseText);
-        }
-    });
-});
-
-$(document).on('click', "button[data-role='disponibilidaditem']", function () {
-    var data = {};
-    if ($(this).attr('data-item')) {
-        data['item'] = $(this).attr('data-item');
-    } else if ($(this).attr('data-combo')) {
-        data['combo'] = $(this).attr('data-combo');
-        data['compra'] = $(this).attr('data-compra');
-    }
-
-    $.ajax({
-        type: 'POST',
-        dataType: 'json',
-        async: true,
-        url: requestUrl + '/callcenter/pedido/disponibilidad',
-        data: data,
-        beforeSend: function () {
-            Loading.show();
-        },
-        success: function (data) {
-            if (data.result === "ok") {
-                $('#div-detalle-pedido').html(data.response.htmlDetalle);
-                Loading.hide();
-            } else {
-                Loading.hide();
-                alert(data.response);
-            }
-        },
-        error: function (jqXHR, textStatus, errorThrown) {
-            Loading.hide();
-            alert('Error: ' + jqXHR.responseText);
-        }
-    });
-});
-
-$(document).on('click', "a[data-role='aprobar-calificacion']", function () {
-    var calificacion = $(this).attr('data-calificacion');
-
-    bootbox.dialog({
-        message: "¿ Está seguro de aprobar este comentario ?",
-        title: "Aprobar comentario",
-        buttons: {
-            success: {
-                label: "Aceptar",
-                className: "btn-primary",
-                callback: function () {
-                    $.ajax({
-                        type: 'POST',
-                        dataType: 'json',
-                        async: true,
-                        url: requestUrl + '/callcenter/admin/aprobarCalificacion',
-                        data: {calificacion: calificacion},
-                        beforeSend: function () {
-                            Loading.show();
-                        },
-                        success: function (data) {
-                            if (data.result === "ok") {
-                                $.fn.yiiGridView.update('grid-calificaciones');
-                                Loading.hide();
-                            } else {
-                                Loading.hide();
-                                bootbox.alert(data.response);
-                            }
-                        },
-                        error: function (jqXHR, textStatus, errorThrown) {
-                            Loading.hide();
-                            alert('Error: ' + jqXHR.responseText);
-                        }
-                    });
+        if (map) {
+            map.setCenter(new google.maps.LatLng(parseFloat(option.attr('data-latitud')), parseFloat(option.attr('data-longitud'))));
+            map.setZoom(13);
+            $('#select-ubicacion-preferencia').remove();
+            $('#select-ubicacion-psubsector').removeClass('div-center').addClass('float-left');
+            $.ajax({
+                type: 'POST',
+                async: true,
+                url: requestUrl + '/sitio/ubicacionSeleccion',
+                data: {ciudad: val},
+                dataType: 'html',
+                beforeSend: function() {
+                    Loading.show();
+                },
+                complete: function() {
+                    Loading.hide();
+                },
+                success: function(data) {
+                    if (data.length > 0) {
+                        $('#select-ubicacion-content').append(data);
+                        $('#select-ubicacion-preferencia .ciudades').select2();
+                    } else {
+                        $('#select-ubicacion-psubsector').removeClass('float-left').addClass('div-center');
+                        map.setZoom(15);
+                    }
+                },
+                error: function(jqXHR, textStatus, errorThrown) {
+                    Loading.hide();
+                    alert('Error: ' + errorThrown);
                 }
-            },
-            close: {
-                label: "Cancelar",
-                className: "btn-default",
-                callback: function () {
-                }
-            }
-        }
-    });
-
-
-});
-
-
-$(document).on('click', "a[data-cargar='1'], a[data-cargar='2']", function () {
-    var tipo = $(this).attr('data-cargar');
-    var pedido = $('#btn-pedido-buscar').attr('data-pedido');
-    var data = {tipo: tipo, compra: pedido};
-
-    if (tipo == 1) {
-        var producto = $(this).attr('data-producto');
-        var cantidadU = $('#cantidad-producto-unidad-' + producto).val();
-        cantidadU = parseInt(cantidadU);
-        if (isNaN(cantidadU)) {
-            cantidadU = -1;
-        }
-        var cantidadF = parseInt($('#cantidad-producto-fraccion-' + producto).val());
-        cantidadF = parseInt(cantidadF);
-        if (isNaN(cantidadF)) {
-            cantidadF = -1;
-        }
-        data['producto'] = producto;
-        data['cantidadU'] = cantidadU;
-        data['cantidadF'] = cantidadF;
-    } else if (tipo == 2) {
-        var combo = $(this).attr('data-combo');
-        var cantidad = $('#cantidad-combo-' + combo).val();
-        cantidad = parseInt(cantidad);
-        if (isNaN(cantidad)) {
-            cantidad = 0;
-        }
-        data['combo'] = combo;
-        data['cantidad'] = cantidad;
-    }
-
-    $.ajax({
-        type: 'POST',
-        dataType: 'json',
-        async: true,
-        url: requestUrl + '/callcenter/pedido/agregar',
-        data: data,
-        beforeSend: function () {
-            Loading.show();
-        },
-        success: function (data) {
-            if (data.result === "ok") {
-                $('#div-detalle-pedido').html(data.response.htmlDetalle);
-                $('#div-encabezado-pedido').html(data.response.htmlEncabezado);
-                Loading.hide();
-            } else {
-                Loading.hide();
-                bootbox.alert(data.response);
-            }
-        },
-        error: function (jqXHR, textStatus, errorThrown) {
-            Loading.hide();
-            bootbox.alert('Error: ' + errorThrown);
-        }
-    });
-});
-
-function dialogoAnimado(texto) {
-    var id = 'dialogo-carro-' + uniqueId();
-    $("<div class='dialogo-animado' id='" + id + "'>" + texto + "</div>").appendTo('body');
-
-    $("#" + id).animate({
-        opacity: 1,
-        bottom: '+=2%'
-    }, 400, function () {
-        setTimeout(function () {
-            $("#" + id).animate({
-                opacity: 0,
-                bottom: '-=2%'
-            }, 400, function () {
-                $("#" + id).remove();
             });
-        }, 3000);
-    });
-}
+        }
+    }
+});
 
-$(document).on('click', "button[data-role='pdvgeodireccion']", function () {
+$(document).on('change', 'select[data-role="sector-despacho-map"]', function() {
+    var val = $(this).val().trim();
+    if (val.length > 0) {
+        var option = $('select[data-role="sector-despacho-map"] option[value="' + val + '"]').attr('selected', 'selected');
+
+        if (map) {
+            map.setCenter(new google.maps.LatLng(parseFloat(option.attr('data-latitud')), parseFloat(option.attr('data-longitud'))));
+            map.setZoom(14);
+        }
+    }
+});
+
+$(document).on('click', 'button[data-role="ubicacion-seleccion-mapa"]', function() {
+    Loading.show();
+    var lat = 0;
+    var lon = 0;
+    if (map) {
+        lat = map.getCenter().lat();
+        lon = map.getCenter().lng();
+    }
     $.ajax({
         type: 'POST',
         dataType: 'json',
         async: true,
-        url: requestUrl + '/callcenter/admin/geodireccion',
-        data: {ciudad: $('#select-ciudad-direccion').val(), direccion: $('#input-pedido-direccion').val()},
-        beforeSend: function () {
-            $('#div-pedido-georeferencia-direcion').html('');
+        url: requestUrl + '/sitio/gps',
+        data: {lat: lat, lon: lon},
+        beforeSend: function() {
+            $("#modal-no-serviciodomicilio").remove();
             Loading.show();
         },
-        success: function (data) {
-            if (data.result === "ok") {
-                $('#div-pedido-georeferencia-direcion').html(data.response);
-                Loading.hide();
-            } else {
-                Loading.hide();
-                bootbox.alert(data.response);
-            }
-        },
-        error: function (jqXHR, textStatus, errorThrown) {
-            Loading.hide();
-            bootbox.alert('Error: ' + jqXHR.responseText);
-        }
-    });
-});
-
-
-$(document).on('change', "#Operador_perfil", function () {
-    $.ajax({
-        type: 'POST',
-        dataType: 'json',
-        async: true,
-        url: requestUrl + '/callcenter/operador/verificarPerfil',
-        data: {perfil: $(this).val()},
-        beforeSend: function () {
-
-            Loading.show();
-        },
-        success: function (data) {
-            if (data.result === "ok") {
-                if (data.response == 2) {
-                    $("#form-pdv-vendedor").css('display', 'block');
-                } else {
-                    $("#form-pdv-vendedor").css('display', 'none');
-                }
-                if (data.response == 3) {
-                    $("#form-pdv-mensajero").css('display', 'block');
-                } else {
-                    $("#form-pdv-mensajero").css('display', 'none');
-                }
-                Loading.hide();
-            } else {
-                Loading.hide();
-                bootbox.alert(data.response);
-            }
-        },
-        error: function (jqXHR, textStatus, errorThrown) {
-            Loading.hide();
-            bootbox.alert('Error: ' + jqXHR.responseText);
-        }
-    });
-});
-
-$(document).on('click', "button[data-role='pdvgeobarrio']", function () {
-    $.ajax({
-        type: 'POST',
-        dataType: 'json',
-        async: true,
-        url: requestUrl + '/callcenter/admin/geobarrio',
-        data: {ciudad: $('#select-ciudad-barrio').val(), barrio: $('#input-pedido-barrio').val()},
-        beforeSend: function () {
-            $('#div-pedido-georeferencia-barrio').html('');
-            Loading.show();
-        },
-        success: function (data) {
-            if (data.result === "ok") {
-                $('#div-pedido-georeferencia-barrio').html(data.response);
-                Loading.hide();
-            } else {
-                Loading.hide();
-                bootbox.alert(data.response);
-            }
-        },
-        error: function (jqXHR, textStatus, errorThrown) {
-            Loading.hide();
-            bootbox.alert('Error: ' + jqXHR.responseText);
-        }
-    });
-});
-
-$(document).on('click', "button[data-role='trazapasarela']", function () {
-    $.ajax({
-        type: 'POST',
-        async: true,
-        url: requestUrl + '/callcenter/pedido/trazapasarela',
-        data: {compra: $(this).attr('data-pedido')},
-        beforeSend: function () {
-            $('#modal-trazapasarela').remove();
-            Loading.show();
-        },
-        success: function (data) {
-            $('#container').append(data);
-            $('#modal-trazapasarela').modal('show');
-        },
-        complete: function () {
-            Loading.hide();
-        },
-        error: function (jqXHR, textStatus, errorThrown) {
-            Loading.hide();
-            bootbox.alert('Error: ' + jqXHR.responseText);
-        }
-    });
-});
-
-$(document).on('click', "button[data-role='modificar-ahorro']", function () {
-    $('#modal-modificar-ahorro-label > span').html($(this).attr('data-opcion') == 1 ? 'unidades' : 'fracciones');
-    $('#modal-modificar-ahorro-label > div').html($(this).attr('data-descripcion'));
-    $('#ModificarAhorroForm_descuento').val($(this).attr('data-ahorro'));
-    $('#ModificarAhorroForm_idCompraItem').val($(this).attr('data-item'));
-    $('#ModificarAhorroForm_opcion').val($(this).attr('data-opcion'));
-    $('#modal-modificar-ahorro').modal('show');
-});
-
-$(document).on('click', "button[data-role='modificar-ahorro-guardar']", function () {
-    var form = $("#form-modificar-ahorro");
-    var boton = $(this);
-
-    $.ajax({
-        type: 'POST',
-        dataType: 'json',
-        async: true,
-        url: requestUrl + '/callcenter/pedido/modificarahorro',
-        data: form.serialize(),
-        beforeSend: function () {
-            boton.prop('disabled', true);
-            $('div[id^="ModificarAhorroForm_"].has-error').html('');
-            $('div[id^="ModificarAhorroForm_"].has-error').css('display', 'none');
-            Loading.show();
-        },
-        success: function (data) {
-            if (data.result === "ok") {
-                $('#modal-modificar-ahorro').modal('hide');
-                $('#div-detalle-pedido').html(data.response.htmlDetalle);
-                $('#div-encabezado-pedido').html(data.response.htmlEncabezado);
-            } else if (data.result === 'error') {
-                bootbox.alert(data.response);
-            } else {
-                $.each(data, function (element, error) {
-                    $('#' + element + '_em_').html(error);
-                    $('#' + element + '_em_').css('display', 'block');
-                });
-            }
-
-            boton.prop('disabled', false);
-            Loading.hide();
-
-        },
-        error: function (jqXHR, textStatus, errorThrown) {
-            Loading.hide();
-            boton.prop('disabled', false);
-            bootbox.alert('Error: ' + jqXHR.responseText);
-        }
-    });
-});
-
-$(document).on('click', "a[data-role='bonotienda-reactivar']", function () {
-    $.ajax({
-        type: 'POST',
-        dataType: 'json',
-        async: true,
-        url: $(this).attr('href'),
-        data: {render: true},
-        beforeSend: function () {
-            $("#modal-reactivar-bono").remove();
-            Loading.show();
-        },
-        complete: function () {
-            Loading.hide();
-        },
-        success: function (data) {
+        success: function(data) {
             if (data.result == 'ok') {
-                $('body').append(data.response);
-                $("#modal-reactivar-bono").modal("show");
+                //$('#modal-ubicacion-map').modal('hide');
+                $('#ubicacion-seleccion-ciudad').val(data.response.ciudad);
+                $('#ubicacion-seleccion-sector').val(data.response.sector);
+                $('#div-ubicacion-tipoubicacion > button').removeClass('activo').addClass('inactivo');
+                $('#div-ubicacion-tipoubicacion > button[data-role="ubicacion-mapa"]').removeClass('inactivo').addClass('activo');
+                ubicacionSeleccion();
             } else {
-                alert(data.response);
+                if (data.responseModal) {
+                    $('body').append(data.responseModal);
+                    $("#modal-no-serviciodomicilio").modal("show");
+                } else {
+                    alert(data.response);
+                }
             }
+            Loading.hide();
         },
-        error: function (jqXHR, textStatus, errorThrown) {
+        error: function(jqXHR, textStatus, errorThrown) {
             Loading.hide();
             alert('Error: ' + errorThrown);
         }
@@ -801,48 +134,239 @@ $(document).on('click', "a[data-role='bonotienda-reactivar']", function () {
     return false;
 });
 
-$(document).on('click', "input[data-role='bonotienda-reactivar']", function () {
-    var form = $(this).parents("form");
+function ubicacionSeleccion() {
+    var form = $("#form-ubicacion");
     $.ajax({
         type: 'POST',
         async: true,
-        url: requestUrl + '/callcenter/bonos/reactivar/id/' + $(this).attr('data-bono'),
+        url: requestUrl + '/callcenter/vitalcall/cotizar/ubicacionSeleccion',
         data: form.serialize(),
-        beforeSend: function () {
-            $('div[id^="ReactivarBonoTiendaForm_"].text-danger').html('');
-            $('div[id^="ReactivarBonoTiendaForm_"].text-danger').css('display', 'none');
+        dataType: 'json',
+        beforeSend: function() {
             Loading.show();
         },
-        complete: function () {
+        complete: function(data) {
             Loading.hide();
         },
-        success: function (data) {
-            var data = $.parseJSON(data);
-
+        success: function(data) {
             if (data.result == 'ok') {
-                $.fn.yiiGridView.update('bonos-tienda-grid');
-                $("#modal-reactivar-bono").modal("hide");
                 dialogoAnimado(data.response);
-            } else if (data.result == 'error') {
-                bootbox.alert(data.response);
+            	window.location.replace(data.urlAnterior);
             } else {
-                $.each(data, function (element, error) {
-                    $('#' + form.attr('id') + ' #' + element + '_em_').html(error);
-                    $('#' + form.attr('id') + ' #' + element + '_em_').css('display', 'block');
-                });
+                alert(data.response);
             }
+        },
+        error: function(jqXHR, textStatus, errorThrown) {
+            // boton.button('enable');
+            Loading.hide();
+            alert('Error: ' + errorThrown);
+        }
+    });
+}
+
+
+//ordenamiento
+$(document).on('change', "select[data-role='orden-listaproductos']", function() {
+    $.ajax({
+        type: 'POST',
+        dataType: 'json',
+        async: true,
+        url: requestUrl + '/callcenter/vitalcall/cotizar/filtrar',
+        data: {'OrdenamientoForm[orden]': $('#OrdenamientoForm_orden').val()},
+        beforeSend: function() {
+            Loading.show();
+        },
+        complete: function() {
             Loading.hide();
         },
-        error: function (jqXHR, textStatus, errorThrown) {
+        success: function(data) {
+            if (data.result === 'ok') {
+                //$.fn.yiiListView.update('id-productos-list');
+                ListViewProductsUpdate();
+            } else {
+                alert(data.response);
+            }
+        },
+        error: function(jqXHR, textStatus, errorThrown) {
             Loading.hide();
-            bootbox.alert('Error: ' + errorThrown);
+            alert('Error: ' + errorThrown);
         }
     });
 });
 
-function uniqueId() {
-    var time = new Date().getTime();
-    while (time == new Date().getTime())
-        ;
-    return new Date().getTime();
+
+//filtros
+$(document).on('click', "input[id^='FiltroForm_listCategoriasTienda_']", function() {
+	filtrarListaProductos();
+});
+
+$(document).on('click', "a[data-role='filtro-listaproductos-reset']", function() {
+    //$('#form-filtro-listaproductos').clearForm();
+    var value = [parseInt($('#FiltroForm_precio').attr('data-slider-min')), parseInt($('#FiltroForm_precio').attr('data-slider-max'))];
+    setPrecioFiltroForm(value,false);
+    $('#FiltroForm_precio').slider('setValue', value);
+    $('#calificacion-filtro-listaproductos').raty('score', 0);
+    $('#calificacion-filtro-listaproductos').attr('data-score', -1);
+
+    filtrarListaProductos();
+    
+});
+
+$(document).on('change', '#FiltroForm_precio_0_text', function() {
+    var value = $(this).val();
+    value = parseInt(value);
+    if (isNaN(value)) {
+        value = parseInt($("#FiltroForm_precio").attr("data-slider-min"));
+    }
+    $('#FiltroForm_precio').slider('setValue', [value, $('#FiltroForm_precio').slider('getValue')[1]]);
+    $('#FiltroForm_precio_0').val(value);
+    $('#FiltroForm_precio_0_text').val("$" + format(value));
+    filtrarListaProductos();
+});
+
+$(document).on('change', '#FiltroForm_precio_1_text', function() {
+    var value = $(this).val();
+    value = parseInt(value);
+    if (isNaN(value)) {
+        value = parseInt($("#FiltroForm_precio").attr("data-slider-max"));
+    }
+    $('#FiltroForm_precio').slider('setValue', [$('#FiltroForm_precio').slider('getValue')[0], value]);
+    $('#FiltroForm_precio_1').val(value);
+    $('#FiltroForm_precio_1_text').val("$" + format(value));
+    filtrarListaProductos();
+});
+
+$(document).on('slide', '#FiltroForm_precio', function() {
+    var value = $('#FiltroForm_precio').slider('getValue');
+    setPrecioFiltroForm(value,false);
+});
+
+$(document).on('slideStop', '#FiltroForm_precio', function() {
+    var value = $('#FiltroForm_precio').slider('getValue');
+    setPrecioFiltroForm(value,true);
+});
+
+function capturarfiltrocalificacion(score, evt) {
+    var calificacion = score;
+    calificacion = parseInt(calificacion);
+    if (isNaN(calificacion)) {
+        calificacion = -1;
+    }
+    $('#FiltroForm_calificacion').val(calificacion);
+    $('#calificacion-filtro-listaproductos').attr('data-score', calificacion);
+    filtrarListaProductos();
 }
+
+function setPrecioFiltroForm(value,filtrar) {
+    $('#FiltroForm_precio_0_text').val("$" + format(value[0]));
+    $('#FiltroForm_precio_1_text').val("$" + format(value[1]));
+    $('#FiltroForm_precio_0').val(value[0]);
+    $('#FiltroForm_precio_1').val(value[1]);
+    if(filtrar)
+        filtrarListaProductos();
+}
+
+function format(input)
+{
+    input = input + "";
+    var num = input.replace(/\./g, '');
+    if (!isNaN(num)) {
+        num = num.toString().split('').reverse().join('').replace(/(?=\d*\.?)(\d{3})/g, '$1.');
+        num = num.split('').reverse().join('').replace(/^[\.]/, '');
+        return num;
+    }
+    else {
+        return "";
+    }
+}
+
+
+function filtrarListaProductos() {
+	$.ajax({
+        type: 'POST',
+        dataType: 'json',
+        async: true,
+        url: requestUrl + '/callcenter/vitalcall/cotizar/filtrar',
+        data: $('#form-filtro-listaproductos').serialize(),
+        beforeSend: function() {
+            Loading.show();
+        },
+        success: function(data) {
+            if (data.result === 'ok') {
+                //$.fn.yiiListView.update('id-productos-list');
+                ListViewProductsUpdate();
+            } else {
+                Loading.hide();
+                alert(data.response);
+            }
+        },
+        error: function(jqXHR, textStatus, errorThrown) {
+            Loading.hide();
+            alert('Error: ' + errorThrown);
+        }
+    });
+}
+
+function ListViewProductsUpdate() {
+    var href = $.fn.yiiListView.getUrl('id-productos-list');
+
+    if (href) {
+        var url = href.split('?');
+        var params = $.deparam.querystring('?' + (url[1] || ''));
+
+        if (params.categoriasBuscador) {
+            if (jQuery.type(params.categoriasBuscador) == "array") {
+                var text = "";
+                $.each(params.categoriasBuscador, function(index, value) {
+                    if (value) {
+                        if (text.length > 0)
+                            text += "_" + value;
+                        else
+                            text = "" + value;
+                    }
+                });
+                params.categoriasBuscador = text;
+            }
+        }
+
+        $.fn.yiiListView.update('id-productos-list', {data: params});
+    } else {
+        $.fn.yiiListView.update('id-productos-list');
+    }
+}
+
+function actualizarNumerosPagina() {
+    var items = $('#items-page').val();
+    $.fn.yiiListView.update('id-productos-list', {data: {pageSize: items}});
+}
+
+
+//inicializar librerias
+function raty() {
+    $("[data-role='raty']").raty({
+        starOn: requestUrl + '/libs/raty/images/star-on.png',
+        starOff: requestUrl + '/libs/raty/images/star-off.png',
+        starHalf: requestUrl + '/libs/raty/images/star-half.png',
+        cancelOn: requestUrl + '/libs/raty/images/cancel-on.png',
+        cancelOff: requestUrl + '/libs/raty/images/cancel-off.png',
+        hints: ['mala', 'deficiente', 'regular', 'buena', 'excelente'],
+        noRatedMsg: 'Sin calificación',
+        /*round: { down: 0.25, full: 0.6, up: 0.76 },*/
+        readOnly: function() {
+            return $(this).attr('data-readonly') === "true";
+        },
+        click: function(score, evt) {
+            if ($(this).attr('data-callback')) {
+                var funcion = $(this).attr('data-callback');
+                window[funcion](score, evt);
+            }
+        },
+        score: function() {
+            return $(this).attr('data-score');
+        }
+    });
+}
+
+raty();
+
+$("input[data-role='bootstrap-slider']").slider();

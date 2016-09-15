@@ -1,16 +1,18 @@
 <?php
 
-class SitioController extends ControllerOperator {
-    
+class SitioController extends ControllerVitalcall {
+
+    public $defaultAction = "ubicacion";
+
     /**
      * This is the action to handle external exceptions.
      */
     public function actionError() {
-        if(Yii::app()->controller->module->user->isGuest)
+        if (Yii::app()->controller->module->user->isGuest)
             $this->layout = "simple";
         else
             $this->layout = "admin";
-        
+
         if ($error = Yii::app()->errorHandler->error) {
             if (Yii::app()->request->isAjaxRequest)
                 echo $error['message'];
@@ -18,10 +20,4 @@ class SitioController extends ControllerOperator {
                 $this->render('error', $error);
         }
     }
-    
-    public function actionIndex(){
-        $this->render('index');
-    }
-
-    
 }

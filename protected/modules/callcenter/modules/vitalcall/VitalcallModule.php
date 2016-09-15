@@ -11,6 +11,7 @@ class VitalcallModule extends CWebModule {
             'callcenter.models.*',
             //'callcenter.models.form.*',
             'vitalcall.models.*',
+            'vitalcall.components.*',
             'callcenter.components.*',
             'application.components.*',
             'application.components.behaviors.*',

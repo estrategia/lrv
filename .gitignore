@@ -10,3 +10,5 @@ protected/runtime/*
 /html/
 /protected/modules/callcenter/uploads/
 .DS_Store
+/.buildpath
+/images/banner/

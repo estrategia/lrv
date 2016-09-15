@@ -1,6 +1,6 @@
 <?php
 
-class ClienteController extends ControllerOperator {
+class ClienteController extends ControllerVitalcall {
     public $defaultAction = "admin";
     
     public function actionAdmin(){
