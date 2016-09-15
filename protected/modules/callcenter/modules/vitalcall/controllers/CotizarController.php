@@ -5,9 +5,20 @@ class CotizarController extends ControllerVitalcall {
 	public function actionUbicacion() {
 		$this->layout = "simple";
 		
+		$listObjCiudad = Ciudad::model()->findAll(array(
+			'order' => 't.orden, t.nombreCiudad',
+			'condition' => 'estadoCiudad=:estadoCiudad',
+			'params' => array(
+				':estadoCiudad' => 1,
+			)
+		));
+		
+		Yii::import('ext.select2.Select2');
+		$listDataCiudad = CHtml::listData($listObjCiudad, 'codigoCiudad', 'nombreCiudad');
 		$redirect = Yii::app()->request->urlReferrer == null ? $this->createUrl('/callcenter/vitalcall/cliente') : Yii::app()->request->urlReferrer;
 	
 		$this->render('ubicacion', array(
+				'listDataCiudad' => $listDataCiudad,
 				'objSectorCiudad' => $this->objSectorCiudad,
 				'urlRedirect' => $redirect
 		));

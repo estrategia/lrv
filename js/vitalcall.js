@@ -1,3 +1,81 @@
+$(document).on('click', 'button[data-role="ubicacion-georeferencia"]', function() {
+	$('#modal-georeferencia').modal('show');
+	return false;
+});
+
+$(document).on('click', 'button[data-role="ubicacion-geodireccion"]', function() {
+	var ciudad = $('#select-georeferencia-ciudad').val();
+	
+	$.ajax({
+        type: 'POST',
+        dataType: 'json',
+        async: true,
+        url: requestUrl + '/callcenter/admin/geodireccion',
+        data: {ciudad: ciudad, direccion: $('#input-georeferencia-direccion').val()},
+        beforeSend: function () {
+            $('#georeferencia-seleccion-text').html('');
+            Loading.show();
+        },
+        success: function (data) {
+            if (data.result === "ok") {
+                $('#georeferencia-seleccion-text').html(data.response);
+                $('#georeferencia-seleccion-ciudad').val(data.ciudad);
+                $('#georeferencia-seleccion-sector').val(data.sector);
+                Loading.hide();
+            } else {
+                Loading.hide();
+                bootbox.alert(data.response);
+            }
+        },
+        error: function (jqXHR, textStatus, errorThrown) {
+            Loading.hide();
+            bootbox.alert('Error: ' + jqXHR.responseText);
+        }
+    });
+	return false;
+});
+
+$(document).on('click', 'button[data-role="ubicacion-geobarrio"]', function() {
+	var ciudad = $('#select-georeferencia-ciudad').val();
+	
+	$.ajax({
+        type: 'POST',
+        dataType: 'json',
+        async: true,
+        url: requestUrl + '/callcenter/admin/geobarrio',
+        data: {ciudad: ciudad, barrio: $('#input-georeferencia-barrio').val()},
+        beforeSend: function () {
+            $('#georeferencia-seleccion-text').html('');
+            Loading.show();
+        },
+        success: function (data) {
+            if (data.result === "ok") {
+                $('#georeferencia-seleccion-text').html(data.response);
+                $('#georeferencia-seleccion-ciudad').val(data.ciudad);
+                $('#georeferencia-seleccion-sector').val(data.sector);
+                Loading.hide();
+            } else {
+                Loading.hide();
+                bootbox.alert(data.response);
+            }
+        },
+        error: function (jqXHR, textStatus, errorThrown) {
+            Loading.hide();
+            bootbox.alert('Error: ' + jqXHR.responseText);
+        }
+    });
+	return false;
+});
+
+$(document).on('click', 'button[data-role="ubicacion-seleccion-georeferencia"]', function() {
+    Loading.show();
+    $('#ubicacion-seleccion-ciudad').val($('#georeferencia-seleccion-ciudad').val());
+    $('#ubicacion-seleccion-sector').val($('#georeferencia-seleccion-sector').val());
+    //$('#div-ubicacion-tipoubicacion > button').removeClass('activo').addClass('inactivo');
+    //$('#div-ubicacion-tipoubicacion > button[data-role="ubicacion-mapa"]').removeClass('inactivo').addClass('activo');
+    ubicacionSeleccion();
+});
+
 $(document).on('click', 'button[data-role="ubicacion-mapa"]', function() {
     if ($('#modal-ubicacion-map').length > 0) {
         $('#modal-ubicacion-map').modal('show');

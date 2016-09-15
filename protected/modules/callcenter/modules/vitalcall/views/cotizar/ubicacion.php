@@ -22,3 +22,7 @@
         </form>
     </section>
 </div>
+
+<?php $this->renderPartial('_georeferencia',array('listDataCiudad'=>$listDataCiudad));?>
+<?php //Yii::app()->clientScript->registerScript('analytics-compra', "$('#select-georeferencia-ciudad').select2();"); ?>
+
