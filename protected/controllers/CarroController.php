@@ -3744,8 +3744,8 @@ class CarroController extends Controller {
         $descripcion = Yii::app()->params->formaPago['pasarela']['descripcion'];
         $prueba = Yii::app()->params->formaPago['pasarela']['prueba'];
 
-        $urlRespuesta = "http://www.larebajavirtual.com/pasarela/respuesta"; //$this->createAbsoluteUrl('/pasarela/respuesta');
-        $urlConfirmacion = "http://www.larebajavirtual.com/pasarela/confirmacion"; //$this->createAbsoluteUrl('/pasarela/confirmacion');
+        $urlRespuesta = "https://www.larebajavirtual.com/pasarela/respuesta"; //$this->createAbsoluteUrl('/pasarela/respuesta');
+        $urlConfirmacion = "https://www.larebajavirtual.com/pasarela/confirmacion"; //$this->createAbsoluteUrl('/pasarela/confirmacion');
         $llaveEncripcion = Yii::app()->params->formaPago['pasarela']['llaveEncripcion'];
 
         $firma = $llaveEncripcion . "~" . $usuarioId . "~" . $resultCompra['response']['objPasarelaEnvio']->idCompra . "~" . $resultCompra['response']['objPasarelaEnvio']->valor . "~" . $resultCompra['response']['objPasarelaEnvio']->moneda;
