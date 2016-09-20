@@ -8,7 +8,7 @@
 
         <link rel="shortcut icon" href="<?php echo Yii::app()->request->baseUrl; ?>/images/favicon_16.ico" type="image/x-icon" /> 
         <title><?php echo CHtml::encode($this->pageTitle); ?></title>
-        <script>requestUrl = "<?php echo Yii::app()->request->baseUrl; ?>";</script>
+        <script>requestUrl = "<?php echo Yii::app()->request->baseUrl; ?>"; gmapKey = "<?php echo Yii::app()->params['google']['llaveMapa']; ?>";</script>
         <link id="bs-css" href="<?php echo Yii::app()->request->baseUrl; ?>/libs/charisma/css/bootstrap-simplex.min.css" rel="stylesheet" />
 
         <?php Yii::app()->clientScript->registerCoreScript('jquery'); ?>
@@ -25,5 +25,4 @@
             </div>
         </div>
     </body>
-    <script src="<?php echo Yii::app()->request->baseUrl; ?>/js/operator.min.js"></script>
 </html>

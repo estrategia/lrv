@@ -27,9 +27,9 @@ class OrdenamientoForm extends CFormModel {
 
     public function getOpciones($tipo) {
         if ($tipo == self::SI_PRECIO)
-            return array(5 => 'Por defecto', 1 => 'Precio Ascendente', 2 => 'Precio Descendente', 3 => 'Nombre', 4 => 'Presentación');
+            return array(5 => 'Por Relevancia', 1 => 'Precio Ascendente', 2 => 'Precio Descendente', 3 => 'Nombre', 4 => 'Presentación');
         else if ($tipo == self::NO_PRECIO)
-            return array(5 => 'Por defecto', 3 => 'Nombre', 4 => 'Presentación');
+            return array(5 => 'Por Relevancia', 3 => 'Nombre', 4 => 'Presentación');
     }
     
     /**

@@ -15,10 +15,15 @@
                 font-family: Interstate regular;
                 src: url(".Yii::app()->request->baseUrl."/images/contenido/metamucil/fonts/interstate-regular.ttf);
             }
+            @font-face {
+                font-family: DIN alternate bold;
+                src: url(".Yii::app()->request->baseUrl."/images/contenido/metamucil/fonts/DIN-alternate-bold.otf);
+            }
             .texto {font-family:Interstate regular;}
             .font-title{font-family:HelveticaBold;}
             .space{margin-top:30px;}
-            .pattern-background{background-image:url(".Yii::app()->request->baseUrl."/images/contenido/metamucil/pattern.png);margin-top: -20px;background-size:cover;}
+            .pattern-background{background-image:url(".Yii::app()->request->baseUrl."/images/contenido/metamucil/pattern.png);margin-top: -22px;background-size:cover;}
+            .banner {background-image:url(".Yii::app()->request->baseUrl."/images/contenido/metamucil/fondo-banner.png);background-size:cover;}
             .titulo {background-color:#B04996;color:#fff;font-size:30px;padding: 15px 0px 15px 50px;border-radius: 0px 22px 22px 0px;}
             .titulo_m { background-color: #B04996;color: #fff;font-size: 22px;padding: 15px 0px 15px 50px;border-radius: 0px 22px 22px 0px;}
             .list {list-style:none;list-style-image: url(".Yii::app()->request->baseUrl."/images/contenido/metamucil/ico.png);font-size: 24px;margin-left: 47px;}
@@ -37,6 +42,13 @@
             .filtro{background-color:#fff;border:1px solid #000;border-radius: 15px;padding: 15px;text-align: center;}
             .contenedor-filtros {padding: 22px;}
             .title {background-color: rgb(239, 138, 0);margin: 0px;color: rgb(255, 255, 255);font-weight: bolder;font-size: 23px;text-align: center;}
+            .ico-imagen {width: 28px;}
+            .title-principal {color:#640B34;text-align:center;font-family: DIN alternate bold;font-size:2em !important;}
+            .title-principal span {color:#fff;font-family: helvetica;font-style: italic;}
+            .elementos {color: rgb(136, 17, 60);font-size: 19px;font-family: interstate regular;padding-top: 15px;}
+            .modelo {margin: 0px 7%;width: 66.8%;float: right;}
+            @media (max-width:1199px) {
+                .modelo{margin: 21px 0% 0%;width: 72.8%;}
 	</style>
     ";
 ?>
@@ -131,8 +143,40 @@
 <!--Versión escritorio-->
 <?php else: ?>
     <div class="container">
-        <div class="row">
-            <img src="<?= Yii::app()->request->baseUrl ?>/images/contenido/metamucil/banner.png" class="img-responsive">
+        <div class="row banner">
+            <div class="row">
+                <div class="col-md-12">
+                  <h1 class="title-principal">FACILITA EL TRÁNSITO INTESTINAL CON <span>Metamucil</span></h1>                    
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-4">
+                    <img src="<?= Yii::app()->request->baseUrl ?>/images/contenido/metamucil/modelo.png" class="img-responsive modelo" alt="Presentación metamucil">
+                </div>
+                <div class="col-md-4 elementos">
+                    <p><img class="ico-imagen" src="<?= Yii::app()->request->baseUrl ?>/images/contenido/metamucil/icon1.png" alt="">
+                        Facilita el <strong>tránsito</strong> intestinal
+                    </p>
+                    <p><img class="ico-imagen" src="<?= Yii::app()->request->baseUrl ?>/images/contenido/metamucil/icon2.png" alt="">
+                        Ayuda en el tratamiento <br> de <strong>estreñimiento crónico</strong></p>
+                    <p><img class="ico-imagen" src="<?= Yii::app()->request->baseUrl ?>/images/contenido/metamucil/icon3.png" alt="">
+                        Ayuda en tu proceso <br> natural de <strong>limpieza</strong></p>
+                    <p><img class="ico-imagen" src="<?= Yii::app()->request->baseUrl ?>/images/contenido/metamucil/icon4.png" alt="">
+                        Te hace sentir más <strong>ligera</strong></p>
+                    <p><img class="ico-imagen" src="<?= Yii::app()->request->baseUrl ?>/images/contenido/metamucil/icon5.png" alt="">
+                        <strong>Fácil</strong> de preparar</p>
+                    <p><img class="ico-imagen" src="<?= Yii::app()->request->baseUrl ?>/images/contenido/metamucil/icon6.png" alt="">
+                        <strong>Sabor</strong> Naranja</p>
+                    <p><img class="ico-imagen" src="<?= Yii::app()->request->baseUrl ?>/images/contenido/metamucil/icon7.png" alt="">
+                        <strong>Sin</strong> azúcar*</p>
+                </div>
+                <div class="col-md-4">
+                    <img style="width: 60%;margin-top: 5px;position: absolute;" src="<?= Yii::app()->request->baseUrl ?>/images/contenido/metamucil/tarro-metamucil.png" class="img-responsive" alt="Metamucil">
+                </div> 
+            </div>
+                <div style="float: left;margin-top: -28px;">
+                    <img class="img-responsive" src="<?= Yii::app()->request->baseUrl ?>/images/contenido/metamucil/franja.png" alt="">
+                </div>               
         </div>
         <div class="row pattern-background">
             <div class="col-md-6" style="padding-left: 0px; margin-top: 40px;">
@@ -200,5 +244,3 @@
     </div>
  <!--Fin versión escritorio-->   
 <?php endif;?>
-
- <?php Yii::app()->clientScript->registerScript('analytics-campania', "ga('create', 'UA-80765083-1', 'auto'); ga('send', 'pageview');"); ?>

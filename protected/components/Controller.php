@@ -144,7 +144,7 @@ class Controller extends CController {
     public function verificarDispositivo() {
         //Get HTTP/HTTPS (the possible values for this vary from server to server)
         $urlProtocolo = (isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] && !in_array(strtolower($_SERVER['HTTPS']), array('off', 'no'))) ? 'https' : 'http';
-
+        
         //Get domain portion
         $urlHost = '://' . $_SERVER['HTTP_HOST'];
         $urlHost = str_replace("://www.", "://", $urlHost);

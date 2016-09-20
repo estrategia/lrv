@@ -30,7 +30,18 @@ return array(
                 'user' => array(
                     'class' => 'callcenter.components.UserOperator',
                 ),
-            )),
+            ),
+            'modules' => array(
+                'vitalcall' => array(
+                    'defaultController' => 'sitio',
+                    'components' => array(
+                        'user' => array(
+                            'class' => 'callcenter.components.UserOperator',
+                        ),
+                    ),
+                )
+            ),
+        ),
         'vendedor' => array(
             'defaultController' => 'sitio',
             'components' => array(
@@ -350,7 +361,14 @@ return array(
             'defecto' => 1,
             'asociado' => 2,
             'clienteFiel' => 3,
+            'vitalCall' => 20,
             '*' => 99
+        ),
+        'tipoVenta' => array(
+            'virtual' => 1,
+            'nacional' => 2,
+            'asistida' => 3,
+            'vitalCall' => 4
         ),
         'bloqueoUsuario' => array(
             'diasBloqueo' => 15,
@@ -390,7 +408,7 @@ return array(
             'distanciaMaxima' => 20//kilometros
         ),
         'google' => array(
-            'llaveMapa' => ''
+            'llaveMapa' => 'gme-copservir'
         ),
         'asunto' => array(
             'recordatorioClave' => 'La Rebaja Virtual: Clave de ingreso',
@@ -634,6 +652,16 @@ return array(
                 'usuario' => 'larebaja.online.callcenter.usuario',
                 'formPedidoBusqueda' => 'larebaja.online.callcenter.formpedidobusqueda',
                 'modelBonosAdminExport' => 'larebaja.online.callcenter.modelbonosadminexport',
+            ),
+        ),
+        'vitalCall' => array(
+            'sesion' => array(
+                'sectorCiudadEntrega' => 'larebaja.online.vitalCall.sectorciudadentrega',
+                'carroPagarForm' => 'larebaja.online.vitalCall.carropagarform',
+                'redireccionUbicacion' => 'larebaja.online.vitalCall.redireccionubicacion',
+            	'productosBusquedaOrden' => 'larebaja.online.vitalCall.productos.busqueda.orden',
+            	'productosBusquedaFiltro' => 'larebaja.online.vitalCall.productos.busqueda.filtro',
+                //'formulaMedica' => 'larebaja.online.vitalCall.compra.formulamedica',
             ),
         ),
     ),

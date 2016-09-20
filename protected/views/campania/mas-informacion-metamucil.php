@@ -148,5 +148,3 @@
     
  <!--Fin versión escritorio-->   
 <?php endif;?>
-
-<?php Yii::app()->clientScript->registerScript('analytics-campania', "ga('create', 'UA-80765083-1', 'auto'); ga('send', 'pageview');"); ?>

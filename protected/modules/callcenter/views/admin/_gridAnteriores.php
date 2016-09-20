@@ -20,7 +20,7 @@ $this->widget('zii.widgets.grid.CGridView', array(
         array(
             'header' => "Pedido #",
             'type' => 'raw',
-            'value' => array($this, 'gridDetallePedido'),
+            'value' => array($model, 'gridDetallePedido'),
         ),
         array(
             'header' => 'PDV',
@@ -33,17 +33,17 @@ $this->widget('zii.widgets.grid.CGridView', array(
         array(
             'header' => "Valor",
             'type' => 'raw',
-            'value' => array($this, 'gridValorPedido'),
+            'value' => array($model, 'gridValorPedido'),
         ),
         array(
             'header' => "Dirección Despacho",
             'type' => 'raw',
-            'value' => array($this, 'gridDestinoPedido'),
+            'value' => array($model, 'gridDestinoPedido'),
         ),
         array(
             'header' => "Punto de Venta",
             'type' => 'raw',
-            'value' => array($this, 'gridPuntoventaPedido'),
+            'value' => array($model, 'gridPuntoventaPedido'),
         ),
         array(
             'header' => 'Ciudad',

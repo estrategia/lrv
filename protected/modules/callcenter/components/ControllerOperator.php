@@ -40,21 +40,14 @@ class ControllerOperator extends CController {
         Yii::app()->getClientScript()->registerScriptFile(Yii::app()->request->baseUrl . '/libs/charisma/js/jquery.uploadify-3.1.min.js', CClientScript::POS_END);
         //Yii::app()->getClientScript()->registerScriptFile(Yii::app()->request->baseUrl . '/libs/charisma/js/jquery.history.js', CClientScript::POS_END);
         Yii::app()->getClientScript()->registerScriptFile(Yii::app()->request->baseUrl . '/libs/charisma/js/charisma.js', CClientScript::POS_END);
-     //   Yii::app()->getClientScript()->registerScriptFile(Yii::app()->request->baseUrl . '/js/operator.js', CClientScript::POS_END);
-        
         Yii::app()->getClientScript()->registerScriptFile(Yii::app()->request->baseUrl . '/libs/loading/js/Loading.js', CClientScript::POS_END);
         Yii::app()->getClientScript()->registerScriptFile(Yii::app()->request->baseUrl . '/libs/bootbox.min.js', CClientScript::POS_END);
-
-        //Yii::app()->getClientScript()->registerScriptFile(Yii::app()->request->baseUrl . '/js/modulos-om.js', CClientScript::POS_END);
-
-        /*Yii::app()->getClientScript()->registerScriptFile(Yii::app()->request->baseUrl . "/libs/bootstrap/js/bootstrap.min.js", CClientScript::POS_HEAD);
-        Yii::app()->getClientScript()->registerScriptFile(Yii::app()->request->baseUrl . "/js/operator.js", CClientScript::POS_HEAD);
-        Yii::app()->getClientScript()->registerScriptFile(Yii::app()->request->baseUrl . "/libs/jquery-ui/jquery-ui.min.js", CClientScript::POS_HEAD);
-        Yii::app()->getClientScript()->registerScriptFile(Yii::app()->request->baseUrl . "/libs/select2/select2.min.js", CClientScript::POS_HEAD);
-        Yii::app()->getClientScript()->registerScriptFile(Yii::app()->request->baseUrl . "/libs/bootstrap/js/dropdown.js", CClientScript::POS_HEAD);*/
         
         //Yii::app()->clientScript->registerCoreScript('jquery');
-
+        
+        Yii::app()->getClientScript()->registerScriptFile(Yii::app()->request->baseUrl . '/libs/owl-carousel/owl.carousel.min.js', CClientScript::POS_END);
+        Yii::app()->getClientScript()->registerScriptFile(Yii::app()->request->baseUrl . '/js/operator.js', CClientScript::POS_END);
+        Yii::app()->getClientScript()->registerScriptFile(Yii::app()->request->baseUrl . '/js/modulos.min.js', CClientScript::POS_END);
     }
 
 //custom application css
@@ -69,14 +62,10 @@ class ControllerOperator extends CController {
         Yii::app()->getClientScript()->registerCssFile(Yii::app()->request->baseUrl . '/libs/charisma/css/jquery.iphone.toggle.css');
         Yii::app()->getClientScript()->registerCssFile(Yii::app()->request->baseUrl . '/libs/charisma/css/uploadify.css');
         Yii::app()->getClientScript()->registerCssFile(Yii::app()->request->baseUrl . '/libs/charisma/css/animate.min.css');
-        //Yii::app()->getClientScript()->registerCssFile(Yii::app()->request->baseUrl . '/css/operator.css');
         Yii::app()->getClientScript()->registerCssFile(Yii::app()->request->baseUrl . '/libs/loading/css/Loading.css');
-        
-        /*Yii::app()->getClientScript()->registerCssFile(Yii::app()->request->baseUrl . "/libs/bootstrap/css/bootstrap.min.css");
-        Yii::app()->getClientScript()->registerCssFile(Yii::app()->request->baseUrl . "/libs/bootstrap/css/bootstrap-responsive.min.css");
-        Yii::app()->getClientScript()->registerCssFile(Yii::app()->request->baseUrl . "/libs/jquery-ui/jquery-ui.min.css");
-        Yii::app()->getClientScript()->registerCssFile(Yii::app()->request->baseUrl . "/libs/select2/select2.min.css");
-        Yii::app()->getClientScript()->registerCssFile(Yii::app()->request->baseUrl . "/libs/bootstrap/css/dropdown.css");*/
+       /* Yii::app()->getClientScript()->registerCssFile(Yii::app()->request->baseUrl . '/libs/owl-carousel/owl.carousel.css');
+        Yii::app()->getClientScript()->registerCssFile(Yii::app()->request->baseUrl . '/libs/owl-carousel/owl.theme.css');
+        Yii::app()->getClientScript()->registerCssFile(Yii::app()->request->baseUrl . '/css/operator.css');*/
     }
 
 }

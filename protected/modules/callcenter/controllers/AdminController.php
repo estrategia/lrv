@@ -706,7 +706,7 @@ class AdminController extends ControllerOperator {
         } else {
             $result = $result[0];
             if ($result->RESPUESTA == 1) {
-                echo CJSON::encode(array('result' => 'ok', 'response' => "<strong> RESULTADO: </strong>" . $result->PDV . "-" . $result->PDV_NOMBRE));
+                echo CJSON::encode(array('result' => 'ok', 'response' => "<strong> RESULTADO: </strong>" . $result->PDV . "-" . $result->PDV_NOMBRE, 'ciudad'=>76001, 'sector'=>22));
             } else {
                 echo CJSON::encode(array('result' => 'ok', 'response' => $result->DESCRIPCION));
             }
@@ -744,7 +744,7 @@ class AdminController extends ControllerOperator {
             $result = $result[0];
             if ($result->RESPUESTA == 1) {
                 $infopdv = $result->PDV[0];
-                echo CJSON::encode(array('result' => 'ok', 'response' => "<strong> RESULTADO: </strong>" . $infopdv['PVTCODIG'] . "-" . $infopdv['PVTNOMBR']));
+                echo CJSON::encode(array('result' => 'ok', 'response' => "<strong> RESULTADO: </strong>" . $infopdv['PVTCODIG'] . "-" . $infopdv['PVTNOMBR'], 'ciudad'=>76001, 'sector'=>22));
             } else {
                 echo CJSON::encode(array('result' => 'ok', 'response' => $result->DESCRIPCION));
             }
@@ -766,7 +766,7 @@ class AdminController extends ControllerOperator {
         return $model;
     }
 
-    protected function gridDetallePedido($data, $row) {
+    /*protected function gridDetallePedido($data, $row) {
         $params = array('pedido' => $data->idCompra);
 
         if ($data->idOperador == null && $data->idEstadoCompra == Yii::app()->params->callcenter ['estadoCompra']['estado']['pendiente']) {
@@ -830,6 +830,6 @@ class AdminController extends ControllerOperator {
             $classes[] = "presencial";
         }
         return empty($classes) ? false : implode(' ', $classes);
-    }
+    }*/
 
 }

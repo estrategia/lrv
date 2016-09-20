@@ -8,15 +8,15 @@
 
         <link rel="shortcut icon" href="<?php echo Yii::app()->request->baseUrl; ?>/images/favicon_16.ico" type="image/x-icon" /> 
         <title><?php echo CHtml::encode($this->pageTitle); ?></title>
-        <script>requestUrl = "<?php echo Yii::app()->request->baseUrl; ?>";</script>
+        <script>requestUrl = "<?php echo Yii::app()->request->baseUrl; ?>"; gmapKey = "<?php echo Yii::app()->params['google']['llaveMapa']; ?>";</script>
         <link id="bs-css" href="<?php echo Yii::app()->request->baseUrl; ?>/libs/charisma/css/bootstrap-simplex.min.css" rel="stylesheet" />
 
         <?php Yii::app()->clientScript->registerCoreScript('jquery'); ?>
         <?php //Yii::app()->clientScript->registerCoreScript('jquery.ui'); ?>
-
+        
         <?php Yii::app()->getClientScript()->registerCssFile(Yii::app()->request->baseUrl . "/libs/owl-carousel/owl.carousel.css"); ?>
-        <?php Yii::app()->getClientScript()->registerCssFile(Yii::app()->request->baseUrl . "/libs/owl-carousel/owl.theme.css") ?>
-        <?php Yii::app()->getClientScript()->registerCssFile(Yii::app()->request->baseUrl . "/css/operator.css"); ?>
+-       <?php Yii::app()->getClientScript()->registerCssFile(Yii::app()->request->baseUrl . "/libs/owl-carousel/owl.theme.css") ?>
+-       <?php Yii::app()->getClientScript()->registerCssFile(Yii::app()->request->baseUrl . "/css/operator.css"); ?>
     </head>
 
     <body>
@@ -81,6 +81,17 @@
                                 <li>
                                     <a href="<?php echo $this->createUrl('/callcenter/admin/calificaciones') ?>" class="ajax-link"><i class="glyphicon glyphicon-ok"></i><span> Comentarios y Calificaciones</span></a>
                                 </li>
+                                
+                                <li class="nav-header hidden-md">VITAL CALL</li>
+                                <li class="">
+                                    <a href="<?php echo $this->createUrl('/callcenter/vitallcall/productos') ?>" class="ajax-link"><i class="glyphicon glyphicon-list-alt"></i><span> Productos</span></a>
+                                </li>
+                                <li class="">
+                                    <a href="<?php echo $this->createUrl('/callcenter/vitalcall/cotizar/buscar') ?>" class="ajax-link"target="_blank"><i class="glyphicon glyphicon-usd"></i><span> Cotizar</span></a>
+                                </li>
+                                <li class="">
+                                    <a href="<?php echo $this->createUrl('/callcenter/vitalcall/cliente') ?>" class="ajax-link"><i class="glyphicon glyphicon-user"></i><span> Pacientes</span></a>
+                                </li>
                             <?php endif; ?>
                             <?php if (Yii::app()->controller->module->user->profile == 2): ?>
                                 <li class="nav-header hidden-md">Admin</li>
@@ -140,8 +151,6 @@
                 <?php echo $content ?>
             </div>
         </div>
-
-
     </body>
     <script src="<?php echo Yii::app()->request->baseUrl; ?>/libs/owl-carousel/owl.carousel.min.js"></script>
     <script src="<?php echo Yii::app()->request->baseUrl; ?>/js/operator.js"></script> <!-- cambiar -->

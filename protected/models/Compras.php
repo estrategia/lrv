@@ -273,11 +273,21 @@ class Compras extends CActiveRecord {
     public function searchAnteriores() {
         $criteria = new CDbCriteria;
         $criteria->with = array("objCompraDireccion", "objCiudad", "objSector", "objPuntoVenta");
-        $criteria->condition = "t.tipoEntrega=:tipoEntrega AND t.identificacionUsuario=:usuario AND t.identificacionUsuario IS NOT NULL AND t.idComercial IS NOT NULL";
-        $criteria->params = array(
-            ':usuario' => $this->identificacionUsuario,
-            ':tipoEntrega' => $this->tipoEntrega,
-        );
+        
+        if($this->idTipoVenta == Yii::app()->params->tipoVenta['vitalCall']){
+            $criteria->condition = "t.identificacionUsuario IS NULL AND t.invitado=:invitado AND t.idTipoVenta=:tipoventa AND objCompraDireccion.identificacionUsuario=:usuario";
+            $criteria->params = array(
+                ':invitado' => 1,
+                ':usuario' => $this->identificacionUsuario,
+                ':tipoventa' => Yii::app()->params->tipoVenta['vitalCall'],
+            );
+        }else{
+            $criteria->condition = "t.tipoEntrega=:tipoEntrega AND t.identificacionUsuario=:usuario AND t.identificacionUsuario IS NOT NULL AND t.idComercial IS NOT NULL";
+            $criteria->params = array(
+                ':usuario' => $this->identificacionUsuario,
+                ':tipoEntrega' => $this->tipoEntrega,
+            );
+        }
 
         $criteria->order = 't.fechaCompra DESC';
 
@@ -827,6 +837,72 @@ class Compras extends CActiveRecord {
         } else {
             return $puntos->cantidadPuntos;
         }
+    }
+    
+    public function gridDetallePedido($data, $row) {
+        $params = array('pedido' => $data->idCompra);
+
+        if ($data->idOperador == null && $data->idEstadoCompra == Yii::app()->params->callcenter ['estadoCompra']['estado']['pendiente']) {
+            $params['asignar'] = true;
+        }
+
+        $result = "<a class='btn btn-success  btn-xs' href='" . CController::createUrl('/callcenter/admin/detallepedido', $params) . "' target='_blank'><i
+                     class='glyphicon glyphicon-zoom-in glyphicon-white'></i> $data->idCompra</a>";
+        return $result;
+    }
+
+    public function gridPuntoventaPedido($data, $row) {
+        if ($data->objPuntoVenta === null)
+            return "NA";
+        return $data->objPuntoVenta->nombrePuntoDeVenta . "<br/>" . $data->objPuntoVenta->direccionPuntoDeVenta;
+    }
+
+    public function gridOrigenPedido($data, $row) {
+        if ($data->identificacionUsuario == null) {
+            return $data->objCompraDireccion->nombre . "<br/>" . $data->objCompraDireccion->correoElectronico;
+        } else {
+            return "$data->identificacionUsuario<br/>" . $data->objUsuario->getNombreCompleto() . "<br/>" . $data->objUsuario->correoElectronico;
+        }
+    }
+
+    public function gridValorPedido($data, $row) {
+        return Yii::app()->numberFormatter->format(Yii::app
+                        ()->params->formatoMoneda['patron'], $data->totalCompra, Yii::app()->params->formatoMoneda['moneda']);
+    }
+
+    public function gridDestinoPedido($data, $row) {
+
+        if ($data->objCompraDireccion == null)
+            return "NA";
+        return $data->
+                objCompraDireccion->nombre . "<br/>" . $data->objCompraDireccion->direccion . "<br/>" . $data->objCompraDireccion->barrio;
+    }
+
+    public function gridPagoPedido($data, $row) {
+        if ($data->objFormaPagoCompra === null)
+            return "NA";
+
+        $result = $data->objFormaPagoCompra->objFormaPago->formaPago;
+        if ($data->objFormaPagoCompra->numeroTarjeta != null && !empty($data->objFormaPagoCompra->numeroTarjeta))
+            $result .= "<strong>No. tarjeta:</strong> " . $data->objFormaPagoCompra->numeroTarjeta . "<br/><strong>No. cuotas:</strong> " . $data->objFormaPagoCompra->cuotasTarjeta;
+
+        return $result;
+    }
+
+    public function gridEstadoPedido($data, $row) {
+        return "<span class='label label-" . Yii::app()->params->callcenter['estadoCompra']['colorClass'][$data->idEstadoCompra] . "'>" . $data->objEstadoCompra->compraEstado . "</span>";
+    }
+    
+    public function gridRowCssClassFunction($row, $data) {
+        $classes = array();
+        $rowCssClass = array('odd', 'even');
+        $classes [] = $rowCssClass[$row % count($rowCssClass)];
+        if ($data->seguimiento == 1)
+            $classes[] = "seguimiento";
+        else if ($data->tipoEntrega == 1) {
+            $classes[] = "presencial";
+        }
+        return empty($classes) ? false : implode(' ', $classes);
     }
 
 }
