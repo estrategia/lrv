@@ -4,9 +4,10 @@
         <div data-role="collapsible">
             <h3>Adjuntar formula médica</h3>
             <div class="ui-field-container">
+                <label>Se debe adjuntar la fórmula médica escaneada, o la imagen tomada desde el celular o cámara fotográfica, o el archivo PDF que la contenga.</label>
                 <?php echo $form->labelEx($model, 'formulaMedica', array('class' => '')); ?>
                 <?php echo CHtml::activeFileField($model, 'formulaMedica', array('maxlength' => 50, 'placeholder' => $model->getAttributeLabel('formulaMedica'))); ?>
-                <?php // echo $form->error($model, 'formulaMedica'); ?>
+                <?php echo $form->error($model, 'formulaMedica'); ?>
             </div>
             <div class="ui-input-btn ui-btn ui-corner-all ui-shadow ui-btn-r">
                 Guardar Formula
@@ -14,7 +15,7 @@
             </div>
         </div>
         <div data-role="collapsible">
-            <h3>Diligenciar datos del médico</h3>
+            <h3>Adjuntar Información del Médico</h3>
             <div class="ui-field-container">
                 <?php echo $form->labelEx($model, 'nombreMedico', array('class' => 'ui-mini')); ?>
                 <?php echo $form->textField($model, 'nombreMedico', array('maxlength' => 50, 'placeholder' => $model->getAttributeLabel('nombreMedico'))); ?>

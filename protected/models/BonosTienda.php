@@ -6,7 +6,7 @@
  * The followings are the available columns in table 't_BonosTienda':
  * @property string $idBonoTienda
  * @property string $identificacionUsuario
- * @property string $concepto
+ * @property string $idBonoTiendaTipo
  * @property integer $valor
  * @property string $vigenciaInicio
  * @property string $vigenciaFin
@@ -37,20 +37,22 @@ class BonosTienda extends CActiveRecord {
         // NOTE: you should only define rules for those attributes that
         // will receive user inputs.
         return array(
-            array('identificacionUsuario, concepto, valor, vigenciaInicio, vigenciaFin, minimoCompra, tipo', 'required', 'message' => '{attribute} no puede estar vac&iacute;o'),
+            array('identificacionUsuario, idBonoTiendaTipo, valor, vigenciaInicio, correoElectronico, vigenciaFin, minimoCompra, tipo', 'required', 'message' => '{attribute} no puede estar vac&iacute;o'),
             array('valor, minimoCompra', 'numerical', 'integerOnly' => true, 'min' => 0),
             array('tipo, estado, idCompra, valorCompra', 'numerical', 'integerOnly' => true),
-            array('identificacionUsuario, concepto', 'length', 'max' => 50),
+            array('identificacionUsuario', 'length', 'max' => 50),
             array('vigenciaInicio, vigenciaFin', 'date', 'format' => 'yyyy-M-d'),
             array('vigenciaFin', 'validateDate'),
+            array('correoElectronico','email'),
             array('fechaCreacion, fechaUso', 'safe'),
             // The following rule is used by search().
             // @todo Please remove those attributes that should not be searched.
-            array('idBonoTienda, identificacionUsuario, concepto, valor, vigenciaInicio, vigenciaFin, minimoCompra, tipo, estado, fechaCreacion, idCompra, fechaUso, valorCompra', 'safe', 'on' => 'search'),
+            array('idBonoTienda, identificacionUsuario, idBonoTiendaTipo, valor, correoElectronico, idBonoTiendaTipo, vigenciaInicio, vigenciaFin, minimoCompra, tipo, estado, fechaCreacion, idCompra, fechaUso, valorCompra', 'safe', 'on' => 'search'),
         );
     }
 
-    public function validateDate($attribute, $params) {
+    public function
+     validateDate($attribute, $params) {
         if ($attribute == 'vigenciaFin') {
             $vigenciaInicio = DateTime::createFromFormat('Y-m-d', $this->vigenciaInicio);
             $vigenciaFin = DateTime::createFromFormat('Y-m-d', $this->vigenciaFin);
@@ -81,6 +83,7 @@ class BonosTienda extends CActiveRecord {
         // class name for the relations automatically generated below.
         return array(
             'objCompra' => array(self::BELONGS_TO, 'Compras', 'idCompra'),
+            'objConcepto' => array(self::BELONGS_TO, 'BonoTienda', 'idBonoTiendaTipo'),
         );
     }
 
@@ -91,7 +94,7 @@ class BonosTienda extends CActiveRecord {
         return array(
             'idBonoTienda' => 'Id bono tienda',
             'identificacionUsuario' => 'Identificaci&oacute;n usuario',
-            'concepto' => 'Concepto',
+            'idBonoTiendaTipo' => 'Concepto',
             'valor' => 'Valor',
             'vigenciaInicio' => 'Vigencia inicio',
             'vigenciaFin' => 'Vigencia fin',
@@ -124,7 +127,7 @@ class BonosTienda extends CActiveRecord {
 
         $criteria->compare('idBonoTienda', $this->idBonoTienda);
         $criteria->compare('identificacionUsuario', $this->identificacionUsuario, true);
-        $criteria->compare('concepto', $this->concepto, true);
+        $criteria->compare('idBonoTiendaTipo', $this->idBonoTiendaTipo, true);
         $criteria->compare('valor', $this->valor, true);
         $criteria->compare('vigenciaInicio', $this->vigenciaInicio, true);
         $criteria->compare('vigenciaFin', $this->vigenciaFin, true);
@@ -222,7 +225,7 @@ class BonosTienda extends CActiveRecord {
                 $fila = $idx + 2;
                 $objWorksheet->setCellValueByColumnAndRow($col++, $fila, $objBono->idBonoTienda);
                 $objWorksheet->setCellValueByColumnAndRow($col++, $fila, $objBono->identificacionUsuario);
-                $objWorksheet->setCellValueByColumnAndRow($col++, $fila, $objBono->concepto);
+                $objWorksheet->setCellValueByColumnAndRow($col++, $fila, $objBono->idBonoTiendaTipo);
                 $objWorksheet->setCellValueByColumnAndRow($col++, $fila, $objBono->valor);
                 $objWorksheet->setCellValueByColumnAndRow($col++, $fila, $objBono->vigenciaInicio);
                 $objWorksheet->setCellValueByColumnAndRow($col++, $fila, $objBono->vigenciaFin);
@@ -260,12 +263,11 @@ class BonosTienda extends CActiveRecord {
 
         if ($dataProvider !== null) {
             foreach ($dataProvider->getData() as $idx => $objBono) {
-                $content .= "$objBono->idBonoTienda;$objBono->identificacionUsuario;$objBono->concepto;$objBono->valor;$objBono->vigenciaInicio;$objBono->vigenciaFin;$objBono->minimoCompra;".Yii::app()->params->callcenter["bonos"]["tipoNombre"][$objBono->tipo]. ";". Yii::app()->params->callcenter["bonos"]["estadoNombre"][$objBono->estado] . ";" . "$objBono->fechaCreacion;$objBono->idCompra;$objBono->fechaUso;$objBono->valorCompra\n";
+                $content .= "$objBono->idBonoTienda;$objBono->identificacionUsuario;$objBono->idBonoTiendaTipo;$objBono->valor;$objBono->vigenciaInicio;$objBono->vigenciaFin;$objBono->minimoCompra;".Yii::app()->params->callcenter["bonos"]["tipoNombre"][$objBono->tipo]. ";". Yii::app()->params->callcenter["bonos"]["estadoNombre"][$objBono->estado] . ";" . "$objBono->fechaCreacion;$objBono->idCompra;$objBono->fechaUso;$objBono->valorCompra\n";
             }
         }
         
         Yii::app()->request->sendFile('BonosLRV_' . date('YmdHis') . '.csv', $content);
         Yii::app()->end();
     }
-
 }

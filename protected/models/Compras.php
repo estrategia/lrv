@@ -103,6 +103,7 @@ class Compras extends CActiveRecord {
             'objPuntoVenta' => array(self::BELONGS_TO, 'PuntoVenta', '', 'on' => 't.idComercial=objPuntoVenta.idComercial'),
             'objCompraDireccion' => array(self::HAS_ONE, 'ComprasDireccionesDespacho', 'idCompra'),
             'objFormaPagoCompra' => array(self::HAS_ONE, 'FormasPago', 'idCompra'),
+        	'listFormaPagoCompra' => array(self::HAS_MANY, 'FormasPago', 'idCompra'),
             'objUsuario' => array(self::BELONGS_TO, 'Usuario', 'identificacionUsuario'),
             'objPerfil' => array(self::BELONGS_TO, 'Perfil', 'codigoPerfil'),
             'objTipoVenta' => array(self::BELONGS_TO, 'TipoVenta', 'idTipoVenta'),
@@ -113,6 +114,7 @@ class Compras extends CActiveRecord {
             'objPasarelaEnvio' => array(self::HAS_ONE, 'PasarelaEnvios', 'idCompra'),
             'listPasarelaRespuestas' => array(self::HAS_MANY, 'PasarelaRespuestas', 'idCompra'),
             'listFormulas' => array(self::HAS_MANY, 'FormulasMedicas', 'idCompra'),
+        				
         );
     }
 
@@ -349,7 +351,9 @@ class Compras extends CActiveRecord {
             //$this->fechaCompra = new CDbExpression('NOW()');
             $this->fechaCompra = date('Y-m-d H:i:s');
             $this->seguimiento = 0;
-            $this->codigoVendedor = 0;
+            if($this->codigoVendedor == null){
+                $this->codigoVendedor = 0;
+            }
         }
 
         if (!$this->isNewRecord) {

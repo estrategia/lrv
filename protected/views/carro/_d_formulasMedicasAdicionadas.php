@@ -20,7 +20,7 @@
                 <td> <?= $formula['telefono']?> </td>
                 <td> <?= $formula['correoElectronico']?> </td>				
                 <td> <?php if(!empty($formula['formulaMedica'])): ?>
-                                        <a href="<?php echo Yii::app()->request->baseUrl; ?> <?= "/".$formula['formulaMedica']?>" target="_blank" >Ver formula</a>
+                                        <a href="<?php echo Yii::app()->request->baseUrl."/".$formula['formulaMedica']?>" target="_blank" >Ver formula</a>
                             <?php endif;?> 
                 </td>
             </tr>

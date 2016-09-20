@@ -32,7 +32,7 @@
                     'name'=>'tipo-formula',
                     'uncheckValue'=>null, 
                     'onClick' => 'mostrarTipoFormula(this.value)' 
-                )); ?> Escribir fórmula médica
+                )); ?> Adjuntar Información del Médico
                 
             </div>
             <div id='describir-formula' class="display-none">
@@ -69,10 +69,12 @@
             </div>
             <div id='anexar-formula' class="display-none">
             <div class="space-2"></div>
+            <label>Se debe adjuntar la fórmula médica escaneada, o la imagen tomada desde el celular o cámara fotográfica, o el archivo PDF que la contenga.</label>
             <div class='row'>
                 <div class="col-sm-12">
                     <?php echo $form->labelEx($model, 'formulaMedica', array()); ?>
                     <?php echo CHtml::activeFileField($model, 'formulaMedica', array('value' => $model->formulaMedica)); ?>
+                    <?php echo $form->error($model, 'formulaMedica', array( 'class' => "rojo")); ?>
                 </div>
             </div>
             </div>

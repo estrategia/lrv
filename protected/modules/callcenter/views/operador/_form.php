@@ -71,7 +71,7 @@ $form = $this->beginWidget('CActiveForm', array(
     <?php echo $form->error($model, 'email'); ?>
 </div>
 
-<div class="form-group" id='form-pdv-vendedor' style="<?= ($model->perfil == Yii::app()->params->callcenter['perfilesOperador']['vendedorPDV']) ? 'display:block' : 'display: none' ?>">
+<div class="form-group" id='form-pdv-vendedor' style="<?= ($model->perfil == Yii::app()->params->callcenter['perfilesOperador']['vendedorPDV'] || $model->perfil == Yii::app()->params->entreganacional['perfil']) ? 'display:block' : 'display: none' ?>">
     <?php echo $form->labelEx($model, 'idComercial'); ?>
     <?php //echo $form->textField($model, 'activo', array('class'=>'form-control')); ?>
     <?php

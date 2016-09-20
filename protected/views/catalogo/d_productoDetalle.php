@@ -193,7 +193,7 @@
                                 <?php echo CHtml::link('<div class="btn btn-default btn-block" >Comparar</div>', '#', array('class' => '', 'data-producto' => $objProducto->codigoProducto,'data-id'=> $idUnico, 'data-role' => 'comparar')); ?>
                             </div>
                         <?php else: ?>
-                            <div class="" style="margin-top: 13px;"
+                            <div class="" style="margin-top: 13px;">
                                 <?php echo CHtml::link('<div class="btn btn-primary btn-block">Agotado</div>', '#', array('disabled' => 'true', 'onclick' => 'return false;')); ?>
                             </div>
                         <?php endif;?>

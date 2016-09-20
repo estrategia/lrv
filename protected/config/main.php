@@ -45,6 +45,13 @@ return array(
                     'class' => 'subasta.components.UserSubasta',
                 ),
             )),
+        'entreganacional' => array(
+            'defaultController' => 'usuario',
+            'components' => array(
+                'user' => array(
+                    'class' => 'entreganacional.components.UserEntrega',
+                ),
+            )),
         'gii' => array(
             'class' => 'system.gii.GiiModule',
             'password' => '1',
@@ -141,6 +148,18 @@ return array(
         ),
     ),
     'params' => array(
+        "meses" => array( 1 => "Enero", 
+               2 => "Febrero",  
+               3 => "Marzo",  
+               4 => "Abril",  
+               5 => "Mayo",  
+               6 => "Junio",  
+               7 => "Julio",  
+               8 => "Agosto",  
+               9 => "Septiembre",  
+               10 => "Octubre",  
+               11 => "Noviembre",  
+               12 => "Diciembre"),
         'horarioEntrega' => array(
             'deltaDefecto' => '0 1:00:0.000000',
             'deltaHorarios' => array(
@@ -416,6 +435,16 @@ return array(
                 'pdv' => 'larebaja.online.subasta.pdv',
             ),
         ),
+        'entreganacional' => array(
+            'sesion' => array(
+                'usuario' => 'larebaja.online.entreganacional.usuario',
+                'formPedidoBusqueda' => 'larebaja.online.entreganacional.formpedidobusqueda',
+                'objCiudadSector' => 'larebaja.online.entreganacional.objciudadsector',
+                'pdv' => 'larebaja.online.entreganacional.pdv',
+                'pdvDestino' => 'larebaja.online.entreganacional.pdvdestino',
+            ),
+            'perfil' => 5,
+        ),
         'callcenter' => array(
             'correo' => 'alexander_javela@copservir.com',
             'pedidos' => array(
@@ -427,6 +456,7 @@ return array(
                 2 => 'Administrador',
                 3 => 'Vendedor punto de venta',
                 4 => 'Mensajero Vendedor',
+                5 => 'Entrega Nacional'
             ),
             'perfilesOperador' => array(
                 'operador' => 1,
@@ -435,16 +465,20 @@ return array(
                 'mensajeroVendedor' => 4
             ),
             
-            'perfiles' => array(1, 2, 3, 4),
+            'perfiles' => array(1, 2, 3, 4, 5),
             'usuario' => array(
                 'estado' => array('activo' => 1, 'inactivo' => 0),
                 'estadoNombre' => array(0 => 'Inactivo', 1 => 'Activo'),
             ),
             'bonos' => array(
-                'estado' => array('activo' => 1, 'inactivo' => 0),
-                'estadoNombre' => array(1 => 'Activo', 0 => 'Inactivo'),
+                'estado' => array('activo' => 1, 'inactivo' => 2, 'redimido' => 0),
+                'estadoNombre' => array(1 => 'Activo', 0 => 'Redimido', 2 => 'Inactivo'),
                 'tipo' => array('manual' => 1, 'cargue' => 2),
                 'tipoNombre' => array(1 => 'Manual', 2 => 'Cargue'),
+                'tipoConfiguracion' => array(1 => 'Tradicional', 2 => 'Bono promocional'),// new
+                'asuntoCorreo' => 'Tienes un bono disponible', // new
+                'tipoBonoCRM' => 3, // new 
+            	'formaPagoBonos' => 8, // new
             ),
             'reactivacionBono' => array(
                 'asuntoMensaje' => 'Activacion bono cliente fiel',

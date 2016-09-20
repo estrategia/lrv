@@ -15,7 +15,7 @@ class ReactivarBonoTiendaForm extends CFormModel {
      */
     public function rules() {
         return array(
-            array('idBonoTienda, comentario', 'required', 'message' => '{attribute} no puede estar vacÃ­o'),
+            array('idBonoTienda, comentario', 'required', 'message' => '{attribute} no puede estar vacío'),
             array('comentario', 'length', 'max' => 255),
             array('comentario', 'length', 'min' => 20),
         );

@@ -70,6 +70,10 @@ return array(
             'cantidadCompras' => 14,
             'acumuladoCompras' => 200000,
         ),
+    	'bono' => array(
+    		'diaMinimoRecordacion' => 2,
+    		'diaMaximoRecordacion' => 5,	
+    	),	
         'webServiceUrl' => array(
             'sincronizarBeneficiosSIICOP' => 'http://localhost/copservir/beneficios/sweb/wslrv',
             'envioCorreosRecordatorios' => 'http://localhost/lrv/sweb/wslrv'
@@ -142,6 +146,23 @@ return array(
                 'descripcion' => 'La Rebaja Virtual - Pasarela de pago',
             )
         ),
-    ),
+        'formatoMoneda' => array('patron' => "¤#,##0;(¤#,##0)", 'moneda' => '$'), // new
+        "meses" => array( 1 => "Enero", 
+               2 => "Febrero",  
+               3 => "Marzo",  
+               4 => "Abril",  
+               5 => "Mayo",  
+               6 => "Junio",  
+               7 => "Julio",  
+               8 => "Agosto",  
+               9 => "Septiembre",  
+               10 => "Octubre",  
+               11 => "Noviembre",  
+               12 => "Diciembre"),
+        'urlSitio' => 'www.larebajavirtual.com',
+        'urlChatLinea' => '/contenido/ver/tipo/grupo/contenido/41',
+        ),
+        
+
 );
 

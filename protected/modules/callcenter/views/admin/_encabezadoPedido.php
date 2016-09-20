@@ -28,12 +28,12 @@
                         <div class="col-md-6">
                             <?php if ($objCompra->identificacionUsuario == null): ?>
                                 <strong>Datos del Remitente</strong> <br>
-                                <strong>Cédula: </strong>Invitado<br>
+                                <strong>C&eacute;dula: </strong>Invitado<br>
                                 <strong>Nombre: </strong><?php echo $objCompra->objCompraDireccion->nombre ?><br>
                                 <strong>Correo: </strong><?php echo $objCompra->objCompraDireccion->correoElectronico ?> <br/>
                             <?php else: ?>
                                 <strong>Datos del Remitente</strong> <br>
-                                <strong>Cédula: </strong><?php echo $objCompra->identificacionUsuario ?><br>
+                                <strong>C&eacute;dula: </strong><?php echo $objCompra->identificacionUsuario ?><br>
                                 <strong>Nombre: </strong><?php echo $objCompra->objUsuario->nombre . " " . $objCompra->objUsuario->apellido ?><br>
                                 <strong>Correo: </strong><?php echo $objCompra->objUsuario->correoElectronico ?> <br/>
                             <?php endif; ?>
@@ -44,8 +44,8 @@
                             <div class="col-md-6">
                                 <strong>Datos del Destinatario</strong> <br>
                                 <strong>Nombre: </strong><?php echo $objCompra->objCompraDireccion->nombre ?> <br>
-                                <strong>Dirección: </strong><?php echo $objCompra->objCompraDireccion->direccion . " - " . $objCompra->objCompraDireccion->barrio ?><br>
-                                <strong>Teléfono: </strong> <?php echo $objCompra->objCompraDireccion->telefono ?> - <strong>Celular: </strong> <?php echo $objCompra->objCompraDireccion->celular ?><br>
+                                <strong>Direcci&oacute;n: </strong><?php echo $objCompra->objCompraDireccion->direccion . " - " . $objCompra->objCompraDireccion->barrio ?><br>
+                                <strong>Tel&eacute;fono: </strong> <?php echo $objCompra->objCompraDireccion->telefono ?> - <strong>Celular: </strong> <?php echo $objCompra->objCompraDireccion->celular ?><br>
                                 <?php if ($objCompra->objCompraDireccion->objCiudad != null): ?>
                                     <strong>Ciudad: </strong><?php echo $objCompra->objCompraDireccion->objCiudad->nombreCiudad . " - " . $objCompra->objCompraDireccion->objSector->nombreSector ?>
                                 <?php else: ?>
@@ -60,7 +60,7 @@
                         <?php endif; ?>
                     </td>
                     <td> 
-                        <strong> 
+                    	<strong> 
                             <span style="color: #E10019; font-size: 16px;"> Pago <?php echo $objCompra->objFormaPagoCompra->objFormaPago->formaPago ?></span>
                             <?php if ($objCompra->objFormaPagoCompra->idFormaPago == Yii::app()->params->formaPago['pasarela']['idPasarela']): ?>
                                 <button type="button" class="btn btn-info btn-sm" data-role="trazapasarela" data-pedido="<?php echo $objCompra->idCompra ?>"><i class="glyphicon glyphicon-list-alt"></i> Traza</button>
@@ -74,6 +74,9 @@
                             <?php endif; ?>
                             <h3><?php echo Yii::app()->numberFormatter->format(Yii::app()->params->formatoMoneda['patron'], $objCompra->objFormaPagoCompra->valor, Yii::app()->params->formatoMoneda['moneda']); ?></h3>
                         </strong>
+                        <button id="btn-formas-pago" class="btn btn-danger btn-sm" data-toggle="modal" data-target="#modalFormasPago">Ver formas de pago</button>
+                    	<tr>                       
+                    </tr>
                         <br>
                     </td>
                 </tr>
@@ -126,7 +129,7 @@
                                     <td><?= $formula->telefono?></td>
                                     <td><?= $formula->correoElectronico?></td>									
                                     <td><?php if(!empty($formula->formulaMedica)): ?>
-                                        <a href="<?php echo Yii::app()->request->baseUrl; ?> <?= "/".$formula->formulaMedica?>" target="_blank" >Ver formula</a>
+                                        <a href="<?php echo Yii::app()->request->baseUrl."/".$formula->formulaMedica?>" target="_blank" >Ver formula</a>
                                     <?php endif;?></td>  
                                 </tr>
                             <?php endforeach;?>
@@ -141,7 +144,53 @@
             </div>
         </div>
     <?php endif; ?>
+	<div id="modalFormasPago" class="modal fade" role="dialog">
+            <div class="modal-dialog" style="width:60%">
+                <!-- Modal content-->
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal">&times;</button>
+                        <h4 class="modal-title">Formas de pago</h4>
+                    </div>
+                    <div class="modal-body">
+                        <table class="table table-input table-bordered table-hover table-striped">
+                            <tbody>
+                                <tr>
+                                    <th>#</th>
+                                    <th>Forma pago</th>
+                                    <th>Valor</th>
+                                    <th>N&uacute;mero de tarjeta</th>
+                                    <th>Cuotas</th>
+                                    <th>numero de Validaci&oacute;n</th>									
+                                    <th>Cuenta</th>
+                                    <th>Forma pago POS</th>
+                                    <th>Tipo de bono</th>
 
+                                </tr>
+                                <?php $i = 1 ?>
+                            <?php foreach($objCompra->listFormaPagoCompra as $formaPago):?>
+                                <tr>
+                                    <td> <?= $i++ ?> </td>
+                                    <td> <?= $formaPago->objFormaPago->formaPago ?> </td>
+                                    <td> <?= $formaPago->valor ?> </td>
+                                    <td> <?= $formaPago->numeroTarjeta ?> </td>
+                                    <td> <?= $formaPago->cuotasTarjeta ?> </td>
+                                    <td> <?= $formaPago->numeroValidacion ?> </td>
+                                    <td> <?= $formaPago->cuenta ?> </td>
+                                    <td> <?= $formaPago->formaPago ?> </td>
+                                    <td> <?= isset($formaPago->objConcepto->concepto)?$formaPago->objConcepto->concepto:"" ?> </td>
+                                </tr>
+                            <?php endforeach;?>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-default" data-dismiss="modal">Cerrar</button>
+                    </div>
+                </div>
+
+            </div>
+        </div>
     <div class="col-md-4">
         <strong> Datos de Asignación </strong><br><br>
         <table border="0" class="table-condensed">

@@ -3241,14 +3241,18 @@ class CarroController extends Controller {
                     throw new Exception("Error al guardar observaciÃ³n" . $objObservacion2->validateErrorsResponse());
                 }
             }
-
+             
+/********************************************************************************************************/
+/**************************************** GUARDAN LAS FORMAS DE PAGO ************************************/
+/********************************************************************************************************/
+            
             $objFormasPago = new FormasPago; //FormaPago::model()->findByPk($modelPago->idFormaPago);
             $objFormasPago->idCompra = $objCompra->idCompra;
             $objFormasPago->valor = Yii::app()->shoppingCart->getTotalCost();
             $objFormasPago->numeroTarjeta = $modelPago->numeroTarjeta;
             $objFormasPago->cuotasTarjeta = $modelPago->cuotasTarjeta;
             $objFormasPago->idFormaPago = $modelPago->idFormaPago;
-            $objFormasPago->valorBono = Yii::app()->shoppingCart->getBono();
+   
 
             if ($objFormasPago->idFormaPago == Yii::app()->params->formaPago['pasarela']['idPasarela']) {
                 $numValidacion = substr(($objCompra->identificacionUsuario + $objCompra->idCompra + $objCompra->totalCompra) * 863, -7);
@@ -3258,7 +3262,7 @@ class CarroController extends Controller {
             if (!$objFormasPago->save()) {
                 throw new Exception("Error al guardar forma de pago" . $objFormasPago->validateErrorsResponse());
             }
-
+            //        $objFormasPago->valorBono = Yii::app()->shoppingCart->getBono();
             $objCompraDireccion = new ComprasDireccionesDespacho;
 
             if ($tipoEntrega == Yii::app()->params->entrega['tipo']['domicilio']) {
@@ -3678,9 +3682,9 @@ class CarroController extends Controller {
                     Yii::log("Exception WebService CongelarCompraAutomatica [compra: $objCompra->idCompra]\n" . $exc->getMessage() . "\n" . $exc->getTraceAsString(), CLogger::LEVEL_INFO, 'application');
                 }
             }
-
-            if ($objFormasPago->valorBono > 0) {
-                $modelPago->actualizarBono($objCompra);
+//echo $objFormasPago->valorBono;exit();
+            if (Yii::app()->shoppingCart->getBono() > 0) {
+            	$modelPago->actualizarBono($objCompra);
             }
 
             return array(
@@ -4028,17 +4032,18 @@ class CarroController extends Controller {
                 }
             }
         }
-
-		
 		
 		if($_POST['tipo-formula'] == 1){
 		   $modelFormula = new FormulasMedicas('datosMedico');
 		}else {
-		  $modelFormula = new FormulasMedicas();
+		  $modelFormula = new FormulasMedicas('datosFormula');
 		}
 		
 		$modelFormula->attributes = $_POST['FormulasMedicas'];
-		
+        if(!empty($ruta)){
+		  $modelFormula->formulaMedica = $ruta;
+        }
+
 		if (!$modelFormula->validate()) {
             echo CActiveForm::validate($modelFormula);
             Yii::app()->end();
@@ -4057,6 +4062,110 @@ class CarroController extends Controller {
             'response' => $this->isMobile ? $this->renderPartial('_formulasMedicasAdicionadas', null, true, false) : $this->renderPartial('_d_formulasMedicasAdicionadas', null, true, false),
         ));
     }
+    
+    
+    public function actionUsarCodigo(){
+    	if (!Yii::app()->request->isPostRequest) {
+    		echo CJSON::encode(array('result' => 'error', 'response' => 'Solicitud invalida.'));
+    		Yii::app()->end();
+    	}
+    	
+    	if (isset(Yii::app()->session[Yii::app()->params->sesion['carroPagarForm']]) && Yii::app()->session[Yii::app()->params->sesion['carroPagarForm']] != null)
+    		$modelPago = Yii::app()->session[Yii::app()->params->sesion['carroPagarForm']];
+    	
+    	$codigoPromocional = Yii::app()->getRequest()->getPost('codigoPromocional', null);
+    	
+    	$bonoTienda = BonoTienda::model()->find(array(
+    			'condition' => 'codigoUso =:codigoPromocional and fechaIni <= CURDATE() AND CURDATE()<= fechaFin and tipo = 2 and estado =:estado',
+    			'params' => array(
+    					':codigoPromocional' => $codigoPromocional,
+    					':estado' => 1
+    			)
+    	));
+    	if($bonoTienda === null){
+    		echo CJSON::encode(array('result' => 'error', 'response' => 'Bono no disponible.'));
+    		Yii::app()->end();
+    	}
+    	
+    	// revisar si ese bono ya está cargado en sesión.
+    	
+    	if($modelPago->verificarPromocional()){
+    		echo CJSON::encode(array('result' => 'error', 'response' => 'Ya se est&aacute; utilizando un c&oacute;digo promocional en la compra.'));
+    		Yii::app()->end();
+    	}
+    	 
+    	// revisar si el bono ya fué utilizado por la persona en otra compra.
+    	
+    	  	$comprobarBono = FormasPago::model()->find(array(
+    	  			'with' => 'objCompra',
+    			'condition' => 'idBonoTiendaTipo =:bonoTienda AND objCompra.identificacionUsuario =:usuario',
+    			'params' => array(
+    					':bonoTienda' => $bonoTienda->idBonoTiendaTipo,
+    					':usuario' => Yii::app()->user->name,
+    			)
+    	));
+    	
+    	if($comprobarBono){
+    		echo CJSON::encode(array('result' => 'error', 'response' => 'El bono ya fu&eacute utilizado en otra compra.'));
+    		Yii::app()->end();
+    	}
+    	
+    	
+    	// validar que el valor total de compra no sea inferior al valor de el bono
+    	
+    	if(Yii::app()->shoppingCart->getCost()<$bonoTienda->valorMinCompra){
+    		echo CJSON::encode(array(
+    				'result' => 'error', 
+    				'response' => 'El valor de la compra debe ser mayor a '.
+    				Yii::app()->numberFormatter->format(
+    						Yii::app()->params->formatoMoneda['patron'], 
+    						$bonoTienda->valorMinCompra, 
+    						Yii::app()->params->formatoMoneda['moneda']
+    						)));
+    		Yii::app()->end();
+    	}
+    	
+    	// Si validamos lo anterior y el uso se puede dar, mostrar información del descuento del bono.
+    	
+    	echo CJSON::encode(array('result' => 'ok', 'response' => 'Bono disponible por '.Yii::app()->numberFormatter->format(Yii::app()->params->formatoMoneda['patron'], $bonoTienda->valorBono, Yii::app()->params->formatoMoneda['moneda'])."\nDesea Utilizarlo?", 'bono' => $bonoTienda->idBonoTiendaTipo));
+    }
+    
+    
+    public function actionGuardarCodigo(){
+    	
+    	if (!Yii::app()->request->isPostRequest) {
+    		echo CJSON::encode(array('result' => 'error', 'response' => 'Solicitud invalida.'));
+    		Yii::app()->end();
+    	}
+    	// agregar el bono como modo de pago
+    	
+    	$modelPago = null;
+    	
+    	if (isset(Yii::app()->session[Yii::app()->params->sesion['carroPagarForm']]) && Yii::app()->session[Yii::app()->params->sesion['carroPagarForm']] != null)
+    		$modelPago = Yii::app()->session[Yii::app()->params->sesion['carroPagarForm']];
+    	
+    	if ($modelPago === null) {
+    		Yii::app()->user->setFlash('error', "Error: Por favor verificar los datos de tu compra.");
+    	    $this->redirect($this->createUrl('/carro'));
+    		Yii::app()->end();
+    	}
+    	
+    	$bono = Yii::app()->getRequest()->getPost('bono', null);
+    	 
+    	$objBono = BonoTienda::model()->findByPk($bono);
+    	
+    	$modelPago->agregarPromocional($objBono);
+    	
+    	Yii::app()->session[Yii::app()->params->sesion['carroPagarForm']] = $modelPago;
+    	/*
+    	$modelPago->totalCompra = Yii::app()->shoppingCart->getTotalCost();
+    	Yii::app()->shoppingCart->setBono($modelPago->calcularBonoRedimido());
+    	*/
+    	
+    	echo CJSON::encode(array('result' => 'ok', 'response' => 'Bono Utilizado'));
+    }
+    
+    
 
     /* public function actionPuntos(){
       $fecha = new DateTime;

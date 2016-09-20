@@ -2113,6 +2113,7 @@ class CarroController extends ControllerVendedor {
             $objCompra->flete = Yii::app()->shoppingCartSalesman->getExtraShipping();
             $objCompra->totalCompra = Yii::app()->shoppingCartSalesman->getTotalCost();
 
+
             if (!$objCompra->save()) {
                 throw new Exception("Error al guardar compra" . $objCompra->validateErrorsResponse());
             }
@@ -2906,11 +2907,14 @@ class CarroController extends ControllerVendedor {
 		if($_POST['tipo-formula'] == 1){
 		   $modelFormula = new FormulasMedicas('datosMedico');
 		}else {
-		  $modelFormula = new FormulasMedicas();
+		  $modelFormula = new FormulasMedicas('datosFormula');
 		}
 		
 		$modelFormula->attributes = $_POST['FormulasMedicas'];
-		
+		if(!empty($ruta)){
+          $modelFormula->formulaMedica = $ruta;
+        }
+
 		if (!$modelFormula->validate()) {
             echo CActiveForm::validate($modelFormula);
             Yii::app()->end();

@@ -23,11 +23,7 @@
             <h2><?= (Yii::app()->controller->module->user->getClienteLogueado())?'Cambiar':'Seleccionar'?> Cliente</h2>
         </a>
     </li>
-    <li>
-        <a href="<?php echo CController::createUrl('cliente/salirCliente') ?>" data-ajax="false">
-            <h2>Cerrar cliente</h2>
-        </a>
-    </li>
+   
     <?php if (!Yii::app()->controller->module->user->isGuest): ?>
         <li>
             <a href="<?php echo CController::createUrl('usuario/salir') ?>" data-ajax="false">

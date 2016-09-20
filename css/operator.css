@@ -140,3 +140,25 @@ table.table-bold{
     font-weight: bold;
     color: #333333;
 }
+
+.dialogo-animado {
+    /*background: none repeat scroll 0 0 #b40000;*/
+    background: none repeat scroll 0 0 rgba(0, 0, 0, 0.7);
+    -moz-border-radius: 7px 7px 7px 7px;
+    -webkit-border-radius: 7px 7px 7px 7px;
+    -o-border-radius: 7px 7px 7px 7px;
+    border-radius: 7px 7px 7px 7px;
+    color: #FFFFFF;
+    padding: 1%;
+    position: fixed;
+    right: 0;
+    bottom: 0;
+    width: 25%;
+    z-index: 9999999;
+    opacity: 0;
+    /*line-height: 14px;*/
+    font-size: 1.1em;
+    /*  -moz-transition: all 0.5s ease-in-out 0s;
+      -webkit-transition: all 0.5s ease-in-out 0s;
+      transition: all 0.5s ease-in-out 0s;*/
+}

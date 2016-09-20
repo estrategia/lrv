@@ -39,7 +39,7 @@ class FormasPago extends CActiveRecord {
             array('numeroValidacion, numeroTarjeta', 'default', 'value' => null),
             // The following rule is used by search().
             // @todo Please remove those attributes that should not be searched.
-            array('idCompra, idFormaPago, valor, numeroTarjeta, cuotasTarjeta, valorBono, numeroValidacion', 'safe', 'on' => 'search'),
+            array('idCompra, idFormaPago, valor, numeroTarjeta, cuotasTarjeta, valorBono, numeroValidacion, cuenta, formaPago, idBonoTiendaTipo', 'safe', 'on' => 'search'),
         );
     }
 
@@ -52,6 +52,8 @@ class FormasPago extends CActiveRecord {
         return array(
             'objFormaPago' => array(self::BELONGS_TO, 'FormaPago', 'idFormaPago'),
             'objCompra' => array(self::BELONGS_TO, 'Compras', 'idCompra'),
+        	'objConcepto' => array(self::BELONGS_TO, 'BonoTienda', 'idBonoTiendaTipo'),
+        	
         );
     }
 

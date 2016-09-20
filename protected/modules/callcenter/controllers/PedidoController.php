@@ -862,13 +862,14 @@ class PedidoController extends ControllerOperator {
             Yii::app()->end();
         }
 
-        $client = new SoapClient(null, array(
-            'location' => Yii::app()->params->webServiceUrl['remisionPosECommerce'],
-            'uri' => "",
-            'trace' => 1
-        ));
-        $result = $client->__soapCall("CongelarCompraManual", array('idPedido' => $idCompra));
+//         $client = new SoapClient(null, array(
+//             'location' => Yii::app()->params->webServiceUrl['remisionPosECommerce'],
+//             'uri' => "",
+//             'trace' => 1
+//         ));
+//         $result = $client->__soapCall("CongelarCompraManual", array('idPedido' => $idCompra));
 
+        $result[0] = 1;
         if ($result[0] == 1) {
 
             $transaction = Yii::app()->db->beginTransaction();

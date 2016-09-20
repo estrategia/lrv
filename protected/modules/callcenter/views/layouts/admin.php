@@ -102,6 +102,9 @@
                                 <li>
                                     <a href="<?php echo $this->createUrl('/callcenter/combo/index') ?>" class="ajax-link"><i class="glyphicon glyphicon-tags"></i><span> Combos</span></a>
                                 </li>
+                                <li class="">
+                                    <a href="<?php echo $this->createUrl('/callcenter/bonos/bonoTienda') ?>" class="ajax-link" ><i class="glyphicon glyphicon-wrench"></i><span> Bonos Tienda</span></a>
+                                </li>
                                 <li>
                                     <a href="<?php echo $this->createUrl('/callcenter/productosRelacionados/index') ?>" class="ajax-link"><i class="glyphicon glyphicon-file"></i><span> Productos relacionados</span></a>
                                 </li>
@@ -141,6 +144,6 @@
 
     </body>
     <script src="<?php echo Yii::app()->request->baseUrl; ?>/libs/owl-carousel/owl.carousel.min.js"></script>
-    <script src="<?php echo Yii::app()->request->baseUrl; ?>/js/operator.min.js"></script>
-    <script src="<?php echo Yii::app()->request->baseUrl; ?>/js/modulos.min.js"></script>
+    <script src="<?php echo Yii::app()->request->baseUrl; ?>/js/operator.js"></script> <!-- cambiar -->
+    <script src="<?php echo Yii::app()->request->baseUrl; ?>/js/modulos.min.js"></script> 
 </html>

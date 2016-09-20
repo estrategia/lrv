@@ -1,3 +1,4 @@
+
 function alert(message) {
     bootbox.alert({message: message, callback: function() {
         }, buttons: {ok: {label: 'Aceptar', className: 'btn-danger'}}});
@@ -2579,5 +2580,84 @@ function mostrarTipoFormula(val){
         $("#describir-formula").addClass('display-none');
         $("#anexar-formula").removeClass('display-none');
     }
-    
 }
+
+
+var bono;
+$(document).on('click', "button[data-role='codigo-promocional']", function() {
+
+    var codigoPromocional = $("#codigoPromocional").val();
+ //   var form = $("#form-pago-confirmacion");
+
+    $.ajax({
+        type: 'POST',
+        url: requestUrl + "/carro/usarCodigo/",
+        data: {codigoPromocional: codigoPromocional}, 
+        dataType: 'json',
+        beforeSend: function() {
+            Loading.show();
+        },
+        complete: function(data) {
+            Loading.hide();
+        },
+        success: function(data) {
+            if (data.result === 'ok') {
+            	
+            	bono = data.bono;
+            	
+            	bootbox.dialog({
+                    message: data.response,
+                    title: "Bono disponible",
+                    buttons: {
+                        success: {
+                            label: "Usar",
+                            className: "btn-primary",
+                            callback: function() {
+                            	
+                            		$.ajax({
+                                    type: 'POST',
+                                    url: requestUrl + "/carro/guardarCodigo/",
+                                    data: {bono: bono}, 
+                                    dataType: 'json',
+                                    beforeSend: function() {
+                                        Loading.show();
+                                    },
+                                    complete: function(data) {
+                                        Loading.hide();
+                                    },
+                                    success: function(data) {
+                                    	if(data.result == 'ok'){
+                                    		$("#FormaPagoForm-usoBonoPromocional").val(1);
+                                    		return false;
+                                    	}else{
+                                    		alert(data.response);
+                                    	}
+                                    }
+                                    
+                            	});
+                               }
+                            
+                        },
+                        close: {
+                            label: "Cancelar",
+                            className: "btn-default",
+                            callback: function() {
+                            }
+                        }
+                    }
+                });
+
+            } else if (data.result === 'error') {
+            	bootbox.alert(data.response);
+            } else {
+                $.each(data, function(element, error) {
+                    $('#' + element + '_em_').html(error);
+                    $('#' + element + '_em_').css('display', 'block');
+                });
+            }
+        }
+    });
+    return false;
+});
+
+

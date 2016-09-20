@@ -21,7 +21,10 @@ $this->widget('zii.widgets.grid.CGridView', array(
     'columns' => array(
         //'idBonoTienda',
         'identificacionUsuario',
-        'concepto',
+        array(
+            'header' => 'Concepto', 
+            'value' => function($val){return (isset($val->objConcepto->concepto))?$val->objConcepto->concepto:"";}
+            ),
         'valor',
         'vigenciaInicio',
         'vigenciaFin',
@@ -34,6 +37,11 @@ $this->widget('zii.widgets.grid.CGridView', array(
         ),
         'fechaCreacion',
         'idCompra',
+        'correoElectronico',
+        array(
+            'header' => 'Notificado', 
+            'value' => function($val){return ($val->notificado)?"Si":"No";}
+            ),
         /*
           'tipo',
           'idCompra',
@@ -42,7 +50,7 @@ $this->widget('zii.widgets.grid.CGridView', array(
          */
         array(
             'class' => 'CButtonColumn',
-            'template' => '{ver}{actualizar}{reactivar}',
+            'template' => '{ver}{actualizar}{desactivar}{reactivar}',
             'buttons' => array(
                 'ver' => array(
                     'label' => '<i class="glyphicon glyphicon-eye-open"></i> ', //Text label of the button.
@@ -66,7 +74,15 @@ $this->widget('zii.widgets.grid.CGridView', array(
                     //'imageUrl' => Yii::app()->request->baseUrl.'/images/email.png', //Image URL of the button.
                     'options' => array('title'=>'Reactivar', 'data-role'=>"bonotienda-reactivar"), //HTML options for the button tag.
                     //'click' => 'function(){console.log("reactivar bono");}', //A JS function to be invoked when the button is clicked.
-                    'visible' => '$data->estado==0 && Yii::app()->controller->module->user->profile != 1', //A PHP expression for determining whether the button is visible.
+                   'visible' => '($data->estado==2 || $data->estado==0) && Yii::app()->controller->module->user->profile != 1', //A PHP expression for determining whether the button is visible.
+                ),
+                'desactivar' => array(
+                    'label' => '<i class="glyphicon glyphicon-remove"></i>', //Text label of the button.
+                    'url' => 'Yii::app()->createUrl("/callcenter/bonos/desactivar", array("id"=>$data->idBonoTienda)) ', //A PHP expression for generating the URL of the button.
+                    //'imageUrl' => Yii::app()->request->baseUrl.'/images/email.png', //Image URL of the button.
+                    'options' => array('title'=>'Desactivar', 'data-role'=>"bonotienda-reactivar"), //HTML options for the button tag.
+                    //'click' => 'function(){console.log("reactivar bono");}', //A JS function to be invoked when the button is clicked.
+                   'visible' => '$data->estado==1 && Yii::app()->controller->module->user->profile != 1', //A PHP expression for determining whether the button is visible.
                 ),
 
             )

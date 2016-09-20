@@ -246,7 +246,14 @@
         </tr> 
     </tbody>
 </table>
+        <?php 
+        $sumaBonos = 0;
 
+        foreach($objCompra->listFormaPagoCompra as $formaPago):
+            if($formaPago->idFormaPago == Yii::app()->params->callcenter['bonos']['formaPagoBonos']):
+                $sumaBonos += $formaPago->valor;
+            endif;
+        endforeach;?>
 <table class="table table-bold table-bordered table-hover table-striped">
     <tbody>
         <tr>
@@ -262,7 +269,7 @@
         <tr>
             <td colspan="4"></td>
             <td><strong>Bono</strong></td>
-            <td class="text-right"><span><?php echo Yii::app()->numberFormatter->format(Yii::app()->params->formatoMoneda['patron'], $objCompra->objFormaPagoCompra->valorBono, Yii::app()->params->formatoMoneda['moneda']) ?></span></td>
+            <td class="text-right"><span><?php echo Yii::app()->numberFormatter->format(Yii::app()->params->formatoMoneda['patron'], $sumaBonos, Yii::app()->params->formatoMoneda['moneda']) ?></span></td>
         </tr>
         <tr>
             <td colspan="4"></td>
