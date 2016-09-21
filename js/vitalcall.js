@@ -419,6 +419,84 @@ function actualizarNumerosPagina() {
 }
 
 
+//carro de compra - agregar producto
+$(document).on('click', "button[data-role='cargar-vitalcall']", function() {
+	var tipo = $(this).attr('data-tipo');
+	
+	if(tipo==1){
+		agregarProductoVC($(this).attr('data-formula'),$(this).attr('data-producto'));
+	}else if(tipo==2){
+		agregarProducto()
+	}
+
+    
+    return false;
+});
+
+function agregarProductoVC(formula, producto){
+    var cantidadU = $('#cantidad-producto-unidad-' + formula + "-" + producto).val();
+
+    cantidadU = parseInt(cantidadU);
+    if (isNaN(cantidadU)) {
+        cantidadU = -1;
+    }
+
+    var cantidadF = parseInt($('#cantidad-producto-fraccion-' + formula + "-" + producto).val());
+    cantidadF = parseInt(cantidadF);
+    if (isNaN(cantidadF)) {
+        cantidadF = -1;
+    }
+
+    $.ajax({
+        type: 'POST',
+        dataType: 'json',
+        async: true,
+        url: requestUrl + '/callcenter/vitalcall/pedido/agregar',
+        data: {tipo:1, formula: formula, producto: producto, cantidadU: cantidadU, cantidadF: cantidadF},
+        beforeSend: function() {
+            Loading.show();
+        },
+        complete: function() {
+            Loading.hide();
+        },
+        success: function(data) {
+            if (data.result === "ok") {
+                /*$('#div-carro-canasta').html(data.response.canastaHTML);
+                $('#div-carro-canasta').trigger("create");
+
+                if (data.response.mensajeHTML) {
+                    dialogoAnimado(data.response.mensajeHTML);
+                    $('#icono-producto-agregado-' + producto).addClass('active');
+                    $("#cantidad-productos").html(data.response.objetosCarro);
+                }
+
+                if (data.response.dialogoHTML) {
+                    $("#modalBodegas").remove();
+                    $("body").append(data.response.dialogoHTML);
+                    $("#modalBodegas").modal('show');
+                }*/
+            } else {
+                alert(data.response);
+            }
+        },
+        error: function(jqXHR, textStatus, errorThrown) {
+            alert('Error: ' + errorThrown);
+        }
+    });
+	
+	
+	
+	
+}
+
+
+
+
+
+
+
+
+
 //inicializar librerias
 function raty() {
     $("[data-role='raty']").raty({

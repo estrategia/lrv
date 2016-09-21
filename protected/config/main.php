@@ -21,6 +21,7 @@ return array(
         'application.components.*',
         'ext.shoppingCart.*',
         'ext.shoppingCartSalesman.*',
+    	'ext.shoppingCartVitalCall.*',
     ),
     'modules' => array(
         // uncomment the following to enable the Gii tool
@@ -99,6 +100,9 @@ return array(
         'shoppingCartSalesman' => array(
             'class' => 'ext.shoppingCartSalesman.EShoppingCart',
         ),
+    	'shoppingCartVitalCall' => array(
+    		'class' => 'ext.shoppingCartVitalCall.EShoppingCart',
+    	),
         'ePdf' => array(
             'class' => 'ext.yii-pdf.EYiiPdf',
             'params' => array(

@@ -113,4 +113,24 @@ class ImagenBanner extends CActiveRecord {
     public static function model($className = __CLASS__) {
         return parent::model($className);
     }
+    
+    public function getLink($isMobile=true){
+    	if($this->tipoContenido==self::CONTENIDO_LINK){
+    		$url = $isMobile ? trim($this->contenidoMovil) : trim($this->contenido);
+    		
+    		if(empty($url)){
+    			return "#";
+    		}
+    		
+    		if (strpos($url, 'https://') !== false || strpos($url, 'http://') !== false) {
+    			return $url;
+    		} else {
+    			return CController::createUrl($url);
+    		}
+    	}else if($this->tipoContenido==self::CONTENIDO_HTML){
+    		return CController::createUrl('/contenido/ver', array('tipo'=>'imagen', 'contenido' => $this->idBanner));
+    	}
+    	
+    	return "#";
+    }
 }
