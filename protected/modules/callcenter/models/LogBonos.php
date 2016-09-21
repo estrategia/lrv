@@ -10,7 +10,7 @@
  * @property string $fechaRegistro
  * @property integer $idOperador
  * @property string $comentario
- * @property string $concepto
+ * @property string $idBonoTiendaTipo
  * @property string $idBonoTienda
  *
  * The followings are the available model relations:
@@ -33,7 +33,7 @@ class LogBonos extends CActiveRecord {
         // NOTE: you should only define rules for those attributes that
         // will receive user inputs.
         return array(
-            array('identificacionUsuario, valorBono, idOperador, comentario, concepto', 'required'),
+            array('identificacionUsuario, valorBono, idOperador, comentario, idBonoTiendaTipo', 'required'),
             array('fechaRegistro', 'safe'),
             array('valorBono, idOperador', 'numerical', 'integerOnly' => true),
             array('identificacionUsuario', 'length', 'max' => 100),
@@ -71,6 +71,7 @@ class LogBonos extends CActiveRecord {
             'comentario' => 'Comentario',
             'concepto' => 'Concepto',
             'idBonoTienda' => 'Bono Tienda',
+        	'idBonoTiendaTipo' => 'Concepto'
         );
     }
 
@@ -98,6 +99,7 @@ class LogBonos extends CActiveRecord {
         $criteria->compare('idOperador', $this->idOperador);
         $criteria->compare('comentario', $this->comentario, true);
         $criteria->compare('concepto', $this->concepto, true);
+        $criteria->compare('idBonoTiendaTipo', $this->idBonoTiendaTipo, true);
         $criteria->compare('idBonoTienda', $this->idBonoTienda, true);
 
         return new CActiveDataProvider($this, array(

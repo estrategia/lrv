@@ -835,6 +835,8 @@ class UsuarioController extends Controller {
         } else if (isset($_POST['ListasPersonales'])) {
             $lista = Yii::app()->getRequest()->getPost('lista', null);
             $model = null;
+            
+            
 
             if ($lista !== null) {
                 $model = ListasPersonales::model()->find(array(

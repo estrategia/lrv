@@ -15,6 +15,7 @@ function dialogoAnimado(texto) {
             });
         }, 3000);
     });
+    
 }
 
 function uniqueId() {

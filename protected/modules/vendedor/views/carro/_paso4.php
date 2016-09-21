@@ -26,7 +26,23 @@ $form = $this->beginWidget('CActiveForm', array(
         <?php $this->renderPartial('/carro/_formaPago', array('form' => $form, 'model' => $modelPago, 'listFormaPago' => $listFormaPago)) ?>
     </div>
     <div class="space-2"></div>
-
+	<?php if(Yii::app ()->controller->module->user->getClienteLogueado ()):?>
+	 <div class="ui-field-container contentPaso3 ui-bar ui-bar-a ui-corner-all">
+		 <div data-role="collapsible" data-collapsed="true" data-collapsed-icon="carat-d" data-expanded-icon="carat-u" data-content-theme="a">
+		    <legend>C&oacute;digo promocional</legend>
+		        <label >Ingresa tu c&oacute;digo</label>
+		        <input type="text" id="codigoPromocional" name="codigoPromocional" />
+		        <input type="hidden" id='FormaPagoForm-usoBonoPromocional' disabled name="FormaPagoVendedorForm[usoBono][promocional]" value="0">
+		        
+		        <div class="ui-input-btn ui-btn ui-corner-all ui-shadow ui-btn-r">
+        					Usar c&oacute;digo
+		        		<input type="button" data-enhanced="true" value="Usar c&oacute;digo" data-role="codigo-promocional"/>
+		        </div>
+		</div>
+		<div class="utilBono" id='usoCodigo'></div>
+	 </div>
+	 <div class="space-2"></div>
+	 <?php endif;?>
     <?php if (!empty($modelPago->bono)): ?>
         <div class="ui-field-container contentPaso3 ui-bar ui-bar-a ui-corner-all">
             <?php echo $form->labelEx($modelPago, 'usoBono', array()); ?>

@@ -95,6 +95,42 @@
         </table>
     <?php endif; ?>
 
+
+ 
+         <?php if (count($objCompra->listFormulas) > 0): ?>
+       
+                      <h4 style="color:#666666">Formulas mÃ©dicas</h4>
+                       <table style="width:100%;border-radius:4px 4px 4px 4px;margin-bottom:20px;border-spacing:0;font-size:14px;border:1px #dddddd solid;color:#666666">
+                            <tbody>
+                                <tr style="vertical-align:middle; background-color:#f9f9f9; ">
+                          
+                                    <th style="background-color:#f9f9f9;line-height:20px;padding:8px;color:#ff0000;text-align:center" >#</th>
+                                    <th style="background-color:#f9f9f9;line-height:20px;padding:8px;color:#ff0000;text-align:center">Nombre mÃ©dico</th>
+                                    <th style="background-color:#f9f9f9;line-height:20px;padding:8px;color:#ff0000;text-align:center">InstituciÃ³n</th>
+                                    <th style="background-color:#f9f9f9;line-height:20px;padding:8px;color:#ff0000;text-align:center">Registro mÃ©dico</th>
+                                    <th style="background-color:#f9f9f9;line-height:20px;padding:8px;color:#ff0000;text-align:center">TelÃ©fono</th>
+                                    <th style="background-color:#f9f9f9;line-height:20px;padding:8px;color:#ff0000;text-align:center">Correo ElectrÃ³nico</th>                                 
+                                    <th style="background-color:#f9f9f9;line-height:20px;padding:8px;color:#ff0000;text-align:center">Formula mÃ©dica</th>
+
+                                </tr>
+                                <?php $i = 1 ?>
+                            <?php foreach($objCompra->listFormulas as $indice => $formula):?>
+                                <tr style="vertical-align:middle; <?php echo ($indice % 2 != 0 ? "background-color:#f9f9f9;" : "") ?>">
+                                    <td style="text-align:left;line-height:20px;border-top:1px solid #dddddd;vertical-align:top;padding:8px"> <?= $i++ ?> </td>
+                                    <td style="text-align:left;line-height:20px;border-top:1px solid #dddddd;vertical-align:top;padding:8px"><?= $formula->nombreMedico?></td>
+                                    <td style="text-align:left;line-height:20px;border-top:1px solid #dddddd;vertical-align:top;padding:8px"><?= $formula->institucion?></td>
+                                    <td style="text-align:left;line-height:20px;border-top:1px solid #dddddd;vertical-align:top;padding:8px"><?= $formula->registroMedico?></td>
+                                    <td style="text-align:left;line-height:20px;border-top:1px solid #dddddd;vertical-align:top;padding:8px"><?= $formula->telefono?></td>
+                                    <td style="text-align:left;line-height:20px;border-top:1px solid #dddddd;vertical-align:top;padding:8px"><?= $formula->correoElectronico?></td>                                  
+                                    <td style="text-align:left;line-height:20px;border-top:1px solid #dddddd;vertical-align:top;padding:8px"><?php if(!empty($formula->formulaMedica)): ?>
+                                        <a href="<?php echo CController::createAbsoluteUrl('/') ."/". $formula->formulaMedica?>" target="_blank" >Ver fÃ³rmula</a>
+                                    <?php endif;?></td>  
+                                </tr>
+                            <?php endforeach;?>
+                            </tbody>
+                        </table>
+        <?php endif; ?>
+
     <h4 style="color:#666666">
         Productos del
         <span class="il">pedido</span>
@@ -165,10 +201,17 @@
                                         </tr>
                                     <?php endif; ?>
 
-                                    <?php if ($objCompra->objFormaPagoCompra->valorBono > 0): ?>
+									<?php 
+									$sumaBonos = 0;
+									foreach($objCompra->listFormaPagoCompra as $formaPago):
+									     if($formaPago->idFormaPago == Yii::app()->params->callcenter['bonos']['formaPagoBonos']):
+									           $sumaBonos += $formaPago->valor;
+									     endif;
+									endforeach;?>
+                                    <?php if ($sumaBonos > 0): ?>
                                         <tr>
                                             <td>Bono</td>
-                                            <td><?php echo Yii::app()->numberFormatter->format(Yii::app()->params->formatoMoneda['patron'], $objCompra->objFormaPagoCompra->valorBono, Yii::app()->params->formatoMoneda['moneda']); ?></td>
+                                            <td><?php echo Yii::app()->numberFormatter->format(Yii::app()->params->formatoMoneda['patron'], $sumaBonos, Yii::app()->params->formatoMoneda['moneda']); ?></td>
                                         </tr>
                                     <?php endif; ?>
                                     <?php if ($objCompra->impuestosCompra > 0): ?>

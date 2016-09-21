@@ -40,6 +40,7 @@ class FormulasMedicas extends CActiveRecord
             array('correoElectronico', 'email'),            
             array('formulaMedica', 'length', 'max'=>128),
 			array('nombreMedico, telefono', 'required', 'on' => 'datosMedico'),
+			array('formulaMedica', 'required', 'on' => 'datosFormula'),
 
 			// The following rule is used by search().
 			// @todo Please remove those attributes that should not be searched.
@@ -99,7 +100,8 @@ class FormulasMedicas extends CActiveRecord
 		$criteria->compare('nombreMedico',$this->nombreMedico,true);
 		$criteria->compare('institucion',$this->institucion,true);
 		$criteria->compare('registroMedico',$this->registroMedico,true);
-		$criteria->compare('descripcion',$this->descripcion,true);
+		$criteria->compare('telefono',$this->telefono,true);
+		$criteria->compare('correoElectronico',$this->correoElectronico,true);
 		$criteria->compare('formulaMedica',$this->formulaMedica,true);
 
 		return new CActiveDataProvider($this, array(
@@ -116,5 +118,34 @@ class FormulasMedicas extends CActiveRecord
 	public static function model($className=__CLASS__)
 	{
 		return parent::model($className);
+	}
+
+	public function beforeSave(){
+
+		if(empty($this->nombreMedico)){
+			$this->nombreMedico = null;
+		}
+
+		if(empty($this->institucion)){
+			$this->institucion = null;
+		}
+
+		if(empty($this->registroMedico)){
+			$this->registroMedico = null;
+		}
+
+		if(empty($this->telefono)){
+			$this->telefono = null;
+		}
+
+		if(empty($this->correoElectronico)){
+			$this->correoElectronico = null;
+		}
+
+		if(empty($this->formulaMedica)){
+			$this->formulaMedica = null;
+		}
+
+		return parent::beforeSave();
 	}
 }

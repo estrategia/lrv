@@ -25,6 +25,18 @@ $(document).on('change', 'input[id=check-pedido-seguimiento]', function () {
     });
 });
 
+
+$(document).on('change', 'select[id=tipo_bono]', function () {
+    if($(this).val() == 1){
+        $("#tipo_1").css("display","block");
+        $("#tipo_2").css("display","none");
+    }else if($(this).val() == 2){
+        $("#tipo_1").css("display","none");
+        $("#tipo_2").css("display","block");
+    }
+});
+
+
 /*
  $(document).on('change', 'input[data-role="adminpedido"]', function() {
  var accion = $(this).attr('data-action');
@@ -839,6 +851,47 @@ $(document).on('click', "input[data-role='bonotienda-reactivar']", function () {
         }
     });
 });
+
+
+$(document).on('click', "input[data-role='bonotienda-desactivar']", function () {
+    var form = $(this).parents("form");
+    $.ajax({
+        type: 'POST',
+        async: true,
+        url: requestUrl + '/callcenter/bonos/desactivar/id/' + $(this).attr('data-bono'),
+        data: form.serialize(),
+        beforeSend: function () {
+            $('div[id^="ReactivarBonoTiendaForm_"].text-danger').html('');
+            $('div[id^="ReactivarBonoTiendaForm_"].text-danger').css('display', 'none');
+            Loading.show();
+        },
+        complete: function () {
+            Loading.hide();
+        },
+        success: function (data) {
+            var data = $.parseJSON(data);
+
+            if (data.result == 'ok') {
+                $.fn.yiiGridView.update('bonos-tienda-grid');
+                $("#modal-reactivar-bono").modal("hide");
+                dialogoAnimado(data.response);
+            } else if (data.result == 'error') {
+                bootbox.alert(data.response);
+            } else {
+                $.each(data, function (element, error) {
+                    $('#' + form.attr('id') + ' #' + element + '_em_').html(error);
+                    $('#' + form.attr('id') + ' #' + element + '_em_').css('display', 'block');
+                });
+            }
+            Loading.hide();
+        },
+        error: function (jqXHR, textStatus, errorThrown) {
+            Loading.hide();
+            bootbox.alert('Error: ' + errorThrown);
+        }
+    });
+});
+
 
 function uniqueId() {
     var time = new Date().getTime();

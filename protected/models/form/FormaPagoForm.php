@@ -283,7 +283,7 @@ class FormaPagoForm extends CFormModel {
                     $totalBono = 0;
                     foreach ($this->bono as $idx => $bono) {
                         if (!isset($this->usoBono[$idx])) {
-                            $this->addError('usoBono', $this->getAttributeLabel('usoBono') . " inv&aacute;lido");
+                            $this->addError('usoBono', $this->getAttributeLabel('usoBono') . " inv&aacute;lido $idx");
                             break;
                         }
 
@@ -340,7 +340,7 @@ class FormaPagoForm extends CFormModel {
                 'vigenciaInicio' => "$objBono->vigenciaInicio",
                 'vigenciaFin' => "$objBono->vigenciaFin",
                 'minimoCompra' => $objBono->minimoCompra,
-                'concepto' => $objBono->concepto,
+                'concepto' => $objBono->objConcepto->concepto,
                 'modoUso' => 1
             );
 
@@ -460,12 +460,57 @@ class FormaPagoForm extends CFormModel {
                             if (empty($result) || $result[0]->ESTADO == 0) {
                                 throw new Exception("Error al actualizar bono: " . CVarDumper::dumpAsString($result));
                             }
+                            
+								// añadir Bono en forma de pago
+	                            $tipoCRM = BonoTienda::model()->find(array(
+	                            	'condition' => 'idBonoTiendaTipo =:tipoBonoCRM',
+	                            	'params' => array(
+	                            			':tipoBonoCRM' => Yii::app()->params->callcenter['bonos']['tipoBonoCRM']
+	                            	)
+	                            ));
+                            
+								$objFormaPagoBono = new FormasPago;
+                             	$objFormaPagoBono->valor = $bono['valor'];
+                                $objFormaPagoBono->idCompra = $objCompra->idCompra;
+                                $objFormaPagoBono->idFormaPago = Yii::app()->params->callcenter['bonos']['formaPagoBonos']; /*******************/
+                                $objFormaPagoBono->cuenta = $tipoCRM->cuenta;
+                                $objFormaPagoBono->formaPago = $tipoCRM->formaPago;
+                                $objFormaPagoBono->idBonoTiendaTipo = $tipoCRM->idBonoTiendaTipo;
+                                if(!$objFormaPagoBono->save()){
+                                   	Yii::log("FormaPago-Bono: Exception [idCompra: $objCompra->idCompra -- idbono: $idx -- idUsuario: $objCompra->identificacionUsuario]\n", CLogger::LEVEL_INFO, 'error');
+                                }                            
+                            
                         } catch (SoapFault $exc) {
                             Yii::log("ActualizarBono-CRM: SoapFault WebService [idCompra: $objCompra->idCompra -- idbono: $idx -- idUsuario: $objCompra->identificacionUsuario]\n" . $exc->getMessage() . "\n" . $exc->getTraceAsString() . "\nRESPONSE WS:\n" . $client->__getLastResponse(), CLogger::LEVEL_INFO, 'application');
                         } catch (Exception $exc) {
                             Yii::log("ActualizarBono-CRM: Exception WebService  [idCompra: $objCompra->idCompra -- idbono: $idx -- idUsuario: $objCompra->identificacionUsuario]\n" . $exc->getMessage() . "\n" . $exc->getTraceAsString(), CLogger::LEVEL_INFO, 'application');
                         }
-                    } else if($this->bono[$idx]['modoUso'] == 1 ) {
+                    }else if($idx == 'promocional'){
+                    	
+                    	$objBonoTienda = BonoTienda::model()->find(array(
+                    			'condition' => 'idBonoTiendaTipo =:tipoBono',
+                    			'params' => array(
+                    					':tipoBono' => $bono['idBonoTienda'],
+                    			)
+                    	));
+                    	
+                    	$objFormaPagoBono = new FormasPago;
+                    	$objFormaPagoBono->valor = $bono['valor'];
+                    	$objFormaPagoBono->idCompra = $objCompra->idCompra;
+                    	$objFormaPagoBono->idFormaPago = Yii::app()->params->callcenter['bonos']['formaPagoBonos']; /*******************/
+                    	$objFormaPagoBono->cuenta = $objBonoTienda->cuenta;
+                        $objFormaPagoBono->formaPago = $objBonoTienda->formaPago;
+                        $objFormaPagoBono->idBonoTiendaTipo = $objBonoTienda->idBonoTiendaTipo;
+                    	if(!$objFormaPagoBono->save()){
+                    		Yii::log("FormaPago-Bono: Exception [idCompra: $objCompra->idCompra -- idbono: $idx -- idUsuario: $objCompra->identificacionUsuario]\n", CLogger::LEVEL_INFO, 'error');
+                    	}
+                    	
+                    	$objBonoTienda->cantidadUso = $objBonoTienda->cantidadUso - 1;
+                    	if(!$objBonoTienda->save()){
+                    		Yii::log("FormaPago-Bono: Exception [idBonoTiendaTipo: No se actualizaron las cantidades de $objBonoTienda->idBonoTiendaTipo]", CLogger::LEVEL_INFO, 'error');
+                    	}
+                    	
+                    }else if($this->bono[$idx]['modoUso'] == 1 ) {
                         $valorCompra = $objCompra->totalCompra + $this->calcularBonoRedimido(); //$objCompra->subtotalCompra + $objCompra->domicilio + $objCompra->flete
                       
                         try {
@@ -481,16 +526,29 @@ class FormaPagoForm extends CFormModel {
                                     ':total' => $valorCompra
                                 )
                             ));
-
+                           
                             if ($objBonoTienda === null) {
                                 Yii::log("ActualizarBono-Tienda: NULL [idCompra: $objCompra->idCompra -- idbono: $idx -- idUsuario: $objCompra->identificacionUsuario]", CLogger::LEVEL_INFO, 'application');
                             } else {
+                            	
                                 $objBonoTienda->estado = 0;
                                 $objBonoTienda->idCompra = $objCompra->idCompra;
                                 $objBonoTienda->valorCompra = $valorCompra;
                                 $objBonoTienda->fechaUso = $objCompra->fechaCompra;
                                 if (!$objBonoTienda->save()) {
                                     Yii::log("ActualizarBono-Tienda: cambio estado [idCompra: $objCompra->idCompra -- idbono: $idx -- idUsuario: $objCompra->identificacionUsuario]\n" . CActiveForm::validate($objBonoTienda), CLogger::LEVEL_INFO, 'application');
+                                }
+                                // añadir Bono en forma de pago
+                                
+                                $objFormaPagoBono = new FormasPago;
+                                $objFormaPagoBono->valor = $objBonoTienda->valor;
+                                $objFormaPagoBono->idCompra = $objCompra->idCompra;
+                                $objFormaPagoBono->idFormaPago = Yii::app()->params->callcenter['bonos']['formaPagoBonos']; /*******************/
+                                $objFormaPagoBono->cuenta = $objBonoTienda->objConcepto->cuenta;
+                                $objFormaPagoBono->formaPago = $objBonoTienda->objConcepto->formaPago;
+                                $objFormaPagoBono->idBonoTiendaTipo = $objBonoTienda->idBonoTiendaTipo;
+                                if(!$objFormaPagoBono->save()){
+                                	Yii::log("FormaPago-Bono: Exception [idCompra: $objCompra->idCompra -- idbono: $idx -- idUsuario: $objCompra->identificacionUsuario]\n", CLogger::LEVEL_INFO, 'error');
                                 }
                             }
                         } catch (Exception $ex) {
@@ -902,6 +960,26 @@ class FormaPagoForm extends CFormModel {
                 break;
             }
         }
+    }
+    
+    
+    public function agregarPromocional($objBono){
+    	$this->bono["promocional"] = array(
+    			'valor' => $objBono->valorBono,
+    			'disponibleCompra' => ($this->totalCompra !== null && $this->totalCompra >= $objBono->valorMinCompra),
+    			'vigenciaInicio' => "$objBono->fechaIni",
+    			'vigenciaFin' => "$objBono->fechaFin",
+    			'minimoCompra' => $objBono->valorMinCompra,
+    			'concepto' => $objBono->concepto,
+    			'idBonoTienda' =>$objBono->idBonoTiendaTipo,
+    			'modoUso' => 3
+    	);
+    	
+    	$this->usoBono["promocional"] = 1;
+    }
+    
+    public function verificarPromocional(){
+    	return isset($this->bono["promocional"]);
     }
 
 }

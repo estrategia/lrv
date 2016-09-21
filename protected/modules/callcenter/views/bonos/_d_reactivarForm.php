@@ -36,7 +36,7 @@
             </div>
             
             <div class="modal-footer center">
-                <input type="button" class="btn btn-primary" data-role="bonotienda-reactivar" data-bono=<?=$model->idBonoTienda?> value="Activar">
+                <input type="button" class="btn btn-primary" data-role="<?php echo  $objBonoTienda->estado == 1 ?"bonotienda-desactivar":"bonotienda-reactivar"?>" data-bono=<?=$model->idBonoTienda?> value="<?php echo  $objBonoTienda->estado == 1 ?"Desactivar":"Reactivar"?>">
                 <button type="button" class="btn btn-default" data-dismiss="modal">Cerrar</button>
             </div>
             <?php $this->endWidget(); ?>

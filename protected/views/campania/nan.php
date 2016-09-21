@@ -16,7 +16,7 @@ $this->metaTags = "<meta http-equiv='X-UA-Compatible' content='IE=edge'>
         .copy{font-family: VAGRoundedStd-Bold;color:#fff;font-size:11pt;text-align:center;}
         .space{height:34px;}
         .end {margin-top: -54px;}
-        .compra-online {width: 70%;margin: 32px auto 0px;}
+        .compra-online {width: 70%;margin: 0px auto 0px;}
         .compra-online-movil {width: 60%;}
 	</style>
 
@@ -73,9 +73,12 @@ $this->metaTags = "<meta http-equiv='X-UA-Compatible' content='IE=edge'>
             <div class="col-md-8">
                 <img src="<?= Yii::app()->request->baseUrl ?>/images/contenido/nan/optipro-proteina.png" class="img-responsive" alt="Banner Nan Optipro">
             </div>
-            <div class="col-md-4">
+            <div class="col-md-4">            
                 <a href="#">  
                     <img src="<?= Yii::app()->request->baseUrl ?>/images/contenido/nan/compra-online.png" class="img-responsive compra-online" alt="Compra Nan Optipro">
+                </a>
+                <a href="">
+                   <img style="margin: 15px auto 0px;width:65%;" src="<?= Yii::app()->request->baseUrl ?>/images/contenido/nan/entrega-en-1-hora.png" class="img-responsive" alt="Entrega en 1 hora Nan Optipro"> 
                 </a>
                 <div class="space"></div>
                 <a href="#">

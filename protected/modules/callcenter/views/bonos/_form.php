@@ -33,9 +33,23 @@ $form = $this->beginWidget('CActiveForm', array(
 </div>
 
 <div class="form-group">
-    <?php echo $form->labelEx($model, 'concepto'); ?>
-    <?php echo $form->textField($model, 'concepto', array('class' => 'form-control', 'size' => 50, 'maxlength' => 50)); ?>
-    <?php echo $form->error($model, 'concepto', array('class' => 'text-danger')); ?>
+    <?php echo $form->labelEx($model, 'idBonoTiendaTipo'); ?>
+    <?php echo $form->dropDownList($model, 'idBonoTiendaTipo', 
+        CHtml::listData( BonoTienda::model()->findAll(array(
+                'condition' => 'tipo =:tipoBono AND estado =:active',
+                'params' => array(
+                        ':tipoBono' => '1',
+                        ':active' => 1
+                    )
+                )), 
+                'idBonoTiendaTipo', 'concepto'), array('class' => 'form-control', 'prompt' => 'Seleccione...')); ?>
+    <?php echo $form->error($model, 'idBonoTiendaTipo', array('class' => 'text-danger')); ?>
+</div>
+
+<div class="form-group">
+    <?php echo $form->labelEx($model, 'correoElectronico'); ?>
+    <?php echo $form->textField($model, 'correoElectronico', array('class' => 'form-control')); ?>
+    <?php echo $form->error($model, 'correoElectronico', array('class' => 'text-danger')); ?>
 </div>
 
 <div class="form-group">
@@ -94,7 +108,13 @@ $form = $this->beginWidget('CActiveForm', array(
     <?php echo $form->textField($model, 'minimoCompra', array('class' => 'form-control')); ?>
     <?php echo $form->error($model, 'minimoCompra', array('class' => 'text-danger')); ?>
 </div>
-
+<?php if($model->estado != 0):?>
+<div class="form-group">
+    <?php echo $form->labelEx($model, 'estado'); ?>
+    <?php echo $form->dropDownList($model, 'estado', Yii::app()->params->callcenter['bonos']['estadoNombre'],array('class' => 'form-control')); ?>
+    <?php echo $form->error($model, 'estado', array('class' => 'text-danger')); ?>
+</div>
+<?php endif;?>
 <?php echo CHtml::submitButton($model->isNewRecord ? 'Crear' : 'Actualizar', array('class' => "btn btn-default")); ?>
 
 <?php $this->endWidget(); ?>

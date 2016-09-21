@@ -172,11 +172,12 @@ class UsuarioController extends ControllerVendedor {
             if ($model->validate()) {
                 try {
                     $usuario->clave = md5($model->clave);
-
+                   
                     if ($usuario->save()) {
                         Yii::app()->user->setFlash('success', "Información actualizada.");
                         $model->clave = $model->claveConfirmar = null;
                     } else {
+                        echo "<pre>";print_r($usuario->getErrors());exit();
                         Yii::app()->user->setFlash('error', "Error al guardar contraseña, por favor, intente de nuevo.");
                     }
                     //Yii::app()->session[Yii::app()->params->usuario['sesion']] = $usuario;
