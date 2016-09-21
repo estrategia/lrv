@@ -103,7 +103,7 @@
 .sold-out {
     text-align: center;
     margin-top: 10px;
-    background-color: #fff;
+    /*background-color: #fff;*/
     border-radius: 5px;
 }
 .border-gray {
@@ -612,6 +612,8 @@ table.tabla-carro .group-botones-cantidad{
 }
 .result_bono {
     color: #e90000;
+    text-transform: uppercase;
+    font-weight: bolder;
 }
 .bonoBody > h4 {
     color: #e90000;
@@ -2252,7 +2254,7 @@ textarea.form-control {
 }
 
 .scroll-div {
-    border: 1px solid #a4a4a4;
+    /*border: 1px solid #a4a4a4;*/
     max-height: 150px;
     overflow-y: scroll;
     padding: 1px 5px;
@@ -2608,7 +2610,7 @@ a.clst_slct_prod.active{display: inline-block !important;}
 img.ajustada {
     display: block;
     margin: auto;
-    max-width: 100%;
+    width: 45%;
 }
 
 .btn-ver-todos{
