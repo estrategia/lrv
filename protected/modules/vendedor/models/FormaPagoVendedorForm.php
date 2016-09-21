@@ -482,6 +482,31 @@ class FormaPagoVendedorForm extends CFormModel {
                         } catch (Exception $exc) {
                             Yii::log("ActualizarBono-CRM: Exception WebService  [idCompra: $objCompra->idCompra -- idbono: $idx -- idUsuario: $objCompra->identificacionUsuario]\n" . $exc->getMessage() . "\n" . $exc->getTraceAsString(), CLogger::LEVEL_INFO, 'application');
                         }
+                    }else if($idx == 'promocional'){
+                    	
+                    	$objBonoTienda = BonoTienda::model()->find(array(
+                    			'condition' => 'idBonoTiendaTipo =:tipoBono',
+                    			'params' => array(
+                    					':tipoBono' => $bono['idBonoTienda'],
+                    			)
+                    	));
+                    	
+                    	$objFormaPagoBono = new FormasPago;
+                    	$objFormaPagoBono->valor = $bono['valor'];
+                    	$objFormaPagoBono->idCompra = $objCompra->idCompra;
+                    	$objFormaPagoBono->idFormaPago = Yii::app()->params->callcenter['bonos']['formaPagoBonos']; /*******************/
+                    	$objFormaPagoBono->cuenta = $objBonoTienda->cuenta;
+                        $objFormaPagoBono->formaPago = $objBonoTienda->formaPago;
+                        $objFormaPagoBono->idBonoTiendaTipo = $objBonoTienda->idBonoTiendaTipo;
+                    	if(!$objFormaPagoBono->save()){
+                    		Yii::log("FormaPago-Bono: Exception [idCompra: $objCompra->idCompra -- idbono: $idx -- idUsuario: $objCompra->identificacionUsuario]\n", CLogger::LEVEL_INFO, 'error');
+                    	}
+                    	
+                    	$objBonoTienda->cantidadUso = $objBonoTienda->cantidadUso - 1;
+                    	if(!$objBonoTienda->save()){
+                    		Yii::log("FormaPago-Bono: Exception [idBonoTiendaTipo: No se actualizaron las cantidades de $objBonoTienda->idBonoTiendaTipo]", CLogger::LEVEL_INFO, 'error');
+                    	}
+                    	
                     } else {
                         $valorCompra = $objCompra->totalCompra + $this->calcularBonoRedimido(); //$objCompra->subtotalCompra + $objCompra->domicilio + $objCompra->flete
 
@@ -927,6 +952,25 @@ class FormaPagoVendedorForm extends CFormModel {
                 break;
             }
         }
+    }
+    
+    public function agregarPromocional($objBono){
+    	$this->bono["promocional"] = array(
+    			'valor' => $objBono->valorBono,
+    			'disponibleCompra' => ($this->totalCompra !== null && $this->totalCompra >= $objBono->valorMinCompra),
+    			'vigenciaInicio' => "$objBono->fechaIni",
+    			'vigenciaFin' => "$objBono->fechaFin",
+    			'minimoCompra' => $objBono->valorMinCompra,
+    			'concepto' => $objBono->concepto,
+    			'idBonoTienda' =>$objBono->idBonoTiendaTipo,
+    			'modoUso' => 3
+    	);
+    	 
+    	$this->usoBono["promocional"] = 1;
+    }
+    
+    public function verificarPromocional(){
+    	return isset($this->bono["promocional"]);
     }
 
 }

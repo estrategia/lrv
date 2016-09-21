@@ -126,6 +126,12 @@
                 </div>
                 <div class="form-group">
                         <!-- checkbox -->
+                        <?php echo $form->labelEx($model, 'valorBono'); ?><div class="space-1"></div>
+                        <?php echo $form->textField($model, 'valorBono', array('id' => 'valorBono', 'class' => 'form-control')) ?>
+                        <?php echo $form->error($model, 'valorBono'); ?>
+                </div>
+                <div class="form-group">
+                        <!-- checkbox -->
                         <?php echo $form->labelEx($model, 'valorMinCompra'); ?><div class="space-1"></div>
                         <?php echo $form->textField($model, 'valorMinCompra', array('id' => 'valorMinCompra', 'class' => 'form-control')) ?>
                         <?php echo $form->error($model, 'valorMinCompra'); ?>

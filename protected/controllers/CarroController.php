@@ -4125,6 +4125,22 @@ class CarroController extends Controller {
     		Yii::app()->end();
     	}
     	
+    	
+    	// validar cantidades
+    	
+    	// revisar si ese bono ya está cargado en sesión.
+    	 
+    	if($bonoTienda->cantidadUso < 1){
+    		echo CJSON::encode(array('result' => 'error', 'response' => 'Ya se agotaron las cantidades disponibles para este bono.'));
+    		Yii::app()->end();
+    	}
+    	// revisar si ese bono ya está cargado en sesión.
+    	 
+    	if($modelPago->verificarPromocional()){
+    		echo CJSON::encode(array('result' => 'error', 'response' => 'Ya se est&aacute; utilizando un c&oacute;digo promocional en la compra.'));
+    		Yii::app()->end();
+    	}
+    	
     	// Si validamos lo anterior y el uso se puede dar, mostrar información del descuento del bono.
     	
     	echo CJSON::encode(array('result' => 'ok', 'response' => 'Bono disponible por '.Yii::app()->numberFormatter->format(Yii::app()->params->formatoMoneda['patron'], $bonoTienda->valorBono, Yii::app()->params->formatoMoneda['moneda'])."\nDesea Utilizarlo?", 'bono' => $bonoTienda->idBonoTiendaTipo));
@@ -4162,7 +4178,7 @@ class CarroController extends Controller {
     	Yii::app()->shoppingCart->setBono($modelPago->calcularBonoRedimido());
     	*/
     	
-    	echo CJSON::encode(array('result' => 'ok', 'response' => 'Bono Utilizado'));
+    	echo CJSON::encode(array('result' => 'ok', 'response' => 'Se ha adquirido el bono por '.Yii::app()->numberFormatter->format(Yii::app()->params->formatoMoneda['patron'], $objBono->valorBono, Yii::app()->params->formatoMoneda['moneda']) ));
     }
     
     

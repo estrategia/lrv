@@ -2628,6 +2628,9 @@ $(document).on('click', "button[data-role='codigo-promocional']", function() {
                                     success: function(data) {
                                     	if(data.result == 'ok'){
                                     		$("#FormaPagoForm-usoBonoPromocional").val(1);
+                                    		$("#FormaPagoForm-usoBonoPromocional").prop("disabled",false);
+                                    		$("#codigoPromocional").val("");
+                                    		$("#usoCodigo").html(data.response);
                                     		return false;
                                     	}else{
                                     		alert(data.response);

@@ -2357,3 +2357,79 @@ $(document).on('click', "#btn-adicionar-formula", function () {
     });
     return false;
 });
+
+
+
+var bono;
+$(document).on('click', "input[data-role='codigo-promocional']", function() {
+
+    var codigoPromocional = $("#codigoPromocional").val();
+ //   var form = $("#form-pago-confirmacion");
+
+    $.ajax({
+        type: 'POST',
+        url: requestUrl + "/carro/usarCodigo/",
+        data: {codigoPromocional: codigoPromocional}, 
+        dataType: 'json',
+        beforeSend: function() {
+        	$.mobile.loading('show');
+        },
+        complete: function(data) {
+        	$.mobile.loading('hide');
+        },
+        success: function(data) {
+            if (data.result === 'ok') {
+            	
+            	bono = data.bono;
+            	$('<div>').mdialog({
+                    content: "<div data-role='main' id='modal-codigo-promo'><div class='ui-content' data-role='content' role='main' >" + 
+                    			data.response + 
+                    			"<a class='ui-btn ui-btn-r ui-corner-all ui-shadow' data-rel='back' data-bono='"+ data.bono+"' data-role='usar-codigo' href='#'>Usar</a>"+
+                    			"<a class='ui-btn ui-btn-r ui-corner-all ui-shadow' data-rel='back' href='#'>Cancelar</a>"+
+                    			"</div></div>"
+                });
+            } else if (data.result === 'error') {
+            	$('<div>').mdialog({
+                content: "<div data-role='main'><div class='ui-content'  data-role='content' role='main'>" + data.response + "<a class='ui-btn ui-btn-r ui-corner-all ui-shadow' data-rel='back' href='#'>Aceptar</a></div></div>"
+            	});
+            } else {
+                $.each(data, function(element, error) {
+                    $('#' + element + '_em_').html(error);
+                    $('#' + element + '_em_').css('display', 'block');
+                });
+            }
+        }
+    });
+    return false;
+});
+
+$(document).on('click', "a[data-role='usar-codigo']", function() {
+	$.ajax({
+	    type: 'POST',
+	    url: requestUrl + "/carro/guardarCodigo/",
+	    data: {bono: $(this).attr('data-bono')}, 
+	    dataType: 'json',
+	    beforeSend: function() {
+	    	$.mobile.loading('show');
+	    },
+	    complete: function(data) {
+	    	$.mobile.loading('hide');
+	    },
+	    success: function(data) {
+	    	if(data.result == 'ok'){
+	    		$("#FormaPagoForm-usoBonoPromocional").val(1);
+	    		$("#FormaPagoForm-usoBonoPromocional").prop("disabled",false);
+	    		$("#modal-codigo-promo").remove();
+	    		$("#codigoPromocional").val("");
+        		$("#usoCodigo").html(data.response);
+	    		return false;
+	    	}else{
+	    		$('<div>').mdialog({
+	                content: "<div data-role='main'><div class='ui-content' data-role='content' role='main'>" + data.response + "<a class='ui-btn ui-btn-r ui-corner-all ui-shadow' data-rel='back' href='#'>Aceptar</a></div></div>"
+	    		});
+	    	}
+	    }
+	    
+	});
+});
+

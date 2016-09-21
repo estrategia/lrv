@@ -283,7 +283,7 @@ class FormaPagoForm extends CFormModel {
                     $totalBono = 0;
                     foreach ($this->bono as $idx => $bono) {
                         if (!isset($this->usoBono[$idx])) {
-                            $this->addError('usoBono', $this->getAttributeLabel('usoBono') . " inv&aacute;lido");
+                            $this->addError('usoBono', $this->getAttributeLabel('usoBono') . " inv&aacute;lido $idx");
                             break;
                         }
 
@@ -505,6 +505,10 @@ class FormaPagoForm extends CFormModel {
                     		Yii::log("FormaPago-Bono: Exception [idCompra: $objCompra->idCompra -- idbono: $idx -- idUsuario: $objCompra->identificacionUsuario]\n", CLogger::LEVEL_INFO, 'error');
                     	}
                     	
+                    	$objBonoTienda->cantidadUso = $objBonoTienda->cantidadUso - 1;
+                    	if(!$objBonoTienda->save()){
+                    		Yii::log("FormaPago-Bono: Exception [idBonoTiendaTipo: No se actualizaron las cantidades de $objBonoTienda->idBonoTiendaTipo]", CLogger::LEVEL_INFO, 'error');
+                    	}
                     	
                     }else if($this->bono[$idx]['modoUso'] == 1 ) {
                         $valorCompra = $objCompra->totalCompra + $this->calcularBonoRedimido(); //$objCompra->subtotalCompra + $objCompra->domicilio + $objCompra->flete

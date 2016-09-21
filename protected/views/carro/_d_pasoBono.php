@@ -27,7 +27,8 @@
    		</div>
    		<div class="col-md-8">
    			<?= CHtml::textField('codigoPromocional','',array('class' => 'form-control', 'placeholder' => 'Ingresa tu código aquí'))?>
-   			<input type="hidden" id='FormaPagoForm-usoBonoPromocional' name="FormaPagoForm[usoBono][promocional]" value="0">
+   			<label id='usoCodigo'></label>
+   			<input type="hidden" id='FormaPagoForm-usoBonoPromocional' disabled name="FormaPagoForm[usoBono][promocional]" value="0">
    		</div>
    </div>
    <div class="space-1"></div>
@@ -66,7 +67,8 @@
    		</div>
    		<div class="col-md-8">
    			<?= CHtml::textField('codigoPromocional','',array('class' => 'form-control', 'placeholder' => 'Ingresa tu código aquí'))?>
-   			<input type="hidden" id='FormaPagoForm-usoBonoPromocional' name="FormaPagoForm[usoBono][promocional]" value="0">
+   			<label id='usoCodigo'></label>
+   			<input type="hidden" id='FormaPagoForm-usoBonoPromocional' disabled name="FormaPagoForm[usoBono][promocional]" value="0">
    		</div>
    </div>
    <div class="space-1"></div>
