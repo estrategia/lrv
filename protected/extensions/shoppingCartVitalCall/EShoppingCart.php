@@ -388,22 +388,6 @@ class EShoppingCart extends CMap {
         return $shipping;
     }
 
-    /* public function getTax($position = null) {
-      $tax = 0.0;
-      if ($position == null) {
-      if ($this->objSectorCiudad != null && $this->objSectorCiudad->objCiudad->excentoImpuestos == 0) {
-      foreach ($this as $position) {
-      $tax += $position->getTax();
-      }
-      }
-      } else {
-      if ($this->objSectorCiudad != null && $this->objSectorCiudad->objCiudad->excentoImpuestos == 0) {
-      $tax = $position->getTax();
-      }
-      }
-      return $tax;
-      } */
-
     public function getTaxPrice() {
         $tax = 0;
         if ($this->objSectorCiudad != null && $this->objSectorCiudad->objCiudad->excentoImpuestos == 0) {

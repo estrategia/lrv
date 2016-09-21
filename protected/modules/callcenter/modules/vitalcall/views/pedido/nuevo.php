@@ -18,7 +18,7 @@
                     <table class="table table-input table-bordered table-hover table-striped">
                         <tbody>
                             <tr>
-                                <th>Código</th>
+                                <th>C&oacute;digo</th>
                                 <th>Producto</th>
                                 <th>Cantidad</th>
                                 <th>Antes</th>
