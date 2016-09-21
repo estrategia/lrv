@@ -14,6 +14,7 @@
 class ProductoCarro extends IECartPosition {
     public $objProducto = null;
     public $objCombo = null;
+    public $objProductoFormula = null;
 
     public function __construct($param) {
         if ($param instanceof Producto) {
@@ -29,6 +30,10 @@ class ProductoCarro extends IECartPosition {
     
     public function isProduct(){
         return ($this->objProducto !== null);
+    }
+    
+    public function isFormula(){
+    	return ($this->objProductoFormula !== null);
     }
     
     public function generate($params) {
@@ -47,6 +52,20 @@ class ProductoCarro extends IECartPosition {
         }else if($this->isCombo()){
             $objprecio = new PrecioCombo($this->objCombo);
             $this->priceUnit = $objprecio->getPrecio();
+        }else if($this->isFormula()){
+        	$objProducto = $this->objProductoFormula->objProductoVC->objProducto;
+        	
+        	$objprecio = new PrecioProducto($objProducto, $params['objSectorCiudad'], $params['codigoPerfil']);
+        	$this->listBeneficios = $objprecio->getBeneficios();
+        	
+        	$this->priceUnit = $objprecio->getPrecio(Precio::PRECIO_UNIDAD, false);
+        	$this->priceFraction = $objprecio->getPrecio(Precio::PRECIO_FRACCION, false);
+        	
+        	$this->discountPriceUnit = $objprecio->getAhorro(Precio::PRECIO_UNIDAD);
+        	$this->discountPriceFraction = $objprecio->getAhorro(Precio::PRECIO_FRACCION);
+        	$this->tax = $objProducto->objImpuesto->porcentaje;
+        	$this->shipping = $objprecio->getFlete();
+        	$this->delivery = $objprecio->getTiempoEntrega();
         }
     }
     
@@ -55,6 +74,8 @@ class ProductoCarro extends IECartPosition {
             return $this->objProducto->codigoProducto;
         }else if($this->isCombo()){
             return $this->objCombo->getCodigo();
+        }else if($this->isFormula()){
+        	return $this->objProductoFormula->idFormula . "-" . $this->objProductoFormula->idProductoVitalCall;
         }
     }
 }
