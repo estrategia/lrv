@@ -25,9 +25,6 @@ $this->metaTags = "<meta http-equiv='X-UA-Compatible' content='IE=edge'>
 
 <!--Versión movil-->
 <?php if ($this->isMobile): ?>
-    <section>
-        <img width="100%" src="<?= Yii::app()->request->baseUrl ?>/images/contenido/nan/banner-nan-optipro.jpg">  
-    </section>
     <div class="background" style="margin-top: -1%;">
         <img style="padding: 5% 3%;" width="95%" src="<?= Yii::app()->request->baseUrl ?>/images/contenido/nan/optipro-proteina.png" alt="Banner Nan Optipro">       
         <center>
@@ -69,9 +66,6 @@ $this->metaTags = "<meta http-equiv='X-UA-Compatible' content='IE=edge'>
     <!--Versión escritorio-->
 <?php else: ?>
     <div class="container">
-        <div class="row">
-            <img src="<?= Yii::app()->request->baseUrl ?>/images/contenido/nan/banner-nan-optipro.jpg" class="img-responsive" alt="Banner Nan Optipro">
-        </div>
         <div class="row background">
             <div class="space"></div>        
        
