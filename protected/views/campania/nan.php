@@ -3,8 +3,8 @@
 
 <?php
 $this->metaTags = "<meta http-equiv='X-UA-Compatible' content='IE=edge'>
-    <meta name='description' content=''>
-    <meta name='keywords' content=''>
+    <meta name='description' content='Nan Optipro 3 Desarrollo de Nestlé es una  proteína optimizada que ayuda a construir bases sólidas para el crecimiento y desarrollo de su hijo.'>
+    <meta name='keywords' content='crecimiento, proteína para niños, desarrollo niños.'>
 
 	<!-- styles -->
 	<style>
@@ -36,19 +36,19 @@ $this->metaTags = "<meta http-equiv='X-UA-Compatible' content='IE=edge'>
             </a>
         </center>
         <center>
-            <a href="#">
+            <a href="<?= Yii::app()->request->baseUrl ?>/campania/contenido/nan-recetas">
                 <img width="100%" src="<?= Yii::app()->request->baseUrl ?>/images/contenido/nan/recetas.png" alt="Recetas Nan Optipro">                   
             </a>
         </center>
         <div class="space"></div>
         <section>
             <img width="100%" src="<?= Yii::app()->request->baseUrl ?>/images/contenido/nan/que-es-optipro.png" alt="Qué es Optipro?">
-            <img width="100%" src="<?= Yii::app()->request->baseUrl ?>/images/contenido/nan/cover-video1.jpg"  alt="video 1">
+            <iframe width="100%" style="margin-top: 15px;" src="https://www.youtube.com/embed/hSR0AkTsguk" frameborder="0" allowfullscreen></iframe>
         </section>
         <div class="space"></div>
         <section>
-            <img width="100%" src="<?= Yii::app()->request->baseUrl ?>/images/contenido/nan/que-es-programacion-metabolica.png" alt="Qué es programación metabolica?">
-            <img width="100%" src="<?= Yii::app()->request->baseUrl ?>/images/contenido/nan/cover-video2.jpg" alt="video 2">
+            <img width="100%" src="<?= Yii::app()->request->baseUrl ?>/images/contenido/nan/deliciosas-recetas.png" alt="Qué es programación metabolica?">
+            <iframe width="100%" style="margin-top: 15px;" src="https://www.youtube.com/embed/8bckex25LDs" frameborder="0" allowfullscreen></iframe>
         </section>
         <section>
             <div class="space"></div>
@@ -81,20 +81,20 @@ $this->metaTags = "<meta http-equiv='X-UA-Compatible' content='IE=edge'>
                    <img style="margin: 15px auto 0px;width:65%;" src="<?= Yii::app()->request->baseUrl ?>/images/contenido/nan/entrega-en-1-hora.png" class="img-responsive" alt="Entrega en 1 hora Nan Optipro"> 
                 </a>
                 <div class="space"></div>
-                <a href="#">
+                <a href="<?= Yii::app()->request->baseUrl ?>/campania/contenido/nan-recetas">
                     <img src="<?= Yii::app()->request->baseUrl ?>/images/contenido/nan/recetas.png" class="img-responsive" alt="Recetas Nan Optipro">                   
                 </a>
             </div>
             <div class="container">
                 <div class="col-md-6">
                     <div class="space"></div>
-                     <img src="<?= Yii::app()->request->baseUrl ?>/images/contenido/nan/que-es-optipro.png" class="img-responsive" alt="Qué es Optipro?">
-                     <img style="margin-top:20px;" src="<?= Yii::app()->request->baseUrl ?>/images/contenido/nan/cover-video1.jpg" class="img-responsive" alt="video 1">
+                     <img style="margin:0 auto;" src="<?= Yii::app()->request->baseUrl ?>/images/contenido/nan/que-es-optipro.png" class="img-responsive" alt="Qué es Optipro?">
+                     <iframe width="100%" height="315" style="margin-top: 15px;" src="https://www.youtube.com/embed/hSR0AkTsguk" frameborder="0" allowfullscreen></iframe>
                 </div>
                 <div class="col-md-6">
                     <div class="space"></div>
-                    <img src="<?= Yii::app()->request->baseUrl ?>/images/contenido/nan/que-es-programacion-metabolica.png" class="img-responsive" alt="Qué es programación metabolica?">
-                    <img style="margin-top:20px;" src="<?= Yii::app()->request->baseUrl ?>/images/contenido/nan/cover-video2.jpg" class="img-responsive" alt="video 2"> 
+                    <img style="height: 97px;margin:0 auto;" src="<?= Yii::app()->request->baseUrl ?>/images/contenido/nan/deliciosas-recetas.png" class="img-responsive" alt="Qué es programación metabolica?">
+                    <iframe width="100%" height="315" style="margin-top: 15px;" src="https://www.youtube.com/embed/8bckex25LDs" frameborder="0" allowfullscreen></iframe>
                 </div>
             </div>
             <div>
