@@ -667,6 +667,7 @@ return array(
             	'productosBusquedaFiltro' => 'larebaja.online.vitalCall.productos.busqueda.filtro',
                 //'formulaMedica' => 'larebaja.online.vitalCall.compra.formulamedica',
             ),
+        	'descuento' => 10,
         ),
     ),
 );

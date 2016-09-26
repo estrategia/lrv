@@ -84,7 +84,7 @@
                                 
                                 <li class="nav-header hidden-md">VITAL CALL</li>
                                 <li class="">
-                                    <a href="<?php echo $this->createUrl('/callcenter/vitallcall/productos') ?>" class="ajax-link"><i class="glyphicon glyphicon-list-alt"></i><span> Productos</span></a>
+                                    <a href="<?php echo $this->createUrl('/callcenter/vitalcall/productos') ?>" class="ajax-link"><i class="glyphicon glyphicon-list-alt"></i><span> Productos</span></a>
                                 </li>
                                 <li class="">
                                     <a href="<?php echo $this->createUrl('/callcenter/vitalcall/cotizar/buscar') ?>" class="ajax-link"target="_blank"><i class="glyphicon glyphicon-usd"></i><span> Cotizar</span></a>
