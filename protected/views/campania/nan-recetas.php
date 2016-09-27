@@ -385,15 +385,15 @@ $this->metaTags = "<meta http-equiv='X-UA-Compatible' content='IE=edge'>
                 <div class="col-md-8">
                     <div class="space"></div>
                     <div class="space"></div>
-                    <iframe id="video-receta1" style="margin-top: 15%;" width="100%" height="400" src="https://www.youtube.com/embed/8bckex25LDs" frameborder="0" allowfullscreen></iframe>
-                    <iframe id="video-receta2" style="margin-top: 15%;" class="hide" width="100%" height="400" src="https://www.youtube.com/embed/E1TrSvbmS2Q?list=PLLEhMEIG7E97afwfr_lMSAQjejl_lfWAJ" frameborder="0" allowfullscreen></iframe>
-                    <iframe id="video-receta3" style="margin-top: 15%;" class="hide" width="100%" height="400" src="https://www.youtube.com/embed/abBQhy3vmlA?list=PLLEhMEIG7E97afwfr_lMSAQjejl_lfWAJ" frameborder="0" allowfullscreen></iframe>   
-                    <iframe id="video-receta4" style="margin-top: 15%;" class="hide" width="100%" height="400" src="https://www.youtube.com/embed/H8jw2AhPt-Y?list=PLLEhMEIG7E97afwfr_lMSAQjejl_lfWAJ" frameborder="0" allowfullscreen></iframe> 
-                    <iframe id="video-receta5" style="margin-top: 15%;" class="hide" width="100%" height="400" src="https://www.youtube.com/embed/1hpaHKt-hs4?list=PLLEhMEIG7E97afwfr_lMSAQjejl_lfWAJ" frameborder="0" allowfullscreen></iframe>
-                    <iframe id="video-receta6" style="margin-top: 15%;" class="hide" width="100%" height="400" src="https://www.youtube.com/embed/xu9TM2T3Ylo?list=PLLEhMEIG7E97afwfr_lMSAQjejl_lfWAJ" frameborder="0" allowfullscreen></iframe> 
-                    <iframe id="video-receta7" style="margin-top: 15%;" class="hide" width="100%" height="400" src="https://www.youtube.com/embed/BlqwKLjx41Y?li=stPLLEhMEIG7E97afwfr_lMSAQjejl_lfWAJ" frameborder="0" allowfullscreen></iframe> 
-                    <iframe id="video-receta8" style="margin-top: 15%;" class="hide" width="100%" height="400" src="https://www.youtube.com/embed/_YBjJPeelQ0?list=PLLEhMEIG7E97afwfr_lMSAQjejl_lfWAJ" frameborder="0" allowfullscreen></iframe>
-                    <iframe id="video-receta9" style="margin-top: 15%;" class="hide" width="100%" height="400" src="https://www.youtube.com/embed/W5N7OClImrE?list=PLLEhMEIG7E97afwfr_lMSAQjejl_lfWAJ" frameborder="0" allowfullscreen></iframe>
+                    <iframe id="video-receta1" style="margin-top: 15px;" width="100%" height="400" src="https://www.youtube.com/embed/8bckex25LDs" frameborder="0" allowfullscreen></iframe>
+                    <iframe id="video-receta2" style="margin-top: 15px;" class="hide" width="100%" height="400" src="https://www.youtube.com/embed/E1TrSvbmS2Q?list=PLLEhMEIG7E97afwfr_lMSAQjejl_lfWAJ" frameborder="0" allowfullscreen></iframe>
+                    <iframe id="video-receta3" style="margin-top: 15px;" class="hide" width="100%" height="400" src="https://www.youtube.com/embed/abBQhy3vmlA?list=PLLEhMEIG7E97afwfr_lMSAQjejl_lfWAJ" frameborder="0" allowfullscreen></iframe>   
+                    <iframe id="video-receta4" style="margin-top: 15px;" class="hide" width="100%" height="400" src="https://www.youtube.com/embed/H8jw2AhPt-Y?list=PLLEhMEIG7E97afwfr_lMSAQjejl_lfWAJ" frameborder="0" allowfullscreen></iframe> 
+                    <iframe id="video-receta5" style="margin-top: 15px;" class="hide" width="100%" height="400" src="https://www.youtube.com/embed/1hpaHKt-hs4?list=PLLEhMEIG7E97afwfr_lMSAQjejl_lfWAJ" frameborder="0" allowfullscreen></iframe>
+                    <iframe id="video-receta6" style="margin-top: 15px;" class="hide" width="100%" height="400" src="https://www.youtube.com/embed/xu9TM2T3Ylo?list=PLLEhMEIG7E97afwfr_lMSAQjejl_lfWAJ" frameborder="0" allowfullscreen></iframe> 
+                    <iframe id="video-receta7" style="margin-top: 15px;" class="hide" width="100%" height="400" src="https://www.youtube.com/embed/BlqwKLjx41Y?li=stPLLEhMEIG7E97afwfr_lMSAQjejl_lfWAJ" frameborder="0" allowfullscreen></iframe> 
+                    <iframe id="video-receta8" style="margin-top: 15px;" class="hide" width="100%" height="400" src="https://www.youtube.com/embed/_YBjJPeelQ0?list=PLLEhMEIG7E97afwfr_lMSAQjejl_lfWAJ" frameborder="0" allowfullscreen></iframe>
+                    <iframe id="video-receta9" style="margin-top: 15px;" class="hide" width="100%" height="400" src="https://www.youtube.com/embed/W5N7OClImrE?list=PLLEhMEIG7E97afwfr_lMSAQjejl_lfWAJ" frameborder="0" allowfullscreen></iframe>
                 </div>
             </div>
 
