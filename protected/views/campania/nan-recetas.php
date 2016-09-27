@@ -14,7 +14,7 @@ $this->metaTags = "<meta http-equiv='X-UA-Compatible' content='IE=edge'>
             src: url(".Yii::app()->request->baseUrl."/images/contenido/nan/font/VAGRoundedStd-Bold.otf);
         }
         .copy{font-family: VAGRoundedStd-Bold;color:#fff;font-size:11pt;text-align:center;}
-        .texto {font-family: VAGRoundedStd-Bold;color:#fff;cursor:pointer;}
+        .texto {/*font-family: VAGRoundedStd-Bold;*/color:#fff;cursor:pointer;}
         .space{height:34px;}
         .end {margin-top: -54px;}
         .compra-online {width: 70%;margin: 0px auto 0px;}
@@ -308,7 +308,7 @@ $this->metaTags = "<meta http-equiv='X-UA-Compatible' content='IE=edge'>
                 <div class="col-md-4">
                     <div class="space"></div>
                      <div class="space"></div>
-                    <div class="row">
+                    <div class="row" style="margin-top: 15px;">
                         <div class="col-md-4">
                             <img style="width: 81%;margin: 0 auto;" src="<?= Yii::app()->request->baseUrl ?>/images/contenido/nan/video1.jpg" class="img-responsive"> 
                         </div>
@@ -316,7 +316,7 @@ $this->metaTags = "<meta http-equiv='X-UA-Compatible' content='IE=edge'>
                             <p id="receta1" class="texto">Gelatina de frutas con NAN® OPTIPRO® 3 DESARROLLO</p>
                         </div>
                     </div>
-                    <div class="row">
+                    <div class="row" style="margin-top: 15px;">
                         <div class="col-md-4">
                             <img style="width: 81%;margin: 0 auto;" src="<?= Yii::app()->request->baseUrl ?>/images/contenido/nan/video2.jpg" class="img-responsive"> 
                         </div>
@@ -324,7 +324,7 @@ $this->metaTags = "<meta http-equiv='X-UA-Compatible' content='IE=edge'>
                             <p id="receta2" class="texto">Sorbete de fresa con NAN® OPTIPRO® 3 DESARROLLO y NESTUM® YOGURT FRESA</p>
                         </div>
                     </div>
-                    <div class="row">
+                    <div class="row" style="margin-top: 15px;">
                         <div class="col-md-4">
                             <img style="width: 81%;margin: 0 auto;" src="<?= Yii::app()->request->baseUrl ?>/images/contenido/nan/video3.jpg" class="img-responsive"> 
                         </div>
@@ -332,7 +332,7 @@ $this->metaTags = "<meta http-equiv='X-UA-Compatible' content='IE=edge'>
                             <p id="receta3" class="texto">NAN® OPTIPRO® 3 DESARROLLO con manzana</p>
                         </div>
                     </div>
-                    <div class="row">
+                    <div class="row" style="margin-top: 15px;">
                         <div class="col-md-4">
                             <img style="width: 81%;margin: 0 auto;" src="<?= Yii::app()->request->baseUrl ?>/images/contenido/nan/video4.jpg" class="img-responsive"> 
                         </div>
@@ -340,7 +340,7 @@ $this->metaTags = "<meta http-equiv='X-UA-Compatible' content='IE=edge'>
                             <p id="receta4" class="texto">NAN® OPTIPRO® 3 DESARROLLO con banano</p>
                         </div>
                     </div>
-                    <div class="row">
+                    <div class="row" style="margin-top: 15px;">
                         <div class="col-md-4">
                             <img style="width: 81%;margin: 0 auto;" src="<?= Yii::app()->request->baseUrl ?>/images/contenido/nan/video5.jpg" class="img-responsive"> 
                         </div>
@@ -348,7 +348,7 @@ $this->metaTags = "<meta http-equiv='X-UA-Compatible' content='IE=edge'>
                             <p id="receta5" class="texto">NAN® OPTIPRO® 3 DESARROLLO con avena</p>
                         </div>
                     </div>
-                    <div class="row">
+                    <div class="row" style="margin-top: 15px;">
                         <div class="col-md-4">
                             <img style="width: 81%;margin: 0 auto;" src="<?= Yii::app()->request->baseUrl ?>/images/contenido/nan/video6.jpg" class="img-responsive"> 
                         </div>
@@ -356,7 +356,7 @@ $this->metaTags = "<meta http-equiv='X-UA-Compatible' content='IE=edge'>
                             <p id="receta6" class="texto">Malteada de NESTUM® VAINILLA, NAN® OPTIPRO® 3 DESARROLLO, duraznos y galletas MILO® </p>
                         </div>
                     </div>
-                    <div class="row">
+                    <div class="row" style="margin-top: 15px;">
                         <div class="col-md-4">
                             <img style="width: 81%;margin: 0 auto;" src="<?= Yii::app()->request->baseUrl ?>/images/contenido/nan/video7.jpg" class="img-responsive"> 
                         </div>
@@ -364,7 +364,7 @@ $this->metaTags = "<meta http-equiv='X-UA-Compatible' content='IE=edge'>
                             <p id="receta7" class="texto">Malteada de NESTUM® VAINILLA y NAN® OPTIPRO® 3 DESARROLLO con melón</p>
                         </div>
                     </div>
-                    <div class="row">
+                    <div class="row" style="margin-top: 15px;">
                         <div class="col-md-4">
                             <img style="width: 81%;margin: 0 auto;" src="<?= Yii::app()->request->baseUrl ?>/images/contenido/nan/video8.jpg" class="img-responsive"> 
                         </div>
@@ -372,7 +372,7 @@ $this->metaTags = "<meta http-equiv='X-UA-Compatible' content='IE=edge'>
                             <p id="receta8" class="texto">Batido de mango con NAN® OPTIPRO® 3 DESARROLLO</p>
                         </div>
                     </div>
-                    <div class="row">
+                    <div class="row" style="margin-top: 15px;">
                         <div class="col-md-4">
                             <img style="width: 81%;margin: 0 auto;" src="<?= Yii::app()->request->baseUrl ?>/images/contenido/nan/video9.jpg" class="img-responsive"> 
                         </div>
@@ -385,15 +385,15 @@ $this->metaTags = "<meta http-equiv='X-UA-Compatible' content='IE=edge'>
                 <div class="col-md-8">
                     <div class="space"></div>
                     <div class="space"></div>
-                    <iframe id="video-receta1" width="100%" height="400" src="https://www.youtube.com/embed/8bckex25LDs" frameborder="0" allowfullscreen></iframe>
-                    <iframe id="video-receta2" class="hide" width="100%" height="400" src="https://www.youtube.com/embed/E1TrSvbmS2Q?list=PLLEhMEIG7E97afwfr_lMSAQjejl_lfWAJ" frameborder="0" allowfullscreen></iframe>
-                    <iframe id="video-receta3" class="hide" width="100%" height="400" src="https://www.youtube.com/embed/abBQhy3vmlA?list=PLLEhMEIG7E97afwfr_lMSAQjejl_lfWAJ" frameborder="0" allowfullscreen></iframe>   
-                    <iframe id="video-receta4" class="hide" width="100%" height="400" src="https://www.youtube.com/embed/H8jw2AhPt-Y?list=PLLEhMEIG7E97afwfr_lMSAQjejl_lfWAJ" frameborder="0" allowfullscreen></iframe> 
-                    <iframe id="video-receta5" class="hide" width="100%" height="400" src="https://www.youtube.com/embed/1hpaHKt-hs4?list=PLLEhMEIG7E97afwfr_lMSAQjejl_lfWAJ" frameborder="0" allowfullscreen></iframe>
-                    <iframe id="video-receta6" class="hide" width="100%" height="400" src="https://www.youtube.com/embed/xu9TM2T3Ylo?list=PLLEhMEIG7E97afwfr_lMSAQjejl_lfWAJ" frameborder="0" allowfullscreen></iframe> 
-                    <iframe id="video-receta7" class="hide" width="100%" height="400" src="https://www.youtube.com/embed/BlqwKLjx41Y?li=stPLLEhMEIG7E97afwfr_lMSAQjejl_lfWAJ" frameborder="0" allowfullscreen></iframe> 
-                    <iframe id="video-receta8" class="hide" width="100%" height="400" src="https://www.youtube.com/embed/_YBjJPeelQ0?list=PLLEhMEIG7E97afwfr_lMSAQjejl_lfWAJ" frameborder="0" allowfullscreen></iframe>
-                    <iframe id="video-receta9" class="hide" width="100%" height="400" src="https://www.youtube.com/embed/W5N7OClImrE?list=PLLEhMEIG7E97afwfr_lMSAQjejl_lfWAJ" frameborder="0" allowfullscreen></iframe>
+                    <iframe id="video-receta1" style="margin-top: 15%;" width="100%" height="400" src="https://www.youtube.com/embed/8bckex25LDs" frameborder="0" allowfullscreen></iframe>
+                    <iframe id="video-receta2" style="margin-top: 15%;" class="hide" width="100%" height="400" src="https://www.youtube.com/embed/E1TrSvbmS2Q?list=PLLEhMEIG7E97afwfr_lMSAQjejl_lfWAJ" frameborder="0" allowfullscreen></iframe>
+                    <iframe id="video-receta3" style="margin-top: 15%;" class="hide" width="100%" height="400" src="https://www.youtube.com/embed/abBQhy3vmlA?list=PLLEhMEIG7E97afwfr_lMSAQjejl_lfWAJ" frameborder="0" allowfullscreen></iframe>   
+                    <iframe id="video-receta4" style="margin-top: 15%;" class="hide" width="100%" height="400" src="https://www.youtube.com/embed/H8jw2AhPt-Y?list=PLLEhMEIG7E97afwfr_lMSAQjejl_lfWAJ" frameborder="0" allowfullscreen></iframe> 
+                    <iframe id="video-receta5" style="margin-top: 15%;" class="hide" width="100%" height="400" src="https://www.youtube.com/embed/1hpaHKt-hs4?list=PLLEhMEIG7E97afwfr_lMSAQjejl_lfWAJ" frameborder="0" allowfullscreen></iframe>
+                    <iframe id="video-receta6" style="margin-top: 15%;" class="hide" width="100%" height="400" src="https://www.youtube.com/embed/xu9TM2T3Ylo?list=PLLEhMEIG7E97afwfr_lMSAQjejl_lfWAJ" frameborder="0" allowfullscreen></iframe> 
+                    <iframe id="video-receta7" style="margin-top: 15%;" class="hide" width="100%" height="400" src="https://www.youtube.com/embed/BlqwKLjx41Y?li=stPLLEhMEIG7E97afwfr_lMSAQjejl_lfWAJ" frameborder="0" allowfullscreen></iframe> 
+                    <iframe id="video-receta8" style="margin-top: 15%;" class="hide" width="100%" height="400" src="https://www.youtube.com/embed/_YBjJPeelQ0?list=PLLEhMEIG7E97afwfr_lMSAQjejl_lfWAJ" frameborder="0" allowfullscreen></iframe>
+                    <iframe id="video-receta9" style="margin-top: 15%;" class="hide" width="100%" height="400" src="https://www.youtube.com/embed/W5N7OClImrE?list=PLLEhMEIG7E97afwfr_lMSAQjejl_lfWAJ" frameborder="0" allowfullscreen></iframe>
                 </div>
             </div>
 
