@@ -37,8 +37,9 @@ $this->metaTags = "<meta http-equiv='X-UA-Compatible' content='IE=edge'>
 	</style>
     ";
 ?>
-
+    <!-- Funcionamiento de cambio de los videos -->
    <script type='text/javascript'>
+
            $(document).ready(function(){
             $('#receta1').click(function(){
                 $('#video-receta1').removeClass('hide');
@@ -50,12 +51,20 @@ $this->metaTags = "<meta http-equiv='X-UA-Compatible' content='IE=edge'>
                 $('#video-receta7').addClass('hide');
                 $('#video-receta8').addClass('hide');
                 $('#video-receta9').addClass('hide'); 
-                //$('.video').get(0).stopVideo();
+                // para pausar el video
+                $("#video-receta2").attr("src", $("#video-receta2").attr("src"));
+                $("#video-receta3").attr("src", $("#video-receta3").attr("src"));
+                $("#video-receta4").attr("src", $("#video-receta4").attr("src"));
+                $("#video-receta5").attr("src", $("#video-receta5").attr("src"));
+                $("#video-receta6").attr("src", $("#video-receta6").attr("src"));
+                $("#video-receta7").attr("src", $("#video-receta7").attr("src"));
+                $("#video-receta8").attr("src", $("#video-receta8").attr("src"));
+                $("#video-receta9").attr("src", $("#video-receta9").attr("src"));
             });
-            $('#receta2').click(function(){
-               
+            $('#receta2').click(function(){               
                 $('#video-receta2').removeClass('hide');
                 $('#video-receta1').addClass('hide');
+                $("#video-receta1").attr("src", $("#video-receta1").attr("src"));
                 $('#video-receta3').addClass('hide');
                 $('#video-receta4').addClass('hide');
                 $('#video-receta5').addClass('hide');
@@ -63,6 +72,15 @@ $this->metaTags = "<meta http-equiv='X-UA-Compatible' content='IE=edge'>
                 $('#video-receta7').addClass('hide');
                 $('#video-receta8').addClass('hide');
                 $('#video-receta9').addClass('hide');
+                // para pausar el video
+                $("#video-receta1").attr("src", $("#video-receta1").attr("src"));
+                $("#video-receta3").attr("src", $("#video-receta3").attr("src"));
+                $("#video-receta4").attr("src", $("#video-receta4").attr("src"));
+                $("#video-receta5").attr("src", $("#video-receta5").attr("src"));
+                $("#video-receta6").attr("src", $("#video-receta6").attr("src"));
+                $("#video-receta7").attr("src", $("#video-receta7").attr("src"));
+                $("#video-receta8").attr("src", $("#video-receta8").attr("src"));
+                $("#video-receta9").attr("src", $("#video-receta9").attr("src"));
                 
             });
             $('#receta3').click(function(){
@@ -75,6 +93,15 @@ $this->metaTags = "<meta http-equiv='X-UA-Compatible' content='IE=edge'>
                 $('#video-receta7').addClass('hide');
                 $('#video-receta8').addClass('hide');
                 $('#video-receta9').addClass('hide');
+                // para pausar el video
+                $("#video-receta1").attr("src", $("#video-receta1").attr("src"));
+                $("#video-receta2").attr("src", $("#video-receta2").attr("src"));
+                $("#video-receta4").attr("src", $("#video-receta4").attr("src"));
+                $("#video-receta5").attr("src", $("#video-receta5").attr("src"));
+                $("#video-receta6").attr("src", $("#video-receta6").attr("src"));
+                $("#video-receta7").attr("src", $("#video-receta7").attr("src"));
+                $("#video-receta8").attr("src", $("#video-receta8").attr("src"));
+                $("#video-receta9").attr("src", $("#video-receta9").attr("src"));
             });
             $('#receta4').click(function(){
                 $('#video-receta4').removeClass('hide');
@@ -86,6 +113,15 @@ $this->metaTags = "<meta http-equiv='X-UA-Compatible' content='IE=edge'>
                 $('#video-receta7').addClass('hide');
                 $('#video-receta8').addClass('hide');
                 $('#video-receta9').addClass('hide');
+                // para pausar el video
+                $("#video-receta1").attr("src", $("#video-receta1").attr("src"));
+                $("#video-receta2").attr("src", $("#video-receta2").attr("src"));
+                $("#video-receta3").attr("src", $("#video-receta3").attr("src"));
+                $("#video-receta5").attr("src", $("#video-receta5").attr("src"));
+                $("#video-receta6").attr("src", $("#video-receta6").attr("src"));
+                $("#video-receta7").attr("src", $("#video-receta7").attr("src"));
+                $("#video-receta8").attr("src", $("#video-receta8").attr("src"));
+                $("#video-receta9").attr("src", $("#video-receta9").attr("src"));
             });
             $('#receta5').click(function(){
                 $('#video-receta5').removeClass('hide');
@@ -97,6 +133,15 @@ $this->metaTags = "<meta http-equiv='X-UA-Compatible' content='IE=edge'>
                 $('#video-receta7').addClass('hide');
                 $('#video-receta8').addClass('hide');
                 $('#video-receta9').addClass('hide');
+                // para pausar el video
+                $("#video-receta1").attr("src", $("#video-receta1").attr("src"));
+                $("#video-receta2").attr("src", $("#video-receta2").attr("src"));
+                $("#video-receta3").attr("src", $("#video-receta3").attr("src"));
+                $("#video-receta4").attr("src", $("#video-receta4").attr("src"));
+                $("#video-receta6").attr("src", $("#video-receta6").attr("src"));
+                $("#video-receta7").attr("src", $("#video-receta7").attr("src"));
+                $("#video-receta8").attr("src", $("#video-receta8").attr("src"));
+                $("#video-receta9").attr("src", $("#video-receta9").attr("src"));
 
             });
             $('#receta6').click(function(){
@@ -109,6 +154,15 @@ $this->metaTags = "<meta http-equiv='X-UA-Compatible' content='IE=edge'>
                 $('#video-receta7').addClass('hide');
                 $('#video-receta8').addClass('hide');
                 $('#video-receta9').addClass('hide');
+                // para pausar el video
+                $("#video-receta1").attr("src", $("#video-receta1").attr("src"));
+                $("#video-receta2").attr("src", $("#video-receta2").attr("src"));
+                $("#video-receta3").attr("src", $("#video-receta3").attr("src"));
+                $("#video-receta4").attr("src", $("#video-receta4").attr("src"));
+                $("#video-receta5").attr("src", $("#video-receta5").attr("src"));
+                $("#video-receta7").attr("src", $("#video-receta7").attr("src"));
+                $("#video-receta8").attr("src", $("#video-receta8").attr("src"));
+                $("#video-receta9").attr("src", $("#video-receta9").attr("src"));
             });
             $('#receta7').click(function(){
                 $('#video-receta7').removeClass('hide');
@@ -120,6 +174,15 @@ $this->metaTags = "<meta http-equiv='X-UA-Compatible' content='IE=edge'>
                 $('#video-receta6').addClass('hide');
                 $('#video-receta8').addClass('hide');
                 $('#video-receta9').addClass('hide');
+                // para pausar el video
+                $("#video-receta1").attr("src", $("#video-receta1").attr("src"));
+                $("#video-receta2").attr("src", $("#video-receta2").attr("src"));
+                $("#video-receta3").attr("src", $("#video-receta3").attr("src"));
+                $("#video-receta4").attr("src", $("#video-receta4").attr("src"));
+                $("#video-receta5").attr("src", $("#video-receta5").attr("src"));
+                $("#video-receta6").attr("src", $("#video-receta6").attr("src"));
+                $("#video-receta8").attr("src", $("#video-receta8").attr("src"));
+                $("#video-receta9").attr("src", $("#video-receta9").attr("src"));
             });
             $('#receta8').click(function(){
                 $('#video-receta8').removeClass('hide');
@@ -131,6 +194,15 @@ $this->metaTags = "<meta http-equiv='X-UA-Compatible' content='IE=edge'>
                 $('#video-receta6').addClass('hide');
                 $('#video-receta7').addClass('hide');
                 $('#video-receta9').addClass('hide');
+                // para pausar el video
+                $("#video-receta1").attr("src", $("#video-receta1").attr("src"));
+                $("#video-receta2").attr("src", $("#video-receta2").attr("src"));
+                $("#video-receta3").attr("src", $("#video-receta3").attr("src"));
+                $("#video-receta4").attr("src", $("#video-receta4").attr("src"));
+                $("#video-receta5").attr("src", $("#video-receta5").attr("src"));
+                $("#video-receta6").attr("src", $("#video-receta6").attr("src"));
+                $("#video-receta7").attr("src", $("#video-receta7").attr("src"));
+                $("#video-receta9").attr("src", $("#video-receta9").attr("src"));
             });
             $('#receta9').click(function(){
                 $('#video-receta9').removeClass('hide');
@@ -142,6 +214,15 @@ $this->metaTags = "<meta http-equiv='X-UA-Compatible' content='IE=edge'>
                 $('#video-receta6').addClass('hide');
                 $('#video-receta7').addClass('hide');
                 $('#video-receta8').addClass('hide');
+                // para pausar el video
+                $("#video-receta1").attr("src", $("#video-receta1").attr("src"));
+                $("#video-receta2").attr("src", $("#video-receta2").attr("src"));
+                $("#video-receta3").attr("src", $("#video-receta3").attr("src"));
+                $("#video-receta4").attr("src", $("#video-receta4").attr("src"));
+                $("#video-receta5").attr("src", $("#video-receta5").attr("src"));
+                $("#video-receta6").attr("src", $("#video-receta6").attr("src"));
+                $("#video-receta7").attr("src", $("#video-receta7").attr("src"));
+                $("#video-receta8").attr("src", $("#video-receta8").attr("src"));
             });
 
         });
