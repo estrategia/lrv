@@ -46,6 +46,22 @@ $this->widget('zii.widgets.grid.CGridView', array(
             'header' => "Fecha de creaci&oacute;n",
             'value' =>'$data->fechaCreacion',
         ),
+    	array(
+    		'class' => 'CButtonColumn',
+    		'template' => '{actualizar}{productos}',
+    		'buttons' => array(
+	    				 'actualizar' => array(
+	    					'label' => '<i class="glyphicon glyphicon-edit"></i> ',
+	    					'url' => 'Yii::app()->createUrl("/callcenter/vitalcall/formula/actualizar", array("id"=>$data->idFormula)) ',
+	    					'options' => array('title'=>'Actualizar'),
+    				 	),
+	    				'productos' => array(
+	    						'label' => '<i class="glyphicon glyphicon-plus"></i> ',
+	    						'url' => 'Yii::app()->createUrl("/callcenter/vitalcall/formula/agregarProductos", array("id"=>$data->idFormula)) ',
+	    						'options' => array('title'=>'Productos de la f&oacute;rmula'),
+	    				),
+    			)
+    		),
     ),
 ));
 ?>

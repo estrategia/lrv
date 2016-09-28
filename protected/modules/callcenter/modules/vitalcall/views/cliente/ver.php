@@ -105,7 +105,17 @@ $this->breadcrumbs = array (
 </div>
 
 <!-- direcciones despacho-->
-<div class="row"></div>
+<div class="row">
+	<div class="col-md-12">
+		<hr>
+		<div>
+			<span class="title">Direcciones de despacho</span>
+			<br/>
+			<a href="#" data-role='nueva-direccion-vital' class='btn btn-info' data-cliente='<?= $objCliente->identificacionUsuario ?>'>Nueva direcci&oacute;n</a>
+            <?php $this->renderPartial('_gridDirecciones', array('model' => $modelDirecciones))?>
+        </div>
+	</div>
+</div>
 
 <!-- pedidos anteriores-->
 <div class="row">

@@ -18,7 +18,7 @@
  */
 class DireccionesDespachoVitalCall extends CActiveRecord {
 	private $_objSectorCiudad = null;
-
+	public $listaSectores = array();
     /**
      * @return string the associated database table name
      */

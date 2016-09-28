@@ -892,7 +892,6 @@ $(document).on('click', "input[data-role='bonotienda-desactivar']", function () 
     });
 });
 
-
 function uniqueId() {
     var time = new Date().getTime();
     while (time == new Date().getTime())
