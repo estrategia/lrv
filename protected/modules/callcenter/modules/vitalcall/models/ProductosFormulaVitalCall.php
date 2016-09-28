@@ -1,29 +1,26 @@
 <?php
 
 /**
- * This is the model class for table "t_FormulasVitalCall".
+ * This is the model class for table "t_ProductosFormulaVitalCall".
  *
- * The followings are the available columns in table 't_FormulasVitalCall':
+ * The followings are the available columns in table 't_ProductosFormulaVitalCall':
  * @property string $idFormula
- * @property string $identificacionUsuario
- * @property string $registroMedico
- * @property string $nombreMedico
- * @property string $institucion
- * @property string $telefono
- * @property string $correoElectronico
+ * @property string $idProductoVitalCall
+ * @property string $cantidad
+ * @property string $dosis
+ * @property string $intervalo
  * @property string $fechaCreacion
- *
- * The followings are the available model relations:
- * @property UsuarioVitalCall $objUsuarioVC
- * @property ProductosVitallCall[] $listProductosVC
+ * 
+ * @property ProductosVitalCall $objProductoVC
+ * @property FormulasVitalCall[] $listFormulasVC
  */
-class FormulasVitalCall extends CActiveRecord {
+class ProductosFormulaVitalCall extends CActiveRecord {
 
     /**
      * @return string the associated database table name
      */
     public function tableName() {
-        return 't_FormulasVitalCall';
+        return 't_ProductosFormulaVitalCall';
     }
 
     /**
@@ -33,13 +30,11 @@ class FormulasVitalCall extends CActiveRecord {
         // NOTE: you should only define rules for those attributes that
         // will receive user inputs.
         return array(
-            array('identificacionUsuario, registroMedico, nombreMedico, institucion, telefono, correoElectronico, fechaCreacion', 'required'),
-            array('identificacionUsuario', 'length', 'max' => 200),
-            array('registroMedico, telefono', 'length', 'max' => 50),
-            array('nombreMedico, institucion, correoElectronico', 'length', 'max' => 100),
+            array('idFormula, idProductoVitalCall, cantidad, dosis, intervalo, fechaCreacion', 'required'),
+            array('idFormula, idProductoVitalCall, cantidad, dosis, intervalo', 'length', 'max' => 10),
             // The following rule is used by search().
             // @todo Please remove those attributes that should not be searched.
-            array('idFormula, identificacionUsuario, registroMedico, nombreMedico, institucion, telefono, correoElectronico, fechaCreacion', 'safe', 'on' => 'search'),
+            array('idFormula, idProductoVitalCall, cantidad, dosis, intervalo, fechaCreacion', 'safe', 'on' => 'search'),
         );
     }
 
@@ -50,9 +45,9 @@ class FormulasVitalCall extends CActiveRecord {
         // NOTE: you may need to adjust the relation name and the related
         // class name for the relations automatically generated below.
         return array(
-            'objUsuarioVC' => array(self::BELONGS_TO, 'UsuarioVitalCall', 'identificacionUsuario'),
-            'listProductosVC' => array(self::MANY_MANY, 'ProductosVitalCall', 't_ProductosFormulaVitalCall(idFormula, idProductoVitalCall)'),
-                //'listProductosFormulaVC' => array(self::MANY_MANY, 'ProductosVitallCall', 't_ProductosFormulaVitalCall(idFormula, idProductoVitallCall)'),
+        	'objFormulaVC' => array(self::BELONGS_TO, 'FormulasVitalCall', 'idFormula'),
+            'objProductoVC' => array(self::BELONGS_TO, 'ProductosVitalCall', 'idProductoVitalCall'),
+            'listFormulasVC' => array(self::HAS_MANY, 'FormulasVitalCall', 'identificacionUsuario'),
         );
     }
 
@@ -62,12 +57,10 @@ class FormulasVitalCall extends CActiveRecord {
     public function attributeLabels() {
         return array(
             'idFormula' => 'Id Formula',
-            'identificacionUsuario' => 'Identificacion Usuario',
-            'registroMedico' => 'Registro Medico',
-            'nombreMedico' => 'Nombre Medico',
-            'institucion' => 'Institucion',
-            'telefono' => 'Telefono',
-            'correoElectronico' => 'Correo Electronico',
+            'idProductoVitalCall' => 'Id Producto Vitall Call',
+            'cantidad' => 'Cantidad',
+            'dosis' => 'Dosis',
+            'intervalo' => 'Intervalo',
             'fechaCreacion' => 'Fecha Creacion',
         );
     }
@@ -90,12 +83,10 @@ class FormulasVitalCall extends CActiveRecord {
         $criteria = new CDbCriteria;
 
         $criteria->compare('idFormula', $this->idFormula, true);
-        $criteria->compare('identificacionUsuario', $this->identificacionUsuario, true);
-        $criteria->compare('registroMedico', $this->registroMedico, true);
-        $criteria->compare('nombreMedico', $this->nombreMedico, true);
-        $criteria->compare('institucion', $this->institucion, true);
-        $criteria->compare('telefono', $this->telefono, true);
-        $criteria->compare('correoElectronico', $this->correoElectronico, true);
+        $criteria->compare('idProductoVitalCall', $this->idProductoVitalCall, true);
+        $criteria->compare('cantidad', $this->cantidad, true);
+        $criteria->compare('dosis', $this->dosis, true);
+        $criteria->compare('intervalo', $this->intervalo, true);
         $criteria->compare('fechaCreacion', $this->fechaCreacion, true);
 
         return new CActiveDataProvider($this, array(
@@ -107,7 +98,7 @@ class FormulasVitalCall extends CActiveRecord {
      * Returns the static model of the specified AR class.
      * Please note that you should have this exact method in all your CActiveRecord descendants!
      * @param string $className active record class name.
-     * @return FormulasVitalCall the static model class
+     * @return ProductosFormulaVitalCall the static model class
      */
     public static function model($className = __CLASS__) {
         return parent::model($className);

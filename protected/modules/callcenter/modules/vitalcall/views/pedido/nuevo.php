@@ -2,7 +2,18 @@
 //CVarDumper::dump($objUsuario,10, true);
 ?>
 
-<?php $idUnico = uniqid() ?>
+<?php //$idUnico = uniqid() ?>
+
+    <div class="row">
+        <div class="col-md-3">
+            <input id="busqueda-buscar-vitalcall" type="text" placeholder="Descripción" class="form-control input-sm"  maxlength="50" > 
+        </div>
+        <div class="col-md-1">
+            <button type="button" class="btn btn-danger btn-sm" data-role="busquedaproducto-vitalcall"><i class="glyphicon glyphicon-search"></i>Buscar</button>
+        </div>
+    </div>
+
+<div class="space-2"></div>
 
 <div class="panel-group" id="accordion-formulas" role="tablist" aria-multiselectable="true">
     <?php foreach ($objUsuario->listFormulasVC as $objFormulaVC): ?>
@@ -27,7 +38,7 @@
                                 <th></th>
                             </tr>
                             <?php foreach ($objFormulaVC->listProductosVC as $objProductoVC): ?>
-                                <?php $idUnico = uniqid() ?>
+                                <?php //$idUnico = uniqid() ?>
                                 <?php $objPrecio = new PrecioProducto($objProductoVC->objProducto, $objSectorCiudad, Yii::app()->params->perfil['vitalCall']); ?>
 
                                 <?php if ($objProductoVC->objProducto->fraccionado == 1): ?>
