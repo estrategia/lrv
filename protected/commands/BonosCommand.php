@@ -74,19 +74,22 @@ class BonosCommand extends CConsoleCommand {
     
     public function actionMigracionBonos(){
     	Yii::import('application.models.FormasPago');
+        Yii::import('application.models.BonoTienda');
     	
     	$formasPago = FormasPago::model()->findAll(array(
     			'condition' => 'valorBono> 0'
     	));
+
+        $bonoTienda = BonoTienda::model()->findByPk(4);
     	
     	foreach($formasPago as $forma){
     		$bonoFormaPago = new FormasPago();
-    		$bonoFormaPago->idFormaPago = 8;
+    		$bonoFormaPago->idFormaPago = 8;  // modify
     		$bonoFormaPago->idCompra = $forma->idCompra;
     		$bonoFormaPago->valor = $forma->valorBono;
-    		$bonoFormaPago->cuenta = NULL;
-    		$bonoFormaPago->formaPago = NULL;
-    		$bonoFormaPago->idBonoTiendaTipo = NULL;
+    		$bonoFormaPago->cuenta = $bonoTienda->cuenta;
+    		$bonoFormaPago->formaPago = $bonoTienda->formaPago;
+    		$bonoFormaPago->idBonoTiendaTipo = $bonoTienda->idBonoTiendaTipo;
     		
     		if(!$bonoFormaPago->save()){
     			Yii::log("NO SE PUDO GUARDAR EL BONO COMO FORMA DE PAGO EN LA COMPRA $forma->idCompra");

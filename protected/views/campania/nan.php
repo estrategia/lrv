@@ -3,8 +3,8 @@
 
 <?php
 $this->metaTags = "<meta http-equiv='X-UA-Compatible' content='IE=edge'>
-    <meta name='description' content=''>
-    <meta name='keywords' content=''>
+    <meta name='description' content='Nan Optipro 3 Desarrollo de Nestlé es una  proteína optimizada que ayuda a construir bases sólidas para el crecimiento y desarrollo de su hijo.'>
+    <meta name='keywords' content='crecimiento, proteína para niños, desarrollo niños.'>
 
 	<!-- styles -->
 	<style>
@@ -19,6 +19,7 @@ $this->metaTags = "<meta http-equiv='X-UA-Compatible' content='IE=edge'>
         .compra-online {width: 70%;margin: 0px auto 0px;}
         .compra-online-movil {width: 60%;}
 	</style>
+
 
     ";
 ?>
@@ -36,7 +37,7 @@ $this->metaTags = "<meta http-equiv='X-UA-Compatible' content='IE=edge'>
             </a>
         </center>
         <center>
-            <a href="#">
+            <a href="<?= Yii::app()->request->baseUrl ?>/campania/contenido/nan-recetas">
                 <img width="100%" src="<?= Yii::app()->request->baseUrl ?>/images/contenido/nan/recetas.png" alt="Recetas Nan Optipro">                   
             </a>
         </center>
@@ -81,7 +82,7 @@ $this->metaTags = "<meta http-equiv='X-UA-Compatible' content='IE=edge'>
                    <img style="margin: 15px auto 0px;width:65%;" src="<?= Yii::app()->request->baseUrl ?>/images/contenido/nan/entrega-en-1-hora.png" class="img-responsive" alt="Entrega en 1 hora Nan Optipro"> 
                 </a>
                 <div class="space"></div>
-                <a href="#">
+                <a href="<?= Yii::app()->request->baseUrl ?>/campania/contenido/nan-recetas">
                     <img src="<?= Yii::app()->request->baseUrl ?>/images/contenido/nan/recetas.png" class="img-responsive" alt="Recetas Nan Optipro">                   
                 </a>
             </div>
