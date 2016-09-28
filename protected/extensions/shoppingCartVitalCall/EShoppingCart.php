@@ -94,6 +94,10 @@ class EShoppingCart extends CMap {
         return $this->codigoPerfil;
     }
     
+    public function getObjCiudad(){
+    	return $this->objSectorCiudad->objCiudad;
+    }
+    
 
     public function getCodigoCiudad() {
         if ($this->objSectorCiudad == null)
@@ -179,14 +183,14 @@ class EShoppingCart extends CMap {
     	if($modelPago!=null && $modelPago->objDireccion!=null){
     		$this->objDireccionVC = $modelPago->objDireccion;
     		$this->objSectorCiudad = $modelPago->objSectorCiudad;
-    	}	
+    	}
     		
         $data = Yii::app()->getUser()->getState($this->getClass());
         $this->shipping = Yii::app()->getUser()->getState($this->getClass() . '_Shipping');
         $this->codigoPerfil = Yii::app()->params->perfil['vitalCall'];
                 
-        CVarDumper::dump($this->codigoPerfil, 10, true);echo "<br>";
-        CVarDumper::dump($this->shipping, 10, true);echo "<br>";
+        //CVarDumper::dump($this->codigoPerfil, 10, true);echo "<br>";
+        //CVarDumper::dump($this->shipping, 10, true);echo "<br>";
         
         if (is_array($data) || $data instanceof Traversable)
             foreach ($data as $key => $product)
@@ -196,8 +200,8 @@ class EShoppingCart extends CMap {
              $this->CalculateShipping();
         }
         
-        CVarDumper::dump($this->codigoPerfil, 10, true);echo "<br>";
-        CVarDumper::dump($this->shipping, 10, true);echo "<br>";
+        //CVarDumper::dump($this->codigoPerfil, 10, true);echo "<br>";
+        //CVarDumper::dump($this->shipping, 10, true);echo "<br>";
     }
 
     /**

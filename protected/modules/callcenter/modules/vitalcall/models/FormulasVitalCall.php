@@ -51,7 +51,7 @@ class FormulasVitalCall extends CActiveRecord {
         // class name for the relations automatically generated below.
         return array(
             'objUsuarioVC' => array(self::BELONGS_TO, 'UsuarioVitalCall', 'identificacionUsuario'),
-            'listProductosVC' => array(self::MANY_MANY, 'ProductosVitallCall', 't_ProductosFormulaVitalCall(idFormula, idProductoVitalCall)'),
+            'listProductosVC' => array(self::MANY_MANY, 'ProductosVitalCall', 't_ProductosFormulaVitalCall(idFormula, idProductoVitalCall)'),
                 //'listProductosFormulaVC' => array(self::MANY_MANY, 'ProductosVitallCall', 't_ProductosFormulaVitalCall(idFormula, idProductoVitallCall)'),
         );
     }

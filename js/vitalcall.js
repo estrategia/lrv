@@ -426,9 +426,8 @@ $(document).on('click', "button[data-role='cargar-vitalcall']", function() {
 	if(tipo==1){
 		agregarProductoVC($(this).attr('data-formula'),$(this).attr('data-producto'));
 	}else if(tipo==2){
-		agregarProducto()
+		agregarProductoNormal($(this).attr('data-producto'));
 	}
-
     
     return false;
 });
@@ -451,7 +450,7 @@ function agregarProductoVC(formula, producto){
         type: 'POST',
         dataType: 'json',
         async: true,
-        url: requestUrl + '/callcenter/vitalcall/pedido/agregar',
+        url: requestUrl + '/callcenter/vitalcall/carro/agregar',
         data: {tipo:1, formula: formula, producto: producto, cantidadU: cantidadU, cantidadF: cantidadF},
         beforeSend: function() {
             Loading.show();
@@ -461,6 +460,11 @@ function agregarProductoVC(formula, producto){
         },
         success: function(data) {
             if (data.result === "ok") {
+            	if (data.response.mensajeHTML) {
+                    dialogoAnimado(data.response.mensajeHTML);
+                    //$('#icono-producto-agregado-' + producto).addClass('active');
+                    //$("#cantidad-productos").html(data.response.objetosCarro);
+                }
                 /*$('#div-carro-canasta').html(data.response.canastaHTML);
                 $('#div-carro-canasta').trigger("create");
 
@@ -468,12 +472,6 @@ function agregarProductoVC(formula, producto){
                     dialogoAnimado(data.response.mensajeHTML);
                     $('#icono-producto-agregado-' + producto).addClass('active');
                     $("#cantidad-productos").html(data.response.objetosCarro);
-                }
-
-                if (data.response.dialogoHTML) {
-                    $("#modalBodegas").remove();
-                    $("body").append(data.response.dialogoHTML);
-                    $("#modalBodegas").modal('show');
                 }*/
             } else {
                 alert(data.response);
@@ -483,11 +481,114 @@ function agregarProductoVC(formula, producto){
             alert('Error: ' + errorThrown);
         }
     });
-	
-	
-	
-	
 }
+
+function agregarProductoNormal(producto){
+    var cantidadU = $('#cantidad-producto-unidad-' + producto).val();
+    cantidadU = parseInt(cantidadU);
+    if (isNaN(cantidadU)) {
+    	cantidadU = -1;
+    }
+    var cantidadF = parseInt($('#cantidad-producto-fraccion-' + producto).val());
+    cantidadF = parseInt(cantidadF);
+    if (isNaN(cantidadF)) {
+    	cantidadF = -1;
+    }
+
+    $.ajax({
+        type: 'POST',
+        dataType: 'json',
+        async: true,
+        url: requestUrl + '/callcenter/vitalcall/carro/agregar',
+        data: {tipo:2, producto: producto, cantidadU: cantidadU, cantidadF: cantidadF},
+        beforeSend: function() {
+            Loading.show();
+        },
+        complete: function() {
+            Loading.hide();
+        },
+        success: function(data) {
+            if (data.result === "ok") {
+            	if (data.response.mensajeHTML) {
+                    dialogoAnimado(data.response.mensajeHTML);
+                    //$('#icono-producto-agregado-' + producto).addClass('active');
+                    //$("#cantidad-productos").html(data.response.objetosCarro);
+                }
+                /*$('#div-carro-canasta').html(data.response.canastaHTML);
+                $('#div-carro-canasta').trigger("create");
+
+                if (data.response.mensajeHTML) {
+                    dialogoAnimado(data.response.mensajeHTML);
+                    $('#icono-producto-agregado-' + producto).addClass('active');
+                    $("#cantidad-productos").html(data.response.objetosCarro);
+                }*/
+            } else {
+                alert(data.response);
+            }
+        },
+        error: function(jqXHR, textStatus, errorThrown) {
+            alert('Error: ' + errorThrown);
+        }
+    });
+}
+
+
+$("#busqueda-buscar-vitalcall").keypress(function (event) {
+	if (event.which == 13) {
+        var text = $.trim($('#busqueda-buscar-vitalcall').val());
+        if (!text) {
+            bootbox.alert('Búsqueda no puede estar vacío');
+        } else {
+        	buscarProductosVitalCall(text, this, requestUrl);
+        }
+        return false;
+    }
+});
+
+
+$(document).on('click', "button[data-role='busquedaproducto-vitalcall']", function () {
+    var text = $.trim($('#busqueda-buscar-vitalcall').val());
+    if (!text) {
+        bootbox.alert('Búsqueda no puede estar vacío');
+    } else {
+        buscarProductosVitalCall(text, this, requestUrl);
+    }
+});
+
+function buscarProductosVitalCall(text, obj, request) {
+	$.ajax({
+        type: 'POST',
+        async: true,
+        url: request + '/callcenter/vitalcall/pedido/buscar',
+        data: {busqueda: text},
+        beforeSend: function () {
+            $('#modal-productos-busqueda').remove();
+            Loading.show();
+        },
+        success: function (data) {
+            $('#container').append(data);
+            $('#modal-productos-busqueda').modal('show');
+        },
+        complete: function () {
+            Loading.hide();
+        },
+        error: function (jqXHR, textStatus, errorThrown) {
+            Loading.hide();
+            bootbox.alert('Error: ' + jqXHR.responseText);
+        }
+    });
+}
+
+
+
+
+
+
+
+
+
+
+
 
 
 

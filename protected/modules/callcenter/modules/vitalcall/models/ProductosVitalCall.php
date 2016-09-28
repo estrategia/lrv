@@ -3,7 +3,7 @@
 /**
  * This is the model class for table "t_ProductosVitallCall".
  *
- * The followings are the available columns in table 't_ProductosVitallCall':
+ * The followings are the available columns in table 't_ProductosVitalCall':
  * @property string $idProductoVitalCall
  * @property string $codigoProducto
  * @property string $descripcion
@@ -16,7 +16,7 @@
  * @property FormulasVitalCall[] $listFormulasVC
  * @property Producto $objProducto
  */
-class ProductosVitallCall extends CActiveRecord {
+class ProductosVitalCall extends CActiveRecord {
 
     protected $esVigente = null;
 
@@ -24,7 +24,7 @@ class ProductosVitallCall extends CActiveRecord {
      * @return string the associated database table name
      */
     public function tableName() {
-        return 't_ProductosVitallCall';
+        return 't_ProductosVitalCall';
     }
 
     /**

@@ -21,6 +21,8 @@ class ProductoCarro extends IECartPosition {
             $this->objProducto = $param;
         }else if($param instanceof Combo){
             $this->objCombo = $param;
+        }else if($param instanceof ProductosFormulaVitalCall){
+        	$this->objProductoFormula = $param;
         }
     }
     
@@ -34,6 +36,13 @@ class ProductoCarro extends IECartPosition {
     
     public function isFormula(){
     	return ($this->objProductoFormula !== null);
+    }
+    
+    public function getObjProducto(){
+    	if($this->isProduct())
+    		return $this->objProducto;
+    	else if($this->isFormula())
+    		return $this->objProductoFormula->objProductoVC->objProducto;
     }
     
     public function generate($params) {
