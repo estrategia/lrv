@@ -80,7 +80,7 @@ class BonosCommand extends CConsoleCommand {
     			'condition' => 'valorBono> 0'
     	));
 
-        $bonoTienda = BonoTienda::model()->findByPk(4);
+        $bonoTienda = BonoTienda::model()->findByPk(4); // modify
     	
     	foreach($formasPago as $forma){
     		$bonoFormaPago = new FormasPago();

@@ -11,38 +11,73 @@ class FormulaController extends ControllerVitalcall {
         $modelPago = null;
         $direccionCliente = null;
         $objSectorCiudad = null;
-
+		
+        $modelFormulaMedica = new FormulasVitalCall();
+        if(isset($_POST['cliente'])){
+        	$modelFormulaMedica->identificacionUsuario = $_POST['cliente'];
+        }
         //CVarDumper::dump($modelPago,10,true);exit();
+		
+        if(isset($_POST['FormulasVitalCall'])){
+        	$modelFormulaMedica->attributes = $_POST['FormulasVitalCall'];
+        	$modelFormulaMedica->fechaCreacion = Date("Y-m-d h:i:s");
+        	if($modelFormulaMedica->validate()){
+        		if($modelFormulaMedica->save()){
+        			$this->redirect(CController::createUrl('cliente/ver/', array('id' => $modelFormulaMedica->identificacionUsuario)));
+        		}
+        	}
+        }
 
-
-        $this->render('nuevo', array(
-            'objUsuario' => $objUsuario,
-            'objSectorCiudad' => $modelPago->objSectorCiudad
+        $this->render('formulaForm', array(
+            'modelFormulaMedica' => $modelFormulaMedica,
         ));
     }
+ 
+    public function actionActualizar($id) {
     
-    public function actionAgregar(){
-    	$modelPago = null;
+    	$modelFormulaMedica = FormulasVitalCall::model()->findByPk($id);
+    
+    	//CVarDumper::dump($modelPago,10,true);exit();
+    
+    	if(isset($_POST['FormulasVitalCall'])){
+    		$modelFormulaMedica->attributes = $_POST['FormulasVitalCall'];
+    		if($modelFormulaMedica->validate()){
+    			if($modelFormulaMedica->save()){
+    				$this->redirect(CController::createUrl('cliente/ver/', array('id' => $modelFormulaMedica->identificacionUsuario)));
+    			}
+    		}
+    	}
+    
+    	$this->render('formulaForm', array(
+    			'modelFormulaMedica' => $modelFormulaMedica,
+    	));
+    }    
+    
+    public function actionAgregarProductos($id){
     	
-    	if (isset(Yii::app()->session[Yii::app()->params->vitalCall['sesion']['carroPagarForm']]) && Yii::app()->session[Yii::app()->params->vitalCall['sesion']['carroPagarForm']] != null) {
-    		$modelPago = Yii::app()->session[Yii::app()->params->vitalCall['sesion']['carroPagarForm']];
+    	$modelBuscarProductos = new BuscarProductosVitallCallForm();
+    	$modelBuscarProductos->idFormula = $id;
+    	if($_POST){
+    		// buscar productos
+    		
+    		$modelBuscarProductos->attributes = $_POST['BuscarProductosVitallCallForm'];
+    		$modelBuscarProductos->buscarProductos();
+    		
     	}
     	
-    	if(empty($modelPago) || !($modelPago->objSectorCiudad instanceof SectorCiudad) ){
-    		echo CJSON::encode(array('result' => 'error', 'response' => 'Proceso de compra no iniciado'));
-    		Yii::app()->end();
-    	}
+    		$productosFormula = ProductosFormulaVitalCall::model()->findAll(array(
+    				'with' => array('objProductoVC' => array ('with' => array ('objProducto'))),
+    				'order' => 't.fechaCreacion',
+    				'condition' => 't.idFormula =:idFormula', 
+    				'params' => array(
+    						'idFormula' => $id
+    				)
+    		));
     	
-    	$tipo = Yii::app()->getRequest()->getPost('tipo', null);
-    	
-    	if($tipo==1){
-    		$this->agregarVitalCall();
-    	}else if($tipo==2){
-    		$this->agregarProducto();
-    	}
-    	
-    	echo CJSON::encode(array('result' => 'error', 'response' => 'Solicitud inválida, tipo incorrecto'));
-    	Yii::app()->end();
+    	$this->render('agregarProductos', array(
+    			'modelBuscarProductos' => $modelBuscarProductos,
+    			'productosFormula' => $productosFormula
+    	));
     }
     
     public function agregarVitalCall(){
@@ -66,8 +101,106 @@ class FormulaController extends ControllerVitalcall {
     	Yii::app()->end();
     }
     
-    public function agregarProducto(){
+    public function actionAgregarProductoFormula(){
     	
+    	if($_POST){
+	    	$model = new ProductosFormulaVitalCall();
+	    	$model->cantidad = $_POST['cantidad'];
+	    	$model->dosis = $_POST['dosis'];
+	    	$model->intervalo = $_POST['intervalo'];
+	    	$model->idProductoVitalCall = $_POST['idProductoVitalCall'];
+	    	$model->idFormula = $_POST['idFormula'];
+	    	$model->fechaCreacion = Date("Y-m-d h:i:s");
+	    	if($model->save()){
+	    		$productosFormula = ProductosFormulaVitalCall::model()->findAll(array(
+	    				'with' => array('objProductoVC' => array ('with' => array ('objProducto'))),
+	    				'order' => 't.fechaCreacion',
+	    				'condition' => 't.idFormula =:idFormula',
+	    				'params' => array(
+	    						'idFormula' => $model->idFormula
+	    				)
+	    		));
+	    		$productos = $this->renderPartial('_listaProductosAgregados', array("productosFormula" => $productosFormula), true, false);
+	    		echo CJSON::encode(array('result' => 'ok', 'response' => $productos));
+	    	}else{
+	    		echo CJSON::encode(array('result' => 'error', 'response' => 'Debe completar todos los campos'));
+	    	}
+    	}
+    }
+    
+    public function actionEliminarProductoFormula(){
+    if($_POST){
+    		$model = ProductosFormulaVitalCall::model()->find(array(
+    				'condition' => 'idFormula =:idFormula AND idProductoVitalCall=:idProductoVitalCall' ,
+    				'params' => array(
+    						':idFormula' =>  $_POST['idFormula'],
+    						':idProductoVitalCall' => $_POST['idProductoVitalCall'],
+    				)
+    		));
+    		
+    		if(!$model){
+    			echo CJSON::encode(array('result' => 'error', 'response' => 'Los datos a actualizar son invalidos o han sido borrados'));
+    			Yii::app()->end();
+    		}
+    		
+    		if($model->delete()){
+    			
+    			$productosFormula = ProductosFormulaVitalCall::model()->findAll(array(
+	    				'with' => array('objProductoVC' => array ('with' => array ('objProducto'))),
+	    				'order' => 't.fechaCreacion',
+	    				'condition' => 't.idFormula =:idFormula',
+	    				'params' => array(
+	    						'idFormula' => $model->idFormula
+	    				)
+	    		));
+	    		$productos = $this->renderPartial('_listaProductosAgregados', array("productosFormula" => $productosFormula), true, false);
+    			
+    			echo CJSON::encode(array('result' => 'ok', 'response' => $productos));
+    		}else{
+    			print_r($model->getErrors());
+    			echo CJSON::encode(array('result' => 'error', 'response' => 'Error al guardar los datos'));
+    		}
+    	}
+    }
+
+    
+    public function actionEditarProductoFormula(){
+    	if($_POST){
+    		$model = ProductosFormulaVitalCall::model()->find(array(
+    				'condition' => 'idFormula =:idFormula AND idProductoVitalCall=:idProductoVitalCall' ,
+    				'params' => array(
+    						':idFormula' =>  $_POST['idFormula'],
+    						':idProductoVitalCall' => $_POST['idProductoVitalCall'],
+    				)
+    		));
+    		
+    		if(!$model){
+    			echo CJSON::encode(array('result' => 'error', 'response' => 'Los datos a actualizar son invalidos o han sido borrados'));
+    			Yii::app()->end();
+    		}
+    		
+    		$model->cantidad = $_POST['cantidad'];
+    		$model->dosis = $_POST['dosis'];
+    		$model->intervalo = $_POST['intervalo'];
+    		$model->idProductoVitalCall = $_POST['idProductoVitalCall'];
+    	
+    		if($model->save()){
+    			$productosFormula = ProductosFormulaVitalCall::model()->findAll(array(
+    					'with' => array('objProductoVC' => array ('with' => array ('objProducto'))),
+    					'order' => 't.fechaCreacion',
+    					'condition' => 't.idFormula =:idFormula',
+    					'params' => array(
+    							'idFormula' => $model->idFormula
+    					)
+    			));
+    			$productos = $this->renderPartial('_listaProductosAgregados', array("productosFormula" => $productosFormula), true, false);
+    			 
+    			echo CJSON::encode(array('result' => 'ok', 'response' => $productos));
+    		}else{
+    			print_r($model->getErrors());
+    			echo CJSON::encode(array('result' => 'error', 'response' => 'Error al guardar los datos'));
+    		}
+    	}
     }
     
     public function actionAgregar1() {

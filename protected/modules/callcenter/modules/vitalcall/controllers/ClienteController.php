@@ -21,11 +21,17 @@ class ClienteController extends ControllerVitalcall {
 		if (isset ( $_GET ['Compras'] ))
 			$modelCompra->attributes = $_GET ['Compras'];
 		
-		$modelFormula = new FormulasVitalCall( 'search' );
+		$modelFormula = new FormulasVitalCall ( 'search' );
 		$modelFormula->unsetAttributes ();
 		if (isset ( $_GET ['FormulasVitalCall'] ))
 			$modelFormula->attributes = $_GET ['FormulasVitalCall'];
 		
+		$modelDirecciones = new DireccionesDespachoVitalCall ( 'search' );
+		$modelDirecciones->unsetAttributes ();
+		if (isset ( $_GET ['DireccionesDespachoVitalCall'] ))
+			$modelDirecciones->attributes = $_GET ['DireccionesDespachoVitalCall'];
+		
+		$modelFormula->identificacionUsuario = $id;
 		if (isset ( $_POST ['ActivacionForm'] )) {
 			$modelActivacion->attributes = $_POST ['ActivacionForm'];
 			
@@ -51,14 +57,15 @@ class ClienteController extends ControllerVitalcall {
 		
 		$modelCompra->identificacionUsuario = $objCliente->identificacionUsuario;
 		$modelCompra->idTipoVenta = Yii::app ()->params->tipoVenta ['vitalCall'];
-		
+		$modelDirecciones->identificacionUsuario = $objCliente->identificacionUsuario;
 		$this->render ( 'ver', array (
 				'objCliente' => $objCliente,
 				'modelCompra' => $modelCompra,
-				'modelActivacion' => $modelActivacion ,
+				'modelActivacion' => $modelActivacion,
 				'modelFormula' => $modelFormula,
-				
-		) );
+				'modelDirecciones' => $modelDirecciones 
+		)
+		 );
 	}
 	public function actionCrear() {
 		$model = new UsuarioVitalCall ();
@@ -111,6 +118,160 @@ class ClienteController extends ControllerVitalcall {
 		 * 'modelCompra' => $modelCompra
 		 * ));
 		 */
+	}
+	public function actionAgregarDireccion() {
+		$model = new DireccionesDespachoVitalCall ();
+		$model->identificacionUsuario = $_POST ['identificacionUsuario'];
+		echo CJSON::encode ( array (
+				'result' => 'ok',
+				'response' => $this->renderPartial ( '_modalDirecciones', array (
+						'model' => $model 
+				), true, true ) 
+		) );
+	}
+	public function actionComprobarciudad($codigoCiudad) {
+		$sectores = Ciudad::model ()->find ( array (
+				'with' => array (
+						'listSubSectores' => array (
+								'with' => array (
+										'listSectorReferencias' => array (
+												'with' => 'objSector' 
+										) 
+								) 
+						) 
+				),
+				'condition' => 't.codigoCiudad=:ciudad',
+				'params' => array (
+						'ciudad' => $codigoCiudad 
+				) 
+		) );
+		
+		$listSectorCiudad = SectorCiudad::model ()->findAll ( array (
+				'with' => array (
+						'objSector',
+						'objCiudad' 
+				),
+				'condition' => 't.codigoSector<>0 AND t.codigoCiudad=:ciudad AND t.estadoCiudadSector=:estado AND objSector.estadoSector=:estado AND objCiudad.estadoCiudad=:estado',
+				'params' => array (
+						':ciudad' => $codigoCiudad,
+						':estado' => 1 
+				) 
+		) );
+		
+		echo CJSON::encode ( array (
+				'result' => 'ok',
+				'code' => 1,
+				'htmlResponse' => $this->renderPartial ( '_sectorlista', array (
+						'listSectorCiudad' => $listSectorCiudad 
+				), true, false ) 
+		) );
+	}
+	public function actionGuardarDireccion() {
+		if ($_POST) {
+			$model = new DireccionesDespachoVitalCall ();
+			$model->attributes = $_POST ['DireccionesDespachoVitalCall'];
+			
+			if ($model->validate ()) {
+				if ($model->save ()) {
+					echo CJSON::encode ( array (
+							'result' => 'ok',
+							'response' => 'Direcci&oacute;n guardada' 
+					) );
+				}
+			} else {
+				
+				echo CActiveForm::validate ( $model );
+				Yii::app ()->end ();
+			}
+		}
+	}
+	public function actionEliminarDireccion() {
+		if ($_POST) {
+			$model = DireccionesDespachoVitalCall::model ()->find ( array (
+					'condition' => 'idDireccionesDespachoVitalCall =:direccion',
+					'params' => array (
+							':direccion' => $_POST ['direccion'] 
+					) 
+			) );
+			
+			if ($model) {
+					if($model->delete()){
+						echo CJSON::encode ( array (
+								'result' => 'ok',
+								'response' => 'Direcci&oacute;n eliminada'
+						) );
+					}
+			} else {
+				echo CJSON::encode ( array (
+						'result' => 'error',
+						'response' => 'La direcci&oacute;n ya no existe'
+				) );
+				Yii::app ()->end ();
+			}
+		}
+	}
+	
+	
+	public function actionEditarDireccion() {
+		if ($_POST) {
+			$model = DireccionesDespachoVitalCall::model ()->find ( array (
+					'condition' => 'idDireccionesDespachoVitalCall =:direccion',
+					'params' => array (
+							':direccion' => $_POST ['direccion']
+					)
+			) );
+				
+			
+			if ($model) {
+				$model->listaSectores = CHtml::listData(SectorCiudad::model ()->findAll ( array (
+						'with' => array (
+								'objSector',
+								'objCiudad'
+						),
+						'condition' => 't.codigoSector<>0 AND t.codigoCiudad=:ciudad AND t.estadoCiudadSector=:estado AND objSector.estadoSector=:estado AND objCiudad.estadoCiudad=:estado',
+						'params' => array (
+								':ciudad' => $model->codigoCiudad,
+								':estado' => 1
+						)
+				) ), 'codigoSector', function ($data){return $data->objSector->nombreSector;});
+				echo CJSON::encode ( array (
+						'result' => 'ok',
+						'response' => $this->renderPartial ( '_modalDirecciones', array (
+								'model' => $model
+						), true, true )));
+			} else {
+				echo CJSON::encode ( array (
+						'result' => 'error',
+						'response' => 'La direcci&oacute;n ya no existe'
+				) );
+				Yii::app ()->end ();
+			}
+		}
+	}
+	
+	
+	public function actionActualizarDireccion() {
+		if ($_POST) {
+			$model = DireccionesDespachoVitalCall::model()->find( array (
+					'condition' => 'idDireccionesDespachoVitalCall =:direccion',
+					'params' => array (
+							':direccion' => $_POST ['idDireccion']
+					)
+			));
+			$model->attributes = $_POST ['DireccionesDespachoVitalCall'];
+				
+			if ($model->validate ()) {
+				if ($model->save ()) {
+					echo CJSON::encode ( array (
+							'result' => 'ok',
+							'response' => 'Direcci&oacute;n actualizada'
+					) );
+				}
+			} else {
+				echo CActiveForm::validate ( $model );
+				Yii::app ()->end ();
+			}
+		}
 	}
 	public function loadModel($id) {
 		$model = UsuarioVitalCall::model ()->findByPk ( $id );

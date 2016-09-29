@@ -11,8 +11,8 @@
         <script>requestUrl = "<?php echo Yii::app()->request->baseUrl; ?>"; gmapKey = "<?php echo Yii::app()->params['google']['llaveMapa']; ?>";tipoEntrega = {presencial:<?=Yii::app()->params->entrega['tipo']['presencial']?>,domicilio:<?=Yii::app()->params->entrega['tipo']['domicilio']?>}</script>
         <link id="bs-css" href="<?php echo Yii::app()->request->baseUrl; ?>/libs/charisma/css/bootstrap-simplex.min.css" rel="stylesheet" />
 
-        <?php Yii::app()->clientScript->registerCoreScript('jquery'); ?>
-        <?php //Yii::app()->clientScript->registerCoreScript('jquery.ui'); ?>
+       <?php Yii::app()->clientScript->registerCoreScript('jquery'); ?>
+       <?php //Yii::app()->clientScript->registerCoreScript('jquery.ui'); ?>
         
         <?php Yii::app()->getClientScript()->registerCssFile(Yii::app()->request->baseUrl . "/libs/owl-carousel/owl.carousel.css"); ?>
         <?php Yii::app()->getClientScript()->registerCssFile(Yii::app()->request->baseUrl . "/libs/owl-carousel/owl.theme.css") ?>

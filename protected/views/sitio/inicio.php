@@ -25,7 +25,7 @@
             <p>Conozca nuestra oferta completa.</p>
         </a>
     </li>
-    <?php if (Yii::app()->user->isGuest): ?>
+    <?php /*if (Yii::app()->user->isGuest): ?>
         <li>
             <a href="<?php echo CController::createUrl('/usuario/autenticar') ?>" data-ajax="false" class=" ui-nodisc-icon ui-alt-icon cbtn_menu_inicio">
                 <img src="<?php echo Yii::app()->request->baseUrl; ?>/images/inicio/icon_cuenta.png">
@@ -41,7 +41,7 @@
                 <p>Información personal.</p>
             </a>
         </li>
-    <?php endif; ?>
+    <?php endif;*/ ?>
     <li>
         <a href="<?php echo CController::createUrl('/catalogo/descuentos') ?>" data-ajax="false" class=" ui-nodisc-icon ui-alt-icon cbtn_menu_inicio">
             <img src="<?php echo Yii::app()->request->baseUrl; ?>/images/inicio/icon_descuentos.png">
