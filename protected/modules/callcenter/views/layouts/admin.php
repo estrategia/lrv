@@ -17,6 +17,8 @@
         <?php Yii::app()->getClientScript()->registerCssFile(Yii::app()->request->baseUrl . "/libs/owl-carousel/owl.carousel.css"); ?>
         <?php Yii::app()->getClientScript()->registerCssFile(Yii::app()->request->baseUrl . "/libs/owl-carousel/owl.theme.css") ?>
         <?php Yii::app()->getClientScript()->registerCssFile(Yii::app()->request->baseUrl . "/css/operator.css"); ?>
+
+          <link id="bs-css" href="<?php echo Yii::app()->request->baseUrl; ?>/css/vitalcall.css" rel="stylesheet" />
     </head>
 
     <body>

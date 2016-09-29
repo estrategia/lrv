@@ -7,7 +7,7 @@
                     <div class="col-md-12">
                         <div>
                             <div class="space-1"></div>
-                            <?php echo CHtml::link('Vaciar carrito', '#', array('data-role' => 'carrovaciar-vitalcall', 'class' => 'btn btn-default', 'role' => "button")); ?>
+                            <?php echo CHtml::link('Vaciar carrito', '#', array('data-role' => 'carrovaciar-vitalcall', 'class' => 'btn btn-default vitalcall', 'role' => "button")); ?>
                         </div>
                     </div>
                 </div>
@@ -41,7 +41,7 @@
                             <?php endforeach; ?>
                             <?php foreach ($listFormulas as $arrFormula):?>
                             	<tr>
-                            		<td colspan="4"><?= $arrFormula['objProductoFormula']->objFormulaVC->nombreMedico ?> - <?= $arrFormula['objProductoFormula']->objFormulaVC->institucion ?></td>
+                            		<td colspan="6"><?= $arrFormula['objProductoFormula']->objFormulaVC->nombreMedico ?> - <?= $arrFormula['objProductoFormula']->objFormulaVC->institucion ?></td>
                             	</tr>
                             	<?php foreach ($arrFormula['listPositions'] as $position): ?>
                             		<?php
@@ -65,7 +65,7 @@
                     <div class="col-md-12">
                         <div>
                             <div class="space-1"></div>
-                            <?php echo CHtml::link('Vaciar carrito', '#', array('data-role' => 'carrovaciar-vitalcall', 'class' => 'btn btn-default', 'role' => "button")); ?>
+                            <?php echo CHtml::link('Vaciar carrito', '#', array('data-role' => 'carrovaciar-vitalcall', 'class' => 'btn btn-default vitalcall', 'role' => "button")); ?>
                         </div>
                     </div>
                 </div>

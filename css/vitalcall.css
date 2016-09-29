@@ -481,11 +481,10 @@ descripciones .iconos_right .itm_ico {
 
 table.tabla-carro .group-botones-cantidad{
     width: 75%;
-    margin-bottom: 5px;
+    margin: 0 auto;
 }
 .group-botones-cantidad .ressete {
     display: inline-block;
-    width: 40%;
 }
 .group-botones-cantidad .btn-addless-cantidad:last-child {
     margin-right: 0;
@@ -507,7 +506,7 @@ table.tabla-carro .group-botones-cantidad{
 .group-botones-cantidad .btn.btn-default {
     background-color: #fff !important;
     border-color: #ccc !important;
-    color: #333 !important;
+    color: #D6230F !important;
 }
 
 .not_padding {
@@ -539,3 +538,34 @@ table.tabla-carro .group-botones-cantidad{
     margin-top: 5px;
     margin-bottom: 9px;
 }
+.btn.btn-default.vitalcall {color: #d9534f;background-color:#fff;background-image: none;border-color: #ccc;}
+.btn.btn-default.vitalcall:hover{border-color: #d9534f;}
+#div-carro-vitalcall .cabecera-tabla {    background-color: #cfcfcf;
+    
+    font-weight: bold;
+    font-size: 1.2em;
+}
+
+#div-carro-vitalcall  .table > thead:first-child > tr:first-child > th {color: #fff !important;}
+
+#div-carro-vitalcall .detalles h3 {color: #EA0001;}
+.border-right {
+    border-right: 1px dashed #ccc;
+}
+
+.increment {
+    border: 1px solid #ccc;
+    color: #d9534f;
+    font-weight: bolder;
+    text-align: center;
+    width: 100%;
+}
+
+.img-table {
+    width: 115px;
+    margin: 0 auto;
+}
+
+.table.tabla-carro > tbody > tr > td {vertical-align: middle;}
+#div-carro-vitalcall .cabecera-tabla th {text-align: center;}
+.tabla-carro td {text-align: center;}
