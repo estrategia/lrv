@@ -598,25 +598,6 @@ $(document).on('click', "a[data-cargar='1'], a[data-cargar='2']", function () {
     });
 });
 
-function dialogoAnimado(texto) {
-    var id = 'dialogo-carro-' + uniqueId();
-    $("<div class='dialogo-animado' id='" + id + "'>" + texto + "</div>").appendTo('body');
-
-    $("#" + id).animate({
-        opacity: 1,
-        bottom: '+=2%'
-    }, 400, function () {
-        setTimeout(function () {
-            $("#" + id).animate({
-                opacity: 0,
-                bottom: '-=2%'
-            }, 400, function () {
-                $("#" + id).remove();
-            });
-        }, 3000);
-    });
-}
-
 $(document).on('click', "button[data-role='pdvgeodireccion']", function () {
     $.ajax({
         type: 'POST',

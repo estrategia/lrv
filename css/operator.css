@@ -174,3 +174,13 @@ table.table-bold{
 .space-3 {
     height: 30px;
 }
+
+.display-none {
+    display: none !important;
+}
+
+img.ajustada {
+    display: block;
+    margin: auto;
+    width: 45%;
+}

@@ -670,6 +670,13 @@ return array(
                 //'formulaMedica' => 'larebaja.online.vitalCall.compra.formulamedica',
             ),
         	'descuento' => 10,
+        	'pagar' => array(
+        		'pasos' => array(
+        			'informacion' => 1, 'confirmacion' => 2,
+        			1 => 'informacion', 2 => 'confirmacion'
+        		),
+        		'pasosDisponibles' => array('informacion', 'confirmacion'),
+        	),
         ),
     ),
 );
