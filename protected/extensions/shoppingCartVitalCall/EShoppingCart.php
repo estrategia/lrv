@@ -24,9 +24,18 @@ class EShoppingCart extends CMap {
     public $objSectorCiudad = null;
     protected $shipping = 0;
     public $codigoPerfil = null;
+    protected $bonoValue = 0;
 
     public function init() {
         $this->restoreFromSession();
+    }
+    
+    public function setBono($newVal) {
+    	$this->bonoValue = $newVal;
+    }
+    
+    public function getBono() {
+    	return $this->bonoValue;
     }
 
     public function setShipping($newVal) {

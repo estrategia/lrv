@@ -8,6 +8,7 @@ class ControllerVitalcall extends ControllerOperator {
 
     public $objSectorCiudad = null;
     public $sectorName = null;
+    public $isMobile = false;
 
     public function init() {
         $this->pageTitle = Yii::app()->name;

@@ -28,7 +28,7 @@ class PedidoController extends ControllerVitalcall {
 
         if (empty($modelPago)) {
             $objDireccionVC = DireccionesDespachoVitalCall::model()->find(array(
-           		'with' => array('objCiudad', 'objSector'),
+           		'with' => array('objUsuarioVC', 'objCiudad', 'objSector'),
                 'condition' => 'idDireccionesDespachoVitalCall=:direccion',
                 'params' => array(':direccion' => $direccionCliente),
             ));
