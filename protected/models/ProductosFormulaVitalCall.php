@@ -88,9 +88,13 @@ class ProductosFormulaVitalCall extends CActiveRecord {
         $criteria->compare('intervalo', $this->intervalo, true);
         $criteria->compare('fechaCreacion', $this->fechaCreacion, true);
 
-        return new CActiveDataProvider($this, array(
+        $data =  new CActiveDataProvider($this, array(
             'criteria' => $criteria,
         ));
+        
+        Yii::app()->session[Yii::app()->params->vitalCall['sesion']['busquedaExportar']] = $data;
+        
+        return $data;
     }
 
     /**

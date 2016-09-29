@@ -136,5 +136,20 @@ class UsuarioVitalCall extends CActiveRecord {
     	}
     	return $pass;
     }
+    
+    public function exportar() {
+    	ini_set('memory_limit', '-1');
+    	$content = '"Identificacion Usuario";"Nombre";"Apellido";"Correo electronico";"Celular";"Telefono";"Extension";"Fecha Creacion"'."\n";
+    	$dataProvider = $this->search(true);
+    
+    	if ($dataProvider !== null) {
+    		foreach ($dataProvider->getData() as $idx => $objUsuario) {
+    			$content .= "$objUsuario->identificacionUsuario;$objUsuario->nombre;$objUsuario->apellido;$objUsuario->correoElectronico;$objUsuario->celular;$objUsuario->telefono;$objUsuario->extension;$objUsuario->fechaCreacion\n";
+    		}
+    	}
+    
+    	Yii::app()->request->sendFile('UsuariosVitalCall_' . date('YmdHis') . '.csv', $content);
+    	Yii::app()->end();
+    }
 
 }

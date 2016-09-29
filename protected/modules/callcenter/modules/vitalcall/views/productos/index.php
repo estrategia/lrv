@@ -12,6 +12,10 @@ $this->breadcrumbs = array(
     <i class="glyphicon glyphicon-plus-sign glyphicon-white"></i> Crear producto
 </a>
 
+<a href="<?php echo $this->createUrl('exportar') ?>" class="btn btn-primary btn-lg">
+    <i class="glyphicon glyphicon-download glyphicon-white"></i> Exportar
+</a>
+
 <?php 
 $this->widget('zii.widgets.grid.CGridView', array(
     'pager' => array(
@@ -27,7 +31,7 @@ $this->widget('zii.widgets.grid.CGridView', array(
     //'afterAjaxUpdate' => new CJavaScriptExpression("function() {Loading.hide(); $options}"),
     //'ajaxUpdateError' => new CJavaScriptExpression("function() {Loading.hide(); bootbox.alert('Error, intente de nuevo');}"),
     'ajaxUpdateError' => new CJavaScriptExpression("function(xhr, textStatus, errorThrown, errorMessage) {alert(errorMessage);}"),
-    'ajaxUrl' => $this->createUrl('admin'),
+  //  'ajaxUrl' => $this->createUrl('admin'),
     'dataProvider' => $model->search(),
     'filter' => $model,
     'columns' => array(
