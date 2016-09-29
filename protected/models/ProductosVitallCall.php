@@ -136,5 +136,21 @@ class ProductosVitallCall extends CActiveRecord {
         $this->esVigente = false;
         return false;
     }
+    
+    public function exportar() {
+    	ini_set('memory_limit', '-1');
+    	$content = '"Codigo Producto";"Nombre Producto";"Descripcion";"Estado";"Fecha Inicio";"Fecha Fin";"Fecha Creacion"'."\n";
+    	$dataProvider = $this->search(true);
+    
+    	if ($dataProvider !== null) {
+    		foreach ($dataProvider->getData() as $idx => $objProductoVitalCall) {
+    			$producto = $objProductoVitalCall->objProducto->descripcionProducto;//$objProductoVitalCall->objProducto->descripcionProducto;
+    			$content .= "$objProductoVitalCall->codigoProducto;$producto;$objProductoVitalCall->descripcion;$objProductoVitalCall->estado;$objProductoVitalCall->fechaInicio;$objProductoVitalCall->fechaFin;$objProductoVitalCall->fechaCreacion\n";
+    		}
+    	}
+    
+    	Yii::app()->request->sendFile('ProductosVitalCall_' . date('YmdHis') . '.csv', $content);
+    	Yii::app()->end();
+    }
 
 }

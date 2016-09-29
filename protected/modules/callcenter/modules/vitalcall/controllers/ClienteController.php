@@ -8,6 +8,8 @@ class ClienteController extends ControllerVitalcall {
 		if (isset ( $_GET ['UsuarioVitalCall'] ))
 			$model->attributes = $_GET ['UsuarioVitalCall'];
 		
+			
+		Yii::app ()->session [Yii::app ()->params->vitalCall ['sesion'] ['usuariosExportar']] = $model;
 		$this->render ( 'admin', array (
 				'model' => $model 
 		) );
@@ -119,6 +121,12 @@ class ClienteController extends ControllerVitalcall {
 		 * ));
 		 */
 	}
+	
+	public function actionExportar() {
+		$datos = Yii::app ()->session [Yii::app ()->params->vitalCall ['sesion'] ['usuariosExportar']];
+		$datos->exportar();
+	}
+	
 	public function actionAgregarDireccion() {
 		$model = new DireccionesDespachoVitalCall ();
 		$model->identificacionUsuario = $_POST ['identificacionUsuario'];

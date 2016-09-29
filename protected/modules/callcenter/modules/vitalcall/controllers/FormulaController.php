@@ -59,10 +59,8 @@ class FormulaController extends ControllerVitalcall {
     	$modelBuscarProductos->idFormula = $id;
     	if($_POST){
     		// buscar productos
-    		
     		$modelBuscarProductos->attributes = $_POST['BuscarProductosVitallCallForm'];
     		$modelBuscarProductos->buscarProductos();
-    		
     	}
     	
     		$productosFormula = ProductosFormulaVitalCall::model()->findAll(array(
