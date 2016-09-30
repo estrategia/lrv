@@ -115,7 +115,7 @@ class FormaPagoVitalCallForm extends CFormModel {
         $this->listCodigoEspecial = array();
 
         foreach ($positions as $position) {
-            if ($position->isProduct()) {
+            //if ($position->isProduct()) {
                 if ($position->getObjProducto()->objCodigoEspecial->confirmacionCompra == 1) {
                     $this->listCodigoEspecial[$position->getObjProducto()->objCodigoEspecial->codigoEspecial] = $position->getObjProducto()->objCodigoEspecial;
 
@@ -124,7 +124,7 @@ class FormaPagoVitalCallForm extends CFormModel {
                         //echo "Cambia Confirmacion [".$position->getObjProducto()->objCodigoEspecial->codigoEspecial."]<br/>";
                     }
                 }
-            }
+            //}
         }
 
         if (empty($this->listCodigoEspecial)) {
@@ -495,9 +495,9 @@ class FormaPagoVitalCallForm extends CFormModel {
     }
 
     public function tipoEntregaValidate($attribute, $params) {
-        if ($this->tipoEntrega == Yii::app()->params->entrega['tipo']['presencial'] && Yii::app()->shoppingCartVitalCall->getStoredItemsCount() > 0) {
+        /*if ($this->tipoEntrega == Yii::app()->params->entrega['tipo']['presencial'] && Yii::app()->shoppingCartVitalCall->getStoredItemsCount() > 0) {
             $this->addError($attribute, "Pasar por el pedido no diponible");
-        }
+        }*/
 
         if ($this->tipoEntrega == Yii::app()->params->entrega['tipo']['domicilio'] && !$this->tieneDomicilio($this->objSectorCiudad)) {
             $this->addError($attribute, "La ubicaci&oacute;n seleccionada no cuenta con entrega a domicilio");

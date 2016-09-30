@@ -8,6 +8,7 @@ class ControllerVitalcall extends ControllerOperator {
 
     public $objSectorCiudad = null;
     public $sectorName = null;
+    public $isMobile = false;
 
     public function init() {
         $this->pageTitle = Yii::app()->name;
@@ -36,7 +37,7 @@ class ControllerVitalcall extends ControllerOperator {
         Yii::app()->getClientScript()->registerCssFile(Yii::app()->request->baseUrl . "/libs/select2/select2.min.css");
         Yii::app()->getClientScript()->registerCssFile(Yii::app()->request->baseUrl . "/libs/bootstrap/css/bootstrap-slider.css");
         Yii::app()->getClientScript()->registerCssFile(Yii::app()->request->baseUrl . "/libs/raty/jquery.raty.css");
-        Yii::app()->getClientScript()->registerCssFile(Yii::app()->request->baseUrl . "/css/vitalcall.css");
+        //Yii::app()->getClientScript()->registerCssFile(Yii::app()->request->baseUrl . "/css/vitalcall.css");
     }
     
     public function getSectorName() {

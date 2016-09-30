@@ -2,11 +2,11 @@
 class ProductosController extends ControllerVitalcall {
 	
 	public function actionIndex() {
-		$model = new ProductosVitallCall ( 'search' );
+		$model = new ProductosVitalCall ( 'search' );
 		
 		$model->unsetAttributes ();
-		if (isset ( $_GET ['ProductosVitallCall'] ))
-			$model->attributes = $_GET ['ProductosVitallCall'];
+		if (isset ( $_GET ['ProductosVitalCall'] ))
+			$model->attributes = $_GET ['ProductosVitalCall'];
 		
 		Yii::app()->session[Yii::app()->params->vitalCall['sesion']['busquedaExportar']] = $model;
 		
@@ -15,10 +15,10 @@ class ProductosController extends ControllerVitalcall {
 		) );
 	}
 	public function actionCrear() {
-		$model = new ProductosVitallCall ();
+		$model = new ProductosVitalCall ();
 		
 		if ($_POST) {
-			$model->attributes = $_POST ['ProductosVitallCall'];
+			$model->attributes = $_POST ['ProductosVitalCall'];
 			$model->fechaCreacion = Date ( "Y-m-d h:i:s" );
 			if ($model->validate ()) {
 				if ($model->save ()) {
@@ -48,9 +48,9 @@ class ProductosController extends ControllerVitalcall {
 		) );
 	}
 	public function actionActualizar($id) {
-		$model = ProductosVitallCall::model ()->findByPk ( $id );
+		$model = ProductosVitalCall::model ()->findByPk ( $id );
 		if ($_POST) {
-			$model->attributes = $_POST ['ProductosVitallCall'];
+			$model->attributes = $_POST ['ProductosVitalCall'];
 			$model->fechaCreacion = Date ( "Y-m-d h:i:s" );
 			if ($model->validate ()) {
 				

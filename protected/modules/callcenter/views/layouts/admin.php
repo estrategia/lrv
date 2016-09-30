@@ -17,6 +17,8 @@
         <?php Yii::app()->getClientScript()->registerCssFile(Yii::app()->request->baseUrl . "/libs/owl-carousel/owl.carousel.css"); ?>
         <?php Yii::app()->getClientScript()->registerCssFile(Yii::app()->request->baseUrl . "/libs/owl-carousel/owl.theme.css") ?>
         <?php Yii::app()->getClientScript()->registerCssFile(Yii::app()->request->baseUrl . "/css/operator.css"); ?>
+
+          <link id="bs-css" href="<?php echo Yii::app()->request->baseUrl; ?>/css/vitalcall.css" rel="stylesheet" />
     </head>
 
     <body>
@@ -31,6 +33,12 @@
                 <a href="#" class="navbar-brand"> 
                     <img class="hidden-xs" src="<?php echo Yii::app()->request->baseUrl; ?>/images/logo_lrv.png" alt="La Rebaja Virtual Logo" />
                 </a>
+                
+                <div class="info-compra" style="margin-right:0;">
+   					<div data-role="panel" id="div-carro-canasta">
+                    	<?php $this->renderPartial('vitalcall.views.carro.canasta'); ?>
+                    </div>
+                </div>
 
                 <div class="btn-group pull-right">
                     <button data-toggle="dropdown" class="btn btn-default dropdown-toggle">
