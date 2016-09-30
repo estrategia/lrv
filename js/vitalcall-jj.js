@@ -565,8 +565,8 @@ function modificarCarro(position, modificar) {
         },
         success: function(data) {
             if (data.result === "ok") {
-                $('#div-carro').html(data.response.carroHTML);
-                $('#div-carro').trigger("create");
+            	$('#div-carro-canasta').html(data.response.canasta);
+                $('#div-carro-canasta').trigger("create");
 
                 if (data.response.canastaHTML) {
                     $('#div-carro-vitalcall').html(data.response.canastaHTML);
@@ -608,8 +608,8 @@ $(document).on('click', "a[data-eliminar='1'], a[data-eliminar='2'], a[data-elim
         success: function(data) {
             if (data.result == 'ok') {
             	// carro de compras
-                $('#div-carro').html(data.carro);
-                $('#div-carro').trigger("create");
+                $('#div-carro-canasta').html(data.canasta);
+                $('#div-carro-canasta').trigger("create");
                 
                 $('#div-carro-vitalcall').html(data.canastaHTML);
                 $('#div-carro-vitalcall').trigger("create");

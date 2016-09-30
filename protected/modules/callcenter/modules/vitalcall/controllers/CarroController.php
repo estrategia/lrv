@@ -707,7 +707,7 @@ class CarroController extends ControllerVitalcall {
         echo CJSON::encode(array(
             'result' => 'ok',
             'response' => array(
-                //	'carroHTML' => $this->renderPartial($canastaVista, null, true),
+                'canasta' => $this->renderPartial("canasta" , null, true),
                 'canastaHTML' => $this->renderPartial('carro', null, true),
             ),
         ));
@@ -743,8 +743,8 @@ class CarroController extends ControllerVitalcall {
 
         echo CJSON::encode(array(
             'result' => 'ok',
-            //	'carro' => $this->renderPartial("carro" , null, true),
-            'canastaHTML' => $this->renderPartial("carro", null, true),
+            	'canasta' => $this->renderPartial("canasta" , null, true),
+            	'canastaHTML' => $this->renderPartial("carro", null, true),
         ));
         Yii::app()->end();
     }
