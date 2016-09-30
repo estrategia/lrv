@@ -459,4 +459,179 @@ $(document).on('click', 'input[data-role="buscar-barrio"]', function() {
 	return false;
 });
 
+$(document).on('change', "input[data-role='modificarcarro']", function() {
+    var cantidad = parseInt($(this).val());
+    var position = $(this).attr('data-position');
+    var modificar = $(this).attr('data-modificar');
 
+    if (isNaN(cantidad) || cantidad < 1) {
+        cantidad = 1;
+    }
+    $(this).val(cantidad);
+    modificarCarro(position, modificar);
+});
+
+$(document).on('click', "button[data-role='modificarcarro']", function() {
+    var position = $(this).attr('data-position');
+    var modificar = $(this).attr('data-modificar');
+    var operacion = $(this).attr('data-operation');
+    var cantidad = 0;
+    var id = "";
+
+    if (modificar == 1) {
+        var esFraccion = $(this).attr('data-fraction') == 1;
+        if (esFraccion) {
+            id = '#cantidad-producto-fraccion-' + position;
+        } else {
+            id = '#cantidad-producto-unidad-' + position;
+        }
+    } else if (modificar == 2) {
+        id = '#cantidad-producto-' + position;
+    } else if (modificar == 3) {
+        id = '#cantidad-producto-bodega-' + position;
+    }
+
+    cantidad = parseInt($(id).val());
+
+    if (isNaN(cantidad) || cantidad < 1) {
+        cantidad = 1;
+    } else {
+        if (operacion == "+") {
+            cantidad++;
+            if (cantidad < 1) {
+                cantidad = 1;
+            }
+        } else if (operacion == "-" && cantidad > 0) {
+            cantidad--;
+            if (cantidad < 1) {
+                cantidad = 1;
+            }
+        }
+    }
+
+    $(id).val(cantidad);
+    modificarCarro(position, modificar);
+});
+
+
+function modificarCarro(position, modificar) {
+    var data = {
+        modificar: modificar,
+        position: position
+    };
+
+    if (modificar == 1) {
+        var cantidadF = parseInt($('#cantidad-producto-fraccion-' + position).val());
+        if (isNaN(cantidadF)) {
+            cantidadF = -1;
+        } else if (cantidadF < 1) {
+            cantidadF = 1;
+        }
+
+        var cantidadU = parseInt($('#cantidad-producto-unidad-' + position).val());
+
+        if (isNaN(cantidadU) || cantidadU < 1) {
+            cantidadU = 1;
+        }
+
+        if (cantidadF > 0) {
+            var numeroFracciones = parseInt($('#cantidad-producto-fraccion-' + position).attr('data-nfracciones'));
+            var unidadFraccionamiento = parseInt($('#cantidad-producto-fraccion-' + position).attr('data-ufraccionamiento'));
+            var fraccionesMaximas = Math.floor(numeroFracciones / unidadFraccionamiento);
+
+            if (cantidadF >= fraccionesMaximas) {
+                var unidades = Math.floor(cantidadF / fraccionesMaximas);
+                var fracciones = cantidadF % fraccionesMaximas;
+                cantidadU += unidades;
+                cantidadF = fracciones;
+            }
+        }
+
+        data['cantidadU'] = cantidadU;
+        data['cantidadF'] = cantidadF;
+    } else if (modificar == 2) {
+        var cantidad = parseInt($('#cantidad-producto-' + position).val());
+        if (isNaN(cantidad) || cantidad < 1) {
+            cantidad = 1;
+        }
+        data['cantidad'] = cantidad;
+    } else if (modificar == 3) {
+        var cantidad = parseInt($('#cantidad-producto-bodega-' + position).val());
+        if (isNaN(cantidad) || cantidad < 1) {
+            cantidad = 1;
+        }
+        data['cantidad'] = cantidad;
+    }
+
+    $.ajax({
+        type: 'POST',
+        dataType: 'json',
+        async: true,
+        url: requestUrl + '/callcenter/vitalcall/carro/modificar',
+        data: data,
+        beforeSend: function() {
+            Loading.show();
+        },
+        complete: function() {
+            Loading.hide();
+        },
+        success: function(data) {
+            if (data.result === "ok") {
+            	$('#div-carro-canasta').html(data.response.canasta);
+                $('#div-carro-canasta').trigger("create");
+
+                if (data.response.canastaHTML) {
+                    $('#div-carro-vitalcall').html(data.response.canastaHTML);
+                    $('#div-carro-vitalcall').trigger("create");
+                }
+
+                if (data.response.dialogoHTML) {
+                   // alert(data.response.dialogoHTML);//modal
+                }
+            } else {
+                $('#div-carro').html(data.response.carroHTML);
+                $('#div-carro').trigger("create");
+                alert(data.response.message);
+            }
+
+        },
+        error: function(jqXHR, textStatus, errorThrown) {
+            alert('Error: ' + errorThrown);
+        }
+    });
+}
+
+$(document).on('click', "a[data-eliminar='1'], a[data-eliminar='2'], a[data-eliminar='3']", function() {
+    var position = $(this).attr('data-position');
+    var eliminar = $(this).attr('data-eliminar');
+
+    $.ajax({
+        type: 'POST',
+        dataType: 'json',
+        async: true,
+        url: requestUrl + '/callcenter/vitalcall/carro/eliminar',
+        data: {id: position, eliminar: eliminar},
+        beforeSend: function() {
+            Loading.show();
+        },
+        complete: function() {
+            Loading.hide();
+        },
+        success: function(data) {
+            if (data.result == 'ok') {
+            	// carro de compras
+                $('#div-carro-canasta').html(data.canasta);
+                $('#div-carro-canasta').trigger("create");
+                
+                $('#div-carro-vitalcall').html(data.canastaHTML);
+                $('#div-carro-vitalcall').trigger("create");
+            } else {
+                alert(data.response);
+            }
+        },
+        error: function(jqXHR, textStatus, errorThrown) {
+            alert('Error: ' + errorThrown);
+        }
+    });
+
+});
