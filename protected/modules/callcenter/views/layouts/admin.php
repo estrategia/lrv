@@ -31,6 +31,12 @@
                 <a href="#" class="navbar-brand"> 
                     <img class="hidden-xs" src="<?php echo Yii::app()->request->baseUrl; ?>/images/logo_lrv.png" alt="La Rebaja Virtual Logo" />
                 </a>
+                
+                <div class="info-compra" style="margin-right:0;">
+   					<div data-role="panel" id="div-carro-canasta">
+                    	<?php $this->renderPartial('vitalcall.views.carro.canasta'); ?>
+                    </div>
+                </div>
 
                 <div class="btn-group pull-right">
                     <button data-toggle="dropdown" class="btn btn-default dropdown-toggle">
