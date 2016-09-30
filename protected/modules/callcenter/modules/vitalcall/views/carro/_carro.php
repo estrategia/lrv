@@ -7,7 +7,7 @@
                     <div class="col-md-12">
                         <div>
                             <div class="space-1"></div>
-                            <?php echo CHtml::link('Vaciar carrito', '#', array('data-role' => 'carrovaciar-vitalcall', 'class' => 'btn btn-default', 'role' => "button")); ?>
+                            <?php echo CHtml::link('Vaciar carrito', 'vaciar', array('class' => 'btn btn-default', 'role' => "button")); ?>
                         </div>
                     </div>
                 </div>
@@ -53,19 +53,14 @@
                             	<?php endforeach; ?>
                             <?php endforeach;?>
                         </tbody>
-                    </table>
-
-
-
-
-                    
+                    </table> 
                 </div>
             </div>
                 <div class="row">
                     <div class="col-md-12">
                         <div>
                             <div class="space-1"></div>
-                            <?php echo CHtml::link('Vaciar carrito', '#', array('data-role' => 'carrovaciar-vitalcall', 'class' => 'btn btn-default', 'role' => "button")); ?>
+                            <?php echo CHtml::link('Vaciar carrito', 'vaciar', array('class' => 'btn btn-default', 'role' => "button")); ?>
                         </div>
                     </div>
                 </div>

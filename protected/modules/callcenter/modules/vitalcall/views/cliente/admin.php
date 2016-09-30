@@ -60,10 +60,6 @@ $this->widget('zii.widgets.grid.CGridView', array(
             'header' => CHtml::encode($model->getAttributeLabel('correoElectronico')),
             'filter' => CHtml::activeTextField($model, 'correoElectronico', array('class' => 'form-control input-sm')),
         ),
-        /*array(
-            'class' => 'CButtonColumn',
-            'template' => '{update}',
-        )*/
         array(
             'class' => 'CButtonColumn',
             'template' => '{ver}{actualizar}',
@@ -78,6 +74,11 @@ $this->widget('zii.widgets.grid.CGridView', array(
                     'url' => 'Yii::app()->createUrl("/callcenter/vitalcall/cliente/actualizar", array("id"=>$data->identificacionUsuario)) ',
                     'options' => array('title'=>'Actualizar'),
                 ),
+                'comprar' => array(
+	                'label' => '<i class="glyphicon glyphicon-shopping-cart"></i> ',
+	                'url' => 'Yii::app()->createUrl("/callcenter/vitalcall/pedido/nuevo/", array("direccion"=>$data->idDireccionesDespacho)) ',
+	                'options' => array('title'=>'Comprar aqu&iacute;'),
+                )
             )
         ),
     ),
