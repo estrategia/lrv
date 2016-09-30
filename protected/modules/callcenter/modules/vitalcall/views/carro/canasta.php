@@ -2,7 +2,7 @@
     <a href="#" data-toggle="dropdown" data-placeholder="false" class="dropdown-toggle">
         <span><img class="ico-carrito" src="<?php echo Yii::app()->request->baseUrl; ?>/images/desktop/ico-carrito.png" alt=""></span>
         <span id="cantidad-productos" class="cantidad-productos"><?php echo Yii::app()->shoppingCartVitalCall->getCount(); ?></span>
-        <p style="color: #A3A3A3;">Productos</p>
+        <p style="color: #A3A3A3;margin:0;line-height: 16px;">Productos</p>
     </a>
 
     <ul class="dropdown-menu noclose pull-right">
