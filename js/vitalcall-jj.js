@@ -459,6 +459,18 @@ $(document).on('click', 'input[data-role="buscar-barrio"]', function() {
 	return false;
 });
 
+$(document).on('change', "input[data-role='modificarcarro']", function() {
+    var cantidad = parseInt($(this).val());
+    var position = $(this).attr('data-position');
+    var modificar = $(this).attr('data-modificar');
+
+    if (isNaN(cantidad) || cantidad < 1) {
+        cantidad = 1;
+    }
+    $(this).val(cantidad);
+    modificarCarro(position, modificar);
+});
+
 $(document).on('click', "button[data-role='modificarcarro']", function() {
     var position = $(this).attr('data-position');
     var modificar = $(this).attr('data-modificar');
