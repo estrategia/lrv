@@ -533,9 +533,7 @@ class CarroController extends ControllerVitalcall {
     		$resultCompra = $this->procesoCompra($modelPago, $modelPago->tipoEntrega);
     
     		if ($resultCompra['result'] == 1) {
-    			$vistaCompraContenido = "application.views.carro.compraContenido";
-    
-    			$contenidoSitio = $this->renderPartial($vistaCompraContenido, array(
+    			$contenidoSitio = $this->renderPartial("compraContenido", array(
     					'objCompra' => $resultCompra['response']['objCompra'],
     					'modelPago' => $resultCompra['response']['modelPago'],
     					'objCompraDireccion' => $resultCompra['response']['objCompraDireccion'],
