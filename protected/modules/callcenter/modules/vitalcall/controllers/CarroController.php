@@ -236,7 +236,7 @@ class CarroController extends ControllerVitalcall {
     
     
     public function actionPagar($paso = null, $post = false) {
-    	$this->layout = "simple";
+    	//$this->layout = "simple";
     	$modelPago = null;
     	
     	if (is_string($post)) {
@@ -542,8 +542,8 @@ class CarroController extends ControllerVitalcall {
     					'objFormaPago' => $resultCompra['response']['objFormaPago'],
     					'objFormasPago' => $resultCompra['response']['objFormasPago']), true);
     
-    			Yii::app()->session[Yii::app()->params->vitalCall['sesion']['carroPagarForm']] = null;
-    			Yii::app()->shoppingCartVitalCall->clear();
+    			//Yii::app()->session[Yii::app()->params->vitalCall['sesion']['carroPagarForm']] = null;
+    			//Yii::app()->shoppingCartVitalCall->clear();
     			$this->render('application.views.carro.compra', array(
     					'contenido' => $contenidoSitio,
     					'objCompra' => $resultCompra['response']['objCompra'],

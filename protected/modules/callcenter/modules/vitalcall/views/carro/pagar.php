@@ -8,7 +8,7 @@
 <?php endif; ?>
 
 <section>
-    <div class="container-fluid">
+    <div class="container-fluid" id="pasos-pago">
         <div class="row">
             <div class="col-md-12">
                 <?php $this->renderPartial('_paso' . Yii::app()->params->vitalCall['pagar']['pasos'][$paso], $parametros); ?>

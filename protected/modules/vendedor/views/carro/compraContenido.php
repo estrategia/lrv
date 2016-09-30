@@ -1,5 +1,5 @@
 <div class="ui-content finalCompra">
-    <h2 style="color:#fff;">¡Gracias por su compra!</h2>
+    <h2 style="color:#fff;">¡Gracias por su compra!..</h2>
 
     <div class="blockPago">
         <?php if ($objCompra->tipoEntrega == Yii::app()->params->entrega['tipo']['domicilio']): ?>
