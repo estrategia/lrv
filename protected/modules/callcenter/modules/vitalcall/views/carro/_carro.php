@@ -3,6 +3,7 @@
 <section>
     <div class="row">
         <div class="col-md-9 border-right">
+        		<?php if (!$lectura) : ?>
                 <div class="row">
                     <div class="col-md-12">
                         <div>
@@ -12,6 +13,7 @@
                     </div>
                 </div>
                 <div class="space-1"></div>
+                <?php endif; ?>
             <div class="row">
                 <div class="col-md-12">
                     <table class="table table-bordered table-hover table-striped tabla-carro">
@@ -47,7 +49,7 @@
                             		<?php
    	                                    $this->renderPartial('_carroElementoProducto', array(
                                             'position' => $position,
-                                            'lectura' => false
+                                            'lectura' => $lectura
                                         ));
                                     ?>
                             	<?php endforeach; ?>
@@ -55,12 +57,10 @@
                         </tbody>
                     </table>
 
-
-
-
                     
                 </div>
             </div>
+            	<?php if (!$lectura) : ?>
                 <div class="row">
                     <div class="col-md-12">
                         <div>
@@ -69,6 +69,7 @@
                         </div>
                     </div>
                 </div>
+                <?php endif; ?>
         </div>
 
         <div class="col-md-3 detalles">
@@ -85,11 +86,12 @@
             <?php if (Yii::app()->shoppingCartVitalCall->getDiscountPrice(true) > 0): ?>
                 <span style="color:#EA0001;">Su ahorro  <?php echo Yii::app()->numberFormatter->format(Yii::app()->params->formatoMoneda['patron'], Yii::app()->shoppingCartVitalCall->getDiscountPrice(true), Yii::app()->params->formatoMoneda['moneda']) ?></span>
             <?php endif; ?>
-
+			<?php if (!$lectura) : ?>
                 <div class="center">
                     <div class="space-1"></div>
                     <?php echo CHtml::link('Comprar', $this->createUrl('/callcenter/vitalcall/carro/pagar'), array('class' => 'btn btn-primary', 'role' => "button")); ?>
                 </div>
+            <?php endif; ?>
         </div>
     </div>
 </section>

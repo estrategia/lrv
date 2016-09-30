@@ -39,6 +39,8 @@ $this->widget('zii.widgets.grid.CGridView', array(
 	    		'value' => function ($data){
 	    			$html = CHtml::link('<i class="glyphicon glyphicon-edit"></i> ','#',array('title'=>'Actualizar', 'data-role' => 'editar-direccion',"data-direccion" => $data->idDireccionesDespachoVitalCall));
 	    			$html .= CHtml::link('<i class="glyphicon glyphicon-remove"></i> ','#', array('title'=>'Eliminar', 'data-role' => 'eliminar-direccion' ,"data-direccion" => $data->idDireccionesDespachoVitalCall));
+	    			$html .= CHtml::link('<i class="glyphicon glyphicon-shopping-cart"></i> ',CController::createUrl('pedido/nuevo/', array("direccion" => $data->idDireccionesDespachoVitalCall)), array('title'=>'Comprar aqu&iacute;'));
+	    			
 		    		return $html;		
 	    		},
 	    	),
