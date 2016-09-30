@@ -82,7 +82,7 @@
 
 
                 <div class="modal-footer center">
-                    <a class='btn btn-default' data-dismiss="modal" href='#'>Cancelar</a> 
+                    <a class='btn btn-default vitalcall' data-dismiss="modal" href='#'>Cancelar</a> 
                 </div>
             </div>
         </div>
