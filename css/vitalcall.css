@@ -372,7 +372,7 @@ descripciones .iconos_right .itm_ico {
 }
 .minicar .scroll {
     height: 214px;
-    overflow-y: auto;
+    overflow-y: none;
 }
 .info-compra .minicar .dropdown-toggle {
     box-shadow: none;
@@ -774,3 +774,135 @@ input[type="checkbox"] + label span {
     cursor: pointer;
 }
 #FormaPagoVitalCallForm_confirmacion {display: none;}
+#div-carro-canasta {float: right;margin-right: 15px;}
+.ico-carrito {
+    height: 25px;
+}
+.cantidad-productos {
+    border: 1px solid #A3A3A3;
+    border-radius: 4px;
+    padding: 5px;
+    color: #EA0001;
+    font-weight: bolder;
+}
+
+.blocktipoentrega {
+    width: 50%;
+    margin: auto;
+    border: 1px solid #dadada;
+    border-radius: 5px;
+    padding: 30px;
+}
+.btn-ciudad {
+    background: #f4f4f4 none repeat scroll 0 0;
+    color: #444;
+    font-size: 18px;
+    transition: 0.5s;
+    display: block;
+    width: 100%;
+}
+.ico-btn .glyphicon {
+    background-color: #777;
+    border-radius: 50%;
+    color: #fff;
+    left: -25px;
+    padding: 12px;
+    top: -5px;
+    transition: 0.5s;
+}
+.form-control {height: initial;padding: 0;}
+
+.btn:hover{color: initial;}
+.form-control.vitalcall {padding: 15px;}
+
+.menu-categorias.cat-collapsables h3 {
+    border: 1px solid;
+    color: #555;
+    font-size: 19px;
+    padding: 6px 0;
+    text-align: center;
+}
+.panel-title {
+    font-size: 18px;
+    color: #A4A4A4;
+}
+.panel-default > .panel-heading {
+    color: #333;
+    background-color: #f5f5f5;
+    border-color: #ddd;
+}
+input[type="checkbox"] {
+    display: none;
+}
+.menu-categorias li {
+    list-style: none;
+    padding-bottom: 5px;
+}
+.search-priced {
+    width: 45%;
+    border-radius: 4px;
+    border: 1px solid #ccc;
+    text-align: center;
+}
+.option-list {
+    float: right;
+}
+
+.listaProductos {
+    list-style: outside none none;
+    margin: 0;
+    padding: 0;
+    text-align: center;
+}
+
+.list-view .summary {
+    color: #6f6f6f;
+    margin: 0 0 20px;
+    text-align: right;
+}
+.listaProductos .items li {
+    display: inline-block;
+    margin-bottom: 30px;
+    margin-top: 30px;
+    vertical-align: top;
+    width: 24%;
+}
+.border-left {
+    border-left: 1px dashed #ccc;
+}
+.line-bottom {
+    border-bottom: 1px dashed #9F9F9F;
+    padding: 0 0 5px;
+}
+.price {
+    font-size: 17px;
+    color: #EA0001 !important;
+    padding: 5px 0 0;
+}
+ .pager li > a:hover {
+    text-decoration: none;
+    background-color: #eee;
+}
+
+.pager li > a {
+    background-color: #fff;
+    border: 1px solid #ddd;
+    border-radius: 0px;
+    display: inline-block;
+}
+.list-view .pager ul li a {
+    border: 1px solid red;
+    color: #6c6363;
+    font-size: 13px;
+    font-weight: normal;
+}
+ul.yiiPager a:link{
+    border: 1px solid #d9534f;
+    color: #000000;
+    font-weight: bold;
+    padding: 5px 15px;
+    text-decoration: none;
+}
+.list-view .pager ul li.selected a {
+    color: #fff;
+}

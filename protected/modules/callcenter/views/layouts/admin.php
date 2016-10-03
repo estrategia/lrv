@@ -41,7 +41,7 @@
                 </div>
 
                 <div class="btn-group pull-right">
-                    <button data-toggle="dropdown" class="btn btn-default dropdown-toggle">
+                    <button data-toggle="dropdown" class="btn btn-default vitalcall dropdown-toggle">
                         <i class="glyphicon glyphicon-user"></i><span class="hidden-sm hidden-xs"><?php echo Yii::app()->controller->module->user->shortName ?></span>
                         <span class="caret"></span>
                     </button>
