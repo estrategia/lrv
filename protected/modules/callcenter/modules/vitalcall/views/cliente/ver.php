@@ -123,14 +123,6 @@ $this->breadcrumbs = array (
 		<hr>
 		<div>
 			<span class="title">Pedidos Anteriores</span>
-
-			<form method="post"
-				action="<?php echo CController::createUrl('/callcenter/vitalcall/pedido/nuevo') ?>">
-				<input type="hidden"
-					value="<?= $objCliente->identificacionUsuario ?>" name="cliente">
-				<button type="submit" value="Submit" class="btn-info">Nuevo pedido</button>
-			</form>
-            
             <?php $this->renderPartial('_gridAnteriores', array('model' => $modelCompra))?>
         </div>
 	</div>
