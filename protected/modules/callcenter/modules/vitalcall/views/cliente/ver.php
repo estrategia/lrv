@@ -28,8 +28,10 @@ $this->breadcrumbs = array (
 							</strong><?= $objCliente->telefono ?> <strong>Extensi&oacute;n: </strong><?= empty($objCliente->extension) ? "N/A" : $objCliente->extension?>
                         </div>
 						<div class="col-md-2">
+						<?php if($objCliente->estado == 2):?>
 							<button type="button" value="Activar" class="btn btn-info"
 								data-toggle="modal" data-target="#modalMisBonos">Activar cliente</button>
+						<?php endif;?>		
 						</div>
 					</td>
 				</tr>
