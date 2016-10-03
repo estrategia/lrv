@@ -28,7 +28,7 @@ $this->breadcrumbs = array (
 							</strong><?= $objCliente->telefono ?> <strong>Extensi&oacute;n: </strong><?= empty($objCliente->extension) ? "N/A" : $objCliente->extension?>
                         </div>
 						<div class="col-md-2">
-							<button type="button" value="Activar" class="btn-info"
+							<button type="button" value="Activar" class="btn btn-info"
 								data-toggle="modal" data-target="#modalMisBonos">Activar cliente</button>
 						</div>
 					</td>
@@ -76,7 +76,7 @@ $this->breadcrumbs = array (
 					
 	                </div>
 			<div class="modal-footer">
-				<?php echo CHtml::submitButton('Validar', array('class' => "btn btn-primary")); ?>
+				<?php echo CHtml::submitButton('Validar', array('class' => "btn-primary")); ?>
 				<button type="button" class="btn btn-default" data-dismiss="modal">Cerrar</button>
 			</div>
 		</div>
@@ -96,7 +96,7 @@ $this->breadcrumbs = array (
 				action="<?php echo CController::createUrl('/callcenter/vitalcall/formula/nueva') ?>">
 				<input type="hidden"
 					value="<?= $objCliente->identificacionUsuario ?>" name="cliente">
-				<button type="submit" value="Submit">Nueva f&oacute;rmula</button>
+				<button type="submit" value="Submit" class="btn-info">Nueva f&oacute;rmula</button>
 			</form>
             
             <?php $this->renderPartial('_gridFormula', array('model' => $modelFormula))?>
@@ -111,7 +111,7 @@ $this->breadcrumbs = array (
 		<div>
 			<span class="title">Direcciones de despacho</span>
 			<br/>
-			<a href="#" data-role='nueva-direccion-vital' class='btn btn-info' data-cliente='<?= $objCliente->identificacionUsuario ?>'>Nueva direcci&oacute;n</a>
+			<a href="#" data-role='nueva-direccion-vital' class='btn-info' data-cliente='<?= $objCliente->identificacionUsuario ?>'>Nueva direcci&oacute;n</a>
             <?php $this->renderPartial('_gridDirecciones', array('model' => $modelDirecciones))?>
         </div>
 	</div>
@@ -128,7 +128,7 @@ $this->breadcrumbs = array (
 				action="<?php echo CController::createUrl('/callcenter/vitalcall/pedido/nuevo') ?>">
 				<input type="hidden"
 					value="<?= $objCliente->identificacionUsuario ?>" name="cliente">
-				<button type="submit" value="Submit">Nuevo pedido</button>
+				<button type="submit" value="Submit" class="btn-info">Nuevo pedido</button>
 			</form>
             
             <?php $this->renderPartial('_gridAnteriores', array('model' => $modelCompra))?>
