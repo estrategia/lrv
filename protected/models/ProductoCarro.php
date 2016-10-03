@@ -27,15 +27,15 @@ class ProductoCarro extends IECartPosition {
     }
     
     public function isCombo(){
-        return ($this->objCombo !== null);
+        return ($this->objCombo instanceof Combo);
     }
     
     public function isProduct(){
-        return ($this->objProducto !== null);
+        return ($this->objProducto instanceof Producto);
     }
     
     public function isFormula(){
-    	return ($this->objProductoFormula !== null);
+    	return ($this->objProductoFormula instanceof ProductosFormulaVitalCall);
     }
     
     public function getObjProducto(){

@@ -189,7 +189,7 @@ class EShoppingCart extends CMap {
     	if (isset(Yii::app()->session[Yii::app()->params->vitalCall['sesion']['carroPagarForm']]) && Yii::app()->session[Yii::app()->params->vitalCall['sesion']['carroPagarForm']] != null)
     		$modelPago = Yii::app()->session[Yii::app()->params->vitalCall['sesion']['carroPagarForm']];
     	
-    	if($modelPago!=null && $modelPago->objDireccion!=null){
+    	if($modelPago instanceof FormaPagoVitalCallForm && $modelPago->objDireccion instanceof DireccionesDespachoVitalCall){
     		$this->objDireccionVC = $modelPago->objDireccion;
     		$this->objSectorCiudad = $modelPago->objSectorCiudad;
     	}

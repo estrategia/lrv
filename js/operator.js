@@ -1,5 +1,10 @@
 var refresh = null;
 
+function alert(message) {
+    bootbox.alert({message: message, callback: function() {
+        }, buttons: {ok: {label: 'Aceptar', className: 'btn-danger'}}});
+}
+
 $(document).on('change', 'input[id=check-pedido-seguimiento]', function () {
     $.ajax({
         type: 'POST',
