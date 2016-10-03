@@ -1,4 +1,4 @@
-<?php if(isset(Yii::app()->session[Yii::app()->params->vitalcall['sesion']['formulaMedica']])):?>
+<?php if(isset(Yii::app()->session[Yii::app()->params->vitalCall['sesion']['formulaMedica']])):?>
 <div class="space-2"></div>
 <table data-role="table" class="table table-bordered table-strip">
     <tr>
@@ -11,7 +11,7 @@
         <th> Formula anexa </th>
     </tr>
         <?php $i = 1;?>
-        <?php foreach(Yii::app()->session[Yii::app()->params->vitalcall['sesion']['formulaMedica']] as $formula):?>
+        <?php foreach(Yii::app()->session[Yii::app()->params->vitalCall['sesion']['formulaMedica']] as $formula):?>
             <tr>
                 <td> <?= $i++ ?> </td>
                 <td> <?= $formula['nombreMedico']?> </td>

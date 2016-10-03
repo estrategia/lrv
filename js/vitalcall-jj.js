@@ -673,7 +673,7 @@ $(document).on('click', "#btn-adicionar-formula", function() {
 
     $.ajax({
         type: 'POST',
-        url: requestUrl + "/vitalcall/carro/adicionarFormula/",
+        url: requestUrl + "/callcenter/vitalcall/carro/adicionarFormula/",
         data: new FormData(form),
         dataType: 'json',
         cache: false,

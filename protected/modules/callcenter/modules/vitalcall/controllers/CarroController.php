@@ -1158,8 +1158,8 @@ class CarroController extends ControllerVitalcall {
     
     
     	$array = array();
-    	if (isset(Yii::app()->session[Yii::app()->params->vitalcall['sesion']['formulaMedica']])) {
-    		$array = Yii::app()->session[Yii::app()->params->vitalcall['sesion']['formulaMedica']];
+    	if (isset(Yii::app()->session[Yii::app()->params->vitalCall['sesion']['formulaMedica']])) {
+    		$array = Yii::app()->session[Yii::app()->params->vitalCall['sesion']['formulaMedica']];
     	}
     	$ruta = "";
     
@@ -1206,7 +1206,7 @@ class CarroController extends ControllerVitalcall {
     			'correoElectronico' => $_POST['FormulasMedicas']['correoElectronico'],
     			'formulaMedica' => $ruta);
     
-    	Yii::app()->session[Yii::app()->params->sesion['formulaMedica']] = $array;
+    	Yii::app()->session[Yii::app()->params->vitalCall['sesion']['formulaMedica']] = $array;
     	echo CJSON::encode(array(
     			'result' => 'ok',
     			'response' =>$this->renderPartial('_formulasMedicasAdicionadas', null, true, false) 
