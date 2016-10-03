@@ -465,14 +465,8 @@ function agregarProductoVC(formula, producto){
                     //$('#icono-producto-agregado-' + producto).addClass('active');
                     //$("#cantidad-productos").html(data.response.objetosCarro);
                 }
-                /*$('#div-carro-canasta').html(data.response.canastaHTML);
+                $('#div-carro-canasta').html(data.response.canastaHTML);
                 $('#div-carro-canasta').trigger("create");
-
-                if (data.response.mensajeHTML) {
-                    dialogoAnimado(data.response.mensajeHTML);
-                    $('#icono-producto-agregado-' + producto).addClass('active');
-                    $("#cantidad-productos").html(data.response.objetosCarro);
-                }*/
             } else {
                 alert(data.response);
             }
@@ -514,14 +508,8 @@ function agregarProductoNormal(producto){
                     //$('#icono-producto-agregado-' + producto).addClass('active');
                     //$("#cantidad-productos").html(data.response.objetosCarro);
                 }
-                /*$('#div-carro-canasta').html(data.response.canastaHTML);
+                $('#div-carro-canasta').html(data.response.canastaHTML);
                 $('#div-carro-canasta').trigger("create");
-
-                if (data.response.mensajeHTML) {
-                    dialogoAnimado(data.response.mensajeHTML);
-                    $('#icono-producto-agregado-' + producto).addClass('active');
-                    $("#cantidad-productos").html(data.response.objetosCarro);
-                }*/
             } else {
                 alert(data.response);
             }

@@ -635,3 +635,31 @@ $(document).on('click', "a[data-eliminar='1'], a[data-eliminar='2'], a[data-elim
     });
 
 });
+
+$(document).on('click', "a[data-role='carrovaciar-vitalcall']", function() {
+    $.ajax({
+        type: 'POST',
+        dataType: 'json',
+        async: true,
+        url: requestUrl + '/callcenter/vitalcall/carro/vaciar',
+        beforeSend: function() {
+            Loading.show();
+        },
+        complete: function() {
+            Loading.hide();
+        },
+        success: function(data) {
+            if (data.result == 'ok') {
+            	$('#div-carro-canasta').html(data.canasta);
+                $('#div-carro-canasta').trigger("create");
+                $('#div-carro-vitalcall').html(data.carro);
+                $('#div-carro-vitalcall').trigger("create");
+            } else {
+                alert(data.response);
+            }
+        },
+        error: function(jqXHR, textStatus, errorThrown) {
+            alert('Error: ' + errorThrown);
+        }
+    });
+});

@@ -123,14 +123,11 @@ class CarroController extends ControllerVitalcall {
           }
          */
 
-        $mensajeCanasta = $this->renderPartial('_carroAgregado', array('objProducto' => $objProducto), true);
-        $canastaVista = "_canasta";
-
         echo CJSON::encode(array(
             'result' => 'ok',
             'response' => array(
-                //'canastaHTML' => $this->renderPartial($canastaVista, null, true),
-                'mensajeHTML' => $mensajeCanasta,
+                'canastaHTML' => $this->renderPartial("canasta", null, true),
+                'mensajeHTML' => $this->renderPartial('_carroAgregado', array('objProducto' => $objProducto), true),
                 'objetosCarro' => Yii::app()->shoppingCartVitalCall->getCount()
             ),
         ));
@@ -210,14 +207,11 @@ class CarroController extends ControllerVitalcall {
           }
          */
 
-        $mensajeCanasta = $this->renderPartial('_carroAgregado', array('objProducto' => $objProducto), true);
-        $canastaVista = "_canasta";
-
         echo CJSON::encode(array(
             'result' => 'ok',
             'response' => array(
-                //'canastaHTML' => $this->renderPartial($canastaVista, null, true),
-                'mensajeHTML' => $mensajeCanasta,
+                'canastaHTML' => $this->renderPartial("canasta", null, true),
+                'mensajeHTML' => $this->renderPartial('_carroAgregado', array('objProducto' => $objProducto), true),
                 'objetosCarro' => Yii::app()->shoppingCartVitalCall->getCount()
             ),
         ));
@@ -227,11 +221,11 @@ class CarroController extends ControllerVitalcall {
     public function actionVaciar() {
         Yii::app()->shoppingCartVitalCall->clear();
 
-        /* echo CJSON::encode(array(
-          'result' => 'ok',
-          'carro' => $this->renderPartial("carro", null, true),
-          'canasta' => $this->renderPartial("canasta", null, true),
-          )); */
+         echo CJSON::encode(array(
+         		'result' => 'ok',
+         		'canasta' => $this->renderPartial("canasta" , null, true),
+         		'carro' => $this->renderPartial("carro", null, true),
+          ));
         Yii::app()->end();
     }
 
