@@ -520,8 +520,8 @@ class CarroController extends ControllerVitalcall {
                 'objFormaPago' => $resultCompra['response']['objFormaPago'],
                 'objFormasPago' => $resultCompra['response']['objFormasPago']), true);
 
-            //Yii::app()->session[Yii::app()->params->vitalCall['sesion']['carroPagarForm']] = null;
-            //Yii::app()->shoppingCartVitalCall->clear();
+            Yii::app()->session[Yii::app()->params->vitalCall['sesion']['carroPagarForm']] = null;
+            Yii::app()->shoppingCartVitalCall->clear();
             $this->render('application.views.carro.compra', array(
                 'contenido' => $contenidoSitio,
                 'objCompra' => $resultCompra['response']['objCompra'],
@@ -548,7 +548,6 @@ class CarroController extends ControllerVitalcall {
                 $puntoVenta = $modelPago->listPuntosVenta[1][$modelPago->indicePuntoVenta];
                 $objCompra->idComercial = $puntoVenta[1];
             }
-
 
             $objCompra->idEstadoCompra = Yii::app()->params->callcenter['estadoCompra']['estado']['pendiente'];
 
@@ -728,6 +727,24 @@ class CarroController extends ControllerVitalcall {
                 //$objItem->idEstadoItemTercero = null;
                 $objItem->flete = $position->getShipping();
                 $objItem->disponible = 1;
+                $objItem->idFormula = $position->objProductoFormula->idFormula;
+                $objItem->idProductoVitalCall = $position->objProductoFormula->idProductoVitalCall;
+                
+                $totalUnidades = 0;
+                $totalFracciones = 0;
+                
+                if($objItem->unidades>0){
+                	$totalUnidades = $objItem->unidades*$position->getObjProducto()->cantidadUnidadMedida;
+                }
+                
+                if($objItem->fracciones>0){
+                	$totalFracciones = $objItem->fracciones*$position->getObjProducto()->unidadFraccionamiento;
+                }
+                
+                $totalCantidad = $totalUnidades+$totalFracciones;
+                
+                $sql = "UPDATE t_ProductosFormulaVitalCall SET cantidadComprada=cantidadComprada+$totalCantidad, fechaCompra='$objCompra->fechaEntrega' WHERE idFormula=$objItem->idFormula AND idProductoVitalCall=$objItem->idProductoVitalCall";
+                Yii::app()->db->createCommand($sql)->execute();
 
                 if (!$objItem->save()) {
                     throw new Exception("Error al guardar item de compra $objItem->codigoProducto. " . $objItem->validateErrorsResponse());
@@ -764,7 +781,7 @@ class CarroController extends ControllerVitalcall {
                     }
                 }
             }
-
+            
             $nombreUsuario = $modelPago->objDireccion->objUsuarioVC->nombre . " " . $modelPago->objDireccion->objUsuarioVC->apellido;
             $correoUsuario = $modelPago->objDireccion->objUsuarioVC->correoElectronico;
 

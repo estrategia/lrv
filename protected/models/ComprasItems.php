@@ -26,6 +26,8 @@
  * @property integer $disponible
  * @property integer $idCombo
  * @property string $descripcionCombo
+ * @property integer $idFormula
+ * @property integer $idProductoVitalCall
  *
  * The followings are the available model relations:
  * @property EstadoItem $objEstadoItem
@@ -48,6 +50,8 @@ class ComprasItems extends CActiveRecord {
         // will receive user inputs.
         return array(
             array('idCompra, precioBaseUnidad, precioBaseFraccion, descuentoUnidad, descuentoFraccion, precioTotalUnidad, precioTotalFraccion, idOperador, terceros, unidades, fracciones, unidadesCedi, codigoImpuesto, idEstadoItem, flete, disponible, idCombo', 'numerical', 'integerOnly' => true),
+        	array('idFormula, idProductoVitalCall', 'numerical', 'integerOnly' => true),
+        	array('idFormula, idProductoVitalCall', 'default', 'value' => null),
             array('codigoProducto', 'length', 'max' => 10),
             array('descripcion', 'length', 'max' => 200),
             array('presentacion, descripcionCombo', 'length', 'max' => 100),

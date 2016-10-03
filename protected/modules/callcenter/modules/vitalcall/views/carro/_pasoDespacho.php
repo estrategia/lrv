@@ -1,4 +1,4 @@
-<div data-role="tipoentrega-habilitar" data-habilitar="<?php echo Yii::app()->params->entrega['tipo']['domicilio'] ?>" class="<?php echo ($modelPago->tipoEntrega == Yii::app()->params->entrega['tipo']['domicilio'] ? "" : "display-none") ?>">
+<div data-role="tipoentrega-habilitar" data-habilitar="<?php echo Yii::app()->params->entrega['tipo']['domicilio'] ?>" class="center center-verticaly border-gray<?php echo ($modelPago->tipoEntrega == Yii::app()->params->entrega['tipo']['domicilio'] ? "" : " display-none") ?>">
     <h4 class="grey">Direcci&oacute;n</h4>
     
     <p class="grey"><?= $modelPago->objDireccion->barrio?></p>
