@@ -846,7 +846,7 @@ class Compras extends CActiveRecord {
             $params['asignar'] = true;
         }
 
-        $result = "<a class='btn btn-success  btn-xs' href='" . CController::createUrl('/callcenter/admin/detallepedido', $params) . "' target='_blank'><i
+        $result = "<a class='btn btn-success  btn-xs' href='" . Yii::app()->createUrl('/callcenter/admin/detallepedido', $params) . "' target='_blank'><i
                      class='glyphicon glyphicon-zoom-in glyphicon-white'></i> $data->idCompra</a>";
         return $result;
     }

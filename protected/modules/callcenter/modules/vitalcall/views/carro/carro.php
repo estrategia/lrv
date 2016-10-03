@@ -1,4 +1,4 @@
-<div class="container">
+<div class="">
     <h2>Carro de compras</h2>
     <?php $mensajes = Yii::app()->user->getFlashes(); ?>
     <?php if ($mensajes): ?>
@@ -12,6 +12,6 @@
     <?php if (Yii::app()->shoppingCartVitalCall->isEmpty()): ?>
         Carro vac&iacute;o
     <?php else: ?>
-        <?php $this->renderPartial('_carro'); ?>
+        <?php $this->renderPartial('_carro', array('lectura'=>false)); ?>
     <?php endif; ?>
 </div>
