@@ -41,6 +41,10 @@ class PedidoController extends ControllerVitalcall {
             $modelPago->identificacionUsuario = $objDireccionVC->identificacionUsuario;
             $modelPago->objDireccion = $objDireccionVC;
             $modelPago->objSectorCiudad = $objDireccionVC->objSectorCiudad;
+            
+           // CVarDumper::dump($objDireccionVC->objSectorCiudad);exit();
+            
+            
             Yii::app()->session[Yii::app()->params->vitalCall['sesion']['carroPagarForm']] = $modelPago;
         }
 

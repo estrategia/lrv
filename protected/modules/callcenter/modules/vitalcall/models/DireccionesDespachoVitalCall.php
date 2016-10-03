@@ -110,7 +110,7 @@ class DireccionesDespachoVitalCall extends CActiveRecord {
     }
     
     public function getObjSectorCiudad(){
-    	if($this->_objSectorCiudad==null && !empty($this->codigoCiudad) && !empty($this->codigoSector)){
+    //	if($this->_objSectorCiudad==null && !empty($this->codigoCiudad) && !empty($this->codigoSector)){
     		$this->_objSectorCiudad = SectorCiudad::model()->find(array(
     				'with' => array('objCiudad','objSector'),
     				'condition' => 't.codigoCiudad=:ciudad AND t.codigoSector=:sector',
@@ -119,7 +119,7 @@ class DireccionesDespachoVitalCall extends CActiveRecord {
     						':sector' => $this->codigoSector
     				)
     		));
-    	}
+   // 	}
     	
     	return $this->_objSectorCiudad;
     }

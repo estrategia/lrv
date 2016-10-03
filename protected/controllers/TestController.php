@@ -1505,5 +1505,11 @@ class TestController extends Controller {
     public function actionCantidadproductos(){
         echo count(Yii::app()->shoppingCart->getPositions());
     }
+    
+    public function actionEnvioSMS(){
+    	require_once (Yii::app()->basePath . DS . 'extensions' . DS . 'elibom'.DS.'elibom.php'); //
+    	$elibom = new ElibomClient('usuario@dominio.com', 'api_password');
+    	$deliveryId = $elibom->sendMessage('3166220738, 573002111111', 'Esto es una prueba en PHP');
+    }
 
 }
