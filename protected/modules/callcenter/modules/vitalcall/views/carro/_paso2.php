@@ -126,7 +126,7 @@
             </fieldset>
 
             <div id="form-formula-medica" class="display-none">
-                <?php //$this->renderPartial('_d_formFormulaMedica', array('model' => new FormulasMedicas(), 'form' => $form))?>
+                <?php $this->renderPartial('_formFormulaMedica', array('model' => new FormulasMedicas(), 'form' => $form))?>
             </div>
 
             <div style="margin-top:40px;">

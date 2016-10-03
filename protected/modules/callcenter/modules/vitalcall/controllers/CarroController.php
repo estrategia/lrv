@@ -1152,5 +1152,65 @@ class CarroController extends ControllerVitalcall {
         ));
         Yii::app()->end();
     }
+    
+
+    public function actionAdicionarFormula() {
+    
+    
+    	$array = array();
+    	if (isset(Yii::app()->session[Yii::app()->params->vitalcall['sesion']['formulaMedica']])) {
+    		$array = Yii::app()->session[Yii::app()->params->vitalcall['sesion']['formulaMedica']];
+    	}
+    	$ruta = "";
+    
+    	if ($_FILES) {
+    		$model = new FormulasMedicas();
+    		$model->attributes = $_POST['FormulasMedicas'];
+    		$uploadedFile = CUploadedFile::getInstance($model, "formulaMedica");
+    
+    		if ($_FILES['FormulasMedicas']['size']['formulaMedica'] > 0) {
+    			$directorio = 'images/formulamedica/' . Date("Ymdhis") . $uploadedFile->getName();
+    			if ($uploadedFile->saveAs($directorio)) {
+    				$ruta = $directorio;
+    			} else {
+    				echo CJSON::encode(
+    						array(
+    								'result' => 'ok',
+    								'response' => 'Error al cargar la imagen de la categoría'
+    						));
+    				Yii::app()->end();
+    			}
+    		}
+    	}
+    
+    	if($_POST['tipo-formula'] == 1){
+    		$modelFormula = new FormulasMedicas('datosMedico');
+    	}else {
+    		$modelFormula = new FormulasMedicas('datosFormula');
+    	}
+    
+    	$modelFormula->attributes = $_POST['FormulasMedicas'];
+    	if(!empty($ruta)){
+    		$modelFormula->formulaMedica = $ruta;
+    	}
+    
+    	if (!$modelFormula->validate()) {
+    		echo CActiveForm::validate($modelFormula);
+    		Yii::app()->end();
+    	}
+    
+    	$array[] = array('nombreMedico' => $_POST['FormulasMedicas']['nombreMedico'],
+    			'institucion' => $_POST['FormulasMedicas']['institucion'],
+    			'registroMedico' => $_POST['FormulasMedicas']['registroMedico'],
+    			'telefono' => $_POST['FormulasMedicas']['telefono'],
+    			'correoElectronico' => $_POST['FormulasMedicas']['correoElectronico'],
+    			'formulaMedica' => $ruta);
+    
+    	Yii::app()->session[Yii::app()->params->sesion['formulaMedica']] = $array;
+    	echo CJSON::encode(array(
+    			'result' => 'ok',
+    			'response' =>$this->renderPartial('_formulasMedicasAdicionadas', null, true, false) 
+    	));
+    }
 
 }
