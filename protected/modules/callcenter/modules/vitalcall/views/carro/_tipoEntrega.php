@@ -3,7 +3,7 @@
     <div>  
         <div data-role="tipoentrega" data-descripcion="entrega a domicilio" data-tipo="<?php echo Yii::app()->params->entrega['tipo']['domicilio']; ?>" class="tipo-entrega<?php echo ($modelPago->tipoEntrega === null ? "" : ($modelPago->tipoEntrega == Yii::app()->params->entrega['tipo']['domicilio'] ? " activo" : " inactivo")) ?>">
             <div class="ico_ubi icoEntrega"></div>
-            <div class="inner_tipoentrega">Quiero que me lo entreguen a domicilio </div>
+            <div class="inner_tipoentrega">Entrega a domicilio</div>
             <div class="clear"></div>
         </div>
     </div>
@@ -11,7 +11,7 @@
     <div>               
         <div data-role="tipoentrega" data-descripcion="pasar por el pedido" data-tipo="<?php echo Yii::app()->params->entrega['tipo']['presencial']; ?>" class="tipo-entrega<?php echo ($modelPago->tipoEntrega === null ? "" : ($modelPago->tipoEntrega == Yii::app()->params->entrega['tipo']['presencial'] ? " activo" : " inactivo")) ?>">
             <div class="ico_ubi icoRecoger"></div>
-            <div class="inner_tipoentrega">Quiero pasar por el pedido </div>
+            <div class="inner_tipoentrega">Pasar por el pedido</div>
             <div class="clear"></div>
         </div>
     </div>
@@ -21,7 +21,7 @@
     <div>               
         <div class="tipo-entrega activo">
             <div class="ico_ubi icoRecoger"></div>
-            <div class="inner_tipoentrega">Quiero pasar por el pedido <a class="view_more_ubicacion" href="#" data-toggle="modal" data-target="#info_recoger">Ver m&aacute;s</a></div>
+            <div class="inner_tipoentrega">Pasar por el pedido <a class="view_more_ubicacion" href="#" data-toggle="modal" data-target="#info_recoger">Ver m&aacute;s</a></div>
             <div class="clear"></div>
         </div>
     </div>

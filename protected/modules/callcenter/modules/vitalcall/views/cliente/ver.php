@@ -114,7 +114,7 @@ $this->breadcrumbs = array (
 			<span class="title">Direcciones de despacho</span>
 			<br/>
 			<a href="#" data-role='nueva-direccion-vital' class='btn-info' data-cliente='<?= $objCliente->identificacionUsuario ?>'>Nueva direcci&oacute;n</a>
-            <?php $this->renderPartial('_gridDirecciones', array('model' => $modelDirecciones))?>
+            <?php $this->renderPartial('_gridDirecciones', array('model' => $modelDirecciones, 'comprar' => ($objCliente->estado==1)))?>
         </div>
 	</div>
 </div>

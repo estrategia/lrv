@@ -350,7 +350,7 @@ class FormaPagoVitalCallForm extends CFormModel {
 
             //recorrer productos y actualiar carro
             foreach ($puntoVenta[4] as $indiceProd => $producto) {
-                $position = Yii::app()->shoppingCartVitalCall->itemAt($producto->CODIGO_PRODUCTO);
+                $position = Yii::app()->shoppingCartVitalCall->getItemAtCode($producto->CODIGO_PRODUCTO);
 
                 if ($position !== null) {
                     $arrPositions[$producto->CODIGO_PRODUCTO] = $producto->CODIGO_PRODUCTO;
@@ -363,16 +363,14 @@ class FormaPagoVitalCallForm extends CFormModel {
                     if ($producto->SALDO_FRACCION >= $producto->CANTIDAD_FRACCION) {
                         Yii::app()->shoppingCartVitalCall->update($position, true, $producto->CANTIDAD_FRACCION);
                     } else {
-                        Yii::app()->shoppingCartVitalCall->update($position, true, $producto->SALDO_UNIDAD);
+                        Yii::app()->shoppingCartVitalCall->update($position, true, $producto->SALDO_FRACCION);
                     }
                 }
             }
 
             foreach (Yii::app()->shoppingCartVitalCall->getPositions() as $position) {
-                if ($position->isProduct()) {
-                    if (!isset($arrPositions[$position->getObjProducto()->codigoProducto])) {
-                        Yii::app()->shoppingCartVitalCall->remove($position->getObjProducto()->codigoProducto);
-                    }
+                if (!isset($arrPositions[$position->getObjProducto()->codigoProducto])) {
+                    Yii::app()->shoppingCartVitalCall->remove($position->getId());
                 }
             }
         }

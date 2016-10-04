@@ -32,7 +32,7 @@ $this->metaTags = "<meta http-equiv='X-UA-Compatible' content='IE=edge'>
     <div class="background" style="margin-top: -1%;">
         <img style="padding: 5% 3%;" width="95%" src="<?= Yii::app()->request->baseUrl ?>/images/contenido/nan/optipro-proteina.png" alt="Banner Nan Optipro">
         <center>
-            <a href="#">  
+            <a href="<?php echo CController::createUrl('/contenido/ver', array('tipo' => 'grupo', 'contenido' => 1218)) ?>" data-ajax="false">  
                 <img src="<?= Yii::app()->request->baseUrl ?>/images/contenido/nan/compra-online.png" class="compra-online-movil" alt="Compra Nan Optipro">
             </a>
         </center>
@@ -75,7 +75,7 @@ $this->metaTags = "<meta http-equiv='X-UA-Compatible' content='IE=edge'>
                 <img src="<?= Yii::app()->request->baseUrl ?>/images/contenido/nan/optipro-proteina.png" class="img-responsive" alt="Banner Nan Optipro">
             </div>
             <div class="col-md-4">            
-                <a href="#">  
+                <a href="<?php echo CController::createUrl('/contenido/ver', array('tipo' => 'grupo', 'contenido' => 1218)) ?>">  
                     <img src="<?= Yii::app()->request->baseUrl ?>/images/contenido/nan/compra-online.png" class="img-responsive compra-online" alt="Compra Nan Optipro">
                 </a>
                 <a href="">
