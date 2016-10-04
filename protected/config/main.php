@@ -497,10 +497,10 @@ return array(
                 'estadoNombre' => array(1 => 'Activo', 0 => 'Redimido', 2 => 'Inactivo'),
                 'tipo' => array('manual' => 1, 'cargue' => 2),
                 'tipoNombre' => array(1 => 'Manual', 2 => 'Cargue'),
-                'tipoConfiguracion' => array(1 => 'Tradicional', 2 => 'Bono promocional'),// new
-                'asuntoCorreo' => 'Tienes un bono disponible', // new
-                'tipoBonoCRM' => 3, // new 
-            	'formaPagoBonos' => 8, // new
+                'tipoConfiguracion' => array(1 => 'Tradicional', 2 => 'Bono promocional'),
+                'asuntoCorreo' => 'Tienes un bono disponible',
+                'tipoBonoCRM' => 3, 
+            	'formaPagoBonos' => 8, 
             ),
             'reactivacionBono' => array(
                 'asuntoMensaje' => 'Activacion bono cliente fiel',
@@ -667,7 +667,8 @@ return array(
             	'productosBusquedaFiltro' => 'larebaja.online.vitalCall.productos.busqueda.filtro',
             	'busquedaExportar' => 'larebaja.online.vitalCall.productos.busqueda.exportar',
             	'usuariosExportar' => 'larebaja.online.vitalCall.productos.usuarios.exportar',
-                //'formulaMedica' => 'larebaja.online.vitalCall.compra.formulamedica',
+                'formulaMedica' => 'larebaja.online.vitalCall.compra.formulamedica', // new 
+                
             ),
         	'descuento' => 10,
         	'pagar' => array(

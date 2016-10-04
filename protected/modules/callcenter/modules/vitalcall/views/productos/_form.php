@@ -29,8 +29,8 @@ $form = $this->beginWidget ( 'CActiveForm', array (
    <?php
 			$this->widget ( 'zii.widgets.jui.CJuiAutoComplete', array (
 					'model' => $model,
-					 'id' => 'ProductosVitallCall_codigoProducto',
-					'name' => 'ProductosVitallCall[codigoProducto]',
+					 'id' => 'ProductosVitalCall_codigoProducto',
+					'name' => 'ProductosVitalCall[codigoProducto]',
 					'source' => $this->createUrl('productos/autocompleteProducto'),
 					'value' => $model->codigoProducto,
 					// additional javascript options for the autocomplete plugin

@@ -241,6 +241,7 @@ class PedidoController extends ControllerOperator {
                     }
                 }
 
+                print_r($puntoVenta);exit();
                 foreach($puntoVenta[4] as $saldos){
                     $listaProductosSaldos[$saldos->CODIGO_PRODUCTO] = $saldos->SALDO;
                 }
