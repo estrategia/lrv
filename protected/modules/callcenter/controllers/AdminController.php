@@ -737,14 +737,20 @@ class AdminController extends ControllerOperator {
             'barrio' => trim($barrio)
         );
         $result = $client->__soapCall("LRVConsultarBarrio", $params);
-
+	
         if (empty($result)) {
             echo CJSON::encode(array('result' => 'ok', 'response' => "Error: no se obtuvo respuesta"));
         } else {
             $result = $result[0];
             if ($result->RESPUESTA == 1) {
-                $infopdv = $result->PDV[0];
-                echo CJSON::encode(array('result' => 'ok', 'response' => "<strong> RESULTADO: </strong>" . $infopdv['PVTCODIG'] . "-" . $infopdv['PVTNOMBR'], 'ciudad'=>76001, 'sector'=>22));
+            	
+            	$infoLabel ="<strong> RESULTADO: </strong><br/>";
+            
+            	foreach($result->PDV as $infopdv){
+            		$infoLabel.=$infopdv->NOMBREBARRIO." : ".$infopdv->IDCOMERCIAL . "-" . $infopdv->NOMBREPUNTODEVENTA." <br/>";
+            	}
+                
+                echo CJSON::encode(array('result' => 'ok', 'response' => $infoLabel, 'ciudad'=> 76001, 'sector'=> 22 ));
             } else {
                 echo CJSON::encode(array('result' => 'ok', 'response' => $result->DESCRIPCION));
             }
