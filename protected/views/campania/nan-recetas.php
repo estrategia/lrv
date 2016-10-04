@@ -265,10 +265,10 @@ $this->metaTags = "<meta http-equiv='X-UA-Compatible' content='IE=edge'>
             <iframe id="video-receta9" class="hide" width="100%" height="230" style="margin-top: 15px;" src="https://www.youtube.com/embed/W5N7OClImrE?list=PLLEhMEIG7E97afwfr_lMSAQjejl_lfWAJ" frameborder="0" allowfullscreen></iframe>
         </section>  -->
         <center>
-            <a href="<?php echo CController::createUrl('/contenido/ver', array('tipo' => 'grupo', 'contenido' => 1218)) ?>">  
+            <a href="<?php echo CController::createUrl('/contenido/ver', array('tipo' => 'grupo', 'contenido' => 1218)) ?>" data-ajax="false">  
                 <img style="width: 200px;" src="<?= Yii::app()->request->baseUrl ?>/images/contenido/nan/compra-online.png" class="img-responsive compra-online" alt="Compra Nan Optipro">
             </a>
-            <a href="">
+            <a href="#">
                <img src="<?= Yii::app()->request->baseUrl ?>/images/contenido/nan/entrega-en-1-hora.png" class="img-responsive" alt="Entrega en 1 hora Nan Optipro"> 
             </a>
         </center>
@@ -411,7 +411,7 @@ $this->metaTags = "<meta http-equiv='X-UA-Compatible' content='IE=edge'>
                             </a>
                         </div>
                         <div class="col-md-6">
-                            <a href="">
+                            <a href="#">
                                <img style="margin: 30px auto 0px;" src="<?= Yii::app()->request->baseUrl ?>/images/contenido/nan/entrega-en-1-hora.png" class="img-responsive" alt="Entrega en 1 hora Nan Optipro"> 
                             </a>
                         </div>
