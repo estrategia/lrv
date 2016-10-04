@@ -18,7 +18,7 @@ $this->widget('zii.widgets.grid.CGridView', array(
     'dataProvider' => $model->search(),
     'columns' => array(
 	        array(
-	            'header' => 'Direcci&oacute;',
+	            'header' => 'Direcci&oacute;n',
 	            'value' => '$data->direccion',
 	        ),
 	        array(
@@ -36,10 +36,10 @@ $this->widget('zii.widgets.grid.CGridView', array(
 	    	array(
 	    		'header' => "",
 	    		'type' => 'raw',	
-	    		'value' => function ($data){
+	    		'value' => function ($data) use ($comprar){
 	    			$html = CHtml::link('<i class="glyphicon glyphicon-edit"></i> ','#',array('title'=>'Actualizar', 'data-role' => 'editar-direccion',"data-direccion" => $data->idDireccionesDespachoVitalCall));
 	    			$html .= CHtml::link('<i class="glyphicon glyphicon-remove"></i> ','#', array('title'=>'Eliminar', 'data-role' => 'eliminar-direccion' ,"data-direccion" => $data->idDireccionesDespachoVitalCall));
-	    			$html .= CHtml::link('<i class="glyphicon glyphicon-shopping-cart"></i> ',CController::createUrl('pedido/nuevo/', array("direccion" => $data->idDireccionesDespachoVitalCall)), array('title'=>'Comprar aqu&iacute;'));
+	    			$html .= CHtml::link('<i class="glyphicon glyphicon-shopping-cart'. ($comprar? "" : " display-none") .'"></i> ',CController::createUrl('pedido/nuevo/', array("direccion" => $data->idDireccionesDespachoVitalCall)), array('title'=>'Comprar aqu&iacute;'));
 	    			
 		    		return $html;		
 	    		},
