@@ -461,7 +461,7 @@ class FormaPagoForm extends CFormModel {
                                 throw new Exception("Error al actualizar bono: " . CVarDumper::dumpAsString($result));
                             }
                             
-								// añadir Bono en forma de pago
+								// aï¿½adir Bono en forma de pago
 	                            $tipoCRM = BonoTienda::model()->find(array(
 	                            	'condition' => 'idBonoTiendaTipo =:tipoBonoCRM',
 	                            	'params' => array(
@@ -538,7 +538,7 @@ class FormaPagoForm extends CFormModel {
                                 if (!$objBonoTienda->save()) {
                                     Yii::log("ActualizarBono-Tienda: cambio estado [idCompra: $objCompra->idCompra -- idbono: $idx -- idUsuario: $objCompra->identificacionUsuario]\n" . CActiveForm::validate($objBonoTienda), CLogger::LEVEL_INFO, 'application');
                                 }
-                                // añadir Bono en forma de pago
+                                // aï¿½adir Bono en forma de pago
                                 
                                 $objFormaPagoBono = new FormasPago;
                                 $objFormaPagoBono->valor = $objBonoTienda->valor;
@@ -790,7 +790,7 @@ class FormaPagoForm extends CFormModel {
                     if ($producto->SALDO_FRACCION >= $producto->CANTIDAD_FRACCION) {
                         Yii::app()->shoppingCart->update($position, true, $producto->CANTIDAD_FRACCION);
                     } else {
-                        Yii::app()->shoppingCart->update($position, true, $producto->SALDO_UNIDAD);
+                        Yii::app()->shoppingCart->update($position, true, $producto->SALDO_FRACCION);
                     }
                 }
             }

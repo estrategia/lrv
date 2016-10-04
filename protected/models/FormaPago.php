@@ -8,6 +8,8 @@
  * @property string $formaPago
  * @property integer $estadoFormaPago
  * @property string codigoPOS
+ * @property integer $ventaVendedor
+ * @property integer $ventaVitalCall
  */
 class FormaPago extends CActiveRecord {
 
@@ -26,12 +28,12 @@ class FormaPago extends CActiveRecord {
         // will receive user inputs.
         return array(
             array('formaPago, codigoPOS', 'required'),
-            array('estadoFormaPago', 'numerical', 'integerOnly' => true),
+            array('estadoFormaPago, ventaVendedor, ventaVitalCall', 'numerical', 'integerOnly' => true),
             array('formaPago', 'length', 'max' => 50),
             array('codigoPOS', 'length', 'max' => 5),
             // The following rule is used by search().
             // @todo Please remove those attributes that should not be searched.
-            array('idFormaPago, formaPago, estadoFormaPago, codigoPOS', 'safe', 'on' => 'search'),
+            array('idFormaPago, formaPago, estadoFormaPago, codigoPOS, ventaVendedor, ventaVitalCall', 'safe', 'on' => 'search'),
         );
     }
 
@@ -54,6 +56,8 @@ class FormaPago extends CActiveRecord {
             'formaPago' => 'Forma Pago',
             'estadoFormaPago' => 'Estado Forma Pago',
             'codigoPOS' => 'Código POS',
+        	'ventaVendedor' => 'Venta vendedor',
+        	'ventaVitalCall' => 'Venta club paciente',
         );
     }
 
@@ -77,6 +81,8 @@ class FormaPago extends CActiveRecord {
         $criteria->compare('idFormaPago', $this->idFormaPago);
         $criteria->compare('formaPago', $this->formaPago, true);
         $criteria->compare('estadoFormaPago', $this->estadoFormaPago);
+        $criteria->compare('ventaVendedor', $this->ventaVendedor);
+        $criteria->compare('ventaVitalCall', $this->ventaVitalCall);
         $criteria->compare('codidoPOS', $this->codidoPOS);
 
         return new CActiveDataProvider($this, array(

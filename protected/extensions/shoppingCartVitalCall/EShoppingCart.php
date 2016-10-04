@@ -476,5 +476,23 @@ class EShoppingCart extends CMap {
     public function isEmpty() {
         return !(bool) $this->getCount();
     }
+    
+    public function getIdFromCode($code) {
+    	foreach ($this as $position) {
+    		if($position->getObjProducto()->codigoProducto==$code){
+    			return $position->getId();
+    		}
+    	}
+    	return null;
+    }
+    
+    public function getItemAtCode($code){
+    	foreach ($this as $position) {
+    		if($position->getObjProducto()->codigoProducto==$code){
+    			return $position;
+    		}
+    	}
+    	return null;
+    }
 
 }

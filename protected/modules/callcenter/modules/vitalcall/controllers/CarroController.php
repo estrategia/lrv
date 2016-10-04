@@ -93,6 +93,12 @@ class CarroController extends ControllerVitalcall {
         }
 
         $idPosition = "$formula-$producto";
+        $idPositionCart = Yii::app()->shoppingCartVitalCall->getIdFromCode($objProducto->codigoProducto);
+        
+        if($idPositionCart!==null && $idPositionCart!=$idPosition){
+        	echo CJSON::encode(array('result' => 'error', 'response' => 'Producto agregado en otra f&oacute;mula'));
+        	Yii::app()->end();
+        }
 
         if ($cantidadU > 0) {
             $cantidadCarroUnidad = 0;
@@ -381,7 +387,7 @@ class CarroController extends ControllerVitalcall {
 
                     $listFormaPago = FormaPago::model()->findAll(array(
                         'order' => 'formaPago',
-                        'condition' => 'estadoFormaPago=:estado',
+                        'condition' => 'ventaVitalCall=:estado',
                         'params' => array(':estado' => 1)
                     ));
                     Yii::app()->session[Yii::app()->params->vitalCall['sesion']['carroPagarForm']] = $modelPago;
@@ -1211,6 +1217,23 @@ class CarroController extends ControllerVitalcall {
     			'result' => 'ok',
     			'response' =>$this->renderPartial('_formulasMedicasAdicionadas', null, true, false) 
     	));
+    }
+    
+    public function actionForm($limpiar = false) {
+    	$modelPago = null;
+    
+    	if (isset(Yii::app()->session[Yii::app()->params->vitalCall['sesion']['carroPagarForm']]) && Yii::app()->session[Yii::app()->params->vitalCall['sesion']['carroPagarForm']] != null)
+    		$modelPago = Yii::app()->session[Yii::app()->params->vitalCall['sesion']['carroPagarForm']];
+    
+    		CVarDumper::dump($modelPago, 10, true);
+    		echo "<br/><br/>RULES<br/><br/>";
+    		CVarDumper::dump($modelPago->rules(), 10, true);
+    		echo "<br/><br/>SCENARIO: " . $modelPago->getScenario();
+    
+    		if ($limpiar){
+    			Yii::app()->session[Yii::app()->params->vitalCall['sesion']['carroPagarForm']] = null;
+    			//unset(Yii::app()->session[Yii::app()->params->vitalCall['sesion']['carroPagarForm']]);
+    		}
     }
 
 }

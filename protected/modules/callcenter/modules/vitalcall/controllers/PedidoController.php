@@ -16,8 +16,6 @@ class PedidoController extends ControllerVitalcall {
             $modelPago = Yii::app()->session[Yii::app()->params->vitalCall['sesion']['carroPagarForm']];
         }
 
-        //CVarDumper::dump($modelPago,10,true);exit();
-
         if (isset($_REQUEST['direccion'])) {
             $direccionCliente = $_REQUEST['direccion'];
         }
@@ -26,7 +24,7 @@ class PedidoController extends ControllerVitalcall {
             throw new CHttpException(404, 'Solicitud denegada. Datos inv&aacute;lidos.');
         }
 
-        if (empty($modelPago)) {
+        if (empty($modelPago) || (!empty($direccionCliente) && !empty($modelPago) && $modelPago->objDireccion->idDireccionesDespachoVitalCall != $direccionCliente) ) {
             $objDireccionVC = DireccionesDespachoVitalCall::model()->find(array(
            		'with' => array('objUsuarioVC', 'objCiudad', 'objSector'),
                 'condition' => 'idDireccionesDespachoVitalCall=:direccion',
@@ -46,6 +44,7 @@ class PedidoController extends ControllerVitalcall {
             $modelPago->objDireccion = $objDireccionVC;
             $modelPago->objSectorCiudad = $objDireccionVC->objSectorCiudad;
             Yii::app()->session[Yii::app()->params->vitalCall['sesion']['carroPagarForm']] = $modelPago;
+            Yii::app()->shoppingCartVitalCall->clear();
         }
 
         //CVarDumper::dump($modelPago,10,true);
