@@ -252,7 +252,7 @@ $this->metaTags = "<meta http-equiv='X-UA-Compatible' content='IE=edge'>
         <section>
             <iframe id="video-receta5" class="hide" width="100%" height="230" style="margin-top: 15px;" src="https://www.youtube.com/embed/1hpaHKt-hs4?list=PLLEhMEIG7E97afwfr_lMSAQjejl_lfWAJ" frameborder="0" allowfullscreen></iframe> 
         </section>
-        <section>
+ <!--        <section>
             <iframe id="video-receta6" class="hide" width="100%" height="230" style="margin-top: 15px;" src="https://www.youtube.com/embed/xu9TM2T3Ylo?list=PLLEhMEIG7E97afwfr_lMSAQjejl_lfWAJ" frameborder="0" allowfullscreen></iframe> 
         </section>
         <section>
@@ -263,7 +263,12 @@ $this->metaTags = "<meta http-equiv='X-UA-Compatible' content='IE=edge'>
         </section>
         <section>
             <iframe id="video-receta9" class="hide" width="100%" height="230" style="margin-top: 15px;" src="https://www.youtube.com/embed/W5N7OClImrE?list=PLLEhMEIG7E97afwfr_lMSAQjejl_lfWAJ" frameborder="0" allowfullscreen></iframe>
-        </section> 
+        </section>  -->
+        <center>
+            <a href="">
+               <img src="<?= Yii::app()->request->baseUrl ?>/images/contenido/nan/entrega-en-1-hora.png" class="img-responsive" alt="Entrega en 1 hora Nan Optipro"> 
+            </a>
+        </center>
                 <div class="space"></div>   
 
         <section>
@@ -274,10 +279,10 @@ $this->metaTags = "<meta http-equiv='X-UA-Compatible' content='IE=edge'>
                   <a id="receta3">3</a>
                   <a id="receta4">4</a>
                   <a id="receta5">5</a>
-                  <a id="receta6">6</a>
+                  <!-- <a id="receta6">6</a>
                   <a id="receta7">7</a>
                   <a id="receta8">8</a>
-                  <a id="receta9">9</a>
+                  <a id="receta9">9</a> -->
                 </div>
               </span>
         </section>  
@@ -348,7 +353,7 @@ $this->metaTags = "<meta http-equiv='X-UA-Compatible' content='IE=edge'>
                             <p id="receta5" class="texto">NAN® OPTIPRO® 3 DESARROLLO con avena</p>
                         </div>
                     </div>
-                    <div class="row" style="margin-top: 15px;">
+<!--                     <div class="row" style="margin-top: 15px;">
                         <div class="col-md-4">
                             <img style="width: 81%;margin: 0 auto;" src="<?= Yii::app()->request->baseUrl ?>/images/contenido/nan/video6.jpg" class="img-responsive"> 
                         </div>
@@ -379,21 +384,30 @@ $this->metaTags = "<meta http-equiv='X-UA-Compatible' content='IE=edge'>
                         <div class="col-md-8">
                             <p id="receta9" class="texto">Batido de guayaba con NAN® OPTIPRO® 3 DESARROLLO</p>
                         </div>
-                    </div>
+                    </div> -->
                      
                 </div>
                 <div class="col-md-8">
-                    <div class="space"></div>
-                    <div class="space"></div>
-                    <iframe id="video-receta1" style="margin-top: 15px;" width="100%" height="400" src="https://www.youtube.com/embed/8bckex25LDs" frameborder="0" allowfullscreen></iframe>
-                    <iframe id="video-receta2" style="margin-top: 15px;" class="hide" width="100%" height="400" src="https://www.youtube.com/embed/E1TrSvbmS2Q?list=PLLEhMEIG7E97afwfr_lMSAQjejl_lfWAJ" frameborder="0" allowfullscreen></iframe>
-                    <iframe id="video-receta3" style="margin-top: 15px;" class="hide" width="100%" height="400" src="https://www.youtube.com/embed/abBQhy3vmlA?list=PLLEhMEIG7E97afwfr_lMSAQjejl_lfWAJ" frameborder="0" allowfullscreen></iframe>   
-                    <iframe id="video-receta4" style="margin-top: 15px;" class="hide" width="100%" height="400" src="https://www.youtube.com/embed/H8jw2AhPt-Y?list=PLLEhMEIG7E97afwfr_lMSAQjejl_lfWAJ" frameborder="0" allowfullscreen></iframe> 
-                    <iframe id="video-receta5" style="margin-top: 15px;" class="hide" width="100%" height="400" src="https://www.youtube.com/embed/1hpaHKt-hs4?list=PLLEhMEIG7E97afwfr_lMSAQjejl_lfWAJ" frameborder="0" allowfullscreen></iframe>
-                    <iframe id="video-receta6" style="margin-top: 15px;" class="hide" width="100%" height="400" src="https://www.youtube.com/embed/xu9TM2T3Ylo?list=PLLEhMEIG7E97afwfr_lMSAQjejl_lfWAJ" frameborder="0" allowfullscreen></iframe> 
-                    <iframe id="video-receta7" style="margin-top: 15px;" class="hide" width="100%" height="400" src="https://www.youtube.com/embed/BlqwKLjx41Y?li=stPLLEhMEIG7E97afwfr_lMSAQjejl_lfWAJ" frameborder="0" allowfullscreen></iframe> 
-                    <iframe id="video-receta8" style="margin-top: 15px;" class="hide" width="100%" height="400" src="https://www.youtube.com/embed/_YBjJPeelQ0?list=PLLEhMEIG7E97afwfr_lMSAQjejl_lfWAJ" frameborder="0" allowfullscreen></iframe>
-                    <iframe id="video-receta9" style="margin-top: 15px;" class="hide" width="100%" height="400" src="https://www.youtube.com/embed/W5N7OClImrE?list=PLLEhMEIG7E97afwfr_lMSAQjejl_lfWAJ" frameborder="0" allowfullscreen></iframe>
+                    <div class="row">
+                        <div class="space"></div>
+                        <div class="space"></div>
+                        <iframe id="video-receta1" style="margin-top: 15px;" width="100%" height="400" src="https://www.youtube.com/embed/8bckex25LDs" frameborder="0" allowfullscreen></iframe>
+                        <iframe id="video-receta2" style="margin-top: 15px;" class="hide" width="100%" height="400" src="https://www.youtube.com/embed/E1TrSvbmS2Q?list=PLLEhMEIG7E97afwfr_lMSAQjejl_lfWAJ" frameborder="0" allowfullscreen></iframe>
+                        <iframe id="video-receta3" style="margin-top: 15px;" class="hide" width="100%" height="400" src="https://www.youtube.com/embed/abBQhy3vmlA?list=PLLEhMEIG7E97afwfr_lMSAQjejl_lfWAJ" frameborder="0" allowfullscreen></iframe>   
+                        <iframe id="video-receta4" style="margin-top: 15px;" class="hide" width="100%" height="400" src="https://www.youtube.com/embed/H8jw2AhPt-Y?list=PLLEhMEIG7E97afwfr_lMSAQjejl_lfWAJ" frameborder="0" allowfullscreen></iframe> 
+                        <iframe id="video-receta5" style="margin-top: 15px;" class="hide" width="100%" height="400" src="https://www.youtube.com/embed/1hpaHKt-hs4?list=PLLEhMEIG7E97afwfr_lMSAQjejl_lfWAJ" frameborder="0" allowfullscreen></iframe>
+                        <!-- <iframe id="video-receta6" style="margin-top: 15px;" class="hide" width="100%" height="400" src="https://www.youtube.com/embed/xu9TM2T3Ylo?list=PLLEhMEIG7E97afwfr_lMSAQjejl_lfWAJ" frameborder="0" allowfullscreen></iframe> 
+                        <iframe id="video-receta7" style="margin-top: 15px;" class="hide" width="100%" height="400" src="https://www.youtube.com/embed/BlqwKLjx41Y?li=stPLLEhMEIG7E97afwfr_lMSAQjejl_lfWAJ" frameborder="0" allowfullscreen></iframe> 
+                        <iframe id="video-receta8" style="margin-top: 15px;" class="hide" width="100%" height="400" src="https://www.youtube.com/embed/_YBjJPeelQ0?list=PLLEhMEIG7E97afwfr_lMSAQjejl_lfWAJ" frameborder="0" allowfullscreen></iframe>
+                        <iframe id="video-receta9" style="margin-top: 15px;" class="hide" width="100%" height="400" src="https://www.youtube.com/embed/W5N7OClImrE?list=PLLEhMEIG7E97afwfr_lMSAQjejl_lfWAJ" frameborder="0" allowfullscreen></iframe> -->                        
+                    </div>
+                    <div class="row">
+                        <a href="">
+                           <img style="margin: 30px auto 0px;" src="<?= Yii::app()->request->baseUrl ?>/images/contenido/nan/entrega-en-1-hora.png" class="img-responsive" alt="Entrega en 1 hora Nan Optipro"> 
+                        </a>
+                        <div class="space"></div>
+                        <div class="space"></div>
+                    </div>
                 </div>
             </div>
 
