@@ -1,5 +1,4 @@
 <?php
-
 class CarroController extends ControllerVitalcall {
 
     public function actionIndex() {

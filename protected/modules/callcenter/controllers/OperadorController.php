@@ -141,11 +141,13 @@ class OperadorController extends ControllerOperator {
                 if ($objOperador->save()) {
                     if ($objOperador->perfil == Yii::app()->params->callcenter['perfilesOperador']['vendedorPDV']) {
                         if($operadorSubasta===null){
+                        	
                             $operadorSubasta = new OperadorSubasta;
                             $operadorSubasta->idOperador = $objOperador->idOperador;
                         }
                         
                         $operadorSubasta->idComercial = $model->idComercial;
+                     //   echo "<pre>";print_r($operadorSubasta);exit();
                         if ($operadorSubasta->save()) {
                             $this->redirect(array('admin', 'usuario' => $objOperador->usuario));
                         }else{
