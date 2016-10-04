@@ -265,6 +265,9 @@ $this->metaTags = "<meta http-equiv='X-UA-Compatible' content='IE=edge'>
             <iframe id="video-receta9" class="hide" width="100%" height="230" style="margin-top: 15px;" src="https://www.youtube.com/embed/W5N7OClImrE?list=PLLEhMEIG7E97afwfr_lMSAQjejl_lfWAJ" frameborder="0" allowfullscreen></iframe>
         </section>  -->
         <center>
+            <a href="<?php echo CController::createUrl('/contenido/ver', array('tipo' => 'grupo', 'contenido' => 1218)) ?>">  
+                <img style="width: 200px;" src="<?= Yii::app()->request->baseUrl ?>/images/contenido/nan/compra-online.png" class="img-responsive compra-online" alt="Compra Nan Optipro">
+            </a>
             <a href="">
                <img src="<?= Yii::app()->request->baseUrl ?>/images/contenido/nan/entrega-en-1-hora.png" class="img-responsive" alt="Entrega en 1 hora Nan Optipro"> 
             </a>
@@ -401,10 +404,18 @@ $this->metaTags = "<meta http-equiv='X-UA-Compatible' content='IE=edge'>
                         <iframe id="video-receta8" style="margin-top: 15px;" class="hide" width="100%" height="400" src="https://www.youtube.com/embed/_YBjJPeelQ0?list=PLLEhMEIG7E97afwfr_lMSAQjejl_lfWAJ" frameborder="0" allowfullscreen></iframe>
                         <iframe id="video-receta9" style="margin-top: 15px;" class="hide" width="100%" height="400" src="https://www.youtube.com/embed/W5N7OClImrE?list=PLLEhMEIG7E97afwfr_lMSAQjejl_lfWAJ" frameborder="0" allowfullscreen></iframe> -->                        
                     </div>
-                    <div class="row">
-                        <a href="">
-                           <img style="margin: 30px auto 0px;" src="<?= Yii::app()->request->baseUrl ?>/images/contenido/nan/entrega-en-1-hora.png" class="img-responsive" alt="Entrega en 1 hora Nan Optipro"> 
-                        </a>
+                    <div class="row" style="margin-top: 20px;">
+                        <div class="col-md-6">
+                            <a href="<?php echo CController::createUrl('/contenido/ver', array('tipo' => 'grupo', 'contenido' => 1218)) ?>">  
+                                <img style="width: 200px;" src="<?= Yii::app()->request->baseUrl ?>/images/contenido/nan/compra-online.png" class="img-responsive compra-online" alt="Compra Nan Optipro">
+                            </a>
+                        </div>
+                        <div class="col-md-6">
+                            <a href="">
+                               <img style="margin: 30px auto 0px;" src="<?= Yii::app()->request->baseUrl ?>/images/contenido/nan/entrega-en-1-hora.png" class="img-responsive" alt="Entrega en 1 hora Nan Optipro"> 
+                            </a>
+                        </div>
+
                         <div class="space"></div>
                         <div class="space"></div>
                     </div>
