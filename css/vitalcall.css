@@ -906,3 +906,7 @@ ul.yiiPager a:link{
 .list-view .pager ul li.selected a {
     color: #fff;
 }
+
+.align-right {
+	text-align:right;
+}
