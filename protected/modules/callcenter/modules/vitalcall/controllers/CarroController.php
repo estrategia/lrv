@@ -95,7 +95,7 @@ class CarroController extends ControllerVitalcall {
         $idPositionCart = Yii::app()->shoppingCartVitalCall->getIdFromCode($objProducto->codigoProducto);
         
         if($idPositionCart!==null && $idPositionCart!=$idPosition){
-        	echo CJSON::encode(array('result' => 'error', 'response' => 'Producto agregado en otra f&oacute;mula'));
+        	echo CJSON::encode(array('result' => 'error', 'response' => 'Producto agregado sin f&oacute;rmula o en otra f&oacute;rmula'));
         	Yii::app()->end();
         }
 
@@ -182,6 +182,12 @@ class CarroController extends ControllerVitalcall {
         }
 
         $idPosition = $producto;
+        $idPositionCart = Yii::app()->shoppingCartVitalCall->getIdFromCode($objProducto->codigoProducto);
+        
+        if($idPositionCart!==null && $idPositionCart!=$idPosition){
+            echo CJSON::encode(array('result' => 'error', 'response' => 'Producto agregado sin f&oacute;rmula o en otra f&oacute;rmula'));
+            Yii::app()->end();
+        }
 
         if ($cantidadU > 0) {
             $cantidadCarroUnidad = 0;
@@ -225,6 +231,8 @@ class CarroController extends ControllerVitalcall {
 
     public function actionVaciar() {
         Yii::app()->shoppingCartVitalCall->clear();
+        unset(Yii::app()->session[Yii::app()->params->vitalCall['sesion']['carroPagarForm']]);
+        unset(Yii::app()->session[Yii::app()->params->vitalCall['sesion']['formulaMedica']]);
 
          echo CJSON::encode(array(
          		'result' => 'ok',
@@ -403,6 +411,7 @@ class CarroController extends ControllerVitalcall {
                         $modelPago->seleccionarPdv($modelPago->indicePuntoVenta);
                     }
                     $modelPago->calcularConfirmacion(Yii::app()->shoppingCartVitalCall->getPositions());
+                    $modelPago->calcularFormulas(Yii::app()->shoppingCartVitalCall->getPositions());
                     break;
             }
             $params['parametros']['modelPago'] = $modelPago;
@@ -579,8 +588,8 @@ class CarroController extends ControllerVitalcall {
                 throw new Exception("Error al guardar compra [0]" . $objCompra->validateErrorsResponse());
             }
 
-            /* if (isset(Yii::app()->session[Yii::app()->params->sesion['formulaMedica']])) {
-              foreach (Yii::app()->session[Yii::app()->params->sesion['formulaMedica']] as $formula) {
+            if (isset(Yii::app()->session[Yii::app()->params->vitalCall['sesion']['formulaMedica']])) {
+              foreach (Yii::app()->session[Yii::app()->params->vitalCall['sesion']['formulaMedica']] as $formula) {
               $formulaMedica = new FormulasMedicas();
               $formulaMedica->idCompra = $objCompra->idCompra;
               $formulaMedica->nombreMedico = $formula['nombreMedico'];
@@ -591,14 +600,14 @@ class CarroController extends ControllerVitalcall {
               $formulaMedica->formulaMedica = $formula['formulaMedica'];
 
               if (!$formulaMedica->save()) {
-              echo "<pre>";
-              print_r($formulaMedica->getErrors());exit();
-              throw new Exception("Error al formula medica" . implode(",",$formulaMedica->getErrors()));
+              	//echo "<pre>";
+              	//print_r($formulaMedica->getErrors());exit();
+              	throw new Exception("Error al formula medica" . implode(",",$formulaMedica->getErrors()));
               }
               }
 
-              unset(Yii::app()->session[Yii::app()->params->sesion['formulaMedica']]);
-              } */
+              unset(Yii::app()->session[Yii::app()->params->vitalCall['sesion']['formulaMedica']]);
+              }
 
             if ($tipoEntrega == Yii::app()->params->entrega['tipo']['presencial']) {
                 $puntoVenta = $modelPago->listPuntosVenta[1][$modelPago->indicePuntoVenta];
@@ -732,8 +741,11 @@ class CarroController extends ControllerVitalcall {
                 //$objItem->idEstadoItemTercero = null;
                 $objItem->flete = $position->getShipping();
                 $objItem->disponible = 1;
-                $objItem->idFormula = $position->objProductoFormula->idFormula;
-                $objItem->idProductoVitalCall = $position->objProductoFormula->idProductoVitalCall;
+                
+                if($position->isFormula()){
+                	$objItem->idFormula = $position->objProductoFormula->idFormula;
+                	$objItem->idProductoVitalCall = $position->objProductoFormula->idProductoVitalCall;
+                }
                 
                 $totalUnidades = 0;
                 $totalFracciones = 0;

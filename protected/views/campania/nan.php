@@ -37,7 +37,7 @@ $this->metaTags = "<meta http-equiv='X-UA-Compatible' content='IE=edge'>
             </a>
         </center>
         <center>
-            <a href="<?= Yii::app()->request->baseUrl ?>/campania/contenido/nan-recetas">
+            <a href="<?= Yii::app()->request->baseUrl ?>/campania/contenido/nan-recetas" data-ajax="false">
                 <img width="100%" src="<?= Yii::app()->request->baseUrl ?>/images/contenido/nan/recetas.png" alt="Recetas Nan Optipro">                   
             </a>
         </center>
@@ -78,7 +78,7 @@ $this->metaTags = "<meta http-equiv='X-UA-Compatible' content='IE=edge'>
                 <a href="<?php echo CController::createUrl('/contenido/ver', array('tipo' => 'grupo', 'contenido' => 1218)) ?>">  
                     <img src="<?= Yii::app()->request->baseUrl ?>/images/contenido/nan/compra-online.png" class="img-responsive compra-online" alt="Compra Nan Optipro">
                 </a>
-                <a href="">
+                <a href="#">
                    <img style="margin: 15px auto 0px;width:65%;" src="<?= Yii::app()->request->baseUrl ?>/images/contenido/nan/entrega-en-1-hora.png" class="img-responsive" alt="Entrega en 1 hora Nan Optipro"> 
                 </a>
                 <div class="space"></div>

@@ -532,5 +532,28 @@ class FormaPagoVitalCallForm extends CFormModel {
             }
         }
     }
+    
+    public function calcularFormulas($positions){
+        $array = array();
+    	if (isset(Yii::app()->session[Yii::app()->params->vitalCall['sesion']['formulaMedica']])) {
+            $array = Yii::app()->session[Yii::app()->params->vitalCall['sesion']['formulaMedica']];
+    	}
+    	
+        foreach($positions as $position){
+        	if($position->isFormula()){
+        		$array["f-".$position->objProductoFormula->idFormula] = array(
+        				'nombreMedico' => $position->objProductoFormula->objFormulaVC->nombreMedico,
+        				'institucion' => $position->objProductoFormula->objFormulaVC->institucion,
+        				'registroMedico' => $position->objProductoFormula->objFormulaVC->registroMedico,
+        				'telefono' => $position->objProductoFormula->objFormulaVC->telefono,
+        				'correoElectronico' => $position->objProductoFormula->objFormulaVC->correoElectronico,
+        				'formulaMedica' => ""
+        		);
+        	}
+        	
+        }
+        
+        Yii::app()->session[Yii::app()->params->vitalCall['sesion']['formulaMedica']] = $array;
+    }
 
 }

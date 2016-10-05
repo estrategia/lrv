@@ -3193,8 +3193,8 @@ class CarroController extends Controller {
                     $formulaMedica->formulaMedica = $formula['formulaMedica'];
 
                     if (!$formulaMedica->save()) {
-                        echo "<pre>";
-                        print_r($formulaMedica->getErrors());exit();
+                        //echo "<pre>";
+                        //print_r($formulaMedica->getErrors());exit();
                         throw new Exception("Error al formula medica" . implode(",",$formulaMedica->getErrors()));
                     }
                 }
