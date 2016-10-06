@@ -116,4 +116,17 @@ class ReportesController extends ControllerVitalcall {
 		$objWriter->save('php://output');
 	}
 	
+	
+	public function actionFormulaVencer(){
+		$dataProvider = new CArrayDataProvider(ProductosFormulaVitalCall::obtenerFormulasVencer(), array(
+				'pagination' => array(
+						'pageSize' => 10,
+				),
+		));
+		$this->render ( 'formulasVencer', array (
+				//'model' => $model,
+				'dataProvider' => $dataProvider
+		));
+	}
+	
 }

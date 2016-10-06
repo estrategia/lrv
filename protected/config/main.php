@@ -678,6 +678,7 @@ return array(
         		),
         		'pasosDisponibles' => array('informacion', 'confirmacion'),
         	),
+        	'diasRecordatorioFormula' => array(1,3)	
         ),
     ),
 );

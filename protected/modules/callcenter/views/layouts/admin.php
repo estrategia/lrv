@@ -103,6 +103,9 @@
                                 <li class="">
                                     <a href="<?php echo $this->createUrl('/callcenter/vitalcall/reportes/reporteMedico') ?>" class="ajax-link"><i class="glyphicon glyphicon-stats"></i><span> Reporte por m&eacute;dico</span></a>
                                 </li>
+                                <li class="">
+                                    <a href="<?php echo $this->createUrl('/callcenter/vitalcall/reportes/formulaVencer') ?>" class="ajax-link"><i class="glyphicon glyphicon-flash"></i><span> F&oacute;rmulas por vencer</span></a>
+                                </li>
                             <?php endif; ?>
                             <?php if (Yii::app()->controller->module->user->profile == 2): ?>
                                 <li class="nav-header hidden-md">Admin</li>

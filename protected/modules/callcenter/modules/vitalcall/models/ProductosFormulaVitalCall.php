@@ -10,12 +10,14 @@
  * @property string $dosis
  * @property string $intervalo
  * @property string $fechaCreacion
+ * @property string $fechaCompra
  * 
  * @property ProductosVitalCall $objProductoVC
  * @property FormulasVitalCall[] $listFormulasVC
  */
 class ProductosFormulaVitalCall extends CActiveRecord {
 
+	public $id, $diasTotales;
     /**
      * @return string the associated database table name
      */
@@ -106,6 +108,40 @@ class ProductosFormulaVitalCall extends CActiveRecord {
      */
     public static function model($className = __CLASS__) {
         return parent::model($className);
+    }
+    
+    
+    public static function obtenerFormulasVencer(){
+    	
+    	// , DATEDIFF(now(),fechaCompra) AS diasTranscurridos,
+    						/* ADDDATE(currentDate, INTERVAL (floor(cantidadComprada/(24/intervalo*dosis))-DATEDIFF(now(),fechaCompra) DAY) as fechaVencimiento*/
+    	$diasRecordatorio = implode(", ", Yii::app()->params->vitalCall['diasRecordatorioFormula']);
+    	return self::model()->findAll(
+    		array(
+    			'with' => array( 
+	    			'objProductoVC' => array('with' => 'objProducto'),
+	    			'objFormulaVC' => array ( 'with' => 'objUsuarioVC') ),	
+    			'select' => '*, floor(cantidadComprada/(24/intervalo*dosis)) as diasTotales',
+    			'condition' => 	"cantidadComprada < cantidad and cantidadComprada > 0 and 
+    				(floor(cantidadComprada/(24/intervalo*dosis))-DATEDIFF(now(),fechaCompra) in ($diasRecordatorio))",
+    		//	'order' => 'diasVencimiento ASC',	
+    		));
+    	
+    	// 
+    	 
+    }
+    
+    public function getDiasRestantes(){
+    	$datetime1 = new DateTime($this->fechaCompra);
+    	$interval = date_create('now')->diff( $datetime1 );
+    	return ($this->diasTotales - $interval->d);
+    }
+    
+    public function getDiaVencimiento(){
+    	$diasRestantes = $this->getDiasRestantes();
+    	$fechaActual = date('Y-m-d');
+    	$fechaVencimiento = strtotime ( "+$diasRestantes day" , strtotime ($fechaActual ) ) ;
+    	return date ( 'Y-m-d' , $fechaVencimiento ); 
     }
 
 }

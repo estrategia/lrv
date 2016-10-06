@@ -161,6 +161,9 @@ return array(
                12 => "Diciembre"),
         'urlSitio' => 'www.larebajavirtual.com',
         'urlChatLinea' => '/contenido/ver/tipo/grupo/contenido/41',
+    	'vitalCall' => array (
+    			'diasRecordatorioFormula' => array(1,3)
+    		)		
         ),
         
 
