@@ -3,8 +3,8 @@
 
 <?php
 $this->metaTags = "<meta http-equiv='X-UA-Compatible' content='IE=edge'>
-    <meta name='description' content=''>
-    <meta name='keywords' content=''>
+    <meta name='description' content='La leche en polvo Klim 1+ ayuda a desarrollar un sistema de defensas y un sistema digestivo saludable. Especial para niños entre 1 y 3 años. '>
+    <meta name='keywords' content='Leche en polvo, leche klim,  leche klim 1.'>
 
 	<!-- styles -->
 	<style>
