@@ -760,7 +760,7 @@ class CarroController extends ControllerVitalcall {
                 
                 $totalCantidad = $totalUnidades+$totalFracciones;
                 
-                $sql = "UPDATE t_ProductosFormulaVitalCall SET cantidadComprada=cantidadComprada+$totalCantidad, fechaCompra='$objCompra->fechaEntrega' WHERE idFormula=$objItem->idFormula AND idProductoVitalCall=$objItem->idProductoVitalCall";
+                $sql = "UPDATE t_ProductosFormulaVitalCall SET cantidadComprada=cantidadComprada+$totalCantidad, fechaCompra='$objCompra->fechaEntrega', cantidadUltimaCompra=$totalCantidad WHERE idFormula=$objItem->idFormula AND idProductoVitalCall=$objItem->idProductoVitalCall";
                 Yii::app()->db->createCommand($sql)->execute();
 
                 if (!$objItem->save()) {

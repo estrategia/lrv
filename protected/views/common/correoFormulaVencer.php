@@ -22,7 +22,7 @@
 	<tr>
 	    <td style="text-align:left;line-height:20px;border-top:1px solid #dddddd;vertical-align:top;padding:8px" >
 	        <p>
-	           <img class="CToWUd" width="70" height="70" align="left" src="<?php echo /*CController::createAbsoluteUrl('/')*/"localhost/lrv/" . $producto['objProducto']->rutaImagen(); ?>" title="" style="margin-right:7px;margin-bottom:13px;float:left">
+	           <img class="CToWUd" width="70" height="70" align="left" src="<?php echo "http://www.larebajavirtual.com" . $producto['objProducto']->rutaImagen(); ?>" title="" style="margin-right:7px;margin-bottom:13px;float:left">
 	        </p>
 	        <p style="margin:0">
 	                <b><?php echo $producto['objProducto']->descripcionProducto ?></b>

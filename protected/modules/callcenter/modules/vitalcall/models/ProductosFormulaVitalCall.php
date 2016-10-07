@@ -121,9 +121,9 @@ class ProductosFormulaVitalCall extends CActiveRecord {
     			'with' => array( 
 	    			'objProductoVC' => array('with' => 'objProducto'),
 	    			'objFormulaVC' => array ( 'with' => 'objUsuarioVC') ),	
-    			'select' => '*, floor(cantidadComprada/(24/intervalo*dosis)) as diasTotales',
+    			'select' => '*, floor(cantidadUltimaCompra/(24/intervalo*dosis)) as diasTotales',
     			'condition' => 	"cantidadComprada < cantidad and cantidadComprada > 0 and 
-    				(floor(cantidadComprada/(24/intervalo*dosis))-DATEDIFF(now(),fechaCompra) in ($diasRecordatorio))",
+    				(floor(cantidadUltimaCompra/(24/intervalo*dosis))-DATEDIFF(now(),fechaCompra) in ($diasRecordatorio))",
     		//	'order' => 'diasVencimiento ASC',	
     		));
     	
