@@ -97,6 +97,8 @@ class Producto extends CActiveRecord {
             'objBusqueda' => array(self::BELONGS_TO, 'RelevanciaTemp', '','on' => 't.codigoProducto = objBusqueda.codigoProducto'),
         	'listVitalCall'	=> array(self::HAS_MANY, 'ProductosVitalCall', 'codigoProducto'),
         	'objVitalCall'	=> array(self::HAS_ONE, 'ProductosVitalCall', 'codigoProducto'),
+        	'listComprasItems'	=> array(self::HAS_MANY, 'ComprasItems', 'codigoProducto'),
+        		
                 //'listCategoriasTienda' => array(self::MANY_MANY, 'CategoriaTienda', '', 'through' => 'CategoriasCategoriaTienda', 'condition' => 'CategoriasCategoriaTienda.idCategoriaBI=106'),
                 //'listCategoriasCategoriaTienda' => array(self::HAS_MANY, 'CategoriasCategoriaTienda', 'idCategoriaBI'),
         );

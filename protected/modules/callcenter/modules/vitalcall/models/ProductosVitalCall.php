@@ -53,6 +53,7 @@ class ProductosVitalCall extends CActiveRecord {
         return array(
             //'listFormulasVC' => array(self::MANY_MANY, 'FormulasVitalCall', 't_ProductosFormulaVitalCall(idProductoVitalCall, idFormula)'),
             'objProducto' => array(self::BELONGS_TO, 'Producto', 'codigoProducto'),
+        	'listComprasItems' => array(self::HAS_MANY, 'ComprasItems', 'idProductoVitalCall'),
         );
     }
 

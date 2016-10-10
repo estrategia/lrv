@@ -668,7 +668,7 @@ return array(
             	'busquedaExportar' => 'larebaja.online.vitalCall.productos.busqueda.exportar',
             	'usuariosExportar' => 'larebaja.online.vitalCall.productos.usuarios.exportar',
                 'formulaMedica' => 'larebaja.online.vitalCall.compra.formulamedica', // new 
-                
+            	'reporteMedico' => 'larebaja.online.vitalCall.compra.reportemedico', // new
             ),
         	'descuento' => 10,
         	'pagar' => array(
@@ -678,6 +678,7 @@ return array(
         		),
         		'pasosDisponibles' => array('informacion', 'confirmacion'),
         	),
+        	'diasRecordatorioFormula' => array(1,3)	
         ),
     ),
 );
