@@ -263,7 +263,8 @@ class BonosTienda extends CActiveRecord {
 
         if ($dataProvider !== null) {
             foreach ($dataProvider->getData() as $idx => $objBono) {
-                $content .= "$objBono->idBonoTienda;$objBono->identificacionUsuario;$objBono->idBonoTiendaTipo;$objBono->valor;$objBono->vigenciaInicio;$objBono->vigenciaFin;$objBono->minimoCompra;".Yii::app()->params->callcenter["bonos"]["tipoNombre"][$objBono->tipo]. ";". Yii::app()->params->callcenter["bonos"]["estadoNombre"][$objBono->estado] . ";" . "$objBono->fechaCreacion;$objBono->idCompra;$objBono->fechaUso;$objBono->valorCompra\n";
+            	$concepto = isset($objBono->objConcepto->concepto)?$objBono->objConcepto->concepto:"";
+                $content .= "$objBono->idBonoTienda;$objBono->identificacionUsuario;$concepto;$objBono->valor;$objBono->vigenciaInicio;$objBono->vigenciaFin;$objBono->minimoCompra;".Yii::app()->params->callcenter["bonos"]["tipoNombre"][$objBono->tipo]. ";". Yii::app()->params->callcenter["bonos"]["estadoNombre"][$objBono->estado] . ";" . "$objBono->fechaCreacion;$objBono->idCompra;$objBono->fechaUso;$objBono->valorCompra\n";
             }
         }
         

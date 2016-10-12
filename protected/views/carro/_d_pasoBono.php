@@ -1,47 +1,63 @@
 <?php if (empty($modelPago->bono)): ?>
 
-    <div class="sold-out">
-        <img class="ajustada" src="<?php echo Yii::app()->request->baseUrl; ?>/images/desktop/sold-out.png" alt="">
-
-
+    
         <!--  Codigos promocionales -->
         <?php if (!Yii::app()->user->isGuest): ?>
             <?php
-            $form = $this->beginWidget('CActiveForm', array(
-                'id' => 'form-pago-bono',
-                'enableClientValidation' => true,
-                'errorMessageCssClass' => 'has-error',
-                'clientOptions' => array(
-                    'validateOnSubmit' => true,
-                    'validateOnChange' => true,
-                    'errorCssClass' => 'has-error',
-                    'successCssClass' => 'has-success',
-                ))
-            );
-            ?>
-
-            <div class ="row">
-
-                <div class="col-md-3">
-                    <label> Redimir c&oacute;digo</label>
-                </div>
-                <div class="col-md-4">
-                    <?= CHtml::textField('codigoPromocional', '', array('class' => 'form-control')) ?>
-                    <label id='usoCodigo'></label>
-                    <input type="hidden" id='FormaPagoForm-usoBonoPromocional' name="FormaPagoForm[usoBono][promocional]" value="0">
-                </div>
-                <div class="col-md-5">
-                    <div class="bot-button">
-                        <button type="button" id="btn-formas-pago" class="btn btn-danger btn-sm" data-toggle="modal" data-role="codigo-promocional">Usar c&oacute;digo</button>
-                    </div>        
-                </div>
-            </div>
-            <div class="space-2"></div>
+								$form = $this->beginWidget ( 'CActiveForm', array (
+										'id' => 'form-pago-bono',
+										'enableClientValidation' => true,
+										'errorMessageCssClass' => 'has-error',
+										'clientOptions' => array (
+											'validateOnSubmit' => true,
+											'validateOnChange' => true,
+											'errorCssClass' => 'has-error',
+											'successCssClass' => 'has-success' 
+								) 
+							) );
+			?>
+				<div id='uso-codigo-div'>
+           			Tienes un c&oacute;digo promocional  <a href="#" type="button" class="" data-toggle="modal" data-target="#modal-promocional">Usalo aqu&iacute;</a>
+				</div>
+					<!-- Modal -->
+					<div id="modal-promocional" class="modal fade" role="dialog">
+					  <div class="modal-dialog">
+					
+					    <!-- Modal content-->
+					    <div class="modal-content">
+					      <div class="modal-header">
+					        <button type="button" class="close" data-dismiss="modal">&times;</button>
+					        <h4 class="modal-title">Modal Header</h4>
+					      </div>
+					      <div class="modal-body">
+					        <div class ="row">
+						        <div class="col-md-4">
+						            <label> Redimir c&oacute;digo</label>
+						        </div>
+						        <div class="col-md-8">
+						            <?= CHtml::textField('codigoPromocional', '', array('class' => 'form-control')) ?>
+						            <label id='usoCodigo'></label>
+						            <input type="hidden" id='FormaPagoForm-usoBonoPromocional' disabled name="FormaPagoForm[usoBono][promocional]" value="0">
+						        </div>
+						       
+						    </div>
+					      </div>
+					      <div class="modal-footer">
+					           <button type="button" id="btn-formas-pago" class="btn btn-danger btn-sm" data-toggle="modal" data-role="codigo-promocional">Usar c&oacute;digo</button>
+						    	<button type="button" class="btn btn-default" data-dismiss="modal">Cerrar</button>
+					      </div>
+					    </div>
+					
+					  </div>
+					</div>	
+					<div class="space-2"></div>
 
             <?php $this->endWidget(); ?>
-
+		<?php else:?>
+		 <div class="sold-out">
+			<img class="ajustada" src="<?php echo Yii::app()->request->baseUrl; ?>/images/desktop/sold-out.png" alt="">
+		</div>		
         <?php endif; ?>
-    </div>
 
 <?php else: ?>
     <?php
@@ -57,43 +73,49 @@
         ))
     );
     ?>
-    Tienes bonos promocionales listos para usar, no te quedes sin utilizarlos.
-    <div class="space-1"></div>
-    <div class="bot-button">
-        <button type="button" id="btn-formas-pago" class="btn btn-danger btn-sm" data-toggle="modal" data-target="#modalMisBonos">Ver mis Bonos</button>
-    </div>
-
-    <!--  Codigos promocionales -->
-    <div class="space-2"></div>
-    <div class ="row">
-        <div class="col-md-3">
-            <label> Redimir c&oacute;digo</label>
-        </div>
-        <div class="col-md-4">
-            <?= CHtml::textField('codigoPromocional', '', array('class' => 'form-control')) ?>
-            <label id='usoCodigo'></label>
-            <input type="hidden" id='FormaPagoForm-usoBonoPromocional' disabled name="FormaPagoForm[usoBono][promocional]" value="0">
-        </div>
-        <div class="col-md-5">
-            <div class="bot-button">
-                <button type="button" id="btn-formas-pago" class="btn btn-danger btn-sm" data-toggle="modal" data-role="codigo-promocional">Usar c&oacute;digo</button>
-            </div>        
-        </div>
-    </div>
-    <div id="modalMisBonos" class="modal fade" role="dialog">
-        <div class="modal-dialog">
-            <!-- Modal content-->
-            <div class="modal-content">
-                <div class="modal-header">
-                    <button type="button" class="close" data-dismiss="modal">&times;</button>
-                    <h4 class="modal-title">Mis bonos</h4>
-                </div>
-                <div class="modal-body">
-                    <div class="bono">
+    <div id='uso-codigo-div'>
+	 	Tienes un c&oacute;digo promocional  <a href="#" type="button" class="" data-toggle="modal" data-target="#modal-promocional">Usalo aqu&iacute;</a>
+	</div>
+					<!-- Modal -->
+					<div id="modal-promocional" class="modal fade" role="dialog">
+					  <div class="modal-dialog">
+					
+					    <!-- Modal content-->
+					    <div class="modal-content">
+					      <div class="modal-header">
+					        <button type="button" class="close" data-dismiss="modal">&times;</button>
+					        <h4 class="modal-title">Modal Header</h4>
+					      </div>
+					      <div class="modal-body">
+					        <div class ="row">
+						        <div class="col-md-4">
+						            <label> Redimir c&oacute;digo</label>
+						        </div>
+						        <div class="col-md-8">
+						            <?= CHtml::textField('codigoPromocional', '', array('class' => 'form-control')) ?>
+						            <label id='usoCodigo'></label>
+						            <input type="hidden" id='FormaPagoForm-usoBonoPromocional' disabled name="FormaPagoForm[usoBono][promocional]" value="0">
+						        </div>
+						       
+						    </div>
+					      </div>
+					      <div class="modal-footer">
+					           <button type="button" id="btn-formas-pago" class="btn btn-danger btn-sm" data-toggle="modal" data-role="codigo-promocional">Usar c&oacute;digo</button>
+						    	<button type="button" class="btn btn-default" data-dismiss="modal">Cerrar</button>
+					      </div>
+					    </div>
+					
+					  </div>
+					</div>
+				    <!--  Codigos promocionales -->
+				
+				    <div class="space-1"></div>
+				     
+       				<div class="bono">
                         <div class="scroll-div">
                             <div class="row" style="margin:0px;">
                                 <div class="col-md-12">
-                                    <p class="text-center text-bold">Â¿Utilizar el bono?</p>
+                                    <p class="text-center text-bold">�Utilizar el bono?</p>
                                 </div>
                             </div>
 
@@ -134,14 +156,6 @@
                         <div class="space-1"></div>
                         <?php echo $form->error($modelPago, 'usoBono', array('class' => 'text-danger')); ?>
                     </div>
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-default" data-dismiss="modal">Cerrar</button>
-                </div>
-            </div>
-
-        </div>
-    </div>
     <?php $this->endWidget(); ?>
 <?php endif; ?>
 

@@ -40,6 +40,13 @@ $form = $this->beginWidget('CActiveForm', array(
     <p>El archivo debe ser en formato .csv</p>
     <p>Descargar plantilla de cargue de ejemplo <?php echo CHtml::link('Aquí', Yii::app()->baseUrl . "/files/upload_bonos.csv"); ?></p>
 </div>
+<div class="form-group">
+    <?php echo $form->labelEx($model, 'tipoBono', array('class' => 'col-lg-2 control-label text-primary')); ?>
+    <?php echo $form->dropDownList($model, 'tipoBono', CHtml::listData(BonoTienda::model()->findAll("tipo = 1"), 'idBonoTiendaTipo', 'concepto'), array( 'prompt'=> 'Seleccione...', 'class' => 'form-control')) ?>
+    <div class="col-lg-10">
+        <?php echo $form->error($model, 'tipoBono', array('class' => 'text-left text-danger')); ?>
+    </div>
+</div>
 
 <div class="form-group">
     <?php echo $form->labelEx($model, 'archivo', array('class' => 'col-lg-2 control-label text-primary')); ?>

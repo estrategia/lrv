@@ -63,7 +63,6 @@ class BeneficiosCommand extends CConsoleCommand {
             if($i == 0){
                 $idSincronizacion = 37071;
             }
-
            
             $h2 = round(microtime(true) * 1000);
 

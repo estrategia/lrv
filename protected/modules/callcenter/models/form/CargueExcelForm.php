@@ -5,6 +5,7 @@
  */
 class CargueExcelForm extends CFormModel {
     public $archivo;
+    public $tipoBono;
 
     /**
      * Declares the validation rules.
@@ -12,7 +13,7 @@ class CargueExcelForm extends CFormModel {
     public function rules() {
         return array(
             // name, email, subject and body are required
-            array('archivo', 'required', 'message' => '{attribute} no puede estar vac&iacute;o'),
+            array('archivo,tipoBono', 'required', 'message' => '{attribute} no puede estar vac&iacute;o'),
             array('archivo', 'file', 'safe'=>true, 'types' => 'csv', 'allowEmpty' => false),
         );
     }
@@ -25,6 +26,7 @@ class CargueExcelForm extends CFormModel {
     public function attributeLabels() {
         return array(
             'archivo' => 'Archivo CSV',
+        	'tipoBono' => 'Tipo Bono',
         );
     }
 

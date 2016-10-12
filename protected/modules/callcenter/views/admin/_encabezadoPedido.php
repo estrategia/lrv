@@ -1,5 +1,5 @@
 <div class="row">
-    <div class="col-md-8">
+    <div class="col-md-9">
         <?php if ($objCompra->idOperador !== null && $objCompra->idOperador !== Yii::app()->controller->module->user->id): ?>
             <div class="alert alert-danger">
                 <strong>ESTE PEDIDO YA ESTA SIENDO TRAMITADO POR: <?php echo strtoupper($objCompra->objOperador->nombre) ?></strong>
@@ -58,7 +58,24 @@
                                 <strong>Ciudad: </strong><?php echo $objCompra->objCiudad->nombreCiudad . " - " . $objCompra->objSector->nombreSector ?>
                             </div>
                         <?php endif; ?>
+                        	
                     </td>
+                    <td>
+				          <strong>Formas de pago</strong> <br>
+				           <table>
+				           		 <?php foreach($objCompra->listFormaPagoCompra as $formaPago):?>
+					                     <tr>
+					                          <td > 
+					                             <?= (isset( $formaPago->objFormaPago->formaPago )?$formaPago->objFormaPago->formaPago:"").": ".
+					                                 (isset( $formaPago->numeroTarjeta )?"<br/>Numero de tarjeta: ".$formaPago->numeroTarjeta:"")." ".
+					                                 (isset( $formaPago->numeroTarjeta )?" Cuotas: ".$formaPago->cuotasTarjeta:"")." ".
+					                                 (isset( $formaPago->objConcepto->concepto )?"<br/><strong>Concepto:</strong> ".$formaPago->objConcepto->concepto:"");
+				            					?> </td>
+					                           <td> <?= Yii::app()->numberFormatter->format(Yii::app()->params->formatoMoneda['patron'], $formaPago->valor, Yii::app()->params->formatoMoneda['moneda']); ?> </td>
+					                     </tr>
+					             <?php endforeach;?>
+				          	</table>  
+				     </td>
                     <td> 
                     	<strong> 
                             <span style="color: #E10019; font-size: 16px;"> Pago <?php echo $objCompra->objFormaPagoCompra->objFormaPago->formaPago ?></span>
@@ -74,11 +91,12 @@
                             <?php endif; ?>
                             <h3><?php echo Yii::app()->numberFormatter->format(Yii::app()->params->formatoMoneda['patron'], $objCompra->objFormaPagoCompra->valor, Yii::app()->params->formatoMoneda['moneda']); ?></h3>
                         </strong>
-                        <button id="btn-formas-pago" class="btn btn-danger btn-sm" data-toggle="modal" data-target="#modalFormasPago">Ver formas de pago</button>
+                      <!--   <button id="btn-formas-pago" class="btn btn-danger btn-sm" data-toggle="modal" data-target="#modalFormasPago">Ver formas de pago</button>  -->
                     	<tr>                       
-                    </tr>
+                    	</tr>
                         <br>
                     </td>
+                    
                 </tr>
                 <tr>
                     <td colspan="3">
@@ -87,12 +105,11 @@
                     </td>
                 </tr>
                 <?php if (count($objCompra->listFormulas) > 0): ?>
-                    <tr>
+                	 <tr>
                         <td colspan="3">
                             <button id="btn-formula-buscar" class="btn btn-danger btn-sm" data-pedido="61" data-toggle="modal" data-target="#myModal">Ver formula médica</button>
                         </td>
-                    </tr>
-
+                    </tr> 
                 <?php endif; ?>
             </tbody>
         </table>
@@ -191,7 +208,8 @@
 
             </div>
         </div>
-    <div class="col-md-4">
+        
+    <div class="col-md-3">
         <strong> Datos de Asignación </strong><br><br>
         <table border="0" class="table-condensed">
             <tbody>
@@ -251,6 +269,7 @@
             </tbody>
         </table>
     </div>
+  
 </div>
 <?php if ($objCompra->totalCompra < $objCompra->objFormaPagoCompra->valor): ?>
     <div class="row">

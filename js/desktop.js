@@ -2630,7 +2630,10 @@ $(document).on('click', "button[data-role='codigo-promocional']", function() {
                                     		$("#FormaPagoForm-usoBonoPromocional").val(1);
                                     		$("#FormaPagoForm-usoBonoPromocional").prop("disabled",false);
                                     		$("#codigoPromocional").val("");
-                                    		$("#usoCodigo").html(data.response);
+                                    		// $("#usoCodigo").html(data.response);
+                                    		$("#modal-promocional").modal('hide');
+                                    		dialogoAnimado(data.response);
+                                    		$("#uso-codigo-div").html(data.response);
                                     		return false;
                                     	}else{
                                     		alert(data.response);
@@ -2651,7 +2654,8 @@ $(document).on('click', "button[data-role='codigo-promocional']", function() {
                 });
 
             } else if (data.result === 'error') {
-            	bootbox.alert(data.response);
+            	//bootbox.alert(data.response);
+            	$("#usoCodigo").html(data.response);
             } else {
                 $.each(data, function(element, error) {
                     $('#' + element + '_em_').html(error);
