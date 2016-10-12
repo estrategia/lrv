@@ -82,6 +82,26 @@ return array(
             'urlFormat' => 'path',
             'showScriptName' => false,
             'caseSensitive' => true,
+            'rules'=>array(
+                /*'post/<id:\d+>/<title:.*?>'=>'post/view',
+                'posts/<tag:.*?>'=>'post/index',*/
+                // REST patterns
+                array('restciudad/list', 'pattern'=>'rest/ciudad', 'verb'=>'GET'),
+                array('restciudad/view', 'pattern'=>'rest/ciudad/<id:\d+>', 'verb'=>'GET'),
+                array('restpuntoventa/puntoventacercano', 'pattern'=>'rest/puntoventacercano/lat/<lat:\-?\d+\.?\d+>/lon/<lon:\-?\d+\.?\d+>', 'verb'=>'GET'),
+                array('restpuntoventa/list', 'pattern'=>'rest/puntoventa', 'verb'=>'GET'),
+                array('restproducto/list', 'pattern'=>'rest/producto', 'verb'=>'GET'),
+                array('restproducto/buscar', 'pattern'=>'rest/producto/buscar/<termino:.*>', 'verb'=>'GET'),
+                array('restproducto/producto', 
+                    'pattern' => 'rest/producto/<codigoProducto:\d+>/ciudad/<codigoCiudad:\d+>/sector/<codigoSector:\d+>',
+                    'verb'=>'GET'),
+                array('restproducto/simular', 'pattern' => 'rest/producto/simular', 'verb' => 'GET'),
+               /* array('rest/update', 'pattern'=>'api/<model:\w+>/<id:\d+>', 'verb'=>'PUT'),
+                array('rest/delete', 'pattern'=>'api/<model:\w+>/<id:\d+>', 'verb'=>'DELETE'),
+                array('rest/create', 'pattern'=>'api/<model:\w+>', 'verb'=>'POST'),*/
+                // Other controllers
+                // '<controller:\w+>/<action:\w+>'=>'<controller>/<action>',
+            ),
         ),
         'db' => array(
             'connectionString' => 'mysql:host=localhost;port=3306;dbname=lrvmovil_copservir',
