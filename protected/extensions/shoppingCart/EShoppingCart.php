@@ -333,6 +333,7 @@ class EShoppingCart extends CMap {
      */
     public function put(IECartPosition $position, $fraction, $quantity = 1) {
         $key = $position->getId();
+        
         if ($this->itemAt($key) instanceof IECartPosition) {
             $position = $this->itemAt($key);
             $oldQuantity = $position->getQuantity($fraction);
@@ -439,13 +440,16 @@ class EShoppingCart extends CMap {
     public function update(IECartPosition $position, $fraction, $quantity) {
         if ($this->objSectorCiudad !== null) {
             $key = $position->getId();
-
-            $position->generate(array(
-                'objSectorCiudad' => $this->objSectorCiudad,
-                'codigoPerfil' => $this->codigoPerfil
-            ));
-
+            
+            if(!Yii::app()->shoppingCart->contains($key)){
+	            $position->generate(array(
+	                'objSectorCiudad' => $this->objSectorCiudad,
+	                'codigoPerfil' => $this->codigoPerfil
+	            ));
+            }
+            
             //$position->attachBehavior("CartPosition", new ECartPositionBehaviour());
+            //$position->setRefresh($this->refresh);
 
             $position->setQuantity($quantity, $fraction);
 
@@ -480,11 +484,13 @@ class EShoppingCart extends CMap {
             }
 
             $key = $position->getId();
-
-            $position->generate(array(
-                'objSectorCiudad' => $this->objSectorCiudad,
-                'codigoPerfil' => $this->codigoPerfil
-            ));
+            
+            if(!Yii::app()->shoppingCart->contains($key)){
+            	$position->generate(array(
+	                'objSectorCiudad' => $this->objSectorCiudad,
+	                'codigoPerfil' => $this->codigoPerfil
+	            ));
+            }            
 
             $position->setQuantityStored($quantity);
 

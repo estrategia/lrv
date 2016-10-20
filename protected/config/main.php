@@ -305,7 +305,7 @@ return array(
             'categoriasNoCalificacion' => array(1, 2)
         ),
         'cotizaciones' => array(
-            'diasVisualizar' => 10,
+            'diasVisualizar' => 100,
         ),
         'pagar' => array(
             'pasos' => array(

@@ -1,5 +1,5 @@
 <?php
-
+//controlador de prueba
 class TestController extends Controller {
     
     public function actionListprod(){

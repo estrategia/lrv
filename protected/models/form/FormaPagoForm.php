@@ -818,7 +818,7 @@ class FormaPagoForm extends CFormModel {
             $arrCantidad['UNIDAD'] = intval($n[0]);
         }
         
-        if(isset($n[1])){
+        if(isset($n[1]) && $uFracc>0){
             $arrCantidad['FRACCION'] = intval($n[1]);
         }
         
