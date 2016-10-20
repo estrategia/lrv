@@ -27,18 +27,18 @@ $this->metaTags = "<meta http-equiv='X-UA-Compatible' content='IE=edge'>
 <!--Versión movil-->
 <?php if ($this->isMobile): ?>
     <section>
-        <img width="100%" src="<?= Yii::app()->request->baseUrl ?>/images/contenido/nan/banner-nan-optipro.jpg">  
+        <img width="100%" src="<?= Yii::app()->request->baseUrl ?>/images/contenido/nan/banner-nan-optipro.jpg">
     </section>
     <div class="background" style="margin-top: -1%;">
         <img style="padding: 5% 3%;" width="95%" src="<?= Yii::app()->request->baseUrl ?>/images/contenido/nan/optipro-proteina.png" alt="Banner Nan Optipro">
         <center>
-            <a href="<?php echo CController::createUrl('/contenido/ver', array('tipo' => 'grupo', 'contenido' => 1218)) ?>" data-ajax="false">  
+            <a href="<?php echo CController::createUrl('/contenido/ver', array('tipo' => 'grupo', 'contenido' => 1218)) ?>" data-ajax="false">
                 <img src="<?= Yii::app()->request->baseUrl ?>/images/contenido/nan/compra-online.png" class="compra-online-movil" alt="Compra Nan Optipro">
             </a>
         </center>
         <center>
             <a href="<?= Yii::app()->request->baseUrl ?>/campania/contenido/nan-recetas" data-ajax="false">
-                <img width="100%" src="<?= Yii::app()->request->baseUrl ?>/images/contenido/nan/recetas.png" alt="Recetas Nan Optipro">                   
+                <img width="100%" src="<?= Yii::app()->request->baseUrl ?>/images/contenido/nan/recetas.png" alt="Recetas Nan Optipro">
             </a>
         </center>
         <div class="space"></div>
@@ -57,10 +57,10 @@ $this->metaTags = "<meta http-equiv='X-UA-Compatible' content='IE=edge'>
                 Productos a partir de 24 meses. <br>
                 *Junto con una alimentación balanceada y ejercicio físico diario.
             </p>
-            <img style="display:flex;" width="100%" src="<?= Yii::app()->request->baseUrl ?>/images/contenido/nan/end.png"> 
+            <img style="display:flex;" width="100%" src="<?= Yii::app()->request->baseUrl ?>/images/contenido/nan/end.png">
         </section>
     </div>
-    <!--Version movil-->   
+    <!--Version movil-->
 
 
     <!--Versión escritorio-->
@@ -74,16 +74,16 @@ $this->metaTags = "<meta http-equiv='X-UA-Compatible' content='IE=edge'>
             <div class="col-md-8">
                 <img src="<?= Yii::app()->request->baseUrl ?>/images/contenido/nan/optipro-proteina.png" class="img-responsive" alt="Banner Nan Optipro">
             </div>
-            <div class="col-md-4">            
-                <a href="<?php echo CController::createUrl('/contenido/ver', array('tipo' => 'grupo', 'contenido' => 1218)) ?>">  
+            <div class="col-md-4">
+                <a href="<?php echo CController::createUrl('/contenido/ver', array('tipo' => 'grupo', 'contenido' => 1218)) ?>">
                     <img src="<?= Yii::app()->request->baseUrl ?>/images/contenido/nan/compra-online.png" class="img-responsive compra-online" alt="Compra Nan Optipro">
                 </a>
                 <a href="#">
-                   <img style="margin: 15px auto 0px;width:65%;" src="<?= Yii::app()->request->baseUrl ?>/images/contenido/nan/entrega-en-1-hora.png" class="img-responsive" alt="Entrega en 1 hora Nan Optipro"> 
+                   <img style="margin: 15px auto 0px;width:65%;" src="<?= Yii::app()->request->baseUrl ?>/images/contenido/nan/entrega-en-1-hora.png" class="img-responsive" alt="Entrega en 1 hora Nan Optipro">
                 </a>
                 <div class="space"></div>
                 <a href="<?= Yii::app()->request->baseUrl ?>/campania/contenido/nan-recetas">
-                    <img src="<?= Yii::app()->request->baseUrl ?>/images/contenido/nan/recetas.png" class="img-responsive" alt="Recetas Nan Optipro">                   
+                    <img src="<?= Yii::app()->request->baseUrl ?>/images/contenido/nan/recetas.png" class="img-responsive" alt="Recetas Nan Optipro">
                 </a>
             </div>
             <div class="container">
@@ -99,14 +99,20 @@ $this->metaTags = "<meta http-equiv='X-UA-Compatible' content='IE=edge'>
                 </div>
             </div>
             <div>
+              <div class="space"></div>
+            <center>
+              <a href="<?= Yii::app()->request->baseUrl ?>/campania/contenido/mas-informacion-nan">
+                <img style="" width="" src="<?= Yii::app()->request->baseUrl ?>/images/contenido/nan/btn-mas-info.png" alt="Banner Nan Optipro">
+              </a>
+            </center>
                 <div class="space"></div>
                 <p class="copy">
                     Productos a partir de 24 meses. <br>
                     *Junto con una alimentación balanceada y ejercicio físico diario.
                 </p>
-                <img src="<?= Yii::app()->request->baseUrl ?>/images/contenido/nan/end.png" class="img-responsive end"> 
+                <img src="<?= Yii::app()->request->baseUrl ?>/images/contenido/nan/end.png" class="img-responsive end">
             </div>
         </div>
     </div>
-    <!--Fin versión escritorio-->   
+    <!--Fin versión escritorio-->
 <?php endif; ?>
