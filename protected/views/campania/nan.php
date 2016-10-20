@@ -20,7 +20,7 @@ $this->metaTags = "<meta http-equiv='X-UA-Compatible' content='IE=edge'>
         .compra-online-movil {width: 60%;}
 	</style>
 
-  <!-- Google Code para etiquetas de remarketing -->
+  <!-- Google Code para etiquetas de remarketing. -->
   <script type='text/javascript'>
     /* <![CDATA[ */
     var google_conversion_id = 872146633;
