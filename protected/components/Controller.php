@@ -56,8 +56,8 @@ class Controller extends CController {
                 Yii::app()->user->logout();
             }
         }
-	//	$this->isMobile = true;
-	//	$this->layout = '//layouts/mobile';
+		// $this->isMobile = true;
+		// $this->layout = '//layouts/mobile';
         $this->verificarDispositivo();
 
         if (isset(Yii::app()->session[Yii::app()->params->sesion['sectorCiudadEntrega']]) && Yii::app()->session[Yii::app()->params->sesion['sectorCiudadEntrega']] != null) {
@@ -144,7 +144,7 @@ class Controller extends CController {
     public function verificarDispositivo() {
         //Get HTTP/HTTPS (the possible values for this vary from server to server)
         $urlProtocolo = (isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] && !in_array(strtolower($_SERVER['HTTPS']), array('off', 'no'))) ? 'https' : 'http';
-        
+
         //Get domain portion
         $urlHost = '://' . $_SERVER['HTTP_HOST'];
         $urlHost = str_replace("://www.", "://", $urlHost);
@@ -267,4 +267,3 @@ class Controller extends CController {
     }
 
 }
-
