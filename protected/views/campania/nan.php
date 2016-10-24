@@ -13,11 +13,17 @@ $this->metaTags = "<meta http-equiv='X-UA-Compatible' content='IE=edge'>
             font-family: VAGRoundedStd-Bold;
             src: url(".Yii::app()->request->baseUrl."/images/contenido/nan/font/VAGRoundedStd-Bold.otf);
         }
+        @font-face {
+            font-family: vagrounded-normal;
+            src: url(".Yii::app()->request->baseUrl."/images/contenido/nan/font/vagrounded-normal.ttf);
+        }
         .copy{font-family: VAGRoundedStd-Bold;color:#fff;font-size:11pt;text-align:center;}
         .space{height:34px;}
         .end {margin-top: -54px;}
         .compra-online {width: 70%;margin: 0px auto 0px;}
         .compra-online-movil {width: 60%;}
+        .container-p{font-family: vagrounded-normal;font-size: 22px;color: #fff;padding: 6% 0;text-align: center;}
+        .container-p-m {font-family: vagrounded-normal; font-size: 19px; color: #fff; padding: 0 5%; text-align: center;}
 	</style>
 
   <!-- Google Code para etiquetas de remarketing. -->
@@ -44,7 +50,12 @@ $this->metaTags = "<meta http-equiv='X-UA-Compatible' content='IE=edge'>
         <img width="100%" src="<?= Yii::app()->request->baseUrl ?>/images/contenido/nan/banner-nan-optipro.jpg">
     </section>
     <div class="background" style="margin-top: -1%;">
-        <img style="padding: 5% 3%;" width="95%" src="<?= Yii::app()->request->baseUrl ?>/images/contenido/nan/optipro-proteina.png" alt="Banner Nan Optipro">
+        <img style="padding: 5% 3% 0;" width="95%" src="<?= Yii::app()->request->baseUrl ?>/images/contenido/nan/optipro-proteina.png" alt="Banner Nan Optipro">
+        <div class="container-p-m">
+          <p>Las proteínas tienen beneficios importantes en el niño en los primeros años de vida, por ejemplo son necesarias para que el niño crezca saludablemente,
+          se desarrollen adecuadamente sus defensas (sistema inmunológico) y su cerebro.</p>
+          <p> Darle a tu hijo una proteína de excelente calidad, es clave para una lograr una adecuada salud presente y futura</p>
+        </div>
         <center>
             <a href="<?php echo CController::createUrl('/contenido/ver', array('tipo' => 'grupo', 'contenido' => 1218)) ?>" data-ajax="false">
                 <img src="<?= Yii::app()->request->baseUrl ?>/images/contenido/nan/compra-online.png" class="compra-online-movil" alt="Compra Nan Optipro">
@@ -65,6 +76,18 @@ $this->metaTags = "<meta http-equiv='X-UA-Compatible' content='IE=edge'>
             <img width="100%" src="<?= Yii::app()->request->baseUrl ?>/images/contenido/nan/deliciosas-recetas.png" alt="Qué es programación metabolica?">
             <iframe width="100%" style="margin-top: 15px;" src="https://www.youtube.com/embed/8bckex25LDs" frameborder="0" allowfullscreen></iframe>
         </section>
+
+        <section>
+          <div class="space"></div>
+          <img style="width: 100%;" src="<?= Yii::app()->request->baseUrl ?>/images/contenido/nan/descripcion-nan-optipro.png" alt="Nan Optipro">
+          <div class="space"></div>
+          <a href="<?= Yii::app()->request->baseUrl ?>/campania/contenido/mas-informacion-nan">
+            <img style="width: 100%;" src="<?= Yii::app()->request->baseUrl ?>/images/contenido/nan/btn-mas-info.png" alt="Banner Nan Optipro">
+          </a>
+        </section>
+
+
+
         <section>
             <div class="space"></div>
             <p class="copy">
@@ -86,7 +109,12 @@ $this->metaTags = "<meta http-equiv='X-UA-Compatible' content='IE=edge'>
         <div class="row background">
             <div class="space"></div>
             <div class="col-md-8">
-                <img src="<?= Yii::app()->request->baseUrl ?>/images/contenido/nan/optipro-proteina.png" class="img-responsive" alt="Banner Nan Optipro">
+                <img style="margin-top: 33px;" src="<?= Yii::app()->request->baseUrl ?>/images/contenido/nan/optipro-proteina.png" class="img-responsive" alt="Banner Nan Optipro">
+              <div class="container-p">
+                <p>Las proteínas tienen beneficios importantes en el niño en los primeros años de vida, por ejemplo son necesarias para que el niño crezca saludablemente,
+                se desarrollen adecuadamente sus defensas (sistema inmunológico) y su cerebro.</p>
+                <p> Darle a tu hijo una proteína de excelente calidad, es clave para una lograr una adecuada salud presente y futura</p>
+              </div>
             </div>
             <div class="col-md-4">
                 <a href="<?php echo CController::createUrl('/contenido/ver', array('tipo' => 'grupo', 'contenido' => 1218)) ?>">
@@ -113,7 +141,9 @@ $this->metaTags = "<meta http-equiv='X-UA-Compatible' content='IE=edge'>
                 </div>
             </div>
             <div>
-              <div class="space"></div>
+            <div class="space"></div>
+            <img class="img-responsive" src="<?= Yii::app()->request->baseUrl ?>/images/contenido/nan/descripcion-nan-optipro.png" alt="Nan Optipro">
+            <div class="space"></div>
             <center>
               <a href="<?= Yii::app()->request->baseUrl ?>/campania/contenido/mas-informacion-nan">
                 <img style="" width="" src="<?= Yii::app()->request->baseUrl ?>/images/contenido/nan/btn-mas-info.png" alt="Banner Nan Optipro">
