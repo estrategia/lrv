@@ -142,7 +142,7 @@ $this->metaTags = "<meta http-equiv='X-UA-Compatible' content='IE=edge'>
             </div>
             <div>
             <div class="space"></div>
-            <img class="img-responsive" src="<?= Yii::app()->request->baseUrl ?>/images/contenido/nan/descripcion-nan-optipro.png" alt="Nan Optipro">
+            <img style="width:75%;margin:0 auto;" class="img-responsive" src="<?= Yii::app()->request->baseUrl ?>/images/contenido/nan/descripcion-nan-optipro.png" alt="Nan Optipro">
             <div class="space"></div>
             <center>
               <a href="<?= Yii::app()->request->baseUrl ?>/campania/contenido/mas-informacion-nan">
