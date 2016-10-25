@@ -594,7 +594,7 @@ class CarroController extends Controller {
 
                     //si hay saldo, agrega a carro
                     if ($cantidadCarroUnidad + $objItem->unidades <= $objSaldo->saldoUnidad) {
-                        Yii::app()->shoppingCart->put($objProductoCarro, false, $objItem->unidades);
+                    	Yii::app()->shoppingCart->put($objProductoCarro, false, $objItem->unidades);
                         $agregadoItem = true;
                         $nUnidadesCarro += $objItem->unidades;
                     } else {
@@ -611,7 +611,7 @@ class CarroController extends Controller {
 
                     //si hay saldo, agrega a carro
                     if ($cantidadCarroFraccion + $objItem->fracciones <= $objSaldo->saldoFraccion) {
-                        Yii::app()->shoppingCart->put($objProductoCarro, true, $objItem->fracciones);
+                    	Yii::app()->shoppingCart->put($objProductoCarro, true, $objItem->fracciones);
                         $agregadoItem = true;
                         $nUnidadesCarro += $objItem->fracciones;
                     } else {
@@ -644,26 +644,31 @@ class CarroController extends Controller {
                         } else {
                             $agregadoCompleto = false;
                         }
-                    }
-
-                    if ($agregadoItem) {
-                        $objProductoCarro->setPriceUnit($objItem->precioBaseUnidad);
-                        $objProductoCarro->setPriceFraction($objItem->precioBaseFraccion);
-                        $objProductoCarro->setDiscountPriceUnit($objItem->descuentoUnidad);
-                        $objProductoCarro->setDiscountPriceFraction($objItem->descuentoFraccion);
-                        $objProductoCarro->setTax($objItem->porcentajeImpuesto);
-                        $objProductoCarro->setDelivery($objItem->tiempoEntrega);
-                        $objProductoCarro->setShipping($objItem->flete);
-
-                        /* $listBeneficios = array();
-                          foreach($objItem->listBeneficios as $objBeneficio){
-
-                          } */
-
-                        $objProductoCarro->setBeneficios($objItem->listBeneficios);
-
-                        Yii::app()->shoppingCart->updatePosition($objProductoCarro);
-                    }
+                    }                    
+                }
+                
+                if ($agregadoItem) {
+                	$objProductoCarro->setPriceUnit($objItem->precioBaseUnidad);
+                	$objProductoCarro->setPriceFraction($objItem->precioBaseFraccion);
+                	$objProductoCarro->setDiscountPriceUnit($objItem->descuentoUnidad);
+                	$objProductoCarro->setDiscountPriceFraction($objItem->descuentoFraccion);
+                	$objProductoCarro->setTax($objItem->porcentajeImpuesto);
+                	$objProductoCarro->setDelivery($objItem->tiempoEntrega);
+                	$objProductoCarro->setShipping($objItem->flete);
+                	
+                	if($position!==null){
+                		$objProductoCarro->setQuantity($position->getQuantity(false), false);
+                		$objProductoCarro->setQuantity($position->getQuantity(true), true);
+                		$objProductoCarro->setQuantityStored($position->getQuantityStored());
+                	}
+                	
+                	/* $listBeneficios = array();
+                	 foreach($objItem->listBeneficios as $objBeneficio){
+                
+                	 } */
+                
+                	$objProductoCarro->setBeneficios($objItem->listBeneficios);
+                	Yii::app()->shoppingCart->updatePosition($objProductoCarro);
                 }
             }
 
@@ -4003,6 +4008,10 @@ class CarroController extends Controller {
         echo "<br/><br/>RULES<br/><br/>";
         CVarDumper::dump($modelPago->rules(), 10, true);
         echo "<br/><br/>SCENARIO: " . $modelPago->getScenario();
+        
+        $listHoras = $modelPago->listDataHoras();
+        echo "<br/><br/>HORAS<br/><br/>";
+        CVarDumper::dump($listHoras, 10, true);
 
         if ($limpiar){
             Yii::app()->session[Yii::app()->params->sesion['carroPagarForm']] = null;
