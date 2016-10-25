@@ -2261,7 +2261,8 @@ textarea.form-control {
 }
 
 .bono > .scroll-div {
-    max-height: 170px;
+    max-height: 200px;
+    font-size: 12px;
 }
 
 .confirm p {

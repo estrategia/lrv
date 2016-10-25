@@ -36,7 +36,7 @@
                 
                 <div class="info-compra" style="margin-right:0;">
    					<div data-role="panel" id="div-carro-canasta">
-                    	<?php $this->renderPartial('vitalcall.views.carro.canasta'); ?>
+                    	<?php $this->renderPartial('telefarma.views.carro.canasta'); ?>
                     </div>
                 </div>
 
@@ -90,21 +90,21 @@
                                     <a href="<?php echo $this->createUrl('/callcenter/admin/calificaciones') ?>" class="ajax-link"><i class="glyphicon glyphicon-ok"></i><span> Comentarios y Calificaciones</span></a>
                                 </li>
                                 
-                                <li class="nav-header hidden-md">VITAL CALL</li>
+                                <li class="nav-header hidden-md">TELEFARMA</li>
                                 <li class="">
-                                    <a href="<?php echo $this->createUrl('/callcenter/vitalcall/productos') ?>" class="ajax-link"><i class="glyphicon glyphicon-list-alt"></i><span> Productos</span></a>
+                                    <a href="<?php echo $this->createUrl('/callcenter/telefarma/productos') ?>" class="ajax-link"><i class="glyphicon glyphicon-list-alt"></i><span> Productos</span></a>
                                 </li>
                                 <li class="">
-                                    <a href="<?php echo $this->createUrl('/callcenter/vitalcall/cotizar/buscar') ?>" class="ajax-link"target="_blank"><i class="glyphicon glyphicon-usd"></i><span> Cotizar</span></a>
+                                    <a href="<?php echo $this->createUrl('/callcenter/telefarma/cotizar/buscar') ?>" class="ajax-link"target="_blank"><i class="glyphicon glyphicon-usd"></i><span> Cotizar</span></a>
                                 </li>
                                 <li class="">
-                                    <a href="<?php echo $this->createUrl('/callcenter/vitalcall/cliente') ?>" class="ajax-link"><i class="glyphicon glyphicon-user"></i><span> Pacientes</span></a>
+                                    <a href="<?php echo $this->createUrl('/callcenter/telefarma/cliente') ?>" class="ajax-link"><i class="glyphicon glyphicon-user"></i><span> Pacientes</span></a>
                                 </li>
                                 <li class="">
-                                    <a href="<?php echo $this->createUrl('/callcenter/vitalcall/reportes/reporteMedico') ?>" class="ajax-link"><i class="glyphicon glyphicon-stats"></i><span> Reporte por m&eacute;dico</span></a>
+                                    <a href="<?php echo $this->createUrl('/callcenter/telefarma/reportes/reporteMedico') ?>" class="ajax-link"><i class="glyphicon glyphicon-stats"></i><span> Reporte por m&eacute;dico</span></a>
                                 </li>
                                 <li class="">
-                                    <a href="<?php echo $this->createUrl('/callcenter/vitalcall/reportes/formulaVencer') ?>" class="ajax-link"><i class="glyphicon glyphicon-flash"></i><span> F&oacute;rmulas por vencer</span></a>
+                                    <a href="<?php echo $this->createUrl('/callcenter/telefarma/reportes/formulaVencer') ?>" class="ajax-link"><i class="glyphicon glyphicon-flash"></i><span> F&oacute;rmulas por vencer</span></a>
                                 </li>
                             <?php endif; ?>
                             <?php if (Yii::app()->controller->module->user->profile == 2): ?>

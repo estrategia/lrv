@@ -74,7 +74,7 @@ function buscarProductos(text, obj, request) {
     $.ajax({
         type: 'POST',
         async: true,
-        url: request + '/entreganacional/pedido/buscarProducto',
+        url: request + '/puntoventa/entreganacional/pedido/buscarProducto',
         data: {busqueda: text},
         beforeSend: function () {
             $('#modal-productos-busqueda').remove();
@@ -100,7 +100,7 @@ $(document).on('click', 'a[data-role="completitud-pdv"]', function () {
         type: 'POST',
         dataType: 'json',
         async: true,
-        url: requestUrl + '/subasta/admin/completitudPdv',
+        url: requestUrl + '/puntoventa/subasta/admin/completitudPdv',
         data: {compra: $(this).attr('data-compra')},
         beforeSend: function () {
             $('#modalSubasta').remove();
@@ -145,7 +145,7 @@ $(document).on('click', "a[data-role='asignar-pedido-pdv']", function () {
     $.ajax({
         type: 'POST',
         async: true,
-        url: requestUrl + '/subasta/admin/asignarPdv',
+        url: requestUrl + '/puntoventa/subasta/admin/asignarPdv',
         data: {dataPedido: dataPedido},
         beforeSend: function () {
             Loading.show();
@@ -182,7 +182,7 @@ $(document).on('click', 'button[data-action="asignar-pdv"]', function () {
         type: 'POST',
         dataType: 'json',
         async: true,
-        url: requestUrl + '/entreganacional/pedido/asignarpdv',
+        url: requestUrl + '/puntoventa/entreganacional/pedido/asignarpdv',
         data: {pdv: $('#select-pdv-asignar').val()},
         beforeSend: function () {
             Loading.show();
@@ -396,7 +396,7 @@ $(document).on('change', "#notificacion-form #NotificacionForm_tipoObservacion",
         $('#notificacion-form #NotificacionForm_observacion').val("");
     }
 });
-
+/*
 $("#busqueda-buscar").keypress(function (event) {
     if (event.which == 13) {
 
@@ -410,9 +410,7 @@ $("#busqueda-buscar").keypress(function (event) {
         return false;
     }
 });
-
-
-
+*/
 
 $(document).on('click', "button[data-role='busquedapedido']", function () {
     var text = $.trim($('#busqueda-buscar').val());
@@ -565,7 +563,7 @@ $(document).on('click', "a[data-cargar='1'], a[data-cargar='2']", function () {
         type: 'POST',
         dataType: 'json',
         async: true,
-        url: requestUrl + '/callcenter/pedido/agregar',
+        url: requestUrl + '/puntoventa/entreganacional/carro/agregar',
         data: data,
         beforeSend: function () {
             Loading.show();

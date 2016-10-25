@@ -37,17 +37,18 @@ class BonosTienda extends CActiveRecord {
         // NOTE: you should only define rules for those attributes that
         // will receive user inputs.
         return array(
-            array('identificacionUsuario, idBonoTiendaTipo, valor, vigenciaInicio, correoElectronico, vigenciaFin, minimoCompra, tipo', 'required', 'message' => '{attribute} no puede estar vac&iacute;o'),
+            array('identificacionUsuario, idBonoTiendaTipo, valor, vigenciaInicio, vigenciaFin, minimoCompra, tipo, concepto', 'required', 'message' => '{attribute} no puede estar vac&iacute;o'),
             array('valor, minimoCompra', 'numerical', 'integerOnly' => true, 'min' => 0),
             array('tipo, estado, idCompra, valorCompra', 'numerical', 'integerOnly' => true),
             array('identificacionUsuario', 'length', 'max' => 50),
+        	array('concepto', 'length', 'max' => 128),
             array('vigenciaInicio, vigenciaFin', 'date', 'format' => 'yyyy-M-d'),
             array('vigenciaFin', 'validateDate'),
             array('correoElectronico','email'),
             array('fechaCreacion, fechaUso', 'safe'),
             // The following rule is used by search().
             // @todo Please remove those attributes that should not be searched.
-            array('idBonoTienda, identificacionUsuario, idBonoTiendaTipo, valor, correoElectronico, idBonoTiendaTipo, vigenciaInicio, vigenciaFin, minimoCompra, tipo, estado, fechaCreacion, idCompra, fechaUso, valorCompra', 'safe', 'on' => 'search'),
+            array('idBonoTienda, identificacionUsuario, idBonoTiendaTipo, valor, correoElectronico, concepto, idBonoTiendaTipo, vigenciaInicio, vigenciaFin, minimoCompra, tipo, estado, fechaCreacion, idCompra, fechaUso, valorCompra', 'safe', 'on' => 'search'),
         );
     }
 
@@ -94,8 +95,9 @@ class BonosTienda extends CActiveRecord {
         return array(
             'idBonoTienda' => 'Id bono tienda',
             'identificacionUsuario' => 'Identificaci&oacute;n usuario',
-            'idBonoTiendaTipo' => 'Concepto',
+            'idBonoTiendaTipo' => 'Tipo Bono',
             'valor' => 'Valor',
+        	'concepto' => 'Concepto',
             'vigenciaInicio' => 'Vigencia inicio',
             'vigenciaFin' => 'Vigencia fin',
             'minimoCompra' => 'M&iacute;nimo compra',
@@ -133,6 +135,10 @@ class BonosTienda extends CActiveRecord {
         $criteria->compare('vigenciaFin', $this->vigenciaFin, true);
         $criteria->compare('minimoCompra', $this->minimoCompra, true);
         $criteria->compare('tipo', $this->tipo);
+        if(!empty($this->concepto)){
+        	$criteria->condition = "t.concepto LIKE '%$this->concepto%'";
+        }
+       
         $criteria->compare('estado', $this->estado);
         $criteria->compare('fechaCreacion', $this->fechaCreacion, true);
         $criteria->compare('idCompra', $this->idCompra);
@@ -258,13 +264,13 @@ class BonosTienda extends CActiveRecord {
 
     public function exportar() {
         ini_set('memory_limit', '-1');
-        $content = '"# Bono";"# Usuario";"Concepto";"Valor";"Vigencia Inicio";"Vigencia Fin";"Minimo Compra";"Tipo";"Estado";"Fecha Creacion";"# Compra";"Fecha Uso";"Valor Compra"'."\n";
+        $content = '"# Bono";"# Usuario";"Tipo Bono";"Concepto";"Valor";"Vigencia Inicio";"Vigencia Fin";"Minimo Compra";"Tipo";"Estado";"Fecha Creacion";"# Compra";"Fecha Uso";"Valor Compra"'."\n";
         $dataProvider = $this->search(true);
 
         if ($dataProvider !== null) {
             foreach ($dataProvider->getData() as $idx => $objBono) {
             	$concepto = isset($objBono->objConcepto->concepto)?$objBono->objConcepto->concepto:"";
-                $content .= "$objBono->idBonoTienda;$objBono->identificacionUsuario;$concepto;$objBono->valor;$objBono->vigenciaInicio;$objBono->vigenciaFin;$objBono->minimoCompra;".Yii::app()->params->callcenter["bonos"]["tipoNombre"][$objBono->tipo]. ";". Yii::app()->params->callcenter["bonos"]["estadoNombre"][$objBono->estado] . ";" . "$objBono->fechaCreacion;$objBono->idCompra;$objBono->fechaUso;$objBono->valorCompra\n";
+                $content .= "$objBono->idBonoTienda;$objBono->identificacionUsuario;$concepto;$objBono->concepto;$objBono->valor;$objBono->vigenciaInicio;$objBono->vigenciaFin;$objBono->minimoCompra;".Yii::app()->params->callcenter["bonos"]["tipoNombre"][$objBono->tipo]. ";". Yii::app()->params->callcenter["bonos"]["estadoNombre"][$objBono->estado] . ";" . "$objBono->fechaCreacion;$objBono->idCompra;$objBono->fechaUso;$objBono->valorCompra\n";
             }
         }
         

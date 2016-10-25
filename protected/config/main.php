@@ -22,6 +22,7 @@ return array(
         'ext.shoppingCart.*',
         'ext.shoppingCartSalesman.*',
     	'ext.shoppingCartVitalCall.*',
+    	'ext.shoppingCartNationalSale.*'
     ),
     'modules' => array(
         // uncomment the following to enable the Gii tool
@@ -33,14 +34,22 @@ return array(
                 ),
             ),
             'modules' => array(
-                'vitalcall' => array(
-                    'defaultController' => 'sitio',
-                    'components' => array(
-                        'user' => array(
-                            'class' => 'callcenter.components.UserOperator',
-                        ),
-                    ),
-                )
+            		'telefarma' => array(
+            				'defaultController' => 'sitio',
+            				'components' => array(
+            						'user' => array(
+            								'class' => 'callcenter.components.UserOperator',
+            						),
+            				),
+            		),
+	                'vitalcall_old' => array(
+	                    'defaultController' => 'sitio',
+	                    'components' => array(
+	                        'user' => array(
+	                            'class' => 'callcenter.components.UserOperator',
+	                        ),
+	                    ),
+	                ) 
             ),
         ),
         'vendedor' => array(
@@ -50,20 +59,34 @@ return array(
                     'class' => 'vendedor.components.UserVendedor',
                 ),
             )),
-        'subasta' => array(
+    		
+        'puntoventa' => array(
             'defaultController' => 'usuario',
             'components' => array(
                 'user' => array(
-                    'class' => 'subasta.components.UserSubasta',
+                    'class' => 'puntoventa.components.UserPuntoVenta',
                 ),
-            )),
-        'entreganacional' => array(
-            'defaultController' => 'usuario',
-            'components' => array(
-                'user' => array(
-                    'class' => 'entreganacional.components.UserEntrega',
-                ),
-            )),
+            ),
+        	'modules' => array(
+        		'entreganacional' => array(
+        				'defaultController' => 'usuario',
+        				'components' => array(
+        						'user' => array(
+        								'class' => 'puntoventa.components.UserPuntoVenta',
+        						),
+        				)),
+        			
+        		
+        		'subasta' => array(
+        				'defaultController' => 'usuario',
+        				'components' => array(
+        						'user' => array(
+        								'class' => 'puntoventa.components.UserPuntoVenta',
+        						),
+        				),
+        		),
+        	),
+        ),
         'gii' => array(
             'class' => 'system.gii.GiiModule',
             'password' => '1',
@@ -130,6 +153,10 @@ return array(
     	'shoppingCartVitalCall' => array(
     		'class' => 'ext.shoppingCartVitalCall.EShoppingCart',
     	),
+    	'shoppingCartNationalSale'	=> array(
+    		'class' => 'ext.shoppingCartNationalSale.EShoppingCart',
+    	)
+    	,	
         'ePdf' => array(
             'class' => 'ext.yii-pdf.EYiiPdf',
             'params' => array(
@@ -470,20 +497,20 @@ return array(
                 'formulaMedica' => 'larebaja.online.vendedor.compra.formulamedica',
             ),
         ),
-        'subasta' => array('sesion' => array(
-                'usuario' => 'larebaja.online.subasta.usuario',
-                'formPedidoBusqueda' => 'larebaja.online.subasta.formpedidobusqueda',
-                'objCiudadSector' => 'larebaja.online.subasta.objciudadsector',
-                'pdv' => 'larebaja.online.subasta.pdv',
+        'puntoventa' => array('sesion' => array(
+                'usuario' => 'larebaja.online.puntoventa.usuario',
+                'formPedidoBusqueda' => 'larebaja.online.puntoventa.formpedidobusqueda',
+                'objCiudadSector' => 'larebaja.online.puntoventa.objciudadsector',
+                'pdv' => 'larebaja.online.puntoventa.pdv',
+        		'pdvDestino' => 'larebaja.online.puntoventa.pdvdestino',
+        		'formPedidoBusqueda' => 'larebaja.online.puntoventa.formpedidobusqueda',
             ),
         ),
         'entreganacional' => array(
             'sesion' => array(
                 'usuario' => 'larebaja.online.entreganacional.usuario',
-                'formPedidoBusqueda' => 'larebaja.online.entreganacional.formpedidobusqueda',
                 'objCiudadSector' => 'larebaja.online.entreganacional.objciudadsector',
                 'pdv' => 'larebaja.online.entreganacional.pdv',
-                'pdvDestino' => 'larebaja.online.entreganacional.pdvdestino',
             ),
             'perfil' => 5,
         ),
@@ -678,6 +705,28 @@ return array(
                 'modelBonosAdminExport' => 'larebaja.online.callcenter.modelbonosadminexport',
             ),
         ),
+    	'telefarma' => array(
+    				'sesion' => array(
+    						'sectorCiudadEntrega' => 'larebaja.online.telefarma.sectorciudadentrega',
+    						'carroPagarForm' => 'larebaja.online.telefarma.carropagarform',
+    						'redireccionUbicacion' => 'larebaja.online.telefarma.redireccionubicacion',
+    						'productosBusquedaOrden' => 'larebaja.online.telefarma.productos.busqueda.orden',
+    						'productosBusquedaFiltro' => 'larebaja.online.telefarma.productos.busqueda.filtro',
+    						'busquedaExportar' => 'larebaja.online.telefarma.productos.busqueda.exportar',
+    						'usuariosExportar' => 'larebaja.online.telefarma.productos.usuarios.exportar',
+    						'formulaMedica' => 'larebaja.online.telefarma.compra.formulamedica', // new
+    						'reporteMedico' => 'larebaja.online.telefarma.compra.reportemedico', // new
+    				),
+    				'descuento' => 10,
+    				'pagar' => array(
+    						'pasos' => array(
+    								'informacion' => 1, 'confirmacion' => 2,
+    								1 => 'informacion', 2 => 'confirmacion'
+    						),
+    						'pasosDisponibles' => array('informacion', 'confirmacion'),
+    				),
+    				'diasRecordatorioFormula' => array(1,3)
+    		),    		
         'vitalCall' => array(
             'sesion' => array(
                 'sectorCiudadEntrega' => 'larebaja.online.vitalCall.sectorciudadentrega',
@@ -700,5 +749,10 @@ return array(
         	),
         	'diasRecordatorioFormula' => array(1,3)	
         ),
+    	'entregaNacional' => array(
+    			'sesion' => array(
+    					'carroPagarForm' => 'larebaja.online.entreganacional.carropagarform',
+    			)
+    	)	
     ),
 );

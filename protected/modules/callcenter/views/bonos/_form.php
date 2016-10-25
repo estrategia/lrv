@@ -47,6 +47,12 @@ $form = $this->beginWidget('CActiveForm', array(
 </div>
 
 <div class="form-group">
+    <?php echo $form->labelEx($model, 'concepto'); ?>
+    <?php echo $form->textField($model, 'concepto', array('class' => 'form-control')); ?>
+    <?php echo $form->error($model, 'concepto', array('class' => 'text-danger')); ?>
+</div>
+
+<div class="form-group">
     <?php echo $form->labelEx($model, 'correoElectronico'); ?>
     <?php echo $form->textField($model, 'correoElectronico', array('class' => 'form-control')); ?>
     <?php echo $form->error($model, 'correoElectronico', array('class' => 'text-danger')); ?>

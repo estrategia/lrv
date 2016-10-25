@@ -117,7 +117,7 @@ $(document).on('click', 'a[data-role="completitud-pdv"]', function () {
         type: 'POST',
         dataType: 'json',
         async: true,
-        url: requestUrl + '/subasta/admin/completitudPdv',
+        url: requestUrl + '/puntoventa/subasta/admin/completitudPdv',
         data: {compra: $(this).attr('data-compra')},
         beforeSend: function () {
             $('#modalSubasta').remove();
@@ -162,7 +162,7 @@ $(document).on('click', "a[data-role='asignar-pedido-pdv']", function () {
     $.ajax({
         type: 'POST',
         async: true,
-        url: requestUrl + '/subasta/admin/asignarPdv',
+        url: requestUrl + '/puntoventa/subasta/admin/asignarPdv',
         data: {dataPedido: dataPedido},
         beforeSend: function () {
             Loading.show();

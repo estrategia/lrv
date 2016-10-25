@@ -1507,6 +1507,33 @@ class TestController extends Controller {
         echo count(Yii::app()->shoppingCart->getPositions());
     }
     
+    public function actionMigracionBonos(){
+    	$formasPago = FormasPago::model()->findAll(array(
+    			'condition' => 'valorBono> 0'
+    	));
+    	
+    	$bonoTienda = BonoTienda::model()->findByPk(4); // modify
+    	 
+    	foreach($formasPago as $forma){
+    		$bonoFormaPago = new FormasPago();
+    		$bonoFormaPago->idFormaPago = 8;  // modify
+    		$bonoFormaPago->idCompra = $forma->idCompra;
+    		$bonoFormaPago->valor = $forma->valorBono;
+    		$bonoFormaPago->cuenta = $bonoTienda->cuenta;
+    		$bonoFormaPago->formaPago = $bonoTienda->formaPago;
+    		$bonoFormaPago->idBonoTiendaTipo = $bonoTienda->idBonoTiendaTipo;
+    	
+    		if(!$bonoFormaPago->save()){
+    			Yii::log("NO SE PUDO GUARDAR EL BONO COMO FORMA DE PAGO EN LA COMPRA $forma->idCompra");
+    		}else{
+    			$forma->valorBono = 0;
+    			if(!$forma->save()){
+    				Yii::log("NO SE PUDO ACTUALIZAR LA FORMA DE PAGO EN LA COMPRA $forma->idCompra");
+    			}
+    		}
+    	}
+    }
+    
     public function actionEnvioSMS(){
     	require_once (Yii::app()->basePath . DS . 'extensions' . DS . 'elibom'.DS.'elibom.php'); //
     	$elibom = new ElibomClient('usuario@dominio.com', 'api_password');
