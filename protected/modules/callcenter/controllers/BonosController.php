@@ -372,14 +372,15 @@ class BonosController extends ControllerOperator {
                                 $objBonoTienda = new BonosTienda;
                                 $objBonoTienda->identificacionUsuario = trim($datosBono[0]);
                                 $objBonoTienda->idBonoTiendaTipo = $model->tipoBono;
-                                $objBonoTienda->valor = trim($datosBono[1]);
-                                $objBonoTienda->vigenciaInicio = trim($datosBono[2]);
-                                $objBonoTienda->vigenciaFin = trim($datosBono[3]);
-                                $objBonoTienda->minimoCompra = trim($datosBono[4]);
+                                $objBonoTienda->concepto = trim($datosBono[1]);
+                                $objBonoTienda->valor = trim($datosBono[2]);
+                                $objBonoTienda->vigenciaInicio = trim($datosBono[3]);
+                                $objBonoTienda->vigenciaFin = trim($datosBono[4]);
+                                $objBonoTienda->minimoCompra = trim($datosBono[5]);
                                 $objBonoTienda->estado = 1;
                                 $objBonoTienda->tipo = 2;
                                 $objBonoTienda->notificado = 0;
-                                $objBonoTienda->correoElectronico = trim($datosBono[5]);
+                                $objBonoTienda->correoElectronico = trim($datosBono[6]);
 
                                 if ($objBonoTienda->save()) {
                                     $total['cargado'] ++;

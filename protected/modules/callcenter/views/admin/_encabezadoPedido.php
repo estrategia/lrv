@@ -76,7 +76,7 @@
 					             <?php endforeach;?>
 				          	</table>  
 				     </td>
-                    <td> 
+                 <!--    <td> 
                     	<strong> 
                             <span style="color: #E10019; font-size: 16px;"> Pago <?php echo $objCompra->objFormaPagoCompra->objFormaPago->formaPago ?></span>
                             <?php if ($objCompra->objFormaPagoCompra->idFormaPago == Yii::app()->params->formaPago['pasarela']['idPasarela']): ?>
@@ -91,11 +91,11 @@
                             <?php endif; ?>
                             <h3><?php echo Yii::app()->numberFormatter->format(Yii::app()->params->formatoMoneda['patron'], $objCompra->objFormaPagoCompra->valor, Yii::app()->params->formatoMoneda['moneda']); ?></h3>
                         </strong>
-                      <!--   <button id="btn-formas-pago" class="btn btn-danger btn-sm" data-toggle="modal" data-target="#modalFormasPago">Ver formas de pago</button>  -->
+                       <button id="btn-formas-pago" class="btn btn-danger btn-sm" data-toggle="modal" data-target="#modalFormasPago">Ver formas de pago</button>  
                     	<tr>                       
                     	</tr>
                         <br>
-                    </td>
+                    </td> -->
                     
                 </tr>
                 <tr>

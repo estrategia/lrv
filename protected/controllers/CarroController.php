@@ -3631,6 +3631,10 @@ class CarroController extends Controller {
             }
 
             $objFormaPago = FormaPago::model()->findByPk($modelPago->idFormaPago);
+            if (Yii::app()->shoppingCart->getBono() > 0) {
+            	$modelPago->actualizarBono($objCompra);
+            }
+            
             $contenidoCorreo = $this->renderPartial('compraCorreo', array(
                 'objCompra' => $objCompra,
                 'modelPago' => $modelPago,
@@ -3639,7 +3643,8 @@ class CarroController extends Controller {
                 'objFormasPago' => $objFormasPago,
                 'nombreUsuario' => $nombreUsuario), true, true);
             $htmlCorreo = $this->renderPartial('application.views.common.correo', array('contenido' => $contenidoCorreo), true, true);
-
+            
+           
             try {
                 sendHtmlEmail($correoUsuario, $asuntoCorreo, $htmlCorreo);
             } catch (Exception $ce) {
@@ -3683,8 +3688,9 @@ class CarroController extends Controller {
                 }
             }
 //echo $objFormasPago->valorBono;exit();
+            
             if (Yii::app()->shoppingCart->getBono() > 0) {
-            	$modelPago->actualizarBono($objCompra);
+            	$modelPago->actualizarBonoCRM($objCompra);
             }
 
             return array(

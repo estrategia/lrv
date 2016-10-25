@@ -59,6 +59,5 @@ class BloqueoCuentaCommand extends CConsoleCommand {
                 Yii::log("BloqueoCuentaCommand::desbloquearCuenta - Usuario no existe [$objBloqueoUsuario->identificacionUsuario]" . "\nBloqueoUsuario:\n" .  CVarDumper::dumpAsString($objBloqueoUsuario->attributes),CLogger::LEVEL_INFO, 'bloqueo_usuario');
             }
         }
-        
     }
 }
