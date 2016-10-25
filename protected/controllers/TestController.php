@@ -3,6 +3,7 @@
 class TestController extends Controller {
     
     public function actionListprod(){
+    	//prueba
         $objModulo = ModulosConfigurados::model()->find(array(
             'condition' => 'idModulo=2',
         ));
