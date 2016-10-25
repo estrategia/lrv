@@ -134,8 +134,7 @@ $this->metaTags = "
   </section>
   <section class="section-blue-m">
     <p>
-      <span> Estamos comprometidos a crear </span><br>
-      un futuro con vidas libre de sensibilidad
+      <span> Vidas libres de sensibilidad </span>
     </p>
   </section>
   <section>
@@ -301,8 +300,7 @@ $this->metaTags = "
   </div>
   <div class="row section-blue">
     <p>
-      <span> Estamos comprometidos a crear </span><br>
-      un futuro con vidas libre de sensibilidad
+      <span>Vidas libres de sensibilidad</span>
     </p>
   </div>
   <div class="row">

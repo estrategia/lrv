@@ -81,8 +81,9 @@ $this->metaTags = "
     </section>
     <section>
       <div class="bloque">
-        <p class="primer-parrafo-m">LA MARCA <span>#1 EN COLOMBIA </span></p>
+        <p class="primer-parrafo-m">LA MARCA <span>#1* EN COLOMBIA </span></p>
         <p class="segundo-parrafo">EN EL CUIDADO DE LAS PRÓTESIS DENTALES</p>
+        <p style="style="color:#8F9092;text-align:center;text-transform: uppercase;"">(*número uno en ventas Nielsen lectura JA 2016)</p>
       </div>
     </section>
   </div>
@@ -160,6 +161,7 @@ $this->metaTags = "
       <blockquote>
         <p class="primer-parrafo">LA MARCA <span>#1 EN COLOMBIA </span></p>
         <p class="segundo-parrafo">EN EL CUIDADO DE LAS PRÓTESIS DENTALES</p>
+        <p style="color:#8F9092;text-align:center;text-transform: uppercase;">(*número uno en ventas Nielsen lectura JA 2016)</p>
       </blockquote>
       <div class="space"></div>
   </div>
