@@ -412,7 +412,7 @@ return array(
             'defecto' => 1,
             'asociado' => 2,
             'clienteFiel' => 3,
-            'vitalCall' => 20,
+            'telefarma' => 20,
             '*' => 99
         ),
         'tipoVenta' => array(
