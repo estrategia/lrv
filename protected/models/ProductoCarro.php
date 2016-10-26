@@ -14,16 +14,16 @@
 class ProductoCarro extends IECartPosition {
     public $objProducto = null;
     public $objCombo = null;
-    public $objProductoFormula = null;
+    //public $objProductoFormula = null;
 
     public function __construct($param) {
         if ($param instanceof Producto) {
             $this->objProducto = $param;
         }else if($param instanceof Combo){
             $this->objCombo = $param;
-        }else if($param instanceof ProductosFormulaVitalCall){
+        }/*else if($param instanceof ProductosFormulaVitalCall){
         	$this->objProductoFormula = $param;
-        }
+        }*/
     }
     
     public function isCombo(){
@@ -34,15 +34,15 @@ class ProductoCarro extends IECartPosition {
         return ($this->objProducto instanceof Producto);
     }
     
-    public function isFormula(){
+    /*public function isFormula(){
     	return ($this->objProductoFormula instanceof ProductosFormulaVitalCall);
-    }
+    }*/
     
     public function getObjProducto(){
     	if($this->isProduct())
     		return $this->objProducto;
-    	else if($this->isFormula())
-    		return $this->objProductoFormula->objProductoVC->objProducto;
+    	/*else if($this->isFormula())
+    		return $this->objProductoFormula->objProductoVC->objProducto;*/
     }
     
     public function generate($params) {
@@ -61,7 +61,7 @@ class ProductoCarro extends IECartPosition {
         }else if($this->isCombo()){
             $objprecio = new PrecioCombo($this->objCombo);
             $this->priceUnit = $objprecio->getPrecio();
-        }else if($this->isFormula()){
+        }/*else if($this->isFormula()){
         	$objProducto = $this->objProductoFormula->objProductoVC->objProducto;
         	
         	$objprecio = new PrecioProducto($objProducto, $params['objSectorCiudad'], $params['codigoPerfil']);
@@ -75,7 +75,7 @@ class ProductoCarro extends IECartPosition {
         	$this->tax = $objProducto->objImpuesto->porcentaje;
         	$this->shipping = $objprecio->getFlete();
         	$this->delivery = $objprecio->getTiempoEntrega();
-        }
+        }*/
     }
     
     public function getId() {
@@ -83,8 +83,8 @@ class ProductoCarro extends IECartPosition {
             return $this->objProducto->codigoProducto;
         }else if($this->isCombo()){
             return $this->objCombo->getCodigo();
-        }else if($this->isFormula()){
+        }/*else if($this->isFormula()){
         	return $this->objProductoFormula->idFormula . "-" . $this->objProductoFormula->idProductoVitalCall;
-        }
+        }*/
     }
 }
