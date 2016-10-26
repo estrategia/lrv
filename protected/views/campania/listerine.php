@@ -60,12 +60,12 @@ $this->metaTags = "<meta http-equiv='X-UA-Compatible' content='IE=edge'>
       .bg-cuidadoTotalZero{
         padding:0px !important;
         background: rgb(109,115,184);
-        /* Old Browsers */background: -moz-linear-gradient(top, rgb(109,115,184) 0%, rgb(109,115,184) 30%, rgb(86,91,148) 30%, rgb(86,91,148) 100%);
-         /* FF3.6+ */background: -webkit-gradient(left top, left bottom, color-stop(0%, rgb(109,115,184)), color-stop(30%, rgb(109,115,184)), color-stop(30%, rgb(86,91,148)), color-stop(100%, rgb(86,91,148)));
-        /* Chrome, Safari4+ */background: -webkit-linear-gradient(top, rgb(109,115,184) 0%, rgb(109,115,184) 30%, rgb(86,91,148) 30%, rgb(86,91,148) 100%);
-         /* Chrome10+,Safari5.1+ */background: -o-linear-gradient(top, rgb(109,115,184) 0%, rgb(109,115,184) 30%, rgb(86,91,148) 30%, rgb(86,91,148) 100%);
-         /* Opera 11.10+ */background: -ms-linear-gradient(top, rgb(109,115,184) 0%, rgb(109,115,184) 30%, rgb(86,91,148) 30%, rgb(86,91,148) 100%);
-         /* IE 10+ */background: linear-gradient(to bottom, rgb(109,115,184) 0%, rgb(109,115,184) 30%, rgb(86,91,148) 30%, rgb(86,91,148) 100%);
+        /* Old Browsers */background: -moz-linear-gradient(top, rgb(109,115,184) 0%, rgb(109,115,184) 38%, rgb(86,91,148) 38%, rgb(86,91,148) 100%);
+         /* FF3.6+ */background: -webkit-gradient(left top, left bottom, color-stop(0%, rgb(109,115,184)), color-stop(38%, rgb(109,115,184)), color-stop(38%, rgb(86,91,148)), color-stop(100%, rgb(86,91,148)));
+        /* Chrome, Safari4+ */background: -webkit-linear-gradient(top, rgb(109,115,184) 0%, rgb(109,115,184) 38%, rgb(86,91,148) 38%, rgb(86,91,148) 100%);
+         /* Chrome10+,Safari5.1+ */background: -o-linear-gradient(top, rgb(109,115,184) 0%, rgb(109,115,184) 38%, rgb(86,91,148) 38%, rgb(86,91,148) 100%);
+         /* Opera 11.10+ */background: -ms-linear-gradient(top, rgb(109,115,184) 0%, rgb(109,115,184) 38%, rgb(86,91,148) 38%, rgb(86,91,148) 100%);
+         /* IE 10+ */background: linear-gradient(to bottom, rgb(109,115,184) 0%, rgb(109,115,184) 38%, rgb(86,91,148) 38%, rgb(86,91,148) 100%);
         /* W3C */filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#6d73b8', endColorstr='#565b94', GradientType=0 );
         /* IE6-9 */
         margin: 0px 25px !important;
@@ -73,12 +73,12 @@ $this->metaTags = "<meta http-equiv='X-UA-Compatible' content='IE=edge'>
       .bg-cuidadoTotalZero-m{
         padding:0px !important;
         background: rgb(109,115,184);
-        /* Old Browsers */background: -moz-linear-gradient(top, rgb(109,115,184) 0%, rgb(109,115,184) 38%, rgb(86,91,148) 38%, rgb(86,91,148) 100%);
-         /* FF3.6+ */background: -webkit-gradient(left top, left bottom, color-stop(0%, rgb(109,115,184)), color-stop(38%, rgb(109,115,184)), color-stop(38%, rgb(86,91,148)), color-stop(100%, rgb(86,91,148)));
-        /* Chrome, Safari4+ */background: -webkit-linear-gradient(top, rgb(109,115,184) 0%, rgb(109,115,184) 38%, rgb(86,91,148) 38%, rgb(86,91,148) 100%);
-         /* Chrome10+,Safari5.1+ */background: -o-linear-gradient(top, rgb(109,115,184) 0%, rgb(109,115,184) 38%, rgb(86,91,148) 38%, rgb(86,91,148) 100%);
-         /* Opera 11.10+ */background: -ms-linear-gradient(top, rgb(109,115,184) 0%, rgb(109,115,184) 38%, rgb(86,91,148) 38%, rgb(86,91,148) 100%);
-         /* IE 10+ */background: linear-gradient(to bottom, rgb(109,115,184) 0%, rgb(109,115,184) 38%, rgb(86,91,148) 38%, rgb(86,91,148) 100%);
+        /* Old Browsers */background: -moz-linear-gradient(top, rgb(109,115,184) 0%, rgb(109,115,184) 30%, rgb(86,91,148) 30%, rgb(86,91,148) 100%);
+         /* FF3.6+ */background: -webkit-gradient(left top, left bottom, color-stop(0%, rgb(109,115,184)), color-stop(30%, rgb(109,115,184)), color-stop(30%, rgb(86,91,148)), color-stop(100%, rgb(86,91,148)));
+        /* Chrome, Safari4+ */background: -webkit-linear-gradient(top, rgb(109,115,184) 0%, rgb(109,115,184) 30%, rgb(86,91,148) 30%, rgb(86,91,148) 100%);
+         /* Chrome10+,Safari5.1+ */background: -o-linear-gradient(top, rgb(109,115,184) 0%, rgb(109,115,184) 30%, rgb(86,91,148) 30%, rgb(86,91,148) 100%);
+         /* Opera 11.10+ */background: -ms-linear-gradient(top, rgb(109,115,184) 0%, rgb(109,115,184) 30%, rgb(86,91,148) 30%, rgb(86,91,148) 100%);
+         /* IE 10+ */background: linear-gradient(to bottom, rgb(109,115,184) 0%, rgb(109,115,184) 30%, rgb(86,91,148) 30%, rgb(86,91,148) 100%);
         /* W3C */filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#6d73b8', endColorstr='#565b94', GradientType=0 );
         /* IE6-9 */
         margin-top: 20px;
@@ -331,7 +331,7 @@ $this->metaTags = "<meta http-equiv='X-UA-Compatible' content='IE=edge'>
     <div class="row section-products">
       <div class="col-md-5 col-md-offset-1 bg-cuidadoTotal">
         <h2>LISTERINE<sup>®</sup> Cuidado <br>Total</h2>
-        <img src="<?= Yii::app()->request->baseUrl ?>/images/contenido/listerine/listerine-cuidado-total.png" class="img-responsive" alt="">
+        <img style="margin:0 auto; display:block;" src="<?= Yii::app()->request->baseUrl ?>/images/contenido/listerine/listerine-cuidado-total.png" alt="">
         <div class="bg-gray">
           <p>Es el más completo y avanzado LISTERINE®. ¡Ofrece 6 beneficios en 1!</p>
           <a href="#">
@@ -342,7 +342,7 @@ $this->metaTags = "<meta http-equiv='X-UA-Compatible' content='IE=edge'>
       </div>
       <div class="col-md-5 bg-cuidadoTotalZero">
         <h2>LISTERINE<sup>®</sup> Cuidado <br>Total Zero</h2>
-        <img src="<?= Yii::app()->request->baseUrl ?>/images/contenido/listerine/listerine-cuidado-total-zero.png" class="img-responsive" alt="">
+        <img style="margin:0 auto; display:block;" src="<?= Yii::app()->request->baseUrl ?>/images/contenido/listerine/listerine-cuidado-total-zero.png" alt="">
         <div class="bg-gray">
           <p>Es el más completo y avanzado LISTERINE<sup>®</sup>, ahora también sin alcohol.</p>
           <a href="#">
