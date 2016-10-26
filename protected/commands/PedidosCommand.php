@@ -12,7 +12,7 @@ class PedidosCommand extends CConsoleCommand{
     public function actionCambiarEstadoPedidosSubasta(){
         date_default_timezone_set ('America/Bogota');
         Yii::import('application.models.*');
-        $file = fopen(Yii::getPathOfAlias('application').DIRECTORY_SEPARATOR."runtime".DIRECTORY_SEPARATOR."pedidos_".date("Y-m-d H-i-s").".txt", "w");
+    //    $file = fopen(Yii::getPathOfAlias('application').DIRECTORY_SEPARATOR."runtime".DIRECTORY_SEPARATOR."pedidos_".date("Y-m-d H-i-s").".txt", "w");
         $compras = Compras::model()->findAll(
                 array(
                     'with' => 'objFormaPagoCompra',
@@ -27,13 +27,13 @@ class PedidosCommand extends CConsoleCommand{
             $compra->idEstadoCompra = Yii::app()->params->callcenter['estadoCompra']['estado']['pendiente'];
             if($compra->save()){
                 Yii::log(Date("Y-m-d h:i:s")."- Sale #$compra->idCompra updated success.");
-                fwrite($file,Date("Y-m-d h:i:s")."- Sale #$compra->idCompra updated success.".PHP_EOL);
+             //   fwrite($file,Date("Y-m-d h:i:s")."- Sale #$compra->idCompra updated success.".PHP_EOL);
             }else{
                 Yii::log(Date("Y-m-d h:i:s")."- Sale #$compra->idCompra didn't update.");
-                fwrite($file,Date("Y-m-d h:i:s")."- Sale #$compra->idCompra didn't update.".PHP_EOL);
+             //   fwrite($file,Date("Y-m-d h:i:s")."- Sale #$compra->idCompra didn't update.".PHP_EOL);
             }
         }
-        fclose($file);
+       // fclose($file);
     }
     
 }

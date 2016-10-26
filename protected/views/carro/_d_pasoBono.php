@@ -17,7 +17,7 @@
 							) );
 			?>
 				<div id='uso-codigo-div'>
-           			Tienes un c&oacute;digo promocional  <a href="#" type="button" class="" data-toggle="modal" data-target="#modal-promocional">Usalo aqu&iacute;</a>
+           			<strong>&iquest;Tienes un c&oacute;digo promocional?</strong>  <a href="#" type="button" class="btn btn-primary btn-xs"  data-toggle="modal" data-target="#modal-promocional">Usalo aqu&iacute;</a>
 				</div>
 					<!-- Modal -->
 					<div id="modal-promocional" class="modal fade" role="dialog">
@@ -27,14 +27,12 @@
 					    <div class="modal-content">
 					      <div class="modal-header">
 					        <button type="button" class="close" data-dismiss="modal">&times;</button>
-					        <h4 class="modal-title">Modal Header</h4>
+					        <h4 class="modal-title">Ingresa tu c&oacute;digo promocional para obtener tu descuento</h4>
 					      </div>
 					      <div class="modal-body">
 					        <div class ="row">
-						        <div class="col-md-4">
-						            <label> Redimir c&oacute;digo</label>
-						        </div>
-						        <div class="col-md-8">
+						        
+						        <div class="col-md-8 col-md-offset-2">
 						            <?= CHtml::textField('codigoPromocional', '', array('class' => 'form-control')) ?>
 						            <label id='usoCodigo'></label>
 						            <input type="hidden" id='FormaPagoForm-usoBonoPromocional' disabled name="FormaPagoForm[usoBono][promocional]" value="0">
@@ -73,9 +71,7 @@
         ))
     );
     ?>
-    <div id='uso-codigo-div'>
-	 	Tienes un c&oacute;digo promocional  <a href="#" type="button" class="" data-toggle="modal" data-target="#modal-promocional">Usalo aqu&iacute;</a>
-	</div>
+    
 					<!-- Modal -->
 					<div id="modal-promocional" class="modal fade" role="dialog">
 					  <div class="modal-dialog">
@@ -84,14 +80,11 @@
 					    <div class="modal-content">
 					      <div class="modal-header">
 					        <button type="button" class="close" data-dismiss="modal">&times;</button>
-					        <h4 class="modal-title">Modal Header</h4>
+					        <h4 class="modal-title">Ingresa tu c&oacute;digo promocional para obtener tu descuento</h4>
 					      </div>
 					      <div class="modal-body">
 					        <div class ="row">
-						        <div class="col-md-4">
-						            <label> Redimir c&oacute;digo</label>
-						        </div>
-						        <div class="col-md-8">
+						        <div class="col-md-8 col-md-offset-2">
 						            <?= CHtml::textField('codigoPromocional', '', array('class' => 'form-control')) ?>
 						            <label id='usoCodigo'></label>
 						            <input type="hidden" id='FormaPagoForm-usoBonoPromocional' disabled name="FormaPagoForm[usoBono][promocional]" value="0">
@@ -108,34 +101,33 @@
 					  </div>
 					</div>
 				    <!--  Codigos promocionales -->
-				
-				    <div class="space-1"></div>
-				     
+				 
        				<div class="bono">
                         <div class="scroll-div">
                             <div class="row" style="margin:0px;">
                                 <div class="col-md-12">
-                                    <p class="text-center text-bold">¿Utilizar el bono?</p>
+                                    <p class="text-center text-bold">
+                                    <div id='uso-codigo-div'>
+									 	<strong>&iquest;Tienes un c&oacute;digo promocional?</strong> <a href="#" class="btn btn-primary btn-xs" data-toggle="modal" data-target="#modal-promocional">Usalo aqu&iacute;</a>
+									</div></p>
                                 </div>
                             </div>
 
                             <?php foreach ($modelPago->bono as $idx => $bono): ?>
-                                <div class="row" style="border-top: 1px solid #ccc;margin:0px;padding: 15px 0px 0px;">
+                                <div class="row" style="border-top: 1px solid #ccc;margin:0px;padding: 1px 0px 0px;">
                                     <div class="col-xs-12 col-sm-12 col-md-12">
                                         <span class="result_bono"><?php echo $bono['concepto'] ?></span>
                                     </div>
-                                    <div class="col-xs-6 col-sm-6 col-md-6">
+                                    <div class="col-xs-4 col-sm-4 col-md-5">
                                         <span class="result_bono">* </span>Valor: <span class="result_bono"><?php echo Yii::app()->numberFormatter->format(Yii::app()->params->formatoMoneda['patron'], $bono['valor'], Yii::app()->params->formatoMoneda['moneda']); ?></span>
                                     </div>
-                                    <div class="col-xs-6 col-sm-6 col-md-6">
+                                    <div class="col-xs-8 col-sm-8 col-md-7">
                                         <span class="result_bono">* </span>V&aacute;lido hasta: <span class="result_bono"><?php echo $bono['vigenciaFin'] ?></span>
                                     </div>
-                                    <div class="col-xs-12 col-sm-12 col-md-12">
-
-                                    </div>
+                                   
                                 </div>
                                 <div class="row" style="margin:0px;">
-                                    <div class="col-xs-12 col-sm-12 col-md-12" style="text-align:center;padding:10px 0px;">
+                                    <div class="col-xs-12 col-sm-12 col-md-12" style="text-align:center;padding:0px 0px;">
                                         <?php if ($bono['disponibleCompra'] && $bono['modoUso'] == 1): ?>
                                             Usar bono en esta compra: <label><input type="radio" id="FormaPagoForm_usoBono_<?= $idx ?>_1" name="FormaPagoForm[usoBono][<?= $idx ?>]" value="1" <?php echo ($modelPago->usoBono[$idx] == 1 ? "checked" : "") ?>>Si</label>
                                             <label style="margin-left: 15px;"><input type="radio" id="FormaPagoForm_usoBono_<?= $idx ?>_0" name="FormaPagoForm[usoBono][<?= $idx ?>]" value="0" <?php echo ($modelPago->usoBono[$idx] != 1 ? "checked" : "") ?>>No</label>
@@ -144,7 +136,7 @@
                                             <label style="margin-left: 15px;"><input type="radio" id="FormaPagoForm_usoBono_<?= $idx ?>_0" name="FormaPagoForm[usoBono][<?= $idx ?>]" value="0" disabled>No</label>
                                             <input type="hidden" name="FormaPagoForm[usoBono][<?= $idx ?>]" value="1">
                                         <?php elseif ($bono['modoUso'] == 1): ?>
-                                            <div style="text-decoration:underline;text-align:center;padding-bottom: 15px;">Disponible por compra superior a <?php echo Yii::app()->numberFormatter->format(Yii::app()->params->formatoMoneda['patron'], $bono['minimoCompra'], Yii::app()->params->formatoMoneda['moneda']); ?></div>
+                                            <div style="text-decoration:underline;text-align:center;padding-bottom: 1px;">Disponible por compra superior a <?php echo Yii::app()->numberFormatter->format(Yii::app()->params->formatoMoneda['patron'], $bono['minimoCompra'], Yii::app()->params->formatoMoneda['moneda']); ?></div>
                                             <input type="hidden" name="FormaPagoForm[usoBono][<?= $idx ?>]" value="0">
                                         <?php else: ?>    
                                             <input type="hidden" name="FormaPagoForm[usoBono][<?= $idx ?>]" value="0">

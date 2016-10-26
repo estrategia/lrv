@@ -150,7 +150,7 @@ $this->metaTags = "<meta http-equiv='X-UA-Compatible' content='IE=edge'>
                   <img style="display: inline-block;" src="/lrv/images/contenido/nan/entrega-en-1-hora.png" class="img-responsive" alt="Entrega en 1 hora Nan Optipro">
                 </center>
               </div>
-            </div
+            </div>
               <div class="row">
                   <div class="col-md-12" style="padding: 0px 76px;">
                     <div class="space"></div>

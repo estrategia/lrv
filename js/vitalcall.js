@@ -217,7 +217,7 @@ function ubicacionSeleccion() {
     $.ajax({
         type: 'POST',
         async: true,
-        url: requestUrl + '/callcenter/vitalcall/cotizar/ubicacionSeleccion',
+        url: requestUrl + '/callcenter/telefarma/sitio/ubicacionSeleccion',
         data: form.serialize(),
         dataType: 'json',
         beforeSend: function() {
@@ -249,7 +249,7 @@ $(document).on('change', "select[data-role='orden-listaproductos']", function() 
         type: 'POST',
         dataType: 'json',
         async: true,
-        url: requestUrl + '/callcenter/vitalcall/cotizar/filtrar',
+        url: requestUrl + '/callcenter/telefarma/cotizar/filtrar',
         data: {'OrdenamientoForm[orden]': $('#OrdenamientoForm_orden').val()},
         beforeSend: function() {
             Loading.show();
@@ -364,7 +364,7 @@ function filtrarListaProductos() {
         type: 'POST',
         dataType: 'json',
         async: true,
-        url: requestUrl + '/callcenter/vitalcall/cotizar/filtrar',
+        url: requestUrl + '/callcenter/telefarma/cotizar/filtrar',
         data: $('#form-filtro-listaproductos').serialize(),
         beforeSend: function() {
             Loading.show();
@@ -809,4 +809,202 @@ $(document).ready(function() {
     });
     raty();
     $("input[data-role='bootstrap-slider']").slider();
+});
+
+
+
+$(document).on('click', "button[data-role='disminuir-cantidad']", function() {
+    var codigoProducto = $(this).attr('data-producto');
+    var id = $(this).attr('data-id');
+    var valorUnidad = $(this).attr('data-precio');
+    var nro = $("#cantidad-producto-unidad-" + codigoProducto + "-" + id).val();
+    nro--;
+    if (nro < 0) {
+        nro = 0;
+    }
+    $("#subtotal-producto-unidad-" + codigoProducto).html("$" + format(nro * valorUnidad));
+    $("#cantidad-producto-unidad-" + codigoProducto + "-" + id).val(nro);
+});
+
+$(document).on('change', "input[data-role='validar-cantidad-unidad']", function() {
+    var codigoProducto = $(this).attr('data-producto');
+    var valorUnidad = $(this).attr('data-precio');
+    var id = $(this).attr('data-id');
+    var nro = $(this).val();
+
+    if (nro < 0) {
+        nro = 0;
+    }
+    $("#subtotal-producto-unidad-" + codigoProducto).html("$" + format(nro * valorUnidad));
+    $("#cantidad-producto-unidad-" + codigoProducto + "-" + id).val(nro);
+});
+
+$(document).on('click', "button[data-role='aumentar-cantidad']", function() {
+    var codigoProducto = $(this).attr('data-producto');
+    var valorUnidad = $(this).attr('data-precio');
+    var id = $(this).attr('data-id');
+    var nro = $("#cantidad-producto-unidad-" + codigoProducto + "-" + id).val();
+    nro++;
+    if (nro < 0) {
+        nro = 0;
+    }
+    $("#subtotal-producto-unidad-" + codigoProducto).html("$" + format(nro * valorUnidad));
+    $("#cantidad-producto-unidad-" + codigoProducto + "-" + id).val(nro);
+});
+
+
+$(document).on('click', "a[data-cargar-telefarma='2']", function() {
+    var combo = $(this).attr('data-combo');
+
+    var cantidad = $('#cantidad-combo-' + combo).val();
+    cantidad = parseInt(cantidad);
+    if (isNaN(cantidad)) {
+        cantidad = 0;
+    }
+
+    $.ajax({
+        type: 'POST',
+        dataType: 'json',
+        async: true,
+        url: requestUrl + '/carro/agregarCombo',
+        data: {combo: combo, cantidad: cantidad},
+        beforeSend: function() {
+            Loading.show();
+        },
+        complete: function(data) {
+            Loading.hide();
+        },
+        success: function(data) {
+            if (data.result === "ok") {
+                $('#div-carro-canasta').html(data.response.canastaHTML);
+                $('#div-carro-canasta').trigger("create");
+
+                if (data.response.mensajeHTML) {
+                    dialogoAnimado(data.response.mensajeHTML);
+                    $("#cantidad-productos").html(data.response.objetosCarro);
+                    //$('#icono-combo-agregado-' + combo).addClass('active');
+                }
+
+                if (data.response.dialogoHTML) {
+                    alert(data.response.dialogoHTML);
+                }
+            } else {
+                alert(data.response);
+            }
+
+        },
+        error: function(jqXHR, textStatus, errorThrown) {
+            alert('Error: ' + errorThrown);
+        }
+    });
+
+    return false;
+});
+
+
+$(document).on('click', "a[data-cargar-telefarma='1']", function() {
+
+    var producto = $(this).attr('data-producto');
+    var unique = $(this).attr('data-id');
+    var cantidadU = $('#cantidad-producto-unidad-' + producto + "-" + unique).val();
+
+    cantidadU = parseInt(cantidadU);
+    if (isNaN(cantidadU)) {
+        cantidadU = -1;
+    }
+
+    var cantidadF = parseInt($('#cantidad-producto-fraccion-' + producto + "-" + unique).val());
+    cantidadF = parseInt(cantidadF);
+    if (isNaN(cantidadF)) {
+        cantidadF = -1;
+    }
+
+    $.ajax({
+        type: 'POST',
+        dataType: 'json',
+        async: true,
+        url: requestUrl + '/carro/agregar',
+        data: {producto: producto, cantidadU: cantidadU, cantidadF: cantidadF},
+        beforeSend: function() {
+            Loading.show();
+        },
+        complete: function() {
+            Loading.hide();
+        },
+        success: function(data) {
+            if (data.result === "ok") {
+                $('#div-carro-canasta').html(data.response.canastaHTML);
+                $('#div-carro-canasta').trigger("create");
+
+                if (data.response.mensajeHTML) {
+                    dialogoAnimado(data.response.mensajeHTML);
+                    $('#icono-producto-agregado-' + producto).addClass('active');
+                    $("#cantidad-productos").html(data.response.objetosCarro);
+                }
+
+                if (data.response.dialogoHTML) {
+                    $("#modalBodegas").remove();
+                    $("body").append(data.response.dialogoHTML);
+                    $("#modalBodegas").modal('show');
+                }
+            } else {
+                alert(data.response);
+            }
+        },
+        error: function(jqXHR, textStatus, errorThrown) {
+            alert('Error: ' + errorThrown);
+        }
+    });
+    return false;
+});
+
+$(document).on('click', "a[data-cargar-telefarma='3']", function() {
+    var producto = $(this).attr('data-producto');
+
+    var cantidadUbicacion = $('#cantidad-producto-ubicacion-' + producto).val();
+    cantidadUbicacion = parseInt(cantidadUbicacion);
+    if (isNaN(cantidadUbicacion)) {
+        cantidadUbicacion = 0;
+    }
+
+    var cantidadBodega = parseInt($('#cantidad-producto-bodega-' + producto).val());
+    cantidadBodega = parseInt(cantidadBodega);
+    if (isNaN(cantidadBodega)) {
+        cantidadBodega = 0;
+    }
+
+    $.ajax({
+        type: 'POST',
+        dataType: 'json',
+        async: true,
+        url: requestUrl + '/carro/agregarBodega',
+        data: {producto: producto, cantidadU: cantidadUbicacion, cantidadB: cantidadBodega},
+        beforeSend: function() {
+            Loading.show();
+        },
+        complete: function(data) {
+            Loading.hide();
+        },
+        success: function(data) {
+            if (data.result === "ok") {
+                $('#div-carro-canasta').html(data.response.canastaHTML);
+                $('#div-carro-canasta').trigger("create");
+
+                if (data.response.mensajeHTML) {
+                    dialogoAnimado(data.response.mensajeHTML);
+                    $("#cantidad-productos").html(data.response.objetosCarro);
+                }
+                if (data.response.dialogoHTML) {
+                    alert(data.response.dialogoHTML);
+                }
+            } else {
+                alert(data.response);
+            }
+        },
+        error: function(jqXHR, textStatus, errorThrown) {
+            alert('Error: ' + errorThrown);
+        }
+    });
+
+    return false;
 });

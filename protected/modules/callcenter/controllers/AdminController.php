@@ -306,7 +306,8 @@ class AdminController extends ControllerOperator {
             $modelLog->comentario = $comentario;
             $modelLog->concepto = 'Cliente Fiel';
             $modelLog->identificacionUsuario = $identificacion;
-
+            $modelLog->idBonoTiendaTipo = Yii::app()->params->callcenter['bonos']['tipoBonoCRM'];
+            
             $clientBono = new SoapClient(null, array(
                 'location' => Yii::app()->params->webServiceUrl['crmLrv'],
                 'uri' => "",
@@ -319,7 +320,7 @@ class AdminController extends ControllerOperator {
             }
 
             $resultBono = $clientBono->__soapCall('ActualizarBono', array('identificacion' => $identificacion, 'tipo' => '1'));
-
+           
             if ($resultBono[0]->ESTADO == 1) {
                 if ($modelLog->save()) {
                     $clientBono = new SoapClient(null, array(

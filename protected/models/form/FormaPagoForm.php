@@ -441,51 +441,10 @@ class FormaPagoForm extends CFormModel {
     }
 
     public function actualizarBono(Compras $objCompra) {
-        if (empty($this->bono)) {
-            Yii::log("ActualizarBono: No existe bono consultado [$this->identificacionUsuario]", CLogger::LEVEL_INFO, 'application');
-        } else {
+        if (!empty($this->bono)) {
             foreach ($this->bono as $idx => $bono) {
                 if ($this->usoBono[$idx] == 1) {
-                    if ($idx == 'crm') {
-                        ini_set('default_socket_timeout', 5);
-                        $client = new SoapClient(null, array(
-                            'location' => Yii::app()->params->webServiceUrl['crmLrv'],
-                            'uri' => "",
-                            'trace' => 1,
-                            'connection_timeout' => 5,
-                        ));
-
-                        try {
-                            $result = $client->__soapCall("ActualizarBono", array('identificacion' => $this->identificacionUsuario));
-                            if (empty($result) || $result[0]->ESTADO == 0) {
-                                throw new Exception("Error al actualizar bono: " . CVarDumper::dumpAsString($result));
-                            }
-                            
-								// a�adir Bono en forma de pago
-	                            $tipoCRM = BonoTienda::model()->find(array(
-	                            	'condition' => 'idBonoTiendaTipo =:tipoBonoCRM',
-	                            	'params' => array(
-	                            			':tipoBonoCRM' => Yii::app()->params->callcenter['bonos']['tipoBonoCRM']
-	                            	)
-	                            ));
-                            
-								$objFormaPagoBono = new FormasPago;
-                             	$objFormaPagoBono->valor = $bono['valor'];
-                                $objFormaPagoBono->idCompra = $objCompra->idCompra;
-                                $objFormaPagoBono->idFormaPago = Yii::app()->params->callcenter['bonos']['formaPagoBonos']; /*******************/
-                                $objFormaPagoBono->cuenta = $tipoCRM->cuenta;
-                                $objFormaPagoBono->formaPago = $tipoCRM->formaPago;
-                                $objFormaPagoBono->idBonoTiendaTipo = $tipoCRM->idBonoTiendaTipo;
-                                if(!$objFormaPagoBono->save()){
-                                   	Yii::log("FormaPago-Bono: Exception [idCompra: $objCompra->idCompra -- idbono: $idx -- idUsuario: $objCompra->identificacionUsuario]\n", CLogger::LEVEL_INFO, 'error');
-                                }                            
-                            
-                        } catch (SoapFault $exc) {
-                            Yii::log("ActualizarBono-CRM: SoapFault WebService [idCompra: $objCompra->idCompra -- idbono: $idx -- idUsuario: $objCompra->identificacionUsuario]\n" . $exc->getMessage() . "\n" . $exc->getTraceAsString() . "\nRESPONSE WS:\n" . $client->__getLastResponse(), CLogger::LEVEL_INFO, 'application');
-                        } catch (Exception $exc) {
-                            Yii::log("ActualizarBono-CRM: Exception WebService  [idCompra: $objCompra->idCompra -- idbono: $idx -- idUsuario: $objCompra->identificacionUsuario]\n" . $exc->getMessage() . "\n" . $exc->getTraceAsString(), CLogger::LEVEL_INFO, 'application');
-                        }
-                    }else if($idx == 'promocional'){
+                    if($idx == 'promocional'){
                     	
                     	$objBonoTienda = BonoTienda::model()->find(array(
                     			'condition' => 'idBonoTiendaTipo =:tipoBono',
@@ -563,6 +522,57 @@ class FormaPagoForm extends CFormModel {
                 }
             }
         }
+    }
+    
+    public function actualizarBonoCRM(Compras $objCompra) {
+    	if (empty($this->bono)) {
+    		Yii::log("ActualizarBono: No existe bono consultado [$this->identificacionUsuario]", CLogger::LEVEL_INFO, 'application');
+    	} else {
+    		foreach ($this->bono as $idx => $bono) {
+    			if ($this->usoBono[$idx] == 1) {
+    				if ($idx == 'crm') {
+    					ini_set('default_socket_timeout', 5);
+    					$client = new SoapClient(null, array(
+    							'location' => Yii::app()->params->webServiceUrl['crmLrv'],
+    							'uri' => "",
+    							'trace' => 1,
+    							'connection_timeout' => 5,
+    					));
+    
+    					try {
+    						$result = $client->__soapCall("ActualizarBono", array('identificacion' => $this->identificacionUsuario));
+    						if (empty($result) || $result[0]->ESTADO == 0) {
+    							throw new Exception("Error al actualizar bono: " . CVarDumper::dumpAsString($result));
+    						}
+    
+    						// anadir Bono en forma de pago
+    						$tipoCRM = BonoTienda::model()->find(array(
+    								'condition' => 'idBonoTiendaTipo =:tipoBonoCRM',
+    								'params' => array(
+    										':tipoBonoCRM' => Yii::app()->params->callcenter['bonos']['tipoBonoCRM']
+    								)
+    						));
+    
+    						$objFormaPagoBono = new FormasPago;
+    						$objFormaPagoBono->valor = $bono['valor'];
+    						$objFormaPagoBono->idCompra = $objCompra->idCompra;
+    						$objFormaPagoBono->idFormaPago = Yii::app()->params->callcenter['bonos']['formaPagoBonos']; /*******************/
+    						$objFormaPagoBono->cuenta = $tipoCRM->cuenta;
+    						$objFormaPagoBono->formaPago = $tipoCRM->formaPago;
+    						$objFormaPagoBono->idBonoTiendaTipo = $tipoCRM->idBonoTiendaTipo;
+    						if(!$objFormaPagoBono->save()){
+    							Yii::log("FormaPago-Bono: Exception [idCompra: $objCompra->idCompra -- idbono: $idx -- idUsuario: $objCompra->identificacionUsuario]\n", CLogger::LEVEL_INFO, 'error');
+    						}
+    
+    					} catch (SoapFault $exc) {
+    						Yii::log("ActualizarBono-CRM: SoapFault WebService [idCompra: $objCompra->idCompra -- idbono: $idx -- idUsuario: $objCompra->identificacionUsuario]\n" . $exc->getMessage() . "\n" . $exc->getTraceAsString() . "\nRESPONSE WS:\n" . $client->__getLastResponse(), CLogger::LEVEL_INFO, 'application');
+    					} catch (Exception $exc) {
+    						Yii::log("ActualizarBono-CRM: Exception WebService  [idCompra: $objCompra->idCompra -- idbono: $idx -- idUsuario: $objCompra->identificacionUsuario]\n" . $exc->getMessage() . "\n" . $exc->getTraceAsString(), CLogger::LEVEL_INFO, 'application');
+    					}
+    				}
+    			}
+    		}
+    	}
     }
 
     public function calcularBonoRedimido() {

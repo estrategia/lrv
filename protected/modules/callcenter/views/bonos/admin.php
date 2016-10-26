@@ -21,9 +21,11 @@ $this->widget('zii.widgets.grid.CGridView', array(
     'columns' => array(
         //'idBonoTienda',
         'identificacionUsuario',
+    	'concepto',	
         array(
-            'header' => 'Concepto', 
-            'value' => function($val){return (isset($val->objConcepto->concepto))?$val->objConcepto->concepto:"";}
+            'header' => 'Tipo Bono', 
+            'value' => function($val){return (isset($val->objConcepto->concepto))?$val->objConcepto->concepto:"";},
+        	'filter' => CHtml::dropDownList('BonosTienda[idBonoTiendaTipo]', $model->idBonoTiendaTipo, CHtml::listData(BonoTienda::model()->findAll("Tipo = 1"),'idBonoTiendaTipo','concepto' ), array('class' => 'form-control input-sm', 'prompt' => 'Todo', 'style' => '')),
             ),
         'valor',
         'vigenciaInicio',

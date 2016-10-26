@@ -45,7 +45,7 @@
                 <?php echo $form->error($model, 'estado'); ?>
             </div>
             <div style="height: 10px"></div>
-            <div id='tipo_1' style="display:<?php echo ($model->tipo != 2)? "block":"none";?>">
+            <div id='tipo_1_' >
                 <div class="form-group"> 
                     <?php echo $form->labelEx($model, 'cuenta'); ?>
                     <?php echo $form->textField($model, 'cuenta', array('class' => 'cuenta form-control',)); ?>

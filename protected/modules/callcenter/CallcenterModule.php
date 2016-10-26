@@ -9,7 +9,8 @@ class CallcenterModule extends CWebModule {
         // import the module-level models and components
         $this->setImport(array(
             'callcenter.models.*',
-        	'vitalcall.models.*',
+        	'telefarma.models.*',
+        	'vitalcall_old.models.*',
             'callcenter.models.form.*',
             'callcenter.components.*',
             'application.components.*',
