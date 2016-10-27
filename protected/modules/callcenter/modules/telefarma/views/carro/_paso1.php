@@ -36,10 +36,10 @@
         </div>
     </div>
     <div class="col-sm-4" >
-        <div class="iconStep step4"></div>
+        <div class="iconStep step5"></div>
         <div class="text orange"><p>5.Datos m&eacute;dico</p></div>
         <div class="step-box">
-            <?php //$this->renderPartial('/carro/_pasoPago', array('modelPago' => $modelPago, 'listFormaPago' => $listFormaPago)) ?>
+            <?php $this->renderPartial('/carro/_pasoMedico', array('modelPago' => $modelPago, 'listFormaPago' => $listFormaPago)) ?>
         </div>
     </div>
     <div class="col-sm-4" >

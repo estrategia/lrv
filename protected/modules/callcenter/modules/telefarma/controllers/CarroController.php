@@ -1489,8 +1489,13 @@ class CarroController extends ControllerTelefarma {
     
     						$modelPago->fechaEntrega = $form->fechaEntrega;
     						$modelPago->idFormaPago = $form->idFormaPago;
-    						//$modelPago->numeroTarjeta = $form->numeroTarjeta;
-    						//$modelPago->cuotasTarjeta = $form->cuotasTarjeta;
+    						$modelPago->numeroTarjeta = $form->numeroTarjeta;
+    						$modelPago->cuotasTarjeta = $form->cuotasTarjeta;
+    						$modelPago->registroMedico = $form->registroMedico;
+    						$modelPago->nombreMedico = $form->nombreMedico;
+    						$modelPago->institucionMedico = $form->institucionMedico;
+    						$modelPago->telefonoMedico = $form->telefonoMedico;
+    						$modelPago->correoElectronicoMedico = $form->correoElectronicoMedico;
     						$modelPago->comentario = $form->comentario;
     						$modelPago->pasoValidado[$paso] = $paso;
     
