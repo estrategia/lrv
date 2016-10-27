@@ -27,7 +27,7 @@ $this->metaTags = "
       .bloque span {color:#00ACAA;}
       blockquote p {color:#8F9092;}
       .bloque p {color:#8F9092;}
-      blockquote .primer-parrafo {font-size:76px;font-family: Gotham-Bold;}
+      blockquote .primer-parrafo {font-size:74px;font-family: Gotham-Bold;}
       .bloque .primer-parrafo-m {font-size:21px;font-family: Gotham-Bold;margin: 0px;text-align:center;}
       blockquote .segundo-parrafo {font-size: 47px;margin:0px;font-family: Gotham-Bold;}
       .bloque .segundo-parrafo {font-size: 13px;margin:0px;font-family: Gotham-Bold;text-align:center;}
@@ -159,9 +159,9 @@ $this->metaTags = "
   </div>
   <div class="row">
       <blockquote>
-        <p class="primer-parrafo">LA MARCA <span>#1 EN COLOMBIA </span></p>
-        <p class="segundo-parrafo">EN EL CUIDADO DE LAS PRÓTESIS DENTALES</p>
-        <p style="color:#8F9092;text-align:center;text-transform: uppercase;">(*número uno en ventas Nielsen lectura JA 2016)</p>
+        <p class="primer-parrafo" style="line-height: 53px;">LA MARCA <span>#1* EN COLOMBIA </span></p>
+        <p class="segundo-parrafo" style="line-height: 48px;">EN EL CUIDADO DE LAS PRÓTESIS DENTALES</p>
+        <p style="color:#8F9092;text-align:center;text-transform: uppercase;font-size: 25px;">(*número uno en ventas Nielsen lectura JA 2016)</p>
       </blockquote>
       <div class="space"></div>
   </div>
