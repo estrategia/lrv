@@ -18,23 +18,24 @@
             	<div class="space-1"></div>
             	<div class="row">
             		<div class="col-md-12">
-		            	<div class="center-div" style="width: 70%;">
-			            	<div class="col-md-8">
+		            	<div class="center-div" style="width: 100%;">
+			            	<div class="col-md-6">
 		                		<input type="text" value="" id="input-georeferencia-direccion" placeholder="direcci&oacute;n" class="form-control input-sm">
 		                	</div>
-		                	<div class="col-md-4">
-		                		<button type="button" style="color: #51a351" class="btn btn-sm" data-role="ubicacion-geodireccion"><i class="glyphicon glyphicon-search"></i> Buscar</button>
+		                	<div class="col-md-6">
+		                		<input type="text" value="" id="input-georeferencia-barrio" placeholder="barrio" class="form-control input-sm">
 		                	</div>
+		                	
 		            	</div>
 		            </div>
                 </div>
                 <div class="row">
             		<div class="col-md-12">
-		            	<div class="center-div" style="width: 70%;">
-			            	<div class="col-md-8">
-		                		<input type="text" value="" id="input-georeferencia-barrio" placeholder="barrio" class="form-control input-sm">
+		            	<div class="center-div" style="width: 100%;">
+			            	<div class="col-md-6">
+		                		<button type="button" style="color: #51a351" class="btn btn-sm" data-role="ubicacion-geodireccion"><i class="glyphicon glyphicon-search"></i> Buscar</button>
 		                	</div>
-		                	<div class="col-md-4">
+		                	<div class="col-md-6">
 		                		<button type="button" style="color: #51a351" class="btn btn-sm" data-role="ubicacion-geobarrio"><i class="glyphicon glyphicon-search"></i> Buscar</button>
 		                	</div>
 		            	</div>

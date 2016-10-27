@@ -249,7 +249,7 @@ $(document).on('change', "select[data-role='orden-listaproductos']", function() 
         type: 'POST',
         dataType: 'json',
         async: true,
-        url: requestUrl + '/callcenter/telefarma/cotizar/filtrar',
+        url: requestUrl + '/callcenter/telefarma/catalogo/filtrar',
         data: {'OrdenamientoForm[orden]': $('#OrdenamientoForm_orden').val()},
         beforeSend: function() {
             Loading.show();
@@ -364,7 +364,7 @@ function filtrarListaProductos() {
         type: 'POST',
         dataType: 'json',
         async: true,
-        url: requestUrl + '/callcenter/telefarma/cotizar/filtrar',
+        url: requestUrl + '/callcenter/telefarma/catalogo/filtrar',
         data: $('#form-filtro-listaproductos').serialize(),
         beforeSend: function() {
             Loading.show();

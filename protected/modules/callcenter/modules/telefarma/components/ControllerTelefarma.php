@@ -16,7 +16,7 @@ class ControllerTelefarma extends ControllerOperator {
         if (isset(Yii::app()->session[Yii::app()->params->telefarma['sesion']['sectorCiudadEntrega']]) && Yii::app()->session[Yii::app()->params->telefarma['sesion']['sectorCiudadEntrega']] != null) {
             $this->objSectorCiudad = Yii::app()->session[Yii::app()->params->telefarma['sesion']['sectorCiudadEntrega']];
         }
-        //$this->layout = "compra";
+        $this->layout = "compra";
         $this->getSectorName();
         $this->registerJs();
         $this->registerCss();
@@ -27,6 +27,8 @@ class ControllerTelefarma extends ControllerOperator {
         Yii::app()->getClientScript()->registerScriptFile(Yii::app()->request->baseUrl . "/libs/select2/select2.min.js", CClientScript::POS_END);
         Yii::app()->getClientScript()->registerScriptFile(Yii::app()->request->baseUrl . "/libs/bootstrap/js/bootstrap-slider.js", CClientScript::POS_HEAD);
         Yii::app()->getClientScript()->registerScriptFile(Yii::app()->request->baseUrl . "/libs/raty/jquery.raty.js", CClientScript::POS_END);
+        Yii::app()->getClientScript()->registerScriptFile(Yii::app()->request->baseUrl . "/libs/ad-gallery/jquery.ad-gallery.js", CClientScript::POS_HEAD);
+        
         Yii::app()->getClientScript()->registerScriptFile(Yii::app()->request->baseUrl . "/js/vitalcall.js", CClientScript::POS_END);
         Yii::app()->getClientScript()->registerScriptFile(Yii::app()->request->baseUrl . "/js/vitalcall-jj.js", CClientScript::POS_END);
         Yii::app()->getClientScript()->registerScriptFile(Yii::app()->request->baseUrl . "/js/telefarma-masm.js", CClientScript::POS_END);
@@ -37,6 +39,8 @@ class ControllerTelefarma extends ControllerOperator {
         Yii::app()->getClientScript()->registerCssFile(Yii::app()->request->baseUrl . "/libs/select2/select2.min.css");
         Yii::app()->getClientScript()->registerCssFile(Yii::app()->request->baseUrl . "/libs/bootstrap/css/bootstrap-slider.css");
         Yii::app()->getClientScript()->registerCssFile(Yii::app()->request->baseUrl . "/libs/raty/jquery.raty.css");
+        Yii::app()->getClientScript()->registerCssFile(Yii::app()->request->baseUrl . "/libs/ad-gallery/jquery.ad-gallery.css");
+         
         //Yii::app()->getClientScript()->registerCssFile(Yii::app()->request->baseUrl . "/css/vitalcall.css");
     }
     

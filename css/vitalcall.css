@@ -910,3 +910,10 @@ ul.yiiPager a:link{
 .align-right {
 	text-align:right;
 }
+
+.ad-gallery .ad-thumbs li a.ad-active img {
+    border: 3px solid #ea0001;
+}
+.ad-gallery .ad-thumbs li a img {
+    max-width: 70px;
+}

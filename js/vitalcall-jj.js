@@ -104,6 +104,18 @@ function buscarProductosVitalCall(text, obj, request) {
     });
 }
 
+$(document).ready(function() {
+	$('.ad-gallery').adGallery({
+	    loader_image: requestUrl + '/libs/ad-gallery/loader.gif',
+	    update_window_hash: false,
+	    width: 400,
+	    height: 300,
+	    thumb_opacity: 0.7,
+	    hooks: {
+	        displayDescription: function(image) {}
+	    }
+	});
+});
 $(document).on('click', "a[data-role='agregar-producto-formula']", function () {
 	
 	var component = $(this).attr('data-component');
