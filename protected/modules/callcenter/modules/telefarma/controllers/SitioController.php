@@ -122,7 +122,7 @@ class SitioController extends ControllerTelefarma {
     		));
     
     		$redirect = $this->createUrl('/callcenter/telefarma/catalogo/buscar');
-    
+    	
     		//se debe de eliminar url de sesion
     		echo CJSON::encode(array(
     				'result' => 'ok',
