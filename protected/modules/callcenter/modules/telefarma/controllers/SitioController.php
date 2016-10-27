@@ -97,18 +97,18 @@ class SitioController extends ControllerTelefarma {
     		));
     		Yii::app()->end();
     	}
-    
+    	
     	$objSectorCiudadOld = null;
     
     	if (!empty($this->objSectorCiudad))
-    		$objSectorCiudadOld = Yii::app()->session[Yii::app()->params->vitalCall['sesion']['sectorCiudadEntrega']];
+    		$objSectorCiudadOld = Yii::app()->session[Yii::app()->params->telefarma['sesion']['sectorCiudadEntrega']];
     
     		$objSectorCiudad->objCiudad->getDomicilio();
     		Yii::app()->session[Yii::app()->params->telefarma['sesion']['sectorCiudadEntrega']] = $objSectorCiudad;
     
     		if ($objSectorCiudadOld != null && ($objSectorCiudadOld->codigoCiudad != $objSectorCiudad->codigoCiudad || $objSectorCiudadOld->codigoSector != $objSectorCiudad->codigoSector)) {
-    			//Yii::app()->shoppingCart->clear();
-    			//Yii::app()->session[Yii::app()->params->vitalCall['sesion']['carroPagarForm']] = null;
+    			Yii::app()->shoppingCartVitalCall->clear();
+    			Yii::app()->session[Yii::app()->params->telefarma['sesion']['carroPagarForm']] = null;
     		}
     
     		//Yii::app()->shoppingCart->CalculateShipping();
