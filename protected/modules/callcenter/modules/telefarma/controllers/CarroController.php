@@ -365,7 +365,7 @@ class CarroController extends ControllerTelefarma {
     	}
     
     	$mensajeCanasta = "";
-    	$mensajeCanasta = $this->renderPartial('_carroAgregado', null, true);
+    	$mensajeCanasta = $this->renderPartial('_carroAgregado', array('objProducto' => $objProducto), true);
     	
     
     	$canastaVista = "canasta";
