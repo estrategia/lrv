@@ -7,13 +7,12 @@
  */
 
 /**
- * Description of FormaPagoForm
+ * Description of FormaPagoTelefarmaForm
  *
  * @author miguel.sanchez
  */
 class FormaPagoTelefarmaForm extends CFormModel {
-
-    //put your code here
+	
     public $identificacionUsuario;
     public $fechaEntrega;
     public $comentario;
@@ -40,6 +39,13 @@ class FormaPagoTelefarmaForm extends CFormModel {
     public $tipoEntrega;
     public $totalCompra = null;
     public $objSectorCiudad = null;
+    
+    //datos medico
+    public $registroMedico;
+    public $nombreMedico;
+    public $institucionMedico;
+    public $telefonoMedico;
+    public $correoElectronicoMedico;
 
     /**
      * Declares the validation rules.
@@ -118,7 +124,17 @@ class FormaPagoTelefarmaForm extends CFormModel {
             $rules[] = array('telefonoContacto,indicePuntoVenta', 'safe');
             $rules[] = array('telefonoContacto,indicePuntoVenta', 'default', 'value' => null);
         }
-
+        
+        $rules[] = array('registroMedico, nombreMedico, institucionMedico, telefonoMedico', 'required', 'on' => 'informacion, finalizar', 'message' => '{attribute} no puede estar vacío');
+        $rules[] = array('registroMedico, telefonoMedico', 'numerical', 'integerOnly' => true, 'on' => 'informacion, finalizar', 'message' => '{attribute} deber ser número');
+        $rules[] = array('registroMedico', 'length', 'min' => 3, 'max' => 15, 'on' => 'informacion, finalizar');
+        $rules[] = array('nombreMedico, institucionMedico', 'length', 'min' => 5, 'max' => 100, 'on' => 'informacion, finalizar');
+        $rules[] = array('telefonoMedico', 'length', 'min' => 5, 'max' => 15, 'on' => 'informacion, finalizar');
+        $rules[] = array('correoElectronicoMedico', 'safe');
+        $rules[] = array('correoElectronicoMedico', 'email', 'on' => 'informacion, finalizar');
+        $rules[] = array('correoElectronicoMedico', 'length', 'max' => 50, 'on' => 'informacion, finalizar');
+        
+        
         //Yii::log("validacion 13\n", CLogger::LEVEL_INFO, 'application');
         //array('clienteFielValidate', 'on' => 'pago, finalizar'),
         //array('codigoPromocion', 'promocionValidate', 'on' => 'pago, finalizar'),
