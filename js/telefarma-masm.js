@@ -17,19 +17,19 @@ $(document).on('click', "button[id='btn-carropagar-siguiente'], button[id='btn-c
 function pasoInformacion(actual, siguiente, boton) {
     var data = {
         siguiente: siguiente,
-        "FormaPagoVitalCallForm[indicePuntoVenta]": $('input[name="FormaPagoVitalCallForm[indicePuntoVenta]"]').val(),
-        "FormaPagoVitalCallForm[tipoEntrega]": $('input[name="FormaPagoVitalCallForm[tipoEntrega]"]').val()
+        "FormaPagoTelefarmaForm[indicePuntoVenta]": $('input[name="FormaPagoTelefarmaForm[indicePuntoVenta]"]').val(),
+        "FormaPagoTelefarmaForm[tipoEntrega]": $('input[name="FormaPagoTelefarmaForm[tipoEntrega]"]').val()
     };
 
     $.ajax({
         type: 'POST',
         async: true,
-        url: requestUrl + '/callcenter/vitalcall/carro/pagar/paso/' + actual + '/post/true',
-        data: $.param(data) + '&' + $('#form-pago-comentario').serialize() + '&' + $('#form-pago-entrega').serialize() + '&' + $('#form-pago-pago').serialize(),
+        url: requestUrl + '/callcenter/telefarma/carro/pagar/paso/' + actual + '/post/true',
+        data: $.param(data) + '&' + $('#form-pago-comentario').serialize() + '&' + $('#form-direccion-pagoinvitado').serialize() + '&' + $('#form-pago-entrega').serialize() + '&' + $('#form-pago-pago').serialize(),
         beforeSend: function() {
             boton.prop('disabled', true);
-            $('div[id^="FormaPagoVitalCallForm_"].text-danger').html('');
-            $('div[id^="FormaPagoVitalCallForm_"].text-danger').css('display', 'none');
+            $('div[id^="FormaPagoTelefarmaForm_"].text-danger').html('');
+            $('div[id^="FormaPagoTelefarmaForm_"].text-danger').css('display', 'none');
             Loading.show();
         },
         complete: function() {
@@ -68,7 +68,7 @@ function pasoConfirmacion(actual, siguiente, boton) {
     $.ajax({
         type: 'POST',
         async: true,
-        url: requestUrl + '/callcenter/vitalcall/carro/pagar/paso/' + actual + '/post/true',
+        url: requestUrl + '/callcenter/telefarma/carro/pagar/paso/' + actual + '/post/true',
         data: $.param(data) + '&' + $('#form-pago-confirmacion').serialize(),
         beforeSend: function() {
             boton.prop('disabled', true);
@@ -112,7 +112,7 @@ $(document).on('click', 'div[data-role="tipoentrega"]', function() {
             type: 'POST',
             dataType: 'json',
             async: true,
-            url: requestUrl + '/callcenter/vitalcall/carro/pasoporel',
+            url: requestUrl + '/callcenter/telefarma/carro/pasoporel',
             data: {opcion: 'modal'},
             beforeSend: function() {
                 $("#modal-pasoporel-seleccionar").remove();
@@ -144,7 +144,7 @@ $(document).on('click', 'button[data-role="pasoporel-seleccion-pdv"]', function(
     $('#pasoporel-seleccion-pdv-nombre').html($(this).attr('data-nombre'));
     $('#pasoporel-seleccion-pdv-direccion').html($(this).attr('data-direccion'));
     $("#modal-pasoporel-seleccionar").modal("hide");
-    $('input[name="FormaPagoVitalCallForm[indicePuntoVenta]"]').val($(this).attr('data-idx'));
+    $('input[name="FormaPagoTelefarmaForm[indicePuntoVenta]"]').val($(this).attr('data-idx'));
 });
 
 function seleccionTipoEntrega(tipo, _tipo) {
@@ -155,7 +155,7 @@ function seleccionTipoEntrega(tipo, _tipo) {
 
     $('#pasoporel-seleccion-pdv-nombre').html("");
     $('#pasoporel-seleccion-pdv-direccion').html("");
-    $('#FormaPagoVitalCallForm_tipoEntrega').val(tipo);
+    $('#FormaPagoTelefarmaForm_tipoEntrega').val(tipo);
     $('div[data-role="tipoentrega-habilitar"]div[data-habilitar="' + tipo + '"]').removeClass('display-none');
     $('div[data-role="tipoentrega-habilitar"]div[data-habilitar="' + tipo + '"] input').removeAttr('disabled');
     $('div[data-role="tipoentrega-habilitar"]div[data-habilitar="' + _tipo + '"]').addClass('display-none');
@@ -171,9 +171,9 @@ $(document).on('click', "div[data-role='formapago']", function() {
     var tipo = $(this).attr('data-tipo');
     if (tipo == "datafono") {
         $("#modal-formapago input[type='radio']").removeAttr('checked');
-        $("#modal-formapago #idFormaPago_" + $("#FormaPagoVitalCallForm_idFormaPago_datafono").val()).prop('checked', true);
+        $("#modal-formapago #idFormaPago_" + $("#FormaPagoTelefarmaForm_idFormaPago_datafono").val()).prop('checked', true);
         $("div[data-role^='formapago-logo-']").addClass('display-none');
-        $("div[data-role='formapago-logo-" + $("#FormaPagoVitalCallForm_idFormaPago_datafono").val() + "']").removeClass('display-none');
+        $("div[data-role='formapago-logo-" + $("#FormaPagoTelefarmaForm_idFormaPago_datafono").val() + "']").removeClass('display-none');
         $("#modal-formapago").modal("show");
         return false;
     } else {
@@ -191,8 +191,8 @@ $(document).on('click', "#modal-formapago input[type='radio']", function() {
         //$("div[data-role='formapago']").removeClass('activo');
         //$('div[data-tipo="datafono"]').addClass('activo');
         //$('#div-formapago-vacio').remove();
-        $('input[id="FormaPagoVitalCallForm_idFormaPago_datafono"]').prop('checked', true);
-        $('input[id="FormaPagoVitalCallForm_idFormaPago_datafono"]').val($(this).val());
+        $('input[id="FormaPagoTelefarmaForm_idFormaPago_datafono"]').prop('checked', true);
+        $('input[id="FormaPagoTelefarmaForm_idFormaPago_datafono"]').val($(this).val());
 
         $("div[data-role^='formapago-logo-']").addClass('display-none');
         $("div[data-role='formapago-logo-" + $(this).val() + "']").removeClass('display-none');

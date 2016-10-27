@@ -18,13 +18,20 @@ class CampaniaController extends Controller {
     public function actionContenido() {
         $campania = "";
         
-        if (!empty($_REQUEST)) {
+        foreach($_REQUEST as $param => $value){
+        	if(empty($value)){
+        		$campania = $param;
+        		break;
+        	}
+        }
+        
+        /*if (!empty($_REQUEST)) {
             $llaves = array_keys($_REQUEST);
             if(isset($llaves[0]) && count($llaves)==1 && empty($_REQUEST[$llaves[0]])){
                 $campania = $llaves[0];
             }
-        }
-
+        }*/
+        
         if (empty($campania))
             throw new CHttpException(404, 'Solicitud inválida.');
         
