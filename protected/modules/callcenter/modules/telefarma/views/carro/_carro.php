@@ -1,4 +1,3 @@
-<?php $listFormulas = array(); ?>
 <?php $listPositionBodega = array(); ?>
 <?php $listPositionDelivery = array(); ?>
 <!-- Vista Carro -->
@@ -37,27 +36,11 @@
                                     		$listPositionBodega[] = $position;
                                         $this->renderPartial('_carroElementoProducto', array(
                                             'position' => $position,
-                                            'lectura' => false
+                                            'lectura' => $lectura
                                         ));
-                                    elseif ($position->isFormula()):
-                                        $listFormulas[$position->objProductoFormula->idFormula]['objProductoFormula'] = $position->objProductoFormula;
-                                        $listFormulas[$position->objProductoFormula->idFormula]['listPositions'][] = $position;
                                     endif;
                                     ?>
                             <?php endforeach; ?>
-                            <?php foreach ($listFormulas as $arrFormula):?>
-                            	<tr>
-                            		<td colspan="6"><?= $arrFormula['objProductoFormula']->objFormulaVC->nombreMedico ?> - <?= $arrFormula['objProductoFormula']->objFormulaVC->institucion ?></td>
-                            	</tr>
-                            	<?php foreach ($arrFormula['listPositions'] as $position): ?>
-                            		<?php
-   	                                    $this->renderPartial('_carroElementoProducto', array(
-                                            'position' => $position,
-                                            'lectura' => $lectura
-                                        ));
-                                    ?>
-                            	<?php endforeach; ?>
-                            <?php endforeach;?>
                         </tbody>
                     </table>
 					 <?php if (!empty($listPositionBodega)): ?>
@@ -78,7 +61,7 @@
                                     <?php
                                     $this->renderPartial('/carro/_carroElementoBodega', array(
                                         'position' => $position,
-                                        'lectura' => false
+                                        'lectura' => $lectura
                                     ));
                                     ?>
                                 <?php endforeach; ?>
