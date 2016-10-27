@@ -52,7 +52,8 @@ class FormaPagoTelefarmaForm extends CFormModel {
         $rules[] = array('tipoEntrega', 'required', 'message' => '{attribute} no puede estar vacío');
         $rules[] = array('tipoEntrega', 'in', 'range' => Yii::app()->params->entrega['listaTipos'], 'allowEmpty' => false);
         $rules[] = array('tipoEntrega', 'tipoEntregaValidate');
-        $rules[] = array('identificacionUsuario', 'required', 'message' => '{attribute} no puede estar vacío');
+        //$rules[] = array('identificacionUsuario', 'required', 'message' => '{attribute} no puede estar vacío');
+        $rules[] = array('identificacionUsuario', 'safe');
 
         //Yii::log("validacion 1\n", CLogger::LEVEL_INFO, 'application');
         //Yii::log("this->pagoInvitado: " . CVarDumper::dumpAsString($this->pagoInvitado) . "\n", CLogger::LEVEL_INFO, 'application');
