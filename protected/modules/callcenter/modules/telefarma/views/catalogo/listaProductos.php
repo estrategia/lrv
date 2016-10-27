@@ -1,5 +1,6 @@
 <?php $cantidadItems = isset($cantidadItems) ? $cantidadItems : 4 ?>
 <div class="space-1"></div>
+<?php echo $this->renderPartial('buscar');?>
 <div class="container-fluid">
     <div class="row">
         <!-- Menu de ordenamiento -->
