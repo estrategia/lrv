@@ -4,6 +4,7 @@ class CarroController extends ControllerTelefarma {
 	public $defaultAction = "index";
 	
     public function actionIndex() {
+    	$this->active = "compra";
         $this->render('index');
         Yii::app()->end();
     }

@@ -681,7 +681,7 @@ $(document).on('click', "a[data-eliminar='1'], a[data-eliminar='2'], a[data-elim
         type: 'POST',
         dataType: 'json',
         async: true,
-        url: requestUrl + '/callcenter/vitalcall/carro/eliminar',
+        url: requestUrl + '/callcenter/telefarma/carro/eliminar',
         data: {id: position, eliminar: eliminar},
         beforeSend: function() {
             Loading.show();
@@ -713,7 +713,7 @@ $(document).on('click', "a[data-role='carrovaciar-vitalcall']", function() {
         type: 'POST',
         dataType: 'json',
         async: true,
-        url: requestUrl + '/callcenter/vitalcall/carro/vaciar',
+        url: requestUrl + '/callcenter/telefarma/carro/vaciar',
         beforeSend: function() {
             Loading.show();
         },

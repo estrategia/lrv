@@ -120,7 +120,7 @@
 			<?php if (!$lectura) : ?>
                 <div class="center">
                     <div class="space-1"></div>
-                    <?php echo CHtml::link('Comprar', $this->createUrl('/callcenter/vitalcall/carro/pagar'), array('class' => 'btn btn-primary', 'role' => "button")); ?>
+                    <?php echo CHtml::link('Comprar', $this->createUrl('/callcenter/telefarma/carro/pagar'), array('class' => 'btn btn-primary', 'role' => "button")); ?>
                 </div>
             <?php endif; ?>
         </div>
