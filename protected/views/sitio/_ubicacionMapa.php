@@ -4,7 +4,7 @@
             <h1 class="page-title center">Ubica en el mapa el lugar donde deseas que entreguemos el pedido</h1>
             <div id="select-ubicacion-content" style="width: 80%;" class="center-div">
                 <div id="select-ubicacion-psubsector" style="width: 48%;" class="center-div ui-mini">
-                    <select data-role="ciudad-despacho-map" style="width: 100%">
+                    <select data-role="ciudad-despacho-map" style="width: 100%" onchange="change()">
                         <option value="">ciudad ...</option>
                         <?php foreach ($listCiudadesSectores as $ciudad): ?>
                             <option data-latitud="<?php echo $ciudad->latitudGoogle ?>" data-longitud="<?php echo $ciudad->longitudGoogle ?>" value="<?php echo $ciudad->codigoCiudad ?>-0"><?php echo $ciudad->nombreCiudad ?></option>

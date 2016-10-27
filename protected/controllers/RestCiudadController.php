@@ -34,5 +34,25 @@
       $response = ['ciudad' => $ciudad, 'sectores' => $sectores];
       echo CJSON::encode($response);
     }
+
+    public function actionSectores()
+    {
+      // $ciudad = SectorCiudad::model()->find('codigoCiudad='. $<_GET['id']);
+      $codigoCiudad = $_GET['id'];
+      $response = [];
+      $sql = "SELECT * FROM `m_SectorCiudad` `t`  LEFT OUTER JOIN `m_Sector` `objSector` ON (`t`.`codigoSector`=`objSector`.`codigoSector`) LEFT OUTER JOIN `m_Ciudad` `objCiudad` ON (`t`.`codigoCiudad`=`objCiudad`.`codigoCiudad`) WHERE (t.codigoSector<>0 AND t.codigoCiudad={$codigoCiudad} AND t.estadoCiudadSector=1 AND objSector.estadoSector=1 AND objCiudad.estadoCiudad=1)";
+      $connection = Yii::app()->db;
+      $command = $connection->createCommand($sql);
+      $sectores = $command->queryAll();
+      
+      // print_r($sectores);
+      // CVarDumper::dump($sectores, 10, true);
+      if (empty($sectores)) {
+        $response = ['result' => 'ok', 'response' => 'Sin sectores'];
+      } else {
+        $response = ['result' => 'ok', 'sectores' => $sectores];
+      }
+      echo CJSON::encode($response);
+    }
   }
 ?>

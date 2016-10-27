@@ -122,16 +122,36 @@
     public function actionBuscar()
     {
       $term = $_GET['termino'];
+      $lab = $_GET['laboratorio'];
       $sesion = Yii::app()->getSession()->getSessionId();
       $codigosArray = GSASearch($term, $sesion);
-      $parametrosProductos = array(
-                'order' => 'rel.relevancia DESC,t.orden DESC',
-                'condition' => "t.activo=:activo",
-                'params' => array(
-                    ':activo' => 1,
-                )
-            );
-      $parametrosProductos['join'] = "JOIN t_relevancia_temp_$sesion rel ON t.codigoProducto  = rel.codigoProducto ";
+      $parametrosProductos = [];
+      $categoria1 = Yii::app()->params['calificacion']['categoriasNoCalificacion'][0];
+      $categoria2 = Yii::app()->params['calificacion']['categoriasNoCalificacion'][1];
+      if ($lab == -1) {
+        $parametrosProductos = array(
+                  'order' => 'rel.relevancia DESC,t.orden DESC',
+                  'condition' => "t.activo=:activo AND (t.idUnidadNegocioBI=:categoria1 OR t.idUnidadNegocioBI=:categoria2)",
+                  'params' => array(
+                      ':activo' => 1,
+                      ':categoria1' => $categoria1,
+                      ':categoria2' => $categoria2,
+                  )
+              );
+        $parametrosProductos['join'] = "JOIN t_relevancia_temp_$sesion rel ON t.codigoProducto  = rel.codigoProducto ";
+      } else {
+        $parametrosProductos = array(
+                  'order' => 'rel.relevancia DESC,t.orden DESC',
+                  'condition' => "t.activo=:activo AND t.codigoProveedor=:nitLaboratorio AND (t.idUnidadNegocioBI=:categoria1 OR t.idUnidadNegocioBI=:categoria2)",
+                  'params' => array(
+                      ':activo' => 1,
+                      ':nitLaboratorio' => $lab,
+                      ':categoria1' => $categoria1,
+                      ':categoria2' => $categoria2,
+                  )
+              );
+        $parametrosProductos['join'] = "JOIN t_relevancia_temp_$sesion rel ON t.codigoProducto  = rel.codigoProducto ";
+      }
       $productos = Producto::model()->findAll($parametrosProductos);
       echo CJSON::encode($productos);
     }

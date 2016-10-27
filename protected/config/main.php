@@ -112,13 +112,17 @@ return array(
                 array('restciudad/list', 'pattern'=>'rest/ciudad', 'verb'=>'GET'),
                 array('restciudad/view', 'pattern'=>'rest/ciudad/<id:\d+>', 'verb'=>'GET'),
                 array('restpuntoventa/puntoventacercano', 'pattern'=>'rest/puntoventacercano/lat/<lat:\-?\d+\.?\d+>/lon/<lon:\-?\d+\.?\d+>', 'verb'=>'GET'),
+                array('restciudad/sectores', 'pattern' => 'rest/ciudad/<id:\d+>/sectores', 'verb' => 'GET'),
                 array('restpuntoventa/list', 'pattern'=>'rest/puntoventa', 'verb'=>'GET'),
                 array('restproducto/list', 'pattern'=>'rest/producto', 'verb'=>'GET'),
-                array('restproducto/buscar', 'pattern'=>'rest/producto/buscar/<termino:.*>', 'verb'=>'GET'),
+                array('restproducto/buscar', 'pattern'=>'rest/producto/buscar/<termino:.*>/<laboratorio:\-?\d+>', 'verb'=>'GET'),
                 array('restproducto/producto', 
                     'pattern' => 'rest/producto/<codigoProducto:\d+>/ciudad/<codigoCiudad:\d+>/sector/<codigoSector:\d+>',
                     'verb'=>'GET'),
                 array('restproducto/simular', 'pattern' => 'rest/producto/simular', 'verb' => 'GET'),
+                array('restprofesion/ver', 'pattern' => 'rest/profesion/ver/<id:\d+>', 'verb' => 'GET'),
+                array('restprofesion/listar', 'pattern' => 'rest/profesion', 'verb' => 'GET'),
+
                /* array('rest/update', 'pattern'=>'api/<model:\w+>/<id:\d+>', 'verb'=>'PUT'),
                 array('rest/delete', 'pattern'=>'api/<model:\w+>/<id:\d+>', 'verb'=>'DELETE'),
                 array('rest/create', 'pattern'=>'api/<model:\w+>', 'verb'=>'POST'),*/
