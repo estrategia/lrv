@@ -626,16 +626,14 @@ class CarroController extends ControllerTelefarma {
     }
     
     public function actionComprar() {
-    	echo "comprar";
-    	exit();
         $modelPago = null;
 
-        if (isset(Yii::app()->session[Yii::app()->params->vitalCall['sesion']['carroPagarForm']]) && Yii::app()->session[Yii::app()->params->vitalCall['sesion']['carroPagarForm']] != null)
-            $modelPago = Yii::app()->session[Yii::app()->params->vitalCall['sesion']['carroPagarForm']];
+        if (isset(Yii::app()->session[Yii::app()->params->telefarma['sesion']['carroPagarForm']]) && Yii::app()->session[Yii::app()->params->telefarma['sesion']['carroPagarForm']] != null)
+            $modelPago = Yii::app()->session[Yii::app()->params->telefarma['sesion']['carroPagarForm']];
 
         if ($modelPago === null) {
             Yii::app()->user->setFlash('error', "Error: Por favor verificar los datos de tu compra.");
-            $this->redirect($this->createUrl('/callcenter/vitalcall_old/carro'));
+            $this->redirect($this->createUrl('/callcenter/telefarma/carro'));
             Yii::app()->end();
         }
 
@@ -643,7 +641,7 @@ class CarroController extends ControllerTelefarma {
 
         if (!in_array($modelPago->tipoEntrega, Yii::app()->params->entrega['listaTipos'])) {
             Yii::app()->user->setFlash('error', "Tipo de entrega inválido, por favor seleccionar tipo de entrega.");
-            $this->redirect($this->createUrl('/callcenter/vitalcall_old/carro'));
+            $this->redirect($this->createUrl('/callcenter/telefarma/carro'));
         }
 
         //validaciones de compra
@@ -655,7 +653,7 @@ class CarroController extends ControllerTelefarma {
 
         foreach ($pasosDisponibles as $idx => $paso) {
             $modelPago->setScenario($paso);
-            $form = new FormaPagoVitalCallForm($paso);
+            $form = new FormaPagoTelefarmaForm($paso);
             foreach ($modelPago->attributes as $atributo => $valor) {
                 $form->$atributo = $valor;
             }
@@ -670,15 +668,14 @@ class CarroController extends ControllerTelefarma {
             Yii::app()->user->setFlash('error', "Error: Por favor verificar los datos de tu compra. " . CActiveForm::validate($modelPago));
             $paramsValidacion = array();
             $paramsValidacion['paso'] = $pasoValidacion;
-            $this->redirect($this->createUrl('/callcenter/vitalcall_old/carro/pagar', $paramsValidacion));
+            $this->redirect($this->createUrl('/callcenter/telefarma/carro/pagar', $paramsValidacion));
             Yii::app()->end();
         }
-
 
         //si ha llegado aqui, paso todas las validaciones y se puede proceder con proceso de compra
         if ($modelPago->idFormaPago == Yii::app()->params->formaPago['pasarela']['idPasarela']) {
             Yii::app()->user->setFlash('error', "Error: Pago en l&iacute;nea no habilitado.");
-            $this->redirect($this->createUrl('/callcenter/vitalcall_old/carro'));
+            $this->redirect($this->createUrl('/callcenter/telefarma/carro'));
         }
 
         $resultCompra = $this->procesoCompra($modelPago, $modelPago->tipoEntrega);
@@ -691,7 +688,7 @@ class CarroController extends ControllerTelefarma {
                 'objFormaPago' => $resultCompra['response']['objFormaPago'],
                 'objFormasPago' => $resultCompra['response']['objFormasPago']), true);
 
-            Yii::app()->session[Yii::app()->params->vitalCall['sesion']['carroPagarForm']] = null;
+            Yii::app()->session[Yii::app()->params->telefarma['sesion']['carroPagarForm']] = null;
             Yii::app()->shoppingCartVitalCall->clear();
             $this->render('application.views.carro.compra', array(
                 'contenido' => $contenidoSitio,
@@ -700,12 +697,12 @@ class CarroController extends ControllerTelefarma {
             Yii::app()->end();
         } else {
             Yii::app()->user->setFlash('error', "Error al realizar compra, por favor intente de nuevo. " . $resultCompra['response']);
-            $this->redirect($this->createUrl('/callcenter/vitalcall_old/carro/pagar'));
+            $this->redirect($this->createUrl('/callcenter/telefarma/carro/pagar'));
             Yii::app()->end();
         }
     }
 
-    private function procesoCompra(FormaPagoVitalCallForm $modelPago, $tipoEntrega) {
+    private function procesoCompra(FormaPagoTelefarmaForm $modelPago, $tipoEntrega) {
         $transaction = Yii::app()->db->beginTransaction();
         try {
             //registrar compra compra
@@ -722,7 +719,7 @@ class CarroController extends ControllerTelefarma {
 
             $objCompra->idEstadoCompra = Yii::app()->params->callcenter['estadoCompra']['estado']['pendiente'];
 
-            $objCompra->idTipoVenta = Yii::app()->params->tipoVenta['vitalCall'];
+            $objCompra->idTipoVenta = Yii::app()->params->tipoVenta['telefarma'];
             $objCompra->activa = 1;
             $objCompra->invitado = 1;
             $objCompra->codigoPerfil = Yii::app()->shoppingCartVitalCall->getCodigoPerfil();
@@ -744,27 +741,6 @@ class CarroController extends ControllerTelefarma {
             if (!$objCompra->save()) {
                 throw new Exception("Error al guardar compra [0]" . $objCompra->validateErrorsResponse());
             }
-
-            if (isset(Yii::app()->session[Yii::app()->params->vitalCall['sesion']['formulaMedica']])) {
-              foreach (Yii::app()->session[Yii::app()->params->vitalCall['sesion']['formulaMedica']] as $formula) {
-              $formulaMedica = new FormulasMedicas();
-              $formulaMedica->idCompra = $objCompra->idCompra;
-              $formulaMedica->nombreMedico = $formula['nombreMedico'];
-              $formulaMedica->institucion = $formula['institucion'];
-              $formulaMedica->registroMedico = $formula['registroMedico'];
-              $formulaMedica->telefono = $formula['telefono'];
-              $formulaMedica->correoElectronico = $formula['correoElectronico'];
-              $formulaMedica->formulaMedica = $formula['formulaMedica'];
-
-              if (!$formulaMedica->save()) {
-              	//echo "<pre>";
-              	//print_r($formulaMedica->getErrors());exit();
-              	throw new Exception("Error al formula medica" . implode(",",$formulaMedica->getErrors()));
-              }
-              }
-
-              unset(Yii::app()->session[Yii::app()->params->vitalCall['sesion']['formulaMedica']]);
-              }
 
             if ($tipoEntrega == Yii::app()->params->entrega['tipo']['presencial']) {
                 $puntoVenta = $modelPago->listPuntosVenta[1][$modelPago->indicePuntoVenta];
@@ -806,9 +782,9 @@ class CarroController extends ControllerTelefarma {
                 }
             }
 
-            /*             * ***************************************************************************************************** */
-            /*             * ************************************** GUARDAN LAS FORMAS DE PAGO *********************************** */
-            /*             * ***************************************************************************************************** */
+            /* ***************************************************************************************************** */
+            /* ************************************** GUARDAN LAS FORMAS DE PAGO *********************************** */
+            /* ***************************************************************************************************** */
 
             $objFormasPago = new FormasPago; //FormaPago::model()->findByPk($modelPago->idFormaPago);
             $objFormasPago->idCompra = $objCompra->idCompra;
@@ -817,28 +793,29 @@ class CarroController extends ControllerTelefarma {
             $objFormasPago->cuotasTarjeta = $modelPago->cuotasTarjeta;
             $objFormasPago->idFormaPago = $modelPago->idFormaPago;
 
-
             if (!$objFormasPago->save()) {
                 throw new Exception("Error al guardar forma de pago" . $objFormasPago->validateErrorsResponse());
             }
 
-            //$objFormasPago->valorBono = Yii::app()->shoppingCartVitalCall->getBono();
             $objCompraDireccion = new ComprasDireccionesDespacho;
             $objCompraDireccion->idCompra = $objCompra->idCompra;
-            $objCompraDireccion->descripcion = "NA";
-            $objCompraDireccion->telefono = $modelPago->objDireccion->objUsuarioVC->telefono;
-            $objCompraDireccion->correoElectronico = $modelPago->objDireccion->objUsuarioVC->correoElectronico;
+            $objCompraDireccion->descripcion = $modelPago->descripcion;
 
             if ($tipoEntrega == Yii::app()->params->entrega['tipo']['domicilio']) {
-                $objCompraDireccion->nombre = $modelPago->objDireccion->objUsuarioVC->nombre . " " . $modelPago->objDireccion->objUsuarioVC->apellido;
-                $objCompraDireccion->direccion = $modelPago->objDireccion->direccion;
-                $objCompraDireccion->barrio = $modelPago->objDireccion->barrio;
-                $objCompraDireccion->codigoCiudad = Yii::app()->shoppingCartVitalCall->getCodigoCiudad();
-                $objCompraDireccion->codigoSector = Yii::app()->shoppingCartVitalCall->getCodigoSector();
+            	$objCompraDireccion->nombre = $modelPago->nombre;
+            	$objCompraDireccion->direccion = $modelPago->direccion;
+            	$objCompraDireccion->barrio = $modelPago->barrio;
+            	$objCompraDireccion->telefono = $modelPago->telefono;
+            	$objCompraDireccion->celular = $modelPago->celular;
+            	$objCompraDireccion->codigoCiudad = Yii::app()->shoppingCartVitalCall->getCodigoCiudad();
+            	$objCompraDireccion->codigoSector = Yii::app()->shoppingCartVitalCall->getCodigoSector();
+            	$objCompraDireccion->correoElectronico = $modelPago->correoElectronico;
             } else if ($tipoEntrega == Yii::app()->params->entrega['tipo']['presencial']) {
                 $objCompraDireccion->nombre = "NA";
                 $objCompraDireccion->direccion = "NA";
                 $objCompraDireccion->barrio = "NA";
+                $objCompraDireccion->telefono = $modelPago->telefonoContacto;
+                $objCompraDireccion->correoElectronico = $modelPago->correoElectronicoContacto;
             }
 
             if (!$objCompraDireccion->save()) {
@@ -899,27 +876,6 @@ class CarroController extends ControllerTelefarma {
                 $objItem->flete = $position->getShipping();
                 $objItem->disponible = 1;
                 
-                if($position->isFormula()){
-                	$objItem->idFormula = $position->objProductoFormula->idFormula;
-                	$objItem->idProductoVitalCall = $position->objProductoFormula->idProductoVitalCall;
-                }
-                
-                $totalUnidades = 0;
-                $totalFracciones = 0;
-                
-                if($objItem->unidades>0){
-                	$totalUnidades = $objItem->unidades*$position->getObjProducto()->cantidadUnidadMedida;
-                }
-                
-                if($objItem->fracciones>0){
-                	$totalFracciones = $objItem->fracciones*$position->getObjProducto()->unidadFraccionamiento;
-                }
-                
-                $totalCantidad = $totalUnidades+$totalFracciones;
-                
-                $sql = "UPDATE t_ProductosFormulaVitalCall SET cantidadComprada=cantidadComprada+$totalCantidad, fechaCompra='$objCompra->fechaEntrega', cantidadUltimaCompra=$totalCantidad WHERE idFormula=$objItem->idFormula AND idProductoVitalCall=$objItem->idProductoVitalCall";
-                Yii::app()->db->createCommand($sql)->execute();
-
                 if (!$objItem->save()) {
                     throw new Exception("Error al guardar item de compra $objItem->codigoProducto. " . $objItem->validateErrorsResponse());
                 }
@@ -956,14 +912,22 @@ class CarroController extends ControllerTelefarma {
                 }
             }
             
-            $nombreUsuario = $modelPago->objDireccion->objUsuarioVC->nombre . " " . $modelPago->objDireccion->objUsuarioVC->apellido;
-            $correoUsuario = $modelPago->objDireccion->objUsuarioVC->correoElectronico;
+        	$nombreUsuario = "INVITADO";
+            $correoUsuario = "NA";
+
+
+            if ($modelPago->tipoEntrega == Yii::app()->params->entrega['tipo']['domicilio']) {
+                $nombreUsuario = $modelPago->nombre;
+                $correoUsuario = $modelPago->correoElectronico;
+            } else if ($modelPago->tipoEntrega == Yii::app()->params->entrega['tipo']['presencial']) {
+                $correoUsuario = $modelPago->correoElectronicoContacto;
+            }
 
             $objPasarelaEnvio = null;
             $asuntoCorreo = Yii::app()->params->asunto['pedidoRealizado'];
 
             $objFormaPago = FormaPago::model()->findByPk($modelPago->idFormaPago);
-            $contenidoCorreo = $this->renderPartial('application.views.carro.compraCorreo', array(
+            $contenidoCorreo = $this->renderPartial('compraCorreo', array(
                 'objCompra' => $objCompra,
                 'modelPago' => $modelPago,
                 'objCompraDireccion' => $objCompraDireccion,
@@ -989,9 +953,9 @@ class CarroController extends ControllerTelefarma {
             ));
 
             try {
-                $result = $client->__soapCall("CongelarCompraAutomatica", array('idPedido' => $objCompra->idCompra)); //763759, 763743
+                //$result = $client->__soapCall("CongelarCompraAutomatica", array('idPedido' => $objCompra->idCompra)); //763759, 763743
                 //$result = array(0=>0,1=>'congelar prueba error');
-                //$result = array(0 => 1, 1 => 'congelar prueba ok', 2 => 'miguel.sanchex@gmail.com.co');
+                $result = array(0 => 1, 1 => 'congelar prueba ok', 2 => 'miguel.sanchex@gmail.com.co');
                 if (!empty($result) && $result[0] == 1) {
                     $objCompraRemision = Compras::model()->findByPk($objCompra->idCompra, array("with" => "objPuntoVenta"));
                     $contenidoCorreo = $this->renderPartial('application.modules.callcenter.views.pedido.compraCorreo', array('objCompra' => $objCompraRemision), true, true);

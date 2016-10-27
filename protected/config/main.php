@@ -423,7 +423,7 @@ return array(
             'virtual' => 1,
             'nacional' => 2,
             'asistida' => 3,
-            'vitalCall' => 4
+            'telefarma' => 4
         ),
         'bloqueoUsuario' => array(
             'diasBloqueo' => 15,

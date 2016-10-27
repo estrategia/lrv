@@ -20,12 +20,12 @@ function pasoInformacion(actual, siguiente, boton) {
         "FormaPagoTelefarmaForm[indicePuntoVenta]": $('input[name="FormaPagoTelefarmaForm[indicePuntoVenta]"]').val(),
         "FormaPagoTelefarmaForm[tipoEntrega]": $('input[name="FormaPagoTelefarmaForm[tipoEntrega]"]').val()
     };
-
+    
     $.ajax({
         type: 'POST',
         async: true,
         url: requestUrl + '/callcenter/telefarma/carro/pagar/paso/' + actual + '/post/true',
-        data: $.param(data) + '&' + $('#form-pago-comentario').serialize() + '&' + $('#form-direccion-pagoinvitado').serialize() + '&' + $('#form-pago-entrega').serialize() + '&' + $('#form-pago-pago').serialize(),
+        data: $.param(data) + '&' + $('#form-pago-comentario').serialize() + '&' + $('#form-direccion-pagoinvitado').serialize() + '&' + $('#form-datosmedico').serialize() + '&' +$('#form-pago-entrega').serialize() + '&' + $('#form-pago-pago').serialize(),
         beforeSend: function() {
             boton.prop('disabled', true);
             $('div[id^="FormaPagoTelefarmaForm_"].text-danger').html('');
