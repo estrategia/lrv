@@ -9,14 +9,14 @@ class ControllerTelefarma extends ControllerOperator {
     public $objSectorCiudad = null;
     public $sectorName = null;
     public $isMobile = false;
-
+	
     public function init() {
         $this->pageTitle = Yii::app()->name;
         
         if (isset(Yii::app()->session[Yii::app()->params->telefarma['sesion']['sectorCiudadEntrega']]) && Yii::app()->session[Yii::app()->params->telefarma['sesion']['sectorCiudadEntrega']] != null) {
             $this->objSectorCiudad = Yii::app()->session[Yii::app()->params->telefarma['sesion']['sectorCiudadEntrega']];
         }
-        
+        $this->layout = "compra";
         $this->getSectorName();
         $this->registerJs();
         $this->registerCss();

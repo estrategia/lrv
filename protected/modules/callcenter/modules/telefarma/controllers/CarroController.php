@@ -1,6 +1,8 @@
 <?php
 class CarroController extends ControllerTelefarma {
 
+	public $defaultAction = "index";
+	
     public function actionIndex() {
         $this->render('index');
         Yii::app()->end();
@@ -1129,9 +1131,7 @@ class CarroController extends ControllerTelefarma {
 
         $modelPago = null;
 
-        if (isset(Yii::app()->session [Yii::app()->params->vitalCall ['sesion'] ['carroPagarForm']]) && Yii::app()->session [Yii::app()->params->vitalCall ['sesion'] ['carroPagarForm']] != null) {
-            $modelPago = Yii::app()->session [Yii::app()->params->vitalCall ['sesion'] ['carroPagarForm']];
-        }
+        $objSectorCiudad = $this->objSectorCiudad;
 
         if ($modificar === null || $id === null) {
             echo CJSON::encode(array(
@@ -1159,7 +1159,7 @@ class CarroController extends ControllerTelefarma {
         }
 
         if ($modificar == 1) {
-            $this->modificarProducto($position, $modelPago->objSectorCiudad);
+            $this->modificarProducto($position, $objSectorCiudad);
         }
 
         echo CJSON::encode(array(
@@ -1195,12 +1195,8 @@ class CarroController extends ControllerTelefarma {
             Yii::app()->end();
         }
 
-        if ($position->isFormula()) {
-            $codigoProducto = $position->objProductoFormula->objProductoVC->codigoProducto;
-        } else {
-            $codigoProducto = $position->objProducto->codigoProducto;
-        }
-
+        $codigoProducto = $position->objProducto->codigoProducto;
+    
         $objProducto = Producto::model()->find(array(
             'with' => array(
                 'listSaldos' => array('condition' => '(listSaldos.saldoUnidad>:saldo AND listSaldos.codigoCiudad=:ciudad AND listSaldos.codigoSector=:sector) OR (listSaldos.saldoUnidad IS NULL AND listSaldos.codigoCiudad IS NULL AND listSaldos.codigoSector IS NULL)'),

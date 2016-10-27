@@ -20,6 +20,8 @@ class ControllerVitalcall extends ControllerOperator {
         $this->getSectorName();
         $this->registerJs();
         $this->registerCss();
+        
+        
     }
     
     public function registerJs(){

@@ -639,7 +639,7 @@ function modificarCarro(position, modificar) {
         type: 'POST',
         dataType: 'json',
         async: true,
-        url: requestUrl + '/callcenter/vitalcall/carro/modificar',
+        url: requestUrl + '/callcenter/telefarma/carro/modificar',
         data: data,
         beforeSend: function() {
             Loading.show();

@@ -5,8 +5,7 @@ class CatalogoController extends ControllerTelefarma {
     
 
     public function actionBuscar() {
-        $this->layout = "simple";
-
+    	$this->active = "buscar";
         $term = trim(Yii::app()->request->getParam('busqueda', ''));
 
         if (empty($term)) {
@@ -17,6 +16,7 @@ class CatalogoController extends ControllerTelefarma {
     }
 
     public function buscar($term) {
+    	$this->active = "buscar";
         $sesion = Yii::app()->getSession()->getSessionId();
         $codigosArray = GSASearch($term, $sesion);
         $objSectorCiudad = $this->objSectorCiudad;
@@ -224,6 +224,7 @@ class CatalogoController extends ControllerTelefarma {
     }
     
     public function actionProducto($producto) {
+    	$this->active = "buscar";
         $objSectorCiudad = $this->objSectorCiudad;
 
         if ($objSectorCiudad == null) {
@@ -365,7 +366,7 @@ class CatalogoController extends ControllerTelefarma {
     
     public function actionBodega($producto, $ubicacion, $bodega) {
     	$objSectorCiudad = $this->objSectorCiudad;
-    
+    	$this->active = "buscar";
     	if ($objSectorCiudad == null) {
     		throw new CHttpException(404, 'Solicitud inválida.');
     	}

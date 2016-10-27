@@ -22,8 +22,7 @@ class SitioController extends ControllerTelefarma {
     }
     
     public function actionUbicacion() {
-    	$this->layout = "simple";
-    
+    	$this->active = "ubicacion";
     	$listObjCiudad = Ciudad::model()->findAll(array(
     			'order' => 't.orden, t.nombreCiudad',
     			'condition' => 'estadoCiudad=:estadoCiudad',

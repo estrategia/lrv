@@ -9,7 +9,7 @@ class ControllerOperator extends CController {
     public $layout = 'admin';
     public $menu = array();
     public $showMenu = true;
-
+    public $active = "";
     /**
      * @var array the breadcrumbs of the current page. The value of this property will
      * be assigned to {@link CBreadcrumbs::links}. Please refer to {@link CBreadcrumbs::links}
