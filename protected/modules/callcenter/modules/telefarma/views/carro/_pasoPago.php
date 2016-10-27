@@ -42,12 +42,19 @@ $form = $this->beginWidget('CActiveForm', array(
     <?php foreach ($listFormaPago as $idx => $objFormaPago): ?>
         <?php if (!in_array($objFormaPago->idFormaPago, Yii::app()->params->formaPago['tarjetasDatafono'])): ?>
             <?php if ($objFormaPago->idFormaPago == Yii::app()->params->formaPago['idCredirebaja']): ?>
-            <?php elseif ($objFormaPago->idFormaPago == Yii::app()->params->formaPago['pasarela']['idPasarela']): ?>
-                <div data-role="formapago-descripcion"  data-tipo="<?php echo $objFormaPago->idFormaPago ?>" class="border-gray row center-div<?php echo ($modelPago->idFormaPago == $objFormaPago->idFormaPago ? "" : " display-none" ) ?>">
-                    <div class="col-md-12 center">
-                        <img class="ajustada" src="<?php echo Yii::app()->request->baseUrl; ?>/images/iconos/logo_pse.png" />
-                    </div>
+            <div data-role="formapago-descripcion" data-tipo="<?php echo $objFormaPago->idFormaPago ?>" class="border-gray row center-div<?php echo ($modelPago->idFormaPago == $objFormaPago->idFormaPago ? "" : " display-none" ) ?>">
+				<div class="col-md-8 info-oficina">
+                    <?php echo $form->labelEx($modelPago, 'numeroTarjeta'); ?>
+                    <?php echo $form->textField($modelPago, 'numeroTarjeta', array('class' => 'form-control', 'placeholder' => '000000000000', 'maxlength' => 12)); ?>
+                    <?php echo $form->error($modelPago, 'numeroTarjeta', array('class' => 'text-danger')); ?>
                 </div>
+				<div class="col-md-4 info-oficina">
+                    <?php echo $form->labelEx($modelPago, 'cuotasTarjeta'); ?>
+                    <?php echo $form->dropDownList($modelPago, 'cuotasTarjeta', FormaPagoForm::listDataCuotas(), array('class' => 'form-control select', 'placeholder' => '0', 'style' => "border-radius:0px;")); ?>
+                    <?php echo $form->error($modelPago, 'cuotasTarjeta', array('class' => 'text-danger')); ?>
+                </div>
+			</div>
+            <?php elseif ($objFormaPago->idFormaPago == Yii::app()->params->formaPago['pasarela']['idPasarela']): ?>
             <?php endif; ?>
         <?php endif; ?>
     <?php endforeach; ?>
