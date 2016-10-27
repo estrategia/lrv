@@ -13,7 +13,7 @@
                     <li class="c_list_prod">
                         <div class="ui-field-contain clst_prod_cont">
                             <?php
-                            $this->renderPartial('vitalcall.views.carro._canastaElemento', array(
+                            $this->renderPartial('telefarma.views.carro._canastaElemento', array(
                                 'position' => $position,
                             ));
                             ?>
@@ -28,7 +28,7 @@
             <li class="subtotal">Subtotal: <strong><?php echo Yii::app()->numberFormatter->format(Yii::app()->params->formatoMoneda['patron'], Yii::app()->shoppingCartVitalCall->getCost(), Yii::app()->params->formatoMoneda['moneda']); ?></strong></li>
             <li>
                 <div class="row btn-pagar">
-                    <?php echo CHtml::link('Comprar', CController::createUrl('/callcenter/vitalcall/carro'), array('class' => 'btn btn-primary')); ?>
+                    <?php echo CHtml::link('Comprar', CController::createUrl('/callcenter/telefarma/carro'), array('class' => 'btn btn-primary')); ?>
                 </div>
             </li>
         <?php else: ?>

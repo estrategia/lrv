@@ -923,7 +923,7 @@ $(document).on('click', "a[data-cargar-telefarma='1']", function() {
         type: 'POST',
         dataType: 'json',
         async: true,
-        url: requestUrl + '/carro/agregar',
+        url: requestUrl + '/callcenter/telefarma/carro/agregar',
         data: {producto: producto, cantidadU: cantidadU, cantidadF: cantidadF},
         beforeSend: function() {
             Loading.show();

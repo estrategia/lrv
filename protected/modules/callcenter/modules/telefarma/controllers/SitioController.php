@@ -40,7 +40,7 @@ class SitioController extends ControllerTelefarma {
     
     	Yii::import('ext.select2.Select2');
     	$listDataCiudad = CHtml::listData($listObjCiudad, 'codigoCiudad', 'nombreCiudad');
-    	$redirect = Yii::app()->request->urlReferrer == null ? $this->createUrl('/callcenter/vitalcall/cliente') : Yii::app()->request->urlReferrer;
+    	$redirect = Yii::app()->request->urlReferrer == null ? $this->createUrl('/callcenter/telefarma/cliente') : Yii::app()->request->urlReferrer;
     
     	$this->render('ubicacion', array(
     			'listDataCiudad' => $listDataCiudad,
@@ -104,7 +104,7 @@ class SitioController extends ControllerTelefarma {
     		$objSectorCiudadOld = Yii::app()->session[Yii::app()->params->vitalCall['sesion']['sectorCiudadEntrega']];
     
     		$objSectorCiudad->objCiudad->getDomicilio();
-    		Yii::app()->session[Yii::app()->params->vitalCall['sesion']['sectorCiudadEntrega']] = $objSectorCiudad;
+    		Yii::app()->session[Yii::app()->params->telefarma['sesion']['sectorCiudadEntrega']] = $objSectorCiudad;
     
     		if ($objSectorCiudadOld != null && ($objSectorCiudadOld->codigoCiudad != $objSectorCiudad->codigoCiudad || $objSectorCiudadOld->codigoSector != $objSectorCiudad->codigoSector)) {
     			//Yii::app()->shoppingCart->clear();

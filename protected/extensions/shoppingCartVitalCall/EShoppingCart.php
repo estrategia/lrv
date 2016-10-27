@@ -16,8 +16,7 @@ class EShoppingCart extends CMap {
     public $discounts = array();
 
     /**
-     * Сумма скидки на всю корзину
-     * @var float
+      * @var float
      */
     protected $discountPrice = 0.0;
     public $codigoPerfil = null;
@@ -204,6 +203,7 @@ class EShoppingCart extends CMap {
      */
     public function put(IECartPosition $position, $fraction, $quantity = 1) {
         $key = $position->getId();
+        
         if ($this->itemAt($key) instanceof IECartPosition) {
             $position = $this->itemAt($key);
             $oldQuantity = $position->getQuantity($fraction);
