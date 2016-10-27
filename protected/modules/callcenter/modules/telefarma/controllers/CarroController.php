@@ -223,19 +223,12 @@ class CarroController extends ControllerTelefarma {
                 	Yii::app()->end();
                 }
                 
-                if ($this->isMobile) {
-                	$htmlBodega = $this->renderPartial('_carroBodega', array(
+              	$htmlBodega = $this->renderPartial('_carroBodega', array(
                 			'objSaldo' => $objSaldo,
                 			'objProducto' => $objProducto,
                 			'cantidadUbicacion' => $cantidadUbicacion,
                 			'cantidadBodega' => $cantidadBodega), true);
-                } else {
-                	$htmlBodega = $this->renderPartial('_d_carroBodega', array(
-                			'objSaldo' => $objSaldo,
-                			'objProducto' => $objProducto,
-                			'cantidadUbicacion' => $cantidadUbicacion,
-                			'cantidadBodega' => $cantidadBodega), true);
-                }
+              	
                 echo CJSON::encode(array(
                 		'result' => 'ok',
                 		'response' => array(
@@ -266,6 +259,126 @@ class CarroController extends ControllerTelefarma {
             ),
         ));
         Yii::app()->end();
+    }
+    
+    
+    public function actionAgregarBodega() {
+    	$producto = Yii::app()->getRequest()->getPost('producto', null);
+    	$cantidadUbicacion = Yii::app()->getRequest()->getPost('cantidadU', null);
+    	$cantidadBodega = Yii::app()->getRequest()->getPost('cantidadB', null);
+    
+    	if ($producto === null || $cantidadUbicacion === null || $cantidadBodega === null) {
+    		echo CJSON::encode(array('result' => 'error', 'response' => 'Solicitud inválida, no se detectan datos'));
+    		Yii::app()->end();
+    	}
+    
+    	if ($cantidadBodega < 1 && $cantidadUbicacion < 1) {
+    		echo CJSON::encode(array('result' => 'error', 'response' => 'Cantidad no válida'));
+    		Yii::app()->end();
+    	}
+    
+    	$objSectorCiudad = $this->objSectorCiudad;
+    
+    	if ($objSectorCiudad == null) {
+    		echo CJSON::encode(array('result' => 'error', 'response' => 'No se detecta ubicación'));
+    		Yii::app()->end();
+    	}
+    
+    	$objPagoForm = new FormaPagoForm;
+    	if (!$objPagoForm->tieneDomicilio($objSectorCiudad)) {
+    		echo CJSON::encode(array('result' => 'error', 'response' => "La cantidad solicitada no está disponible en este momento."));
+    		Yii::app()->end();
+    	}
+    
+    	$cantidadCarroUnidad = 0;
+    	$cantidadCarroBodega = 0;
+    	$position = Yii::app()->shoppingCartVitalCall->itemAt($producto);
+    
+    	if ($position !== null) {
+    		$cantidadCarroUnidad = $position->getQuantityUnit();
+    		$cantidadCarroBodega = $position->getQuantityStored();
+    	}
+    
+    	$objProducto = Producto::model()->find(array(
+    			'with' => array(
+    					'listSaldos' => array('condition' => '(listSaldos.codigoCiudad=:ciudad AND listSaldos.codigoSector=:sector) OR (listSaldos.saldoUnidad IS NULL AND listSaldos.codigoCiudad IS NULL AND listSaldos.codigoSector IS NULL)'),
+    					'listPrecios' => array('condition' => '(listPrecios.codigoCiudad=:ciudad AND listPrecios.codigoSector=:sector) OR (listPrecios.codigoCiudad IS NULL AND listPrecios.codigoSector IS NULL)'),
+    					'listSaldosTerceros' => array('condition' => '(listSaldosTerceros.codigoCiudad=:ciudad AND listSaldosTerceros.codigoSector=:sector) OR (listSaldosTerceros.codigoCiudad IS NULL AND listSaldosTerceros.codigoSector IS NULL)')
+    			),
+    			'condition' => 't.activo=:activo AND t.codigoProducto=:codigo AND ( (listSaldos.saldoUnidad IS NOT NULL AND listPrecios.codigoCiudad IS NOT NULL) OR listSaldosTerceros.codigoCiudad IS NOT NULL)',
+    			'params' => array(
+    					':activo' => 1,
+    					':codigo' => $producto,
+    					':ciudad' => $objSectorCiudad->codigoCiudad,
+    					':sector' => $objSectorCiudad->codigoSector,
+    			),
+    	));
+    
+    	if ($objProducto === null) {
+    		echo CJSON::encode(array('result' => 'error', 'response' => 'Producto no disponible'));
+    		Yii::app()->end();
+    	}
+    
+    	if ($cantidadUbicacion > 0) {
+    		$objSaldo = $objProducto->getSaldo($objSectorCiudad->codigoCiudad, $objSectorCiudad->codigoSector);
+    
+    		if ($objSaldo === null) {
+    			echo CJSON::encode(array('result' => 'error', 'response' => 'Producto no disponible'));
+    			Yii::app()->end();
+    		}
+    
+    		if ($cantidadCarroUnidad + $cantidadUbicacion > $objSaldo->saldoUnidad) {
+    			echo CJSON::encode(array(
+    					'result' => 'error',
+    					'response' => "La cantidad solicitada no está disponible en este momento. Saldos disponibles: $objSaldo->saldoUnidad unidades"));
+    			Yii::app()->end();
+    		}
+    	}
+    
+    	if ($cantidadBodega > 0) {
+    		$objSaldoBodega = ProductosSaldosCedi::model()->find(array(
+    				'condition' => 'codigoProducto=:producto AND codigoCedi=:cedi AND saldoUnidad>=:saldo',
+    				'params' => array(
+    						':producto' => $producto,
+    						':cedi' => $objSectorCiudad->objCiudad->codigoSucursal,
+    						':saldo' => $cantidadBodega + $cantidadCarroBodega
+    				)
+    		));
+    
+    		if ($objSaldoBodega === null) {
+    			echo CJSON::encode(array(
+    					'result' => 'error',
+    					'response' => "La cantidad solicitada no está disponible en este momento. No hay unidades disponibles",
+    					//'response' => 'Cantidad no disponible para entrega ' . Yii::app()->shoppingCart->getDeliveryStored() . ' hrs'
+    			));
+    			Yii::app()->end();
+    		}
+    	}
+    
+    	$objProductoCarro = new ProductoCarro($objProducto);
+    	if ($cantidadUbicacion > 0) {
+    		Yii::app()->shoppingCartVitalCall->put($objProductoCarro, false, $cantidadUbicacion);
+    	}
+    
+    	if ($cantidadBodega > 0) {
+    		Yii::app()->shoppingCartVitalCall->putStored($objProductoCarro, $cantidadBodega);
+    	}
+    
+    	$mensajeCanasta = "";
+    	$mensajeCanasta = $this->renderPartial('_carroAgregado', array('objProducto' => $objProducto), true);
+    	
+    
+    	$canastaVista = "canasta";
+    	
+    	echo CJSON::encode(array(
+    			'result' => 'ok',
+    			'response' => array(
+    					'canastaHTML' => $this->renderPartial($canastaVista, null, true),
+    					'mensajeHTML' => $mensajeCanasta,
+    					'objetosCarro' => Yii::app()->shoppingCart->getCount()
+    			),
+    	));
+    	Yii::app()->end();
     }
 
     public function actionVaciar() {

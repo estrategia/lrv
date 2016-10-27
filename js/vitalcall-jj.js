@@ -8,6 +8,78 @@ $(document).on('click', "button[data-role='busquedaproducto-vitalcall']", functi
     }
 });
 
+
+
+function cambioUnidadesUbicacion(codigoProducto, valorUnidad, op) {
+
+    var cantidadProductoUbicacion = $("#cantidad-producto-ubicacion-" + codigoProducto).val();
+    var cantidadProductoBodega = $("#cantidad-producto-bodega-" + codigoProducto).val();
+    if (op == 0) {
+        cantidadProductoUbicacion--;
+    } else {
+        cantidadProductoUbicacion++;
+    }
+    if (cantidadProductoUbicacion < 0) {
+        cantidadProductoUbicacion = 0;
+    }
+    $("#cantidad-producto-ubicacion-" + codigoProducto).val(cantidadProductoUbicacion);
+
+    var subtotal = valorUnidad * cantidadProductoUbicacion;
+    // colocar el subtotal
+    $("#subtotal-producto-ubicacion-" + codigoProducto).html("$" + format(subtotal));
+
+    var total = subtotal + cantidadProductoBodega * valorUnidad;
+    // colocar el total
+    $("#total-producto-" + codigoProducto).html("$" + format(total));
+}
+
+function cambioUnidadesBodega(codigoProducto, valorUnidad, op) {
+    var cantidadProductoBodega = $("#cantidad-producto-bodega-" + codigoProducto).val();
+    var cantidadProductoUbicacion = $("#cantidad-producto-ubicacion-" + codigoProducto).val();
+    if (op == 0) {
+        cantidadProductoBodega--;
+    } else {
+        cantidadProductoBodega++;
+    }
+    if (cantidadProductoBodega < 0) {
+        cantidadProductoBodega = 0;
+    }
+    $("#cantidad-producto-bodega-" + codigoProducto).val(cantidadProductoBodega);
+
+    var subtotal = valorUnidad * cantidadProductoBodega;
+    // colocar el subtotal
+    $("#subtotal-producto-bodega-" + codigoProducto).html("$" + format(subtotal));
+
+    var total = subtotal + cantidadProductoUbicacion * valorUnidad;
+    // colocar el total
+    $("#total-producto-" + codigoProducto).html("$" + format(total));
+}
+
+function subtotalProductoBodega (codigoProducto, valorUnidad) {
+    var cantidadProductoBodega = $("#cantidad-producto-bodega-" + codigoProducto).val();
+    var cantidadProductoUbicacion = $("#cantidad-producto-ubicacion-" + codigoProducto).val();
+    if (cantidadProductoBodega < 0) {
+    	cantidadProductoBodega = 0;
+    } 
+    
+    if (cantidadProductoUbicacion < 0) {
+    	cantidadProductoUbicacion = 0;
+    }
+    $("#cantidad-producto-bodega-" + codigoProducto).val(cantidadProductoBodega);
+    $("#cantidad-producto-ubicacion-" + codigoProducto).val(cantidadProductoUbicacion);
+
+    var subtotalUbicacion = valorUnidad * cantidadProductoUbicacion;
+    var subtotalBodega = valorUnidad * cantidadProductoBodega;
+    // colocar el subtotal
+    
+    $("#subtotal-producto-ubicacion-" + codigoProducto).html("$" + format(subtotalUbicacion));
+    $("#subtotal-producto-bodega-" + codigoProducto).html("$" + format(subtotalBodega));
+
+    var total = subtotalUbicacion + subtotalBodega;
+    // colocar el total
+    $("#total-producto-" + codigoProducto).html("$" + format(total));
+}
+
 function buscarProductosVitalCall(text, obj, request) {
 	$.ajax({
         type: 'POST',

@@ -772,7 +772,7 @@ $(document).on('click', "a[data-cargar-telefarma='3']", function() {
         type: 'POST',
         dataType: 'json',
         async: true,
-        url: requestUrl + '/carro/agregarBodega',
+        url: requestUrl + '/callcenter/telefarma/carro/agregarBodega',
         data: {producto: producto, cantidadU: cantidadUbicacion, cantidadB: cantidadBodega},
         beforeSend: function() {
             Loading.show();

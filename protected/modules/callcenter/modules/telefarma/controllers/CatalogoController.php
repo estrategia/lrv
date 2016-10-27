@@ -20,6 +20,7 @@ class CatalogoController extends ControllerTelefarma {
         $sesion = Yii::app()->getSession()->getSessionId();
         $codigosArray = GSASearch($term, $sesion);
         $objSectorCiudad = $this->objSectorCiudad;
+      
         $codigoPerfil = Yii::app()->params->perfil['defecto'];
 
         if (empty($codigosArray)) {
@@ -359,6 +360,65 @@ class CatalogoController extends ControllerTelefarma {
                 'objFormCalificacion' => $objFormCalificacion
             ));
         }
+    }
+    
+    
+    public function actionBodega($producto, $ubicacion, $bodega) {
+    	$objSectorCiudad = $this->objSectorCiudad;
+    
+    	if ($objSectorCiudad == null) {
+    		throw new CHttpException(404, 'Solicitud inválida.');
+    	}
+    
+    	if ($ubicacion < 0) {
+    		$ubicacion = 0;
+    	}
+    
+    	if ($bodega < 0) {
+    		$bodega = 0;
+    	}
+    
+    	$objProducto = Producto::model()->find(array(
+    			'with' => array(
+    					'listImagenesGrandes',
+    					'objDetalle',
+    					'objCodigoEspecial',
+    					'listCalificaciones' => array('with' => 'objUsuario'),
+    					'listSaldos' => array('condition' => '(listSaldos.saldoUnidad>:saldo AND listSaldos.codigoCiudad=:ciudad AND listSaldos.codigoSector=:sector) OR (listSaldos.saldoUnidad IS NULL AND listSaldos.codigoCiudad IS NULL AND listSaldos.codigoSector IS NULL)'),
+    					'listPrecios' => array('condition' => '(listPrecios.codigoCiudad=:ciudad AND listPrecios.codigoSector=:sector) OR (listPrecios.codigoCiudad IS NULL AND listPrecios.codigoSector IS NULL)'),
+    					'listSaldosTerceros' => array('condition' => '(listSaldosTerceros.saldoUnidad>:saldo AND listSaldosTerceros.codigoCiudad=:ciudad AND listSaldosTerceros.codigoSector=:sector) OR (listSaldosTerceros.codigoCiudad IS NULL AND listSaldosTerceros.codigoSector IS NULL)')
+    			),
+    			'condition' => 't.ventaVirtual=:venta AND t.activo=:activo AND t.codigoProducto=:codigo  AND ( (listSaldos.saldoUnidad IS NOT NULL AND listPrecios.codigoCiudad IS NOT NULL) OR listSaldosTerceros.codigoCiudad IS NOT NULL)',
+    			'params' => array(
+    					':venta' => 1,
+    					':activo' => 1,
+    					':codigo' => $producto,
+    					':saldo' => 0,
+    					':ciudad' => $objSectorCiudad->codigoCiudad,
+    					':sector' => $objSectorCiudad->codigoSector,
+    			),
+    	));
+    
+    	if ($objProducto == null) {
+    		throw new CHttpException(404, 'Producto no disponible.');
+    	}
+    
+    	$codigoPerfil = Yii::app()->shoppingCartVitalCall->getCodigoPerfil();
+    	$cantidadCarro = 0;
+    	$position = Yii::app()->shoppingCartVitalCall->itemAt($producto);
+    
+    	if ($position != null) {
+    		$cantidadCarro = $position->getQuantity();
+    	}
+    
+    	$this->render('bodegaDetalle', array(
+    				'objProducto' => $objProducto,
+    				'objPrecio' => new PrecioProducto($objProducto, $objSectorCiudad, $codigoPerfil),
+    				'cantidadUbicacion' => $ubicacion,
+    				'cantidadBodega' => $bodega,
+    				'cantidadCarro' => $cantidadCarro
+    	));
+    
     }
 
 }
