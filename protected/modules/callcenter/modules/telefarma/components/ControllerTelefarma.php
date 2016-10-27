@@ -29,7 +29,7 @@ class ControllerTelefarma extends ControllerOperator {
         Yii::app()->getClientScript()->registerScriptFile(Yii::app()->request->baseUrl . "/libs/raty/jquery.raty.js", CClientScript::POS_END);
         Yii::app()->getClientScript()->registerScriptFile(Yii::app()->request->baseUrl . "/js/vitalcall.js", CClientScript::POS_END);
         Yii::app()->getClientScript()->registerScriptFile(Yii::app()->request->baseUrl . "/js/vitalcall-jj.js", CClientScript::POS_END);
-        
+        Yii::app()->getClientScript()->registerScriptFile(Yii::app()->request->baseUrl . "/js/telefarma-masm.js", CClientScript::POS_END);
     }
     
     public function registerCss(){
