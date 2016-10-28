@@ -3109,7 +3109,8 @@ class CarroController extends Controller {
                 'modelPago' => $resultCompra['response']['modelPago'],
                 'objCompraDireccion' => $resultCompra['response']['objCompraDireccion'],
                 'objFormaPago' => $resultCompra['response']['objFormaPago'],
-                'objFormasPago' => $resultCompra['response']['objFormasPago']), true);
+                'objFormasPago' => $resultCompra['response']['objFormasPago'],
+            	'nombreUsuario' => $resultCompra['response']['nombreUsuario']), true);
 
             Yii::app()->session[Yii::app()->params->sesion['carroPagarForm']] = null;
             Yii::app()->shoppingCart->clear();
@@ -3707,6 +3708,7 @@ class CarroController extends Controller {
                     'objFormaPago' => $objFormaPago,
                     'objFormasPago' => $objFormasPago,
                     'objPasarelaEnvio' => $objPasarelaEnvio,
+                	'nombreUsuario' => $nombreUsuario
                 )
             );
         } catch (Exception $exc) {

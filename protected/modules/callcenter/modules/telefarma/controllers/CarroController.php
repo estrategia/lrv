@@ -780,9 +780,9 @@ class CarroController extends ControllerTelefarma {
             ));
 
             try {
-                //$result = $client->__soapCall("CongelarCompraAutomatica", array('idPedido' => $objCompra->idCompra)); //763759, 763743
+                $result = $client->__soapCall("CongelarCompraAutomatica", array('idPedido' => $objCompra->idCompra)); //763759, 763743
                 //$result = array(0=>0,1=>'congelar prueba error');
-                $result = array(0 => 1, 1 => 'congelar prueba ok', 2 => 'miguel.sanchex@gmail.com.co');
+                //$result = array(0 => 1, 1 => 'congelar prueba ok', 2 => 'miguel.sanchex@gmail.com.co');
                 if (!empty($result) && $result[0] == 1) {
                     $objCompraRemision = Compras::model()->findByPk($objCompra->idCompra, array("with" => "objPuntoVenta"));
                     $contenidoCorreo = $this->renderPartial('application.modules.callcenter.views.pedido.compraCorreo', array('objCompra' => $objCompraRemision), true, true);
