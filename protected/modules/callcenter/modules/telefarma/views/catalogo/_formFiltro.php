@@ -39,25 +39,6 @@
             </div>
         </div>
     <?php endif; ?>
-
-
-    <div class="panel panel-default">
-        <div class="panel-heading" role="tab" id="headingFour">
-            <h4 class="panel-title">
-                <a role="button" data-toggle="collapse" data-parent="#accordion-filtros" href="#collapseFour" aria-expanded="true" aria-controls="collapseFour" style="background:none;" >
-                    Calificaci&oacute;n
-                </a>
-            </h4>
-        </div>
-        <div id="collapseFour-" class="panel-collapse collapse in" role="tabpanel" aria-labelledby="headingFour">
-            <div class="panel-body">
-                <div class="center">
-                    <div id="calificacion-filtro-listaproductos" data-role="raty" data-readonly="false" data-score="0" data-callback="capturarfiltrocalificacion"></div>
-                </div>
-                <input id="FiltroForm_calificacion" name="FiltroForm[calificacion]" value="-1" type="hidden"/>
-            </div>
-        </div>
-    </div>
    
     <div class="space-1"></div>
     <div class="text-center">
