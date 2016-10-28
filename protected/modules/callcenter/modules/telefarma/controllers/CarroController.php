@@ -352,7 +352,7 @@ class CarroController extends ControllerTelefarma {
     			echo CJSON::encode(array(
     					'result' => 'error',
     					'response' => "La cantidad solicitada no está disponible en este momento. No hay unidades disponibles",
-    					//'response' => 'Cantidad no disponible para entrega ' . Yii::app()->shoppingCart->getDeliveryStored() . ' hrs'
+    					//'response' => 'Cantidad no disponible para entrega ' . Yii::app()->shoppingCartVitalCall->getDeliveryStored() . ' hrs'
     			));
     			Yii::app()->end();
     		}
@@ -378,7 +378,7 @@ class CarroController extends ControllerTelefarma {
     			'response' => array(
     					'canastaHTML' => $this->renderPartial($canastaVista, null, true),
     					'mensajeHTML' => $mensajeCanasta,
-    					'objetosCarro' => Yii::app()->shoppingCart->getCount()
+    					'objetosCarro' => Yii::app()->shoppingCartVitalCall->getCount()
     			),
     	));
     	Yii::app()->end();
@@ -386,8 +386,8 @@ class CarroController extends ControllerTelefarma {
 
     public function actionVaciar() {
         Yii::app()->shoppingCartVitalCall->clear();
-        unset(Yii::app()->session[Yii::app()->params->vitalCall['sesion']['carroPagarForm']]);
-        unset(Yii::app()->session[Yii::app()->params->vitalCall['sesion']['formulaMedica']]);
+        unset(Yii::app()->session[Yii::app()->params->telefarma['sesion']['carroPagarForm']]);
+        //unset(Yii::app()->session[Yii::app()->params->telefarma['sesion']['formulaMedica']]);
 
          echo CJSON::encode(array(
          		'result' => 'ok',
@@ -396,184 +396,7 @@ class CarroController extends ControllerTelefarma {
           ));
         Yii::app()->end();
     }
-
-    public function actionPagar0($paso = null, $post = false) {
-        //$this->layout = "simple";
-        $modelPago = null;
-
-        if (is_string($post)) {
-            $post = ($post == "true");
-        }
-
-        if (isset(Yii::app()->session[Yii::app()->params->vitalCall['sesion']['carroPagarForm']]) && Yii::app()->session[Yii::app()->params->vitalCall['sesion']['carroPagarForm']] != null) {
-            $modelPago = Yii::app()->session[Yii::app()->params->vitalCall['sesion']['carroPagarForm']];
-        }
-
-        if (empty($modelPago) || !($modelPago->objSectorCiudad instanceof SectorCiudad)) {
-            throw new CHttpException(404, 'Proceso de compra no iniciado');
-        }
-
-        if (Yii::app()->shoppingCartVitalCall->isEmpty()) {
-            if ($post) {
-                echo CJSON::encode(array('result' => 'ok', 'response' => 'Carro vac&iacute;o', 'redirect' => $this->createUrl("/callcenter/vitalcall_old/carro")));
-                Yii::app()->end();
-            } else {
-                $this->redirect($this->createUrl('/callcenter/vitalcall_old/cliente'));
-                Yii::app()->end();
-            }
-        }
-
-        if ($modelPago->tipoEntrega == null) {
-            $modelPago->tipoEntrega = Yii::app()->params->entrega['tipo']['domicilio'];
-        }
-
-        //verificar si ubicacion (ciudad-sector) tiene domicilio
-        if (!$modelPago->tieneDomicilio()) {
-            $modelPago->tipoEntrega = Yii::app()->params->entrega['tipo']['presencial'];
-        }
-
-        Yii::app()->session[Yii::app()->params->vitalCall['sesion']['carroPagarForm']] = $modelPago;
-
-        //finalizan validaciones previas e inicializa proceso de pasos de pago
-
-        if ($paso === null)
-            $paso = Yii::app()->params->vitalCall['pagar']['pasos'][1];
-
-        if (!in_array($paso, Yii::app()->params->vitalCall['pagar']['pasosDisponibles'])) {
-            throw new CHttpException(404, 'Página solicitada no existe.');
-        }
-
-        $modelPago->setScenario($paso);
-
-
-        if ($post) {
-            $siguiente = Yii::app()->getRequest()->getPost('siguiente', null);
-
-            if ($siguiente === null) {
-                echo CJSON::encode(array('result' => 'error', 'response' => 'Solicitud inválida'));
-                Yii::app()->end();
-            }
-
-            switch ($paso) {
-                case Yii::app()->params->vitalCall['pagar']['pasos'][1]:
-                    $form = new FormaPagoVitalCallForm($paso);
-                    $form->identificacionUsuario = $modelPago->identificacionUsuario;
-                    $form->objHorarioCiudadSector = $modelPago->objHorarioCiudadSector;
-                    $form->totalCompra = $modelPago->totalCompra;
-
-                    if (isset($_POST['FormaPagoVitalCallForm'])) {
-                        foreach ($_POST['FormaPagoVitalCallForm'] as $atributo => $valor) {
-                            $form->$atributo = is_string($valor) ? trim($valor) : $valor;
-                        }
-                    }
-
-                    if ($form->validate()) {
-                        $modelPago->tipoEntrega = $form->tipoEntrega;
-
-                        if ($modelPago->tipoEntrega == Yii::app()->params->entrega['tipo']['presencial']) {
-                            $modelPago->indicePuntoVenta = $form->indicePuntoVenta;
-                            $modelPago->seleccionarPdv($form->indicePuntoVenta);
-                        }
-
-                        $modelPago->fechaEntrega = $form->fechaEntrega;
-                        $modelPago->idFormaPago = $form->idFormaPago;
-                        $modelPago->numeroTarjeta = $form->numeroTarjeta;
-                        $modelPago->cuotasTarjeta = $form->cuotasTarjeta;
-                        $modelPago->comentario = $form->comentario;
-                        $modelPago->pasoValidado[$paso] = $paso;
-
-                        Yii::app()->session[Yii::app()->params->vitalCall['sesion']['carroPagarForm']] = $modelPago;
-
-                        echo CJSON::encode(array('result' => 'ok', 'response' => 'Datos guardados', 'redirect' => $this->createUrl("/callcenter/vitalcall_old/carro/pagar", array('paso' => $siguiente))));
-                        Yii::app()->end();
-                    } else {
-                        echo CActiveForm::validate($form);
-                        Yii::app()->end();
-                    }
-
-                    break;
-                case Yii::app()->params->vitalCall['pagar']['pasos'][2]:
-
-                    if ($siguiente != "finalizar") {
-                        echo CJSON::encode(array('result' => 'ok', 'response' => 'Datos guardados', 'redirect' => $this->createUrl("/callcenter/vitalcall_old/carro/pagar", array('paso' => $siguiente))));
-                        Yii::app()->end();
-                    }
-
-                    $form = new FormaPagoVitalCallForm($paso);
-                    $form->identificacionUsuario = $modelPago->identificacionUsuario;
-                    $form->objHorarioCiudadSector = $modelPago->objHorarioCiudadSector;
-                    $form->tipoEntrega = $modelPago->tipoEntrega;
-
-                    if (isset($_POST['FormaPagoVitalCallForm'])) {
-                        foreach ($_POST['FormaPagoVitalCallForm'] as $atributo => $valor) {
-                            $form->$atributo = is_string($valor) ? trim($valor) : $valor;
-                        }
-                    }
-
-                    if ($form->validate()) {
-                        $modelPago->pasoValidado[$paso] = $paso;
-                        $modelPago->confirmacion = $form->confirmacion;
-                        Yii::app()->session[Yii::app()->params->vitalCall['sesion']['carroPagarForm']] = $modelPago;
-                        echo CJSON::encode(array('result' => 'ok', 'response' => "Datos guardados", 'redirect' => $this->createUrl("/callcenter/vitalcall_old/carro/comprar")));
-                        Yii::app()->end();
-                    } else {
-                        echo CActiveForm::validate($form);
-                        Yii::app()->end();
-                    }
-                    break;
-                default :
-                    echo CJSON::encode(array('result' => 'error', 'response' => 'Paso no detectado'));
-                    break;
-            }
-        } else {
-            //validar pasos anteriores
-            $modelPago->validarPasos(Yii::app()->params->vitalCall['pagar']['pasosDisponibles'], $paso);
-
-            $params = array();
-            $params['parametros']['paso'] = $paso;
-            $params['paso'] = $paso;
-
-            $nPasoActual = Yii::app()->params->vitalCall['pagar']['pasos'][$paso];
-            $nPasoAnterior = $nPasoActual - 1;
-            $nPasoSiguiente = $nPasoActual + 1;
-            $pasoSiguiente = isset(Yii::app()->params->vitalCall['pagar']['pasos'][$nPasoSiguiente]) ? Yii::app()->params->vitalCall['pagar']['pasos'][$nPasoSiguiente] : null;
-            $pasoAnterior = isset(Yii::app()->params->vitalCall['pagar']['pasos'][$nPasoAnterior]) ? Yii::app()->params->vitalCall['pagar']['pasos'][$nPasoAnterior] : null;
-
-            $params['parametros']['pasoAnterior'] = $pasoAnterior;
-            $params['parametros']['pasoSiguiente'] = $pasoSiguiente;
-            $params['parametros']['nPasoActual'] = $nPasoActual;
-
-            switch ($paso) {
-                case Yii::app()->params->vitalCall['pagar']['pasos'][1]:
-                    $params['parametros']['listHorarios'] = $modelPago->listDataHoras();
-
-                    $listFormaPago = FormaPago::model()->findAll(array(
-                        'order' => 'formaPago',
-                        'condition' => 'ventaVitalCall=:estado',
-                        'params' => array(':estado' => 1)
-                    ));
-                    Yii::app()->session[Yii::app()->params->vitalCall['sesion']['carroPagarForm']] = $modelPago;
-                    $params['parametros']['listFormaPago'] = $listFormaPago;
-
-                    break;
-                case Yii::app()->params->vitalCall['pagar']['pasos'][2]:
-                    $objFormaPago = FormaPago::model()->findByPk($modelPago->idFormaPago);
-                    $params['parametros']['objFormaPago'] = $objFormaPago;
-
-
-                    //verificar productos en pdv
-                    if ($modelPago->tipoEntrega == Yii::app()->params->entrega['tipo']['presencial']) {
-                        $modelPago->seleccionarPdv($modelPago->indicePuntoVenta);
-                    }
-                    $modelPago->calcularConfirmacion(Yii::app()->shoppingCartVitalCall->getPositions());
-                    $modelPago->calcularFormulas(Yii::app()->shoppingCartVitalCall->getPositions());
-                    break;
-            }
-            $params['parametros']['modelPago'] = $modelPago;
-            $this->render("pagar", $params);
-        }
-    }
-
+	
     public function actionPasoporel() {
         $opcion = Yii::app()->getRequest()->getPost('opcion');
 
@@ -615,7 +438,7 @@ class CarroController extends ControllerTelefarma {
             }
 
             $modelPago->seleccionarPdv($idx);
-            Yii::app()->session[Yii::app()->params->vitalCall['sesion']['carroPagarForm']] = $modelPago;
+            Yii::app()->session[Yii::app()->params->telefarma['sesion']['carroPagarForm']] = $modelPago;
 
             echo CJSON::encode(array('result' => 'ok', 'response' => 'Punto de venta seleccionado'));
             Yii::app()->end();
@@ -648,8 +471,8 @@ class CarroController extends ControllerTelefarma {
         $pasoValidacion = null;
         //se valida que cada paso este realizado
         $modelPago->validarConfirmacion(Yii::app()->shoppingCartVitalCall->getPositions());
-        $pasosDisponibles = Yii::app()->params->vitalCall['pagar']['pasosDisponibles'];
-        Yii::app()->session[Yii::app()->params->vitalCall['sesion']['carroPagarForm']] = $modelPago;
+        $pasosDisponibles = Yii::app()->params->telefarma['pagar']['pasosDisponibles'];
+        Yii::app()->session[Yii::app()->params->telefarma['sesion']['carroPagarForm']] = $modelPago;
 
         foreach ($pasosDisponibles as $idx => $paso) {
             $modelPago->setScenario($paso);
@@ -1006,8 +829,8 @@ class CarroController extends ControllerTelefarma {
 
     public function actionDisponibilidad() {
         $modelPago = null;
-        if (isset(Yii::app()->session[Yii::app()->params->vitalCall['sesion']['carroPagarForm']]) && Yii::app()->session[Yii::app()->params->vitalCall['sesion']['carroPagarForm']] != null) {
-            $modelPago = Yii::app()->session[Yii::app()->params->vitalCall['sesion']['carroPagarForm']];
+        if (isset(Yii::app()->session[Yii::app()->params->telefarma['sesion']['carroPagarForm']]) && Yii::app()->session[Yii::app()->params->telefarma['sesion']['carroPagarForm']] != null) {
+            $modelPago = Yii::app()->session[Yii::app()->params->telefarma['sesion']['carroPagarForm']];
         }
 
         if ($modelPago == null) {
@@ -1019,10 +842,10 @@ class CarroController extends ControllerTelefarma {
     }
 
     public function actionList() {
-        //Yii::app()->session[Yii::app()->params->vitalCall['sesion']['carroPagarForm']] = null;
-        //Yii::app()->shoppingCart->clear();
+        //Yii::app()->session[Yii::app()->params->telefarma['sesion']['carroPagarForm']] = null;
+        //Yii::app()->shoppingCartVitalCall->clear();
         //exit();
-        //CVarDumper::dump(Yii::app()->shoppingCart->itemAt(91269), 2, true);
+        //CVarDumper::dump(Yii::app()->shoppingCartVitalCall->itemAt(91269), 2, true);
         //echo "<br/>";
         //echo "<br/>";
 
@@ -1112,7 +935,7 @@ class CarroController extends ControllerTelefarma {
         }
 
         $position = Yii::app()->shoppingCartVitalCall->itemAt($id);
-        // !Yii::app()->shoppingCart->contains($id)
+        // !Yii::app()->shoppingCartVitalCall->contains($id)
 
         if ($position === null) {
             echo CJSON::encode(array(
@@ -1285,71 +1108,11 @@ class CarroController extends ControllerTelefarma {
         Yii::app()->end();
     }
     
-
-    public function actionAdicionarFormula() {
-    
-    
-    	$array = array();
-    	if (isset(Yii::app()->session[Yii::app()->params->vitalCall['sesion']['formulaMedica']])) {
-    		$array = Yii::app()->session[Yii::app()->params->vitalCall['sesion']['formulaMedica']];
-    	}
-    	$ruta = "";
-    
-    	if ($_FILES) {
-    		$model = new FormulasMedicas();
-    		$model->attributes = $_POST['FormulasMedicas'];
-    		$uploadedFile = CUploadedFile::getInstance($model, "formulaMedica");
-    
-    		if ($_FILES['FormulasMedicas']['size']['formulaMedica'] > 0) {
-    			$directorio = 'images/formulamedica/' . Date("Ymdhis") . $uploadedFile->getName();
-    			if ($uploadedFile->saveAs($directorio)) {
-    				$ruta = $directorio;
-    			} else {
-    				echo CJSON::encode(
-    						array(
-    								'result' => 'ok',
-    								'response' => 'Error al cargar la imagen de la categoría'
-    						));
-    				Yii::app()->end();
-    			}
-    		}
-    	}
-    
-    	if($_POST['tipo-formula'] == 1){
-    		$modelFormula = new FormulasMedicas('datosMedico');
-    	}else {
-    		$modelFormula = new FormulasMedicas('datosFormula');
-    	}
-    
-    	$modelFormula->attributes = $_POST['FormulasMedicas'];
-    	if(!empty($ruta)){
-    		$modelFormula->formulaMedica = $ruta;
-    	}
-    
-    	if (!$modelFormula->validate()) {
-    		echo CActiveForm::validate($modelFormula);
-    		Yii::app()->end();
-    	}
-    
-    	$array[] = array('nombreMedico' => $_POST['FormulasMedicas']['nombreMedico'],
-    			'institucion' => $_POST['FormulasMedicas']['institucion'],
-    			'registroMedico' => $_POST['FormulasMedicas']['registroMedico'],
-    			'telefono' => $_POST['FormulasMedicas']['telefono'],
-    			'correoElectronico' => $_POST['FormulasMedicas']['correoElectronico'],
-    			'formulaMedica' => $ruta);
-    
-    	Yii::app()->session[Yii::app()->params->vitalCall['sesion']['formulaMedica']] = $array;
-    	echo CJSON::encode(array(
-    			'result' => 'ok',
-    			'response' =>$this->renderPartial('_formulasMedicasAdicionadas', null, true, false) 
-    	));
-    }
-    
     public function actionForm($limpiar = false) {
     	$modelPago = null;
     
-    	if (isset(Yii::app()->session[Yii::app()->params->vitalCall['sesion']['carroPagarForm']]) && Yii::app()->session[Yii::app()->params->vitalCall['sesion']['carroPagarForm']] != null)
-    		$modelPago = Yii::app()->session[Yii::app()->params->vitalCall['sesion']['carroPagarForm']];
+    	if (isset(Yii::app()->session[Yii::app()->params->telefarma['sesion']['carroPagarForm']]) && Yii::app()->session[Yii::app()->params->telefarma['sesion']['carroPagarForm']] != null)
+    		$modelPago = Yii::app()->session[Yii::app()->params->telefarma['sesion']['carroPagarForm']];
     
     		CVarDumper::dump($modelPago, 10, true);
     		echo "<br/><br/>RULES<br/><br/>";
@@ -1357,8 +1120,8 @@ class CarroController extends ControllerTelefarma {
     		echo "<br/><br/>SCENARIO: " . $modelPago->getScenario();
     
     		if ($limpiar){
-    			Yii::app()->session[Yii::app()->params->vitalCall['sesion']['carroPagarForm']] = null;
-    			//unset(Yii::app()->session[Yii::app()->params->vitalCall['sesion']['carroPagarForm']]);
+    			Yii::app()->session[Yii::app()->params->telefarma['sesion']['carroPagarForm']] = null;
+    			//unset(Yii::app()->session[Yii::app()->params->telefarma['sesion']['carroPagarForm']]);
     		}
     }
     
@@ -1537,7 +1300,7 @@ class CarroController extends ControllerTelefarma {
     					$params['parametros']['listFormaPago'] = $listFormaPago;
     
     					break;
-    				case Yii::app()->params->vitalCall['pagar']['pasos'][2]:
+    				case Yii::app()->params->telefarma['pagar']['pasos'][2]:
     					$objFormaPago = FormaPago::model()->findByPk($modelPago->idFormaPago);
     					$params['parametros']['objFormaPago'] = $objFormaPago;
     

@@ -4,7 +4,7 @@
  * This is the model class for table "m_Medico".
  *
  * The followings are the available columns in table 'm_Medico':
- * @property string $registro
+ * @property string $registroMedico
  * @property string $nombre
  * @property string $institucion
  * @property string $telefono
@@ -25,14 +25,14 @@ class Medico extends CActiveRecord{
 		// NOTE: you should only define rules for those attributes that
 		// will receive user inputs.
 		return array(
-			array('registro, nombre, institucion, telefono', 'required'),
-			array('registro', 'length', 'max'=>20),
+			array('registroMedico, nombre, institucion, telefono', 'required'),
+			array('registroMedico', 'length', 'max'=>20),
 			array('nombre, institucion', 'length', 'max'=>200),
 			array('telefono', 'length', 'max'=>50),
 			array('correoElectronico', 'length', 'max'=>45),
 			// The following rule is used by search().
 			// @todo Please remove those attributes that should not be searched.
-			array('registro, nombre, institucion, telefono, correoElectronico', 'safe', 'on'=>'search'),
+			array('registroMedico, nombre, institucion, telefono, correoElectronico', 'safe', 'on'=>'search'),
 		);
 	}
 
@@ -51,7 +51,7 @@ class Medico extends CActiveRecord{
 	 */
 	public function attributeLabels(){
 		return array(
-			'registro' => 'Registro',
+			'registroMedico' => 'registroMedico',
 			'nombre' => 'Nombre',
 			'institucion' => 'Institucion',
 			'telefono' => 'Telefono',
@@ -76,7 +76,7 @@ class Medico extends CActiveRecord{
 
 		$criteria=new CDbCriteria;
 
-		$criteria->compare('registro',$this->registro,true);
+		$criteria->compare('registroMedico',$this->registroMedico,true);
 		$criteria->compare('nombre',$this->nombre,true);
 		$criteria->compare('institucion',$this->institucion,true);
 		$criteria->compare('telefono',$this->telefono,true);
