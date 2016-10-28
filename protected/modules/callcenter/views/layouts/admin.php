@@ -34,7 +34,7 @@
                     <img class="hidden-xs" src="<?php echo Yii::app()->request->baseUrl; ?>/images/logo_lrv.png" alt="La Rebaja Virtual Logo" />
                 </a>
                 
-                <div class="info-compra" style="margin-right:0;">
+                <div class="info-compra display-none" style="margin-right:0;">
    					<div data-role="panel" id="div-carro-canasta">
                     	<?php $this->renderPartial('telefarma.views.carro.canasta'); ?>
                     </div>
