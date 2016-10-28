@@ -25,6 +25,24 @@
     <?php if ($objCompra->tipoEntrega == Yii::app()->params->entrega['tipo']['domicilio']): ?>
         <table cellpadding="10" style="font-size:14px;border-collapse:collapse;border-spacing:0px;width:99.9%;border-bottom:1px solid #dddddd;margin-bottom:24px">
             <tbody>
+            	<?php if($objCompra->invitado=='0' && !empty($objCompra->identificacionUsuario) && $objCompra->codigoCiudad=='11001'):?>
+					<?php
+					$cedula = $objCompra->identificacionUsuario;
+					$idCompra = $objCompra->idCompra;
+					$nombre = $nombreUsuario;
+					$semilla = 'B0GoPlan2016%';
+					$cadena = $cedula . $idCompra . $semilla;
+					$token = md5($cadena);
+					$urlToken = "http://www.ganaconlarebaja.com?cedula=$cedula&idCompra=$idCompra&token=$token&nombre=$nombre";
+					?>
+					<tr>
+	                    <td>
+	                    	<a href="<?= $urlToken ?>">
+	                        	<img src="http://www.larebajavirtual.com/images/contenido/copservir/800x300rompecabezas.jpg" style="display: block; margin-left: auto;margin-right: auto; width: 100%">
+	                        </a>
+	                    </td>
+	                </tr>
+				<?php endif;?>
                 <tr>
                     <td width="50%" style="border-bottom:1px solid #dddddd;padding:0" colspan="2">
                         <h4 style="color:#666666"> Datos de despacho</h4>

@@ -1,5 +1,20 @@
 <div class="ui-content finalCompra">
     <h2>¡Gracias por su compra!</h2>
+    
+    <?php if($objCompra->invitado=='0' && !empty($objCompra->identificacionUsuario) && $objCompra->codigoCiudad=='11001'):?>
+		<?php
+		$cedula = $objCompra->identificacionUsuario;
+		$idCompra = $objCompra->idCompra;
+		$nombre = $nombreUsuario;
+		$semilla = 'B0GoPlan2016%';
+		$cadena = $cedula . $idCompra . $semilla;
+		$token = md5($cadena);
+		$urlToken = "http://www.ganaconlarebaja.com?cedula=$cedula&idCompra=$idCompra&token=$token&nombre=$nombre";
+		?>
+		<a href="<?= $urlToken ?>">
+			<img src="http://www.m.larebajavirtual.com/images/contenido/copservir/500x300rompecabezas.jpg" class="ajustada">
+		</a>
+	<?php endif;?>
 
     <div class="blockPago">
         <?php if ($objCompra->tipoEntrega == Yii::app()->params->entrega['tipo']['domicilio']): ?>
