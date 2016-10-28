@@ -27,6 +27,10 @@ class EShoppingCart extends CMap {
     protected $deliveryStored = 0; //tiempo entrega bodega
     protected $bonoValue = 0;
     protected $objPagoExpress = null;
+    
+    private function getClass(){
+    	return __CLASS__ . "MsgVendedor";
+    }
 
     public function init() {
         $this->restoreFromSession();
@@ -250,7 +254,7 @@ class EShoppingCart extends CMap {
      */
     public function restoreFromSession() {
 
-        $data = Yii::app()->getUser()->getState(__CLASS__ . '_Venta');
+        $data = Yii::app()->getUser()->getState($this->getClass() . '_Venta');
 
         if (isset(Yii::app()->session[Yii::app()->params->vendedor['sesion']['sectorCiudadEntrega']])) {
             $this->objSectorCiudad = Yii::app()->session[Yii::app()->params->vendedor['sesion']['sectorCiudadEntrega']];
@@ -261,8 +265,8 @@ class EShoppingCart extends CMap {
             Yii::app()->session[Yii::app()->params->vendedor['sesion']['sectorCiudadEntrega']] = $this->objSectorCiudad;
         }
 
-        $this->codigoPerfil = Yii::app()->getUser()->getState(__CLASS__ . '_CodigoPerfilVendedor');
-        $this->shipping = Yii::app()->getUser()->getState(__CLASS__ . '_ShippingVendedor');
+        $this->codigoPerfil = Yii::app()->getUser()->getState($this->getClass() . '_CodigoPerfilVendedor');
+        $this->shipping = Yii::app()->getUser()->getState($this->getClass() . '_ShippingVendedor');
         $codigoPerfil = Yii::app()->params->perfil['defecto'];
         if (isset(Yii::app()->session[Yii::app()->params->vendedor['sesion']['cliente']]) && Yii::app()->session[Yii::app()->params->vendedor['sesion']['cliente']] instanceof Usuario) {
             $objUsuario = Yii::app()->session[Yii::app()->params->vendedor['sesion']['cliente']];
@@ -486,14 +490,14 @@ class EShoppingCart extends CMap {
      * @return void
      */
     protected function saveState() {
-        Yii::app()->getUser()->setState(__CLASS__ . '_Venta', $this->toArray());
+        Yii::app()->getUser()->setState($this->getClass() . '_Venta', $this->toArray());
         $this->saveStateAttributes();
     }
 
     protected function saveStateAttributes() {
         //Yii::app()->getUser()->setState('SectorCiudad', $this->objSectorCiudad);
-        Yii::app()->getUser()->setState(__CLASS__ . '_CodigoPerfilVendedor', $this->codigoPerfil);
-        Yii::app()->getUser()->setState(__CLASS__ . '_ShippingVendedor', $this->shipping);
+        Yii::app()->getUser()->setState($this->getClass() . '_CodigoPerfilVendedor', $this->codigoPerfil);
+        Yii::app()->getUser()->setState($this->getClass() . '_ShippingVendedor', $this->shipping);
     }
 
     /**

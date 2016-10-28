@@ -27,6 +27,10 @@ class EShoppingCart extends CMap {
     protected $deliveryStored = 0; //tiempo entrega bodega
     protected $bonoValue = 0;
     protected $objPagoExpress = null;
+    
+    private function getClass(){
+    	return __CLASS__ . "Tienda";
+    }
 
     public function getObjExpress() {
         if(Yii::app()->user->isGuest){
@@ -270,7 +274,7 @@ class EShoppingCart extends CMap {
      * Restores the shopping cart from the session
      */
     public function restoreFromSession() {
-        $data = Yii::app()->getUser()->getState(__CLASS__);
+        $data = Yii::app()->getUser()->getState($this->getClass());
 
         if (isset(Yii::app()->session[Yii::app()->params->sesion['sectorCiudadEntrega']])) {
             $this->objSectorCiudad = Yii::app()->session[Yii::app()->params->sesion['sectorCiudadEntrega']];
@@ -281,8 +285,8 @@ class EShoppingCart extends CMap {
             Yii::app()->session[Yii::app()->params->sesion['sectorCiudadEntrega']] = $this->objSectorCiudad;
         }
 
-        $this->codigoPerfil = Yii::app()->getUser()->getState(__CLASS__ . '_CodigoPerfil');
-        $this->shipping = Yii::app()->getUser()->getState(__CLASS__ . '_Shipping');
+        $this->codigoPerfil = Yii::app()->getUser()->getState($this->getClass() . '_CodigoPerfil');
+        $this->shipping = Yii::app()->getUser()->getState($this->getClass() . '_Shipping');
         $codigoPerfil = Yii::app()->params->perfil['defecto'];
         if(isset(Yii::app()->session[Yii::app()->params->usuario['sesion']]) && Yii::app()->session[Yii::app()->params->usuario['sesion']] instanceof Usuario){
             $objUsuario = Yii::app()->session[Yii::app()->params->usuario['sesion']];
@@ -512,14 +516,14 @@ class EShoppingCart extends CMap {
      * @return void
      */
     protected function saveState() {
-        Yii::app()->getUser()->setState(__CLASS__, $this->toArray());
+        Yii::app()->getUser()->setState($this->getClass(), $this->toArray());
         $this->saveStateAttributes();
     }
 
     protected function saveStateAttributes() {
         //Yii::app()->getUser()->setState('SectorCiudad', $this->objSectorCiudad);
-        Yii::app()->getUser()->setState(__CLASS__ . '_CodigoPerfil', $this->codigoPerfil);
-        Yii::app()->getUser()->setState(__CLASS__ . '_Shipping', $this->shipping);
+        Yii::app()->getUser()->setState($this->getClass() . '_CodigoPerfil', $this->codigoPerfil);
+        Yii::app()->getUser()->setState($this->getClass() . '_Shipping', $this->shipping);
     }
 
     /**
