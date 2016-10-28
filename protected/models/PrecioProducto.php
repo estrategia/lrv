@@ -57,6 +57,7 @@ class PrecioProducto extends Precio {
                         break;
                     }
                 }
+              
 
                 if ($this->precioUnidad > 0 || $this->precioFraccion > 0) {
                     $tienePrecio = true;
@@ -87,6 +88,30 @@ class PrecioProducto extends Precio {
                     $listPrecios = $objProducto->listPrecios;
                     $listSaldos = $objProducto->listSaldos;
                 }
+                
+                /************************ SALDOS DE BODEGA *****************************/
+                
+                $listSaldosBodega = array();
+                
+                if ($consultaPrecio) {
+                	$listSaldosBodega = ProductosSaldosCedi::model()->findAll(array(
+                			'condition' => '(codigoProducto=:producto AND codigoCedi=:codigoCedi',
+                			'params' => array(
+                					':codigoCedi' => $objProducto->objCiudad->codigoSucursal,
+                			),
+                	));
+                } else {
+                	$listSaldosBodega = $objProducto->listSaldosCedi;
+                }
+                
+                foreach ($listSaldosBodega as $objProductoSaldoBodega) {
+                	  if ($objProductoSaldoBodega->saldoUnidad > 0 ) {
+                			$tieneSaldo = true;
+                		}
+                	break;
+                }
+                
+                /************************ FIN SALDOS DE BODEGA **************************/
 
                 foreach ($listPrecios as $objProductoPrecio) {
                     if ($objProductoPrecio->codigoCiudad == $objCiudadSector->codigoCiudad && $objProductoPrecio->codigoSector == $objCiudadSector->codigoSector) {

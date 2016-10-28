@@ -85,6 +85,7 @@ class Producto extends CActiveRecord {
             'listSaldos' => array(self::HAS_MANY, 'ProductosSaldos', 'codigoProducto'),
             'listPrecios' => array(self::HAS_MANY, 'ProductosPrecios', 'codigoProducto'),
             'listSaldosTerceros' => array(self::HAS_MANY, 'ProductosSaldosTerceros', 'codigoProducto'),
+        	'listSaldosCedi' => array(self::HAS_MANY, 'ProductosSaldosCedi', 'codigoProducto'),
             'listDescuentosPerfiles' => array(self::HAS_MANY, 'ProductosDescuentosPerfiles', 'codigoProducto'),
             'listDescuentosEspeciales' => array(self::HAS_MANY, 'ProductosDescuentosEspeciales', 'codigoProducto'),
             //'listPerfiles' => array(self::MANY_MANY, 'Perfil', 't_ProductosDescuentosPerfiles(codigoProducto, codigoPerfil)'),
