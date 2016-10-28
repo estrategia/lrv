@@ -26,12 +26,12 @@
  * @property integer $disponible
  * @property integer $idCombo
  * @property string $descripcionCombo
- * @property integer $idFormula
- * @property integer $idProductoVitalCall
+ * @property string $registroMedico
  *
  * The followings are the available model relations:
  * @property EstadoItem $objEstadoItem
  * @property Compras $objCompra
+ * @property Medico $objMedico
  */
 class ComprasItems extends CActiveRecord {
 
@@ -50,14 +50,13 @@ class ComprasItems extends CActiveRecord {
         // will receive user inputs.
         return array(
             array('idCompra, precioBaseUnidad, precioBaseFraccion, descuentoUnidad, descuentoFraccion, precioTotalUnidad, precioTotalFraccion, idOperador, terceros, unidades, fracciones, unidadesCedi, codigoImpuesto, idEstadoItem, flete, disponible, idCombo', 'numerical', 'integerOnly' => true),
-        	array('idFormula, idProductoVitalCall', 'numerical', 'integerOnly' => true),
-        	array('idFormula, idProductoVitalCall', 'default', 'value' => null),
             array('codigoProducto', 'length', 'max' => 10),
             array('descripcion', 'length', 'max' => 200),
             array('presentacion, descripcionCombo', 'length', 'max' => 100),
+        	array('registroMedico', 'length', 'max'=>20),
             // The following rule is used by search().
             // @todo Please remove those attributes that should not be searched.
-            array('idCompraItem, idCompra, codigoProducto, descripcion, descripcionCombo, presentacion, precioBaseUnidad, precioBaseFraccion, descuentoUnidad, descuentoFraccion, precioTotalUnidad, precioTotalFraccion, idOperador, terceros, unidades, fracciones, unidadesCedi, codigoImpuesto, idEstadoItem, flete, disponible, idCombo', 'safe', 'on' => 'search'),
+            array('idCompraItem, idCompra, codigoProducto, descripcion, descripcionCombo, presentacion, precioBaseUnidad, precioBaseFraccion, descuentoUnidad, descuentoFraccion, precioTotalUnidad, precioTotalFraccion, idOperador, terceros, unidades, fracciones, unidadesCedi, codigoImpuesto, idEstadoItem, flete, disponible, idCombo, registroMedico', 'safe', 'on' => 'search'),
         );
     }
 
@@ -75,6 +74,7 @@ class ComprasItems extends CActiveRecord {
             'objOperador' => array(self::BELONGS_TO, 'Operador', 'idOperador'),
             'objEstadoItem' => array(self::BELONGS_TO, 'EstadoItem', 'idEstadoItem'),
             'listBeneficios' => array(self::HAS_MANY, 'BeneficiosComprasItems', 'idCompraItem'),
+        	'objMedico' => array(self::BELONGS_TO, 'Medico', 'registroMedico'),
         );
     }
 
@@ -104,7 +104,8 @@ class ComprasItems extends CActiveRecord {
             'flete' => 'Flete',
             'disponible' => 'Disponible',
             'idCombo' => 'Id Combo',
-            'descripcionCombo' => 'Sescripcion Combo'
+            'descripcionCombo' => 'Sescripcion Combo',
+        	'registroMedico' => 'Registro Medico',
         );
     }
 
@@ -147,6 +148,7 @@ class ComprasItems extends CActiveRecord {
         $criteria->compare('disponible', $this->disponible);
         $criteria->compare('idCombo', $this->idCombo);
         $criteria->compare('descripcionCombo', $this->descripcionCombo, true);
+        $criteria->compare('registroMedico',$this->registroMedico,true);
 
         return new CActiveDataProvider($this, array(
             'criteria' => $criteria,

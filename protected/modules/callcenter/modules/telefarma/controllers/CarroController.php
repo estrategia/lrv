@@ -528,6 +528,10 @@ class CarroController extends ControllerTelefarma {
     private function procesoCompra(FormaPagoTelefarmaForm $modelPago, $tipoEntrega) {
         $transaction = Yii::app()->db->beginTransaction();
         try {
+        	//registrar medico
+        	$sqlMedico = "INSERT INTO m_Medico(registroMedico, nombre, institucion, telefono, correoElectronico) VALUES ($modelPago->registroMedico, '$modelPago->nombreMedico', '$modelPago->institucionMedico', '$modelPago->telefonoMedico', '$modelPago->correoElectronicoMedico') ON DUPLICATE KEY UPDATE nombre='$modelPago->nombreMedico', institucion='$modelPago->institucionMedico', telefono='$modelPago->telefonoMedico', correoElectronico='$modelPago->correoElectronicoMedico'";
+        	Yii::app()->db->createCommand($sqlMedico)->execute();
+        	
             //registrar compra compra
             $objCompra = new Compras;
             $objCompra->identificacionUsuario = null;
@@ -698,6 +702,7 @@ class CarroController extends ControllerTelefarma {
                 //$objItem->idEstadoItemTercero = null;
                 $objItem->flete = $position->getShipping();
                 $objItem->disponible = 1;
+                $objItem->registroMedico = $modelPago->registroMedico;
                 
                 if (!$objItem->save()) {
                     throw new Exception("Error al guardar item de compra $objItem->codigoProducto. " . $objItem->validateErrorsResponse());
@@ -737,7 +742,6 @@ class CarroController extends ControllerTelefarma {
             
         	$nombreUsuario = "INVITADO";
             $correoUsuario = "NA";
-
 
             if ($modelPago->tipoEntrega == Yii::app()->params->entrega['tipo']['domicilio']) {
                 $nombreUsuario = $modelPago->nombre;
