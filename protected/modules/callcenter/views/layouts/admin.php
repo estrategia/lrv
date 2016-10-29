@@ -9,16 +9,12 @@
         <link rel="shortcut icon" href="<?php echo Yii::app()->request->baseUrl; ?>/images/favicon_16.ico" type="image/x-icon" /> 
         <title><?php echo CHtml::encode($this->pageTitle); ?></title>
         <script>requestUrl = "<?php echo Yii::app()->request->baseUrl; ?>"; gmapKey = "<?php echo Yii::app()->params['google']['llaveMapa']; ?>";tipoEntrega = {presencial:<?=Yii::app()->params->entrega['tipo']['presencial']?>,domicilio:<?=Yii::app()->params->entrega['tipo']['domicilio']?>}</script>
-        <link id="bs-css" href="<?php echo Yii::app()->request->baseUrl; ?>/libs/charisma/css/bootstrap-simplex.min.css" rel="stylesheet" />
-
-       <?php Yii::app()->clientScript->registerCoreScript('jquery'); ?>
-       <?php //Yii::app()->clientScript->registerCoreScript('jquery.ui'); ?>
-        
-        <?php Yii::app()->getClientScript()->registerCssFile(Yii::app()->request->baseUrl . "/libs/owl-carousel/owl.carousel.css"); ?>
-        <?php Yii::app()->getClientScript()->registerCssFile(Yii::app()->request->baseUrl . "/libs/owl-carousel/owl.theme.css") ?>
-        <?php Yii::app()->getClientScript()->registerCssFile(Yii::app()->request->baseUrl . "/css/operator.css"); ?>
-
-          <link id="bs-css" href="<?php echo Yii::app()->request->baseUrl; ?>/css/vitalcall.css" rel="stylesheet" />
+		<?php Yii::app()->clientScript->registerCoreScript('jquery'); ?>
+       	<?php //Yii::app()->clientScript->registerCoreScript('jquery.ui'); ?>
+       	<?php Yii::app()->getClientScript()->registerCssFile(Yii::app()->request->baseUrl . "/libs/charisma/css/bootstrap-simplex.min.css"); ?>
+       	<?php //Yii::app()->getClientScript()->registerCssFile(Yii::app()->request->baseUrl . "/libs/owl-carousel/owl.carousel.css"); ?>
+       	<?php //Yii::app()->getClientScript()->registerCssFile(Yii::app()->request->baseUrl . "/libs/owl-carousel/owl.theme.css") ?>
+       	<?php Yii::app()->getClientScript()->registerCssFile(Yii::app()->request->baseUrl . "/css/operator.css"); ?>          
     </head>
 
     <body>
@@ -99,9 +95,6 @@
                                 </li>
                                  <li class="">
                                     <a href="<?php echo $this->createUrl('/callcenter/telefarma/reportes/reporteMedico') ?>" class="ajax-link"><i class="glyphicon glyphicon-stats"></i><span> Reporte por m&eacute;dico</span></a>
-                                </li>
-                                <li class="">
-                                    <a href="<?php echo $this->createUrl('/callcenter/telefarma/reportes/formulaVencer') ?>" class="ajax-link"><i class="glyphicon glyphicon-flash"></i><span> F&oacute;rmulas por vencer</span></a>
                                 </li>
                             <?php endif; ?>
                             <?php if (Yii::app()->controller->module->user->profile == 2): ?>

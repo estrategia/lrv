@@ -176,6 +176,11 @@ class FormaPagoTelefarmaForm extends CFormModel {
             'correoElectronico' => 'Correo electrónico',
             'correoElectronicoContacto' => 'Correo electrónico',
             'indicePuntoVenta' => 'Punto de Venta',
+        	'registroMedico' => 'Registro Med',
+        	'nombreMedico' => 'Nombre',
+        	'institucionMedico' => 'Institucion',
+        	'telefonoMedico' => 'Telefono',
+        	'correoElectronicoMedico' => 'Correo-e',
         );
     }
 

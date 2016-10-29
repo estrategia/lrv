@@ -9,11 +9,9 @@
         <link rel="shortcut icon" href="<?php echo Yii::app()->request->baseUrl; ?>/images/favicon_16.ico" type="image/x-icon" /> 
         <title><?php echo CHtml::encode($this->pageTitle); ?></title>
         <script>requestUrl = "<?php echo Yii::app()->request->baseUrl; ?>"; gmapKey = "<?php echo Yii::app()->params['google']['llaveMapa']; ?>"; tipoEntrega = {presencial:<?=Yii::app()->params->entrega['tipo']['presencial']?>,domicilio:<?=Yii::app()->params->entrega['tipo']['domicilio']?>}</script>
-        <link id="bs-css" href="<?php echo Yii::app()->request->baseUrl; ?>/libs/charisma/css/bootstrap-simplex.min.css" rel="stylesheet" />
-
         <?php Yii::app()->clientScript->registerCoreScript('jquery'); ?>
+        <?php Yii::app()->getClientScript()->registerCssFile(Yii::app()->request->baseUrl . "/libs/charisma/css/bootstrap-simplex.min.css"); ?>
         <?php Yii::app()->getClientScript()->registerCssFile(Yii::app()->request->baseUrl . "/css/operator.css"); ?>
-        <link id="bs-css" href="<?php echo Yii::app()->request->baseUrl; ?>/css/vitalcall.css" rel="stylesheet" />
     </head>
 
     <body>

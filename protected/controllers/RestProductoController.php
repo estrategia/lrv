@@ -123,7 +123,7 @@
     {
       $term = $_GET['termino'];
       $lab = $_GET['laboratorio'];
-      $sesion = Yii::app()->getSession()->getSessionId();
+      $sesion = Yii::app()->getSession()->getSessionId() . "_visitamedica";
       $codigosArray = GSASearch($term, $sesion);
       $parametrosProductos = [];
       $categoria1 = Yii::app()->params['calificacion']['categoriasNoCalificacion'][0];

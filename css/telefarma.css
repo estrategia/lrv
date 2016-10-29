@@ -986,6 +986,9 @@ ul.yiiPager a:link{
 #form-direccion-pagoinvitado .form-group {
     margin-bottom: 0px;
 }
+#form-datosmedico .form-group {
+    margin-bottom: 0;
+}
 #FormaPagoTelefarmaForm_fechaEntrega {padding: 10px;}
 
 .ad-gallery .ad-thumbs li a.ad-active img {

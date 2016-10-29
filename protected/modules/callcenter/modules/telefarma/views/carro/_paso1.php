@@ -19,7 +19,7 @@
     </div>
     <div class="col-sm-4" >
         <div class="iconStep step3"></div>
-        <div class="text orange"><p>&nbsp;3.Fecha y hora de entrega</p></div>
+        <div class="text orange"><p>&nbsp;3.Fecha/hora entrega</p></div>
         <div class="step-box">
             <?php $this->renderPartial('/carro/_pasoEntrega', array('modelPago' => $modelPago, 'listHorarios' => $listHorarios)) ?>
         </div>

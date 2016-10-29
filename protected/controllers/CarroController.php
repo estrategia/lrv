@@ -3693,8 +3693,7 @@ class CarroController extends Controller {
                     Yii::log("Exception WebService CongelarCompraAutomatica [compra: $objCompra->idCompra]\n" . $exc->getMessage() . "\n" . $exc->getTraceAsString(), CLogger::LEVEL_INFO, 'application');
                 }
             }
-//echo $objFormasPago->valorBono;exit();
-            
+			//echo $objFormasPago->valorBono;exit();
             if (Yii::app()->shoppingCart->getBono() > 0) {
             	$modelPago->actualizarBonoCRM($objCompra);
             }

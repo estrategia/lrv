@@ -718,8 +718,8 @@ return array(
     						'productosBusquedaFiltro' => 'larebaja.online.telefarma.productos.busqueda.filtro',
     						'busquedaExportar' => 'larebaja.online.telefarma.productos.busqueda.exportar',
     						'usuariosExportar' => 'larebaja.online.telefarma.productos.usuarios.exportar',
-    						'formulaMedica' => 'larebaja.online.telefarma.compra.formulamedica', // new
-    						'reporteMedico' => 'larebaja.online.telefarma.compra.reportemedico', // new
+    						'formulaMedica' => 'larebaja.online.telefarma.compra.formulamedica',
+    						'reporteMedico' => 'larebaja.online.telefarma.compra.reportemedico',
     				),
     				'descuento' => 10,
     				'pagar' => array(
@@ -730,29 +730,7 @@ return array(
     						'pasosDisponibles' => array('informacion', 'confirmacion'),
     				),
     				'diasRecordatorioFormula' => array(1,3)
-    		),    		
-        'vitalCall' => array(
-            'sesion' => array(
-                'sectorCiudadEntrega' => 'larebaja.online.vitalCall.sectorciudadentrega',
-                'carroPagarForm' => 'larebaja.online.vitalCall.carropagarform',
-                'redireccionUbicacion' => 'larebaja.online.vitalCall.redireccionubicacion',
-            	'productosBusquedaOrden' => 'larebaja.online.vitalCall.productos.busqueda.orden',
-            	'productosBusquedaFiltro' => 'larebaja.online.vitalCall.productos.busqueda.filtro',
-            	'busquedaExportar' => 'larebaja.online.vitalCall.productos.busqueda.exportar',
-            	'usuariosExportar' => 'larebaja.online.vitalCall.productos.usuarios.exportar',
-                'formulaMedica' => 'larebaja.online.vitalCall.compra.formulamedica', // new 
-            	'reporteMedico' => 'larebaja.online.vitalCall.compra.reportemedico', // new
-            ),
-        	'descuento' => 10,
-        	'pagar' => array(
-        		'pasos' => array(
-        			'informacion' => 1, 'confirmacion' => 2,
-        			1 => 'informacion', 2 => 'confirmacion'
-        		),
-        		'pasosDisponibles' => array('informacion', 'confirmacion'),
-        	),
-        	'diasRecordatorioFormula' => array(1,3)	
-        ),
+    	),
     	'entregaNacional' => array(
     			'sesion' => array(
     					'carroPagarForm' => 'larebaja.online.entreganacional.carropagarform',

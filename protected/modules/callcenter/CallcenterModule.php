@@ -10,7 +10,6 @@ class CallcenterModule extends CWebModule {
         $this->setImport(array(
             'callcenter.models.*',
         	'telefarma.models.*',
-        	'vitalcall_old.models.*',
             'callcenter.models.form.*',
             'callcenter.components.*',
             'application.components.*',
