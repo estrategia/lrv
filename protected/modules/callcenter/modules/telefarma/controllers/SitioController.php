@@ -110,7 +110,7 @@ class SitioController extends ControllerTelefarma {
     			Yii::app()->session[Yii::app()->params->telefarma['sesion']['carroPagarForm']] = null;
     		}
     
-    		//Yii::app()->shoppingCart->CalculateShipping();
+    		//Yii::app()->shoppingCartVitalCall->CalculateShipping();
     
     		$objHorarioSecCiud = HorariosCiudadSector::model()->find(array(
     				'condition' => 'codigoCiudad=:ciudad AND codigoSector=:sector',

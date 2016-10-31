@@ -266,7 +266,7 @@ class CatalogoController extends ControllerTelefarma {
             throw new CHttpException(404, 'Producto no existe.');
         }
 
-        $codigoPerfil = Yii::app()->shoppingCart->getCodigoPerfil();
+        $codigoPerfil = Yii::app()->shoppingCartVitalCall->getCodigoPerfil();
         $objCalificacion = null;
 
         if (!Yii::app()->user->isGuest) {

@@ -14,7 +14,7 @@
     <?php endif; ?>
 
     <div class=" content-txt2">
-        <?php $objPrecio = new PrecioProducto($data, $this->objSectorCiudad, Yii::app()->shoppingCart->getCodigoPerfil()); ?>
+        <?php $objPrecio = new PrecioProducto($data, $this->objSectorCiudad, Yii::app()->shoppingCartVitalCall->getCodigoPerfil()); ?>
         <div class="img-list-products">
             <?php if ($objPrecio->tieneBeneficio()): ?>
                 <!--descuento-->

@@ -22,7 +22,6 @@ return array(
         'ext.shoppingCart.*',
         'ext.shoppingCartSalesman.*',
     	'ext.shoppingCartVitalCall.*',
-    	'ext.shoppingCartNationalSale.*'
     ),
     'modules' => array(
         // uncomment the following to enable the Gii tool
@@ -33,6 +32,7 @@ return array(
                     'class' => 'callcenter.components.UserOperator',
                 ),
             ),
+
             'modules' => array(
             		'telefarma' => array(
             				'defaultController' => 'sitio',
@@ -42,14 +42,6 @@ return array(
             						),
             				),
             		),
-	                'vitalcall_old' => array(
-	                    'defaultController' => 'sitio',
-	                    'components' => array(
-	                        'user' => array(
-	                            'class' => 'callcenter.components.UserOperator',
-	                        ),
-	                    ),
-	                ) 
             ),
         ),
         'vendedor' => array(
@@ -59,40 +51,13 @@ return array(
                     'class' => 'vendedor.components.UserVendedor',
                 ),
             )),
-    		
-        'puntoventa' => array(
+        'subasta' => array(
             'defaultController' => 'usuario',
             'components' => array(
                 'user' => array(
-                    'class' => 'puntoventa.components.UserPuntoVenta',
+                    'class' => 'subasta.components.UserSubasta',
                 ),
-            ),
-        	'modules' => array(
-        		'entreganacional' => array(
-        				'defaultController' => 'usuario',
-        				'components' => array(
-        						'user' => array(
-        								'class' => 'puntoventa.components.UserPuntoVenta',
-                                 ),
-        				)),
-        			
-        		
-        		'subasta' => array(
-        				'defaultController' => 'usuario',
-        				'components' => array(
-        						'user' => array(
-        								'class' => 'puntoventa.components.UserPuntoVenta',
-        						),
-        				),
-        		),
-        	),
-        ),
-        'gii' => array(
-            'class' => 'system.gii.GiiModule',
-            'password' => '1',
-            // If removed, Gii defaults to localhost only. Edit carefully to taste.
-            'ipFilters' => array('127.0.0.1', '::1'),
-        ),
+            )),
     ),
     // application components
     'components' => array(
@@ -105,36 +70,12 @@ return array(
             'urlFormat' => 'path',
             'showScriptName' => false,
             'caseSensitive' => true,
-            'rules'=>array(
-                /*'post/<id:\d+>/<title:.*?>'=>'post/view',
-                'posts/<tag:.*?>'=>'post/index',*/
-                // REST patterns
-                array('restciudad/list', 'pattern'=>'rest/ciudad', 'verb'=>'GET'),
-                array('restciudad/view', 'pattern'=>'rest/ciudad/<id:\d+>', 'verb'=>'GET'),
-                array('restpuntoventa/puntoventacercano', 'pattern'=>'rest/puntoventacercano/lat/<lat:\-?\d+\.?\d+>/lon/<lon:\-?\d+\.?\d+>', 'verb'=>'GET'),
-                array('restciudad/sectores', 'pattern' => 'rest/ciudad/<id:\d+>/sectores', 'verb' => 'GET'),
-                array('restpuntoventa/list', 'pattern'=>'rest/puntoventa', 'verb'=>'GET'),
-                array('restproducto/list', 'pattern'=>'rest/producto', 'verb'=>'GET'),
-                array('restproducto/buscar', 'pattern'=>'rest/producto/buscar/<termino:.*>/<laboratorio:\-?\d+>', 'verb'=>'GET'),
-                array('restproducto/producto', 
-                    'pattern' => 'rest/producto/<codigoProducto:\d+>/ciudad/<codigoCiudad:\d+>/sector/<codigoSector:\d+>',
-                    'verb'=>'GET'),
-                array('restproducto/simular', 'pattern' => 'rest/producto/simular', 'verb' => 'GET'),
-                array('restprofesion/ver', 'pattern' => 'rest/profesion/ver/<id:\d+>', 'verb' => 'GET'),
-                array('restprofesion/listar', 'pattern' => 'rest/profesion', 'verb' => 'GET'),
-
-               /* array('rest/update', 'pattern'=>'api/<model:\w+>/<id:\d+>', 'verb'=>'PUT'),
-                array('rest/delete', 'pattern'=>'api/<model:\w+>/<id:\d+>', 'verb'=>'DELETE'),
-                array('rest/create', 'pattern'=>'api/<model:\w+>', 'verb'=>'POST'),*/
-                // Other controllers
-                // '<controller:\w+>/<action:\w+>'=>'<controller>/<action>',
-            ),
         ),
         'db' => array(
-            'connectionString' => 'mysql:host=localhost;port=3306;dbname=lrvmovil_copservir',
+            'connectionString' => 'mysql:host=siidesarrollo.copservir.com;port=3306;dbname=lrvmovil',
             'emulatePrepare' => true,
-            'username' => 'root',
-            'password' => '',
+            'username' => 'ajavela',
+            'password' => 'Ajavela',
             'charset' => 'utf8',
             'enableProfiling' => true,
             'enableParamLogging' => true,
@@ -157,10 +98,6 @@ return array(
     	'shoppingCartVitalCall' => array(
     		'class' => 'ext.shoppingCartVitalCall.EShoppingCart',
     	),
-    	'shoppingCartNationalSale'	=> array(
-    		'class' => 'ext.shoppingCartNationalSale.EShoppingCart',
-    	)
-    	,	
         'ePdf' => array(
             'class' => 'ext.yii-pdf.EYiiPdf',
             'params' => array(
@@ -214,18 +151,6 @@ return array(
         ),
     ),
     'params' => array(
-        "meses" => array( 1 => "Enero", 
-               2 => "Febrero",  
-               3 => "Marzo",  
-               4 => "Abril",  
-               5 => "Mayo",  
-               6 => "Junio",  
-               7 => "Julio",  
-               8 => "Agosto",  
-               9 => "Septiembre",  
-               10 => "Octubre",  
-               11 => "Noviembre",  
-               12 => "Diciembre"),
         'horarioEntrega' => array(
             'deltaDefecto' => '0 1:00:0.000000',
             'deltaHorarios' => array(
@@ -236,39 +161,11 @@ return array(
                 )
             ),
         ),
-        'tipoFormulaMedica' => '2',
+
         'promociones' => array(
-            'viernesnegro' => array(
-                'icono' => '/images/inicio/masvistos.png',
-                'nombre' => 'Viernes negro',
-                'fechaInicio' => '2015-11-25 13:00:00',
-                'fechaFin' => '2015-11-28 15:10:00',
-                'elementos' => array(
-                    array(
-                        'rutaImagen' => '/images/banner/banner_inicio1-2015-10-20.jpg',
-                        'productos' => array(12957, 12959, 30128, 32591, 97448, 17600, 26767, 48679, 48683)
-                    ),
-                    array(
-                        'rutaImagen' => '/images/banner/banner_inicio2-2015-10-20.jpg',
-                        'productos' => array(12957, 12959, 30128, 32591, 97448, 17600, 26767, 48679, 48683)
-                    ),
-                    array(
-                        'rutaImagen' => '/images/banner/banner_inicio1.jpg',
-                        'productos' => array(12957, 12959, 30128, 32591, 97448, 17600, 26767, 48679, 48683)
-                    ),
-                    array(
-                        'rutaImagen' => '/images/banner/banner_inicio2.jpg',
-                        'productos' => array(12957, 12959, 30128, 32591, 97448, 17600, 26767, 48679, 48683)
-                    ),
-                    array(
-                        'rutaImagen' => '/images/banner/banner_inicio3.jpg',
-                        'productos' => array(12957, 12959, 30128, 32591, 97448, 17600, 26767, 48679, 48683)
-                    )
-                )
-            )
         ),
         'minimoSlideProductos' => 5,
-        'minimoGridProductos' => 5,
+        'minimoGridProductos' => 1,
         'correoAdmin' => 'infolrv@copservir.com',
         'maximoComparacion' => 5,
         'urlSitio' => 'www.larebajavirtual.com',
@@ -276,7 +173,7 @@ return array(
         'clienteFiel' => array(
             'correo' => 'cliente_fiel@copservir.com',
             'telefono' => '01 8000 93 99 00',
-            'dias' => array(1, 10, 15, 25),
+            'dias' => array(), //Se cambia ya que desde febrero no hay dias de CF en lrv
             'montoCompra' => 1000,
             'puntosCompra' => 10,
         ),
@@ -286,6 +183,7 @@ return array(
             'estadoNombre' => array(0 => 'Inactivo', 1 => 'Activo'),
         ),
         'claveLista' => 'listapersonallrv',
+        'tipoFormulaMedica' => '2',
         'sesion' => array(
             'cookieExpiracion' => 2592000, //1 dia 86400 --> 30 dias
             'claveCookie' => 'l4r384j4cook13',
@@ -297,7 +195,7 @@ return array(
             'redireccionAutenticacion' => 'larebaja.online.usuario.autenticacion',
             'pdvEntrega' => 'larebaja.online.ubicacion.pdvEntrega',
             'direccionEntrega' => 'larebaja.online.ubicacion.direccionEntrega',
-            'sectorCiudadEntrega' => 'larebaja.online.ubicacion.sectorCiudadEntrega',
+            'sectorCiudadEntrega' => 'larebaja.online.ubicacion.',
             'subSectorCiudadEntrega' => 'larebaja.online.ubicacion.subSsectorCiudadEntrega',
             'productosBusquedaOrden' => 'larebaja.online.productos.busqueda.orden',
             'productosBusquedaFiltro' => 'larebaja.online.productos.busqueda.filtro',
@@ -328,15 +226,15 @@ return array(
                 2 => 'grande'
             ),
             'noImagen' => array(
-                'mini' => '/images/productos/thumb/noimage.png',
-                'grande' => '/images/productos/noimage.png',
+                'mini' => '/images/productos/noimage150.png',
+                'grande' => '/images/productos/noimage300.png',
             )
         ),
         'calificacion' => array(
             'categoriasNoCalificacion' => array(1, 2)
         ),
         'cotizaciones' => array(
-            'diasVisualizar' => 100,
+            'diasVisualizar' => 10,
         ),
         'pagar' => array(
             'pasos' => array(
@@ -355,7 +253,7 @@ return array(
         ),
         'formaPago' => array(
             'idCredirebaja' => 2,
-            'tarjetasDatafono' => array(5, 6, 7, 8, 9, 10, 11, 12),
+            'tarjetasDatafono' => array(5, 6, 7, 8, 9, 10, 11, 12, 13),
             'tarjetasDatafonoLogo' => array(
                 5 => '/images/iconos/visa_logo.png',
                 6 => '/images/iconos/visa_logo.png',
@@ -365,14 +263,15 @@ return array(
                 10 => '/images/iconos/exito_logo.png',
                 11 => '/images/iconos/bigpass_logo.png',
                 12 => '/images/iconos/sodexo_logo.png',
+                13 => '/images/iconos/American_Express.png',
             ),
             'pasarela' => array(
-                'valorMinimo' => 5000,
+                'valorMinimo' => 10000,
                 'idPasarela' => 3,
-                'usuarioId' => '2',
-                'llaveEncripcion' => '1111111111111111',
-                'prueba' => '1',
-                'action' => 'https://gateway2.pagosonline.net/apps/gateway/index.html',
+                'usuarioId' => '109165',
+                'llaveEncripcion' => '1498ae84155',
+                'prueba' => '0',
+                'action' => 'https://gateway.pagosonline.net/apps/gateway/index.html',
                 'descripcion' => 'La Rebaja Virtual - Pasarela de pago',
             )
         ),
@@ -385,7 +284,7 @@ return array(
         'carpetaImagen' => array(
             'categorias' => '/images/menu/',
             'codigoEspecial' => '/images/codigoespecial/',
-            'productos' => array(1 => '/images/productos/thumb/', 2 => '/images/productos/'),
+            'productos' => array(1 => '/images/productos/', 2 => '/images/productos/'),
             'combos' => array(1 => '/images/combos/thumb/', 2 => '/images/combos/'),
             'menuDesktop' => '/images/menu/desktop/',
         ),
@@ -416,7 +315,7 @@ return array(
             'defecto' => 1,
             'asociado' => 2,
             'clienteFiel' => 3,
-            'telefarma' => 20,
+            'telefarma' => 21,
             '*' => 99
         ),
         'tipoVenta' => array(
@@ -427,8 +326,8 @@ return array(
         ),
         'bloqueoUsuario' => array(
             'diasBloqueo' => 15,
-            'cantidadCompras' => 14,
-            'acumuladoCompras' => 200000,
+            'cantidadCompras' => 30,
+            'acumuladoCompras' => 1500000,
         ),
         'logueo' => array(
             '*' => 3
@@ -460,7 +359,7 @@ return array(
         ),
         'servicioVentaControlada' => 17,
         'gps' => array(
-            'distanciaMaxima' => 20//kilometros
+            'distanciaMaxima' => 5//kilometros
         ),
         'google' => array(
             'llaveMapa' => 'gme-copservir'
@@ -469,7 +368,7 @@ return array(
             'recordatorioClave' => 'La Rebaja Virtual: Clave de ingreso',
             'bienvenida' => 'La Rebaja Virtual: Bienvenido(a)',
             'pedidoRealizado' => 'La Rebaja Virtual: Pedido realizado',
-            'pedidoRealizadoPasarela' => 'La Rebaja Virtual: Pendiente de Confirmación Pasarela',
+            'pedidoRealizadoPasarela' => 'La Rebaja Virtual: Pendiente de Confirmaci�n Pasarela',
             'pedidoRemitido' => 'La Rebaja Virtual: Pedido remitido',
         ),
         'asuntoRecordatorioClave' => 'Clave de Ingreso',
@@ -501,68 +400,57 @@ return array(
                 'formulaMedica' => 'larebaja.online.vendedor.compra.formulamedica',
             ),
         ),
-        'puntoventa' => array('sesion' => array(
-                'usuario' => 'larebaja.online.puntoventa.usuario',
-                'formPedidoBusqueda' => 'larebaja.online.puntoventa.formpedidobusqueda',
-                'objCiudadSector' => 'larebaja.online.puntoventa.objciudadsector',
-                'pdv' => 'larebaja.online.puntoventa.pdv',
-        		'pdvDestino' => 'larebaja.online.puntoventa.pdvdestino',
-        		'formPedidoBusqueda' => 'larebaja.online.puntoventa.formpedidobusqueda',
+        'subasta' => array('sesion' => array(
+                'usuario' => 'larebaja.online.subasta.usuario',
+                'formPedidoBusqueda' => 'larebaja.online.subasta.formpedidobusqueda',
+                'objCiudadSector' => 'larebaja.online.subasta.objciudadsector',
+                'pdv' => 'larebaja.online.subasta.pdv',
             ),
-        ),
-        'entreganacional' => array(
-            'sesion' => array(
-                'usuario' => 'larebaja.online.entreganacional.usuario',
-                'objCiudadSector' => 'larebaja.online.entreganacional.objciudadsector',
-                'pdv' => 'larebaja.online.entreganacional.pdv',
-            ),
-            'perfil' => 5,
         ),
         'callcenter' => array(
             'correo' => 'alexander_javela@copservir.com',
             'pedidos' => array(
                 'diasVisualizar' => 1,
-                'tiempoRecargarPagina' => 10000,
+                'tiempoRecargarPagina' => 30000,
             ),
             'perfil' => array(
                 1 => 'Operador',
                 2 => 'Administrador',
-                3 => 'Vendedor punto de venta',
-                4 => 'Mensajero Vendedor',
-                5 => 'Entrega Nacional'
+                3 => 'Analista',
+                4 => 'Vendedor punto de venta',
+                5 => 'Mensajero Vendedor',
             ),
             'perfilesOperador' => array(
                 'operador' => 1,
                 'administrador' => 2,
-                'vendedorPDV' => 3,
-                'mensajeroVendedor' => 4
+                'vendedorPDV' => 4,
+                'mensajeroVendedor' => 5
             ),
-            
             'perfiles' => array(1, 2, 3, 4, 5),
             'usuario' => array(
                 'estado' => array('activo' => 1, 'inactivo' => 0),
                 'estadoNombre' => array(0 => 'Inactivo', 1 => 'Activo'),
             ),
             'bonos' => array(
-                'estado' => array('activo' => 1, 'inactivo' => 2, 'redimido' => 0),
-                'estadoNombre' => array(1 => 'Activo', 0 => 'Redimido', 2 => 'Inactivo'),
+                'estado' => array('activo' => 1, 'inactivo' => 0),
+                'estadoNombre' => array(1 => 'Activo', 0 => 'Inactivo'),
                 'tipo' => array('manual' => 1, 'cargue' => 2),
                 'tipoNombre' => array(1 => 'Manual', 2 => 'Cargue'),
                 'tipoConfiguracion' => array(1 => 'Tradicional', 2 => 'Bono promocional'),
                 'asuntoCorreo' => 'Tienes un bono disponible',
-                'tipoBonoCRM' => 3, 
-            	'formaPagoBonos' => 8, 
+                'tipoBonoCRM' => 2, // es el tipo de bonos que usa en el crm, recuerde crear un tipo para este.
+                'formaPagoBonos' => 14, // El tipo de la forma de pago para bonos.
             ),
             'reactivacionBono' => array(
                 'asuntoMensaje' => 'Activacion bono cliente fiel',
                 'destinatarios' => array('karen_charria@copservir.com', 'fernando_riasco@copservir.com')
             ),
             'observacion' => array(
-                'asuntoMensaje' => 'La rebaja virtual - información de su pedido',
+                'asuntoMensaje' => 'La rebaja virtual - informaci�n de su pedido',
                 'estado' => array(
                     7 => 'Cancelar',
                     1 => 'Volver a pendiente',
-                    8 => 'Devolución',
+                    8 => 'Devoluci�n',
                     5 => 'Facturado',
                 ),
             ),
@@ -573,7 +461,7 @@ return array(
                     '3' => '3. Pedido solicitado fuera de servicio',
                     '4' => '4. Pedido solicitado y no hay domicilio',
                     '5' => '5. Producto agotado',
-                    '6' => '6. Confirmar dirección',
+                    '6' => '6. Confirmar direccion',
                     '7' => '7. Confirmar pedio de pago',
                     '8' => '8. Se solicita con Tarjeta credirebaja y no tiene cupo',
                     '9' => '9. Se solicita con Tarjeta credirebaja y esta en mora',
@@ -607,7 +495,7 @@ return array(
                     'negadoPasarela' => 13,
                     'validacionManualPasarela' => 14,
                     'mensajeroAsignado' => 15,
-                    'subasta' => 16,
+                    'subasta' => 1,
                 ),
                 'colorClass' => array(
                     16 => 'info',
@@ -635,30 +523,30 @@ return array(
                     3 => 'Lista de Imagenes',
                     4 => 'Html',
                     5 => 'Html y lista de productos',
-                    6 => 'Enlaces men&uacute;',
-                    7 => 'Promoci&oacute;n flotante',
+                    6 => 'Enlaces menu',
+                    7 => 'Promocion flotante',
                     8 => 'Cuadricula de productos',
-                    9 => 'Grupo de m&oacute;dulos',
-                    10 => 'Productos &uacute;ltimo antojo',
-                    11 => 'Productos banner'
+                    9 => 'Grupo de modulos',
+                    10 => 'Productos ultimo antojo',
+                    11 => 'Productos banner MV'
                 ),
                 'ubicacionModulos' => array(
                     1 => 'Inicio',
-                    2 => 'División',
+                    2 => 'Division',
                     3 => 'Categoria',
                     4 => 'Fin Compra',
-                    10 => 'Móvil Home',
-                    11 => 'Móvil Inicio',
+                    10 => 'Movil Home',
+                    11 => 'Movil Inicio',
                     12 => 'Vendedor Inicio',
                 ),
                 'diasSemana' => array(
                     0 => 'Domingo',
                     1 => 'Lunes',
                     2 => 'Martes',
-                    3 => 'Miércoles',
+                    3 => 'Miercoles',
                     4 => 'Jueves',
                     5 => 'Viernes',
-                    6 => 'Sábado',
+                    6 => 'Sabado',
                 ),
                 'tiposContenidos' => array(
                     1 => 'Link',
@@ -709,32 +597,26 @@ return array(
                 'modelBonosAdminExport' => 'larebaja.online.callcenter.modelbonosadminexport',
             ),
         ),
-    	'telefarma' => array(
-    				'sesion' => array(
-    						'sectorCiudadEntrega' => 'larebaja.online.telefarma.sectorciudadentrega',
-    						'carroPagarForm' => 'larebaja.online.telefarma.carropagarform',
-    						'redireccionUbicacion' => 'larebaja.online.telefarma.redireccionubicacion',
-    						'productosBusquedaOrden' => 'larebaja.online.telefarma.productos.busqueda.orden',
-    						'productosBusquedaFiltro' => 'larebaja.online.telefarma.productos.busqueda.filtro',
-    						'busquedaExportar' => 'larebaja.online.telefarma.productos.busqueda.exportar',
-    						'usuariosExportar' => 'larebaja.online.telefarma.productos.usuarios.exportar',
-    						'formulaMedica' => 'larebaja.online.telefarma.compra.formulamedica',
-    						'reporteMedico' => 'larebaja.online.telefarma.compra.reportemedico',
-    				),
-    				'descuento' => 10,
-    				'pagar' => array(
-    						'pasos' => array(
-    								'informacion' => 1, 'confirmacion' => 2,
-    								1 => 'informacion', 2 => 'confirmacion'
-    						),
-    						'pasosDisponibles' => array('informacion', 'confirmacion'),
-    				),
-    				'diasRecordatorioFormula' => array(1,3)
+		'telefarma' => array(
+   			'sesion' => array(
+    			'sectorCiudadEntrega' => 'larebaja.online.telefarma.sectorciudadentrega',
+    			'carroPagarForm' => 'larebaja.online.telefarma.carropagarform',
+    			'redireccionUbicacion' => 'larebaja.online.telefarma.redireccionubicacion',
+    			'productosBusquedaOrden' => 'larebaja.online.telefarma.productos.busqueda.orden',
+    			'productosBusquedaFiltro' => 'larebaja.online.telefarma.productos.busqueda.filtro',
+    			'busquedaExportar' => 'larebaja.online.telefarma.productos.busqueda.exportar',
+    			'usuariosExportar' => 'larebaja.online.telefarma.productos.usuarios.exportar',
+    			'formulaMedica' => 'larebaja.online.telefarma.compra.formulamedica',
+    			'reporteMedico' => 'larebaja.online.telefarma.compra.reportemedico',
+    		),
+   			'descuento' => 10,
+   			'pagar' => array(
+   				'pasos' => array(
+   					'informacion' => 1, 'confirmacion' => 2,
+   					1 => 'informacion', 2 => 'confirmacion'
+   				),
+   				'pasosDisponibles' => array('informacion', 'confirmacion'),
+    		),
     	),
-    	'entregaNacional' => array(
-    			'sesion' => array(
-    					'carroPagarForm' => 'larebaja.online.entreganacional.carropagarform',
-    			)
-    	)	
     ),
 );
