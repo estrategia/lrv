@@ -73,7 +73,7 @@ return array(
         				'components' => array(
         						'user' => array(
         								'class' => 'puntoventa.components.UserPuntoVenta',
-        						),
+                                 ),
         				)),
         			
         		
