@@ -403,7 +403,7 @@ class CatalogoController extends ControllerTelefarma {
     	));
     
     	if ($objProducto == null) {
-    		throw new CHttpException(404, 'Producto no disponible.');
+    		throw new CHttpException(404, 'Producto de bodega no disponible.');
     	}
     
     	$codigoPerfil = Yii::app()->shoppingCartVitalCall->getCodigoPerfil();
