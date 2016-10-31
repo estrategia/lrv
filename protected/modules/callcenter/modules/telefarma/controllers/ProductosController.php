@@ -36,7 +36,7 @@ class ProductosController extends ControllerTelefarma {
 						$descuentoPerfil = new ProductosDescuentosPerfiles ();
 						$descuentoPerfil->codigoProducto = $model->codigoProducto;
 						$descuentoPerfil->codigoPerfil = Yii::app ()->params->perfil ['vitalCall'];
-						$descuentoPerfil->descuentoPerfil = Yii::app ()->params->vitalCall ['descuento'];
+						$descuentoPerfil->descuentoPerfil = Yii::app ()->params->telefarma ['descuento'];
 						
 						if ($descuentoPerfil->save ()) {
 							$this->redirect ( CController::createUrl ( 'index' ) );
@@ -69,7 +69,7 @@ class ProductosController extends ControllerTelefarma {
 							$descuentoPerfil = new ProductosDescuentosPerfiles ();
 							$descuentoPerfil->codigoProducto = $model->codigoProducto;
 							$descuentoPerfil->codigoPerfil = Yii::app ()->params->perfil ['vitalCall'];
-							$descuentoPerfil->descuentoPerfil = Yii::app ()->params->vitalCall ['descuento'];
+							$descuentoPerfil->descuentoPerfil = Yii::app ()->params->telefarma ['descuento'];
 							
 							if ($descuentoPerfil->save ()) {
 								$this->redirect ( CController::createUrl ( 'index' ) );

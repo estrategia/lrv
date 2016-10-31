@@ -18,13 +18,13 @@ class SessionControlFilter extends CFilter {
         //Yii::app()->request->urlReferrer
         $sesionUbicacion = false;
         
-        if (isset(Yii::app()->session[Yii::app()->params->vitalCall['sesion']['sectorCiudadEntrega']]) && Yii::app()->session[Yii::app()->params->vitalCall['sesion']['sectorCiudadEntrega']] != null ) {
+        if (isset(Yii::app()->session[Yii::app()->params->telefarma['sesion']['sectorCiudadEntrega']]) && Yii::app()->session[Yii::app()->params->telefarma['sesion']['sectorCiudadEntrega']] != null ) {
             $sesionUbicacion = true;
         }
         
         if (!$sesionUbicacion) {
             if ($this->redirect)
-                Yii::app()->request->redirect(Yii::app()->baseUrl . "/callcenter/vitalcall/sitio/ubicacion");
+                Yii::app()->request->redirect(Yii::app()->baseUrl . "/callcenter/telefarma/sitio/ubicacion");
         }
 
         $filterChain->run();

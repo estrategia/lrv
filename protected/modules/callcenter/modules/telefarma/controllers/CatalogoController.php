@@ -47,17 +47,17 @@ class CatalogoController extends ControllerTelefarma {
 
 	
         if (!isset($_GET['ajax'])) {
-            Yii::app()->session[Yii::app()->params->vitalCall['sesion']['productosBusquedaOrden']] = null;
-            Yii::app()->session[Yii::app()->params->vitalCall['sesion']['productosBusquedaFiltro']] = null;
+            Yii::app()->session[Yii::app()->params->telefarma['sesion']['productosBusquedaOrden']] = null;
+            Yii::app()->session[Yii::app()->params->telefarma['sesion']['productosBusquedaFiltro']] = null;
         }
 
-        if (Yii::app()->session[Yii::app()->params->vitalCall['sesion']['productosBusquedaFiltro']] != null) {
-            $formFiltro = Yii::app()->session[Yii::app()->params->vitalCall['sesion']['productosBusquedaFiltro']];
+        if (Yii::app()->session[Yii::app()->params->telefarma['sesion']['productosBusquedaFiltro']] != null) {
+            $formFiltro = Yii::app()->session[Yii::app()->params->telefarma['sesion']['productosBusquedaFiltro']];
             $formFiltro->listCategoriasTiendaCheck = $formFiltro->listCategoriasTienda;
         }
 
-        if (Yii::app()->session[Yii::app()->params->vitalCall['sesion']['productosBusquedaOrden']] != null) {
-            $formOrdenamiento = Yii::app()->session[Yii::app()->params->vitalCall['sesion']['productosBusquedaOrden']];
+        if (Yii::app()->session[Yii::app()->params->telefarma['sesion']['productosBusquedaOrden']] != null) {
+            $formOrdenamiento = Yii::app()->session[Yii::app()->params->telefarma['sesion']['productosBusquedaOrden']];
         }
 
         $parametrosProductos = array();
@@ -206,15 +206,15 @@ class CatalogoController extends ControllerTelefarma {
         //Yii::log("Filtrar:Filtro0\n" . CVarDumper::dumpAsString(Yii::app()->session[Yii::app()->params->sesion['productosBusquedaFiltro']]), CLogger::LEVEL_INFO, 'application');
 
         if (isset($_POST['OrdenamientoForm'])) {
-            Yii::app()->session[Yii::app()->params->vitalCall['sesion']['productosBusquedaOrden']] = null;
+            Yii::app()->session[Yii::app()->params->telefarma['sesion']['productosBusquedaOrden']] = null;
             $formOrdenamiento->attributes = $_POST['OrdenamientoForm'];
-            Yii::app()->session[Yii::app()->params->vitalCall['sesion']['productosBusquedaOrden']] = $formOrdenamiento;
+            Yii::app()->session[Yii::app()->params->telefarma['sesion']['productosBusquedaOrden']] = $formOrdenamiento;
         }
 
         if (isset($_POST['FiltroForm'])) {
-            Yii::app()->session[Yii::app()->params->vitalCall['sesion']['productosBusquedaFiltro']] = null;
+            Yii::app()->session[Yii::app()->params->telefarma['sesion']['productosBusquedaFiltro']] = null;
             $formFiltro->attributes = $_POST['FiltroForm'];
-            Yii::app()->session[Yii::app()->params->vitalCall['sesion']['productosBusquedaFiltro']] = $formFiltro;
+            Yii::app()->session[Yii::app()->params->telefarma['sesion']['productosBusquedaFiltro']] = $formFiltro;
         }
 
         //Yii::log("Filtrar:Filtro1\n" . CVarDumper::dumpAsString($formFiltro), CLogger::LEVEL_INFO, 'application');
