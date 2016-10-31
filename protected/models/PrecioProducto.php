@@ -134,7 +134,7 @@ class PrecioProducto extends Precio {
                         break;
                     }
                 }
-            }
+            }   
 
             $objDescuentoEspecial = ProductosDescuentosEspeciales::model()->find(array(
                 'condition' => 'codigoCiudad=:ciudad AND codigoSector=:sector AND codigoProducto=:producto AND codigoPerfil=:perfil AND fechaInicio<=:fecha AND fechaFin>=:fecha ',
