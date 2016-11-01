@@ -997,3 +997,9 @@ ul.yiiPager a:link{
 .ad-gallery .ad-thumbs li a img {
     max-width: 70px;
 }
+
+.btn-default, .btn-default:hover {
+	background: #fff;
+    border: 1px solid #ccc;
+    filter: none;
+}

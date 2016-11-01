@@ -65,12 +65,17 @@ $this->widget('zii.widgets.grid.CGridView', array(
         )*/
         array(
             'class' => 'CButtonColumn',
-            'template' => '{actualizar}',
+            'template' => '{actualizar}{eliminar}',
             'buttons' => array(
                 'actualizar' => array(
                     'label' => '<i class="glyphicon glyphicon-edit"></i> ',
                     'url' => 'Yii::app()->createUrl("/callcenter/telefarma/productos/actualizar", array("id"=>$data->idProductoVitalCall)) ',
                     'options' => array('title'=>'Actualizar'),
+                ),
+                'eliminar' => array(
+                		'label' => '<i class="glyphicon glyphicon-remove"></i> ',
+                		'url' => 'Yii::app()->createUrl("/callcenter/telefarma/productos/eliminar", array("id"=>$data->idProductoVitalCall)) ',
+                		'options' => array('title'=>'Eliminar'),
                 ),
             )
         ),

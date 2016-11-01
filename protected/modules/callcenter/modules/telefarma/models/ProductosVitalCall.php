@@ -38,6 +38,7 @@ class ProductosVitalCall extends CActiveRecord {
             array('estado', 'numerical', 'integerOnly' => true),
             array('codigoProducto', 'length', 'max' => 10),
             array('descripcion', 'length', 'max' => 200),
+        	array('descripcion','validarExistencia'),
             // The following rule is used by search().
             // @todo Please remove those attributes that should not be searched.
             array('idProductoVitalCall, codigoProducto, descripcion, estado, fechaInicio, fechaFin, fechaCreacion', 'safe', 'on' => 'search'),
@@ -70,6 +71,39 @@ class ProductosVitalCall extends CActiveRecord {
             'fechaFin' => 'Fecha Fin',
             'fechaCreacion' => 'Fecha Creacion',
         );
+    }
+    
+    public function validarExistencia(){
+    
+    	$productoVitallCall = "";
+    	if($this->idProductoVitalCall != null){
+    		$productoVitallCall = ' AND idProductoVitalCall != '.$this->idProductoVitalCall;
+    	}
+    	
+    	$ValidarFechaInicio = self::model()->find(array(
+    			'condition' => 'codigoProducto =:codigoProducto AND :fecha between fechaInicio and fechaFin'.$productoVitallCall,
+    			'params' => array(
+    					':codigoProducto' => $this->codigoProducto,
+    					':fecha' => $this->fechaInicio
+    			)
+    	));
+    	
+    	
+    	if($ValidarFechaInicio != null){
+    		$this->addError('fechaInicio', 'El producto ya tiene una vigencia durante esta fecha');
+    	}
+    	
+    	$ValidarFechaInicio = self::model()->find(array(
+    			'condition' => 'codigoProducto =:codigoProducto AND :fecha between fechaInicio and fechaFin'.$productoVitallCall,
+    			'params' => array(
+    					':codigoProducto' => $this->codigoProducto,
+    					':fecha' => $this->fechaFin
+    			)
+    	));
+    	
+    	if($ValidarFechaInicio != null){
+    		$this->addError('fechaFin', 'El producto ya tiene una vigencia durante esta fecha');
+    	}
     }
 
     /**

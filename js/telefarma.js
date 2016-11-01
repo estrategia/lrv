@@ -71,6 +71,8 @@ $(document).on('click', 'button[data-role="ubicacion-seleccion-georeferencia"]',
     Loading.show();
     $('#ubicacion-seleccion-ciudad').val($('#georeferencia-seleccion-ciudad').val());
     $('#ubicacion-seleccion-sector').val($('#georeferencia-seleccion-sector').val());
+    
+    
     //$('#div-ubicacion-tipoubicacion > button').removeClass('activo').addClass('inactivo');
     //$('#div-ubicacion-tipoubicacion > button[data-role="ubicacion-mapa"]').removeClass('inactivo').addClass('activo');
     ubicacionSeleccion();
@@ -214,11 +216,13 @@ $(document).on('click', 'button[data-role="ubicacion-seleccion-mapa"]', function
 
 function ubicacionSeleccion() {
     var form = $("#form-ubicacion");
+    var direccion = $('#input-georeferencia-direccion').val();
+    var barrio = $('#input-georeferencia-barrio').val();
     $.ajax({
         type: 'POST',
         async: true,
         url: requestUrl + '/callcenter/telefarma/sitio/ubicacionSeleccion',
-        data: form.serialize(),
+        data: form.serialize()+"&direccion="+direccion+"&barrio="+barrio,
         dataType: 'json',
         beforeSend: function() {
             Loading.show();

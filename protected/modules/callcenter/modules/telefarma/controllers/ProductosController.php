@@ -1,9 +1,10 @@
 <?php
 class ProductosController extends ControllerTelefarma {
 	
+	
 	public function actionIndex() {
 		$model = new ProductosVitalCall ( 'search' );
-		
+		$this->layout = 'admin';
 		$model->unsetAttributes ();
 		if (isset ( $_GET ['ProductosVitalCall'] ))
 			$model->attributes = $_GET ['ProductosVitalCall'];
@@ -18,7 +19,7 @@ class ProductosController extends ControllerTelefarma {
 	
 	public function actionCrear() {
 		$model = new ProductosVitalCall ();
-		
+		$this->layout = 'admin';
 		if ($_POST) {
 			$model->attributes = $_POST ['ProductosVitalCall'];
 			$model->fechaCreacion = Date ( "Y-m-d h:i:s" );
@@ -28,14 +29,14 @@ class ProductosController extends ControllerTelefarma {
 							'condition' => 'codigoProducto =:codigoProducto AND codigoPerfil =:codigoPerfil',
 							'params' => array (
 									':codigoProducto' => $model->codigoProducto,
-									':codigoPerfil' => Yii::app ()->params->perfil ['vitalCall'] 
+									':codigoPerfil' => Yii::app ()->params->perfil ['telefarma'] 
 							) 
 					) );
 					
 					if (! $descuentoPerfil) {
 						$descuentoPerfil = new ProductosDescuentosPerfiles ();
 						$descuentoPerfil->codigoProducto = $model->codigoProducto;
-						$descuentoPerfil->codigoPerfil = Yii::app ()->params->perfil ['vitalCall'];
+						$descuentoPerfil->codigoPerfil = Yii::app ()->params->perfil ['telefarma'];
 						$descuentoPerfil->descuentoPerfil = Yii::app ()->params->telefarma ['descuento'];
 						
 						if ($descuentoPerfil->save ()) {
@@ -50,6 +51,7 @@ class ProductosController extends ControllerTelefarma {
 		) );
 	}
 	public function actionActualizar($id) {
+		$this->layout = 'admin';
 		$model = ProductosVitalCall::model ()->findByPk ( $id );
 		if ($_POST) {
 			$model->attributes = $_POST ['ProductosVitalCall'];
@@ -61,14 +63,14 @@ class ProductosController extends ControllerTelefarma {
 								'condition' => 'codigoProducto =:codigoProducto AND codigoPerfil =:codigoPerfil',
 								'params' => array (
 										':codigoProducto' => $model->codigoProducto,
-										':codigoPerfil' => Yii::app ()->params->perfil ['vitalCall'] 
+										':codigoPerfil' => Yii::app ()->params->perfil ['telefarma'] 
 								) 
 						) );
 						
 						if (!$descuentoPerfil) {
 							$descuentoPerfil = new ProductosDescuentosPerfiles ();
 							$descuentoPerfil->codigoProducto = $model->codigoProducto;
-							$descuentoPerfil->codigoPerfil = Yii::app ()->params->perfil ['vitalCall'];
+							$descuentoPerfil->codigoPerfil = Yii::app ()->params->perfil ['telefarma'];
 							$descuentoPerfil->descuentoPerfil = Yii::app ()->params->telefarma ['descuento'];
 							
 							if ($descuentoPerfil->save ()) {
@@ -83,6 +85,17 @@ class ProductosController extends ControllerTelefarma {
 				'model' => $model 
 		) );
 	}
+	
+	public function actionEliminar($id) {
+		$this->layout = 'admin';
+		$model = ProductosVitalCall::model ()->findByPk ( $id );
+		if($model->delete()){
+			$this->redirect(CController::createUrl('index'));
+		}
+		
+	}
+	
+	
 	public function actionExportar() {
 		$datos = Yii::app ()->session [Yii::app ()->params->telefarma ['sesion'] ['busquedaExportar']];
 		$datos->exportar();
