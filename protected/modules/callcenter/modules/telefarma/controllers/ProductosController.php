@@ -28,14 +28,14 @@ class ProductosController extends ControllerTelefarma {
 							'condition' => 'codigoProducto =:codigoProducto AND codigoPerfil =:codigoPerfil',
 							'params' => array (
 									':codigoProducto' => $model->codigoProducto,
-									':codigoPerfil' => Yii::app ()->params->perfil ['vitalCall'] 
+									':codigoPerfil' => Yii::app ()->params->perfil ['telefarma'] 
 							) 
 					) );
 					
 					if (! $descuentoPerfil) {
 						$descuentoPerfil = new ProductosDescuentosPerfiles ();
 						$descuentoPerfil->codigoProducto = $model->codigoProducto;
-						$descuentoPerfil->codigoPerfil = Yii::app ()->params->perfil ['vitalCall'];
+						$descuentoPerfil->codigoPerfil = Yii::app ()->params->perfil ['telefarma'];
 						$descuentoPerfil->descuentoPerfil = Yii::app ()->params->telefarma ['descuento'];
 						
 						if ($descuentoPerfil->save ()) {
@@ -61,14 +61,14 @@ class ProductosController extends ControllerTelefarma {
 								'condition' => 'codigoProducto =:codigoProducto AND codigoPerfil =:codigoPerfil',
 								'params' => array (
 										':codigoProducto' => $model->codigoProducto,
-										':codigoPerfil' => Yii::app ()->params->perfil ['vitalCall'] 
+										':codigoPerfil' => Yii::app ()->params->perfil ['telefarma'] 
 								) 
 						) );
 						
 						if (!$descuentoPerfil) {
 							$descuentoPerfil = new ProductosDescuentosPerfiles ();
 							$descuentoPerfil->codigoProducto = $model->codigoProducto;
-							$descuentoPerfil->codigoPerfil = Yii::app ()->params->perfil ['vitalCall'];
+							$descuentoPerfil->codigoPerfil = Yii::app ()->params->perfil ['telefarma'];
 							$descuentoPerfil->descuentoPerfil = Yii::app ()->params->telefarma ['descuento'];
 							
 							if ($descuentoPerfil->save ()) {
