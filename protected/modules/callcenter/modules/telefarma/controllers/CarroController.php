@@ -1147,6 +1147,8 @@ class CarroController extends ControllerTelefarma {
     	if (isset(Yii::app()->session[Yii::app()->params->telefarma['sesion']['carroPagarForm']]) && Yii::app()->session[Yii::app()->params->telefarma['sesion']['carroPagarForm']] != null) {
     		$modelPago = Yii::app()->session[Yii::app()->params->telefarma['sesion']['carroPagarForm']];
     	}
+    	
+    //	CVarDumper::dump($modelPago,10,true);exit();
     
     	if (Yii::app()->shoppingCartVitalCall->isEmpty()) {
     		if ($post) {
