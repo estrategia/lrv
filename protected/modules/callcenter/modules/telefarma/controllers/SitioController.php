@@ -4,6 +4,20 @@ class SitioController extends ControllerTelefarma {
 
     public $defaultAction = "ubicacion";
 
+    public function filters() {
+    	return array(
+    			//'access',
+    			'login + ubicacion',
+    			//'loginajax + direccionActualizar',
+    	);
+    }
+    
+    public function filterLogin($filter) {
+    	if (Yii::app()->controller->module->user->isGuest) {
+    		$this->redirect(Yii::app()->controller->module->user->loginUrl);
+    	}
+    	$filter->run();
+    }
     /**
      * This is the action to handle external exceptions.
      */

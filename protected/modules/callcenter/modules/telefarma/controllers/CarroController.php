@@ -3,6 +3,21 @@ class CarroController extends ControllerTelefarma {
 
 	public $defaultAction = "index";
 	
+	public function filters() {
+		return array(
+				//'access',
+				'login + index, comprar, pagar',
+				//'loginajax + direccionActualizar',
+		);
+	}
+	
+	public function filterLogin($filter) {
+		if (Yii::app()->controller->module->user->isGuest) {
+			$this->redirect(Yii::app()->controller->module->user->loginUrl);
+		}
+		$filter->run();
+	}
+	
     public function actionIndex() {
     	$this->active = "compra";
         $this->render('index');
@@ -1329,6 +1344,26 @@ class CarroController extends ControllerTelefarma {
     			$params['parametros']['modelPago'] = $modelPago;
     			$this->render("pagar", $params);
     		}
+    }
+    
+    public function actionAutocompleteMedico($term) {
+    	$productos = Medico::model ()->findAll ( array (
+    			'condition' => "(nombre like '%$term%') ",
+    			'params' => array (
+    					':activo' => 1
+    			)
+    	));
+    	foreach ( $productos as $model ) {
+    		$results [] = array (
+    				'label' => $model ['registroMedico'] . " - " . $model ['nombre'],
+    				'value' => $model ['nombre'],
+    				'registroMedico' => $model ['registroMedico'],
+    				'institucion' => $model ['institucion'],
+    				'telefono' => $model ['telefono'],
+    				'correo' => $model ['correoElectronico'],
+    		);
+    	}
+    	echo CJSON::encode ( $results );
     }
 
 }

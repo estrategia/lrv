@@ -1,6 +1,20 @@
 <?php
 class ProductosController extends ControllerTelefarma {
 	
+	public function filters() {
+		return array(
+				//'access',
+				'login + index, crear, actualizar, eliminar',
+				//'loginajax + direccionActualizar',
+		);
+	}
+	
+	public function filterLogin($filter) {
+		if (Yii::app()->controller->module->user->isGuest) {
+			$this->redirect(Yii::app()->controller->module->user->loginUrl);
+		}
+		$filter->run();
+	}
 	
 	public function actionIndex() {
 		$model = new ProductosVitalCall ( 'search' );

@@ -2,7 +2,20 @@
 
 class CatalogoController extends ControllerTelefarma {
 
-    
+	public function filters() {
+		return array(
+				//'access',
+				'login + buscar, producto, bodega',
+				//'loginajax + direccionActualizar',
+		);
+	}
+	
+	public function filterLogin($filter) {
+		if (Yii::app()->controller->module->user->isGuest) {
+			$this->redirect(Yii::app()->controller->module->user->loginUrl);
+		}
+		$filter->run();
+	}
 
     public function actionBuscar() {
     	$this->active = "buscar";

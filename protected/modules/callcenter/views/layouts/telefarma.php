@@ -7,6 +7,7 @@
 	          <a href="<?php echo $this->createUrl('/callcenter/telefarma/carro/')?>" class="btn btn-primary <?php echo ($this->active=="carro" ? "active" : "") ?>">Compra</a>
 	      </div>
       </div>
+      <?php if($this->active == "buscar"):?>
       <div class="col-xs-5">
              <form method="get" action="<?php echo CController::createUrl('/callcenter/telefarma/catalogo/buscar') ?>">
                      <div class="row">
@@ -23,7 +24,7 @@
                      <?php endif; ?>
            </div>
       </div>
-      
+      <?php endif;?>
   </div>
   <?php echo $content ?>
 <?php $this->endContent(); ?>
