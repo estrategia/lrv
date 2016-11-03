@@ -274,12 +274,12 @@ class Compras extends CActiveRecord {
         $criteria = new CDbCriteria;
         $criteria->with = array("objCompraDireccion", "objCiudad", "objSector", "objPuntoVenta");
         
-        if($this->idTipoVenta == Yii::app()->params->tipoVenta['vitalCall']){
+        if($this->idTipoVenta == Yii::app()->params->tipoVenta['telefarma']){
             $criteria->condition = "t.identificacionUsuario IS NULL AND t.invitado=:invitado AND t.idTipoVenta=:tipoventa AND objCompraDireccion.identificacionUsuario=:usuario";
             $criteria->params = array(
                 ':invitado' => 1,
                 ':usuario' => $this->identificacionUsuario,
-                ':tipoventa' => Yii::app()->params->tipoVenta['vitalCall'],
+                ':tipoventa' => Yii::app()->params->tipoVenta['telefarma'],
             );
         }else{
             $criteria->condition = "t.tipoEntrega=:tipoEntrega AND t.identificacionUsuario=:usuario AND t.identificacionUsuario IS NOT NULL AND t.idComercial IS NOT NULL";
