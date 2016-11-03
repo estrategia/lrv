@@ -12,7 +12,12 @@
              <form method="get" action="<?php echo CController::createUrl('/callcenter/telefarma/catalogo/buscar') ?>">
                      <div class="row">
                             <div class="col-xs-12 content-search">
-                                  <input type="text" class="form-control vitalcall" placeholder="Escriba el nombre del producto"  autocomplete="off" value="" id="busqueda" name="busqueda" > 
+                              <div class="col-xs-11" style="padding: 0;">
+                                  <input type="text" class="form-control vitalcall" placeholder="Escriba el nombre del producto"  autocomplete="off" value="" id="busqueda" name="busqueda" >
+                              </div>
+                              <div class="col-xs-1" style="padding: 0;margin-left: -62px;margin-top: -7px;">
+                                  <img class="ico-buscar" src="/lrv/images/desktop/ico-buscar.png">
+                              </div>
                             </div>
                       </div>
              </form>

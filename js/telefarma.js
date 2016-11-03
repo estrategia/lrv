@@ -5,7 +5,7 @@ $(document).on('click', 'button[data-role="ubicacion-georeferencia"]', function(
 
 $(document).on('click', 'button[data-role="ubicacion-geodireccion"]', function() {
 	var ciudad = $('#select-georeferencia-ciudad').val();
-	
+
 	$.ajax({
         type: 'POST',
         dataType: 'json',
@@ -37,7 +37,7 @@ $(document).on('click', 'button[data-role="ubicacion-geodireccion"]', function()
 
 $(document).on('click', 'button[data-role="ubicacion-geobarrio"]', function() {
 	var ciudad = $('#select-georeferencia-ciudad').val();
-	
+
 	$.ajax({
         type: 'POST',
         dataType: 'json',
@@ -71,8 +71,8 @@ $(document).on('click', 'button[data-role="ubicacion-seleccion-georeferencia"]',
     Loading.show();
     $('#ubicacion-seleccion-ciudad').val($('#georeferencia-seleccion-ciudad').val());
     $('#ubicacion-seleccion-sector').val($('#georeferencia-seleccion-sector').val());
-    
-    
+
+
     //$('#div-ubicacion-tipoubicacion > button').removeClass('activo').addClass('inactivo');
     //$('#div-ubicacion-tipoubicacion > button[data-role="ubicacion-mapa"]').removeClass('inactivo').addClass('activo');
     ubicacionSeleccion();
@@ -291,7 +291,7 @@ $(document).on('click', "a[data-role='filtro-listaproductos-reset']", function()
     $('#calificacion-filtro-listaproductos').attr('data-score', -1);
 
     filtrarListaProductos();
-    
+
 });
 
 $(document).on('change', '#FiltroForm_precio_0_text', function() {
@@ -426,13 +426,13 @@ function actualizarNumerosPagina() {
 //carro de compra - agregar producto
 $(document).on('click', "button[data-role='cargar-vitalcall']", function() {
 	var tipo = $(this).attr('data-tipo');
-	
+
 	if(tipo==1){
 		agregarProductoVC($(this).attr('data-formula'),$(this).attr('data-producto'));
 	}else if(tipo==2){
 		agregarProductoNormal($(this).attr('data-producto'));
 	}
-    
+
     return false;
 });
 
@@ -806,4 +806,14 @@ $(document).on('click', "a[data-cargar-telefarma='3']", function() {
     });
 
     return false;
+});
+
+
+//Panel de filtros telefarma
+$('.menu-bar').on('click', function(){
+	$('.sidebar').addClass('mostrar');
+});
+
+$('.cerrar').on('click', function(){
+	$('.sidebar').removeClass('mostrar');
 });
