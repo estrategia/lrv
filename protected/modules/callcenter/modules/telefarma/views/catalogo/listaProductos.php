@@ -34,7 +34,6 @@
                 </div>
             </div>
             <br/>
-
             <?php if ($dataprovider != null): ?>
                 <div id="lista-productos" class="list_cuadricula">
                     <section>
