@@ -4,6 +4,20 @@ class SitioController extends ControllerTelefarma {
 
     public $defaultAction = "ubicacion";
 
+    public function filters() {
+    	return array(
+    			//'access',
+    			'login + ubicacion',
+    			//'loginajax + direccionActualizar',
+    	);
+    }
+    
+    public function filterLogin($filter) {
+    	if (Yii::app()->controller->module->user->isGuest) {
+    		$this->redirect(Yii::app()->controller->module->user->loginUrl);
+    	}
+    	$filter->run();
+    }
     /**
      * This is the action to handle external exceptions.
      */
@@ -109,7 +123,18 @@ class SitioController extends ControllerTelefarma {
     			Yii::app()->shoppingCartVitalCall->clear();
     			Yii::app()->session[Yii::app()->params->telefarma['sesion']['carroPagarForm']] = null;
     		}
-    
+    		
+    		$modelPago = null;
+    		if(isset(Yii::app()->session[Yii::app()->params->telefarma['sesion']['carroPagarForm']])){
+    			$modelPago = Yii::app()->session[Yii::app()->params->telefarma['sesion']['carroPagarForm']];
+    		}else{
+    			$modelPago = new FormaPagoTelefarmaForm();
+    		}
+    		
+    		$modelPago->barrio = trim($_REQUEST['barrio']);
+    		$modelPago->direccion = trim($_REQUEST['direccion']);
+    		
+    		Yii::app()->session[Yii::app()->params->telefarma['sesion']['carroPagarForm']] = $modelPago;
     		//Yii::app()->shoppingCartVitalCall->CalculateShipping();
     
     		$objHorarioSecCiud = HorariosCiudadSector::model()->find(array(

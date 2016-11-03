@@ -91,7 +91,7 @@
                                     <a href="<?php echo $this->createUrl('/callcenter/telefarma/productos') ?>" class="ajax-link"><i class="glyphicon glyphicon-list-alt"></i><span> Productos</span></a>
                                 </li>
                                 <li class="">
-                                    <a href="<?php echo $this->createUrl('/callcenter/telefarma/catalogo/buscar') ?>" class="ajax-link"><i class="glyphicon glyphicon-usd"></i><span> Pedido</span></a>
+                                    <a href="<?php echo $this->createUrl('/callcenter/telefarma/sitio/ubicacion') ?>" class="ajax-link"><i class="glyphicon glyphicon-usd"></i><span> Pedido</span></a>
                                 </li>
                                  <li class="">
                                     <a href="<?php echo $this->createUrl('/callcenter/telefarma/reportes/reporteMedico') ?>" class="ajax-link"><i class="glyphicon glyphicon-stats"></i><span> Reporte por m&eacute;dico</span></a>

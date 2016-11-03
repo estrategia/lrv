@@ -26,7 +26,28 @@
         <div class="form-group form-group-sm">
             <?php echo $form->labelEx($modelPago, 'nombreMedico', array('class' => 'col-md-5 control-label')); ?>
             <div class="col-md-7">
-                <?php echo $form->textField($modelPago, 'nombreMedico', array('class' => 'form-control', 'maxlength' => 100, 'placeholder' => $modelPago->getAttributeLabel('nombreMedico'))); ?>
+                <?php //echo $form->textField($modelPago, 'nombreMedico', array('class' => 'form-control', 'maxlength' => 100, 'placeholder' => $modelPago->getAttributeLabel('nombreMedico'))); ?>
+                <?php
+					$this->widget ( 'zii.widgets.jui.CJuiAutoComplete', array (
+							'model' => $modelPago,
+							 'id' => 'FormaPagoTelefarmaForm_nombreMedico',
+							'name' => 'FormaPagoTelefarmaForm[nombreMedico]',
+							'source' => $this->createUrl('carro/autocompleteMedico'),
+							'value' => $modelPago->nombreMedico,
+							// additional javascript options for the autocomplete plugin
+							'options' => array (
+									'minLength' => '3' ,
+									'select'=>"js: function(event, ui) {
+										        $('#FormaPagoTelefarmaForm_registroMedico').val(ui.item['registroMedico']);
+										        $('#FormaPagoTelefarmaForm_institucionMedico').val(ui.item['institucion']);
+												$('#FormaPagoTelefarmaForm_telefonoMedico').val(ui.item['telefono']);
+												$('#FormaPagoTelefarmaForm_correoElectronicoMedico').val(ui.item['correo']);
+										     }"
+							),
+							'htmlOptions' => array (
+									'class' => 'form-control',
+							) 
+					)) ;?>
                 <?php echo $form->error($modelPago, 'nombreMedico', array('class' => 'text-danger')); ?>
             </div>
         </div>

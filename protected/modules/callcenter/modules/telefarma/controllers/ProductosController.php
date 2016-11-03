@@ -1,9 +1,24 @@
 <?php
 class ProductosController extends ControllerTelefarma {
 	
+	public function filters() {
+		return array(
+				//'access',
+				'login + index, crear, actualizar, eliminar',
+				//'loginajax + direccionActualizar',
+		);
+	}
+	
+	public function filterLogin($filter) {
+		if (Yii::app()->controller->module->user->isGuest) {
+			$this->redirect(Yii::app()->controller->module->user->loginUrl);
+		}
+		$filter->run();
+	}
+	
 	public function actionIndex() {
 		$model = new ProductosVitalCall ( 'search' );
-		
+		$this->layout = 'admin';
 		$model->unsetAttributes ();
 		if (isset ( $_GET ['ProductosVitalCall'] ))
 			$model->attributes = $_GET ['ProductosVitalCall'];
@@ -18,7 +33,7 @@ class ProductosController extends ControllerTelefarma {
 	
 	public function actionCrear() {
 		$model = new ProductosVitalCall ();
-		
+		$this->layout = 'admin';
 		if ($_POST) {
 			$model->attributes = $_POST ['ProductosVitalCall'];
 			$model->fechaCreacion = Date ( "Y-m-d h:i:s" );
@@ -50,6 +65,7 @@ class ProductosController extends ControllerTelefarma {
 		) );
 	}
 	public function actionActualizar($id) {
+		$this->layout = 'admin';
 		$model = ProductosVitalCall::model ()->findByPk ( $id );
 		if ($_POST) {
 			$model->attributes = $_POST ['ProductosVitalCall'];
@@ -83,6 +99,17 @@ class ProductosController extends ControllerTelefarma {
 				'model' => $model 
 		) );
 	}
+	
+	public function actionEliminar($id) {
+		$this->layout = 'admin';
+		$model = ProductosVitalCall::model ()->findByPk ( $id );
+		if($model->delete()){
+			$this->redirect(CController::createUrl('index'));
+		}
+		
+	}
+	
+	
 	public function actionExportar() {
 		$datos = Yii::app ()->session [Yii::app ()->params->telefarma ['sesion'] ['busquedaExportar']];
 		$datos->exportar();

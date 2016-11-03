@@ -72,7 +72,7 @@ $form = $this->beginWidget ( 'CActiveForm', array (
 						) 
 				) );
 				?>
-    <?php echo $form->error($model, 'fechaFin', array('class' => 'text-danger')); ?>
+    <?php echo $form->error($model, 'fechaInicio', array('class' => 'text-danger')); ?>
 </div>
 
 <div class="form-group">

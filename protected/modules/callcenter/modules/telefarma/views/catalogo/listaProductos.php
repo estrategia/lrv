@@ -7,7 +7,7 @@
 
 
 
-        <div class="col-md-<?php echo (isset($formFiltro) || isset($formOrdenamiento)) ? "10" : "12" ?> side" <?php echo (empty($this->breadcrumbs) ? "" : "style='margin-top:-45px;'") ?>>
+        <div class="col-md-<?php echo (isset($formFiltro) || isset($formOrdenamiento)) ? "12" : "12" ?> side" <?php echo (empty($this->breadcrumbs) ? "" : "style='margin-top:-45px;'") ?>>
             <div class="row">
                 <div class="col-md-12">
                     <?php if ($imagenBusqueda != null): ?>
@@ -57,6 +57,7 @@
         </div>
 
         <!-- Menu de filtros -->
+        <!--  
         <?php if (isset($formFiltro) || isset($formOrdenamiento)): ?>
             <div class="col-md-2 menu-categorias cat-collapsables">
                 <h3>Filtrar por:</h3>
@@ -66,7 +67,7 @@
                     </div>
                 <?php endif; ?>
             </div>
-        <?php endif; ?>
+        <?php endif; ?> -->
     </div>
     <div class="row">
         <div class="col-md-12">

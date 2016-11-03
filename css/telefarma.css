@@ -659,7 +659,7 @@ textarea.form-control {
 
 .inner_tipoentrega {
     line-height: 23px;
-    padding: 9px 18px 9px 70px;
+    padding: 10px 10px 9px;
 }
 
 .border-gray {
@@ -815,7 +815,7 @@ input[type="checkbox"] + label span {
 .form-control {height: initial;padding: 0;}
 
 .btn:hover{color: initial;}
-.form-control.vitalcall {padding: 15px;}
+.form-control.vitalcall {padding: 7px;}
 
 .menu-categorias.cat-collapsables h3 {
     border: 1px solid;
@@ -989,6 +989,10 @@ ul.yiiPager a:link{
 #form-datosmedico .form-group {
     margin-bottom: 0;
 }
+#pasos-pago .text{
+	font-size:18px;
+}
+
 #FormaPagoTelefarmaForm_fechaEntrega {padding: 10px;}
 
 .ad-gallery .ad-thumbs li a.ad-active img {
@@ -996,4 +1000,10 @@ ul.yiiPager a:link{
 }
 .ad-gallery .ad-thumbs li a img {
     max-width: 70px;
+}
+
+.btn-default, .btn-default:hover {
+	background: #fff;
+    border: 1px solid #ccc;
+    filter: none;
 }

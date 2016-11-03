@@ -1,8 +1,8 @@
 <?php $this->pageTitle = "Prebioticos Klim 1+ La Rebaja Virtual"; ?>
 <?php
 $this->metaTags = "<meta http-equiv='X-UA-Compatible' content='IE=edge'>
-    <meta name='description' content=''>
-    <meta name='keywords' content=''>
+    <meta name='description' content='La leche en polvo Klim 1+ ayuda a desarrollar un sistema de defensas perfecto para tu hijo que está en la etapa de explorar todo.'>
+    <meta name='keywords' content='prebioticos, leche klim,  flora intestinal.'>
   	<style>
           .background {background-image:url(".Yii::app()->request->baseUrl."/images/contenido/klim1/background.jpg);background-size:cover;}
           @font-face {
