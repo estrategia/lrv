@@ -1403,3 +1403,6 @@ a.clst_slct_prod.active{display: inline-block !important;}
     color:white !important;
 }
 
+.align-right {
+	text-align:right;
+}
