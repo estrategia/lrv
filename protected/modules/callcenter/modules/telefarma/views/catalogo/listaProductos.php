@@ -6,7 +6,7 @@
         <!-- Menu de ordenamiento -->
 
 
-
+	<?php $formSort = ""?>
         <div class="col-md-<?php echo (isset($formFiltro) || isset($formOrdenamiento)) ? "12" : "12" ?> side" <?php echo (empty($this->breadcrumbs) ? "" : "style='margin-top:-45px;'") ?>>
             <div class="row">
                 <div class="col-md-12">
@@ -14,17 +14,19 @@
                         <p align="center"><img alt="lo sentimos no se han encontrado resultados" src="<?php echo Yii::app()->request->baseUrl . $imagenBusqueda; ?>" class="ajustada"></p>
                     <?php else: ?>
                         <?php if ($dataprovider != null /* && !empty($dataprovider->getData()) */): ?>
-                            <div class="option-list">
+                           <?php $formSort = "<div class='col-md-2'>
+							<div class='option-list'>
                                 Productos por página
-                                <select name="items-page" class="form-control ciudades" id="items-page" onchange="actualizarNumerosPagina()">
+                                <select name='items-page' class='form-control ciudades' id='items-page' onchange='actualizarNumerosPagina()'>";?>
                                     <?php foreach (Yii::app()->params->busqueda['productosPorPagina'][$cantidadItems] as $pagina): ?>
-                                        <option value="<?php echo $pagina ?>" <?php echo (($dataprovider != null && $dataprovider->getPagination()->getPageSize() == $pagina) ? "selected" : "") ?>><?php echo $pagina ?></option>
+                                     <?php  $formSort .= "<option value='$pagina' ".(($dataprovider != null && $dataprovider->getPagination()->getPageSize() == $pagina) ? "selected" : "")." >$pagina</option>";?>
                                     <?php endforeach; ?>
-                                </select>
-                            </div>
+                  			<?php $formSort .= "</select>
+                            	</div>
+							</div>";?>
 
                             <?php if (isset($formOrdenamiento)): ?>
-                                <?php $this->renderPartial('_formOrdenamiento', array('formOrdenamiento' => $formOrdenamiento, 'objSectorCiudad' => $objSectorCiudad)); ?>
+                                <?php $formSort .= $this->renderPartial('_formOrdenamiento', array('formOrdenamiento' => $formOrdenamiento, 'objSectorCiudad' => $objSectorCiudad),true,false); ?>
                             <?php endif; ?>
                         <?php endif; ?>
                     <?php endif; ?>
@@ -42,7 +44,7 @@
                             'dataProvider' => $dataprovider,
                             //'template' => "{items}\n{pager}",
                             //'summaryText' => "{start} - {end} из {count}",
-                            'template' => "{summary}<ul class='listaProductos'>{items}</ul><div class='clear'></div>{pager}",
+                            'template' => "<div class='row'><div class='col-md-2'>{summary}</div> $formSort </div><ul class='listaProductos'>{items}</ul><div class='clear'></div>{pager}",
                             'itemsCssClass' => "items items$cantidadItems",
                             'itemView' => '_productoElemento',
                             'beforeAjaxUpdate' => new CJavaScriptExpression("function() {Loading.show();}"),

@@ -75,7 +75,7 @@ class SwebController extends CController {
     public function eliminarBeneficios($condicion) {
 
             try{
-            	$file = fopen(Yii::getPathOfAlias('application') . DIRECTORY_SEPARATOR . "runtime" . DIRECTORY_SEPARATOR . "creacionbeneficiolog_" . date("H-i-s") . ".txt", "w");
+            //	$file = fopen(Yii::getPathOfAlias('application') . DIRECTORY_SEPARATOR . "runtime" . DIRECTORY_SEPARATOR . "creacionbeneficiolog_" . date("H-i-s") . ".txt", "w");
                 $sql = "SET SQL_SAFE_UPDATES = 0;
                     SET FOREIGN_KEY_CHECKS = 0;
                     DELETE  t,PBR,pv from  t_Beneficios AS t
@@ -84,8 +84,8 @@ class SwebController extends CController {
                     t_BeneficiosPuntosVenta as pv ON (pv.IdBeneficio = t.IdBeneficio)
                 WHERE $condicion AND t.Tipo IN (21,22,23,24,25)";
                  Yii::app()->db->createCommand($sql)->query();
-                 fwrite($file, $sql . PHP_EOL);
-                 fclose($file);
+            //     fwrite($file, $sql . PHP_EOL);
+             //    fclose($file);
                 return 1;
             }catch(Exception $e){
                 Yii::log($e->getMessage());
@@ -101,7 +101,7 @@ class SwebController extends CController {
     public function actualizarBeneficios($parametros, $condicion) {
 
             try{
-            	$file = fopen(Yii::getPathOfAlias('application') . DIRECTORY_SEPARATOR . "runtime" . DIRECTORY_SEPARATOR . "eliminacionbeneficiolog_" . date("H-i-s") . ".txt", "w");
+            //	$file = fopen(Yii::getPathOfAlias('application') . DIRECTORY_SEPARATOR . "runtime" . DIRECTORY_SEPARATOR . "eliminacionbeneficiolog_" . date("H-i-s") . ".txt", "w");
             	$sql = "SET SQL_SAFE_UPDATES = 0;
                         SET FOREIGN_KEY_CHECKS = 0;
                         UPDATE t_Beneficios AS t
@@ -109,8 +109,8 @@ class SwebController extends CController {
                         SET ".$parametros." 
                         WHERE $condicion AND t.Tipo IN (21,22,23,24,25)";
                 Yii::app()->db->createCommand($sql)->query();
-                fwrite($file, $sql . PHP_EOL);
-                fclose($file);
+           //    fwrite($file, $sql . PHP_EOL);
+           //     fclose($file);
                 return 1;
             }catch(Exception $e){
                 Yii::log($e->getMessage());
