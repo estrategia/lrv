@@ -49,7 +49,7 @@ return array(
 	                            'class' => 'callcenter.components.UserOperator',
 	                        ),
 	                    ),
-	                ) 
+	                )
             ),
         ),
         'vendedor' => array(
@@ -59,7 +59,7 @@ return array(
                     'class' => 'vendedor.components.UserVendedor',
                 ),
             )),
-    		
+
         'puntoventa' => array(
             'defaultController' => 'usuario',
             'components' => array(
@@ -75,8 +75,8 @@ return array(
         								'class' => 'puntoventa.components.UserPuntoVenta',
                                  ),
         				)),
-        			
-        		
+
+
         		'subasta' => array(
         				'defaultController' => 'usuario',
         				'components' => array(
@@ -109,6 +109,27 @@ return array(
                 /*'post/<id:\d+>/<title:.*?>'=>'post/view',
                 'posts/<tag:.*?>'=>'post/index',*/
                 // REST patterns
+
+                // Links de campañias
+                'atacadol-alivio-dolores-fuertes' => 'publicidad/contenido/nombre/atacadol-alivio-dolores-fuertes',
+                'coca-cola-sabores' => 'publicidad/contenido/nombre/coca-cola-sabores',
+                'corega' => 'publicidad/contenido/nombre/corega',
+                'klim-fortigrow' => 'publicidad/contenido/nombre/klim-fortigrow',
+                'klim1-fortiprotect' => 'publicidad/contenido/nombre/leche-klim-1',
+                'listerine-cuidado-total' => 'publicidad/contenido/nombre/listerine-cuidado-total',
+                'mas-informacion-metamucil' => 'publicidad/contenido/nombre/mas-informacion-metamucil',
+                'mas-informacion-nan' => 'publicidad/contenido/nombre/mas-informacion-nan',
+                'metamucil-facilita-transito-intestinal' => 'publicidad/contenido/nombre/metamucil-facilita-transito-intestinal',
+                'nan-recetas' => 'publicidad/contenido/nombre/nan-recetas',
+                'nestle-nan-optipro' => 'publicidad/contenido/nombre/nestle-nan-optipro',
+                'parodontax' => 'publicidad/contenido/nombre/parodontax',
+                'porque-elejir-metamucil' => 'publicidad/contenido/nombre/porque-elejir-metamucil',
+                'prebioticos-klim' => 'publicidad/contenido/nombre/prebioticos-klim',
+                'prohelix' => 'publicidad/contenido/nombre/prohelix',
+                'sensodyne' => 'publicidad/contenido/nombre/sensodyne',
+                'sobre-metamucil' => 'publicidad/contenido/nombre/sobre-metamucil',
+                // Fin links campañas
+
                 array('restciudad/list', 'pattern'=>'rest/ciudad', 'verb'=>'GET'),
                 array('restciudad/view', 'pattern'=>'rest/ciudad/<id:\d+>', 'verb'=>'GET'),
                 array('restpuntoventa/puntoventacercano', 'pattern'=>'rest/puntoventacercano/lat/<lat:\-?\d+\.?\d+>/lon/<lon:\-?\d+\.?\d+>', 'verb'=>'GET'),
@@ -116,13 +137,12 @@ return array(
                 array('restpuntoventa/list', 'pattern'=>'rest/puntoventa', 'verb'=>'GET'),
                 array('restproducto/list', 'pattern'=>'rest/producto', 'verb'=>'GET'),
                 array('restproducto/buscar', 'pattern'=>'rest/producto/buscar/<termino:.*>/<laboratorio:\-?\d+>', 'verb'=>'GET'),
-                array('restproducto/producto', 
+                array('restproducto/producto',
                     'pattern' => 'rest/producto/<codigoProducto:\d+>/ciudad/<codigoCiudad:\d+>/sector/<codigoSector:\d+>',
                     'verb'=>'GET'),
                 array('restproducto/simular', 'pattern' => 'rest/producto/simular', 'verb' => 'GET'),
                 array('restprofesion/ver', 'pattern' => 'rest/profesion/ver/<id:\d+>', 'verb' => 'GET'),
                 array('restprofesion/listar', 'pattern' => 'rest/profesion', 'verb' => 'GET'),
-
                /* array('rest/update', 'pattern'=>'api/<model:\w+>/<id:\d+>', 'verb'=>'PUT'),
                 array('rest/delete', 'pattern'=>'api/<model:\w+>/<id:\d+>', 'verb'=>'DELETE'),
                 array('rest/create', 'pattern'=>'api/<model:\w+>', 'verb'=>'POST'),*/
@@ -130,6 +150,7 @@ return array(
                 // '<controller:\w+>/<action:\w+>'=>'<controller>/<action>',
             ),
         ),
+
         'db' => array(
             'connectionString' => 'mysql:host=localhost;port=3306;dbname=lrvmovil_copservir',
             'emulatePrepare' => true,
@@ -160,7 +181,7 @@ return array(
     	'shoppingCartNationalSale'	=> array(
     		'class' => 'ext.shoppingCartNationalSale.EShoppingCart',
     	)
-    	,	
+    	,
         'ePdf' => array(
             'class' => 'ext.yii-pdf.EYiiPdf',
             'params' => array(
@@ -214,17 +235,17 @@ return array(
         ),
     ),
     'params' => array(
-        "meses" => array( 1 => "Enero", 
-               2 => "Febrero",  
-               3 => "Marzo",  
-               4 => "Abril",  
-               5 => "Mayo",  
-               6 => "Junio",  
-               7 => "Julio",  
-               8 => "Agosto",  
-               9 => "Septiembre",  
-               10 => "Octubre",  
-               11 => "Noviembre",  
+        "meses" => array( 1 => "Enero",
+               2 => "Febrero",
+               3 => "Marzo",
+               4 => "Abril",
+               5 => "Mayo",
+               6 => "Junio",
+               7 => "Julio",
+               8 => "Agosto",
+               9 => "Septiembre",
+               10 => "Octubre",
+               11 => "Noviembre",
                12 => "Diciembre"),
         'horarioEntrega' => array(
             'deltaDefecto' => '0 1:00:0.000000',
@@ -537,7 +558,7 @@ return array(
                 'vendedorPDV' => 3,
                 'mensajeroVendedor' => 4
             ),
-            
+
             'perfiles' => array(1, 2, 3, 4, 5),
             'usuario' => array(
                 'estado' => array('activo' => 1, 'inactivo' => 0),
@@ -550,8 +571,8 @@ return array(
                 'tipoNombre' => array(1 => 'Manual', 2 => 'Cargue'),
                 'tipoConfiguracion' => array(1 => 'Tradicional', 2 => 'Bono promocional'),
                 'asuntoCorreo' => 'Tienes un bono disponible',
-                'tipoBonoCRM' => 3, 
-            	'formaPagoBonos' => 8, 
+                'tipoBonoCRM' => 3,
+            	'formaPagoBonos' => 8,
             ),
             'reactivacionBono' => array(
                 'asuntoMensaje' => 'Activacion bono cliente fiel',
@@ -735,6 +756,6 @@ return array(
     			'sesion' => array(
     					'carroPagarForm' => 'larebaja.online.entreganacional.carropagarform',
     			)
-    	)	
+    	)
     ),
 );
