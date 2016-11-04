@@ -20,7 +20,13 @@
             <?php $this->renderPartial('_buscar'); ?>
         </div>
 		
-		<?= $resultadoBusqueda?>
+		<?=   $this->renderPartial('resultadoBusqueda', array(
+	        		'dataprovider' => $dataProvider,
+	        		'listCombos' => $listCombos,
+	        		'objSectorCiudad' => 'objSectorCiudad',
+	        		'codigoPerfil' => $codigoPerfil, // verificar en el futuro
+	        		'nombreBusqueda' => $nombreBusqueda,
+	        ),true,false);?>
     </div>
 </div>
 

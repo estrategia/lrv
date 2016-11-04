@@ -1,6 +1,6 @@
 <?php
 
-class AdminController extends ControllerOperator {
+class AdminController extends ControllerSubasta {
 
     /**
      * @return array action filters
@@ -685,7 +685,8 @@ class AdminController extends ControllerOperator {
             'uri' => "",
             'trace' => 1
         ));
-        $result = $client->__soapCall("CongelarCompraManual", array('idPedido' => $idCompra));
+    //    $result = $client->__soapCall("CongelarCompraManual", array('idPedido' => $idCompra));
+        $result = $client->__soapCall("CongelarCompraAutomatica", array('idPedido' => $idCompra, 'pdvSubasta' => $idPuntoVenta));
         //$result = array(0=>0,1=>'congelar prueba error');
         //$result = array(0=>1,1=>'congelar prueba ok', 2 =>'miguel.sanchez@eiso.com.co');
         if ($result[0] != 1) {

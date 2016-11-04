@@ -1,6 +1,6 @@
 <?php
 
-class DefaultController extends ControllerOperator {
+class DefaultController extends ControllerSubasta {
 
     /**
      * @return array action filters

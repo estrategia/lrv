@@ -1,6 +1,6 @@
 <?php
 
-class AdminController extends ControllerOperator {
+class AdminController extends ControllerPuntoVenta {
 
     /**
      * @return array action filters

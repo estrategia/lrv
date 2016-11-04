@@ -1,6 +1,6 @@
 <?php
 
-class DefaultController extends ControllerOperator {
+class DefaultController extends ControllerPuntoVenta {
 
     /**
      * @return array action filters

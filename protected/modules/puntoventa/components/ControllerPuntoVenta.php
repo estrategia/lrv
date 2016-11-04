@@ -4,7 +4,7 @@
  * Controller is the customized base controller class.
  * All controller classes for this application should extend from this base class.
  */
-class ControllerOperator extends CController {
+class ControllerPuntoVenta extends CController {
 
     public $layout = 'admin';
     public $menu = array();

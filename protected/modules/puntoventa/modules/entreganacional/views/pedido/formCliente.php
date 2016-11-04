@@ -203,7 +203,7 @@ $listPdv = PuntoVenta::model()->findAll(array(
                                 }), array('prompt' => 'Seleccione punto de venta', 'id' => 'select-pdv-asignar', 'style' => 'width: 100%;')) ?>
                     </div>
                     <div class="col-md-3">
-                        <button type="button" id="<?php echo uniqid() ?>" data-action="asignar-pdv" style="color: #dd4814;" class="btn btn-sm"><strong>Asignar</strong></button>
+                        <button type="button" id="<?php echo uniqid() ?>" data-action="asignar-pdv-entrega" style="color: #dd4814;" class="btn btn-sm"><strong>Asignar</strong></button>
                     </div>
                 </div>
                 <input type="hidden" value="386414" id="idPedido" name="idPedido">

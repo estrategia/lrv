@@ -12,6 +12,8 @@ class EntreganacionalModule extends CWebModule {
             'entreganacional.models.*',
             'entreganacional.components.*',
         ));
+        
+        $this->layoutPath = "protected/modules/puntoventa/views/layouts";
     }
 
     public function beforeControllerAction($controller, $action) {

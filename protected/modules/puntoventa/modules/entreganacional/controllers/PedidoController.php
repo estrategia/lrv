@@ -1,6 +1,6 @@
 <?php
 
-class PedidoController extends ControllerOperator {
+class PedidoController extends ControllerEntregaNacional {
 
     /**
      * @return array action filters
@@ -173,7 +173,20 @@ class PedidoController extends ControllerOperator {
 
     public function actionBuscarProductos(){
         $this->layout = 'simple';
-        $resultadoBusqueda = "";
+        $resultadoBusqueda = $busqueda = "";
+        $dataProvider = null;
+        $listCombos = array();
+        
+        $pdvDestino = Yii::app()->session[Yii::app()->params->puntoventa['sesion']['pdvDestino']];
+        $pdvOrigen = PuntoVenta::model()->find(
+        		array(
+        				'condition' => "IDComercial =:idcomercial",
+        				"params" => array(
+        						":idcomercial" => Yii::app()->session[Yii::app()->params->puntoventa['sesion']['pdv']])
+        		));
+        if($pdvOrigen === null){
+        	throw new CHttpException(404, 'Solicitud inválida.');
+        }
         
         if($_POST){
 	        $busqueda = Yii::app()->getRequest()->getPost('busqueda');
@@ -186,16 +199,7 @@ class PedidoController extends ControllerOperator {
 	        $sesion = Yii::app()->getSession()->getSessionId();
 	        $codigosArray = GSASearch($busqueda,$sesion);
 	        $codigosStr = implode(",", $codigosArray);
-	        $pdvDestino = Yii::app()->session[Yii::app()->params->puntoventa['sesion']['pdvDestino']];
-	        $pdvOrigen = PuntoVenta::model()->find(
-	        		array(
-	        				'condition' => "IDComercial =:idcomercial",
-	        				"params" => array(
-	        						":idcomercial" => Yii::app()->session[Yii::app()->params->puntoventa['sesion']['pdv']])
-	        		));
-	        if($pdvOrigen === null){
-	        	throw new CHttpException(404, 'Solicitud inválida.');
-	        }
+	        
 	        
 	        if (!empty($codigosArray)) {
 	        	$listProductos = Producto::model()->findAll(array(
@@ -291,24 +295,20 @@ class PedidoController extends ControllerOperator {
 	        			'response' => 'No se puede consultar la totalidad del pedido'
 	        	));
 	        }
-	        
-	        $resultadoBusqueda = $this->renderPartial('resultadoBusqueda', array(
-	        		'dataprovider' => $dataProvider,
-	        		'listCombos' => $listCombos,
-	        		'objSectorCiudad' => SectorCiudad::model()->find(array(
-	        				'condition' => 'codigoCiudad =:ciudad AND codigoSector =:sector',
-	        				'params' => array(
-	        						':ciudad' => $pdvOrigen->codigoCiudad,
-	        						':sector' => $pdvOrigen->idSectorLRV,
-	        				))),
-	        		'codigoPerfil' => 1, // verificar en el futuro
-	        		'nombreBusqueda' => $busqueda,
-	        		'listaProductosSaldos' => $listaProductosSaldos,
-	        ),true,false);
         }
         
         $this->render('pedido', array(
-        		'resultadoBusqueda' => $resultadoBusqueda
+        		'dataProvider' => $dataProvider,
+	        	'listCombos' => $listCombos,
+	        	'objSectorCiudad' => SectorCiudad::model()->find(array(
+	        			'condition' => 'codigoCiudad =:ciudad AND codigoSector =:sector',
+	        			'params' => array(
+	        					':ciudad' => $pdvOrigen->codigoCiudad,
+	        					':sector' => $pdvOrigen->idSectorLRV,
+	        			))),
+	        	'codigoPerfil' => 1, // verificar en el futuro
+	        	'nombreBusqueda' => $busqueda,
+	       // 	'listaProductosSaldos' => $listaProductosSaldos,
         ));
     }
 

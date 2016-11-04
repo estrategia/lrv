@@ -1,6 +1,6 @@
 <?php
 
-class UsuarioController extends ControllerOperator {
+class UsuarioController extends ControllerSubasta {
     //public $defaultAction = 'autenticar';
 
     /**

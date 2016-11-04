@@ -25,7 +25,7 @@ $form = $this->beginWidget ( 'CActiveForm', array (
 
 	<div class="col-md-12">
 		<div class="form-group">
-	       <?php echo CHtml::submitButton('Guardar Bono', array('class' => "btn btn-default")); ?>
+	       <?php echo CHtml::submitButton('Buscar', array('class' => "btn btn-default")); ?>
 	    </div>
 	</div>
 <?php $this->endWidget(); ?>
