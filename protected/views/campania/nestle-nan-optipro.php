@@ -62,7 +62,7 @@ $this->metaTags = "<meta http-equiv='X-UA-Compatible' content='IE=edge'>
             </a>
         </center>
         <center>
-            <a href="<?= Yii::app()->request->baseUrl ?>/campania/contenido/nan-recetas" data-ajax="false">
+            <a href="<?= Yii::app()->request->baseUrl ?>/recetas-nestle-nan-optipro" data-ajax="false">
                 <img width="100%" src="<?= Yii::app()->request->baseUrl ?>/images/contenido/nan/recetas.png" alt="Recetas Nan Optipro">
             </a>
         </center>
@@ -124,7 +124,7 @@ $this->metaTags = "<meta http-equiv='X-UA-Compatible' content='IE=edge'>
                    <img style="margin: 15px auto 0px;width:65%;" src="<?= Yii::app()->request->baseUrl ?>/images/contenido/nan/entrega-en-1-hora.png" class="img-responsive" alt="Entrega en 1 hora Nan Optipro">
                 </a>
                 <div class="space"></div>
-                <a href="<?= Yii::app()->request->baseUrl ?>/campania/contenido/nan-recetas">
+                <a href="<?= Yii::app()->request->baseUrl ?>/recetas-nestle-nan-optipro">
                     <img src="<?= Yii::app()->request->baseUrl ?>/images/contenido/nan/recetas.png" class="img-responsive" alt="Recetas Nan Optipro">
                 </a>
             </div>

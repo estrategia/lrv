@@ -128,6 +128,9 @@ return array(
                 'prohelix' => 'publicidad/contenido/nombre/prohelix',
                 'sensodyne' => 'publicidad/contenido/nombre/sensodyne',
                 'sobre-metamucil' => 'publicidad/contenido/nombre/sobre-metamucil',
+
+                'recetas-nestle-nan-optipro' => 'publicidad/contenido/nombre/nan-recetas',
+
                 // Fin links campañas
 
                 array('restciudad/list', 'pattern'=>'rest/ciudad', 'verb'=>'GET'),
