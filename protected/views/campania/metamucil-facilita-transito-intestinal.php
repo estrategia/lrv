@@ -83,39 +83,39 @@
                     <li>Te ayuda a reducir los niveles de colesterol+</li>
                     <li>Ayuda a sentirte más ligero</li>
                     <p class="texto" style="font-size: 15px; margin-left: 59px;">*Acompañado de una dieta baja en grasas saturadas y ejercicio regular.</p>
-                </ul>              
-            </section>  
+                </ul>
+            </section>
             <div class="space"></div>
             <section style="width:82%; margin-left: 5%;">
                 <div class="sobre-metamucil_m texto">
                     <div class="title"> Sobre Metamucil</div>
                     <p style="margin-top: 10px;">Hay muchos productos basados en fibra. ¿Pero estos productos usan la fibra qué es multi-beneficios?</p>
-                    <a href="<?= Yii::app()->request->baseUrl ?>/campania/contenido/sobre-metamucil" data-ajax="false"><span class="leer-mas">Leer más</span></a>
+                    <a href="<?= Yii::app()->request->baseUrl ?>/sobre-metamucil" data-ajax="false"><span class="leer-mas">Leer más</span></a>
                 </div>
-            </section>        
-            <div class="space"></div>    
+            </section>
+            <div class="space"></div>
             <section  style="width:82%; margin-left: 5%;">
                <div class="sobre-metamucil_m texto">
                     <div class="title"> ¿Porqué elegir Metamucil?</div>
                     <p style="margin-top: 10px;"><span style="font-weight:bolder;color:#EF8A00;">1.</span> Quiere estar en forma y esbelto naturalmente <br>
                     <span style="font-weight:bolder;color:#EF8A00;">2.</span> Un modo sencillo de agregar fibras a su dieta..</p>
-                    <a href="<?= Yii::app()->request->baseUrl ?>/campania/contenido/porque-elejir-metamucil" data-ajax="false"><span class="leer-mas">Leer más</span></a>
-                </div>  
+                    <a href="<?= Yii::app()->request->baseUrl ?>/porque-elejir-metamucil" data-ajax="false"><span class="leer-mas">Leer más</span></a>
+                </div>
             </section>
-            
+
             <section style="padding: 20px;">
-                <div class="title">Razones para elegir metamucil</div>                
+                <div class="title">Razones para elegir metamucil</div>
                 <video  style="width:100%;" controls poster="<?= Yii::app()->request->baseUrl ?>/images/contenido/metamucil/poster.png" style="margin-top: 20px;">
                    <source src="<?= Yii::app()->request->baseUrl ?>/images/contenido/metamucil/metamucil.mp4" type="video/mp4">
                     Your browser does not support the video tag.
-                </video>  
-            </section>            
-            
+                </video>
+            </section>
+
             <section style="padding: 20px;">
                 <div class="title">Fibra Psyllium</div>
                 <iframe width="100%" height="250" src="https://www.youtube.com/embed/Il6Yqjy-WRM" frameborder="0" allowfullscreen></iframe>
             </section>
-            
+
 
 
             <section>
@@ -131,22 +131,22 @@
                     </div>
                 </div>
             </section>
-            
+
             <section style="padding: 0px 29px 0px 22px; text-align: justify;">
                 <p style="color:#EF8A00;">Es un medicamento fitoterapeútico. No exceder su consumo. Número de registro sanitario PFM2015-0002427. Leer indicaciones y contraindicaciones. Sí los síntomas persisten, consultar al médico.</p>
-            </section>            
-            
-                     
+            </section>
+
+
         </div>
     </div>
-<!--Versión movil-->   
+<!--Versión movil-->
 <!--Versión escritorio-->
 <?php else: ?>
     <div class="container">
         <div class="row banner">
             <div class="row">
                 <div class="col-md-12">
-                  <h1 class="title-principal">FACILITA EL TRÁNSITO INTESTINAL CON <span>Metamucil</span></h1>                    
+                  <h1 class="title-principal">FACILITA EL TRÁNSITO INTESTINAL CON <span>Metamucil</span></h1>
                 </div>
             </div>
             <div class="row">
@@ -172,11 +172,11 @@
                 </div>
                 <div class="col-md-4">
                     <img style="width: 60%;margin-top: 5px;position: absolute;" src="<?= Yii::app()->request->baseUrl ?>/images/contenido/metamucil/tarro-metamucil.png" class="img-responsive" alt="Metamucil">
-                </div> 
+                </div>
             </div>
                 <div style="float: left;margin-top: -28px;">
                     <img class="img-responsive" src="<?= Yii::app()->request->baseUrl ?>/images/contenido/metamucil/franja.png" alt="">
-                </div>               
+                </div>
         </div>
         <div class="row pattern-background">
             <div class="col-md-6" style="padding-left: 0px; margin-top: 40px;">
@@ -197,19 +197,19 @@
                 <div class="space"></div>
             </div>
             <div class="col-md-6" style="margin-top: 30px;">
-                <a href="<?php echo CController::createUrl('/catalogo/buscar', array('busqueda' => 'metamucil')) ?>"><img src="<?= Yii::app()->request->baseUrl ?>/images/contenido/metamucil/entrega.png" class="img-responsive img-entrega"></a> 
+                <a href="<?php echo CController::createUrl('/catalogo/buscar', array('busqueda' => 'metamucil')) ?>"><img src="<?= Yii::app()->request->baseUrl ?>/images/contenido/metamucil/entrega.png" class="img-responsive img-entrega"></a>
                 <div class="sobre-metamucil texto">
                     <div class="title"> Sobre Metamucil</div>
                     <p style="margin-top: 10px;">Hay muchos productos basados en fibra. ¿Pero estos productos usan la fibra qué es multi-beneficios?</p>
-                    <a href="<?= Yii::app()->request->baseUrl ?>/campania/contenido/sobre-metamucil"><span class="leer-mas">Leer más</span></a>
-                </div>  
+                    <a href="<?= Yii::app()->request->baseUrl ?>/sobre-metamucil"><span class="leer-mas">Leer más</span></a>
+                </div>
                 <div class="space"></div>
                 <div class="sobre-metamucil texto">
                     <div class="title"> ¿Porqué elegir Metamucil?</div>
                     <p style="margin-top: 10px;"><span style="font-weight:bolder;color:#EF8A00;">1.</span> Quiere estar en forma y esbelto naturalmente <br>
                     <span style="font-weight:bolder;color:#EF8A00;">2.</span> Un modo sencillo de agregar fibras a su dieta..</p>
-                    <a href="<?= Yii::app()->request->baseUrl ?>/campania/contenido/porque-elejir-metamucil"><span class="leer-mas">Leer más</span></a>
-                </div>   
+                    <a href="<?= Yii::app()->request->baseUrl ?>/porque-elejir-metamucil"><span class="leer-mas">Leer más</span></a>
+                </div>
                 <div class="space"></div>
                 <div class="contenedor-filtros texto">
                     <div class="col-md-6 filtro">
@@ -224,23 +224,23 @@
             </div>
              <div class="col-md-12">
                  <div class="col-md-6">
-                    <div class="title">Razones para elegir metamucil</div>                
+                    <div class="title">Razones para elegir metamucil</div>
                         <video  style="width:100%;" controls poster="<?= Yii::app()->request->baseUrl ?>/images/contenido/metamucil/poster.png" style="margin-top: 20px;">
                             <source src="<?= Yii::app()->request->baseUrl ?>/images/contenido/metamucil/metamucil.mp4" type="video/mp4">
                             Your browser does not support the video tag.
-                        </video>  
-                 </div>                 
+                        </video>
+                 </div>
                  <div class="col-md-6">
                     <div class="title">Fibra Psyllium</div>
                     <iframe width="100%" height="303" src="https://www.youtube.com/embed/Il6Yqjy-WRM" frameborder="0" allowfullscreen></iframe>
                  </div>
 
-              </div>            
+              </div>
             <div class="col-md-12">
                 <div class="space"></div>
                 <p style="color:#EF8A00;">Es un medicamento fitoterapeútico. No exceder su consumo. Número de registro sanitario PFM2015-0002427. Leer indicaciones y contraindicaciones. Sí los síntomas persisten, consultar al médico.</p>
             </div>
         </div>
     </div>
- <!--Fin versión escritorio-->   
+ <!--Fin versión escritorio-->
 <?php endif;?>

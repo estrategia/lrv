@@ -41,7 +41,7 @@ $this->metaTags = "<meta http-equiv='X-UA-Compatible' content='IE=edge'>
             <img src="<?= Yii::app()->request->baseUrl ?>/images/contenido/klim1/entrega-en-1-hora.png" alt="Entrega en 1 hora">
         </center>
         <center>
-            <a href="<?= Yii::app()->request->baseUrl ?>/campania/contenido/prebioticos-klim" data-ajax="false">
+            <a href="<?= Yii::app()->request->baseUrl ?>/prebioticos-klim" data-ajax="false">
                 <img style="width:100%;" src="<?= Yii::app()->request->baseUrl ?>/images/contenido/klim1/que-son-previoticos.png" class="img-responsive" alt="¿Qué son los prebióticos?">
             </a>
         </center>
@@ -71,7 +71,7 @@ $this->metaTags = "<meta http-equiv='X-UA-Compatible' content='IE=edge'>
         </div>
         <div class="row">
           <div class="col-md-6">
-            <a href="<?= Yii::app()->request->baseUrl ?>/campania/contenido/prebioticos-klim" data-ajax="false">
+            <a href="<?= Yii::app()->request->baseUrl ?>/prebioticos-klim" data-ajax="false">
                 <img style="width: 60%;margin: 25px auto 25px;" src="<?= Yii::app()->request->baseUrl ?>/images/contenido/klim1/que-son-previoticos.png" class="img-responsive" alt="¿Qué son los prebióticos?">
             </a>
           </div>

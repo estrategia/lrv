@@ -81,7 +81,7 @@ $this->metaTags = "<meta http-equiv='X-UA-Compatible' content='IE=edge'>
           <div class="space"></div>
           <img style="width: 100%;" src="<?= Yii::app()->request->baseUrl ?>/images/contenido/nan/descripcion-nan-optipro.png" alt="Nan Optipro">
           <div class="space"></div>
-          <a href="<?= Yii::app()->request->baseUrl ?>/campania/contenido/mas-informacion-nan">
+          <a href="<?= Yii::app()->request->baseUrl ?>/mas-informacion-nan">
             <img style="width: 100%;" src="<?= Yii::app()->request->baseUrl ?>/images/contenido/nan/btn-mas-info.png" alt="Banner Nan Optipro">
           </a>
         </section>
@@ -145,7 +145,7 @@ $this->metaTags = "<meta http-equiv='X-UA-Compatible' content='IE=edge'>
             <img style="width:75%;margin:0 auto;" class="img-responsive" src="<?= Yii::app()->request->baseUrl ?>/images/contenido/nan/descripcion-nan-optipro.png" alt="Nan Optipro">
             <div class="space"></div>
             <center>
-              <a href="<?= Yii::app()->request->baseUrl ?>/campania/contenido/mas-informacion-nan">
+              <a href="<?= Yii::app()->request->baseUrl ?>/mas-informacion-nan">
                 <img style="" width="" src="<?= Yii::app()->request->baseUrl ?>/images/contenido/nan/btn-mas-info.png" alt="Banner Nan Optipro">
               </a>
             </center>
