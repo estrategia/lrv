@@ -29,7 +29,7 @@ $this->metaTags = "<meta http-equiv='X-UA-Compatible' content='IE=edge'>
       <img style="width:100%;margin:0px auto;margin-top: 5%;" class="img-responsive" src="<?= Yii::app()->request->baseUrl ?>/images/contenido/klim-fortigrow/logo-klimFortigrow.png" alt="Klim fortigrow">
       <img style="width:100%;margin-top: 5%;" src="<?= Yii::app()->request->baseUrl ?>/images/contenido/klim-fortigrow/dummie.png" alt="Klim fortigrow">
       <img style="width:100%;" src="<?= Yii::app()->request->baseUrl ?>/images/contenido/klim-fortigrow/desarrollo-cognitivo.png" alt="">
-      <a href="#"><img style="width: 62%;margin: 0 auto;" src="<?= Yii::app()->request->baseUrl ?>/images/contenido/klim-fortigrow/compra-onlie.png" alt=""></a>
+      <a href="<?= Yii::app()->request->baseUrl ?>/catalogo/producto/producto/114669/"><img style="width: 62%;margin: 0 auto;" src="<?= Yii::app()->request->baseUrl ?>/images/contenido/klim-fortigrow/compra-onlie.png" alt=""></a>
       <img style="width: 35%;margin: 0 auto;" src="<?= Yii::app()->request->baseUrl ?>/images/contenido/klim-fortigrow/entrega-1-hora.png" alt="">
       <div class="col-md-12 ">
         <div class="content">
@@ -70,7 +70,7 @@ $this->metaTags = "<meta http-equiv='X-UA-Compatible' content='IE=edge'>
           <div class="col-xs-5 col-sm-5 col-md-5">
             <div class="row">
               <center>
-                <a href="#"><img style="width: 62%;margin: 0 auto;" src="<?= Yii::app()->request->baseUrl ?>/images/contenido/klim-fortigrow/compra-onlie.png" alt=""></a>
+                <a href="<?= Yii::app()->request->baseUrl ?>/catalogo/producto/producto/114669/"><img style="width: 62%;margin: 0 auto;" src="<?= Yii::app()->request->baseUrl ?>/images/contenido/klim-fortigrow/compra-onlie.png" alt=""></a>
               </center>
             </div>
             <div class="row">
