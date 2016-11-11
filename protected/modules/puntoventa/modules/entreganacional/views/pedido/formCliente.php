@@ -1,7 +1,6 @@
-
-<?php 
-
-	$form = $this->beginWidget('CActiveForm', array(
+<div class='space-3'></div>
+<div class='row'>
+<?php $form = $this->beginWidget('CActiveForm', array(
         'enableClientValidation' => true,
         'enableAjaxValidation' => false,
         'htmlOptions' => array(
@@ -15,18 +14,21 @@
             'errorCssClass' => 'has-error',
             'successCssClass' => 'has-success',
         ))
-    );
-    ?>
+    ); ?>
 
     <?php echo CHtml::errorSummary($modelCliente); ?>
-            
-            <div class="form-group"> 
+       <div class='row'>     
+            <div class="col-md-3 form-group"> 
                 <?php echo $form->labelEx($modelCliente, 'numeroDocumento'); ?>
                 <?php echo $form->textField($modelCliente, 'numeroDocumento', array('class' => 'numeroDocumento form-control',)); ?>
                 <?php echo $form->error($modelCliente, 'numeroDocumento'); ?>
             </div>
-
-	<input type="submit" class="btn btn-default" data-enhanced="true" value="Buscar" name="Submit">
+            <div class='col-md-3'>
+            <br/>
+    			<input type="submit" class="btn btn-default" data-enhanced="true" value="Buscar" name="Submit">        
+            </div>
+		</div>
+	
 
  <?php   $this->endWidget(); ?>
 
@@ -50,7 +52,7 @@
                 'ajaxUpdateError' => new CJavaScriptExpression("function(xhr, textStatus, errorThrown, errorMessage) {alert(errorMessage);}"),
                 'dataProvider' => $dataProvider,
                 //'rowCssClass'=>array('odd','even'),
-                'rowCssClassExpression' => array($this, 'rowCssClassFunction'), //'$data->seguimiento==1?"seguimiento":"jajaj"',
+               // 'rowCssClassExpression' => array($this, 'rowCssClassFunction'), //'$data->seguimiento==1?"seguimiento":"jajaj"',
                 //'filter' => $model,
                 'columns' => array(
                     array(
@@ -111,6 +113,11 @@
                         'type' => 'raw',
                         'value' => array($this, 'gridEstadoPedido'),
                     ),
+                    array(
+                    		'header' => 'Estado',
+                    		'type' => 'raw',
+                    		'value' => array($this, 'gridUsoDireccion'),
+                    ),
                 ),
             ));
             ?>
@@ -167,32 +174,34 @@ $listPdv = PuntoVenta::model()->findAll(array(
             <span class="title">Buscar Barrio</span><br><br>
 
             <form action="" method="post" id="barrioform" name="barrioform">
-                <div class="row">
-                    <div class="col-md-3">
-                        <strong>Ciudad </strong>
-                    </div>
-                    <div class="col-md-9">
-<?php echo Select2::dropDownList('select-ciudad-barrio', null , CHtml::listData($listCiudad, 'codigoCiudad', 'nombreCiudad'), array('prompt' => 'Seleccione ciudad', 'id' => 'select-ciudad-barrio', 'style' => 'width: 50%;')) ?>
-                    </div>  
-                </div>
-                <div class="row">
-                    <div class="col-md-3">
-                        <strong>Barrio: </strong>
-                    </div>
-                    <div class="col-md-6">
-                        <input type="text" id="input-pedido-barrio" class="form-control input-sm"> 
-                    </div>
-                    <div class="col-md-3">
-                        <button type="button" class="btn btn-danger btn-sm" data-role="pdvgeobarrio" ><i class="glyphicon glyphicon-search"></i>Buscar</button>
-                    </div>
-                </div>
-            </form>
+                <table class="table table-bordered table-hover table-striped table-condensed">
+                    <tbody>
+                        <tr>
+                            <th>Ciudad</th>
+                            <td>
+								<?php echo Select2::dropDownList('select-ciudad-barrio', null , CHtml::listData($listCiudad, 'codigoCiudad', 'nombreCiudad'), array('prompt' => 'Seleccione ciudad', 'id' => 'select-ciudad-barrio', 'style' => 'width: 50%;')) ?>
+                    		</td>
+                    		<td style="vertical-align: middle; text-align: center" rowspan="2">  
+                           		<button type="button" class="btn btn-danger btn-sm" data-role="pdvgeobarrio" ><i class="glyphicon glyphicon-search"></i>Buscar</button>
+                            </td>
+                        </tr>
+		                <tr>
+			                <th>
+	                        	Barrio: 
+	                    	</th>
+	                    	<td>
+	                        	<input type="text" id="input-pedido-barrio" class="form-control input-sm"> 
+	                        </td>
+                    	</tr>
+                    </tbody>
+                    </table>
+            	</form>
         <div id="div-pedido-georeferencia-barrio"></div>
     </div>
 </div>
 <hr/>
 <div class="row">
-    <div class="col-md-12">
+    <div class="col-md-6">
         <div>
             <span class="title"><strong>Asignar Punto de venta</strong></span>
             <form action="/callcenter/index/generardoccruce/" method="post" id="asignarpdv" name="asignarpdv">
@@ -211,4 +220,5 @@ $listPdv = PuntoVenta::model()->findAll(array(
             </form>   
         </div>
     </div>
+</div>
 </div>

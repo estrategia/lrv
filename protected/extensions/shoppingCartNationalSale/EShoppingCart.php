@@ -45,52 +45,18 @@ class EShoppingCart extends CMap {
 
     public function CalculateShipping() {
         if ($this->objSectorCiudadDestino !== null && $this->objSectorCiudadDestino instanceof SectorCiudad) {
-
-            $objDomicilio = Domicilio::model()->find(array(
-                'condition' => 'codigoCiudad=:ciudad AND codigoSector=:sector AND codigoPerfil=:perfil',
-                'params' => array(
-                    ':ciudad' => $this->objSectorCiudadDestino->codigoCiudad,
-                    ':sector' => $this->objSectorCiudadDestino->codigoSector,
-                    ':perfil' => $this->codigoPerfil,
-                )
-            ));
-
-            if ($objDomicilio === null) {
-                $objDomicilio = Domicilio::model()->find(array(
-                    'condition' => 'codigoCiudad=:ciudad AND codigoSector=:sector AND codigoPerfil=:perfil',
-                    'params' => array(
-                        ':ciudad' => $this->objSectorCiudadDestino->codigoCiudad,
-                        ':sector' => Yii::app()->params->sector['*'],
-                        ':perfil' => $this->codigoPerfil,
-                    )
-                ));
-            }
-
-            if ($objDomicilio === null) {
-                $objDomicilio = Domicilio::model()->find(array(
-                    'condition' => 'codigoCiudad=:ciudad AND codigoSector=:sector AND codigoPerfil=:perfil',
-                    'params' => array(
-                        ':ciudad' => Yii::app()->params->ciudad['*'],
-                        ':sector' => Yii::app()->params->sector['*'],
-                        ':perfil' => $this->codigoPerfil,
-                    )
-                ));
-            }
-
-            if ($objDomicilio === null) {
-                $objDomicilio = Domicilio::model()->find(array(
-                    'condition' => 'codigoCiudad=:ciudad AND codigoSector=:sector AND codigoPerfil=:perfil',
-                    'params' => array(
-                        ':ciudad' => Yii::app()->params->ciudad['*'],
-                        ':sector' => Yii::app()->params->sector['*'],
-                        ':perfil' => Yii::app()->params->perfil['*'],
-                    )
-                ));
-            }
-
+        	$modelPago = null;
+        	if (isset(Yii::app()->session[Yii::app()->params->entregaNacional['sesion']['carroPagarForm']]) && Yii::app()->session[Yii::app()->params->entregaNacional['sesion']['carroPagarForm']] != null)
+    			$modelPago = Yii::app()->session[Yii::app()->params->entregaNacional['sesion']['carroPagarForm']];
+    	
+    		if($modelPago->recogida == 1){ 
+    			$objDomicilio = Domicilio::model()->findByPK(Yii::app()->params->entregaNacional['domicilio']['recogida']);
+    		}else{
+    			$objDomicilio = Domicilio::model()->findByPK(Yii::app()->params->entregaNacional['domicilio']['sinrecogida']);
+    		}
             if ($objDomicilio !== null)
                 $this->shipping = $objDomicilio->valorDomicilio;
-
+			
             $this->saveStateAttributes();
         }
     }
@@ -211,8 +177,8 @@ class EShoppingCart extends CMap {
     	
     	
     	if($modelPago instanceof FormaPagoEntregaNacionalForm ){
-    		$this->objSectorCiudadOrigen = $modelPago->objSectorCiudadOrigen;
-    		$this->objSectorCiudadDestino = $modelPago->objSectorCiudadDestino;
+    		$this->objSectorCiudadOrigen = $modelPago->objCiudadSectorOrigen;
+    		$this->objSectorCiudadDestino = $modelPago->objCiudadSectorDestino;
     	}
     		
         $data = Yii::app()->getUser()->getState($this->getClass());
@@ -226,9 +192,7 @@ class EShoppingCart extends CMap {
             foreach ($data as $key => $product)
                 parent::add($key, $product);
         
-        if($this->shipping<=0){
-             $this->CalculateShipping();
-        }
+        $this->CalculateShipping();
         
         //CVarDumper::dump($this->codigoPerfil, 10, true);echo "<br>";
         //CVarDumper::dump($this->shipping, 10, true);echo "<br>";

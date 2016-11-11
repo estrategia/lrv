@@ -9,6 +9,7 @@ class UserPuntoVenta {
     public $loginUrl = array('/puntoventa/usuario/autenticar');
     public $homeUrl = array('/puntoventa');
     public $profile = null;
+    public $codigoVendedor = null;
 
     public function init() {
         $this->restoreFromSession();
@@ -53,6 +54,9 @@ class UserPuntoVenta {
             $nombre = explode(" ", $user->nombre);
             $this->shortName = $nombre[0];
             $this->profile = $user->perfil;
+            if(isset($user->objOperadorVendedor->codigoVendedor)){
+            	$this->codigoVendedor = $user->objOperadorVendedor->codigoVendedor;
+            }
         }
     }
 
@@ -86,6 +90,8 @@ class UserPuntoVenta {
 
         return false;
     }
+    
+    
 
     public function logout() {
         $sessions = Yii::app()->params->puntoventa['sesion'];

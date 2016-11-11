@@ -28,8 +28,9 @@ class PedidoController extends ControllerEntregaNacional {
          $filter->run();
     }
 
-    public function actionIndex(){
-        $this->layout = 'simple';
+    public function actionUbicacion(){
+        $this->layout = 'entrega';
+        $this->active = 'ubicacion';
 
         $modelCliente = new ClienteForm();
         $params = array();
@@ -141,7 +142,7 @@ class PedidoController extends ControllerEntregaNacional {
         			)
         ));
         
-        $modelPago->objSectorCiudadDestino = $objSectorCiudadDestino;
+        $modelPago->objCiudadSectorDestino = $objSectorCiudadDestino;
         
         // punto de venta de entrega
         $puntoVenta = PuntoVenta::model()->find(array(
@@ -159,13 +160,36 @@ class PedidoController extends ControllerEntregaNacional {
         			)
         ));
         
-        $modelPago->objSectorCiudadOrigen = $objSectorCiudadOrigen;
+        // direccion y destinatario para pedido anterior.
+        /***********************************************************************/
+    //    echo $_REQUEST['data-pedido'];
+        if(isset($_REQUEST['idPedido'])){
+        	
+        	$objCompra = Compras::model()->findByPk($_REQUEST['idPedido']);
+        	
+        	if($objCompra != null){
+        		$modelPago->nombreRemitente = $objCompra->objComprasRemitente->nombreRemitente;
+        		$modelPago->identificacionUsuario = $objCompra->identificacionUsuario;
+        		$modelPago->telefonoRemitente = $objCompra->objComprasRemitente->telefonoRemitente;
+        		$modelPago->correoRemitente = $objCompra->objComprasRemitente->correoRemitente;
+        		$modelPago->barrio = $objCompra->objCompraDireccion->barrio;
+        		$modelPago->telefono = $objCompra->objCompraDireccion->telefono;
+        		$modelPago->nombre = $objCompra->objCompraDireccion->nombre;
+        		$modelPago->direccion = $objCompra->objCompraDireccion->direccion;
+        		$modelPago->celular = $objCompra->objCompraDireccion->celular;
+        	//	$modelPago->extension = $objCompra->objCompraDireccion->extension;
+        	}
+        }
+        
+        /***********************************************************************/
+        
+        $modelPago->objCiudadSectorOrigen = $objSectorCiudadOrigen;
         Yii::app()->session[Yii::app()->params->entregaNacional['sesion']['carroPagarForm']] = $modelPago;
         
         echo CJSON::encode(array
                 (   'result' => 'ok', 
                     'response' => "Se ha seleccionado el punto de venta $objPdv->idComercial - $objPdv->nombrePuntoDeVenta",
-                    'redirect' => CController::createUrl('pedido/buscarProductos'),
+                    'redirect' => CController::createUrl('catalogo/buscar'),
                 ));
         Yii::app()->end();
         
@@ -266,7 +290,6 @@ class PedidoController extends ControllerEntregaNacional {
 	        		}
 	        	}
 	        
-	        
 	        	foreach($puntoVenta[4] as $saldos){
 	        		$listaProductosSaldos[$saldos->CODIGO_PRODUCTO] = $saldos->SALDO;
 	        	}
@@ -285,7 +308,6 @@ class PedidoController extends ControllerEntregaNacional {
 	        					'pageSize' => 10,
 	        			),
 	        	));
-	        
 	        	
 	        } catch (Exception $exc) {
 	        	Yii::log($exc->getMessage() . "\n" . $exc->getTraceAsString(), CLogger::LEVEL_ERROR, 'application');
@@ -312,9 +334,49 @@ class PedidoController extends ControllerEntregaNacional {
         ));
     }
 
-    public function actionBuscarProducto() {
-
+    protected function gridDetallePedido($data, $row) {
+    	$params = array('pedido' => $data->idCompra);
+       	$result = "$data->idCompra";
+    	return $result;
     }
-
+    
+    protected function gridOrigenPedido($data, $row) {
+    	if ($data->identificacionUsuario == null) {
+    		return $data->objCompraDireccion->nombre . "<br/>" . $data->objCompraDireccion->correoElectronico;
+    	} else {
+    		return "$data->identificacionUsuario<br/>" . $data->objUsuario->getNombreCompleto() . "<br/>" . $data->objUsuario->correoElectronico;
+    	}
+    }
+    
+    protected function gridDestinoPedido($data, $row) {
+    
+    	if ($data->objCompraDireccion == null)
+    		return "NA";
+    		return $data->
+    		objCompraDireccion->nombre . "<br/>" . $data->objCompraDireccion->direccion . "<br/>" . $data->objCompraDireccion->barrio;
+    }
+    
+    protected function gridPagoPedido($data, $row) {
+    	if ($data->objFormaPagoCompra === null)
+    		return "NA";
+    
+    		$result = $data->objFormaPagoCompra->objFormaPago->formaPago;
+    		if ($data->objFormaPagoCompra->numeroTarjeta != null && !empty($data->objFormaPagoCompra->numeroTarjeta))
+    			$result .= "<strong>No. tarjeta:</strong> " . $data->objFormaPagoCompra->numeroTarjeta . "<br/><strong>No. cuotas:</strong> " . $data->objFormaPagoCompra->cuotasTarjeta;
+    
+    			return $result;
+    }
+    
+    protected function gridEstadoPedido($data, $row) {
+    	return "<span class='label label-" . Yii::app()->params->callcenter['estadoCompra']['colorClass'][$data->idEstadoCompra] . "'>" . $data->objEstadoCompra->compraEstado . "</span>";
+    }
+    
+    protected function gridUsoDireccion($data, $row) {
+    	
+    	$result = "<a href='#' data-pdv='$data->idComercial' data-pedido='$data->idCompra' data-action='asignar-pdv-direccion' class='btn btn-info' >Usar</a>";
+    
+    	return $result;
+    }
+    
 
 }

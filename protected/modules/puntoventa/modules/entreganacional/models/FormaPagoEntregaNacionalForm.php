@@ -26,11 +26,29 @@ class FormaPagoEntregaNacionalForm extends CFormModel {
     public $listPuntosVenta = array(0 => 0, 1 => 'No consultado');
     public $indicePuntoVenta;
     public $objHorarioCiudadSector = null;
-    public $pagoInvitado = true;
+    public $pagoInvitado = false;
     public $tipoEntrega;
     public $totalCompra = null;
-    public $objSectorCiudadOrigen = null;
-    public $objSectorCiudadDestino = null;
+    public $objCiudadSectorOrigen = null;
+    public $objCiudadSectorDestino = null;
+    public $telefonoContacto;
+    public $nombre;
+    public $direccion;
+    public $barrio;
+    public $telefono;
+    public $extension;
+    public $celular;
+   
+    /***********DATOS REMITENTE*************/
+    //datos medico
+    public $nombreRemitente;
+    public $cedulaRemitente;
+    public $recogida;
+    public $telefonoRemitente;
+    public $direccionRemitente;
+    public $barrioRemitente;
+    public $correoRemitente;
+    /************************/
     
     public $objDireccion = null;
 
@@ -42,11 +60,10 @@ class FormaPagoEntregaNacionalForm extends CFormModel {
     public function rules() {
         //Yii::log("validacion 0\n", CLogger::LEVEL_INFO, 'application');
         $rules = array();
-        $rules[] = array('tipoEntrega', 'required', 'message' => '{attribute} no puede estar vacío');
-        $rules[] = array('tipoEntrega', 'in', 'range' => Yii::app()->params->entrega['listaTipos'], 'allowEmpty' => false);
-        $rules[] = array('tipoEntrega', 'tipoEntregaValidate');
-
-        $rules[] = array('identificacionUsuario', 'required', 'message' => '{attribute} no puede estar vacío');
+//         $rules[] = array('cedulaRemitente,nombreRemitente,recogida,', 'required', 'message' => '{attribute} no puede estar vacío');
+//         $rules[] = array('tipoEntrega', 'in', 'range' => Yii::app()->params->entrega['listaTipos'], 'allowEmpty' => false);
+//         $rules[] = array('tipoEntrega', 'tipoEntregaValidate');
+          $rules[] = array('identificacionUsuario', 'required', 'message' => '{attribute} no puede estar vacío');
 
         //Yii::log("validacion 1\n", CLogger::LEVEL_INFO, 'application');
         //Yii::log("this->pagoInvitado: " . CVarDumper::dumpAsString($this->pagoInvitado) . "\n", CLogger::LEVEL_INFO, 'application');
@@ -54,8 +71,11 @@ class FormaPagoEntregaNacionalForm extends CFormModel {
             //Yii::log("validacion 7\n", CLogger::LEVEL_INFO, 'application');
 
         //Yii::log("validacion 10\n", CLogger::LEVEL_INFO, 'application');
-
-        $rules[] = array('fechaEntrega', 'required', 'on' => 'entrega, informacion, finalizar', 'message' => '{attribute} no puede estar vacío');
+        if($this->recogida == 1){
+        	$rules[] = array('direccionRemitente, barrioRemitente', 'required', 'on' => 'entrega, informacion, finalizar', 'message' => '{attribute} no puede estar vacío');
+        }
+        $rules[] = array('fechaEntrega, identificacionUsuario, nombreRemitente,telefonoRemitente, correoRemitente,  recogida, nombre, direccion, barrio, telefono, celular', 'required', 'on' => 'entrega, informacion, finalizar', 'message' => '{attribute} no puede estar vacío');
+        $rules[] = array('correoRemitente','email');
         $rules[] = array('comentario', 'length', 'max' => 250, 'on' => 'entrega, informacion, finalizar');
         $rules[] = array('fechaEntrega', 'fechaValidate', 'on' => 'entrega, informacion, finalizar');
         $rules[] = array('idFormaPago', 'required', 'on' => 'pago, informacion, finalizar', 'message' => 'Seleccionar forma de pago');
@@ -63,15 +83,6 @@ class FormaPagoEntregaNacionalForm extends CFormModel {
         $rules[] = array('comentario, numeroTarjeta, cuotasTarjeta', 'default', 'value' => null);
         $rules[] = array('idFormaPago', 'pagoValidate', 'on' => 'pago, informacion, finalizar');
         $rules[] = array('confirmacion', 'compare', 'compareValue' => 1, 'on' => 'confirmacion, finalizar', 'message' => 'Aceptar términos anteriores');
-
-        if ($this->tipoEntrega == Yii::app()->params->entrega['tipo']['presencial']) {
-            //Yii::log("validacion 11\n", CLogger::LEVEL_INFO, 'application');
-            $rules[] = array('indicePuntoVenta', 'required', 'on' => 'informacion', 'message' => 'Seleccionar Punto de Venta');
-        } else if ($this->tipoEntrega == Yii::app()->params->entrega['tipo']['domicilio']) {
-            //Yii::log("validacion 12\n", CLogger::LEVEL_INFO, 'application');
-            $rules[] = array('indicePuntoVenta', 'safe');
-            $rules[] = array('indicePuntoVenta', 'default', 'value' => null);
-        }
 
         //Yii::log("validacion 13\n", CLogger::LEVEL_INFO, 'application');
 
@@ -179,16 +190,18 @@ class FormaPagoEntregaNacionalForm extends CFormModel {
             }
         }
     }
+    
+
 
     public function consultarHorario() {
-        if ($this->objSectorCiudad != null) {
-            if ($this->objHorarioCiudadSector == null || $this->objHorarioCiudadSector->codigoCiudad != $this->objSectorCiudad->codigoCiudad || $this->objHorarioCiudadSector->codigoSector != $this->objSectorCiudad->codigoSector) {
+        if ($this->objCiudadSectorDestino != null) {
+            if ($this->objHorarioCiudadSector == null || $this->objHorarioCiudadSector->codigoCiudad != $this->objCiudadSectorDestino->codigoCiudad || $this->objHorarioCiudadSector->codigoSector != $this->objCiudadSectorDestino->codigoSector) {
 	            $this->objHorarioCiudadSector = HorariosCiudadSector::model()->find(array(
 	                'condition' => 'codigoCiudad=:ciudad AND codigoSector=:sector AND estadoCiudadSector=:estado',
 	                'params' => array(
 	                    ':estado' => 1,
-	                    ':ciudad' => $this->objSectorCiudad->codigoCiudad,
-	                    ':sector' => $this->objSectorCiudad->codigoSector
+	                    ':ciudad' => $this->objCiudadSectorDestino->codigoCiudad,
+	                    ':sector' => $this->objCiudadSectorDestino->codigoSector
 	                )
 	            ));
             }
@@ -414,9 +427,9 @@ class FormaPagoEntregaNacionalForm extends CFormModel {
         $deltaHorario = Yii::app()->params->horarioEntrega['deltaDefecto'];
         $this->consultarHorario();
 
-        if ($this->objSectorCiudad !== null) {
-            if (isset(Yii::app()->params->horarioEntrega['deltaHorarios'][$this->objSectorCiudad->codigoCiudad])) {
-                $arrHorario = Yii::app()->params->horarioEntrega['deltaHorarios'][$this->objSectorCiudad->codigoCiudad];
+        if ($this->objCiudadSectorDestino !== null) {
+            if (isset(Yii::app()->params->horarioEntrega['deltaHorarios'][$this->objCiudadSectorDestino->codigoCiudad])) {
+                $arrHorario = Yii::app()->params->horarioEntrega['deltaHorarios'][$this->objCiudadSectorDestino->codigoCiudad];
 
                 $fActual = new DateTime;
                 $fInicio = DateTime::createFromFormat('Y-m-d H:i:s', $arrHorario['fechaInicio']);

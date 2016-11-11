@@ -63,11 +63,11 @@
                             </li>
 							<li class="nav-header">Entrega nacional</li>
                             <li class="">
-                                <a href="<?php echo $this->createUrl('/puntoventa/entreganacional/pedido/index') ?>" class="ajax-link"><i class="glyphicon glyphicon-shopping-cart"></i><span> Crear pedido</span></a>
+                                <a href="<?php echo $this->createUrl('/puntoventa/entreganacional/pedido/ubicacion') ?>" class="ajax-link"><i class="glyphicon glyphicon-shopping-cart"></i><span> Crear pedido</span></a>
                             </li>
-                            <li class="">
+                          <!--   <li class="">
                                 <a href="<?php echo $this->createUrl('/puntoventa/entreganacional/admin/pedidos') ?>" class="ajax-link" target="_blank"><i class="glyphicon glyphicon-list-alt"></i><span> Mis pedidos</span></a>
-                            </li>
+                            </li>  -->
 
                         </ul>
                     </div>

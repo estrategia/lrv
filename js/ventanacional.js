@@ -55,6 +55,36 @@ $(document).on('click', 'button[data-action="asignar-pdv-entrega"]', function ()
 
 });
 
+$(document).on('click', 'a[data-action="asignar-pdv-direccion"]', function () {
+    $.ajax({
+        type: 'POST',
+        dataType: 'json',
+        async: true,
+        url: requestUrl + '/puntoventa/entreganacional/pedido/asignarpdv',
+        data: {pdv: $(this).attr('data-pdv'),idPedido: $(this).attr('data-pedido')},
+        beforeSend: function () {
+            Loading.show();
+        },
+        complete: function () {
+            Loading.hide();
+        },
+        success: function (data) {
+            if (data.result == 'ok') {
+                dialogoAnimado(data.response);
+                window.location.replace(data.redirect);
+            } else {
+                bootbox.alert(data.response);
+            }
+        },
+        error: function (jqXHR, textStatus, errorThrown) {
+            Loading.hide();
+            bootbox.alert('Error: ' + errorThrown);
+        }
+    });
+
+});
+
+
 /*
 $("#busqueda-buscar").keypress(function (event) {
     if (event.which == 13) {
@@ -472,3 +502,155 @@ function format(input)
         return "";
     }
 }
+
+/************** PASOS DE COMPRA *************/
+
+
+/*
+ * pasos de compra
+ */
+$(document).on('click', "button[id='btn-carropagar-siguiente'], button[id='btn-carropagar-anterior']", function() {
+    var actual = $(this).attr('data-origin');
+    var siguiente = $(this).attr('data-redirect');
+
+    if (actual === 'informacion') {
+        pasoInformacion(actual, siguiente, $(this));
+    } else if (actual === 'confirmacion') {
+        pasoConfirmacion(actual, siguiente, $(this));
+    }
+
+    return false;
+});
+
+function pasoInformacion(actual, siguiente, boton) {
+    var data = {
+        siguiente: siguiente,
+        "FormaPagoEntregaNacionalForm[indicePuntoVenta]": $('input[name="FormaPagoEntregaNacionalForm[indicePuntoVenta]"]').val(),
+        "FormaPagoEntregaNacionalForm[tipoEntrega]": $('input[name="FormaPagoEntregaNacionalForm[tipoEntrega]"]').val()
+    };
+    
+    $.ajax({
+        type: 'POST',
+        async: true,
+        url: requestUrl + '/puntoventa/entreganacional/carro/pagar/paso/' + actual + '/post/true',
+        data: $.param(data) + '&' + $('#form-pago-comentario').serialize() + '&' + $('#form-direccion-pagoinvitado').serialize() + '&' + $('#form-remitente').serialize() + '&' +$('#form-pago-entrega').serialize() + '&' + $('#form-pago').serialize(),
+        beforeSend: function() {
+            boton.prop('disabled', true);
+            $('div[id^="FormaPagoEntregaNacionalForm_"].text-danger').html('');
+            $('div[id^="FormaPagoEntregaNacionalForm_"].text-danger').css('display', 'none');
+            Loading.show();
+        },
+        complete: function() {
+            Loading.hide();
+        },
+        success: function(data) {
+            var obj = $.parseJSON(data);
+
+            if (obj.result === 'ok') {
+                boton.prop('disabled', false);
+                window.location.replace(obj.redirect);
+            } else if (obj.result === 'error') {
+                Loading.hide();
+                alert(obj.response);
+                boton.prop('disabled', false);
+            } else {
+                $.each(obj, function(element, error) {
+                    $('#' + element + '_em_').html(error);
+                    $('#' + element + '_em_').css('display', 'block');
+                });
+                boton.prop('disabled', false);
+                Loading.hide();
+            }
+        },
+        error: function(jqXHR, textStatus, errorThrown) {
+            Loading.hide();
+            alert('Error: ' + errorThrown);
+            boton.prop('disabled', false);
+        }
+    });
+}
+
+function pasoConfirmacion(actual, siguiente, boton) {
+    var data = {siguiente: siguiente};
+
+    $.ajax({
+        type: 'POST',
+        async: true,
+        url: requestUrl + '/puntoventa/entreganacional/carro/pagar/paso/' + actual + '/post/true',
+        data: $.param(data) + '&' + $('#form-pago-confirmacion').serialize(),
+        beforeSend: function() {
+            boton.prop('disabled', true);
+            Loading.show();
+        },
+        complete: function() {
+            Loading.hide();
+        },
+        success: function(data) {
+            var obj = $.parseJSON(data);
+
+            if (obj.result === 'ok') {
+                window.location.replace(obj.redirect);
+            } else if (obj.result === 'error') {
+                alert(obj.response);
+                boton.prop('disabled', false);
+            } else {
+                $.each(obj, function(element, error) {
+                    $('#' + element + '_em_').html(error);
+                    $('#' + element + '_em_').css('display', 'block');
+                });
+                boton.prop('disabled', false);
+            }
+        },
+        error: function(jqXHR, textStatus, errorThrown) {
+            alert('Error: ' + errorThrown);
+            boton.prop('disabled', false);
+        }
+    });
+}
+
+
+/*
+ * pasos compra - forma pago 
+ */
+$(document).on('click', "div[data-role='formapago']", function() {
+    var tipo = $(this).attr('data-tipo');
+    if (tipo == "datafono") {
+        $("#modal-formapago input[type='radio']").removeAttr('checked');
+        $("#modal-formapago #idFormaPago_" + $("#FormaPagoEntregaNacionalForm_idFormaPago_datafono").val()).prop('checked', true);
+        $("div[data-role^='formapago-logo-']").addClass('display-none');
+        $("div[data-role='formapago-logo-" + $("#FormaPagoEntregaNacionalForm_idFormaPago_datafono").val() + "']").removeClass('display-none');
+        $("#modal-formapago").modal("show");
+        return false;
+    } else {
+        var descripcion = $("div[data-role='formapago-descripcion']div[data-tipo='" + tipo + "']");
+        $("div[data-role='formapago-descripcion']").addClass('display-none');
+
+        if (descripcion.length > 0) {
+            descripcion.removeClass('display-none');
+        }
+    }
+});
+
+$(document).on('click', "input[name='FormaPagoEntregaNacionalForm[recogida]']", function() {
+    var tipo = $(this).val();
+    if (tipo == 1) {
+    	$("#recogida").removeClass('display-none');
+    } else {
+    	$("#recogida").addClass('display-none');
+    }
+});
+
+$(document).on('click', "#modal-formapago input[type='radio']", function() {
+    if ($(this).is(':checked')) {
+        //$("div[data-role='formapago']").removeClass('activo');
+        //$('div[data-tipo="datafono"]').addClass('activo');
+        //$('#div-formapago-vacio').remove();
+        $('input[id="FormaPagoEntregaNacionalForm_idFormaPago_datafono"]').prop('checked', true);
+        $('input[id="FormaPagoEntregaNacionalForm_idFormaPago_datafono"]').val($(this).val());
+
+        $("div[data-role^='formapago-logo-']").addClass('display-none');
+        $("div[data-role='formapago-logo-" + $(this).val() + "']").removeClass('display-none');
+        $("div[data-role='formapago-logo-pagoenlinea']").addClass('display-none');
+        $("div[data-role='formapago-descripcion']").addClass('display-none');
+    }
+});

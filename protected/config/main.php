@@ -445,7 +445,7 @@ return array(
         ),
         'tipoVenta' => array(
             'virtual' => 1,
-            'nacional' => 2,
+            'nacional' => 2, // new
             'asistida' => 3,
             'telefarma' => 4
         ),
@@ -755,10 +755,23 @@ return array(
     				),
     				'diasRecordatorioFormula' => array(1,3)
     	),
-    	'entregaNacional' => array(
+    	'entregaNacional' => array( /***** NEW ******/
     			'sesion' => array(
     					'carroPagarForm' => 'larebaja.online.entreganacional.carropagarform',
-    			)
+    			),
+    			'pagar' => array(
+    					'pasos' => array(
+    							'informacion' => 1, 
+    							'confirmacion' => 2,
+    							1 => 'informacion', 
+    							2 => 'confirmacion'
+    					),
+    					'pasosDisponibles' => array('informacion', 'confirmacion'),
+    			),
+	   			'domicilio' => array(
+	   					'sinrecogida' => 3,
+	   					'recogida' => 2
+	   			),
     	)
     ),
 );

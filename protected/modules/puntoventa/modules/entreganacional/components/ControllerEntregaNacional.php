@@ -11,7 +11,10 @@ class ControllerEntregaNacional extends ControllerPuntoVenta {
     public $showMenu = true;
     public $active = null;
     public $objCiudadSectorOrigen = null;
+    public $objCiudadSectorDestino = null;
     public $objPuntoVentaDestino = null;
+    public $isMobile = false;
+    
     /**
      * @var array the breadcrumbs of the current page. The value of this property will
      * be assigned to {@link CBreadcrumbs::links}. Please refer to {@link CBreadcrumbs::links}
@@ -23,6 +26,15 @@ class ControllerEntregaNacional extends ControllerPuntoVenta {
         $this->pageTitle = Yii::app()->name;
          if (isset(Yii::app()->session[Yii::app()->params->puntoventa['sesion']['pdvDestino']]) && Yii::app()->session[Yii::app()->params->puntoventa['sesion']['pdvDestino']] != null) {
         	$this->objPuntoVentaDestino = Yii::app()->session[Yii::app()->params->puntoventa['sesion']['pdvDestino']];
+        	$this->objCiudadSectorDestino = SectorCiudad::model()->find(array(
+        			'with' => array('objCiudad', 'objSector'),
+        			'condition' => 't.codigoCiudad=:ciudad AND t.codigoSector=:sector AND t.estadoCiudadSector=:estado',
+        			'params' => array(
+        					':ciudad' => $this->objPuntoVentaDestino->codigoCiudad,
+        					':sector' => $this->objPuntoVentaDestino->idSectorLRV,
+        					':estado' => 1,
+        			)
+        	));
         }
         
          

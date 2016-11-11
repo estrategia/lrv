@@ -5,7 +5,6 @@
         <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
         <meta name="language" content="es" />
         <meta charset="utf-8" />
-
         <link rel="shortcut icon" href="<?php echo Yii::app()->request->baseUrl; ?>/images/favicon_16.ico" type="image/x-icon" /> 
         <title><?php echo CHtml::encode($this->pageTitle); ?></title>
         <script>requestUrl = "<?php echo Yii::app()->request->baseUrl; ?>";</script>
@@ -24,6 +23,5 @@
             </div>
         </div>
     </body>
-    bbb
     <script src="<?php echo Yii::app()->request->baseUrl; ?>/js/operator.js"></script>
 </html>

@@ -8,10 +8,6 @@
 
 class BeneficiosCommand extends CConsoleCommand {
 
-    public function actionHello() {
-        echo "trying Beneficio's command";
-    }
-
     public function actionTestMemory() {
         $inicio = memory_get_usage();
         $a = 1000;
@@ -60,10 +56,10 @@ class BeneficiosCommand extends CConsoleCommand {
                 $idSincronizacion = $result[0]['maximo'];
             }
             
-            if($i == 0){
-                $idSincronizacion = 37071;
-            }
-           
+//             if($i == 0){
+//             	$idSincronizacion = 63512;
+//             }
+            
             $h2 = round(microtime(true) * 1000);
 
             fwrite($file, $sql . ". Time execution: " . ($h2 - $h1) . " miliseconds" . PHP_EOL);
@@ -72,19 +68,13 @@ class BeneficiosCommand extends CConsoleCommand {
             $h1 = round(microtime(true) * 1000);
 
             try {
-                /* $client = new SoapClient(Yii::app()->params->webServiceUrl['sincronizarBeneficiosSIICOP'], array(
-                  "trace" => 1,
-                  'cache_wsdl' => WSDL_CACHE_NONE
-                  )); */
                 $result = $client->setBeneficios($idSincronizacion/* $arrTiposBeneficio, $arrBeneficios */);
             } catch (Exception $e) {
                 $h2 = round(microtime(true) * 1000);
-                // echo "Error to calling to webservice".". Time execution: ".($h2-$h1)." miliseconds\n";
                 Yii::app()->exit();
             }
 
             $h2 = round(microtime(true) * 1000);
-            //    echo "Calling to webservice".". Time execution: ".($h2-$h1)." miliseconds\n";
             fwrite($file, "Calling to webservice" . ". Time execution: " . ($h2 - $h1) . " miliseconds" . PHP_EOL);
 
             if ($result['Result'] == 0) {
@@ -95,8 +85,6 @@ class BeneficiosCommand extends CConsoleCommand {
             if ($result['Result'] == 2) {
                 $pendientesSincronizar = false;
             }
-
-
             if ($result['Result'] == 1) {
                 $pendientesSincronizar = true;
                 $arrTiposBeneficio = $result['arrTiposBeneficio'];
@@ -125,7 +113,6 @@ class BeneficiosCommand extends CConsoleCommand {
 
                     $h2 = round(microtime(true) * 1000);
                     fwrite($file, "Trying save in tipo beneficios's table" . ". Time execution: " . ($h2 - $h1) . " miliseconds" . PHP_EOL);
-                    //   echo "Trying save in tipo beneficios's table".". Time execution: ".($h2-$h1)." miliseconds\n";
                 }
                 $datosPdv = array();
                 $beneficiosProductos = array();
@@ -161,17 +148,8 @@ class BeneficiosCommand extends CConsoleCommand {
                     $h2 = round(microtime(true) * 1000);
                     fwrite($file, "Trying save in beneficios's table" . ". Time execution: " . ($h2 - $h1) . " miliseconds" . PHP_EOL);
 
-                    //   echo "Trying save in beneficios's table".". Time execution: ".($h2-$h1)." miliseconds\n";
-
                     foreach ($beneficio['listBeneficiosProductos'] as $benefProd) {
-                        /* $objBenefProd = new BeneficiosProductos;
-                          $objBenefProd->idBeneficio = $objBeneficio->idBeneficio;
-                          $objBenefProd->codigoProducto = $benefProd['Refe'];
-                          $objBenefProd->mensaje = $benefProd['Mensaje'];
-                          $objBenefProd->unid = $benefProd['Unid'];
-                          $objBenefProd->obsequio = $benefProd['Obsequio'];
-                          $objBenefProd->tipo = $benefProd['tipo'];
-                         */
+                      
                         $h1 = round(microtime(true) * 1000);
 
                         if ($benefProd['Mensaje'] != null) {
@@ -195,9 +173,6 @@ class BeneficiosCommand extends CConsoleCommand {
                                 $benefProd['Obsequio'] . "," .
                                 $benefProd['tipo'] . ")";
 
-                        /*  if (!$objBenefProd->save()) {
-                          throw new Exception("Error al xx guardar tBeneficiosProductos {idbenef: " . $objBeneficio->idBeneficio . ", id: " . $benefProd['IdBeneficio'] . ", refe: " . $benefProd['Refe'] . " error: " . CActiveForm::validate($objBenefProd) . "}");
-                          } */
                         $h2 = round(microtime(true) * 1000);
                         fwrite($file, "Trying save in beneficios producto's table" . ". Time execution: " . ($h2 - $h1) . " miliseconds\n");
                         //  echo "Trying save in beneficios producto's table".". Time execution: ".($h2-$h1)." miliseconds\n";
@@ -207,25 +182,12 @@ class BeneficiosCommand extends CConsoleCommand {
                     $h1 = round(microtime(true) * 1000);
 
                     foreach ($beneficio['listBeneficiosPuntoVenta'] as $benefPdv) {
-                        /* $objBenefPdv = new BeneficiosPuntosVenta;
-                          $objBenefPdv->idBeneficio = $objBeneficio->idBeneficio;
-                          $objBenefPdv->idComercial = $benefPdv['IDComercial']; */
                         $datosPdv[] = "($objBeneficio->idBeneficio,'" . $benefPdv['IDComercial'] . "')";
-                        /*  if (!$objBenefPdv->save()) {
-                          throw new Exception("Error al guardar tBeneficiosPuntoVenta {id: " . $benefPdv['IdBeneficio'] . ", idComercial: " . $benefPdv['IDComercial'] . " error: " . CActiveForm::validate($objBenefPdv) . "}");
-                          } */
                     }
 
                     if ($beneficio['listCedulas']) {
                         foreach ($beneficio['listCedulas'] as $benCed) {
-                          
-                            /* $objBenefPdv = new BeneficiosPuntosVenta;
-                              $objBenefPdv->idBeneficio = $objBeneficio->idBeneficio;
-                              $objBenefPdv->idComercial = $benefPdv['IDComercial']; */
-                            $beneficiosCedulas[] = "($objBeneficio->idBeneficio,".$benCed['NumeroDocumento'].")";
-                            /*  if (!$objBenefPdv->save()) {
-                              throw new Exception("Error al guardar tBeneficiosPuntoVenta {id: " . $benefPdv['IdBeneficio'] . ", idComercial: " . $benefPdv['IDComercial'] . " error: " . CActiveForm::validate($objBenefPdv) . "}");
-                              } */
+                          	$beneficiosCedulas[] = "($objBeneficio->idBeneficio,".$benCed['NumeroDocumento'].")";
                         }
                     }
 
@@ -268,46 +230,6 @@ class BeneficiosCommand extends CConsoleCommand {
         fclose($file);
         echo "Beneficios sincronizados correctamente";
         Yii::log("Beneficios sincronizados correctamente\n" . date('Y-m-d H:i:s'), CLogger::LEVEL_INFO, 'application');
-        /*     $beneficios = Beneficios::model()->findAll(array(
-          'with' => array('listBeneficiosProductos', 'listBeneficiosPuntoVenta'),
-          'condition' => 't.SincronizacionLRV=:sincro',
-          'params' => array(
-          ':sincro' => 0
-          )
-          ));
-
-
-          foreach ($beneficios as $idx => $beneficio) {
-          $arrBeneficios[$idx] = $beneficio->attributes;
-          $arrBeneficios[$idx]['listBeneficiosProductos'] = array();
-          $arrBeneficios[$idx]['listBeneficiosPuntoVenta'] = array();
-          foreach ($beneficio->listBeneficiosProductos as $beneficioProducto)
-          $arrBeneficios[$idx]['listBeneficiosProductos'][] = $beneficioProducto->attributes;
-          foreach ($beneficio->listBeneficiosPuntoVenta as $beneficioPdv)
-          $arrBeneficios[$idx]['listBeneficiosPuntoVenta'][] = $beneficioPdv->attributes;
-          }
-          //BeneficioTipo-Beneficios
-          $arrTiposBeneficio = BeneficioTipo::model()->getCommandBuilder()->createFindCommand(BeneficioTipo::model()->tableSchema, new CDbCriteria)->queryAll();
-          $client = new SoapClient(Yii::app()->params->webServiceUrl['sincronizarBeneficiosLRV'], array(
-          "trace" => 1,
-          'cache_wsdl' => WSDL_CACHE_NONE
-          ));
-          try {
-          $result = $client->setBeneficios($arrTiposBeneficio, $arrBeneficios);
-          if ($result['Result'] == 1) {
-          foreach ($beneficios as $beneficio) {
-          $beneficio->SincronizacionLRV = 1;
-          $beneficio->save();
-          }
-          Yii::log("BeneficiosCommand::sincronizarLrv: ". $result['Response'], CLogger::LEVEL_INFO, 'application');
-          }else{
-          Yii::log("BeneficiosCommand::sincronizarLrv: ". $result['Response'], CLogger::LEVEL_ERROR, 'application');
-          }
-          } catch (SoapFault $exc) {
-          Yii::log("BeneficiosCommand::sincronizarLrv::SoapFault: " . $client->__getLastResponse(), CLogger::LEVEL_ERROR, 'application');
-          } catch (Exception $exc) {
-          Yii::log("BeneficiosCommand::sincronizarLrv::Exception: " . $exc->getMessage(), CLogger::LEVEL_ERROR, 'application');
-          } */
     }
 
 }
