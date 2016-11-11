@@ -62,9 +62,9 @@ $this->metaTags = "
 
       <div data-role="navbar">
         <ul class="menu-movil">
-          <li class="sensibilidad"><a class="item"  href="<?= Yii::app()->request->baseUrl ?>/campania/contenido/sensodyne" data-ajax="false">SENSIBILIDAD</a></li>
-          <li class="encias"><a class="item" href="<?= Yii::app()->request->baseUrl ?>/campania/contenido/parodontax" data-ajax="false">ENCÍAS</a></li>
-          <li class="protesis"><a class="item"  href="<?= Yii::app()->request->baseUrl ?>/campania/contenido/corega" data-ajax="false">PRÓTESIS</a></li>
+          <li class="sensibilidad"><a class="item"  href="<?= Yii::app()->request->baseUrl ?>/sensodyne" data-ajax="false">SENSIBILIDAD</a></li>
+          <li class="encias"><a class="item" href="<?= Yii::app()->request->baseUrl ?>/parodontax" data-ajax="false">ENCÍAS</a></li>
+          <li class="protesis"><a class="item"  href="<?= Yii::app()->request->baseUrl ?>/corega" data-ajax="false">PRÓTESIS</a></li>
         </ul>
       </div>
 
@@ -117,13 +117,13 @@ $this->metaTags = "
 <div class="container-fluid">
   <div class="row header">
     <div class="col-md-4 cont-sensibilidad ">
-      <div class="menu sensibilidad"><a href="<?= Yii::app()->request->baseUrl ?>/campania/contenido/sensodyne">SENSIBILIDAD</a></div>
+      <div class="menu sensibilidad"><a href="<?= Yii::app()->request->baseUrl ?>/sensodyne">SENSIBILIDAD</a></div>
     </div>
     <div class="col-md-4 cont-encias">
-        <div class="menu encias"><a href="<?= Yii::app()->request->baseUrl ?>/campania/contenido/parodontax">ENCÍAS</a></div>
+        <div class="menu encias"><a href="<?= Yii::app()->request->baseUrl ?>/parodontax">ENCÍAS</a></div>
     </div>
     <div class="col-md-4 cont-protesis">
-      <div class="menu protesis"><a href="<?= Yii::app()->request->baseUrl ?>/campania/contenido/corega">PRÓTESIS</a></div>
+      <div class="menu protesis"><a href="<?= Yii::app()->request->baseUrl ?>/corega">PRÓTESIS</a></div>
     </div>
   </div>
   <div class="row">
