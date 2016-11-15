@@ -424,7 +424,7 @@ class FormaPagoEntregaNacionalForm extends CFormModel {
     }
 
     public function listDataHoras() {
-        $deltaHorario = Yii::app()->params->horarioEntrega['deltaDefecto'];
+        $deltaHorario = Yii::app()->params->horarioEntrega['deltaEntregaNacional'];
         $this->consultarHorario();
 
         if ($this->objCiudadSectorDestino !== null) {

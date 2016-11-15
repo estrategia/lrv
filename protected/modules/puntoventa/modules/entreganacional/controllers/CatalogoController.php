@@ -39,7 +39,7 @@ class CatalogoController extends ControllerEntregaNacional {
                 'msgCodigoEspecial' => array(),
                 'listCodigoEspecial' => array(),
                 'imagenBusqueda' => Yii::app()->params->busqueda['imagen']['noExito'],
-                'objSectorCiudad' => $objSectorCiudad,
+                'objSectorCiudad' => $this->objCiudadSectorDestino,
                 'codigoPerfil' => $codigoPerfil,
                 'nombreBusqueda' => 'NA',
                 'dataprovider' => null
@@ -81,7 +81,7 @@ class CatalogoController extends ControllerEntregaNacional {
                 'objCodigoEspecial',
                 'listCalificaciones',
             	'objCategoriaBI' => array('with' => array('listCategoriasTienda' => array('on' => 'listCategoriasTienda.tipoDispositivo=:dispositivo'))),
-                'listSaldos' => array('on' => 'listSaldos.codigoCiudad=:ciudad AND listSaldos.codigoSector=:sector'),
+            //    'listSaldos' => array('on' => 'listSaldos.codigoCiudad=:ciudad AND listSaldos.codigoSector=:sector'),
                 'listPrecios' => array('on' => 'listPrecios.codigoCiudad=:ciudad AND listPrecios.codigoSector=:sector'),
                 'listSaldosTerceros' => array('on' => 'listSaldosTerceros.codigoCiudad=:ciudad AND listSaldosTerceros.codigoSector=:sector')
             ),
@@ -97,12 +97,12 @@ class CatalogoController extends ControllerEntregaNacional {
         $parametrosProductos['join'] = "JOIN t_relevancia_temp_$sesion rel ON t.codigoProducto  = rel.codigoProducto ";
 
         if (!isset($_GET['ajax'])) {
-            $query = "SELECT  MIN(listPrecios.precioUnidad) minproducto, MAX(listPrecios.precioUnidad) maxproducto, MIN(listSaldosTerceros.precioUnidad) mintercero, MAX(listSaldosTerceros.precioUnidad) maxtercero ";
+            $query = "SELECT  MIN(listPrecios.precioUnidad) minproducto, MAX(listPrecios.precioUnidad) maxproducto, 0  mintercero, 0 maxtercero ";
             $query .= "FROM m_Producto t ";
-            $query .= "LEFT OUTER JOIN t_ProductosSaldos listSaldos ON (listSaldos.codigoProducto=t.codigoProducto) AND listSaldos.codigoCiudad='$objSectorCiudadOrigen->codigoCiudad' AND listSaldos.codigoSector='$objSectorCiudadOrigen->codigoSector'";
+      //      $query .= "LEFT OUTER JOIN t_ProductosSaldos listSaldos ON (listSaldos.codigoProducto=t.codigoProducto) AND listSaldos.codigoCiudad='$objSectorCiudadOrigen->codigoCiudad' AND listSaldos.codigoSector='$objSectorCiudadOrigen->codigoSector'";
             $query .= "LEFT OUTER JOIN t_ProductosPrecios listPrecios ON (listPrecios.codigoProducto=t.codigoProducto) AND listPrecios.codigoCiudad='$objSectorCiudadOrigen->codigoCiudad' AND listPrecios.codigoSector='$objSectorCiudadOrigen->codigoSector' ";
-            $query .= "LEFT OUTER JOIN t_ProductosSaldosTerceros listSaldosTerceros ON (listSaldosTerceros.codigoProducto=t.codigoProducto) AND listSaldosTerceros.codigoCiudad='$objSectorCiudadOrigen->codigoCiudad' AND listSaldosTerceros.codigoSector='$objSectorCiudadOrigen->codigoSector'";
-            $query .= "WHERE t.activo=1 AND t.codigoProducto IN ($codigosStr) AND (listSaldos.saldoUnidad > 0 OR listSaldosTerceros.saldoUnidad > 0) ";
+      //      $query .= "LEFT OUTER JOIN t_ProductosSaldosTerceros listSaldosTerceros ON (listSaldosTerceros.codigoProducto=t.codigoProducto) AND listSaldosTerceros.codigoCiudad='$objSectorCiudadOrigen->codigoCiudad' AND listSaldosTerceros.codigoSector='$objSectorCiudadOrigen->codigoSector'";
+            $query .= "WHERE t.activo=1 AND t.codigoProducto IN ($codigosStr) ";
 
             $resultadoRango = Yii::app()->db->createCommand($query)->queryRow();
             $formFiltro->setRango($resultadoRango['minproducto'], $resultadoRango['maxproducto'], $resultadoRango['mintercero'], $resultadoRango['maxtercero']);
@@ -169,41 +169,51 @@ class CatalogoController extends ControllerEntregaNacional {
         			break;
         			//    }
         		}
-        	}
-        	 
-        	 
-        	foreach($puntoVenta[4] as $saldos){
-        		$listaProductosSaldos[$saldos->CODIGO_PRODUCTO] = $saldos->SALDO;
-        	}
-        	 
-        	foreach ($listProductos as $producto){
-        		if(isset($listaProductosSaldos[$producto->codigoProducto]) ){
-        			if($listaProductosSaldos[$producto->codigoProducto] > 0){
-        				$resultadoFinal[] = $producto;
+        		
+        		foreach($puntoVenta[4] as $saldos){
+        			$listaProductosSaldos[$saldos->CODIGO_PRODUCTO] = $saldos->SALDO;
+        		}
+        		
+        		foreach ($listProductos as $producto){
+        			if(isset($listaProductosSaldos[$producto->codigoProducto]) ){
+        				if($listaProductosSaldos[$producto->codigoProducto] > 0){
+        					$producto->saldosDisponibles = $listaProductosSaldos[$producto->codigoProducto];
+        					$resultadoFinal[] = $producto;
+        				}
         			}
         		}
+        		
+        		$pagina = 24;
+        		if (isset($_GET['pageSize']) and is_numeric($_GET['pageSize'])) {
+        			$pagina = $_GET['pageSize'];
+        		}
+        		
+        		if (!empty($listProductos)) {
+        			$dataProvider = new CArrayDataProvider($listProductos, array(
+        					'id' => 'codigoProducto',
+        					'sort' => array(
+        							'attributes' => array(
+        									'descripcionProducto'
+        							),
+        					),
+        					'pagination' => array(
+        							'pageSize' => $pagina,
+        					),
+        			));
+        		}
+        		
+        	}else{
+        		$this->render('listaProductos', array(
+        				'msgCodigoEspecial' => array(),
+        				'listCodigoEspecial' => array(),
+        				'imagenBusqueda' => Yii::app()->params->busqueda['imagen']['noExito'],
+        				'objSectorCiudad' => $this->objCiudadSectorDestino,
+        				'codigoPerfil' => $codigoPerfil,
+        				'nombreBusqueda' => 'NA',
+        				'dataprovider' => null
+        		));
+        		Yii::app()->end();
         	}
-        
-        $pagina = 24;
-        if (isset($_GET['pageSize']) and is_numeric($_GET['pageSize'])) {
-            $pagina = $_GET['pageSize'];
-        }
-
-        if (!empty($listProductos)) {
-            $dataProvider = new CArrayDataProvider($listProductos, array(
-                'id' => 'codigoProducto',
-                'sort' => array(
-                    'attributes' => array(
-                        'descripcionProducto'
-                    ),
-                ),
-                'pagination' => array(
-                    'pageSize' => $pagina,
-                ),
-            ));
-        }
-        	 
-        
         } catch (Exception $exc) {
         	Yii::log($exc->getMessage() . "\n" . $exc->getTraceAsString(), CLogger::LEVEL_ERROR, 'application');
         	//  $this->listPuntosVenta = array(0 => 0, 1 => 'Error al consultar disponibilidad de productos');
@@ -212,7 +222,6 @@ class CatalogoController extends ControllerEntregaNacional {
         			'response' => 'No se puede consultar la totalidad del pedido'
         	));
         }
-        
         
         
         /*******************************************************************************************************/
@@ -295,10 +304,9 @@ class CatalogoController extends ControllerEntregaNacional {
     
     public function actionProducto($producto) {
     //	$this->active = "buscar";
-        $objSectorCiudad = $this->objSectorCiudad;
+        $objSectorCiudad = $this->objCiudadSectorDestino;
 
         if ($objSectorCiudad == null) {
-            Yii::app()->session[Yii::app()->params->sesion['redireccionUbicacion']] = null;
             $objProducto = Producto::model()->find(array(
                 'with' => array('listImagenesGrandes', 'objDetalle', 'objCodigoEspecial', 'listCalificaciones' => array('with' => 'objUsuario')),
                 'condition' => 't.activo=:activo AND t.codigoProducto=:codigo',
@@ -314,7 +322,7 @@ class CatalogoController extends ControllerEntregaNacional {
                     'objDetalle',
                     'objCodigoEspecial',
                     'listCalificaciones' => array('with' => 'objUsuario'),
-                    'listSaldos' => array('on' => 'listSaldos.codigoCiudad=:ciudad AND listSaldos.codigoSector=:sector OR listSaldos.idProductoSaldos IS NULL'),
+                  //  'listSaldos' => array('on' => 'listSaldos.codigoCiudad=:ciudad AND listSaldos.codigoSector=:sector OR listSaldos.idProductoSaldos IS NULL'),
                     'listPrecios' => array('on' => 'listPrecios.codigoCiudad=:ciudad AND listPrecios.codigoSector=:sector OR listPrecios.idProductoPrecios IS NULL'),
                     'listSaldosTerceros' => array('on' => 'listSaldosTerceros.codigoCiudad=:ciudad AND listSaldosTerceros.codigoSector=:sector OR listSaldosTerceros.idProductoSaldo IS NULL')
                 ),
@@ -335,8 +343,59 @@ class CatalogoController extends ControllerEntregaNacional {
         if ($objProducto == null) {
             throw new CHttpException(404, 'Producto no existe.');
         }
+        
+        // verificar cantidad máxima de saldos.
+        
+        /*********************************/
 
-        $codigoPerfil = Yii::app()->shoppingCartVitalCall->getCodigoPerfil();
+        $productosBusqueda = $listaProductosSaldos =  array();
+        	$productosBusqueda[] = array(
+        			"CODIGO_PRODUCTO" => $objProducto->codigoProducto,
+        			"ID_PRODUCTO" => $objProducto->codigoProducto,
+        			"CANTIDAD" => 1,
+        			"DESCRIPCION" => $objProducto->descripcionProducto,
+        	);
+     
+         
+        try {
+        	$client = new SoapClient(null, array(
+        			'location' => Yii::app()->params->webServiceUrl['serverLRV'],
+        			'uri' => "",
+        			'trace' => 1
+        	));
+        
+        	$puntosVenta = $client->__soapCall("LRVConsultarSaldoMovil", array(
+        			'productos' => $productosBusqueda,
+        			'ciudad' => $this->objPuntoVentaDestino->codigoCiudad,
+        			'sector' => $this->objPuntoVentaDestino->idSectorLRV
+        	));
+        
+        	$puntoVenta = null;
+        
+        	foreach ($puntosVenta[1] as $pdv) {
+        		//   if ($pdv[1] == $pdvDestino->idComercial) {
+        		$puntoVenta = $pdv;
+        		break;
+        		//    }
+        	}
+        	
+        	foreach($puntoVenta[4] as $saldos){
+        		$listaProductosSaldos[$saldos->CODIGO_PRODUCTO] = $saldos->SALDO;
+        	}
+        	
+        	if(isset($listaProductosSaldos[$objProducto->codigoProducto]) ){
+        		if($listaProductosSaldos[$objProducto->codigoProducto] > 0){
+        			$objProducto->saldosDisponibles = $listaProductosSaldos[$objProducto->codigoProducto];
+        		}
+        	}
+        		
+        }catch(Exception $e){
+        	
+        }
+        
+        
+        /*********************************/
+        $codigoPerfil = Yii::app()->shoppingCartNationalSale->getCodigoPerfil();
         $objCalificacion = null;
 
         if (!Yii::app()->user->isGuest) {
@@ -384,19 +443,8 @@ class CatalogoController extends ControllerEntregaNacional {
             
         }
 
-        if ($this->isMobile) {
-            $this->render('productoDetalle', array(
-                'objProducto' => $objProducto,
-                'objPrecio' => new PrecioProducto($objProducto, $objSectorCiudad, $codigoPerfil),
-                'objSectorCiudad' => $objSectorCiudad,
-                'codigoPerfil' => $codigoPerfil,
-                'listaPuntoVenta' => $listaPuntoVenta,
-                'objCalificacion' => $objCalificacion,
-                'listRelacionados' => $listRelacionados,
-                'tipoBusqueda' => Yii::app()->params->busqueda['tipo']['buscador'],
-            ));
-        } else {
-            $objCategoria = CategoriasCategoriaTienda::model()->find(array(
+   
+         $objCategoria = CategoriasCategoriaTienda::model()->find(array(
                 'with' => array('objCategoriaTienda'),
                 'condition' => 't.idCategoriaBI=:categoriabi AND objCategoriaTienda.tipoDispositivo=:dispositivo',
                 'params' => array(
@@ -418,7 +466,7 @@ class CatalogoController extends ControllerEntregaNacional {
                 );
             }
 
-            $objFormCalificacion = new CalificacionForm;
+         
             $this->render('d_productoDetalle', array(
                 'objProducto' => $objProducto,
                 'objPrecio' => new PrecioProducto($objProducto, $objSectorCiudad, $codigoPerfil),
@@ -428,9 +476,8 @@ class CatalogoController extends ControllerEntregaNacional {
                 'objCalificacion' => $objCalificacion,
                 'listRelacionados' => $listRelacionados,
                 'tipoBusqueda' => Yii::app()->params->busqueda['tipo']['buscador'],
-                'objFormCalificacion' => $objFormCalificacion
             ));
-        }
+       
     }
     
     
@@ -456,18 +503,15 @@ class CatalogoController extends ControllerEntregaNacional {
     					'objCodigoEspecial',
     					'listCalificaciones' => array('with' => 'objUsuario'),
     				//	'listSaldos' => array( 'on' => '(listSaldos.saldoUnidad>:saldo AND listSaldos.codigoCiudad=:ciudad AND listSaldos.codigoSector=:sector) OR (listSaldos.saldoUnidad IS NULL AND listSaldos.codigoCiudad IS NULL AND listSaldos.codigoSector IS NULL)'),
-    					'listSaldosCedi' => array('on' => '(codigoCedi =:codigoCedi)'),
     					'listPrecios' => array('condition' => '(listPrecios.codigoCiudad=:ciudad AND listPrecios.codigoSector=:sector) OR (listPrecios.codigoCiudad IS NULL AND listPrecios.codigoSector IS NULL)'),
-    					'listSaldosTerceros' => array('condition' => '(listSaldosTerceros.saldoUnidad>:saldo AND listSaldosTerceros.codigoCiudad=:ciudad AND listSaldosTerceros.codigoSector=:sector) OR (listSaldosTerceros.codigoCiudad IS NULL AND listSaldosTerceros.codigoSector IS NULL)')
+    				//	'listSaldosTerceros' => array('condition' => '(listSaldosTerceros.saldoUnidad>:saldo AND listSaldosTerceros.codigoCiudad=:ciudad AND listSaldosTerceros.codigoSector=:sector) OR (listSaldosTerceros.codigoCiudad IS NULL AND listSaldosTerceros.codigoSector IS NULL)')
     			),
-    			'condition' => 't.ventaVirtual=:venta AND t.activo=:activo AND t.codigoProducto=:codigo  AND (listSaldosTerceros.codigoCiudad IS NOT NULL OR (listSaldosCedi.saldoUnidad>:saldo AND listPrecios.codigoCiudad IS NOT NULL))',
+    			'condition' => 't.ventaVirtual=:venta AND t.activo=:activo AND t.codigoProducto=:codigo AND listPrecios.codigoCiudad IS NOT NULL',
     			'params' => array(
     					':venta' => 1,
     					':activo' => 1,
     					':codigo' => $producto,
-    					':saldo' => 0,
     					':ciudad' => $objSectorCiudad->codigoCiudad,
-    					':codigoCedi' => $objSectorCiudad->objCiudad->codigoSucursal,
     					':sector' => $objSectorCiudad->codigoSector,
     			),
     	));
@@ -476,9 +520,9 @@ class CatalogoController extends ControllerEntregaNacional {
     		throw new CHttpException(404, 'Producto de bodega no disponible.');
     	}
     
-    	$codigoPerfil = Yii::app()->shoppingCartVitalCall->getCodigoPerfil();
+    	$codigoPerfil = Yii::app()->shoppingCartNationalSale->getCodigoPerfil();
     	$cantidadCarro = 0;
-    	$position = Yii::app()->shoppingCartVitalCall->itemAt($producto);
+    	$position = Yii::app()->shoppingCartNationalSale->itemAt($producto);
     
     	if ($position != null) {
     		$cantidadCarro = $position->getQuantity();

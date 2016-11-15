@@ -12,16 +12,67 @@
         </b>
         <?php echo $objCompra->fechaCompra ?>
     </p>
-    <?php if ($objCompra->tipoEntrega == Yii::app()->params->entrega['tipo']['domicilio']): ?>
         <p style="text-align:right;font-size:14px">
             <b>Hora de entrega: </b>
             <span style="color:#ff0000"><?php echo $objCompra->fechaEntrega ?></span>
         </p>
-    <?php endif; ?>
         <h1 style="text-align:left;color:#666666;font-family:Arial;font-size:22px">¡Hola! </h1> 
-        <h1 style="text-align:left;color:#666666;font-family:Arial;font-size:25px"><?php echo utf8_decode($nombreUsuario)?></h1><br/>
+        <h1 style="text-align:left;color:#666666;font-family:Arial;font-size:25px"><?php echo utf8_decode($objCompra->objComprasRemitente->nombreRemitente)?></h1><br/>
     <h1 style="text-align:left;color:#ff0000;font-family:Arial;font-size:20px">Gracias por su compra</h1>
     <br/>
+    
+    <?php // if($objCompra->objComprasRemitente->recogida == 1):?>
+    	<table cellpadding="10" style="font-size:14px;border-collapse:collapse;border-spacing:0px;width:99.9%;border-bottom:1px solid #dddddd;margin-bottom:24px">
+            <tbody>
+                <tr>
+                    <td width="50%" style="border-bottom:1px solid #dddddd;padding:0" colspan="2">
+                        <h4 style="color:#666666"> Datos de remitente</h4>
+                    </td>
+                </tr>
+              <!--  <tr>
+                    <td height="3" style="background-color:#a40014;font-size:3px;line-height:3px;padding:0;height:3px;width:100%" colspan="2">
+                        <p style="margin:0"> </p>
+                    </td>
+                </tr> -->
+                <tr>
+                    <td valign="top" style="border-left:1px solid #dddddd;border-right:1px solid #dddddd;border-bottom:1px solid #dddddd;color:#444444;background:#f9f9f9">
+                        <p>
+                            <b>Nombre::</b>
+                            <?php echo $objCompra->objComprasRemitente->nombreRemitente ?>
+                        </p>
+                        <p>
+                            <b>Ciudad:</b>
+                            <?php echo $this->objCiudadSectorOrigen->objCiudad->nombreCiudad ?>
+                        </p>
+                        <p>
+                            <b>Teléfono:</b>
+                            <?php echo $objCompra->objComprasRemitente->telefonoRemitente ?>
+                        </p>
+                        <p>
+                            <b>Forma de pago:</b>
+                            <?php echo $objFormaPago->formaPago ?>
+                        </p>
+                    </td>
+                    <td width="50%" valign="top" style="border-right:1px solid #dddddd;color:#555555;background:#f9f9f9">
+                        <p>
+                            <b>Recogida:</b>
+                            <?php echo ($objCompra->objComprasRemitente->recogida == 1 )? "Si":"No" ?>
+                        </p>
+                        <p>
+                            <b>Dirección:</b>
+                            <?php echo $objCompra->objComprasRemitente->direccionRemitente ?>
+                        </p>
+                        <p>
+                            <b>Barrio:</b>
+                            <?php echo $objCompra->objComprasRemitente->barrioRemitente ?>
+                        </p>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    
+    <?php // endif;?>
+    
     <?php if ($objCompra->tipoEntrega == Yii::app()->params->entrega['tipo']['domicilio']): ?>
         <table cellpadding="10" style="font-size:14px;border-collapse:collapse;border-spacing:0px;width:99.9%;border-bottom:1px solid #dddddd;margin-bottom:24px">
             <tbody>
@@ -58,10 +109,6 @@
                         <p>
                             <b>Teléfono:</b>
                             <?php echo $objCompraDireccion->telefono ?>
-                        </p>
-                        <p>
-                            <b>Forma de pago:</b>
-                            <?php echo $objFormaPago->formaPago ?>
                         </p>
                     </td>
                 </tr>

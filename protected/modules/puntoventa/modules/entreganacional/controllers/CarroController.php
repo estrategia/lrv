@@ -48,6 +48,7 @@ class CarroController extends ControllerEntregaNacional{
 		$producto = Yii::app()->getRequest()->getPost('producto', null);
 		$cantidadU = Yii::app()->getRequest()->getPost('cantidadU', null);
 		$cantidadF = Yii::app()->getRequest()->getPost('cantidadF', null);
+		$maximo = Yii::app()->getRequest()->getPost('maximo', null);
 		$puntoVenta = Yii::app()->session[Yii::app()->params->puntoventa['sesion']['pdv']];
 		
 		$objPuntoVenta = PuntoVenta::model()->find(array(
@@ -88,12 +89,12 @@ class CarroController extends ControllerEntregaNacional{
 			Yii::app()->end();
 		}
 	
-		$objSaldo = $objProducto->getSaldo($objPuntoVenta->codigoCiudad, $objPuntoVenta->idSectorLRV);
+// 		$objSaldo = $objProducto->getSaldo($objPuntoVenta->codigoCiudad, $objPuntoVenta->idSectorLRV);
 	
-		if ($objSaldo === null) {
-			echo CJSON::encode(array('result' => 'error', 'response' => 'Producto no disponible'));
-			Yii::app()->end();
-		}
+// 		if ($objSaldo === null) {
+// 			echo CJSON::encode(array('result' => 'error', 'response' => 'Producto no disponible'));
+// 			Yii::app()->end();
+// 		}
 	
 		$idPosition = $producto;
 	
@@ -105,16 +106,18 @@ class CarroController extends ControllerEntregaNacional{
 				$cantidadCarroUnidad = $position->getQuantityUnit();
 			}
 			//si hay saldo, agrega a carro, sino consulta bodega
-			if ($cantidadCarroUnidad + $cantidadU <= $objSaldo->saldoUnidad) {
+			if ($cantidadCarroUnidad + $cantidadU <= $maximo) {
+				$objProducto->saldosDisponibles = $maximo;
 				$objProductoCarro = new ProductoCarro($objProducto);
 				Yii::app()->shoppingCartNationalSale->put($objProductoCarro, false, $cantidadU);
 			} else {
-				echo CJSON::encode(array('result' => 'error', 'response' => "La cantidad solicitada no está disponible en este momento. Saldos disponibles: $objSaldo->saldoUnidad unidades"));
+				echo CJSON::encode(array('result' => 'error', 'response' => "La cantidad solicitada no está disponible en este momento. Saldos disponibles: $maximo"));
 				Yii::app()->end();
 			}
 		}
 	
 		if ($cantidadF > 0) {
+			$objProducto->saldosDisponibles = $maximo;
 			$objProductoCarro = new ProductoCarro($objProducto);
 			Yii::app()->shoppingCartNationalSale->put($objProductoCarro, true, $cantidadF);
 		}
@@ -232,15 +235,15 @@ class CarroController extends ControllerEntregaNacional{
 			Yii::app()->end();
 		}
 	
-		$objSaldo = $objProducto->getSaldo($objSectorCiudad->codigoCiudad, $objSectorCiudad->codigoSector);
+// 		$objSaldo = $objProducto->getSaldo($objSectorCiudad->codigoCiudad, $objSectorCiudad->codigoSector);
 	
-		if ($objSaldo === null) {
-			echo CJSON::encode(array('result' => 'error', 'response' => array(
-					'message' => 'Producto no disponible',
-					'carroHTML' => $this->renderPartial($carroVista, null, true),
-			)));
-			Yii::app()->end();
-		}
+// 		if ($objSaldo === null) {
+// 			echo CJSON::encode(array('result' => 'error', 'response' => array(
+// 					'message' => 'Producto no disponible',
+// 					'carroHTML' => $this->renderPartial($carroVista, null, true),
+// 			)));
+// 			Yii::app()->end();
+// 		}
 	
 		$agregarU = false;
 		$agregarF = false;
@@ -249,11 +252,12 @@ class CarroController extends ControllerEntregaNacional{
 	
 		if ($cantidadU >= 0) {
 			//si hay saldo, agrega a carro, sino consulta bodega
-			if ($cantidadU <= $objSaldo->saldoUnidad) {
+			if ($cantidadU <= $position->objProducto->saldosDisponibles) {
 				$agregarU = true;
 			} else {
 				echo CJSON::encode(array('result' => 'error', 'response' => array(
-							'message' => "La cantidad solicitada no está disponible en este momento. Saldos disponibles: $objSaldo->saldoUnidad unidades",
+							'message' => "La cantidad solicitada no está disponible en este momento. Saldos disponibles: ".$position->objProducto->saldosDisponibles." unidades",
+							'maximo' => $position->objProducto->saldosDisponibles,
 							//	'carroHTML' => $this->renderPartial($carroVista, null, true),
 					)));
 					Yii::app()->end();
@@ -907,9 +911,15 @@ class CarroController extends ControllerEntregaNacional{
 						}
 						
 						$objCompraRemision = Compras::model()->findByPk($objCompra->idCompra, array("with" => "objPuntoVenta"));
-						
+						$contenidoCorreo = $this->renderPartial('application.modules.callcenter.views.pedido.compraCorreo', array('objCompra' => $objCompraRemision), true, true);
+						$htmlCorreo = $this->renderPartial('application.views.common.correo', array('contenido' => $contenidoCorreo), true, true);
+						try {
+							sendHtmlEmail($result[2], Yii::app()->params->asunto['pedidoRemitido'], $htmlCorreo);
+						} catch (Exception $ce) {
+							Yii::log("Error enviando correo de remision automatica #$objCompra->idCompra\n" . $ce->getMessage() . "\n" . $ce->getTraceAsString(), CLogger::LEVEL_INFO, 'application');
+						}
 					} else {
-						$objCompra->idEstadoCompra = Yii::app()->params->callcenter['estadoCompra']['estado']['subasta'];
+						$objCompra->idEstadoCompra = Yii::app()->params->callcenter['estadoCompra']['estado']['pendiente'];
 						if (!$objCompra->save()) {
 							throw new Exception("Error al guardar compra [1]" . $objCompra->validateErrorsResponse());
 						}
@@ -917,13 +927,7 @@ class CarroController extends ControllerEntregaNacional{
 				}
 				
 				/***********************************************VER SI SE MANEJA LA MISMA PLANTILLA********************************************************/
-				$contenidoCorreo = $this->renderPartial('application.modules.callcenter.views.pedido.compraCorreo', array('objCompra' => $objCompraRemision), true, true);
-				$htmlCorreo = $this->renderPartial('application.views.common.correo', array('contenido' => $contenidoCorreo), true, true);
-				try {
-					sendHtmlEmail($result[2], Yii::app()->params->asunto['pedidoRemitido'], $htmlCorreo);
-				} catch (Exception $ce) {
-					Yii::log("Error enviando correo de remision automatica #$objCompra->idCompra\n" . $ce->getMessage() . "\n" . $ce->getTraceAsString(), CLogger::LEVEL_INFO, 'application');
-				}
+				
 				
 				/********************************************************************************************************/
 			} catch (SoapFault $exc) {

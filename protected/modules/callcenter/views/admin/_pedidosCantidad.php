@@ -12,4 +12,5 @@
 <a class="btn btn-xs btn-info" href="<?php echo $this->createUrl('/callcenter/admin/pedidos', array('parametro' => 'tercero')) ?>">Terceros [<?php echo $arrCantidadPedidos['terceros'] ?>]</a>
 <a class="btn btn-xs btn-warning" href="<?php echo $this->createUrl('/callcenter/admin/pedidos', array('parametro' => 'seguimiento')) ?>">Seguimiento[<?php echo $arrCantidadPedidos['seguimiento'] ?>]</a>
 <a class="btn btn-xs btn-danger" href="<?php echo $this->createUrl('/callcenter/admin/pedidos', array('parametro' => 'enlinea')) ?>">Pagos en Linea [<?php echo $arrCantidadPedidos['enlinea'] ?>]</a>
+<a class="btn btn-xs btn-danger" href="<?php echo $this->createUrl('/callcenter/admin/pedidos', array('parametro' => 'entregaNacional')) ?>">Entrega Nacional [<?php echo $arrCantidadPedidos['entregaNacional'] ?>]</a>
 <a class="btn btn-xs btn-info" href="<?php echo $this->createUrl('/callcenter/admin/pedidos', array('parametro' => 'busqueda')) ?>">Búsquedas..</a>

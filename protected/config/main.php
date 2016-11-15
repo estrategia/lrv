@@ -250,7 +250,8 @@ return array(
                11 => "Noviembre",
                12 => "Diciembre"),
         'horarioEntrega' => array(
-            'deltaDefecto' => '0 1:00:0.000000',
+            'deltaDefecto' => '0 1:00:0.000000', // testing
+        	'deltaEntregaNacional' => '0 2:00:0.000000', // testing
             'deltaHorarios' => array(
                 '76001' => array(
                     'fechaInicio' => '2016-04-21 00:00:00',

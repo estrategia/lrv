@@ -739,6 +739,19 @@ class Compras extends CActiveRecord {
         }
         $resultAux4 = Yii::app()->db->createCommand($query4)->queryRow(true);
         $result['enlinea'] = $resultAux4['cantidad'];
+        
+        $query5 = "";
+        if ($idOperador == null) {
+        	$query5 = "SELECT COUNT(c.idCompra) cantidad
+            FROM t_Compras c 
+            WHERE c.idTipoVenta='" . Yii::app()->params->tipoVenta['nacional'] . "' AND c.fechaCompra>='$fecha' ";
+        } else {
+        	$query5 = "SELECT COUNT(c.idCompra) cantidad
+            FROM t_Compras c 
+            WHERE idTipoVenta='" . Yii::app()->params->tipoVenta['nacional'] . "' AND c.idOperador=$idOperador AND c.fechaCompra>='$fecha' ";
+        }
+        $resultAux4 = Yii::app()->db->createCommand($query5)->queryRow(true);
+        $result['entregaNacional'] = $resultAux4['cantidad'];
 
         return $result;
     }

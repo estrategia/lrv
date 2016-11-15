@@ -132,6 +132,20 @@ class AdminController extends ControllerOperator {
                     'dataProvider' => $model->search(array('order' => 't.fechaCompra DESC', 'formaPago' => Yii::app()->params->formaPago['pasarela']['idPasarela'], 'operadorPedido' => true)),
                     'arrCantidadPedidos' => Compras::cantidadComprasPorEstado($fecha)
                 ));
+            } else if ($parametro == 'entregaNacional') {
+                $model = new Compras('search');
+                $model->unsetAttributes();
+                if (isset($_GET['Compras']))
+                    $model->attributes = $_GET['Compras'];
+
+                $fecha = Compras::calcularFechaVisualizar();
+                $model->fechaCompra = $fecha;
+
+                $this->render('pedidos', array(
+                    'model' => $model,
+                    'dataProvider' => $model->search(array('order' => 't.fechaCompra DESC', 'idTipoVenta' => Yii::app()->params->tipoVenta['nacional'], 'operadorPedido' => true)),
+                    'arrCantidadPedidos' => Compras::cantidadComprasPorEstado($fecha)
+                ));
             }else {
                 echo "NOT IMPLEMENTED YET";
             }

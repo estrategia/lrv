@@ -41,6 +41,7 @@ class Producto extends CActiveRecord {
      * @return string the associated database table name
      */
     public $id;
+    public $saldosDisponibles;
 
     public function tableName() {
         return 'm_Producto';

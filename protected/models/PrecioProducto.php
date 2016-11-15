@@ -95,9 +95,10 @@ class PrecioProducto extends Precio {
                 
                 if ($consultaPrecio) {
                 	$listSaldosBodega = ProductosSaldosCedi::model()->findAll(array(
-                			'condition' => '(codigoProducto=:producto AND codigoCedi=:codigoCedi',
+                			'condition' => '(codigoProducto=:producto AND codigoCedi=:codigoCedi)',
                 			'params' => array(
-                					':codigoCedi' => $objProducto->objCiudad->codigoSucursal,
+                					':codigoCedi' => $objCiudadSector->objCiudad->codigoSucursal,
+                					':producto' => $objProducto->codigoProducto,
                 			),
                 	));
                 } else {

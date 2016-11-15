@@ -49,7 +49,7 @@
             </div>
             <div class="line-bottom">
                 <div class="descripcion-grid text-truncate">
-                    <span><?php echo $data->presentacionProducto; ?></span>
+                    <span><?php echo $data->presentacionProducto; ?></span> &nbsp;&nbsp;  Unid. Disp: <?php echo $data->saldosDisponibles?>
                 </div>
                 <div class="descripcion-lineal" style="display:none">
                     <?php echo $data->presentacionProducto ?>
@@ -101,7 +101,7 @@
                         </div>
                     </div>
                     <div class="col-xs-6 not_padding">
-                        <?php echo CHtml::link('<div class="btn btn-primary btn-block btn-xs">Añadir <img src="' . Yii::app()->baseUrl . '/images/desktop/button-carrito.png" alt=""></div>', '#', array('data-producto' => $data->codigoProducto, 'data-cargar-nacional' => 1, 'data-id' => $idUnico)); ?>
+                        <?php echo CHtml::link('<div class="btn btn-primary btn-block btn-xs">Añadir <img src="' . Yii::app()->baseUrl . '/images/desktop/button-carrito.png" alt=""></div>', '#', array('data-producto' => $data->codigoProducto, 'data-cargar-nacional' => 1, 'data-id' => $idUnico, 'data-max' =>  $data->saldosDisponibles)); ?>
                     </div>
                 </div>
              

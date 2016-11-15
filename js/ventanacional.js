@@ -24,8 +24,6 @@ function buscarProductos(text, obj, request) {
     });
 }
 
-
-
 $(document).on('click', 'button[data-action="asignar-pdv-entrega"]', function () {
     $.ajax({
         type: 'POST',
@@ -104,8 +102,10 @@ $("#busqueda-buscar").keypress(function (event) {
 $(document).on('click', "a[data-cargar-nacional='1'], a[data-cargar-nacional='2']", function () {
     var tipo = $(this).attr('data-cargar-nacional');
     var pedido = $('#btn-pedido-buscar').attr('data-pedido');
+    var max = $(this).attr('data-max');
     var data = {tipo: tipo, compra: pedido};
 
+    data['maximo'] = max;
     if (tipo == 1) {
         var producto = $(this).attr('data-producto');
         var cantidadU = $('#cantidad-producto-unidad-' + producto).val();
@@ -234,41 +234,38 @@ $(document).on('click', "button[data-role='pdvgeobarrio']", function () {
 
 $(document).on('click', "button[data-role='disminuir-cantidad']", function() {
     var codigoProducto = $(this).attr('data-producto');
-    var id = $(this).attr('data-id');
-    var valorUnidad = $(this).attr('data-precio');
-    var nro = $("#cantidad-producto-unidad-" + codigoProducto + "-" + id).val();
+   var valorUnidad = $(this).attr('data-precio');
+    var nro = $("#cantidad-producto-unidad-" + codigoProducto ).val();
     nro--;
     if (nro < 0) {
         nro = 0;
     }
     $("#subtotal-producto-unidad-" + codigoProducto).html("$" + format(nro * valorUnidad));
-    $("#cantidad-producto-unidad-" + codigoProducto + "-" + id).val(nro);
+    $("#cantidad-producto-unidad-" + codigoProducto ).val(nro);
 });
 
 $(document).on('change', "input[data-role='validar-cantidad-unidad']", function() {
     var codigoProducto = $(this).attr('data-producto');
     var valorUnidad = $(this).attr('data-precio');
-    var id = $(this).attr('data-id');
     var nro = $(this).val();
 
     if (nro < 0) {
         nro = 0;
     }
     $("#subtotal-producto-unidad-" + codigoProducto).html("$" + format(nro * valorUnidad));
-    $("#cantidad-producto-unidad-" + codigoProducto + "-" + id).val(nro);
+    $("#cantidad-producto-unidad-" + codigoProducto).val(nro);
 });
 
 $(document).on('click', "button[data-role='aumentar-cantidad']", function() {
     var codigoProducto = $(this).attr('data-producto');
     var valorUnidad = $(this).attr('data-precio');
-    var id = $(this).attr('data-id');
-    var nro = $("#cantidad-producto-unidad-" + codigoProducto + "-" + id).val();
+    var nro = $("#cantidad-producto-unidad-" + codigoProducto).val();
     nro++;
     if (nro < 0) {
         nro = 0;
     }
     $("#subtotal-producto-unidad-" + codigoProducto).html("$" + format(nro * valorUnidad));
-    $("#cantidad-producto-unidad-" + codigoProducto + "-" + id).val(nro);
+    $("#cantidad-producto-unidad-" + codigoProducto ).val(nro);
 });
 
 
@@ -277,19 +274,21 @@ $(document).on('click', "button[data-role='aumentar-cantidad']", function() {
 $(document).on('change', "input[data-role='modificarcarro']", function() {
     var cantidad = parseInt($(this).val());
     var position = $(this).attr('data-position');
+    var maximo = $(this).attr('data-max');
     var modificar = $(this).attr('data-modificar');
 
     if (isNaN(cantidad) || cantidad < 1) {
         cantidad = 1;
     }
     $(this).val(cantidad);
-    modificarCarro(position, modificar);
+    modificarCarro(position, modificar,maximo);
 });
 
 $(document).on('click', "button[data-role='modificarcarro']", function() {
     var position = $(this).attr('data-position');
     var modificar = $(this).attr('data-modificar');
     var operacion = $(this).attr('data-operation');
+    var maximo = $(this).attr('data-max');
     var cantidad = 0;
     var id = "";
 
@@ -325,14 +324,16 @@ $(document).on('click', "button[data-role='modificarcarro']", function() {
     }
 
     $(id).val(cantidad);
-    modificarCarro(position, modificar);
+    modificarCarro(position, modificar, maximo);
+    
 });
 
 
-function modificarCarro(position, modificar) {
+function modificarCarro(position, modificar, maximo) {
     var data = {
         modificar: modificar,
-        position: position
+        position: position,
+        maximo:maximo
     };
 
     if (modificar == 1) {
@@ -406,7 +407,10 @@ function modificarCarro(position, modificar) {
             } else {
                 $('#div-carro').html(data.response.carroHTML);
                 $('#div-carro').trigger("create");
-                alert(data.response.message);
+                if(data.response.maximo){
+                	$('#cantidad-producto-unidad-' + position).val(data.response.maximo)
+                }
+                bootbox.alert(data.response.message);
             }
 
         },
@@ -450,6 +454,59 @@ $(document).on('click', "a[data-eliminar='1'], a[data-eliminar='2'], a[data-elim
     });
 
 });
+
+
+function disminuirCantidadFraccionado(codigoProducto, numeroFracciones, unidadFraccionamiento, valorFraccionado, valorUnidad, idUnico) {
+    var nro = $("#cantidad-producto-fraccion-" + codigoProducto ).val();
+    nro--;
+    if (nro < 0) {
+        var nro = $("#cantidad-producto-unidad-" + codigoProducto ).val();
+        nro--;
+        if (nro < 0) {
+            nro = 0;
+        }
+        $("#cantidad-producto-unidad-" + codigoProducto).val(nro);
+        $("#subtotal-producto-unidad-" + codigoProducto).html("$" + format(nro * valorUnidad));
+        nro = (numeroFracciones / unidadFraccionamiento - 1);
+    }
+    $("#subtotal-producto-fraccion-" + codigoProducto).html("$" + format(nro * valorFraccionado));
+    $("#cantidad-producto-fraccion-" + codigoProducto).val(nro);
+}
+
+function aumentarCantidadFraccionado(codigoProducto, numeroFracciones, unidadFraccionamiento, valorFraccionado, valorUnidad, idUnico) {
+    var nro = $("#cantidad-producto-fraccion-" + codigoProducto).val();
+    nro++;
+    if ((nro * unidadFraccionamiento) == numeroFracciones) {
+        var nro = $("#cantidad-producto-unidad-" + codigoProducto).val();
+        nro++;
+        $("#cantidad-producto-unidad-" + codigoProducto ).val(nro);
+        $("#subtotal-producto-unidad-" + codigoProducto).html("$" + format(nro * valorUnidad));
+        nro = 0;
+    }
+    $("#subtotal-producto-fraccion-" + codigoProducto).html("$" + format(nro * valorFraccionado));
+    $("#cantidad-producto-fraccion-" + codigoProducto).val(nro);
+}
+
+function validarCantidadFraccionado(codigoProducto, numeroFracciones, unidadFraccionamiento, valorFraccionado, valorUnidad, idUnico) {
+    var nroFracciones = $("#cantidad-producto-fraccion-" + codigoProducto ).val();
+    var nroUnidades = $("#cantidad-producto-unidad-" + codigoProducto ).val();
+
+
+    if (nroFracciones < 0) {
+        nroFracciones = 0;
+    }
+    if ((nroFracciones * unidadFraccionamiento) >= numeroFracciones) {
+        var nroUnidadesAdicionales = Math.floor((nroFracciones * unidadFraccionamiento) / numeroFracciones);
+        nroUnidades = nroUnidades * 1 + nroUnidadesAdicionales;
+        $("#cantidad-producto-unidad-" + codigoProducto ).val(nroUnidades);
+        $("#subtotal-producto-unidad-" + codigoProducto).html("$" + format(nroUnidades * valorUnidad));
+        nroFracciones = (nroFracciones * unidadFraccionamiento) % numeroFracciones;
+    }
+    $("#subtotal-producto-fraccion-" + codigoProducto).html("$" + format(nroFracciones * valorFraccionado));
+    $("#cantidad-producto-fraccion-" + codigoProducto).val(nroFracciones);
+}
+
+
 
 $(document).on('click', "a[data-role='carrovaciar-entrega']", function() {
     $.ajax({
@@ -638,6 +695,18 @@ $(document).on('click', "input[name='FormaPagoEntregaNacionalForm[recogida]']", 
     } else {
     	$("#recogida").addClass('display-none');
     }
+});
+$(document).ready(function() {
+	$('.ad-gallery').adGallery({
+	    loader_image: requestUrl + '/libs/ad-gallery/loader.gif',
+	    update_window_hash: false,
+	    width: 400,
+	    height: 300,
+	    thumb_opacity: 0.7,
+	    hooks: {
+	        displayDescription: function(image) {}
+	    }
+	});
 });
 
 $(document).on('click', "#modal-formapago input[type='radio']", function() {
