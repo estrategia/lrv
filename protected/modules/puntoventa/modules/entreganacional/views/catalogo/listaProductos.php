@@ -43,7 +43,7 @@
                             'dataProvider' => $dataprovider,
                             //'template' => "{items}\n{pager}",
                             //'summaryText' => "{start} - {end} из {count}",
-                            'template' => "<div class='row'><div class='col-md-4'></div><div class='col-md-2'>{summary}</div> $formSort <div class='col-md-2 menu-bar'><span class='glyphicon glyphicon-th-list'></span></div> </div><ul class='listaProductos'>{items}</ul><div class='clear'></div>{pager}",
+                            'template' => "<div class='row'><div class='col-md-4'></div><div class='col-md-2'>{summary}</div> $formSort <div class='col-md-2 menu-bar' data-role='filtros'><span class='glyphicon glyphicon-th-list'></span></div> </div><ul class='listaProductos'>{items}</ul><div class='clear'></div>{pager}",
                             'itemsCssClass' => "items items$cantidadItems",
                             'itemView' => '_productoElemento',
                             'beforeAjaxUpdate' => new CJavaScriptExpression("function() {Loading.show();}"),
@@ -66,7 +66,7 @@
         <!-- Menu de filtros -->
         <?php if (isset($formFiltro) || isset($formOrdenamiento)): ?>
           <div class="sidebar">
-            <p class="cerrar">Cerrar <span class="glyphicon glyphicon-remove" aria-hidden="true"></span></p>
+            <p class="cerrar" data-role='cerrar'>Cerrar <span class="glyphicon glyphicon-remove" aria-hidden="true"></span></p>
             <div class="col-md-12 menu-categorias cat-collapsables">
                 <h3>Filtrar por:</h3>
                 <?php if (isset($formFiltro)): ?>

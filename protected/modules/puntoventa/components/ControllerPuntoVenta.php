@@ -59,7 +59,7 @@ class ControllerPuntoVenta extends CController {
 
 //custom application css
     public function registerCss() {
-        Yii::app()->getClientScript()->registerCssFile(Yii::app()->request->baseUrl . '/libs/charisma/css/charisma-app.css');
+   /*    Yii::app()->getClientScript()->registerCssFile(Yii::app()->request->baseUrl . '/libs/charisma/css/charisma-app.css');
         Yii::app()->getClientScript()->registerCssFile(Yii::app()->request->baseUrl . '/libs/charisma/bower_components/chosen/chosen.min.css');
         Yii::app()->getClientScript()->registerCssFile(Yii::app()->request->baseUrl . '/libs/charisma/bower_components/colorbox/example3/colorbox.css');
         Yii::app()->getClientScript()->registerCssFile(Yii::app()->request->baseUrl . '/libs/charisma/bower_components/responsive-tables/responsive-tables.css');
@@ -71,7 +71,20 @@ class ControllerPuntoVenta extends CController {
         Yii::app()->getClientScript()->registerCssFile(Yii::app()->request->baseUrl . '/libs/charisma/css/animate.min.css');
         //Yii::app()->getClientScript()->registerCssFile(Yii::app()->request->baseUrl . '/css/operator.css');
         Yii::app()->getClientScript()->registerCssFile(Yii::app()->request->baseUrl . '/libs/loading/css/Loading.css');
-        
+      */
+    	Yii::app()->getClientScript()->registerCssFile(Yii::app()->request->baseUrl . '/libs/charisma/css/charisma-app.css');
+    	Yii::app()->getClientScript()->registerCssFile(Yii::app()->request->baseUrl . '/libs/charisma/bower_components/chosen/chosen.min.css');
+    	Yii::app()->getClientScript()->registerCssFile(Yii::app()->request->baseUrl . '/libs/charisma/bower_components/colorbox/example3/colorbox.css');
+    	Yii::app()->getClientScript()->registerCssFile(Yii::app()->request->baseUrl . '/libs/charisma/bower_components/responsive-tables/responsive-tables.css');
+    	Yii::app()->getClientScript()->registerCssFile(Yii::app()->request->baseUrl . '/libs/charisma/bower_components/bootstrap-tour/build/css/bootstrap-tour.min.css');
+    	Yii::app()->getClientScript()->registerCssFile(Yii::app()->request->baseUrl . '/libs/charisma/css/jquery.noty.css');
+    	Yii::app()->getClientScript()->registerCssFile(Yii::app()->request->baseUrl . '/libs/charisma/css/noty_theme_default.css');
+    	Yii::app()->getClientScript()->registerCssFile(Yii::app()->request->baseUrl . '/libs/charisma/css/jquery.iphone.toggle.css');
+    	Yii::app()->getClientScript()->registerCssFile(Yii::app()->request->baseUrl . '/libs/charisma/css/uploadify.css');
+    	Yii::app()->getClientScript()->registerCssFile(Yii::app()->request->baseUrl . '/libs/charisma/css/animate.min.css');
+    	Yii::app()->getClientScript()->registerCssFile(Yii::app()->request->baseUrl . '/libs/loading/css/Loading.css');
+    	Yii::app()->getClientScript()->registerCssFile(Yii::app()->request->baseUrl . '/libs/owl-carousel/owl.carousel.css');
+    	Yii::app()->getClientScript()->registerCssFile(Yii::app()->request->baseUrl . '/libs/owl-carousel/owl.theme.css');
         /*Yii::app()->getClientScript()->registerCssFile(Yii::app()->request->baseUrl . "/libs/bootstrap/css/bootstrap.min.css");
         Yii::app()->getClientScript()->registerCssFile(Yii::app()->request->baseUrl . "/libs/bootstrap/css/bootstrap-responsive.min.css");
         Yii::app()->getClientScript()->registerCssFile(Yii::app()->request->baseUrl . "/libs/jquery-ui/jquery-ui.min.css");

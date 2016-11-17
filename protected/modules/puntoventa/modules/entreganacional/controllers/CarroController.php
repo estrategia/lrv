@@ -97,31 +97,48 @@ class CarroController extends ControllerEntregaNacional{
 // 		}
 	
 		$idPosition = $producto;
-	
-		if ($cantidadU > 0) {
-			$cantidadCarroUnidad = 0;
-			$position = Yii::app()->shoppingCartNationalSale->itemAt($idPosition);
-	
-			if ($position !== null) {
-				$cantidadCarroUnidad = $position->getQuantityUnit();
-			}
+		$cantidadCarroUnidad = $cantidadCarroFraccion =  0;
+		$position = Yii::app()->shoppingCartNationalSale->itemAt($idPosition);
+		
+		if ($position !== null) {
 			//si hay saldo, agrega a carro, sino consulta bodega
-			if ($cantidadCarroUnidad + $cantidadU <= $maximo) {
+			$cantidadCarroUnidad = $position->getQuantityUnit();
+			if($position->getQuantity(true) > 0) {
+				$cantidadCarroFraccion = $position->getQuantity(true) * $objProducto->unidadFraccionamiento/$objProducto->numeroFracciones;
+			}
+		}
+		
+		$divisionFracciones = $objProducto->numeroFracciones > 0 ?
+		$objProducto->unidadFraccionamiento/$objProducto->numeroFracciones:
+		0;
+		// $canastaVista = "canasta";
+		
+		//si hay saldo, agrega a carro, sino consulta bodega
+		if ($cantidadCarroUnidad + $cantidadCarroFraccion + $cantidadU + $cantidadF*$divisionFracciones <= $maximo) {
+			if ($cantidadU >= 0) {
 				$objProducto->saldosDisponibles = $maximo;
 				$objProductoCarro = new ProductoCarro($objProducto);
 				Yii::app()->shoppingCartNationalSale->put($objProductoCarro, false, $cantidadU);
-			} else {
-				echo CJSON::encode(array('result' => 'error', 'response' => "La cantidad solicitada no está disponible en este momento. Saldos disponibles: $maximo"));
-				Yii::app()->end();
 			}
+			if ($cantidadF >= 0) {
+				$objProducto->saldosDisponibles = $maximo;
+				$objProductoCarro = new ProductoCarro($objProducto);
+				Yii::app()->shoppingCartNationalSale->put($objProductoCarro, true, $cantidadF);
+			}
+		} else {
+			$fracciones = $objProducto->unidadFraccionamiento > 0 ?
+			intval(abs(intval($maximo)-$maximo)*$objProducto->numeroFracciones/$objProducto->unidadFraccionamiento):
+			0;
+			echo CJSON::encode(array('result' => 'error', 'response' => array(
+					'message' => "La cantidad solicitada no está disponible en este momento. Saldos disponibles: ".intval($maximo)." unidades ".
+					($fracciones > 0 ? ($fracciones." fracciones. ") : ""),
+					'maximoUnidades' => intval($maximo),
+					'maximoFracciones' => $fracciones,
+					//	'carroHTML' => $this->renderPartial($carroVista, null, true),
+			)));
+			Yii::app()->end();
 		}
-	
-		if ($cantidadF > 0) {
-			$objProducto->saldosDisponibles = $maximo;
-			$objProductoCarro = new ProductoCarro($objProducto);
-			Yii::app()->shoppingCartNationalSale->put($objProductoCarro, true, $cantidadF);
-		}
-	
+		
 		/* if (!ctype_digit($cantidad)) {
 		 echo CJSON::encode(array('result' => 'error', 'response' => 'La cantidad de productos, debe ser n&uacute;mero entero.'));
 		 Yii::app()->end();
@@ -208,6 +225,10 @@ class CarroController extends ControllerEntregaNacional{
 			)));
 			Yii::app()->end();
 		}
+		
+		if($cantidadF == null){
+			$cantidadF = 0;
+		}
 	
 		$codigoProducto = $position->objProducto->codigoProducto;
 	
@@ -235,47 +256,35 @@ class CarroController extends ControllerEntregaNacional{
 			Yii::app()->end();
 		}
 	
-// 		$objSaldo = $objProducto->getSaldo($objSectorCiudad->codigoCiudad, $objSectorCiudad->codigoSector);
-	
-// 		if ($objSaldo === null) {
-// 			echo CJSON::encode(array('result' => 'error', 'response' => array(
-// 					'message' => 'Producto no disponible',
-// 					'carroHTML' => $this->renderPartial($carroVista, null, true),
-// 			)));
-// 			Yii::app()->end();
-// 		}
-	
 		$agregarU = false;
 		$agregarF = false;
-	
+		$divisionFracciones = $objProducto->numeroFracciones > 0 ? 
+									$objProducto->unidadFraccionamiento/$objProducto->numeroFracciones:
+									0;
 		// $canastaVista = "canasta";
 	
-		if ($cantidadU >= 0) {
 			//si hay saldo, agrega a carro, sino consulta bodega
-			if ($cantidadU <= $position->objProducto->saldosDisponibles) {
-				$agregarU = true;
+			if ($cantidadU + $cantidadF*$divisionFracciones <= $position->objProducto->saldosDisponibles) {
+				if ($cantidadU >= 0) {
+					$agregarU = true;
+				}
+				if ($cantidadF >= 0) {
+					$agregarF = true;
+				}
 			} else {
+				$fracciones = $objProducto->unidadFraccionamiento > 0 ?
+													intval(abs(intval($position->objProducto->saldosDisponibles)-$position->objProducto->saldosDisponibles)*$objProducto->numeroFracciones/$objProducto->unidadFraccionamiento):
+													0;
 				echo CJSON::encode(array('result' => 'error', 'response' => array(
-							'message' => "La cantidad solicitada no está disponible en este momento. Saldos disponibles: ".$position->objProducto->saldosDisponibles." unidades",
-							'maximo' => $position->objProducto->saldosDisponibles,
+							'message' => "La cantidad solicitada no está disponible en este momento. Saldos disponibles: ".intval($position->objProducto->saldosDisponibles)." unidades ".
+										($fracciones > 0 ? ($fracciones." fracciones. ") : ""),
+							'maximoUnidades' => intval($position->objProducto->saldosDisponibles),
+							'maximoFracciones' => $fracciones,
 							//	'carroHTML' => $this->renderPartial($carroVista, null, true),
 					)));
 					Yii::app()->end();
 			}
-		}
-	
-		if ($cantidadF >= 0) {
-			if ($cantidadF <= $objSaldo->saldoFraccion) {
-				$agregarF = true;
-			} else {
-				echo CJSON::encode(array('result' => 'error', 'response' => array(
-						'message' => "La cantidad solicitada no está disponible en este momento. Saldos disponibles: $objSaldo->saldoFraccion fracciones",
-						//	'carroHTML' => $this->renderPartial($carroVista, null, true),
-				)));
-				Yii::app()->end();
-			}
-		}
-	
+		
 		if ($agregarU) {
 			Yii::app()->shoppingCartNationalSale->update($position, false, $cantidadU);
 		}
@@ -333,11 +342,11 @@ class CarroController extends ControllerEntregaNacional{
 	public function actionVaciar() {
 		Yii::app()->shoppingCartNationalSale->clear();
 		unset(Yii::app()->session[Yii::app()->params->entregaNacional['sesion']['carroPagarForm']]);
-		unset(Yii::app()->session[Yii::app()->params->entregaNacional['sesion']['formulaMedica']]);
+
 	
 		echo CJSON::encode(array(
 				'result' => 'ok',
-				'canasta' => $this->renderPartial("canasta" , null, true),
+			//	'canasta' => $this->renderPartial("canasta" , null, true),
 				'carro' => $this->renderPartial("carro", null, true),
 		));
 		Yii::app()->end();

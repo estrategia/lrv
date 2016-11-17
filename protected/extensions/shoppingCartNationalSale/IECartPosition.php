@@ -69,7 +69,7 @@ abstract class IECartPosition {
     public function getQuantity($fraction = false) {
         return ($fraction ? $this->quantityFraction : ($this->quantityUnit+$this->quantityStored));
     }
-    
+
     /**
      * Returns quantity.
      * @return int
@@ -170,7 +170,6 @@ abstract class IECartPosition {
     }
 
     /**
-     * Установить сумму скидки на позицию
      * @param  $newVal
      * @return void
      */

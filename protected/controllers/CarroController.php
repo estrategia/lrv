@@ -3664,7 +3664,6 @@ class CarroController extends Controller {
             }
 
             $transaction->commit();
-
             if ($modelPago->idFormaPago != Yii::app()->params->formaPago['pasarela']['idPasarela']) {
                 ini_set('default_socket_timeout', 5);
                 $client = new SoapClient(null, array(

@@ -181,7 +181,7 @@ $(document).on('click', "button[data-role='pdvgeodireccion']", function () {
         type: 'POST',
         dataType: 'json',
         async: true,
-        url: requestUrl + '/entreganacional/pedido/geoDireccion',
+        url: requestUrl + '/puntoventa/entreganacional/pedido/geoDireccion',
         data: {ciudad: $('#select-ciudad-direccion').val(), direccion: $('#input-pedido-direccion').val()},
         beforeSend: function () {
             $('#div-pedido-georeferencia-direcion').html('');
@@ -329,6 +329,183 @@ $(document).on('click', "button[data-role='modificarcarro']", function() {
 });
 
 
+//ordenamiento
+$(document).on('change', "select[data-role='orden-listaproductos']", function() {
+  $.ajax({
+      type: 'POST',
+      dataType: 'json',
+      async: true,
+      url: requestUrl + '/puntoventa/entreganacional/catalogo/filtrar',
+      data: {'OrdenamientoForm[orden]': $('#OrdenamientoForm_orden').val()},
+      beforeSend: function() {
+          Loading.show();
+      },
+      complete: function() {
+          Loading.hide();
+      },
+      success: function(data) {
+          if (data.result === 'ok') {
+              //$.fn.yiiListView.update('id-productos-list');
+              ListViewProductsUpdate();
+          } else {
+              alert(data.response);
+          }
+      },
+      error: function(jqXHR, textStatus, errorThrown) {
+          Loading.hide();
+          alert('Error: ' + errorThrown);
+      }
+  });
+});
+
+
+function filtrarListaProductos() {
+	$.ajax({
+        type: 'POST',
+        dataType: 'json',
+        async: true,
+        url: requestUrl + '/puntoventa/entreganacional/catalogo/filtrar',
+        data: $('#form-filtro-listaproductos').serialize(),
+        beforeSend: function() {
+            Loading.show();
+        },
+        success: function(data) {
+            if (data.result === 'ok') {
+                //$.fn.yiiListView.update('id-productos-list');
+                ListViewProductsUpdate();
+            } else {
+                Loading.hide();
+                alert(data.response);
+            }
+        },
+        error: function(jqXHR, textStatus, errorThrown) {
+            Loading.hide();
+            alert('Error: ' + errorThrown);
+        }
+    });
+}
+
+function ListViewProductsUpdate() {
+    var href = $.fn.yiiListView.getUrl('id-productos-list');
+
+    if (href) {
+        var url = href.split('?');
+        var params = $.deparam.querystring('?' + (url[1] || ''));
+
+        if (params.categoriasBuscador) {
+            if (jQuery.type(params.categoriasBuscador) == "array") {
+                var text = "";
+                $.each(params.categoriasBuscador, function(index, value) {
+                    if (value) {
+                        if (text.length > 0)
+                            text += "_" + value;
+                        else
+                            text = "" + value;
+                    }
+                });
+                params.categoriasBuscador = text;
+            }
+        }
+
+        $.fn.yiiListView.update('id-productos-list', {data: params});
+    } else {
+        $.fn.yiiListView.update('id-productos-list');
+    }
+}
+
+
+//Panel de filtros telefarma
+$('.menu-bar').on('click', function(){
+	
+});
+
+$(document).on('click', "div[data-role='filtros']", function() {
+	$('.sidebar').addClass('mostrar');	
+});
+
+$(document).on('click', "p[data-role='cerrar']", function() {
+	$('.sidebar').removeClass('mostrar');
+});
+
+
+
+//filtros
+$(document).on('click', "input[id^='FiltroForm_listCategoriasTienda_']", function() {
+	filtrarListaProductos();
+});
+
+$(document).on('click', "a[data-role='filtro-listaproductos-reset']", function() {
+    //$('#form-filtro-listaproductos').clearForm();
+    var value = [parseInt($('#FiltroForm_precio').attr('data-slider-min')), parseInt($('#FiltroForm_precio').attr('data-slider-max'))];
+    setPrecioFiltroForm(value,false);
+    $('#FiltroForm_precio').slider('setValue', value);
+    $('#calificacion-filtro-listaproductos').raty('score', 0);
+    $('#calificacion-filtro-listaproductos').attr('data-score', -1);
+
+    filtrarListaProductos();
+
+});
+
+$(document).on('change', '#FiltroForm_precio_0_text', function() {
+    var value = $(this).val();
+    value = parseInt(value);
+    if (isNaN(value)) {
+        value = parseInt($("#FiltroForm_precio").attr("data-slider-min"));
+    }
+    $('#FiltroForm_precio').slider('setValue', [value, $('#FiltroForm_precio').slider('getValue')[1]]);
+    $('#FiltroForm_precio_0').val(value);
+    $('#FiltroForm_precio_0_text').val("$" + format(value));
+    filtrarListaProductos();
+});
+
+$(document).on('change', '#FiltroForm_precio_1_text', function() {
+    var value = $(this).val();
+    value = parseInt(value);
+    if (isNaN(value)) {
+        value = parseInt($("#FiltroForm_precio").attr("data-slider-max"));
+    }
+    $('#FiltroForm_precio').slider('setValue', [$('#FiltroForm_precio').slider('getValue')[0], value]);
+    $('#FiltroForm_precio_1').val(value);
+    $('#FiltroForm_precio_1_text').val("$" + format(value));
+    filtrarListaProductos();
+});
+
+$(document).on('slide', '#FiltroForm_precio', function() {
+    var value = $('#FiltroForm_precio').slider('getValue');
+    setPrecioFiltroForm(value,false);
+});
+
+$(document).on('slideStop', '#FiltroForm_precio', function() {
+    var value = $('#FiltroForm_precio').slider('getValue');
+    setPrecioFiltroForm(value,true);
+});
+
+function capturarfiltrocalificacion(score, evt) {
+    var calificacion = score;
+    calificacion = parseInt(calificacion);
+    if (isNaN(calificacion)) {
+        calificacion = -1;
+    }
+    $('#FiltroForm_calificacion').val(calificacion);
+    $('#calificacion-filtro-listaproductos').attr('data-score', calificacion);
+    filtrarListaProductos();
+}
+
+function setPrecioFiltroForm(value,filtrar) {
+    $('#FiltroForm_precio_0_text').val("$" + format(value[0]));
+    $('#FiltroForm_precio_1_text').val("$" + format(value[1]));
+    $('#FiltroForm_precio_0').val(value[0]);
+    $('#FiltroForm_precio_1').val(value[1]);
+    if(filtrar)
+        filtrarListaProductos();
+}
+
+
+function actualizarNumerosPagina() {
+    var items = $('#items-page').val();
+    $.fn.yiiListView.update('id-productos-list', {data: {pageSize: items}});
+}
+
 function modificarCarro(position, modificar, maximo) {
     var data = {
         modificar: modificar,
@@ -407,8 +584,9 @@ function modificarCarro(position, modificar, maximo) {
             } else {
                 $('#div-carro').html(data.response.carroHTML);
                 $('#div-carro').trigger("create");
-                if(data.response.maximo){
-                	$('#cantidad-producto-unidad-' + position).val(data.response.maximo)
+                if(data.response.maximoUnidades){
+                	$('#cantidad-producto-unidad-' + position).val(data.response.maximoUnidades)
+                	$('#cantidad-producto-fraccion-' + position).val(data.response.maximoFracciones)
                 }
                 bootbox.alert(data.response.message);
             }

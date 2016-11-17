@@ -85,7 +85,7 @@ class CatalogoController extends ControllerEntregaNacional {
                 'listPrecios' => array('on' => 'listPrecios.codigoCiudad=:ciudad AND listPrecios.codigoSector=:sector'),
                 'listSaldosTerceros' => array('on' => 'listSaldosTerceros.codigoCiudad=:ciudad AND listSaldosTerceros.codigoSector=:sector')
             ),
-            'condition' => "t.activo=:activo AND listPrecios.codigoCiudad is not null",
+            'condition' => "t.activo=:activo AND listPrecios.codigoCiudad is not null AND t.ventaVirtual=:activo",
             'params' => array(
                 ':tipoImagen' => YII::app()->params->producto['tipoImagen']['mini'],
                 ':activo' => 1,
@@ -155,7 +155,7 @@ class CatalogoController extends ControllerEntregaNacional {
         			'trace' => 1
         	));
 
-        	$puntosVenta = $client->__soapCall("LRVConsultarSaldoMovil", array(
+        	$puntosVenta = $client->__soapCall("LRVConsultarSaldoMovilNEW", array(
         			'productos' => $productosBusqueda,
         			'ciudad' => $this->objPuntoVentaDestino->codigoCiudad,
         			'sector' => $this->objPuntoVentaDestino->idSectorLRV
@@ -169,7 +169,7 @@ class CatalogoController extends ControllerEntregaNacional {
         			break;
         			//    }
         		}
-        		
+        	
         		foreach($puntoVenta[4] as $saldos){
         			$listaProductosSaldos[$saldos->CODIGO_PRODUCTO] = $saldos->SALDO;
         		}
@@ -271,9 +271,6 @@ class CatalogoController extends ControllerEntregaNacional {
 
         $parametrosVista['imagenBusqueda'] = $imagenBusqueda;
         //Yii::log("Buscar:Filtro2\n" . CVarDumper::dumpAsString($formFiltro), CLogger::LEVEL_INFO, 'application');
-
-        
-
         $parametrosVista['dataprovider'] = $dataProvider;
         $this->render('listaProductos', $parametrosVista);
     }
@@ -364,7 +361,7 @@ class CatalogoController extends ControllerEntregaNacional {
         			'trace' => 1
         	));
         
-        	$puntosVenta = $client->__soapCall("LRVConsultarSaldoMovil", array(
+        	$puntosVenta = $client->__soapCall("LRVConsultarSaldoMovilNEW", array(
         			'productos' => $productosBusqueda,
         			'ciudad' => $this->objPuntoVentaDestino->codigoCiudad,
         			'sector' => $this->objPuntoVentaDestino->idSectorLRV
@@ -390,10 +387,13 @@ class CatalogoController extends ControllerEntregaNacional {
         	}
         		
         }catch(Exception $e){
-        	
+        	Yii::log($exc->getMessage() . "\n" . $exc->getTraceAsString(), CLogger::LEVEL_ERROR, 'application');
+        	//  $this->listPuntosVenta = array(0 => 0, 1 => 'Error al consultar disponibilidad de productos');
+        	echo CJSON::encode(array(
+        			'result' => 'error',
+        			'response' => 'No se pudo buscar los saldos de este producto'
+        	));
         }
-        
-        
         /*********************************/
         $codigoPerfil = Yii::app()->shoppingCartNationalSale->getCodigoPerfil();
         $objCalificacion = null;
@@ -440,7 +440,12 @@ class CatalogoController extends ControllerEntregaNacional {
             $sql = "INSERT INTO t_ProductosVistos(codigoProducto, idCategoriaBI) VALUES ($objProducto->codigoProducto,$objProducto->idCategoriaBI) ON DUPLICATE KEY UPDATE cantidad=cantidad+1";
             Yii::app()->db->createCommand($sql)->execute();
         } catch (Exception $ex) {
-            
+        	Yii::log($exc->getMessage() . "\n" . $exc->getTraceAsString(), CLogger::LEVEL_ERROR, 'application');
+        	//  $this->listPuntosVenta = array(0 => 0, 1 => 'Error al consultar disponibilidad de productos');
+        	echo CJSON::encode(array(
+        			'result' => 'error',
+        			'response' => 'No se pudo registrar la visita de este producto'
+        	));
         }
 
    
@@ -479,63 +484,5 @@ class CatalogoController extends ControllerEntregaNacional {
             ));
        
     }
-    
-    
-    public function actionBodega($producto, $ubicacion, $bodega) {
-    	$objSectorCiudad = $this->objSectorCiudad;
-    	//$this->active = "buscar";
-    	if ($objSectorCiudad == null) {
-    		throw new CHttpException(404, 'Solicitud inválida.');
-    	}
-    
-    	if ($ubicacion < 0) {
-    		$ubicacion = 0;
-    	}
-    
-    	if ($bodega < 0) {
-    		$bodega = 0;
-    	}
-    
-    	$objProducto = Producto::model()->find(array(
-    			'with' => array(
-    					'listImagenesGrandes',
-    					'objDetalle',
-    					'objCodigoEspecial',
-    					'listCalificaciones' => array('with' => 'objUsuario'),
-    				//	'listSaldos' => array( 'on' => '(listSaldos.saldoUnidad>:saldo AND listSaldos.codigoCiudad=:ciudad AND listSaldos.codigoSector=:sector) OR (listSaldos.saldoUnidad IS NULL AND listSaldos.codigoCiudad IS NULL AND listSaldos.codigoSector IS NULL)'),
-    					'listPrecios' => array('condition' => '(listPrecios.codigoCiudad=:ciudad AND listPrecios.codigoSector=:sector) OR (listPrecios.codigoCiudad IS NULL AND listPrecios.codigoSector IS NULL)'),
-    				//	'listSaldosTerceros' => array('condition' => '(listSaldosTerceros.saldoUnidad>:saldo AND listSaldosTerceros.codigoCiudad=:ciudad AND listSaldosTerceros.codigoSector=:sector) OR (listSaldosTerceros.codigoCiudad IS NULL AND listSaldosTerceros.codigoSector IS NULL)')
-    			),
-    			'condition' => 't.ventaVirtual=:venta AND t.activo=:activo AND t.codigoProducto=:codigo AND listPrecios.codigoCiudad IS NOT NULL',
-    			'params' => array(
-    					':venta' => 1,
-    					':activo' => 1,
-    					':codigo' => $producto,
-    					':ciudad' => $objSectorCiudad->codigoCiudad,
-    					':sector' => $objSectorCiudad->codigoSector,
-    			),
-    	));
-    
-    	if ($objProducto == null) {
-    		throw new CHttpException(404, 'Producto de bodega no disponible.');
-    	}
-    
-    	$codigoPerfil = Yii::app()->shoppingCartNationalSale->getCodigoPerfil();
-    	$cantidadCarro = 0;
-    	$position = Yii::app()->shoppingCartNationalSale->itemAt($producto);
-    
-    	if ($position != null) {
-    		$cantidadCarro = $position->getQuantity();
-    	}
-    
-    	$this->render('bodegaDetalle', array(
-    				'objProducto' => $objProducto,
-    				'objPrecio' => new PrecioProducto($objProducto, $objSectorCiudad, $codigoPerfil),
-    				'cantidadUbicacion' => $ubicacion,
-    				'cantidadBodega' => $bodega,
-    				'cantidadCarro' => $cantidadCarro
-    	));
-    
-    }
-
+ 
 }
