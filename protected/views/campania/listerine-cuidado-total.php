@@ -262,7 +262,7 @@ $this->metaTags = "<meta http-equiv='X-UA-Compatible' content='IE=edge'>
 <!--Versión escritorio-->
 <?php else: ?>
   <div class="sidebar-cart">
-	   <ul><li><a href="<?php echo CController::createUrl('/catalogo/producto', array('producto' => 59286)) ?>"><img class="img-responsive" src="<?= Yii::app()->request->baseUrl ?>/images/contenido/listerine/comprar-sticky.png" alt=""></a></li></ul>
+	   <ul><li><a href="<?php echo CController::createUrl('/catalogo/producto', array('producto' => 115376)) ?>"><img class="img-responsive" src="<?= Yii::app()->request->baseUrl ?>/images/contenido/listerine/comprar-sticky.png" alt=""></a></li></ul>
 	</div>
   <section class="background">
     <div class="container">
