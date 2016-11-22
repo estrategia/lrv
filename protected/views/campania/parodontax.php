@@ -123,7 +123,7 @@ $this->metaTags = "
     <p class="parrafos-m">Utilizarla diariamente ayuda a remover la placa, prevenir y controlar el sangrado de encías.</p>
   </section>
   <section class="contenedor">
-    <img src="<?= Yii::app()->request->baseUrl ?>/images/contenido/Parodontax/empaque-parodontax.png" class="img-responsive" alt="Comprar Parodontax en la rebaja virtual">
+    <img src="<?= Yii::app()->request->baseUrl ?>/images/contenido/parodontax/empaque-parodontax.png" class="img-responsive" alt="Comprar Parodontax en la rebaja virtual">
     <p class="copy-m">*Ayuda a prevenir la aparición de caries,<br>ya que combina sus ingredientes con flúor. </p>
   </section>
   <section class="bg-line-m">
@@ -138,7 +138,7 @@ $this->metaTags = "
   </section>
   <section class="row">
     <p class="formula" style="font-size: 20px;margin-top: 18%;">*Posee una fórmula con 70% <br>de ingredientes especializados</p>
-    <img src="<?= Yii::app()->request->baseUrl ?>/images/contenido/Parodontax/mujer.jpg" class="img-responsive" alt="">
+    <img src="<?= Yii::app()->request->baseUrl ?>/images/contenido/parodontax/mujer.jpg" class="img-responsive" alt="">
   </section>
   <section class="row">
     <a href="#"><img style="margin: 35px auto;" src="<?= Yii::app()->request->baseUrl ?>/images/contenido/corega/boton-comprar.png" class="img-responsive compra-online-m" alt="Comprar Parodontax en la rebaja virtual"></a>
