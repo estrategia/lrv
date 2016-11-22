@@ -48,7 +48,13 @@
                             'itemView' => '_productoElemento',
                             'beforeAjaxUpdate' => new CJavaScriptExpression("function() {Loading.show();}"),
                             'afterAjaxUpdate' => new CJavaScriptExpression("function(id,data) { $('html, body').animate({ scrollTop: 0 }, 600);
-                                                        Loading.hide(); raty();$('[data-toggle=\"popover\"]').popover();}"),
+                                                        Loading.hide(); raty();$('[data-toggle=\"popover\"]').popover(); 
+                            							$('.menu-bar').on('click', function(){
+															$('.sidebar').addClass('mostrar');
+														});
+														$('.cerrar').on('click', function(){
+															$('.sidebar').removeClass('mostrar');
+														});}"),
                             'pager' => array('class' => 'CLinkPager', 'header' => ''),
                         ));
                         ?>
