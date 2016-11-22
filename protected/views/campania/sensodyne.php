@@ -7,6 +7,7 @@ $this->metaTags = "
     <meta name='description' content='La crema dental Sensodyne recomendada por odontólogos que actúa para aliviar las molestias causadas por dientes sensibles y brindar protección duradera.'>
     <meta name='keywords' content='Dientes sensibles, sensibilidad dental, crema dental.'>
   	<style>
+    body{overflow-x: hidden;}
       @font-face {
         font-family: NewJune-Bold;
         src: url(".Yii::app()->request->baseUrl."/images/contenido/corega/fonts/NewJune-Bold.otf);
@@ -276,14 +277,14 @@ $this->metaTags = "
     <img src="<?= Yii::app()->request->baseUrl ?>/images/contenido/sensodyne/banner-sensodyne.jpg" class="img-responsive" alt="Sensodyne La rebaja virtual">
   </div>
 </div>
-<div class="container">
+<div class="container-fluid">
   <div class="row">
     <div class="space"></div>
     <a href="#"><img style="width: 60%;margin: 0 auto;" src="<?= Yii::app()->request->baseUrl ?>/images/contenido/sensodyne/boton-compra.png" class="img-responsive" alt="Comprar Corega en la rebaja virtual"></a>
     <div class="space"></div>
   </div>
 </div>
-<div class="container" >
+<div class="container-fluid" >
   <div class="row">
     <div class="image">
       <img src="<?= Yii::app()->request->baseUrl ?>/images/contenido/sensodyne/section1.jpg" class="img-responsive" alt="">
@@ -304,7 +305,7 @@ $this->metaTags = "
     </p>
   </div>
   <div class="row">
-    <img src="<?= Yii::app()->request->baseUrl ?>/images/contenido/sensodyne/section4.jpg" class="img-responsive" alt="">
+    <!-- <img src="<?= Yii::app()->request->baseUrl ?>/images/contenido/sensodyne/section4.jpg" class="img-responsive" alt=""> -->
     <div id="carousel-example-generic" class="carousel slide carousel-fade" data-ride="carousel">
 
       <ol class="carousel-indicators">
@@ -317,8 +318,14 @@ $this->metaTags = "
       </ol>
       <p class="title-slide principal">Elige tu Sensodyne </p>
       <div class="carousel-inner">
-        <!--slide1-->
+        <!--slide0-->
         <div class="item active">
+           <div class="col-sm-12 col-md-12">
+              <img src="<?= Yii::app()->request->baseUrl ?>/images/contenido/sensodyne/section4.jpg" class="img-responsive" alt="">
+          </div>
+        </div>
+        <!--slide1-->
+        <div class="item">
            <div class="col-sm-6 col-md-6">
              <img  src="<?= Yii::app()->request->baseUrl ?>/images/contenido/sensodyne/1-blanqueador-repara-proteje.jpg" class="img-responsive" alt="Ama con toda - Corega de venta en La Rebaja virtual">
            </div>
@@ -487,6 +494,7 @@ $this->metaTags = "
     </div>
   </div>
   <div class="row">
+    <div class="container">
     <h2 class="video">Videos</h2>
     <div class="col-sm-4 col-md-4">
       <iframe width="100%" height="210" src="https://www.youtube.com/embed/QGicShMZYqM" frameborder="0" allowfullscreen></iframe>
@@ -500,6 +508,7 @@ $this->metaTags = "
         Your browser does not support HTML5 video.
       </video>
     </div>
+  </div>
   </div>
 </div>
 

@@ -202,9 +202,15 @@ $this->metaTags = "
     <div class="space"></div>
     <a href="#"><img src="<?= Yii::app()->request->baseUrl ?>/images/contenido/corega/boton-comprar.png" class="img-responsive" alt="Comprar Corega en la rebaja virtual"></a>
     <div class="space"></div>
-    <iframe width="100%" height="450" src="https://www.youtube.com/embed/Lk20DhBIzHo" frameborder="0" allowfullscreen></iframe>
-    <div class="space"></div>
-    <div class="title-blue">Con Corega® vuelve a disfrutar cada momento</div>
+    <div class="col-md-6">
+      <iframe width="100%" height="315" src="https://www.youtube.com/embed/Lk20DhBIzHo" frameborder="0" allowfullscreen></iframe>
+    </div>
+    <div class="col-md-6">
+      <iframe width="100%" height="315" src="https://www.youtube.com/embed/k_iuT4WDo44" frameborder="0" allowfullscreen></iframe>
+    </div>
+  </div>
+  <div class="row">
+      <div class="title-blue">Con Corega® vuelve a disfrutar cada momento</div>
   </div>
 </div>
 <div class="container-fluid footer">&copy; <?=date('Y')?> Grupo de empresas GSK. Todos los derechos reservados.</div>
