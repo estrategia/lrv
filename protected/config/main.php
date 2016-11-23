@@ -129,6 +129,7 @@ return array(
                 'sensodyne' => 'publicidad/contenido/nombre/sensodyne',
                 'sobre-metamucil' => 'publicidad/contenido/nombre/sobre-metamucil',
                 'recetas-nestle-nan-optipro' => 'publicidad/contenido/nombre/nan-recetas',
+                'perros-y-gatos' => 'publicidad/contenido/nombre/perros-y-gatos',
 
                 // Fin links campañas
 
@@ -761,9 +762,9 @@ return array(
     			),
     			'pagar' => array(
     					'pasos' => array(
-    							'informacion' => 1, 
+    							'informacion' => 1,
     							'confirmacion' => 2,
-    							1 => 'informacion', 
+    							1 => 'informacion',
     							2 => 'confirmacion'
     					),
     					'pasosDisponibles' => array('informacion', 'confirmacion'),
