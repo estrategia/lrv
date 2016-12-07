@@ -186,6 +186,8 @@ class BeneficiosCommand extends CConsoleCommand {
                     }
 
                     if ($beneficio['listCedulas']) {
+                    	fwrite($file, "Insertando cédulas en el beneficio $objBeneficio->idBeneficio \n");
+                    	 
                         foreach ($beneficio['listCedulas'] as $benCed) {
                           	$beneficiosCedulas[] = "($objBeneficio->idBeneficio,".$benCed['NumeroDocumento'].")";
                         }
@@ -218,6 +220,8 @@ class BeneficiosCommand extends CConsoleCommand {
                                     numeroDocumento)
                                     VALUES " . implode(",", $beneficiosCedulas);
                     Yii::app()->db->createCommand($sql)->execute();
+                    fwrite($file, "Se guardan las cédulas en la base de datos \n");
+                     
                 }
             }
             $transaction->commit();

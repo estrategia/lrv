@@ -9,19 +9,33 @@
  */
 abstract class IECartPosition {
     protected $priceUnit = 0;
+    protected $priceUnitDiscount = 0;
+    
     protected $priceFraction = 0;
+    protected $priceFractionDiscount = 0;
+    
     protected $quantityUnit = 0;
     protected $quantityStored = 0;
     protected $quantityFraction = 0;
     protected $discountPriceUnit = 0.0;
+    protected $discountPriceUnitDiscount = 0.0;
+     
     protected $discountPriceFraction = 0.0;
+    protected $discountPriceFractionDiscount = 0.0;
+    
     protected $shipping = 0;
     protected $delivery = 0;
     protected $tax = 0.0;
+    
     protected $listBeneficios = array();
+    protected $listBeneficiosBonos = array();
     
     public function getBeneficios(){
         return $this->listBeneficios;
+    }
+    
+    public function getBeneficiosBonos(){
+    	return $this->listBeneficiosBonos;
     }
     
     public function getDelivery() {
@@ -51,6 +65,21 @@ abstract class IECartPosition {
     public function getSumPriceFraction($withDiscount = true){
         return $this->getPrice(true, $withDiscount) * $this->quantityFraction;
     }
+    
+    
+    public function getSumPriceToken($withStored = true, $withDiscount = true) {
+      	return $this->getPriceToken(false, $withDiscount) * ($this->quantityUnit+ ($withStored ? $this->quantityStored : 0)) + $this->getPriceToken(true, $withDiscount) * $this->quantityFraction;
+    }
+    
+    public function getSumPriceUnitToken($withStored = true, $withDiscount = true){
+    	return $this->getPriceToken(false, $withDiscount) * ($this->quantityUnit+ ($withStored ? $this->quantityStored : 0));
+    }
+    
+    public function getSumPriceFractionToken($withDiscount = true){
+    	return $this->getPriceToken(true, $withDiscount) * $this->quantityFraction;
+    }
+    
+    
     
     /**
      * Returns total price for all units of the position
@@ -147,6 +176,11 @@ abstract class IECartPosition {
     public function setBeneficios($listBeneficios){
         $this->listBeneficios = $listBeneficios;
     }
+    
+    public function setBeneficiosBonos($listBeneficios){
+    	$this->listBeneficiosBonos = $listBeneficios;
+    }
+    
 
     public function getTaxPrice($total = false) {
         $tax = 0.0;
@@ -181,6 +215,10 @@ abstract class IECartPosition {
         return ($fraction ? $this->discountPriceFraction : $this->discountPriceUnit);
     }
     
+    public function getDiscountPriceToken($fraction = false) {
+    	return ($fraction ? $this->discountPriceFractionDiscount : $this->discountPriceUnitDiscount);
+    }
+    
     public function hasDiscount(){
         return (($this->discountPriceFraction+$this->discountPriceUnit) > 0);
     }
@@ -196,6 +234,16 @@ abstract class IECartPosition {
 
         return $price;
     }
+    
+    public function getPriceToken($fraction = false, $withDiscount = true) {
+    	$price = ($fraction ? $this->priceFraction : $this->priceUnit);
+    
+    	if ($withDiscount)
+    		$price -= ($fraction ? $this->discountPriceFractionDiscount : $this->discountPriceUnitDiscount);
+    
+    		return $price;
+    }
+    
 
     public function getTotalPrice() {
         $price = $this->getSumPrice();

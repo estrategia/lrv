@@ -15,8 +15,11 @@ abstract class Precio {
 
     protected $porcentajeDescuentoPerfil = 0;
     protected $porcentajeDescuentoBeneficio = 0;
+    protected $porcentajeDescuentoBeneficioBono = 0;
+    protected $porcentajeDescuentoBeneficioDescuento = 0;
     protected $inicializado = false;
     protected $listBeneficios = array();
+    protected $listBeneficiosBonos = array();
     protected $listPuntos = array();
     protected $flete = 0;
     protected $tiempoEntrega = 0;
@@ -47,6 +50,9 @@ abstract class Precio {
         return $this->listBeneficios;
     }
     
+    public function getBeneficiosBonos(){
+    	return $this->listBeneficiosBonos;
+    }
     public function getPuntos(){
         return $this->listPuntos;
     }
@@ -81,12 +87,33 @@ abstract class Precio {
         else
             throw new Exception("Tipo porcentaje indefinido");
     }
+    
+    public function getPorcentajeDescuentoDescuento($tipo = self::DESCUENTO_COMPLETO) {
+    	if ($tipo == self::DESCUENTO_COMPLETO)
+    		return $this->porcentajeDescuentoBeneficioDescuento + $this->porcentajeDescuentoPerfil;
+    	else if ($tipo == self::DESCUENTO_PERFIL)
+    		return $this->porcentajeDescuentoPerfil;
+    	else if ($tipo == self::DESCUENTO_BENEFICIO)
+    		return $this->porcentajeDescuentoBeneficioDescuento;
+    	else
+    		throw new Exception("Tipo porcentaje indefinido");
+    }
+    
+    public function getPorcentajeDescuentoBono($tipo = self::DESCUENTO_COMPLETO) {
+    	if ($tipo == self::DESCUENTO_COMPLETO)
+    		return $this->porcentajeDescuentoBeneficioBono + $this->porcentajeDescuentoPerfil;
+    	else if ($tipo == self::DESCUENTO_PERFIL)
+    		return $this->porcentajeDescuentoPerfil;
+    	else if ($tipo == self::DESCUENTO_BENEFICIO)
+    		return $this->porcentajeDescuentoBeneficioBono;
+    	else
+    		throw new Exception("Tipo porcentaje indefinido");
+    }
 
     /*
      * valor: valor
      * tipo: 1: arriba, <>1: abajo
      */
-
     public static function redondear($valor, $tipo) {
         $multiplo = 50;
 

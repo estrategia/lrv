@@ -925,6 +925,13 @@ function modificarCarro(position, modificar) {
                 }
 
                 if (data.response.dialogoHTML) {
+                	if(data.response.bodega){
+                		$("#modalBodegas").remove();
+                		$('body').append(data.response.dialogoHTML);
+                        $("#modalBodegas").modal("show");
+                	}
+                	
+                	else
                     alert(data.response.dialogoHTML);//modal
                 }
             } else {

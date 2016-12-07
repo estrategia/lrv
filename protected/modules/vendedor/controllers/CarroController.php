@@ -1945,15 +1945,7 @@ class CarroController extends ControllerVendedor {
 					$params ['parametros'] ['listHorarios'] = $modelPago->listDataHoras ();
 					break;
 				case Yii::app ()->params->pagar ['pasos'] [4] :
-					$listFormaPago = FormaPago::model ()->findAll ( array (
-							'order' => 'formaPago',
-							'condition' => 'estadoFormaPago=:estado AND  ventaVendedor=:ventavendedor',
-							'params' => array (
-									':estado' => 1,
-									':ventavendedor' => 1 
-							) 
-					) );
-					
+					$listFormaPago = FormaPago::getFormasPago(5); 
 					$modelPago->consultarBono ( Yii::app ()->shoppingCartSalesman->getTotalCost () );
 					Yii::app ()->session [Yii::app ()->params->vendedor ['sesion'] ['carroPagarForm']] = $modelPago;
 					$params ['parametros'] ['listFormaPago'] = $listFormaPago;
@@ -2237,16 +2229,7 @@ class CarroController extends ControllerVendedor {
 					$params ['parametros'] ['listHorarios'] = $modelPago->listDataHoras ();
 					break;
 				case Yii::app ()->params->pagar ['pasos'] [4] :
-					$listFormaPago = FormaPago::model ()->findAll ( array (
-							'order' => 'formaPago',
-							'condition' => 'estadoFormaPago=:estado AND idFormaPago <> :credirebaja AND  ventaVendedor =:ventavendedor',
-							'params' => array (
-									':estado' => 1,
-									':credirebaja' => Yii::app ()->params->formaPago ['idCredirebaja'],
-									':ventavendedor' => 1 
-							) 
-					) );
-					
+					$listFormaPago = FormaPago::getFormasPago(6);
 					$modelPago->consultarBono ( Yii::app ()->shoppingCart->getTotalCost () );
 					Yii::app ()->session [Yii::app ()->params->vendedor ['sesion'] ['carroPagarForm']] = $modelPago;
 					$params ['parametros'] ['listFormaPago'] = $listFormaPago;

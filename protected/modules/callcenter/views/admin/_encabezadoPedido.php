@@ -69,6 +69,7 @@
 					                             <?= (isset( $formaPago->objFormaPago->formaPago )?$formaPago->objFormaPago->formaPago:"").": ".
 					                                 (isset( $formaPago->numeroTarjeta )?"<br/>Numero de tarjeta: ".$formaPago->numeroTarjeta:"")." ".
 					                                 (isset( $formaPago->numeroTarjeta )?" Cuotas: ".$formaPago->cuotasTarjeta:"")." ".
+					                                 (isset( $formaPago->numeroValidacion )?" No. Validaci&oacute;n: ".$formaPago->numeroValidacion:"")." ".
 					                                 (isset( $formaPago->objConcepto->concepto )?"<br/><strong>Concepto:</strong> ".$formaPago->objConcepto->concepto:"");
 				            					?> </td>
 					                           <td> <?= Yii::app()->numberFormatter->format(Yii::app()->params->formatoMoneda['patron'], $formaPago->valor, Yii::app()->params->formatoMoneda['moneda']); ?> </td>
