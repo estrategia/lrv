@@ -43,7 +43,7 @@ abstract class Precio {
     }
 
     public function tieneBeneficio() {
-        return !empty($this->listBeneficios);
+        return !empty($this->listBeneficios) || !empty($this->listBeneficiosBonos);
     }
 
     public function getBeneficios() {

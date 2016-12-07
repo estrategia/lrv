@@ -394,7 +394,8 @@
                                         <div id="rating-<?php echo $objComentario->codigoProducto ?>" data-role="raty" data-readonly="true" data-score="<?php echo $objComentario->calificacion ?>" class="clst_cal_str"></div>
                                     </div>
                                     <div class="row">
-                                        <p style="color:#999;font-weight:bolder;" ><?php echo $objComentario->objUsuario->getNombreCorto(); ?><br>
+                                    	
+                                        <p style="color:#999;font-weight:bolder;" ><?php echo isset($objComentario->objUsuario)?$objComentario->objUsuario->getNombreCorto():'Usuario'; ?><br>
                                         </p>
                                     </div>
                                 </div>

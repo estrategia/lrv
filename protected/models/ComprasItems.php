@@ -316,8 +316,32 @@ class ComprasItems extends CActiveRecord {
                 throw new Exception("La cantidad solicitada no está disponible en este momento. Saldos disponibles: $objSaldo->saldoUnidad unidades");
             }
         }
+        
+        $bonosProducto = FormasPago::model()->findAll(array(
+        		'condition' => 'idCompra =:idCompra AND codigoProducto=:codigoProducto',
+        		'params' => array(
+        				':idCompra' => $this->idCompra,
+        				':codigoProducto' => $this->codigoProducto
+        		) 
+        ));
+        
+        $bonoDescuento = 0;
+        if(count($bonosProducto) > 0){
+        	// Se aumentaron cantidades
+        	foreach($bonosProducto as $objBono){
+        		$objBono->valor  = $objBono->valorBonoUnidad * $cantidad;
+        		$bonoDescuento += $objBono->valorBonoUnidad;
+        		if(!$objBono->save()){
+        			try {
+        				$transaction->rollBack();
+        			} catch (Exception $txexc) {
+        				Yii::log($txexc->getMessage() . "\n" . $txexc->getTraceAsString(), CLogger::LEVEL_ERROR, 'application');
+        			}
+        		}
+        	}	
+        }
 
-        $precioTotal = $this->precioBaseUnidad - $this->descuentoUnidad;
+        $precioTotal = $this->precioBaseUnidad - $this->descuentoUnidad ;
         $precioDiff = $precioTotal * $cantDiff;
         $this->unidades += $cantDiff;
         $this->precioTotalUnidad += $precioDiff;
@@ -326,6 +350,8 @@ class ComprasItems extends CActiveRecord {
 
         $objCompra = $this->objCompra;
         $objCompra->subtotalCompra += $precioDiff;
+        
+        $precioDiff-= $cantDiff*$bonoDescuento;
         $objCompra->impuestosCompra += round(Precio::calcularImpuesto($precioDiff, $this->objImpuesto->porcentaje));
         $objCompra->baseImpuestosCompra += round(Precio::calcularBaseImpuesto($precioDiff, $this->objImpuesto->porcentaje));
         $objCompra->totalCompra += $precioDiff;
