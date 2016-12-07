@@ -33,7 +33,7 @@ $this->metaTags = "<meta http-equiv='X-UA-Compatible' content='IE=edge'>
             <img style="width:100%;" src="<?= Yii::app()->request->baseUrl ?>/images/contenido/klim1/contenido-klim.png" alt="Contiene nutrientes que ayudan al normal funcionamiento del sistema de defensas.">
         </section>
         <center>
-            <a href="<?php echo CController::createUrl('/catalogo/producto', array('producto' =>	32329, 'descripcion' => 'KLIM-1%2B-PREBIO.html')) ?>">
+            <a href="<?php echo CController::createUrl('/contenido/ver', array('tipo' => 'grupo', 'contenido' => 1699)) ?>">
                 <img style="width:40%;" src="<?= Yii::app()->request->baseUrl ?>/images/contenido/klim1/btn-comprar.png" alt="Comprar Klim1+">
             </a>
         </center>
@@ -79,7 +79,7 @@ $this->metaTags = "<meta http-equiv='X-UA-Compatible' content='IE=edge'>
             <center>
               <ul class="list">
                 <li>
-                  <a href="<?php echo CController::createUrl('/catalogo/producto', array('producto' =>	32329, 'descripcion' => 'KLIM-1%2B-PREBIO.html')) ?>">
+                  <a href="<?php echo CController::createUrl('/contenido/ver', array('tipo' => 'grupo', 'contenido' => 1699)) ?>">
                     <img style="width: 45%;" src="<?= Yii::app()->request->baseUrl ?>/images/contenido/klim1/btn-comprar.png" class="img-responsive" alt="Comprar Klim1+">
                   </a>
                 </li>

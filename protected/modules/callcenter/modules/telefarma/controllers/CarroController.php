@@ -1319,11 +1319,7 @@ class CarroController extends ControllerTelefarma {
     				case Yii::app()->params->telefarma['pagar']['pasos'][1]:
     					$params['parametros']['listHorarios'] = $modelPago->listDataHoras();
     
-    					$listFormaPago = FormaPago::model()->findAll(array(
-    							'order' => 'formaPago',
-    							'condition' => 'ventaVitalCall=:estado',
-    							'params' => array(':estado' => 1)
-    					));
+    					$listFormaPago = FormaPago::getFormasPago(3);
     					Yii::app()->session[Yii::app()->params->telefarma['sesion']['carroPagarForm']] = $modelPago;
     					$params['parametros']['listFormaPago'] = $listFormaPago;
     

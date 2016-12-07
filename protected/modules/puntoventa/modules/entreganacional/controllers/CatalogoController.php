@@ -164,10 +164,10 @@ class CatalogoController extends ControllerEntregaNacional {
         	$puntoVenta = null;
         	if (!empty($puntosVenta)) {
         		foreach ($puntosVenta[1] as $pdv) {
-        			//   if ($pdv[1] == $pdvDestino->idComercial) {
+        			if ($pdv[1] == $pdvDestino->idComercial) {
         			$puntoVenta = $pdv;
         			break;
-        			//    }
+        			}
         		}
         	
         		foreach($puntoVenta[4] as $saldos){
@@ -370,10 +370,10 @@ class CatalogoController extends ControllerEntregaNacional {
         	$puntoVenta = null;
         
         	foreach ($puntosVenta[1] as $pdv) {
-        		//   if ($pdv[1] == $pdvDestino->idComercial) {
-        		$puntoVenta = $pdv;
-        		break;
-        		//    }
+        		if ($pdv[1] == $pdvDestino->idComercial) {
+	        		$puntoVenta = $pdv;
+	        		break;
+        		}
         	}
         	
         	foreach($puntoVenta[4] as $saldos){
@@ -470,7 +470,6 @@ class CatalogoController extends ControllerEntregaNacional {
                     $objProducto->descripcionProducto
                 );
             }
-
          
             $this->render('d_productoDetalle', array(
                 'objProducto' => $objProducto,

@@ -516,11 +516,7 @@ class CarroController extends ControllerEntregaNacional{
 					case Yii::app()->params->entregaNacional['pagar']['pasos'][1]:
 						$params['parametros']['listHorarios'] = $modelPago->listDataHoras();
 	
-						$listFormaPago = FormaPago::model()->findAll(array(
-								'order' => 'formaPago',
-								'condition' => 'ventaVitalCall=:estado',
-								'params' => array(':estado' => 1)
-						));
+						$listFormaPago = FormaPago::getFormasPago(4);
 						Yii::app()->session[Yii::app()->params->entregaNacional['sesion']['carroPagarForm']] = $modelPago;
 						$params['parametros']['listFormaPago'] = $listFormaPago;
 	

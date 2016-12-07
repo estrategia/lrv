@@ -16,7 +16,6 @@ class EShoppingCart extends CMap {
     public $discounts = array();
 
     /**
-     * Сумма скидки на всю корзину
      * @var float
      */
     protected $discountPrice = 0.0;
@@ -256,14 +255,7 @@ class EShoppingCart extends CMap {
 
         $data = Yii::app()->getUser()->getState($this->getClass() . '_Venta');
 
-        if (isset(Yii::app()->session[Yii::app()->params->vendedor['sesion']['sectorCiudadEntrega']])) {
-            $this->objSectorCiudad = Yii::app()->session[Yii::app()->params->vendedor['sesion']['sectorCiudadEntrega']];
-            if ($this->objSectorCiudad->objCiudad->getDomicilio() != null) {
-                $this->shippingStored = $this->objSectorCiudad->objCiudad->getDomicilio()->valorDomicilio;
-                $this->deliveryStored = $this->objSectorCiudad->objCiudad->getDomicilio()->tiempoDomicilio;
-            }
-            Yii::app()->session[Yii::app()->params->vendedor['sesion']['sectorCiudadEntrega']] = $this->objSectorCiudad;
-        }
+       
 
         $this->codigoPerfil = Yii::app()->getUser()->getState($this->getClass() . '_CodigoPerfilVendedor');
         $this->shipping = Yii::app()->getUser()->getState($this->getClass() . '_ShippingVendedor');
@@ -281,7 +273,20 @@ class EShoppingCart extends CMap {
         if (is_array($data) || $data instanceof Traversable)
             foreach ($data as $key => $product)
                 parent::add($key, $product);
-
+		
+        if (isset(Yii::app()->session[Yii::app()->params->vendedor['sesion']['sectorCiudadEntrega']])) {
+           	$this->objSectorCiudad = Yii::app()->session[Yii::app()->params->vendedor['sesion']['sectorCiudadEntrega']];
+               	if ($this->objSectorCiudad->objCiudad->getDomicilio() != null) {
+               		
+               		if($this->isUnitStored()){
+	               		$this->shippingStored = $this->objSectorCiudad->objCiudad->getDomicilio()->valorDomicilio;
+               		}
+               		$this->deliveryStored = $this->objSectorCiudad->objCiudad->getDomicilio()->tiempoDomicilio;
+               		 
+               	}
+               	Yii::app()->session[Yii::app()->params->vendedor['sesion']['sectorCiudadEntrega']] = $this->objSectorCiudad;
+        }
+        
         $this->setCodigoPerfil($codigoPerfil);
 
         if ($this->shipping <= 0) {
@@ -306,6 +311,19 @@ class EShoppingCart extends CMap {
 
         //CVarDumper::dump($this->shipping, 10, true);echo "<br>";
     }
+    
+    public function isUnitStored(){
+    	$positions = $this->getPositions();
+    
+    	foreach($positions as $position){
+    		if ($position->getDelivery() == 0 && $position->getShipping() == 0 && $position->isProduct() && $position->getQuantityStored() > 0){
+    			return true;
+    		}
+    	}
+    
+    	return false;
+    }
+    
 
     /**
      * Add item to the shopping cart

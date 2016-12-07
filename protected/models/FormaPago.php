@@ -99,5 +99,68 @@ class FormaPago extends CActiveRecord {
     public static function model($className = __CLASS__) {
         return parent::model($className);
     }
+    
+    
+    public function getFormasPago($case = null){
+    	$condiciones=array(
+    		'order' => 'formaPago',
+    		'condition' => 'estadoFormaPago=:estado',
+    		'params' => array(':estado' => 1)
+    	);
+    	
+    	
+    	switch($case){
+    		case 1:{
+    			if(Yii::app()->shoppingCart->isUnitStored()){
+    				$condiciones['condition'].= " AND ventaBodega =:formaBodega";
+    				$condiciones['params'][':formaBodega'] = 1;
+    			}
+    		}
+    		case 2:{
+    			if(Yii::app()->shoppingCart->isUnitStored()){
+    				$condiciones['condition'].= " AND ventaBodega =:formaBodega";
+    				$condiciones['params'][':formaBodega'] = 1;
+    			}
+    			$condiciones['condition'].=" AND idFormaPago <> :credirebaja";
+    			$condiciones['params'][':credirebaja'] = Yii::app()->params->formaPago['idCredirebaja'];
+    		}break;
+    		case 3:{
+    			if(Yii::app()->shoppingCartVitalCall->isUnitStored()){
+    				$condiciones['condition'].= " AND ventaBodega =:formaBodega";
+    				$condiciones['params'][':formaBodega'] = 1;
+    			}
+    			$condiciones['condition'].=" AND ventaVitalCall=:estadoVitalCall";
+    			$condiciones['params'][':estadoVitalCall'] = 1;
+    		}break;
+    		case 4:{
+    			if(Yii::app()->shoppingCartNationalSale->isUnitStored()){
+    				$condiciones['condition'].= " AND ventaBodega =:formaBodega";
+    				$condiciones['params'][':formaBodega'] = 1;
+    			}
+    			$condiciones['condition'].=" AND ventaVitalCall=:estadoVitalCall";
+    			$condiciones['params'][':estadoVitalCall'] = 1;
+    		}break;
+    		case 5:{
+    			if(Yii::app()->shoppingCartSalesman->isUnitStored()){
+    				$condiciones['condition'].= " AND ventaBodega =:formaBodega";
+    				$condiciones['params'][':formaBodega'] = 1;
+    			}
+    			$condiciones['condition'].=" AND ventaVendedor=:ventavendedor";
+    			$condiciones['params'][':ventavendedor'] = 1;
+    		}break;
+    		case 6:{
+    			if(Yii::app()->shoppingCartSalesman->isUnitStored()){
+    				$condiciones['condition'].= " AND ventaBodega =:formaBodega";
+    				$condiciones['params'][':formaBodega'] = 1;
+    			}
+    			$condiciones['condition'].=" AND ventaVendedor=:ventavendedor AND idFormaPago <> :credirebaja";
+    			$condiciones['params'][':credirebaja'] = Yii::app()->params->formaPago['idCredirebaja'];
+    			$condiciones['params'][':ventavendedor'] = 1;
+    		}break;
+    	}
+    	
+    	return self::model()->findAll($condiciones);
+    	
+    }
 
 }

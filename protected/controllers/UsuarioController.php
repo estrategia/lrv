@@ -89,6 +89,7 @@ class UsuarioController extends Controller {
             //echo CJSON::encode(array("result"=>"error","response"=>"redirect: $redirect"));exit();
 
             if ($model->validate()) {
+            	Yii::app()->shoppingCart->setCalcularUnidades();
                 Yii::app()->session[Yii::app()->params->sesion['redireccionAutenticacion']] = 'null';
                 echo CJSON::encode(array(
                     "result" => "ok",

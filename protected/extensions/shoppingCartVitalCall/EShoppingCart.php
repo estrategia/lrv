@@ -155,13 +155,7 @@ class EShoppingCart extends CMap {
     public function restoreFromSession() {
         $data = Yii::app()->getUser()->getState($this->getClass());
         
-        if (isset(Yii::app()->session[Yii::app()->params->telefarma['sesion']['sectorCiudadEntrega']]) && Yii::app()->session[Yii::app()->params->telefarma['sesion']['sectorCiudadEntrega']] != null) {
-        	$this->objSectorCiudad = Yii::app()->session[Yii::app()->params->telefarma['sesion']['sectorCiudadEntrega']];
-        	if ($this->objSectorCiudad->objCiudad->getDomicilio() != null) {
-        		$this->shippingStored = $this->objSectorCiudad->objCiudad->getDomicilio()->valorDomicilio;
-        		$this->deliveryStored = $this->objSectorCiudad->objCiudad->getDomicilio()->tiempoDomicilio;
-        	}
-        }
+        
 
         $this->codigoPerfil = Yii::app()->params->perfil['telefarma'];
         $this->shipping = Yii::app()->getUser()->getState($this->getClass() . '_Shipping');
@@ -174,6 +168,15 @@ class EShoppingCart extends CMap {
             foreach ($data as $key => $product)
                 parent::add($key, $product);
         
+        if (isset(Yii::app()->session[Yii::app()->params->telefarma['sesion']['sectorCiudadEntrega']]) && Yii::app()->session[Yii::app()->params->telefarma['sesion']['sectorCiudadEntrega']] != null) {
+           	$this->objSectorCiudad = Yii::app()->session[Yii::app()->params->telefarma['sesion']['sectorCiudadEntrega']];
+               	if ($this->objSectorCiudad->objCiudad->getDomicilio() != null) {
+               		if($this->isUnitStored()){
+	               		$this->shippingStored = $this->objSectorCiudad->objCiudad->getDomicilio()->valorDomicilio;
+               		}
+               		$this->deliveryStored = $this->objSectorCiudad->objCiudad->getDomicilio()->tiempoDomicilio;
+           	}
+        }
         if($this->shipping<=0){
              $this->CalculateShipping();
         }
@@ -191,6 +194,19 @@ class EShoppingCart extends CMap {
         }
         
         //CVarDumper::dump($this->shipping, 10, true);echo "<br>";
+    }
+    
+    
+    public function isUnitStored(){
+    	$positions = $this->getPositions();
+    	 
+    	foreach($positions as $position){
+    		if ($position->getDelivery() == 0 && $position->getShipping() == 0 && $position->isProduct() && $position->getQuantityStored() > 0){
+    			return true;
+    		}
+    	}
+    	 
+    	return false;
     }
 
     /**

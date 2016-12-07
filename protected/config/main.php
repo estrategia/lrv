@@ -470,7 +470,10 @@ return array(
             'clientefielCompra' => 301,
         ),
         'beneficios' => array(
-            'lrv' => array(21, 22, 23, 24),
+            'lrv' => array(21, 22, 23, 24, 25, 26),
+        	'descuentos' => array(21, 22, 23, 24), // new 
+        	'bonos' => array(25,26), // new
+        	'tipoBonoFormaPago' => array( 25 => 7, 26 => 8 ),
             'recambios' => array(1, 10),
             'recambioslabel' => array(1 => 'Recambio', 10 => 'Recambio Cruzado'),
             'recambio' => 1,
@@ -481,7 +484,7 @@ return array(
                 'acumulado' => 1,
                 'mayor' => 2
             ),
-            'configuracionActiva' => 2,
+            'configuracionActiva' => 1,
         ),
         'servicioVentaControlada' => 17,
         'gps' => array(
@@ -501,6 +504,7 @@ return array(
         'asuntoBienvenida' => 'La Rebaja te da la bienvenida',
         'formatoMoneda' => array('patron' => "¤#,##0;(¤#,##0)", 'moneda' => '$'),
         'webServiceUrl' => array(
+        	'sincronizarBeneficiosSIICOP' => 'http://sii.copservir.com/beneficios/sweb/wslrv',
             'serverGeo' => 'http://www.copservir.com/webService/serverGeo.php',
             'serverLRV' => 'http://www.copservir.com/webService/serverLRV.php',
             'crmLrv' => "http://www.copservir.com/webService/crmLrv.php",
