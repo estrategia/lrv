@@ -129,22 +129,23 @@ return array(
                 'sensodyne' => 'publicidad/contenido/nombre/sensodyne',
                 'sobre-metamucil' => 'publicidad/contenido/nombre/sobre-metamucil',
                 'recetas-nestle-nan-optipro' => 'publicidad/contenido/nombre/nan-recetas',
+                'perros-y-gatos' => 'publicidad/contenido/nombre/perros-y-gatos',
 
                 // Fin links campañas
 
-                array('restciudad/list', 'pattern'=>'rest/ciudad', 'verb'=>'GET'),
-                array('restciudad/view', 'pattern'=>'rest/ciudad/<id:\d+>', 'verb'=>'GET'),
-                array('restpuntoventa/puntoventacercano', 'pattern'=>'rest/puntoventacercano/lat/<lat:\-?\d+\.?\d+>/lon/<lon:\-?\d+\.?\d+>', 'verb'=>'GET'),
-                array('restciudad/sectores', 'pattern' => 'rest/ciudad/<id:\d+>/sectores', 'verb' => 'GET'),
-                array('restpuntoventa/list', 'pattern'=>'rest/puntoventa', 'verb'=>'GET'),
-                array('restproducto/list', 'pattern'=>'rest/producto', 'verb'=>'GET'),
-                array('restproducto/buscar', 'pattern'=>'rest/producto/buscar/<termino:.*>/<laboratorio:\-?\d+>', 'verb'=>'GET'),
-                array('restproducto/producto',
+                array('restCiudad/list', 'pattern'=>'rest/ciudad', 'verb'=>'GET'),
+                array('restCiudad/view', 'pattern'=>'rest/ciudad/<id:\d+>', 'verb'=>'GET'),
+                array('restPuntoVenta/puntoventacercano', 'pattern'=>'rest/puntoventacercano/lat/<lat:\-?\d+\.?\d+>/lon/<lon:\-?\d+\.?\d+>', 'verb'=>'GET'),
+                array('restCiudad/sectores', 'pattern' => 'rest/ciudad/<id:\d+>/sectores', 'verb' => 'GET'),
+                array('restPuntoVenta/list', 'pattern'=>'rest/puntoventa', 'verb'=>'GET'),
+                array('restProducto/list', 'pattern'=>'rest/producto', 'verb'=>'GET'),
+                array('restProducto/buscar', 'pattern'=>'rest/producto/buscar/<termino:.*>/<laboratorio:\-?\d+>', 'verb'=>'GET'),
+                array('restProducto/producto',
                     'pattern' => 'rest/producto/<codigoProducto:\d+>/ciudad/<codigoCiudad:\d+>/sector/<codigoSector:\d+>',
                     'verb'=>'GET'),
-                array('restproducto/simular', 'pattern' => 'rest/producto/simular', 'verb' => 'GET'),
-                array('restprofesion/ver', 'pattern' => 'rest/profesion/ver/<id:\d+>', 'verb' => 'GET'),
-                array('restprofesion/listar', 'pattern' => 'rest/profesion', 'verb' => 'GET'),
+                array('restProducto/simular', 'pattern' => 'rest/producto/simular', 'verb' => 'GET'),
+                array('restProfesion/ver', 'pattern' => 'rest/profesion/ver/<id:\d+>', 'verb' => 'GET'),
+                array('restProfesion/listar', 'pattern' => 'rest/profesion', 'verb' => 'GET'),
                /* array('rest/update', 'pattern'=>'api/<model:\w+>/<id:\d+>', 'verb'=>'PUT'),
                 array('rest/delete', 'pattern'=>'api/<model:\w+>/<id:\d+>', 'verb'=>'DELETE'),
                 array('rest/create', 'pattern'=>'api/<model:\w+>', 'verb'=>'POST'),*/
@@ -765,9 +766,9 @@ return array(
     			),
     			'pagar' => array(
     					'pasos' => array(
-    							'informacion' => 1, 
+    							'informacion' => 1,
     							'confirmacion' => 2,
-    							1 => 'informacion', 
+    							1 => 'informacion',
     							2 => 'confirmacion'
     					),
     					'pasosDisponibles' => array('informacion', 'confirmacion'),

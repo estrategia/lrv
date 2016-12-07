@@ -16,8 +16,7 @@ class PedidosCommand extends CConsoleCommand{
         $compras = Compras::model()->findAll(
                 array(
                     'with' => 'objFormaPagoCompra',
-                    'condition' => "DATE_SUB(now() , INTERVAL '10:0' MINUTE_SECOND) > fechaCompra AND t.idEstadoCompra =:estadocompra AND 
-                		codigoCiudad = 76001 and codigoSector = 22",
+                    'condition' => "DATE_SUB(now() , INTERVAL '10:0' MINUTE_SECOND) > fechaCompra AND t.idEstadoCompra =:estadocompra",
                     'params' => array(
                         ':estadocompra' => Yii::app()->params->callcenter['estadoCompra']['estado']['subasta'] // subasta
                     )
