@@ -315,7 +315,18 @@ class EShoppingCart extends CMap {
         return false;
     }
 
-
+    public function isUnitStored(){
+    	$positions = $this->getPositions();
+    	 
+    	foreach($positions as $position){
+    		if ($position->getDelivery() == 0 && $position->getShipping() == 0 && $position->isProduct() && $position->getQuantityStored() > 0){
+    			return true;
+    		}
+    	}
+    	 
+    	return false;
+    }
+    
     /**
      * Saves the state of the object in the session.
      * @return void
@@ -365,6 +376,24 @@ class EShoppingCart extends CMap {
 
         return $price;
     }
+    
+    /**
+     * Returns total price for all items in the shopping cart.
+     * @param bool $withDiscount
+     * @return float
+     */
+    public function getCostToken($withDiscount = true) {
+    	$price = 0.0;
+    	foreach ($this as $position) {
+    		$price += $position->getSumPriceToken($withDiscount);
+    	}
+    
+    	if ($withDiscount)
+    		$price -= $this->discountPrice;
+    
+    		return $price;
+    }
+    
 
     public function getTotalCost() {
         $price = 0.0;

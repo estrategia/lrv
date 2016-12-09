@@ -560,6 +560,23 @@ class EShoppingCart extends CMap {
 
         return $price;
     }
+    
+    /**
+     * Returns total price for all items in the shopping cart.
+     * @param bool $withDiscount
+     * @return float
+     */
+    public function getCostToken($withDiscount = true) {
+    	$price = 0.0;
+    	foreach ($this as $position) {
+    		$price += $position->getSumPriceToken($withDiscount);
+    	}
+    
+    	if ($withDiscount)
+    		$price -= $this->discountPrice;
+    
+    		return $price;
+    }
 
     public function getTotalCost() {
 

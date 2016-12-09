@@ -34,8 +34,10 @@
                             <?php else: ?>
                                 <strong>Datos del Remitente</strong> <br>
                                 <strong>C&eacute;dula: </strong><?php echo $objCompra->identificacionUsuario ?><br>
+                                <?php if(isset($objCompra->objUsuario)):?>
                                 <strong>Nombre: </strong><?php echo $objCompra->objUsuario->nombre . " " . $objCompra->objUsuario->apellido ?><br>
                                 <strong>Correo: </strong><?php echo $objCompra->objUsuario->correoElectronico ?> <br/>
+                                <?php endif;?>
                             <?php endif; ?>
                             <strong>TipoEntrega: </strong><?php echo Yii::app()->params->entrega["tipo"][$objCompra->tipoEntrega] ?> 
 

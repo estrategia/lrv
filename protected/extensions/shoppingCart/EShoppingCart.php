@@ -612,6 +612,8 @@ class EShoppingCart extends CMap {
     
     		return $price;
     }
+    
+    
 
     public function getTotalCost() {
 
@@ -626,6 +628,9 @@ class EShoppingCart extends CMap {
 
         return $price;
     }
+    
+    
+    
 
     public function getExtraShipping() {
         $shipping = 0.0;

@@ -164,10 +164,10 @@ class CatalogoController extends ControllerEntregaNacional {
         	$puntoVenta = null;
         	if (!empty($puntosVenta)) {
         		foreach ($puntosVenta[1] as $pdv) {
-        			if ($pdv[1] == $pdvDestino->idComercial) {
+        		//	if ($pdv[1] == $pdvDestino->idComercial) {
         			$puntoVenta = $pdv;
         			break;
-        			}
+        		//	}
         		}
         	
         		foreach($puntoVenta[4] as $saldos){
