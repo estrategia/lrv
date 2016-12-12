@@ -51,7 +51,7 @@ class LoginOperatorForm extends CFormModel {
 
             switch ($this->_identity->errorCode) {
                 case OperatorIdentity::ERROR_NONE:
-                    Yii::app()->controller->module->user->login($this->_identity);
+                	Yii::app()->controller->module->user->login($this->_identity);
                     break;
                 case OperatorIdentity::ERROR_USERNAME_INVALID:
                     $this->addError('username', 'Usuario incorrecto');
@@ -68,5 +68,7 @@ class LoginOperatorForm extends CFormModel {
             }
         }
     }
+    
+
 
 }

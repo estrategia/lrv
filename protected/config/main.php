@@ -509,7 +509,8 @@ return array(
             'serverLRV' => 'http://www.copservir.com/webService/serverLRV.php',
             'crmLrv' => "http://www.copservir.com/webService/crmLrv.php",
             'remisionPos' => "http://www.copservir.com/webService/serverLRV.php",
-            'remisionPosECommerce' => "http://www.copservir.com/webService/Pos/RemisionPosEcommerce.php"
+            'remisionPosECommerce' => "http://www.copservir.com/webService/Pos/RemisionPosEcommerce.php",
+        	'persona' => 'http://localhost/copservir/wsMultiportal/persona',
         ),
         'vendedor' => array(
             'sesion' => array(
@@ -538,6 +539,7 @@ return array(
         		'pdvDestino' => 'larebaja.online.puntoventa.pdvdestino',
         		'formPedidoBusqueda' => 'larebaja.online.puntoventa.formpedidobusqueda',
             ),
+        	'perfil' =>  3,	
         ),
         'entreganacional' => array(
             'sesion' => array(

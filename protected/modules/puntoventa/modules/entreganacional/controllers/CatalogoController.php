@@ -19,7 +19,7 @@ class CatalogoController extends ControllerEntregaNacional {
 
     public function actionBuscar() {
     	$this->active = "buscar";
-        $term = trim(Yii::app()->request->getParam('busqueda', ''));
+    	$term = trim(Yii::app()->request->getParam('busqueda', ''));
 
         if (empty($term)) {
             $this->render('buscar');
