@@ -337,8 +337,7 @@ class PrecioProducto extends Precio {
                    //$this->ahorroFraccion=  floor($this->precioFraccionTotal * ($this->getPorcentajeDescuento() / 100));
                 $this->ahorroUnidadDescuento = self::redondear($this->ahorroUnidadDescuento, 1);
                 
-                
-                $this->ahorroUnidadBono = floor($this->precioUnidad * ($this->getPorcentajeDescuentoBono() / 100));
+                $this->ahorroUnidadBono = floor($this->precioUnidad * ($this->getPorcentajeDescuentoBono(self::DESCUENTO_BENEFICIO) / 100));
                 //$this->ahorroFraccion=  floor($this->precioFraccionTotal * ($this->getPorcentajeDescuento() / 100));
                 $this->ahorroUnidadBono = self::redondear($this->ahorroUnidadBono, 1);
                  
@@ -359,6 +358,9 @@ class PrecioProducto extends Precio {
             )
         ));
     }
+    
+    
+    
 
     public function getPrecio() {
         $params = func_get_args();
@@ -413,5 +415,10 @@ class PrecioProducto extends Precio {
             return "";
         }
     }
+    
+    public function getBono(){
+    	return $this->ahorroUnidadBono;
+    }
+    
 
 }

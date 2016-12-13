@@ -30,6 +30,9 @@ abstract class IECartPosition {
     protected $listBeneficios = array();
     protected $listBeneficiosBonos = array();
     
+    protected $priceTokenUnit = 0;
+    
+    
     public function getBeneficios(){
         return $this->listBeneficios;
     }
@@ -250,6 +253,11 @@ abstract class IECartPosition {
         $price += $this->shipping;
         return $price;
     }
+    
+    public function getSumToken(){
+    	return ($this->quantityUnit + $this->quantityStored)* $this->priceTokenUnit;
+    }
+    
 
     abstract public function generate($params);
 

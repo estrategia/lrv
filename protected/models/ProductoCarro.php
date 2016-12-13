@@ -66,6 +66,8 @@ class ProductoCarro extends IECartPosition {
             $this->tax = $this->objProducto->objImpuesto->porcentaje;
             $this->shipping = $objprecio->getFlete();
             $this->delivery = $objprecio->getTiempoEntrega();
+            
+            $this->priceTokenUnit = $objprecio->getBono();
         }else if($this->isCombo()){
             $objprecio = new PrecioCombo($this->objCombo);
             $this->priceUnit = $objprecio->getPrecio();

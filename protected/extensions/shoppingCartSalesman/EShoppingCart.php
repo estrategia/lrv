@@ -624,6 +624,7 @@ class EShoppingCart extends CMap {
                 $tax += $position->getTaxPrice(true);
             }
         }
+        $tax += $this->getTaxShipping() + $this->getTaxShippingStored();
         //$tax = ceil($tax);
         return $tax;
     }
@@ -635,6 +636,9 @@ class EShoppingCart extends CMap {
                 $tax += $position->getBaseTaxPrice(true);
             }
         }
+        
+        $tax += $this->getTaxShipping(true) + $this->getTaxShippingStored(true);
+         
         //$tax = ceil($tax);
         return $tax;
     }
@@ -691,6 +695,39 @@ class EShoppingCart extends CMap {
      */
     public function isEmpty() {
         return !(bool) $this->getCount();
+    }
+    
+    public function getTotalBonoProducto(){
+    	$price = 0.0;
+    	foreach ($this as $position) {
+    		$price += $position->getSumToken();
+    	}
+    	return $price;
+    }
+    
+    public function getTaxShipping($base = false){
+    	 
+    	$impuestoQuery = Impuesto::model()->findByPk(Yii::app()->params->impuestoDomicilio);
+    	 
+    	$impuesto = $impuestoQuery->valor;
+    	 
+    	 
+    	if($base == true)
+    		return round(Precio::calcularBaseImpuesto($this->shipping, $impuesto/100));
+    		else
+    			return round(Precio::calcularImpuesto($this->shipping, $impuesto/100));
+    }
+    
+    public function getTaxShippingStored($base = false){
+    	$impuestoQuery = Impuesto::model()->findByPk(Yii::app()->params->impuestoDomicilio);
+    
+    	$impuesto = $impuestoQuery->valor;
+    	 
+    	 
+    	if($base == true)
+    		return round(Precio::calcularBaseImpuesto($this->shippingStored, $impuesto/100));
+    		else
+    			return round(Precio::calcularImpuesto($this->shippingStored, $impuesto/100));
     }
 
 }

@@ -261,6 +261,7 @@ return array(
                 )
             ),
         ),
+    	'impuestoDomicilio' => 1,	
         'tipoFormulaMedica' => '2',
         'promociones' => array(
             'viernesnegro' => array(
@@ -539,7 +540,7 @@ return array(
         		'pdvDestino' => 'larebaja.online.puntoventa.pdvdestino',
         		'formPedidoBusqueda' => 'larebaja.online.puntoventa.formpedidobusqueda',
             ),
-        	'perfil' =>  3,	
+        	'perfil' =>  3,	// new
         ),
         'entreganacional' => array(
             'sesion' => array(
@@ -762,7 +763,7 @@ return array(
     				),
     				'diasRecordatorioFormula' => array(1,3)
     	),
-    	'entregaNacional' => array( /***** NEW ******/
+    	'entregaNacional' => array(
     			'sesion' => array(
     					'carroPagarForm' => 'larebaja.online.entreganacional.carropagarform',
     			),

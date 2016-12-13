@@ -136,7 +136,7 @@ abstract class Precio {
         if($impuesto<=0)
             return 0;
         
-        $base=$valor/(1+($impuesto));
+        $base= self::calcularBaseImpuesto($valor, $impuesto);
         return $base*$impuesto;
     }
     

@@ -45,9 +45,9 @@
                                     <tr style="vertical-align: middle">
                                         <td rowspan='2'><?= $objProductoVC->codigoProducto ?></td>
                                         <td rowspan='2'>
-                                            <?php if ($objPrecio->tieneBeneficio()): ?>
+                                            <?php if ($objPrecio->tieneBeneficio() && $objProductoVC->mostrarAhorroVirtual == 1): ?>
                                                 <!--descuento-->
-                                                <div class=""><?php echo $objPrecio->getPorcentajeDescuento() ?>% dcto</div>
+                                                <div class=""><?php echo $objPrecio->getPorcentajeDescuento() ?>%</div>
                                             <?php endif; ?>
 
                                             <img src="<?php echo Yii::app()->request->baseUrl . $objProductoVC->objProducto->rutaImagen(); ?>" class="img-responsive noimagenProduct product-prom">
