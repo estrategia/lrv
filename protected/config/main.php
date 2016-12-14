@@ -267,7 +267,7 @@ return array(
                 'icono' => '/images/inicio/masvistos.png',
                 'nombre' => 'Viernes negro',
                 'fechaInicio' => '2015-11-25 13:00:00',
-                'fechaFin' => '2015-11-28 15:10:00',
+                'fechaFin' => '2017-11-28 15:10:00',
                 'elementos' => array(
                     array(
                         'rutaImagen' => '/images/banner/banner_inicio1-2015-10-20.jpg',
