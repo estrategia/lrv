@@ -346,23 +346,26 @@ class FormaPagoVendedorForm extends CFormModel {
             $this->usoBono["$objBono->idBonoTienda"] = 0;
         }
         
-             $listBonosProductos = Producto::model()->findAll(array(
-            'with' => array('objBeneficioProducto' => 
-                                    array(
-                                            'with' => array (
-                                                    'objBeneficio' => array (
-                                                        'with' => 'listCedulas'
-                                                    )))),
-            'condition' => 'objBeneficio.tipo = 25 AND 
-             listCedulas.numeroDocumento =:numeroDocumento AND 
-             objBeneficio.fechaIni <= now() AND 
-             objBeneficio.fechaFin >= now() AND
-             listCedulas.estado = 1',
-            'params' => array(
-                ':numeroDocumento' => Yii::app()->controller->module->user->getCedulaCliente()
-            ),
-        //    'order' => 'vigenciaInicio'
-        ));
+        
+        
+        
+	     /*   $listBonosProductos = Producto::model()->findAll(array(
+	            'with' => array('objBeneficioProducto' => 
+	                                    array(
+	                                            'with' => array (
+	                                                    'objBeneficio' => array (
+	                                                        'with' => 'listCedulas'
+	                                                    )))),
+	            'condition' => 'objBeneficio.tipo = 25 AND 
+	             listCedulas.numeroDocumento =:numeroDocumento AND 
+	             objBeneficio.fechaIni <= now() AND 
+	             objBeneficio.fechaFin >= now() AND
+	             listCedulas.estado = 1',
+	            'params' => array(
+	                ':numeroDocumento' => Yii::app()->controller->module->user->getCedulaCliente()
+	            ),
+	        //    'order' => 'vigenciaInicio'
+	        ));*/
         
           $codigosProductos = array ();
           $productosCant = array ();
@@ -375,7 +378,7 @@ class FormaPagoVendedorForm extends CFormModel {
               }
           }
              
-        foreach ($listBonosProductos as $objProducto) {
+       /* foreach ($listBonosProductos as $objProducto) {
                  $this->bono[$objProducto->objBeneficioProducto->idBeneficio] = array(
                      'valor' => $objProducto->objBeneficioProducto->objBeneficio->dsctoUnid * (in_array($objProducto->codigoProducto, $codigosProductos)?$productosCant[$objProducto->codigoProducto]:1),
                      'disponibleCompra' => ($this->totalCompra !== null && $this->totalCompra >= $objProducto->objBeneficioProducto->objBeneficio->dsctoUnid && in_array($objProducto->codigoProducto, $codigosProductos) ),
@@ -389,7 +392,7 @@ class FormaPagoVendedorForm extends CFormModel {
                  );
 
                  $this->usoBono[$objProducto->objBeneficioProducto->idBeneficio] = 0;
-        }
+        } */
              
         //-- bonos propios de la tienda
         //-- bono crm

@@ -19,7 +19,7 @@ class CatalogoController extends ControllerEntregaNacional {
 
     public function actionBuscar() {
     	$this->active = "buscar";
-        $term = trim(Yii::app()->request->getParam('busqueda', ''));
+    	$term = trim(Yii::app()->request->getParam('busqueda', ''));
 
         if (empty($term)) {
             $this->render('buscar');
@@ -164,10 +164,10 @@ class CatalogoController extends ControllerEntregaNacional {
         	$puntoVenta = null;
         	if (!empty($puntosVenta)) {
         		foreach ($puntosVenta[1] as $pdv) {
-        			if ($pdv[1] == $pdvDestino->idComercial) {
+        		//	if ($pdv[1] == $pdvDestino->idComercial) {
         			$puntoVenta = $pdv;
         			break;
-        			}
+        		//	}
         		}
         	
         		foreach($puntoVenta[4] as $saldos){

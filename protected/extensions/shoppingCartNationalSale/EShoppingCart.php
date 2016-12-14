@@ -315,7 +315,18 @@ class EShoppingCart extends CMap {
         return false;
     }
 
-
+    public function isUnitStored(){
+    	$positions = $this->getPositions();
+    	 
+    	foreach($positions as $position){
+    		if ($position->getDelivery() == 0 && $position->getShipping() == 0 && $position->isProduct() && $position->getQuantityStored() > 0){
+    			return true;
+    		}
+    	}
+    	 
+    	return false;
+    }
+    
     /**
      * Saves the state of the object in the session.
      * @return void
@@ -365,6 +376,24 @@ class EShoppingCart extends CMap {
 
         return $price;
     }
+    
+    /**
+     * Returns total price for all items in the shopping cart.
+     * @param bool $withDiscount
+     * @return float
+     */
+    public function getCostToken($withDiscount = true) {
+    	$price = 0.0;
+    	foreach ($this as $position) {
+    		$price += $position->getSumPriceToken($withDiscount);
+    	}
+    
+    	if ($withDiscount)
+    		$price -= $this->discountPrice;
+    
+    		return $price;
+    }
+    
 
     public function getTotalCost() {
         $price = 0.0;
@@ -394,6 +423,8 @@ class EShoppingCart extends CMap {
                 $tax += $position->getTaxPrice(true);
             }
         }
+        
+        $tax += $this->getTaxShipping() + $this->getTaxShippingStored();
         //$tax = ceil($tax);
         return $tax;
     }
@@ -405,6 +436,9 @@ class EShoppingCart extends CMap {
                 $tax += $position->getBaseTaxPrice(true);
             }
         }
+        
+        $tax += $this->getTaxShipping(true) + $this->getTaxShippingStored(true);
+         
         //$tax = ceil($tax);
         return $tax;
     }
@@ -479,6 +513,39 @@ class EShoppingCart extends CMap {
     		}
     	}
     	return null;
+    }
+    
+    public function getTotalBonoProducto(){
+    	$price = 0.0;
+    	foreach ($this as $position) {
+    		$price += $position->getSumToken();
+    	}
+    	return $price;
+    }
+    
+    public function getTaxShipping($base = false){
+    	 
+    	$impuestoQuery = Impuesto::model()->findByPk(Yii::app()->params->impuestoDomicilio);
+    	 
+    	$impuesto = $impuestoQuery->valor;
+    	 
+    	 
+    	if($base == true)
+    		return round(Precio::calcularBaseImpuesto($this->shipping, $impuesto/100));
+    		else
+    			return round(Precio::calcularImpuesto($this->shipping, $impuesto/100));
+    }
+    
+    public function getTaxShippingStored($base = false){
+    	$impuestoQuery = Impuesto::model()->findByPk(Yii::app()->params->impuestoDomicilio);
+    
+    	$impuesto = $impuestoQuery->valor;
+    	 
+    	 
+    	if($base == true)
+    		return round(Precio::calcularBaseImpuesto($this->shippingStored, $impuesto/100));
+    		else
+    			return round(Precio::calcularImpuesto($this->shippingStored, $impuesto/100));
     }
 
 }

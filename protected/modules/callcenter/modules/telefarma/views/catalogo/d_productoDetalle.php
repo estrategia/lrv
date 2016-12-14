@@ -38,9 +38,9 @@
                           
                     </div>
                     <div class="" style="color:#A3A3A3;font-size: 16px;">
-                        <?php if ($objPrecio->tieneBeneficio()): ?>
+                        <?php if ($objPrecio->tieneBeneficio() && $objProducto->mostrarAhorroVirtual == 1): ?>
                             <!--descuento-->
-                            <div class="cdiv_prod_desc"><?php echo $objPrecio->getPorcentajeDescuento() ?>% dcto</div>
+                            <div class="cdiv_prod_desc"><?php echo $objPrecio->getPorcentajeDescuento() ?>% </div>
                         <?php endif; ?>
                             <div class="space-2"></div>
                         <h1 style="color: #ED1C24; font-size: 24px;">

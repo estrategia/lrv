@@ -16,9 +16,9 @@
     <div class=" content-txt2">
         <?php $objPrecio = new PrecioProducto($data, $this->objSectorCiudad, Yii::app()->shoppingCart->getCodigoPerfil()); ?>
         <div class="img-list-products">
-            <?php if ($objPrecio->tieneBeneficio()): ?>
+            <?php if ($objPrecio->tieneBeneficio() && $data->mostrarAhorroVirtual == 1): ?>
                 <!--descuento-->
-                <div class="cdiv_prod_desc"><?php echo $objPrecio->getPorcentajeDescuento() ?>% dcto</div>
+                <div class="cdiv_prod_desc"><?php echo $objPrecio->getPorcentajeDescuento() ?>%</div>
             <?php endif; ?>
                 
             <a href="<?php echo CController::createUrl('/catalogo/producto', array('producto' => $data->codigoProducto, 'descripcion' => $data->getCadenaUrl())) ?>">
@@ -98,6 +98,19 @@
             <?php echo CHtml::link('<div class="btn btn-primary btn-block">Consultar precio</div>', $this->createUrl('/sitio/ubicacion'), array()); ?>
 
         <?php elseif ($data->ventaVirtual == 1 && $objPrecio->inicializado() && $vista != 'slider'): ?>
+        
+        	<?php if ($data->fraccionado == 1): ?>
+        	 <div class="botones-list">
+                <div class="row">
+                    <div class="col-xs-6 ">
+                    	<?php echo CHtml::link('<div class="btn btn-primary btn-block btn-xs">Añadir Unidades</div>', CController::createUrl('/catalogo/producto', array('producto' => $data->codigoProducto, 'descripcion' => $data->getCadenaUrl())), array()); ?>
+                    </div>
+                    <div class="col-xs-6 ">
+                    	<?php echo CHtml::link('<div class="btn btn-primary btn-block btn-xs">Añadir Fracciones</div>', CController::createUrl('/catalogo/producto', array('producto' => $data->codigoProducto, 'descripcion' => $data->getCadenaUrl())), array('data-producto' => $data->codigoProducto, 'data-cargar' => 1, 'data-id' => $idUnico)); ?>
+                    </div>
+                 </div>
+             </div> 
+        	<?php else:?>
             <div class="botones-list">
                 <div class="row">
                     <div class="col-xs-6 not_padding">
@@ -125,6 +138,7 @@
                   </div>
                   <?php */endif; ?>
             </div>
+            <?php endif;?>
         <?php elseif (!$objPrecio->inicializado()): ?>
             <div class="col-md-12">
                 <?php echo CHtml::link('<div class="btn btn-primary btn-block btn-xs">Agotado</div>', CController::createUrl('/catalogo/producto', array('producto' => $data->codigoProducto, 'descripcion' => $data->getCadenaUrl())), array()); ?>

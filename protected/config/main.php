@@ -130,6 +130,8 @@ return array(
                 'sobre-metamucil' => 'publicidad/contenido/nombre/sobre-metamucil',
                 'recetas-nestle-nan-optipro' => 'publicidad/contenido/nombre/nan-recetas',
                 'perros-y-gatos' => 'publicidad/contenido/nombre/perros-y-gatos',
+                'perros-y-gatos' => 'publicidad/contenido/nombre/perros-y-gatos',
+                'proteccion-solar-sol-or' => 'publicidad/contenido/nombre/sol-or',
 
                 // Fin links campañas
 
@@ -261,6 +263,7 @@ return array(
                 )
             ),
         ),
+    	'impuestoDomicilio' => 1,	
         'tipoFormulaMedica' => '2',
         'promociones' => array(
             'viernesnegro' => array(
@@ -509,7 +512,8 @@ return array(
             'serverLRV' => 'http://www.copservir.com/webService/serverLRV.php',
             'crmLrv' => "http://www.copservir.com/webService/crmLrv.php",
             'remisionPos' => "http://www.copservir.com/webService/serverLRV.php",
-            'remisionPosECommerce' => "http://www.copservir.com/webService/Pos/RemisionPosEcommerce.php"
+            'remisionPosECommerce' => "http://www.copservir.com/webService/Pos/RemisionPosEcommerce.php",
+        	'persona' => 'http://localhost/copservir/wsMultiportal/persona',
         ),
         'vendedor' => array(
             'sesion' => array(
@@ -538,6 +542,7 @@ return array(
         		'pdvDestino' => 'larebaja.online.puntoventa.pdvdestino',
         		'formPedidoBusqueda' => 'larebaja.online.puntoventa.formpedidobusqueda',
             ),
+        	'perfil' =>  3,	// new
         ),
         'entreganacional' => array(
             'sesion' => array(
@@ -760,7 +765,7 @@ return array(
     				),
     				'diasRecordatorioFormula' => array(1,3)
     	),
-    	'entregaNacional' => array( /***** NEW ******/
+    	'entregaNacional' => array(
     			'sesion' => array(
     					'carroPagarForm' => 'larebaja.online.entreganacional.carropagarform',
     			),

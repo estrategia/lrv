@@ -18,10 +18,10 @@
 
     <!-- <div class="cdt_line_spc"><span></span></div>-->
 
-    <?php if ($objPrecio->tieneBeneficio()): ?>
+    <?php if ($objPrecio->tieneBeneficio() && $objProducto->mostrarAhorroVirtual == 1): ?>
         <div class="cdiv_prod_desc">
             <div class="c_prod_desc">
-                <p><?php echo $objPrecio->getPorcentajeDescuento() ?> % <span>dcto</span></p>
+                <p><?php echo $objPrecio->getPorcentajeDescuento() ?> % </p>
             </div>
         </div>
     <?php endif; ?>

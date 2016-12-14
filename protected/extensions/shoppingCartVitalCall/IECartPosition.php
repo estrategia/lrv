@@ -20,6 +20,8 @@ abstract class IECartPosition {
     protected $tax = 0.0;
     protected $listBeneficios = array();
     
+    protected $priceTokenUnit = 0;
+    
     public function getBeneficios(){
         return $this->listBeneficios;
     }
@@ -170,8 +172,7 @@ abstract class IECartPosition {
     }
 
     /**
-     * Установить сумму скидки на позицию
-     * @param  $newVal
+      * @param  $newVal
      * @return void
      */
     /* public function setDiscountPrice($newVal) {
@@ -203,6 +204,11 @@ abstract class IECartPosition {
         $price += $this->shipping;
         return $price;
     }
+    
+    public function getSumToken(){
+    	return ($this->quantityUnit + $this->quantityStored)* $this->priceTokenUnit;
+    }
+    
 
     abstract public function generate($params);
 
