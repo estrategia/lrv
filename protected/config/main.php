@@ -130,6 +130,8 @@ return array(
                 'sobre-metamucil' => 'publicidad/contenido/nombre/sobre-metamucil',
                 'recetas-nestle-nan-optipro' => 'publicidad/contenido/nombre/nan-recetas',
                 'perros-y-gatos' => 'publicidad/contenido/nombre/perros-y-gatos',
+                'perros-y-gatos' => 'publicidad/contenido/nombre/perros-y-gatos',
+                'proteccion-solar-sol-or' => 'publicidad/contenido/nombre/sol-or',
 
                 // Fin links campañas
 
