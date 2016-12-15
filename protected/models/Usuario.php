@@ -168,7 +168,8 @@ class Usuario extends CActiveRecord {
     }
 
     public function getNombreCorto() {
-        $nombre = explode(' ', $this->nombre);
+    	$nombre = explode(' ', $this->nombre);
+       
         $nombreStr = trim($nombre[0]);
 
         if(isset($nombre[1])){

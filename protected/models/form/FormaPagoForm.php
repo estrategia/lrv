@@ -347,27 +347,64 @@ class FormaPagoForm extends CFormModel {
             $this->usoBono["$objBono->idBonoTienda"] = 0;
         }
         
-        $listBonosProductos = Producto::model()->findAll(array(
-            'with' => array('objBeneficioProducto' => 
-                                    array(
-                                            'with' => array (
-                                                    'objBeneficio' => array (
-                                                        'with' => 'listCedulas'
-                                                    )))),
-            'condition' => 'objBeneficio.tipo = 25 AND 
-             listCedulas.numeroDocumento =:numeroDocumento AND 
-             objBeneficio.fechaIni <= now() AND 
-             objBeneficio.fechaFin >= now() AND
-             listCedulas.estado = 1',
-            'params' => array(
-                ':numeroDocumento' => Yii::app()->user->name
-            ),
-        //    'params' => $paramsBonos,
-        //    'order' => 'vigenciaInicio'
-        ));
+        $listBonosProductos= array();
+        if($this->objSectorCiudad != null ){
+	        $listBonosProductos = Producto::model()->findAll(array(
+	            'with' => array('objBeneficioProducto' => 
+	                                    array(
+	                                            'with' => array (
+	                                                    'objBeneficio' => array (
+	                                                        'with' => array('listCedulas','listPuntosVenta')
+	                                                    )))),
+	            'condition' => 'objBeneficio.tipo = 25 AND 
+	             listCedulas.numeroDocumento =:numeroDocumento AND 
+	             objBeneficio.fechaIni <= now() AND 
+	             objBeneficio.fechaFin >= now() AND
+	             listCedulas.estado = 1 AND listPuntosVenta.codigoCiudad=:codigoCiudad AND listPuntosVenta.idSectorLRV=:codigoSector',
+	            'params' => array(
+	                ':numeroDocumento' => Yii::app()->user->name,
+	            	':codigoCiudad' => $this->objSectorCiudad->codigoCiudad,
+	            	':codigoSector' => $this->objSectorCiudad->codigoSector
+	            	
+	            ),
+	        		//    'params' => $paramsBonos,
+	        		//    'order' => 'vigenciaInicio'
+	        		));
+	      
+        }
+        $listBonosProductos26 = array();
+        
+        	if($this->objSectorCiudad != null ){
+        		$swObligaClie = "swObligaCli = 0";
+        		if(Yii::app()->shoppingCart->getEsClienteFiel()){
+        			$swObligaClie = "swObligaCli = 0 OR swObligaCli = 2";
+        		}
+        		
+        		$listBonosProductos26 = Producto::model()->findAll(array(
+        				'with' => array('objBeneficioProducto' =>
+        						array(
+        								'with' => array (
+        										'objBeneficio' => array(
+        												'with' => 'listPuntosVenta'
+        										)
+        										
+        								))),
+					    'condition' => 'objBeneficio.tipo = 26 AND
+									             objBeneficio.fechaIni <= now() AND
+									             objBeneficio.fechaFin >= now() AND ('.$swObligaClie.') 
+					        				AND listPuntosVenta.codigoCiudad=:codigoCiudad AND listPuntosVenta.idSectorLRV=:codigoSector',
+        				'params' => array(
+        						':codigoCiudad' => $this->objSectorCiudad->codigoCiudad,
+        						':codigoSector' => $this->objSectorCiudad->codigoSector
+        				))
+        				);
+        		
+            }
+                   
         
           $codigosProductos = array ();
           $productosCant = array ();
+          
           foreach (Yii::app()->shoppingCart->getPositions() as $position){
               if ($position->getDelivery() == 0 && $position->getShipping() == 0){
                   if($position->isProduct()){
@@ -377,7 +414,7 @@ class FormaPagoForm extends CFormModel {
               }
           }
              
-            foreach ($listBonosProductos as $objProducto) {
+           /* foreach ($listBonosProductos as $objProducto) {
                  $this->bono[$objProducto->objBeneficioProducto->idBeneficio] = array(
                      'valor' => $objProducto->objBeneficioProducto->objBeneficio->dsctoUnid * (in_array($objProducto->codigoProducto, $codigosProductos)?$productosCant[$objProducto->codigoProducto]:1),
                      'disponibleCompra' => ($this->totalCompra !== null && $this->totalCompra >= $objProducto->objBeneficioProducto->objBeneficio->dsctoUnid && in_array($objProducto->codigoProducto, $codigosProductos) ),
@@ -391,7 +428,22 @@ class FormaPagoForm extends CFormModel {
                  );
 
                  $this->usoBono[$objProducto->objBeneficioProducto->idBeneficio] = 0;
-             }
+             }*/
+             
+          /*   foreach ($listBonosProductos26 as $objProducto) {
+             	$this->bono[$objProducto->objBeneficioProducto->idBeneficio] = array(
+             			'valor' => $objProducto->objBeneficioProducto->objBeneficio->dsctoUnid * (in_array($objProducto->codigoProducto, $codigosProductos)?$productosCant[$objProducto->codigoProducto]:1),
+             			'disponibleCompra' => ($this->totalCompra !== null && $this->totalCompra >= $objProducto->objBeneficioProducto->objBeneficio->dsctoUnid && in_array($objProducto->codigoProducto, $codigosProductos) ),
+             			'vigenciaInicio' => $objProducto->objBeneficioProducto->objBeneficio->fechaIni,
+             			'vigenciaFin' => $objProducto->objBeneficioProducto->objBeneficio->fechaFin,
+             			'minimoCompra' =>  $objProducto->objBeneficioProducto->objBeneficio->dsctoUnid,
+             			'concepto' => 'Por la compra de '.$objProducto->codigoProducto.' - '.$objProducto->descripcionProducto. " recibe un bono de ".$objProducto->objBeneficioProducto->objBeneficio->dsctoUnid,
+             			//  'concepto' => $objProducto->objBeneficioProducto->objBeneficio->mensaje,
+             			'modoUso' => 2,
+             			'codigoProducto' => $objProducto->codigoProducto
+             	);
+             	$this->usoBono[$objProducto->objBeneficioProducto->idBeneficio] = 0;
+             }*/
              
         //-- bonos propios de la tienda
         //-- bono crm

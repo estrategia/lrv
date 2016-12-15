@@ -130,6 +130,8 @@ return array(
                 'sobre-metamucil' => 'publicidad/contenido/nombre/sobre-metamucil',
                 'recetas-nestle-nan-optipro' => 'publicidad/contenido/nombre/nan-recetas',
                 'perros-y-gatos' => 'publicidad/contenido/nombre/perros-y-gatos',
+                'perros-y-gatos' => 'publicidad/contenido/nombre/perros-y-gatos',
+                'proteccion-solar-sol-or' => 'publicidad/contenido/nombre/sol-or',
 
                 // Fin links campañas
 
@@ -261,13 +263,14 @@ return array(
                 )
             ),
         ),
+    	'impuestoDomicilio' => 1,	
         'tipoFormulaMedica' => '2',
         'promociones' => array(
             'viernesnegro' => array(
                 'icono' => '/images/inicio/masvistos.png',
                 'nombre' => 'Viernes negro',
                 'fechaInicio' => '2015-11-25 13:00:00',
-                'fechaFin' => '2015-11-28 15:10:00',
+                'fechaFin' => '2017-11-28 15:10:00',
                 'elementos' => array(
                     array(
                         'rutaImagen' => '/images/banner/banner_inicio1-2015-10-20.jpg',
@@ -470,7 +473,10 @@ return array(
             'clientefielCompra' => 301,
         ),
         'beneficios' => array(
-            'lrv' => array(21, 22, 23, 24),
+            'lrv' => array(21, 22, 23, 24, 25, 26),
+        	'descuentos' => array(21, 22, 23, 24), // new 
+        	'bonos' => array(25,26), // new
+        	'tipoBonoFormaPago' => array( 25 => 7, 26 => 8 ),
             'recambios' => array(1, 10),
             'recambioslabel' => array(1 => 'Recambio', 10 => 'Recambio Cruzado'),
             'recambio' => 1,
@@ -481,7 +487,7 @@ return array(
                 'acumulado' => 1,
                 'mayor' => 2
             ),
-            'configuracionActiva' => 2,
+            'configuracionActiva' => 1,
         ),
         'servicioVentaControlada' => 17,
         'gps' => array(
@@ -501,11 +507,13 @@ return array(
         'asuntoBienvenida' => 'La Rebaja te da la bienvenida',
         'formatoMoneda' => array('patron' => "¤#,##0;(¤#,##0)", 'moneda' => '$'),
         'webServiceUrl' => array(
+        	'sincronizarBeneficiosSIICOP' => 'http://sii.copservir.com/beneficios/sweb/wslrv',
             'serverGeo' => 'http://www.copservir.com/webService/serverGeo.php',
             'serverLRV' => 'http://www.copservir.com/webService/serverLRV.php',
             'crmLrv' => "http://www.copservir.com/webService/crmLrv.php",
             'remisionPos' => "http://www.copservir.com/webService/serverLRV.php",
-            'remisionPosECommerce' => "http://www.copservir.com/webService/Pos/RemisionPosEcommerce.php"
+            'remisionPosECommerce' => "http://www.copservir.com/webService/Pos/RemisionPosEcommerce.php",
+        	'persona' => 'http://localhost/copservir/wsMultiportal/persona',
         ),
         'vendedor' => array(
             'sesion' => array(
@@ -534,6 +542,7 @@ return array(
         		'pdvDestino' => 'larebaja.online.puntoventa.pdvdestino',
         		'formPedidoBusqueda' => 'larebaja.online.puntoventa.formpedidobusqueda',
             ),
+        	'perfil' =>  3,	// new
         ),
         'entreganacional' => array(
             'sesion' => array(
@@ -756,7 +765,7 @@ return array(
     				),
     				'diasRecordatorioFormula' => array(1,3)
     	),
-    	'entregaNacional' => array( /***** NEW ******/
+    	'entregaNacional' => array(
     			'sesion' => array(
     					'carroPagarForm' => 'larebaja.online.entreganacional.carropagarform',
     			),

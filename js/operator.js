@@ -143,6 +143,58 @@ $(document).on('click', 'a[data-role="completitud-pdv"]', function () {
     });
 });
 
+$(document).on('click', 'a[data-role="activar-usuario"]', function () {
+	btn = $(this);
+	bootbox.dialog({
+        message: "¿Está seguro de activar este usuario en la tienda virtual?",
+        title: "Confirmación",
+        buttons: {
+            success: {
+                label: "Aceptar",
+                className: "btn-primary",
+                callback: function() {
+                	  $.ajax({
+                	        type: 'POST',
+                	        dataType: 'json',
+                	        async: true,
+                	        url: requestUrl + '/callcenter/cuentasInactivas/activarCuenta',
+                	        data: {identificacion: btn.attr('data-identificacion')},
+                	        beforeSend: function () {
+                	            // detener refresh
+                	            clearTimeout(refresh);
+                	            Loading.show();
+                	        },
+                	        complete: function () {
+                	            Loading.hide();
+                	        },
+                	        success: function (data) {
+                	            if (data.result == 'ok') {
+                	            	$.fn.yiiGridView.update('grid-bloqueos-usuarios');
+                	                dialogoAnimado(data.response);
+                	            } else {
+                	                bootbox.alert(data.response);
+                	            }
+                	        },
+                	        error: function (jqXHR, textStatus, errorThrown) {
+                	            Loading.hide();
+                	            bootbox.alert('Error: ' + errorThrown);
+                	        }
+                	    });
+                }
+            },
+            close: {
+                label: "Cancelar",
+                className: "btn-default",
+                callback: function() {
+                }
+            }
+        }
+    });
+	
+	
+  
+});
+
 
 $(document).on('click', "a[data-action='modal']", function () {
 

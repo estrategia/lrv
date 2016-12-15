@@ -529,10 +529,15 @@ class AdminController extends ControllerSubasta {
     }
 
     protected function gridOrigenPedido($data, $row) {
+    	
         if ($data->identificacionUsuario == null) {
             return $data->objCompraDireccion->nombre . "<br/>" . $data->objCompraDireccion->correoElectronico;
         } else {
-            return "$data->identificacionUsuario<br/>" . $data->objUsuario->getNombreCompleto() . "<br/>" . $data->objUsuario->correoElectronico;
+        	
+        	return "$data->identificacionUsuario<br/>" . 
+        			(isset($data->objUsuario)?$data->objUsuario->getNombreCompleto():"" ) . "<br/>" . 
+        			(isset($data->objUsuario)?$data->objUsuario->correoElectronico:"");
+        	
         }
     }
 

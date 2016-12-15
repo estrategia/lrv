@@ -411,100 +411,124 @@ class Compras extends CActiveRecord {
                 )
             ));
             
-            if($objUsuario!==null && $objUsuario->codigoPerfil == Yii::app()->params['perfil']['asociado']){            
-                try{
-                    $anho = $this->fechaCompraDate->format('Y');
-                    $mes = $this->fechaCompraDate->format('n');
-
-                    //consultar si ya tenia compras bloqueadas
-                    $sql = "select max(idCompra) idCompra "
-                            . "from t_BloqueosUsuarios bu "
-                            . "join t_ComprasBloqueoUsuarios cbu on bu.idBloqueoUsuario=cbu.idBloqueoUsuario "
-                            . "where bu.estado=:desbloqueado AND bu.identificacionUsuario=:usuario and anho=:anho and mes=:mes";
-
-                    $command = Yii::app()->db->createCommand();
-                    $command->text = $sql;
-                    $command->bindValue(':desbloqueado', BloqueosUsuarios::ESTADO_DESBLOQUEADO, PDO::PARAM_INT);
-                    $command->bindValue(':usuario', $this->identificacionUsuario, PDO::PARAM_STR);
-                    $command->bindValue(':anho', $anho, PDO::PARAM_INT);
-                    $command->bindValue(':mes', $mes, PDO::PARAM_INT);
-                    $idCompra = $command->queryScalar();
-
-                    $condition = "identificacionUsuario=:usuario AND YEAR(fechaCompra)=:anho AND MONTH(fechaCompra)=:mes";
-                    $params = array(':usuario' => $this->identificacionUsuario, ':anho' => $anho, ':mes' => $mes);
-
-                    if ($idCompra != null) {
-                        $condition .=" AND idCompra>:idCompra";
-                        $params[':idCompra'] = $idCompra;
-                    }
-
-                    //consultar compras para evaluar comportamiento
-                    $listCompras = self::model()->findAll(array(
-                        'condition' => $condition,
-                        'params' => $params
-                    ));
-
-                    $cantidadCompras = 0;
-                    $acumuladoCompras = 0;
-                    $limiteCantidad = Yii::app()->params->bloqueoUsuario['cantidadCompras'];
-                    $limiteAcumulado = Yii::app()->params->bloqueoUsuario['acumuladoCompras'];
-
-                    $arrValoresInsertar = array();
-                    foreach($listCompras as $objCompra){
-                        $cantidadCompras++;
-                        $acumuladoCompras += $objCompra->totalCompra;
-                        $arrValoresInsertar[] = "(:idBloqueoUsuario,$objCompra->idCompra)";
-                    }
-
-                    //si comportamiento de compra excede los limites establecidos se procede con bloqueo de usuario
-                    if( $cantidadCompras>0 && (($limiteCantidad>0 && $cantidadCompras>$limiteCantidad) || ($limiteAcumulado>0 && $acumuladoCompras>$limiteAcumulado)) ){
-                        $objUsuario->activo=Usuario::ESTADO_BLOQUEADO;
-                        
-                        if(isset(Yii::app()->session[Yii::app()->params->usuario['sesion']]) && Yii::app()->session[Yii::app()->params->usuario['sesion']] instanceof Usuario){
-                            Yii::app()->session[Yii::app()->params->usuario['sesion']] = $objUsuario;
-                        }
-
-                        $objBloqueoUsuario = new BloqueosUsuarios;
-                        $objBloqueoUsuario->identificacionUsuario = $this->identificacionUsuario;
-                        $objBloqueoUsuario->numeroCompras = $cantidadCompras;
-                        $objBloqueoUsuario->acumuladoCompras = $acumuladoCompras;
-                        $objBloqueoUsuario->anho = $anho;
-                        $objBloqueoUsuario->mes = $mes;
-                        $objBloqueoUsuario->estado = BloqueosUsuarios::ESTADO_BLOQUEADO;
-                        $fechaHoy = date('Y-m-d H:i:s');
-                        $objBloqueoUsuario->fechaRegistro = $fechaHoy;
-                        $objBloqueoUsuario->fechaActualizacion = $fechaHoy;
-
-                        if($objBloqueoUsuario->save()){
-                            //$rowsInactivacion = Yii::app()->db->createCommand("UPDATE m_Usuario SET activo=:activo WHERE identificacionUsuario=:usuario")->bindValue(':activo', Usuario::ESTADO_BLOQUEADO, PDO::PARAM_INT)->bindValue(':usuario', $this->identificacionUsuario, PDO::PARAM_STR)->execute();
-                            //$rowsInactivacion>0
-                            if($objUsuario->save()){
-                                $contenidoCorreo = Yii::app()->controller->renderPartial('//common/correoBloqueo', array('objUsuario' => $objUsuario), true);
-                                $htmlCorreo = Yii::app()->controller->renderPartial('//common/correo', array('contenido' => $contenidoCorreo), true);   
-                                try{
-                                    sendHtmlEmail($objUsuario->correoElectronico, "La Rebaja Virtual: Bloqueo de cuenta", $htmlCorreo,Yii::app()->params->callcenter['correo']);
-                                }  catch (Exception $exc){}
-
-                                $sqlBloqueoCompra = "INSERT INTO t_ComprasBloqueoUsuarios (idBloqueoUsuario,idCompra) VALUES " . implode(",",$arrValoresInsertar);
-                                $command = Yii::app()->db->createCommand($sqlBloqueoCompra);
-                                $command->bindValue(':idBloqueoUsuario', $objBloqueoUsuario->idBloqueoUsuario, PDO::PARAM_INT);
-                                $rowsBloqueoCompra = $command->execute();
-
-                                if($rowsBloqueoCompra<=0){
-                                    Yii::log("Compras::verificarBloqueoUsuario - Error al guardar compras de bloqueo de usuario: \n". CVarDumper::dumpAsString($objBloqueoUsuario->attributes) . "\nCompras:\n" . CVarDumper::dumpAsString($arrValoresInsertar) . "\nErrores:\n" . CVarDumper::dumpAsString($objBloqueoUsuario->validateErrorsResponse()) ,CLogger::LEVEL_INFO, 'bloqueo_usuario');
-                                }
-                            }else{
-                                Yii::log("Compras::verificarBloqueoUsuario - Error al inactivar usuario: \n". CVarDumper::dumpAsString($objUsuario->validateErrorsResponse()) . "\nBloqueoUsuario:\n" .  CVarDumper::dumpAsString($objBloqueoUsuario->attributes) . "\nCompras:\n" . CVarDumper::dumpAsString($arrValoresInsertar) ,CLogger::LEVEL_INFO, 'bloqueo_usuario');
-                            }
-                        }else{
-                            Yii::log("Compras::verificarBloqueoUsuario - Error al guardar bloqueo de usuario: \n". CVarDumper::dumpAsString($objBloqueoUsuario->attributes) . "\nCompras:\n" . CVarDumper::dumpAsString($arrValoresInsertar) . "\nErrores:\n" . CVarDumper::dumpAsString($objBloqueoUsuario->validateErrorsResponse()) ,CLogger::LEVEL_INFO, 'bloqueo_usuario');
-                        }
-                    }else{
-                        //Yii::log("Compras::verificarBloqueoUsuario - PRUEBA 100" ,CLogger::LEVEL_INFO, 'bloqueo_usuario');
-                    }
-                }catch(Exception $exc){
-                    Yii::log("Compras::verificarBloqueoUsuario - Exception para compra [$this->idCompra]:\n" . $exc->getMessage() . "\n" . $exc->getTraceAsString() ,CLogger::LEVEL_INFO, 'bloqueo_usuario');
-                }
+            if($objUsuario!==null ){
+            	
+            	$bloqueoCuenta = BloqueoCuenta::model()->find(array(
+            			'condition' =>  'perfil =:perfil',
+            			'params' => array(
+            					':perfil' => $objUsuario->codigoPerfil
+            			)
+            	));
+            	
+            	
+            	if($bloqueoCuenta != null){
+	                try{
+	                    $anho = $this->fechaCompraDate->format('Y');
+	                    $mes = $this->fechaCompraDate->format('n');
+	
+	                    // Usuario desbloqueado en este mes ?
+	                    $usuarioDesbloqueado = BloqueosUsuarios::model()->find(array(
+	                    		'condition' => 'identificacionUsuario=:usuario AND YEAR(fechaDesbloqueo)=:anho AND MONTH(fechaDesbloqueo)=:mes',
+	                    		'params' => array(
+	                    				':usuario' => $this->identificacionUsuario,
+	                    				':anho' => $anho,
+	                    				':mes' => $mes,
+	                    		)
+	                    ));
+	                    
+	                    if($usuarioDesbloqueado == null){
+		                    //consultar si ya tenia compras bloqueadas
+		                    $sql = "select max(idCompra) idCompra "
+		                            . "from t_BloqueosUsuarios bu "
+		                            . "join t_ComprasBloqueoUsuarios cbu on bu.idBloqueoUsuario=cbu.idBloqueoUsuario "
+		                            . "where bu.estado=:desbloqueado AND bu.identificacionUsuario=:usuario and anho=:anho and mes=:mes";
+		
+		                    $command = Yii::app()->db->createCommand();
+		                    $command->text = $sql;
+		                    $command->bindValue(':desbloqueado', BloqueosUsuarios::ESTADO_DESBLOQUEADO, PDO::PARAM_INT);
+		                    $command->bindValue(':usuario', $this->identificacionUsuario, PDO::PARAM_STR);
+		                    $command->bindValue(':anho', $anho, PDO::PARAM_INT);
+		                    $command->bindValue(':mes', $mes, PDO::PARAM_INT);
+		                    $idCompra = $command->queryScalar();
+		
+		                    
+		                    $condition = "identificacionUsuario=:usuario AND YEAR(fechaCompra)=:anho AND MONTH(fechaCompra)=:mes";
+		                    $params = array(':usuario' => $this->identificacionUsuario, ':anho' => $anho, ':mes' => $mes);
+		
+		                    if ($idCompra != null) {
+		                        $condition .=" AND idCompra>:idCompra";
+		                        $params[':idCompra'] = $idCompra;
+		                    }
+		
+		                    //consultar compras para evaluar comportamiento
+		                    $listCompras = self::model()->findAll(array(
+		                        'condition' => $condition,
+		                        'params' => $params
+		                    ));
+		
+		                    $cantidadCompras = 0;
+		                    $acumuladoCompras = 0;
+		                    $limiteCantidad = $bloqueoCuenta->cantidadCompras;
+		                    $limiteAcumulado = $bloqueoCuenta->acumuladoCompras;
+		
+		                    $arrValoresInsertar = array();
+		                    foreach($listCompras as $objCompra){
+		                        $cantidadCompras++;
+		                        $acumuladoCompras += $objCompra->totalCompra;
+		                        $arrValoresInsertar[] = "(:idBloqueoUsuario,$objCompra->idCompra)";
+		                    }
+		
+		                    //si comportamiento de compra excede los limites establecidos se procede con bloqueo de usuario
+		                    if( $cantidadCompras>0 && (($limiteCantidad>0 && $cantidadCompras>$limiteCantidad) || ($limiteAcumulado>0 && $acumuladoCompras>$limiteAcumulado)) ){
+		                        $objUsuario->activo=Usuario::ESTADO_BLOQUEADO;
+		                        
+		                        if(isset(Yii::app()->session[Yii::app()->params->usuario['sesion']]) && Yii::app()->session[Yii::app()->params->usuario['sesion']] instanceof Usuario){
+		                            Yii::app()->session[Yii::app()->params->usuario['sesion']] = $objUsuario;
+		                        }
+		
+		                        $objBloqueoUsuario = new BloqueosUsuarios;
+		                        $objBloqueoUsuario->identificacionUsuario = $this->identificacionUsuario;
+		                        $objBloqueoUsuario->numeroCompras = $cantidadCompras;
+		                        $objBloqueoUsuario->acumuladoCompras = $acumuladoCompras;
+		                        $objBloqueoUsuario->anho = $anho;
+		                        $objBloqueoUsuario->mes = $mes;
+		                        $objBloqueoUsuario->estado = BloqueosUsuarios::ESTADO_BLOQUEADO;
+		                        $fechaHoy = date('Y-m-d H:i:s');
+		                        $objBloqueoUsuario->fechaRegistro = $fechaHoy;
+		                        $objBloqueoUsuario->fechaActualizacion = $fechaHoy;
+		
+		                        if($objBloqueoUsuario->save()){
+		                            //$rowsInactivacion = Yii::app()->db->createCommand("UPDATE m_Usuario SET activo=:activo WHERE identificacionUsuario=:usuario")->bindValue(':activo', Usuario::ESTADO_BLOQUEADO, PDO::PARAM_INT)->bindValue(':usuario', $this->identificacionUsuario, PDO::PARAM_STR)->execute();
+		                            //$rowsInactivacion>0
+		                            if($objUsuario->save()){
+		                                $contenidoCorreo = Yii::app()->controller->renderPartial('//common/correoBloqueo', array('objUsuario' => $objUsuario), true);
+		                                $htmlCorreo = Yii::app()->controller->renderPartial('//common/correo', array('contenido' => $contenidoCorreo), true);   
+		                                try{
+		                                    sendHtmlEmail($objUsuario->correoElectronico, "La Rebaja Virtual: Bloqueo de cuenta", $htmlCorreo,Yii::app()->params->callcenter['correo']);
+		                                }  catch (Exception $exc){}
+		
+		                                $sqlBloqueoCompra = "INSERT INTO t_ComprasBloqueoUsuarios (idBloqueoUsuario,idCompra) VALUES " . implode(",",$arrValoresInsertar);
+		                                $command = Yii::app()->db->createCommand($sqlBloqueoCompra);
+		                                $command->bindValue(':idBloqueoUsuario', $objBloqueoUsuario->idBloqueoUsuario, PDO::PARAM_INT);
+		                                $rowsBloqueoCompra = $command->execute();
+		
+		                                if($rowsBloqueoCompra<=0){
+		                                    Yii::log("Compras::verificarBloqueoUsuario - Error al guardar compras de bloqueo de usuario: \n". CVarDumper::dumpAsString($objBloqueoUsuario->attributes) . "\nCompras:\n" . CVarDumper::dumpAsString($arrValoresInsertar) . "\nErrores:\n" . CVarDumper::dumpAsString($objBloqueoUsuario->validateErrorsResponse()) ,CLogger::LEVEL_INFO, 'bloqueo_usuario');
+		                                }
+		                            }else{
+		                                Yii::log("Compras::verificarBloqueoUsuario - Error al inactivar usuario: \n". CVarDumper::dumpAsString($objUsuario->validateErrorsResponse()) . "\nBloqueoUsuario:\n" .  CVarDumper::dumpAsString($objBloqueoUsuario->attributes) . "\nCompras:\n" . CVarDumper::dumpAsString($arrValoresInsertar) ,CLogger::LEVEL_INFO, 'bloqueo_usuario');
+		                            }
+		                        }else{
+		                            Yii::log("Compras::verificarBloqueoUsuario - Error al guardar bloqueo de usuario: \n". CVarDumper::dumpAsString($objBloqueoUsuario->attributes) . "\nCompras:\n" . CVarDumper::dumpAsString($arrValoresInsertar) . "\nErrores:\n" . CVarDumper::dumpAsString($objBloqueoUsuario->validateErrorsResponse()) ,CLogger::LEVEL_INFO, 'bloqueo_usuario');
+		                        }
+		                    }else{
+		                        //Yii::log("Compras::verificarBloqueoUsuario - PRUEBA 100" ,CLogger::LEVEL_INFO, 'bloqueo_usuario');
+		                    }
+	                    }
+	                }catch(Exception $exc){
+	                    Yii::log("Compras::verificarBloqueoUsuario - Exception para compra [$this->idCompra]:\n" . $exc->getMessage() . "\n" . $exc->getTraceAsString() ,CLogger::LEVEL_INFO, 'bloqueo_usuario');
+	                }
+            	}
             }
         }
     }

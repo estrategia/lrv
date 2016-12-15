@@ -16,9 +16,9 @@
     <div class=" content-txt2">
         <?php $objPrecio = new PrecioProducto($data, $this->objCiudadSectorOrigen, Yii::app()->shoppingCartNationalSale->getCodigoPerfil()); ?>
         <div class="img-list-products">
-            <?php if ($objPrecio->tieneBeneficio()): ?>
+            <?php if ($objPrecio->tieneBeneficio() && $data->mostrarAhorroVirtual == 1): ?>
                 <!--descuento-->
-                <div class="cdiv_prod_desc"><?php echo $objPrecio->getPorcentajeDescuento() ?>% dcto</div>
+                <div class="cdiv_prod_desc"><?php echo $objPrecio->getPorcentajeDescuento() ?>%</div>
             <?php endif; ?>
                 
             <a href="<?php echo CController::createUrl('catalogo/producto', array('producto' => $data->codigoProducto, 'descripcion' => $data->getCadenaUrl())) ?>">
@@ -86,26 +86,36 @@
                     <p> Tiempo de entrega: <span> <?php echo $objPrecio->getTiempoEntrega() ?> horas</span></p>
                 <?php endif; ?>
             <?php endif; ?>
-            
-             <div class="botones-list">
-                <div class="row">
-                    <div class="col-xs-6 not_padding">
-                        <div class="group-botones-cantidad">
-                            <button class="btn btn-default btn-xs" data-role="disminuir-cantidad" data-id="<?php echo $idUnico ?>" id="disminuir-unidad-<?php echo $data->codigoProducto ?>" data-producto="<?php echo $data->codigoProducto ?>" data-precio="<?= $objPrecio->getPrecio(Precio::PRECIO_UNIDAD) ?>" type="button"><span class="glyphicon glyphicon-minus"></span></button>
-
-                            <div class="ressete btn-xs">
-                                <input id="cantidad-producto-unidad-<?php echo $data->codigoProducto ?>" data-id="<?php echo $idUnico ?>"  class="increment" type="text" data-role="validar-cantidad-unidad"  data-producto="<?php echo $data->codigoProducto ?>" data-precio="<?= $objPrecio->getPrecio(Precio::PRECIO_UNIDAD) ?>" maxlength="3" value="1" data-total="700"/>
-                            </div>
-                            <button class="btn btn-default btn-xs" data-role="aumentar-cantidad" data-id="<?php echo $idUnico ?>"  id="aumentar-unidad-<?php echo $data->codigoProducto ?>" data-producto="<?php echo $data->codigoProducto ?>" data-precio="<?= $objPrecio->getPrecio(Precio::PRECIO_UNIDAD) ?>" type="button"><span class="glyphicon glyphicon-plus"></span></button>
-
-                        </div>
-                    </div>
-                    <div class="col-xs-6 not_padding">
-                        <?php echo CHtml::link('<div class="btn btn-primary btn-block btn-xs">Añadir <img src="' . Yii::app()->baseUrl . '/images/desktop/button-carrito.png" alt=""></div>', '#', array('data-producto' => $data->codigoProducto, 'data-cargar-nacional' => 1, 'data-id' => $idUnico, 'data-max' =>  $data->saldosDisponibles)); ?>
-                    </div>
-                </div>
-             
-            </div>
+	            <?php if ($data->fraccionado == 1): ?>
+            	  	<div class="row">
+	                    <div class="col-xs-6 ">
+	                    	<?php echo CHtml::link('<div class="btn btn-primary btn-block btn-xs">Añadir Unidades</div>', CController::createUrl('/puntoventa/entreganacional/catalogo/producto', array('producto' => $data->codigoProducto, 'descripcion' => $data->getCadenaUrl())), array()); ?>
+	                    </div>
+	                    <div class="col-xs-6 ">
+	                    	<?php echo CHtml::link('<div class="btn btn-primary btn-block btn-xs">Añadir Fracciones</div>', CController::createUrl('/puntoventa/entreganacional/catalogo/producto', array('producto' => $data->codigoProducto, 'descripcion' => $data->getCadenaUrl())), array('data-producto' => $data->codigoProducto, 'data-cargar' => 1, 'data-id' => $idUnico)); ?>
+	                    </div>
+	                 </div>
+            	 <?php else:?>
+		             <div class="botones-list">
+		                <div class="row">
+		                    <div class="col-xs-6 not_padding">
+		                        <div class="group-botones-cantidad">
+		                            <button class="btn btn-default btn-xs" data-role="disminuir-cantidad" data-id="<?php echo $idUnico ?>" id="disminuir-unidad-<?php echo $data->codigoProducto ?>" data-producto="<?php echo $data->codigoProducto ?>" data-precio="<?= $objPrecio->getPrecio(Precio::PRECIO_UNIDAD) ?>" type="button"><span class="glyphicon glyphicon-minus"></span></button>
+		
+		                            <div class="ressete btn-xs">
+		                                <input id="cantidad-producto-unidad-<?php echo $data->codigoProducto ?>" data-id="<?php echo $idUnico ?>"  class="increment" type="text" data-role="validar-cantidad-unidad"  data-producto="<?php echo $data->codigoProducto ?>" data-precio="<?= $objPrecio->getPrecio(Precio::PRECIO_UNIDAD) ?>" maxlength="3" value="1" data-total="700"/>
+		                            </div>
+		                            <button class="btn btn-default btn-xs" data-role="aumentar-cantidad" data-id="<?php echo $idUnico ?>"  id="aumentar-unidad-<?php echo $data->codigoProducto ?>" data-producto="<?php echo $data->codigoProducto ?>" data-precio="<?= $objPrecio->getPrecio(Precio::PRECIO_UNIDAD) ?>" type="button"><span class="glyphicon glyphicon-plus"></span></button>
+		
+		                        </div>
+		                    </div>
+		                    <div class="col-xs-6 not_padding">
+		                        <?php echo CHtml::link('<div class="btn btn-primary btn-block btn-xs">Añadir <img src="' . Yii::app()->baseUrl . '/images/desktop/button-carrito.png" alt=""></div>', '#', array('data-producto' => $data->codigoProducto, 'data-cargar-nacional' => 1, 'data-id' => $idUnico, 'data-max' =>  $data->saldosDisponibles)); ?>
+		                    </div>
+		                </div>
+		             
+		            </div>
+            <?php endif;?>
         </div>
 
             <div class="iconos_right">

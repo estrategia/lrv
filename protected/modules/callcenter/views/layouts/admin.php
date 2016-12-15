@@ -109,6 +109,12 @@
                                     <a href="<?php echo $this->createUrl('/callcenter/cuentasInactivas') ?>" class="ajax-link"><i class="glyphicon glyphicon-user"></i><span> Cuentas inactivas</span></a>
                                 </li>
                                 <li>
+                                    <a href="<?php echo $this->createUrl('/callcenter/cuentasInactivas/bloqueoPerfil') ?>" class="ajax-link"><i class="glyphicon glyphicon-cog"></i><span> Bloqueo perfil</span></a>
+                                </li>
+                                <li>
+                                    <a href="<?php echo $this->createUrl('/callcenter/cuentasInactivas/cuentasBloqueadas') ?>" class="ajax-link"><i class="glyphicon glyphicon-circle-arrow-up"></i><span> Desbloquear cuentas</span></a>
+                                </li>
+                                <li>
                                     <a href="<?php echo $this->createUrl('/callcenter/pedido/exportar') ?>" class="ajax-link"><i class="glyphicon glyphicon-download-alt"></i><span> Pedidos</span></a>
                                 </li>
                                 <li>

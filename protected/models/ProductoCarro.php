@@ -49,15 +49,25 @@ class ProductoCarro extends IECartPosition {
         if ($this->isProduct()) {
             $objprecio = new PrecioProducto($this->objProducto, $params['objSectorCiudad'], $params['codigoPerfil']);
             $this->listBeneficios = $objprecio->getBeneficios();
+            $this->listBeneficiosBonos = $objprecio->getBeneficiosBonos();
             
             $this->priceUnit = $objprecio->getPrecio(Precio::PRECIO_UNIDAD, false);
+            $this->priceUnitDiscount = $objprecio->getPrecio(Precio::PRECIO_UNIDAD, false,false);
+            
             $this->priceFraction = $objprecio->getPrecio(Precio::PRECIO_FRACCION, false);
-
+            $this->priceFractionDiscount = $objprecio->getPrecio(Precio::PRECIO_FRACCION, false,false);
+   
             $this->discountPriceUnit = $objprecio->getAhorro(Precio::PRECIO_UNIDAD);
+            $this->discountPriceUnitDiscount = $objprecio->getAhorro(Precio::PRECIO_UNIDAD,false);
+            
             $this->discountPriceFraction = $objprecio->getAhorro(Precio::PRECIO_FRACCION);
+            $this->discountPriceFractionDiscount = $objprecio->getAhorro(Precio::PRECIO_FRACCION);
+            
             $this->tax = $this->objProducto->objImpuesto->porcentaje;
             $this->shipping = $objprecio->getFlete();
             $this->delivery = $objprecio->getTiempoEntrega();
+            
+            $this->priceTokenUnit = $objprecio->getBono();
         }else if($this->isCombo()){
             $objprecio = new PrecioCombo($this->objCombo);
             $this->priceUnit = $objprecio->getPrecio();

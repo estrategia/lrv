@@ -16,7 +16,6 @@ class EShoppingCart extends CMap {
     public $discounts = array();
 
     /**
-     * Сумма скидки на всю корзину
      * @var float
      */
     protected $discountPrice = 0.0;
@@ -163,6 +162,13 @@ class EShoppingCart extends CMap {
         $this->saveStateAttributes();
     }
     
+    
+    public function setCalcularUnidades(){
+    	$this->updatePositions();
+    	$this->CalculateShipping();
+    	$this->saveStateAttributes();
+    }
+    
     public function getSectorCiudad() {
         return $this->objSectorCiudad;
     }
@@ -171,14 +177,13 @@ class EShoppingCart extends CMap {
         return $this->codigoPerfil;
     }
     
-    /*public function getEsClienteFiel(){
+    public function getEsClienteFiel(){
         if(isset(Yii::app()->session[Yii::app()->params->usuario['sesion']]) && Yii::app()->session[Yii::app()->params->usuario['sesion']] instanceof Usuario){
             $objUsuario = Yii::app()->session[Yii::app()->params->usuario['sesion']];
             return ($objUsuario->esClienteFiel==1);
         }
-        
         return false;
-    }*/
+    }
 
     public function getCodigoCiudad() {
         if ($this->objSectorCiudad == null)
@@ -276,14 +281,7 @@ class EShoppingCart extends CMap {
     public function restoreFromSession() {
         $data = Yii::app()->getUser()->getState($this->getClass());
 
-        if (isset(Yii::app()->session[Yii::app()->params->sesion['sectorCiudadEntrega']])) {
-            $this->objSectorCiudad = Yii::app()->session[Yii::app()->params->sesion['sectorCiudadEntrega']];
-            if ($this->objSectorCiudad->objCiudad->getDomicilio() != null) {
-                $this->shippingStored = $this->objSectorCiudad->objCiudad->getDomicilio()->valorDomicilio;
-                $this->deliveryStored = $this->objSectorCiudad->objCiudad->getDomicilio()->tiempoDomicilio;
-            }
-            Yii::app()->session[Yii::app()->params->sesion['sectorCiudadEntrega']] = $this->objSectorCiudad;
-        }
+        
 
         $this->codigoPerfil = Yii::app()->getUser()->getState($this->getClass() . '_CodigoPerfil');
         $this->shipping = Yii::app()->getUser()->getState($this->getClass() . '_Shipping');
@@ -302,6 +300,17 @@ class EShoppingCart extends CMap {
             foreach ($data as $key => $product)
                 parent::add($key, $product);
         
+                
+		if (isset(Yii::app()->session[Yii::app()->params->sesion['sectorCiudadEntrega']])) {
+            $this->objSectorCiudad = Yii::app()->session[Yii::app()->params->sesion['sectorCiudadEntrega']];
+               	if ($this->objSectorCiudad->objCiudad->getDomicilio() != null) {
+               		if($this->isUnitStored()){
+               			$this->shippingStored = $this->objSectorCiudad->objCiudad->getDomicilio()->valorDomicilio;
+               		}
+               		$this->deliveryStored = $this->objSectorCiudad->objCiudad->getDomicilio()->tiempoDomicilio;
+               	}
+               	Yii::app()->session[Yii::app()->params->sesion['sectorCiudadEntrega']] = $this->objSectorCiudad;
+        }
         $this->setCodigoPerfil($codigoPerfil);
         
         if($this->shipping<=0){
@@ -324,8 +333,23 @@ class EShoppingCart extends CMap {
             $this->shipping = 0;
         }
         
+        
+        
         //CVarDumper::dump($this->shipping, 10, true);echo "<br>";
     }
+    
+    public function isUnitStored(){
+    	$positions = $this->getPositions();
+    	
+    	foreach($positions as $position){
+    		if ($position->getDelivery() == 0 && $position->getShipping() == 0 && $position->isProduct() && $position->getQuantityStored() > 0){
+    			return true;
+    		}
+    	}
+    	
+    	return false;
+    }
+    
 
     /**
      * Add item to the shopping cart
@@ -506,6 +530,9 @@ class EShoppingCart extends CMap {
             $this->applyDiscounts();
             $this->onUpdatePoistion(new CEvent($this));
             $this->saveState();
+            if(!$this->isUnitStored()){
+            	$this->shippingStored = null;
+            }
             return true;
         }
         return false;
@@ -568,6 +595,31 @@ class EShoppingCart extends CMap {
 
         return $price;
     }
+    
+    /**
+     * Returns total price for all items in the shopping cart.
+     * @param bool $withDiscount
+     * @return float
+     */
+    public function getCostToken($withDiscount = true) {
+    	$price = 0.0;
+    	foreach ($this as $position) {
+    		$price += $position->getSumPriceToken($withDiscount);
+    	}
+    
+    	if ($withDiscount)
+    		$price -= $this->discountPrice;
+    
+    		return $price;
+    }
+    
+    public function getTotalBonoProducto(){
+    	$price = 0.0;
+    	foreach ($this as $position) {
+    		$price += $position->getSumToken();
+    	}
+    	return $price;
+    }
 
     public function getTotalCost() {
 
@@ -582,12 +634,16 @@ class EShoppingCart extends CMap {
 
         return $price;
     }
+    
+    
+    
 
     public function getExtraShipping() {
         $shipping = 0.0;
         foreach ($this as $position) {
-            $shipping += $position->getShipping();
+        	$shipping += $position->getShipping();
         }
+        
         $shipping += $this->shippingStored;
         return $shipping;
     }
@@ -615,9 +671,37 @@ class EShoppingCart extends CMap {
                 $tax += $position->getTaxPrice(true);
             }
         }
+        
+        $tax += $this->getTaxShipping() + $this->getTaxShippingStored();  
         //$tax = ceil($tax);
         return $tax;
     }
+    
+    public function getTaxShipping($base = false){
+    	
+    	$impuestoQuery = Impuesto::model()->findByPk(Yii::app()->params->impuestoDomicilio);
+    	
+    	$impuesto = $impuestoQuery->valor;
+    	
+    	
+    	if($base == true)
+    		return round(Precio::calcularBaseImpuesto($this->shipping, $impuesto/100));
+    	else
+    		return round(Precio::calcularImpuesto($this->shipping, $impuesto/100));
+    }
+    
+    public function getTaxShippingStored($base = false){
+    	$impuestoQuery = Impuesto::model()->findByPk(Yii::app()->params->impuestoDomicilio);
+    	 
+    	$impuesto = $impuestoQuery->valor;
+    	
+    	
+    	if($base == true)
+    		return round(Precio::calcularBaseImpuesto($this->shippingStored, $impuesto/100));
+    	else
+    		return round(Precio::calcularImpuesto($this->shippingStored, $impuesto/100));
+    }
+    
     
     public function getBaseTaxPrice(){
         $tax = 0;
@@ -626,6 +710,9 @@ class EShoppingCart extends CMap {
                 $tax += $position->getBaseTaxPrice(true);
             }
         }
+        $tax += $this->getTaxShipping(true) + $this->getTaxShippingStored(true);
+        
+       
         //$tax = ceil($tax);
         return $tax;
     }

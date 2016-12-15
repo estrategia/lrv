@@ -179,19 +179,24 @@ class CarroController extends Controller {
 
                 //si hay en bodegas, mensaje para ver detalle bodega, sino, mensaje error
                 $objSaldoBodega = ProductosSaldosCedi::model()->find(array(
-                    'condition' => 'codigoProducto=:producto AND codigoCedi=:cedi AND saldoUnidad>=:saldo',
+                    'condition' => 'codigoProducto=:producto AND codigoCedi=:cedi',
                     'params' => array(
                         ':producto' => $producto,
                         ':cedi' => $this->objSectorCiudad->objCiudad->codigoSucursal,
-                        ':saldo' => $cantidadBodega
+                        //':saldo' => $cantidadBodega
                     )
                 ));
 
+                
+                // revisar
                 if ($objSaldoBodega === null) {
                     echo CJSON::encode(array('result' => 'error', 'response' => "La cantidad solicitada no está disponible en este momento. Saldos disponibles: $saldoUnidad unidades"));
                     Yii::app()->end();
                 }
 
+                if($objSaldoBodega->saldoUnidad < $cantidadBodega){
+                	$cantidadBodega = $objSaldoBodega->saldoUnidad;
+                }
                 if ($this->isMobile) {
                     $htmlBodega = $this->renderPartial('_carroBodega', array(
                         'saldoUnidad' => $saldoUnidad,
@@ -209,6 +214,7 @@ class CarroController extends Controller {
                     'result' => 'ok',
                     'response' => array(
                         'dialogoHTML' => $htmlBodega,
+                    	'bodega' => '1'
                     ),
                 ));
                 Yii::app()->end();
@@ -970,16 +976,19 @@ class CarroController extends Controller {
 
         $objProducto = Producto::model()->find(array(
             'with' => array(
-                'listSaldos' => array('condition' => '(listSaldos.codigoCiudad=:ciudad AND listSaldos.codigoSector=:sector) OR (listSaldos.saldoUnidad IS NULL AND listSaldos.codigoCiudad IS NULL AND listSaldos.codigoSector IS NULL)'),
+                'listSaldos' => array('on' => '(listSaldos.codigoCiudad=:ciudad AND listSaldos.codigoSector=:sector) OR (listSaldos.saldoUnidad IS NULL AND listSaldos.codigoCiudad IS NULL AND listSaldos.codigoSector IS NULL)'),
                 'listPrecios' => array('condition' => '(listPrecios.codigoCiudad=:ciudad AND listPrecios.codigoSector=:sector) OR (listPrecios.codigoCiudad IS NULL AND listPrecios.codigoSector IS NULL)'),
-                'listSaldosTerceros' => array('condition' => '(listSaldosTerceros.codigoCiudad=:ciudad AND listSaldosTerceros.codigoSector=:sector) OR (listSaldosTerceros.codigoCiudad IS NULL AND listSaldosTerceros.codigoSector IS NULL)')
+                'listSaldosTerceros' => array('on' => '(listSaldosTerceros.codigoCiudad=:ciudad AND listSaldosTerceros.codigoSector=:sector) OR (listSaldosTerceros.codigoCiudad IS NULL AND listSaldosTerceros.codigoSector IS NULL)'),
+            	'listSaldosCedi' => array ('on' => 'codigoCedi =:codigoCedi'),
+            		 
             ),
-            'condition' => 't.activo=:activo AND t.codigoProducto=:codigo AND ( (listSaldos.saldoUnidad IS NOT NULL AND listPrecios.codigoCiudad IS NOT NULL) OR listSaldosTerceros.codigoCiudad IS NOT NULL)',
+            'condition' => 't.activo=:activo AND t.codigoProducto=:codigo AND ( ((listSaldos.saldoUnidad IS NOT NULL OR listSaldosCedi.saldoUnidad IS NOT NULL) AND listPrecios.codigoCiudad IS NOT NULL) OR listSaldosTerceros.codigoCiudad IS NOT NULL)',
             'params' => array(
                 ':activo' => 1,
                 ':codigo' => $producto,
                 ':ciudad' => $objSectorCiudad->codigoCiudad,
                 ':sector' => $objSectorCiudad->codigoSector,
+            	':codigoCedi' => $objSectorCiudad->objCiudad->codigoSucursal,
             ),
         ));
 
@@ -992,7 +1001,7 @@ class CarroController extends Controller {
             $objSaldo = $objProducto->getSaldo($objSectorCiudad->codigoCiudad, $objSectorCiudad->codigoSector);
 
             if ($objSaldo === null) {
-                echo CJSON::encode(array('result' => 'error', 'response' => 'Producto no disponible'));
+                echo CJSON::encode(array('result' => 'error', 'response' => 'Saldo de los productos no est&aacute;n disponibles'));
                 Yii::app()->end();
             }
 
@@ -1197,6 +1206,11 @@ class CarroController extends Controller {
                     Yii::app()->end();
                 }
 
+                $saldoUnidad = 0 ;
+                if(isset( $objSaldo->saldoUnidad)){
+                	$saldoUnidad =  $objSaldo->saldoUnidad;
+                }
+                
                 $cantidadBodega = $cantidadU - $objSaldo->saldoUnidad;
                 $cantidadUbicacion = $cantidadU - $cantidadBodega - $position->getQuantityUnit();
 
@@ -1217,14 +1231,19 @@ class CarroController extends Controller {
                     )));
                     Yii::app()->end();
                 }
-
+                $vistaModal = "_d_carroBodega";
+                if($this->isMobile){
+                	$vistaModal = "_carroBodega";
+                }
                 echo CJSON::encode(array(
                     'result' => 'ok',
                     'response' => array(
                         'carroHTML' => $this->renderPartial($carroVista, null, true),
-                        'dialogoHTML' => $this->renderPartial('_carroBodega', array(
+                    	'bodega' => '1',
+                        'dialogoHTML' => $this->renderPartial($vistaModal, array(
                             'objSaldo' => $objSaldo,
                             'objProducto' => $objProducto,
+                        	'saldoUnidad' => $saldoUnidad,
                             'cantidadUbicacion' => $cantidadUbicacion,
                             'cantidadBodega' => $cantidadBodega), true),
                     ),
@@ -1849,11 +1868,8 @@ class CarroController extends Controller {
                     $params['parametros']['listDirecciones'] = $listDirecciones;
                     $params['parametros']['listHorarios'] = $modelPago->listDataHoras();
 
-                    $listFormaPago = FormaPago::model()->findAll(array(
-                        'order' => 'formaPago',
-                        'condition' => 'estadoFormaPago=:estado',
-                        'params' => array(':estado' => 1)
-                    ));
+                    // case 1 formas de pago
+                    $listFormaPago = FormaPago::getFormasPago(1);
                     $modelPago->consultarBono(Yii::app()->shoppingCart->getTotalCost());
                     Yii::app()->session[Yii::app()->params->sesion['carroPagarForm']] = $modelPago;
                     $params['parametros']['listFormaPago'] = $listFormaPago;
@@ -2010,11 +2026,8 @@ class CarroController extends Controller {
                 case Yii::app()->params->pagar['pasosDesktop'][1]:
                     $params['parametros']['listHorarios'] = $modelPago->listDataHoras();
 
-                    $listFormaPago = FormaPago::model()->findAll(array(
-                        'order' => 'formaPago',
-                        'condition' => 'estadoFormaPago=:estado AND idFormaPago <> :credirebaja',
-                        'params' => array(':estado' => 1, ':credirebaja' => Yii::app()->params->formaPago['idCredirebaja'])
-                    ));
+                    // forma de pago 2
+                    $listFormaPago = FormaPago::getFormasPago(2);
                     $modelPago->consultarBono(Yii::app()->shoppingCart->getTotalCost());
                     Yii::app()->session[Yii::app()->params->sesion['carroPagarForm']] = $modelPago;
                     $params['parametros']['listFormaPago'] = $listFormaPago;
@@ -2280,11 +2293,8 @@ class CarroController extends Controller {
                     $params['parametros']['listHorarios'] = $modelPago->listDataHoras();
                     break;
                 case Yii::app()->params->pagar['pasos'][4]:
-                    $listFormaPago = FormaPago::model()->findAll(array(
-                        'order' => 'formaPago',
-                        'condition' => 'estadoFormaPago=:estado',
-                        'params' => array(':estado' => 1)
-                    ));
+                	// forma de pago 1
+                    $listFormaPago = FormaPago::getFormasPago(1);
 
                     $modelPago->consultarBono(Yii::app()->shoppingCart->getTotalCost());
                     Yii::app()->session[Yii::app()->params->sesion['carroPagarForm']] = $modelPago;
@@ -2536,11 +2546,8 @@ class CarroController extends Controller {
                     $params['parametros']['listHorarios'] = $modelPago->listDataHoras();
                     break;
                 case Yii::app()->params->pagar['pasos'][4]:
-                    $listFormaPago = FormaPago::model()->findAll(array(
-                        'order' => 'formaPago',
-                        'condition' => 'estadoFormaPago=:estado AND idFormaPago <> :credirebaja',
-                        'params' => array(':estado' => 1, ':credirebaja' => Yii::app()->params->formaPago['idCredirebaja'])
-                    ));
+                	// forma de pago 2
+                    $listFormaPago = FormaPago::getFormasPago(2);
 
                     $modelPago->consultarBono(Yii::app()->shoppingCart->getTotalCost());
                     Yii::app()->session[Yii::app()->params->sesion['carroPagarForm']] = $modelPago;
@@ -2769,17 +2776,11 @@ class CarroController extends Controller {
                     $listFormaPago = array();
 
                     if ($modelPago->pagoInvitado) {
-                        $listFormaPago = FormaPago::model()->findAll(array(
-                            'order' => 'formaPago',
-                            'condition' => 'estadoFormaPago=:estado AND idFormaPago <> :credirebaja',
-                            'params' => array(':estado' => 1, ':credirebaja' => Yii::app()->params->formaPago['idCredirebaja'])
-                        ));
+                    	// forma de pago 2
+                        $listFormaPago = FormaPago::getFormasPago(2);
                     } else {
-                        $listFormaPago = FormaPago::model()->findAll(array(
-                            'order' => 'formaPago',
-                            'condition' => 'estadoFormaPago=:estado',
-                            'params' => array(':estado' => 1)
-                        ));
+                    	// forma de pago 1
+                        $listFormaPago = FormaPago::getFormasPago(1);
                     }
 
                     $modelPago->consultarBono(Yii::app()->shoppingCart->getTotalCost());
@@ -2969,17 +2970,11 @@ class CarroController extends Controller {
                 $listFormaPago = array();
 
                 if ($modelPago->pagoInvitado) {
-                    $listFormaPago = FormaPago::model()->findAll(array(
-                        'order' => 'formaPago',
-                        'condition' => 'estadoFormaPago=:estado AND idFormaPago <> :credirebaja',
-                        'params' => array(':estado' => 1, ':credirebaja' => Yii::app()->params->formaPago['idCredirebaja'])
-                    ));
+                	// forma de pago 2
+                    $listFormaPago = FormaPago::getFormasPago(2);
                 } else {
-                    $listFormaPago = FormaPago::model()->findAll(array(
-                        'order' => 'formaPago',
-                        'condition' => 'estadoFormaPago=:estado',
-                        'params' => array(':estado' => 1)
-                    ));
+                	// forma de pago 1
+                    $listFormaPago = FormaPago::getFormasPago(1);
                 }
                 $modelPago->consultarBono(Yii::app()->shoppingCart->getTotalCost());
                 Yii::app()->session[Yii::app()->params->sesion['carroPagarForm']] = $modelPago;
@@ -3182,7 +3177,7 @@ class CarroController extends Controller {
                 $objCompra->codigoCedi = 0;
             }
 
-            $objCompra->subtotalCompra = Yii::app()->shoppingCart->getCost();
+            $objCompra->subtotalCompra = Yii::app()->shoppingCart->getCostToken();
             $objCompra->impuestosCompra = Yii::app()->shoppingCart->getTaxPrice();
             $objCompra->baseImpuestosCompra = Yii::app()->shoppingCart->getBaseTaxPrice();
             $objCompra->domicilio = Yii::app()->shoppingCart->getShipping();
@@ -3430,12 +3425,17 @@ class CarroController extends Controller {
                     $objItem->codigoProducto = $position->objProducto->codigoProducto;
                     $objItem->descripcion = $position->objProducto->descripcionProducto;
                     $objItem->presentacion = $position->objProducto->presentacionProducto;
+                    
+                    /* Para los tipo de beneficios 25 y 26 no registrar el descuento en el precio */
+                    
                     $objItem->precioBaseUnidad = $position->getPrice(false, false);
                     $objItem->precioBaseFraccion = $position->getPrice(true, false);
-                    $objItem->descuentoUnidad = $position->getDiscountPrice();
-                    $objItem->descuentoFraccion = $position->getDiscountPrice(true);
-                    $objItem->precioTotalUnidad = $position->getSumPriceUnit();
-                    $objItem->precioTotalFraccion = $position->getSumPriceFraction(true);
+                   
+                    $objItem->descuentoUnidad = $position->getDiscountPriceToken();
+                    $objItem->descuentoFraccion = $position->getDiscountPriceToken(true);
+                    $objItem->precioTotalUnidad = $position->getSumPriceUnitToken();
+                    $objItem->precioTotalFraccion = $position->getSumPriceFractionToken(true);
+                     
                     $objItem->terceros = $position->objProducto->tercero;
                     $objItem->unidades = $position->getQuantityUnit();
                     $objItem->fracciones = $position->getQuantity(true);
@@ -3456,13 +3456,14 @@ class CarroController extends Controller {
                         throw new Exception("Error al guardar item de compra $objItem->codigoProducto. " . $objItem->validateErrorsResponse());
                     }
 
-
+					/*
                     foreach ($modelPago->usoBono as $idx => $usoBono) {
                         if ($usoBono == 1 && $modelPago->bono[$idx]['modoUso'] == 2) {
                             if ($modelPago->bono[$idx]['codigoProducto'] == $objItem->codigoProducto) {
 
                                 $beneficio = Beneficios::model()->find("idBeneficio = $idx");
-
+								
+                                // el beneficio debe ser distinto a los tipo 25 y 26
                                 if ($beneficio) {
                                     $objBeneficioItem = new BeneficiosComprasItems;
                                     $objBeneficioItem->idBeneficio = $beneficio->idBeneficio;
@@ -3491,40 +3492,105 @@ class CarroController extends Controller {
                                     if (!$objBeneficioItem->save()) {
                                         throw new Exception("Error al guardar beneficio de compra $objBeneficioItem->idCompraItem. " . $objBeneficioItem->validateErrorsResponse());
                                     }
+                                }else{
+                                	// Estos beneficios se deben guardar como forma de pago
                                 }
                             }
                         }
-                    }
+                    }*/
 
                     //beneficios
                     foreach ($position->getBeneficios() as $objBeneficio) {
-                        $objBeneficioItem = new BeneficiosComprasItems;
-                        $objBeneficioItem->idBeneficio = $objBeneficio->idBeneficio;
-                        $objBeneficioItem->idBeneficioSincronizado = $objBeneficio->idBeneficioSincronizado;
-                        $objBeneficioItem->idCompraItem = $objItem->idCompraItem;
-                        $objBeneficioItem->tipo = $objBeneficio->tipo;
-                        $objBeneficioItem->fechaIni = $objBeneficio->fechaIni;
-                        $objBeneficioItem->fechaFin = $objBeneficio->fechaFin;
-                        $objBeneficioItem->dsctoUnid = $objBeneficio->dsctoUnid;
-                        $objBeneficioItem->dsctoFrac = $objBeneficio->dsctoFrac;
-                        $objBeneficioItem->vtaUnid = $objBeneficio->vtaUnid;
-                        $objBeneficioItem->vtaFrac = $objBeneficio->vtaFrac;
-                        $objBeneficioItem->pagoUnid = $objBeneficio->pagoUnid;
-                        $objBeneficioItem->pagoFrac = $objBeneficio->pagoFrac;
-                        $objBeneficioItem->cuentaCop = $objBeneficio->cuentaCop;
-                        $objBeneficioItem->nitCop = $objBeneficio->nitCop;
-                        $objBeneficioItem->porcCop = $objBeneficio->porcCop;
-                        $objBeneficioItem->cuentaProv = $objBeneficio->cuentaProv;
-                        $objBeneficioItem->nitProv = $objBeneficio->nitProv;
-                        $objBeneficioItem->porcProv = $objBeneficio->porcProv;
-                        $objBeneficioItem->promoFiel = $objBeneficio->promoFiel;
-                        $objBeneficioItem->mensaje = $objBeneficio->mensaje;
-                        $objBeneficioItem->swobligaCli = $objBeneficio->swobligaCli;
-                        $objBeneficioItem->fechaCreacionBeneficio = $objBeneficio->fechaCreacionBeneficio;
-
-                        if (!$objBeneficioItem->save()) {
-                            throw new Exception("Error al guardar beneficio de compra $objBeneficioItem->idCompraItem. " . $objBeneficioItem->validateErrorsResponse());
-                        }
+                    	
+                    	if(in_array($objBeneficio->tipo, Yii::app()->params->beneficios['descuentos']) ){
+	                        $objBeneficioItem = new BeneficiosComprasItems;
+	                        $objBeneficioItem->idBeneficio = $objBeneficio->idBeneficio;
+	                        $objBeneficioItem->idBeneficioSincronizado = $objBeneficio->idBeneficioSincronizado;
+	                        $objBeneficioItem->idCompraItem = $objItem->idCompraItem;
+	                        $objBeneficioItem->tipo = $objBeneficio->tipo;
+	                        $objBeneficioItem->fechaIni = $objBeneficio->fechaIni;
+	                        $objBeneficioItem->fechaFin = $objBeneficio->fechaFin;
+	                        $objBeneficioItem->dsctoUnid = $objBeneficio->dsctoUnid;
+	                        $objBeneficioItem->dsctoFrac = $objBeneficio->dsctoFrac;
+	                        $objBeneficioItem->vtaUnid = $objBeneficio->vtaUnid;
+	                        $objBeneficioItem->vtaFrac = $objBeneficio->vtaFrac;
+	                        $objBeneficioItem->pagoUnid = $objBeneficio->pagoUnid;
+	                        $objBeneficioItem->pagoFrac = $objBeneficio->pagoFrac;
+	                        $objBeneficioItem->cuentaCop = $objBeneficio->cuentaCop;
+	                        $objBeneficioItem->nitCop = $objBeneficio->nitCop;
+	                        $objBeneficioItem->porcCop = $objBeneficio->porcCop;
+	                        $objBeneficioItem->cuentaProv = $objBeneficio->cuentaProv;
+	                        $objBeneficioItem->nitProv = $objBeneficio->nitProv;
+	                        $objBeneficioItem->porcProv = $objBeneficio->porcProv;
+	                        $objBeneficioItem->promoFiel = $objBeneficio->promoFiel;
+	                        $objBeneficioItem->mensaje = $objBeneficio->mensaje;
+	                        $objBeneficioItem->swobligaCli = $objBeneficio->swobligaCli;
+	                        $objBeneficioItem->fechaCreacionBeneficio = $objBeneficio->fechaCreacionBeneficio;
+	
+	                        if (!$objBeneficioItem->save()) {
+	                            throw new Exception("Error al guardar beneficio de compra $objBeneficioItem->idCompraItem. " . $objBeneficioItem->validateErrorsResponse());
+	                        }
+                    	}
+                    }
+                    
+                    foreach ($position->getBeneficiosBonos() as $objBeneficio) {
+                    	 
+                    	if(in_array($objBeneficio->tipo, Yii::app()->params->beneficios['bonos']) ){
+                    		$objBeneficioItem = new BeneficiosComprasItems;
+                    		$objBeneficioItem->idBeneficio = $objBeneficio->idBeneficio;
+                    		$objBeneficioItem->idBeneficioSincronizado = $objBeneficio->idBeneficioSincronizado;
+                    		$objBeneficioItem->idCompraItem = $objItem->idCompraItem;
+                    		$objBeneficioItem->tipo = $objBeneficio->tipo;
+                    		$objBeneficioItem->fechaIni = $objBeneficio->fechaIni;
+                    		$objBeneficioItem->fechaFin = $objBeneficio->fechaFin;
+                    		$objBeneficioItem->dsctoUnid = $objBeneficio->dsctoUnid;
+                    		$objBeneficioItem->dsctoFrac = $objBeneficio->dsctoFrac;
+                    		$objBeneficioItem->vtaUnid = $objBeneficio->vtaUnid;
+                    		$objBeneficioItem->vtaFrac = $objBeneficio->vtaFrac;
+                    		$objBeneficioItem->pagoUnid = $objBeneficio->pagoUnid;
+                    		$objBeneficioItem->pagoFrac = $objBeneficio->pagoFrac;
+                    		$objBeneficioItem->cuentaCop = $objBeneficio->cuentaCop;
+                    		$objBeneficioItem->nitCop = $objBeneficio->nitCop;
+                    		$objBeneficioItem->porcCop = $objBeneficio->porcCop;
+                    		$objBeneficioItem->cuentaProv = $objBeneficio->cuentaProv;
+                    		$objBeneficioItem->nitProv = $objBeneficio->nitProv;
+                    		$objBeneficioItem->porcProv = $objBeneficio->porcProv;
+                    		$objBeneficioItem->promoFiel = $objBeneficio->promoFiel;
+                    		$objBeneficioItem->mensaje = $objBeneficio->mensaje;
+                    		$objBeneficioItem->swobligaCli = $objBeneficio->swobligaCli;
+                    		$objBeneficioItem->fechaCreacionBeneficio = $objBeneficio->fechaCreacionBeneficio;
+                    
+                    		if (!$objBeneficioItem->save()) {
+                    			throw new Exception("Error al guardar beneficio de compra $objBeneficioItem->idCompraItem. " . $objBeneficioItem->validateErrorsResponse());
+                    		}
+                    		
+                    		// Guardar la forma de pago
+                    		$objBonoTienda = BonoTienda::model()->find(array(
+                    				'condition' => 'idBonoTiendaTipo =:tipoBono',
+                    				'params' => array(
+                    						':tipoBono' => Yii::app()->params->beneficios['tipoBonoFormaPago'][$objBeneficio->tipo],
+                    				)
+                    		));
+                    		 
+                    		$objFormaPagoBono = new FormasPago;
+                    		$objFormaPagoBono->valorBonoUnidad = floor(Precio::redondear($objBeneficio->dsctoUnid/100*$position->getPriceToken(), 1));
+                    		$objFormaPagoBono->valor = $objFormaPagoBono->valorBonoUnidad * $position->getQuantityUnit(); // valor total del bono.
+                    		$objFormaPagoBono->idCompra = $objCompra->idCompra;
+                    		$objFormaPagoBono->idFormaPago = Yii::app()->params->callcenter['bonos']['formaPagoBonos']; /*******************/
+                    		$objFormaPagoBono->cuenta = $objBeneficio->cuentaProv;
+                    		$objFormaPagoBono->formaPago = $objBonoTienda->formaPago;
+                    		$objFormaPagoBono->idBonoTiendaTipo =  Yii::app()->params->beneficios['tipoBonoFormaPago'][$objBeneficio->tipo];
+                    		
+                    		$objFormaPagoBono->codigoProducto = $position->objProducto->codigoProducto;
+                    		
+                    		if(!$objFormaPagoBono->save()){
+                    			echo "<pre>";
+                    			print_r($objFormaPagoBono->getErrors());
+                    			exit();
+                    			Yii::log("FormaPago-Bono: Exception [idCompra: $objCompra->idCompra -- idbono: $idx -- idUsuario: $objCompra->identificacionUsuario]\n", CLogger::LEVEL_INFO, 'error');
+                    		}
+                    		
+                    	}
                     }
                 } else if ($position->isCombo()) {
                     $objSaldo = ComboSectorCiudad::model()->find(array(
@@ -3850,6 +3916,8 @@ class CarroController extends Controller {
 
                     //beneficios
                     foreach ($position->getBeneficios() as $objBeneficio) {
+                    	
+                    	// tener en cuenta los beneficios 25 y 26
                         $objBeneficioItem = new BeneficiosCotizacionesItems;
                         $objBeneficioItem->idBeneficio = $objBeneficio->idBeneficio;
                         $objBeneficioItem->idBeneficioSincronizado = $objBeneficio->idBeneficioSincronizado;
