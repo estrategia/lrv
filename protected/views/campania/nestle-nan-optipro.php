@@ -68,7 +68,19 @@ $this->metaTags = "<meta http-equiv='X-UA-Compatible' content='IE=edge'>
   currency: 'USD'
   });
   </script>
-  
+
+  <!-- Hotjar Tracking Code for www.larebajavirtual.com/nestle-nan-optipro -->
+<script>
+    (function(h,o,t,j,a,r){
+        h.hj=h.hj||function(){(h.hj.q=h.hj.q||[]).push(arguments)};
+        h._hjSettings={hjid:360594,hjsv:5};
+        a=o.getElementsByTagName('head')[0];
+        r=o.createElement('script');r.async=1;
+        r.src=t+h._hjSettings.hjid+j+h._hjSettings.hjsv;
+        a.appendChild(r);
+    })(window,document,'//static.hotjar.com/c/hotjar-','.js?sv=');
+</script>
+
     ";
 ?>
 

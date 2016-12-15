@@ -312,7 +312,7 @@ class CatalogoController extends Controller {
         }
 
         $listProductos = Producto::model()->findAll($parametrosProductos);
-
+		
         $listCodigoEspecial = CodigoEspecial::model()->findAll(array(
             'condition' => 'codigoEspecial<>0'
         ));
@@ -1245,7 +1245,7 @@ class CatalogoController extends Controller {
 
         $listaProductos[$codigoProducto] = $objProducto;
         Yii::app()->session[Yii::app()->params->sesion['productosComparar']] = $listaProductos;
-
+		
 
         echo CJSON::encode(array(
             'result' => 'ok',
@@ -1461,7 +1461,7 @@ class CatalogoController extends Controller {
 
     public function actionSubtotalBodega() {
         $objSectorCiudad = $this->objSectorCiudad;
-
+		
 
         if ($objSectorCiudad == null) {
             echo CJSON::encode(array('result' => 'error', 'response' => 'No se detecta ubicación'));
@@ -2094,7 +2094,7 @@ class CatalogoController extends Controller {
                     ':activo' => 1,
                 )
             );
-
+			
             $criteria['condition'] .= " AND t.codigoProducto IN (" . implode(",", $listaCodigos) . ")";
             $criteria['with']['listSaldos'] = array('on' => 'listSaldos.codigoCiudad=:ciudad AND listSaldos.codigoSector=:sector OR listSaldos.idProductoSaldos IS NULL');
             $criteria['with']['listPrecios'] = array('on' => 'listPrecios.codigoCiudad=:ciudad AND listPrecios.codigoSector=:sector OR listPrecios.idProductoPrecios IS NULL');

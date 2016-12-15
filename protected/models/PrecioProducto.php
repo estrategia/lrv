@@ -28,7 +28,7 @@ class PrecioProducto extends Precio {
         $fecha = new DateTime;
         $tienePrecio = false;
         $tieneSaldo = false;
-
+        
         if ($objCiudadSector != null) {
             if ($objProducto->tercero == 1) {
                 $listSaldosTerceros = array();
@@ -61,7 +61,7 @@ class PrecioProducto extends Precio {
                         break;
                     }
                 }
-              
+
 
                 if ($this->precioUnidad > 0 || $this->precioFraccion > 0) {
                     $tienePrecio = true;
