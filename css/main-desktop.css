@@ -566,7 +566,7 @@ table.tabla-carro .group-botones-cantidad{
     box-shadow: 2px 3px 4px #dddddd;
 }
 .blocktipoentrega {
-    width: 50%;
+    width: 70%;
     margin: auto;
     border: 1px solid #dadada;
     border-radius: 5px;
@@ -2754,4 +2754,62 @@ img.ajustada {
     background-repeat: no-repeat;
     background-size: contain;
     position:absolute;
+}
+
+.shepherd-content footer {
+    background-color: inherit;
+    border: none;
+    align-items: center;
+}
+
+.tipo-ubicacion {
+    display: flex;
+    flex-wrap: wrap;
+}
+
+.boton-tipo-ubicacion {
+    flex-grow: 1;
+    flex-basis: 50%;
+    display: flex;
+    text-align: left;
+}
+
+.boton-tipo-ubicacion span {
+    display: inline-flex;
+    align-items: center;
+    margin-top: auto;
+    margin-bottom: auto;
+    margin-left: 2%;
+    color: white !important;
+    font-size: 2rem;
+    line-height: 2rem;
+    padding: 2% 2% 2% 2%;
+    border: 3px solid;
+    border-radius: 8px;
+    width: 60%;
+}
+
+.boton-tipo-ubicacion {
+    background:none;
+    border: none;
+}
+
+.boton-tipo-ubicacion .amarillo {
+    border-color: #EEB317;
+    background-color: #EEB317;
+}
+
+.boton-tipo-ubicacion .azul {
+    border-color: #28898C;
+    background-color: #28898C;
+}
+
+.boton-tipo-ubicacion .naranja {
+    border-color: #EE8838;
+    background-color: #EE8838;
+}
+
+.boton-tipo-ubicacion .rojo {
+    border-color: #EA5154;
+    background-color: #EA5154;
 }

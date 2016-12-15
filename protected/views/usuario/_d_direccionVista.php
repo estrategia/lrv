@@ -17,10 +17,6 @@
         <td class="text-truncate" title="<?php echo $model->nombre ?>"><?php echo $model->nombre ?></td>
     </tr>
     <tr>
-        <td>Sector</td>
-        <td  class="text-truncate" title="<?php echo strtolower($model->objSector->nombreSector) ?>"><?php echo strtolower($model->objSector->nombreSector) ?></td>
-    </tr>
-    <tr>
         <td>Dirección</td>
         <td class="text-truncate" title="<?php echo $model->direccion ?>"><?php echo $model->direccion ?></td>
     </tr>

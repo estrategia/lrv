@@ -6,12 +6,36 @@
         </div>
         <div class="blocktipoentrega">
             <div id="div-ubicacion-tipoubicacion" class="text-center">
-                <?php //echo CHtml::htmlButton('<span class="glyphicon glyphicon-screenshot"></span>  Usar la ubicación de tu dispositivo', array('class' => 'btn ico-btn  btn-ciudad', 'data-role' => 'ubicacion-gps')); ?>
-                <?php if (!Yii::app()->user->isGuest): ?>
+                <div class="tipo-ubicacion">
+                    <button class="boton-tipo-ubicacion" data-role="ubicacion-direccion">
+                        <img src=" <?php echo Yii::app()->request->baseUrl . '/images/iconos/ubicacion-desktop/direcciones.png' ?> " alt="">
+                        <span class="amarillo">Direcciones</span>
+                    </button>
+                    <button class="boton-tipo-ubicacion" data-role="seleccion-barrio">
+                        <img src=" <?php echo Yii::app()->request->baseUrl . '/images/iconos/ubicacion-desktop/barrio.png' ?> " alt="">
+                        <span class="azul">Ubicar por barrio</span>
+                    </button>
+                    <button class="boton-tipo-ubicacion" data-role="ubicacion-gps">
+                        <img src=" <?php echo Yii::app()->request->baseUrl . '/images/iconos/ubicacion-desktop/automatica.png' ?> " alt="">
+                        <span class="naranja">Ubicación automatica</span>
+                    </button>
+                    <button class="boton-tipo-ubicacion" data-role="ubicacion-mapa">
+                        <img src=" <?php echo Yii::app()->request->baseUrl . '/images/iconos/ubicacion-desktop/ciudad.png' ?> " alt="">
+                        <span class="rojo">Selección de ciudad</span>
+                    </button>
+                </div>
+               <!--  <?php if (!Yii::app()->user->isGuest): ?>
                     <?php echo CHtml::htmlButton('<span class="glyphicon glyphicon-folder-open"></span>   Usar tus direcciones', array('class' => 'btn ico-btn  btn-ciudad', 'data-role' => 'ubicacion-direccion')); ?>
+
                 <div class="space-3"></div>
                         <?php endif; ?>
                 <?php echo CHtml::htmlButton('<span class="glyphicon glyphicon-map-marker"></span>  Seleccionar ciudad', array('class' => 'btn ico-btn  btn-ciudad', 'data-role' => 'ubicacion-mapa')); ?>
+                
+                <div class="space-3"></div>
+                <?php echo CHtml::htmlButton('<span class="glyphicon glyphicon-globe"></span>  Ubicación automatica', array('class' => 'btn ico-btn  btn-ciudad', 'data-role' => 'ubicacion-gps')); ?>
+
+                <div class="space-3"></div>
+                <?php echo CHtml::htmlButton('<span class="glyphicon glyphicon-object-align-bottom"></span>  Seleccionar barrio', array('class' => 'btn ico-btn  btn-ciudad', 'data-role' => 'seleccion-barrio')); ?> -->
             </div>
             <div class="space-2"></div>
             <div class="text-center">
