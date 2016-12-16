@@ -102,7 +102,7 @@ class CarroController extends Controller {
     }
 
     public function actionAgregar() {
-        if ($this->objSectorCiudad == null) {
+        if ($this->objSectorCiudad === null || $this->objSectorCiudad->esDefecto()) {
             echo CJSON::encode(array('result' => 'error', 'response' => 'No se detecta ubicación'));
             Yii::app()->end();
         }
@@ -712,11 +712,9 @@ class CarroController extends Controller {
     }
 
     public function actionAgregarlista() {
-        $objSectorCiudad = null;
-        if (isset(Yii::app()->session[Yii::app()->params->sesion['sectorCiudadEntrega']]))
-            $objSectorCiudad = Yii::app()->session[Yii::app()->params->sesion['sectorCiudadEntrega']];
-
-        if ($objSectorCiudad === null) {
+        $objSectorCiudad = $this->objSectorCiudad;
+		
+        if ($objSectorCiudad === null || $objSectorCiudad->esDefecto()) {
             echo CJSON::encode(array('result' => 'error', 'response' => 'Seleccionar ubicación.'));
             Yii::app()->end();
         }
@@ -864,11 +862,9 @@ class CarroController extends Controller {
             Yii::app()->end();
         }
 
-        $objSectorCiudad = null;
-        if (isset(Yii::app()->session[Yii::app()->params->sesion['sectorCiudadEntrega']]))
-            $objSectorCiudad = Yii::app()->session[Yii::app()->params->sesion['sectorCiudadEntrega']];
+        $objSectorCiudad = $this->objSectorCiudad;
 
-        if ($objSectorCiudad == null) {
+        if ($objSectorCiudad === null || $objSectorCiudad->esDefecto()) {
             echo CJSON::encode(array('result' => 'error', 'response' => 'No se detecta ubicación'));
             Yii::app()->end();
         }
@@ -1076,11 +1072,9 @@ class CarroController extends Controller {
             $carroVista = "d_carro";
         }
 
-        $objSectorCiudad = null;
-        if (isset(Yii::app()->session[Yii::app()->params->sesion['sectorCiudadEntrega']]))
-            $objSectorCiudad = Yii::app()->session[Yii::app()->params->sesion['sectorCiudadEntrega']];
+        $objSectorCiudad = $this->objSectorCiudad;
 
-        if ($objSectorCiudad == null) {
+        if ($objSectorCiudad === null || $objSectorCiudad->esDefecto()) {
             echo CJSON::encode(array('result' => 'error', 'response' => array(
                     'message' => 'No se detecta ubicación',
                     'carroHTML' => $this->renderPartial($carroVista, null, true),
@@ -1453,12 +1447,7 @@ class CarroController extends Controller {
 
     public function actionPagoexpress() {
         Yii::app()->session[Yii::app()->params->sesion['carroPagarForm']] = null;
-
-        if ($this->objSectorCiudad === null) {
-            Yii::app()->user->setFlash('error', "Seleccionar ubicación.");
-            $this->redirect($this->createUrl('/sitio/ubicacion'));
-        }
-
+		
         if (Yii::app()->shoppingCart->isEmpty()) {
             $this->render('carroVacio'); //$this->render('index');
             Yii::app()->end();
@@ -2580,7 +2569,7 @@ class CarroController extends Controller {
             throw new CHttpException(404, 'Página solicitada no existe.');
         }
 
-        $objSectorCiudad = Yii::app()->session[Yii::app()->params->sesion['sectorCiudadEntrega']];
+        $objSectorCiudad = $this->objSectorCiudad;
 
         if (isset(Yii::app()->session[Yii::app()->params->sesion['carroPagarForm']]) && Yii::app()->session[Yii::app()->params->sesion['carroPagarForm']] != null) {
             $modelPago = Yii::app()->session[Yii::app()->params->sesion['carroPagarForm']];
@@ -2818,7 +2807,7 @@ class CarroController extends Controller {
             throw new CHttpException(404, 'Página solicitada no existe.');
         }
 
-        $objSectorCiudad = Yii::app()->session[Yii::app()->params->sesion['sectorCiudadEntrega']];
+        $objSectorCiudad = $this->objSectorCiudad;
 
         if (isset(Yii::app()->session[Yii::app()->params->sesion['carroPagarForm']]) && Yii::app()->session[Yii::app()->params->sesion['carroPagarForm']] != null) {
             $modelPago = Yii::app()->session[Yii::app()->params->sesion['carroPagarForm']];

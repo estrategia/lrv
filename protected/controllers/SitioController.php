@@ -9,7 +9,8 @@ class SitioController extends Controller {
         return array(
             array(
                 'application.filters.SessionControlFilter + inicio, categorias',
-                'isMobile' => $this->isMobile
+                'isMobile' => $this->isMobile,
+            	'objSectorCiudad' => $this->objSectorCiudad,
             ),
             array(
                 'application.filters.SessionControlFilter + index',

@@ -34,6 +34,7 @@ class Controller extends CController {
     public $categorias = array();
     public $objSectorCiudad = null;
     public $metaTags = null;
+    public $ubicacionDefecto = true;
 
     public function init() {
         if (Yii::app()->detectMobileBrowser->showMobile) {
@@ -59,18 +60,24 @@ class Controller extends CController {
 		// $this->isMobile = true;
 		// $this->layout = '//layouts/mobile';
         $this->verificarDispositivo();
-
+		
         if (isset(Yii::app()->session[Yii::app()->params->sesion['sectorCiudadEntrega']]) && Yii::app()->session[Yii::app()->params->sesion['sectorCiudadEntrega']] != null) {
             $this->objSectorCiudad = Yii::app()->session[Yii::app()->params->sesion['sectorCiudadEntrega']];
         }
-
+        
         $this->verificarSesion();
 
+        if($this->objSectorCiudad==null && Yii::app()->params->ubicacionDefecto && $this->ubicacionDefecto){
+        	$this->objSectorCiudad = SectorCiudad::getDefecto();
+        }
+        
+        //CVarDumper::dump($this->objSectorCiudad,10,true);echo "<br>";
+        
         $this->pageTitle = Yii::app()->name;
         $this->getSectorName();
         $this->registerJs();
         $this->registerCss();
-
+		
         if (!$this->isMobile) {
             $this->getCategorias();
         }
