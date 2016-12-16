@@ -756,6 +756,8 @@ class AdminController extends ControllerOperator {
         if (empty($result)) {
             echo CJSON::encode(array('result' => 'ok', 'response' => "Error: no se obtuvo respuesta"));
         } else {
+
+            var_dump($result);
             $result = $result[0];
             if ($result->RESPUESTA == 1) {
             	

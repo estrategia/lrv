@@ -1628,7 +1628,11 @@ class TestController extends Controller {
     		$h1 = round(microtime(true) * 1000);
     
     		try {
+<<<<<<< HEAD
+    			$result = $client->setBeneficios($idSincronizacion/* $arrTiposBeneficio, $arrBeneficios */);
+=======
     			$result = $client->setBeneficios($idSincronizacion);
+>>>>>>> ba8bda449285cc034bdcfdb5ba64dc8ea2ddb552
     		} catch (Exception $e) {
     			$h2 = round(microtime(true) * 1000);
     			Yii::app()->exit();

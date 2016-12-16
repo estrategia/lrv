@@ -63,10 +63,10 @@ function obtenerPosicion(pos) {
         },
         success: function (data) {
             if (data.result == 'ok') {
-                $('<div>').mdialog({
-                    id: "popup-ubicacion-gps",
-                    content: "<div data-role='main'><div class='ui-content' data-role='content' role='main'>" + data.response.mensaje + "<a class='ui-btn ui-btn-r ui-corner-all ui-shadow' data-role='ubicacion-gps-seleccion' data-ciudad='" + data.response.ciudad + "' data-sector='" + data.response.sector + "' data-mensaje='" + data.response.mensaje + "' href='#'>Aceptar</a><a class='ui-btn ui-btn-n ui-corner-all ui-shadow' data-rel='back' href='#'>Cancelar</a></div></div>"
-                });
+                $('#ubicacion-seleccion-ciudad').val(data.response.ciudad).attr('data-ciudad');
+                $('#ubicacion-seleccion-sector').val(data.response.sector).attr('data-sector');
+                $('#ubicacion-seleccion-direccion').val('');
+                ubicacionSeleccion();
             } else {
                 if (data.responseModal) {
                     $('<div>').mdialog({
@@ -86,15 +86,6 @@ function obtenerPosicion(pos) {
         }
     });
 }
-
-$(document).on('click', 'a[data-role="ubicacion-gps-seleccion"]', function () {
-    $('#ubicacion-seleccion-ciudad').val($(this).attr('data-ciudad'));
-    $('#ubicacion-seleccion-sector').val($(this).attr('data-sector'));
-    $('#ubicacion-seleccion-direccion').val('');
-    /*$("#popup-ubicacion-gps").popup("close");*/
-    /*$("#popup-ubicacion-gps").remove();*/
-    ubicacionSeleccion();
-});
 
 $(document).on('click', 'a[data-role="ubicacion-seleccion-mapa"]', function () {
     //$.mobile.loading('show');
@@ -139,6 +130,71 @@ $(document).on('click', 'a[data-role="ubicacion-seleccion-mapa"]', function () {
         }
     });
 });
+
+$(document).on('click', 'button[data-role="seleccion-barrio"]', function() {
+    if ($('#page-ubicacion-barrio').length > 0) {
+        $.mobile.changePage('#page-ubicacion-barrio', {transition: "pop", role: "dialog", reverse: false});
+    } else {
+        $.ajax({
+            type: 'GET',
+            async: true,
+            url: requestUrl + '/sitio/seleccionBarrio',
+            dataType: 'html',
+            beforeSend: function() {
+                // $("#modal-ubicacion-barrios").remove();
+                $.mobile.loading('show');
+            },
+            complete: function(data) {
+                $.mobile.loading('hide');
+            },
+            success: function(data) {
+                console.log(data);
+                $('body').append(data);
+                $.mobile.changePage('#page-ubicacion-barrio', {transition: "pop", role: "dialog", reverse: false});
+            },
+            error: function(jqXHR, textStatus, errorThrown) {
+                $.mobile.loading('hide');
+                alert('Error: ' + errorThrown);
+            }
+        });
+    }
+    return false;
+});
+
+$(document).on('click', 'button[data-role="ubicacion-barrio"]', function() {
+    var ciudad = $('#selector-ciudad').val();
+    var barrio = $("input[name='barrio']").val();
+    $.ajax({
+        type: 'post',
+        async: true,
+        url: requestUrl + '/sitio/ubicacionBarrio',
+        data: {
+            ciudad: ciudad,
+            barrio: barrio
+        },
+        dataType: 'json',
+        beforeSend: function() {
+            $.mobile.loading('show');
+        },
+        complete: function(data) {
+            $.mobile.loading('hide');
+        },
+        success: function(data) {
+            $('#ubicacion-seleccion-ciudad').val(data.response.ciudad);
+            $('#ubicacion-seleccion-sector').val(data.response.sector);
+            $('#ubicacion-seleccion-direccion').val('');
+            // $('#body').append(data);
+            ubicacionSeleccion();
+            $.mobile.loading('hide');
+        },
+        error: function(jqXHR, textStatus, errorThrown) {
+            $.mobile.loading('hide');
+            alert('Error: ' + errorThrown);
+        }
+    });
+    return false;
+});
+
 function ubicacionSeleccion() {
     var form = $("#form-ubicacion");
     $.ajax({
@@ -214,17 +270,17 @@ $(document).on('change', 'select[data-role="ciudad-despacho-map"]', function () 
     }
 });
 
-$(document).on('change', 'select[data-role="sector-despacho-map"]', function () {
-    var val = $(this).val().trim();
-    if (val.length > 0) {
-        var option = $('select[data-role="sector-despacho-map"] option[value="' + val + '"]').attr('selected', 'selected');
+// $(document).on('change', 'select[data-role="sector-despacho-map"]', function () {
+//     var val = $(this).val().trim();
+//     if (val.length > 0) {
+//         var option = $('select[data-role="sector-despacho-map"] option[value="' + val + '"]').attr('selected', 'selected');
 
-        if (map) {
-            map.setCenter(new google.maps.LatLng(parseFloat(option.attr('data-latitud')), parseFloat(option.attr('data-longitud'))));
-            map.setZoom(14);
-        }
-    }
-});
+//         if (map) {
+//             map.setCenter(new google.maps.LatLng(parseFloat(option.attr('data-latitud')), parseFloat(option.attr('data-longitud'))));
+//             map.setZoom(14);
+//         }
+//     }
+// });
 
 $(document).on('click', 'button[data-role="ubicacion-mapa"]', function () {
     if ($('#page-ubicacion-map').length > 0) {
@@ -2433,3 +2489,44 @@ $(document).on('click', "a[data-role='usar-codigo']", function() {
 	});
 });
 
+var tour;
+
+tour = new Shepherd.Tour({
+  defaults: {
+    classes: 'shepherd-theme-default',
+    scrollTo: true
+  }
+});
+
+tour.addStep('selecciona-ciudad', {
+  text: 'Seleciona la ciudad donde te encuentras.',
+  attachTo: '#select-ubicacion-psubsector bottom',
+  buttons: [
+    {
+      text: 'Siguiente',
+      action: tour.next
+    }
+  ]
+});
+
+tour.addStep('arrastra-mapa', {
+  text: 'Arrastra el mapa y ubica el marcador en el lugar donde te encuentras.',
+  attachTo: '#map bottom',
+  buttons: [
+    {
+      text: 'Siguiente',
+      action: tour.next
+    }
+  ]
+});
+
+tour.addStep('confirma-ubicacion', {
+  text: 'Para finalizar presiona el boton confirmar.',
+  attachTo: '#confirma-ubicacion top',
+  buttons: [
+    {
+      text: 'Finalizar',
+      action: tour.next
+    }
+  ]
+});

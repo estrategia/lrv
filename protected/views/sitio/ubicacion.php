@@ -9,7 +9,10 @@
         <?php echo CHtml::htmlButton('Usar tus direcciones', array('class' => 'ui-btn ui-btn-r ui-corner-all ui-alt-icon', 'data-role' => 'ubicacion-direccion')); ?>
     <?php endif; ?>
 
+    <?php echo CHtml::htmlButton('Seleccionar barrio', array('class' => 'ui-btn ui-btn-r ui-corner-all', 'data-role' => 'seleccion-barrio')); ?>
+    
     <?php echo CHtml::htmlButton('Seleccionar ciudad', array('class' => 'ui-btn ui-btn-n ui-corner-all ui-alt-icon', 'data-role' => 'ubicacion-mapa')); ?>
+
 
     <form id="form-ubicacion"  method="post" action="<?php echo $this->createUrl("/sitio/ubicacionSeleccion") ?>">
         <input id="ubicacion-seleccion-direccion" type="hidden" name="direccion" value="<?php echo ($objDireccion == null ? "" : $objDireccion->idDireccionDespacho) ?>">

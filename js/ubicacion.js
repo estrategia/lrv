@@ -1,5 +1,3 @@
-var lat = 4.704009;
-var lng = -74.042832;
 var locationMarker;
 var map;
 
