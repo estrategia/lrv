@@ -4,10 +4,6 @@
         <td><?php echo $model->nombre ?></td>
     </tr>
     <tr>
-        <td><strong>Ubicaci&oacute;n</strong></td>
-        <td><?php echo ($model->codigoSector == 0 ? $model->objCiudad->nombreCiudad : $model->objSector->nombreSector) ?></td>
-    </tr>
-    <tr>
         <td><strong>Direcci&oacute;n</strong></td>
         <td><?php echo $model->direccion ?></td>
     </tr>

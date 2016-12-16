@@ -114,7 +114,7 @@ class SitioController extends Controller {
                     )
                 ));
 
-                $this->renderPartial('_d_ubicacionSector', array('listSectorCiudad' => $listSectorCiudad));
+                // $this->renderPartial('_d_ubicacionSector', array('listSectorCiudad' => $listSectorCiudad));
                 Yii::app()->end();
             }
         }
@@ -333,6 +333,66 @@ class SitioController extends Controller {
             echo CJSON::encode(array('result' => 'error', 'response' => 'Solicitud invalida.'));
             Yii::app()->end();
         }
+    }
+
+    public function actionSeleccionBarrio()
+    {
+        $ciudades = Ciudad::model()->findAll(array(
+            'order' => 't.orden, t.nombreCiudad',
+            'condition' => 'estadoCiudad=:estadoCiudad',
+            'params' => array(
+                ':estadoCiudad' => 1,
+            )
+        ));
+        $this->renderPartial($this->isMobile ? '_seleccionarBarrio' : '_d_seleccionarBarrio', array('ciudades' => $ciudades));
+    }
+
+    public function actionUbicacionBarrio()
+    {
+        if (!Yii::app()->request->isPostRequest) {
+            echo CJSON::encode(array('result' => 'error', 'response' => 'Solicitud invalida.'));
+            Yii::app()->end();
+        }
+
+        $barrio = Yii::app()->getRequest()->getPost('barrio');
+        $ciudad = Yii::app()->getRequest()->getPost('ciudad');
+        // $barrio = "santa monica";
+        // $ciudad = 76001;
+
+        if ($barrio === null || $ciudad == null) {
+            echo CJSON::encode(array('result' => 'error', 'response' => 'Solicitud invalida.'));
+            Yii::app()->end();
+        }
+        $client = new SoapClient(null, array(
+            'location' => Yii::app()->params->webServiceUrl['serverLRV'],
+            'uri' => "",
+            'trace' => 1
+        ));
+        $params = array(
+            'idCiudad' => trim($ciudad),
+            'barrio' => trim($barrio)
+        );
+        $result = $client->__soapCall("LRVConsultarBarrio", $params);
+        $idComercial = $result[0]->PDV[0]->IDCOMERCIAL;
+        // $pdv = PuntoVenta::model()->find("idComercial=:idComercial", array(':idComercial'=>$idComercial));
+        $objSectorCiudad = SectorCiudad::model()->find(array(
+            'join' => 'INNER JOIN m_PuntoVenta on m_PuntoVenta.codigoCiudad = t.codigoCiudad AND m_PuntoVenta.idSectorLRV = t.codigoSector',
+            'condition' => 'm_PuntoVenta.idComercial=:idComercial',
+            'params' => array(
+                'idComercial' => $idComercial
+            )
+        ));
+        if (is_null($objSectorCiudad)) {
+            echo CJSON::encode(array('result' => 'error', 'response' => 'No se pudo determinar la ubicacion para este barrio.'));
+            Yii::app()->end();
+        }
+        echo CJSON::encode(array(
+            'result' => 'ok',
+            'response' => array(
+                'ciudad' => $objSectorCiudad->codigoCiudad,
+                'sector' => $objSectorCiudad->codigoSector
+            )
+        ));
     }
 
     public function actionInicio() {

@@ -159,13 +159,13 @@
     public function actionSimular()
     {
       $response = [
-        'result' => 0,
+        'result' => 1,
         'response' => [
           // Pdv 1
           [
             'idComercial' => 13141,
-            'nombrePVD' => 'REBAJA PLUS No. 1 - CALI',
-            'direccionPVD' => 'No. 100-, Cl. 16 #48',
+            'nombrePDV' => 'REBAJA PLUS No. 1 - CALI',
+            'direccionPDV' => 'No. 100-, Cl. 16 #48',
             'nombreCiudad' => 'Cali, Valle',
             'nombreSector' => 'CIUDAD JARDIN',
             'nombreBarrio' => 'CIUDAD JARDIN',
@@ -186,8 +186,8 @@
           // Pdv 2
           [
             'idComercial' => 13142,
-            'nombrePVD' => 'REBAJA PLUS No. 6 - CALI',
-            'direccionPVD' => 'Calle 13 No. 66-20',
+            'nombrePDV' => 'REBAJA PLUS No. 6 - CALI',
+            'direccionPDV' => 'Calle 13 No. 66-20',
             'nombreCiudad' => 'Cali, Valle',
             'nombreSector' => 'LIMONAR',
             'nombreBarrio' => 'LIMONAR',
@@ -208,8 +208,8 @@
           // Pdv 3
           [
             'idComercial' => 13143,
-            'nombrePVD' => 'REBAJA No. 24 - CALI',
-            'direccionPVD' => 'Calle 5 No. 69-08',
+            'nombrePDV' => 'REBAJA No. 24 - CALI',
+            'direccionPDV' => 'Calle 5 No. 69-08',
             'nombreCiudad' => 'Cali, Valle',
             'nombreSector' => 'BARRIO CALDAS',
             'nombreBarrio' => 'BARRIO CALDAS',
@@ -230,8 +230,8 @@
           // Pdv 4
           [
             'idComercial' => 13144,
-            'nombrePVD' => 'REBAJA No. 5 - CALI',
-            'direccionPVD' => 'Calle 42 No. 83C-22' ,
+            'nombrePDV' => 'REBAJA No. 5 - CALI',
+            'direccionPDV' => 'Calle 42 No. 83C-22' ,
             'nombreCiudad' => 'Cali, Valle',
             'nombreSector' => 'CIUDADELA COMFANDI',
             'nombreBarrio' => 'CIUDADELA COMFANDI',
@@ -251,8 +251,7 @@
           ],
         ],
       ];
-
-      echo CJSON::encode($response);
+      echo CJSON::encode([$response]);
     }
   }
 ?>
