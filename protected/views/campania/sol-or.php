@@ -47,6 +47,19 @@ $this->metaTags = "<meta http-equiv='X-UA-Compatible' content='IE=edge'>
 		.ui-grid-a p {margin: 7px 10px 0px !important;}
 		hr {margin: 30px;border: 1px solid #EDEDED;}
 	</style>
+
+  <!-- Hotjar Tracking Code for https://www.larebajavirtual.com/proteccion-solar-sol-or -->
+  <script>
+      (function(h,o,t,j,a,r){
+          h.hj=h.hj||function(){(h.hj.q=h.hj.q||[]).push(arguments)};
+          h._hjSettings={hjid:369670,hjsv:5};
+          a=o.getElementsByTagName('head')[0];
+          r=o.createElement('script');r.async=1;
+          r.src=t+h._hjSettings.hjid+j+h._hjSettings.hjsv;
+          a.appendChild(r);
+      })(window,document,'//static.hotjar.com/c/hotjar-','.js?sv=');
+  </script>
+
     ";
 ?>
 <!--Versión movil-->
@@ -88,7 +101,7 @@ $this->metaTags = "<meta http-equiv='X-UA-Compatible' content='IE=edge'>
 		   	<div class="ui-block-a"><img src="<?= Yii::app()->request->baseUrl ?>/images/contenido/sol-or/1.ultra/aloe-vera.png" class="ico-imagen"></div>
 		   	<div class="ui-block-b"><p>Contiene Aloe vera, D-Pantenol <strong>y Ácido Hialurónico.</strong></p></div>
 		</div>
-		<center><a href="#"><img class="btn-comprar-m" src="<?= Yii::app()->request->baseUrl ?>/images/contenido/sol-or/comprar.png"></a></center>
+		<center><a href="<?php echo CController::createUrl('/catalogo/producto', array('producto' => 31194)) ?>"><img class="btn-comprar-m" src="<?= Yii::app()->request->baseUrl ?>/images/contenido/sol-or/comprar.png"></a></center>
 	</div>
 </section>
 <hr>
@@ -117,7 +130,7 @@ $this->metaTags = "<meta http-equiv='X-UA-Compatible' content='IE=edge'>
 		   	<div class="ui-block-a"><img src="<?= Yii::app()->request->baseUrl ?>/images/contenido/sol-or/2.gel/aloe-vera.png" class="ico-imagen"></div>
 		   	<div class="ui-block-b"><p>Contiene Aloe vera, D-Pantenol <strong>y Ácido Hialurónico.</strong></p></div>
 		</div>
-		<center><a href="#"><img class="btn-comprar-m" src="<?= Yii::app()->request->baseUrl ?>/images/contenido/sol-or/comprar.png"></a></center>
+		<center><a href="<?php echo CController::createUrl('/catalogo/producto', array('producto' => 37681)) ?>"><img class="btn-comprar-m" src="<?= Yii::app()->request->baseUrl ?>/images/contenido/sol-or/comprar.png"></a></center>
 	</div>
 </section>
 <hr>
@@ -150,7 +163,7 @@ $this->metaTags = "<meta http-equiv='X-UA-Compatible' content='IE=edge'>
 		   	<div class="ui-block-a"><img src="<?= Yii::app()->request->baseUrl ?>/images/contenido/sol-or/3.crema/aloe-vera.png" class="ico-imagen"></div>
 		   	<div class="ui-block-b"><p> Aloe vera, D-pantenol <strong>y Ácido Hialurónico.</strong></p></div>
 		</div>
-		<center><a href="#"><img class="btn-comprar-m" src="<?= Yii::app()->request->baseUrl ?>/images/contenido/sol-or/comprar.png"></a></center>
+		<center><a href="<?php echo CController::createUrl('/catalogo/producto', array('producto' => 94665)) ?>"><img class="btn-comprar-m" src="<?= Yii::app()->request->baseUrl ?>/images/contenido/sol-or/comprar.png"></a></center>
 	</div>
 </section>
 <hr>
@@ -182,7 +195,7 @@ $this->metaTags = "<meta http-equiv='X-UA-Compatible' content='IE=edge'>
 		   	<div class="ui-block-a"><img src="<?= Yii::app()->request->baseUrl ?>/images/contenido/sol-or/4.emulsion/spray.png" class="ico-imagen"></div>
 		   	<div class="ui-block-b"><p> Sistema de spray</p></div>
 		</div>
-		<center><a href="#"><img class="btn-comprar-m" src="<?= Yii::app()->request->baseUrl ?>/images/contenido/sol-or/comprar.png"></a></center>
+		<center><a href="<?php echo CController::createUrl('/catalogo/producto', array('producto' => 54081)) ?>"><img class="btn-comprar-m" src="<?= Yii::app()->request->baseUrl ?>/images/contenido/sol-or/comprar.png"></a></center>
 	</div>
 </section>
 <hr>
@@ -214,7 +227,7 @@ $this->metaTags = "<meta http-equiv='X-UA-Compatible' content='IE=edge'>
 		   	<div class="ui-block-a"><img src="<?= Yii::app()->request->baseUrl ?>/images/contenido/sol-or/5.locion/sin-fragancia.png" class="ico-imagen"></div>
 		   	<div class="ui-block-b"><p> Sin fragancia</p></div>
 		</div>
-		<center><a href="#"><img class="btn-comprar-m" src="<?= Yii::app()->request->baseUrl ?>/images/contenido/sol-or/comprar.png"></a></center>
+		<center><a href="<?php echo CController::createUrl('/catalogo/producto', array('producto' => 94530)) ?>"><img class="btn-comprar-m" src="<?= Yii::app()->request->baseUrl ?>/images/contenido/sol-or/comprar.png"></a></center>
 	</div>
 </section>
 <hr>
@@ -246,7 +259,7 @@ $this->metaTags = "<meta http-equiv='X-UA-Compatible' content='IE=edge'>
 		   	<div class="ui-block-a"><img src="<?= Yii::app()->request->baseUrl ?>/images/contenido/sol-or/6.resistente-al-agua/aloe-vera.png" class="ico-imagen"></div>
 		   	<div class="ui-block-b"><p>Aloe vera y aceite de coco</p></div>
 		</div>
-		<center><a href="#"><img class="btn-comprar-m" src="<?= Yii::app()->request->baseUrl ?>/images/contenido/sol-or/comprar.png"></a></center>
+		<center><a href="<?php echo CController::createUrl('/catalogo/producto', array('producto' => 17845)) ?>"><img class="btn-comprar-m" src="<?= Yii::app()->request->baseUrl ?>/images/contenido/sol-or/comprar.png"></a></center>
 	</div>
 </section>
 <hr>
@@ -278,7 +291,7 @@ $this->metaTags = "<meta http-equiv='X-UA-Compatible' content='IE=edge'>
 		   	<div class="ui-block-a"><img src="<?= Yii::app()->request->baseUrl ?>/images/contenido/sol-or/7.infantil1/vitaminae.png" class="ico-imagen"></div>
 		   	<div class="ui-block-b"><p>Vitamina E</p></div>
 		</div>
-		<center><a href="#"><img class="btn-comprar-m" src="<?= Yii::app()->request->baseUrl ?>/images/contenido/sol-or/comprar.png"></a></center>
+		<center><a href="<?php echo CController::createUrl('/catalogo/producto', array('producto' => 37683)) ?>"><img class="btn-comprar-m" src="<?= Yii::app()->request->baseUrl ?>/images/contenido/sol-or/comprar.png"></a></center>
 	</div>
 </section>
 <hr>
@@ -310,7 +323,7 @@ $this->metaTags = "<meta http-equiv='X-UA-Compatible' content='IE=edge'>
 		   	<div class="ui-block-a"><img src="<?= Yii::app()->request->baseUrl ?>/images/contenido/sol-or/8.infantil2/spray.png" class="ico-imagen"></div>
 		   	<div class="ui-block-b"><p>Sistema de spray</p></div>
 		</div>
-		<center><a href="#"><img class="btn-comprar-m" src="<?= Yii::app()->request->baseUrl ?>/images/contenido/sol-or/comprar.png"></a></center>
+		<center><a href="<?php echo CController::createUrl('/catalogo/producto', array('producto' => 17846)) ?>"><img class="btn-comprar-m" src="<?= Yii::app()->request->baseUrl ?>/images/contenido/sol-or/comprar.png"></a></center>
 	</div>
 </section>
 <hr>
@@ -335,7 +348,7 @@ $this->metaTags = "<meta http-equiv='X-UA-Compatible' content='IE=edge'>
 			<p><span class="bull">&bull;</span>Aplica diariamente en: axilas, manos, pies, abdomen, espalda, ingle y pecho.</p>
 		</div>
 		<center>
-      <a href="#"><img class="btn-comprar-m" src="<?= Yii::app()->request->baseUrl ?>/images/contenido/sol-or/comprar.png"></a>
+      <a href="<?php echo CController::createUrl('/catalogo/producto', array('producto' => 37679)) ?>"><img class="btn-comprar-m" src="<?= Yii::app()->request->baseUrl ?>/images/contenido/sol-or/comprar.png"></a>
       <img class="btn-comprar-m" style="box-shadow: none;margin-top: 10px;" src="<?= Yii::app()->request->baseUrl ?>/images/contenido/sol-or/Boton Descuento.png">
       <p style="font-size: 11px;">Aplica los 17, 19, 26 de diciembre de 2016 y 2 de enero de 2017  </p>
       <p style="font-size: 11px;">
@@ -371,7 +384,7 @@ $this->metaTags = "<meta http-equiv='X-UA-Compatible' content='IE=edge'>
 			<p><span class="bull">&bull;</span>Resistente al agua</p>
 			<p><span class="bull">&bull;</span>Alto poder emoliente</p>
 		</div>
-		<center><a href="#"><img class="btn-comprar-m" src="<?= Yii::app()->request->baseUrl ?>/images/contenido/sol-or/comprar.png"></a></center>
+		<center><a href="<?php echo CController::createUrl('/catalogo/producto', array('producto' => 35207)) ?>"><img class="btn-comprar-m" src="<?= Yii::app()->request->baseUrl ?>/images/contenido/sol-or/comprar.png"></a></center>
 	</div>
 </section>
 <div style="height:50px;"></div>
@@ -415,7 +428,7 @@ $this->metaTags = "<meta http-equiv='X-UA-Compatible' content='IE=edge'>
     					<p><img src="<?= Yii::app()->request->baseUrl ?>/images/contenido/sol-or/1.ultra/vitamina-e.png" class="ico-imagen"> Vitamina E</p>
     					<p><img src="<?= Yii::app()->request->baseUrl ?>/images/contenido/sol-or/1.ultra/aloe-vera.png" class="ico-imagen"> Contiene Aloe vera, D-Pantenol <br> <strong class="segundo-parrafo">y Ácido Hialurónico.</strong></p>
     				</div>
-    				<a href="#"><img class="btn-comprar" src="<?= Yii::app()->request->baseUrl ?>/images/contenido/sol-or/comprar.png"></a>
+    				<a href="<?php echo CController::createUrl('/catalogo/producto', array('producto' => 31194)) ?>"><img class="btn-comprar" src="<?= Yii::app()->request->baseUrl ?>/images/contenido/sol-or/comprar.png"></a>
     			</div>
     		</div>
 			<!-- SOL-OR GEL -->
@@ -432,7 +445,7 @@ $this->metaTags = "<meta http-equiv='X-UA-Compatible' content='IE=edge'>
     					<p><img src="<?= Yii::app()->request->baseUrl ?>/images/contenido/sol-or/2.gel/e+c.png" class="ico-imagen"> Vitamina E y C</p>
     					<p><img src="<?= Yii::app()->request->baseUrl ?>/images/contenido/sol-or/2.gel/aloe-vera.png" class="ico-imagen"> Contiene Aloe vera, D-Pantenol <br> <strong class="segundo-parrafo">y Ácido Hialurónico.</strong></p>
     				</div>
-    				<a href="#"><img class="btn-comprar" src="<?= Yii::app()->request->baseUrl ?>/images/contenido/sol-or/comprar.png"></a>
+    				<a href="<?php echo CController::createUrl('/catalogo/producto', array('producto' => 37681)) ?>"><img class="btn-comprar" src="<?= Yii::app()->request->baseUrl ?>/images/contenido/sol-or/comprar.png"></a>
     			</div>
     		</div>
     	</div>
@@ -453,7 +466,7 @@ $this->metaTags = "<meta http-equiv='X-UA-Compatible' content='IE=edge'>
     					<p><img src="<?= Yii::app()->request->baseUrl ?>/images/contenido/sol-or/3.crema/e+d.png" class="ico-imagen"> Vitaminas E y D</p>
     					<p><img src="<?= Yii::app()->request->baseUrl ?>/images/contenido/sol-or/3.crema/aloe-vera.png" class="ico-imagen"> Aloe vera, D-pantenol <br> <strong class="segundo-parrafo">y Ácido Hialurónico.</strong></p>
     				</div>
-    				<a href="#"><img class="btn-comprar" src="<?= Yii::app()->request->baseUrl ?>/images/contenido/sol-or/comprar.png"></a>
+    				<a href="<?php echo CController::createUrl('/catalogo/producto', array('producto' => 94665)) ?>"><img class="btn-comprar" src="<?= Yii::app()->request->baseUrl ?>/images/contenido/sol-or/comprar.png"></a>
     			</div>
     		</div>
 			<!-- SOL-OR EMULSION -->
@@ -471,7 +484,7 @@ $this->metaTags = "<meta http-equiv='X-UA-Compatible' content='IE=edge'>
     					<p><img src="<?= Yii::app()->request->baseUrl ?>/images/contenido/sol-or/4.emulsion/aloe-vera.png" class="ico-imagen"> Aloe vera, D-Pantenol <br> <strong class="segundo-parrafo">y Ácido Hialurónico.</strong></p>
     					<p><img src="<?= Yii::app()->request->baseUrl ?>/images/contenido/sol-or/4.emulsion/spray.png" class="ico-imagen"> Sistema de spray</p>
     				</div>
-    				<a href="#"><img class="btn-comprar" src="<?= Yii::app()->request->baseUrl ?>/images/contenido/sol-or/comprar.png"></a>
+    				<a href="<?php echo CController::createUrl('/catalogo/producto', array('producto' => 54081)) ?>"><img class="btn-comprar" src="<?= Yii::app()->request->baseUrl ?>/images/contenido/sol-or/comprar.png"></a>
     			</div>
     		</div>
     	</div>
@@ -492,7 +505,7 @@ $this->metaTags = "<meta http-equiv='X-UA-Compatible' content='IE=edge'>
     					<p><img src="<?= Yii::app()->request->baseUrl ?>/images/contenido/sol-or/5.locion/secrecion.png" class="ico-imagen"> Regula la secreción sebácea</p>
     					<p><img src="<?= Yii::app()->request->baseUrl ?>/images/contenido/sol-or/5.locion/sin-fragancia.png" class="ico-imagen"> Sin fragancia</p>
     				</div>
-    				<a href="#"><img class="btn-comprar" src="<?= Yii::app()->request->baseUrl ?>/images/contenido/sol-or/comprar.png"></a>
+    				<a href="<?php echo CController::createUrl('/catalogo/producto', array('producto' => 94530)) ?>"><img class="btn-comprar" src="<?= Yii::app()->request->baseUrl ?>/images/contenido/sol-or/comprar.png"></a>
     			</div>
     		</div>
 			<!-- SOL-OR RESISTENTE AL AGUA -->
@@ -510,7 +523,7 @@ $this->metaTags = "<meta http-equiv='X-UA-Compatible' content='IE=edge'>
     					<p><img src="<?= Yii::app()->request->baseUrl ?>/images/contenido/sol-or/6.resistente-al-agua/spray.png" class="ico-imagen"> Sistema de spray</p>
     					<p><img src="<?= Yii::app()->request->baseUrl ?>/images/contenido/sol-or/6.resistente-al-agua/aloe-vera.png" class="ico-imagen"> Aloe vera y aceite de coco</p>
     				</div>
-    				<a href="#"><img class="btn-comprar" src="<?= Yii::app()->request->baseUrl ?>/images/contenido/sol-or/comprar.png"></a>
+    				<a href="<?php echo CController::createUrl('/catalogo/producto', array('producto' => 17845)) ?>"><img class="btn-comprar" src="<?= Yii::app()->request->baseUrl ?>/images/contenido/sol-or/comprar.png"></a>
     			</div>
     		</div>
     	</div>
@@ -531,7 +544,7 @@ $this->metaTags = "<meta http-equiv='X-UA-Compatible' content='IE=edge'>
     					<p><img src="<?= Yii::app()->request->baseUrl ?>/images/contenido/sol-or/7.infantil1/aloe-vera.png" class="ico-imagen"> Aloe vera</p>
     					<p><img src="<?= Yii::app()->request->baseUrl ?>/images/contenido/sol-or/7.infantil1/vitaminae.png" class="ico-imagen"> Vitamina E</p>
     				</div>
-    				<a href="#"><img class="btn-comprar" src="<?= Yii::app()->request->baseUrl ?>/images/contenido/sol-or/comprar.png"></a>
+    				<a href="<?php echo CController::createUrl('/catalogo/producto', array('producto' => 37683)) ?>"><img class="btn-comprar" src="<?= Yii::app()->request->baseUrl ?>/images/contenido/sol-or/comprar.png"></a>
     			</div>
     		</div>
 			<!-- SOL-OR  INFANTIL RESISTENTE AL AGUA -->
@@ -549,7 +562,7 @@ $this->metaTags = "<meta http-equiv='X-UA-Compatible' content='IE=edge'>
 						<p><img src="<?= Yii::app()->request->baseUrl ?>/images/contenido/sol-or/8.infantil2/aloe-vera.png" class="ico-imagen"> Aloe vera y aceite de coco</p>
 						<p><img src="<?= Yii::app()->request->baseUrl ?>/images/contenido/sol-or/8.infantil2/spray.png" class="ico-imagen"> Sistema de spray</p>
 					</div>
-					<a href="#"><img class="btn-comprar" src="<?= Yii::app()->request->baseUrl ?>/images/contenido/sol-or/comprar.png"></a>
+					<a href="<?php echo CController::createUrl('/catalogo/producto', array('producto' => 17846)) ?>"><img class="btn-comprar" src="<?= Yii::app()->request->baseUrl ?>/images/contenido/sol-or/comprar.png"></a>
 				</div>
 			</div>
     	</div>
@@ -573,7 +586,7 @@ $this->metaTags = "<meta http-equiv='X-UA-Compatible' content='IE=edge'>
 						<p><span class="bull">&bull;</span>No permite la sudoración evidente</p>
 						<p><span class="bull">&bull;</span>Aplica diariamente en: axilas, manos, pies, abdomen, espalda, ingle y pecho.</p>
 					</div>
-    				<a href="#"><img class="btn-comprar" style="margin-top: 10px;" src="<?= Yii::app()->request->baseUrl ?>/images/contenido/sol-or/comprar.png"></a>
+    				<a href="<?php echo CController::createUrl('/catalogo/producto', array('producto' => 37679)) ?>"><img class="btn-comprar" style="margin-top: 10px;" src="<?= Yii::app()->request->baseUrl ?>/images/contenido/sol-or/comprar.png"></a>
             <img class="btn-comprar" style="box-shadow: none;margin-top: 10px;" src="<?= Yii::app()->request->baseUrl ?>/images/contenido/sol-or/Boton Descuento.png">
             <p style="font-size: 12px;margin-top: 15px;">Aplica los 17, 19, 26 de diciembre de 2016 y 2 de enero de 2017  </p>
     			</div>
@@ -604,7 +617,7 @@ $this->metaTags = "<meta http-equiv='X-UA-Compatible' content='IE=edge'>
 						<p><span class="bull">&bull;</span>Resistente al agua</p>
 						<p><span class="bull">&bull;</span>Alto poder emoliente</p>
 					</div>
-    				<a href="#"><img class="btn-comprar" src="<?= Yii::app()->request->baseUrl ?>/images/contenido/sol-or/comprar.png"></a>
+    				<a href="<?php echo CController::createUrl('/catalogo/producto', array('producto' => 35207)) ?>"><img class="btn-comprar" src="<?= Yii::app()->request->baseUrl ?>/images/contenido/sol-or/comprar.png"></a>
     			</div>
     		</div>
     	</div>
