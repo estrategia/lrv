@@ -1,2 +1,18 @@
 FASE 1
 
+
+FASE 2
+
+protected/components/Controller.php
+
+protected/controllers/CatalogoController.php
+
+protected/models/Categoria.php
+protected/models/CodigoEspecial.php
+protected/models/ModulosConfigurados.php
+
+protected/views/catalogo/d_listaProductos.php
+protected/views/catalogo/listaProductos.php
+
+protected/views/layouts/desktop.php -- <?php if (CodigoEspecial::hasState()): ?>
+protected/views/layouts/mobile.php -- <?php if (CodigoEspecial::hasState()): ?>

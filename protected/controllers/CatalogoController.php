@@ -44,15 +44,15 @@ class CatalogoController extends Controller {
 
         $modulosConfigurados = ModulosConfigurados::getModulos($this->objSectorCiudad, Yii::app()->shoppingCart->getCodigoPerfil(), UbicacionModulos::UBICACION_ESCRITORIO_DIVISION, $division);
 
-        $productos = array();
+        $listProductos = array();
         if ($modulosConfigurados == null) {
             // buscar productos top 
-            $productos = Categoria::productosDivision($division, $this->isMobile);
+            $listProductos = Categoria::productosDivision($division, $this->isMobile);
         }
         $this->render('d_division', array(
             'objCategoria' => $objCategoria,
             'listModulos' => $modulosConfigurados,
-            'listProductos' => $productos
+            'listProductos' => $listProductos
         ));
     }
 
@@ -115,7 +115,6 @@ class CatalogoController extends Controller {
                 $this->render('listaProductos', array(
                     'listProductos' => array(),
                     'listCombos' => array(),
-                    'msgCodigoEspecial' => array(),
                     'listCodigoEspecial' => array(),
                     'imagenBusqueda' => Yii::app()->params->busqueda['imagen']['noExito'],
                     'objSectorCiudad' => $objSectorCiudad,
@@ -126,7 +125,6 @@ class CatalogoController extends Controller {
             } else {
                 $this->render('d_listaProductos', array(
                     'listCombos' => array(),
-                    'msgCodigoEspecial' => array(),
                     'listCodigoEspecial' => array(),
                     'imagenBusqueda' => Yii::app()->params->busqueda['imagen']['noExito'],
                     'objSectorCiudad' => $objSectorCiudad,
@@ -349,7 +347,6 @@ class CatalogoController extends Controller {
             'condition' => 'codigoEspecial<>0'
         ));
 
-        $msgCodigoEspecial = array();
         $formFiltro->listMarcas = array();
         $formFiltro->listFiltros = array();
         foreach ($listProductos as $idxProd => $objProducto) {
@@ -359,7 +356,7 @@ class CatalogoController extends Controller {
             }
 
             if ($objProducto->codigoEspecial != null && $objProducto->codigoEspecial != 0) {
-                $msgCodigoEspecial[$objProducto->codigoEspecial] = $objProducto->objCodigoEspecial;
+                CodigoEspecial::setState($objProducto->objCodigoEspecial);
             }
             $formFiltro->listMarcas[$objProducto->idMarca] = $objProducto->objMarca->nombreMarca;
 
@@ -376,7 +373,6 @@ class CatalogoController extends Controller {
 
         $parametrosVista = array(
             'listCombos' => $listCombos,
-            'msgCodigoEspecial' => $msgCodigoEspecial,
             'listCodigoEspecial' => $listCodigoEspecial,
             'objSectorCiudad' => $objSectorCiudad,
             'codigoPerfil' => $codigoPerfil,
@@ -636,7 +632,6 @@ class CatalogoController extends Controller {
                 $this->render('listaProductos', array(
                     'listProductos' => array(),
                     'listCombos' => array(),
-                    'msgCodigoEspecial' => array(),
                     'listCodigoEspecial' => array(),
                     'imagenBusqueda' => Yii::app()->params->busqueda['imagen']['noExito'],
                     'objSectorCiudad' => $objSectorCiudad,
@@ -646,7 +641,6 @@ class CatalogoController extends Controller {
             } else {
                 $this->render('d_listaProductos', array(
                     'listCombos' => array(),
-                    'msgCodigoEspecial' => array(),
                     'listCodigoEspecial' => array(),
                     'imagenBusqueda' => Yii::app()->params->busqueda['imagen']['noExito'],
                     'objSectorCiudad' => $objSectorCiudad,
@@ -850,7 +844,6 @@ class CatalogoController extends Controller {
             'condition' => 'codigoEspecial<>0'
         ));
 
-        $msgCodigoEspecial = array();
         if (!isset($_GET['ajax'])) {
             $formFiltro->listCategoriasTienda = array();
         }
@@ -862,7 +855,7 @@ class CatalogoController extends Controller {
             }
 
             if ($objProducto->codigoEspecial != null && $objProducto->codigoEspecial != 0) {
-                $msgCodigoEspecial[$objProducto->codigoEspecial] = $objProducto->objCodigoEspecial;
+            	CodigoEspecial::setState($objProducto->objCodigoEspecial);
             }
 
             if (!isset($_GET['ajax'])) {
@@ -875,7 +868,6 @@ class CatalogoController extends Controller {
 
         $parametrosVista = array(
             'listCombos' => $listCombos,
-            'msgCodigoEspecial' => $msgCodigoEspecial,
             'listCodigoEspecial' => $listCodigoEspecial,
             'objSectorCiudad' => $objSectorCiudad,
             'codigoPerfil' => $codigoPerfil,
@@ -1016,17 +1008,15 @@ class CatalogoController extends Controller {
             'condition' => 'codigoEspecial<>0'
         ));
 
-        $msgCodigoEspecial = array();
         foreach ($listProductos as $objProducto) {
             if ($objProducto->codigoEspecial != null && $objProducto->codigoEspecial != 0) {
-                $msgCodigoEspecial[$objProducto->codigoEspecial] = $objProducto->objCodigoEspecial;
+                CodigoEspecial::setState($objProducto->objCodigoEspecial);
             }
         }
 
         $parametrosVista = array(
             'listProductos' => $listProductos,
             'listCombos' => $listCombos,
-            'msgCodigoEspecial' => $msgCodigoEspecial,
             'listCodigoEspecial' => $listCodigoEspecial,
             'objSectorCiudad' => $objSectorCiudad,
             'codigoPerfil' => $codigoPerfil,
@@ -1074,9 +1064,9 @@ class CatalogoController extends Controller {
                     'objDetalle',
                     'objCodigoEspecial',
                     'listCalificaciones' => array('with' => 'objUsuario'),
-                    'listSaldos' => array('on' => 'listSaldos.codigoCiudad=:ciudad AND listSaldos.codigoSector=:sector OR listSaldos.idProductoSaldos IS NULL'),
-                    'listPrecios' => array('on' => 'listPrecios.codigoCiudad=:ciudad AND listPrecios.codigoSector=:sector OR listPrecios.idProductoPrecios IS NULL'),
-                    'listSaldosTerceros' => array('on' => 'listSaldosTerceros.codigoCiudad=:ciudad AND listSaldosTerceros.codigoSector=:sector OR listSaldosTerceros.idProductoSaldo IS NULL')
+                    'listSaldos' => array('on' => '(listSaldos.codigoCiudad=:ciudad AND listSaldos.codigoSector=:sector) OR listSaldos.idProductoSaldos IS NULL'),
+                    'listPrecios' => array('on' => '(listPrecios.codigoCiudad=:ciudad AND listPrecios.codigoSector=:sector) OR listPrecios.idProductoPrecios IS NULL'),
+                    'listSaldosTerceros' => array('on' => '(listSaldosTerceros.codigoCiudad=:ciudad AND listSaldosTerceros.codigoSector=:sector) OR listSaldosTerceros.idProductoSaldo IS NULL')
                 ),
                 'condition' => 't.activo=:activo AND t.codigoProducto=:codigo',
                 'params' => array(
@@ -1893,10 +1883,9 @@ class CatalogoController extends Controller {
             'condition' => 'codigoEspecial<>0'
         ));
 
-        $msgCodigoEspecial = array();
         foreach ($listProductos as $objProducto) {
             if ($objProducto->codigoEspecial != null && $objProducto->codigoEspecial != 0) {
-                $msgCodigoEspecial[$objProducto->codigoEspecial] = $objProducto->objCodigoEspecial;
+                CodigoEspecial::setState($objProducto->objCodigoEspecial);
             }
         }
 
@@ -1919,7 +1908,6 @@ class CatalogoController extends Controller {
         $parametrosVista = array(
             'listProductos' => $listProductos,
             'listCombos' => $listCombos,
-            'msgCodigoEspecial' => $msgCodigoEspecial,
             'listCodigoEspecial' => $listCodigoEspecial,
             'objSectorCiudad' => $objSectorCiudad,
             'codigoPerfil' => $codigoPerfil,
@@ -2013,13 +2001,6 @@ class CatalogoController extends Controller {
             'condition' => 'codigoEspecial<>0'
         ));
 
-        $msgCodigoEspecial = array();
-        foreach ($listProductos as $objProducto) {
-            if ($objProducto->codigoEspecial != null && $objProducto->codigoEspecial != 0) {
-                $msgCodigoEspecial[$objProducto->codigoEspecial] = $objProducto->objCodigoEspecial;
-            }
-        }
-
         $limiteRestante = $limite - count($listProductos);
         $listProductos2 = array();
 
@@ -2060,11 +2041,16 @@ class CatalogoController extends Controller {
                 Yii::log($exc->getMessage() . "\n" . $exc->getTraceAsString(), CLogger::LEVEL_ERROR, 'application');
             }
         }
+        
+        foreach ($listProductos as $objProducto) {
+        	if ($objProducto->codigoEspecial != null && $objProducto->codigoEspecial != 0) {
+        		CodigoEspecial::setState($objProducto->objCodigoEspecial);
+        	}
+        }
 
         $parametrosVista = array(
             'listProductos' => $listProductos,
             'listCombos' => $listCombos,
-            'msgCodigoEspecial' => $msgCodigoEspecial,
             'listCodigoEspecial' => $listCodigoEspecial,
             'objSectorCiudad' => $objSectorCiudad,
             'codigoPerfil' => $codigoPerfil,
@@ -2159,13 +2145,6 @@ class CatalogoController extends Controller {
             'condition' => 'codigoEspecial<>0'
         ));
 
-        $msgCodigoEspecial = array();
-        foreach ($listProductos as $objProducto) {
-            if ($objProducto->codigoEspecial != null && $objProducto->codigoEspecial != 0) {
-                $msgCodigoEspecial[$objProducto->codigoEspecial] = $objProducto->objCodigoEspecial;
-            }
-        }
-
         $limiteRestante = $limite - count($listProductos);
         $listProductos2 = array();
 
@@ -2206,10 +2185,15 @@ class CatalogoController extends Controller {
                 Yii::log($exc->getMessage() . "\n" . $exc->getTraceAsString(), CLogger::LEVEL_ERROR, 'application');
             }
         }
+        
+        foreach ($listProductos as $objProducto) {
+        	if ($objProducto->codigoEspecial != null && $objProducto->codigoEspecial != 0) {
+        		CodigoEspecial::setState($objProducto->objCodigoEspecial);
+        	}
+        }
 
         $parametrosVista = array(
             'listCombos' => $listCombos,
-            'msgCodigoEspecial' => $msgCodigoEspecial,
             'listCodigoEspecial' => $listCodigoEspecial,
             'objSectorCiudad' => $objSectorCiudad,
             'codigoPerfil' => $codigoPerfil,
@@ -2294,10 +2278,9 @@ class CatalogoController extends Controller {
             'condition' => 'codigoEspecial<>0'
         ));
 
-        $msgCodigoEspecial = array();
         foreach ($listProductos as $objProducto) {
             if ($objProducto->codigoEspecial != null && $objProducto->codigoEspecial != 0) {
-                $msgCodigoEspecial[$objProducto->codigoEspecial] = $objProducto->objCodigoEspecial;
+                CodigoEspecial::setState($objProducto->objCodigoEspecial);
             }
         }
 
@@ -2322,7 +2305,6 @@ class CatalogoController extends Controller {
         $parametrosVista = array(
             'listProductos' => $listProductos,
             'listCombos' => array(),
-            'msgCodigoEspecial' => $msgCodigoEspecial,
             'listCodigoEspecial' => $listCodigoEspecial,
             'objSectorCiudad' => $this->objSectorCiudad,
             'codigoPerfil' => $codigoPerfil,

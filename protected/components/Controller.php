@@ -34,7 +34,6 @@ class Controller extends CController {
     public $categorias = array();
     public $objSectorCiudad = null;
     public $metaTags = null;
-    public $ubicacionDefecto = true;
 
     public function init() {
         if (Yii::app()->detectMobileBrowser->showMobile) {
@@ -67,7 +66,7 @@ class Controller extends CController {
         
         $this->verificarSesion();
 
-        if($this->objSectorCiudad==null && Yii::app()->params->ubicacionDefecto && $this->ubicacionDefecto){
+        if($this->objSectorCiudad==null && Yii::app()->params->ubicacionDefecto){
         	$this->objSectorCiudad = SectorCiudad::getDefecto();
         }
         

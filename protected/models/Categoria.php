@@ -164,6 +164,12 @@ class Categoria extends CActiveRecord {
         }
 
         $listProductos = Producto::model()->findAll($parametrosProductos);
+        
+        foreach ($listProductos as $objProducto) {
+        	if ($objProducto->codigoEspecial != null && $objProducto->codigoEspecial != 0) {
+        		CodigoEspecial::setState($objProducto->objCodigoEspecial);
+        	}
+        }
 
         return $listProductos;
     }

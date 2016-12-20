@@ -90,6 +90,20 @@ header("Pragma: no-cache");
                 </div>
             </div>
             <!-- Fin main content -->
+            <?php if (CodigoEspecial::hasState()): ?>
+            <div class="ui-content no-padding-top" style="margin-top: -5px">
+			    <table class="codEspecial">
+			        <tbody>
+			            <?php foreach (CodigoEspecial::getState() as $objEspecial): ?>
+			                <tr>
+			                    <td><img class="icon_codigo_especial" src="<?php echo Yii::app()->request->baseUrl . Yii::app()->params->carpetaImagen['codigoEspecial'] . $objEspecial->rutaIcono; ?>" ></td>
+			                    <td><?php echo $objEspecial->descripcion ?></td>
+			                </tr>
+			            <?php endforeach; ?>
+			        </tbody>
+			    </table>
+        	</div>
+        	<?php endif; ?>
 
             <div data-role="panel" id="panel-menu-ppal" data-display="overlay" data-position="right" data-position-fixed="false">
                 <?php $this->renderPartial('/sitio/menu'); ?>

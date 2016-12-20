@@ -202,8 +202,27 @@ header("Pragma: no-cache");
 
             <!-- <div class="container"> -->
             <div id="main-content">
-<?php echo $content; ?>
+				<?php echo $content; ?>
             </div>
+            
+            <?php if (CodigoEspecial::hasState()): ?>
+				<div class="container-fluid">
+                	<div class="row">
+						<div class="col-md-12">
+							<table class="codEspecial">
+						    	<tbody>
+						        	<?php foreach (CodigoEspecial::getState() as $objEspecial): ?>
+						        	<tr>
+						        		<td><img class="icon_codigo_especial" src="<?php echo Yii::app()->request->baseUrl . Yii::app()->params->carpetaImagen['codigoEspecial'] . 'desktop/' . $objEspecial->rutaIcono; ?>" ></td>
+						            	<td><?php echo $objEspecial->descripcion ?></td>
+						        	</tr>
+						            <?php endforeach; ?>
+								</tbody>
+							</table>	
+						</div>
+					</div>
+          		</div>
+			<?php endif; ?>
             <div class="space-1"></div>
             <!-- </div> -->
             <!--banner footer-->
@@ -262,7 +281,7 @@ header("Pragma: no-cache");
                                     <li><a href="<?php echo $this->createUrl('/contenido/corporativo', array('tipo' => 'pqrs')) ?>">PQRS (Pregunras, quejas, reclamos, sugerencias)</a></li>
                                 </ul>
                             </div>
-                        </div>	
+                        </div>
                         <div class="col-xs-12"><div class="space-1"></div></div>
 
 
