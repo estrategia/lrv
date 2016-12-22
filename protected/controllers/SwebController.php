@@ -117,6 +117,56 @@ class SwebController extends CController {
                 return 0;
             }
     }
+    
+    /**
+     * @param string $puntoVentaOrigen,
+     * @param string $puntoVentaDestino
+     * @return int valor entero
+     * @soap
+     */
+   public function copiarBeneficios($puntoVentaOrigen, $puntoVentaDestino){
+   	
+   	try{
+   	
+		   	$Transaccion = Yii::app()->db->beginTransaction();
+		   	// Borrar lo anterior que exista en ese punto de venta
+		   	$beneficios = Beneficios::model()->findAll(
+		   			array(
+		   					'with' => 'listPuntosVenta',
+		   					'condition' => 'listPuntosVenta.IDComercial =:puntoOrigen AND t.fechaIni >=:fechaVigencia',
+		   					'params' => array(
+		   							':puntoOrigen' => $puntoVentaOrigen,
+		   							':fechaVigencia' => Date("Y-m-d"),
+		   					)
+		   			));
+		   	
+		   	
+		   	if($beneficios){
+		   		$sql = "DELETE FROM  t_BeneficiosPuntosVenta WHERE IDComercial = '$puntoVentaDestino'";
+		   		Yii::app()->db->createCommand($sql)->query();
+		   		 
+		   		// Insertar lo nuevo a partir de ese punto de venta.
+		   		 
+		   		$arrayInsert = array();
+		   		$registros = 0;
+		   		foreach ($beneficios as $ben){
+		   			$arrayInsert[] = "($ben->idBeneficio, '$puntoVentaDestino')";
+		   			$registros++;
+		   		}
+		   		 
+		   		if($arrayInsert){
+		   			$sql = "INSERT INTO t_BeneficiosPuntosVenta (IdBeneficio, IDComercial) VALUES ". implode(",", $arrayInsert);
+		   			Yii::app()->db->createCommand($sql)->query();
+		   			$Transaccion->commit();
+		   		}
+		   	}
+		   	return 1;
+	   	}catch(Exception $e){
+	   		Yii::log($e->getMessage());
+	   		return 0;
+	   	}
+	   
+   }
 
     public function actionVerificarCorreo(){
         $this->recordarCorreos();

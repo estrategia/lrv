@@ -56,10 +56,6 @@ class BeneficiosCommand extends CConsoleCommand {
                 $idSincronizacion = $result[0]['maximo'];
             }
             
-//             if($i == 0){
-//             	$idSincronizacion = 63512;
-//             }
-            
             $h2 = round(microtime(true) * 1000);
 
             fwrite($file, $sql . ". Time execution: " . ($h2 - $h1) . " miliseconds" . PHP_EOL);
@@ -185,8 +181,8 @@ class BeneficiosCommand extends CConsoleCommand {
                         $datosPdv[] = "($objBeneficio->idBeneficio,'" . $benefPdv['IDComercial'] . "')";
                     }
 
-                    if ($beneficio['listCedulas']) {
-                    	fwrite($file, "Insertando cédulas en el beneficio $objBeneficio->idBeneficio \n");
+                    if ($beneficio['listCedulas'] != null) {
+                    	fwrite($file, "Insertando cedulas en el beneficio $objBeneficio->idBeneficio \n");
                     	 
                         foreach ($beneficio['listCedulas'] as $benCed) {
                           	$beneficiosCedulas[] = "($objBeneficio->idBeneficio,".$benCed['NumeroDocumento'].")";
@@ -221,7 +217,6 @@ class BeneficiosCommand extends CConsoleCommand {
                                     VALUES " . implode(",", $beneficiosCedulas);
                     Yii::app()->db->createCommand($sql)->execute();
                     fwrite($file, "Se guardan las cédulas en la base de datos \n");
-                     
                 }
             }
             $transaction->commit();

@@ -88,11 +88,8 @@
                 <?php if ($objPrecio->getTiempoEntrega() > 0): ?>
                     <p> Tiempo de entrega: <span> <?php echo $objPrecio->getTiempoEntrega() ?> horas</span></p>
                 <?php endif; ?>
-
             <?php endif; ?>
-
-
-        </div>
+       </div>
 
         <?php if ($this->objSectorCiudad == null): ?>
             <?php echo CHtml::link('<div class="btn btn-primary btn-block">Consultar precio</div>', $this->createUrl('/sitio/ubicacion'), array()); ?>
