@@ -7,15 +7,15 @@ $this->metaTags = "<meta http-equiv='X-UA-Compatible' content='IE=edge'>
 	<style>
   @font-face {
       font-family: Gotham-Bold;
-      src: url(" . Yii::app()->request->baseUrl . "/images/contenido/pyg/fonts/Gotham-Bold_0.otf);
+      src: url(" . Yii::app()->request->baseUrl . "/images/contenido/pyg/Fonts/Gotham-Bold_0.otf);
   }
 		@font-face {
 		    font-family: Gotham-Medium;
-		    src: url(" . Yii::app()->request->baseUrl . "/images/contenido/pyg/fonts/Gotham-Medium_0.otf);
+		    src: url(" . Yii::app()->request->baseUrl . "/images/contenido/pyg/Fonts/Gotham-Medium_0.otf);
 		}
     @font-face {
         font-family: Gotham-Book;
-        src: url(" . Yii::app()->request->baseUrl . "/images/contenido/pyg/fonts/Gotham-Book_0.otf);
+        src: url(" . Yii::app()->request->baseUrl . "/images/contenido/pyg/Fonts/Gotham-Book_0.otf);
     }
     .sidebar-cart {position: fixed;right: 0px;top: 65%;z-index: 2000;}
     .titleh2{color:#2BB2E9;text-align:center;text-transform:uppercase;font-weight:bolder;  font-family: Gotham-Medium;margin-top: 30px;margin-bottom: 30px;}
@@ -50,6 +50,16 @@ $this->metaTags = "<meta http-equiv='X-UA-Compatible' content='IE=edge'>
     .ico-m { width: 23px; margin-right: 8px;}
     .btn-comprar-m { display: block; margin: 36px auto 23px; width: 70%;}
     video { width: 100%; height: auto;}
+
+    @media (min-width: 1000px) and (max-width: 1600px) {
+      .empty {height: 30px;}
+      .contenedor-info .text {margin-left: 66px;font-size: 19px;}
+      .forma {padding: 15px 24px 15px 21px;margin-left: 31px;margin-bottom: 15px;}
+      .forma.distinta {margin-bottom: 15px;}
+      .forma p {font-size: 26px;margin:0px;}
+      .ico { width: 25px;}
+      .btn-comprar { margin-left: 20%; margin-top: 19%; position: absolute; width: 75%;}
+    }
   </style>
 ";
 ?>
