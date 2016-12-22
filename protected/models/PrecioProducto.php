@@ -324,7 +324,7 @@ class PrecioProducto extends Precio {
                 $this->listBeneficios = array();
             }
 
-            if ($tienePrecio && $tieneSaldo) {
+            if ($objCiudadSector->esDefecto() || ($tienePrecio && $tieneSaldo)) {
                 $this->precioFraccionTotal = $this->precioFraccion * $this->unidadFraccionamiento;
                 $this->precioUnidad = self::redondear($this->precioUnidad, 1);
                 $this->precioFraccionTotal = self::redondear($this->precioFraccionTotal, 1);
@@ -343,6 +343,10 @@ class PrecioProducto extends Precio {
                  
                 //$this->ahorroFraccion = self::redondear($this->ahorroFraccion, 1);
                 $this->inicializado = true;
+                
+                if($this->precioUnidad<=0){
+                	$this->inicializado = false;
+                }
             }
         }
 

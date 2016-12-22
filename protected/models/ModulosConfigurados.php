@@ -255,6 +255,12 @@ class ModulosConfigurados extends CActiveRecord {
             }
 
             $listaProductos = Producto::model()->findAll($criteria);
+            
+            foreach ($listaProductos as $objProducto) {
+            	if ($objProducto->codigoEspecial != null && $objProducto->codigoEspecial != 0) {
+            		CodigoEspecial::setState($objProducto->objCodigoEspecial);
+            	}
+            }
         }
 
         return $listaProductos;

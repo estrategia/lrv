@@ -518,15 +518,13 @@ class UsuarioController extends Controller {
     }
 
     public function actionPagoexpress() {
-        $objSectorCiudad = null;
-        if (isset(Yii::app()->session[Yii::app()->params->sesion['sectorCiudadEntrega']]))
-            $objSectorCiudad = Yii::app()->session[Yii::app()->params->sesion['sectorCiudadEntrega']];
+        $objSectorCiudad = $this->objSectorCiudad;
 
-        if ($objSectorCiudad === null) {
+        /*if ($objSectorCiudad === null || $objSectorCiudad->esDefecto()) {
             Yii::app()->user->setFlash('error', "Seleccionar ubicación.");
             $this->redirect($this->createUrl('/sitio/ubicacion'));
-        }
-
+        }*/
+		
         $objPagoExpress = PagoExpress::model()->find(array(
             'with' => array('objDireccionDespacho' => array('condition' => 'objDireccionDespacho.codigoCiudad=:ciudad AND objDireccionDespacho.codigoSector=:sector')),
             'condition' => 't.identificacionUsuario=:cedula AND t.activo=:activo',
@@ -1246,9 +1244,7 @@ class UsuarioController extends Controller {
     }
 
     public function actionDirecciones() {
-        $objSectorCiudad = null;
-        if (isset(Yii::app()->session[Yii::app()->params->sesion['sectorCiudadEntrega']]))
-            $objSectorCiudad = Yii::app()->session[Yii::app()->params->sesion['sectorCiudadEntrega']];
+        $objSectorCiudad = $this->objSectorCiudad;
 
         if ($objSectorCiudad === null) {
             Yii::app()->user->setFlash('error', "Seleccionar ubicación.");
@@ -1407,9 +1403,7 @@ class UsuarioController extends Controller {
     }
 
     public function actionDireccionCrear() {
-        $objSectorCiudad = null;
-        if (isset(Yii::app()->session[Yii::app()->params->sesion['sectorCiudadEntrega']]))
-            $objSectorCiudad = Yii::app()->session[Yii::app()->params->sesion['sectorCiudadEntrega']];
+        $objSectorCiudad = $this->objSectorCiudad;
 
         if ($objSectorCiudad === null) {
             echo CJSON::encode(array('result' => 'error', 'response' => 'Seleccionar ubicación'));

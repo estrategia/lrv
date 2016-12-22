@@ -97,5 +97,31 @@ class CodigoEspecial extends CActiveRecord {
     public static function model($className = __CLASS__) {
         return parent::model($className);
     }
+    
+    public static function setState(CodigoEspecial $objCodigoEspecial){
+    	$dataArray = array();
+    	$keyState = __CLASS__ . "_Data";
+    	
+    	if(Yii::app()->user->hasState($keyState)){
+    		$dataArray = Yii::app()->user->getState($keyState);
+    	}
+    	
+    	$dataArray[$objCodigoEspecial->codigoEspecial] = $objCodigoEspecial;
+    	Yii::app()->user->setState($keyState,$dataArray);
+    }
+    
+    public static function getState($delete=true){
+    	$keyState = __CLASS__ . "_Data";
+    	$dataArray = Yii::app()->user->getState($keyState);
+    	
+    	if($delete)
+    		Yii::app()->user->setState($keyState,null);
+    	return $dataArray;
+    }
+    
+    public static function hasState(){
+    	$keyState = __CLASS__ . "_Data";
+    	return Yii::app()->user->hasState($keyState);
+    }
 
 }

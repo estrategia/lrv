@@ -440,6 +440,7 @@ return array(
             '*' => 99,
             'sinSector' => 0
         ),
+    	'ubicacionDefecto' => true,
         'perfil' => array(
             'defecto' => 1,
             'asociado' => 2,

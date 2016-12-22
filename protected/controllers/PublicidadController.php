@@ -10,7 +10,7 @@ class PublicidadController extends Controller {
             array(
                 'application.filters.SessionControlFilter + contenido',
                 'isMobile' => $this->isMobile,
-                'redirect' => false
+                'objSectorCiudad' => $this->objSectorCiudad,
             ),
         );
     }

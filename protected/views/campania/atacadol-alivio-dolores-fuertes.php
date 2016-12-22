@@ -11,8 +11,8 @@ $this->metaTags = "<meta http-equiv='X-UA-Compatible' content='IE=edge'>
             @font-face {
                 font-family: Interstate regular;
                 src: url(".Yii::app()->request->baseUrl."/images/contenido/atacadol/fonts/interstate-regular.ttf);
-            }  
-           
+            }
+
 
             .space{margin-top:30px;}
             .background{
@@ -44,13 +44,24 @@ $this->metaTags = "<meta http-equiv='X-UA-Compatible' content='IE=edge'>
             .img-entrega{width: 300px;margin: 0px auto;}
             .texto-intro{background-color:#004F9F;padding:5px;}
             .texto-intro p {border:4px solid #F7B800;margin:0px;color:#fff;text-align:center;font-size:30px;}
-            .title{margin-bottom: 20px;}            
+            .title{margin-bottom: 20px;}
             .list{list-style:none;list-style-image: url('../../images/contenido/atacadol/ico.png');text-align:justify;}
             .list-m {padding: 0px 10px 0px 36px;}
             .filtro {background-color:#fff;border-radius: 5px;border: 1px solid red;padding: 0 !important;}
             .filtro-m {background-color:#fff;border-radius: 5px;border: 1px solid red;padding: 19px !important;}
-
 	</style>
+
+  <!-- Hotjar Tracking Code for https://www.larebajavirtual.com/atacadol-alivio-dolores-fuertes -->
+  <script>
+      (function(h,o,t,j,a,r){
+          h.hj=h.hj||function(){(h.hj.q=h.hj.q||[]).push(arguments)};
+          h._hjSettings={hjid:369669,hjsv:5};
+          a=o.getElementsByTagName('head')[0];
+          r=o.createElement('script');r.async=1;
+          r.src=t+h._hjSettings.hjid+j+h._hjSettings.hjsv;
+          a.appendChild(r);
+      })(window,document,'//static.hotjar.com/c/hotjar-','.js?sv=');
+  </script>
 
     ";
 ?>
@@ -59,7 +70,7 @@ $this->metaTags = "<meta http-equiv='X-UA-Compatible' content='IE=edge'>
 <!--Versión movil-->
 <?php if ($this->isMobile): ?>
     <section style="background-color:#001781;">
-        <img width="100%" src="<?= Yii::app()->request->baseUrl ?>/images/contenido/atacadol/banner-movil.png">  
+        <img width="100%" src="<?= Yii::app()->request->baseUrl ?>/images/contenido/atacadol/banner-movil.png">
 
         <div class="background-m">
             <img width="100%" src="<?= Yii::app()->request->baseUrl ?>/images/contenido/atacadol/descripcion.png">
@@ -94,14 +105,14 @@ $this->metaTags = "<meta http-equiv='X-UA-Compatible' content='IE=edge'>
                     <li>No exceder la dosis máxima recomendada.</li>
                     <li>Si los síntomas persisten consulte a su médico</li>
                 </ul>
-            </section>	
+            </section>
             <section>
                 <img src="<?= Yii::app()->request->baseUrl ?>/images/contenido/atacadol/titulo-4.png" alt="¿Qué contiene AtacaDol?">
                 <ul class="list">
                     <li>Paracetamol 500mg</li>
                     <li>Cafeína 50mg</li>
                 </ul>
-            </section> 
+            </section>
             <section>
                 <img width=100% src="<?= Yii::app()->request->baseUrl ?>/images/contenido/atacadol/titulo-5.png" alt="Contraindicaciones y Advertencias">
                 <ul class="list list-m">
@@ -115,7 +126,7 @@ $this->metaTags = "<meta http-equiv='X-UA-Compatible' content='IE=edge'>
                     <li><strong>Recomendaciones:</strong> <br>
                         Si consume té o café hacerlo moderadamente.
                     </li>
-                </ul>	    		
+                </ul>
             </section>
             <section>
                 <img src="<?= Yii::app()->request->baseUrl ?>/images/contenido/atacadol/titulo-6.png" alt="Sobredosificación">
@@ -128,7 +139,7 @@ $this->metaTags = "<meta http-equiv='X-UA-Compatible' content='IE=edge'>
                         Si consume té o café hacerlo moderadamente.
                     </li>
                 </ul>
-            </section> 
+            </section>
             <section>
                 <img src="<?= Yii::app()->request->baseUrl ?>/images/contenido/atacadol/titulo-7.png" alt="Reacciones Adversas">
                 <p>Suspenda la medicación y consulte a su médico inmediatamente si:</p>
@@ -151,7 +162,7 @@ $this->metaTags = "<meta http-equiv='X-UA-Compatible' content='IE=edge'>
                 <section class="filtro-m" style="text-align:center;">
                     <span style="color:#E90000;">Más información</span>
                     <a href=""><img width="34" src="<?= Yii::app()->request->baseUrl ?>/images/contenido/metamucil/ico-filtro.png" ></a>
-                </section>	            	
+                </section>
                 <p style="color:#000;font-size:14px;padding-bottom:20px;">AtacaDol Activo: Es un medicamento No exceder su consumo. <br>
                     Reg. sanitario INVIMA 2015M-0016108. Leer indicaciones y contraindicaciones. Sí los síntomas persisten, consultar al médico.</p>
             </section>
@@ -159,7 +170,7 @@ $this->metaTags = "<meta http-equiv='X-UA-Compatible' content='IE=edge'>
         </div>
     </section>
 
-    <!--Version movil-->   
+    <!--Version movil-->
 
 
     <!--Versión escritorio-->
@@ -176,13 +187,13 @@ $this->metaTags = "<meta http-equiv='X-UA-Compatible' content='IE=edge'>
                               <p>
                                       Llega <strong>ATACADOL</strong> <span style="color:#DF040F;">Activo</span>,<br>
                                       para el alivio de dolores de <br>
-                                      cabeza como la migraña	                		
+                                      cabeza como la migraña
                               </p>
                       </div> -->
                     <div class="space"></div>
                 </div>
                 <div class="col-md-6">
-                    <a href="<?php echo CController::createUrl('/catalogo/producto', array('producto' => 111306, 'descripcion' => 'VICK-ATACADOL-ACTIVO.html')) ?>"><img src="<?= Yii::app()->request->baseUrl ?>/images/contenido/metamucil/entrega.png" class="img-responsive img-entrega"></a> 
+                    <a href="<?php echo CController::createUrl('/catalogo/producto', array('producto' => 111306, 'descripcion' => 'VICK-ATACADOL-ACTIVO.html')) ?>"><img src="<?= Yii::app()->request->baseUrl ?>/images/contenido/metamucil/entrega.png" class="img-responsive img-entrega"></a>
                     <div class="space"></div>
                 </div>
             </div>
@@ -286,11 +297,11 @@ $this->metaTags = "<meta http-equiv='X-UA-Compatible' content='IE=edge'>
                     <div class="col-md-5">
                         <span style="color:#E90000;">Más información</span>
                         <a href=""><img width="34" src="<?= Yii::app()->request->baseUrl ?>/images/contenido/metamucil/ico-filtro.png" ></a>
-                    </div>	            	
+                    </div>
                 </div>
             </div>
         </div>
 
     </div>
-    <!--Fin versión escritorio-->   
+    <!--Fin versión escritorio-->
 <?php endif; ?>
