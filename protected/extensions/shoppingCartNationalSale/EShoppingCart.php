@@ -536,5 +536,9 @@ class EShoppingCart extends CMap {
     			return round(Precio::calcularImpuesto($this->shipping, $impuesto/100));
     }
     
-
+    public function clear(){
+    	$this->setShipping(0);
+    	$this->CalculateShipping();
+    	parent::clear();
+    }
 }
