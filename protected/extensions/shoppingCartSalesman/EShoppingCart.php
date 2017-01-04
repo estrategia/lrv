@@ -56,10 +56,9 @@ class EShoppingCart extends CMap {
         $this->saveStateAttributes();
     }
 
-    public function CalculateShipping() {
-        if ($this->objSectorCiudad !== null && $this->objSectorCiudad instanceof SectorCiudad) {
-
-            $objDomicilio = Domicilio::model()->find(array(
+	public function CalculateShipping() {
+    	if ($this->objSectorCiudad !== null && $this->objSectorCiudad instanceof SectorCiudad) {
+        	$objDomicilio = Domicilio::model()->find(array(
                 'condition' => 'codigoCiudad=:ciudad AND codigoSector=:sector AND codigoPerfil=:perfil',
                 'params' => array(
                     ':ciudad' => $this->objSectorCiudad->codigoCiudad,
@@ -67,7 +66,18 @@ class EShoppingCart extends CMap {
                     ':perfil' => $this->codigoPerfil,
                 )
             ));
-
+            
+            if ($objDomicilio === null) {
+            	$objDomicilio = Domicilio::model()->find(array(
+             		'condition' => 'codigoCiudad=:ciudad AND codigoSector=:sector AND codigoPerfil=:perfil',
+             		'params' => array(
+             			':ciudad' => $this->objSectorCiudad->codigoCiudad,
+             			':sector' => $this->objSectorCiudad->codigoSector,
+             			':perfil' => Yii::app()->params->perfil['*'],
+             		)
+            	));
+            }
+             
             if ($objDomicilio === null) {
                 $objDomicilio = Domicilio::model()->find(array(
                     'condition' => 'codigoCiudad=:ciudad AND codigoSector=:sector AND codigoPerfil=:perfil',
@@ -78,7 +88,18 @@ class EShoppingCart extends CMap {
                     )
                 ));
             }
-
+            
+            if ($objDomicilio === null) {
+            	$objDomicilio = Domicilio::model()->find(array(
+            		'condition' => 'codigoCiudad=:ciudad AND codigoSector=:sector AND codigoPerfil=:perfil',
+            		'params' => array(
+            			':ciudad' => $this->objSectorCiudad->codigoCiudad,
+            			':sector' => Yii::app()->params->sector['*'],
+            			':perfil' => Yii::app()->params->perfil['*'],
+            		)
+            	));
+            }
+            
             if ($objDomicilio === null) {
                 $objDomicilio = Domicilio::model()->find(array(
                     'condition' => 'codigoCiudad=:ciudad AND codigoSector=:sector AND codigoPerfil=:perfil',
@@ -89,18 +110,7 @@ class EShoppingCart extends CMap {
                     )
                 ));
             }
-
-            /* if ($objDomicilio === null) {
-              $objDomicilio = Domicilio::model()->find(array(
-              'condition' => 'codigoCiudad=:ciudad AND codigoSector=:sector AND codigoPerfil=:perfil',
-              'params' => array(
-              ':ciudad' => $this->objSectorCiudad->codigoCiudad,
-              ':sector' => $this->objSectorCiudad->codigoSector,
-              ':perfil' => Yii::app()->params->perfil['*'],
-              )
-              ));
-              } */
-
+            
             if ($objDomicilio === null) {
                 $objDomicilio = Domicilio::model()->find(array(
                     'condition' => 'codigoCiudad=:ciudad AND codigoSector=:sector AND codigoPerfil=:perfil',
@@ -111,7 +121,7 @@ class EShoppingCart extends CMap {
                     )
                 ));
             }
-
+            
             if ($objDomicilio !== null)
                 $this->shipping = $objDomicilio->valorDomicilio;
 
@@ -728,6 +738,12 @@ class EShoppingCart extends CMap {
     		return round(Precio::calcularBaseImpuesto($this->shippingStored, $impuesto/100));
     		else
     			return round(Precio::calcularImpuesto($this->shippingStored, $impuesto/100));
+    }
+    
+    public function clear(){
+    	$this->setShipping(0);
+    	$this->CalculateShipping();
+    	parent::clear();
     }
 
 }

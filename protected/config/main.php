@@ -132,7 +132,7 @@ return array(
                 'perros-y-gatos' => 'publicidad/contenido/nombre/perros-y-gatos',
                 'perros-y-gatos' => 'publicidad/contenido/nombre/perros-y-gatos',
                 'proteccion-solar-sol-or' => 'publicidad/contenido/nombre/sol-or',
-
+                'shampoo-clinical-solution-caspa-severa' => 'publicidad/contenido/nombre/pyg',
                 // Fin links campañas
 
                 array('restCiudad/list', 'pattern'=>'rest/ciudad', 'verb'=>'GET'),
@@ -263,7 +263,7 @@ return array(
                 )
             ),
         ),
-    	'impuestoDomicilio' => 1,	
+    	'impuestoDomicilio' => 1,
         'tipoFormulaMedica' => '2',
         'promociones' => array(
             'viernesnegro' => array(
@@ -476,7 +476,7 @@ return array(
         ),
         'beneficios' => array(
             'lrv' => array(21, 22, 23, 24, 25, 26),
-        	'descuentos' => array(21, 22, 23, 24), // new 
+        	'descuentos' => array(21, 22, 23, 24), // new
         	'bonos' => array(25,26), // new
         	'tipoBonoFormaPago' => array( 25 => 7, 26 => 8 ),
             'recambios' => array(1, 10),
