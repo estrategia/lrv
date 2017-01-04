@@ -109,6 +109,7 @@ class Controller extends CController {
                         Yii::app()->user->login($identity);
                     }
                 }
+                $this->redirect(CController::createUrl('/'));
             }
         }
 

@@ -101,7 +101,7 @@ class FormaPago extends CActiveRecord {
     }
     
     
-    public function getFormasPago($case = null){
+    public static function getFormasPago($case = null){
     	$condiciones=array(
     		'order' => 'formaPago',
     		'condition' => 'estadoFormaPago=:estado',

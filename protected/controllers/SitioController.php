@@ -21,14 +21,142 @@ class SitioController extends Controller {
     }
 
     public function actionIndex() {
+    	
+    	$objContenidoCumpleaños = ContenidoInicio::getContenidoCumpleanhos(Yii::app()->session[Yii::app()->params->usuario['sesion']]);
+    	
+    	
         if ($this->isMobile) {
+        	
+        	$this->contenidosInicioMovil();
+        	
             $this->actionInicio();
         } else {
-            $this->render('d_index', array(
-                'listModulos' => ModulosConfigurados::getModulos($this->objSectorCiudad, Yii::app()->shoppingCart->getCodigoPerfil(), UbicacionModulos::UBICACION_ESCRITORIO_HOME)
-            ));
+        	
+        	// verificar los contenidos de bienvenida
+        	
+        	$this->contenidosInicioDesktop();
+        	
+        	 $this->render('d_index', array(
+	                'listModulos' => ModulosConfigurados::getModulos($this->objSectorCiudad, Yii::app()->shoppingCart->getCodigoPerfil(), UbicacionModulos::UBICACION_ESCRITORIO_HOME)
+	         ));
+        	
         }
         Yii::app()->end();
+    }
+    private function contenidosInicioMovil(){
+    	if(Yii::app()->user->isGuest){
+    		$objContenido = ContenidoInicio::getContenidoNoAutenticado();
+    		 
+    		if($objContenido){
+    			$this->render('d_indexContenidos', array(
+    					'contenido' => $objContenido->contenidoMovil
+    			));
+    			Yii::app()->end();
+    		}
+    	}else{
+    		 
+    		// Cumpleaños
+    		 
+    		$objContenido = ContenidoInicio::getContenidoCumpleanhos(Yii::app()->session[Yii::app()->params->usuario['sesion']]);
+    		
+    		if($objContenido){
+    			$this->render('d_indexContenidos', array(
+    					'contenido' => $objContenido->contenidoMovil
+    			));
+    			Yii::app()->end();
+    		}
+    		 
+    		// No vuelve a ingresar
+    		 
+    		$objContenido = ContenidoInicio::getContenidoUsuarioNoIngresa(Yii::app()->session[Yii::app()->params->usuario['sesion']]);
+    		 
+    		if($objContenido){
+    			$this->render('d_indexContenidos', array(
+    					'contenido' => $objContenido->contenidoMovil
+    			));
+    			Yii::app()->end();
+    		}
+    		 
+    		// No compra
+    		 
+    		$objContenido = ContenidoInicio::getContenidoSinCompras(Yii::app()->session[Yii::app()->params->usuario['sesion']]);
+    		 
+    		if($objContenido){
+    			$this->render('d_indexContenidos', array(
+    					'contenido' => $objContenido->contenidoMovil
+    			));
+    			Yii::app()->end();
+    		}
+    		 
+    		// No tiene listas
+    		 
+    		$objContenido = ContenidoInicio::getContenidoSinListas(Yii::app()->session[Yii::app()->params->usuario['sesion']]);
+    		 
+    		if($objContenido){
+    			$this->render('d_indexContenidos', array(
+    					'contenido' => $objContenido->contenidoMovil
+    			));
+    			Yii::app()->end();
+    		}
+    	}
+    }
+    
+    private function contenidosInicioDesktop(){
+    		if(Yii::app()->user->isGuest){
+    		$objContenido = ContenidoInicio::getContenidoNoAutenticado();
+    	
+    		if($objContenido){
+    			$this->render('d_indexContenidos', array(
+    					'contenido' => $objContenido->contenido
+    			));
+    			Yii::app()->end();
+    		}
+    	}else{
+    	
+    		// Cumpleaños
+    		$objContenido = ContenidoInicio::getContenidoCumpleanhos(Yii::app()->session[Yii::app()->params->usuario['sesion']]);
+    		
+    		if($objContenido){
+    			$this->render('d_indexContenidos', array(
+    					'contenido' => $objContenido->contenido
+    			));
+    			Yii::app()->end();
+    		}
+    	
+    		// No vuelve a ingresar
+    	
+    		$objContenidoNoIngresa = ContenidoInicio::getContenidoUsuarioNoIngresa(Yii::app()->session[Yii::app()->params->usuario['sesion']]);
+    	
+    		if($objContenidoNoIngresa){
+    			$this->render('d_indexContenidos', array(
+    					'contenido' => $objContenidoNoIngresa->contenido
+    			));
+    			Yii::app()->end();
+    		}
+    	
+    		// No compra
+    	
+    		$objContenido = ContenidoInicio::getContenidoSinCompras(Yii::app()->session[Yii::app()->params->usuario['sesion']]);
+    	
+    		if($objContenido){
+    			$this->render('d_indexContenidos', array(
+    					'contenido' => $objContenido->contenido
+    			));
+    			Yii::app()->end();
+    		}
+    	
+    		// No tiene listas
+    	
+    		$objContenido = ContenidoInicio::getContenidoSinListas(Yii::app()->session[Yii::app()->params->usuario['sesion']]);
+    	
+    		if($objContenido){
+    			$this->render('d_indexContenidos', array(
+    					'contenido' => $objContenido->contenido
+    			));
+    			Yii::app()->end();
+    		}
+    	
+    	}
     }
 
     public function actionMapa() {

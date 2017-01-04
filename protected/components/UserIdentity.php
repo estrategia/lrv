@@ -56,6 +56,7 @@ class UserIdentity extends CUserIdentity {
             $this->setState('shortName', $nombre[0]);
 
             $this->errorCode = self::ERROR_NONE;
+           // $usuario->fechaAccesoAnterior = ;
             $usuario->fechaUltimoAcceso = new CDbExpression('NOW()');
 
             if ($usuario->validate()) {

@@ -341,6 +341,7 @@ return array(
             'sesion' => 'larebaja.online.entrega.tipoEntrega',
         ),
         'generos' => array(1 => 'Femenino', 2 => 'Masculino'),
+    	
         'genero' => array(
             'lista' => array(1 => 'Femenino', 2 => 'Masculino'),
             'valor' => array('femenino' => 1, 'masculino' => 2),
@@ -783,6 +784,26 @@ return array(
 	   					'sinrecogida' => 3,
 	   					'recogida' => 2
 	   			),
-    	)
+    	),
+    	'contenidoInicio' => array(
+    			'tipos' => array( 
+    					1 => 'Usuario no logueado',
+    					2 => 'Autenticado Cumplea&ntilde;os',
+    					3 => 'Autenticado que no ha comprado',
+    					4 => 'Autenticado sin listas personales',
+    					5 => 'Autenticado que hace tiempo no ingresa'
+    					
+    			),
+    			'tiposContenido' => array (
+    				'noAutenticado' => 1,
+    				'cumpleanos' => 2, 
+    				'noCompra' => 3,
+    				'sinLista' => 4,
+    				'noIngresa' => 5,
+    			),
+    			'tiempoNoIngreso' => 30, // dias
+    			'generos' => array(1 => 'Femenino', 2 => 'Masculino', 9 => 'Ambos'),
+    			'ambosGeneros' => 9,
+    	)	
     ),
 );
