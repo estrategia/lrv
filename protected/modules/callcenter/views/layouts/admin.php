@@ -121,6 +121,9 @@
                                     <a href="<?php echo $this->createUrl('/callcenter/contenido/index') ?>" class="ajax-link"><i class="glyphicon glyphicon-file"></i><span> Contenidos administrables</span></a>
                                 </li>
                                 <li>
+                                    <a href="<?php echo $this->createUrl('/callcenter/plantillasCorreo') ?>" class="ajax-link"><i class="glyphicon glyphicon-envelope"></i><span> Plantillas de correo</span></a>
+                                </li>
+                                <li>
                                     <a href="<?php echo $this->createUrl('/callcenter/combo/index') ?>" class="ajax-link"><i class="glyphicon glyphicon-tags"></i><span> Combos</span></a>
                                 </li>
                                 <li class="">
