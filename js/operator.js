@@ -770,6 +770,40 @@ $(document).on('click', "button[data-role='trazapasarela']", function () {
     });
 });
 
+$(document).on('click', "a[data-role='contenido-inicio-visualizar']", function() {
+
+    var idContenido = $(this).attr("data-contenido");
+    var vista = $(this).attr("data-vista");
+    $.ajax({
+        type: 'GET',
+        async: true,
+        url: requestUrl + '/callcenter/inicio/visualizarContenido',
+        data: {idContenido: idContenido, vista : vista},
+        beforeSend: function() {
+            Loading.show();
+        },
+        success: function(data) {
+            var data = $.parseJSON(data);
+            if (data.result == "ok") {
+                $("#modal-previsualizar").remove();
+                $("#container").append(data.response);
+              
+                $("#modal-previsualizar").modal('show');
+
+            } else if (data.result == "error") {
+                bootbox.alert(data.response);
+            }
+        },
+        complete: function() {
+            Loading.hide();
+        },
+        error: function(jqXHR, textStatus, errorThrown) {
+
+        }
+    });
+});
+
+
 $(document).on('click', "button[data-role='modificar-ahorro']", function () {
     $('#modal-modificar-ahorro-label > span').html($(this).attr('data-opcion') == 1 ? 'unidades' : 'fracciones');
     $('#modal-modificar-ahorro-label > div').html($(this).attr('data-descripcion'));

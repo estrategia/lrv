@@ -121,7 +121,11 @@
                                     <a href="<?php echo $this->createUrl('/callcenter/contenido/index') ?>" class="ajax-link"><i class="glyphicon glyphicon-file"></i><span> Contenidos administrables</span></a>
                                 </li>
                                 <li>
+<<<<<<< HEAD
                                     <a href="<?php echo $this->createUrl('/callcenter/plantillasCorreo') ?>" class="ajax-link"><i class="glyphicon glyphicon-envelope"></i><span> Plantillas de correo</span></a>
+=======
+                                    <a href="<?php echo $this->createUrl('/callcenter/Inicio/index') ?>" class="ajax-link"><i class="glyphicon glyphicon-home"></i><span> Administraci&oacute;n de inicio</span></a>
+>>>>>>> 55602a21a64353ddef542ecc4f9a67d386881570
                                 </li>
                                 <li>
                                     <a href="<?php echo $this->createUrl('/callcenter/combo/index') ?>" class="ajax-link"><i class="glyphicon glyphicon-tags"></i><span> Combos</span></a>

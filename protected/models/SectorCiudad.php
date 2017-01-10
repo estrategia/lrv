@@ -283,5 +283,19 @@ class SectorCiudad extends CActiveRecord {
             return $ciudad->listSectores;
         }
     }
+    
+    public static function getDefecto(){
+    	return SectorCiudad::model()->find(array(
+        	'condition' => 'codigoCiudad=:ciudad AND codigoSector=:sector',
+        	'params' => array(
+        		':ciudad' => Yii::app()->params->ciudad['*'],
+        		':sector' => Yii::app()->params->sector['*'],
+        	)
+        ));
+    }
+    
+    public function esDefecto(){
+    	return $this->codigoCiudad==Yii::app()->params->ciudad['*'] && $this->codigoSector==Yii::app()->params->sector['*'];
+    }
 
 }

@@ -66,6 +66,12 @@ class Controller extends CController {
 
         $this->verificarSesion();
 
+        if($this->objSectorCiudad==null && Yii::app()->params->ubicacionDefecto){
+        	$this->objSectorCiudad = SectorCiudad::getDefecto();
+        }
+
+        //CVarDumper::dump($this->objSectorCiudad,10,true);echo "<br>";
+
         $this->pageTitle = Yii::app()->name;
         $this->getSectorName();
         $this->registerJs();
@@ -103,6 +109,7 @@ class Controller extends CController {
                         Yii::app()->user->login($identity);
                     }
                 }
+                $this->redirect(CController::createUrl('/'));
             }
         }
 

@@ -132,7 +132,7 @@ return array(
                 'perros-y-gatos' => 'publicidad/contenido/nombre/perros-y-gatos',
                 'perros-y-gatos' => 'publicidad/contenido/nombre/perros-y-gatos',
                 'proteccion-solar-sol-or' => 'publicidad/contenido/nombre/sol-or',
-
+                'shampoo-clinical-solution-caspa-severa' => 'publicidad/contenido/nombre/pyg',
                 // Fin links campañas
 
                 array('restCiudad/list', 'pattern'=>'rest/ciudad', 'verb'=>'GET'),
@@ -263,7 +263,7 @@ return array(
                 )
             ),
         ),
-    	'impuestoDomicilio' => 1,	
+    	'impuestoDomicilio' => 1,
         'tipoFormulaMedica' => '2',
         'promociones' => array(
             'viernesnegro' => array(
@@ -341,6 +341,7 @@ return array(
             'sesion' => 'larebaja.online.entrega.tipoEntrega',
         ),
         'generos' => array(1 => 'Femenino', 2 => 'Masculino'),
+    	
         'genero' => array(
             'lista' => array(1 => 'Femenino', 2 => 'Masculino'),
             'valor' => array('femenino' => 1, 'masculino' => 2),
@@ -440,6 +441,7 @@ return array(
             '*' => 99,
             'sinSector' => 0
         ),
+    	'ubicacionDefecto' => true,
         'perfil' => array(
             'defecto' => 1,
             'asociado' => 2,
@@ -474,7 +476,7 @@ return array(
         ),
         'beneficios' => array(
             'lrv' => array(21, 22, 23, 24, 25, 26),
-        	'descuentos' => array(21, 22, 23, 24), // new 
+        	'descuentos' => array(21, 22, 23, 24), // new
         	'bonos' => array(25,26), // new
         	'tipoBonoFormaPago' => array( 25 => 7, 26 => 8 ),
             'recambios' => array(1, 10),
@@ -782,6 +784,26 @@ return array(
 	   					'sinrecogida' => 3,
 	   					'recogida' => 2
 	   			),
-    	)
+    	),
+    	'contenidoInicio' => array(
+    			'tipos' => array( 
+    					1 => 'Usuario no logueado',
+    					2 => 'Autenticado Cumplea&ntilde;os',
+    					3 => 'Autenticado que no ha comprado',
+    					4 => 'Autenticado sin listas personales',
+    					5 => 'Autenticado que hace tiempo no ingresa'
+    					
+    			),
+    			'tiposContenido' => array (
+    				'noAutenticado' => 1,
+    				'cumpleanos' => 2, 
+    				'noCompra' => 3,
+    				'sinLista' => 4,
+    				'noIngresa' => 5,
+    			),
+    			'tiempoNoIngreso' => 30, // dias
+    			'generos' => array(1 => 'Femenino', 2 => 'Masculino', 9 => 'Ambos'),
+    			'ambosGeneros' => 9,
+    	)	
     ),
 );

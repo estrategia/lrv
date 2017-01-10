@@ -1628,11 +1628,9 @@ class TestController extends Controller {
     		$h1 = round(microtime(true) * 1000);
     
     		try {
-<<<<<<< HEAD
-    			$result = $client->setBeneficios($idSincronizacion/* $arrTiposBeneficio, $arrBeneficios */);
-=======
+
     			$result = $client->setBeneficios($idSincronizacion);
->>>>>>> ba8bda449285cc034bdcfdb5ba64dc8ea2ddb552
+
     		} catch (Exception $e) {
     			$h2 = round(microtime(true) * 1000);
     			Yii::app()->exit();
@@ -1745,7 +1743,7 @@ class TestController extends Controller {
     				}
     
     				if ($beneficio['listCedulas']) {
-    					fwrite($file, "Insertando cédulas en el beneficio $objBeneficio->idBeneficio \n");
+    					fwrite($file, "Insertando cï¿½dulas en el beneficio $objBeneficio->idBeneficio \n");
     
     					foreach ($beneficio['listCedulas'] as $benCed) {
     						$beneficiosCedulas[] = "($objBeneficio->idBeneficio,".$benCed['NumeroDocumento'].")";
@@ -1795,4 +1793,26 @@ class TestController extends Controller {
     	Yii::log("Beneficios sincronizados correctamente\n" . date('Y-m-d H:i:s'), CLogger::LEVEL_INFO, 'application');
     }
 
+    
+    public function actionPruebaBeneficio($idSincronizacion = null){
+    	
+    	$client = new SoapClient("http://sii.copservir.com/beneficios/sweb/wslrv", array(
+    			"trace" => 1,
+    			'cache_wsdl' => WSDL_CACHE_NONE,
+    			'exceptions' => 0
+    	));
+    	$pendientesSincronizar = true;
+    	$i = 0;
+    	
+    	try {
+    		$result = $client->setBeneficios($idSincronizacion);
+    		$arrBeneficios = $result['arrBeneficios'];
+    		foreach ($arrBeneficios as $beneficio) {
+    			print_r($beneficio['listCedulas']);
+    		}
+    	} catch (Exception $e) {
+    		$h2 = round(microtime(true) * 1000);
+    		Yii::app()->exit();
+    	}
+    }
 }

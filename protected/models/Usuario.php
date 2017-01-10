@@ -56,6 +56,7 @@ class Usuario extends CActiveRecord {
         return array(
             'objPerfil' => array(self::BELONGS_TO, 'Perfil', 'codigoPerfil'),
             'objUsuarioExtendida' => array(self::HAS_ONE, 'UsuarioExtendida', 'identificacionUsuario'),
+        	'listListasPersonales' => array(self::HAS_MANY, 'ListasPersonales', 'identificacionUsuario'),
         );
     }
 

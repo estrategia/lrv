@@ -78,9 +78,8 @@ class EShoppingCart extends CMap {
     }
 
     public function CalculateShipping() {
-        if ($this->objSectorCiudad !== null && $this->objSectorCiudad instanceof SectorCiudad) {
-
-            $objDomicilio = Domicilio::model()->find(array(
+    	if ($this->objSectorCiudad !== null && $this->objSectorCiudad instanceof SectorCiudad) {
+        	$objDomicilio = Domicilio::model()->find(array(
                 'condition' => 'codigoCiudad=:ciudad AND codigoSector=:sector AND codigoPerfil=:perfil',
                 'params' => array(
                     ':ciudad' => $this->objSectorCiudad->codigoCiudad,
@@ -88,7 +87,18 @@ class EShoppingCart extends CMap {
                     ':perfil' => $this->codigoPerfil,
                 )
             ));
-
+            
+            if ($objDomicilio === null) {
+            	$objDomicilio = Domicilio::model()->find(array(
+             		'condition' => 'codigoCiudad=:ciudad AND codigoSector=:sector AND codigoPerfil=:perfil',
+             		'params' => array(
+             			':ciudad' => $this->objSectorCiudad->codigoCiudad,
+             			':sector' => $this->objSectorCiudad->codigoSector,
+             			':perfil' => Yii::app()->params->perfil['*'],
+             		)
+            	));
+            }
+             
             if ($objDomicilio === null) {
                 $objDomicilio = Domicilio::model()->find(array(
                     'condition' => 'codigoCiudad=:ciudad AND codigoSector=:sector AND codigoPerfil=:perfil',
@@ -99,7 +109,18 @@ class EShoppingCart extends CMap {
                     )
                 ));
             }
-
+            
+            if ($objDomicilio === null) {
+            	$objDomicilio = Domicilio::model()->find(array(
+            		'condition' => 'codigoCiudad=:ciudad AND codigoSector=:sector AND codigoPerfil=:perfil',
+            		'params' => array(
+            			':ciudad' => $this->objSectorCiudad->codigoCiudad,
+            			':sector' => Yii::app()->params->sector['*'],
+            			':perfil' => Yii::app()->params->perfil['*'],
+            		)
+            	));
+            }
+            
             if ($objDomicilio === null) {
                 $objDomicilio = Domicilio::model()->find(array(
                     'condition' => 'codigoCiudad=:ciudad AND codigoSector=:sector AND codigoPerfil=:perfil',
@@ -110,18 +131,7 @@ class EShoppingCart extends CMap {
                     )
                 ));
             }
-
-            /* if ($objDomicilio === null) {
-              $objDomicilio = Domicilio::model()->find(array(
-              'condition' => 'codigoCiudad=:ciudad AND codigoSector=:sector AND codigoPerfil=:perfil',
-              'params' => array(
-              ':ciudad' => $this->objSectorCiudad->codigoCiudad,
-              ':sector' => $this->objSectorCiudad->codigoSector,
-              ':perfil' => Yii::app()->params->perfil['*'],
-              )
-              ));
-              } */
-
+            
             if ($objDomicilio === null) {
                 $objDomicilio = Domicilio::model()->find(array(
                     'condition' => 'codigoCiudad=:ciudad AND codigoSector=:sector AND codigoPerfil=:perfil',
@@ -132,7 +142,7 @@ class EShoppingCart extends CMap {
                     )
                 ));
             }
-
+            
             if ($objDomicilio !== null)
                 $this->shipping = $objDomicilio->valorDomicilio;
 
@@ -279,13 +289,11 @@ class EShoppingCart extends CMap {
      * Restores the shopping cart from the session
      */
     public function restoreFromSession() {
-        $data = Yii::app()->getUser()->getState($this->getClass());
-
-        
-
+    	$data = Yii::app()->getUser()->getState($this->getClass());
         $this->codigoPerfil = Yii::app()->getUser()->getState($this->getClass() . '_CodigoPerfil');
         $this->shipping = Yii::app()->getUser()->getState($this->getClass() . '_Shipping');
         $codigoPerfil = Yii::app()->params->perfil['defecto'];
+        
         if(isset(Yii::app()->session[Yii::app()->params->usuario['sesion']]) && Yii::app()->session[Yii::app()->params->usuario['sesion']] instanceof Usuario){
             $objUsuario = Yii::app()->session[Yii::app()->params->usuario['sesion']];
             $codigoPerfil = $objUsuario->getCodigoPerfil();
@@ -294,7 +302,6 @@ class EShoppingCart extends CMap {
         //CVarDumper::dump($this->codigoPerfil, 10, true);echo "<br>";
         //CVarDumper::dump($this->shipping, 10, true);echo "<br>";
         //CVarDumper::dump($codigoPerfil, 10, true);echo "<br><br><br>";
-        
 
         if (is_array($data) || $data instanceof Traversable)
             foreach ($data as $key => $product)
@@ -314,7 +321,7 @@ class EShoppingCart extends CMap {
         $this->setCodigoPerfil($codigoPerfil);
         
         if($this->shipping<=0){
-             $this->CalculateShipping();
+      		$this->CalculateShipping();
         }
         
         //CVarDumper::dump($this->codigoPerfil, 10, true);echo "<br>";
@@ -770,5 +777,10 @@ class EShoppingCart extends CMap {
     public function isEmpty() {
         return !(bool) $this->getCount();
     }
-
+    
+    public function clear(){
+    	$this->setShipping(0);
+    	$this->CalculateShipping();
+    	parent::clear();
+    }
 }
