@@ -43,7 +43,7 @@ class EShoppingCart extends CMap {
         $this->saveStateAttributes();
     }
 
-    public function CalculateShipping() {
+	public function CalculateShipping() {
         if ($this->objSectorCiudadDestino !== null && $this->objSectorCiudadDestino instanceof SectorCiudad) {
         	$modelPago = null;
         	if (isset(Yii::app()->session[Yii::app()->params->entregaNacional['sesion']['carroPagarForm']]) && Yii::app()->session[Yii::app()->params->entregaNacional['sesion']['carroPagarForm']] != null)
