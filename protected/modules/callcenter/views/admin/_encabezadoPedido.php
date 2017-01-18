@@ -38,6 +38,14 @@
                                 <strong>Nombre: </strong><?php echo $objCompra->objUsuario->nombre . " " . $objCompra->objUsuario->apellido ?><br>
                                 <strong>Correo: </strong><?php echo $objCompra->objUsuario->correoElectronico ?> <br/>
                                 <?php endif;?>
+                             <?php if(isset($objCompra->objComprasRemitente)):?>
+                             		<strong>Recogida: </strong> <?php echo $objCompra->objComprasRemitente->recogida == 1 ? "Si":"No"?><br>
+                             		<?php if($objCompra->objComprasRemitente->recogida == 1):?>
+                             				<strong>Direcci&oacute;n: </strong><?php echo $objCompra->objComprasRemitente->direccionRemitente ?><br>
+                             				<strong>Barrio: </strong><?php echo $objCompra->objComprasRemitente->barrioRemitente ?><br>
+                             		<?php endif;?>
+                             	<strong>Tel&eacute;fono: </strong><?php echo $objCompra->objComprasRemitente->telefonoRemitente ?><br>
+                             <?php endif;?>   
                             <?php endif; ?>
                             <strong>TipoEntrega: </strong><?php echo Yii::app()->params->entrega["tipo"][$objCompra->tipoEntrega] ?> 
 
@@ -243,6 +251,13 @@
                     <td>
                         <button class="btn btn-inverse btn-default btn-sm" data-action="remitir" data-compra="<?php echo $objCompra->idCompra ?>">Remitir</button>
                         <button class="btn btn-inverse btn-default btn-sm" data-action="remitirborrar" data-compra="<?php echo $objCompra->idCompra ?>">Borrar remisión</button>
+                    </td>
+                </tr>
+                <tr>
+                    <td style="text-align: right"><strong>Remitir Nacional</strong></td>
+                    <td>
+                        <button class="btn btn-inverse btn-default btn-sm" data-action="remitirNacional" data-compra="<?php echo $objCompra->idCompra ?>">Remitir</button>
+                        <button class="btn btn-inverse btn-default btn-sm" data-action="remitirborrarNacional" data-compra="<?php echo $objCompra->idCompra ?>">Borrar remisión</button>
                     </td>
                 </tr>
                 <tr>

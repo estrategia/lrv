@@ -59,13 +59,13 @@ class ComprasRemitente extends CActiveRecord
 	{
 		return array(
 			'idCompra' => 'Id Compra',
-			'cedulaRemitente' => 'Cedula Remitente',
+			'cedulaRemitente' => 'Cedula',
 			'asistida' => 'Asistida',
-			'nombreRemitente' => 'Nombre Remitente',
-			'telefonoRemitente' => 'Telefono Remitente',
-			'correoRemitente' => 'Correo Remitente',
-			'direccionRemitente' => 'Direccion Remitente',
-			'barrioRemitente' => 'Barrio Remitente',
+			'nombreRemitente' => 'Nombre',
+			'telefonoRemitente' => 'Telefono',
+			'correoRemitente' => 'Correo',
+			'direccionRemitente' => 'Direccion',
+			'barrioRemitente' => 'Barrio',
 		);
 	}
 

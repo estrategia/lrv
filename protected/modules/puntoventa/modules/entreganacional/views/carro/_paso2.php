@@ -30,7 +30,9 @@
                     <div class="row">
                         <div class="col-md-4">
                             <p>Subtotal:</p>
-                            <p>Envío:</p>
+                            <p>Servicio de entrega en la red:</p>
+                            <p>Servicio de recogida:</p>
+                            <p>Total Servicio:</p>
                             <?php if (Yii::app()->shoppingCartNationalSale->getExtraShipping() > 0): ?>
                                 <p>Flete adicional:</p>
                             <?php endif; ?>
@@ -44,6 +46,8 @@
                         </div>
                         <div class="col-md-6">
                             <p><?php echo Yii::app()->numberFormatter->format(Yii::app()->params->formatoMoneda['patron'], Yii::app()->shoppingCartNationalSale->getCost(), Yii::app()->params->formatoMoneda['moneda']); ?></p>
+                            <p><?php echo Yii::app()->numberFormatter->format(Yii::app()->params->formatoMoneda['patron'], Yii::app()->shoppingCartNationalSale->getShippingServicio(), Yii::app()->params->formatoMoneda['moneda']); ?></p>
+                            <p><?php echo Yii::app()->numberFormatter->format(Yii::app()->params->formatoMoneda['patron'], Yii::app()->shoppingCartNationalSale->getShippingRecogida(), Yii::app()->params->formatoMoneda['moneda']); ?></p>
                             <p><?php echo Yii::app()->numberFormatter->format(Yii::app()->params->formatoMoneda['patron'], Yii::app()->shoppingCartNationalSale->getShipping(), Yii::app()->params->formatoMoneda['moneda']); ?></p>
                             <?php if (Yii::app()->shoppingCartNationalSale->getExtraShipping() > 0): ?>
                                 <p><?php echo Yii::app()->numberFormatter->format(Yii::app()->params->formatoMoneda['patron'], Yii::app()->shoppingCartNationalSale->getExtraShipping(), Yii::app()->params->formatoMoneda['moneda']); ?></p>

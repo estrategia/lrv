@@ -48,6 +48,7 @@ class EShoppingCart extends CMap {
     }
 
 	public function CalculateShipping() {
+		
     	if ($this->objSectorCiudad !== null && $this->objSectorCiudad instanceof SectorCiudad) {
         	$objDomicilio = Domicilio::model()->find(array(
                 'condition' => 'codigoCiudad=:ciudad AND codigoSector=:sector AND codigoPerfil=:perfil',
@@ -64,7 +65,7 @@ class EShoppingCart extends CMap {
              		'params' => array(
              			':ciudad' => $this->objSectorCiudad->codigoCiudad,
              			':sector' => $this->objSectorCiudad->codigoSector,
-             			':perfil' => Yii::app()->params->perfil['*'],
+             			':perfil' => Yii::app()->params->perfil['telefarma'],
              		)
             	));
             }
@@ -75,7 +76,7 @@ class EShoppingCart extends CMap {
                     'params' => array(
                         ':ciudad' => $this->objSectorCiudad->codigoCiudad,
                         ':sector' => Yii::app()->params->sector['*'],
-                        ':perfil' => $this->codigoPerfil,
+                        ':perfil' => Yii::app()->params->perfil['telefarma'],
                     )
                 ));
             }
@@ -86,7 +87,7 @@ class EShoppingCart extends CMap {
             		'params' => array(
             			':ciudad' => $this->objSectorCiudad->codigoCiudad,
             			':sector' => Yii::app()->params->sector['*'],
-            			':perfil' => Yii::app()->params->perfil['*'],
+            			':perfil' => Yii::app()->params->perfil['telefarma'],
             		)
             	));
             }
@@ -97,25 +98,14 @@ class EShoppingCart extends CMap {
                     'params' => array(
                         ':ciudad' => Yii::app()->params->ciudad['*'],
                         ':sector' => Yii::app()->params->sector['*'],
-                        ':perfil' => $this->codigoPerfil,
-                    )
-                ));
-            }
-            
-            if ($objDomicilio === null) {
-                $objDomicilio = Domicilio::model()->find(array(
-                    'condition' => 'codigoCiudad=:ciudad AND codigoSector=:sector AND codigoPerfil=:perfil',
-                    'params' => array(
-                        ':ciudad' => Yii::app()->params->ciudad['*'],
-                        ':sector' => Yii::app()->params->sector['*'],
-                        ':perfil' => Yii::app()->params->perfil['*'],
+                        ':perfil' => Yii::app()->params->perfil['telefarma'],
                     )
                 ));
             }
             
             if ($objDomicilio !== null)
                 $this->shipping = $objDomicilio->valorDomicilio;
-
+                
             $this->saveStateAttributes();
         }
     }
@@ -198,9 +188,9 @@ class EShoppingCart extends CMap {
                		$this->deliveryStored = $this->objSectorCiudad->objCiudad->getDomicilio()->tiempoDomicilio;
            	}
         }
-        if($this->shipping<=0){
-             $this->CalculateShipping();
-        }
+       
+        $this->CalculateShipping();
+       
         
         //CVarDumper::dump($this->codigoPerfil, 10, true);echo "<br>";
         //CVarDumper::dump($this->shipping, 10, true);echo "<br>";

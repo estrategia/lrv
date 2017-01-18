@@ -86,7 +86,7 @@ class UserPuntoVenta {
             if ($pdv != null) {
                 Yii::app()->session[Yii::app()->params->puntoventa['sesion']['pdv']] = $pdv;
 
-                $puntov = PuntoVenta::model()->find('idComercial =:idcomercial', array('idcomercial' => $pdv));
+                $puntov = PuntoVenta::model()->find('idComercial =:idcomercial', array(':idcomercial' => $pdv));
                 $objCiudadSector = SectorCiudad::model()->find(array(
                     'with' => array('objCiudad', 'objSector'),
                     'condition' => 't.codigoCiudad=:ciudad AND t.codigoSector=:sector AND t.estadoCiudadSector=:estado',
@@ -113,7 +113,7 @@ class UserPuntoVenta {
 
     public function logout() {
         $sessions = Yii::app()->params->puntoventa['sesion'];
-
+        Yii::app()->shoppingCartNationalSale->clear();
         foreach ($sessions as $sesion) {
             unset(Yii::app()->session[$sesion]);
         }

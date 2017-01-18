@@ -254,7 +254,7 @@ return array(
                12 => "Diciembre"),
         'horarioEntrega' => array(
             'deltaDefecto' => '0 1:00:0.000000', // testing
-        	'deltaEntregaNacional' => '0 2:00:0.000000', // testing
+            'deltaEntregaNacional' => '0 2:00:0.000000', // testing
             'deltaHorarios' => array(
                 '76001' => array(
                     'fechaInicio' => '2016-04-21 00:00:00',
@@ -341,8 +341,7 @@ return array(
             'sesion' => 'larebaja.online.entrega.tipoEntrega',
         ),
         'generos' => array(1 => 'Femenino', 2 => 'Masculino'),
-    	
-        'genero' => array(
+    	'genero' => array(
             'lista' => array(1 => 'Femenino', 2 => 'Masculino'),
             'valor' => array('femenino' => 1, 'masculino' => 2),
             'nombre' => array('femenino' => 'Femenino', 'masculino' => 'Masculino', 1 => 'Femenino', 2 => 'Masculino')
@@ -567,6 +566,9 @@ return array(
                 4 => 'Mensajero Vendedor',
                 5 => 'Entrega Nacional'
             ),
+        	'promociones' => array (
+        		'urlImagenes'	=> 'images/promociones/',
+        	), // new promociones
             'perfilesOperador' => array(
                 'operador' => 1,
                 'administrador' => 2,
@@ -600,9 +602,10 @@ return array(
                     1 => 'Volver a pendiente',
                     8 => 'Devolución',
                     5 => 'Facturado',
+                	17 => 'Entregado',	
                 ),
             ),
-            'notificacion' => array(
+            'notificacion' => array( // para jave
                 'tipo' => array(
                     '1' => '1. Volver a Pendiente',
                     '2' => '2. Ofrecer otros productos',
@@ -662,6 +665,7 @@ return array(
                     13 => 'warning',
                     14 => 'danger',
                     15 => 'danger',
+                	17 => 'success',
                 )
             ),
             'modulosConfigurados' => array(
@@ -765,7 +769,7 @@ return array(
     						),
     						'pasosDisponibles' => array('informacion', 'confirmacion'),
     				),
-    				'diasRecordatorioFormula' => array(1,3)
+    				'diasRecordatorioFormula' => array(1,3),
     	),
     	'entregaNacional' => array(
     			'sesion' => array(
@@ -781,8 +785,8 @@ return array(
     					'pasosDisponibles' => array('informacion', 'confirmacion'),
     			),
 	   			'domicilio' => array(
-	   					'sinrecogida' => 3,
-	   					'recogida' => 2
+	   					'sinrecogida' => 1000,
+	   					'recogida' => 2000
 	   			),
     	),
     	'contenidoInicio' => array(
@@ -791,8 +795,7 @@ return array(
     					2 => 'Autenticado Cumplea&ntilde;os',
     					3 => 'Autenticado que no ha comprado',
     					4 => 'Autenticado sin listas personales',
-    					5 => 'Autenticado que hace tiempo no ingresa'
-    					
+    					5 => 'Autenticado que hace tiempo no ingresa',
     			),
     			'tiposContenido' => array (
     				'noAutenticado' => 1,

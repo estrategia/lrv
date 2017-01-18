@@ -105,8 +105,9 @@
                         'value' => '$data->identificacionUsuario == null ? "Invitado" : "Registrado"',
                     ),
                     array(
+                    
                         'header' => 'PDV',
-                        'value' => '$data->idComercial == null ? "Sin Asignar" : $data->idComercial',
+                        'value' => '$data->objComprasRemitente->puntoVentaDestino == null ? "Sin Asignar" : $data->objComprasRemitente->puntoVentaDestino',
                     ),
                     array(
                         'header' => 'Estado',
@@ -201,7 +202,7 @@ $listPdv = PuntoVenta::model()->findAll(array(
 </div>
 <hr/>
 <div class="row">
-    <div class="col-md-6">
+    <div class="col-md-12">
         <div>
             <span class="title"><strong>Asignar Punto de venta</strong></span>
             <form action="/callcenter/index/generardoccruce/" method="post" id="asignarpdv" name="asignarpdv">

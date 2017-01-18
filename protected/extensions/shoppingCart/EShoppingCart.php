@@ -74,6 +74,7 @@ class EShoppingCart extends CMap {
 
     public function setShipping($newVal) {
         $this->shipping = $newVal;
+        
         $this->saveStateAttributes();
     }
 
@@ -145,7 +146,7 @@ class EShoppingCart extends CMap {
             
             if ($objDomicilio !== null)
                 $this->shipping = $objDomicilio->valorDomicilio;
-
+                $this->shipping = 0;
             $this->saveStateAttributes();
         }
     }

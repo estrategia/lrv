@@ -8,7 +8,7 @@ class CatalogoController extends Controller {
     public function filters() {
         return array(
         	array(
-        		'application.filters.SessionControlFilter + categoria, buscar, relacionados, descuentos, masvendidos, masvistos, verTodosProductos',
+        		'application.filters.SessionControlFilter + categoria, buscar, relacionados, descuentos, masvendidos, masvistos, verTodosProductos, misPromociones',
         		'isMobile' => $this->isMobile,
         		'objSectorCiudad' => $this->objSectorCiudad,
         	),
@@ -2348,5 +2348,96 @@ class CatalogoController extends Controller {
             'listaProductos' => $listaProductos
         ));
     }
+    
+    
+    
+    public function actionPromociones(){
+    	$promociones = CategoriaTienda::model()->findAll(
+    			array(
+    				'with' => array('listPromociones' => array(
+    						'with' => array('objPromocion' =>
+    								array(
+    										'with' => 'listSectorCiudad'
+    									)
+    						)
+    				)),	
+    				'condition' => 'listPromociones.idCategoriaTienda is NOT NULL AND objPromocion.fechaInicio <= :fecha AND  objPromocion.fechaFin >= :fecha 
+    								AND objPromocion.estado =:activo
+    					 AND ( (listSectorCiudad.codigoCiudad=:ciudadA AND listSectorCiudad.codigoSector=:sectorA)
+                   		  OR (listSectorCiudad.codigoCiudad=:ciudad AND listSectorCiudad.codigoSector=:sectorA)
+             		 	  OR (listSectorCiudad.codigoCiudad=:ciudad AND listSectorCiudad.codigoSector=:sector))',
+    				'params' => array(
+    						':fecha' => Date("Y-m-d h:i:s"),
+    						':activo' => 1,
+    						':ciudad' => $this->objSectorCiudad->codigoCiudad,
+    						':sector' => $this->objSectorCiudad->codigoSector,
+    						':sectorA' => Yii::app()->params->sector['*'],
+    						':ciudadA' =>  Yii::app()->params->ciudad['*'],
+    				)
+    			)
+    		);
+    	    	
+   // 	CVarDumper::dump($promociones, 10 , true);exit();
+    	$this->render('promociones', array(
+    			'promociones' => $promociones
+    	));
+    }
+    
+    
+    public function actionMisPromociones(){
+    	
+    	// obtener las categorias padres de acuerdo a la experiencia de compra del usuario
+    	
+    	$comprasUsuarioCategoria = ComprasUsuariosCategorias::model()->findAll(array(
+    			'condition' => 'identificacionUsuario =:usuario',
+    			'params' => array(
+    					':usuario' => Yii::app()->user->name
+    			)
+    	));
+    	$categoriasPadre = array();
+    	foreach($comprasUsuarioCategoria as $categoria){
+    		
+    		$categoriasPadre[] = Categoria::obtenerPadrePrincipal($categoria->idCategoriaBI);
+    	}
+    	
+    	// obtener las categorias a partir de los padres
+    	
+    	echo implode(",", $categoriasPadre);exit();
+    	$promociones = CategoriaTienda::model()->findAll(
+    			array(
+    				'with' => array('listPromociones' => array(
+    						'with' => array('objPromocion' =>
+    								array(
+    										'with' => 'listSectorCiudad'
+    									)
+    						)
+    				), 'listCategoriasBI' => array(
+    						
+    				)),	
+    				'condition' => '
+    					listCategoriasBI.idCategoriaBI IN ('.implode(",", $categoriasPadre).') AND 
+    					listPromociones.idCategoriaTienda is NOT NULL AND objPromocion.fechaInicio <= :fecha AND  objPromocion.fechaFin >= :fecha 
+    								AND objPromocion.estado =:activo
+    					 AND ( (listSectorCiudad.codigoCiudad=:ciudadA AND listSectorCiudad.codigoSector=:sectorA)
+                   		  OR (listSectorCiudad.codigoCiudad=:ciudad AND listSectorCiudad.codigoSector=:sectorA)
+             		 	  OR (listSectorCiudad.codigoCiudad=:ciudad AND listSectorCiudad.codigoSector=:sector))',
+    				'params' => array(
+    						':fecha' => Date("Y-m-d h:i:s"),
+    						':activo' => 1,
+    						':ciudad' => $this->objSectorCiudad->codigoCiudad,
+    						':sector' => $this->objSectorCiudad->codigoSector,
+    						':sectorA' => Yii::app()->params->sector['*'],
+    						':ciudadA' =>  Yii::app()->params->ciudad['*'],
+    						
+    				)
+    			)
+    		);
+    	 
+    	 
+    	$this->render('promociones', array(
+    			'promociones' => $promociones
+    	));
+    }
+    
 
 }

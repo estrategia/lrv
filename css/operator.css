@@ -1406,3 +1406,29 @@ a.clst_slct_prod.active{display: inline-block !important;}
 .align-right {
 	text-align:right;
 }
+
+.btn1 {
+    background-color: #fff !important;
+    border-color: #ccc !important;
+    color: #333 !important;
+    font-size:12px;
+    padding: 4px 5px !important;
+}
+
+.listaProductos {
+	text-align: left !important;
+}
+
+.step-box{
+	font-size:12px;
+}
+
+.bottom-aligned {
+    display: flex;
+    vertical-align: bottom;
+    align-items: flex-end;
+}
+
+.step-box .form-control{
+	font-size:12px !important;
+}
