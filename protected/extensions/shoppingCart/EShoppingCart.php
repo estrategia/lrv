@@ -80,7 +80,7 @@ class EShoppingCart extends CMap {
 
     public function CalculateShipping() {
     	if ($this->objSectorCiudad !== null && $this->objSectorCiudad instanceof SectorCiudad) {
-        	$objDomicilio = Domicilio::model()->find(array(
+    		$objDomicilio = Domicilio::model()->find(array(
                 'condition' => 'codigoCiudad=:ciudad AND codigoSector=:sector AND codigoPerfil=:perfil',
                 'params' => array(
                     ':ciudad' => $this->objSectorCiudad->codigoCiudad,
@@ -88,7 +88,7 @@ class EShoppingCart extends CMap {
                     ':perfil' => $this->codigoPerfil,
                 )
             ));
-            
+        	
             if ($objDomicilio === null) {
             	$objDomicilio = Domicilio::model()->find(array(
              		'condition' => 'codigoCiudad=:ciudad AND codigoSector=:sector AND codigoPerfil=:perfil',
@@ -101,7 +101,7 @@ class EShoppingCart extends CMap {
             }
              
             if ($objDomicilio === null) {
-                $objDomicilio = Domicilio::model()->find(array(
+            	$objDomicilio = Domicilio::model()->find(array(
                     'condition' => 'codigoCiudad=:ciudad AND codigoSector=:sector AND codigoPerfil=:perfil',
                     'params' => array(
                         ':ciudad' => $this->objSectorCiudad->codigoCiudad,
@@ -134,7 +134,7 @@ class EShoppingCart extends CMap {
             }
             
             if ($objDomicilio === null) {
-                $objDomicilio = Domicilio::model()->find(array(
+            	$objDomicilio = Domicilio::model()->find(array(
                     'condition' => 'codigoCiudad=:ciudad AND codigoSector=:sector AND codigoPerfil=:perfil',
                     'params' => array(
                         ':ciudad' => Yii::app()->params->ciudad['*'],
