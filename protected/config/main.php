@@ -252,6 +252,12 @@ return array(
                10 => "Octubre",
                11 => "Noviembre",
                12 => "Diciembre"),
+    	'dispositivo'  => array(
+    			'desktop' => 1,
+    			'movil' => 2,
+    			1 => 'Desktop',
+    			2 => 'Movil',
+    	), 	
         'horarioEntrega' => array(
             'deltaDefecto' => '0 1:00:0.000000', // testing
             'deltaEntregaNacional' => '0 2:00:0.000000', // testing

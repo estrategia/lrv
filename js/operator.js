@@ -385,33 +385,36 @@ $(document).on('click', 'button[data-action="remitirborrar"]', function () {
         });
     });
 
-    $(document).on('click', 'button[data-action="remitirborrarNacional"]', function () {
-        $.ajax({
-            type: 'POST',
-            dataType: 'json',
-            async: true,
-            url: requestUrl + '/callcenter/pedido/remitirBorrarNacional',
-            data: {idCompra: $(this).attr('data-compra')},
-            beforeSend: function () {
-                Loading.show();
-            },
-            complete: function () {
-                Loading.hide();
-            },
-            success: function (data) {
-                if (data.result == 1) {
-                    $('#div-encabezado-pedido').html(data.encabezado);
-                    $('#div-pedido-observaciones').html(data.htmlObservaciones);
-                }
-                bootbox.alert(data.response);
+});
 
-            },
-            error: function (jqXHR, textStatus, errorThrown) {
-                Loading.hide();
-                bootbox.alert('Error: ' + errorThrown);
+
+$(document).on('click', 'button[data-action="remitirborrarNacional"]', function () {
+    $.ajax({
+        type: 'POST',
+        dataType: 'json',
+        async: true,
+        url: requestUrl + '/callcenter/pedido/remitirBorrarNacional',
+        data: {idCompra: $(this).attr('data-compra')},
+        beforeSend: function () {
+            Loading.show();
+        },
+        complete: function () {
+            Loading.hide();
+        },
+        success: function (data) {
+            if (data.result == 1) {
+                $('#div-encabezado-pedido').html(data.encabezado);
+                $('#div-pedido-observaciones').html(data.htmlObservaciones);
             }
-        });
+            bootbox.alert(data.response);
 
+        },
+        error: function (jqXHR, textStatus, errorThrown) {
+            Loading.hide();
+            bootbox.alert('Error: ' + errorThrown);
+        }
+    });
+    
 });
 
 $(document).on('click', "button[data-role='modificarpedido']", function () {
@@ -1177,7 +1180,8 @@ $(document).on('click', "a[data-role='eliminar-sector-promocion']", function() {
 
 $(document).on('click', "button[data-role='add-categoria-promocion']", function() {
 
-    var categoria = $('#select-categoria-promocion').val();
+    var categoriaDesktop = $('#select-categoria-promocion-desktop').val();
+    var categoriaMovil = $('#select-categoria-promocion-movil').val();
     var idPromocion = $(this).attr('data-promocion');
 
     if ($("#sector-select").val() == 0) {
@@ -1187,7 +1191,7 @@ $(document).on('click', "button[data-role='add-categoria-promocion']", function(
         type: 'POST',
         async: true,
         url: requestUrl + '/callcenter/promociones/guardarCategoria',
-        data: {categoria: categoria, idPromocion: idPromocion},
+        data: {categoriaDesktop: categoriaDesktop, categoriaMovil:categoriaMovil , idPromocion: idPromocion},
         dataType: 'json',
         beforeSend: function() {
             Loading.show();
@@ -1197,7 +1201,7 @@ $(document).on('click', "button[data-role='add-categoria-promocion']", function(
         },
         success: function(data) {
             if (data.result == "ok") {
-                bootbox.alert("Ciudad/Sector adicionado con éxito");
+                bootbox.alert("Categoria adicionada con éxito");
                 $("#lista-sectores").html(data.response);
             } else if (data.result == "error") {
                 bootbox.alert(data.response);
@@ -1237,5 +1241,3 @@ $(document).on('click', "a[data-role='eliminar-categoria-promocion']", function(
         }
     });
 });
-
-

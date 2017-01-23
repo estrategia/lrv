@@ -690,6 +690,7 @@ class AdminController extends ControllerSubasta {
             'uri' => "",
             'trace' => 1
         ));
+        
     //    $result = $client->__soapCall("CongelarCompraManual", array('idPedido' => $idCompra));
         $result = $client->__soapCall("CongelarCompraAutomatica", array('idPedido' => $idCompra, 'pdvSubasta' => $idPuntoVenta));
         //$result = array(0=>0,1=>'congelar prueba error');

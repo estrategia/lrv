@@ -32,10 +32,7 @@
                     </div>
                 </div>
             <?php endif; ?>
-
         </div>
-
-
         <div class="content_product">
             <div class="">
                     <div class="descripcion-grid text-truncate">
@@ -47,18 +44,20 @@
             </div>
             <div class="line-bottom">
                 <div class="descripcion-grid text-truncate">
-                    <span><?php echo $data->presentacionProducto; ?></span> &nbsp;&nbsp;  Unid. Disp: <?php echo $data->saldosDisponibles?>
+                    <span><?php echo $data->presentacionProducto; ?></span> &nbsp;&nbsp; 
                 </div>
                 <div class="descripcion-lineal" style="display:none">
                     <?php echo $data->presentacionProducto ?>
                 </div>
             </div>
+            
+             <strong><span>Unidades disponibles: <?php echo $data->saldosDisponibles?></span></strong>
 
             <!-- Precio del producto -->
             <?php if ($objPrecio->inicializado()): ?>
                 <?php if ($data->mostrarAhorroVirtual == 1 && $objPrecio->getAhorro(Precio::PRECIO_UNIDAD) > 0 && $this->objCiudadSectorOrigen->objCiudad->excentoImpuestos != 1): ?>
                     <div class="prices_status"> 
-                        <table style="margin-top: 15px; width: 100%;">
+                        <table style="margin-top: 0px; width: 100%;">
                             <tr>
                                 <td valing="middle">
                                     <p>
@@ -75,7 +74,7 @@
                         </table>
                     </div>
                 <?php else: ?>
-                    <div class="price text-center" style="margin-top:20px"><?php echo Yii::app()->numberFormatter->format(Yii::app()->params->formatoMoneda['patron'], $objPrecio->getPrecio(Precio::PRECIO_UNIDAD), Yii::app()->params->formatoMoneda['moneda']); ?> </div>
+                    <div class="price text-center" style="margin-top:0px"><?php echo Yii::app()->numberFormatter->format(Yii::app()->params->formatoMoneda['patron'], $objPrecio->getPrecio(Precio::PRECIO_UNIDAD), Yii::app()->params->formatoMoneda['moneda']); ?> </div>
                 <?php endif; ?>
                 <?php if ($objPrecio->getFlete() > 0): ?>
                     <p>Flete: <span> <?php echo Yii::app()->numberFormatter->format(Yii::app()->params->formatoMoneda['patron'], $objPrecio->getFlete(), Yii::app()->params->formatoMoneda['moneda']); ?>]</span></p>

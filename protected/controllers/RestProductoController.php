@@ -114,8 +114,8 @@
         'precioUnidad' => $precioUnidad,
         'precioFraccion' => $precioFraccion,
         'fraccion' => $fraccion,
+        'codigoProveedor' => $objProducto->codigoProveedor,
       );
-
       echo CJSON::encode($productoResponse);
     }
 

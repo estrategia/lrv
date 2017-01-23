@@ -57,10 +57,14 @@
                                 <strong>Direcci&oacute;n: </strong><?php echo $objCompra->objCompraDireccion->direccion . " - " . $objCompra->objCompraDireccion->barrio ?><br>
                                 <strong>Tel&eacute;fono: </strong> <?php echo $objCompra->objCompraDireccion->telefono ?> - <strong>Celular: </strong> <?php echo $objCompra->objCompraDireccion->celular ?><br>
                                 <?php if ($objCompra->objCompraDireccion->objCiudad != null): ?>
-                                    <strong>Ciudad: </strong><?php echo $objCompra->objCompraDireccion->objCiudad->nombreCiudad . " - " . $objCompra->objCompraDireccion->objSector->nombreSector ?>
+                                    <strong>Ciudad: </strong><?php echo $objCompra->objCompraDireccion->objCiudad->nombreCiudad . " - " . $objCompra->objCompraDireccion->objSector->nombreSector ?><br/>
                                 <?php else: ?>
-                                    <strong>Ciudad: </strong> NA
+                                    <strong>Ciudad: </strong> NA <br/>
                                 <?php endif; ?>
+                                <?php if(isset($objCompra->objComprasRemitente) && isset($objCompra->objComprasRemitente->puntoVentaDestino)):?>
+                                <?php $puntoVenta = PuntoVenta::model()->find('idComercial ="'.$objCompra->objComprasRemitente->puntoVentaDestino.'"')?>
+                                	<strong>Destino: </strong> <?php echo $objCompra->objComprasRemitente->puntoVentaDestino ?> - <?php echo $puntoVenta->nombrePuntoDeVenta?>
+                                <?php endif;?>
                             </div>
                         <?php else: ?>
                             <div class="col-md-6">
@@ -265,7 +269,7 @@
                         <form role="form" id="form-pedido-seguimiento">
                             <div class="checkbox">
                                 <label>
-                                    <input type="checkbox" id="check-pedido-seguimiento" data-compra="<?php echo $objCompra->idCompra ?>" <?php echo ($objCompra->seguimiento == 1 ? "checked='checked'" : "") ?>> <strong>REALIZAR SEGUIMIENTO</strong>
+                                    <input type="checkbox" style="display:block" id="check-pedido-seguimiento" data-compra="<?php echo $objCompra->idCompra ?>" <?php echo ($objCompra->seguimiento == 1 ? "checked='checked'" : "") ?>> <strong>REALIZAR SEGUIMIENTO</strong>
                                 </label>
                             </div>
                         </form>

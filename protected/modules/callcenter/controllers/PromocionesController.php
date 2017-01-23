@@ -331,52 +331,78 @@ class PromocionesController extends ControllerOperator{
 			throw new CHttpException(404, 'Solicitud inválida.');
 		}
 		
-		$idCategoria = Yii::app()->getRequest()->getPost('categoria');
+		$idCategoriaDesktop = Yii::app()->getRequest()->getPost('categoriaDesktop');
+		$idCategoriaMovil = Yii::app()->getRequest()->getPost('categoriaMovil');
 		$idPromocion = Yii::app()->getRequest()->getPost('idPromocion');
 		
-		$promocionCategoria = PromocionesCategorias::model()->find(array(
+		$promocionCategoriaDesktop = PromocionesCategorias::model()->find(array(
 				'condition' => 'idCategoriaTienda =:idCategoria AND idPromocion=:idpromocion ',
 				'params' => array(
-						'idCategoria' => $idCategoria,
+						'idCategoria' => $idCategoriaDesktop,
 						'idpromocion' => $idPromocion
 				)
 		));
 		
-		if ($promocionCategoria == null) {
+		$promocionCategoriaMovil = PromocionesCategorias::model()->find(array(
+				'condition' => 'idCategoriaTienda =:idCategoria AND idPromocion=:idpromocion ',
+				'params' => array(
+						'idCategoria' => $idCategoriaMovil,
+						'idpromocion' => $idPromocion
+				)
+		));
 		
-			$promocionModel = new PromocionesCategorias();
-			$promocionModel->idCategoriaTienda = $idCategoria;
-			$promocionModel->idPromocion = $idPromocion;
 		
-			if ($promocionModel->save()) {
-				$categorias = PromocionesCategorias::model()->findAll(array(
-						'with' => array('objCategoria'),
-						'condition' => 'idPromocion =:idpromocion',
-						'params' => array(
-								'idpromocion' => $idPromocion
-						),
-						'order' => 'objCategoria.nombreCategoriaTienda'
-				));
-		
-				$html = $this->renderPartial('_listaCategorias', array(
-						'categorias' => $categorias
-				), true, false);
-				echo CJSON::encode(array(
-						'result' => 'ok',
-						'response' => $html
-				));
-			} else {
-				echo CJSON::encode(array(
-						'result' => 'error',
-						'response' => "Error al guardar la categoria"
-				));
-			}
-		} else {
+		if($promocionCategoriaDesktop != null || $promocionCategoriaMovil != null){
 			echo CJSON::encode(array(
 					'result' => 'error',
-					'response' => "La categoria esta referenciada"
+					'response' => "Ya existe la categoria"
 			));
+			Yii::app()->end();
 		}
+		
+		
+		$promocionModel = new PromocionesCategorias();
+		$promocionModel->idCategoriaTienda = $idCategoriaDesktop;
+		$promocionModel->idPromocion = $idPromocion;
+		
+		if (!$promocionModel->save()){
+			echo CJSON::encode(array(
+					'result' => 'error',
+					'response' => "Error al guardar la categoria desktop"
+				));
+			Yii::app()->end();
+		}
+	
+		
+		$promocionModel = new PromocionesCategorias();
+		$promocionModel->idCategoriaTienda = $idCategoriaMovil;
+		$promocionModel->idPromocion = $idPromocion;
+		
+		if (!$promocionModel->save()){
+			echo CJSON::encode(array(
+					'result' => 'error',
+					'response' => "Error al guardar la categoria movil"
+			));
+			Yii::app()->end();
+		}
+		
+		$categorias = PromocionesCategorias::model()->findAll(array(
+				'with' => array('objCategoria'),
+				'condition' => 'idPromocion =:idpromocion',
+				'params' => array(
+						'idpromocion' => $idPromocion
+				),
+				'order' => 'objCategoria.nombreCategoriaTienda'
+		));
+			
+		$html = $this->renderPartial('_listaCategorias', array(
+				'categorias' => $categorias
+		), true, false);
+		
+		echo CJSON::encode(array(
+				'result' => 'ok',
+				'response' => $html
+		));
 	}
 	
 	public function actionEliminarCategoria(){

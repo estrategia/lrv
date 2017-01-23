@@ -204,7 +204,7 @@ $listPdv = PuntoVenta::model()->findAll(array(
 <div class="row">
     <div class="col-md-12">
         <div>
-            <span class="title"><strong>Asignar Punto de venta</strong></span>
+            <span class="title"><strong>Asignar Punto de venta destino</strong></span>
             <form action="/callcenter/index/generardoccruce/" method="post" id="asignarpdv" name="asignarpdv">
                 <div class="row">
                     <div class="col-md-9">

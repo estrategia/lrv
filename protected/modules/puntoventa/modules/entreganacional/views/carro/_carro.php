@@ -60,19 +60,16 @@
         <div class="col-md-3 detalles">
             <h3>Detalles de la compra</h3>
             <span>Subtotal <?php echo Yii::app()->numberFormatter->format(Yii::app()->params->formatoMoneda['patron'], Yii::app()->shoppingCartNationalSale->getCost(), Yii::app()->params->formatoMoneda['moneda']); ?></span><br>
+            <span>Servicio entrega <?php echo Yii::app()->numberFormatter->format(Yii::app()->params->formatoMoneda['patron'], Yii::app()->shoppingCartNationalSale->getShippingServicio(), Yii::app()->params->formatoMoneda['moneda']); ?></span><br/>
             <?php if ($lectura) : ?>
-            	<span>Servicio entrega <?php echo Yii::app()->numberFormatter->format(Yii::app()->params->formatoMoneda['patron'], Yii::app()->shoppingCartNationalSale->getShippingServicio(), Yii::app()->params->formatoMoneda['moneda']); ?></span><br/>
             	<span>Servicio recogida <?php echo Yii::app()->numberFormatter->format(Yii::app()->params->formatoMoneda['patron'], Yii::app()->shoppingCartNationalSale->getShippingRecogida(), Yii::app()->params->formatoMoneda['moneda']); ?></span><br/>
-            	<span>Total servicio <?php echo Yii::app()->numberFormatter->format(Yii::app()->params->formatoMoneda['patron'], Yii::app()->shoppingCartNationalSale->getShipping(), Yii::app()->params->formatoMoneda['moneda']); ?></span><br/>
             <?php endif;?>
+            <span>Total servicio <?php echo Yii::app()->numberFormatter->format(Yii::app()->params->formatoMoneda['patron'], Yii::app()->shoppingCartNationalSale->getShipping(), Yii::app()->params->formatoMoneda['moneda']); ?></span><br/>
              <?php if (Yii::app()->shoppingCartNationalSale->getExtraShipping() > 0): ?>
                 <span>Flete adicional <?php echo Yii::app()->numberFormatter->format(Yii::app()->params->formatoMoneda['patron'], Yii::app()->shoppingCartNationalSale->getExtraShipping(), Yii::app()->params->formatoMoneda['moneda']); ?></span>
             <?php endif; ?>
-            <?php if ($lectura) : ?>
             <h3>Total a pagar <?php echo Yii::app()->numberFormatter->format(Yii::app()->params->formatoMoneda['patron'], Yii::app()->shoppingCartNationalSale->getTotalCost(), Yii::app()->params->formatoMoneda['moneda']) ?></h3>
-            <?php else:?>
-            <h3>Total a pagar <?php echo Yii::app()->numberFormatter->format(Yii::app()->params->formatoMoneda['patron'], Yii::app()->shoppingCartNationalSale->getCost(), Yii::app()->params->formatoMoneda['moneda']) ?></h3> 
-            <?php endif; ?>
+            
             <?php if (Yii::app()->shoppingCartNationalSale->getObjCiudadOrigen()->excentoImpuestos == 0 && Yii::app()->shoppingCartNationalSale->getTaxPrice() > 0 && $lectura): ?>
                 <span>Impuestos incluidos <?php echo Yii::app()->numberFormatter->format(Yii::app()->params->formatoMoneda['patron'], Yii::app()->shoppingCartNationalSale->getTaxPrice(), Yii::app()->params->formatoMoneda['moneda']) ?></span><br/>
             <?php endif; ?>
