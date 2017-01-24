@@ -13,8 +13,9 @@ class ControllerEntregaNacional extends ControllerPuntoVenta {
     public $objCiudadSectorOrigen = null;
     public $objCiudadSectorDestino = null;
     public $objPuntoVentaDestino = null;
+    public $objPuntoVentaOrigen = null;
     public $isMobile = false;
-    
+    public $urlLogo = "entreganacional.png";
     /**
      * @var array the breadcrumbs of the current page. The value of this property will
      * be assigned to {@link CBreadcrumbs::links}. Please refer to {@link CBreadcrumbs::links}
@@ -50,6 +51,7 @@ class ControllerEntregaNacional extends ControllerPuntoVenta {
         	$ciudad = $puntoVenta->codigoCiudad;
         	$sector = $puntoVenta->idSectorLRV;
         	
+        	$this->objPuntoVentaOrigen = $puntoVenta;
         	$this->objCiudadSectorOrigen = SectorCiudad::model()->find(array(
         			'with' => array('objCiudad', 'objSector'),
         			'condition' => 't.codigoCiudad=:ciudad AND t.codigoSector=:sector AND t.estadoCiudadSector=:estado',

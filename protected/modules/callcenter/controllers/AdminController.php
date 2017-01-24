@@ -64,6 +64,7 @@ class AdminController extends ControllerOperator {
             $fecha = Compras::calcularFechaVisualizar();
             $model->fechaCompra = $fecha;
 
+            $params = array();
             $sort = "";
             switch ($parametro) {
                 case 1: $sort = "t.seguimiento DESC, t.fechaCompra DESC";
@@ -73,9 +74,19 @@ class AdminController extends ControllerOperator {
                     break;
                 case 3: $sort = "t.fechaEntrega DESC";
                     break;
-                case 4: $sort = "t.fechaCompra ASC";
-                    break;
-                case 5: $sort = "t.fechaEntrega DESC";
+                case 4: {
+	                	$sort = "tiempoRestante DESC";
+	                	$params['select'] = array("*",
+	                			"TIMESTAMPDIFF(minute, fechaEntrega, now()) as tiempoRestante"
+	                			);
+                	}
+                break;
+                case 5: {
+	                	$sort = "tiempoRestante DESC";
+	                	$params['select'] = array("*",
+	                			"TIMESTAMPDIFF(minute, fechaEntrega, now()) as tiempoRestante"
+	                			);
+                	}
                     break;
                 case 6: $sort = "t.fechaCompra DESC";
                     break;
@@ -88,10 +99,15 @@ class AdminController extends ControllerOperator {
                 default: $sort = "t.fechaCompra DESC";
                     break;
             }
+            
+            $params['order'] = $sort;
+            $params['operadorPedido'] = true;
 
             $this->render('pedidos', array(
                 'model' => $model,
-                'dataProvider' => $model->search(array('order' => $sort, 'operadorPedido' => true)),
+                'dataProvider' => $model->search(
+                		$params
+                		),
                 'arrCantidadPedidos' => Compras::cantidadComprasPorEstado($fecha)
             ));
         } else {
@@ -129,7 +145,10 @@ class AdminController extends ControllerOperator {
 
                 $this->render('pedidos', array(
                     'model' => $model,
-                    'dataProvider' => $model->search(array('order' => 't.fechaCompra DESC', 'formaPago' => Yii::app()->params->formaPago['pasarela']['idPasarela'], 'operadorPedido' => true)),
+                    'dataProvider' => $model->search(array(
+                    		'order' => 't.fechaCompra DESC', 
+                    		'formaPago' => Yii::app()->params->formaPago['pasarela']['idPasarela'], 
+                    		'operadorPedido' => true)),
                     'arrCantidadPedidos' => Compras::cantidadComprasPorEstado($fecha)
                 ));
             } else if ($parametro == 'entregaNacional') {
@@ -757,7 +776,6 @@ class AdminController extends ControllerOperator {
             echo CJSON::encode(array('result' => 'ok', 'response' => "Error: no se obtuvo respuesta"));
         } else {
 
-            var_dump($result);
             $result = $result[0];
             if ($result->RESPUESTA == 1) {
             	

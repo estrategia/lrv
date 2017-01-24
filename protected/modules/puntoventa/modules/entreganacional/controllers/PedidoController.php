@@ -8,7 +8,7 @@ class PedidoController extends ControllerEntregaNacional {
     public function filters() {
         return array(
             //'access',
-            'login + index, pedidos',
+            'login + index, pedidos, ubicacion',
             'busqueda + buscarProductos'
                 //'loginajax + direccionActualizar',
         );
@@ -101,6 +101,11 @@ class PedidoController extends ControllerEntregaNacional {
                 echo CJSON::encode(array('result' => 'error', 'response' => $result->DESCRIPCION));
             }
         }
+    }
+    
+    public function actionProbarPdv(){
+    	CVarDumper::dump(Yii::app()->session[Yii::app()->params->puntoventa['sesion']['pdv']]);
+    	exit();
     }
 
 
@@ -373,7 +378,7 @@ class PedidoController extends ControllerEntregaNacional {
     
     protected function gridUsoDireccion($data, $row) {
     	
-    	$result = "<a href='#' data-pdv='$data->idComercial' data-pedido='$data->idCompra' data-action='asignar-pdv-direccion' class='btn btn-info' >Usar</a>";
+    	$result = "<a href='#' data-pdv='".$data->objComprasRemitente->puntoVentaDestino."' data-pedido='$data->idCompra' data-action='asignar-pdv-direccion' class='btn btn-info' >Usar</a>";
     
     	return $result;
     }

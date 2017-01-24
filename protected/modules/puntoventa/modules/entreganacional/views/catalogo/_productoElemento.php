@@ -31,13 +31,8 @@
                         <div id="raty-lectura-producto-<?php echo $data->codigoProducto ?>" data-role="raty" data-readonly="true" data-score="<?php echo $data->getCalificacion() ?>"></div>                 
                     </div>
                 </div>
-            <?php elseif ($vista != 'slider'): ?>
-                <div style="height:46px;"></div>
             <?php endif; ?>
-
         </div>
-
-
         <div class="content_product">
             <div class="">
                     <div class="descripcion-grid text-truncate">
@@ -49,18 +44,20 @@
             </div>
             <div class="line-bottom">
                 <div class="descripcion-grid text-truncate">
-                    <span><?php echo $data->presentacionProducto; ?></span> &nbsp;&nbsp;  Unid. Disp: <?php echo $data->saldosDisponibles?>
+                    <span><?php echo $data->presentacionProducto; ?></span> &nbsp;&nbsp; 
                 </div>
                 <div class="descripcion-lineal" style="display:none">
                     <?php echo $data->presentacionProducto ?>
                 </div>
             </div>
+            
+             <strong><span>Unidades disponibles: <?php echo $data->saldosDisponibles?></span></strong>
 
             <!-- Precio del producto -->
             <?php if ($objPrecio->inicializado()): ?>
                 <?php if ($data->mostrarAhorroVirtual == 1 && $objPrecio->getAhorro(Precio::PRECIO_UNIDAD) > 0 && $this->objCiudadSectorOrigen->objCiudad->excentoImpuestos != 1): ?>
                     <div class="prices_status"> 
-                        <table style="margin-top: 15px; width: 100%;">
+                        <table style="margin-top: 0px; width: 100%;">
                             <tr>
                                 <td valing="middle">
                                     <p>
@@ -77,7 +74,7 @@
                         </table>
                     </div>
                 <?php else: ?>
-                    <div class="price text-center" style="margin-top:20px"><?php echo Yii::app()->numberFormatter->format(Yii::app()->params->formatoMoneda['patron'], $objPrecio->getPrecio(Precio::PRECIO_UNIDAD), Yii::app()->params->formatoMoneda['moneda']); ?> </div>
+                    <div class="price text-center" style="margin-top:0px"><?php echo Yii::app()->numberFormatter->format(Yii::app()->params->formatoMoneda['patron'], $objPrecio->getPrecio(Precio::PRECIO_UNIDAD), Yii::app()->params->formatoMoneda['moneda']); ?> </div>
                 <?php endif; ?>
                 <?php if ($objPrecio->getFlete() > 0): ?>
                     <p>Flete: <span> <?php echo Yii::app()->numberFormatter->format(Yii::app()->params->formatoMoneda['patron'], $objPrecio->getFlete(), Yii::app()->params->formatoMoneda['moneda']); ?>]</span></p>
@@ -85,14 +82,21 @@
                 <?php if ($objPrecio->getTiempoEntrega() > 0): ?>
                     <p> Tiempo de entrega: <span> <?php echo $objPrecio->getTiempoEntrega() ?> horas</span></p>
                 <?php endif; ?>
+            <?php  else:?>
+                <div class="row">
+	                    <div class="col-xs-6 ">
+	                    	<?php echo CHtml::link('<div class="btn btn-primary btn-block btn-xs">Precio No disponible</div>', '#', array()); ?>
+	                    </div>
+	            </div>
             <?php endif; ?>
+            <?php if ($data->saldosDisponibles):?>
 	            <?php if ($data->fraccionado == 1): ?>
             	  	<div class="row">
 	                    <div class="col-xs-6 ">
 	                    	<?php echo CHtml::link('<div class="btn btn-primary btn-block btn-xs">Añadir Unidades</div>', CController::createUrl('/puntoventa/entreganacional/catalogo/producto', array('producto' => $data->codigoProducto, 'descripcion' => $data->getCadenaUrl())), array()); ?>
 	                    </div>
 	                    <div class="col-xs-6 ">
-	                    	<?php echo CHtml::link('<div class="btn btn-primary btn-block btn-xs">Añadir Fracciones</div>', CController::createUrl('/puntoventa/entreganacional/catalogo/producto', array('producto' => $data->codigoProducto, 'descripcion' => $data->getCadenaUrl())), array('data-producto' => $data->codigoProducto, 'data-cargar' => 1, 'data-id' => $idUnico)); ?>
+	                    	<?php echo CHtml::link('<div class="btn btn-primary btn-block btn-xs">Añadir Fracciones</div>', CController::createUrl('/puntoventa/entreganacional/catalogo/producto', array('producto' => $data->codigoProducto, 'descripcion' => $data->getCadenaUrl())), array()); ?>
 	                    </div>
 	                 </div>
             	 <?php else:?>
@@ -100,12 +104,12 @@
 		                <div class="row">
 		                    <div class="col-xs-6 not_padding">
 		                        <div class="group-botones-cantidad">
-		                            <button class="btn btn-default btn-xs" data-role="disminuir-cantidad" data-id="<?php echo $idUnico ?>" id="disminuir-unidad-<?php echo $data->codigoProducto ?>" data-producto="<?php echo $data->codigoProducto ?>" data-precio="<?= $objPrecio->getPrecio(Precio::PRECIO_UNIDAD) ?>" type="button"><span class="glyphicon glyphicon-minus"></span></button>
+		                            <button class="btn btn1 btn-xs" data-role="disminuir-cantidad" data-id="<?php echo $idUnico ?>" id="disminuir-unidad-<?php echo $data->codigoProducto ?>" data-producto="<?php echo $data->codigoProducto ?>" data-precio="<?= $objPrecio->getPrecio(Precio::PRECIO_UNIDAD) ?>" type="button"><span class="glyphicon glyphicon-minus"></span></button>
 		
 		                            <div class="ressete btn-xs">
 		                                <input id="cantidad-producto-unidad-<?php echo $data->codigoProducto ?>" data-id="<?php echo $idUnico ?>"  class="increment" type="text" data-role="validar-cantidad-unidad"  data-producto="<?php echo $data->codigoProducto ?>" data-precio="<?= $objPrecio->getPrecio(Precio::PRECIO_UNIDAD) ?>" maxlength="3" value="1" data-total="700"/>
 		                            </div>
-		                            <button class="btn btn-default btn-xs" data-role="aumentar-cantidad" data-id="<?php echo $idUnico ?>"  id="aumentar-unidad-<?php echo $data->codigoProducto ?>" data-producto="<?php echo $data->codigoProducto ?>" data-precio="<?= $objPrecio->getPrecio(Precio::PRECIO_UNIDAD) ?>" type="button"><span class="glyphicon glyphicon-plus"></span></button>
+		                            <button class="btn btn1 btn-xs" data-role="aumentar-cantidad" data-id="<?php echo $idUnico ?>"  id="aumentar-unidad-<?php echo $data->codigoProducto ?>" data-producto="<?php echo $data->codigoProducto ?>" data-precio="<?= $objPrecio->getPrecio(Precio::PRECIO_UNIDAD) ?>" type="button"><span class="glyphicon glyphicon-plus"></span></button>
 		
 		                        </div>
 		                    </div>
@@ -115,7 +119,14 @@
 		                </div>
 		             
 		            </div>
-            <?php endif;?>
+		        <?php endif;?>
+		     <?php else:?> 
+		     <div class="row">
+	                    <div class="col-xs-12 ">
+	                    	<?php echo CHtml::link('<div class="btn btn-primary btn-block btn-xs">Producto no disponible</div>', '#', array()); ?>
+	                    </div>
+	          </div>  
+             <?php endif;?>
         </div>
 
             <div class="iconos_right">
