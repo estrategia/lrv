@@ -133,6 +133,13 @@ return array(
                 'perros-y-gatos' => 'publicidad/contenido/nombre/perros-y-gatos',
                 'proteccion-solar-sol-or' => 'publicidad/contenido/nombre/sol-or',
                 'shampoo-clinical-solution-caspa-severa' => 'publicidad/contenido/nombre/pyg',
+
+                'similac-mama-embarazo' => 'publicidad/contenido/nombre/similac-mama',
+                'similac-3kid' => 'publicidad/contenido/nombre/similac-3-kid',
+                'pediasure' => 'publicidad/contenido/nombre/pediasure',
+                'ensure-nutricion-especializada' => 'publicidad/contenido/nombre/ensure',
+                'glucerna-para-diabeticos' => 'publicidad/contenido/nombre/glucerna',
+
                 // Fin links campañas
 
                 array('restCiudad/list', 'pattern'=>'rest/ciudad', 'verb'=>'GET'),
@@ -341,7 +348,7 @@ return array(
             'sesion' => 'larebaja.online.entrega.tipoEntrega',
         ),
         'generos' => array(1 => 'Femenino', 2 => 'Masculino'),
-    	
+
         'genero' => array(
             'lista' => array(1 => 'Femenino', 2 => 'Masculino'),
             'valor' => array('femenino' => 1, 'masculino' => 2),
@@ -786,17 +793,17 @@ return array(
 	   			),
     	),
     	'contenidoInicio' => array(
-    			'tipos' => array( 
+    			'tipos' => array(
     					1 => 'Usuario no logueado',
     					2 => 'Autenticado Cumplea&ntilde;os',
     					3 => 'Autenticado que no ha comprado',
     					4 => 'Autenticado sin listas personales',
     					5 => 'Autenticado que hace tiempo no ingresa'
-    					
+
     			),
     			'tiposContenido' => array (
     				'noAutenticado' => 1,
-    				'cumpleanos' => 2, 
+    				'cumpleanos' => 2,
     				'noCompra' => 3,
     				'sinLista' => 4,
     				'noIngresa' => 5,
@@ -804,6 +811,6 @@ return array(
     			'tiempoNoIngreso' => 30, // dias
     			'generos' => array(1 => 'Femenino', 2 => 'Masculino', 9 => 'Ambos'),
     			'ambosGeneros' => 9,
-    	)	
+    	)
     ),
 );
