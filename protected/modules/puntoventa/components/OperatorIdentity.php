@@ -49,6 +49,7 @@ class OperatorIdentity extends CUserIdentity {
     	if ($resultWebServicesLogin['result'] == 3) {
     		$this->errorCode = self::ERROR_NONE;
     		
+          //  echo "<pre>";print_r($resultWebServicesLogin);exit();
     		$this->user = new UsuarioPuntoVenta();
     		$this->user->setUsername($resultWebServicesLogin['response']['Username']);
     		$this->user->setEmail($resultWebServicesLogin['response']['Email']);
