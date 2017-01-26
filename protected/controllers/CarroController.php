@@ -3711,14 +3711,14 @@ class CarroController extends Controller {
                 'nombreUsuario' => $nombreUsuario), true, true);
             
             $header = PlantillaCorreo::model()->find(array(
-            	'condition' => 'nombre =:nombre',
+            	'condition' => 'nombrePlantilla =:nombre',
             	'params' => array(
             			':nombre' => 'header'
             	)
             ));
             
             $footer = PlantillaCorreo::model()->find(array(
-            		'condition' => 'nombre =:nombre',
+            		'condition' => 'nombrePlantilla =:nombre',
             		'params' => array(
             				':nombre' => 'footer'
             		)
@@ -3727,8 +3727,8 @@ class CarroController extends Controller {
             $htmlCorreo = $this->renderPartial('application.views.common.correo', 
             		array(
             			'contenido' => $contenidoCorreo,
-            			'header' => $header->contenido,
-            			'footer' => $footer->contenido,
+            			'header' => isset($header->contenido)? $header->contenido:'',
+            			'footer' => isset($footer->contenido)? $footer->contenido:'',
             		), 
             		true, true);
             

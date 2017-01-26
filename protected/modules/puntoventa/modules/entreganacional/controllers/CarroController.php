@@ -967,7 +967,7 @@ class CarroController extends ControllerEntregaNacional{
 	
 			try {
 				/***************************** VALIDAR CON JAVELA ESTE PEDAZO DE CODIGO ****************************************************/
-				if($objCompra->recogida  == 0){
+			//	if($objCompra->recogida  == 0){
 					$result = $client->__soapCall("CongelarCompraAutomatica", array('idPedido' => $objCompra->idCompra)); //763759, 763743
 					//$result = array(0=>0,1=>'congelar prueba error');
 					//$result = array(0 => 1, 1 => 'congelar prueba ok', 2 => 'miguel.sanchex@gmail.com.co');
@@ -1007,7 +1007,7 @@ class CarroController extends ControllerEntregaNacional{
 							throw new Exception("Error al guardar compra [1]" . $objCompra->validateErrorsResponse());
 						}
 					}
-				}
+			//	}
 				
 				/***********************************************VER SI SE MANEJA LA MISMA PLANTILLA********************************************************/
 				
