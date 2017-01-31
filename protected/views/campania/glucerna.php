@@ -55,7 +55,7 @@ $this->metaTags = "<meta http-equiv='X-UA-Compatible' content='IE=edge'>
     .descrip span:nth-child(1){font-family: brandonGrotesque-regular;font-size: 32px;line-height: 32px;}
     .descrip span:nth-child(3){font-family: brandonGrotesque-boldItalic;font-size: 35px;line-height: 30px;}
     .graph {text-align:center;}
-    .graph .izq {color: #44719B;font-family: brandonGrotesque-regular;font-size: 22px;line-height: 25px;margin-left: 149px;}
+    .graph .izq {color: #1D436A;font-family: brandonGrotesque-regular;font-size: 22px;line-height: 25px;margin-left: 149px;}
     .graph .der {color: #1D436A;font-family: brandonGrotesque-regular;font-size: 22px;line-height: 25px;margin-right: 133px;}
     .list {background-color: #0C4A85;color: #fff;font-family: helvetica-neue-lt-std-medium-italic;border-radius: 0 0 100px;padding: 40px 88px;font-size: 23px;}
     .legal {color: #696969;font-family: myriadPro-regular;font-size: 11px;padding: 20px 88px;}
@@ -153,7 +153,7 @@ $this->metaTags = "<meta http-equiv='X-UA-Compatible' content='IE=edge'>
 <!--Banner principal-->
 <img class="img-responsive bn-principal" src="<?= Yii::app()->request->baseUrl ?>/images/contenido/abbot/glucerna/banner-principal.jpg" alt="Con Glucerna sigues siendo tú">
 <div class="container background">
-  <div style="padding: 0px 70px;">
+  <div style="padding: 60px 70px 0px;">
     <img class="img-responsive" src="<?= Yii::app()->request->baseUrl ?>/images/contenido/abbot/glucerna/glucerna.png" alt="Glucerna">
     <span class="tit">Puede ser usado por diabéticos dentro</span> <br>
     <span class="sub-tit">de las restricciones de una dieta con supervisión médica. </span>

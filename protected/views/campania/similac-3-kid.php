@@ -47,7 +47,7 @@ $this->metaTags = "<meta http-equiv='X-UA-Compatible' content='IE=edge'>
 
     .bn-principal {border-top: 10px solid #3170A3;}
     .background {background-color:#F9FAF4;}
-    .banderin {background-image: url(/lrv/images/contenido/abbot/similac-3-kid/banderin.png);background-size: 100%;padding-left: 0px !important;color: #945103;margin-top: 70px;background-repeat: no-repeat;}
+    .banderin {background-image: url(/images/contenido/abbot/similac-3-kid/banderin.png);background-size: 100%;padding-left: 0px !important;color: #945103;margin-top: 70px;background-repeat: no-repeat;}
     .banderin p {margin-left: 17%;  font-family:helvetica-bold;font-size: 27px;}
     .banderin p:nth-child(2),p:nth-child(3) { margin-left: 10%;}
     .banderin span {font-family: helvetica;font-size: 31px;}

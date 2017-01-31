@@ -151,7 +151,7 @@ $this->metaTags = "<meta http-equiv='X-UA-Compatible' content='IE=edge'>
     <p class="sub">Ayuda a cubrir las demandas nutricionales específicas de la madre y del bebé en desarrollo, <br> durante el embarazo y en periodo de lactancia.</p>
     <p class="sub-text">Para ti:
       <ul class="list">
-        <li><span class="bullet">&#8226;</span> Es fuente de vitaminas y minerales, prepara tu cuerpo<br> para las exigencias del embarazo y la lactancia.</li>
+        <li><span class="bullet">&#8226;</span> Es fuente de vitaminas y minerales, prepara tu cuerpo<br> <span style="margin-left: 3.3%;">para las exigencias del embarazo y la lactancia.</span></li>
         <li><span class="bullet">&#8226;</span> Bajo en grasa para un aumento de peso saludable.</li>
         <li><span class="bullet">&#8226;</span> Proteína, calcio y fibra prebiótica.</li>
       </ul>
