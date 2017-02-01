@@ -38,6 +38,14 @@
                                 <strong>Nombre: </strong><?php echo $objCompra->objUsuario->nombre . " " . $objCompra->objUsuario->apellido ?><br>
                                 <strong>Correo: </strong><?php echo $objCompra->objUsuario->correoElectronico ?> <br/>
                                 <?php endif;?>
+                             <?php if(isset($objCompra->objComprasRemitente)):?>
+                             		<strong>Recogida: </strong> <?php echo $objCompra->objComprasRemitente->recogida == 1 ? "Si":"No"?><br>
+                             		<?php if($objCompra->objComprasRemitente->recogida == 1):?>
+                             				<strong>Direcci&oacute;n: </strong><?php echo $objCompra->objComprasRemitente->direccionRemitente ?><br>
+                             				<strong>Barrio: </strong><?php echo $objCompra->objComprasRemitente->barrioRemitente ?><br>
+                             		<?php endif;?>
+                             	<strong>Tel&eacute;fono: </strong><?php echo $objCompra->objComprasRemitente->telefonoRemitente ?><br>
+                             <?php endif;?>   
                             <?php endif; ?>
                             <strong>TipoEntrega: </strong><?php echo Yii::app()->params->entrega["tipo"][$objCompra->tipoEntrega] ?> 
 
@@ -49,10 +57,14 @@
                                 <strong>Direcci&oacute;n: </strong><?php echo $objCompra->objCompraDireccion->direccion . " - " . $objCompra->objCompraDireccion->barrio ?><br>
                                 <strong>Tel&eacute;fono: </strong> <?php echo $objCompra->objCompraDireccion->telefono ?> - <strong>Celular: </strong> <?php echo $objCompra->objCompraDireccion->celular ?><br>
                                 <?php if ($objCompra->objCompraDireccion->objCiudad != null): ?>
-                                    <strong>Ciudad: </strong><?php echo $objCompra->objCompraDireccion->objCiudad->nombreCiudad . " - " . $objCompra->objCompraDireccion->objSector->nombreSector ?>
+                                    <strong>Ciudad: </strong><?php echo $objCompra->objCompraDireccion->objCiudad->nombreCiudad . " - " . $objCompra->objCompraDireccion->objSector->nombreSector ?><br/>
                                 <?php else: ?>
-                                    <strong>Ciudad: </strong> NA
+                                    <strong>Ciudad: </strong> NA <br/>
                                 <?php endif; ?>
+                                <?php if(isset($objCompra->objComprasRemitente) && isset($objCompra->objComprasRemitente->puntoVentaDestino)):?>
+                                <?php $puntoVenta = PuntoVenta::model()->find('idComercial ="'.$objCompra->objComprasRemitente->puntoVentaDestino.'"')?>
+                                	<strong>Destino: </strong> <?php echo $objCompra->objComprasRemitente->puntoVentaDestino ?> - <?php echo $puntoVenta->nombrePuntoDeVenta?>
+                                <?php endif;?>
                             </div>
                         <?php else: ?>
                             <div class="col-md-6">
@@ -246,11 +258,18 @@
                     </td>
                 </tr>
                 <tr>
+                    <td style="text-align: right"><strong>Remitir Nacional</strong></td>
+                    <td>
+                        <button class="btn btn-inverse btn-default btn-sm" data-action="remitirNacional" data-compra="<?php echo $objCompra->idCompra ?>">Remitir</button>
+                        <button class="btn btn-inverse btn-default btn-sm" data-action="remitirborrarNacional" data-compra="<?php echo $objCompra->idCompra ?>">Borrar remisión</button>
+                    </td>
+                </tr>
+                <tr>
                     <td colspan="2"> 
                         <form role="form" id="form-pedido-seguimiento">
                             <div class="checkbox">
                                 <label>
-                                    <input type="checkbox" id="check-pedido-seguimiento" data-compra="<?php echo $objCompra->idCompra ?>" <?php echo ($objCompra->seguimiento == 1 ? "checked='checked'" : "") ?>> <strong>REALIZAR SEGUIMIENTO</strong>
+                                    <input type="checkbox" style="display:block" id="check-pedido-seguimiento" data-compra="<?php echo $objCompra->idCompra ?>" <?php echo ($objCompra->seguimiento == 1 ? "checked='checked'" : "") ?>> <strong>REALIZAR SEGUIMIENTO</strong>
                                 </label>
                             </div>
                         </form>

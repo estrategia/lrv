@@ -7,7 +7,8 @@ class CarroController extends ControllerEntregaNacional{
 	public function filters() {
 		return array(
 				//'access',
-				'login + agregar',
+				'login + agregar,index',
+				'entrega + index',
 				//'loginajax + direccionActualizar',
 		);
 	}
@@ -26,11 +27,18 @@ class CarroController extends ControllerEntregaNacional{
 		}
 		$filter->run();
 	}
-	
+
+	public function filterEntrega($filter) {
+		
+		if (!$this->objCiudadSectorDestino) {
+			$this->redirect(CController::createUrl('pedido/ubicacion'));
+		}
+		$filter->run();
+	}
 	public function actionIndex() {
 		$this->active = "compra";
 		$this->render('index');
-		Yii::app()->end();
+	//	Yii::app()->end();
 	}
 	
 	public function actionAgregar() {
@@ -608,6 +616,8 @@ class CarroController extends ControllerEntregaNacional{
 						'contenido' => $contenidoSitio,
 						'objCompra' => $resultCompra['response']['objCompra'],
 				));
+				
+				Yii::app()->session[Yii::app()->params->puntoventa['sesion']['pdvDestino']] = null;
 				Yii::app()->end();
 			} else {
 				Yii::app()->user->setFlash('error', "Error al realizar compra, por favor intente de nuevo. " . $resultCompra['response']);
@@ -629,7 +639,7 @@ class CarroController extends ControllerEntregaNacional{
 	
 			/********************************* IDENTIFICAR EL PUNTO DE VENTA EN LA SESI�N *******************/
 			
-			$objCompra->idComercial = $this->objPuntoVentaDestino->idComercial;
+			$objCompra->idComercial = $this->objPuntoVentaOrigen->idComercial;
 			
 			if($modelPago->recogida == 1){
 				$objCompra->idEstadoCompra = Yii::app()->params->callcenter['estadoCompra']['estado']['pendiente'];
@@ -758,6 +768,10 @@ class CarroController extends ControllerEntregaNacional{
 			$objCompraRemitente->direccionRemitente =  $modelPago->direccionRemitente;
 			$objCompraRemitente->barrioRemitente =  $modelPago->barrioRemitente;
 			$objCompraRemitente->recogida =  $modelPago->recogida;
+			$objCompraRemitente->puntoVentaDestino = $this->objPuntoVentaDestino->idComercial;
+			$objCompraRemitente->servicioRed = Yii::app()->shoppingCartNationalSale->getShippingServicio();
+			$objCompraRemitente->servicioRecogida = Yii::app()->shoppingCartNationalSale->getShippingRecogida();
+			
 			if (!$objCompraRemitente->save()) {
 				throw new Exception("Error al guardar dirección de compra" . $objCompraRemitente->validateErrorsResponse());
 			}
@@ -778,20 +792,22 @@ class CarroController extends ControllerEntregaNacional{
 				}
 	
 				if ($objSaldo == null) {
-					throw new Exception("Producto " . $position->getObjProducto()->codigoProducto . " no disponible");
+				//	throw new Exception("Producto " . $position->getObjProducto()->codigoProducto . " no disponible");
 				}
 	
-				if ($objSaldo->saldoUnidad < $position->getQuantityUnit()) {
+				/*if ($objSaldo->saldoUnidad < $position->getQuantityUnit()) {
 					throw new Exception("Producto " . $position->getObjProducto()->codigoProducto . ". La cantidad solicitada no está disponible en este momento. Saldos disponibles: $objSaldo->saldoUnidad unidades");
 				}
 	
 				if ($objSaldo->saldoFraccion < $position->getQuantity(true)) {
 					throw new Exception("Producto " . $position->getObjProducto()->codigoProducto . ". La cantidad solicitada no está disponible en este momento. Saldos disponibles: $objSaldo->saldoFraccion fracciones");
-				}
+				}*/
 	
-				$objSaldo->saldoUnidad = $objSaldo->saldoUnidad - $position->getQuantityUnit();
-				$objSaldo->saldoFraccion = $objSaldo->saldoFraccion - $position->getQuantity(true);
-				$objSaldo->save();
+				if($objSaldo != null){
+					$objSaldo->saldoUnidad = $objSaldo->saldoUnidad - $position->getQuantityUnit();
+					$objSaldo->saldoFraccion = $objSaldo->saldoFraccion - $position->getQuantity(true);
+					$objSaldo->save();
+				}
 				//-- actualizar saldo producto
 	
 				$objItem = new ComprasItems;
@@ -951,7 +967,7 @@ class CarroController extends ControllerEntregaNacional{
 	
 			try {
 				/***************************** VALIDAR CON JAVELA ESTE PEDAZO DE CODIGO ****************************************************/
-				if($objCompra->recogida  == 0){
+			//	if($objCompra->recogida  == 0){
 					$result = $client->__soapCall("CongelarCompraAutomatica", array('idPedido' => $objCompra->idCompra)); //763759, 763743
 					//$result = array(0=>0,1=>'congelar prueba error');
 					//$result = array(0 => 1, 1 => 'congelar prueba ok', 2 => 'miguel.sanchex@gmail.com.co');
@@ -991,7 +1007,7 @@ class CarroController extends ControllerEntregaNacional{
 							throw new Exception("Error al guardar compra [1]" . $objCompra->validateErrorsResponse());
 						}
 					}
-				}
+			//	}
 				
 				/***********************************************VER SI SE MANEJA LA MISMA PLANTILLA********************************************************/
 				

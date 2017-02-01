@@ -14,7 +14,7 @@
 
     public function actionList()
     {
-      $ciudades = Ciudad::model()->findAll();
+      $ciudades = Ciudad::model()->findAll(array('order' => 't.orden'));
       echo CJSON::encode($ciudades);
     }
 
@@ -28,7 +28,8 @@
                     'params' => array(
                         ':ciudad' => $ciudad->codigoCiudad,
                         ':estado' => 1
-                    )
+                    ),
+      				'order' => 't.orden'
                 ));
       // print_r($sectores);
       $response = ['ciudad' => $ciudad, 'sectores' => $sectores];

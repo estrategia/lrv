@@ -690,6 +690,7 @@ class AdminController extends ControllerSubasta {
             'uri' => "",
             'trace' => 1
         ));
+        
     //    $result = $client->__soapCall("CongelarCompraManual", array('idPedido' => $idCompra));
         $result = $client->__soapCall("CongelarCompraAutomatica", array('idPedido' => $idCompra, 'pdvSubasta' => $idPuntoVenta));
         //$result = array(0=>0,1=>'congelar prueba error');
@@ -711,7 +712,7 @@ class AdminController extends ControllerSubasta {
 
         try {
             $objCompra->idEstadoCompra = Yii::app()->params->callcenter['estadoCompra']['estado']['remitido'];
-            $objCompra->generarDocumentoCruce(Yii::app()->controller->module->user->id);
+            $objCompra->generarDocumentoCruce(38);
 
             // Guardar el cambio de estado de la remisión
             if (!$objCompra->save()) {
@@ -721,7 +722,7 @@ class AdminController extends ControllerSubasta {
             $objEstadoCompra = new ComprasEstados;
             $objEstadoCompra->idCompra = $objCompra->idCompra;
             $objEstadoCompra->idEstadoCompra = Yii::app()->params->callcenter['estadoCompra']['estado']['remitido'];
-            $objEstadoCompra->idOperador = Yii::app()->controller->module->user->id;
+            $objEstadoCompra->idOperador = 38;
 
             // guardar en ComprasEstados
             if (!$objEstadoCompra->save()) {
@@ -731,7 +732,7 @@ class AdminController extends ControllerSubasta {
             $objObservacion = new ComprasObservaciones;
             $objObservacion->idCompra = $objCompra->idCompra;
             $objObservacion->observacion = "Cambio de Estado: Remitido por subasta al POS PDV. " . $objCompra->objPuntoVenta->nombrePuntoDeVenta;
-            $objObservacion->idOperador = Yii::app()->controller->module->user->id;
+            $objObservacion->idOperador = 38;
             $objObservacion->notificarCliente = 0;
 
             // Guardar las observaciones

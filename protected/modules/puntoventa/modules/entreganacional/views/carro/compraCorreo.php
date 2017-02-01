@@ -172,8 +172,20 @@
                         <div>
                             <table cellpadding="7" border="0" style="border-left:1px solid #cccccc;border-right:1px solid #cccccc;border-top:1px solid #cccccc;color:#666666;margin-top:20px;width:100%">
                                 <tbody>
+                                	<tr>
+                                        <td style="padding-left:21px;width:70%">Servicio de entrega en la red</td>
+                                        <td style="text-align:center">
+                                            <b><?php echo Yii::app()->numberFormatter->format(Yii::app()->params->formatoMoneda['patron'], Yii::app()->shoppingCartNationalSale->getShippingServicio(), Yii::app()->params->formatoMoneda['moneda']); ?></b>
+                                        </td>
+                                    </tr>
                                     <tr>
-                                        <td style="padding-left:21px;width:70%">Servicio</td>
+                                        <td style="padding-left:21px;width:70%">Servicio de recogida</td>
+                                        <td style="text-align:center">
+                                            <b><?php echo Yii::app()->numberFormatter->format(Yii::app()->params->formatoMoneda['patron'], Yii::app()->shoppingCartNationalSale->getShippingRecogida(), Yii::app()->params->formatoMoneda['moneda']); ?></b>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td style="padding-left:21px;width:70%">Total servicio</td>
                                         <td style="text-align:center">
                                             <b><?php echo Yii::app()->numberFormatter->format(Yii::app()->params->formatoMoneda['patron'], Yii::app()->shoppingCartNationalSale->getShipping(), Yii::app()->params->formatoMoneda['moneda']); ?></b>
                                         </td>

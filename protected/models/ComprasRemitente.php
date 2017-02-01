@@ -48,7 +48,7 @@ class ComprasRemitente extends CActiveRecord
 		// NOTE: you may need to adjust the relation name and the related
 		// class name for the relations automatically generated below.
 		return array(
-				
+			//	'objPuntoVenta' => array(self::BELONGS_TO, 'PuntoVenta', '', 'on' => 'objPuntoVenta.idComercial = t.puntoVentaDestino' ),
 		);
 	}
 
@@ -59,13 +59,13 @@ class ComprasRemitente extends CActiveRecord
 	{
 		return array(
 			'idCompra' => 'Id Compra',
-			'cedulaRemitente' => 'Cedula Remitente',
+			'cedulaRemitente' => 'Cedula',
 			'asistida' => 'Asistida',
-			'nombreRemitente' => 'Nombre Remitente',
-			'telefonoRemitente' => 'Telefono Remitente',
-			'correoRemitente' => 'Correo Remitente',
-			'direccionRemitente' => 'Direccion Remitente',
-			'barrioRemitente' => 'Barrio Remitente',
+			'nombreRemitente' => 'Nombre',
+			'telefonoRemitente' => 'Telefono',
+			'correoRemitente' => 'Correo',
+			'direccionRemitente' => 'Direccion',
+			'barrioRemitente' => 'Barrio',
 		);
 	}
 

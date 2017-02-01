@@ -3251,7 +3251,7 @@ class CarroController extends Controller {
    
 
             if ($objFormasPago->idFormaPago == Yii::app()->params->formaPago['pasarela']['idPasarela']) {
-                $numValidacion = substr(($objCompra->identificacionUsuario + $objCompra->idCompra + $objCompra->totalCompra) * 863, -7);
+                $numValidacion = substr(($objCompra->identificacionUsuario + $objCompra->idCompra - $objCompra->totalCompra) * 863, -7);
                 $objFormasPago->numeroValidacion = $numValidacion;
             }
 
@@ -3709,7 +3709,28 @@ class CarroController extends Controller {
                 'objFormaPago' => $objFormaPago,
                 'objFormasPago' => $objFormasPago,
                 'nombreUsuario' => $nombreUsuario), true, true);
-            $htmlCorreo = $this->renderPartial('application.views.common.correo', array('contenido' => $contenidoCorreo), true, true);
+            
+            $header = PlantillaCorreo::model()->find(array(
+            	'condition' => 'nombrePlantilla =:nombre',
+            	'params' => array(
+            			':nombre' => 'header'
+            	)
+            ));
+            
+            $footer = PlantillaCorreo::model()->find(array(
+            		'condition' => 'nombrePlantilla =:nombre',
+            		'params' => array(
+            				':nombre' => 'footer'
+            		)
+            ));
+            
+            $htmlCorreo = $this->renderPartial('application.views.common.correo', 
+            		array(
+            			'contenido' => $contenidoCorreo,
+            			'header' => isset($header->contenido)? $header->contenido:'',
+            			'footer' => isset($footer->contenido)? $footer->contenido:'',
+            		), 
+            		true, true);
             
            
             try {
