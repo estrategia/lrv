@@ -8,7 +8,7 @@ class TestController extends Controller {
             'condition' => 'idModulo=2',
         ));
         
-        //$listProductos = $objModulo->getListaProductos($this->objSectorCiudad);
+        $listProductos = $objModulo->getListaProductos($this->objSectorCiudad);
     }
     
     public function actionBloqueo() {
