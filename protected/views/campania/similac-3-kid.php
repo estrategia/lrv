@@ -98,26 +98,19 @@ $this->metaTags = "<meta http-equiv='X-UA-Compatible' content='IE=edge'>
   <img class="img-responsive-m" src="<?= Yii::app()->request->baseUrl ?>/images/contenido/abbot/similac-3-kid/kid.jpg">
   <div style="padding: 0 30px;">
   <p class="note" style="text-align: justify;">
-    “Como mamá, deseas que tu hijo crezca sano y feliz. Ahora que tu bebe crece tan rápidamente y probablemente lo estas preparando para entrar a su jardín,  necesitas complementar su alimentación con nutrientes que no solo le ayuden en su desarrollo, sino que también le fortalezcan sus defensas, y le caiga muy bien a su barriguita. Recuerda que la adecuada nutrición de hijo en esta etapa de su vida marcará la diferencia
+    “Como mamá, deseas que tu hijo crezca sano y feliz. Ahora que tu bebe crece tan rápidamente y probablemente lo estas preparando para entrar a su jardín,  necesitas complementar su alimentación con nutrientes que no solo le ayuden en su desarrollo, sino que también le caiga muy bien a su barriguita. Recuerda que la adecuada nutrición de hijo en esta etapa de su vida marcará la diferencia
     en su crecimiento y desarrollo para toda la vida”
   </p>
     <div class="detail" style="text-align: justify;">
-      <span>- Sistema Eye-Q plus:</span>
-      <p>combinación de nutrientes como: DHA, AA, Omegas 3 y 6,<br>
-      Luteína, Colina y Hierro, que apoyan su desarrollo mental, <br>
-      visual, y del lenguaje.</p>
+      <p>- Mezcla única de grasas diseñada para ayudar a una fácil digestión, evitando molestias en las barriguitas</p>
     </div>
     <div class="detail"  style="text-align: justify;">
-      <span>- Probióticos, prebióticos y nucleótidos:</span>
-      <p>Contribuye  en el fortalecimiento las defensas de tu hijo y favorecen una mejor digestión.</p>
-      <span>- Calcio y Vitamina D:</span  style="text-align: justify;">
-      <p>fortalecen el desarrollo de sus huesos y dientes.</p>
+      <span>- Sistema Eye-Q plus: </span>
+      <p>combinación exclusiva de nutrientes clave como: DHA, AA, Omega 3 y 6, luteína y colina que apoyan su desarrollo mental.</p>
     </div>
     <div class="detail"  style="text-align: justify;">
-      <span>- Hierro:</span>
-      <p>Ayuda a prevenir el riesgo de anemia.</p>
-      <span> - No contiene aceites que puedan causar barriguitas <br>
-      duras por eso les sienta bien.</span>
+    <p>- Contiene prebióticos, probióticos y nucleótidos.</p>
+    <p>- Proporciona hierro, calcio y vitamina D que apoyan su adecuado crecimiento.</p>
     </div>
   </div>
 </section>
@@ -151,10 +144,9 @@ $this->metaTags = "<meta http-equiv='X-UA-Compatible' content='IE=edge'>
 <div class="container background">
   <div class="row">
     <div class="col-sm-7 col-md-7 banderin">
-      <p style="margin-top: 30px;">Una mezcla de nutrientes, <br> probióticos y prebióticos.</p>
-      <p><img src="<?= Yii::app()->request->baseUrl ?>/images/contenido/abbot/similac-3-kid/icon-white.png"> <i>Ayuda a una</i> <span>fácil digestión</span></p>
-      <p><img src="<?= Yii::app()->request->baseUrl ?>/images/contenido/abbot/similac-3-kid/icon-white.png"><i>Y tiene todos los nutrientes claves </i></p>
-      <p style="margin-bottom: 60px;line-height: 0px;"><i> para su</i> <span>desarrollo físico y cerebral.</span></p>
+      <p style="margin-top: 80px;margin-bottom: 80px;">
+        Mezcla única de grasas diseñada <br> para ayudar a una <span style="font-weight: bold;">fácil digestión</span>,<br> evita barriguitas duras.
+      </p>
     </div>
     <div class="col-sm-5 col-md-5">
       <img class="img-responsive log" src="<?= Yii::app()->request->baseUrl ?>/images/contenido/abbot/similac-3-kid/logo.png" alt="Logo Similac 3 Kid">
@@ -186,33 +178,26 @@ $this->metaTags = "<meta http-equiv='X-UA-Compatible' content='IE=edge'>
   </div>
   <div class="row" style="padding: 0px 60px;">
     <p class="note">
-      “Como mamá, deseas que tu hijo crezca sano y feliz. Ahora que tu bebe crece tan rápidamente y probablemente lo estas preparando para entrar a su jardín,  necesitas complementar su alimentación con nutrientes que no solo le ayuden en su desarrollo, sino que también le fortalezcan sus defensas, y le caiga muy bien a su barriguita. Recuerda que la adecuada nutrición de hijo en esta etapa de su vida marcará la diferencia
+      “Como mamá, deseas que tu hijo crezca sano y feliz. Ahora que tu bebe crece tan rápidamente y probablemente lo estas preparando para entrar a su jardín,  necesitas complementar su alimentación con nutrientes que no solo le ayuden en su desarrollo, sino que también le caiga muy bien a su barriguita. Recuerda que la adecuada nutrición de hijo en esta etapa de su vida marcará la diferencia
        en su crecimiento y desarrollo para toda la vida”
     </p>
   </div>
   <div class="row detail" style="padding: 0px 60px;">
     <div class="col-sm-6 col-md-6">
-      <span>- Sistema Eye-Q plus:</span>
-      <p>combinación de nutrientes como: DHA, AA, Omegas 3 y 6,<br>
-      Luteína, Colina y Hierro, que apoyan su desarrollo mental, <br>
-      visual, y del lenguaje.</p>
+      <br>
+      <p>- Mezcla única de grasas diseñada para ayudar a una fácil digestión, evitando molestias en las barriguitas</p>
     </div>
     <div class="col-sm-6 col-md-6">
-      <span>- Probióticos, prebióticos y nucleótidos:</span>
-      <p>Contribuye  en el fortalecimiento las defensas de tu hijo y favorecen una mejor digestión.</p>
-
-    <span>- Calcio y Vitamina D:</span>
-      <p>fortalecen el desarrollo de sus huesos y dientes.</p>
+      <span>- Sistema Eye-Q plus:</span>
+      <p>combinación exclusiva de nutrientes clave como: DHA, AA, Omega 3 y 6, luteína y colina que apoyan su desarrollo mental.</p>
     </div>
   </div>
   <div class="row detail" style="padding: 0px 60px;">
     <div class="col-sm-6 col-md-6">
-      <span>- Hierro:</span>
-      <p>Ayuda a prevenir el riesgo de anemia.</p>
+      <p>- Contiene prebióticos, probióticos y nucleótidos.</p>
     </div>
     <div class="col-sm-6 col-md-6">
-      <span> - No contiene aceites que puedan causar barriguitas <br>
-      duras por eso les sienta bien.</span>
+      <p>- Proporciona hierro, calcio y vitamina D que apoyan su adecuado crecimiento</p>
     </div>
   </div>
   <div class="row gradient">
