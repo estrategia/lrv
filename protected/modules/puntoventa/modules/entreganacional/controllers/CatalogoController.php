@@ -363,7 +363,7 @@ class CatalogoController extends ControllerEntregaNacional {
             throw new CHttpException(404, 'Producto no existe.');
         }
         
-        // verificar cantidad máxima de saldos.
+        // verificar cantidad maxima de saldos.
         
         /*********************************/
 

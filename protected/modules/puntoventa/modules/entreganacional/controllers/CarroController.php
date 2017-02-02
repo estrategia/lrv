@@ -637,7 +637,7 @@ class CarroController extends ControllerEntregaNacional{
 			$objCompra->fechaEntrega = $modelPago->fechaEntrega;
 			$objCompra->observacion = $modelPago->comentario;
 	
-			/********************************* IDENTIFICAR EL PUNTO DE VENTA EN LA SESIÓN *******************/
+			/********************************* IDENTIFICAR EL PUNTO DE VENTA EN LA SESIoN *******************/
 			
 			$objCompra->idComercial = $this->objPuntoVentaOrigen->idComercial;
 			
@@ -645,7 +645,7 @@ class CarroController extends ControllerEntregaNacional{
 				$objCompra->idEstadoCompra = Yii::app()->params->callcenter['estadoCompra']['estado']['pendiente'];
 				
 			}else{
-				// guardar la compra como remitida POS y llamar el webservice de remisión.
+				// guardar la compra como remitida POS y llamar el webservice de remision.
 				$objCompra->idEstadoCompra = Yii::app()->params->callcenter['estadoCompra']['estado']['remitido'];
 				// remitir
 				

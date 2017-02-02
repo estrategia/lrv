@@ -22,8 +22,7 @@ class SitioController extends Controller {
 
     public function actionIndex() {
     	
-    	$objContenidoCumpleaños = ContenidoInicio::getContenidoCumpleanhos(Yii::app()->session[Yii::app()->params->usuario['sesion']]);
-    	
+    	$objContenidoCumpleanos = ContenidoInicio::getContenidoCumpleanhos(Yii::app()->session[Yii::app()->params->usuario['sesion']]);
     	
         if ($this->isMobile) {
         	
@@ -55,7 +54,7 @@ class SitioController extends Controller {
     		}
     	}else{
     		 
-    		// Cumpleaños
+    		// Cumpleanos
     		 
     		$objContenido = ContenidoInicio::getContenidoCumpleanhos(Yii::app()->session[Yii::app()->params->usuario['sesion']]);
     		
@@ -113,7 +112,7 @@ class SitioController extends Controller {
     		}
     	}else{
     	
-    		// Cumpleaños
+    		// Cumpleanos
     		$objContenido = ContenidoInicio::getContenidoCumpleanhos(Yii::app()->session[Yii::app()->params->usuario['sesion']]);
     		
     		if($objContenido){

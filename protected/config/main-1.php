@@ -368,7 +368,7 @@ return array(
             'recordatorioClave' => 'La Rebaja Virtual: Clave de ingreso',
             'bienvenida' => 'La Rebaja Virtual: Bienvenido(a)',
             'pedidoRealizado' => 'La Rebaja Virtual: Pedido realizado',
-            'pedidoRealizadoPasarela' => 'La Rebaja Virtual: Pendiente de Confirmaci�n Pasarela',
+            'pedidoRealizadoPasarela' => 'La Rebaja Virtual: Pendiente de Confirmacion Pasarela',
             'pedidoRemitido' => 'La Rebaja Virtual: Pedido remitido',
         ),
         'asuntoRecordatorioClave' => 'Clave de Ingreso',
@@ -446,11 +446,11 @@ return array(
                 'destinatarios' => array('karen_charria@copservir.com', 'fernando_riasco@copservir.com')
             ),
             'observacion' => array(
-                'asuntoMensaje' => 'La rebaja virtual - informaci�n de su pedido',
+                'asuntoMensaje' => 'La rebaja virtual - informacion de su pedido',
                 'estado' => array(
                     7 => 'Cancelar',
                     1 => 'Volver a pendiente',
-                    8 => 'Devoluci�n',
+                    8 => 'Devolucion',
                     5 => 'Facturado',
                 ),
             ),

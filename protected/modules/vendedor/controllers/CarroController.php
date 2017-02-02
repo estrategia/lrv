@@ -3345,7 +3345,7 @@ class CarroController extends ControllerVendedor {
 			Yii::app ()->end ();
 		}
 		
-		// revisar si ese bono ya está cargado en sesión.
+		// revisar si ese bono ya esta cargado en sesion.
 		
 		if ($modelPago->verificarPromocional ()) {
 			echo CJSON::encode ( array (
@@ -3355,7 +3355,7 @@ class CarroController extends ControllerVendedor {
 			Yii::app ()->end ();
 		}
 		
-		// revisar si el bono ya fué utilizado por la persona en otra compra.
+		// revisar si el bono ya fue utilizado por la persona en otra compra.
 		
 		$comprobarBono = FormasPago::model ()->find ( array (
 				'with' => 'objCompra',
@@ -3386,7 +3386,7 @@ class CarroController extends ControllerVendedor {
 		
 		// validar cantidades
 		
-		// revisar si ese bono ya está cargado en sesión.
+		// revisar si ese bono ya esta cargado en sesion.
 		
 		if ($bonoTienda->cantidadUso < 1) {
 			echo CJSON::encode ( array (
@@ -3395,7 +3395,7 @@ class CarroController extends ControllerVendedor {
 			) );
 			Yii::app ()->end ();
 		}
-		// revisar si ese bono ya está cargado en sesión.
+		// revisar si ese bono ya esta cargado en sesion.
 		
 		if ($modelPago->verificarPromocional ()) {
 			echo CJSON::encode ( array (
@@ -3405,7 +3405,7 @@ class CarroController extends ControllerVendedor {
 			Yii::app ()->end ();
 		}
 		
-		// Si validamos lo anterior y el uso se puede dar, mostrar información del descuento del bono.
+		// Si validamos lo anterior y el uso se puede dar, mostrar informacion del descuento del bono.
 		
 		echo CJSON::encode ( array (
 				'result' => 'ok',
