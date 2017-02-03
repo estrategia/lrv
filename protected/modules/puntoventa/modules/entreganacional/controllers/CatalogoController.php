@@ -178,6 +178,16 @@ class CatalogoController extends ControllerEntregaNacional {
 		        			break;
 	        			}
 	        		}
+	        		
+	        		if($puntoVenta === null){
+	        			$puntoVenta = array(
+	        					0 => 1,
+	        					1 => '',
+	        					2 => '',
+	        					3 => '',
+	        					4 => array()
+	        			);
+	        		}
 	        	
 	        		foreach($puntoVenta[4] as $saldos){
 	        			$listaProductosSaldos[$saldos->CODIGO_PRODUCTO] = $saldos->SALDO;
