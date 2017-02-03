@@ -6,7 +6,7 @@
         <meta name="language" content="es" />
         <meta charset="utf-8" />
 
-        <link rel="shortcut icon" href="<?php echo Yii::app()->request->baseUrl; ?>/images/favicon_16.ico" type="image/x-icon" /> 
+        <link rel="shortcut icon" href="<?php echo Yii::app()->request->baseUrl; ?>/images/favicon_16.ico" type="image/x-icon" />
         <title><?php echo CHtml::encode($this->pageTitle); ?></title>
         <script>requestUrl = "<?php echo Yii::app()->request->baseUrl; ?>";</script>
         <link id="bs-css" href="<?php echo Yii::app()->request->baseUrl; ?>/libs/charisma/css/bootstrap-simplex.min.css" rel="stylesheet" />
@@ -29,23 +29,25 @@
                     <span class="icon-bar"></span>
                     <span class="icon-bar"></span>
                 </button>
-                <a href="#" class="navbar-brand"> 
+                <a href="#" class="navbar-brand">
                     <img class="hidden-xs" src="<?php echo Yii::app()->request->baseUrl; ?>/images/<?php echo (isset($this->urlLogo)?$this->urlLogo:"logo_lrv.png")?>" alt="La Rebaja Virtual Logo" />
                 </a>
              </div>
-             <div class='col-md-9'> 
+             <div class='col-md-9'>
                 <div class="btn-group pull-left">
 	                <?php if(isset($this->objCiudadSectorOrigen)):?>
-	                 <strong> PDV Origen: </strong> <?php echo $this->objPuntoVentaOrigen->idComercial ?>- <?php echo $this->objPuntoVentaOrigen->nombrePuntoDeVenta ?><br/> 
-	                
+                    <div class="pdv-origen">
+                      <strong><span class="glyphicon glyphicon-map-marker"></span>  PDV Origen: </strong> <?php echo $this->objPuntoVentaOrigen->idComercial ?>- <?php echo $this->objPuntoVentaOrigen->nombrePuntoDeVenta ?>
+                    </div>
 	                <?php endif;?>
 	                <?php if(isset($this->objCiudadSectorDestino)):?>
-	                <strong> PDV Destino: </strong> <?php echo $this->objPuntoVentaDestino->idComercial ?>- <?php echo $this->objPuntoVentaDestino->nombrePuntoDeVenta ?><br/>
-	                
+                    <div class="pdv-destino">
+                      <strong><span class="glyphicon glyphicon-send"></span> PDV Destino: </strong> <?php echo $this->objPuntoVentaDestino->idComercial ?>- <?php echo $this->objPuntoVentaDestino->nombrePuntoDeVenta ?>
+                    </div>
 	                <?php endif;?>
                 </div>
              </div>
-             <div class='col-md-1'>    
+             <div class='col-md-1'>
                 <div class="btn-group pull-right bottom-aligned">
                     <button data-toggle="dropdown" class="btn btn-default dropdown-toggle">
                         <i class="glyphicon glyphicon-user"></i><span class="hidden-sm hidden-xs"><?php echo Yii::app()->controller->module->user->shortName ?></span>

@@ -1442,3 +1442,10 @@ a.clst_slct_prod.active{display: inline-block !important;}
 .step-box .form-control{
 	font-size:12px !important;
 }
+
+.pdv-origen {background-color: #f2b21b;color: #fff;padding: 0px 19px;display: inline-block;border-radius: 4px;margin: 0px 0px 8px;}
+.pdv-destino {background-color: #23a136;color: #fff;padding: 0px 19px;display: inline-block;border-radius: 4px;}
+#div-pedido-georeferencia-barrio strong {color: #d9230f;}
+.line-color {border-bottom: 1px solid #eaeaea;}
+.line-color:nth-child(odd) { background: #F0F0F0;}
+.line-color:nth-child(even) {background: #fff;}
