@@ -115,7 +115,7 @@ class FormaPago extends CActiveRecord {
     				$condiciones['condition'].= " AND ventaBodega =:formaBodega";
     				$condiciones['params'][':formaBodega'] = 1;
     			}
-    		}
+    		}break;
     		case 2:{
     			if(Yii::app()->shoppingCart->isUnitStored()){
     				$condiciones['condition'].= " AND ventaBodega =:formaBodega";

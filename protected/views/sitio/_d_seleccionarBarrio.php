@@ -15,13 +15,15 @@
                     </div>
                   </div>
                   <div class="row">
-                    
                     <div class="form-group col-md-6">
                       <input type="text" class="form-control input-sm" name="barrio" placeholder="Escribe el nombre del barrio">
                     </div>
                   </div>
+                  <div id="ubicacion-barrios-respuesta" class="row">
+                  	
+                  </div>
                 <div class="space-1"></div>
-                <button class="btn" data-role="ubicacion-barrio">Aceptar</button>
+                <button class="btn" data-role="ubicacion-barrio">Buscar</button>
                 <button class="btn" data-dismiss="modal">Cancelar</button>
               </div>
             </div>

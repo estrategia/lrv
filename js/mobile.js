@@ -141,14 +141,12 @@ $(document).on('click', 'button[data-role="seleccion-barrio"]', function() {
             url: requestUrl + '/sitio/seleccionBarrio',
             dataType: 'html',
             beforeSend: function() {
-                // $("#modal-ubicacion-barrios").remove();
                 $.mobile.loading('show');
             },
             complete: function(data) {
                 $.mobile.loading('hide');
             },
             success: function(data) {
-                console.log(data);
                 $('body').append(data);
                 $.mobile.changePage('#page-ubicacion-barrio', {transition: "pop", role: "dialog", reverse: false});
             },
@@ -180,12 +178,22 @@ $(document).on('click', 'button[data-role="ubicacion-barrio"]', function() {
             $.mobile.loading('hide');
         },
         success: function(data) {
-            $('#ubicacion-seleccion-ciudad').val(data.response.ciudad);
-            $('#ubicacion-seleccion-sector').val(data.response.sector);
-            $('#ubicacion-seleccion-direccion').val('');
-            // $('#body').append(data);
-            ubicacionSeleccion();
-            $.mobile.loading('hide');
+        	if(data.result == 'ok'){
+        		if(data.response){
+        			$('#ubicacion-seleccion-ciudad').val(data.response.ciudad);
+                    $('#ubicacion-seleccion-sector').val(data.response.sector);
+                    $('#ubicacion-seleccion-direccion').val('');
+                    ubicacionSeleccion();
+        		}else if(data.responseHTML){
+        			$('#ubicacion-barrios-respuesta').html(data.responseHTML);
+        		}else{
+        			$.mobile.loading('hide');
+        			alert("Respuesta incorrecta");
+        		}
+        	}else{
+        		$.mobile.loading('hide');
+        		alert(data.response);
+        	}
         },
         error: function(jqXHR, textStatus, errorThrown) {
             $.mobile.loading('hide');
@@ -193,6 +201,13 @@ $(document).on('click', 'button[data-role="ubicacion-barrio"]', function() {
         }
     });
     return false;
+});
+
+$(document).on('click', 'div[data-role="ubicacion-barriosOpciones"]', function(){
+	$('#ubicacion-seleccion-ciudad').val($(this).attr('data-ciudad'));
+    $('#ubicacion-seleccion-sector').val($(this).attr('data-sector'));
+    $('#ubicacion-seleccion-direccion').val('');
+    ubicacionSeleccion();
 });
 
 function ubicacionSeleccion() {

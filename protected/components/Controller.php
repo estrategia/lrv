@@ -188,8 +188,9 @@ class Controller extends CController {
             $this->sectorName = $objSectorCiudad->objCiudad->nombreCiudad;
             //if ($objSubSector != null)
             //    $this->sectorName .= " - " . $objSubSector->nombreSubSector;
-            if ($objSectorCiudad->objSector->codigoSector != 0)
-                $this->sectorName .= " - " . $objSectorCiudad->objSector->nombreSector;
+            
+            /*if ($objSectorCiudad->objSector->codigoSector != 0)
+                $this->sectorName .= " - " . $objSectorCiudad->objSector->nombreSector;*/
         }else {
             $this->sectorName = "Seleccionar ciudad";
         }

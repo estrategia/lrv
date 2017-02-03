@@ -1847,19 +1847,29 @@ $(document).on('click', 'button[data-role="ubicacion-barrio"]', function() {
         },
         dataType: 'json',
         beforeSend: function() {
-            Loading.show();
+        	//$('#ubicacion-barrios-respuesta').html('');
+        	Loading.show();
         },
         complete: function(data) {
             Loading.hide();
         },
         success: function(data) {
-            $('#ubicacion-seleccion-ciudad').val(data.response.ciudad);
-            $('#ubicacion-seleccion-sector').val(data.response.sector);
-            $('#ubicacion-seleccion-direccion').val('');
-            $('#main-page').append(data);
-            $('#modal-ubicacion-barrios').modal('show');
-            ubicacionSeleccion();
-            Loading.hide();
+        	if(data.result == 'ok'){
+        		if(data.response){
+        			$('#ubicacion-seleccion-ciudad').val(data.response.ciudad);
+                    $('#ubicacion-seleccion-sector').val(data.response.sector);
+                    $('#ubicacion-seleccion-direccion').val('');
+                    ubicacionSeleccion();
+        		}else if(data.responseHTML){
+        			$('#ubicacion-barrios-respuesta').html(data.responseHTML);
+        		}else{
+        			Loading.hide();
+        			alert("Respuesta incorrecta");
+        		}
+        	}else{
+        		Loading.hide();
+        		alert(data.response);
+        	}
         },
         error: function(jqXHR, textStatus, errorThrown) {
             Loading.hide();
@@ -1867,6 +1877,13 @@ $(document).on('click', 'button[data-role="ubicacion-barrio"]', function() {
         }
     });
     return false;
+});
+
+$(document).on('click', 'div[data-role="ubicacion-barriosOpciones"]', function(){
+	$('#ubicacion-seleccion-ciudad').val($(this).attr('data-ciudad'));
+    $('#ubicacion-seleccion-sector').val($(this).attr('data-sector'));
+    $('#ubicacion-seleccion-direccion').val('');
+    ubicacionSeleccion();
 });
 
 $(document).on('click', 'button[data-role="pasoporel-seleccion-pdv"]', function() {
