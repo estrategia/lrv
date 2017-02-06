@@ -158,7 +158,7 @@ $(document).on('click', 'a[data-role="activar-usuario"]', function () {
                 	        dataType: 'json',
                 	        async: true,
                 	        url: requestUrl + '/callcenter/cuentasInactivas/activarCuenta',
-                	        data: {identificacion: btn.attr('data-identificacion')},
+                	        data: {id: btn.attr('data-id')},
                 	        beforeSend: function () {
                 	            // detener refresh
                 	            clearTimeout(refresh);

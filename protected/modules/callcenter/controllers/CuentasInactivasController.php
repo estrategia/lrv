@@ -71,53 +71,62 @@ class CuentasInactivasController extends ControllerOperator {
     		throw new CHttpException(404, 'Solicitud inválida.');
     	}
     	
-    	$identificacionUsuario = Yii::app()->getRequest()->getPost('identificacion');
+    	$id = Yii::app()->getRequest()->getPost('id');
     	
-    	$listBloqueoUsuarios = BloqueosUsuarios::model()->findAll(array(
-    			'with' => 'objUsuario',
-    			'condition' => 'estado=:estado',
-    			'params' => array(
-    					':estado' => BloqueosUsuarios::ESTADO_BLOQUEADO,
-    			)
+    	$usuarioBloqueado = BloqueosUsuarios::model()->find(array(
+    		'with' => 'objUsuario',
+    		'condition' => 't.estado=:estado AND t.idBloqueoUsuario=:id',
+    		'params' => array(
+    			':estado' => BloqueosUsuarios::ESTADO_BLOQUEADO,
+    			':id' => $id
+    		)
     	));
     	
-    	if($listBloqueoUsuarios){
-    		
-	    		foreach($listBloqueoUsuarios as $usuarioBloqueado){
-	    			$usuarioBloqueado->estado = BloqueosUsuarios::ESTADO_DESBLOQUEADO;
-	    			$objUsuario = $usuarioBloqueado->objUsuario;
-	    			$objUsuario->activo = Usuario::ESTADO_ACTIVO;
-	    			$usuarioBloqueado->fechaActualizacion = Date("Y-m-d h:i:s");
-	    			$usuarioBloqueado->fechaDesbloqueo = $usuarioBloqueado->fechaActualizacion ;
-	    			if(!$objUsuario->save()){
-	    				echo CJSON::encode(array(
-	    						'result' => 'error',
-	    						'response' => 'Error al activar el usuario'
-	    				));
-	    				Yii::app()->end();
-	    			}
-	    			
-	    			if(!$usuarioBloqueado->save() ){
-	    				echo CJSON::encode(array(
-	    						'result' => 'error',
-	    						'response' => 'Error al activar el usuario'
-	    				));
-	    				Yii::app()->end();
-	    			}
-	    		}
-    		
-    			echo CJSON::encode(array(
-    				'result' => 'ok',
-    				'response' => 'Usuario Activado'
-    			)); 
-    	}else{
+    	if($usuarioBloqueado === null){
     		echo CJSON::encode(array(
-    				'result' => 'error',
-    				'response' => 'Usuario no existe'
+    			'result' => 'error',
+    			'response' => 'Bloqueo de usuario no existe'
     		));
     		Yii::app()->end();
     	}
     	
+    	$objUsuario = $usuarioBloqueado->objUsuario;
+    	$objUsuario->activo = Usuario::ESTADO_ACTIVO;
+    	
+    	$usuarioBloqueado->estado = BloqueosUsuarios::ESTADO_DESBLOQUEADO;
+    	$usuarioBloqueado->fechaActualizacion = Date("Y-m-d h:i:s");
+    	$usuarioBloqueado->fechaDesbloqueo = $usuarioBloqueado->fechaActualizacion;
+    	
+    	$transaction = Yii::app()->db->beginTransaction();
+ 		try {
+ 			if(!$objUsuario->save()){
+ 				throw new Exception("Error al activar el usuario");
+ 			}
+ 			
+ 			if(!$usuarioBloqueado->save() ){
+ 				throw new Exception("Error al activar bloqueo de usuario");
+ 			}
+ 			
+ 			$transaction->commit();
+ 			
+ 			echo CJSON::encode(array(
+ 				'result' => 'ok',
+ 				'response' => 'Usuario activado'
+ 			));
+ 		} catch (Exception $exc) {
+ 			Yii::log($exc->getMessage() . "\n" . $exc->getTraceAsString(), CLogger::LEVEL_ERROR, 'application');
+ 		
+ 			try {
+ 				$transaction->rollBack();
+ 			} catch (Exception $txexc) {
+ 				Yii::log($txexc->getMessage() . "\n" . $txexc->getTraceAsString(), CLogger::LEVEL_ERROR, 'application');
+ 			}
+ 			
+ 			return array(
+ 				'result' => 'error',
+ 				'response' => $exc->getMessage()
+ 			);
+ 		}    	
     }
     
     

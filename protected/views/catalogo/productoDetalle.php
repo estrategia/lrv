@@ -170,7 +170,12 @@
         <?php echo CHtml::link('Consultar precio', '#popup-consultarprecio', array('data-rel' => "popup", 'class' => 'ui-btn ui-corner-all ui-shadow ui-btn-r')); ?>
     <?php elseif ($objProducto->ventaVirtual == 1): ?>
         <?php if($objPrecio->inicializado()): ?>
-            <?php echo CHtml::link('Añadir al carro', '#', array('data-producto' => $objProducto->codigoProducto, 'data-cargar' => 1, 'class' => 'ui-btn ui-corner-all ui-shadow ui-btn-r btn_frc_add_car')); ?>
+        	<?php if($this->objSectorCiudad->esDefecto()): ?>
+				<?php echo CHtml::link('Añadir al carro', CController::createUrl('/sitio/ubicacion'), array('class' => 'ui-btn ui-corner-all ui-shadow ui-btn-r btn_frc_add_car', 'data-ajax'=>'false')); ?>
+			<?php else: ?>
+				<?php echo CHtml::link('Añadir al carro', '#', array('data-producto' => $objProducto->codigoProducto, 'data-cargar' => 1, 'class' => 'ui-btn ui-corner-all ui-shadow ui-btn-r btn_frc_add_car')); ?>
+			<?php endif;?>
+			
             <?php if (!Yii::app()->user->isGuest): ?>
                 <?php echo CHtml::link('Guardar en la lista personal', '#', array('data-role' => 'lstpersonalguardar', 'data-tipo' => 1, 'data-codigo' => $objProducto->codigoProducto, 'class' => 'ui-btn ui-corner-all ui-shadow ui-btn-n btn_add_lst_pr')); ?>
             <?php endif; ?>

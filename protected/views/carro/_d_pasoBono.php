@@ -103,13 +103,14 @@
 				    <!--  Codigos promocionales -->
 				 
        				<div class="bono">
-                        <div class="scroll-div">
+                        <div class="<?= (count($modelPago->bono)>3 ? "scroll-div" : "padding-div") ?>">
                             <div class="row" style="margin:0px;">
                                 <div class="col-md-12">
-                                    <p class="text-center text-bold">
-                                    <div id='uso-codigo-div'>
-									 	<strong>&iquest;Tienes un c&oacute;digo promocional?</strong> <a href="#" class="btn btn-primary btn-xs" data-toggle="modal" data-target="#modal-promocional">Usalo aqu&iacute;</a>
-									</div></p>
+                                    <div class="text-center text-bold">
+	                                    <div id='uso-codigo-div'>
+										 	<strong>&iquest;Tienes un c&oacute;digo promocional?</strong> <a href="#" class="btn btn-primary btn-xs" data-toggle="modal" data-target="#modal-promocional">Usalo aqu&iacute;</a>
+										</div>
+									</div>
                                 </div>
                             </div>
 

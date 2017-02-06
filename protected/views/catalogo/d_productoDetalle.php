@@ -184,7 +184,12 @@
                     <?php elseif ($objProducto->ventaVirtual == 1): ?>
                         <?php if($objPrecio->inicializado()): ?>
                             <div class="" style="margin-top: 13px;">
-                                <?php echo CHtml::link('<div class="btn btn-primary btn-block">Añadir&nbsp;<img src="' . Yii::app()->baseUrl . '/images/desktop/button-carrito.png" alt=""></div>', '#', array('data-producto' => $objProducto->codigoProducto, 'data-cargar' => 1, 'data-id' => $idUnico, 'class' => '')); ?>
+                            	<?php if($this->objSectorCiudad->esDefecto()): ?>
+			                    	<?php echo CHtml::link('<div class="btn btn-primary btn-block">Añadir&nbsp;<img src="' . Yii::app()->baseUrl . '/images/desktop/button-carrito.png" alt=""></div>', CController::createUrl('/sitio/ubicacion'), array()); ?>
+			                    <?php else: ?>
+			                    	<?php echo CHtml::link('<div class="btn btn-primary btn-block">Añadir&nbsp;<img src="' . Yii::app()->baseUrl . '/images/desktop/button-carrito.png" alt=""></div>', '#', array('data-producto' => $objProducto->codigoProducto, 'data-cargar' => 1, 'data-id' => $idUnico, 'class' => '')); ?>
+			                    <?php endif;?>
+                                
                                 <?php if (!Yii::app()->user->isGuest): ?>
                                     <?php echo "<div class='space-1'></div>" ?>
                                     <?php echo CHtml::link('<div class="btn btn-default btn-block" >Añadir a la lista</div>', '#', array('class' => '', 'data-tipo' => '1', 'data-role' => 'lstpersonalguardar', 'data-codigo' => $objProducto->codigoProducto, 'data-id' => $idUnico)); ?>

@@ -2267,6 +2267,10 @@ textarea.form-control {
     font-size: 12px;
 }
 
+.bono > .padding-div {
+    padding: 1px 5px;
+}
+
 .confirm p {
     font-size: 18px;
     color: #A4A4A4;

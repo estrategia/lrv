@@ -48,7 +48,7 @@
         array(
             'header' => '',
             'type' => 'raw',
-            'value' => 'CHtml::link("Activar", "#", array("data-ajax"=>"true", "data-identificacion" => $data->identificacionUsuario, "data-role" => "activar-usuario"))'
+            'value' => 'CHtml::link("Activar", "#", array("data-ajax"=>"true", "data-identificacion" => $data->identificacionUsuario, "data-id"=> $data->idBloqueoUsuario, "data-role" => "activar-usuario"))'
         ),
     );
     

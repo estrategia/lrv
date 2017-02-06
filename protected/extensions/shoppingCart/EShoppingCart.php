@@ -146,7 +146,7 @@ class EShoppingCart extends CMap {
             
             if ($objDomicilio !== null)
                 $this->shipping = $objDomicilio->valorDomicilio;
-                $this->shipping = 0;
+
             $this->saveStateAttributes();
         }
     }
