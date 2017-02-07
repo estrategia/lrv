@@ -2819,3 +2819,7 @@ img.ajustada {
     border-color: #EA5154;
     background-color: #EA5154;
 }
+
+.shepherd-element.shepherd-theme-default .shepherd-content footer .shepherd-buttons li .shepherd-button {
+	background-color: #c9302c !important;
+}

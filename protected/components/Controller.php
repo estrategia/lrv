@@ -112,6 +112,21 @@ class Controller extends CController {
                 $this->redirect(CController::createUrl('/'));
             }
         }
+        
+        if(!Yii::app()->user->isGuest && !isset(Yii::app()->user->shortName)){
+        	$objUsuario = Usuario::model()->find(array(
+        		'condition' => 't.identificacionUsuario=:cedula',
+        		'params' => array(
+        			':cedula' => Yii::app()->user->name
+        		)
+        	));
+        		
+        	if ($objUsuario !== null) {
+        		$nombre = explode(' ', $objUsuario->nombre);
+        		Yii::app()->user->setState('lastLoginTime', $objUsuario->fechaUltimoAcceso);
+        		Yii::app()->user->setState('shortName', $nombre[0]);
+        	}
+        }
 
         if ($this->objSectorCiudad == null) {
             $cookieSectorCiudad = _getCookie(Yii::app()->params->sesion['sectorCiudadEntrega']);
@@ -214,7 +229,7 @@ class Controller extends CController {
             Yii::app()->getClientScript()->registerScriptFile(Yii::app()->request->baseUrl . "/js/common.min.js", CClientScript::POS_HEAD);
             Yii::app()->getClientScript()->registerScriptFile(Yii::app()->request->baseUrl . "/libs/tour/tether.js", CClientScript::POS_HEAD);
             Yii::app()->getClientScript()->registerScriptFile(Yii::app()->request->baseUrl . "/libs/tour/shepherd.min.js", CClientScript::POS_HEAD);
-            Yii::app()->getClientScript()->registerScriptFile(Yii::app()->request->baseUrl . "/js/mobile.js", CClientScript::POS_HEAD);
+            Yii::app()->getClientScript()->registerScriptFile(Yii::app()->request->baseUrl . "/js/mobile.min.js", CClientScript::POS_HEAD);
         } else {
             //    Yii::app()->getClientScript()->registerScriptFile(Yii::app()->request->baseUrl . "/libs/jquery/jquery-1.10.0.min.js", CClientScript::POS_HEAD);
             Yii::app()->getClientScript()->registerScriptFile(Yii::app()->request->baseUrl . "/libs/bootstrap/js/bootstrap.min.js", CClientScript::POS_HEAD);
@@ -230,7 +245,7 @@ class Controller extends CController {
             Yii::app()->getClientScript()->registerScriptFile(Yii::app()->request->baseUrl . "/libs/tour/tether.js", CClientScript::POS_HEAD);
             Yii::app()->getClientScript()->registerScriptFile(Yii::app()->request->baseUrl . "/libs/tour/shepherd.min.js", CClientScript::POS_HEAD);
             Yii::app()->getClientScript()->registerScriptFile(Yii::app()->request->baseUrl . "/js/common.min.js", CClientScript::POS_HEAD);
-            Yii::app()->getClientScript()->registerScriptFile(Yii::app()->request->baseUrl . "/js/desktop.js", CClientScript::POS_END);
+            Yii::app()->getClientScript()->registerScriptFile(Yii::app()->request->baseUrl . "/js/desktop.min.js", CClientScript::POS_END);
             //Yii::app()->getClientScript()->registerScriptFile(Yii::app()->request->baseUrl . "/js/desktop-om.js", CClientScript::POS_END);
             //Yii::app()->getClientScript()->registerScriptFile(Yii::app()->request->baseUrl . "/js/desktop-ms.js", CClientScript::POS_END);
             //Yii::app()->getClientScript()->registerScriptFile(Yii::app()->request->baseUrl . "/js/desktop-jj.js", CClientScript::POS_END);

@@ -4,6 +4,96 @@ function alert(message) {
         }, buttons: {ok: {label: 'Aceptar', className: 'btn-danger'}}});
 }
 
+var tour;
+
+tour = new Shepherd.Tour({
+  defaults: {
+    classes: 'shepherd-theme-default',
+    scrollTo: true
+  }
+});
+
+tour.addStep('selecciona-ciudad', {
+  text: 'Seleciona la ciudad donde te encuentras.',
+  attachTo: '#select-ubicacion-psubsector bottom',
+  buttons: [
+    {
+      text: 'Siguiente',
+      action: tour.next
+    }
+  ]
+});
+
+tour.addStep('arrastra-mapa', {
+  text: 'Arrastra el mapa y ubica el marcador en el lugar donde te encuentras.',
+  attachTo: '#map .gmnoprint img bottom',
+  when: {
+      show: function() {
+    	  resizingMap();
+    	  locationMarker.setPosition(map.getCenter());
+      }
+  },
+  buttons: [
+    {
+      text: 'Siguiente',
+      action: tour.next
+    }
+  ]
+});
+
+// #gmimap0 top
+//'#map .gmnoprint img bottom',
+tour.addStep('confirma-ubicacion', {
+  text: 'Para finalizar presiona el boton confirmar.',
+  attachTo: '#confirma-ubicacion top',
+  buttons: [
+    {
+      text: 'Finalizar',
+      action: tour.next
+    }
+  ]
+});
+
+var tourAuto;
+
+tourAuto = new Shepherd.Tour({
+  defaults: {
+    classes: 'shepherd-theme-default',
+    scrollTo: true
+  }
+});
+
+tourAuto.addStep('arrastra-mapa', {
+  text: 'Arrastra el mapa y ubica el marcador en el lugar donde te encuentras.',
+  attachTo: '#map .gmnoprint img bottom',
+  buttons: [
+    {
+      text: 'Siguiente',
+      action: tourAuto.next
+    }
+  ]
+});
+
+tourAuto.addStep('confirma-ubicacion', {
+  text: 'Para finalizar presiona el boton confirmar.',
+  attachTo: '#confirma-ubicacion top',
+  buttons: [
+    {
+      text: 'Finalizar',
+      action: tourAuto.next
+    }
+  ]
+});
+
+function iniciarTour(ubicacion) {
+    if (ubicacion == 0) {
+        tour.start();
+    }
+    if (ubicacion == 1) {
+        tourAuto.start();
+    }
+}
+
 /* 
  * To change this license header, choose License Headers in Project Properties.
  * To change this template file, choose Tools | Templates
@@ -1807,7 +1897,8 @@ function setCoords(pos) {
 
 $(document).on('click', 'button[data-role="seleccion-barrio"]', function() {
     if($('#modal-ubicacion-barrios').length > 0) {
-        $('#modal-ubicacion-barrios').modal('show');        
+    	$('#ubicacion-barrios-respuesta').html("");
+        $('#modal-ubicacion-barrios').modal('show');      
     } else {
         $.ajax({
             type: 'GET',
@@ -1823,6 +1914,7 @@ $(document).on('click', 'button[data-role="seleccion-barrio"]', function() {
             },
             success: function(data) {
                 $('#main-page').append(data);
+                $('#selector-ciudad').select2();
                 $('#modal-ubicacion-barrios').modal('show');
             },
             error: function(jqXHR, textStatus, errorThrown) {
@@ -1879,11 +1971,12 @@ $(document).on('click', 'button[data-role="ubicacion-barrio"]', function() {
     return false;
 });
 
-$(document).on('click', 'div[data-role="ubicacion-barriosOpciones"]', function(){
+$(document).on('click', 'a[data-role="ubicacion-barriosOpciones"]', function(){
 	$('#ubicacion-seleccion-ciudad').val($(this).attr('data-ciudad'));
     $('#ubicacion-seleccion-sector').val($(this).attr('data-sector'));
     $('#ubicacion-seleccion-direccion').val('');
     ubicacionSeleccion();
+    return false;
 });
 
 $(document).on('click', 'button[data-role="pasoporel-seleccion-pdv"]', function() {
@@ -2022,6 +2115,7 @@ $(document).on('click', 'button[data-role="ubicacion-mapa"]', function() {
                         map.setZoom(6);
                         resizeMap();
                         Loading.hide();
+                        setTimeout( function(){iniciarTour(0);} , 1000);
                     }).fail(function(jqxhr, settings, exception) {
                         Loading.hide();
                         alert("Error al inicializar mapa: " + exception);
@@ -2820,85 +2914,3 @@ $(document).on('click', "button[data-role='codigo-promocional']", function() {
     });
     return false;
 });
-
-var tour;
-
-tour = new Shepherd.Tour({
-  defaults: {
-    classes: 'shepherd-theme-default',
-    scrollTo: true
-  }
-});
-
-tour.addStep('selecciona-ciudad', {
-  text: 'Seleciona la ciudad donde te encuentras.',
-  attachTo: '#select-ubicacion-psubsector bottom',
-  buttons: [
-    {
-      text: 'Siguiente',
-      action: tour.next
-    }
-  ]
-});
-
-tour.addStep('arrastra-mapa', {
-  text: 'Arrastra el mapa y ubica el marcador en el lugar donde te encuentras.',
-  attachTo: '#map bottom',
-  buttons: [
-    {
-      text: 'Siguiente',
-      action: tour.next
-    }
-  ]
-});
-
-tour.addStep('confirma-ubicacion', {
-  text: 'Para finalizar presiona el boton confirmar.',
-  attachTo: '#confirma-ubicacion top',
-  buttons: [
-    {
-      text: 'Finalizar',
-      action: tour.next
-    }
-  ]
-});
-
-var tourAuto;
-
-tourAuto = new Shepherd.Tour({
-  defaults: {
-    classes: 'shepherd-theme-default',
-    scrollTo: true
-  }
-});
-
-tourAuto.addStep('arrastra-mapa', {
-  text: 'Arrastra el mapa y ubica el marcador en el lugar donde te encuentras.',
-  attachTo: '#map bottom',
-  buttons: [
-    {
-      text: 'Siguiente',
-      action: tourAuto.next
-    }
-  ]
-});
-
-tourAuto.addStep('confirma-ubicacion', {
-  text: 'Para finalizar presiona el boton confirmar.',
-  attachTo: '#confirma-ubicacion top',
-  buttons: [
-    {
-      text: 'Finalizar',
-      action: tourAuto.next
-    }
-  ]
-});
-
-function iniciarTour(ubicacion) {
-    if (ubicacion == 0) {
-        tour.start();
-    }
-    if (ubicacion == 1) {
-        tourAuto.start();
-    }
-}

@@ -10,12 +10,11 @@
             </select>
             <input type="text" name="barrio" placeholder="Escribe el nombre del barrio">
             <div id="ubicacion-barrios-respuesta">
-                  	
             </div>
         </div>
         <div class="page-footer center">
           <button class="ui-btn ui-btn-r ui-corner-all ui-shadow" data-role="ubicacion-barrio">Buscar</button>
-          <a href="" class="ui-btn ui-btn-r ui-corner-all ui-shadow" data-rel="back">Cancelar</a>
+          <a href="" class="ui-btn ui-btn-n ui-corner-all ui-shadow" data-rel="back">Cancelar</a>
         </div>
     </div>
 </div>
