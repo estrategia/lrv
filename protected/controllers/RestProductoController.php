@@ -57,7 +57,6 @@
             ));
 
       $objPrecio = new PrecioProducto($objProducto, $objSectorCiudad, Yii::app()->params->perfil['defecto']);
-
       // CVarDumper::dump($objProducto,10,true);
 
       $codigoEspecial = '';
@@ -114,8 +113,8 @@
         'precioUnidad' => $precioUnidad,
         'precioFraccion' => $precioFraccion,
         'fraccion' => $fraccion,
+        'codigoProveedor' => $objProducto->codigoProveedor,
       );
-
       echo CJSON::encode($productoResponse);
     }
 
