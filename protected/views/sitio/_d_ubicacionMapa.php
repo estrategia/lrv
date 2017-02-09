@@ -2,7 +2,7 @@
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">
-                <button onclick="iniciarTour(0)" class="btn btn-default float-right">?</button>
+                <button onclick="iniciarTour(1)" class="btn btn-default float-right">?</button>
                 <h1 class="modal-title center">Ubica en el mapa el lugar donde deseas que entreguemos el pedido</h1>
                 <div class="space-1"></div>
                     <div id="select-ubicacion-content" style="width: 50%;" class="center-div">
@@ -20,7 +20,7 @@
                 <div class="map-content" id="map"></div>
             </div>
             <div class="modal-footer center">
-                <button type="button" class="btn btn-default" data-dismiss="modal" >Cancelar</button>
+                <button type="button" class="btn btn-default" data-dismiss="modal" onclick="cerrarTour()">Cancelar</button>
                 <button id="confirma-ubicacion" type="button" class="btn btn-primary" data-role="ubicacion-seleccion-mapa">Confirmar ubicaci&oacute;n</button>
             </div>
         </div>

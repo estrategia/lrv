@@ -3,6 +3,10 @@ function alert(message) {
     bootbox.alert({message: message, callback: function() {
         }, buttons: {ok: {label: 'Aceptar', className: 'btn-danger'}}});
 }
+var tipoTour = 0;
+// Determinan si se ha iniciado el tour por primera vez
+var tourIniGps = true; 
+var tourIniMap = true;
 
 var tour;
 
@@ -85,14 +89,35 @@ tourAuto.addStep('confirma-ubicacion', {
   ]
 });
 
-function iniciarTour(ubicacion) {
-    if (ubicacion == 0) {
+function iniciarTour() {
+    if (tipoTour == 0) {
         tour.start();
     }
-    if (ubicacion == 1) {
+    if (tipoTour == 1) {
         tourAuto.start();
     }
 }
+
+function cerrarTour() {
+    tour.complete();
+    tourAuto.complete();
+}
+
+$(document).on('click', 'button[data-role = "ubicacion-gps"]', function () {
+    tipoTour = 1;
+});
+$(document).on('click', 'button[data-role = "ubicacion-mapa"]', function () {
+    tipoTour = 0;
+});
+// $('#modal-ubicacion-map').on('shown.bs.modal', function () {
+//     alert("hola");
+//     if (tipoTour == 0) {
+//         tourIniMap ? setTimeout(function() {iniciarTour();} , 1000) : tourIniMap = false;
+//     }
+//     if (tipoTour == 1) {
+//         tourIniGps ? setTimeout(function() {iniciarTour();} , 1000) : tourIniGps = false;
+//     }
+// });
 
 /* 
  * To change this license header, choose License Headers in Project Properties.
@@ -1752,6 +1777,12 @@ function ubicacionGPS() {
     if (navigator.geolocation) {
         Loading.show();
         navigator.geolocation.getCurrentPosition(setCoords, errorPosicion, {'enableHighAccuracy': true, 'timeout': 30000, 'maximumAge': 0});
+        if (tourIniGps) {
+            setTimeout(function() {
+                iniciarTour();
+            } , 1000);
+            tourIniGps = false;
+        }
     } else {
         alert("Servicio no soportado por este navegador.");
     }
@@ -1846,6 +1877,7 @@ function setCoords(pos) {
     }
     if ($('#modal-ubicacion-map').length > 0) {
         $('#modal-ubicacion-map').modal('show');
+        tourIniMap ? setTimeout(function() {iniciarTour();} , 1000) : tourIniMap = false;
         var pt = new google.maps.LatLng(lat, lng);
         map.setCenter(pt);
         map.setZoom(12);
@@ -1875,6 +1907,7 @@ function setCoords(pos) {
                         map.setZoom(12);
                         // resizeMap();
                         // console.log(centro);
+                        tourIniMap ? setTimeout(function() {iniciarTour();} , 1000) : tourIniMap = false;
                         Loading.hide();
                     }).fail(function(jqxhr, settings, exception) {
                         Loading.hide();
@@ -2093,6 +2126,12 @@ $(document).on('click', 'button[data-role="ubicacion-mapa"]', function() {
         map.setCenter(pt);
         map.setZoom(6);
         resizeMap();
+        if (tourIniMap) {
+            setTimeout(function() {
+                iniciarTour();
+            } , 1000);
+            tourIniMap = false;
+        }
     } else {
         $.ajax({
             type: 'POST',
@@ -2114,8 +2153,13 @@ $(document).on('click', 'button[data-role="ubicacion-mapa"]', function() {
                         map.setCenter(pt);
                         map.setZoom(6);
                         resizeMap();
+                        if (tourIniMap) {
+                            setTimeout(function() {
+                                iniciarTour();
+                            } , 1000);
+                            tourIniMap = false;
+                        }
                         Loading.hide();
-                        setTimeout( function(){iniciarTour(0);} , 1000);
                     }).fail(function(jqxhr, settings, exception) {
                         Loading.hide();
                         alert("Error al inicializar mapa: " + exception);
@@ -2161,6 +2205,12 @@ $(document).on('click', 'button[data-role="ubicacion-seleccion-mapa"]', function
 
                 $('#div-ubicacion-tipoubicacion > button').removeClass('activo').addClass('inactivo');
                 $('#div-ubicacion-tipoubicacion > button[data-role="ubicacion-mapa"]').removeClass('inactivo').addClass('activo');
+                if (tourIniGps) {
+                    setTimeout(function() {
+                        iniciarTour();
+                    } , 1000);
+                    tourIniGps = false;
+                }
                 ubicacionSeleccion();
             } else {
                 if (data.responseModal) {
