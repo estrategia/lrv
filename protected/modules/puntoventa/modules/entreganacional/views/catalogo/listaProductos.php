@@ -17,7 +17,7 @@
                            <?php $formSort = "<div class='col-md-2'>
 							<div class='option-list'>
                                 Productos por página
-                                <select name='items-page' class='form-control ciudades' id='items-page' onchange='actualizarNumerosPagina()'>";?>
+                                <select name='items-page' class='form-control' id='items-page' onchange='actualizarNumerosPagina()'>";?>
                                     <?php foreach (Yii::app()->params->busqueda['productosPorPagina'][$cantidadItems] as $pagina): ?>
                                      <?php  $formSort .= "<option value='$pagina' ".(($dataprovider != null && $dataprovider->getPagination()->getPageSize() == $pagina) ? "selected" : "")." >$pagina</option>";?>
                                     <?php endforeach; ?>
@@ -43,12 +43,21 @@
                             'dataProvider' => $dataprovider,
                             //'template' => "{items}\n{pager}",
                             //'summaryText' => "{start} - {end} из {count}",
-                            'template' => "<div class='row'><div class='col-md-4'></div><div class='col-md-2'>{summary}</div> $formSort <div class='col-md-2 menu-bar' data-role='filtros'><span class='glyphicon glyphicon-th-list'></span></div> </div><ul class='listaProductos'>{items}</ul><div class='clear'></div>{pager}",
+                            'template' => " <div class='row' style='margin-bottom: 25px;'>
+                                              <div class='col-md-1 col-md-offset-4'></div>
+                                    			     $formSort
+                                    				   <div style='margin-top: 20px;' class='menu-bar' data-role='filtros'>
+                                    				       <span class='glyphicon glyphicon-th-list'></span>
+                                    				   </div
+                                               <div class='col-md-3'>{summary}</div>
+                            				        </div>
+                                            <ul class='listaProductos'>{items}</ul>
+                            				{pager}",
                             'itemsCssClass' => "items items$cantidadItems",
                             'itemView' => '_productoElemento',
                             'beforeAjaxUpdate' => new CJavaScriptExpression("function() {Loading.show();}"),
                             'afterAjaxUpdate' => new CJavaScriptExpression("function(id,data) { $('html, body').animate({ scrollTop: 0 }, 600);
-                                                        Loading.hide(); raty();$('[data-toggle=\"popover\"]').popover(); 
+                                                        Loading.hide(); raty();$('[data-toggle=\"popover\"]').popover();
                             							$('.menu-bar').on('click', function(){
 															$('.sidebar').addClass('mostrar');
 														});

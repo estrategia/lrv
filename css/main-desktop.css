@@ -1,14 +1,14 @@
 @font-face {
-    font-family: harabara;  
-    src: local('harabara'), 
-        url("fonts/harabara.ttf") format('truetype');  
-    font-weight: normal;  
+    font-family: harabara;
+    src: local('harabara'),
+        url("fonts/harabara.ttf") format('truetype');
+    font-weight: normal;
 }
 @font-face {
-    font-family: geneva;  
-    src: local('geneva'), 
-        url("fonts/geneva.ttf") format('truetype');  
-    font-weight: normal;  
+    font-family: geneva;
+    src: local('geneva'),
+        url("fonts/geneva.ttf") format('truetype');
+    font-weight: normal;
 }
 .not_margin {
     margin: 0;
@@ -1083,6 +1083,8 @@ input#RegistroForm_condiciones[type="checkbox"] + label span {
     vertical-align: top;
     width: 24%;
 }
+.listaProductos .items li::before{content: "";width: 100%;height:2px;/*background-color: #CCCCCC*/;position: absolute;}
+
 .listaProductos .items.items3 li{
     width: 32%;
 }
@@ -1336,7 +1338,7 @@ header {
 }
 .cantidad-productos{
     border: 1px solid #A3A3A3;
-    border-radius:4px; 
+    border-radius:4px;
     padding: 5px;
     color: #EA0001;
     font-weight: bolder;
@@ -1370,11 +1372,11 @@ header {
 }
 
 .carousel .item {
-    width: 100%; 
-    max-height: 600px; 
+    width: 100%;
+    max-height: 600px;
 }
 .carousel .item img {
-    width: 100%; 
+    width: 100%;
 }
 
 .carousel .carousel-control {
@@ -1453,7 +1455,7 @@ header {
 }
 
 footer{
-    border-top:5px solid #EA0001; 
+    border-top:5px solid #EA0001;
     background-color: #6F6F6F;
     color: #fff;
 }
@@ -1665,7 +1667,7 @@ footer li a:hover{
 }
 .button:hover{
     cursor: pointer;
-    background-color:#E0151D; 
+    background-color:#E0151D;
 }
 .button-lista {
     background-color: #FE9A2E;
@@ -1728,11 +1730,11 @@ footer li a:hover{
     padding: 0;
 }
 /*.breadcrumb{
-    background-color:#fff; 
+    background-color:#fff;
     padding: 20px 63px;
 }*/
 .breadcrumb{
-    background-color:#fff; 
+    background-color:#fff;
     padding: 10px 0;
     margin-bottom: 0;
     border-radius: 0;
@@ -2265,6 +2267,10 @@ textarea.form-control {
     font-size: 12px;
 }
 
+.bono > .padding-div {
+    padding: 1px 5px;
+}
+
 .confirm p {
     font-size: 18px;
     color: #A4A4A4;
@@ -2343,7 +2349,7 @@ textarea.form-control {
 
 
 .list-view .items-float .view
-{       
+{
     width: 200px;
     height: 200px;
     float:left;   /* <--- this will make the items float */
@@ -2452,7 +2458,7 @@ ul.yiiPager .selected a {
 }
 
 .elemento-interior{
-    border: 1px dashed #ddd; 
+    border: 1px dashed #ddd;
     background-color: white;
 }
 
@@ -2567,10 +2573,10 @@ a.clst_slct_prod.active{display: inline-block !important;}
 }
 
 .modal.map .modal-footer {
-    position:absolute; 
-    z-index:9999; 
-    bottom: 10px; 
-    width:100%; 
+    position:absolute;
+    z-index:9999;
+    bottom: 10px;
+    width:100%;
     height:50px;
     border: none;
 }
@@ -2625,7 +2631,7 @@ img.ajustada {
 #form-direccion-pagoinvitado .control-label {
     padding-right: 0;
 }
-@media (max-width: 1260px) { 
+@media (max-width: 1260px) {
     .user {
         margin-left: -22px;
     }
@@ -2687,7 +2693,7 @@ img.ajustada {
         margin-left: -22px;
     }
 }
-@media (min-width: 768px) and (max-width: 991px) { 
+@media (min-width: 768px) and (max-width: 991px) {
     .navbar-brand {
         display: block;
         float: none;
@@ -2734,7 +2740,7 @@ img.ajustada {
         margin-left: -22px;
     }
 }
-@media (min-width: 992px) and (max-width: 1199px) { 
+@media (min-width: 992px) and (max-width: 1199px) {
     .info-compra {
         font-size: 13px;
     }
@@ -2746,7 +2752,7 @@ img.ajustada {
     }
 }
 
-@media (min-width: 1200px) { 
+@media (min-width: 1200px) {
 }
 
 .cuidado-personal > .right-nav{
@@ -2812,4 +2818,8 @@ img.ajustada {
 .boton-tipo-ubicacion .rojo {
     border-color: #EA5154;
     background-color: #EA5154;
+}
+
+.shepherd-element.shepherd-theme-default .shepherd-content footer .shepherd-buttons li .shepherd-button {
+	background-color: #c9302c !important;
 }

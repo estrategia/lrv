@@ -7,10 +7,18 @@
         <div class="blocktipoentrega">
             <div id="div-ubicacion-tipoubicacion" class="text-center">
                 <div class="tipo-ubicacion">
-                    <button class="boton-tipo-ubicacion" data-role="ubicacion-direccion">
-                        <img src=" <?php echo Yii::app()->request->baseUrl . '/images/iconos/ubicacion-desktop/direcciones.png' ?> " alt="">
-                        <span class="amarillo">Direcciones</span>
-                    </button>
+                	<?php if (Yii::app()->user->isGuest): ?>
+                		<button class="boton-tipo-ubicacion" style="opacity:0.3; cursor: default;">
+	                        <img src=" <?php echo Yii::app()->request->baseUrl . '/images/iconos/ubicacion-desktop/direcciones.png' ?> " alt="">
+	                        <span class="amarillo">Direcciones</span>
+	                    </button>
+                	<?php else: ?>
+                		<button class="boton-tipo-ubicacion" data-role="ubicacion-direccion">
+	                        <img src=" <?php echo Yii::app()->request->baseUrl . '/images/iconos/ubicacion-desktop/direcciones.png' ?> " alt="">
+	                        <span class="amarillo">Direcciones</span>
+	                    </button>
+                	<?php endif;?>
+                    
                     <button class="boton-tipo-ubicacion" data-role="seleccion-barrio">
                         <img src=" <?php echo Yii::app()->request->baseUrl . '/images/iconos/ubicacion-desktop/barrio.png' ?> " alt="">
                         <span class="azul">Ubicar por barrio</span>

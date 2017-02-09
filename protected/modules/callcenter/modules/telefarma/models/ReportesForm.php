@@ -14,7 +14,7 @@ class ReportesForm extends CFormModel {
 	public function rules() {
 		// Yii::log("validacion 0\n", CLogger::LEVEL_INFO, 'application');
 		$rules = array ( array('fechaInicio, fechaFin', 'required'));
-		// $rules[] = array('busqueda', 'minLength' => 3, 'message' => 'Mínimo 3 letras');
+		// $rules[] = array('busqueda', 'minLength' => 3, 'message' => 'Minimo 3 letras');
 
 		return $rules;
 	}

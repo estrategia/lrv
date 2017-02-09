@@ -6,7 +6,7 @@
         <meta name="language" content="es" />
         <meta charset="utf-8" />
 
-        <link rel="shortcut icon" href="<?php echo Yii::app()->request->baseUrl; ?>/images/favicon_16.ico" type="image/x-icon" /> 
+        <link rel="shortcut icon" href="<?php echo Yii::app()->request->baseUrl; ?>/images/favicon_16.ico" type="image/x-icon" />
         <title><?php echo CHtml::encode($this->pageTitle); ?></title>
         <script>requestUrl = "<?php echo Yii::app()->request->baseUrl; ?>";</script>
         <link id="bs-css" href="<?php echo Yii::app()->request->baseUrl; ?>/libs/charisma/css/bootstrap-simplex.min.css" rel="stylesheet" />
@@ -21,17 +21,34 @@
 
     <body>
         <div role="navigation" class="navbar navbar-default">
-            <div class="navbar-inner">
+            <div class="navbar-inner row">
+            <div class='col-md-2'>
                 <button class="navbar-toggle pull-left animated flip" type="button">
                     <span class="sr-only">Toggle navigation</span>
                     <span class="icon-bar"></span>
                     <span class="icon-bar"></span>
                     <span class="icon-bar"></span>
                 </button>
-                <a href="#" class="navbar-brand"> 
-                    <img class="hidden-xs" src="<?php echo Yii::app()->request->baseUrl; ?>/images/logo_lrv.png" alt="La Rebaja Virtual Logo" />
+                <a href="#" class="navbar-brand">
+                    <img class="hidden-xs" src="<?php echo Yii::app()->request->baseUrl; ?>/images/<?php echo (isset($this->urlLogo)?$this->urlLogo:"logo_lrv.png")?>" alt="La Rebaja Virtual Logo" />
                 </a>
-                <div class="btn-group pull-right">
+             </div>
+             <div class='col-md-9'>
+                <div class="btn-group pull-left">
+	                <?php if(isset($this->objCiudadSectorOrigen)):?>
+                    <div class="pdv-origen">
+                      <strong><span class="glyphicon glyphicon-map-marker"></span>  PDV Origen: </strong> <?php echo $this->objPuntoVentaOrigen->idComercial ?>- <?php echo $this->objPuntoVentaOrigen->nombrePuntoDeVenta ?>
+                    </div>
+	                <?php endif;?>
+	                <?php if(isset($this->objCiudadSectorDestino)):?>
+                    <div class="pdv-destino">
+                      <strong><span class="glyphicon glyphicon-send"></span> PDV Destino: </strong> <?php echo $this->objPuntoVentaDestino->idComercial ?>- <?php echo $this->objPuntoVentaDestino->nombrePuntoDeVenta ?>
+                    </div>
+	                <?php endif;?>
+                </div>
+             </div>
+             <div class='col-md-1'>
+                <div class="btn-group pull-right bottom-aligned">
                     <button data-toggle="dropdown" class="btn btn-default dropdown-toggle">
                         <i class="glyphicon glyphicon-user"></i><span class="hidden-sm hidden-xs"><?php echo Yii::app()->controller->module->user->shortName ?></span>
                         <span class="caret"></span>
@@ -40,13 +57,12 @@
                         <li><?php echo CHtml::link('Cambiar clave', $this->createUrl('/puntoventa/usuario/clave')) ?></li>
                         <li><?php echo CHtml::link('Salir', $this->createUrl('/puntoventa/usuario/salir')) ?></li>
                     </ul>
-
                 </div>
+               </div>
             </div>
         </div>
 
         <div id="container" class="ch-container">
-
             <div id="div-menu-callcenter" class="col-sm-2 col-lg-2">
                 <div class="sidebar-nav">
                     <div class="nav-canvas">
@@ -55,9 +71,6 @@
                         <ul class="nav nav-pills nav-stacked main-menu">
                             <?php // if (in_array(Yii::app()->controller->module->user->profile, array(1, 2))): ?>
                             <li class="nav-header">Subasta</li>
-                            <li class="">
-                                <a href="<?php echo $this->createUrl('/puntoventa/subasta') ?>" class="ajax-link"><i class="glyphicon glyphicon-home"></i><span> Panel de control</span></a>
-                            </li>
                             <li class="">
                                 <a href="<?php echo $this->createUrl('/puntoventa/subasta/admin/pedidos') ?>" class="ajax-link" target="_blank"><i class="glyphicon glyphicon-list-alt"></i><span> Pedidos</span></a>
                             </li>

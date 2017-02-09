@@ -6,6 +6,54 @@ function alerta(mensaje) {
 
 intervalRelacionados = null;
 
+var tour;
+
+tour = new Shepherd.Tour({
+  defaults: {
+    classes: 'shepherd-theme-default',
+    scrollTo: true
+  }
+});
+
+tour.addStep('selecciona-ciudad', {
+  text: 'Seleciona la ciudad donde te encuentras.',
+  attachTo: '#select-ubicacion-psubsector bottom',
+  buttons: [
+    {
+      text: 'Siguiente',
+      action: tour.next
+    }
+  ]
+});
+
+tour.addStep('arrastra-mapa', {
+  text: 'Arrastra el mapa y ubica el marcador en el lugar donde te encuentras.',
+  attachTo: '#map .gmnoprint img bottom',
+  when: {
+      show: function() {
+    	  resizingMap();
+    	  locationMarker.setPosition(map.getCenter());
+      }
+  },
+  buttons: [
+    {
+      text: 'Siguiente',
+      action: tour.next
+    }
+  ]
+});
+
+tour.addStep('confirma-ubicacion', {
+  text: 'Para finalizar presiona el boton confirmar.',
+  attachTo: '#confirma-ubicacion top',
+  buttons: [
+    {
+      text: 'Finalizar',
+      action: tour.next
+    }
+  ]
+});
+
 function animarRelacionado() {
     $("html, body").animate({scrollTop: 0}, 600);
     $("#link-relacionados-agregar").css("opacity", "");
@@ -133,6 +181,7 @@ $(document).on('click', 'a[data-role="ubicacion-seleccion-mapa"]', function () {
 
 $(document).on('click', 'button[data-role="seleccion-barrio"]', function() {
     if ($('#page-ubicacion-barrio').length > 0) {
+    	$('#ubicacion-barrios-respuesta').html("");
         $.mobile.changePage('#page-ubicacion-barrio', {transition: "pop", role: "dialog", reverse: false});
     } else {
         $.ajax({
@@ -141,14 +190,12 @@ $(document).on('click', 'button[data-role="seleccion-barrio"]', function() {
             url: requestUrl + '/sitio/seleccionBarrio',
             dataType: 'html',
             beforeSend: function() {
-                // $("#modal-ubicacion-barrios").remove();
                 $.mobile.loading('show');
             },
             complete: function(data) {
                 $.mobile.loading('hide');
             },
             success: function(data) {
-                console.log(data);
                 $('body').append(data);
                 $.mobile.changePage('#page-ubicacion-barrio', {transition: "pop", role: "dialog", reverse: false});
             },
@@ -180,18 +227,37 @@ $(document).on('click', 'button[data-role="ubicacion-barrio"]', function() {
             $.mobile.loading('hide');
         },
         success: function(data) {
-            $('#ubicacion-seleccion-ciudad').val(data.response.ciudad);
-            $('#ubicacion-seleccion-sector').val(data.response.sector);
-            $('#ubicacion-seleccion-direccion').val('');
-            // $('#body').append(data);
-            ubicacionSeleccion();
-            $.mobile.loading('hide');
+        	if(data.result == 'ok'){
+        		if(data.response){
+        			$('#ubicacion-seleccion-ciudad').val(data.response.ciudad);
+                    $('#ubicacion-seleccion-sector').val(data.response.sector);
+                    $('#ubicacion-seleccion-direccion').val('');
+                    ubicacionSeleccion();
+        		}else if(data.responseHTML){
+        			$('#ubicacion-barrios-respuesta').html(data.responseHTML);
+        			$('#ubicacion-barrios-respuesta').trigger("create");
+        		}else{
+        			$.mobile.loading('hide');
+        			alert("Respuesta incorrecta");
+        		}
+        	}else{
+        		$.mobile.loading('hide');
+        		alert(data.response);
+        	}
         },
         error: function(jqXHR, textStatus, errorThrown) {
             $.mobile.loading('hide');
             alert('Error: ' + errorThrown);
         }
     });
+    return false;
+});
+
+$(document).on('click', 'a[data-role="ubicacion-barriosOpciones"], li[data-role="ubicacion-barriosOpciones"]', function(){
+	$('#ubicacion-seleccion-ciudad').val($(this).attr('data-ciudad'));
+    $('#ubicacion-seleccion-sector').val($(this).attr('data-sector'));
+    $('#ubicacion-seleccion-direccion').val('');
+    ubicacionSeleccion();
     return false;
 });
 
@@ -229,7 +295,6 @@ function ubicacionSeleccion() {
         }
     });
 }
-;
 
 $(document).on('change', 'select[data-role="ciudad-despacho-map"]', function () {
     var val = $(this).val().trim();
@@ -303,6 +368,7 @@ $(document).on('click', 'button[data-role="ubicacion-mapa"]', function () {
                         $.mobile.changePage('#page-ubicacion-map', {transition: "pop", role: "dialog", reverse: false});
                         resizeMap();
                         $.mobile.loading('hide');
+                        setTimeout( function(){tour.start();} , 2000);
                     }).fail(function (jqxhr, settings, exception) {
                         $.mobile.loading('hide');
                         alert("Error al inicializar mapa: " + exception);
@@ -2487,46 +2553,4 @@ $(document).on('click', "a[data-role='usar-codigo']", function() {
 	    }
 	    
 	});
-});
-
-var tour;
-
-tour = new Shepherd.Tour({
-  defaults: {
-    classes: 'shepherd-theme-default',
-    scrollTo: true
-  }
-});
-
-tour.addStep('selecciona-ciudad', {
-  text: 'Seleciona la ciudad donde te encuentras.',
-  attachTo: '#select-ubicacion-psubsector bottom',
-  buttons: [
-    {
-      text: 'Siguiente',
-      action: tour.next
-    }
-  ]
-});
-
-tour.addStep('arrastra-mapa', {
-  text: 'Arrastra el mapa y ubica el marcador en el lugar donde te encuentras.',
-  attachTo: '#map bottom',
-  buttons: [
-    {
-      text: 'Siguiente',
-      action: tour.next
-    }
-  ]
-});
-
-tour.addStep('confirma-ubicacion', {
-  text: 'Para finalizar presiona el boton confirmar.',
-  attachTo: '#confirma-ubicacion top',
-  buttons: [
-    {
-      text: 'Finalizar',
-      action: tour.next
-    }
-  ]
 });

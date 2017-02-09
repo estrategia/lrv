@@ -35,7 +35,7 @@ $this->widget('zii.widgets.grid.CGridView', array(
             'value' => '$data->institucion',
         ),
         array(
-            'header' => "Teléfono",
+            'header' => "Telefono",
             'value' => '$data->telefono',
         ),
         array(

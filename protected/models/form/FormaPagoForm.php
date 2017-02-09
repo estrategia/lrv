@@ -574,7 +574,7 @@ class FormaPagoForm extends CFormModel {
                                 if (!$objBonoTienda->save()) {
                                     Yii::log("ActualizarBono-Tienda: cambio estado [idCompra: $objCompra->idCompra -- idbono: $idx -- idUsuario: $objCompra->identificacionUsuario]\n" . CActiveForm::validate($objBonoTienda), CLogger::LEVEL_INFO, 'application');
                                 }
-                                // a�adir Bono en forma de pago
+                                // anadir Bono en forma de pago
                                 
                                 $objFormaPagoBono = new FormasPago;
                                 $objFormaPagoBono->valor = $objBonoTienda->valor;

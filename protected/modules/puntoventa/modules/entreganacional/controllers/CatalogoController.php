@@ -6,6 +6,7 @@ class CatalogoController extends ControllerEntregaNacional {
 		return array(
 				//'access',
 				'login + buscar, producto, bodega',
+				'entrega + buscar',
 				//'loginajax + direccionActualizar',
 		);
 	}
@@ -13,6 +14,13 @@ class CatalogoController extends ControllerEntregaNacional {
 	public function filterLogin($filter) {
 		if (Yii::app()->controller->module->user->isGuest) {
 			$this->redirect(Yii::app()->controller->module->user->loginUrl);
+		}
+		$filter->run();
+	}
+	
+	public function filterEntrega($filter) {
+		if (!$this->objCiudadSectorDestino) {
+			$this->redirect(CController::createUrl('pedido/ubicacion'));
 		}
 		$filter->run();
 	}
@@ -33,7 +41,7 @@ class CatalogoController extends ControllerEntregaNacional {
         $codigosArray = GSASearch($term, $sesion);
         $objSectorCiudadOrigen = $this->objCiudadSectorOrigen;
         $codigoPerfil = Yii::app()->params->perfil['defecto'];
-
+		
         if (empty($codigosArray)) {
             $this->render('listaProductos', array(
                 'msgCodigoEspecial' => array(),
@@ -163,45 +171,67 @@ class CatalogoController extends ControllerEntregaNacional {
         	 
         	$puntoVenta = null;
         	if (!empty($puntosVenta)) {
-        		foreach ($puntosVenta[1] as $pdv) {
-        		//	if ($pdv[1] == $pdvDestino->idComercial) {
-        			$puntoVenta = $pdv;
-        			break;
-        		//	}
-        		}
-        	
-        		foreach($puntoVenta[4] as $saldos){
-        			$listaProductosSaldos[$saldos->CODIGO_PRODUCTO] = $saldos->SALDO;
-        		}
-        		
-        		foreach ($listProductos as $producto){
-        			if(isset($listaProductosSaldos[$producto->codigoProducto]) ){
-        				if($listaProductosSaldos[$producto->codigoProducto] > 0){
-        					$producto->saldosDisponibles = $listaProductosSaldos[$producto->codigoProducto];
-        					$resultadoFinal[] = $producto;
-        				}
-        			}
-        		}
-        		
-        		$pagina = 24;
-        		if (isset($_GET['pageSize']) and is_numeric($_GET['pageSize'])) {
-        			$pagina = $_GET['pageSize'];
-        		}
-        		
-        		if (!empty($listProductos)) {
-        			$dataProvider = new CArrayDataProvider($listProductos, array(
-        					'id' => 'codigoProducto',
-        					'sort' => array(
-        							'attributes' => array(
-        									'descripcionProducto'
-        							),
-        					),
-        					'pagination' => array(
-        							'pageSize' => $pagina,
-        					),
+        		if($puntosVenta[0] == 1){
+	        		foreach ($puntosVenta[1] as $pdv) {
+	        			if ($pdv[1] == $this->objPuntoVentaDestino->idComercial) {
+		        			$puntoVenta = $pdv;
+		        			break;
+	        			}
+	        		}
+	        		
+	        		if($puntoVenta === null){
+	        			$puntoVenta = array(
+	        					0 => 1,
+	        					1 => '',
+	        					2 => '',
+	        					3 => '',
+	        					4 => array()
+	        			);
+	        		}
+	        	
+	        		foreach($puntoVenta[4] as $saldos){
+	        			$listaProductosSaldos[$saldos->CODIGO_PRODUCTO] = $saldos->SALDO;
+	        		}
+	        		
+	        		foreach ($listProductos as $producto){
+	        			if(isset($listaProductosSaldos[$producto->codigoProducto]) ){
+	        				if($listaProductosSaldos[$producto->codigoProducto] > 0){
+	        					$producto->saldosDisponibles = $listaProductosSaldos[$producto->codigoProducto];
+	        					$resultadoFinal[] = $producto;
+	        				}
+	        			}
+	        		}
+	        		
+	        		$pagina = 24;
+	        		if (isset($_GET['pageSize']) and is_numeric($_GET['pageSize'])) {
+	        			$pagina = $_GET['pageSize'];
+	        		}
+	        		
+	        		if (!empty($resultadoFinal)) {
+	        			$dataProvider = new CArrayDataProvider($resultadoFinal, array(
+	        					'id' => 'codigoProducto',
+	        					'sort' => array(
+	        							'attributes' => array(
+	        									'descripcionProducto'
+	        							),
+	        					),
+	        					'pagination' => array(
+	        							'pageSize' => $pagina,
+	        					),
+	        			));
+	        		}
+        		}else{
+        			$this->render('listaProductos', array(
+        					'msgCodigoEspecial' => array(),
+        					'listCodigoEspecial' => array(),
+        					'imagenBusqueda' => Yii::app()->params->busqueda['imagen']['noExito'],
+        					'objSectorCiudad' => $this->objCiudadSectorDestino,
+        					'codigoPerfil' => $codigoPerfil,
+        					'nombreBusqueda' => 'NA',
+        					'dataprovider' => null
         			));
+        			Yii::app()->end();
         		}
-        		
         	}else{
         		$this->render('listaProductos', array(
         				'msgCodigoEspecial' => array(),
@@ -235,9 +265,9 @@ class CatalogoController extends ControllerEntregaNacional {
             $formFiltro->listCategoriasTienda = array();
         }
 
-        foreach ($listProductos as $idxProd => $objProducto) {
+        foreach ($resultadoFinal as $idxProd => $objProducto) {
             if ($formFiltro->calificacion > 0 && $objProducto->getCalificacion() < $formFiltro->calificacion) {
-                unset($listProductos[$idxProd]);
+                unset($resultadoFinal[$idxProd]);
                 continue;
             }
 
@@ -262,7 +292,7 @@ class CatalogoController extends ControllerEntregaNacional {
         );
 
         $imagenBusqueda = null;
-        if (empty($listProductos)) {
+        if (empty($resultadoFinal)) {
             $imagenBusqueda = Yii::app()->params->busqueda['imagen']['noExito'];
         } else {
             $parametrosVista['formOrdenamiento'] = $formOrdenamiento;
@@ -302,7 +332,9 @@ class CatalogoController extends ControllerEntregaNacional {
     public function actionProducto($producto) {
     //	$this->active = "buscar";
         $objSectorCiudad = $this->objCiudadSectorDestino;
-
+		
+        
+        
         if ($objSectorCiudad == null) {
             $objProducto = Producto::model()->find(array(
                 'with' => array('listImagenesGrandes', 'objDetalle', 'objCodigoEspecial', 'listCalificaciones' => array('with' => 'objUsuario')),
@@ -341,7 +373,7 @@ class CatalogoController extends ControllerEntregaNacional {
             throw new CHttpException(404, 'Producto no existe.');
         }
         
-        // verificar cantidad máxima de saldos.
+        // verificar cantidad maxima de saldos.
         
         /*********************************/
 
@@ -370,7 +402,7 @@ class CatalogoController extends ControllerEntregaNacional {
         	$puntoVenta = null;
         
         	foreach ($puntosVenta[1] as $pdv) {
-        		if ($pdv[1] == $pdvDestino->idComercial) {
+        		if ($pdv[1] == $this->objPuntoVentaDestino->idComercial) {
 	        		$puntoVenta = $pdv;
 	        		break;
         		}
@@ -458,19 +490,7 @@ class CatalogoController extends ControllerEntregaNacional {
                 )
             ));
 
-            if ($objCategoria == null) {
-                $this->breadcrumbs = array(
-                    'Inicio' => array('/'),
-                    $objProducto->descripcionProducto
-                );
-            } else {
-                $this->breadcrumbs = array(
-                    'Inicio' => array('/'),
-                    $objCategoria->objCategoriaTienda->nombreCategoriaTienda => array('/catalogo/categoria/categoria/' . $objCategoria->objCategoriaTienda->idCategoriaTienda),
-                    $objProducto->descripcionProducto
-                );
-            }
-         
+           
             $this->render('d_productoDetalle', array(
                 'objProducto' => $objProducto,
                 'objPrecio' => new PrecioProducto($objProducto, $objSectorCiudad, $codigoPerfil),

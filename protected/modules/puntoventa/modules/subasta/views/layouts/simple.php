@@ -25,6 +25,5 @@
             </div>
         </div>
     </body>
-    aaa
     <script src="<?php echo Yii::app()->request->baseUrl; ?>/js/operator.js"></script>
 </html>

@@ -1,7 +1,7 @@
 <?php  setlocale(LC_TIME, 'es_ES.UTF-8'); ?>
 <div>   
     <div style="height: 20px;"></div>
-    Te recordamos que aún estás a tiempo para redimir tu bono por <?php echo Yii::app()->numberFormatter->format(Yii::app()->params->formatoMoneda['patron'], $objBono->valor, Yii::app()->params->formatoMoneda['moneda']) ?> por concepto de
+    Te recordamos que aun estas a tiempo para redimir tu bono por <?php echo Yii::app()->numberFormatter->format(Yii::app()->params->formatoMoneda['patron'], $objBono->valor, Yii::app()->params->formatoMoneda['moneda']) ?> por concepto de
     "<?php echo isset($objBono->objConcepto->concepto)?$objBono->objConcepto->concepto:"" ?>", 
     para que lo aproveches realizando tus compras en la <a href='http://www.larebajavirtual.com' style="color:#ff0000" > www.larebajavirtual.com </a>
     <div style="height: 20px;"></div>

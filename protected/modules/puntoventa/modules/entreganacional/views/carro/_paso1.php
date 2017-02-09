@@ -5,14 +5,14 @@
 <div class="row" style="margin-top:25px;">
     <div class="col-sm-4" >
         <div class="iconStep step1"></div>
-        <div class="text orange"><p>1.Tipo entrega</p></div>
+        <div class="text orange"><p>1.Datos del remitente</p></div>
         <div class="step-box">
             <?php $this->renderPartial('/carro/_tipoEntrega', array('modelPago' => $modelPago)) ?>
         </div>
     </div>
     <div class="col-sm-4" >
         <div class="iconStep step2"></div>
-        <div class="text orange"><p>2.Direcci&oacute;n despacho</p></div>
+        <div class="text orange"><p>2.Datos del destinatario</p></div>
         <div class="step-box">
             <?php $this->renderPartial('/carro/_pasoDespacho', array('modelPago' => $modelPago)) ?>
         </div>

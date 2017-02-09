@@ -1,6 +1,8 @@
 <?php $this->pageTitle = Yii::app()->name . " - " . $objProducto->descripcionProducto; ?>
 
+
 <?php $idUnico = uniqid() ?>
+
 <section class="product_detail">
     <div class="container">
         <div class="row">
@@ -50,7 +52,9 @@
                             </a>
                             <!-- Titulo del producto -->
                             <?php echo $objProducto->descripcionProducto ?>
+                            
                         </h1>
+                         <div><span>Saldos disponibles: <?php echo $objProducto->saldosDisponibles?></span></div>
                         <div><span><?php echo $objProducto->presentacionProducto ?></span></div>
                         <div><span>Código: <?php echo $objProducto->codigoProducto ?></span></div>
                         <?php if ($objProducto->objCodigoEspecial->codigoEspecial != 0): ?>
@@ -179,8 +183,10 @@
                     <?php elseif ($objProducto->ventaVirtual == 1): ?>
                         <?php if($objPrecio->inicializado()): ?>
                             <div class="" style="margin-top: 13px;">
-                                <?php echo CHtml::link('<div class="btn btn-primary btn-block">Añadir&nbsp;<img src="' . Yii::app()->baseUrl . '/images/desktop/button-carrito.png" alt=""></div>', '#', array('data-producto' => $objProducto->codigoProducto, 'data-cargar-nacional' => 1, 'data-id' => $idUnico, 'data-max' => $objProducto->saldosDisponibles ,'class' => '')); ?>
-                                
+                                <?php echo CHtml::link('<div class="btn btn-primary btn-block">Añadir&nbsp;<img src="' . Yii::app()->baseUrl . '/images/desktop/button-carrito.png" alt=""></div>', '#', array('data-producto' => $objProducto->codigoProducto, 'data-cargar-nacional' => 1, 'data-id' => $idUnico, 'data-max' => $objProducto->saldosDisponibles ,'class' => '')); ?><br/>
+                                <?php if(Yii::app()->request->urlReferrer != null ):?>
+								<?php echo CHtml::link('<div class="btn btn-primary btn-block">Volver a la b&uacute;squeda</div>', Yii::app()->request->urlReferrer)?>
+								<?php endif;?>
                                 <!--adicionar a lista -->
                                 
                             </div>

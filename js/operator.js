@@ -158,7 +158,7 @@ $(document).on('click', 'a[data-role="activar-usuario"]', function () {
                 	        dataType: 'json',
                 	        async: true,
                 	        url: requestUrl + '/callcenter/cuentasInactivas/activarCuenta',
-                	        data: {identificacion: btn.attr('data-identificacion')},
+                	        data: {id: btn.attr('data-id')},
                 	        beforeSend: function () {
                 	            // detener refresh
                 	            clearTimeout(refresh);
@@ -357,6 +357,64 @@ $(document).on('click', 'button[data-action="remitirborrar"]', function () {
         }
     });
 
+    $(document).on('click', 'button[data-action="remitirNacional"]', function () {
+        $.ajax({
+            type: 'POST',
+            dataType: 'json',
+            async: true,
+            url: requestUrl + '/callcenter/pedido/remitirNacional',
+            data: {idCompra: $(this).attr('data-compra')},
+            beforeSend: function () {
+                Loading.show();
+            },
+            complete: function () {
+                Loading.hide();
+            },
+            success: function (data) {
+                if (data.result == 1) {
+                    $('#div-encabezado-pedido').html(data.encabezado);
+                    $('#div-pedido-observaciones').html(data.htmlObservaciones);
+                }
+                bootbox.alert(data.response);
+
+            },
+            error: function (jqXHR, textStatus, errorThrown) {
+                Loading.hide();
+                bootbox.alert('Error: ' + errorThrown);
+            }
+        });
+    });
+
+});
+
+
+$(document).on('click', 'button[data-action="remitirborrarNacional"]', function () {
+    $.ajax({
+        type: 'POST',
+        dataType: 'json',
+        async: true,
+        url: requestUrl + '/callcenter/pedido/remitirBorrarNacional',
+        data: {idCompra: $(this).attr('data-compra')},
+        beforeSend: function () {
+            Loading.show();
+        },
+        complete: function () {
+            Loading.hide();
+        },
+        success: function (data) {
+            if (data.result == 1) {
+                $('#div-encabezado-pedido').html(data.encabezado);
+                $('#div-pedido-observaciones').html(data.htmlObservaciones);
+            }
+            bootbox.alert(data.response);
+
+        },
+        error: function (jqXHR, textStatus, errorThrown) {
+            Loading.hide();
+            bootbox.alert('Error: ' + errorThrown);
+        }
+    });
+    
 });
 
 $(document).on('click', "button[data-role='modificarpedido']", function () {
@@ -970,3 +1028,216 @@ function uniqueId() {
         ;
     return new Date().getTime();
 }
+
+
+$(document).on('click', 'a[data-role="promocion-eliminar"]', function() {
+
+    var idPromocion = $(this).attr("data-promocion");
+
+    bootbox.dialog({
+        message: "¿Está seguro de eliminar la promoción?",
+        title: "Eliminar Promoción",
+        buttons: {
+            success: {
+                label: "Aceptar",
+                className: "btn-primary",
+                callback: function() {
+                    $.ajax({
+                        type: 'POST',
+                        async: true,
+                        url: requestUrl + '/callcenter/promocion/eliminarPromocion',
+                        data: {idPromocion: idPromocion},
+                        beforeSend: function() {
+                            Loading.show();
+                        },
+                        complete: function() {
+                            Loading.hide();
+                        },
+                        success: function(data) {
+                            var data = $.parseJSON(data);
+                            if (data.result === "ok") {
+                                $.fn.yiiGridView.update('grid-modulos');
+                            } else if (data.result === 'error') {
+                                bootbox.alert(data.response);
+                            }
+                        },
+                        error: function(jqXHR, textStatus, errorThrown) {
+                            Loading.hide();
+                            bootbox.alert('Error: ' + errorThrown);
+                        }
+                    });
+                }
+            },
+            close: {
+                label: "Cancelar",
+                className: "btn-default",
+                callback: function() {
+                }
+            }
+        }
+    });
+});
+
+
+$(document).on('change', "select[data-role='promocion-ciudad']", function() {
+
+    var codigoCiudad = $('#select-ciudad-promocion').val();
+    $.ajax({
+        type: 'GET',
+        async: true,
+        url: requestUrl + '/callcenter/promociones/comprobarciudad',
+        data: {codigoCiudad: codigoCiudad},
+        beforeSend: function() {
+            Loading.show();
+        },
+        complete: function(data) {
+            Loading.hide();
+        },
+        success: function(data) {
+            var data = $.parseJSON(data);
+            if (data.result === "ok") {
+                if (data.code == 1) {
+                    $("#div-sector-promocion").html(data.htmlResponse);
+                    $("#div-sector-promocion").css('display', 'block');
+                    $("#sector-select").val(1);
+                } else if (data.code == 2) {
+                    $("#div-sector-promocion").css('display', 'none');
+                    $("#sector-select").val(0);
+                }
+            }
+        },
+        error: function(jqXHR, textStatus, errorThrown) {
+
+        }
+    });
+});
+
+$(document).on('click', "button[data-role='add-sector-ciudad-promocion']", function() {
+
+    var codigoCiudad = $('#select-ciudad-promocion').val();
+    var codigoSector = $('#sector-promocion').val();
+    var idPromocion = $(this).attr('data-promocion');
+
+    if ($("#sector-select").val() == 0) {
+        codigoSector = 0;
+    }
+    $.ajax({
+        type: 'POST',
+        async: true,
+        url: requestUrl + '/callcenter/promociones/guardarCiudadSector',
+        data: {codigoCiudad: codigoCiudad, codigoSector: codigoSector, idPromocion: idPromocion},
+        dataType: 'json',
+        beforeSend: function() {
+            Loading.show();
+        },
+        complete: function(data) {
+            Loading.hide();
+        },
+        success: function(data) {
+            if (data.result == "ok") {
+                bootbox.alert("Ciudad/Sector adicionado con éxito");
+                $("#lista-sectores").html(data.response);
+            } else if (data.result == "error") {
+                bootbox.alert(data.response);
+            }
+        },
+        error: function(jqXHR, textStatus, errorThrown) {
+
+        }
+    });
+});
+
+$(document).on('click', "a[data-role='eliminar-sector-promocion']", function() {
+    var codigoSector = $(this).attr("data-promocion-sector");
+    var codigoCiudad = $(this).attr("data-promocion-ciudad");
+    var idPromocion = $(this).attr("data-promocion");
+    $.ajax({
+        type: 'POST',
+        async: true,
+        url: requestUrl + '/callcenter/promociones/eliminarCiudadSector',
+        data: {codigoSector: codigoSector, codigoCiudad: codigoCiudad, idPromocion: idPromocion },
+        dataType: 'json',
+        beforeSend: function() {
+            Loading.show();
+        },
+        complete: function(data) {
+            Loading.hide();
+        },
+        success: function(data) {
+            if (data.result == "ok") {
+                bootbox.alert("Ciudad/Sector eliminado con éxito");
+                $("#lista-sectores").html(data.response);
+            } else if (data.result == "error") {
+                bootbox.alert(data.response);
+            }
+        },
+        error: function(jqXHR, textStatus, errorThrown) {
+
+        }
+    });
+});
+
+
+$(document).on('click', "button[data-role='add-categoria-promocion']", function() {
+
+    var categoriaDesktop = $('#select-categoria-promocion-desktop').val();
+    var categoriaMovil = $('#select-categoria-promocion-movil').val();
+    var idPromocion = $(this).attr('data-promocion');
+
+    if ($("#sector-select").val() == 0) {
+        codigoSector = 0;
+    }
+    $.ajax({
+        type: 'POST',
+        async: true,
+        url: requestUrl + '/callcenter/promociones/guardarCategoria',
+        data: {categoriaDesktop: categoriaDesktop, categoriaMovil:categoriaMovil , idPromocion: idPromocion},
+        dataType: 'json',
+        beforeSend: function() {
+            Loading.show();
+        },
+        complete: function(data) {
+            Loading.hide();
+        },
+        success: function(data) {
+            if (data.result == "ok") {
+                bootbox.alert("Categoria adicionada con éxito");
+                $("#lista-sectores").html(data.response);
+            } else if (data.result == "error") {
+                bootbox.alert(data.response);
+            }
+        },
+        error: function(jqXHR, textStatus, errorThrown) {
+
+        }
+    });
+});
+
+$(document).on('click', "a[data-role='eliminar-categoria-promocion']", function() {
+    var categoria = $(this).attr("data-promocion-categoria");
+    var idPromocion = $(this).attr("data-promocion");
+    $.ajax({
+        type: 'POST',
+        async: true,
+        url: requestUrl + '/callcenter/promociones/eliminarCategoria',
+        data: {categoria: categoria, idPromocion: idPromocion },
+        dataType: 'json',
+        beforeSend: function() {
+            Loading.show();
+        },
+        complete: function(data) {
+            Loading.hide();
+        },
+        success: function(data) {
+            if (data.result == "ok") {
+                bootbox.alert("Categoria eliminado con éxito");
+                $("#lista-sectores").html(data.response);
+            } else if (data.result == "error") {
+                bootbox.alert(data.response);
+            }
+        },
+        error: function(jqXHR, textStatus, errorThrown) {
+
+        }
+    });
+});

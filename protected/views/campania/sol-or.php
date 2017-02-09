@@ -259,7 +259,11 @@ $this->metaTags = "<meta http-equiv='X-UA-Compatible' content='IE=edge'>
 		   	<div class="ui-block-a"><img src="<?= Yii::app()->request->baseUrl ?>/images/contenido/sol-or/6.resistente-al-agua/aloe-vera.png" class="ico-imagen"></div>
 		   	<div class="ui-block-b"><p>Aloe vera y aceite de coco</p></div>
 		</div>
-		<center><a href="<?php echo CController::createUrl('/catalogo/producto', array('producto' => 17845)) ?>"><img class="btn-comprar-m" src="<?= Yii::app()->request->baseUrl ?>/images/contenido/sol-or/comprar.png"></a></center>
+		<center>
+      <!-- <a href="<?php echo CController::createUrl('/catalogo/producto', array('producto' => 17845)) ?>"> -->
+        <img class="btn-comprar-m" src="<?= Yii::app()->request->baseUrl ?>/images/contenido/sol-or/no-disponible.png">
+      <!-- </a> -->
+    </center>
 	</div>
 </section>
 <hr>
@@ -523,7 +527,9 @@ $this->metaTags = "<meta http-equiv='X-UA-Compatible' content='IE=edge'>
     					<p><img src="<?= Yii::app()->request->baseUrl ?>/images/contenido/sol-or/6.resistente-al-agua/spray.png" class="ico-imagen"> Sistema de spray</p>
     					<p><img src="<?= Yii::app()->request->baseUrl ?>/images/contenido/sol-or/6.resistente-al-agua/aloe-vera.png" class="ico-imagen"> Aloe vera y aceite de coco</p>
     				</div>
-    				<a href="<?php echo CController::createUrl('/catalogo/producto', array('producto' => 17845)) ?>"><img class="btn-comprar" src="<?= Yii::app()->request->baseUrl ?>/images/contenido/sol-or/comprar.png"></a>
+    				<!-- <a href="<?php echo CController::createUrl('/catalogo/producto', array('producto' => 17845)) ?>"> -->
+              <img style="margin-top: 5px;" src="<?= Yii::app()->request->baseUrl ?>/images/contenido/sol-or/no-disponible.png">
+            <!-- </a> -->
     			</div>
     		</div>
     	</div>

@@ -3,7 +3,7 @@
 
 <?php
 $this->metaTags = "<meta http-equiv='X-UA-Compatible' content='IE=edge'>
-    <meta name='description' content='Nan Optipro 3 Desarrollo de Nestlé es una  proteína optimizada que ayuda a construir bases sólidas para el crecimiento y desarrollo de su hijo.'>
+    <meta name='description' content='NAN® OPTIPRO® 3 DESARROLLO de Nestlé con  proteína optimizada que ayuda a construir bases sólidas para el crecimiento y desarrollo de su hijo'>
     <meta name='keywords' content='crecimiento, proteína para niños, desarrollo niños.'>
 
 	<!-- styles -->
@@ -97,7 +97,7 @@ $this->metaTags = "<meta http-equiv='X-UA-Compatible' content='IE=edge'>
           <p> Darle a tu hijo una proteína de excelente calidad, es clave para una lograr una adecuada salud presente y futura</p>
         </div>
         <center>
-            <a href="<?php echo CController::createUrl('/contenido/ver', array('tipo' => 'grupo', 'contenido' => 1218)) ?>" data-ajax="false">
+            <a href="<?php echo CController::createUrl('/catalogo/producto', array('producto' => 65388)) ?>" data-ajax="false">
                 <img src="<?= Yii::app()->request->baseUrl ?>/images/contenido/nan/compra-online.png" class="compra-online-movil" alt="Compra Nan Optipro">
             </a>
         </center>
@@ -157,7 +157,7 @@ $this->metaTags = "<meta http-equiv='X-UA-Compatible' content='IE=edge'>
               </div>
             </div>
             <div class="col-md-4">
-                <a href="<?php echo CController::createUrl('/contenido/ver', array('tipo' => 'grupo', 'contenido' => 1218)) ?>">
+                <a href="<?php echo CController::createUrl('/catalogo/producto', array('producto' => 65388)) ?>">
                     <img src="<?= Yii::app()->request->baseUrl ?>/images/contenido/nan/compra-online.png" class="img-responsive compra-online" alt="Compra Nan Optipro">
                 </a>
                 <a href="#">

@@ -23,6 +23,8 @@ class EShoppingCart extends CMap {
     public $objSectorCiudadOrigen = null;
     public $objSectorCiudadDestino = null;
     protected $shipping = 0;
+    protected $shippingServicio = 0;
+    protected $shippingRecogida = 0;
     public $codigoPerfil = null;
     protected $bonoValue = 0;
 
@@ -43,26 +45,38 @@ class EShoppingCart extends CMap {
         $this->saveStateAttributes();
     }
 
-    public function CalculateShipping() {
+	public function CalculateShipping() {
         if ($this->objSectorCiudadDestino !== null && $this->objSectorCiudadDestino instanceof SectorCiudad) {
         	$modelPago = null;
         	if (isset(Yii::app()->session[Yii::app()->params->entregaNacional['sesion']['carroPagarForm']]) && Yii::app()->session[Yii::app()->params->entregaNacional['sesion']['carroPagarForm']] != null)
     			$modelPago = Yii::app()->session[Yii::app()->params->entregaNacional['sesion']['carroPagarForm']];
     	
-    		if($modelPago->recogida == 1){ 
-    			$objDomicilio = Domicilio::model()->findByPK(Yii::app()->params->entregaNacional['domicilio']['recogida']);
-    		}else{
-    			$objDomicilio = Domicilio::model()->findByPK(Yii::app()->params->entregaNacional['domicilio']['sinrecogida']);
-    		}
-            if ($objDomicilio !== null)
-                $this->shipping = $objDomicilio->valorDomicilio;
-			
+    			
+	    		if(!empty($modelPago)){
+	    			$this->shipping = Yii::app()->params->entregaNacional['domicilio']['sinrecogida'];
+	    			$this->shippingServicio = Yii::app()->params->entregaNacional['domicilio']['sinrecogida'];
+		    		if($modelPago->recogida == 1){ 
+		    			$this->shipping += Yii::app()->params->entregaNacional['domicilio']['recogida'];
+		    			$this->shippingRecogida = Yii::app()->params->entregaNacional['domicilio']['recogida'];
+		    		}
+	    		}else{
+	    			$this->shipping = 0;
+	    		}
+          	
             $this->saveStateAttributes();
         }
     }
 
     public function getShipping() {
         return $this->shipping;
+    }
+    
+    public function getShippingServicio() {
+    	return $this->shippingServicio;
+    }
+    
+    public function getShippingRecogida() {
+    	return $this->shippingRecogida;
     }
 
     public function getCodigoPerfil() {
@@ -74,11 +88,15 @@ class EShoppingCart extends CMap {
     }
     
     public function getObjCiudadOrigen(){
-    	return $this->objSectorCiudadOrigen->objCiudad;
+    	if(!empty($this->objSectorCiudadOrigen))
+    		return $this->objSectorCiudadOrigen->objCiudad;
+    	else null;
     }
     
     public function getObjCiudadDestino(){
-    	return $this->objSectorCiudadDestino->objCiudad;
+    	if(!empty($this->objSectorCiudadDestino))
+    		return $this->objSectorCiudadDestino->objCiudad;
+    	else null;
     }
     
 

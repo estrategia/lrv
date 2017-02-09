@@ -105,8 +105,9 @@
                         'value' => '$data->identificacionUsuario == null ? "Invitado" : "Registrado"',
                     ),
                     array(
+                    
                         'header' => 'PDV',
-                        'value' => '$data->idComercial == null ? "Sin Asignar" : $data->idComercial',
+                        'value' => '$data->objComprasRemitente->puntoVentaDestino == null ? "Sin Asignar" : $data->objComprasRemitente->puntoVentaDestino',
                     ),
                     array(
                         'header' => 'Estado',
@@ -152,7 +153,7 @@ $listPdv = PuntoVenta::model()->findAll(array(
                         <tr>
                             <th>Ciudad</th>
                             <td>
-<?php echo Select2::dropDownList('select-ciudad-direccion', null, CHtml::listData($listCiudad, 'codigoCiudad', 'nombreCiudad'), array('prompt' => 'Seleccione ciudad', 'id' => 'select-ciudad-direccion', 'style' => 'width: 60%;')) ?>
+								<?php echo Select2::dropDownList('select-ciudad-direccion', null, CHtml::listData($listCiudad, 'codigoCiudad', 'nombreCiudad'), array('prompt' => 'Seleccione ciudad', 'id' => 'select-ciudad-direccion', 'style' => 'width: 100%;')) ?>
                             </td>
                             <td style="vertical-align: middle; text-align: center" rowspan="2">  
                                 <button type="button" style="color: #51a351" class="btn btn-sm" data-role="pdvgeodireccion" ><i class="glyphicon glyphicon-globe"></i> Geo</button>
@@ -179,7 +180,7 @@ $listPdv = PuntoVenta::model()->findAll(array(
                         <tr>
                             <th>Ciudad</th>
                             <td>
-								<?php echo Select2::dropDownList('select-ciudad-barrio', null , CHtml::listData($listCiudad, 'codigoCiudad', 'nombreCiudad'), array('prompt' => 'Seleccione ciudad', 'id' => 'select-ciudad-barrio', 'style' => 'width: 50%;')) ?>
+								<?php echo Select2::dropDownList('select-ciudad-barrio', null , CHtml::listData($listCiudad, 'codigoCiudad', 'nombreCiudad'), array('prompt' => 'Seleccione ciudad', 'id' => 'select-ciudad-barrio', 'style' => 'width: 100%;')) ?>
                     		</td>
                     		<td style="vertical-align: middle; text-align: center" rowspan="2">  
                            		<button type="button" class="btn btn-danger btn-sm" data-role="pdvgeobarrio" ><i class="glyphicon glyphicon-search"></i>Buscar</button>
@@ -201,9 +202,9 @@ $listPdv = PuntoVenta::model()->findAll(array(
 </div>
 <hr/>
 <div class="row">
-    <div class="col-md-6">
+    <div class="col-md-12">
         <div>
-            <span class="title"><strong>Asignar Punto de venta</strong></span>
+            <span class="title"><strong>Asignar Punto de venta destino</strong></span>
             <form action="/callcenter/index/generardoccruce/" method="post" id="asignarpdv" name="asignarpdv">
                 <div class="row">
                     <div class="col-md-9">

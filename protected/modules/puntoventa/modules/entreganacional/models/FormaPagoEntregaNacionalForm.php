@@ -107,6 +107,11 @@ class FormaPagoEntregaNacionalForm extends CFormModel {
     public function attributeLabels() {
         return array(
             'identificacionUsuario' => 'Cédula',
+        	'nombreRemitente' => 'Nombre',
+        	'telefonoRemitente' => 'Tel&eacute;fono',
+        	'correoRemitente' => 'Correo',
+        	'direccionRemitente' => 'Direcci&oacute;n',
+        	'barrioRemitente' => 'Barrio',
             'fechaEntrega' => 'Programación de entrega',
             'comentario' => 'Comentario adicional',
             'idFormaPago' => 'Forma de pago',
@@ -128,7 +133,7 @@ class FormaPagoEntregaNacionalForm extends CFormModel {
 
         foreach ($positions as $position) {
             //if ($position->isProduct()) {
-                if ($position->getObjProducto()->objCodigoEspecial->confirmacionCompra == 1) {
+            	if ($position->getObjProducto()->objCodigoEspecial->confirmacionCompra == 1) {
                     $this->listCodigoEspecial[$position->getObjProducto()->objCodigoEspecial->codigoEspecial] = $position->getObjProducto()->objCodigoEspecial;
 
                     if (!isset($listEspecialTmp[$position->getObjProducto()->objCodigoEspecial->codigoEspecial])) {

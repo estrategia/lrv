@@ -135,9 +135,10 @@ class BonosTienda extends CActiveRecord {
         $criteria->compare('vigenciaFin', $this->vigenciaFin, true);
         $criteria->compare('minimoCompra', $this->minimoCompra, true);
         $criteria->compare('tipo', $this->tipo);
-        if(!empty($this->concepto)){
+       /* if(!empty($this->concepto)){
         	$criteria->condition = "t.concepto LIKE '%$this->concepto%'";
-        }
+        }*/
+        $criteria->compare('concepto', $this->concepto, true);
        
         $criteria->compare('estado', $this->estado);
         $criteria->compare('fechaCreacion', $this->fechaCreacion, true);

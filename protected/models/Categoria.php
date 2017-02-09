@@ -47,6 +47,7 @@ class Categoria extends CActiveRecord {
                 'on' => 'listCategoriasHijasHijas.idCategoriaBI = listCategoriasTiendaCategoria.idCategoriaBI AND listCategoriasTiendaCategoria.idCategoriaTienda =:idcategoriatienda '),
             'listCategoriasHijas' => array(self::HAS_MANY, 'Categoria', 'padre'),
             'listCategoriasHijasHijas' => array(self::HAS_MANY, 'Categoria', 'padre'),
+        	'listComprasCategoria' => array(self::HAS_MANY, 'ComprasUsuariosCategorias', 'idCategoriaBI'),	
         );
     }
 
@@ -172,6 +173,22 @@ class Categoria extends CActiveRecord {
         }
 
         return $listProductos;
+    }
+    
+    
+    public static function obtenerPadrePrincipal($categoria){
+    	$categoriaModel = self::model()->find(array(
+    			'condition' => 'idCategoriaBI =:categoria',
+    			'params' => array(
+    					':categoria' => $categoria
+    			)
+    	));
+    	
+    	if($categoriaModel->padre != 0){
+    		return self::obtenerPadrePrincipal($categoriaModel->padre);
+    	}else{
+    		return $categoria;
+    	}
     }
 
 }

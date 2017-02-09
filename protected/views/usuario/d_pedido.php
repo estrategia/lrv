@@ -52,7 +52,7 @@
                             </tr>
                             <tr>
                                 <td>Ciudad</td>
-                                <td><?php echo $objCompra->objCiudad->nombreCiudad . " - " . $objCompra->objSector->nombreSector ?></td>
+                                <td><?php echo $objCompra->objCiudad->nombreCiudad /*. " - " . $objCompra->objSector->nombreSector*/ ?></td>
                             </tr>
                             <tr>
                                 <td>Direcci&oacute;n</td>

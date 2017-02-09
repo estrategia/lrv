@@ -3,7 +3,7 @@
 
 <?php
 $this->metaTags = "<meta http-equiv='X-UA-Compatible' content='IE=edge'>
-    <meta name='description' content='Nan Optipro 3 Desarrollo de Nestlé trae unas deliciosas recetas fáciles de preparar para que tu hijo consuma proteína de una manera divertida.'>
+    <meta name='description' content='NAN® OPTIPRO® 3 DESARROLLO de Nestlé trae unas deliciosas recetas fáciles de preparar para que tu hijo consuma proteína de una manera divertida.'>
     <meta name='Recetas para niños, loncheras, proteína para niños.'>
 
 	<!-- styles -->

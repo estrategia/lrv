@@ -48,6 +48,7 @@
 class Compras extends CActiveRecord {
 
     public $busquedaSearch;
+    public $tiempoRestante;
     private $_fechaCompraDate;
     private $_fechaEntregaDate;
 
@@ -260,6 +261,10 @@ class Compras extends CActiveRecord {
 
         if (isset($params['order'])) {
             $criteria->order = $params['order'];
+        }
+        
+        if(isset($params['select'])){
+        	$criteria->select = $params['select'];
         }
 
         return new CActiveDataProvider($this, array(
