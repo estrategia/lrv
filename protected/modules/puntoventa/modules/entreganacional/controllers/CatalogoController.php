@@ -266,9 +266,11 @@ class CatalogoController extends ControllerEntregaNacional {
             }
 
             if (!isset($_GET['ajax'])) {
-                foreach ($objProducto->objCategoriaBI->listCategoriasTienda as $objCategoriaTienda) {
-                    $formFiltro->listCategoriasTienda[$objCategoriaTienda->idCategoriaTienda] = $objCategoriaTienda->nombreCategoriaTienda;
-                }
+            	if(isset($objProducto->objCategoriaBI->listCategoriasTienda)){
+	                foreach ($objProducto->objCategoriaBI->listCategoriasTienda as $objCategoriaTienda) {
+	                    $formFiltro->listCategoriasTienda[$objCategoriaTienda->idCategoriaTienda] = $objCategoriaTienda->nombreCategoriaTienda;
+	                }
+            	}
                 natsort($formFiltro->listCategoriasTienda);
             }
         }
