@@ -143,25 +143,25 @@ class CuentasInactivasController extends ControllerOperator {
     	));
     }
     
-    public function actionActualizarPerfil($perfil = null){
+    public function actionActualizarPerfil($id = null){
     	
-    	if($perfil == null){
+    	if($id == null){
     		$form = new BloqueoCuenta();
     	}else{
     		$form = BloqueoCuenta::model()->find(array(
-    				'condition' => 'perfil =:perfil',
-    				'params' => array(
-    						'perfil' => $perfil
-    				)
+    			'condition' => 'idBloqueo =:id',
+    			'params' => array(
+    					'id' => $id
+    			)
     		));
-    		
-    		if($form == null){
-    			throw new CHttpException(404, 'Solicitud inválida.');
-    			Yii::app()->end();
-    		}
     	}
     	
-    	if($_POST){
+    	if($form == null){
+    		throw new CHttpException(404, 'Solicitud inválida.');
+    		Yii::app()->end();
+    	}
+    	
+    	if( isset($_POST['BloqueoCuenta']) ){
     		$form->attributes = $_POST['BloqueoCuenta'];
     		
     		if($form->save()){
@@ -171,36 +171,33 @@ class CuentasInactivasController extends ControllerOperator {
     	}
     	
     	$this->render('formBloqueoPerfil', array(
-    					'model' => $form		
+    		'model' => $form		
     	));
     	
     }
     
-    public function actionEliminarPerfil($perfil = null){
-    	 
-    	if($perfil == null){
+    public function actionEliminarPerfil($id = null){
+    	if($id == null){
     		throw new CHttpException(404, 'Solicitud inválida.');
     		Yii::app()->end();
     	}
     	
-    	$form = BloqueoCuenta::model()->find(array(
-    			'condition' => 'perfil =:perfil',
-    			'params' => array(
-    					'perfil' => $perfil
-    			)
+    	$model = BloqueoCuenta::model()->find(array(
+    		'condition' => 'idBloqueo =:id',
+    		'params' => array(
+    			'id' => $id
+    		)
     	));
     	
-    	if($form == null){
+    	if($model == null){
     		throw new CHttpException(404, 'Solicitud inválida.');
     		Yii::app()->end();
     	}
     	
-    	if($form->delete()){
-    			$this->redirect(CController::createUrl('/callcenter/cuentasInactivas/bloqueoPerfil'));
-    			Yii::app()->end();
+    	if($model->delete()){
+    		$this->redirect(CController::createUrl('/callcenter/cuentasInactivas/bloqueoPerfil'));
+    		Yii::app()->end();
     	}
-    	 
-    	
     	 
     }
 

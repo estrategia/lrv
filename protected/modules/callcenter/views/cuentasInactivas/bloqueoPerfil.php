@@ -2,7 +2,7 @@
     $columns = array(
         array(
             'header' => 'Perfil',
-            'value' => '$data->perfil',
+            'value' => '$data->objPerfil->nombrePerfil',
           //  'filter' => CHtml::activeTextField($model, 'identificacionUsuario', array('class' => 'form-control')),
         ),
         array(
@@ -25,14 +25,14 @@
             'header' => '',
             'type' => 'raw',
             'value' => function($data){ 
-            	return	CHtml::link("Actualizar", CController::createUrl("/callcenter/cuentasInactivas/actualizarPerfil",array('perfil' =>$data->perfil )), array());
+            	return	CHtml::link("Actualizar", CController::createUrl("/callcenter/cuentasInactivas/actualizarPerfil",array('id' =>$data->idBloqueo )), array());
             }
         ),
     	array(
     		'header' => '',
     		'type' => 'raw',
     		'value' => function ($data){
-    			return CHtml::link("Eliminar", CController::createUrl("/callcenter/cuentasInactivas/eliminarPerfil",array('perfil' =>$data->perfil )), array());
+    			return CHtml::link("Eliminar", CController::createUrl("/callcenter/cuentasInactivas/eliminarPerfil",array('id' =>$data->idBloqueo )), array());
     		}
     	),
     );
