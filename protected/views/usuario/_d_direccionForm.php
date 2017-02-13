@@ -101,7 +101,8 @@
                                 <?php if ($model->isNewRecord): ?>
                                     <input type="text" disabled="disabled" class="form-control " value="<?php echo $this->sectorName ?>">
                                 <?php else: ?>
-                                    <input type="text" disabled="disabled" class="form-control input-sm" value="<?php echo $model->objCiudad->nombreCiudad . (($model->codigoSector != 0) ? (" - " . $model->objSector->nombreSector) : "") ?>">
+                                	<!-- <input type="text" disabled="disabled" class="display-none" data-value="<?php echo $model->objCiudad->nombreCiudad . (($model->codigoSector != 0) ? (" - " . $model->objSector->nombreSector) : "") ?>"> -->
+                                    <input type="text" disabled="disabled" class="form-control input-sm" value="<?php echo $model->objCiudad->nombreCiudad ?>">
                                 <?php endif; ?>
                             </div>
                         </div>

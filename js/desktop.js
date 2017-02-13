@@ -3,6 +3,121 @@ function alert(message) {
     bootbox.alert({message: message, callback: function() {
         }, buttons: {ok: {label: 'Aceptar', className: 'btn-danger'}}});
 }
+var tipoTour = 0;
+// Determinan si se ha iniciado el tour por primera vez
+var tourIniGps = true; 
+var tourIniMap = true;
+
+var tour;
+
+tour = new Shepherd.Tour({
+  defaults: {
+    classes: 'shepherd-theme-default',
+    scrollTo: true
+  }
+});
+
+tour.addStep('selecciona-ciudad', {
+  text: 'Seleciona la ciudad donde te encuentras.',
+  attachTo: '#select-ubicacion-psubsector bottom',
+  buttons: [
+    {
+      text: 'Siguiente',
+      action: tour.next
+    }
+  ]
+});
+
+tour.addStep('arrastra-mapa', {
+  text: 'Arrastra el mapa y ubica el marcador en el lugar donde te encuentras.',
+  attachTo: '#map .gmnoprint img bottom',
+  when: {
+      show: function() {
+    	  resizingMap();
+    	  locationMarker.setPosition(map.getCenter());
+      }
+  },
+  buttons: [
+    {
+      text: 'Siguiente',
+      action: tour.next
+    }
+  ]
+});
+
+// #gmimap0 top
+//'#map .gmnoprint img bottom',
+tour.addStep('confirma-ubicacion', {
+  text: 'Para finalizar presiona el boton confirmar.',
+  attachTo: '#confirma-ubicacion top',
+  buttons: [
+    {
+      text: 'Finalizar',
+      action: tour.next
+    }
+  ]
+});
+
+var tourAuto;
+
+tourAuto = new Shepherd.Tour({
+  defaults: {
+    classes: 'shepherd-theme-default',
+    scrollTo: true
+  }
+});
+
+tourAuto.addStep('arrastra-mapa', {
+  text: 'Arrastra el mapa y ubica el marcador en el lugar donde te encuentras.',
+  attachTo: '#map .gmnoprint img bottom',
+  buttons: [
+    {
+      text: 'Siguiente',
+      action: tourAuto.next
+    }
+  ]
+});
+
+tourAuto.addStep('confirma-ubicacion', {
+  text: 'Para finalizar presiona el boton confirmar.',
+  attachTo: '#confirma-ubicacion top',
+  buttons: [
+    {
+      text: 'Finalizar',
+      action: tourAuto.next
+    }
+  ]
+});
+
+function iniciarTour() {
+    if (tipoTour == 0) {
+        tour.start();
+    }
+    if (tipoTour == 1) {
+        tourAuto.start();
+    }
+}
+
+function cerrarTour() {
+    tour.complete();
+    tourAuto.complete();
+}
+
+$(document).on('click', 'button[data-role = "ubicacion-gps"]', function () {
+    tipoTour = 1;
+});
+$(document).on('click', 'button[data-role = "ubicacion-mapa"]', function () {
+    tipoTour = 0;
+});
+// $('#modal-ubicacion-map').on('shown.bs.modal', function () {
+//     alert("hola");
+//     if (tipoTour == 0) {
+//         tourIniMap ? setTimeout(function() {iniciarTour();} , 1000) : tourIniMap = false;
+//     }
+//     if (tipoTour == 1) {
+//         tourIniGps ? setTimeout(function() {iniciarTour();} , 1000) : tourIniGps = false;
+//     }
+// });
 
 /* 
  * To change this license header, choose License Headers in Project Properties.
@@ -1662,6 +1777,12 @@ function ubicacionGPS() {
     if (navigator.geolocation) {
         Loading.show();
         navigator.geolocation.getCurrentPosition(setCoords, errorPosicion, {'enableHighAccuracy': true, 'timeout': 30000, 'maximumAge': 0});
+        if (tourIniGps) {
+            setTimeout(function() {
+                iniciarTour();
+            } , 1000);
+            tourIniGps = false;
+        }
     } else {
         alert("Servicio no soportado por este navegador.");
     }
@@ -1756,6 +1877,7 @@ function setCoords(pos) {
     }
     if ($('#modal-ubicacion-map').length > 0) {
         $('#modal-ubicacion-map').modal('show');
+        tourIniMap ? setTimeout(function() {iniciarTour();} , 1000) : tourIniMap = false;
         var pt = new google.maps.LatLng(lat, lng);
         map.setCenter(pt);
         map.setZoom(12);
@@ -1785,6 +1907,7 @@ function setCoords(pos) {
                         map.setZoom(12);
                         // resizeMap();
                         // console.log(centro);
+                        tourIniMap ? setTimeout(function() {iniciarTour();} , 1000) : tourIniMap = false;
                         Loading.hide();
                     }).fail(function(jqxhr, settings, exception) {
                         Loading.hide();
@@ -1807,7 +1930,8 @@ function setCoords(pos) {
 
 $(document).on('click', 'button[data-role="seleccion-barrio"]', function() {
     if($('#modal-ubicacion-barrios').length > 0) {
-        $('#modal-ubicacion-barrios').modal('show');        
+    	$('#ubicacion-barrios-respuesta').html("");
+        $('#modal-ubicacion-barrios').modal('show');      
     } else {
         $.ajax({
             type: 'GET',
@@ -1823,6 +1947,7 @@ $(document).on('click', 'button[data-role="seleccion-barrio"]', function() {
             },
             success: function(data) {
                 $('#main-page').append(data);
+                $('#selector-ciudad').select2();
                 $('#modal-ubicacion-barrios').modal('show');
             },
             error: function(jqXHR, textStatus, errorThrown) {
@@ -1847,25 +1972,43 @@ $(document).on('click', 'button[data-role="ubicacion-barrio"]', function() {
         },
         dataType: 'json',
         beforeSend: function() {
-            Loading.show();
+        	//$('#ubicacion-barrios-respuesta').html('');
+        	Loading.show();
         },
         complete: function(data) {
             Loading.hide();
         },
         success: function(data) {
-            $('#ubicacion-seleccion-ciudad').val(data.response.ciudad);
-            $('#ubicacion-seleccion-sector').val(data.response.sector);
-            $('#ubicacion-seleccion-direccion').val('');
-            $('#main-page').append(data);
-            $('#modal-ubicacion-barrios').modal('show');
-            ubicacionSeleccion();
-            Loading.hide();
+        	if(data.result == 'ok'){
+        		if(data.response){
+        			$('#ubicacion-seleccion-ciudad').val(data.response.ciudad);
+                    $('#ubicacion-seleccion-sector').val(data.response.sector);
+                    $('#ubicacion-seleccion-direccion').val('');
+                    ubicacionSeleccion();
+        		}else if(data.responseHTML){
+        			$('#ubicacion-barrios-respuesta').html(data.responseHTML);
+        		}else{
+        			Loading.hide();
+        			alert("Respuesta incorrecta");
+        		}
+        	}else{
+        		Loading.hide();
+        		alert(data.response);
+        	}
         },
         error: function(jqXHR, textStatus, errorThrown) {
             Loading.hide();
             alert('Error: ' + errorThrown);
         }
     });
+    return false;
+});
+
+$(document).on('click', 'a[data-role="ubicacion-barriosOpciones"]', function(){
+	$('#ubicacion-seleccion-ciudad').val($(this).attr('data-ciudad'));
+    $('#ubicacion-seleccion-sector').val($(this).attr('data-sector'));
+    $('#ubicacion-seleccion-direccion').val('');
+    ubicacionSeleccion();
     return false;
 });
 
@@ -1983,6 +2126,12 @@ $(document).on('click', 'button[data-role="ubicacion-mapa"]', function() {
         map.setCenter(pt);
         map.setZoom(6);
         resizeMap();
+        if (tourIniMap) {
+            setTimeout(function() {
+                iniciarTour();
+            } , 1000);
+            tourIniMap = false;
+        }
     } else {
         $.ajax({
             type: 'POST',
@@ -1996,7 +2145,7 @@ $(document).on('click', 'button[data-role="ubicacion-mapa"]', function() {
                 $.getScript("https://maps.googleapis.com/maps/api/js?client=" + gmapKey).done(function(script, textStatus) {
                     $.getScript(requestUrl + "/js/ubicacion.min.js").done(function(script, textStatus) {
                         $('#main-page').append(data);
-                        // $('#select-ubicacion-psubsector .ciudades').select2();
+                        $('#select-ubicacion-psubsector .ciudades').select2();
                         inicializarMapa();
                         $('#modal-ubicacion-map').modal('show');
                         // $('#select-ubicacion-content').show();
@@ -2004,6 +2153,12 @@ $(document).on('click', 'button[data-role="ubicacion-mapa"]', function() {
                         map.setCenter(pt);
                         map.setZoom(6);
                         resizeMap();
+                        if (tourIniMap) {
+                            setTimeout(function() {
+                                iniciarTour();
+                            } , 1000);
+                            tourIniMap = false;
+                        }
                         Loading.hide();
                     }).fail(function(jqxhr, settings, exception) {
                         Loading.hide();
@@ -2050,6 +2205,12 @@ $(document).on('click', 'button[data-role="ubicacion-seleccion-mapa"]', function
 
                 $('#div-ubicacion-tipoubicacion > button').removeClass('activo').addClass('inactivo');
                 $('#div-ubicacion-tipoubicacion > button[data-role="ubicacion-mapa"]').removeClass('inactivo').addClass('activo');
+                if (tourIniGps) {
+                    setTimeout(function() {
+                        iniciarTour();
+                    } , 1000);
+                    tourIniGps = false;
+                }
                 ubicacionSeleccion();
             } else {
                 if (data.responseModal) {
@@ -2803,85 +2964,3 @@ $(document).on('click', "button[data-role='codigo-promocional']", function() {
     });
     return false;
 });
-
-var tour;
-
-tour = new Shepherd.Tour({
-  defaults: {
-    classes: 'shepherd-theme-default',
-    scrollTo: true
-  }
-});
-
-tour.addStep('selecciona-ciudad', {
-  text: 'Seleciona la ciudad donde te encuentras.',
-  attachTo: '#select-ubicacion-psubsector bottom',
-  buttons: [
-    {
-      text: 'Siguiente',
-      action: tour.next
-    }
-  ]
-});
-
-tour.addStep('arrastra-mapa', {
-  text: 'Arrastra el mapa y ubica el marcador en el lugar donde te encuentras.',
-  attachTo: '#map bottom',
-  buttons: [
-    {
-      text: 'Siguiente',
-      action: tour.next
-    }
-  ]
-});
-
-tour.addStep('confirma-ubicacion', {
-  text: 'Para finalizar presiona el boton confirmar.',
-  attachTo: '#confirma-ubicacion top',
-  buttons: [
-    {
-      text: 'Finalizar',
-      action: tour.next
-    }
-  ]
-});
-
-var tourAuto;
-
-tourAuto = new Shepherd.Tour({
-  defaults: {
-    classes: 'shepherd-theme-default',
-    scrollTo: true
-  }
-});
-
-tourAuto.addStep('arrastra-mapa', {
-  text: 'Arrastra el mapa y ubica el marcador en el lugar donde te encuentras.',
-  attachTo: '#map bottom',
-  buttons: [
-    {
-      text: 'Siguiente',
-      action: tourAuto.next
-    }
-  ]
-});
-
-tourAuto.addStep('confirma-ubicacion', {
-  text: 'Para finalizar presiona el boton confirmar.',
-  attachTo: '#confirma-ubicacion top',
-  buttons: [
-    {
-      text: 'Finalizar',
-      action: tourAuto.next
-    }
-  ]
-});
-
-function iniciarTour(ubicacion) {
-    if (ubicacion == 0) {
-        tour.start();
-    }
-    if (ubicacion == 1) {
-        tourAuto.start();
-    }
-}

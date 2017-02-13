@@ -216,7 +216,7 @@ class BeneficiosCommand extends CConsoleCommand {
                                     numeroDocumento)
                                     VALUES " . implode(",", $beneficiosCedulas);
                     Yii::app()->db->createCommand($sql)->execute();
-                    fwrite($file, "Se guardan las cédulas en la base de datos \n");
+                    fwrite($file, "Se guardan las cedulas en la base de datos \n");
                 }
             }
             $transaction->commit();

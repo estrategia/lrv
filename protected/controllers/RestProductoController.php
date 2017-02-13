@@ -57,7 +57,6 @@
             ));
 
       $objPrecio = new PrecioProducto($objProducto, $objSectorCiudad, Yii::app()->params->perfil['defecto']);
-
       // CVarDumper::dump($objProducto,10,true);
 
       $codigoEspecial = '';

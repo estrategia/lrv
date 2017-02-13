@@ -25,6 +25,7 @@
       $sectores = SectorCiudad::model()->findAll(array(
                     'with' => array('objSector', 'objCiudad'),
                     'condition' => 't.codigoSector<>0 AND t.codigoCiudad=:ciudad AND t.estadoCiudadSector=:estado AND objSector.estadoSector=:estado AND objCiudad.estadoCiudad=:estado',
+                    'order' => 'orden',
                     'params' => array(
                         ':ciudad' => $ciudad->codigoCiudad,
                         ':estado' => 1

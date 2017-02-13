@@ -201,7 +201,7 @@ $this->metaTags = "<meta http-equiv='X-UA-Compatible' content='IE=edge'>
         <div class="row">
           <p class="name-product">PediaSure 900 gr</p>
             <a href="<?php echo CController::createUrl('/catalogo/producto', array('producto' => 82634  )) ?>">
-               <img class="img-responsive btn-comprar" src="<?= Yii::app()->request->baseUrl ?>/images/contenido/abbot/pediasure/boton.png">
+               <img style="margin-top: 58px;" class="img-responsive btn-comprar" src="<?= Yii::app()->request->baseUrl ?>/images/contenido/abbot/pediasure/boton.png">
             </a>
         </div>
       </div>

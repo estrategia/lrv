@@ -1,7 +1,7 @@
 <div class="header header-m">
 <img class="img-responsive-m" src="<?= Yii::app()->request->baseUrl ?>/images/contenido/abbot/general/header.png" style="width: 322%;">
   <div class="container marcas movil" style="padding: 0px 35px;">
-    <h2>ABBOTT NUTRITION TE ACOMPAÑA EN TODAS LAS ETAPAS DE TU VIDA</h2>
+    <h2>ABBOTT NUTRICIÓN TE ACOMPAÑA EN TODAS LAS ETAPAS DE TU VIDA</h2>
     <div class="ui-grid-a">
       <div class="ui-block-a">
         <a href="<?= Yii::app()->request->baseUrl ?>/similac-mama-embarazo" data-ajax="false">

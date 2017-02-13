@@ -122,7 +122,11 @@
                         </div>
                     </div>
                     <div class="col-xs-6 not_padding">
-                        <?php echo CHtml::link('<div class="btn btn-primary btn-block btn-xs">Añadir <img src="' . Yii::app()->baseUrl . '/images/desktop/button-carrito.png" alt=""></div>', '#', array('data-producto' => $data->codigoProducto, 'data-cargar' => 1, 'data-id' => $idUnico)); ?>
+                    <?php if($this->objSectorCiudad->esDefecto()): ?>
+                    	<?php echo CHtml::link('<div class="btn btn-primary btn-block btn-xs">Añadir <img src="' . Yii::app()->baseUrl . '/images/desktop/button-carrito.png" alt=""></div>', CController::createUrl('/sitio/ubicacion'), array()); ?>
+                    <?php else: ?>
+                    	<?php echo CHtml::link('<div class="btn btn-primary btn-block btn-xs">Añadir <img src="' . Yii::app()->baseUrl . '/images/desktop/button-carrito.png" alt=""></div>', '#', array('data-producto' => $data->codigoProducto, 'data-cargar' => 1, 'data-id' => $idUnico)); ?>
+                    <?php endif;?>
                     </div>
                 </div>
                 <?php if (isset($vista) && $vista == "comparacion"): /* ?>

@@ -109,6 +109,9 @@ return array(
                 /*'post/<id:\d+>/<title:.*?>'=>'post/view',
                 'posts/<tag:.*?>'=>'post/index',*/
                 // REST patterns
+                array('restProducto/producto',
+                    'pattern' => 'rest/producto/<codigoProducto:\d+>/ciudad/<codigoCiudad:\d+>/sector/<codigoSector:\d+>',
+                    'verb'=>'GET'),
 
                 // Links de campañias
                 'atacadol-alivio-dolores-fuertes' => 'publicidad/contenido/nombre/atacadol-alivio-dolores-fuertes',
@@ -149,9 +152,6 @@ return array(
                 array('restPuntoVenta/list', 'pattern'=>'rest/puntoventa', 'verb'=>'GET'),
                 array('restProducto/list', 'pattern'=>'rest/producto', 'verb'=>'GET'),
                 array('restProducto/buscar', 'pattern'=>'rest/producto/buscar/<termino:.*>/<laboratorio:\-?\d+>', 'verb'=>'GET'),
-                array('restProducto/producto',
-                    'pattern' => 'rest/producto/<codigoProducto:\d+>/ciudad/<codigoCiudad:\d+>/sector/<codigoSector:\d+>',
-                    'verb'=>'GET'),
                 array('restProducto/simular', 'pattern' => 'rest/producto/simular', 'verb' => 'GET'),
                 array('restProfesion/ver', 'pattern' => 'rest/profesion/ver/<id:\d+>', 'verb' => 'GET'),
                 array('restProfesion/listar', 'pattern' => 'rest/profesion', 'verb' => 'GET'),
@@ -164,7 +164,8 @@ return array(
         ),
 
         'db' => array(
-            'connectionString' => 'mysql:host=localhost;port=3306;dbname=lrvmovil_copservir',
+            'connectionString' => 'mysql:host=192.168.1.22;port=3306;dbname=lrvmovil_copservir',
+        	//'connectionString' => 'mysql:host=localhost;port=3306;dbname=lrvmovil_copservir',
             'emulatePrepare' => true,
             'username' => 'root',
             'password' => '',

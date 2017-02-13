@@ -3,7 +3,7 @@
 
 <?php
 $this->metaTags = "<meta http-equiv='X-UA-Compatible' content='IE=edge'>
-    <meta name='description' content='NAN® OPTIPRO® 3 DESARROLLO de Nestlé es una  proteína optimizada que ayuda a construir bases sólidas para el crecimiento y desarrollo de su hijo.'>
+    <meta name='description' content='NAN® OPTIPRO® 3 DESARROLLO de Nestlé con  proteína optimizada que ayuda a construir bases sólidas para el crecimiento y desarrollo de su hijo'>
     <meta name='keywords' content='crecimiento, proteína para niños, desarrollo niños.'>
 
 	<!-- styles -->

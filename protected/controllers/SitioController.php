@@ -22,8 +22,7 @@ class SitioController extends Controller {
 
     public function actionIndex() {
     	
-    	$objContenidoCumpleaños = ContenidoInicio::getContenidoCumpleanhos(Yii::app()->session[Yii::app()->params->usuario['sesion']]);
-    	
+    	$objContenidoCumpleanos = ContenidoInicio::getContenidoCumpleanhos(Yii::app()->session[Yii::app()->params->usuario['sesion']]);
     	
         if ($this->isMobile) {
         	
@@ -55,7 +54,7 @@ class SitioController extends Controller {
     		}
     	}else{
     		 
-    		// Cumpleaños
+    		// Cumpleanos
     		 
     		$objContenido = ContenidoInicio::getContenidoCumpleanhos(Yii::app()->session[Yii::app()->params->usuario['sesion']]);
     		
@@ -113,7 +112,7 @@ class SitioController extends Controller {
     		}
     	}else{
     	
-    		// Cumpleaños
+    		// Cumpleanos
     		$objContenido = ContenidoInicio::getContenidoCumpleanhos(Yii::app()->session[Yii::app()->params->usuario['sesion']]);
     		
     		if($objContenido){
@@ -481,12 +480,10 @@ class SitioController extends Controller {
             echo CJSON::encode(array('result' => 'error', 'response' => 'Solicitud invalida.'));
             Yii::app()->end();
         }
-
+		
         $barrio = Yii::app()->getRequest()->getPost('barrio');
         $ciudad = Yii::app()->getRequest()->getPost('ciudad');
-        // $barrio = "santa monica";
-        // $ciudad = 76001;
-
+		
         if ($barrio === null || $ciudad == null) {
             echo CJSON::encode(array('result' => 'error', 'response' => 'Solicitud invalida.'));
             Yii::app()->end();
@@ -501,25 +498,58 @@ class SitioController extends Controller {
             'barrio' => trim($barrio)
         );
         $result = $client->__soapCall("LRVConsultarBarrio", $params);
-        $idComercial = $result[0]->PDV[0]->IDCOMERCIAL;
-        // $pdv = PuntoVenta::model()->find("idComercial=:idComercial", array(':idComercial'=>$idComercial));
-        $objSectorCiudad = SectorCiudad::model()->find(array(
-            'join' => 'INNER JOIN m_PuntoVenta on m_PuntoVenta.codigoCiudad = t.codigoCiudad AND m_PuntoVenta.idSectorLRV = t.codigoSector',
-            'condition' => 'm_PuntoVenta.idComercial=:idComercial',
-            'params' => array(
-                'idComercial' => $idComercial
-            )
-        ));
-        if (is_null($objSectorCiudad)) {
-            echo CJSON::encode(array('result' => 'error', 'response' => 'No se pudo determinar la ubicacion para este barrio.'));
-            Yii::app()->end();
+        //Yii::log(CVarDumper::dumpAsString($result), CLogger::LEVEL_INFO, 'error');
+        
+        if($result[0]->RESPUESTA==0){
+        	echo CJSON::encode(array('result' => 'error', 'response' => $result[0]->DESCRIPCION));
+        	Yii::app()->end();
         }
+        
+        $nPdv = count($result[0]->PDV);
+        
+        if($nPdv<=0){
+        	echo CJSON::encode(array('result' => 'error', 'response' => "No se detecta ubicaci&oacute;n para el barrio \"$barrio\" "));
+        	Yii::app()->end();
+        }
+        
+        if($nPdv==1){
+        	$idComercial = $result[0]->PDV[0]->IDCOMERCIAL;
+        	// $pdv = PuntoVenta::model()->find("idComercial=:idComercial", array(':idComercial'=>$idComercial));
+        	$objSectorCiudad = SectorCiudad::model()->find(array(
+        		'join' => 'INNER JOIN m_PuntoVenta on m_PuntoVenta.codigoCiudad = t.codigoCiudad AND m_PuntoVenta.idSectorLRV = t.codigoSector',
+        		'condition' => 'm_PuntoVenta.idComercial=:idComercial',
+        		'params' => array(
+        			'idComercial' => $idComercial
+        		)
+        	));
+        	if (is_null($objSectorCiudad)) {
+        		echo CJSON::encode(array('result' => 'error', 'response' => 'No se pudo determinar la ubicacion para este barrio.'));
+        		Yii::app()->end();
+        	}
+        	echo CJSON::encode(array(
+        		'result' => 'ok',
+        		'response' => array(
+        			'ciudad' => $objSectorCiudad->codigoCiudad,
+        			'sector' => $objSectorCiudad->codigoSector
+        		)
+        	));
+        	
+        	Yii::app()->end();
+        }
+        
+        $listBarrios = array();
+        foreach($result[0]->PDV as $pdv){
+        	$listBarrios[$pdv->NOMBREBARRIO] = array("ciudad"=> $pdv->CODIGOCIUDAD , "sector"=>$pdv->IDSECTORLRV);
+        }
+        
+        if(empty($listBarrios)){
+        	echo CJSON::encode(array('result' => 'error', 'response' => "No se detectan barrios"));
+        	Yii::app()->end();
+        }
+        
         echo CJSON::encode(array(
-            'result' => 'ok',
-            'response' => array(
-                'ciudad' => $objSectorCiudad->codigoCiudad,
-                'sector' => $objSectorCiudad->codigoSector
-            )
+        	'result' => 'ok',
+        	'responseHTML' => $this->renderPartial($this->isMobile ? "_ubicacionBarrios" : "_d_ubicacionBarrios", array('listBarrios' => $listBarrios), true)
         ));
     }
 

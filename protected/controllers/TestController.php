@@ -1743,7 +1743,7 @@ class TestController extends Controller {
     				}
     
     				if ($beneficio['listCedulas']) {
-    					fwrite($file, "Insertando c�dulas en el beneficio $objBeneficio->idBeneficio \n");
+    					fwrite($file, "Insertando cedulas en el beneficio $objBeneficio->idBeneficio \n");
     
     					foreach ($beneficio['listCedulas'] as $benCed) {
     						$beneficiosCedulas[] = "($objBeneficio->idBeneficio,".$benCed['NumeroDocumento'].")";

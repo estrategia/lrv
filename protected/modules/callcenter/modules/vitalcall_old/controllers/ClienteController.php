@@ -51,8 +51,8 @@ class ClienteController extends ControllerVitalcall {
 				$objCliente->codigoActivacionValidacion = $modelActivacion->codigoActivacionValidacion;
 				
 				if ($objCliente->save ()) {
-					Yii::app ()->user->setFlash ( 'alert alert-danger', "C�digo de activaci�n incorrecto" );
-					$modelActivacion->addError ( 'codigoActivacionValidacion', "C�digo de activaci�n incorrecto" );
+					Yii::app ()->user->setFlash ( 'alert alert-danger', "Codigo de activacion incorrecto" );
+					$modelActivacion->addError ( 'codigoActivacionValidacion', "Codigo de activacion incorrecto" );
 				}
 			}
 		}
@@ -80,7 +80,7 @@ class ClienteController extends ControllerVitalcall {
 			if ($model->validate ()) {
 				
 				if ($model->save ()) {
-					// enviar correo de activaci�n.
+					// enviar correo de activacion.
 					
 					$this->redirect ( CController::createUrl ( 'admin' ) );
 				}
@@ -101,7 +101,7 @@ class ClienteController extends ControllerVitalcall {
 			if ($model->validate ()) {
 				
 				if ($model->save ()) {
-					// enviar correo de activaci�n.
+					// enviar correo de activacion.
 					
 					$this->redirect ( CController::createUrl ( 'admin' ) );
 				}

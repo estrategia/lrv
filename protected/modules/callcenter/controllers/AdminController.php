@@ -99,7 +99,7 @@ class AdminController extends ControllerOperator {
                 default: $sort = "t.fechaCompra DESC";
                     break;
             }
-            
+
             $params['order'] = $sort;
             $params['operadorPedido'] = true;
 
@@ -123,12 +123,12 @@ class AdminController extends ControllerOperator {
                 $model->unsetAttributes();
                 if (isset($_GET['Compras']))
                     $model->attributes = $_GET['Compras'];
-                
+
                 //$model->tipoEntrega = Yii::app()->params->entrega["tipo"]['domicilio'];
                 $model->seguimiento = 1;
                 $fecha = Compras::calcularFechaVisualizar();
                 $model->fechaCompra = null;
-                
+
                 $this->render('pedidos', array(
                     'model' => $model,
                     'dataProvider' => $model->search(array('order' => 't.fechaCompra DESC', 'operadorPedido' => true)),
@@ -146,8 +146,8 @@ class AdminController extends ControllerOperator {
                 $this->render('pedidos', array(
                     'model' => $model,
                     'dataProvider' => $model->search(array(
-                    		'order' => 't.fechaCompra DESC', 
-                    		'formaPago' => Yii::app()->params->formaPago['pasarela']['idPasarela'], 
+                    		'order' => 't.fechaCompra DESC',
+                    		'formaPago' => Yii::app()->params->formaPago['pasarela']['idPasarela'],
                     		'operadorPedido' => true)),
                     'arrCantidadPedidos' => Compras::cantidadComprasPorEstado($fecha)
                 ));
@@ -340,7 +340,7 @@ class AdminController extends ControllerOperator {
             $modelLog->concepto = 'Cliente Fiel';
             $modelLog->identificacionUsuario = $identificacion;
             $modelLog->idBonoTiendaTipo = Yii::app()->params->callcenter['bonos']['tipoBonoCRM'];
-            
+
             $clientBono = new SoapClient(null, array(
                 'location' => Yii::app()->params->webServiceUrl['crmLrv'],
                 'uri' => "",
@@ -353,7 +353,7 @@ class AdminController extends ControllerOperator {
             }
 
             $resultBono = $clientBono->__soapCall('ActualizarBono', array('identificacion' => $identificacion, 'tipo' => '1'));
-           
+
             if ($resultBono[0]->ESTADO == 1) {
                 if ($modelLog->save()) {
                     $clientBono = new SoapClient(null, array(
@@ -370,7 +370,7 @@ class AdminController extends ControllerOperator {
                         $correosDestinatario = implode(",", Yii::app()->params->callcenter['reactivacionBono']['destinatarios']);
                         sendHtmlEmail($correosDestinatario, Yii::app()->params->callcenter['reactivacionBono']['asuntoMensaje'], $htmlCorreo);
                     } catch (Exception $exc) {
-                        
+
                     }
 
                     echo CJSON::encode(array(
@@ -644,7 +644,7 @@ class AdminController extends ControllerOperator {
                     $htmlCorreo = $this->renderPartial('//common/correo', array('contenido' => $contenido), true, true);
                     sendHtmlEmail($objCompra->identificacionUsuario == null ? $objCompra->objCompraDireccion->correoElectronico : $objCompra->objUsuario->correoElectronico, Yii::app()->params->callcenter['observacion']['asuntoMensaje'], $htmlCorreo);
                 } catch (Exception $exc) {
-                    
+
                 }
 
                 echo CJSON::encode(array('result' => 'ok',
@@ -771,20 +771,20 @@ class AdminController extends ControllerOperator {
             'barrio' => trim($barrio)
         );
         $result = $client->__soapCall("LRVConsultarBarrio", $params);
-	
+
         if (empty($result)) {
             echo CJSON::encode(array('result' => 'ok', 'response' => "Error: no se obtuvo respuesta"));
         } else {
 
             $result = $result[0];
             if ($result->RESPUESTA == 1) {
-            	
-            	$infoLabel ="<strong> RESULTADO: </strong><br/>";
-            
+
+            	$infoLabel ="<strong> RESULTADO: </strong>";
+
             	foreach($result->PDV as $infopdv){
-            		$infoLabel.=$infopdv->NOMBREBARRIO." : ".$infopdv->IDCOMERCIAL . "-" . $infopdv->NOMBREPUNTODEVENTA." <br/>";
+            		$infoLabel.= "<div class='line-color'>".$infopdv->NOMBREBARRIO." : ".$infopdv->IDCOMERCIAL . "-" . $infopdv->NOMBREPUNTODEVENTA." </div>";
             	}
-                
+
                 echo CJSON::encode(array('result' => 'ok', 'response' => $infoLabel, 'ciudad'=> 76001, 'sector'=> 22 ));
             } else {
                 echo CJSON::encode(array('result' => 'ok', 'response' => $result->DESCRIPCION));

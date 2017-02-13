@@ -1,7 +1,7 @@
 <?php $this->pageTitle = "Klim 1+ La Rebaja Virtual"; ?>
 <?php
 $this->metaTags = "<meta http-equiv='X-UA-Compatible' content='IE=edge'>
-    <meta name='description' content='Alimento lácteo Klim 1+ ayuda a desarrollar un sistema de defensas y un sistema digestivo saludable. Especial para niños entre 1 y 3 años. '>
+    <meta name='description' content='Alimento lácteo KLIM® 1+ FORTIPROTECT® ayuda a desarrollar un sistema de defensas y un sistema digestivo saludable. Especial para niños entre 1 y 3 años.'>
     <meta name='keywords' content='Leche en polvo, leche klim,  leche klim 1.'>
   	<style>
           .background {background-image:url(".Yii::app()->request->baseUrl."/images/contenido/klim1/background.jpg);background-size:cover;}

@@ -67,7 +67,8 @@ $form = $this->beginWidget('CActiveForm', array(
     <?php if (!$model->isNewRecord): ?>
         <div class="ui-field-container">
             <label class="">Ubicación</label>
-            <input type="text" disabled="disabled" value="<?php echo $model->objCiudad->nombreCiudad . (($model->codigoSector !=0) ? (" - " . $model->objSector->nombreSector) : "") ?>">
+            <!--  <input type="text" disabled="disabled" data-value="<?php echo $model->objCiudad->nombreCiudad . (($model->codigoSector !=0) ? (" - " . $model->objSector->nombreSector) : "") ?>"> -->
+            <input type="text" disabled="disabled" value="<?php echo $model->objCiudad->nombreCiudad?>">
         </div>
     <?php endif; ?>
 </fieldset>
