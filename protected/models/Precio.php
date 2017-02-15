@@ -114,8 +114,8 @@ abstract class Precio {
      * valor: valor
      * tipo: 1: arriba, <>1: abajo
      */
-    public static function redondear($valor, $tipo) {
-        $multiplo = 50;
+    public static function redondear($valor, $tipo, $multiplo = 50) {
+        //$multiplo = 50;
 
         if ($valor > 0) {
             $modulo = $valor % $multiplo;

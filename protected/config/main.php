@@ -164,8 +164,8 @@ return array(
         ),
 
         'db' => array(
-            'connectionString' => 'mysql:host=192.168.1.22;port=3306;dbname=lrvmovil_copservir',
-        	//'connectionString' => 'mysql:host=localhost;port=3306;dbname=lrvmovil_copservir',
+           // 'connectionString' => 'mysql:host=192.168.1.22;port=3306;dbname=lrvmovil_copservir',
+        	'connectionString' => 'mysql:host=localhost;port=3306;dbname=lrvmovil_copservir',
             'emulatePrepare' => true,
             'username' => 'root',
             'password' => '',
