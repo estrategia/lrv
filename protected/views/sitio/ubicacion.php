@@ -11,7 +11,7 @@
 
     <?php echo CHtml::htmlButton('Seleccionar barrio', array('class' => 'ui-btn ui-btn-r ui-corner-all', 'data-role' => 'seleccion-barrio')); ?>
     
-    <?php echo CHtml::htmlButton('Seleccionar ciudad', array('class' => 'ui-btn ui-btn-n ui-corner-all ui-alt-icon', 'data-role' => 'ubicacion-mapa')); ?>
+    <?php echo CHtml::htmlButton('Seleccionar ciudad', array('class' => 'ui-btn ui-btn-n ui-corner-all ui-alt-icon', 'data-role' => 'seleccionar-ciudad')); ?>
 
 
     <form id="form-ubicacion"  method="post" action="<?php echo $this->createUrl("/sitio/ubicacionSeleccion") ?>">

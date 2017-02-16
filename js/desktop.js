@@ -9,7 +9,6 @@ var tourIniGps = true;
 var tourIniMap = true;
 
 var tour;
-
 tour = new Shepherd.Tour({
   defaults: {
     classes: 'shepherd-theme-default',
@@ -17,27 +16,22 @@ tour = new Shepherd.Tour({
   }
 });
 
-tour.addStep('selecciona-ciudad', {
-  text: 'Seleciona la ciudad donde te encuentras.',
-  attachTo: '#select-ubicacion-psubsector bottom',
-  buttons: [
-    {
-      text: 'Siguiente',
-      action: tour.next
-    }
-  ]
-});
-
 tour.addStep('arrastra-mapa', {
   text: 'Arrastra el mapa y ubica el marcador en el lugar donde te encuentras.',
   attachTo: '#map .gmnoprint img bottom',
   when: {
-      show: function() {
+        'before-show': function() {
     	  resizingMap();
     	  locationMarker.setPosition(map.getCenter());
       }
   },
   buttons: [
+    {
+      text: 'Enterado',
+      action: function () {
+        noMostrarMas(0);
+      }
+    },
     {
       text: 'Siguiente',
       action: tour.next
@@ -52,7 +46,13 @@ tour.addStep('confirma-ubicacion', {
   attachTo: '#confirma-ubicacion top',
   buttons: [
     {
-      text: 'Finalizar',
+      text: 'Enterado',
+      action: function () {
+        noMostrarMas(0);
+      }
+    },
+    {
+      text: 'Cerrar',
       action: tour.next
     }
   ]
@@ -72,6 +72,12 @@ tourAuto.addStep('arrastra-mapa', {
   attachTo: '#map .gmnoprint img bottom',
   buttons: [
     {
+      text: 'Enterado',
+      action: function () {
+        noMostrarMas(1);
+      }
+    },
+    {
       text: 'Siguiente',
       action: tourAuto.next
     }
@@ -83,24 +89,52 @@ tourAuto.addStep('confirma-ubicacion', {
   attachTo: '#confirma-ubicacion top',
   buttons: [
     {
-      text: 'Finalizar',
+      text: 'Enterado',
+      action: function () {
+        noMostrarMas(1);
+      }
+    },
+    {
+      text: 'Cerrar',
       action: tourAuto.next
     }
   ]
 });
 
-function iniciarTour() {
-    if (tipoTour == 0) {
-        tour.start();
-    }
-    if (tipoTour == 1) {
-        tourAuto.start();
+function iniciarTour(auto) {
+    if (auto) {
+        if (tipoTour == 0 && volverAMostrar(0) != 'noMostrar') {
+            tour.start();
+        }
+        if (tipoTour == 1 && volverAMostrar(1) != 'noMostrar') {
+            tourAuto.start();
+        }
+    } else {
+        if (tour) {
+            tour.start();
+        }
+        if (tourAuto) {
+            tourAuto.start();
+        }
     }
 }
 
 function cerrarTour() {
+  if (tour) {
     tour.complete();
+  }
+  if (tourAuto) {
     tourAuto.complete();
+  }
+}
+
+function noMostrarMas(tour) {
+  tour == 0 ? Cookies.set('tour1', 'noMostrar', { expires : 365 }) : Cookies.set('tour2', 'noMostrar', { expires : 365 });
+  cerrarTour();
+}
+
+function volverAMostrar(tour) {
+  return tour == 0 ? Cookies.get('tour1') : Cookies.get('tour2');
 }
 
 $(document).on('click', 'button[data-role = "ubicacion-gps"]', function () {
@@ -1779,7 +1813,7 @@ function ubicacionGPS() {
         navigator.geolocation.getCurrentPosition(setCoords, errorPosicion, {'enableHighAccuracy': true, 'timeout': 30000, 'maximumAge': 0});
         if (tourIniGps) {
             setTimeout(function() {
-                iniciarTour();
+                iniciarTour(true);
             } , 1000);
             tourIniGps = false;
         }
@@ -1813,74 +1847,18 @@ function errorPosicion(error) {
     alert(mensaje);
 }
 
-// function obtenerPosicion(pos) {
-//     var lat = 0;
-//     var lon = 0;
-//     if (pos) {
-//         lat = pos.coords.latitude;
-//         lon = pos.coords.longitude;
-//     }
-//     $.ajax({
-//         type: 'POST',
-//         dataType: 'json',
-//         async: true,
-//         url: requestUrl + '/sitio/gps',
-//         data: {lat: lat, lon: lon},
-//         beforeSend: function() {
-//             Loading.show();
-//         },
-//         success: function(data) {
-//             if (data.result == 'ok') {
-//                 bootbox.dialog({
-//                     message: data.response.mensaje,
-//                     title: "Ubicaci&oacute;n encontrada",
-//                     buttons: {
-//                         success: {
-//                             label: "Usar esta ubicación",
-//                             className: "btn-primary",
-//                             callback: function() {
-//                                 $('#ubicacion-seleccion-ciudad').val(data.response.ciudad);
-//                                 $('#ubicacion-seleccion-sector').val(data.response.sector);
-//                                 $('#ubicacion-seleccion-direccion').val('');
-//                                 $('#div-ubicacion-tipoubicacion > button').removeClass('activo').addClass('inactivo');
-//                                 $('#div-ubicacion-tipoubicacion > button[data-role="ubicacion-gps"]').removeClass('inactivo').addClass('activo');
-//                                 $('button[data-role="ubicacion-seleccion"]').removeClass('display-none');
-//                                 ubicacionSeleccion();
-//                             }
-//                         },
-//                         close: {
-//                             label: "Cancelar",
-//                             className: "btn-default",
-//                             callback: function() {
-//                             }
-//                         }
-//                     }
-//                 });
-
-//             } else {
-//                 alert(data.response);
-//             }
-//             Loading.hide();
-//         },
-//         error: function(jqXHR, textStatus, errorThrown) {
-//             Loading.hide();
-//             alert('Error: ' + errorThrown);
-//         }
-//     });
-// }
 
 function setCoords(pos) {
-    $('#select-ubicacion-content').hide();
     if (pos) {
         lat = pos.coords.latitude;
         lng = pos.coords.longitude;
     }
     if ($('#modal-ubicacion-map').length > 0) {
         $('#modal-ubicacion-map').modal('show');
-        tourIniMap ? setTimeout(function() {iniciarTour();} , 1000) : tourIniMap = false;
+        tourIniMap ? setTimeout(function() {iniciarTour(true);} , 1000) : tourIniMap = false;
         var pt = new google.maps.LatLng(lat, lng);
         map.setCenter(pt);
-        map.setZoom(12);
+        map.setZoom(15);
         resizeMap();
     } else {
         latitud = lat;
@@ -1904,10 +1882,10 @@ function setCoords(pos) {
 
                         var pt = new google.maps.LatLng(latitud, longitud);
                         map.setCenter(pt);
-                        map.setZoom(12);
+                        map.setZoom(15);
                         // resizeMap();
                         // console.log(centro);
-                        tourIniMap ? setTimeout(function() {iniciarTour();} , 1000) : tourIniMap = false;
+                        tourIniMap ? setTimeout(function() {iniciarTour(true);} , 1000) : tourIniMap = false;
                         Loading.hide();
                     }).fail(function(jqxhr, settings, exception) {
                         Loading.hide();
@@ -2116,19 +2094,21 @@ $(document).on('click', 'a[data-role="ubicacion-seleccion-nodomicilio"]', functi
     ubicacionSeleccion();
 });
 
-$(document).on('click', 'button[data-role="ubicacion-mapa"]', function() {
+$(document).on('click', 'button[data-role="confirmar-ciudad"]', function() {
     $('#select-ubicacion-content').show();
-    lat = 4.704009;
-    lng = -74.042832;
+    if(lat == null || lng == null) {
+        lat = 4.704009;
+        lng = -74.042832;
+    }
     if ($('#modal-ubicacion-map').length > 0) {
         $('#modal-ubicacion-map').modal('show');
         var pt = new google.maps.LatLng(lat, lng);
         map.setCenter(pt);
-        map.setZoom(6);
+        map.setZoom(15);
         resizeMap();
         if (tourIniMap) {
             setTimeout(function() {
-                iniciarTour();
+                iniciarTour(true);
             } , 1000);
             tourIniMap = false;
         }
@@ -2151,11 +2131,11 @@ $(document).on('click', 'button[data-role="ubicacion-mapa"]', function() {
                         // $('#select-ubicacion-content').show();
                         var pt = new google.maps.LatLng(lat, lng);
                         map.setCenter(pt);
-                        map.setZoom(6);
+                        map.setZoom(15);
                         resizeMap();
                         if (tourIniMap) {
                             setTimeout(function() {
-                                iniciarTour();
+                                iniciarTour(true);
                             } , 1000);
                             tourIniMap = false;
                         }
@@ -2176,6 +2156,28 @@ $(document).on('click', 'button[data-role="ubicacion-mapa"]', function() {
         });
     }
     return false;
+});
+
+$(document).on('click', 'button[data-role="ubicacion-mapa"]', function() {
+    $.ajax({
+            type: 'POST',
+            dataType: 'html',
+            async: true,
+            url: requestUrl + '/sitio/ciudades',
+            beforeSend: function() {
+                Loading.show();
+            },
+            success: function(data) {
+                $('#main-page').append(data);
+                $('#modal-seleccion-ciudad').modal('show');
+                $('select[data-role="ciudad-despacho-map"]').select2();
+                Loading.hide();                       
+            },
+            error: function(jqXHR, textStatus, errorThrown) {
+                Loading.hide();
+                alert('Error: ' + errorThrown);
+            }
+        });
 });
 
 $(document).on('click', 'button[data-role="ubicacion-seleccion-mapa"]', function() {
@@ -2207,7 +2209,7 @@ $(document).on('click', 'button[data-role="ubicacion-seleccion-mapa"]', function
                 $('#div-ubicacion-tipoubicacion > button[data-role="ubicacion-mapa"]').removeClass('inactivo').addClass('activo');
                 if (tourIniGps) {
                     setTimeout(function() {
-                        iniciarTour();
+                        iniciarTour(true);
                     } , 1000);
                     tourIniGps = false;
                 }
@@ -2234,54 +2236,10 @@ $(document).on('change', 'select[data-role="ciudad-despacho-map"]', function() {
     var val = $(this).val().trim();
     if (val.length > 0) {
         var option = $('select[data-role="ciudad-despacho-map"] option[value="' + val + '"]').attr('selected', 'selected');
-
-        if (map) {
-            map.setCenter(new google.maps.LatLng(parseFloat(option.attr('data-latitud')), parseFloat(option.attr('data-longitud'))));
-            map.setZoom(13);
-            // $('#select-ubicacion-preferencia').remove();
-            // $('#select-ubicacion-psubsector').removeClass('div-center').addClass('float-left');
-            // $.ajax({
-            //     type: 'POST',
-            //     async: true,
-            //     url: requestUrl + '/sitio/ubicacionSeleccion',
-            //     data: {ciudad: val},
-            //     dataType: 'html',
-            //     beforeSend: function() {
-            //         Loading.show();
-            //     },
-            //     complete: function() {
-            //         Loading.hide();
-            //     },
-            //     success: function(data) {
-            //         if (data.length > 0) {
-            //             $('#select-ubicacion-content').append(data);
-            //             $('#select-ubicacion-preferencia .ciudades').select2();
-            //         } else {
-            //             $('#select-ubicacion-psubsector').removeClass('float-left').addClass('div-center');
-            //             map.setZoom(15);
-            //         }
-            //     },
-            //     error: function(jqXHR, textStatus, errorThrown) {
-            //         Loading.hide();
-            //         alert('Error: ' + errorThrown);
-            //     }
-            // });
-        }
+        lat = parseFloat(option.attr('data-latitud'));
+        lng = parseFloat(option.attr('data-longitud'));
     }
 });
-
-// $(document).on('change', 'select[data-role="sector-despacho-map"]', function() {
-//     var val = $(this).val().trim();
-//     if (val.length > 0) {
-//         var option = $('select[data-role="sector-despacho-map"] option[value="' + val + '"]').attr('selected', 'selected');
-
-//         if (map) {
-//             map.setCenter(new google.maps.LatLng(parseFloat(option.attr('data-latitud')), parseFloat(option.attr('data-longitud'))));
-//             map.setZoom(14);
-//         }
-//     }
-// });
-
 
 function ubicacionSeleccion() {
     var form = $("#form-ubicacion");

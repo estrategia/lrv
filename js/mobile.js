@@ -15,16 +15,26 @@ tour = new Shepherd.Tour({
   }
 });
 
-tour.addStep('selecciona-ciudad', {
-  text: 'Seleciona la ciudad donde te encuentras.',
-  attachTo: '#select-ubicacion-psubsector bottom',
-  buttons: [
-    {
-      text: 'Siguiente',
-      action: tour.next
-    }
-  ]
-});
+function cerrarTour() {
+  if (tour) {
+    tour.complete();
+  }
+}
+
+function noMostrarMas() {
+  Cookies.set('mobileTour', 'noMostrar', { expires : 365 });
+  cerrarTour();
+}
+
+function volverAMostrar() {
+  return Cookies.get('mobileTour');
+}
+
+function iniciarTour() {
+  if (volverAMostrar() != 'noMostrar') {
+    tour.start();
+  }
+}
 
 tour.addStep('arrastra-mapa', {
   text: 'Arrastra el mapa y ubica el marcador en el lugar donde te encuentras.',
@@ -37,6 +47,12 @@ tour.addStep('arrastra-mapa', {
   },
   buttons: [
     {
+      text: 'Enterado',
+      action: function () {
+        noMostrarMas();
+      }
+    },
+    {
       text: 'Siguiente',
       action: tour.next
     }
@@ -48,7 +64,13 @@ tour.addStep('confirma-ubicacion', {
   attachTo: '#confirma-ubicacion top',
   buttons: [
     {
-      text: 'Finalizar',
+      text: 'Enterado',
+      action: function () {
+        noMostrarMas();
+      }
+    },
+    {
+      text: 'Cerrar',
       action: tour.next
     }
   ]
@@ -300,54 +322,70 @@ $(document).on('change', 'select[data-role="ciudad-despacho-map"]', function () 
     var val = $(this).val().trim();
     if (val.length > 0) {
         var option = $('select[data-role="ciudad-despacho-map"] option[value="' + val + '"]').attr('selected', 'selected');
-
-        if (map) {
-            map.setCenter(new google.maps.LatLng(parseFloat(option.attr('data-latitud')), parseFloat(option.attr('data-longitud'))));
-            map.setZoom(13);
-            $('#select-ubicacion-preferencia').remove();
-            $('#select-ubicacion-psubsector').removeClass('div-center').addClass('float-left');
-            $.ajax({
-                type: 'POST',
-                async: true,
-                url: requestUrl + '/sitio/ubicacionSeleccion',
-                data: {ciudad: val},
-                dataType: 'html',
-                beforeSend: function () {
-                    $.mobile.loading('show');
-                },
-                complete: function () {
-                    $.mobile.loading('hide');
-                },
-                success: function (data) {
-                    if (data.length > 0) {
-                        $('#select-ubicacion-content').append(data);
-                        $('#select-ubicacion-content').trigger("create");
-                    } else {
-                        $('#select-ubicacion-psubsector').removeClass('float-left').addClass('div-center');
-                    }
-                },
-                error: function (jqXHR, textStatus, errorThrown) {
-                    $.mobile.loading('hide');
-                    alert('Error: ' + errorThrown);
-                }
-            });
-        }
+        lat = parseFloat(option.attr('data-latitud'));
+        lng = parseFloat(option.attr('data-longitud'));
+        // if (map) {
+        //     map.setCenter(new google.maps.LatLng(parseFloat(option.attr('data-latitud')), parseFloat(option.attr('data-longitud'))));
+        //     map.setZoom(13);
+        //     $('#select-ubicacion-preferencia').remove();
+        //     $('#select-ubicacion-psubsector').removeClass('div-center').addClass('float-left');
+        //     $.ajax({
+        //         type: 'POST',
+        //         async: true,
+        //         url: requestUrl + '/sitio/ubicacionSeleccion',
+        //         data: {ciudad: val},
+        //         dataType: 'html',
+        //         beforeSend: function () {
+        //             $.mobile.loading('show');
+        //         },
+        //         complete: function () {
+        //             $.mobile.loading('hide');
+        //         },
+        //         success: function (data) {
+        //             if (data.length > 0) {
+        //                 $('#select-ubicacion-content').append(data);
+        //                 $('#select-ubicacion-content').trigger("create");
+        //             } else {
+        //                 $('#select-ubicacion-psubsector').removeClass('float-left').addClass('div-center');
+        //             }
+        //         },
+        //         error: function (jqXHR, textStatus, errorThrown) {
+        //             $.mobile.loading('hide');
+        //             alert('Error: ' + errorThrown);
+        //         }
+        //     });
+        // }
     }
 });
 
-// $(document).on('change', 'select[data-role="sector-despacho-map"]', function () {
-//     var val = $(this).val().trim();
-//     if (val.length > 0) {
-//         var option = $('select[data-role="sector-despacho-map"] option[value="' + val + '"]').attr('selected', 'selected');
 
-//         if (map) {
-//             map.setCenter(new google.maps.LatLng(parseFloat(option.attr('data-latitud')), parseFloat(option.attr('data-longitud'))));
-//             map.setZoom(14);
-//         }
-//     }
-// });
+$(document).on('click', 'button[data-role="seleccionar-ciudad"]', function () {
+    if ($('#seleccion-ciudad').length > 0) {
+        $.mobile.changePage('#seleccion-ciudad', {transition: "pop", role: "dialog", reverse: false});
+    } else {
+        $.ajax({
+            type: 'POST',
+            dataType: 'html',
+            async: true,
+            url: requestUrl + '/sitio/ciudades',
+            beforeSend: function () {
+                $.mobile.loading('show');
+            },
+            success: function (data) {
+                $('body').append(data);
+                $.mobile.changePage('#seleccion-ciudad', {transition: "pop", reverse: false, position: "window"});
+                $.mobile.loading('hide');
+            },
+            error: function (jqXHR, textStatus, errorThrown) {
+                $.mobile.loading('hide');
+                alert('Error: ' + errorThrown);
+            }
+        });
+    }
+    return false;
+});
 
-$(document).on('click', 'button[data-role="ubicacion-mapa"]', function () {
+$(document).on('click', 'a[data-role="confirmar-seleccion-ciudad"]', function () {
     if ($('#page-ubicacion-map').length > 0) {
         $.mobile.changePage('#page-ubicacion-map', {transition: "pop", role: "dialog", reverse: false});
         resizeMap();
@@ -368,7 +406,7 @@ $(document).on('click', 'button[data-role="ubicacion-mapa"]', function () {
                         $.mobile.changePage('#page-ubicacion-map', {transition: "pop", role: "dialog", reverse: false});
                         resizeMap();
                         $.mobile.loading('hide');
-                        setTimeout( function(){tour.start();} , 2000);
+                        setTimeout( function(){iniciarTour();} , 2000);
                     }).fail(function (jqxhr, settings, exception) {
                         $.mobile.loading('hide');
                         alert("Error al inicializar mapa: " + exception);
