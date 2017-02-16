@@ -1197,6 +1197,8 @@ class CatalogoController extends Controller {
         if ($bodega < 0) {
             $bodega = 0;
         }
+        
+       
 
         $objProducto = Producto::model()->find(array(
             'with' => array(
@@ -1225,6 +1227,10 @@ class CatalogoController extends Controller {
             throw new CHttpException(404, 'Producto no disponible.');
         }
 
+        $this->breadcrumbs = array(
+        		'Inicio' => array('/'),
+        		$objProducto->descripcionProducto
+        );
         $codigoPerfil = Yii::app()->shoppingCart->getCodigoPerfil();
         $cantidadCarro = 0;
         $position = Yii::app()->shoppingCart->itemAt($producto);

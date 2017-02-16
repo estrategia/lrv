@@ -144,8 +144,11 @@ class EShoppingCart extends CMap {
                 ));
             }
             
-            if ($objDomicilio !== null)
+            if ($objDomicilio !== null ){
                 $this->shipping = $objDomicilio->valorDomicilio;
+            }else{
+            	$this->shipping = 0;
+            }
 
             $this->saveStateAttributes();
         }
@@ -321,8 +324,10 @@ class EShoppingCart extends CMap {
         }
         $this->setCodigoPerfil($codigoPerfil);
         
-        if($this->shipping<=0){
+        if($this->shipping<=0 && $this->isUnit()){
       		$this->CalculateShipping();
+        }else if(!$this->isUnit()){
+        	$this->shipping = 0;
         }
         
         //CVarDumper::dump($this->codigoPerfil, 10, true);echo "<br>";
@@ -351,6 +356,19 @@ class EShoppingCart extends CMap {
     	
     	foreach($positions as $position){
     		if ($position->getDelivery() == 0 && $position->getShipping() == 0 && $position->isProduct() && $position->getQuantityStored() > 0){
+    			return true;
+    		}
+    	}
+    	
+    	return false;
+    }
+    
+    
+    public function isUnit(){
+    	$positions = $this->getPositions();
+    	 
+    	foreach($positions as $position){
+    		if ($position->isProduct() && ($position->getQuantityUnit() > 0 ||  $position->getQuantity(true) > 0)){
     			return true;
     		}
     	}
@@ -497,6 +515,11 @@ class EShoppingCart extends CMap {
             $this->applyDiscounts();
             $this->onUpdatePoistion(new CEvent($this));
             $this->saveState();
+            
+            if(!$this->isUnit()){
+            	$this->shipping = 0;
+            }
+            
             return true;
         }
         return false;
@@ -541,6 +564,7 @@ class EShoppingCart extends CMap {
             if(!$this->isUnitStored()){
             	$this->shippingStored = null;
             }
+            
             return true;
         }
         return false;

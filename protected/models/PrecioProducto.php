@@ -191,8 +191,11 @@ class PrecioProducto extends Precio {
                 ));
             }
 
-            if ($objDescuentoEspecial !== null)
+            if ($objDescuentoEspecial !== null){
                 $this->porcentajeDescuentoPerfil = $objDescuentoEspecial->descuentoPerfil;
+            	$this->ahorroUnidad += self::redondear(floor($this->precioUnidad * ($this->porcentajeDescuentoPerfil / 100)),1,10);
+            	$this->ahorroUnidadDescuento += self::redondear(floor($this->precioUnidad * ($this->porcentajeDescuentoPerfil / 100)),1,10);
+            }
             else {
                 $objDescuentoPerfil = ProductosDescuentosPerfiles::model()->find(array(
                     'condition' => 'codigoProducto=:producto AND codigoPerfil=:perfil',
@@ -202,8 +205,11 @@ class PrecioProducto extends Precio {
                     )
                 ));
 
-                if ($objDescuentoPerfil !== null)
+                if ($objDescuentoPerfil !== null){
                     $this->porcentajeDescuentoPerfil = $objDescuentoPerfil->descuentoPerfil;
+                    $this->ahorroUnidad += self::redondear(floor($this->precioUnidad * ($this->porcentajeDescuentoPerfil / 100)),1,10);
+                    $this->ahorroUnidadDescuento += self::redondear(floor($this->precioUnidad * ($this->porcentajeDescuentoPerfil / 100)),1,10);
+                }
             }
 
             //consultar beneficios del producto
@@ -272,11 +278,18 @@ class PrecioProducto extends Precio {
                foreach ($this->listBeneficios as $objBeneficio) {
                     $this->porcentajeDescuentoBeneficio += $objBeneficio->dsctoUnid;
                     $this->porcentajeDescuentoBeneficioDescuento += $objBeneficio->dsctoUnid;
+                    
+                    $this->ahorroUnidadDescuento += self::redondear(floor($this->precioUnidad * ($objBeneficio->dsctoUnid / 100)),1,10);
+                    $this->ahorroUnidad += self::redondear(floor($this->precioUnidad * ($objBeneficio->dsctoUnid / 100)),1,10);
+                    //$this->ahorroFraccion=  floor($this->precioFraccionTotal * ($this->getPorcentajeDescuento() / 100));
                 }
                 
                 foreach ($this->listBeneficiosBonos as $objBeneficio) {
                 	$this->porcentajeDescuentoBeneficio += $objBeneficio->dsctoUnid;
                 	$this->porcentajeDescuentoBeneficioBono += $objBeneficio->dsctoUnid;
+                	
+                	$this->ahorroUnidad += self::redondear(floor($this->precioUnidad * ($objBeneficio->dsctoUnid / 100)),1,10);
+                	$this->ahorroUnidadBono = self::redondear(floor($this->precioUnidad * ($objBeneficio->dsctoUnid / 100)),1,10);
                 }
                 
             } else if (Yii::app()->params->beneficios['configuracionActiva'] == Yii::app()->params->beneficios['configuracion']['mayor']) {
@@ -328,11 +341,11 @@ class PrecioProducto extends Precio {
                 $this->precioFraccionTotal = $this->precioFraccion * $this->unidadFraccionamiento;
                 $this->precioUnidad = self::redondear($this->precioUnidad, 1);
                 $this->precioFraccionTotal = self::redondear($this->precioFraccionTotal, 1);
-                
+                /*
                 $this->ahorroUnidad = floor($this->precioUnidad * ($this->getPorcentajeDescuento() / 100));
                 //$this->ahorroFraccion=  floor($this->precioFraccionTotal * ($this->getPorcentajeDescuento() / 100));
-                $this->ahorroUnidad = self::redondear($this->ahorroUnidad, 1);
-                
+                $this->ahorroUnidad = self::redondear($this->ahorroUnidad, 1, 10);
+               
                 $this->ahorroUnidadDescuento = floor($this->precioUnidad * ($this->getPorcentajeDescuentoDescuento() / 100));
                    //$this->ahorroFraccion=  floor($this->precioFraccionTotal * ($this->getPorcentajeDescuento() / 100));
                 $this->ahorroUnidadDescuento = self::redondear($this->ahorroUnidadDescuento, 1);
@@ -340,7 +353,7 @@ class PrecioProducto extends Precio {
                 $this->ahorroUnidadBono = floor($this->precioUnidad * ($this->getPorcentajeDescuentoBono(self::DESCUENTO_BENEFICIO) / 100));
                 //$this->ahorroFraccion=  floor($this->precioFraccionTotal * ($this->getPorcentajeDescuento() / 100));
                 $this->ahorroUnidadBono = self::redondear($this->ahorroUnidadBono, 1);
-                 
+                */ 
                 //$this->ahorroFraccion = self::redondear($this->ahorroFraccion, 1);
                 $this->inicializado = true;
                 

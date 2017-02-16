@@ -44,6 +44,7 @@ class BloqueoCuenta extends CActiveRecord
 		// NOTE: you may need to adjust the relation name and the related
 		// class name for the relations automatically generated below.
 		return array(
+			'objPerfil' => array(self::BELONGS_TO, 'Perfil', '', 'on' => 'objPerfil.codigoPerfil = t.perfil'),
 		);
 	}
 
@@ -78,6 +79,7 @@ class BloqueoCuenta extends CActiveRecord
 		// @todo Please modify the following code to remove attributes that should not be searched.
 
 		$criteria=new CDbCriteria;
+		$criteria->with = array('objPerfil');
 
 		$criteria->compare('idBloqueo',$this->idBloqueo);
 		$criteria->compare('perfil',$this->perfil);

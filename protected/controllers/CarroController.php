@@ -3370,21 +3370,25 @@ class CarroController extends Controller {
                         ));
                     }
 
-                    if ($objSaldo == null) {
-                        throw new Exception("Producto " . $position->objProducto->codigoProducto . " no disponible");
+                    if( $position->getQuantityStored() < 1 || $position->getQuantityUnit() > 0 || $position->getQuantity(true) > 0) {
+	                    if ($objSaldo == null) {
+	                        throw new Exception("Producto " . $position->objProducto->codigoProducto . " no disponible");
+	                    }
+	
+	                    if ($objSaldo->saldoUnidad < $position->getQuantityUnit()) {
+	                        throw new Exception("Producto " . $position->objProducto->codigoProducto . ". La cantidad solicitada no está disponible en este momento. Saldos disponibles: $objSaldo->saldoUnidad unidades");
+	                    }
+	
+	                    if ($objSaldo->saldoFraccion < $position->getQuantity(true)) {
+	                        throw new Exception("Producto " . $position->objProducto->codigoProducto . ". La cantidad solicitada no está disponible en este momento. Saldos disponibles: $objSaldo->saldoFraccion fracciones");
+	                    }
+	
+	                    $objSaldo->saldoUnidad = $objSaldo->saldoUnidad - $position->getQuantityUnit();
+	                    $objSaldo->saldoFraccion = $objSaldo->saldoFraccion - $position->getQuantity(true);
+	                    $objSaldo->save();
+	                    
                     }
-
-                    if ($objSaldo->saldoUnidad < $position->getQuantityUnit()) {
-                        throw new Exception("Producto " . $position->objProducto->codigoProducto . ". La cantidad solicitada no está disponible en este momento. Saldos disponibles: $objSaldo->saldoUnidad unidades");
-                    }
-
-                    if ($objSaldo->saldoFraccion < $position->getQuantity(true)) {
-                        throw new Exception("Producto " . $position->objProducto->codigoProducto . ". La cantidad solicitada no está disponible en este momento. Saldos disponibles: $objSaldo->saldoFraccion fracciones");
-                    }
-
-                    $objSaldo->saldoUnidad = $objSaldo->saldoUnidad - $position->getQuantityUnit();
-                    $objSaldo->saldoFraccion = $objSaldo->saldoFraccion - $position->getQuantity(true);
-                    $objSaldo->save();
+                    
                     //-- actualizar saldo producto
                     //actualizar saldo bodega //--
                     if ($position->getQuantityStored() > 0) {
@@ -3562,7 +3566,9 @@ class CarroController extends Controller {
                     		));
                     		 
                     		$objFormaPagoBono = new FormasPago;
-                    		$objFormaPagoBono->valorBonoUnidad = floor(Precio::redondear($objBeneficio->dsctoUnid/100*$position->getPriceToken(), 1));
+                    		// $objFormaPagoBono->valorBonoUnidad = floor(Precio::redondear($objBeneficio->dsctoUnid/100*$position->getPriceToken(), 1));
+                    		$objFormaPagoBono->valorBonoUnidad = floor(Precio::redondear($objBeneficio->dsctoUnid/100*$position->getPrice(false, false),1,10));
+                    		
                     		$objFormaPagoBono->valor = $objFormaPagoBono->valorBonoUnidad * $position->getQuantityUnit(); // valor total del bono.
                     		$objFormaPagoBono->idCompra = $objCompra->idCompra;
                     		$objFormaPagoBono->idFormaPago = Yii::app()->params->callcenter['bonos']['formaPagoBonos']; /*******************/

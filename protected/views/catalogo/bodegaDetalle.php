@@ -28,7 +28,7 @@
             <tr>
                 <th>
         <div class="ctbl_presentacion">
-            <label data-icon="false" class="ctbl_chk_lb">Entrega inmediata</label>
+            <label data-icon="false" class="ctbl_chk_lb">Entrega en condiciones normales</label>
         </div>
         </th>
         <th  align="right">
