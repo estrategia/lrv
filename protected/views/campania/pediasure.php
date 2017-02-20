@@ -95,7 +95,7 @@ $this->metaTags = "<meta http-equiv='X-UA-Compatible' content='IE=edge'>
     <div class="ui-block-c"> <img class="img-responsive-m" src="<?= Yii::app()->request->baseUrl ?>/images/contenido/abbot/pediasure/vainilla.png"> </div>
   </div>
   <p class="name-product-m">PediaSure 400 gr</p>
-  <a href="<?php echo CController::createUrl('/catalogo/producto', array('producto' => 20184  )) ?>"  data-ajax="false">
+  <a href="<?php echo CController::createUrl('/contenido/ver', array('tipo' => 'grupo', 'contenido' => 1986)) ?>" data-ajax="false">
      <img  src="<?= Yii::app()->request->baseUrl ?>/images/contenido/abbot/pediasure/boton.png">
   </a>
   <!-- Producto 2-->
@@ -105,7 +105,7 @@ $this->metaTags = "<meta http-equiv='X-UA-Compatible' content='IE=edge'>
     <div class="ui-block-b"> <img class="img-responsive-m" src="<?= Yii::app()->request->baseUrl ?>/images/contenido/abbot/pediasure/vainilla.png"> </div>
   </div>
   <p class="name-product-m">PediaSure 900 gr</p>
-  <a href="<?php echo CController::createUrl('/catalogo/producto', array('producto' => 82634  )) ?>"  data-ajax="false">
+  <a href="<?php echo CController::createUrl('/contenido/ver', array('tipo' => 'grupo', 'contenido' => 1984)) ?>" data-ajax="false">
      <img src="<?= Yii::app()->request->baseUrl ?>/images/contenido/abbot/pediasure/boton.png">
   </a>
   <!-- Producto 3-->
@@ -116,7 +116,7 @@ $this->metaTags = "<meta http-equiv='X-UA-Compatible' content='IE=edge'>
     <div class="ui-block-c"> <img class="img-responsive-m" src="<?= Yii::app()->request->baseUrl ?>/images/contenido/abbot/pediasure/chocolate.png"> </div>
   </div>
   <p class="name-product-m">PediaSure 237 ml</p>
-  <a href="<?php echo CController::createUrl('/catalogo/producto', array('producto' => 110000 )) ?>" data-ajax="false">
+<a href="<?php echo CController::createUrl('/contenido/ver', array('tipo' => 'grupo', 'contenido' => 1982)) ?>" data-ajax="false">
      <img src="<?= Yii::app()->request->baseUrl ?>/images/contenido/abbot/pediasure/boton.png">
   </a>
 </section>
@@ -162,7 +162,7 @@ $this->metaTags = "<meta http-equiv='X-UA-Compatible' content='IE=edge'>
 <!--VERSIÓN ESCRITORIO-->
 <?php else: ?>
 <div class="sidebar-cart">
-	<a href="https://www.larebajavirtual.com/catalogo/buscar?busqueda=pediasure"><img class="img-responsive" src="<?= Yii::app()->request->baseUrl ?>/images/contenido/abbot/general/compra-online.png" alt="Comprar pediasure"></a>
+	<img class="img-responsive" src="<?= Yii::app()->request->baseUrl ?>/images/contenido/abbot/general/compra-online.png" alt="Comprar pediasure">
 </div>
 <!--Header-->
 <?php require 'headerAbbott.php'; ?>
@@ -183,7 +183,7 @@ $this->metaTags = "<meta http-equiv='X-UA-Compatible' content='IE=edge'>
         </div>
         <div class="row">
           <p class="name-product">PediaSure 400 gr</p>
-          <a href="<?php echo CController::createUrl('/catalogo/producto', array('producto' => 20184  )) ?>">
+            <a href="<?php echo CController::createUrl('/contenido/ver', array('tipo' => 'grupo', 'contenido' => 1986)) ?>">
              <img class="img-responsive btn-comprar" src="<?= Yii::app()->request->baseUrl ?>/images/contenido/abbot/pediasure/boton.png">
           </a>
         </div>
@@ -200,7 +200,7 @@ $this->metaTags = "<meta http-equiv='X-UA-Compatible' content='IE=edge'>
         </div>
         <div class="row">
           <p class="name-product">PediaSure 900 gr</p>
-            <a href="<?php echo CController::createUrl('/catalogo/producto', array('producto' => 82634  )) ?>">
+              <a href="<?php echo CController::createUrl('/contenido/ver', array('tipo' => 'grupo', 'contenido' => 1984)) ?>">
                <img style="margin-top: 58px;" class="img-responsive btn-comprar" src="<?= Yii::app()->request->baseUrl ?>/images/contenido/abbot/pediasure/boton.png">
             </a>
         </div>
@@ -219,7 +219,9 @@ $this->metaTags = "<meta http-equiv='X-UA-Compatible' content='IE=edge'>
         </div>
         <div class="row">
           <p class="name-product">PediaSure 237 ml</p>
-          <a href="<?php echo CController::createUrl('/catalogo/producto', array('producto' => 110000 )) ?>"> <img class="img-responsive btn-comprar" src="<?= Yii::app()->request->baseUrl ?>/images/contenido/abbot/pediasure/boton.png"> </a>
+            <a href="<?php echo CController::createUrl('/contenido/ver', array('tipo' => 'grupo', 'contenido' => 1982)) ?>">
+               <img class="img-responsive btn-comprar" src="<?= Yii::app()->request->baseUrl ?>/images/contenido/abbot/pediasure/boton.png">
+            </a>
         </div>
       </div>
   </div>

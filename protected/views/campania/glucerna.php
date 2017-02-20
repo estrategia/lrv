@@ -145,9 +145,11 @@ $this->metaTags = "<meta http-equiv='X-UA-Compatible' content='IE=edge'>
 
 <!--VERSIÓN ESCRITORIO-->
 <?php else: ?>
-<div class="sidebar-cart">
-	<img class="img-responsive" src="<?= Yii::app()->request->baseUrl ?>/images/contenido/abbot/general/compra-online.png">
-</div>
+  <a href="<?php echo CController::createUrl('/contenido/ver', array('tipo' => 'grupo', 'contenido' => 1918)) ?>">
+    <div class="sidebar-cart">
+    	<img class="img-responsive" src="<?= Yii::app()->request->baseUrl ?>/images/contenido/abbot/general/compra-online.png">
+    </div>
+  </a>
 <!--Header-->
 <?php require 'headerAbbott.php'; ?>
 <!--Banner principal-->
