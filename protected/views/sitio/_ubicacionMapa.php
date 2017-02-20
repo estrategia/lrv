@@ -4,7 +4,7 @@
         <div class="page-footer center map-footer">
             <div class="ui-grid-b">
                 <div class="ui-block-a">
-                    <a style="" href='#' class='ui-btn ui-btn-r ui-corner-all ui-shadow ui-mini ' data-rel='back'>Cancelar</a>
+                    <a style="" href='#' class='ui-btn ui-btn-r ui-corner-all ui-shadow ui-mini ' onclick=" $.mobile.changePage('#main-page'); ">Cancelar</a>
                 </div>
                 <div class="ui-block-b">
                     <a id="confirma-ubicacion" style="" href="#" class='ui-btn ui-btn-n ui-corner-all ui-shadow ui-mini ' data-role="ubicacion-seleccion-mapa">Confirmar</a>
