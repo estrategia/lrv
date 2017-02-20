@@ -10,7 +10,7 @@
                     <a id="confirma-ubicacion" style="" href="#" class='ui-btn ui-btn-n ui-corner-all ui-shadow ui-mini ' data-role="ubicacion-seleccion-mapa">Confirmar</a>
                 </div>
                 <div class="ui-block-c">
-                    <button id="ayuda" onclick="tour.start()" class="ui-btn ui-btn-inline ui-corner-all ui-shadow ui-mini ">?</button>
+                    <button id="ayuda" onclick="tour.start()" class="ui-btn ui-btn-b ui-btn-inline ui-corner-all ui-shadow ui-mini ">?</button>
                 </div>
             </div>
         </div>
