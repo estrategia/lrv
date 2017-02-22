@@ -14,9 +14,8 @@ class BloqueoCuentaCommand extends CConsoleCommand {
         Yii::import('application.models.BloqueosUsuarios');
         Yii::import('application.models.Usuario');
         Yii::import('application.models.BloqueoCuenta');
+        Yii::import('application.models.PlantillaCorreo');
        
-        
-        
         $bloqueosCuentas = BloqueoCuenta::model()->findAll();
         
         foreach($bloqueosCuentas as $tipoBloqueo){
@@ -48,9 +47,11 @@ class BloqueoCuentaCommand extends CConsoleCommand {
         					$vistaCorreo = Yii::getPathOfAlias('application.views.common.correo').'.php';
         	
         					if(file_exists($vistaCorreo) && file_exists($vistaDesbloqueo)){
+        						
         						$contenidoCorreo = $this->renderFile($vistaDesbloqueo, array('objUsuario' => $objUsuario), true);
-        						$htmlCorreo = $this->renderFile($vistaCorreo, array('contenido' => $contenidoCorreo), true);
-        	
+        						
+        								$htmlCorreo = PlantillaCorreo::getContenidoConsola('desbloquearCuenta', $contenidoCorreo);
+                                                        
         						try {
         							sendHtmlEmail($objUsuario->correoElectronico, "La Rebaja Virtual: Desbloqueo de cuenta", $htmlCorreo, Yii::app()->params->callcenter['correo']);
         						} catch (Exception $exc) {

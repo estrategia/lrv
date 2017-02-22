@@ -90,5 +90,78 @@
         return parent::model($className);
     }
     
+    
+    public static function getContenido($nombrePlantilla, $contenidoCorreo){
+    	$header = PlantillaCorreo::model()->find(array(
+    			'condition' => 'nombrePlantilla =:nombre',
+    			'params' => array(
+    					':nombre' => Yii::app()->params->plantillasCorreo['header'],
+    			)
+    	));
+    		
+    	$footer = PlantillaCorreo::model()->find(array(
+    			'condition' => 'nombrePlantilla =:nombre',
+    			'params' => array(
+    					':nombre' => Yii::app()->params->plantillasCorreo['footer'],
+    			)
+    	));
+    		
+    	$plantilla = PlantillaCorreo::model()->find(array(
+    			'condition' => 'nombrePlantilla =:nombre',
+    			'params' => array(
+    					':nombre' => Yii::app()->params->plantillasCorreo[$nombrePlantilla],
+    			)
+    	));
+    		
+    	if(isset($plantilla->contenido)){
+    		$plantilla->contenido = str_replace("@contenido", $contenidoCorreo, $plantilla->contenido);
+    		$contenidoCorreo = $plantilla->contenido;
+    	}
+    	
+    	$htmlCorreo = Yii::app()->controller->renderPartial('application.views.common.correo', array(
+    			'contenido' => $contenidoCorreo,
+    			'header' => isset($header->contenido)? $header->contenido:'',
+    			'footer' => isset($footer->contenido)? $footer->contenido:'',
+    	), true, true);
+    	
+    		
+    	return $htmlCorreo;
+    }
+    
+    public static function getContenidoConsola($nombrePlantilla, $contenidoCorreo){
+    	$header = PlantillaCorreo::model()->find(array(
+    			'condition' => 'nombrePlantilla =:nombre',
+    			'params' => array(
+    					':nombre' => Yii::app()->params->plantillasCorreo['header'],
+    			)
+    	));
+    
+    	$footer = PlantillaCorreo::model()->find(array(
+    			'condition' => 'nombrePlantilla =:nombre',
+    			'params' => array(
+    					':nombre' => Yii::app()->params->plantillasCorreo['footer'],
+    			)
+    	));
+    
+    	$plantilla = PlantillaCorreo::model()->find(array(
+    			'condition' => 'nombrePlantilla =:nombre',
+    			'params' => array(
+    					':nombre' => Yii::app()->params->plantillasCorreo[$nombrePlantilla],
+    			)
+    	));
+    
+    	if(isset($plantilla->contenido)){
+    		$plantilla->contenido = str_replace("@contenido", $contenidoCorreo, $plantilla->contenido);
+    		$contenidoCorreo = $plantilla->contenido;
+    	}
+    	$ccc = new CController('context');
+    	$htmlCorreo = $ccc->renderInternal(Yii::getPathOfAlias('application.views.common.correo').'.php', array('contenido' => $contenidoCorreo,
+    			'header' => isset($header->contenido)? $header->contenido:'',
+    			'footer' => isset($footer->contenido)? $footer->contenido:'',), true);
+    
+    	return $htmlCorreo;
+    }
+    
+   
   }
 ?>

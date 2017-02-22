@@ -3571,7 +3571,7 @@ class CarroController extends Controller {
                     		
                     		$objFormaPagoBono->valor = $objFormaPagoBono->valorBonoUnidad * $position->getQuantityUnit(); // valor total del bono.
                     		$objFormaPagoBono->idCompra = $objCompra->idCompra;
-                    		$objFormaPagoBono->idFormaPago = Yii::app()->params->callcenter['bonos']['formaPagoBonos']; /*******************/
+                    		$objFormaPagoBono->idFormaPago = Yii::app()->params->beneficios['tipoBonoFormaPago'][$objBeneficio->tipo]; /*******************/
                     		$objFormaPagoBono->cuenta = $objBeneficio->cuentaProv;
                     		$objFormaPagoBono->formaPago = $objBonoTienda->formaPago;
                     		$objFormaPagoBono->idBonoTiendaTipo =  Yii::app()->params->beneficios['tipoBonoFormaPago'][$objBeneficio->tipo];
@@ -3708,7 +3708,7 @@ class CarroController extends Controller {
             	$modelPago->actualizarBono($objCompra);
             }
             
-            $contenidoCorreo = $this->renderPartial('compraCorreo', array(
+            $contenidoCorreo = $this->renderPartial(Yii::app()->params->rutasPlantillasCorreo['compraCorreo'], array(
                 'objCompra' => $objCompra,
                 'modelPago' => $modelPago,
                 'objCompraDireccion' => $objCompraDireccion,
@@ -3716,29 +3716,8 @@ class CarroController extends Controller {
                 'objFormasPago' => $objFormasPago,
                 'nombreUsuario' => $nombreUsuario), true, true);
             
-            $header = PlantillaCorreo::model()->find(array(
-            	'condition' => 'nombrePlantilla =:nombre',
-            	'params' => array(
-            			':nombre' => 'header'
-            	)
-            ));
-            
-            $footer = PlantillaCorreo::model()->find(array(
-            		'condition' => 'nombrePlantilla =:nombre',
-            		'params' => array(
-            				':nombre' => 'footer'
-            		)
-            ));
-            
-            $htmlCorreo = $this->renderPartial('application.views.common.correo', 
-            		array(
-            			'contenido' => $contenidoCorreo,
-            			'header' => isset($header->contenido)? $header->contenido:'',
-            			'footer' => isset($footer->contenido)? $footer->contenido:'',
-            		), 
-            		true, true);
-            
-           
+            $htmlCorreo = PlantillaCorreo::getContenido('finCompra',$contenidoCorreo);
+            	
             try {
                 sendHtmlEmail($correoUsuario, $asuntoCorreo, $htmlCorreo);
             } catch (Exception $ce) {
@@ -3761,8 +3740,10 @@ class CarroController extends Controller {
                     //$result = array(0=>1,1=>'congelar prueba ok', 2 =>'miguel.sanchez@eiso.com.co');
                     if (!empty($result) && $result[0] == 1) {
                         $objCompraRemision = Compras::model()->findByPk($objCompra->idCompra, array("with" => "objPuntoVenta"));
-                        $contenidoCorreo = $this->renderPartial('application.modules.callcenter.views.pedido.compraCorreo', array('objCompra' => $objCompraRemision), true, true);
-                        $htmlCorreo = $this->renderPartial('application.views.common.correo', array('contenido' => $contenidoCorreo), true, true);
+                        $contenidoCorreo = $this->renderPartial(Yii::app()->params->rutasPlantillasCorreo['compraCallcenter'], array('objCompra' => $objCompraRemision), true, true);
+                        
+                        $htmlCorreo = PlantillaCorreo::getContenido('compraCallcenter',$contenidoCorreo);
+                        	
                         try {
                             sendHtmlEmail($result[2], Yii::app()->params->asunto['pedidoRemitido'], $htmlCorreo);
                         } catch (Exception $ce) {
