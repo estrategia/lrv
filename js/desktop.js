@@ -18,7 +18,7 @@ tour = new Shepherd.Tour({
 
 tour.addStep('arrastra-mapa', {
   text: 'Arrastra el mapa y ubica el marcador en el lugar donde te encuentras.',
-  attachTo: '#map .gmnoprint img bottom',
+  attachTo: '#map .gmnoprint map bottom',
   when: {
         'before-show': function() {
     	  resizingMap();
@@ -69,7 +69,7 @@ tourAuto = new Shepherd.Tour({
 
 tourAuto.addStep('arrastra-mapa', {
   text: 'Arrastra el mapa y ubica el marcador en el lugar donde te encuentras.',
-  attachTo: '#map .gmnoprint img bottom',
+  attachTo: '#map .gmnoprint map bottom',
   buttons: [
     {
       text: 'Enterado',
@@ -101,22 +101,48 @@ tourAuto.addStep('confirma-ubicacion', {
   ]
 });
 
+var intervalTour = null;
+var intervalTourCount = 1;
+
 function iniciarTour(auto) {
+	intervalTour = setInterval(iniciarTourInterval, 500, auto);
+}
+
+function iniciarTourInterval(auto) {
+	console.log("valida mapa tour " + auto + " conteo: " + intervalTourCount);
+	intervalTourCount++;
+    if($('#map .gmnoprint map').length>0){
+    	clearInterval(intervalTour);
+    	intervalTour = null;
+    	intervalTourCount = 1;
+    	console.log("valida mapa tour FIN " + auto);
+    	iniciarTourAux(auto);
+    }
+}
+
+
+function iniciarTourAux(auto) {
+	console.log("valida mapa tour: comienzo tour " + auto);
+	
     if (auto) {
         if (tipoTour == 0 && volverAMostrar(0) != 'noMostrar') {
             tour.start();
         }
         if (tipoTour == 1 && volverAMostrar(1) != 'noMostrar') {
-            tourAuto.start();
+        	tourAuto.start();
         }
     } else {
         if (tour) {
-            tour.start();
+        	tour.start();
         }
         if (tourAuto) {
             tourAuto.start();
         }
     }
+}
+
+function tourEstaAbierto(varTour){
+	return (varTour.getCurrentStep() && varTour.getCurrentStep().isOpen());
 }
 
 function cerrarTour() {
@@ -1811,12 +1837,6 @@ function ubicacionGPS() {
     if (navigator.geolocation) {
         Loading.show();
         navigator.geolocation.getCurrentPosition(setCoords, errorPosicion, {'enableHighAccuracy': true, 'timeout': 30000, 'maximumAge': 0});
-        if (tourIniGps) {
-            setTimeout(function() {
-                iniciarTour(true);
-            } , 1000);
-            tourIniGps = false;
-        }
     } else {
         alert("Servicio no soportado por este navegador.");
     }
@@ -1860,6 +1880,12 @@ function setCoords(pos) {
         map.setCenter(pt);
         map.setZoom(15);
         resizeMap();
+        if (tourIniGps) {
+            setTimeout(function() {
+                iniciarTour(true);
+            } , 1000);
+            tourIniGps = false;
+        }
     } else {
         latitud = lat;
         longitud = lng;
@@ -1883,8 +1909,14 @@ function setCoords(pos) {
                         var pt = new google.maps.LatLng(latitud, longitud);
                         map.setCenter(pt);
                         map.setZoom(15);
-                        // resizeMap();
-                        // console.log(centro);
+                        resizeMap();
+                        
+                        if (tourIniGps) {
+                            setTimeout(function() {
+                                iniciarTour(true);
+                            } , 1000);
+                            tourIniGps = false;
+                        }
                         tourIniMap ? setTimeout(function() {iniciarTour(true);} , 1000) : tourIniMap = false;
                         Loading.hide();
                     }).fail(function(jqxhr, settings, exception) {

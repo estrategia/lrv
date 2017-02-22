@@ -30,7 +30,22 @@ function volverAMostrar() {
   return Cookies.get('mobileTour');
 }
 
+var intervalTour = null;
+
 function iniciarTour() {
+	intervalTour = setInterval(iniciarTourInterval, 500);
+}
+
+function iniciarTourInterval() {
+    if($('#map .gmnoprint map').length>0){
+    	clearInterval(intervalTour);
+    	intervalTour = null;
+    	iniciarTourAux();
+    }
+}
+
+
+function iniciarTourAux() {
   if (volverAMostrar() != 'noMostrar') {
     tour.start();
   }
@@ -38,7 +53,7 @@ function iniciarTour() {
 
 tour.addStep('arrastra-mapa', {
   text: 'Arrastra el mapa y ubica el marcador en el lugar donde te encuentras.',
-  attachTo: '#map .gmnoprint img bottom',
+  attachTo: '#map .gmnoprint map bottom',
   when: {
       show: function() {
     	  resizingMap();
@@ -388,6 +403,7 @@ $(document).on('click', 'button[data-role="seleccionar-ciudad"]', function () {
 $(document).on('click', 'a[data-role="confirmar-seleccion-ciudad"]', function () {
     if ($('#page-ubicacion-map').length > 0) {
         $.mobile.changePage('#page-ubicacion-map', {transition: "pop", role: "dialog", reverse: false});
+        map.setZoom(15);
         resizeMap();
     } else {
         $.ajax({
@@ -404,6 +420,7 @@ $(document).on('click', 'a[data-role="confirmar-seleccion-ciudad"]', function ()
                         $('body').append(data);
                         inicializarMapa();
                         $.mobile.changePage('#page-ubicacion-map', {transition: "pop", role: "dialog", reverse: false});
+                        map.setZoom(15);
                         resizeMap();
                         $.mobile.loading('hide');
                         setTimeout( function(){iniciarTour();} , 2000);

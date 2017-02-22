@@ -21,24 +21,15 @@ class SitioController extends Controller {
     }
 
     public function actionIndex() {
-    	
-    	$objContenidoCumpleanos = ContenidoInicio::getContenidoCumpleanhos(Yii::app()->session[Yii::app()->params->usuario['sesion']]);
-    	
-        if ($this->isMobile) {
-        	
+    	if ($this->isMobile) {
         	$this->contenidosInicioMovil();
-        	
             $this->actionInicio();
         } else {
-        	
         	// verificar los contenidos de bienvenida
-        	
         	$this->contenidosInicioDesktop();
-        	
         	 $this->render('d_index', array(
 	                'listModulos' => ModulosConfigurados::getModulos($this->objSectorCiudad, Yii::app()->shoppingCart->getCodigoPerfil(), UbicacionModulos::UBICACION_ESCRITORIO_HOME)
 	         ));
-        	
         }
         Yii::app()->end();
     }

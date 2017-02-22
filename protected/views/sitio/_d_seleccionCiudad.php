@@ -11,7 +11,7 @@
                         <div id="select-ubicacion-content" class="center-div">
                             <div id="select-ubicacion-psubsector" class="center-div">
                                 <select class="form-control" data-role="ciudad-despacho-map">
-                                    <option value="">Seleccione ciudad ...</option>
+                                    <!--  <option value="">Seleccione ciudad ...</option> -->
                                     <?php foreach ($listCiudadesSectores as $ciudad): ?>
                                         <option data-latitud="<?php echo $ciudad->latitudGoogle  ?>" data-longitud="<?php echo $ciudad->longitudGoogle  ?>" value="<?php echo $ciudad->codigoCiudad ?>-0"><?php echo $ciudad->nombreCiudad ?></option>
                                     <?php endforeach; ?>
