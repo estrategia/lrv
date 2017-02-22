@@ -37,12 +37,11 @@ class BonosController extends ControllerOperator {
 
         if (isset($_POST['BonosTienda'])) {
             $model->attributes = $_POST['BonosTienda'];
-            if ($model->save()){
+            if ($model->save()) {
                 // enviar correo
                 $this->enviarCorreo($model);
                 $this->redirect($this->createUrl('/callcenter/bonos/index', array('opcion' => 'admin', 'bono' => $model->idBonoTienda)));
             }
-                
         }
 
         $this->render('index', array(
@@ -109,7 +108,7 @@ class BonosController extends ControllerOperator {
             $model->attributes = $_POST['ReactivarBonoTiendaForm'];
             if ($model->validate()) {
                 if ($objBonoTienda->estado == 0 || $objBonoTienda->estado == 2) {
-                	
+
                     $objBonoTienda->estado = 1;
                     $objBonoTienda->idCompra = null;
                     $objBonoTienda->fechaUso = null;
@@ -192,88 +191,89 @@ class BonosController extends ControllerOperator {
      * If deletion is successful, the browser will be redirected to the 'admin' page.
      * @param integer $id the ID of the model to be deleted
      */
+
     public function actionDesactivar($id) {
-    	if (!Yii::app()->request->isPostRequest) {
-    		echo CJSON::encode(array('result' => 'error', 'response' => 'Solicitud inválida'));
-    		Yii::app()->end();
-    	}
-    	
-    	$render = Yii::app()->getRequest()->getPost('render', false);
-    	$objBonoTienda = BonosTienda::model()->findByPk($id);
-    	
-    	if ($objBonoTienda === null) {
-    		echo CJSON::encode(array('result' => 'error', 'response' => 'Bono no existente'));
-    		Yii::app()->end();
-    	}
-    	
-    	$model = new ReactivarBonoTiendaForm;
-    	$model->idBonoTienda = $id;
-    	
-    	if ($render == true) {
-    		echo CJSON::encode(array(
-    				'result' => 'ok',
-    				'response' => $this->renderPartial('_d_reactivarForm', array(
-    							'model' => $model, 
-    							'objBonoTienda' => $objBonoTienda), true)
-    		));
-    		Yii::app()->end();
-    	} else if (isset($_POST['ReactivarBonoTiendaForm'])) {
-    		$model->attributes = $_POST['ReactivarBonoTiendaForm'];
-    		if ($model->validate()) {
-    			if ($objBonoTienda->estado == 1 ) {
-    				 
-    				$objBonoTienda->estado = 2;
-    			//	$objBonoTienda->idCompra = null;
-    			//	$objBonoTienda->fechaUso = null;
-    				$objBonoTienda->valorCompra = 0;
-    	
-    				$modelLog = new LogBonos;
-    				$modelLog->idOperador = Yii::app()->controller->module->user->id;
-    				$modelLog->valorBono = $objBonoTienda->valor;
-    				$modelLog->comentario = $model->comentario;
-    				$modelLog->idBonoTiendaTipo = $objBonoTienda->idBonoTiendaTipo;
-    				$modelLog->idBonoTienda = $objBonoTienda->idBonoTienda;
-    				$modelLog->identificacionUsuario = $objBonoTienda->identificacionUsuario;
-    	
-    				$transaction = Yii::app()->db->beginTransaction();
-    				try {
-    					if (!$objBonoTienda->save())
-    						throw new Exception(CActiveForm::validate($objBonoTienda));
-    	
-    						if (!$modelLog->save())
-    							throw new Exception(CActiveForm::validate($modelLog));
-    	
-    							$transaction->commit();
-    							echo CJSON::encode(array(
-    									'result' => 'ok',
-    									'response' => 'Desactivaci&oacute;n correcta'
-    							));
-    							Yii::app()->end();
-    				} catch (Exception $exc) {
-    					Yii::log($exc->getMessage() . "\n" . $exc->getTraceAsString(), CLogger::LEVEL_ERROR, 'application');
-    					try {
-    						$transaction->rollBack();
-    					} catch (Exception $txexc) {
-    						Yii::log($txexc->getMessage() . "\n" . $txexc->getTraceAsString(), CLogger::LEVEL_ERROR, 'application');
-    					}
-    	
-    					echo CJSON::encode(array(
-    							'result' => 'error',
-    							'response' => "Exception: " . $exc->getMessage()
-    					));
-    					Yii::app()->end();
-    				}
-    			} else {
-    				echo CJSON::encode(array(
-    						'result' => 'ok',
-    						'response' => 'Bono no requiere desactivaci&oacute;n'
-    				));
-    			}
-    		} else {
-    			echo CActiveForm::validate($model);
-    			Yii::app()->end();
-    		}
-    	}
+        if (!Yii::app()->request->isPostRequest) {
+            echo CJSON::encode(array('result' => 'error', 'response' => 'Solicitud inválida'));
+            Yii::app()->end();
+        }
+
+        $render = Yii::app()->getRequest()->getPost('render', false);
+        $objBonoTienda = BonosTienda::model()->findByPk($id);
+
+        if ($objBonoTienda === null) {
+            echo CJSON::encode(array('result' => 'error', 'response' => 'Bono no existente'));
+            Yii::app()->end();
+        }
+
+        $model = new ReactivarBonoTiendaForm;
+        $model->idBonoTienda = $id;
+
+        if ($render == true) {
+            echo CJSON::encode(array(
+                'result' => 'ok',
+                'response' => $this->renderPartial('_d_reactivarForm', array(
+                    'model' => $model,
+                    'objBonoTienda' => $objBonoTienda), true)
+            ));
+            Yii::app()->end();
+        } else if (isset($_POST['ReactivarBonoTiendaForm'])) {
+            $model->attributes = $_POST['ReactivarBonoTiendaForm'];
+            if ($model->validate()) {
+                if ($objBonoTienda->estado == 1) {
+
+                    $objBonoTienda->estado = 2;
+                    //	$objBonoTienda->idCompra = null;
+                    //	$objBonoTienda->fechaUso = null;
+                    $objBonoTienda->valorCompra = 0;
+
+                    $modelLog = new LogBonos;
+                    $modelLog->idOperador = Yii::app()->controller->module->user->id;
+                    $modelLog->valorBono = $objBonoTienda->valor;
+                    $modelLog->comentario = $model->comentario;
+                    $modelLog->idBonoTiendaTipo = $objBonoTienda->idBonoTiendaTipo;
+                    $modelLog->idBonoTienda = $objBonoTienda->idBonoTienda;
+                    $modelLog->identificacionUsuario = $objBonoTienda->identificacionUsuario;
+
+                    $transaction = Yii::app()->db->beginTransaction();
+                    try {
+                        if (!$objBonoTienda->save())
+                            throw new Exception(CActiveForm::validate($objBonoTienda));
+
+                        if (!$modelLog->save())
+                            throw new Exception(CActiveForm::validate($modelLog));
+
+                        $transaction->commit();
+                        echo CJSON::encode(array(
+                            'result' => 'ok',
+                            'response' => 'Desactivaci&oacute;n correcta'
+                        ));
+                        Yii::app()->end();
+                    } catch (Exception $exc) {
+                        Yii::log($exc->getMessage() . "\n" . $exc->getTraceAsString(), CLogger::LEVEL_ERROR, 'application');
+                        try {
+                            $transaction->rollBack();
+                        } catch (Exception $txexc) {
+                            Yii::log($txexc->getMessage() . "\n" . $txexc->getTraceAsString(), CLogger::LEVEL_ERROR, 'application');
+                        }
+
+                        echo CJSON::encode(array(
+                            'result' => 'error',
+                            'response' => "Exception: " . $exc->getMessage()
+                        ));
+                        Yii::app()->end();
+                    }
+                } else {
+                    echo CJSON::encode(array(
+                        'result' => 'ok',
+                        'response' => 'Bono no requiere desactivaci&oacute;n'
+                    ));
+                }
+            } else {
+                echo CActiveForm::validate($model);
+                Yii::app()->end();
+            }
+        }
     }
 
     /**
@@ -366,7 +366,7 @@ class BonosController extends ControllerOperator {
                                 if ($registro == 0) {
                                     continue;
                                 }
-                                
+
                                 $datosBono = explode(";", $lineaBono);
                                 $total['total'] ++;
                                 $objBonoTienda = new BonosTienda;
@@ -387,7 +387,6 @@ class BonosController extends ControllerOperator {
                                 } else {
                                     $warnings .= "Error $registro:" . CVarDumper::dumpAsString($objBonoTienda->getErrors()) . "<br/>";
                                 }
-
                             }
 
                             $transaction->commit();
@@ -427,36 +426,36 @@ class BonosController extends ControllerOperator {
         Yii::app()->end();
     }
 
-    public function actionBonoTienda($bono = null, $opcion = null){
+    public function actionBonoTienda($bono = null, $opcion = null) {
 
         $model = new BonoTienda('search');
         $model->unsetAttributes();  // clear any default values
-         if (isset($_GET['BonoTienda']))
+        if (isset($_GET['BonoTienda']))
             $model->attributes = $_GET['BonoTienda'];
 
         $vista = 'listaTiposBonos';
-        if($opcion == 'crear'){
+        if ($opcion == 'crear') {
             $vista = "crearTipo";
             $model = new BonoTienda();
-        }else if($opcion == "editar"){
+        } else if ($opcion == "editar") {
             $model = BonoTienda::model()->findByPk($bono);
             $vista = "crearTipo";
         }
 
-        if(isset($_POST['BonoTienda'])){
-                $model->attributes = $_POST['BonoTienda'];
-                if($model->validate()){
-                    if($model->save()){
-                        $this->redirect(CController::createUrl('bonoTienda'));
-                    }else{
-                        Yii::log("Error al guardar el bono");
-                    }
+        if (isset($_POST['BonoTienda'])) {
+            $model->attributes = $_POST['BonoTienda'];
+            if ($model->validate()) {
+                if ($model->save()) {
+                    $this->redirect(CController::createUrl('bonoTienda'));
+                } else {
+                    Yii::log("Error al guardar el bono");
                 }
+            }
         }
-       
+
 
         $this->render('tiposBonos', array(
-            'vista' => $vista ,
+            'vista' => $vista,
             'opcion' => 'admin',
             'params' => array(
                 'model' => $model,
@@ -586,15 +585,17 @@ class BonosController extends ControllerOperator {
     /**
      * Send email to bono created.
      */
-    function enviarCorreo($model){
-        try{
+    function enviarCorreo($model) {
+        try {
             $htmlCorreo = "";
-            $contenidoCorreo = $this->renderPartial('bonoCorreo', array(
-                   'objBono' => $model,
-                   ), true, true);
-            $htmlCorreo = $this->renderPartial('application.views.common.correo', array('contenido' => $contenidoCorreo), true, true);
+            $contenidoCorreo = $this->renderPartial(Yii::app()->params->rutasPlantillasCorreo['bonoCorreo'], array(
+                'objBono' => $model,
+                    ), true, true);
+           
+            $htmlCorreo = PlantillaCorreo::getContenido('bonoCreado', $contenidoCorreo);
+             
             sendHtmlEmail($model->correoElectronico, Yii::app()->params->callcenter['bonos']['asuntoCorreo'], $htmlCorreo);
-        }catch(Exception $e){
+        } catch (Exception $e) {
             $model->notificado = 0;
             $model->save();
             Yii::log("No se pudo enviar correo al usuario $model->correoElectronico");

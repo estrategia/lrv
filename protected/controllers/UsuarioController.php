@@ -254,7 +254,9 @@ class UsuarioController extends Controller {
                     $objUsuarioExtendida->save();
                     $model->usuario->objUsuarioExtendida = $objUsuarioExtendida;
 
-                    $contenido = $this->renderPartial('_correoRecordar', array('objUsuario' => $model->usuario), true, true);
+                    $contenido = $this->renderPartial(Yii::app()->params->rutasPlantillasCorreo['correoRecordarClave'], array('objUsuario' => $model->usuario), true, true);
+                    
+                    
                     $htmlCorreo = $this->renderPartial('//common/correo', array('contenido' => $contenido), true, true);
                     sendHtmlEmail($model->correoElectronico, Yii::app()->params->asuntoRecordatorioClave, $htmlCorreo);
 

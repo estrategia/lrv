@@ -2812,7 +2812,7 @@ class CarroController extends ControllerVendedor {
 							$objFormaPagoBono->valorBonoUnidad = floor(Precio::redondear($objBeneficio->dsctoUnid/100*$position->getPriceToken(), 1));
 							$objFormaPagoBono->valor = $objFormaPagoBono->valorBonoUnidad * $position->getQuantityUnit(); // valor total del bono.
 							$objFormaPagoBono->idCompra = $objCompra->idCompra;
-							$objFormaPagoBono->idFormaPago = Yii::app()->params->callcenter['bonos']['formaPagoBonos']; /*******************/
+							$objFormaPagoBono->idFormaPago = Yii::app()->params->beneficios['tipoBonoFormaPago'][$objBeneficio->tipo]; /*******************/
 							$objFormaPagoBono->cuenta = $objBeneficio->cuentaProv;
 							$objFormaPagoBono->formaPago = $objBonoTienda->formaPago;
 							$objFormaPagoBono->idBonoTiendaTipo =  Yii::app()->params->beneficios['tipoBonoFormaPago'][$objBeneficio->tipo];
@@ -2945,7 +2945,7 @@ class CarroController extends ControllerVendedor {
 			}
 			
 			$objFormaPago = FormaPago::model ()->findByPk ( $modelPago->idFormaPago );
-			$contenidoCorreo = $this->renderPartial ( 'compraCorreo', array (
+			$contenidoCorreo = $this->renderPartial ( Yii::app()->params->rutasPlantillasCorreo['compraCorreo'], array (
 					'objCompra' => $objCompra,
 					'modelPago' => $modelPago,
 					'objCompraDireccion' => $objCompraDireccion,
@@ -2953,9 +2953,8 @@ class CarroController extends ControllerVendedor {
 					'objFormasPago' => $objFormasPago,
 					'nombreUsuario' => $nombreUsuario 
 			), true, true );
-			$htmlCorreo = $this->renderPartial ( 'application.views.common.correo', array (
-					'contenido' => $contenidoCorreo 
-			), true, true );
+			
+			$htmlCorreo = PlantillaCorreo::getContenido('finCompra', $contenidoCorreo);
 			
 			try {
 				sendHtmlEmail ( $correoUsuario, $asuntoCorreo, $htmlCorreo );
@@ -2984,12 +2983,11 @@ class CarroController extends ControllerVendedor {
 						$objCompraRemision = Compras::model ()->findByPk ( $objCompra->idCompra, array (
 								"with" => "objPuntoVenta" 
 						) );
-						$contenidoCorreo = $this->renderPartial ( 'application.modules.callcenter.views.pedido.compraCorreo', array (
+						$contenidoCorreo = $this->renderPartial ( Yii::app()->params->rutasPlantillasCorreo['compraCallcenter'], array (
 								'objCompra' => $objCompraRemision 
 						), true, true );
-						$htmlCorreo = $this->renderPartial ( 'application.views.common.correo', array (
-								'contenido' => $contenidoCorreo 
-						), true, true );
+                                                
+						$htmlCorreo = PlantillaCorreo::getContenido('compraCallCenter', $contenidoCorreo);
 						try {
 							sendHtmlEmail ( $result [2], Yii::app ()->params->asunto ['pedidoRemitido'], $htmlCorreo );
 						} catch ( Exception $ce ) {

@@ -506,8 +506,10 @@ class Compras extends CActiveRecord {
 		                            //$rowsInactivacion = Yii::app()->db->createCommand("UPDATE m_Usuario SET activo=:activo WHERE identificacionUsuario=:usuario")->bindValue(':activo', Usuario::ESTADO_BLOQUEADO, PDO::PARAM_INT)->bindValue(':usuario', $this->identificacionUsuario, PDO::PARAM_STR)->execute();
 		                            //$rowsInactivacion>0
 		                            if($objUsuario->save()){
-		                                $contenidoCorreo = Yii::app()->controller->renderPartial('//common/correoBloqueo', array('objUsuario' => $objUsuario), true);
-		                                $htmlCorreo = Yii::app()->controller->renderPartial('//common/correo', array('contenido' => $contenidoCorreo), true);   
+		                                $contenidoCorreo = Yii::app()->controller->renderPartial(Yii::app()->params->rutasPlantillasCorreo['correoBloqueo'], array('objUsuario' => $objUsuario), true);
+                                        
+		                                $htmlCorreo = PlantillaCorreo::getContenido('finCompra', $contenidoCorreo);
+		                                
 		                                try{
 		                                    sendHtmlEmail($objUsuario->correoElectronico, "La Rebaja Virtual: Bloqueo de cuenta", $htmlCorreo,Yii::app()->params->callcenter['correo']);
 		                                }  catch (Exception $exc){}

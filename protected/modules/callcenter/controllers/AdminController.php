@@ -75,18 +75,18 @@ class AdminController extends ControllerOperator {
                 case 3: $sort = "t.fechaEntrega DESC";
                     break;
                 case 4: {
-	                	$sort = "tiempoRestante DESC";
-	                	$params['select'] = array("*",
-	                			"TIMESTAMPDIFF(minute, fechaEntrega, now()) as tiempoRestante"
-	                			);
-                	}
-                break;
+                        $sort = "tiempoRestante DESC";
+                        $params['select'] = array("*",
+                            "TIMESTAMPDIFF(minute, fechaEntrega, now()) as tiempoRestante"
+                        );
+                    }
+                    break;
                 case 5: {
-	                	$sort = "tiempoRestante DESC";
-	                	$params['select'] = array("*",
-	                			"TIMESTAMPDIFF(minute, fechaEntrega, now()) as tiempoRestante"
-	                			);
-                	}
+                        $sort = "tiempoRestante DESC";
+                        $params['select'] = array("*",
+                            "TIMESTAMPDIFF(minute, fechaEntrega, now()) as tiempoRestante"
+                        );
+                    }
                     break;
                 case 6: $sort = "t.fechaCompra DESC";
                     break;
@@ -106,8 +106,8 @@ class AdminController extends ControllerOperator {
             $this->render('pedidos', array(
                 'model' => $model,
                 'dataProvider' => $model->search(
-                		$params
-                		),
+                        $params
+                ),
                 'arrCantidadPedidos' => Compras::cantidadComprasPorEstado($fecha)
             ));
         } else {
@@ -146,9 +146,9 @@ class AdminController extends ControllerOperator {
                 $this->render('pedidos', array(
                     'model' => $model,
                     'dataProvider' => $model->search(array(
-                    		'order' => 't.fechaCompra DESC',
-                    		'formaPago' => Yii::app()->params->formaPago['pasarela']['idPasarela'],
-                    		'operadorPedido' => true)),
+                        'order' => 't.fechaCompra DESC',
+                        'formaPago' => Yii::app()->params->formaPago['pasarela']['idPasarela'],
+                        'operadorPedido' => true)),
                     'arrCantidadPedidos' => Compras::cantidadComprasPorEstado($fecha)
                 ));
             } else if ($parametro == 'entregaNacional') {
@@ -183,7 +183,7 @@ class AdminController extends ControllerOperator {
 
         $form = Yii::app()->session[Yii::app()->params->callcenter['sesion']['formPedidoBusqueda']];
 
-        if (isset($_GET['ajax']) && $_GET['ajax']="pedidos-grid") {
+        if (isset($_GET['ajax']) && $_GET['ajax'] = "pedidos-grid") {
             $post = true;
             $model = new Compras('search');
             $model->unsetAttributes();
@@ -365,12 +365,14 @@ class AdminController extends ControllerOperator {
                     $bono = $clientBono->__soapCall('ConsultarBono', array('identificacion' => $identificacion, 'tipo' => '1'));
 
                     try {
-                        $contenido = $this->renderPartial('_mensajeCorreoReactivacion', array('modelLog' => $modelLog, 'bono' => $bono), true, true);
-                        $htmlCorreo = $this->renderPartial('//common/correo', array('contenido' => $contenido), true, true);
-                        $correosDestinatario = implode(",", Yii::app()->params->callcenter['reactivacionBono']['destinatarios']);
+                        $contenidoCorreo = $this->renderPartial(Yii::app()->params->rutasPlantillasCorreo['reactivacionBono'], array('modelLog' => $modelLog, 'bono' => $bono), true, true);
+                        
+                       $htmlCorreo = PlantillaCorreo::getContenido('observacionPedido', $contenidoCorreo);
+		           
+                       $correosDestinatario = implode(",", Yii::app()->params->callcenter['reactivacionBono']['destinatarios']);
                         sendHtmlEmail($correosDestinatario, Yii::app()->params->callcenter['reactivacionBono']['asuntoMensaje'], $htmlCorreo);
                     } catch (Exception $exc) {
-
+                        
                     }
 
                     echo CJSON::encode(array(
@@ -640,11 +642,13 @@ class AdminController extends ControllerOperator {
                 }
 
                 try {
-                    $contenido = $this->renderPartial('//common/mensajeHtml', array('mensaje' => $objObservacion->observacion), true, true);
-                    $htmlCorreo = $this->renderPartial('//common/correo', array('contenido' => $contenido), true, true);
+                    $contenidoCorreo = $this->renderPartial(Yii::app()->params->rutasPlantillasCorreo['mensajeHtml'], array('mensaje' => $objObservacion->observacion), true, true);
+
+                    $htmlCorreo = PlantillaCorreo::getContenido('observacionPedido', $contenidoCorreo);
+                 
                     sendHtmlEmail($objCompra->identificacionUsuario == null ? $objCompra->objCompraDireccion->correoElectronico : $objCompra->objUsuario->correoElectronico, Yii::app()->params->callcenter['observacion']['asuntoMensaje'], $htmlCorreo);
                 } catch (Exception $exc) {
-
+                    
                 }
 
                 echo CJSON::encode(array('result' => 'ok',
@@ -740,7 +744,7 @@ class AdminController extends ControllerOperator {
         } else {
             $result = $result[0];
             if ($result->RESPUESTA == 1) {
-                echo CJSON::encode(array('result' => 'ok', 'response' => "<strong> RESULTADO: </strong>" . $result->PDV . "-" . $result->PDV_NOMBRE, 'ciudad'=>76001, 'sector'=>22));
+                echo CJSON::encode(array('result' => 'ok', 'response' => "<strong> RESULTADO: </strong>" . $result->PDV . "-" . $result->PDV_NOMBRE, 'ciudad' => 76001, 'sector' => 22));
             } else {
                 echo CJSON::encode(array('result' => 'ok', 'response' => $result->DESCRIPCION));
             }
@@ -779,13 +783,13 @@ class AdminController extends ControllerOperator {
             $result = $result[0];
             if ($result->RESPUESTA == 1) {
 
-            	$infoLabel ="<strong> RESULTADO: </strong>";
+                $infoLabel = "<strong> RESULTADO: </strong>";
 
-            	foreach($result->PDV as $infopdv){
-            		$infoLabel.= "<div class='line-color'>".$infopdv->NOMBREBARRIO." : ".$infopdv->IDCOMERCIAL . "-" . $infopdv->NOMBREPUNTODEVENTA." </div>";
-            	}
+                foreach ($result->PDV as $infopdv) {
+                    $infoLabel .= "<div class='line-color'>" . $infopdv->NOMBREBARRIO . " : " . $infopdv->IDCOMERCIAL . "-" . $infopdv->NOMBREPUNTODEVENTA . " </div>";
+                }
 
-                echo CJSON::encode(array('result' => 'ok', 'response' => $infoLabel, 'ciudad'=> 76001, 'sector'=> 22 ));
+                echo CJSON::encode(array('result' => 'ok', 'response' => $infoLabel, 'ciudad' => 76001, 'sector' => 22));
             } else {
                 echo CJSON::encode(array('result' => 'ok', 'response' => $result->DESCRIPCION));
             }
@@ -807,70 +811,69 @@ class AdminController extends ControllerOperator {
         return $model;
     }
 
-    /*protected function gridDetallePedido($data, $row) {
-        $params = array('pedido' => $data->idCompra);
+    /* protected function gridDetallePedido($data, $row) {
+      $params = array('pedido' => $data->idCompra);
 
-        if ($data->idOperador == null && $data->idEstadoCompra == Yii::app()->params->callcenter ['estadoCompra']['estado']['pendiente']) {
-            $params['asignar'] = true;
-        }
+      if ($data->idOperador == null && $data->idEstadoCompra == Yii::app()->params->callcenter ['estadoCompra']['estado']['pendiente']) {
+      $params['asignar'] = true;
+      }
 
-        $result = "<a class='btn btn-success  btn-xs' href='" . $this->createUrl('/callcenter/admin/detallepedido', $params) . "' target='_blank'><i
-                     class='glyphicon glyphicon-zoom-in glyphicon-white'></i> $data->idCompra</a>";
-        return $result;
-    }
+      $result = "<a class='btn btn-success  btn-xs' href='" . $this->createUrl('/callcenter/admin/detallepedido', $params) . "' target='_blank'><i
+      class='glyphicon glyphicon-zoom-in glyphicon-white'></i> $data->idCompra</a>";
+      return $result;
+      }
 
-    protected function gridPuntoventaPedido($data, $row) {
-        if ($data->objPuntoVenta === null)
-            return "NA";
-        return $data->objPuntoVenta->nombrePuntoDeVenta . "<br/>" . $data->objPuntoVenta->direccionPuntoDeVenta;
-    }
+      protected function gridPuntoventaPedido($data, $row) {
+      if ($data->objPuntoVenta === null)
+      return "NA";
+      return $data->objPuntoVenta->nombrePuntoDeVenta . "<br/>" . $data->objPuntoVenta->direccionPuntoDeVenta;
+      }
 
-    protected function gridOrigenPedido($data, $row) {
-        if ($data->identificacionUsuario == null) {
-            return $data->objCompraDireccion->nombre . "<br/>" . $data->objCompraDireccion->correoElectronico;
-        } else {
-            return "$data->identificacionUsuario<br/>" . $data->objUsuario->getNombreCompleto() . "<br/>" . $data->objUsuario->correoElectronico;
-        }
-    }
+      protected function gridOrigenPedido($data, $row) {
+      if ($data->identificacionUsuario == null) {
+      return $data->objCompraDireccion->nombre . "<br/>" . $data->objCompraDireccion->correoElectronico;
+      } else {
+      return "$data->identificacionUsuario<br/>" . $data->objUsuario->getNombreCompleto() . "<br/>" . $data->objUsuario->correoElectronico;
+      }
+      }
 
-    protected function gridValorPedido($data, $row) {
-        return Yii::app()->numberFormatter->format(Yii::app
-                        ()->params->formatoMoneda['patron'], $data->totalCompra, Yii::app()->params->formatoMoneda['moneda']);
-    }
+      protected function gridValorPedido($data, $row) {
+      return Yii::app()->numberFormatter->format(Yii::app
+      ()->params->formatoMoneda['patron'], $data->totalCompra, Yii::app()->params->formatoMoneda['moneda']);
+      }
 
-    protected function gridDestinoPedido($data, $row) {
+      protected function gridDestinoPedido($data, $row) {
 
-        if ($data->objCompraDireccion == null)
-            return "NA";
-        return $data->
-                objCompraDireccion->nombre . "<br/>" . $data->objCompraDireccion->direccion . "<br/>" . $data->objCompraDireccion->barrio;
-    }
+      if ($data->objCompraDireccion == null)
+      return "NA";
+      return $data->
+      objCompraDireccion->nombre . "<br/>" . $data->objCompraDireccion->direccion . "<br/>" . $data->objCompraDireccion->barrio;
+      }
 
-    protected function gridPagoPedido($data, $row) {
-        if ($data->objFormaPagoCompra === null)
-            return "NA";
+      protected function gridPagoPedido($data, $row) {
+      if ($data->objFormaPagoCompra === null)
+      return "NA";
 
-        $result = $data->objFormaPagoCompra->objFormaPago->formaPago;
-        if ($data->objFormaPagoCompra->numeroTarjeta != null && !empty($data->objFormaPagoCompra->numeroTarjeta))
-            $result .= "<strong>No. tarjeta:</strong> " . $data->objFormaPagoCompra->numeroTarjeta . "<br/><strong>No. cuotas:</strong> " . $data->objFormaPagoCompra->cuotasTarjeta;
+      $result = $data->objFormaPagoCompra->objFormaPago->formaPago;
+      if ($data->objFormaPagoCompra->numeroTarjeta != null && !empty($data->objFormaPagoCompra->numeroTarjeta))
+      $result .= "<strong>No. tarjeta:</strong> " . $data->objFormaPagoCompra->numeroTarjeta . "<br/><strong>No. cuotas:</strong> " . $data->objFormaPagoCompra->cuotasTarjeta;
 
-        return $result;
-    }
+      return $result;
+      }
 
-    protected function gridEstadoPedido($data, $row) {
-        return "<span class='label label-" . Yii::app()->params->callcenter['estadoCompra']['colorClass'][$data->idEstadoCompra] . "'>" . $data->objEstadoCompra->compraEstado . "</span>";
-    }
+      protected function gridEstadoPedido($data, $row) {
+      return "<span class='label label-" . Yii::app()->params->callcenter['estadoCompra']['colorClass'][$data->idEstadoCompra] . "'>" . $data->objEstadoCompra->compraEstado . "</span>";
+      }
 
-    protected function rowCssClassFunction($row, $data) {
-        $classes = array();
-        $rowCssClass = array('odd', 'even');
-        $classes [] = $rowCssClass[$row % count($rowCssClass)];
-        if ($data->seguimiento == 1)
-            $classes[] = "seguimiento";
-        else if ($data->tipoEntrega == 1) {
-            $classes[] = "presencial";
-        }
-        return empty($classes) ? false : implode(' ', $classes);
-    }*/
-
+      protected function rowCssClassFunction($row, $data) {
+      $classes = array();
+      $rowCssClass = array('odd', 'even');
+      $classes [] = $rowCssClass[$row % count($rowCssClass)];
+      if ($data->seguimiento == 1)
+      $classes[] = "seguimiento";
+      else if ($data->tipoEntrega == 1) {
+      $classes[] = "presencial";
+      }
+      return empty($classes) ? false : implode(' ', $classes);
+      } */
 }
