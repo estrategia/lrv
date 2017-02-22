@@ -21,10 +21,13 @@ function inicializarMapa(){
     google.maps.event.addListener(map, 'bounds_changed', function(){
         locationMarker.setPosition(map.getCenter());
     });
+
+    google.maps.event.addListener(map, 'idle', function() {
+      console.log("cargado");
+    });
 }
 
 google.maps.event.addDomListener(window, 'load', inicializarMapa); 
-
 
 function resizeMap() {
    if(typeof map =="undefined") return;
