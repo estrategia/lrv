@@ -7,7 +7,7 @@
             <div class="modal-footer center">
                 <button type="button" class="btn btn-default" data-dismiss="modal" onclick="cerrarTour()">Cancelar</button>
                 <button id="confirma-ubicacion" type="button" class="btn btn-primary" data-role="ubicacion-seleccion-mapa">Confirmar ubicaci&oacute;n</button>
-                <button onclick="iniciarTour(false)" class="btn btn-primary float-right">?</button>
+                <button onclick="iniciarTour()" class="btn btn-primary float-right">?</button>
             </div>
         </div>
     </div>
