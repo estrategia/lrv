@@ -93,7 +93,20 @@ function volverAMostrar(tour) {
   return tour == 0 ? Cookies.get('tour1') : Cookies.get('tour2');
 }
 
+
 function iniciarTourAutomatico() {
+	intervalTour = setInterval(iniciarTourInterval, 500);
+}
+
+function iniciarTourInterval() {
+    if($('#map .gmnoprint map').length>0){
+    	clearInterval(intervalTour);
+    	intervalTour = null;
+    	iniciarTourAutomaticoAux();
+    }
+}
+
+function iniciarTourAutomaticoAux() {
     if(tipoTour == 0 && volverAMostrar(tipoTour) != 'noMostrar') {
         iniciarTour();
     }
@@ -511,7 +524,6 @@ $(document).on('click', "[id^='enlace-pago-direccion-express-']", function() {
 });
 
 $(document).on('click', "a[data-role='usuario-pagoexpress-formapago']", function() {
-    console.log("asdff");
     var campoCheckbox = $(this).children("input");
     campoCheckbox.prop("checked", true);
 });
@@ -2050,7 +2062,6 @@ $(document).on('click', 'a[data-role="ubicacion-seleccion-nodomicilio"]', functi
 });
 
 $(document).on('click', 'button[data-role="confirmar-ciudad"]', function() {
-    console.log('mapa');
     $('#select-ubicacion-content').show();
     if(lat == null || lng == null) {
         lat = 4.704009;

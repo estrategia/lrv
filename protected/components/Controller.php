@@ -56,9 +56,11 @@ class Controller extends CController {
                 Yii::app()->user->logout();
             }
         }
-		$this->isMobile = true;
-		$this->layout = '//layouts/mobile';
-  //       $this->verificarDispositivo();
+		
+		//$this->isMobile = true;
+		//$this->layout = '//layouts/mobile';
+  		
+        $this->verificarDispositivo();
 
         if (isset(Yii::app()->session[Yii::app()->params->sesion['sectorCiudadEntrega']]) && Yii::app()->session[Yii::app()->params->sesion['sectorCiudadEntrega']] != null) {
             $this->objSectorCiudad = Yii::app()->session[Yii::app()->params->sesion['sectorCiudadEntrega']];
