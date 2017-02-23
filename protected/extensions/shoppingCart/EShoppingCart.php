@@ -662,9 +662,16 @@ class EShoppingCart extends CMap {
 
         $price -= $this->discountPrice;
         $price += $this->shipping + $this->shippingStored;
-        $price -= $this->bonoValue;
+    //    $price -= $this->bonoValue; /***** Valor que está afectando la compra ******/
 
         return $price;
+    }
+    
+    public function getTotalCostClient() {
+    	
+    	$price = $this->getTotalCost() - $this->bonoValue; /***** Valor que está afectando la compra ******/
+    
+    	return $price;
     }
     
     

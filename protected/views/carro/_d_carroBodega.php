@@ -7,8 +7,13 @@
             <div class="modal-body">
                 <div class='row'>
                     <div class='col-md-12 text-justify' >
-                        Lo sentimos, en este mmento contamos con <?php echo $saldoUnidad ?> unidad(es) disponible(s) para entrega en condiciones normales.
-                       Las unidades restantes estaran disponibles en un tiempo de entrega de <?php echo Yii::app()->shoppingCart->getDeliveryStored() ?> horas y con forma de pago en L&iacute;nea  
+                    	<?php if($tipo == 1):?>
+                        Lo sentimos, en este momento contamos con <?php echo $saldoUnidad ?> unidad(es) disponible(s) para entrega en condiciones normales.
+                        Las unidades restantes estaran disponibles en un tiempo de entrega de <?php echo Yii::app()->shoppingCart->getDeliveryStored() ?> horas y con forma de pago en L&iacute;nea
+                       <?php elseif ($tipo == 2): ?>
+                       Lo sentimos, No contamos con unidades para entrega en condiciones normales.
+        			   Las unidades estaran disponibles en un tiempo de entrega de  <?php echo Yii::app()->shoppingCart->getDeliveryStored() ?> horas y con forma de pago en L&iacute;nea
+                       <?php endif;?>  
                     </div>
                 </div> 
             </div>

@@ -197,18 +197,29 @@ class CarroController extends Controller {
                 if($objSaldoBodega->saldoUnidad < $cantidadBodega){
                 	$cantidadBodega = $objSaldoBodega->saldoUnidad;
                 }
+                
+                if($saldoUnidad - $cantidadCarroUnidad > 0 ){
+                	$tipo = 1;
+                }else{
+                	$tipo =  2;
+                }
+                
                 if ($this->isMobile) {
                     $htmlBodega = $this->renderPartial('_carroBodega', array(
                         'saldoUnidad' => $saldoUnidad,
                         'objProducto' => $objProducto,
                         'cantidadUbicacion' => $cantidadUbicacion,
-                        'cantidadBodega' => $cantidadBodega), true);
+                        'cantidadBodega' => $cantidadBodega,
+                    	'tipo' => $tipo,
+                    ), true);
                 } else {
                     $htmlBodega = $this->renderPartial('_d_carroBodega', array(
                         'saldoUnidad' => $saldoUnidad,
                         'objProducto' => $objProducto,
                         'cantidadUbicacion' => $cantidadUbicacion,
-                        'cantidadBodega' => $cantidadBodega), true);
+                        'cantidadBodega' => $cantidadBodega,
+                    	'tipo' => $tipo,
+                    ), true);
                 }
                 echo CJSON::encode(array(
                     'result' => 'ok',

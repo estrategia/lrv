@@ -398,6 +398,7 @@ class CatalogoController extends ControllerTelefarma {
     					'objDetalle',
     					'objCodigoEspecial',
     					'listCalificaciones' => array('with' => 'objUsuario'),
+    					'listSaldos' => array('on' => '(listSaldos.codigoCiudad=:ciudad AND listSaldos.codigoSector=:sector)'),
     				//	'listSaldos' => array( 'on' => '(listSaldos.saldoUnidad>:saldo AND listSaldos.codigoCiudad=:ciudad AND listSaldos.codigoSector=:sector) OR (listSaldos.saldoUnidad IS NULL AND listSaldos.codigoCiudad IS NULL AND listSaldos.codigoSector IS NULL)'),
     					'listSaldosCedi' => array('on' => '(codigoCedi =:codigoCedi)'),
     					'listPrecios' => array('condition' => '(listPrecios.codigoCiudad=:ciudad AND listPrecios.codigoSector=:sector) OR (listPrecios.codigoCiudad IS NULL AND listPrecios.codigoSector IS NULL)'),
@@ -419,6 +420,12 @@ class CatalogoController extends ControllerTelefarma {
     		throw new CHttpException(404, 'Producto de bodega no disponible.');
     	}
     
+    	$unidadesDisponibles = 0;
+    	if(isset($objProducto->listSaldos[0])){
+    		if(($objProducto->listSaldos[0]->saldoUnidad) > 0)
+    			$unidadesDisponibles = $objProducto->listSaldos[0]->saldoUnidad;
+    	}
+    	
     	$codigoPerfil = Yii::app()->shoppingCartVitalCall->getCodigoPerfil();
     	$cantidadCarro = 0;
     	$position = Yii::app()->shoppingCartVitalCall->itemAt($producto);
@@ -432,7 +439,8 @@ class CatalogoController extends ControllerTelefarma {
     				'objPrecio' => new PrecioProducto($objProducto, $objSectorCiudad, $codigoPerfil),
     				'cantidadUbicacion' => $ubicacion,
     				'cantidadBodega' => $bodega,
-    				'cantidadCarro' => $cantidadCarro
+    				'cantidadCarro' => $cantidadCarro,
+    				'unidadesDisponibles' => $unidadesDisponibles,
     	));
     
     }

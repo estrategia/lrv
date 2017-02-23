@@ -136,17 +136,20 @@ class CatalogoController extends ControllerVendedor {
                 'order' => 'tieneImagen DESC, rel.relevancia DESC, t.orden DESC',
                 'with' => array('listImagenes', 'objCodigoEspecial', 'listCalificaciones',
                     'objCategoriaBI' => array('with' => array('listCategoriasTienda' => array('on' => 'listCategoriasTienda.tipoDispositivo=:dispositivo'))),
-                    'listSaldos' => array('condition' => '(listSaldos.saldoUnidad>:saldo AND listSaldos.codigoCiudad=:ciudad AND listSaldos.codigoSector=:sector) OR (listSaldos.saldoUnidad IS NULL AND listSaldos.codigoCiudad IS NULL AND listSaldos.codigoSector IS NULL)'),
+                    'listSaldos' => array('on' => 'listSaldos.codigoCiudad=:ciudad AND listSaldos.codigoSector=:sector'),
+        	    'listSaldosCedi' => array ('on' => 'codigoCedi =:codigoCedi'),
                     'listPrecios' => array('condition' => '(listPrecios.codigoCiudad=:ciudad AND listPrecios.codigoSector=:sector) OR (listPrecios.codigoCiudad IS NULL AND listPrecios.codigoSector IS NULL)'),
                     'listSaldosTerceros' => array('condition' => '(listSaldosTerceros.saldoUnidad>:saldo AND listSaldosTerceros.codigoCiudad=:ciudad AND listSaldosTerceros.codigoSector=:sector) OR (listSaldosTerceros.codigoCiudad IS NULL AND listSaldosTerceros.codigoSector IS NULL)')
                 ),
-                'condition' => "t.activo=:activo AND (listImagenes.tipoImagen='" . Yii::app()->params->producto['tipoImagen']['mini'] . "' OR listImagenes.tipoImagen IS NULL)  AND ( (listSaldos.saldoUnidad IS NOT NULL AND listPrecios.codigoCiudad IS NOT NULL) OR listSaldosTerceros.codigoCiudad IS NOT NULL)",
+             //   'condition' => "t.activo=:activo AND (listImagenes.tipoImagen='" . Yii::app()->params->producto['tipoImagen']['mini'] . "' OR listImagenes.tipoImagen IS NULL)  AND ( (listSaldos.saldoUnidad IS NOT NULL AND listPrecios.codigoCiudad IS NOT NULL) OR listSaldosTerceros.codigoCiudad IS NOT NULL)",
+             		'condition' => "t.activo=:activo AND (listSaldos.saldoUnidad>:saldo OR listSaldos.saldoFraccion>:saldo OR listSaldosTerceros.saldoUnidad>:saldo  OR listSaldosCedi.saldoUnidad > 0 )",
                 'params' => array(
                     ':activo' => 1,
                     ':dispositivo' => $this->isMobile ? CategoriaTienda::DISPOSITIVO_MOVIL : CategoriaTienda::DISPOSITIVO_ESCRITORIO,
                     ':saldo' => 0,
                     ':ciudad' => $objSectorCiudad->codigoCiudad,
                     ':sector' => $objSectorCiudad->codigoSector,
+                	':codigoCedi' => $objSectorCiudad->objCiudad->codigoSucursal
                     //':sesion' => $sesion
                 )
             );
@@ -761,11 +764,12 @@ class CatalogoController extends ControllerVendedor {
                 'objDetalle',
                 'objCodigoEspecial',
                 'listCalificaciones' => array('with' => 'objUsuario'),
-                'listSaldos' => array('condition' => '(listSaldos.saldoUnidad>:saldo AND listSaldos.codigoCiudad=:ciudad AND listSaldos.codigoSector=:sector) OR (listSaldos.saldoUnidad IS NULL AND listSaldos.codigoCiudad IS NULL AND listSaldos.codigoSector IS NULL)'),
-                'listPrecios' => array('condition' => '(listPrecios.codigoCiudad=:ciudad AND listPrecios.codigoSector=:sector) OR (listPrecios.codigoCiudad IS NULL AND listPrecios.codigoSector IS NULL)'),
+                'listSaldos' => array('on' => '(listSaldos.saldoUnidad>:saldo AND listSaldos.codigoCiudad=:ciudad AND listSaldos.codigoSector=:sector) OR (listSaldos.saldoUnidad IS NULL AND listSaldos.codigoCiudad IS NULL AND listSaldos.codigoSector IS NULL)'),
+            	'listSaldosCedi' => array('on' => '(codigoCedi =:codigoCedi)'),
+            	'listPrecios' => array('condition' => '(listPrecios.codigoCiudad=:ciudad AND listPrecios.codigoSector=:sector) OR (listPrecios.codigoCiudad IS NULL AND listPrecios.codigoSector IS NULL)'),
                 'listSaldosTerceros' => array('condition' => '(listSaldosTerceros.saldoUnidad>:saldo AND listSaldosTerceros.codigoCiudad=:ciudad AND listSaldosTerceros.codigoSector=:sector) OR (listSaldosTerceros.codigoCiudad IS NULL AND listSaldosTerceros.codigoSector IS NULL)')
             ),
-            'condition' => 't.ventaVirtual=:venta AND t.activo=:activo AND t.codigoProducto=:codigo  AND ( (listSaldos.saldoUnidad IS NOT NULL AND listPrecios.codigoCiudad IS NOT NULL) OR listSaldosTerceros.codigoCiudad IS NOT NULL)',
+            'condition' => 't.ventaVirtual=:venta AND t.activo=:activo AND t.codigoProducto=:codigo  AND ( listSaldosTerceros.codigoCiudad IS NOT NULL OR (listSaldosCedi.saldoUnidad>:saldo AND listPrecios.codigoCiudad IS NOT NULL))',
             'params' => array(
                 ':venta' => 1,
                 ':activo' => 1,
@@ -773,11 +777,19 @@ class CatalogoController extends ControllerVendedor {
                 ':saldo' => 0,
                 ':ciudad' => $objSectorCiudad->codigoCiudad,
                 ':sector' => $objSectorCiudad->codigoSector,
+            	':codigoCedi' => $objSectorCiudad->objCiudad->codigoSucursal,
             ),
         ));
 
+        
         if ($objProducto == null) {
             throw new CHttpException(404, 'Producto no disponible.');
+        }
+        
+        $unidadesDisponibles = 0;
+        if(isset($objProducto->listSaldos[0])){
+        	if(($objProducto->listSaldos[0]->saldoUnidad) > 0)
+        		$unidadesDisponibles = $objProducto->listSaldos[0]->saldoUnidad;
         }
 
         $codigoPerfil = Yii::app()->shoppingCartSalesman->getCodigoPerfil();
@@ -794,7 +806,8 @@ class CatalogoController extends ControllerVendedor {
             'objPrecio' => new PrecioProducto($objProducto, $objSectorCiudad, $codigoPerfil),
             'cantidadUbicacion' => $ubicacion,
             'cantidadBodega' => $bodega,
-            'cantidadCarro' => $cantidadCarro
+            'cantidadCarro' => $cantidadCarro,
+        	'unidadesDisponibles' => $unidadesDisponibles,
         ));
     }
 
