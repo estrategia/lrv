@@ -56,8 +56,10 @@ class Controller extends CController {
                 Yii::app()->user->logout();
             }
         }
-		// $this->isMobile = true;
-		// $this->layout = '//layouts/mobile';
+		
+		//$this->isMobile = true;
+		//$this->layout = '//layouts/mobile';
+  		
         $this->verificarDispositivo();
 
         if (isset(Yii::app()->session[Yii::app()->params->sesion['sectorCiudadEntrega']]) && Yii::app()->session[Yii::app()->params->sesion['sectorCiudadEntrega']] != null) {
@@ -227,6 +229,7 @@ class Controller extends CController {
             Yii::app()->getClientScript()->registerScriptFile(Yii::app()->request->baseUrl . "/libs/owl-carousel/owl.carousel.min.js", CClientScript::POS_HEAD);
             Yii::app()->getClientScript()->registerScriptFile(Yii::app()->request->baseUrl . "/libs/jquerymobile-windows/jqm-windows.mdialog.js", CClientScript::POS_HEAD);
             Yii::app()->getClientScript()->registerScriptFile(Yii::app()->request->baseUrl . "/js/common.min.js", CClientScript::POS_HEAD);
+            Yii::app()->getClientScript()->registerScriptFile(Yii::app()->request->baseUrl . '/libs/js-cookie/js-cookie.min.js', CClientScript::POS_END);
             Yii::app()->getClientScript()->registerScriptFile(Yii::app()->request->baseUrl . "/libs/tour/tether.js", CClientScript::POS_HEAD);
             Yii::app()->getClientScript()->registerScriptFile(Yii::app()->request->baseUrl . "/libs/tour/shepherd.min.js", CClientScript::POS_HEAD);
             Yii::app()->getClientScript()->registerScriptFile(Yii::app()->request->baseUrl . "/js/mobile.min.js", CClientScript::POS_HEAD);
@@ -242,6 +245,7 @@ class Controller extends CController {
             Yii::app()->getClientScript()->registerScriptFile(Yii::app()->request->baseUrl . "/libs/ad-gallery/jquery.ad-gallery.js", CClientScript::POS_HEAD);
             Yii::app()->getClientScript()->registerScriptFile(Yii::app()->request->baseUrl . '/libs/bootbox.min.js', CClientScript::POS_END);
             Yii::app()->getClientScript()->registerScriptFile(Yii::app()->request->baseUrl . '/libs/raphael/raphael-min.js', CClientScript::POS_END);
+            Yii::app()->getClientScript()->registerScriptFile(Yii::app()->request->baseUrl . '/libs/js-cookie/js-cookie.min.js', CClientScript::POS_END);
             Yii::app()->getClientScript()->registerScriptFile(Yii::app()->request->baseUrl . "/libs/tour/tether.js", CClientScript::POS_HEAD);
             Yii::app()->getClientScript()->registerScriptFile(Yii::app()->request->baseUrl . "/libs/tour/shepherd.min.js", CClientScript::POS_HEAD);
             Yii::app()->getClientScript()->registerScriptFile(Yii::app()->request->baseUrl . "/js/common.min.js", CClientScript::POS_HEAD);

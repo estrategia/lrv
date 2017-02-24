@@ -139,9 +139,13 @@ class BloqueosUsuarios extends CActiveRecord {
 
             if ($this->save()) {
                 if ($objUsuario->save() > 0) {
-                    $contenidoCorreo = Yii::app()->controller->renderPartial('//common/correoDesbloqueo', array('identificacionUsuario' => $this->identificacionUsuario), true);
+                	
+                	$contenidoCorreo = Yii::app()->controller->renderPartial(Yii::app()->params->rutasPlantillasCorreo['correoDesbloqueo'], array('identificacionUsuario' => $this->identificacionUsuario), true);
+                	
+                    $htmlCorreo = PlantillaCorreo::getContenido('desbloquearCuenta',$contenidoCorreo);
+                    
                     try {
-                        sendHtmlEmail($objUsuario->correoElectronico, "La Rebaja Virtual: Desbloqueo de cuenta", $contenidoCorreo, Yii::app()->params->callcenter['correo']);
+                        sendHtmlEmail($objUsuario->correoElectronico, "La Rebaja Virtual: Desbloqueo de cuenta", $htmlCorreo, Yii::app()->params->callcenter['correo']);
                     } catch (Exception $exc) {
                     }
                 } else {

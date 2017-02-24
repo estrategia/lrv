@@ -11,6 +11,7 @@ class FormulasVencerCommand extends CConsoleCommand {
 		Yii::import('application.modules.callcenter.modules.vitalCall.models.ProductosVitalCall');
 		Yii::import('application.modules.callcenter.modules.vitalCall.models.UsuarioVitalCall');
 		Yii::import('application.models.Imagen');
+                Yii::import('application.models.PlantillaCorreo');
 		$productosFormulasMedicas = ProductosFormulaVitalCall::obtenerFormulasVencer();
 		
 		$formulaEnvio = array();
@@ -25,12 +26,11 @@ class FormulasVencerCommand extends CConsoleCommand {
 		foreach($formulaEnvio as $formula){
 			$vistaDesbloqueo = Yii::getPathOfAlias('application.views.common.correoFormulaVencer').'.php';
 			$vistaCorreo = Yii::getPathOfAlias('application.views.common.correo').'.php';
-		//	print_r($formula);exit();
 			if(file_exists($vistaCorreo) && file_exists($vistaDesbloqueo)){
 				$contenidoCorreo = $this->renderFile($vistaDesbloqueo, array('objFormula' => $formula), true);
-				$htmlCorreo = $this->renderFile($vistaCorreo, array('contenido' => $contenidoCorreo), true);
-			
-				try {
+				$htmlCorreo = PlantillaCorreo::getContenidoConsola('formulasVencer', $contenidoCorreo);
+				
+				try {           
 					sendHtmlEmail($formula['objUsuario']->correoElectronico, "La Rebaja Virtual: Desbloqueo de cuenta", $htmlCorreo, Yii::app()->params->callcenter['correo']);
 				} catch (Exception $exc) {
 				//	Yii::log("BloqueoCuentaCommand::desbloquearCuenta - Error envio correo [".$exc->getMessage()."] usuario [$objBloqueoUsuario->identificacionUsuario]" . "\nBloqueoUsuario:\n" .  CVarDumper::dumpAsString($objBloqueoUsuario->attributes),CLogger::LEVEL_INFO, 'bloqueo_usuario');

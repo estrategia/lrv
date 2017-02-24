@@ -40,9 +40,12 @@
                             if ($position->isProduct()):
                                 if ($position->getQuantityStored() > 0)
                                     $listPositionBodega[] = $position;
-                                $this->renderPartial('/carro/_carroElementoProducto', array(
-                                    'position' => $position,
-                                ));
+                                
+                                    if($position->getQuantityUnit()> 0 || $position->getQuantity(true)>0):
+		                                $this->renderPartial('/carro/_carroElementoProducto', array(
+		                                    'position' => $position,
+		                                ));
+                                    endif;
                             elseif ($position->isCombo()):
                                 $this->renderPartial('/carro/_carroElementoCombo', array(
                                     'position' => $position,

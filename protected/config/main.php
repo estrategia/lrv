@@ -135,7 +135,7 @@ return array(
 
                 'perros-y-gatos' => 'publicidad/contenido/nombre/perros-y-gatos',
                 'muestra-gratis-perros-y-gatos' => 'publicidad/contenido/nombre/perros-y-gatos-formulario',
-                
+
                 'proteccion-solar-sol-or' => 'publicidad/contenido/nombre/sol-or',
                 'shampoo-clinical-solution-caspa-severa' => 'publicidad/contenido/nombre/pyg',
 
@@ -314,6 +314,31 @@ return array(
         'minimoSlideProductos' => 5,
         'minimoGridProductos' => 5,
         'correoAdmin' => 'infolrv@copservir.com',
+    	'plantillasCorreo' => array(
+    		'header' => 'header',
+    		'footer' => 'footer',
+    		'finCompra' => 'finCompra',
+    		'desbloquearCuenta' => 'desbloquearCuenta',
+    		'bonoCreado' => 'bonoCreado',
+    		'bonoPorVencer' => 'bonoPorVencer',
+    		'formulasVencer' => 'formulasVencer',
+    		'recordarLista' => 'recordarLista',
+    		'observacionPedido' => 'observacionPedido',
+    		'compraCallcenter' => 'compraCallcenter',
+    	),
+    	'rutasPlantillasCorreo' => array(
+    		'compraCorreo' => 'compraCorreo',
+    		'compraCallcenter' => 'application.modules.callcenter.views.pedido.compraCorreo',
+    		'correoRecordacion' => '//common/correoRecordacion',
+    		'correoRecordarClave' => '_correoRecordar',
+    		'correoDesbloqueo' =>	'//common/correoDesbloqueo',
+    		'correoBloqueo' => '//common/correoBloqueo',
+    		'reactivacionBono' => '_mensajeCorreoReactivacion',
+    		'mensajeHtml' => '//common/mensajeHtml',
+    		'bonoCorreo' => 'bonoCorreo'
+    	)
+
+    	,
         'maximoComparacion' => 5,
         'urlSitio' => 'www.larebajavirtual.com',
         'urlChatLinea' => '/contenido/ver/tipo/grupo/contenido/41',

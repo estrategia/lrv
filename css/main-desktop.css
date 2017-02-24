@@ -2820,6 +2820,39 @@ img.ajustada {
     background-color: #EA5154;
 }
 
+.shepherd-content {
+    background-color: #000 !important;
+    opacity: 0.8;
+    color: #FFF !important;
+}
+
+.shepherd-element-attached-top.shepherd-element-attached-center > .shepherd-content::before {
+    border-bottom-color: #000 !important;
+    /*border-top-color: #000;*/
+}
+
+.shepherd-element-attached-bottom.shepherd-element-attached-center > .shepherd-content::before {
+    border-top-color: #000 !important;
+    /*border-top-color: #000;*/
+}
+
 .shepherd-element.shepherd-theme-default .shepherd-content footer .shepherd-buttons li .shepherd-button {
 	background-color: #c9302c !important;
+    opacity: 1;
+}
+
+ul.info-seleccion-ciudad {
+    margin-top: 10px;
+    list-style: none;
+    padding-left: 2px;
+    border: solid 1px #E5E5E5;
+}
+
+ul.info-seleccion-ciudad p {
+    text-align: left;
+    margin: 5px 0 0;
+}
+
+p.legal-seleccion-ciudad {
+    font-size: 10px;
 }

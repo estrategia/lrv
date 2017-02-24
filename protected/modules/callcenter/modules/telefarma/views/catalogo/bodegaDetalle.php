@@ -32,12 +32,21 @@
             <div class="col-md-6 content-txt2 border-left">
                 <div class="descripciones">
                     <div class="col-md-12" style="color:#A3A3A3;font-size: 16px;">
-                        <h3 style="color: #ED1C24;"><?php echo $objProducto->descripcionProducto ?></h3>
+                        <h3 style="color: #ED1C24;"> <!-- producto agregado -->
+                            <a href="" class="itm_ico clst_slct_prod<?php echo (Yii::app()->shoppingCartVitalCall->contains($objProducto->codigoProducto) ? " active" : "") ?>" id="icono-producto-agregado-<?php echo $objProducto->codigoProducto ?>">
+                                <img src="<?php echo Yii::app()->request->baseUrl ?>/images/desktop/icon_seleccionado.png">
+                            </a>
+                            <!-- Titulo del producto -->
+                            <?php echo $objProducto->descripcionProducto ?></h3>
                         <div><span><?php echo $objProducto->presentacionProducto ?></span></div>
                         <div><span>Código: <?php echo $objProducto->codigoProducto ?></span></div>
-
+						<?php if ($objProducto->objCodigoEspecial->codigoEspecial != 0): ?>
+                            <div class="detail_especial">
+                                <?php echo $objProducto->objCodigoEspecial->descripcion ?>
+                            </div>
+                        <?php endif; ?>
                        <!--     <div id="raty-lectura-producto-<?php echo $objProducto->codigoProducto ?>" data-role="raty" data-readonly="true" data-score="<?php echo $objProducto->getCalificacion() ?>" class=""></div> -->
-                        <p>Cantidad agregada al carro: <?php echo $cantidadCarro ?></p>
+                       <!--  <p>Cantidad agregada al carro: <?php echo $cantidadCarro ?></p>  -->
 
                         <?php if ($objProducto->mostrarAhorroVirtual == 1 && $objPrecio->getPorcentajeDescuento() > 0 /* && $objSectorCiudad->objCiudad->excentoImpuestos==0 */): ?>
                             <div style="margin-top: 15px;"><span class="strike2"><?php echo Yii::app()->numberFormatter->format(Yii::app()->params->formatoMoneda['patron'], $objPrecio->getPrecio(Precio::PRECIO_UNIDAD, false), Yii::app()->params->formatoMoneda['moneda']); ?></span></div>
@@ -48,17 +57,19 @@
                             <div><span style="font-weight:bolder;"><?php echo Yii::app()->numberFormatter->format(Yii::app()->params->formatoMoneda['patron'], $objPrecio->getPrecio(Precio::PRECIO_UNIDAD), Yii::app()->params->formatoMoneda['moneda']); ?></span></div>	
                         <?php endif; ?>
                         <br/>
-                        Entrega inmediata:
-                        <div class="col-md-12 line-bottom">
-                            <button class="col-md-2 min" style="border:1px solid;" id="disminuir_cantidad_ubicacion_<?php echo $objProducto->codigoProducto ?>" onclick="cambioUnidadesUbicacion('<?php echo $objProducto->codigoProducto ?>',<?= $objPrecio->getPrecio(Precio::PRECIO_UNIDAD) ?>, 0)" type="button"><span class="glyphicon glyphicon-minus"></span></button>
-                            <div class="col-md-2 ressete"><input id="cantidad-producto-ubicacion-<?php echo $objProducto->codigoProducto ?>" onchange="subtotalProductoBodega(<?php echo $objProducto->codigoProducto ?>,<?= $objPrecio->getPrecio(Precio::PRECIO_UNIDAD) ?>);"  class="increment" type="text" onchange="validarCantidadUnidad(<?php echo $objProducto->codigoProducto ?>,<?= $objPrecio->getPrecio(Precio::PRECIO_UNIDAD) ?>)" maxlength="3" value="<?php echo $cantidadUbicacion ?>" data-total="700"/></div>
-                            <button class="col-md-2 min" style="border:1px solid;" id="aumentar_cantidad_ubicacion_<?php echo $objProducto->codigoProducto ?>" onclick="cambioUnidadesUbicacion('<?php echo $objProducto->codigoProducto ?>',<?= $objPrecio->getPrecio(Precio::PRECIO_UNIDAD) ?>, 1)" type="button"><span  class="glyphicon glyphicon-plus"></span></button>
-                        </div>
-                        <div class="">
-                            <span class="txt_sub">Subtotal</span> <span id="subtotal-producto-ubicacion-<?php echo $objProducto->codigoProducto ?>"><?php echo Yii::app()->numberFormatter->format(Yii::app()->params->formatoMoneda['patron'], $objPrecio->getPrecio(Precio::PRECIO_UNIDAD) * $cantidadUbicacion, Yii::app()->params->formatoMoneda['moneda']); ?></span>
-                        </div>
-                        <br/>
-                        Domicilio <?php echo Yii::app()->shoppingCartVitalCall->getDeliveryStored() ?> hrs:
+                        <?php if($unidadesDisponibles > 0):?>
+	                        Entrega en condiciones normales:
+	                        <div class="col-md-12 line-bottom">
+	                            <button class="col-md-2 min" style="border:1px solid;" id="disminuir_cantidad_ubicacion_<?php echo $objProducto->codigoProducto ?>" onclick="cambioUnidadesUbicacion('<?php echo $objProducto->codigoProducto ?>',<?= $objPrecio->getPrecio(Precio::PRECIO_UNIDAD) ?>, 0)" type="button"><span class="glyphicon glyphicon-minus"></span></button>
+	                            <div class="col-md-2 ressete"><input id="cantidad-producto-ubicacion-<?php echo $objProducto->codigoProducto ?>" onchange="subtotalProductoBodega(<?php echo $objProducto->codigoProducto ?>,<?= $objPrecio->getPrecio(Precio::PRECIO_UNIDAD) ?>);"  class="increment" type="text" onchange="validarCantidadUnidad(<?php echo $objProducto->codigoProducto ?>,<?= $objPrecio->getPrecio(Precio::PRECIO_UNIDAD) ?>)" maxlength="3" value="<?php echo $cantidadUbicacion ?>" data-total="700"/></div>
+	                            <button class="col-md-2 min" style="border:1px solid;" id="aumentar_cantidad_ubicacion_<?php echo $objProducto->codigoProducto ?>" onclick="cambioUnidadesUbicacion('<?php echo $objProducto->codigoProducto ?>',<?= $objPrecio->getPrecio(Precio::PRECIO_UNIDAD) ?>, 1)" type="button"><span  class="glyphicon glyphicon-plus"></span></button>
+	                        </div>
+	                        <div class="">
+	                            <span class="txt_sub">Subtotal</span> <span id="subtotal-producto-ubicacion-<?php echo $objProducto->codigoProducto ?>"><?php echo Yii::app()->numberFormatter->format(Yii::app()->params->formatoMoneda['patron'], $objPrecio->getPrecio(Precio::PRECIO_UNIDAD) * $cantidadUbicacion, Yii::app()->params->formatoMoneda['moneda']); ?></span>
+	                        </div>
+	                        <br/>
+                        <?php endif;?>
+                        Domicilio <?php echo Yii::app()->shoppingCartVitalCall->getDeliveryStored() ?> horas:
                         <div class="col-md-12 line-bottom">
                             <button class="col-md-2 min" style="border:1px solid;" id="disminuir_cantidad_bodega_<?php echo $objProducto->codigoProducto ?>" onclick="cambioUnidadesBodega('<?php echo $objProducto->codigoProducto ?>',<?= $objPrecio->getPrecio(Precio::PRECIO_UNIDAD) ?>, 0)" type="button"><span class="glyphicon glyphicon-minus"></span></button>
                             <div class="col-md-2 ressete"><input class="increment" type="text" id="cantidad-producto-bodega-<?php echo $objProducto->codigoProducto ?>" onchange="subtotalProductoBodega(<?php echo $objProducto->codigoProducto ?>,<?= $objPrecio->getPrecio(Precio::PRECIO_UNIDAD) ?>);" maxlength="3" value="<?php echo $cantidadBodega ?>" data-total="700"/></div>
@@ -74,13 +85,13 @@
                         <?php echo CHtml::link('<div class="btn btn-primary btn-block" >Añadir <img src="' . Yii::app()->baseUrl . '/images/desktop/button-carrito.png" alt=""></div>', '#', array('data-producto' => $objProducto->codigoProducto, 'data-cargar-telefarma' => 3)); ?>
 
 
-                        <?php if ($objProducto->codigoEspecial !== null && $objProducto->codigoEspecial != 0): ?>
+                        <?php /*if ($objProducto->codigoEspecial !== null && $objProducto->codigoEspecial != 0): ?>
                             <div class=""><span></span></div>
                             <p class="">
                                 <img src="<?php echo Yii::app()->request->baseUrl . Yii::app()->params->carpetaImagen['codigoEspecial'] . 'desktop/' . $objProducto->objCodigoEspecial->rutaIcono; ?>" >
                                 <?php echo $objProducto->objCodigoEspecial->descripcion ?>
                             </p>
-                        <?php endif; ?>
+                        <?php endif;*/ ?>
                     </div>
                 </div>
             </div>

@@ -21,24 +21,15 @@ class SitioController extends Controller {
     }
 
     public function actionIndex() {
-    	
-    	$objContenidoCumpleanos = ContenidoInicio::getContenidoCumpleanhos(Yii::app()->session[Yii::app()->params->usuario['sesion']]);
-    	
-        if ($this->isMobile) {
-        	
+    	if ($this->isMobile) {
         	$this->contenidosInicioMovil();
-        	
             $this->actionInicio();
         } else {
-        	
         	// verificar los contenidos de bienvenida
-        	
         	$this->contenidosInicioDesktop();
-        	
         	 $this->render('d_index', array(
 	                'listModulos' => ModulosConfigurados::getModulos($this->objSectorCiudad, Yii::app()->shoppingCart->getCodigoPerfil(), UbicacionModulos::UBICACION_ESCRITORIO_HOME)
 	         ));
-        	
         }
         Yii::app()->end();
     }
@@ -158,7 +149,8 @@ class SitioController extends Controller {
     	}
     }
 
-    public function actionMapa() {
+    public function actionCiudades()
+    {
         $listCiudadesSectores = Ciudad::model()->findAll(array(
             'with' => array('listSectorCiudad' => array('with' => 'objSector')),
             'order' => 't.orden, t.nombreCiudad',
@@ -170,7 +162,23 @@ class SitioController extends Controller {
             )
         ));
 
-        $this->renderPartial($this->isMobile ? '_ubicacionMapa' : '_d_ubicacionMapa', array('listCiudadesSectores' => $listCiudadesSectores));
+        $this->renderPartial($this->isMobile ? '_seleccionCiudad' : '_d_seleccionCiudad', array('listCiudadesSectores' => $listCiudadesSectores));
+    }
+
+    public function actionMapa() {
+        // $listCiudadesSectores = Ciudad::model()->findAll(array(
+        //     'with' => array('listSectorCiudad' => array('with' => 'objSector')),
+        //     'order' => 't.orden, t.nombreCiudad',
+        //     'condition' => 'estadoCiudadSector=:estadoCiudadSector AND estadoSector=:estadoSector AND estadoCiudad=:estadoCiudad',
+        //     'params' => array(
+        //         ':estadoCiudadSector' => 1,
+        //         ':estadoSector' => 1,
+        //         ':estadoCiudad' => 1,
+        //     )
+        // ));
+
+        // $this->renderPartial($this->isMobile ? '_ubicacionMapa' : '_d_ubicacionMapa', array('listCiudadesSectores' => $listCiudadesSectores));
+        $this->renderPartial($this->isMobile ? '_ubicacionMapa' : '_d_ubicacionMapa');
     }
 
     public function actionUbicacion() {

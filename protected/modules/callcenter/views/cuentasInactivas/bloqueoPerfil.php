@@ -2,38 +2,41 @@
     $columns = array(
         array(
             'header' => 'Perfil',
-            'value' => '$data->perfil',
-          //  'filter' => CHtml::activeTextField($model, 'identificacionUsuario', array('class' => 'form-control')),
+            'value' => '$data->objPerfil->nombrePerfil',
         ),
         array(
             'header' => 'Dias Bloqueo',
             'value' => '$data->diasBloqueo',
-     //       'filter' => CHtml::activeTextField($model, 'nombre', array('class' => 'form-control')),
+        	'htmlOptions'=>array('style' => 'text-align: right;')
         ),
         array(
             'header' => 'Cantidad Compras',
             'value' => '$data->cantidadCompras',
-     //       'filter' => CHtml::activeTextField($model, 'apellido', array('id' => 'apellido','class' => 'form-control')),
+        	'htmlOptions'=>array('style' => 'text-align: right;')
         ),
         array(
             'header' => 'Acumulado Compras',
             'value' => '$data->acumuladoCompras',
-      //      'filter' => CHtml::activeTextField($model, 'correoElectronico', array('id' => 'correoElectronico','class' => 'form-control')),
+        	'value' => function($data){
+        		return	Yii::app()->numberFormatter->format(Yii::app()->params->formatoMoneda['patron'], $data->acumuladoCompras, Yii::app()->params->formatoMoneda['moneda']);
+        	},
+        	'htmlOptions'=>array('style' => 'text-align: right;')
         ),
-    	
         array(
             'header' => '',
             'type' => 'raw',
             'value' => function($data){ 
-            	return	CHtml::link("Actualizar", CController::createUrl("/callcenter/cuentasInactivas/actualizarPerfil",array('perfil' =>$data->perfil )), array());
-            }
+            	return	CHtml::link("Actualizar", CController::createUrl("/callcenter/cuentasInactivas/actualizarPerfil",array('id' =>$data->idBloqueo )), array());
+            },
+            'htmlOptions'=>array('style' => 'text-align: center;')
         ),
     	array(
     		'header' => '',
     		'type' => 'raw',
     		'value' => function ($data){
-    			return CHtml::link("Eliminar", CController::createUrl("/callcenter/cuentasInactivas/eliminarPerfil",array('perfil' =>$data->perfil )), array());
-    		}
+    			return CHtml::link("Eliminar", CController::createUrl("/callcenter/cuentasInactivas/eliminarPerfil",array('id' =>$data->idBloqueo )), array());
+    		},
+    		'htmlOptions'=>array('style' => 'text-align: center;')
     	),
     );
     ?>

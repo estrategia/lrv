@@ -197,18 +197,29 @@ class CarroController extends Controller {
                 if($objSaldoBodega->saldoUnidad < $cantidadBodega){
                 	$cantidadBodega = $objSaldoBodega->saldoUnidad;
                 }
+                
+                if($saldoUnidad - $cantidadCarroUnidad > 0 ){
+                	$tipo = 1;
+                }else{
+                	$tipo =  2;
+                }
+                
                 if ($this->isMobile) {
                     $htmlBodega = $this->renderPartial('_carroBodega', array(
                         'saldoUnidad' => $saldoUnidad,
                         'objProducto' => $objProducto,
                         'cantidadUbicacion' => $cantidadUbicacion,
-                        'cantidadBodega' => $cantidadBodega), true);
+                        'cantidadBodega' => $cantidadBodega,
+                    	'tipo' => $tipo,
+                    ), true);
                 } else {
                     $htmlBodega = $this->renderPartial('_d_carroBodega', array(
                         'saldoUnidad' => $saldoUnidad,
                         'objProducto' => $objProducto,
                         'cantidadUbicacion' => $cantidadUbicacion,
-                        'cantidadBodega' => $cantidadBodega), true);
+                        'cantidadBodega' => $cantidadBodega,
+                    	'tipo' => $tipo,
+                    ), true);
                 }
                 echo CJSON::encode(array(
                     'result' => 'ok',
@@ -3370,21 +3381,25 @@ class CarroController extends Controller {
                         ));
                     }
 
-                    if ($objSaldo == null) {
-                        throw new Exception("Producto " . $position->objProducto->codigoProducto . " no disponible");
+                    if( $position->getQuantityStored() < 1 || $position->getQuantityUnit() > 0 || $position->getQuantity(true) > 0) {
+	                    if ($objSaldo == null) {
+	                        throw new Exception("Producto " . $position->objProducto->codigoProducto . " no disponible");
+	                    }
+	
+	                    if ($objSaldo->saldoUnidad < $position->getQuantityUnit()) {
+	                        throw new Exception("Producto " . $position->objProducto->codigoProducto . ". La cantidad solicitada no está disponible en este momento. Saldos disponibles: $objSaldo->saldoUnidad unidades");
+	                    }
+	
+	                    if ($objSaldo->saldoFraccion < $position->getQuantity(true)) {
+	                        throw new Exception("Producto " . $position->objProducto->codigoProducto . ". La cantidad solicitada no está disponible en este momento. Saldos disponibles: $objSaldo->saldoFraccion fracciones");
+	                    }
+	
+	                    $objSaldo->saldoUnidad = $objSaldo->saldoUnidad - $position->getQuantityUnit();
+	                    $objSaldo->saldoFraccion = $objSaldo->saldoFraccion - $position->getQuantity(true);
+	                    $objSaldo->save();
+	                    
                     }
-
-                    if ($objSaldo->saldoUnidad < $position->getQuantityUnit()) {
-                        throw new Exception("Producto " . $position->objProducto->codigoProducto . ". La cantidad solicitada no está disponible en este momento. Saldos disponibles: $objSaldo->saldoUnidad unidades");
-                    }
-
-                    if ($objSaldo->saldoFraccion < $position->getQuantity(true)) {
-                        throw new Exception("Producto " . $position->objProducto->codigoProducto . ". La cantidad solicitada no está disponible en este momento. Saldos disponibles: $objSaldo->saldoFraccion fracciones");
-                    }
-
-                    $objSaldo->saldoUnidad = $objSaldo->saldoUnidad - $position->getQuantityUnit();
-                    $objSaldo->saldoFraccion = $objSaldo->saldoFraccion - $position->getQuantity(true);
-                    $objSaldo->save();
+                    
                     //-- actualizar saldo producto
                     //actualizar saldo bodega //--
                     if ($position->getQuantityStored() > 0) {
@@ -3562,10 +3577,12 @@ class CarroController extends Controller {
                     		));
                     		 
                     		$objFormaPagoBono = new FormasPago;
-                    		$objFormaPagoBono->valorBonoUnidad = floor(Precio::redondear($objBeneficio->dsctoUnid/100*$position->getPriceToken(), 1));
+                    		// $objFormaPagoBono->valorBonoUnidad = floor(Precio::redondear($objBeneficio->dsctoUnid/100*$position->getPriceToken(), 1));
+                    		$objFormaPagoBono->valorBonoUnidad = floor(Precio::redondear($objBeneficio->dsctoUnid/100*$position->getPrice(false, false),1,10));
+                    		
                     		$objFormaPagoBono->valor = $objFormaPagoBono->valorBonoUnidad * $position->getQuantityUnit(); // valor total del bono.
                     		$objFormaPagoBono->idCompra = $objCompra->idCompra;
-                    		$objFormaPagoBono->idFormaPago = Yii::app()->params->callcenter['bonos']['formaPagoBonos']; /*******************/
+                    		$objFormaPagoBono->idFormaPago = Yii::app()->params->beneficios['tipoBonoFormaPago'][$objBeneficio->tipo]; /*******************/
                     		$objFormaPagoBono->cuenta = $objBeneficio->cuentaProv;
                     		$objFormaPagoBono->formaPago = $objBonoTienda->formaPago;
                     		$objFormaPagoBono->idBonoTiendaTipo =  Yii::app()->params->beneficios['tipoBonoFormaPago'][$objBeneficio->tipo];
@@ -3702,7 +3719,7 @@ class CarroController extends Controller {
             	$modelPago->actualizarBono($objCompra);
             }
             
-            $contenidoCorreo = $this->renderPartial('compraCorreo', array(
+            $contenidoCorreo = $this->renderPartial(Yii::app()->params->rutasPlantillasCorreo['compraCorreo'], array(
                 'objCompra' => $objCompra,
                 'modelPago' => $modelPago,
                 'objCompraDireccion' => $objCompraDireccion,
@@ -3710,29 +3727,8 @@ class CarroController extends Controller {
                 'objFormasPago' => $objFormasPago,
                 'nombreUsuario' => $nombreUsuario), true, true);
             
-            $header = PlantillaCorreo::model()->find(array(
-            	'condition' => 'nombrePlantilla =:nombre',
-            	'params' => array(
-            			':nombre' => 'header'
-            	)
-            ));
-            
-            $footer = PlantillaCorreo::model()->find(array(
-            		'condition' => 'nombrePlantilla =:nombre',
-            		'params' => array(
-            				':nombre' => 'footer'
-            		)
-            ));
-            
-            $htmlCorreo = $this->renderPartial('application.views.common.correo', 
-            		array(
-            			'contenido' => $contenidoCorreo,
-            			'header' => isset($header->contenido)? $header->contenido:'',
-            			'footer' => isset($footer->contenido)? $footer->contenido:'',
-            		), 
-            		true, true);
-            
-           
+            $htmlCorreo = PlantillaCorreo::getContenido('finCompra',$contenidoCorreo);
+            	
             try {
                 sendHtmlEmail($correoUsuario, $asuntoCorreo, $htmlCorreo);
             } catch (Exception $ce) {
@@ -3755,8 +3751,10 @@ class CarroController extends Controller {
                     //$result = array(0=>1,1=>'congelar prueba ok', 2 =>'miguel.sanchez@eiso.com.co');
                     if (!empty($result) && $result[0] == 1) {
                         $objCompraRemision = Compras::model()->findByPk($objCompra->idCompra, array("with" => "objPuntoVenta"));
-                        $contenidoCorreo = $this->renderPartial('application.modules.callcenter.views.pedido.compraCorreo', array('objCompra' => $objCompraRemision), true, true);
-                        $htmlCorreo = $this->renderPartial('application.views.common.correo', array('contenido' => $contenidoCorreo), true, true);
+                        $contenidoCorreo = $this->renderPartial(Yii::app()->params->rutasPlantillasCorreo['compraCallcenter'], array('objCompra' => $objCompraRemision), true, true);
+                        
+                        $htmlCorreo = PlantillaCorreo::getContenido('compraCallcenter',$contenidoCorreo);
+                        	
                         try {
                             sendHtmlEmail($result[2], Yii::app()->params->asunto['pedidoRemitido'], $htmlCorreo);
                         } catch (Exception $ce) {

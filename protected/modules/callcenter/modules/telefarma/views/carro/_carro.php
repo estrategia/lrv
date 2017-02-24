@@ -17,7 +17,7 @@
                 <?php endif; ?>
             <div class="row">
                 <div class="col-md-12">
-                    <table class="table table-bordered table-hover table-striped tabla-carro">
+                    <table class="table table-bordered table-hover table-striped tabla-carro <?= Yii::app()->shoppingCart->isUnit() > 0 ? '':'display-none'?>">
                         <thead class="cabecera-tabla">
                             <tr>
                                 <th  style="width: 27%;">Producto</th>
@@ -34,10 +34,12 @@
                                     if ($position->isProduct()):
                                     	if ($position->getQuantityStored() > 0)
                                     		$listPositionBodega[] = $position;
-                                        $this->renderPartial('_carroElementoProducto', array(
-                                            'position' => $position,
-                                            'lectura' => $lectura
-                                        ));
+                                    		if($position->getQuantityUnit()> 0 || $position->getQuantity(true)>0):
+		                                        $this->renderPartial('_carroElementoProducto', array(
+		                                            'position' => $position,
+		                                            'lectura' => $lectura
+		                                        ));
+                                    		endif;
                                     endif;
                                     ?>
                             <?php endforeach; ?>
