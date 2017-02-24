@@ -336,9 +336,7 @@ return array(
     		'reactivacionBono' => '_mensajeCorreoReactivacion',
     		'mensajeHtml' => '//common/mensajeHtml',
     		'bonoCorreo' => 'bonoCorreo'
-    	)
-
-    	,
+    	),
         'maximoComparacion' => 5,
         'urlSitio' => 'www.larebajavirtual.com',
         'urlChatLinea' => '/contenido/ver/tipo/grupo/contenido/41',
