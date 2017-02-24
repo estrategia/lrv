@@ -132,8 +132,10 @@ return array(
                 'sensodyne' => 'publicidad/contenido/nombre/sensodyne',
                 'sobre-metamucil' => 'publicidad/contenido/nombre/sobre-metamucil',
                 'recetas-nestle-nan-optipro' => 'publicidad/contenido/nombre/nan-recetas',
+
                 'perros-y-gatos' => 'publicidad/contenido/nombre/perros-y-gatos',
-                'perros-y-gatos' => 'publicidad/contenido/nombre/perros-y-gatos',
+                'muestra-gratis-perros-y-gatos' => 'publicidad/contenido/nombre/perros-y-gatos-formulario',
+
                 'proteccion-solar-sol-or' => 'publicidad/contenido/nombre/sol-or',
                 'shampoo-clinical-solution-caspa-severa' => 'publicidad/contenido/nombre/pyg',
 
@@ -164,8 +166,8 @@ return array(
         ),
 
         'db' => array(
-           // 'connectionString' => 'mysql:host=192.168.1.22;port=3306;dbname=lrvmovil_copservir',
-        	'connectionString' => 'mysql:host=localhost;port=3306;dbname=lrvmovil_copservir',
+            'connectionString' => 'mysql:host=192.168.1.22;port=3306;dbname=lrvmovil_copservir',
+        	//'connectionString' => 'mysql:host=localhost;port=3306;dbname=lrvmovil_copservir',
             'emulatePrepare' => true,
             'username' => 'root',
             'password' => '',
@@ -334,9 +336,7 @@ return array(
     		'reactivacionBono' => '_mensajeCorreoReactivacion',
     		'mensajeHtml' => '//common/mensajeHtml',
     		'bonoCorreo' => 'bonoCorreo'
-    	)	
-    		
-    	,	
+    	),
         'maximoComparacion' => 5,
         'urlSitio' => 'www.larebajavirtual.com',
         'urlChatLinea' => '/contenido/ver/tipo/grupo/contenido/41',

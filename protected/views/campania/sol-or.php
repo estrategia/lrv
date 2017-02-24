@@ -353,7 +353,7 @@ $this->metaTags = "<meta http-equiv='X-UA-Compatible' content='IE=edge'>
 		</div>
 		<center>
       <a href="<?php echo CController::createUrl('/catalogo/producto', array('producto' => 37679)) ?>"><img class="btn-comprar-m" src="<?= Yii::app()->request->baseUrl ?>/images/contenido/sol-or/comprar.png"></a>
-      <img class="btn-comprar-m" style="box-shadow: none;margin-top: 10px;" src="<?= Yii::app()->request->baseUrl ?>/images/contenido/sol-or/Boton Descuento.png">
+      <!-- <img class="btn-comprar-m" style="box-shadow: none;margin-top: 10px;" src="<?= Yii::app()->request->baseUrl ?>/images/contenido/sol-or/Boton Descuento.png"> -->
       <p style="font-size: 11px;">Aplica los 17, 19, 26 de diciembre de 2016 y 2 de enero de 2017  </p>
       <p style="font-size: 11px;">
           Descuento valido para compra virtual www.larebajavirtual.com, telefónica y presencial. El precio ofrecido en la www.larebajavirtual.com
@@ -593,7 +593,7 @@ $this->metaTags = "<meta http-equiv='X-UA-Compatible' content='IE=edge'>
 						<p><span class="bull">&bull;</span>Aplica diariamente en: axilas, manos, pies, abdomen, espalda, ingle y pecho.</p>
 					</div>
     				<a href="<?php echo CController::createUrl('/catalogo/producto', array('producto' => 37679)) ?>"><img class="btn-comprar" style="margin-top: 10px;" src="<?= Yii::app()->request->baseUrl ?>/images/contenido/sol-or/comprar.png"></a>
-            <img class="btn-comprar" style="box-shadow: none;margin-top: 10px;" src="<?= Yii::app()->request->baseUrl ?>/images/contenido/sol-or/Boton Descuento.png">
+            <!-- <img class="btn-comprar" style="box-shadow: none;margin-top: 10px;" src="<?= Yii::app()->request->baseUrl ?>/images/contenido/sol-or/Boton Descuento.png"> -->
             <p style="font-size: 12px;margin-top: 15px;">Aplica los 17, 19, 26 de diciembre de 2016 y 2 de enero de 2017  </p>
     			</div>
           <div class="col-md-12">

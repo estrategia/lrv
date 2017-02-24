@@ -114,7 +114,7 @@ ul.ui-listview.ui-listview-inset.ui-corner-all.ui-shadow li a.ui-btn.ui-icon-car
 /* -- Toolbars (header-footer) -- */
 .ui-bar-h{
     background-color: #e4e4e4;
-    border:none;        
+    border:none;
 }
 .ui-bar-h h1{  color: #b40000; /**/ /*font-size: smaller !important; margin: 0 !important; overflow: visible !important;*/  }
 .ui-bar-h h2,h3{  color: #505050; }
@@ -218,7 +218,7 @@ ul.c_list_ventajas.ui-listview.ui-listview-inset.ui-corner-all.ui-shadow {
     padding: 0;
 }
 
-/*  -- header -- */ 
+/*  -- header -- */
 .logo{
     background: url("../images/estructura/bg_header.jpg") #FFF;
     background-repeat: repeat-x;
@@ -317,11 +317,11 @@ div.c_src_page .ui-btn {
     padding: 0.48em 0;
     width: 25%;
 }
-div.c_src_page div.ui-input-search.ui-body-inherit.ui-corner-all.ui-shadow-inset.ui-input-has-clear{ 
-    width: 62%; 
-    float: left; 
-    border: none; 
-    box-shadow: none; 
+div.c_src_page div.ui-input-search.ui-body-inherit.ui-corner-all.ui-shadow-inset.ui-input-has-clear{
+    width: 62%;
+    float: left;
+    border: none;
+    box-shadow: none;
     background: #fff;
     border-radius: 0px !important;
     border-top-left-radius: .6em !important;/*.5em;*/
@@ -340,11 +340,11 @@ div.c_src_page div.ui-btn.ui-input-btn.ui-corner-all.ui-shadow.ui-btn-inline{
     background:#b10000;
     /* background: #ff0000; /* Old browsers
     background: -moz-linear-gradient(top,  #ff0000 0%, #ab0000 100%); /* FF3.6+
-    background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,#ff0000), color-stop(100%,#ab0000)); /* Chrome,Safari4+ 
-    background: -webkit-linear-gradient(top,  #ff0000 0%,#ab0000 100%); /* Chrome10+,Safari5.1+ 
-    background: -o-linear-gradient(top,  #ff0000 0%,#ab0000 100%); /* Opera 11.10+ 
-    background: -ms-linear-gradient(top,  #ff0000 0%,#ab0000 100%); /* IE10+ 
-    background: linear-gradient(to bottom,  #ff0000 0%,#ab0000 100%); /* W3C 
+    background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,#ff0000), color-stop(100%,#ab0000)); /* Chrome,Safari4+
+    background: -webkit-linear-gradient(top,  #ff0000 0%,#ab0000 100%); /* Chrome10+,Safari5.1+
+    background: -o-linear-gradient(top,  #ff0000 0%,#ab0000 100%); /* Opera 11.10+
+    background: -ms-linear-gradient(top,  #ff0000 0%,#ab0000 100%); /* IE10+
+    background: linear-gradient(to bottom,  #ff0000 0%,#ab0000 100%); /* W3C
     filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#ff0000', endColorstr='#ab0000',GradientType=0 ); /* IE6-9 */
     color: #fff;
 }
@@ -437,9 +437,9 @@ div.c_src_page div.ui-btn.ui-input-btn.ui-corner-all.ui-shadow.ui-btn-inline{
 img.center, .ui-alt-icon.center, ui-icon-center, a.ui-icon-center {
     display: block;
     margin-left: auto;
-    margin-right: auto 
+    margin-right: auto
 }
-.f_redes_sociales a.ui-btn:after{ 
+.f_redes_sociales a.ui-btn:after{
     width: 30px; height: 30px; background-size: contain; background-repeat: no-repeat; background-position: left top; margin: -15px;
 }
 .ui-icon-fb:after {
@@ -811,7 +811,7 @@ div.ctxt_pedido.bg_red h2, div.ctxt_pedido.bg_yellow h2 {
     display: block;
 }
 div.ctxt_pedido.bg_red p a{ color: #fac70e; } div.ctxt_pedido.bg_yellow p a{ color: #ff0000; }
-div.ctxt_pedido.bg_red h2 > a{ 
+div.ctxt_pedido.bg_red h2 > a{
     border: none;
     background: #ff0000; /* Old browsers */
     background: -moz-linear-gradient(top,  #ff0000 0%, #ab0000 100%); /* FF3.6+ */
@@ -878,7 +878,7 @@ button.ui-btn.c_btn_ub {
 /*form.btn_src_bsq_ubi .ui-input-search.ui-body-inherit.ui-corner-all.ui-shadow-inset.ui-input-has-clear{ box-shadow: none; border: 1px solid #ccc; }*/
 .c_btn_ub.ui-alt-icon.ui-btn:after{  }
 .c_btn_sr_ubi.ui-input-search input{
-    margin-bottom: .2em;    
+    margin-bottom: .2em;
 }
 div.ui-nodisc-icon.cbtn_ub_ciudad.ui-collapsible.ui-collapsible-inset.ui-corner-all.ui-collapsible-themed-content div.ui-collapsible-content.ui-body-inherit{ /*padding: 0px; */}
 /*.lst_ub_cdd.ui-collapsible.ui-collapsible-inset.ui-corner-all.ui-collapsible-themed-content.ui-first-child{ padding: .5em 1em; padding-top: 0px; }*/
@@ -975,7 +975,7 @@ div.cpanel_domicilio .ui-panel-inner .ui-btn-domicilio{
 }
 /*div.cpanel_domicilio .ui-panel-inner h2 img{ width: 4em; float: right; }
 div.cpanel_domicilio .ui-panel-inner div.cidx_no_line{ border: none; }*/
-/*div.cpanel_domicilio .ui-panel-inner div{ 
+/*div.cpanel_domicilio .ui-panel-inner div{
     margin: .1em .8em;
     border-bottom: 1px solid #ccc;
     padding: 0 .3em;
@@ -1028,7 +1028,7 @@ div.cpanel_pasarxel .ui-panel-inner .ui-btn-presencial{
 }
 /*div.cpanel_pasarxel .ui-panel-inner h2 img{ width: 4em; float: right; }
 div.cpanel_pasarxel .ui-panel-inner div.cidx_no_line{ border: none; padding-bottom: 0px; }*/
-/*div.cpanel_pasarxel .ui-panel-inner div{ 
+/*div.cpanel_pasarxel .ui-panel-inner div{
     margin: .1em .8em;
     border-bottom: 1px solid #ccc;
     padding: 0 .3em;
@@ -1813,7 +1813,7 @@ li.active .iconStep {
 
 .iconStep.step5{
     background-image: url(../images/iconos/icons_carro/confirmacion.png);
-} 
+}
 .clear{
     clear: both;
 }
@@ -2611,7 +2611,7 @@ div.clst_cont_top.top_frc {
     padding: 0;
     width: 100%;
     border-radius: 0;
-    
+
     position: fixed;
     top: 0;
     right: 0;
@@ -2629,10 +2629,10 @@ div.clst_cont_top.top_frc {
 }
 
 .map .page-footer {
-    position:absolute; 
-    z-index:9999; 
-    bottom: 10px; 
-    width:70%; 
+    position:absolute;
+    z-index:9999;
+    bottom: 10px;
+    width:70%;
     height:auto;
     border: none;
     margin-left: 15%;
@@ -2763,3 +2763,5 @@ p.legal-seleccion-ciudad {
         float: left !important;
     }
 }
+
+.ctbl_presentacion .ui-link {color: red;font-weight: bold;text-decoration: none;}
