@@ -122,7 +122,7 @@
         </fieldset>
 
         <div class="btnPagarConfirmacion ui-field-container ui-bar ui-bar-a ui-corner-all">
-            <div>Total a pagar <?php echo Yii::app()->numberFormatter->format(Yii::app()->params->formatoMoneda['patron'], Yii::app()->shoppingCart->getTotalCost(), Yii::app()->params->formatoMoneda['moneda']) ?></div>
+            <div>Total a pagar <?php echo Yii::app()->numberFormatter->format(Yii::app()->params->formatoMoneda['patron'], Yii::app()->shoppingCart->getTotalCostClient(), Yii::app()->params->formatoMoneda['moneda']) ?></div>
             <div class="ui-input-btn ui-btn ui-corner-all ui-shadow ui-btn-r">
                 Finalizar compra
                 <input type="button" data-enhanced="true" value="Finalizar compra" id="btn-carropagar-siguiente" data-origin="<?php echo $paso ?>" data-redirect="finalizar">

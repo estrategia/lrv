@@ -648,7 +648,7 @@ class CarroController extends ControllerTelefarma {
 
             $objFormasPago = new FormasPago; //FormaPago::model()->findByPk($modelPago->idFormaPago);
             $objFormasPago->idCompra = $objCompra->idCompra;
-            $objFormasPago->valor = Yii::app()->shoppingCartVitalCall->getTotalCost();
+            $objFormasPago->valor = Yii::app()->shoppingCartVitalCall->getTotalCostClient();
             $objFormasPago->numeroTarjeta = $modelPago->numeroTarjeta;
             $objFormasPago->cuotasTarjeta = $modelPago->cuotasTarjeta;
             $objFormasPago->idFormaPago = $modelPago->idFormaPago;
