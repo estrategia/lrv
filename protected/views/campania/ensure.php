@@ -96,7 +96,7 @@ $this->metaTags = "<meta http-equiv='X-UA-Compatible' content='IE=edge'>
     <div class="forma-m one" style="">
       <img style="width: 41%;margin-top: -50px;margin-left: -28px;" src="<?= Yii::app()->request->baseUrl ?>/images/contenido/abbot/ensure/ensure-advance-liquido.png" alt="Ensure Advance liquido">
       <p style="font-size: 17px;text-align:center;padding: 0;margin: 0px 0px 15px;">Alimento completo y balanceado con altos niveles de proteína. HMB para recuperar la fibra muscular, fuerza y vitalidad.</p>
-      <a href="<?php echo CController::createUrl('/catalogo/producto', array('producto' => 110478)) ?>" data-ajax="false">
+      <a href="<?php echo CController::createUrl('/contenido/ver', array('tipo' => 'grupo', 'contenido' => 2081)) ?>" data-ajax="false">
         <img class="img-responsive-m" style="margin: 0 auto;width: 95%;display: block;" src="<?= Yii::app()->request->baseUrl ?>/images/contenido/abbot/ensure/boton.png" alt="Comprar Ensure Advance">
       </a>
     </div>
@@ -191,7 +191,7 @@ $this->metaTags = "<meta http-equiv='X-UA-Compatible' content='IE=edge'>
       <div class="forma one">
         <p>Alimento completo y balanceado con altos niveles de proteína. <br>HMB para recuperar la fibra muscular, fuerza y vitalidad.</p>
         <img class="img-responsive flotante" src="<?= Yii::app()->request->baseUrl ?>/images/contenido/abbot/ensure/ensure-advance-liquido.png" alt="Ensure Advance liquido">
-        <a href="<?php echo CController::createUrl('/catalogo/producto', array('producto' => 110478   )) ?>">
+        <a href="<?php echo CController::createUrl('/contenido/ver', array('tipo' => 'grupo', 'contenido' => 2081)) ?>">
           <img class="img-responsive btn-comprar" src="<?= Yii::app()->request->baseUrl ?>/images/contenido/abbot/ensure/boton.png" alt="Comprar Ensure Advance">
         </a>
       </div>
