@@ -112,7 +112,7 @@ class Controller extends CController {
                 $this->redirect(CController::createUrl('/'));
             }
         }
-        
+
         if(!Yii::app()->user->isGuest && !isset(Yii::app()->user->shortName)){
         	$objUsuario = Usuario::model()->find(array(
         		'condition' => 't.identificacionUsuario=:cedula',
@@ -120,7 +120,7 @@ class Controller extends CController {
         			':cedula' => Yii::app()->user->name
         		)
         	));
-        		
+
         	if ($objUsuario !== null) {
         		$nombre = explode(' ', $objUsuario->nombre);
         		Yii::app()->user->setState('lastLoginTime', $objUsuario->fechaUltimoAcceso);
@@ -203,7 +203,7 @@ class Controller extends CController {
             $this->sectorName = $objSectorCiudad->objCiudad->nombreCiudad;
             //if ($objSubSector != null)
             //    $this->sectorName .= " - " . $objSubSector->nombreSubSector;
-            
+
             /*if ($objSectorCiudad->objSector->codigoSector != 0)
                 $this->sectorName .= " - " . $objSectorCiudad->objSector->nombreSector;*/
         }else {
