@@ -29,7 +29,7 @@
 	            <tr>
 	                <th>
 	        <div class="ctbl_presentacion">
-	            <label data-icon="false" class="ctbl_chk_lb">Entrega en condiciones normales <a href='#' onclick='alerta("Los productos agregados ser&aacute;n entregados seg&uacute;n la programaci&oacute;n que realices al momento de finalizar la compra.");'>?</a></label> 
+	            <label data-icon="false" class="ctbl_chk_lb">Entrega en condiciones normales <a href='#' onclick='alerta("Los productos agregados ser&aacute;n entregados seg&uacute;n la programaci&oacute;n que realices al momento de finalizar la compra.");'>?</a></label>
 	        </div>
 	        </th>
 	        <th  align="right">
@@ -63,7 +63,7 @@
             <tr>
                 <th>
         <div class="ctbl_presentacion">
-            <label data-icon="false" class="ctbl_chk_lb">Domicilio <?php echo Yii::app()->shoppingCart->getDeliveryStored() ?> horas <a href='#' onclick='alerta("Los productos agregados ser&aacute;n entregados al tiempo estipulado a traves de Servientrega.");'>?</a> </label>                             
+            <label data-icon="false" class="ctbl_chk_lb">Domicilio <?php echo Yii::app()->shoppingCart->getDeliveryStored() ?> horas <a href='#' onclick='alerta("Los productos agregados ser&aacute;n entregados al tiempo estipulado a traves de Servientrega.");'><span>?</span></a> </label>
         </div>
         </th>
         <th  align="right">
@@ -114,7 +114,7 @@
 						Tiempo solicitud retracto: 5 d&iacute;as<br/>
 						Tiempo de respuesta: 5 d&iacute;as<br/>
 						</p>
-					
+
 					<h4>DEVOLUCI&Oacute;N (NO RECIB&Iacute; EL PRODUCTO/RECIB&Iacute; PRODUCTO MALO)</h4>
 						<p>El costo de env&iacute;o del PRODUCTO al vendedor lo asume: Vendedor <br/>
 						Costo de env&iacute;o al cliente lo asume: Vendedor <br/>

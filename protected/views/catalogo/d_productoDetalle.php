@@ -4,7 +4,7 @@
 <section class="product_detail">
     <div class="container">
         <div class="row">
-            <div class="col-md-5">
+            <div class="col-md-6">
                 <?php $listImagenes = $objProducto->listImagenesGrandes() ?>
                 <?php if (empty($listImagenes)): ?>
                     <div class="item"><img class='img-responsive' src="<?php echo Yii::app()->request->baseUrl . Yii::app()->params->producto['noImagen']['grande']; ?>" alt="<?php echo $objProducto->descripcionProducto ?>" title="<?php echo $objProducto->descripcionProducto ?>"></div>
@@ -31,12 +31,12 @@
                         </div>
                     </div>
                 <?php endif; ?>
-            </div>  
+            </div>
 
-            <div class="col-md-7 content-txt2 border-left">
+            <div class="col-md-6 content-txt2 border-left">
                 <div class="descripciones">
                     <div style="height: auto; overflow: hidden;">
-                          
+
                     </div>
                     <div class="" style="color:#A3A3A3;font-size: 16px;">
                         <?php if ($objPrecio->tieneBeneficio() && $objProducto->mostrarAhorroVirtual == 1): ?>
@@ -70,7 +70,7 @@
                         <?php endif; ?>
 
                         <?php if ($objPrecio->inicializado()): ?>
-                            <?php if ($objProducto->fraccionado == 1): ?> 
+                            <?php if ($objProducto->fraccionado == 1): ?>
                                 <!-- Producto fraccionado -->
                             </div>
                         </div>
@@ -78,15 +78,15 @@
                             <table border="0" cellpadding="0" cellspacing="0" style="margin-top:40px;">
                                 <tr>
                                     <td valign="bottom" class="container_gray_fracc td-dcto">
-                                        
+
                                         <div class="sep-dashed"><label for="uno" checked=""><span></span><?php echo $objProducto->presentacionProducto ?></label><br/></div>
-                                        <?php if ($objProducto->mostrarAhorroVirtual == 1 && $objPrecio->getPorcentajeDescuento() > 0 && $objSectorCiudad->objCiudad->excentoImpuestos == 0): ?> 
+                                        <?php if ($objProducto->mostrarAhorroVirtual == 1 && $objPrecio->getPorcentajeDescuento() > 0 && $objSectorCiudad->objCiudad->excentoImpuestos == 0): ?>
                                             <div class="sep-dashed"><span class="antes strike"><?php echo Yii::app()->numberFormatter->format(Yii::app()->params->formatoMoneda['patron'], $objPrecio->getPrecio(Precio::PRECIO_UNIDAD, false), Yii::app()->params->formatoMoneda['moneda']); ?></span><br></div>
                                             <div class="sep-dashed"><span class="ahorro">Ahorro:<?php echo Yii::app()->numberFormatter->format(Yii::app()->params->formatoMoneda['patron'], $objPrecio->getAhorro(Precio::PRECIO_UNIDAD), Yii::app()->params->formatoMoneda['moneda']); ?></span><br></div>
                                             <div style="margin-top:8px;margin-bottom:8px;"><span class="ahora"><?php echo Yii::app()->numberFormatter->format(Yii::app()->params->formatoMoneda['patron'], $objPrecio->getPrecio(Precio::PRECIO_UNIDAD), Yii::app()->params->formatoMoneda['moneda']); ?></span><br></div>
                                         <?php else: ?>
                                             <div style="margin-top:8px;margin-bottom:8px;"><span class="ahora"><?php echo Yii::app()->numberFormatter->format(Yii::app()->params->formatoMoneda['patron'], $objPrecio->getPrecio(Precio::PRECIO_UNIDAD, false), Yii::app()->params->formatoMoneda['moneda']); ?></span><br></div>
-                                        <?php endif; ?>         
+                                        <?php endif; ?>
 
                                         <div class="row control_cant_detalle">
                                             <button class="col-md-3 min" style="border:1px solid;" id="disminuir-unidad-<?php echo $objProducto->codigoProducto ?>"  data-id="<?php echo $idUnico ?>"  data-role="disminuir-cantidad"  data-producto="<?php echo $objProducto->codigoProducto ?>" data-precio="<?= $objPrecio->getPrecio(Precio::PRECIO_UNIDAD) ?>" type="button"><span class="glyphicon glyphicon-minus" ></span></button>
@@ -97,23 +97,23 @@
 
                                     </td>
                                     <td  valign="bottom">
-                                                
+
                                         <p class="sep-dashed" style="font-size: 14px;">Unidad minima de venta (U.M.V)</p>
                                         <div class="sep-dashed"><label for="dos"><span></span> <?php echo $objProducto->objMedidaFraccion->descripcionMedidaFraccion ?> X <?php echo $objProducto->unidadFraccionamiento ?></label><br></div>
-                                        <?php if ($objProducto->mostrarAhorroVirtual == 1 && $objPrecio->getPorcentajeDescuento() > 0 && $objSectorCiudad->objCiudad->excentoImpuestos == 0): ?> 
+                                        <?php if ($objProducto->mostrarAhorroVirtual == 1 && $objPrecio->getPorcentajeDescuento() > 0 && $objSectorCiudad->objCiudad->excentoImpuestos == 0): ?>
                                             <div class="sep-dashed"><span class="antes strike"><?php echo Yii::app()->numberFormatter->format(Yii::app()->params->formatoMoneda['patron'], $objPrecio->getPrecio(Precio::PRECIO_FRACCION, false), Yii::app()->params->formatoMoneda['moneda']); ?></span><br></div>
                                             <div class="sep-dashed"><span class="ahorro">Ahorro:<?php echo Yii::app()->numberFormatter->format(Yii::app()->params->formatoMoneda['patron'], $objPrecio->getAhorro(Precio::PRECIO_FRACCION), Yii::app()->params->formatoMoneda['moneda']); ?></span><br></div>
                                             <div style="margin-top:8px;margin-bottom:8px;"><span class="ahora"><?php echo Yii::app()->numberFormatter->format(Yii::app()->params->formatoMoneda['patron'], $objPrecio->getPrecio(Precio::PRECIO_FRACCION), Yii::app()->params->formatoMoneda['moneda']); ?></span><br></div>
                                         <?php else: ?>
                                             <div style="margin-top:8px;margin-bottom:8px;"><span class="ahora"><?php echo Yii::app()->numberFormatter->format(Yii::app()->params->formatoMoneda['patron'], $objPrecio->getPrecio(Precio::PRECIO_FRACCION, false), Yii::app()->params->formatoMoneda['moneda']); ?></span><br></div>
-                                        <?php endif; ?>  
+                                        <?php endif; ?>
                                         <div class="row control_cant_detalle">
                                             <button class="col-md-3 min" style="border:1px solid;" id="disminuir-fraccion-<?php echo $objProducto->codigoProducto ?>" data-id="<?php echo $idUnico ?>" onclick="disminuirCantidadFraccionado(<?php echo $objProducto->codigoProducto ?>,<?php echo $objProducto->numeroFracciones ?>,<?php echo $objProducto->unidadFraccionamiento ?>,<?= $objPrecio->getPrecio(Precio::PRECIO_FRACCION) ?>,<?= $objPrecio->getPrecio(Precio::PRECIO_UNIDAD, false) ?>, '<?= $idUnico ?>')" type="button"><span  class="glyphicon glyphicon-minus"></span></button>
                                             <div class="col-md-6 select-cantidad"><input id="cantidad-producto-fraccion-<?php echo $objProducto->codigoProducto ?>-<?php echo $idUnico ?>" data-id="<?php echo $idUnico ?>" class="increment" type="text" onchange="validarCantidadFraccionado(<?php echo $objProducto->codigoProducto ?>,<?php echo $objProducto->numeroFracciones ?>,<?php echo $objProducto->unidadFraccionamiento ?>,<?= $objPrecio->getPrecio(Precio::PRECIO_FRACCION) ?>,<?= $objPrecio->getPrecio(Precio::PRECIO_UNIDAD, false) ?>, '<?= $idUnico ?>')" maxlength="3" value="0" data-total="700"/></div>
                                             <button class="col-md-3 min" style="border:1px solid;" id="aumentar-fraccion-<?php echo $objProducto->codigoProducto ?>" data-id="<?php echo $idUnico ?>"  onclick="aumentarCantidadFraccionado(<?php echo $objProducto->codigoProducto ?>,<?php echo $objProducto->numeroFracciones ?>,<?php echo $objProducto->unidadFraccionamiento ?>,<?= $objPrecio->getPrecio(Precio::PRECIO_FRACCION) ?>,<?= $objPrecio->getPrecio(Precio::PRECIO_UNIDAD, false) ?>, '<?= $idUnico ?>')" type="button"><span  class="glyphicon glyphicon-plus"></span></button>
                                         </div>
                                         <div class=" subtotal"><span class="">Subtotal: <span id="subtotal-producto-fraccion-<?php echo $objProducto->codigoProducto ?>">$0</span></span></div>
-                                    </td>  
+                                    </td>
                                 </tr>
                                 <?php if ($objPrecio->tienePuntos()): ?>
                                     <tr>
@@ -150,7 +150,7 @@
                                 <?php endif; ?>
                             <?php else: ?>
                                 <div style="margin-top: 15px;"></div>
-                                <div><span style="font-weight:bolder;"><?php echo Yii::app()->numberFormatter->format(Yii::app()->params->formatoMoneda['patron'], $objPrecio->getPrecio(Precio::PRECIO_UNIDAD), Yii::app()->params->formatoMoneda['moneda']); ?></span></div>	
+                                <div><span style="font-weight:bolder;"><?php echo Yii::app()->numberFormatter->format(Yii::app()->params->formatoMoneda['patron'], $objPrecio->getPrecio(Precio::PRECIO_UNIDAD), Yii::app()->params->formatoMoneda['moneda']); ?></span></div>
                             <?php endif; ?>
                             <?php if ($objPrecio->tienePuntos()): ?>
                                 <div class="space-1"></div>
@@ -174,13 +174,13 @@
                                 </div>
                             <?php endif; ?>
                         <?php endif; ?>
-                    <?php endif; ?>   
-                    
-                                
+                    <?php endif; ?>
+
+
                     <?php if ($objSectorCiudad == null): ?>
                         <div class="consultar_precio" style="margin-top: 13px;">
                             <?php echo CHtml::link('<div class="btn btn-primary btn-block">Consultar Precio</div>', $this->createUrl('/sitio/ubicacion'), array()); ?>
-                        </div> 
+                        </div>
                     <?php elseif ($objProducto->ventaVirtual == 1): ?>
                         <?php if($objPrecio->inicializado()): ?>
                             <div class="" style="margin-top: 13px;">
@@ -189,7 +189,7 @@
 			                    <?php else: ?>
 			                    	<?php echo CHtml::link('<div class="btn btn-primary btn-block">Añadir&nbsp;<img src="' . Yii::app()->baseUrl . '/images/desktop/button-carrito.png" alt=""></div>', '#', array('data-producto' => $objProducto->codigoProducto, 'data-cargar' => 1, 'data-id' => $idUnico, 'class' => '')); ?>
 			                    <?php endif;?>
-                                
+
                                 <?php if (!Yii::app()->user->isGuest): ?>
                                     <?php echo "<div class='space-1'></div>" ?>
                                     <?php echo CHtml::link('<div class="btn btn-default btn-block" >Añadir a la lista</div>', '#', array('class' => '', 'data-tipo' => '1', 'data-role' => 'lstpersonalguardar', 'data-codigo' => $objProducto->codigoProducto, 'data-id' => $idUnico)); ?>
@@ -240,7 +240,7 @@
                     </p>
                 </div>
             </div>
-        </div> 
+        </div>
     </section>
 <?php endif; ?>
 
@@ -351,7 +351,7 @@
                         </div>
                     </div>
                     <div class="col-md-6">
-                        <div class="content-resena">	
+                        <div class="content-resena">
                             <div class="row" style="margin-bottom: 10px;">
                                 <div class="col-md-6">
                                     <div id="avg_sumary_<?php echo $objProducto->codigoProducto ?>" data-role="raty" data-readonly="true" data-score="<?php echo $objProducto->getCalificacion() ?>" class="clst_cal_str"></div>
@@ -359,7 +359,7 @@
                                 <div class="col-md-6"><p style="margin:0px;font-size:20px;color:#999;"><?php echo $objProducto->getContadorCalificaciones(); ?> Reseña(s)</p></div>
                             </div>
                             <div class="row">
-                                <div class="col-md-12">	
+                                <div class="col-md-12">
                                     <?php if (Yii::app()->user->isGuest): ?>
                                         <p class="">Iniciar sesión para calificar este producto</p>
                                     <?php elseif ($objCalificacion == null): ?>
@@ -394,12 +394,12 @@
                         <?php if ($objComentario->aprobado == 1): ?>
                             <?php $contadorCalificacion++; ?>
                             <div class="col-md-2">
-                                <div class="col-md-12">	
+                                <div class="col-md-12">
                                     <div class="row">
                                         <div id="rating-<?php echo $objComentario->codigoProducto ?>" data-role="raty" data-readonly="true" data-score="<?php echo $objComentario->calificacion ?>" class="clst_cal_str"></div>
                                     </div>
                                     <div class="row">
-                                    	
+
                                         <p style="color:#999;font-weight:bolder;" ><?php echo isset($objComentario->objUsuario)?$objComentario->objUsuario->getNombreCorto():'Usuario'; ?><br>
                                         </p>
                                     </div>
@@ -440,5 +440,4 @@
           </p>
           <?php endif; */ ?>
     </div>
-</section>    
-
+</section>

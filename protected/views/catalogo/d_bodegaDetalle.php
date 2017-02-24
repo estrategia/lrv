@@ -30,11 +30,11 @@
                         </div>
                     </div>
                 <?php endif; ?>
-            </div> 
+            </div>
             <div class="col-md-6 content-txt2 border-left">
                 <div class="descripciones">
                     <div class="col-md-12" style="color:#A3A3A3;font-size: 16px;">
-                    	
+
                         <h3 style="color: #ED1C24;">
                         <!-- producto agregado -->
                             <a href="" class="itm_ico clst_slct_prod<?php echo (Yii::app()->shoppingCart->contains($objProducto->codigoProducto) ? " active" : "") ?>" id="icono-producto-agregado-<?php echo $objProducto->codigoProducto ?>">
@@ -52,17 +52,35 @@
                         <!-- <p>Cantidad agregada al carro: <?php echo $cantidadCarro ?></p> -->
 
                         <?php if ($objProducto->mostrarAhorroVirtual == 1 && $objPrecio->getPorcentajeDescuento() > 0 /* && $objSectorCiudad->objCiudad->excentoImpuestos==0 */): ?>
-                            <div style="margin-top: 15px;"><span class="strike2"><?php echo Yii::app()->numberFormatter->format(Yii::app()->params->formatoMoneda['patron'], $objPrecio->getPrecio(Precio::PRECIO_UNIDAD, false), Yii::app()->params->formatoMoneda['moneda']); ?></span></div>
-                            <div><span>Ahorro: <?php echo Yii::app()->numberFormatter->format(Yii::app()->params->formatoMoneda['patron'], $objPrecio->getAhorro(Precio::PRECIO_UNIDAD), Yii::app()->params->formatoMoneda['moneda']); ?></span></div>
-                            <div><span style="font-weight:bolder;"><?php echo Yii::app()->numberFormatter->format(Yii::app()->params->formatoMoneda['patron'], $objPrecio->getPrecio(Precio::PRECIO_UNIDAD), Yii::app()->params->formatoMoneda['moneda']); ?></span></div>	   
+
+  <table style="margin-top: 15px;">
+    <tr>
+        <td valing="middle">
+          <div style="margin-top: 15px;"><span class="strike2"><?php echo Yii::app()->numberFormatter->format(Yii::app()->params->formatoMoneda['patron'], $objPrecio->getPrecio(Precio::PRECIO_UNIDAD, false), Yii::app()->params->formatoMoneda['moneda']); ?></span></div>
+          <div><span>Ahorro: <?php echo Yii::app()->numberFormatter->format(Yii::app()->params->formatoMoneda['patron'], $objPrecio->getAhorro(Precio::PRECIO_UNIDAD), Yii::app()->params->formatoMoneda['moneda']); ?></span></div>
+        </td>
+        <td valing="middle">
+          <div class="pricened"><span ><?php echo Yii::app()->numberFormatter->format(Yii::app()->params->formatoMoneda['patron'], $objPrecio->getPrecio(Precio::PRECIO_UNIDAD), Yii::app()->params->formatoMoneda['moneda']); ?></span></div>
+        </td>
+    </tr>
+  </table>
+
+
+
                         <?php else: ?>
                             <div style="margin-top: 15px;"></div>
-                            <div><span style="font-weight:bolder;"><?php echo Yii::app()->numberFormatter->format(Yii::app()->params->formatoMoneda['patron'], $objPrecio->getPrecio(Precio::PRECIO_UNIDAD), Yii::app()->params->formatoMoneda['moneda']); ?></span></div>	
+                            <div><span style="font-weight:bolder;color: #e90000 !important;font-size: 1.5em;"><?php echo Yii::app()->numberFormatter->format(Yii::app()->params->formatoMoneda['patron'], $objPrecio->getPrecio(Precio::PRECIO_UNIDAD), Yii::app()->params->formatoMoneda['moneda']); ?></span></div>
                         <?php endif; ?>
                         <br/>
                         <?php if($unidadesDisponibles > 0):?>
-                        Entrega en condiciones normales: <a href='#' data-toggle="modal" data-target="#modalCondicionesNormales">?</a>
-                        <div id="modalCondicionesNormales" class="modal fade" role="dialog">
+                          <div style="margin-bottom:15px;">
+                            Entrega en condiciones normales:
+                            <a href='#' data-toggle="modal" data-target="#modalCondicionesNormales">
+                              <span class="glyphicon glyphicon-info-sign" aria-hidden="true"></span>
+                            </a>
+                          </div>
+
+            <div id="modalCondicionesNormales" class="modal fade" role="dialog">
 						  <div class="modal-dialog">
 						    <!-- Modal content-->
 						    <div class="modal-content">
@@ -77,9 +95,10 @@
 						        <button type="button" class="btn btn-default" data-dismiss="modal">Cerrar</button>
 						      </div>
 						    </div>
-						
+
 						  </div>
 						</div>
+
 						<div class="col-md-12 line-bottom">
                             <button class="col-md-2 min" style="border:1px solid;" id="disminuir_cantidad_ubicacion_<?php echo $objProducto->codigoProducto ?>" onclick="cambioUnidadesUbicacion('<?php echo $objProducto->codigoProducto ?>',<?= $objPrecio->getPrecio(Precio::PRECIO_UNIDAD) ?>, 0)" type="button"><span  class="glyphicon glyphicon-minus"></span></button>
                             <div class="col-md-2 ressete"><input id="cantidad-producto-ubicacion-<?php echo $objProducto->codigoProducto ?>" onchange="subtotalProductoBodega(<?php echo $objProducto->codigoProducto ?>);"  class="increment" type="text" onchange="validarCantidadUnidad(<?php echo $objProducto->codigoProducto ?>,<?= $objPrecio->getPrecio(Precio::PRECIO_UNIDAD) ?>)" maxlength="3" value="<?php echo $cantidadUbicacion ?>" data-total="700"/></div>
@@ -90,8 +109,14 @@
                         </div>
                         <br/>
                         <?php endif;?>
-                        Domicilio <?php echo Yii::app()->shoppingCart->getDeliveryStored() ?> horas: <a href='#' data-toggle="modal" data-target="#modalCondicionesBodega">?</a>
-                        
+
+                        <div style="margin-bottom:15px;">
+                          Domicilio <?php echo Yii::app()->shoppingCart->getDeliveryStored() ?> horas:
+                          <a href='#' data-toggle="modal" data-target="#modalCondicionesBodega">
+                          <span class="glyphicon glyphicon-info-sign" aria-hidden="true"></span>
+                          </a>
+                        </div>
+
                         <div id="modalCondicionesBodega" class="modal fade" role="dialog">
 						  <div class="modal-dialog">
 						    <!-- Modal content-->
@@ -107,7 +132,7 @@
 						        <button type="button" class="btn btn-default" data-dismiss="modal">Cerrar</button>
 						      </div>
 						    </div>
-						
+
 						  </div>
 						</div>
                         <div class="col-md-12 line-bottom">
@@ -118,7 +143,7 @@
                         <div class="">
                             <span class="txt_sub">Subtotal</span> <span id="subtotal-producto-bodega-<?php echo $objProducto->codigoProducto ?>"><?php echo Yii::app()->numberFormatter->format(Yii::app()->params->formatoMoneda['patron'], $objPrecio->getPrecio(Precio::PRECIO_UNIDAD) * $cantidadBodega, Yii::app()->params->formatoMoneda['moneda']); ?></span>
                         </div>
-                        
+
                         <br/>
                         <div class="">Total: <span id="total-producto-<?php echo $objProducto->codigoProducto ?>"><?php echo Yii::app()->numberFormatter->format(Yii::app()->params->formatoMoneda['patron'], $objPrecio->getPrecio(Precio::PRECIO_UNIDAD) * ($cantidadBodega + $cantidadUbicacion), Yii::app()->params->formatoMoneda['moneda']); ?></span></div>
                         <br/>
@@ -151,27 +176,64 @@
     <div class="container">
          <div class='row line-bottom2'>
             <div class='col-md-12'>
-                 <span class='glyphicon glyphicon-chevron-right der' aria-hidden='true'></span>&nbsp;<h4 style='display:inline-block;'>POLITICAS DE CAMBIOS Y DEVOLUCIONES.</h4>
-              	 <h4>RETRACTO (PRODUCTO RECIBIDO PERO NO LO QUIERO)</h4>
-					<p>El costo de env&iacute;o del PRODUCTO al vendedor lo asume: COMPRADOR <br/>
-					Tiempo solicitud retracto: 5 d&iacute;as<br/>
-					Tiempo de respuesta: 5 d&iacute;as<br/>
-					</p>
-				
-				<h4>DEVOLUCI&Oacute;N (NO RECIB&Iacute; EL PRODUCTO/RECIB&Iacute; PRODUCTO MALO)</h4>
-					<p>El costo de env&iacute;o del PRODUCTO al vendedor lo asume: Vendedor <br/>
-					Costo de env&iacute;o al cliente lo asume: Vendedor <br/>
-					Tiempo solicitud devoluci&oacute;n: 5 d&iacute;as <br/>
-					Tiempo de respuesta: 5 d&iacute;as <br/>
-					</p>
-				<h4> GARANT&Iacute;A (EL PRODUCTO SE AVERI&Oacute;)</h4>
-					<p>El costo de env&iacute;o del PRODUCTO al vendedor lo asume: Vendedor<br/>
-					El costo de env&iacute;o del PRODUCTO al cliente lo asume: Vendedor<br/>
-					Solicitud garant&iacute;a, por producto<br/>
-					Tiempo de respuesta: 30 d&iacute;as despu&eacute;s de recibido el PRODUCTO<br/>
-					<p/>
-					
+              <hr>
+                 <span class='glyphicon glyphicon-chevron-right der' aria-hidden='true'></span>&nbsp;<h4 style='display:inline-block;color:#EA0001;font-weight: bold;'>POLITICAS DE CAMBIOS Y DEVOLUCIONES.</h4>
+                 <div class="panel-group" id="accordion" role="tablist" aria-multiselectable="true">
+                   <div class="panel panel-default">
+                     <div class="panel-heading" role="tab" id="headingOne">
+                       <h4 class="panel-title">
+                         <a role="button" data-toggle="collapse" data-parent="#accordion" href="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
+                          Retracto (producto recibido pero no lo quiero)
+                         </a>
+                       </h4>
+                     </div>
+                     <div id="collapseOne" class="panel-collapse collapse in" role="tabpanel" aria-labelledby="headingOne">
+                       <div class="panel-body">
+                         <p>El costo de env&iacute;o del PRODUCTO al vendedor lo asume: COMPRADOR <br/>
+                         Tiempo solicitud retracto: 5 d&iacute;as<br/>
+                         Tiempo de respuesta: 5 d&iacute;as<br/>
+                         </p>
+                       </div>
+                     </div>
+                   </div>
+                   <div class="panel panel-default">
+                     <div class="panel-heading" role="tab" id="headingTwo">
+                       <h4 class="panel-title">
+                         <a class="collapsed" role="button" data-toggle="collapse" data-parent="#accordion" href="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
+                           Devoluci&oacute;n (no recib&iacute; el producto / recib&iacute; producto malo)
+                         </a>
+                       </h4>
+                     </div>
+                     <div id="collapseTwo" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingTwo">
+                       <div class="panel-body">
+                         <p>El costo de env&iacute;o del PRODUCTO al vendedor lo asume: Vendedor <br/>
+                         Costo de env&iacute;o al cliente lo asume: Vendedor <br/>
+                         Tiempo solicitud devoluci&oacute;n: 5 d&iacute;as <br/>
+                         Tiempo de respuesta: 5 d&iacute;as <br/>
+                         </p>
+                       </div>
+                     </div>
+                   </div>
+                   <div class="panel panel-default">
+                     <div class="panel-heading" role="tab" id="headingThree">
+                       <h4 class="panel-title">
+                         <a class="collapsed" role="button" data-toggle="collapse" data-parent="#accordion" href="#collapseThree" aria-expanded="false" aria-controls="collapseThree">
+                           Garant&iacute;a (el producto se ve averi&oacute;)
+                         </a>
+                       </h4>
+                     </div>
+                     <div id="collapseThree" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingThree">
+                       <div class="panel-body">
+                         <p>El costo de env&iacute;o del PRODUCTO al vendedor lo asume: Vendedor<br/>
+                         El costo de env&iacute;o del PRODUCTO al cliente lo asume: Vendedor<br/>
+                         Solicitud garant&iacute;a, por producto<br/>
+                         Tiempo de respuesta: 30 d&iacute;as despu&eacute;s de recibido el PRODUCTO<br/>
+                         <p/>
+                       </div>
+                     </div>
+                   </div>
+               </div>
             </div>
          </div>
-      </div> 
+      </div>
 </section>
