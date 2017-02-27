@@ -2893,3 +2893,42 @@ $(document).on('click', "button[data-role='codigo-promocional']", function() {
     });
     return false;
 });
+
+function guardarMascota(){
+	
+	 $.ajax({
+	        type: 'POST',
+	        url: requestUrl + "/campania/guardarDatosMascota/",
+	        data: $("#formulario-mascota").serialize(), 
+	        dataType: 'json',
+	        beforeSend: function() {
+	            Loading.show();
+	            $(".error").html("");
+	        },
+	        complete: function(data) {
+	            Loading.hide();
+	           
+	        },
+	        success: function(data) {
+	            if (data.result === 'ok') {
+	            	bootbox.alert("Datos registrados");
+	            	document.getElementById("formulario-mascota").reset(); 
+	            }else{
+	            	/*errores="<div style='text-align:center'>";
+	            	$.each(data, function(element, error) {
+	                    errores+=error+"<br/>";
+	                });
+	            	
+	            	errores +="</div>";
+	            	alert(errores);*/
+	            	
+	            	 $.each(data, function(element, error) {
+	                     $('#' + element + '_em').html(error);
+	                     $('#' + element + '_em').css('display', 'block');
+	                 });
+	            }
+	            
+	        }});
+	 
+	 
+} 

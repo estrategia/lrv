@@ -46,5 +46,32 @@ class CampaniaController extends Controller {
             throw new CHttpException(404, "Error al abrir campaña");
         }
     }
+    
+    public function actionGuardarDatosMascota(){
+    	
+    	 $model = new Mascotas();
+    	 $model->attributes = Yii::app()->getRequest()->getPost('Mascotas', null);
+    		
+    	 if($model->validate()){
+    	 	if($model->save()){
+    	 		echo CJSON::encode(array(
+    	 				'result' => 'ok',
+    	 				'response' => 'Datos guardados con exito'
+    	 		));
+    	 		Yii::app()->end();
+    	 	}else{
+    	 		echo CJSON::encode(array(
+    	 				'result' => 'error',
+    	 				'response' => implode("\n",$model->getErrors())
+    	 		));
+    	 		Yii::app()->end();
+    	 	}
+    	 }else{
+    	 	echo CActiveForm::validate($model);
+    	 	Yii::app()->end();
+    	 }
+    	}
+    	
+   
 
 }

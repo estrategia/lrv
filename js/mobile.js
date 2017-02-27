@@ -2609,3 +2609,45 @@ $(document).on('click', "a[data-role='usar-codigo']", function() {
 	    
 	});
 });
+
+
+function guardarMascota(){
+	
+	 $.ajax({
+	        type: 'POST',
+	        url: requestUrl + "/campania/guardarDatosMascota/",
+	        data: $("#formulario-mascota").serialize(), 
+	        dataType: 'json',
+	        beforeSend: function() {
+	        	 $(".error").html("");
+	        	$.mobile.loading('show');
+	        },
+	        complete: function(data) {
+	        	$.mobile.loading('hide');
+	        },
+	        success: function(data) {
+	            if (data.result === 'ok') {
+	            	$('<div>').mdialog({
+		                content: "<div data-role='main'><div class='ui-content' data-role='content' role='main'>Datos registrados<a class='ui-btn ui-btn-r ui-corner-all ui-shadow' data-rel='back' href='#'>Aceptar</a></div></div>"
+		    		});
+	            	document.getElementById("formulario-mascota").reset(); 
+	            }else{
+	            /*	errores="";
+	            	$.each(data, function(element, error) {
+	                    errores+=error+"<br/>";
+	                });
+	            	
+	            	errores +="";
+	            	$('<div>').mdialog({
+		                content: "<div data-role='main'><div class='ui-content' data-role='content' role='main'>" + errores + "<a class='ui-btn ui-btn-r ui-corner-all ui-shadow' data-rel='back' href='#'>Aceptar</a></div></div>"
+		    		});*/
+	            	
+	            	 $.each(data, function(element, error) {
+	                     $('#' + element + '_em').html(error);
+	                     $('#' + element + '_em').css('display', 'block');
+	                 });
+	            }
+	            
+	        }});
+	 
+} 
