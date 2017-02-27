@@ -117,7 +117,7 @@ $this->metaTags = "<meta http-equiv='X-UA-Compatible' content='IE=edge'>
     <div class="forma-m three" style="">
       <img style="width: 41%;margin-top: -50px;margin-left: -28px;" src="<?= Yii::app()->request->baseUrl ?>/images/contenido/abbot/ensure/ensure-base-liquida.png" alt="Ensure Advance liquido">
       <p style="font-size: 17px;text-align:center;padding: 0;margin: 0px 0px 15px;">Contiene Fructooligosacáridos de cadena corta, una fuente de fibra prebiótica e inulina para apoyar la salud del sistema inmune, calcio que es esencial para construir y mantener huesos fuertes.</p>
-      <a href="<?php echo CController::createUrl('/catalogo/producto', array('producto' => 43640  )) ?>" data-ajax="false">
+      <a href="<?php echo CController::createUrl('/contenido/ver', array('tipo' => 'grupo', 'contenido' => 2083)) ?>" data-ajax="false">
         <img class="img-responsive-m" style="margin: 0 auto;width: 95%;display: block;" src="<?= Yii::app()->request->baseUrl ?>/images/contenido/abbot/ensure/boton.png" alt="Comprar Ensure Advance">
       </a>
     </div>
@@ -220,7 +220,7 @@ $this->metaTags = "<meta http-equiv='X-UA-Compatible' content='IE=edge'>
       <div class="forma three">
         <p>Contiene Fructooligosacáridos de cadena corta, una fuente de fibra <br> prebiótica e inulina para apoyar la salud del sistema inmune, calcio <br> que es esencial para construir y mantener huesos fuertes.</p>
         <img class="img-responsive flotante" src="<?= Yii::app()->request->baseUrl ?>/images/contenido/abbot/ensure/ensure-base-liquida.png" alt="Ensure Advance liquido">
-        <a href="<?php echo CController::createUrl('/catalogo/producto', array('producto' => 43640  )) ?>">
+        <a href="<?php echo CController::createUrl('/contenido/ver', array('tipo' => 'grupo', 'contenido' => 2083)) ?>">
           <img class="img-responsive btn-comprar" src="<?= Yii::app()->request->baseUrl ?>/images/contenido/abbot/ensure/boton.png" alt="Comprar Ensure Advance">
         </a>
       </div>
