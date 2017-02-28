@@ -518,6 +518,7 @@ return array(
         	'descuentos' => array(21, 22, 23, 24), // new
         	'bonos' => array(25,26), // new
         	'tipoBonoFormaPago' => array( 25 => 7, 26 => 8 ),
+        	'tipoMedioPago' => array( 25 => 15, 26 => 16 ),
             'recambios' => array(1, 10),
             'recambioslabel' => array(1 => 'Recambio', 10 => 'Recambio Cruzado'),
             'recambio' => 1,

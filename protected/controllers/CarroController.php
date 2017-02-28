@@ -3539,7 +3539,7 @@ class CarroController extends Controller {
                     		
                     		$objFormaPagoBono->valor = $objFormaPagoBono->valorBonoUnidad * $position->getQuantityUnit(); // valor total del bono.
                     		$objFormaPagoBono->idCompra = $objCompra->idCompra;
-                    		$objFormaPagoBono->idFormaPago = Yii::app()->params->beneficios['tipoBonoFormaPago'][$objBeneficio->tipo]; 
+                    		$objFormaPagoBono->idFormaPago = Yii::app()->params->beneficios['tipoMedioPago'][$objBeneficio->tipo]; 
                     		$objFormaPagoBono->cuenta = $objBeneficio->cuentaProv;
                     		$objFormaPagoBono->formaPago = $objBonoTienda->formaPago;
                     		$objFormaPagoBono->idBonoTiendaTipo =  Yii::app()->params->beneficios['tipoBonoFormaPago'][$objBeneficio->tipo];
@@ -3670,6 +3670,7 @@ class CarroController extends Controller {
 
             $objFormaPago = FormaPago::model()->findByPk($modelPago->idFormaPago);
             if (Yii::app()->shoppingCart->getBono() > 0) {
+            	
             	$modelPago->actualizarBono($objCompra);
             }
             

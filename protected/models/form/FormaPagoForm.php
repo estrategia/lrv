@@ -547,7 +547,7 @@ class FormaPagoForm extends CFormModel {
                     	}
                     	
                     }else if($this->bono[$idx]['modoUso'] == 1 ) {
-                        $valorCompra = $objCompra->totalCompra + $this->calcularBonoRedimido(); //$objCompra->subtotalCompra + $objCompra->domicilio + $objCompra->flete
+                        $valorCompra = $objCompra->totalCompra ; //$objCompra->subtotalCompra + $objCompra->domicilio + $objCompra->flete
                       
                         try {
                             $fecha = DateTime::createFromFormat('Y-m-d H:i:s', $objCompra->fechaCompra)->format('Y-m-d');
@@ -571,7 +571,9 @@ class FormaPagoForm extends CFormModel {
                                 $objBonoTienda->idCompra = $objCompra->idCompra;
                                 $objBonoTienda->valorCompra = $valorCompra;
                                 $objBonoTienda->fechaUso = $objCompra->fechaCompra;
+                                
                                 if (!$objBonoTienda->save()) {
+                                	// print_r($objBonoTienda->getErrors());
                                     Yii::log("ActualizarBono-Tienda: cambio estado [idCompra: $objCompra->idCompra -- idbono: $idx -- idUsuario: $objCompra->identificacionUsuario]\n" . CActiveForm::validate($objBonoTienda), CLogger::LEVEL_INFO, 'application');
                                 }
                                 // anadir Bono en forma de pago

@@ -2810,8 +2810,6 @@ class CarroController extends ControllerVendedor {
 						}
 					}
 					
-					
-					
 					foreach ($position->getBeneficiosBonos() as $objBeneficio) {
 					
 						if(in_array($objBeneficio->tipo, Yii::app()->params->beneficios['bonos']) ){
@@ -2855,7 +2853,7 @@ class CarroController extends ControllerVendedor {
 							$objFormaPagoBono->valorBonoUnidad = floor(Precio::redondear($objBeneficio->dsctoUnid/100*$position->getPriceToken(), 1));
 							$objFormaPagoBono->valor = $objFormaPagoBono->valorBonoUnidad * $position->getQuantityUnit(); // valor total del bono.
 							$objFormaPagoBono->idCompra = $objCompra->idCompra;
-							$objFormaPagoBono->idFormaPago = Yii::app()->params->beneficios['tipoBonoFormaPago'][$objBeneficio->tipo]; /*******************/
+							$objFormaPagoBono->idFormaPago = Yii::app()->params->beneficios['tipoMedioPago'][$objBeneficio->tipo]; /*******************/
 							$objFormaPagoBono->cuenta = $objBeneficio->cuentaProv;
 							$objFormaPagoBono->formaPago = $objBonoTienda->formaPago;
 							$objFormaPagoBono->idBonoTiendaTipo =  Yii::app()->params->beneficios['tipoBonoFormaPago'][$objBeneficio->tipo];
@@ -3049,9 +3047,9 @@ class CarroController extends ControllerVendedor {
 				}
 			}
 			
-			if ($objFormasPago->valorBono > 0) {
+		//	if ($objFormasPago->valorBono > 0) {
 				$modelPago->actualizarBono ( $objCompra );
-			}
+		//	} 
 			
 			return array (
 					'result' => 1,
