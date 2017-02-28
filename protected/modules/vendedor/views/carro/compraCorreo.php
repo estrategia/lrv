@@ -206,8 +206,8 @@
                                      
                                     <?php foreach($objCompra->listFormaPagoCompra as $formaPago):?>
                                     	<tr>
-                                        	<td style="color:#FFFFFF;font-weight:bold;width:70%;font-size:16px; border-right-width: 0px"><?php echo (isset( $formaPago->objFormaPago->formaPago )?$formaPago->objFormaPago->formaPago:"").": "?></td>
-                                        	<td style="font-size:16px;color:#FFFFFF;background-color: #FF0000;font-weight:bold;text-align:center;border-left-width: 0px">
+                                        	<td style="font-weight:bold;width:70%;font-size:13px; border-right-width: 0px"><?php echo (isset( $formaPago->objFormaPago->formaPago )?$formaPago->objFormaPago->formaPago:"").": "?></td>
+                                        	<td style="font-size:13px;font-weight:bold;text-align:center;border-left-width: 0px">
                                         		<?= Yii::app()->numberFormatter->format(Yii::app()->params->formatoMoneda['patron'], $formaPago->valor, Yii::app()->params->formatoMoneda['moneda']); ?>
                                         	</td>
                                     	</tr>

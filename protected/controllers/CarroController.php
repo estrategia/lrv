@@ -3252,23 +3252,23 @@ class CarroController extends Controller {
 /********************************************************************************************************/
 /**************************************** GUARDAN LAS FORMAS DE PAGO ************************************/
 /********************************************************************************************************/
-            
             $objFormasPago = new FormasPago; //FormaPago::model()->findByPk($modelPago->idFormaPago);
             $objFormasPago->idCompra = $objCompra->idCompra;
-            $objFormasPago->valor = Yii::app()->shoppingCart->getTotalCostClient();
+            $objFormasPago->idFormaPago = $modelPago->idFormaPago;
+            if ($objFormasPago->idFormaPago == Yii::app()->params->formaPago['pasarela']['idPasarela']) {
+            	$numValidacion = substr(($objCompra->identificacionUsuario + $objCompra->idCompra - $objCompra->totalCompra) * 863, -7);
+            	$objFormasPago->numeroValidacion = $numValidacion;
+            }
+            $valor = Yii::app()->shoppingCart->getTotalCostClient();
             $objFormasPago->numeroTarjeta = $modelPago->numeroTarjeta;
             $objFormasPago->cuotasTarjeta = $modelPago->cuotasTarjeta;
-            $objFormasPago->idFormaPago = $modelPago->idFormaPago;
-   
-
-            if ($objFormasPago->idFormaPago == Yii::app()->params->formaPago['pasarela']['idPasarela']) {
-                $numValidacion = substr(($objCompra->identificacionUsuario + $objCompra->idCompra - $objCompra->totalCompra) * 863, -7);
-                $objFormasPago->numeroValidacion = $numValidacion;
-            }
-
+            $objFormasPago->valor = $valor;
+       
             if (!$objFormasPago->save()) {
-                throw new Exception("Error al guardar forma de pago" . $objFormasPago->validateErrorsResponse());
+            	throw new Exception("Error al guardar forma de pago" . $objFormasPago->validateErrorsResponse());
             }
+            
+            
             //        $objFormasPago->valorBono = Yii::app()->shoppingCart->getBono();
             $objCompraDireccion = new ComprasDireccionesDespacho;
 
@@ -3460,50 +3460,7 @@ class CarroController extends Controller {
                         throw new Exception("Error al guardar item de compra $objItem->codigoProducto. " . $objItem->validateErrorsResponse());
                     }
 
-					/*
-                    foreach ($modelPago->usoBono as $idx => $usoBono) {
-                        if ($usoBono == 1 && $modelPago->bono[$idx]['modoUso'] == 2) {
-                            if ($modelPago->bono[$idx]['codigoProducto'] == $objItem->codigoProducto) {
-
-                                $beneficio = Beneficios::model()->find("idBeneficio = $idx");
-								
-                                // el beneficio debe ser distinto a los tipo 25 y 26
-                                if ($beneficio) {
-                                    $objBeneficioItem = new BeneficiosComprasItems;
-                                    $objBeneficioItem->idBeneficio = $beneficio->idBeneficio;
-                                    $objBeneficioItem->idBeneficioSincronizado = $beneficio->idBeneficioSincronizado;
-                                    $objBeneficioItem->idCompraItem = $objItem->idCompraItem;
-                                    $objBeneficioItem->tipo = $beneficio->tipo;
-                                    $objBeneficioItem->fechaIni = $beneficio->fechaIni;
-                                    $objBeneficioItem->fechaFin = $beneficio->fechaFin;
-                                    $objBeneficioItem->dsctoUnid = $beneficio->dsctoUnid;
-                                    $objBeneficioItem->dsctoFrac = $beneficio->dsctoFrac;
-                                    $objBeneficioItem->vtaUnid = $beneficio->vtaUnid;
-                                    $objBeneficioItem->vtaFrac = $beneficio->vtaFrac;
-                                    $objBeneficioItem->pagoUnid = $beneficio->pagoUnid;
-                                    $objBeneficioItem->pagoFrac = $beneficio->pagoFrac;
-                                    $objBeneficioItem->cuentaCop = $beneficio->cuentaCop;
-                                    $objBeneficioItem->nitCop = $beneficio->nitCop;
-                                    $objBeneficioItem->porcCop = $beneficio->porcCop;
-                                    $objBeneficioItem->cuentaProv = $beneficio->cuentaProv;
-                                    $objBeneficioItem->nitProv = $beneficio->nitProv;
-                                    $objBeneficioItem->porcProv = $beneficio->porcProv;
-                                    $objBeneficioItem->promoFiel = $beneficio->promoFiel;
-                                    $objBeneficioItem->mensaje = $beneficio->mensaje;
-                                    $objBeneficioItem->swobligaCli = $beneficio->swobligaCli;
-                                    $objBeneficioItem->fechaCreacionBeneficio = $beneficio->fechaCreacionBeneficio;
-
-                                    if (!$objBeneficioItem->save()) {
-                                        throw new Exception("Error al guardar beneficio de compra $objBeneficioItem->idCompraItem. " . $objBeneficioItem->validateErrorsResponse());
-                                    }
-                                }else{
-                                	// Estos beneficios se deben guardar como forma de pago
-                                }
-                            }
-                        }
-                    }*/
-
-                    //beneficios
+			        //beneficios
                     foreach ($position->getBeneficios() as $objBeneficio) {
                     	
                     	if(in_array($objBeneficio->tipo, Yii::app()->params->beneficios['descuentos']) ){
@@ -3582,7 +3539,7 @@ class CarroController extends Controller {
                     		
                     		$objFormaPagoBono->valor = $objFormaPagoBono->valorBonoUnidad * $position->getQuantityUnit(); // valor total del bono.
                     		$objFormaPagoBono->idCompra = $objCompra->idCompra;
-                    		$objFormaPagoBono->idFormaPago = Yii::app()->params->beneficios['tipoBonoFormaPago'][$objBeneficio->tipo]; /*******************/
+                    		$objFormaPagoBono->idFormaPago = Yii::app()->params->beneficios['tipoBonoFormaPago'][$objBeneficio->tipo]; 
                     		$objFormaPagoBono->cuenta = $objBeneficio->cuentaProv;
                     		$objFormaPagoBono->formaPago = $objBonoTienda->formaPago;
                     		$objFormaPagoBono->idBonoTiendaTipo =  Yii::app()->params->beneficios['tipoBonoFormaPago'][$objBeneficio->tipo];
@@ -3590,9 +3547,6 @@ class CarroController extends Controller {
                     		$objFormaPagoBono->codigoProducto = $position->objProducto->codigoProducto;
                     		
                     		if(!$objFormaPagoBono->save()){
-                    			echo "<pre>";
-                    			print_r($objFormaPagoBono->getErrors());
-                    			exit();
                     			Yii::log("FormaPago-Bono: Exception [idCompra: $objCompra->idCompra -- idbono: $idx -- idUsuario: $objCompra->identificacionUsuario]\n", CLogger::LEVEL_INFO, 'error');
                     		}
                     		
@@ -3719,6 +3673,7 @@ class CarroController extends Controller {
             	$modelPago->actualizarBono($objCompra);
             }
             
+           
             $contenidoCorreo = $this->renderPartial(Yii::app()->params->rutasPlantillasCorreo['compraCorreo'], array(
                 'objCompra' => $objCompra,
                 'modelPago' => $modelPago,
@@ -3734,8 +3689,9 @@ class CarroController extends Controller {
             } catch (Exception $ce) {
                 Yii::log("Error enviando correo al registrar compra #$objCompra->idCompra\n" . $ce->getMessage() . "\n" . $ce->getTraceAsString(), CLogger::LEVEL_INFO, 'application');
             }
-
+            
             $transaction->commit();
+          
             if ($modelPago->idFormaPago != Yii::app()->params->formaPago['pasarela']['idPasarela']) {
                 ini_set('default_socket_timeout', 5);
                 $client = new SoapClient(null, array(
@@ -3749,7 +3705,7 @@ class CarroController extends Controller {
                     $result = $client->__soapCall("CongelarCompraAutomatica", array('idPedido' => $objCompra->idCompra)); //763759, 763743
                     //$result = array(0=>0,1=>'congelar prueba error');
                     //$result = array(0=>1,1=>'congelar prueba ok', 2 =>'miguel.sanchez@eiso.com.co');
-                    if (!empty($result) && $result[0] == 1) {
+                   if (!empty($result) && $result[0] == 1) {
                         $objCompraRemision = Compras::model()->findByPk($objCompra->idCompra, array("with" => "objPuntoVenta"));
                         $contenidoCorreo = $this->renderPartial(Yii::app()->params->rutasPlantillasCorreo['compraCallcenter'], array('objCompra' => $objCompraRemision), true, true);
                         
@@ -3761,9 +3717,10 @@ class CarroController extends Controller {
                             Yii::log("Error enviando correo de remision automatica #$objCompra->idCompra\n" . $ce->getMessage() . "\n" . $ce->getTraceAsString(), CLogger::LEVEL_INFO, 'application');
                         }
                     } else {
-                        $objCompra->idEstadoCompra = Yii::app()->params->callcenter['estadoCompra']['estado']['subasta'];
-                        if (!$objCompra->save()) {
-                            throw new Exception("Error al guardar compra [1]" . $objCompra->validateErrorsResponse());
+                    	$objCompra1 = Compras::model()->findByPk($objCompra->idCompra);
+                         $objCompra1->idEstadoCompra = Yii::app()->params->callcenter['estadoCompra']['estado']['subasta'];
+                        if (!$objCompra1->save()) {
+                            throw new Exception("Error al guardar compra [1]" . $objCompra1->validateErrorsResponse());
                         }
                     }
                 } catch (SoapFault $exc) {
@@ -3772,11 +3729,13 @@ class CarroController extends Controller {
                     Yii::log("Exception WebService CongelarCompraAutomatica [compra: $objCompra->idCompra]\n" . $exc->getMessage() . "\n" . $exc->getTraceAsString(), CLogger::LEVEL_INFO, 'application');
                 }
             }
+          	
+         
 			//echo $objFormasPago->valorBono;exit();
             if (Yii::app()->shoppingCart->getBono() > 0) {
             	$modelPago->actualizarBonoCRM($objCompra);
             }
-
+          
             return array(
                 'result' => 1,
                 'response' => array(
@@ -3803,6 +3762,9 @@ class CarroController extends Controller {
                 'response' => $exc->getMessage()
             );
         }
+        
+        
+        
     }
 
     public function actionPagopasarela() {

@@ -373,8 +373,14 @@ class Compras extends CActiveRecord {
 
         if (!$this->isNewRecord) {
             if ($this->objFormaPagoCompra != null) {
+            	$formasPago = FormasPago::model()->findAll('idCompra =:idcompra', array(':idcompra' => $this->idCompra));
+            	$val = 0;
+            	for($i = 1;$i < count($formasPago);$i++){
+            		$val += $formasPago[$i]->valor;
+            	}
                 if ($this->objFormaPagoCompra->idFormaPago != Yii::app()->params->formaPago['pasarela']['idPasarela']) {
-                    $this->objFormaPagoCompra->valor = $this->totalCompra;
+                    
+                	$this->objFormaPagoCompra->valor = $this->totalCompra-$val;
 
                     if (!$this->objFormaPagoCompra->save()) {
                         throw new Exception('Error de actualización forma pago: ' . $this->objFormaPagoCompra->validateErrorsResponse());
@@ -936,6 +942,16 @@ class Compras extends CActiveRecord {
 
     public function gridEstadoPedido($data, $row) {
         return "<span class='label label-" . Yii::app()->params->callcenter['estadoCompra']['colorClass'][$data->idEstadoCompra] . "'>" . $data->objEstadoCompra->compraEstado . "</span>";
+    }
+    
+    public function sumaFormasPago(){
+    	$formasPago = FormasPago::model()->findAll('idCompra =:idcompra', array(':idcompra' => $this->idCompra));
+    	$val = 0;
+    	for($i = 0;$i < count($formasPago);$i++){
+    		$val += $formasPago[$i]->valor;
+    	}
+    	
+    	return $val;
     }
     
     public function gridRowCssClassFunction($row, $data) {

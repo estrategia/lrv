@@ -37,7 +37,7 @@ class Mascotas extends CActiveRecord
 		// NOTE: you should only define rules for those attributes that
 		// will receive user inputs.
 		return array(
-			array('cedulaCliente, nombreCliente, direccion, codigoCiudad, telefono, tipoMascota, nombreMascota, edadMascota, correo', 'required'),
+			array('cedulaCliente, nombreCliente, direccion, codigoCiudad, telefono, tipoMascota, nombreMascota, edadMascota, correo', 'required', 'message' => '{attribute} no puede estar vac&iacute;o'),
 			array('cedulaCliente, telefono, tipoMascota, edadMascota', 'numerical', 'integerOnly'=>true),
 			array('nombreCliente', 'length', 'max'=>64),
 			array('correo','email'),

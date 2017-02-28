@@ -95,8 +95,9 @@
             <?php if (Yii::app()->shoppingCartVitalCall->getExtraShipping() > 0): ?>
                 <span>Flete adicional <?php echo Yii::app()->numberFormatter->format(Yii::app()->params->formatoMoneda['patron'], Yii::app()->shoppingCartVitalCall->getExtraShipping(), Yii::app()->params->formatoMoneda['moneda']); ?></span>
             <?php endif; ?>
+            <?php if ($lectura) : ?>
             <h3>Total compra <?php echo Yii::app()->numberFormatter->format(Yii::app()->params->formatoMoneda['patron'], Yii::app()->shoppingCartVitalCall->getTotalCost(), Yii::app()->params->formatoMoneda['moneda']) ?></h3>
-            
+            <?php endif; ?>
             <!--  Formas de pago -->
             <?php if(isset($objCompra)):?>
             	<?php foreach($objCompra->listFormaPagoCompra as $formaPago):?>

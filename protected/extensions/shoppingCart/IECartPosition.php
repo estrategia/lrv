@@ -260,6 +260,12 @@ abstract class IECartPosition {
         $price += $this->shipping;
         return $price;
     }
+    
+    public function getTotalPriceToken() {
+    	$price = $this->getSumPriceToken();
+    	$price += $this->shipping;
+    	return $price;
+    }
 
     abstract public function generate($params);
 

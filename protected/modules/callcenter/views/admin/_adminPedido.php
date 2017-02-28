@@ -273,7 +273,7 @@
         </tr>
         <tr>
             <td colspan="4"></td>
-            <td><strong>Total a pagar</strong></td>
+            <td><strong>Valor venta</strong></td>
             <td class="text-right"><span><?php echo Yii::app()->numberFormatter->format(Yii::app()->params->formatoMoneda['patron'], $objCompra->totalCompra, Yii::app()->params->formatoMoneda['moneda']) ?></span></td>
         </tr>
         <tr>

@@ -351,7 +351,7 @@ class ComprasItems extends CActiveRecord {
         $objCompra = $this->objCompra;
         $objCompra->subtotalCompra += $precioDiff;
         
-        $precioDiff-= $cantDiff*$bonoDescuento;
+    //    $precioDiff-= $cantDiff*$bonoDescuento;
         $objCompra->impuestosCompra += round(Precio::calcularImpuesto($precioDiff, $this->objImpuesto->porcentaje));
         $objCompra->baseImpuestosCompra += round(Precio::calcularBaseImpuesto($precioDiff, $this->objImpuesto->porcentaje));
         $objCompra->totalCompra += $precioDiff;

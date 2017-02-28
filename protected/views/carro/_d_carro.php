@@ -126,7 +126,7 @@
             <?php if (Yii::app()->shoppingCart->getBono() > 0): ?>
                 <span>Bono <?php echo Yii::app()->numberFormatter->format(Yii::app()->params->formatoMoneda['patron'], Yii::app()->shoppingCart->getBono(), Yii::app()->params->formatoMoneda['moneda']); ?></span>
             <?php endif; ?>
-            <h3>Total compra <?php echo Yii::app()->numberFormatter->format(Yii::app()->params->formatoMoneda['patron'], Yii::app()->shoppingCart->getTotalCost(), Yii::app()->params->formatoMoneda['moneda']) ?></h3>
+            <h3>Valor a pagar <?php echo Yii::app()->numberFormatter->format(Yii::app()->params->formatoMoneda['patron'], Yii::app()->shoppingCart->getTotalCostClient(), Yii::app()->params->formatoMoneda['moneda']) ?></h3>
             
             <!--  Formas de pago -->
             <?php if(isset($objCompra)):?>
