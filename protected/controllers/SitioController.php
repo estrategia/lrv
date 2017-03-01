@@ -520,30 +520,30 @@ class SitioController extends Controller {
         	Yii::app()->end();
         }
         
-        if($nPdv==1){
-        	$idComercial = $result[0]->PDV[0]->IDCOMERCIAL;
-        	// $pdv = PuntoVenta::model()->find("idComercial=:idComercial", array(':idComercial'=>$idComercial));
-        	$objSectorCiudad = SectorCiudad::model()->find(array(
-        		'join' => 'INNER JOIN m_PuntoVenta on m_PuntoVenta.codigoCiudad = t.codigoCiudad AND m_PuntoVenta.idSectorLRV = t.codigoSector',
-        		'condition' => 'm_PuntoVenta.idComercial=:idComercial',
-        		'params' => array(
-        			'idComercial' => $idComercial
-        		)
-        	));
-        	if (is_null($objSectorCiudad)) {
-        		echo CJSON::encode(array('result' => 'error', 'response' => 'No se pudo determinar la ubicacion para este barrio.'));
-        		Yii::app()->end();
-        	}
-        	echo CJSON::encode(array(
-        		'result' => 'ok',
-        		'response' => array(
-        			'ciudad' => $objSectorCiudad->codigoCiudad,
-        			'sector' => $objSectorCiudad->codigoSector
-        		)
-        	));
+        // if($nPdv==1){
+        // 	$idComercial = $result[0]->PDV[0]->IDCOMERCIAL;
+        // 	// $pdv = PuntoVenta::model()->find("idComercial=:idComercial", array(':idComercial'=>$idComercial));
+        // 	$objSectorCiudad = SectorCiudad::model()->find(array(
+        // 		'join' => 'INNER JOIN m_PuntoVenta on m_PuntoVenta.codigoCiudad = t.codigoCiudad AND m_PuntoVenta.idSectorLRV = t.codigoSector',
+        // 		'condition' => 'm_PuntoVenta.idComercial=:idComercial',
+        // 		'params' => array(
+        // 			'idComercial' => $idComercial
+        // 		)
+        // 	));
+        // 	if (is_null($objSectorCiudad)) {
+        // 		echo CJSON::encode(array('result' => 'error', 'response' => 'No se pudo determinar la ubicacion para este barrio.'));
+        // 		Yii::app()->end();
+        // 	}
+        // 	echo CJSON::encode(array(
+        // 		'result' => 'ok',
+        // 		'response' => array(
+        // 			'ciudad' => $objSectorCiudad->codigoCiudad,
+        // 			'sector' => $objSectorCiudad->codigoSector
+        // 		)
+        // 	));
         	
-        	Yii::app()->end();
-        }
+        // 	Yii::app()->end();
+        // }
         
         $listBarrios = array();
         foreach($result[0]->PDV as $pdv){

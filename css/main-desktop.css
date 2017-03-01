@@ -2841,11 +2841,19 @@ img.ajustada {
     opacity: 1;
 }
 
+#tour-origen {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    -webkit-transform: translate(-50%, -50%);
+    transform: translate(-50%, -50%);
+    z-index: 9999;
+}
+
 ul.info-seleccion-ciudad {
     margin-top: 10px;
     list-style: none;
     padding-left: 2px;
-    border: solid 1px #E5E5E5;
 }
 
 ul.info-seleccion-ciudad p {
@@ -2853,6 +2861,71 @@ ul.info-seleccion-ciudad p {
     margin: 5px 0 0;
 }
 
-p.legal-seleccion-ciudad {
+ul.info-seleccion-ciudad li .item-texto{
+    display: inline-flex;
+    width: 100%;
+}
+
+ul.info-seleccion-ciudad .glyphicon {
+    margin: 5px 5px 0;
+}
+
+.modal-logo img {
+    display: block;
+    margin: auto;
+    width: 70px;
+    height: 70px;
+}
+
+.modal-logo .titulo-logo {
+    margin-bottom: 10px;
+    margin-top: 10px;
+}
+
+.modal-logo .titulo-logo::before {
+    margin: 3px;
+    content: '';
+    display: block;
+    position: relative;
+    top: 0;
+    width: 50%;
+    left: 25%;
+    border-top: 1px solid #A3A3A3;
+}
+
+.modal-logo .titulo-logo::after {
+    margin: 3px;
+    content: '';
+    display: block;
+    position: relative;
+    top: 0;
+    width: 50%;
+    left: 25%;
+    border-top: 1px solid #A3A3A3;
+}
+
+#modal-seleccion-ciudad .modal-header {
+    border:none;
+}
+
+#modal-seleccion-ciudad .modal-footer {
+    border:none;
+}
+
+#modal-seleccion-ciudad .modal-body {
+    padding: 5px;
+}
+
+.select2-selection__rendered {
+    color: #444 !important;
+}
+
+.seleccionar-ciudad-legal {
+    border: solid 1px red;
+    border-radius: 3px;
+}
+
+.seleccionar-ciudad-legal p {
+    margin: 5px;
     font-size: 10px;
 }

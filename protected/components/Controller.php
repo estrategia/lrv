@@ -56,8 +56,8 @@ class Controller extends CController {
                 Yii::app()->user->logout();
             }
         }
-		$this->isMobile = true;
-		$this->layout = '//layouts/mobile';
+		// $this->isMobile = true;
+		// $this->layout = '//layouts/mobile';
   //       $this->verificarDispositivo();
 
         if (isset(Yii::app()->session[Yii::app()->params->sesion['sectorCiudadEntrega']]) && Yii::app()->session[Yii::app()->params->sesion['sectorCiudadEntrega']] != null) {
@@ -280,7 +280,7 @@ class Controller extends CController {
             Yii::app()->getClientScript()->registerCssFile(Yii::app()->request->baseUrl . "/libs/raty/jquery.raty.css");
             Yii::app()->getClientScript()->registerCssFile(Yii::app()->request->baseUrl . "/libs/ad-gallery/jquery.ad-gallery.css");
             Yii::app()->getClientScript()->registerCssFile(Yii::app()->request->baseUrl . "/libs/tour/shepherd-theme-default.css");
-            //Yii::app()->getClientScript()->registerCssFile(Yii::app()->request->baseUrl . "/css/main-desktop.css");
+            Yii::app()->getClientScript()->registerCssFile(Yii::app()->request->baseUrl . "/css/main-desktop.css");
             Yii::app()->getClientScript()->registerCssFile(Yii::app()->request->baseUrl . '/libs/loading/css/Loading.css');
         }
     }
