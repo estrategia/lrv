@@ -30,7 +30,6 @@ function inicializarMapa(){
 
     google.maps.event.addListener(map, 'idle', function() {
       iniciarTourAutomatico();
-      console.log("cargado");
     });
 }
 

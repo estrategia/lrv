@@ -1829,7 +1829,7 @@ function setCoords(pos) {
             },
             success: function(data) {
                 $.getScript("https://maps.googleapis.com/maps/api/js?client=" + gmapKey).done(function(script, textStatus) {
-                    $.getScript(requestUrl + "/js/ubicacion.js").done(function(script, textStatus) {
+                    $.getScript(requestUrl + "/js/ubicacion.min.js").done(function(script, textStatus) {
                         $('#main-page').append(data);
                         // $('#select-ubicacion-psubsector .ciudades').select2();
                         inicializarMapa();
@@ -2071,7 +2071,7 @@ $(document).on('click', 'button[data-role="confirmar-ciudad"]', function() {
             },
             success: function(data) {
                 $.getScript("https://maps.googleapis.com/maps/api/js?client=" + gmapKey).done(function(script, textStatus) {
-                    $.getScript(requestUrl + "/js/ubicacion.js").done(function(script, textStatus) {
+                    $.getScript(requestUrl + "/js/ubicacion.min.js").done(function(script, textStatus) {
                         $('#main-page').append(data);
                         $('#select-ubicacion-psubsector .ciudades').select2();
                         inicializarMapa();
