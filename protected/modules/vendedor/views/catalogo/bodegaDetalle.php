@@ -21,48 +21,48 @@
     <div class="cdt_line_spc"><span></span></div>
 
     <div id="raty-lectura-producto-<?php echo $objProducto->codigoProducto ?>" data-role="raty" data-readonly="true" data-score="<?php echo $objProducto->getCalificacion() ?>" class="clst_cal_str"></div>
-    <p>Cantidad agregada al carro: <?php echo $cantidadCarro ?></p>
-
-    <table  class="ui-responsive ctbl_prod_frc">
-        <thead class="ctbl_head">
-            <tr>
-                <th>
-        <div class="ctbl_presentacion">
-            <label data-icon="false" class="ctbl_chk_lb">Entrega inmediata</label>
-        </div>
-        </th>
-        <th  align="right">
-        <div class="frc_btn_cant">
-            <input type="number" placeholder="0" value="<?php echo $cantidadUbicacion ?>" id="cantidad-producto-ubicacion-<?php echo $objProducto->codigoProducto ?>" onchange="subtotalProductoBodega(<?php echo $objProducto->codigoProducto ?>);" class="dtl_cant_prod_01">
-        </div>
-        </th>
-        <th>
-        <div class="ctbl_subtotal">
-            <span class="txt_sub">Subtotal</span> <span id="subtotal-producto-ubicacion-<?php echo $objProducto->codigoProducto ?>"><?php echo Yii::app()->numberFormatter->format(Yii::app()->params->formatoMoneda['patron'], $objPrecio->getPrecio(Precio::PRECIO_UNIDAD) * $cantidadUbicacion, Yii::app()->params->formatoMoneda['moneda']); ?></span>
-        </div>
-        </th>
-        </tr>
-        </thead>
-        <tbody>
-            <tr class="ctbl_tl">
-                <td style="text-align:left;">Precio regular</td>
-                <td>Ahorro</td>
-                <td style="text-align:right;"><span>Precio</span></td>
-            </tr>
-            <tr>
-                <td class="txt_pre_lst"><?php echo Yii::app()->numberFormatter->format(Yii::app()->params->formatoMoneda['patron'], $objPrecio->getPrecio(Precio::PRECIO_UNIDAD, false), Yii::app()->params->formatoMoneda['moneda']); ?></td>
-                <td class="txt_ahor"><?php echo Yii::app()->numberFormatter->format(Yii::app()->params->formatoMoneda['patron'], $objPrecio->getAhorro(Precio::PRECIO_UNIDAD), Yii::app()->params->formatoMoneda['moneda']); ?></td>
-                <td class="txt_pre"  align="right"><?php echo Yii::app()->numberFormatter->format(Yii::app()->params->formatoMoneda['patron'], $objPrecio->getPrecio(Precio::PRECIO_UNIDAD), Yii::app()->params->formatoMoneda['moneda']); ?></td>
-            </tr>
-        </tbody>
-    </table>
-
+    <!--  <p>Cantidad agregada al carro: <?php echo $cantidadCarro ?></p> -->
+	<?php if($unidadesDisponibles > 0):?>
+	    <table  class="ui-responsive ctbl_prod_frc">
+	        <thead class="ctbl_head">
+	            <tr>
+	                <th>
+	        <div class="ctbl_presentacion">
+	            <label data-icon="false" class="ctbl_chk_lb">Entrega en condiciones normales</label>
+	        </div>
+	        </th>
+	        <th  align="right">
+	        <div class="frc_btn_cant">
+	            <input type="number" placeholder="0" value="<?php echo $cantidadUbicacion ?>" id="cantidad-producto-ubicacion-<?php echo $objProducto->codigoProducto ?>" onchange="subtotalProductoBodega(<?php echo $objProducto->codigoProducto ?>);" class="dtl_cant_prod_01">
+	        </div>
+	        </th>
+	        <th>
+	        <div class="ctbl_subtotal">
+	            <span class="txt_sub">Subtotal</span> <span id="subtotal-producto-ubicacion-<?php echo $objProducto->codigoProducto ?>"><?php echo Yii::app()->numberFormatter->format(Yii::app()->params->formatoMoneda['patron'], $objPrecio->getPrecio(Precio::PRECIO_UNIDAD) * $cantidadUbicacion, Yii::app()->params->formatoMoneda['moneda']); ?></span>
+	        </div>
+	        </th>
+	        </tr>
+	        </thead>
+	        <tbody>
+	            <tr class="ctbl_tl">
+	                <td style="text-align:left;">Precio regular</td>
+	                <td>Ahorro</td>
+	                <td style="text-align:right;"><span>Precio</span></td>
+	            </tr>
+	            <tr>
+	                <td class="txt_pre_lst"><?php echo Yii::app()->numberFormatter->format(Yii::app()->params->formatoMoneda['patron'], $objPrecio->getPrecio(Precio::PRECIO_UNIDAD, false), Yii::app()->params->formatoMoneda['moneda']); ?></td>
+	                <td class="txt_ahor"><?php echo Yii::app()->numberFormatter->format(Yii::app()->params->formatoMoneda['patron'], $objPrecio->getAhorro(Precio::PRECIO_UNIDAD), Yii::app()->params->formatoMoneda['moneda']); ?></td>
+	                <td class="txt_pre"  align="right"><?php echo Yii::app()->numberFormatter->format(Yii::app()->params->formatoMoneda['patron'], $objPrecio->getPrecio(Precio::PRECIO_UNIDAD), Yii::app()->params->formatoMoneda['moneda']); ?></td>
+	            </tr>
+	        </tbody>
+	    </table>
+	<?php endif;?>
     <table class="ui-responsive ctbl_prod_frc ctbl_color_prod_frc">
         <thead class="ctbl_head_g2">
             <tr>
                 <th>
         <div class="ctbl_presentacion">
-            <label data-icon="false" class="ctbl_chk_lb">Entrega <?php echo Yii::app()->shoppingCartSalesman->getDeliveryStored() ?> hrs</label>                            
+            <label data-icon="false" class="ctbl_chk_lb">Entrega <?php echo Yii::app()->shoppingCartSalesman->getDeliveryStored() ?> horas</label>                            
         </div>
         </th>
         <th  align="right">

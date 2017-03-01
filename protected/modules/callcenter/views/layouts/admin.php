@@ -88,6 +88,9 @@
                                 <li>
                                     <a href="<?php echo $this->createUrl('/callcenter/admin/calificaciones') ?>" class="ajax-link"><i class="glyphicon glyphicon-ok"></i><span> Comentarios y Calificaciones</span></a>
                                 </li>
+                                <li>
+                                    <a href="<?php echo $this->createUrl('/callcenter/admin/mascotas') ?>" class="ajax-link"><i class="glyphicon glyphicon-heart-empty"></i><span> Mascotas</span></a>
+                                </li>
                                 
                                 <li class="nav-header hidden-md">TELEFARMA</li>
                                 <li class="">

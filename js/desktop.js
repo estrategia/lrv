@@ -91,7 +91,20 @@ function volverAMostrar(tour) {
   return tour == 0 ? Cookies.get('tour1') : Cookies.get('tour2');
 }
 
+
 function iniciarTourAutomatico() {
+	intervalTour = setInterval(iniciarTourInterval, 500);
+}
+
+function iniciarTourInterval() {
+    if($('#map .gmnoprint map').length>0){
+    	clearInterval(intervalTour);
+    	intervalTour = null;
+    	iniciarTourAutomaticoAux();
+    }
+}
+
+function iniciarTourAutomaticoAux() {
     if(tipoTour == 0 && volverAMostrar(tipoTour) != 'noMostrar') {
         iniciarTour();
     }
@@ -509,7 +522,6 @@ $(document).on('click', "[id^='enlace-pago-direccion-express-']", function() {
 });
 
 $(document).on('click', "a[data-role='usuario-pagoexpress-formapago']", function() {
-    console.log("asdff");
     var campoCheckbox = $(this).children("input");
     campoCheckbox.prop("checked", true);
 });
@@ -1734,6 +1746,10 @@ function cambioUnidadesUbicacion(codigoProducto, valorUnidad, op) {
 function cambioUnidadesBodega(codigoProducto, valorUnidad, op) {
     var cantidadProductoBodega = $("#cantidad-producto-bodega-" + codigoProducto).val();
     var cantidadProductoUbicacion = $("#cantidad-producto-ubicacion-" + codigoProducto).val();
+    
+    if(!Number.isInteger(cantidadProductoUbicacion)){
+    	cantidadProductoUbicacion = 0;
+    }
     if (op == 0) {
         cantidadProductoBodega--;
     } else {
@@ -2842,3 +2858,42 @@ $(document).on('click', "button[data-role='codigo-promocional']", function() {
     });
     return false;
 });
+
+function guardarMascota(){
+	
+	 $.ajax({
+	        type: 'POST',
+	        url: requestUrl + "/campania/guardarDatosMascota/",
+	        data: $("#formulario-mascota").serialize(), 
+	        dataType: 'json',
+	        beforeSend: function() {
+	            Loading.show();
+	            $(".error").html("");
+	        },
+	        complete: function(data) {
+	            Loading.hide();
+	           
+	        },
+	        success: function(data) {
+	            if (data.result === 'ok') {
+	            	bootbox.alert("Datos registrados");
+	            	document.getElementById("formulario-mascota").reset(); 
+	            }else{
+	            	/*errores="<div style='text-align:center'>";
+	            	$.each(data, function(element, error) {
+	                    errores+=error+"<br/>";
+	                });
+	            	
+	            	errores +="</div>";
+	            	alert(errores);*/
+	            	
+	            	 $.each(data, function(element, error) {
+	                     $('#' + element + '_em').html(error);
+	                     $('#' + element + '_em').css('display', 'block');
+	                 });
+	            }
+	            
+	        }});
+	 
+	 
+} 

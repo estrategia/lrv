@@ -108,7 +108,7 @@ $this->metaTags = "<meta http-equiv='X-UA-Compatible' content='IE=edge'>
       <div class="ui-block-c"> <img src="<?= Yii::app()->request->baseUrl ?>/images/contenido/abbot/glucerna/chocolate.png"> </div>
     </div>
     <p class="name-product-m">Glucerna 237 ml</p>
-      <a href="<?php echo CController::createUrl('/catalogo/producto', array('producto' => 110371  )) ?>" data-ajax="false">
+      <a href="<?php echo CController::createUrl('/contenido/ver', array('tipo' => 'grupo', 'contenido' => 2060)) ?>" data-ajax="false">
         <img class="btn-comprar-m" src="<?= Yii::app()->request->baseUrl ?>/images/contenido/abbot/glucerna/boton.png">
       </a>
   </div>
@@ -145,9 +145,11 @@ $this->metaTags = "<meta http-equiv='X-UA-Compatible' content='IE=edge'>
 
 <!--VERSIÓN ESCRITORIO-->
 <?php else: ?>
-<div class="sidebar-cart">
-	<img class="img-responsive" src="<?= Yii::app()->request->baseUrl ?>/images/contenido/abbot/general/compra-online.png">
-</div>
+  <a href="<?php echo CController::createUrl('/contenido/ver', array('tipo' => 'grupo', 'contenido' => 1918)) ?>">
+    <div class="sidebar-cart">
+    	<img class="img-responsive" src="<?= Yii::app()->request->baseUrl ?>/images/contenido/abbot/general/compra-online.png">
+    </div>
+  </a>
 <!--Header-->
 <?php require 'headerAbbott.php'; ?>
 <!--Banner principal-->
@@ -205,7 +207,7 @@ $this->metaTags = "<meta http-equiv='X-UA-Compatible' content='IE=edge'>
         </div>
         <div class="row">
           <p class="name-product">Glucerna 237 ml</p>
-          <a href="<?php echo CController::createUrl('/catalogo/producto', array('producto' => 110371  )) ?>">
+          <a href="<?php echo CController::createUrl('/contenido/ver', array('tipo' => 'grupo', 'contenido' => 2060)) ?>">
              <img class="img-responsive btn-comprar" src="<?= Yii::app()->request->baseUrl ?>/images/contenido/abbot/glucerna/boton.png">
            </a>
         </div>

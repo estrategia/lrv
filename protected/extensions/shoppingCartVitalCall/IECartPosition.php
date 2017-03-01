@@ -205,6 +205,12 @@ abstract class IECartPosition {
         return $price;
     }
     
+    public function getTotalPriceToken() {
+    	$price = $this->getSumPriceToken();
+    	$price += $this->shipping;
+    	return $price;
+    }
+    
     public function getSumToken(){
     	return ($this->quantityUnit + $this->quantityStored)* $this->priceTokenUnit;
     }

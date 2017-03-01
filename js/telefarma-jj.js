@@ -36,6 +36,11 @@ function cambioUnidadesUbicacion(codigoProducto, valorUnidad, op) {
 function cambioUnidadesBodega(codigoProducto, valorUnidad, op) {
     var cantidadProductoBodega = $("#cantidad-producto-bodega-" + codigoProducto).val();
     var cantidadProductoUbicacion = $("#cantidad-producto-ubicacion-" + codigoProducto).val();
+    
+    if(!Number.isInteger(cantidadProductoUbicacion)){
+    	cantidadProductoUbicacion = 0;
+    }
+    
     if (op == 0) {
         cantidadProductoBodega--;
     } else {

@@ -217,9 +217,22 @@
                             </table>
                             <table cellpadding="7" border="0" style="border:1px solid #ccc;color:#666666;margin-top:0px;width:100%">
                                 <tbody>
-                                    <tr style="background:#f9f9f9">
-                                        <td style="color:#FFFFFF;background-color: #FF0000;font-weight:bold;width:70%;font-size:16px; border-right-width: 0px">TOTAL</td>
+                                    <tr >
+                                        <td style="color:#FFFFFF;background-color: #FF0000;font-weight:bold;width:70%;font-size:16px; border-right-width: 0px">Valor venta</td>
                                         <td style="font-size:16px;color:#FFFFFF;background-color: #FF0000;font-weight:bold;text-align:center;border-left-width: 0px"><?php echo Yii::app()->numberFormatter->format(Yii::app()->params->formatoMoneda['patron'], Yii::app()->shoppingCart->getTotalCost(), Yii::app()->params->formatoMoneda['moneda']) ?></td>
+                                    </tr>
+                                    <?php foreach($objCompra->listFormaPagoCompra as $formaPago):?>
+                                    	<tr>
+                                        	<td style="font-weight:bold;width:70%;font-size:16px; border-right-width: 0px"><?php echo (isset( $formaPago->objFormaPago->formaPago )?$formaPago->objFormaPago->formaPago:"").": "?></td>
+                                        	<td style="font-size:16px;font-weight:bold;text-align:center;border-left-width: 0px">
+                                        		<?= Yii::app()->numberFormatter->format(Yii::app()->params->formatoMoneda['patron'], $formaPago->valor, Yii::app()->params->formatoMoneda['moneda']); ?>
+                                        	</td>
+                                    	</tr>
+                                    <?php endforeach;?>
+                                    
+                                    <tr style="background:#f9f9f9">
+                                        <td style="color:#FFFFFF;background-color: #FF0000;font-weight:bold;width:70%;font-size:16px; border-right-width: 0px">TOTAL A PAGAR</td>
+                                        <td style="font-size:16px;color:#FFFFFF;background-color: #FF0000;font-weight:bold;text-align:center;border-left-width: 0px"><?php echo Yii::app()->numberFormatter->format(Yii::app()->params->formatoMoneda['patron'], Yii::app()->shoppingCart->getTotalCostClient(), Yii::app()->params->formatoMoneda['moneda']) ?></td>
                                     </tr>
                                 </tbody>
                             </table>

@@ -150,7 +150,7 @@
 
 
                 <!-- producto agregado -->
-                <a href="" class="itm_ico clst_slct_prod<?php echo (Yii::app()->shoppingCart->contains($data->codigoProducto) ? " active" : "") ?>" id="icono-producto-agregado-<?php echo $data->codigoProducto ?>">
+                <a href="" class="itm_ico clst_slct_prod<?php echo (Yii::app()->shoppingCartNationalSale->contains($data->codigoProducto) ? " active" : "") ?>" id="icono-producto-agregado-<?php echo $data->codigoProducto ?>">
                     <img src="<?php echo Yii::app()->request->baseUrl ?>/images/desktop/icon_seleccionado.png">
                 </a>
                 <!-- puntos agregado -->

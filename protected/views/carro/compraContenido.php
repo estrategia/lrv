@@ -191,8 +191,21 @@
                         <td><?php echo Yii::app()->numberFormatter->format(Yii::app()->params->formatoMoneda['patron'], Yii::app()->shoppingCart->getDiscountPrice(true), Yii::app()->params->formatoMoneda['moneda']) ?></td>
                     </tr>
                 <?php endif; ?>
+                <tr class="rowRed">
+                        <td>Valor venta</td>
+                        <td><?php echo Yii::app()->numberFormatter->format(Yii::app()->params->formatoMoneda['patron'], Yii::app()->shoppingCart->getTotalCost(), Yii::app()->params->formatoMoneda['moneda']) ?></td>
+                </tr>
+                <?php if(isset($objCompra)):?>
+            	<?php foreach($objCompra->listFormaPagoCompra as $formaPago):?>
+            			<tr class="">
+            				<td><?php echo (isset( $formaPago->objFormaPago->formaPago )?$formaPago->objFormaPago->formaPago:"").": "?></td>
+            				<td><?= Yii::app()->numberFormatter->format(Yii::app()->params->formatoMoneda['patron'], $formaPago->valor, Yii::app()->params->formatoMoneda['moneda']); ?></td>
+            			</tr>
+            	<?php endforeach;?>
+            <?php endif;?>
+                
             </tbody>
         </table>
-        <p class="center TotalPagarCompra">Total a pagar <?php echo Yii::app()->numberFormatter->format(Yii::app()->params->formatoMoneda['patron'], Yii::app()->shoppingCart->getTotalCost(), Yii::app()->params->formatoMoneda['moneda']) ?></p>
+        <p class="center TotalPagarCompra">Total a pagar <?php echo Yii::app()->numberFormatter->format(Yii::app()->params->formatoMoneda['patron'], Yii::app()->shoppingCart->getTotalCostClient(), Yii::app()->params->formatoMoneda['moneda']) ?></p>
     </div>
 </div>

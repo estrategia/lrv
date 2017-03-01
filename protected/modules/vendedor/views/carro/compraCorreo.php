@@ -203,6 +203,20 @@
                                         <td style="color:#FFFFFF;background-color: #FF0000;font-weight:bold;width:70%;font-size:16px; border-right-width: 0px">TOTAL</td>
                                         <td style="font-size:16px;color:#FFFFFF;background-color: #FF0000;font-weight:bold;text-align:center;border-left-width: 0px"><?php echo Yii::app()->numberFormatter->format(Yii::app()->params->formatoMoneda['patron'], Yii::app()->shoppingCartSalesman->getTotalCost(), Yii::app()->params->formatoMoneda['moneda']) ?></td>
                                     </tr>
+                                     
+                                    <?php foreach($objCompra->listFormaPagoCompra as $formaPago):?>
+                                    	<tr>
+                                        	<td style="font-weight:bold;width:70%;font-size:13px; border-right-width: 0px"><?php echo (isset( $formaPago->objFormaPago->formaPago )?$formaPago->objFormaPago->formaPago:"").": "?></td>
+                                        	<td style="font-size:13px;font-weight:bold;text-align:center;border-left-width: 0px">
+                                        		<?= Yii::app()->numberFormatter->format(Yii::app()->params->formatoMoneda['patron'], $formaPago->valor, Yii::app()->params->formatoMoneda['moneda']); ?>
+                                        	</td>
+                                    	</tr>
+                                    <?php endforeach;?>
+                                    
+                                    <tr style="background:#f9f9f9">
+                                        <td style="color:#FFFFFF;background-color: #FF0000;font-weight:bold;width:70%;font-size:16px; border-right-width: 0px">TOTAL A PAGAR</td>
+                                        <td style="font-size:16px;color:#FFFFFF;background-color: #FF0000;font-weight:bold;text-align:center;border-left-width: 0px"><?php echo Yii::app()->numberFormatter->format(Yii::app()->params->formatoMoneda['patron'], Yii::app()->shoppingCartSalesman->getTotalCostClient(), Yii::app()->params->formatoMoneda['moneda']) ?></td>
+                                    </tr>
                                 </tbody>
                             </table>
                             <p style="color:#666666;padding:5px 0;text-align:center;margin:0">- Impuestos incluídos: <?php echo Yii::app()->numberFormatter->format(Yii::app()->params->formatoMoneda['patron'], Yii::app()->shoppingCartSalesman->getTaxPrice(), Yii::app()->params->formatoMoneda['moneda']) ?> -</p>

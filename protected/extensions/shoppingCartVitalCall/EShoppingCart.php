@@ -189,8 +189,11 @@ class EShoppingCart extends CMap {
            	}
         }
        
-        $this->CalculateShipping();
-       
+     	if($this->shipping<=0 && $this->isUnit()){
+      		$this->CalculateShipping();
+        }else if(!$this->isUnit()){
+        	$this->shipping = 0;
+        }
         
         //CVarDumper::dump($this->codigoPerfil, 10, true);echo "<br>";
         //CVarDumper::dump($this->shipping, 10, true);echo "<br>";
@@ -205,6 +208,19 @@ class EShoppingCart extends CMap {
         }
         
         //CVarDumper::dump($this->shipping, 10, true);echo "<br>";
+    }
+    
+
+    public function isUnit(){
+    	$positions = $this->getPositions();
+    
+    	foreach($positions as $position){
+    		if ($position->isProduct() && ($position->getQuantityUnit() > 0 ||  $position->getQuantity(true) > 0)){
+    			return true;
+    		}
+    	}
+    	 
+    	return false;
     }
     
     
@@ -355,6 +371,11 @@ class EShoppingCart extends CMap {
             else
                 parent::add($key, $position);
 
+            if(!$this->isUnit()){
+              	$this->shipping = 0;
+            }
+                
+                
             $this->applyDiscounts();
             $this->onUpdatePoistion(new CEvent($this));
             $this->saveState();
@@ -480,19 +501,29 @@ class EShoppingCart extends CMap {
     }
     
 
-    public function getTotalCost() {
+ 	public function getTotalCost($withBono = false) {
 
         $price = 0.0;
-        foreach ($this as $position) {
-            $price += $position->getTotalPrice();
+ 		foreach ($this as $position) {
+        	if($withBono)
+        		$price += $position->getTotalPrice();
+        	else 
+        		$price += $position->getTotalPriceToken();
         }
+        
 
         $price -= $this->discountPrice;
         $price += $this->shipping + $this->shippingStored;
-        $price -= $this->bonoValue;
+    //    $price -= $this->bonoValue; /***** Valor que está afectando la compra ******/
 
         return $price;
     }
+    
+    public function getTotalCostClient() {
+    	$price = $this->getTotalCost(true) - $this->bonoValue; /***** Valor que está afectando la compra ******/
+    	return $price;
+    }
+    
 
     public function getExtraShipping() {
         $shipping = 0.0;

@@ -93,6 +93,6 @@
     <?php endif; ?>
 
     <div id="div-carro">
-        <?php $this->renderPartial('_d_carro', array('lectura' => true)); ?>
+        <?php $this->renderPartial('_d_carro', array('lectura' => true, 'objCompra' => $objCompra)); ?>
     </div>
 </div>

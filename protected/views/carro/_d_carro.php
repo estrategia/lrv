@@ -20,7 +20,7 @@
             <?php endif; ?>
             <div class="row">
                 <div class="col-md-12">
-                    <table class="table table-bordered table-hover table-striped tabla-carro">
+                    <table class="table table-bordered table-hover table-striped tabla-carro <?= Yii::app()->shoppingCart->isUnit() > 0 ? '':'display-none'?>">
                         <thead class="cabecera-tabla">
                             <tr>
                                 <th  style="width: 27%;">Producto</th>
@@ -38,10 +38,13 @@
                                     if ($position->isProduct()):
                                         if ($position->getQuantityStored() > 0)
                                             $listPositionBodega[] = $position;
-                                        $this->renderPartial('/carro/_d_carroElementoProducto', array(
-                                            'position' => $position,
-                                            'lectura' => $lectura
-                                        ));
+                                        
+                                            if($position->getQuantityUnit()> 0 || $position->getQuantity(true)>0):
+		                                        $this->renderPartial('/carro/_d_carroElementoProducto', array(
+		                                            'position' => $position,
+		                                            'lectura' => $lectura
+		                                        ));
+                                            endif;
                                     elseif ($position->isCombo()):
                                         $this->renderPartial('/carro/_d_carroElementoCombo', array(
                                             'position' => $position,
@@ -123,7 +126,15 @@
             <?php if (Yii::app()->shoppingCart->getBono() > 0): ?>
                 <span>Bono <?php echo Yii::app()->numberFormatter->format(Yii::app()->params->formatoMoneda['patron'], Yii::app()->shoppingCart->getBono(), Yii::app()->params->formatoMoneda['moneda']); ?></span>
             <?php endif; ?>
-            <h3>Total a pagar <?php echo Yii::app()->numberFormatter->format(Yii::app()->params->formatoMoneda['patron'], Yii::app()->shoppingCart->getTotalCost(), Yii::app()->params->formatoMoneda['moneda']) ?></h3>
+            <h3>Valor a pagar <?php echo Yii::app()->numberFormatter->format(Yii::app()->params->formatoMoneda['patron'], Yii::app()->shoppingCart->getTotalCostClient(), Yii::app()->params->formatoMoneda['moneda']) ?></h3>
+            
+            <!--  Formas de pago -->
+            <?php if(isset($objCompra)):?>
+            	<?php foreach($objCompra->listFormaPagoCompra as $formaPago):?>
+            		<span><?php echo (isset( $formaPago->objFormaPago->formaPago )?$formaPago->objFormaPago->formaPago:"").": "?> <?= Yii::app()->numberFormatter->format(Yii::app()->params->formatoMoneda['patron'], $formaPago->valor, Yii::app()->params->formatoMoneda['moneda']); ?></span><br/>
+            	<?php endforeach;?>
+            <?php endif;?>
+            <!--   -->
             <?php if (Yii::app()->shoppingCart->getObjCiudad()->excentoImpuestos == 0 && Yii::app()->shoppingCart->getTaxPrice() > 0): ?>
                 <span>Impuestos incluidos <?php echo Yii::app()->numberFormatter->format(Yii::app()->params->formatoMoneda['patron'], Yii::app()->shoppingCart->getTaxPrice(), Yii::app()->params->formatoMoneda['moneda']) ?></span><br/>
             <?php endif; ?>

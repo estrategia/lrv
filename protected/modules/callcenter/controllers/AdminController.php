@@ -810,6 +810,39 @@ class AdminController extends ControllerOperator {
             throw new CHttpException(404, 'La página solicitada no existe.');
         return $model;
     }
+    
+    public function actionMascotas(){
+    	$model = new Mascotas('search');
+    	
+    	$model->unsetAttributes();
+    	if (isset($_GET['Mascotas']))
+    		$model->attributes = $_GET['Mascotas'];
+    	
+    	//	Yii::app()->getClientScript()->registerCssFile(Yii::app()->request->baseUrl . "/css/main-desktop.css");
+    	Yii::app()->session[Yii::app()->params->callcenter['sesion']['modelMascotasAdminExport']] = $model;
+    	
+    		$this->render('mascotas', array(
+    				'model' => $model
+    		));
+    }
+    
+    
+    public function actionExportarMascotas(){
+    	if (isset($_GET['excel'])) {
+    		$model = null;
+    	
+    		if (Yii::app()->session[Yii::app()->params->callcenter['sesion']['modelMascotasAdminExport']] !== null)
+    			$model = Yii::app()->session[Yii::app()->params->callcenter['sesion']['modelMascotasAdminExport']];
+    	
+    			if ($model !== null && get_class($model) === 'Mascotas') {
+    				$model->exportar();
+    			} else {
+    				$this->redirect(array('admin'));
+    			}
+    	} else {
+    		$this->redirect(array('admin'));
+    	}
+    }
 
     /* protected function gridDetallePedido($data, $row) {
       $params = array('pedido' => $data->idCompra);
