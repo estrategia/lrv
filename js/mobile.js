@@ -15,45 +15,9 @@ tour = new Shepherd.Tour({
   }
 });
 
-function cerrarTour() {
-  if (tour) {
-    tour.complete();
-  }
-}
-
-function noMostrarMas() {
-  Cookies.set('mobileTour', 'noMostrar', { expires : 365 });
-  cerrarTour();
-}
-
-function volverAMostrar() {
-  return Cookies.get('mobileTour');
-}
-
-var intervalTour = null;
-
-function iniciarTour() {
-	intervalTour = setInterval(iniciarTourInterval, 500);
-}
-
-function iniciarTourInterval() {
-    if($('#map .gmnoprint map').length>0){
-    	clearInterval(intervalTour);
-    	intervalTour = null;
-    	iniciarTourAux();
-    }
-}
-
-
-function iniciarTourAux() {
-  if (volverAMostrar() != 'noMostrar') {
-    tour.start();
-  }
-}
-
 tour.addStep('arrastra-mapa', {
   text: 'Arrastra el mapa y ubica el marcador en el lugar donde te encuentras.',
-  attachTo: '#map .gmnoprint map bottom',
+  attachTo: '#tour-origen bottom',
   when: {
       show: function() {
     	  resizingMap();
@@ -90,6 +54,31 @@ tour.addStep('confirma-ubicacion', {
     }
   ]
 });
+
+function iniciarTour() {
+    tour.start();
+}
+
+function cerrarTour() {
+  if (tour) {
+    tour.complete();
+  }
+}
+
+function noMostrarMas() {
+  Cookies.set('mobileTour', 'noMostrar', { expires : 365 });
+  cerrarTour();
+}
+
+function volverAMostrar() {
+  return Cookies.get('mobileTour');
+}
+
+function iniciarTourAutomatico() {
+    if(volverAMostrar() != 'noMostrar') {
+        iniciarTour();
+    }
+}
 
 function animarRelacionado() {
     $("html, body").animate({scrollTop: 0}, 600);
@@ -423,7 +412,7 @@ $(document).on('click', 'a[data-role="confirmar-seleccion-ciudad"]', function ()
                         map.setZoom(15);
                         resizeMap();
                         $.mobile.loading('hide');
-                        setTimeout( function(){iniciarTour();} , 2000);
+                        // iniciarTourAutomatico();
                     }).fail(function (jqxhr, settings, exception) {
                         $.mobile.loading('hide');
                         alert("Error al inicializar mapa: " + exception);

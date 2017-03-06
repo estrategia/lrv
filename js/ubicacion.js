@@ -14,16 +14,22 @@ function inicializarMapa(){
 
     map = new google.maps.Map(document.getElementById("map"), mapProp);
 
-    locationMarker = new google.maps.Marker({position: new google.maps.LatLng(parseFloat(lat), parseFloat(lng)),
-        map: map, draggable: true, animation: google.maps.Animation.DROP
-    });
+    locationMarker = new google.maps.Marker(
+      {
+        position: new google.maps.LatLng(parseFloat(lat), parseFloat(lng)),
+        map: map, 
+        draggable: true, 
+        animation: google.maps.Animation.DROP
+        // optimized: false
+      }
+    );
 
     google.maps.event.addListener(map, 'bounds_changed', function(){
         locationMarker.setPosition(map.getCenter());
     });
 
     google.maps.event.addListener(map, 'idle', function() {
-      console.log("cargado");
+      iniciarTourAutomatico();
     });
 }
 

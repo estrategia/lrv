@@ -6,8 +6,6 @@ function alert(message) {
 // Determina si se abrio desde la ubicacion automatica o desde la seleccion de ciudad
 var tipoTour = 0;
 // Determinan si se ha iniciado el tour por primera vez
-var tourIniGps = true; 
-var tourIniMap = true;
 
 $(document).on('click', 'button[data-role = "ubicacion-gps"]', function () {
     tipoTour = 1;
@@ -26,7 +24,7 @@ tour = new Shepherd.Tour({
 
 tour.addStep('arrastra-mapa', {
   text: 'Arrastra el mapa y ubica el marcador en el lugar donde te encuentras.',
-  attachTo: '#map .gmnoprint map bottom',
+  attachTo: '#tour-origen bottom',
   when: {
         'before-show': function() {
     	  resizingMap();
@@ -1814,17 +1812,10 @@ function setCoords(pos) {
     }
     if ($('#modal-ubicacion-map').length > 0) {
         $('#modal-ubicacion-map').modal('show');
-        tourIniMap ? setTimeout(function() {iniciarTourAutomatico();} , 1000) : tourIniMap = false;
         var pt = new google.maps.LatLng(lat, lng);
         map.setCenter(pt);
         map.setZoom(15);
         resizeMap();
-        if (tourIniGps) {
-            setTimeout(function() {
-                iniciarTourAutomatico();
-            } , 1000);
-            tourIniGps = false;
-        }
     } else {
         latitud = lat;
         longitud = lng;
@@ -1849,14 +1840,6 @@ function setCoords(pos) {
                         map.setCenter(pt);
                         map.setZoom(15);
                         resizeMap();
-                        
-                        if (tourIniGps) {
-                            setTimeout(function() {
-                                iniciarTourAutomatico();
-                            } , 1000);
-                            tourIniGps = false;
-                        }
-                        tourIniMap ? setTimeout(function() {iniciarTourAutomatico();} , 1000) : tourIniMap = false;
                         Loading.hide();
                     }).fail(function(jqxhr, settings, exception) {
                         Loading.hide();
@@ -2077,12 +2060,6 @@ $(document).on('click', 'button[data-role="confirmar-ciudad"]', function() {
         map.setCenter(pt);
         map.setZoom(15);
         resizeMap();
-        if (tourIniMap) {
-            setTimeout(function() {
-                iniciarTourAutomatico();
-            } , 1000);
-            tourIniMap = false;
-        }
     } else {
         $.ajax({
             type: 'POST',
@@ -2104,12 +2081,6 @@ $(document).on('click', 'button[data-role="confirmar-ciudad"]', function() {
                         map.setCenter(pt);
                         map.setZoom(15);
                         resizeMap();
-                        if (tourIniMap) {
-                            setTimeout(function() {
-                                iniciarTourAutomatico();
-                            } , 1000);
-                            tourIniMap = false;
-                        }
                         Loading.hide();
                     }).fail(function(jqxhr, settings, exception) {
                         Loading.hide();
@@ -2178,12 +2149,6 @@ $(document).on('click', 'button[data-role="ubicacion-seleccion-mapa"]', function
 
                 $('#div-ubicacion-tipoubicacion > button').removeClass('activo').addClass('inactivo');
                 $('#div-ubicacion-tipoubicacion > button[data-role="ubicacion-mapa"]').removeClass('inactivo').addClass('activo');
-                if (tourIniGps) {
-                    setTimeout(function() {
-                        iniciarTourAutomatico();
-                    } , 1000);
-                    tourIniGps = false;
-                }
                 ubicacionSeleccion();
             } else {
                 if (data.responseModal) {
