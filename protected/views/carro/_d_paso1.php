@@ -55,7 +55,7 @@
 <div class="space-3"></div>
 
 <!-- modal info recoger -->
-
+<?php if (Yii::app()->shoppingCart->getStoredItemsCount() <= 0): ?>
 <div class="modal fade" id="info_recoger" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
     <div class="modal-dialog" role="document">
         <div class="modal-content">
@@ -96,7 +96,7 @@
         </div>
     </div>
 </div>
-
+<?php endif;?>
 <!-- fin modal info recoger -->
 
 <!-- modal info domicilio -->

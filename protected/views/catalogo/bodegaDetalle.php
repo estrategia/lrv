@@ -63,7 +63,7 @@
             <tr>
                 <th>
         <div class="ctbl_presentacion">
-            <label data-icon="false" class="ctbl_chk_lb">Domicilio <?php echo Yii::app()->shoppingCart->getDeliveryStored() ?> horas <a href='#' onclick='alerta("Los productos agregados ser&aacute;n entregados al tiempo estipulado a traves de Servientrega.");'><span>?</span></a> </label>
+            <label data-icon="false" class="ctbl_chk_lb">Entrega en <?php echo Yii::app()->shoppingCart->getDeliveryStored() ?> horas <a href='#' onclick='alerta("Los productos agregados ser&aacute;n entregados en el tiempo estipulado y tendr&aacute;n un cobro adicional de env&iacute;o que ser&aacute; calculado al final de la compra.");'><span>?</span></a> </label>
         </div>
         </th>
         <th  align="right">

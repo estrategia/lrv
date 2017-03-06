@@ -8,6 +8,7 @@
         </div>
     </div>
     <div class="space-1"></div>
+    <?php if (Yii::app()->shoppingCart->getStoredItemsCount() <= 0): ?>
     <div>               
         <div data-role="tipoentrega" data-descripcion="pasar por el pedido" data-tipo="<?php echo Yii::app()->params->entrega['tipo']['presencial']; ?>" class="tipo-entrega<?php echo ($modelPago->tipoEntrega === null ? "" : ($modelPago->tipoEntrega == Yii::app()->params->entrega['tipo']['presencial'] ? " activo" : " inactivo")) ?>">
             <div class="ico_ubi icoRecoger"></div>
@@ -15,6 +16,7 @@
             <div class="clear"></div>
         </div>
     </div>
+    <?php endif;?>
 </div>
 <?php else: ?>
 <div id="div-ubicacion-tipoentrega" class="center center-verticaly" style="padding:20px; background: #fff;">

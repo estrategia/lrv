@@ -99,11 +99,11 @@
         	<?php if ($data->fraccionado == 1): ?>
         	 <div class="botones-list">
                 <div class="row">
-                    <div class="col-xs-6 ">
+                    <div class="col-xs-6  btn-producto">
                     	<?php echo CHtml::link('<div class="btn btn-primary btn-block btn-xs">Añadir Unidades</div>', CController::createUrl('/catalogo/producto', array('producto' => $data->codigoProducto, 'descripcion' => $data->getCadenaUrl())), array()); ?>
                     </div>
-                    <div class="col-xs-6 ">
-                    	<?php echo CHtml::link('<div class="btn btn-primary btn-block btn-xs">Añadir Fracciones</div>', CController::createUrl('/catalogo/producto', array('producto' => $data->codigoProducto, 'descripcion' => $data->getCadenaUrl())), array()); ?>
+                    <div class="col-xs-6  btn-producto">
+                    	<?php echo CHtml::link('<div class="btn btn-primary btn-block btn-xs ">Añadir Fracciones</div>', CController::createUrl('/catalogo/producto', array('producto' => $data->codigoProducto, 'descripcion' => $data->getCadenaUrl())), array()); ?>
                     </div>
                  </div>
              </div> 
