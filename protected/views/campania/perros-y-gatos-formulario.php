@@ -147,10 +147,10 @@ $this->metaTags = "
   <div class="overlay">
     <div class="container">
       <h1 class="title">Registra tu mascota</h1>
-      <h2 class="sub-title">y recibe una esencia natural de Pets and Cats de Laboratorios <span>Natural Freshly</span></h2>
+      <h2 class="sub-title"><strong>y recibe una esencia natural de Pets and Cats de Laboratorios <span>Natural Freshly</span></strong></h2>
       <div class="row">
       <form id="formulario-mascota" class="formulario-registro" action=""  method="post">
-      	<div class="label-title"> Datos del amo</div>
+      	<div class="label-title"><strong>Datos del amo</strong></div>
           <div class='row'>
           		<div class="col-sm-6 col-md-6">
 		            <input name='Mascotas[cedulaCliente]' type="text" title="C&eacute;dula del amo" placeholder="C&eacute;dula del amo" value="<?php echo !Yii::app()->user->isGuest?Yii::app()->user->name :''?>">
@@ -174,7 +174,7 @@ $this->metaTags = "
                 
 		  </div>
 		  <br>
-		  <div class="label-title"> Datos de la mascota</div>
+		  <div class="label-title"><strong>Datos de la mascota</strong></div>
           <div class='row'>
           		
 	            <div class="col-sm-6 col-md-6">
@@ -204,7 +204,7 @@ $this->metaTags = "
             	</div>
             </div>
             <br>
-         	<div class="label-title"> Datos de entrega de muestra</div>
+         	<div class="label-title"><strong> Datos de entrega de muestra</strong></div>
          	
          	<div class='row'>
          		<div class="col-sm-6 col-md-6"> 
