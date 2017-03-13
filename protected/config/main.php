@@ -168,8 +168,8 @@ return array(
         ),
 
         'db' => array(
-        //'connectionString' => 'mysql:host=192.168.1.22;port=3306;dbname=lrvmovil_copservir',
-        	'connectionString' => 'mysql:host=localhost;port=3306;dbname=lrvmovil_copservir',
+            'connectionString' => 'mysql:host=localhost;port=3306;dbname=lrvmovil_copservir',
+        	//'connectionString' => 'mysql:host=localhost;port=3306;dbname=lrvmovil_copservir',
             'emulatePrepare' => true,
             'username' => 'root',
             'password' => '',
@@ -520,6 +520,7 @@ return array(
         	'descuentos' => array(21, 22, 23, 24), // new
         	'bonos' => array(25,26), // new
         	'tipoBonoFormaPago' => array( 25 => 7, 26 => 8 ),
+        	'tipoMedioPago' => array( 25 => 15, 26 => 16 ),
             'recambios' => array(1, 10),
             'recambioslabel' => array(1 => 'Recambio', 10 => 'Recambio Cruzado'),
             'recambio' => 1,
@@ -789,6 +790,7 @@ return array(
                 'usuario' => 'larebaja.online.callcenter.usuario',
                 'formPedidoBusqueda' => 'larebaja.online.callcenter.formpedidobusqueda',
                 'modelBonosAdminExport' => 'larebaja.online.callcenter.modelbonosadminexport',
+            	'modelMascotasAdminExport' => 'larebaja.online.callcenter.modelmascotasadminexport',
             ),
         ),
     	'telefarma' => array(
@@ -849,6 +851,12 @@ return array(
     			'tiempoNoIngreso' => 30, // dias
     			'generos' => array(1 => 'Femenino', 2 => 'Masculino', 9 => 'Ambos'),
     			'ambosGeneros' => 9,
+    	),
+    	'mascotas' => array(
+    			'tipo' => array(
+    					'1' => 'Perro',
+    					'2' => 'Gato',
+    			)
     	)
     ),
 );

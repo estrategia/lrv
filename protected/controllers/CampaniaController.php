@@ -46,5 +46,45 @@ class CampaniaController extends Controller {
             throw new CHttpException(404, "Error al abrir campaña");
         }
     }
+    
+    public function actionGuardarDatosMascota(){
+    	
+    	 $model = new Mascotas();
+    	 $model->attributes = Yii::app()->getRequest()->getPost('Mascotas', null);
+    		
+    	 if($model->validate()){
+    	 	$model->fechaRegistro = Date("Y-m-d h:i:s");
+    	 	if($model->save()){
+    	 		
+    	 		$contenidoCorreo = $this->renderPartial('correoMascotas', array(
+    	 				'model' => $model,), true, true);
+    	 		
+    	 		$htmlCorreo = $this->renderPartial('application.views.common.correo', array('contenido' => $contenidoCorreo), true, true);
+    	 		
+    	 		try {
+    	 			sendHtmlEmail($model->correo, "Gracias por inscribir a tu mascota", $htmlCorreo);
+    	 			echo CJSON::encode(array(
+    	 					'result' => 'ok',
+    	 					'response' => 'Datos guardados con exito'
+    	 			));
+    	 		} catch (Exception $ce) {
+    	 			Yii::log("Error enviando correo al registrar compra #$objCompra->idCompra\n" . $ce->getMessage() . "\n" . $ce->getTraceAsString(), CLogger::LEVEL_INFO, 'application');
+    	 		}
+    	 		
+    	 		Yii::app()->end();
+    	 	}else{
+    	 		echo CJSON::encode(array(
+    	 				'result' => 'error',
+    	 				'response' => implode("\n",$model->getErrors())
+    	 		));
+    	 		Yii::app()->end();
+    	 	}
+    	 }else{
+    	 	echo CActiveForm::validate($model);
+    	 	Yii::app()->end();
+    	 }
+    	}
+    	
+   
 
 }

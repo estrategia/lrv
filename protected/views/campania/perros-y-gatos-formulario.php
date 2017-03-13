@@ -23,6 +23,8 @@ $this->metaTags = "
         font-family: NewJune-Bold;
         src: url(".Yii::app()->request->baseUrl."/images/contenido/perros-y-gatos/fonts/NewJune-Bold.otf);
       }
+        		
+        		
 
       .bg-pattern {background-image:url(".Yii::app()->request->baseUrl."/images/contenido/perros-y-gatos/textura.png);background-repeat: no-repeat;background-size: cover;background-position: center;}
       .bg-pattern  .container-fluid {padding:0px;}
@@ -46,13 +48,15 @@ $this->metaTags = "
       .seccion-entrega.m span {font-size: 25px;}
       .title {color: #E84E0E;font-family: helvetica-bold;text-align: center;font-size: 60px;font-weight: bold;}
       .sub-title {color: #EC6806;text-align: center;font-family: HelveticaNeueLTStd-Lt;}
+	  .label-title {color: #EC6806;text-align: left;font-family: HelveticaNeueLTStd-Lt; font-size: 32px;}
       .sub-title span {font-style: italic;font-family: helvetica-bold;}
       .formulario-registro {padding: 0px 50px;margin-top: 40px;}
       .formulario-registro select {margin: 10px 0px;  color: #9D8ACD;font-size: 20px;font-family: HelveticaNeueLTStd-Lt;}
       .formulario-registro option {margin: 10px 0px;  color: #9D8ACD;font-size: 20px;font-family: HelveticaNeueLTStd-Lt;}
       .formulario-registro input[type='text'], select {width: 100%;padding: 10px 20px;border: none;margin: 10px 0;border-radius: 15px;}
-      .formulario-registro input[type='submit'] {background-color: #E84E0E;color: #fff;border: none;margin: 0 auto;display: block;border-radius: 15px;padding: 15px 30px;font-weight: bold;margin-top: 35px;}
+      .formulario-registro input[type='button'] {background-color: #E84E0E;color: #fff;border: none;margin: 0 auto;display: block;border-radius: 15px;padding: 15px 30px;font-weight: bold;margin-top: 35px;}
       .formulario-registro input[placeholder] {color: #482583;font-size: 20px;font-family: HelveticaNeueLTStd-Lt;}
+	  .formulario-registro .error {font-size: 20px;font-family: HelveticaNeueLTStd-Lt;}	
     </style>
     ";
 ?>
@@ -70,23 +74,54 @@ $this->metaTags = "
       <h1 class="title" style="font-size: 32px;">Registra tu mascota</h1>
       <h2 class="sub-title">y recibe una esencia natural de Pets and Cats de Laboratorios <span>Natural Freshly</span></h2>
       <div class="row">
-      <form class="" style="padding: 0px 20px;margin-top: 20px;" action=""  method="">
-          <div class="col-sm-6 col-md-6">
-            <input type="text" placeholder="nombre del amo">
-            <input type="text" placeholder="ciudad">
-            <input type="text" placeholder="nombre de la mascota">
-          </div>
-          <div class="col-sm-6 col-md-6">
-            <input type="text" placeholder="dirección">
-            <input type="text" placeholder="teléfono o celular de contacto">
-            <select>
-              <option value="" selected="selected">- tipo de mascota -</option>
-              <option value="windows">Perros</option>
-              <option value="mac">Gatos</option>
+      <form id="formulario-mascota" class="formulario-registro" style="padding: 0px 20px;margin-top: 20px;" action=""  method="">
+          <div class="col-sm-12 col-md-12">
+          	<div class="label-title"> Datos del amo</div>
+          
+            <input name='Mascotas[cedulaCliente]' type="text" placeholder="C&eacute;dula del amo" value="<?php echo !Yii::app()->user->isGuest?Yii::app()->user->name :''?>">
+            <div id='Mascotas_cedulaCliente_em' class="error has-error"></div>
+            <br>
+            <input name='Mascotas[nombreCliente]' type="text" placeholder="Nombre del amo" value="<?php echo !Yii::app()->user->isGuest? Yii::app()->session[Yii::app()->params->usuario['sesion']]->nombre ." ".Yii::app()->session[Yii::app()->params->usuario['sesion']]->apellido :''?>">
+            <div id='Mascotas_nombreCliente_em' class="error has-error"></div>
+            <br>
+            <input name='Mascotas[fechaNacimientoCliente]' type="text" placeholder="Fecha de nacimiento (yyyy-mm-dd)"  value="<?php echo !Yii::app()->user->isGuest? Yii::app()->session[Yii::app()->params->usuario['sesion']]->objUsuarioExtendida->fechaNacimiento :''?>">
+            <div id='Mascotas_fechaNacimientoCliente_em' class="error has-error"></div>
+            <br>
+            <input name='Mascotas[correo]' type="text" placeholder="Correo electr&oacute;nico"  value="<?php echo !Yii::app()->user->isGuest? Yii::app()->session[Yii::app()->params->usuario['sesion']]->correoElectronico :''?>">
+            <div id='mascotas_correo_em' class="error has-error"></div><br>
+            <div class="label-title"> Datos de la mascota</div>
+            <select name='Mascotas[tipoMascota]'>
+              <option value="" selected="selected">- Tipo de mascota -</option>
+              <option value="1">Perros</option>
+              <option value="2">Gatos</option>
             </select>
+            <div id='Mascotas_tipoMascota_em' class="error has-error"></div><br/>
+            <input name='Mascotas[nombreMascota]' type="text" placeholder="Nombre de la mascota">
+            <div id='Mascotas_nombreMascota_em' class="error has-error"></div><br/>
+            <select name='Mascotas[edadMascota]' >
+            <option =""> - Edad de la mascota (a&ntilde;os)- </option>
+            <?php for($i = 0;$i<=20;$i++ ):?>
+            	<option value="<?php echo $i?>"><?php echo $i?> </option>
+            <?php endfor;?>
+            </select>
+            <div id='Mascotas_edadMascota_em' class="error has-error"></div><br>
+            <div class="label-title"> Datos de entrega de la muestra</div>
+            <?php $ciudades = Ciudad::model()->findAll(array ('condition'  => 'estadoCiudad = 1', 'order' => 'nombreCiudad'));?>
+            <select name='Mascotas[codigoCiudad]' placeholder="Ciudad">
+            <option value="" selected="selected">- Seleccione Ciudad -</option>
+            <?php foreach($ciudades as $ciudad):?>
+            	<option value='<?= $ciudad->codigoCiudad ?>'><?= $ciudad->nombreCiudad?></option>
+            <?php endforeach;?>
+            </select>
+            <div id='Mascotas_codigoCiudad_em' class="error has-error"></div><br>
+            <input name='Mascotas[direccion]' type="text" placeholder="Dirección">
+            <div id='Mascotas_direccion_em' class="error has-error"></div><br>
+            <input name='Mascotas[telefono]' type="text" placeholder="Teléfono o celular de contacto">
+            <div id='Mascotas_telefono_em' class="error has-error"></div><br>
+            
           </div>
           <div class="col-md-12">
-            <input type="submit" value="ENVIAR">
+            <button type="button" value="ENVIAR" onclick='guardarMascota();'>ENVIAR</button>
           </div>
       </form>
       </div>
@@ -112,25 +147,90 @@ $this->metaTags = "
   <div class="overlay">
     <div class="container">
       <h1 class="title">Registra tu mascota</h1>
-      <h2 class="sub-title">y recibe una esencia natural de Pets and Cats de Laboratorios <span>Natural Freshly</span></h2>
+      <h2 class="sub-title"><strong>y recibe una esencia natural de Pets and Cats de Laboratorios <span>Natural Freshly</span></strong></h2>
       <div class="row">
-      <form class="formulario-registro" action=""  method="">
-          <div class="col-sm-6 col-md-6">
-            <input type="text" placeholder="nombre del amo"><br>
-            <input type="text" placeholder="ciudad"><br>
-            <input type="text" placeholder="nombre de la mascota">
+      <form id="formulario-mascota" class="formulario-registro" action=""  method="post">
+      	<div class="label-title"><strong>Datos del amo</strong></div>
+          <div class='row'>
+          		<div class="col-sm-6 col-md-6">
+		            <input name='Mascotas[cedulaCliente]' type="text" title="C&eacute;dula del amo" placeholder="C&eacute;dula del amo" value="<?php echo !Yii::app()->user->isGuest?Yii::app()->user->name :''?>">
+		            <div id='Mascotas_cedulaCliente_em' class="error text-danger"></div>
+           		</div>
+            	<div class="col-sm-6 col-md-6">
+          			<input name='Mascotas[nombreCliente]' type="text" title="Nombre del amo" placeholder="Nombre del amo"  value="<?php echo !Yii::app()->user->isGuest? Yii::app()->session[Yii::app()->params->usuario['sesion']]->nombre ." ".Yii::app()->session[Yii::app()->params->usuario['sesion']]->apellido :''?>">
+          			<div id='Mascotas_nombreCliente_em' class="error text-danger"></div>
+          		</div>
           </div>
-          <div class="col-sm-6 col-md-6">
-            <input type="text" placeholder="dirección"><br>
-            <input type="text" placeholder="teléfono o celular de contacto"><br>
-            <select>
-              <option value="" selected="selected">- tipo de mascota -</option>
-              <option value="windows">Perros</option>
-              <option value="mac">Gatos</option>
-            </select>
+         
+           <div class='row'>
+          		<div class="col-sm-6 col-md-6"> 
+                   <input name='Mascotas[fechaNacimientoCliente]' type="text" title="Fecha de nacimiento" placeholder="Fecha de nacimiento (aaaa-mm-dd)" value="<?php echo !Yii::app()->user->isGuest? Yii::app()->session[Yii::app()->params->usuario['sesion']]->objUsuarioExtendida->fechaNacimiento :''?>">
+                   <div id='Mascotas_fechaNacimientoCliente_em' class="error text-danger"></div>
+                </div>
+                <div class="col-sm-6 col-md-6">
+	            <input name='Mascotas[correo]' type="text" title="Correo electr&oacute;nico del amo" placeholder="Correo electr&oacute;nico del amo" value="<?php echo !Yii::app()->user->isGuest? Yii::app()->session[Yii::app()->params->usuario['sesion']]->correoElectronico :''?>">
+	            <div id='Mascotas_correo_em' class="error text-danger"></div>
+	            </div>
+                
+		  </div>
+		  <br>
+		  <div class="label-title"><strong>Datos de la mascota</strong></div>
+          <div class='row'>
+          		
+	            <div class="col-sm-6 col-md-6">
+		            <select name='Mascotas[tipoMascota]'>
+		              <option value="" selected="selected">- Tipo de mascota -</option>
+		              <option value="1">Perros</option>
+		              <option value="2">Gatos</option>
+		            </select>
+		            <div id='Mascotas_tipoMascota_em' class="error text-danger"></div>
+	            </div>
+	            
+	            <div class="col-sm-6 col-md-6"> 
+          			<select name='Mascotas[edadMascota]'>
+          				<option =""> - Edad de la mascota (a&ntilde;os)- </option>
+			            <?php for($i = 0;$i<=20;$i++ ):?>
+			            	<option value="<?php echo $i?>"><?php echo $i?> </option>
+			            <?php endfor;?>
+			        </select>
+          			<div id='Mascotas_edadMascota_em' class="error text-danger"></div>
+          		</div>
+          		
+         	</div>
+         	<div class='row'>
+         		<div class="col-sm-6 col-md-6">
+	            	<input name='Mascotas[nombreMascota]' type="text" placeholder="Nombre de la mascota">
+	            	<div id='Mascotas_nombreMascota_em' class="error text-danger"></div>
+            	</div>
+            </div>
+            <br>
+         	<div class="label-title"><strong> Datos de entrega de muestra</strong></div>
+         	
+         	<div class='row'>
+         		<div class="col-sm-6 col-md-6"> 
+		            <?php $ciudades = Ciudad::model()->findAll(array ('condition'  => 'estadoCiudad = 1', 'order' => 'nombreCiudad'));?>
+		            <select name='Mascotas[codigoCiudad]' placeholder="Ciudad">
+		            <option value="" selected="selected">- Seleccione Ciudad -</option>
+		            <?php foreach($ciudades as $ciudad):?>
+		            	<option value='<?= $ciudad->codigoCiudad ?>'><?= $ciudad->nombreCiudad?></option>
+		            <?php endforeach;?>
+		            </select>
+		            <div id='Mascotas_codigoCiudad_em' class="error text-danger"></div>
+		        </div>
+          		<div class="col-sm-6 col-md-6"> 
+	            	<input name='Mascotas[telefono]' type="text" placeholder="Teléfono o celular de contacto">
+	            	<div id='Mascotas_telefono_em' class="error text-danger"></div>
+	            </div>
+	            
           </div>
+          <div class="row">
+          		<div class="col-sm-6 col-md-6">
+	          		<input name='Mascotas[direccion]' type="text" placeholder="Dirección">
+	          		<div id='Mascotas_direccion_em' class="error text-danger"></div>
+	          	</div>
+          </div>	
           <div class="col-md-12">
-            <input type="submit" value="ENVIAR">
+            <input type="button" value="ENVIAR" onclick='guardarMascota();return false;'>
           </div>
       </form>
       </div>

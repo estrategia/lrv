@@ -32,7 +32,7 @@ $this->metaTags = "
       .perro, .gato {width: 250px;margin-top: -99px !important;padding-bottom: 20px;}
       .perro {margin:0 auto;}
       .gato {margin: 0 auto ;}
-      .bg-orange {background-color:#EC6806;padding-bottom: 30px;}
+      .bg-orange {background-color:#EC6806;padding-bottom: 105px;}
       .bg-green{background-color:#8CB825;padding-bottom: 105px;}
       .muestra {margin: 40px 0 15px 0;}
       .seccion-entrega {background-color:#E30917;font-family: NewJune-Bold;color:#fff;font-size:35px;line-height: 100px;margin-top: 30px;}
@@ -42,7 +42,7 @@ $this->metaTags = "
       .call-to-action {background-color: #E84E0E;padding: 12px 30px;border-radius: 50px;color: #fff;font-family: helvetica-bold;font-size: 25px;position: absolute;bottom: 30%;margin-left: 44%;}
       .call-to-action:hover {background-color:#58170C; color:#fff;}
       .icono{width: 75px;float: left;position: relative;z-index: 1;}
-      .item-link {background-color: #fff;font-size: 26px;padding: 5px 33px;border-radius: 0px 30px 30px 0;position: absolute;margin-top: 13px;margin-left: -15px;font-family: NewJune-Bold;width: 200px;text-align: center;}
+      .item-link {background-color: #fff;font-size: 26px;padding: 5px 33px;border-radius: 0px 30px 30px 0;position: absolute;margin-top: 13px;margin-left: -15px;font-family: NewJune-Bold;width: 77%;text-align: center;}
       .section-button a {color:#58170C !important;}
       .icono {-webkit-transition: width 2s, height 2s, -webkit-transform 2s;transition: width 2s, height 2s, transform 2s;}
       .section-button:hover .icono {    -ms-transform: rotate(360deg);  -webkit-transform: rotate(360deg); transform: rotate(360deg);}
@@ -50,7 +50,7 @@ $this->metaTags = "
       .hvr-float-shadow:hover, .hvr-float-shadow:focus, .hvr-float-shadow:active {-webkit-transform: translateY(-5px);transform: translateY(-5px);}
       .hvr-float-shadow:hover::before, .hvr-float-shadow:focus::before, .hvr-float-shadow:active::before {opacity: 1;-webkit-transform: translateY(5px);transform: translateY(5px);}
       .hvr-float-shadow::before { pointer-events: none;position: absolute;z-index: -1; content: ''; top: 100%; left: 5%; height: 10px; width: 90%; opacity: 0; background: -webkit-radial-gradient(center, ellipse, rgba(0, 0, 0, 0.35) 0%, transparent 80%);background: radial-gradient(ellipse at center, rgba(0, 0, 0, 0.35) 0%, transparent 80%);-webkit-transition-duration: 0.3s; transition-duration: 0.3s; -webkit-transition-property: transform, opacity; transition-property: transform, opacity;}
-      .item-link.m{ background-color: #fff;font-size: 23px;padding: 3px 29px;border-radius: 0px 30px 30px 0;margin-top: 25px;margin-left: -11px;font-family: NewJune-Bold;width: 137px;text-align: center;}
+      .item-link.m{ background-color: #fff;font-size: 23px;padding: 3px 29px;border-radius: 0px 30px 30px 0;margin-top: 25px;margin-left: -11px;font-family: NewJune-Bold;width: 194px;text-align: center;}
       .icono.m {width: 60px;z-index: 1;margin-top: 14px;}
       .section-orange.m {font-family: helvetica-bold;background-color: #E84E0E;color: #fff;text-align: center;font-size: 19px;margin: 6px 0;padding: 15px;}
       .seccion-entrega.m {background-color: #E30917;font-family: NewJune-Bold;color: #fff;font-size: 19px;margin-top: 10px;text-align: center;padding: 15px 10px;line-height: initial;}
@@ -68,25 +68,29 @@ $this->metaTags = "
   <section>
     <div class="col-xs-6 col-sm-6 col-md-6 bg-orange">
       <center><img style="width: 42%;margin-top: -60px;" src="<?= Yii::app()->request->baseUrl ?>/images/contenido/perros-y-gatos/perro.png"></center>
-      <div style="overflow: hidden;padding: 0 15%;">
+      <div style="overflow: hidden;padding: 0 9%;">
           <img class="icono m" src="<?= Yii::app()->request->baseUrl ?>/images/contenido/perros-y-gatos/accesorio-perro.png">
-          <a href="#" style="color: #58170C !important;"><span class="item-link m">Accesorios</span></a>
+          <a href="<?php echo CController::createUrl('/catalogo/categoria/categoria/221')?>" style="color: #58170C !important;"><span class="item-link m">Accesorios</span></a>
       </div>
-      <div style="overflow: hidden;padding: 0 15%;">
+      <div style="overflow: hidden;padding: 0 9%;">
           <img class="icono m" src="<?= Yii::app()->request->baseUrl ?>/images/contenido/perros-y-gatos/aseo-perros.png">
-          <a href="#" style="color: #58170C !important;"><span class="item-link m">Aseo</span></a>
+          <a href="<?php echo CController::createUrl('/catalogo/categoria/categoria/224')?>" style="color: #58170C !important;"><span class="item-link m">Aseo</span></a>
       </div>
-      <div style="overflow: hidden;padding: 0 15%;">
+      <div style="overflow: hidden;padding: 0 9%;">
+          <img class="icono m" src="<?= Yii::app()->request->baseUrl ?>/images/contenido/perros-y-gatos/a-humedo-perro.png">
+          <a href="<?php echo CController::createUrl('/catalogo/categoria/categoria/222')?>" style="color: #58170C !important;"><span class="item-link m">Alimento húmedo</span></a>
+      </div>
+      <div style="overflow: hidden;padding: 0 9%;">
           <img class="icono m" src="<?= Yii::app()->request->baseUrl ?>/images/contenido/perros-y-gatos/alimento-perros.png">
-          <a href="#" style="color: #58170C !important;"><span class="item-link m">Alimento</span></a>
+          <a href="<?php echo CController::createUrl('/catalogo/categoria/categoria/222')?>" style="color: #58170C !important;"><span class="item-link m">Alimento seco</span></a>
       </div>
-      <div style="overflow: hidden;padding: 0 15%;">
+      <div style="overflow: hidden;padding: 0 9%;">
           <img class="icono m" src="<?= Yii::app()->request->baseUrl ?>/images/contenido/perros-y-gatos/snacks-perros.png">
-          <a href="#" style="color: #58170C !important;"><span class="item-link m">Snacks</span></a>
+          <a href="<?php echo CController::createUrl('/catalogo/categoria/categoria/225')?>" style="color: #58170C !important;"><span class="item-link m">Snacks</span></a>
       </div>
-      <div style="overflow: hidden;padding: 0 15%;">
+      <div style="overflow: hidden;padding: 0 9%;">
         <img class="icono m" src="<?= Yii::app()->request->baseUrl ?>/images/contenido/perros-y-gatos/vitaminas-perros.png">
-        <a href="#" style="color: #58170C !important;"><span class="item-link m">Vitaminas</span></a>
+        <a href="<?php echo CController::createUrl('/catalogo/categoria/categoria/226')?>" style="color: #58170C !important;"><span class="item-link m">Vitaminas</span></a>
       </div>
     </div>
   </section>
@@ -94,21 +98,25 @@ $this->metaTags = "
     <section style="margin-top: 120px;">
       <div class="col-xs-6 col-sm-6 col-md-6 bg-green" style="padding-bottom: 40px;">
         <center><img style="width: 42%;margin-top: -60px;" src="<?= Yii::app()->request->baseUrl ?>/images/contenido/perros-y-gatos/gato.png"></center>
-        <div style="overflow: hidden;padding: 0 15%;">
+        <div style="overflow: hidden;padding: 0 9%;">
             <img class="icono m" src="<?= Yii::app()->request->baseUrl ?>/images/contenido/perros-y-gatos/accesorios-gatos.png">
-            <a href="#" style="color: #58170C !important;"><span class="item-link m">Accesorios</span></a>
+            <a href="<?php echo CController::createUrl('/catalogo/categoria/categoria/215')?>" style="color: #58170C !important;"><span class="item-link m">Accesorios</span></a>
         </div>
-        <div style="overflow: hidden;padding: 0 15%;">
+        <div style="overflow: hidden;padding: 0 9%;">
             <img class="icono m" src="<?= Yii::app()->request->baseUrl ?>/images/contenido/perros-y-gatos/aseo-gatos.png">
-            <a href="#" style="color: #58170C !important;"><span class="item-link m">Aseo</span></a>
+            <a href="<?php echo CController::createUrl('/catalogo/categoria/categoria/219')?>" style="color: #58170C !important;"><span class="item-link m">Aseo</span></a>
         </div>
-        <div style="overflow: hidden;padding: 0 15%;">
+        <div style="overflow: hidden;padding: 0 9%;">
+            <img class="icono m" src="<?= Yii::app()->request->baseUrl ?>/images/contenido/perros-y-gatos/a-humedo-gato.png">
+            <a href="<?php echo CController::createUrl('/catalogo/categoria/categoria/217')?>" style="color: #58170C !important;"><span class="item-link m">Alimento húmedo</span></a>
+        </div>
+        <div style="overflow: hidden;padding: 0 9%;">
             <img class="icono m" src="<?= Yii::app()->request->baseUrl ?>/images/contenido/perros-y-gatos/alimento-gatos.png">
-            <a href="#" style="color: #58170C !important;"><span class="item-link m">Alimento</span></a>
+            <a href="<?php echo CController::createUrl('/catalogo/categoria/categoria/217')?>" style="color: #58170C !important;"><span class="item-link m">Alimento seco</span></a>
         </div>
-        <div style="overflow: hidden;padding: 0 15%;">
+        <div style="overflow: hidden;padding: 0 9%;">
             <img class="icono m" src="<?= Yii::app()->request->baseUrl ?>/images/contenido/perros-y-gatos/arena-gatos.png">
-            <a href="#" style="color: #58170C !important;"><span class="item-link m">Snacks</span></a>
+            <a href="<?php echo CController::createUrl('/catalogo/categoria/categoria/218')?>" style="color: #58170C !important;"><span class="item-link m">Snacks</span></a>
         </div>
       </div>
     </section>
@@ -136,40 +144,46 @@ $this->metaTags = "
             <img class="img-responsive perro" src="<?= Yii::app()->request->baseUrl ?>/images/contenido/perros-y-gatos/perro.png">
         </div>
       </div>
-      <div class="col-md-9 offset-4">
+      <div class="col-md-10 col-md-offset-2">
         <div class="row">
           <div class="col-xs-6 col-sm-6 col-md-6">
             <div class="section-button">
               <img class="img-responsive icono" src="<?= Yii::app()->request->baseUrl ?>/images/contenido/perros-y-gatos/accesorio-perro.png">
-              <a href="#"><span class="item-link">Accesorios</span></a>
+              <a href="<?php echo CController::createUrl('/catalogo/categoria/categoria/221')?>"><span class="item-link">Accesorios</span></a>
             </div>
           </div>
           <div class="col-xs-6 col-sm-6 col-md-6">
             <div class="section-button">
               <img class="img-responsive icono" src="<?= Yii::app()->request->baseUrl ?>/images/contenido/perros-y-gatos/aseo-perros.png">
-              <a href="#"><span class="item-link">Aseo</span></a>
+              <a href="<?php echo CController::createUrl('/catalogo/categoria/categoria/224')?>"><span class="item-link">Aseo</span></a>
             </div>
           </div>
         </div>
         <div class="row">
           <div class="col-xs-6 col-sm-6 col-md-6">
             <div class="section-button">
-              <img class="img-responsive icono" src="<?= Yii::app()->request->baseUrl ?>/images/contenido/perros-y-gatos/alimento-perros.png">
-              <a href="#"><span class="item-link">Alimento</span></a>
+              <img class="img-responsive icono" src="<?= Yii::app()->request->baseUrl ?>/images/contenido/perros-y-gatos/vitaminas-perros.png">
+              <a href="<?php echo CController::createUrl('/catalogo/categoria/categoria/226')?>"><span class="item-link">Vitaminas</span></a>
             </div>
           </div>
           <div class="col-xs-6 col-sm-6 col-md-6">
             <div class="section-button">
               <img class="img-responsive icono" src="<?= Yii::app()->request->baseUrl ?>/images/contenido/perros-y-gatos/snacks-perros.png">
-              <a href="#"><span class="item-link">Snacks</span></a>
+              <a href="<?php echo CController::createUrl('/catalogo/categoria/categoria/225')?>"><span class="item-link">Snacks</span></a>
             </div>
           </div>
         </div>
         <div class="row">
-          <div class="col-md-offset-2 col-xs-8">
+          <div class="col-xs-6 col-sm-6 col-md-6">
             <div class="section-button">
-              <img style="margin-left: 15%;" class="img-responsive icono" src="<?= Yii::app()->request->baseUrl ?>/images/contenido/perros-y-gatos/vitaminas-perros.png">
-              <a href="#"><span class="item-link">Vitaminas</span></a>
+              <img class="img-responsive icono" src="<?= Yii::app()->request->baseUrl ?>/images/contenido/perros-y-gatos/a-humedo-perro.png">
+              <a href="<?php echo CController::createUrl('/catalogo/categoria/categoria/222')?>"><span class="item-link" style="width: 289px;">Alimento Húmedo</span></a>
+            </div>
+          </div>
+          <div class="col-xs-6 col-sm-6 col-md-6">
+            <div class="section-button">
+              <img class="img-responsive icono" src="<?= Yii::app()->request->baseUrl ?>/images/contenido/perros-y-gatos/alimento-perros.png">
+              <a href="<?php echo CController::createUrl('/catalogo/categoria/categoria/222')?>"><span class="item-link" style="width: 289px;">Alimento Seco</span></a>
             </div>
           </div>
         </div>
@@ -185,27 +199,35 @@ $this->metaTags = "
           <div class="col-xs-6 col-sm-6 col-md-6">
             <div class="section-button">
                 <img class="img-responsive icono" src="<?= Yii::app()->request->baseUrl ?>/images/contenido/perros-y-gatos/accesorios-gatos.png">
-                <a href="#"><span class="item-link">Accesorios</span></a>
+                <a href="<?php echo CController::createUrl('/catalogo/categoria/categoria/215')?>"><span class="item-link" style="width: 267px;">Accesorios</span></a>
             </div>
           </div>
           <div class="col-xs-6 col-sm-6 col-md-6">
             <div class="section-button">
               <img class="img-responsive icono" src="<?= Yii::app()->request->baseUrl ?>/images/contenido/perros-y-gatos/aseo-gatos.png">
-              <a href="#"><span class="item-link">Aseo</span></a>
+              <a href="<?php echo CController::createUrl('/catalogo/categoria/categoria/219')?>"><span class="item-link">Aseo</span></a>
             </div>
           </div>
         </div>
         <div class="row" >
           <div class="col-xs-6 col-sm-6 col-md-6">
             <div class="section-button">
-              <img class="img-responsive icono" src="<?= Yii::app()->request->baseUrl ?>/images/contenido/perros-y-gatos/alimento-gatos.png">
-              <a href="#"><span class="item-link">Alimento</span></a>
+              <img class="img-responsive icono" src="<?= Yii::app()->request->baseUrl ?>/images/contenido/perros-y-gatos/a-humedo-gato.png">
+              <a href="<?php echo CController::createUrl('/catalogo/categoria/categoria/217')?>"><span class="item-link" style="width: 267px;padding: 5px 10px;">Alimento húmedo</span></a>
             </div>
           </div>
           <div class="col-xs-6 col-sm-6 col-md-6">
             <div class="section-button">
               <img class="img-responsive icono" src="<?= Yii::app()->request->baseUrl ?>/images/contenido/perros-y-gatos/arena-gatos.png">
-              <a href="#"><span class="item-link">Arena</span></a>
+              <a href="<?php echo CController::createUrl('/catalogo/categoria/categoria/218')?>"><span class="item-link">Arena</span></a>
+            </div>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-xs-6 col-sm-6 col-md-6">
+            <div class="section-button">
+              <img class="img-responsive icono" src="<?= Yii::app()->request->baseUrl ?>/images/contenido/perros-y-gatos/alimento-gatos.png">
+              <a href="<?php echo CController::createUrl('/catalogo/categoria/categoria/222')?>"><span class="item-link">Alimento Seco</span></a>
             </div>
           </div>
         </div>

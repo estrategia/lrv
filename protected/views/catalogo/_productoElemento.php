@@ -76,7 +76,7 @@
         <table class="ui-responsive ctable_list_prod">
             <tbody>
                 <tr>
-                    <?php if ($objProducto->ventaVirtual != 0): ?>
+                    <?php if ($objProducto->ventaVirtual != 0 && !$objProducto->fraccionado == 1): ?>
                         <td class="ctd_01">
                             <input type="number" placeholder="0" id="cantidad-producto-unidad-<?php echo $objProducto->codigoProducto ?>" class="cbtn_cant" onchange="subtotalUnidadProducto(<?php echo $objProducto->codigoProducto ?>);" data-mini="true" value="1">
                         </td>
@@ -89,11 +89,16 @@
                         <?php if ($objProducto->ventaVirtual == 0): ?>
                             <?php echo CHtml::link('Ver producto', "#popup-carro-controlada-$objProducto->codigoProducto", array('class' => 'ui-btn ui-corner-all ui-shadow ui-btn-inline ui-btn-r', 'data-rel' => 'popup', 'data-mini' => 'true')); ?>
                         <?php else: ?>
-                        	<?php if($this->objSectorCiudad->esDefecto()): ?>
-		                    	<?php echo CHtml::link('Añadir al carro', CController::createUrl('/sitio/ubicacion'), array('class' => 'ui-btn ui-corner-all ui-shadow ui-btn-inline ui-btn-r', 'data-mini' => 'true', 'data-ajax'=>'false')); ?>
-		                    <?php else: ?>
-		                    	<?php echo CHtml::link('Añadir al carro', '#', array('data-producto' => $objProducto->codigoProducto, 'data-cargar' => 1, 'class' => 'ui-btn ui-corner-all ui-shadow ui-btn-inline ui-btn-r', 'data-mini' => 'true')); ?>
-		                    <?php endif;?>
+                        <?php if ($objProducto->fraccionado == 1): ?>
+				        	     <?php echo CHtml::link('Añadir Unidades', CController::createUrl('/catalogo/producto', array('producto' => $objProducto->codigoProducto, 'descripcion' => $objProducto->getCadenaUrl())), array('class' => 'ui-btn ui-corner-all ui-shadow ui-btn-inline ui-btn-r', 'data-mini' => 'true')); ?>
+				                 <?php echo CHtml::link('Añadir Fracciones', CController::createUrl('/catalogo/producto', array('producto' => $objProducto->codigoProducto, 'descripcion' => $objProducto->getCadenaUrl())), array('class' => 'ui-btn ui-corner-all ui-shadow ui-btn-inline ui-btn-r', 'data-mini' => 'true')); ?>
+				           <?php else:?> 
+	                        	<?php if($this->objSectorCiudad->esDefecto()): ?>
+			                    	<?php echo CHtml::link('Añadir al carro', CController::createUrl('/sitio/ubicacion'), array('class' => 'ui-btn ui-corner-all ui-shadow ui-btn-inline ui-btn-r', 'data-mini' => 'true', 'data-ajax'=>'false')); ?>
+			                    <?php else: ?>
+			                    	<?php echo CHtml::link('Añadir al carro', '#', array('data-producto' => $objProducto->codigoProducto, 'data-cargar' => 1, 'class' => 'ui-btn ui-corner-all ui-shadow ui-btn-inline ui-btn-r', 'data-mini' => 'true')); ?>
+			                    <?php endif;?>
+		                  <?php endif;?>
                         <?php endif; ?>
                     </td>
                 </tr>

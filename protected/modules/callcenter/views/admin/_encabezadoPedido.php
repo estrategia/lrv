@@ -257,6 +257,7 @@
                         <button class="btn btn-inverse btn-default btn-sm" data-action="remitirborrar" data-compra="<?php echo $objCompra->idCompra ?>">Borrar remisión</button>
                     </td>
                 </tr>
+                <?php if($objCompra->idTipoVenta == Yii::app()->params->tipoVenta['nacional']):?>
                 <tr>
                     <td style="text-align: right"><strong>Remitir Nacional</strong></td>
                     <td>
@@ -264,6 +265,7 @@
                         <button class="btn btn-inverse btn-default btn-sm" data-action="remitirborrarNacional" data-compra="<?php echo $objCompra->idCompra ?>">Borrar remisión</button>
                     </td>
                 </tr>
+                <?php endif;?>
                 <tr>
                     <td colspan="2"> 
                         <form role="form" id="form-pedido-seguimiento">
@@ -293,7 +295,7 @@
     </div>
   
 </div>
-<?php if ($objCompra->totalCompra < $objCompra->objFormaPagoCompra->valor): ?>
+<?php if ($objCompra->totalCompra < $objCompra->sumaFormasPago()): ?>
     <div class="row">
         <div class="col-md-12">
             <div class="alert alert-danger">
@@ -303,11 +305,11 @@
     </div>
 <?php endif; ?>
 
-<?php if ($objCompra->totalCompra > $objCompra->objFormaPagoCompra->valor): ?>
+<?php if ($objCompra->totalCompra > $objCompra->sumaFormasPago()): ?>
     <div class="row">
         <div class="col-md-12">
             <div class="alert alert-danger">
-                <strong>ADVERTENCIA: EL VALOR TOTAL DE LA COMPRA ES SUPERIOR A LA FORMA DE PAGO, POR FAVOR ADICIONE UNA FORMA DE PAGO PARA CUBRIR EL EXCEDENTE DE <?php echo Yii::app()->numberFormatter->format(Yii::app()->params->formatoMoneda['patron'], ($objCompra->totalCompra - $objCompra->objFormaPagoCompra->valor), Yii::app()->params->formatoMoneda['moneda']) ?></strong>
+                <strong>ADVERTENCIA: EL VALOR TOTAL DE LA COMPRA ES SUPERIOR A LA FORMA DE PAGO, POR FAVOR ADICIONE UNA FORMA DE PAGO PARA CUBRIR EL EXCEDENTE DE <?php echo Yii::app()->numberFormatter->format(Yii::app()->params->formatoMoneda['patron'], ($objCompra->totalCompra - $objCompra->sumaFormasPago()), Yii::app()->params->formatoMoneda['moneda']) ?></strong>
             </div>
         </div>
     </div>
