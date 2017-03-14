@@ -168,33 +168,12 @@ $this->metaTags = "
 </div>
 <div class="container-fluid">
   <div class="row">
-    <div id="sub-banner" class="carousel slide" data-ride="carousel">
-      <!-- Indicators -->
-      <ol class="carousel-indicators">
-        <li data-target="#sub-banner" data-slide-to="0" class="active"></li>
-        <li data-target="#sub-banner" data-slide-to="1"></li>
-        <li data-target="#sub-banner" data-slide-to="2"></li>
-        <li data-target="#sub-banner" data-slide-to="3"></li>
-      </ol>
-      <!-- Wrapper for slides -->
-      <div class="carousel-inner">
-        <div class="item active">
-          <img src="<?= Yii::app()->request->baseUrl ?>/images/contenido/corega/subbanner1.jpg" class="img-responsive" alt="Adhesivos Ultra Corega">
-        </div>
-        <div class="item">
-          <img src="<?= Yii::app()->request->baseUrl ?>/images/contenido/corega/subbanner2.jpg" class="img-responsive" alt="Corega crema adhesiva sin sabor">
-        </div>
-        <div class="item">
-          <img src="<?= Yii::app()->request->baseUrl ?>/images/contenido/corega/subbanner3.jpg" class="img-responsive" alt="Corega crema adhesiva sabor Menta">
-        </div>
-        <div class="item">
-          <img src="<?= Yii::app()->request->baseUrl ?>/images/contenido/corega/subbanner4.jpg" class="img-responsive" alt="Limpiador Corega Tabs">
-        </div>
-      </div>
-      <a class="carousel-control left" href="#sub-banner" data-slide="prev"><i class="prev-slide"></i></a>
-      <a class="carousel-control right" href="#sub-banner" data-slide="next"><i class="next-slide"></i></a>
-    </div>
+    <img src="<?= Yii::app()->request->baseUrl ?>/images/contenido/corega/subbanner1.jpg" class="img-responsive" alt="Adhesivos Ultra Corega">
     <hr></hr>
+      <img src="<?= Yii::app()->request->baseUrl ?>/images/contenido/corega/subbanner2.jpg" class="img-responsive" alt="Corega crema adhesiva sin sabor">
+        <img src="<?= Yii::app()->request->baseUrl ?>/images/contenido/corega/subbanner3.jpg" class="img-responsive" alt="Corega crema adhesiva sabor Menta">
+        <img src="<?= Yii::app()->request->baseUrl ?>/images/contenido/corega/subbanner4.jpg" class="img-responsive" alt="Limpiador Corega Tabs">
+
   </div>
 </div>
 <div class="container">

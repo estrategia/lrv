@@ -108,7 +108,7 @@ $this->metaTags = "
         </div>
         <div class="item">
           <div class="image">
-            <p class="txt-banner">Es un signo <br> de problemas <br> <span>en las encias</span></p>
+            <p class="txt-banner">Podría ser signo <br> de problemas <br> <span>en las encias</span></p>
             <img src="<?= Yii::app()->request->baseUrl ?>/images/contenido/parodontax/banner-parodontax.png" alt="">
           </div>
         </div>
@@ -120,16 +120,16 @@ $this->metaTags = "
   </section>
   <section class="contenedor">
     <h1 class="title-principal-m">Parodontax ®</h1>
-    <p class="parrafos-m">Utilizarla diariamente ayuda a remover la placa, prevenir y controlar el sangrado de encías.</p>
+    <p class="parrafos-m">Utilizarla diariamente ayuda a remover la placa, prevenir y proteger del sangrado de encías.</p>
   </section>
   <section class="contenedor">
     <img src="<?= Yii::app()->request->baseUrl ?>/images/contenido/parodontax/empaque-parodontax.png" class="img-responsive" alt="Comprar Parodontax en la rebaja virtual">
-    <p class="copy-m">*Ayuda a prevenir la aparición de caries,<br>ya que combina sus ingredientes con flúor. </p>
+    <p class="copy-m">Ayuda a prevenir la aparición de caries,<br>ya que combina sus ingredientes con flúor. </p>
   </section>
   <section class="bg-line-m">
     <p class="descripcion-m"><span class="titulo-m">Parodontax® Whitening </span> <br>
     Es una crema dental de uso diario que ayuda a prevenir<br>
-    y proteger contra el sangrado de encías, mientras ayuda<br>
+    y proteger contra el sangrado de encías*, mientras ayuda<br>
     a devolver el blanco natural de los dientes, eliminando<br>
     suavemente las manchas superficiales.</p>
   </section>
@@ -137,7 +137,7 @@ $this->metaTags = "
     <img style="width: 75%;margin: -40px 10%;" src="<?= Yii::app()->request->baseUrl ?>/images/contenido/Parodontax/parodontax.png" class="img-responsive" alt="">
   </section>
   <section class="row">
-    <p class="formula" style="font-size: 20px;margin-top: 18%;">*Posee una fórmula con 70% <br>de ingredientes especializados</p>
+    <p class="formula" style="font-size: 20px;margin-top: 18%;text-align: left;">Contiene un 67% de <br>ingredientes diseñados <br>especialmente para remover la <br>placa</p>
     <img src="<?= Yii::app()->request->baseUrl ?>/images/contenido/parodontax/mujer.jpg" class="img-responsive" alt="">
   </section>
   <section class="row">
@@ -145,6 +145,7 @@ $this->metaTags = "
   </section>
   <section class="row">
     <iframe width="100%" height="210" src="https://www.youtube.com/embed/A9Dbnbk_P_s" frameborder="0" allowfullscreen></iframe>
+    <p class="videos" style="text-align: left;margin-top: 5px;">Parodontax Colombia</p>
   </section>
   <section>
     <p class="videos contenedor">VIDEOS</p>
@@ -154,6 +155,7 @@ $this->metaTags = "
     <video width="100%" height="210" poster="<?= Yii::app()->request->baseUrl ?>/images/contenido/parodontax/video2.jpg" controls>
       <source src="<?= Yii::app()->request->baseUrl ?>/images/contenido/parodontax/video2.webm" type="video/webm">
     </video>
+    <p class="videos" style="font-size: 17px;margin-top: 22px;">Los videos y fotos usadas son material previamente aprobado en zinc por todos los equipos involucrados en el proceso de aprobación</p>
   </section>
 
   <section>
@@ -214,7 +216,7 @@ $this->metaTags = "
         <div class="item">
           <img src="<?= Yii::app()->request->baseUrl ?>/images/contenido/Parodontax/banner-parodontax.png" class="img-responsive" alt="¿Has visto sangre cuando te cepillas?">
           <div class="carousel-caption">
-              <p>Es un signo <br> de problemas <br> <span>en las encias</span></p>
+              <p>Podría ser un signo <br> de problemas <br> <span>en las encias</span></p>
           </div>
         </div>
       </div>
@@ -229,7 +231,7 @@ $this->metaTags = "
     <div class="col-md-4"></div>
     <div class="col-md-8 intro">
       <h1 class="title-principal">Parodontax ®</h1>
-      <p class="parrafos">Utilizarla diariamente ayuda a remover la placa, <br> prevenir y controlar el sangrado de encías.</p>
+      <p class="parrafos">Utilizarla diariamente ayuda a remover la placa, <br> prevenir y proteger del sangrado de encías.</p>
     </div>
   </div>
 
@@ -239,14 +241,14 @@ $this->metaTags = "
           <img src="<?= Yii::app()->request->baseUrl ?>/images/contenido/Parodontax/empaque-parodontax.png" class="img-responsive" alt="Comprar Parodontax en la rebaja virtual">
         </div>
         <div class="col-md-6">
-          <p class="copy">*Ayuda a prevenir la aparición de caries,<br>ya que combina sus ingredientes con flúor. </p>
+          <p class="copy">Ayuda a prevenir la aparición de caries,<br>ya que combina sus ingredientes con flúor. </p>
         </div>
       </div>
       <div class="row ">
         <div class="col-md-12">
           <p class="descripcion"><span class="titulo">Parodontax® Whitening </span> <br>
           Es una crema dental de uso diario que ayuda a prevenir<br>
-          y proteger contra el sangrado de encías, mientras ayuda<br>
+          y proteger contra el sangrado de encías*, mientras ayuda<br>
           a devolver el blanco natural de los dientes, eliminando<br>
           suavemente las manchas superficiales.</p>
         </div>
@@ -261,7 +263,8 @@ $this->metaTags = "
 
     <div class="row">
       <div class="col-md-7">
-        <p class="formula">*Posee una fórmula con 70% <br>de ingredientes especializados</p>
+        <p class="formula" style="text-align: left;margin-top: 2%;">Contiene un 67% de <br>ingredientes diseñados <br>especialmente para remover la <br>placa </p>
+        <p class="formula" style="margin-top: 0px;text-align: left;font-size: 13px;">*Causado por la placa</p>
       </div>
         <div class="col-md-5">
           <img style="width: 80%;margin-top: -15%;" src="<?= Yii::app()->request->baseUrl ?>/images/contenido/Parodontax/mujer.jpg" class="img-responsive" alt="">
@@ -279,6 +282,7 @@ $this->metaTags = "
       <div class="col-md-12">
         <center>
           <iframe width="100%" height="600" src="https://www.youtube.com/embed/A9Dbnbk_P_s" frameborder="0" allowfullscreen></iframe>
+          <p class="videos" style="text-align: left;margin-top: 5px;">Parodontax Colombia</p>
         </center>
       </div>
     </div>
@@ -294,6 +298,9 @@ $this->metaTags = "
         <video width="100%" height="320" poster="<?= Yii::app()->request->baseUrl ?>/images/contenido/parodontax/video2.jpg" controls>
           <source src="<?= Yii::app()->request->baseUrl ?>/images/contenido/parodontax/video2.webm" type="video/webm">
         </video>
+      </div>
+      <div class="col-md-12">
+        <p class="videos" style="font-size: 17px;margin-top: 22px;">Los videos y fotos usadas son material previamente aprobado en zinc por todos los equipos involucrados en el proceso de aprobación</p>
       </div>
     </div>
 
