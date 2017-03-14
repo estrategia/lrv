@@ -132,10 +132,8 @@ return array(
                 'sensodyne' => 'publicidad/contenido/nombre/sensodyne',
                 'sobre-metamucil' => 'publicidad/contenido/nombre/sobre-metamucil',
                 'recetas-nestle-nan-optipro' => 'publicidad/contenido/nombre/nan-recetas',
-
                 'perros-y-gatos' => 'publicidad/contenido/nombre/perros-y-gatos',
                 'muestra-gratis-perros-y-gatos' => 'publicidad/contenido/nombre/perros-y-gatos-formulario',
-
                 'proteccion-solar-sol-or' => 'publicidad/contenido/nombre/sol-or',
                 'shampoo-clinical-solution-caspa-severa' => 'publicidad/contenido/nombre/pyg',
                 'similac-mama-embarazo' => 'publicidad/contenido/nombre/similac-mama',
@@ -145,6 +143,8 @@ return array(
                 'glucerna-para-diabeticos' => 'publicidad/contenido/nombre/glucerna',
                 'zahara-protector-solar' => 'publicidad/contenido/nombre/zahara',
                 'prodent-cuidado-oral' => 'publicidad/contenido/nombre/prodent',
+                'pedialyte-suero-oral' => 'publicidad/contenido/nombre/pedialyte',
+                'pilas-energizer' => 'publicidad/contenido/nombre/energizer',
 
 
                 // Fin links campañas

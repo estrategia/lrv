@@ -48,17 +48,21 @@ $this->metaTags = "<meta http-equiv='X-UA-Compatible' content='IE=edge'>
 		hr {margin: 30px;border: 1px solid #EDEDED;}
 	</style>
 
-  <!-- Hotjar Tracking Code for https://www.larebajavirtual.com/proteccion-solar-sol-or -->
-  <script>
-      (function(h,o,t,j,a,r){
-          h.hj=h.hj||function(){(h.hj.q=h.hj.q||[]).push(arguments)};
-          h._hjSettings={hjid:369670,hjsv:5};
-          a=o.getElementsByTagName('head')[0];
-          r=o.createElement('script');r.async=1;
-          r.src=t+h._hjSettings.hjid+j+h._hjSettings.hjsv;
-          a.appendChild(r);
-      })(window,document,'//static.hotjar.com/c/hotjar-','.js?sv=');
-  </script>
+<!-- Google Code para etiquetas de remarketing -->
+<script type='text/javascript'>
+/* <![CDATA[ */
+var google_conversion_id = 865606460;
+var google_custom_params = window.google_tag_params;
+var google_remarketing_only = true;
+/* ]]> */
+</script>
+<script type='text/javascript' src='//www.googleadservices.com/pagead/conversion.js'>
+</script>
+<noscript>
+<div style='display:inline;'>
+<img height='1' width='1' style='border-style:none;'' alt='' src='//googleads.g.doubleclick.net/pagead/viewthroughconversion/865606460/?guid=ON&amp;script=0'/>
+</div>
+</noscript>
 
     ";
 ?>

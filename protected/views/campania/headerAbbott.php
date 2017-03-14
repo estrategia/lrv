@@ -30,7 +30,7 @@
       </a>
     </div>
     <div class="col-sm-2 col-md-2">
-      <a href="<?= Yii::app()->request->baseUrl ?>/">
+      <a href="<?= Yii::app()->request->baseUrl ?>/pedialyte-suero-oral">
         <img class="img-responsive" src="<?= Yii::app()->request->baseUrl ?>/images/contenido/abbot/general/logo-pedialyte.png" alt="Logo Pedialyte">
       </a>
     </div>
@@ -65,7 +65,7 @@
         </a>
       </div>
       <div class="col-sm-2 col-md-2">
-        <a href="<?= Yii::app()->request->baseUrl ?>/">
+        <a href="<?= Yii::app()->request->baseUrl ?>/pedialyte-suero-oral">
           <img class="img-responsive" style="width: 61%;margin: 0 auto;" src="<?= Yii::app()->request->baseUrl ?>/images/contenido/abbot/general/icono-similac-pedialyte.png" alt="Logo Pedialyte">
         </a>
       </div>
