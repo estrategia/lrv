@@ -249,6 +249,7 @@ return array(
             ),
         ),
     ),
+		
     'params' => array(
         "meses" => array( 1 => "Enero",
                2 => "Febrero",
@@ -631,6 +632,8 @@ return array(
                 'asuntoCorreo' => 'Tienes un bono disponible',
                 'tipoBonoCRM' => 3,
             	'formaPagoBonos' => 8,
+            	'diaMaximoRecordacion' => 5,
+            	'diaMinimoRecordacion' => 1,
             ),
             'reactivacionBono' => array(
                 'asuntoMensaje' => 'Activacion bono cliente fiel',
