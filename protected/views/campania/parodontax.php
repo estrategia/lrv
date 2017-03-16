@@ -40,7 +40,7 @@ $this->metaTags = "
       .carousel .item {max-height: initial !important;}
       .carousel-caption {top: 144px;font-size: 70px !important;font-family: Frutiger-Bold;right: 4% !important;left: 27% !important;top: 12% !important;}
       .carousel-caption span {font-family: Frutiger-Black;font-size: 75px !important;}
-      .bg-line {background-image:url(".Yii::app()->request->baseUrl."/images/contenido/Parodontax/bg-line.jpg);background-size: 100% 100%;}
+      .bg-line {background-image:url(".Yii::app()->request->baseUrl."/images/contenido/parodontax/bg-line.jpg);background-size: 100% 100%;}
       .bg-line-m {background-color: #E0E4E7;border-bottom: 5px solid #E40C19;}
       .titulo {font-family: FrutigerLTStd-Black;color: #696866;font-size: 48px;}
       .titulo-m {font-family: FrutigerLTStd-Black;color: #696866;font-size: 24px;}
@@ -134,7 +134,7 @@ $this->metaTags = "
     suavemente las manchas superficiales.</p>
   </section>
   <section>
-    <img style="width: 75%;margin: -40px 10%;" src="<?= Yii::app()->request->baseUrl ?>/images/contenido/Parodontax/parodontax.png" class="img-responsive" alt="">
+    <img style="width: 75%;margin: -40px 10%;" src="<?= Yii::app()->request->baseUrl ?>/images/contenido/parodontax/parodontax.png" class="img-responsive" alt="">
   </section>
   <section class="row">
     <p class="formula" style="font-size: 20px;margin-top: 18%;text-align: left;">Contiene un 67% de <br>ingredientes diseñados <br>especialmente para remover la <br>placa</p>
@@ -195,26 +195,26 @@ $this->metaTags = "
 
 <div class="container">
   <div class="row">
-    <img src="<?= Yii::app()->request->baseUrl ?>/images/contenido/Parodontax/logo-parodontax.png" class="img-responsive logo-parodontax" alt="Parodontax">
+    <img src="<?= Yii::app()->request->baseUrl ?>/images/contenido/parodontax/logo-parodontax.png" class="img-responsive logo-parodontax" alt="Parodontax">
   </div>
   <div class="row">
     <div id="carousel-example-generic" class="carousel slide" data-ride="carousel">
       <!-- Wrapper for slides -->
       <div class="carousel-inner">
         <div class="item active">
-          <img src="<?= Yii::app()->request->baseUrl ?>/images/contenido/Parodontax/banner-parodontax.png" class="img-responsive" alt="¿Has visto sangre cuando te cepillas?">
+          <img src="<?= Yii::app()->request->baseUrl ?>/images/contenido/parodontax/banner-parodontax.png" class="img-responsive" alt="¿Has visto sangre cuando te cepillas?">
           <div class="carousel-caption">
               <p>¿Has visto <br> <span>sangre</span> cuando <br> te <span>cepillas</span>?</p>
           </div>
         </div>
         <div class="item">
-          <img src="<?= Yii::app()->request->baseUrl ?>/images/contenido/Parodontax/banner-parodontax.png" class="img-responsive" alt="¿Has visto sangre cuando te cepillas?">
+          <img src="<?= Yii::app()->request->baseUrl ?>/images/contenido/parodontax/banner-parodontax.png" class="img-responsive" alt="¿Has visto sangre cuando te cepillas?">
           <div class="carousel-caption">
               <p>Deberías <br>saber que <br>el <span>sangrado</span>...</p>
           </div>
         </div>
         <div class="item">
-          <img src="<?= Yii::app()->request->baseUrl ?>/images/contenido/Parodontax/banner-parodontax.png" class="img-responsive" alt="¿Has visto sangre cuando te cepillas?">
+          <img src="<?= Yii::app()->request->baseUrl ?>/images/contenido/parodontax/banner-parodontax.png" class="img-responsive" alt="¿Has visto sangre cuando te cepillas?">
           <div class="carousel-caption">
               <p>Podría ser un signo <br> de problemas <br> <span>en las encias</span></p>
           </div>
@@ -238,7 +238,7 @@ $this->metaTags = "
     <div class="row bg-line" style="margin: 45px 0px;">
       <div class="row">
         <div class="col-md-6">
-          <img src="<?= Yii::app()->request->baseUrl ?>/images/contenido/Parodontax/empaque-parodontax.png" class="img-responsive" alt="Comprar Parodontax en la rebaja virtual">
+          <img src="<?= Yii::app()->request->baseUrl ?>/images/contenido/parodontax/empaque-parodontax.png" class="img-responsive" alt="Comprar Parodontax en la rebaja virtual">
         </div>
         <div class="col-md-6">
           <p class="copy">Ayuda a prevenir la aparición de caries,<br>ya que combina sus ingredientes con flúor. </p>
@@ -255,7 +255,7 @@ $this->metaTags = "
       </div>
       <div class="row">
         <div class="col-md-12">
-          <img style="width: 41%;margin: 0 10%;" src="<?= Yii::app()->request->baseUrl ?>/images/contenido/Parodontax/parodontax.png" class="img-responsive" alt="">
+          <img style="width: 41%;margin: 0 10%;" src="<?= Yii::app()->request->baseUrl ?>/images/contenido/parodontax/parodontax.png" class="img-responsive" alt="">
         </div>
       </div>
     </div>
@@ -267,7 +267,7 @@ $this->metaTags = "
         <p class="formula" style="margin-top: 0px;text-align: left;font-size: 13px;">*Causado por la placa</p>
       </div>
         <div class="col-md-5">
-          <img style="width: 80%;margin-top: -15%;" src="<?= Yii::app()->request->baseUrl ?>/images/contenido/Parodontax/mujer.jpg" class="img-responsive" alt="">
+          <img style="width: 80%;margin-top: -15%;" src="<?= Yii::app()->request->baseUrl ?>/images/contenido/parodontax/mujer.jpg" class="img-responsive" alt="">
 
         </div>
     </div>
