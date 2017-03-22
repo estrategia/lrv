@@ -1815,4 +1815,44 @@ class TestController extends Controller {
     		Yii::app()->exit();
     	}
     }
+    
+    public function actionServEtgaEnvio(){
+    	Yii::import("application.models.servientrega.AuthHeader");
+    	$auth = new AuthHeader("Testcopservir", "BpSUh12jBIiWdACDozgOaQ==", "SER408", "COPSERVIR_SISCLINET");
+    	$header = new SoapHeader("http://tempuri.org/", "AuthHeader", $auth, false);
+    	$client = new SoapClient('http://web.servientrega.com:8081/GeneracionGuias.asmx?WSDL', array(
+    			"trace" => 1,
+    			"exceptions" => 0,
+    			'cache_wsdl' => WSDL_CACHE_NONE
+    	));
+    	$client->__setSoapHeaders($header);
+    	$parm = array();
+    	$paramReq = $this->renderPartial('CargueMasivoExternoDTO', array(), true);
+    	$parm[] = new SoapVar($paramReq, XSD_ANYXML);
+    	$service = $client->CargueMasivoExterno(new SoapVar($parm, SOAP_ENC_OBJECT));
+    	$req = $client->__getLastRequest();
+    	CVarDumper::dump($req, 10, true);
+    	echo"<br/><br/>";
+    	CVarDumper::dump($service, 10, true);
+    	
+    }
+    
+    public function actionServEtgaRastreo($guia){
+    	$client = new SoapClient('http://sismilenio.servientrega.com.co/wsrastreoenvios/wsrastreoenvios.asmx?WSDL', array(
+    			"trace" => 1,
+    			"exceptions" => 0,
+    			'cache_wsdl' => WSDL_CACHE_NONE
+    	));
+    	//$client->__setSoapHeaders($header);
+    	$parm = array();
+    	$paramReq = $this->renderPartial('ConsultarGuia', array("NumeroGuia"=>$guia), true);
+    	$parm[] = new SoapVar($paramReq, XSD_ANYXML);
+    	$service = $client->ConsultarGuia(new SoapVar($parm, SOAP_ENC_OBJECT));
+    	$req = $client->__getLastRequest();
+    	CVarDumper::dump($req, 10, true);
+    	echo"<br/><br/><br/><br/>";
+    	CVarDumper::dump($service, 10, true);
+    }
+    
+    
 }

@@ -1,0 +1,1 @@
+<ns1:NumeroGuia><?= $NumeroGuia?></ns1:NumeroGuia>
