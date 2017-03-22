@@ -135,7 +135,7 @@ $this->metaTags = "
   </section>
   <section class="section-blue-m">
     <p>
-      <span> Vidas libres de sensibilidad </span>
+      <span> Estamos comprometidos a crear <br> un futuro con vidas libres de sensibilidad </span>
     </p>
   </section>
   <section>
@@ -146,88 +146,82 @@ $this->metaTags = "
         <!--slide1-->
         <div class="item" style="padding:30px;">
           <img  src="<?= Yii::app()->request->baseUrl ?>/images/contenido/sensodyne/1-blanqueador-repara-proteje.jpg" class="img-responsive" alt="Ama con toda - Corega de venta en La Rebaja virtual">
-          <h2 class="title-slide">Sensodyne®<br>Blanqueador, Repara & Protege </h2>
-          <p>Sensodyne® Blanqueador Repara & Protege Tecnología NOVAMIN TM Repara las áreas sensibles de los dientes, mientras ayuda a devolverles el blanco natural.  </p>
-            <ul class="ok">
+          <h2 class="title-slide">Sensodyne®<br>Repara & Protege Blanqueador</h2>
+          <p>Fórmula única y clínicamente comprobada que ayuda a reparar* las áreas sensibles del diente,
+            gracias a su tecnología avanzada NovaMin™ que identifica las zonas donde la dentina está expuesta,
+            adhiriéndose a ésta y formando una capa protectora mientras ayuda a devolver el blanco natural a los dientes.  </p>            <!-- <ul class="ok">
               <li>Alivio a la sensibilidad</li>
               <li>Protección anticaries</li>
               <li>Aliento fresco</li>
               <li>Protección prolongada de la sensibilidad</li>
-            </ul>
+            </ul> -->
+            <p style="color: #B0B0B0;font-style: italic;">*Repara no implica corrección o tratamiento de alguna patología o daño presentado a nivel bucal.</p>
         </div>
         <!--slide2-->
         <div class="item" style="padding:30px;">
           <img  src="<?= Yii::app()->request->baseUrl ?>/images/contenido/sensodyne/2-repara-proteje-2.jpg" class="img-responsive" alt="Ama con toda - Corega de venta en La Rebaja virtual">
           <h2 class="title-slide">Sensodyne®<br>Repara & Protege </h2>
-          <p>Sensodyne® Repara & Protege, fórmula única y clínicamente comprobada que ayuda a reparar* las áreas sensibles del diente, formando una capa protectora encima
-          que ayuda a proteger el dientes de la sensibilidad. </p>
-            <ul  class="ok">
+          <p>Fórmula única y clínicamente comprobada que ayuda a reparar* las áreas sensibles
+          del diente, gracias a su tecnología avanzada NovaMin <sup>TM</sup> que identifica  las zonas donde
+          la dentina está expuesta, adhiriéndose a ésta  y formando una capa protectora.  </p>
+            <!-- <ul  class="ok">
               <li>Alivio a la sensibilidad</li>
               <li>Protección anticaries</li>
               <li>Aliento fresco</li>
               <li>Protección prolongada de la sensibilidad</li>
-            </ul>
+            </ul> -->
+            <p style="color: #B0B0B0;font-style: italic;">*Repara no implica corrección o tratamiento de alguna patología o daño presentado a nivel bucal.</p>
         </div>
         <!--slide3-->
         <div class="item" style="padding:30px;">
           <img  src="<?= Yii::app()->request->baseUrl ?>/images/contenido/sensodyne/3-rapido-alivio.jpg" class="img-responsive" alt="Ama con toda - Corega de venta en La Rebaja virtual">
           <h2 class="title-slide">Sensodyne®<br>Rápido Alivio </h2>
-          <p>Sensodyne® Rápido Alivio, proporciona alivio rápido clínicamente comprobado para dientes sensibles, actuando en sólo 60 segundos para aliviar las molestias de los dientes sensibles,
-          cuando se aplica directamente con la yema del dedo durante un minuto. Esto debido a que su fórmula crea un sello físico contra los desencadenantes de la sensibilidad.
-          Cuando se utiliza dos veces al día, brinda protección duradera contra la sensibilidad.<br>
-          *Siguiendo las instrucciones del empaque</p>
-            <ul  class="ok">
+          <p>Sensodyne® Rápido Alivio proporciona alivio rápido clínicamente comprobado para dientes sensibles, actuando en sólo 60 segundos* cuando se aplica directamente con la yema del dedo. Esto debido a que su fórmula crea un sello físico contra los desencadenantes de la sensibilidad.
+</p>
+            <!-- <ul  class="ok">
               <li>Alivio a la sensibilidad en solo 60 segundos</li>
               <li>Protección contra las caries</li>
               <li>Protección duradera de la sensibilidad dental</li>
-            </ul>
+            </ul> -->
+            <p style="color: #B0B0B0;font-style: italic;">* Siguiendo las instrucciones del empaque.</p>
+
+
         </div>
         <!--slide4-->
         <div class="item" style="padding:30px;">
           <img  src="<?= Yii::app()->request->baseUrl ?>/images/contenido/sensodyne/4-blanqueador-extrafresh.jpg" class="img-responsive" alt="Ama con toda - Corega de venta en La Rebaja virtual">
           <h2 class="title-slide">Sensodyne®<br>Diaria Blanqueadora Extra Fresh</h2>
-          <p>Sensodyne® Diaria Blanqueadora Extra Fresh, es una crema dental de uso diario específicamente formulada para personas con dientes sensibles. Contiene Trifosfato
-          Pentasódico que  ayuda a devolver el blanco natural de los dientes y flúor que ayuda a fortalecer los dientes y prevenir las caries*. Cepilla tus dientes dos veces al día diariamente con Sensodyne para controlar y ayudar a prevenir la sensibilidad dental.<br>
-          *Cepillandose dos veces al día.
+          <p>Sensodyne Blanqueador Extra Fresh es una crema dental de uso diario formulada para personas con dientes sensibles. Contiene Trifosfato Pentasódico que ayuda a devolver el blanco natural de los dientes y flúor que ayuda a fortalecer los dientes y prevenir las caries*.
           </p>
-            <ul  class="ok">
+            <!-- <ul  class="ok">
               <li>Alivio a la sensibilidad</li>
               <li>Protección contra las caries</li>
               <li>Blanqueadora</li>
               <li>Protección duradera de la sensibilidad dental</li>
               <li>Ayuda a devolver el blanco natural a los dientes</li>
               <li>Refresca el aliento</li>
-            </ul>
+            </ul> -->
+            <p style="color: #B0B0B0;font-style: italic;">*cepillándose dos veces al día</p>
         </div>
         <!--slide5-->
         <div class="item" style="padding:30px;">
           <img  src="<?= Yii::app()->request->baseUrl ?>/images/contenido/sensodyne/5-multiproteccion.jpg" class="img-responsive" alt="Ama con toda - Corega de venta en La Rebaja virtual">
           <h2 class="title-slide">Sensodyne®<br>Diaria Multi Protección</h2>
-          <p>Sensodyne® Diaria Multi Protección es una crema dental de uso diario específicamente formulada para personas con dientes sensibles. Contiene flúor para proteger, fortalecer
-          y proveer alivio continuo a dientes sensibles* y ayuda a mantener la salud de las encías.<br> Además ayuda a proteger contra las caries. Cepille dos veces al día diariamente para
-          ayudar a controlar y prevenir la sensibilidad dental.<br>
-          * Cepillándose dos veces al día </p>
-            <ul  class="ok">
+          <p>Sensodyne® Multi Protección Fórmula Avanzada es una crema dental  de uso diario formulada para  personas con dientes sensibles. Contiene fluoruro para fortalecer los dientes y proteger contra las caries ayudando a mantener la salud de las encías. </p>
+            <!-- <ul  class="ok">
               <li>Alivio a la sensibilidad</li>
               <li>Protección contra las caries</li>
               <li>Blanqueadora</li>
               <li>Protección duradera de la sensibilidad dental</li>
               <li>Ayuda a devolver el blanco natural a los dientes</li>
               <li>Refresca el aliento</li>
-            </ul>
+            </ul> -->
         </div>
         <!--slide6-->
         <div class="item" style="padding:30px;">
           <img  src="<?= Yii::app()->request->baseUrl ?>/images/contenido/sensodyne/6-original.jpg" class="img-responsive" alt="Ama con toda - Corega de venta en La Rebaja virtual">
-          <h2 class="title-slide">Sensodyne®<br>Diaria Multi Protección</h2>
-          <p>Sensodyne® Original esta específicamente formulada para dientes sensibles. Contiene cloruro de estroncio y es la fórmula original sin flúor de Sensodyne;
-            ideal para personas que no toleran el flúor y necesitan aliviar la sensibilidad dental.<br>
-          * Cepillándose dos veces al día </p>
-            <ul  class="ok">
-              <li>Alivio a la sensibilidad</li>
-              <li>Sin flúor</li>
-              <li>Protección duradera de la sensibilidad dental</li>
-            </ul>
+          <h2 class="title-slide">Sensodyne®<br>Original</h2>
+          <p>Sensodyne Original esta específicamente formulada para dientes sensibles. Contiene cloruro de estroncio y es la fórmula original sin flúor de Sensodyne; ideal para personas que no toleran el flúor y necesitan aliviar la sensibilidad dental.</p>
         </div>
     </div>
   </section>
@@ -251,6 +245,8 @@ $this->metaTags = "
         Your browser does not support HTML5 video.
       </video>
     </div>
+  <p class="video">Los videos y fotos usadas son material previamente aprobado en zinc por todos los equipos involucrados en el proceso de aprobación</p>
+
   </section>
   <section class="footer"><p style="font-size:14px ;">&copy; <?=date('Y')?> Grupo de empresas GSK. Todos los derechos reservados.</p></section>
 
@@ -301,7 +297,7 @@ $this->metaTags = "
   </div>
   <div class="row section-blue">
     <p>
-      <span>Vidas libres de sensibilidad</span>
+      <span>Estamos comprometidos a crear <br> un futuro con vidas libres de sensibilidad </span>
     </p>
   </div>
   <div class="row">
@@ -315,24 +311,27 @@ $this->metaTags = "
         <li data-target="#carousel-example-generic" data-slide-to="3"></li>
         <li data-target="#carousel-example-generic" data-slide-to="4"></li>
         <li data-target="#carousel-example-generic" data-slide-to="5"></li>
+        <li data-target="#carousel-example-generic" data-slide-to="6"></li>
       </ol>
       <p class="title-slide principal">Elige tu Sensodyne </p>
       <div class="carousel-inner">
-        <!--slide0-->
+        <!--slide1-->
         <div class="item active">
            <div class="col-sm-12 col-md-12">
               <img src="<?= Yii::app()->request->baseUrl ?>/images/contenido/sensodyne/section4.jpg" class="img-responsive" alt="">
           </div>
         </div>
-        <!--slide1-->
+        <!--slide2-->
         <div class="item">
            <div class="col-sm-6 col-md-6">
              <img  src="<?= Yii::app()->request->baseUrl ?>/images/contenido/sensodyne/1-blanqueador-repara-proteje.jpg" class="img-responsive" alt="Ama con toda - Corega de venta en La Rebaja virtual">
            </div>
            <div class="col-sm-6 col-md-6">
-               <h2 class="title-slide">Sensodyne®<br>Blanqueador, Repara & Protege </h2>
-               <p>Sensodyne® Blanqueador Repara & Protege Tecnología NOVAMIN TM <br>Repara las áreas sensibles de los dientes, mientras ayuda a devolverles el blanco natural.  </p>
-               <div class="col-md-4">
+               <h2 class="title-slide">Sensodyne®<br>Repara & Protege Blanqueador </h2>
+               <p>Fórmula única y clínicamente comprobada que ayuda a reparar* las áreas sensibles del diente, gracias<br>
+                  a su tecnología avanzada NovaMin™ que identifica las zonas donde la dentina está expuesta, adhiriéndose<br>
+                   a ésta y formando una capa protectora mientras ayuda a devolver el blanco natural a los dientes.  </p>
+               <!-- <div class="col-md-4">
                  <ul class="ok">
                    <li>Alivio a la sensibilidad</li>
                    <li>Protección anticaries</li>
@@ -343,20 +342,21 @@ $this->metaTags = "
                    <li>Aliento fresco</li>
                    <li>Protección prolongada de la sensibilidad</li>
                  </ul>
-               </div>
+               </div> -->
+                 <p style="color: #B0B0B0;font-style: italic;">*Repara no implica corrección o tratamiento de alguna patología o daño presentado a nivel bucal.</p>
            </div>
         </div>
-        <!--slide2-->
+        <!--slide3-->
         <div class="item">
           <div class="col-sm-6 col-md-6">
             <img src="<?= Yii::app()->request->baseUrl ?>/images/contenido/sensodyne/2-repara-proteje-2.jpg" class="img-responsive" alt="Ama con toda - Corega de venta en La Rebaja virtual">
           </div>
           <div class="col-sm-6 col-md-6">
               <h2 class="title-slide">Sensodyne®<br>Repara & Protege </h2>
-              <p>Sensodyne® Repara & Protege, fórmula única y clínicamente comprobada que ayuda <br>
-              a reparar* las áreas sensibles del diente, formando una capa protectora encima <br>
-              que ayuda a proteger el dientes de la sensibilidad.  </p>
-              <div class="col-md-4">
+              <p>Fórmula única y clínicamente comprobada que ayuda a reparar* las áreas sensibles <br>
+              del diente, gracias a su tecnología avanzada NovaMin <sup>TM</sup> que identifica  las zonas donde<br>
+              la dentina está expuesta, adhiriéndose a ésta  y formando una capa protectora.  </p>
+              <!-- <div class="col-md-4">
                 <ul  class="ok">
                   <li>Alivio a la sensibilidad</li>
                   <li>Protección anticaries</li>
@@ -367,21 +367,24 @@ $this->metaTags = "
                   <li>Aliento fresco</li>
                   <li>Protección prolongada de la sensibilidad</li>
                 </ul>
-              </div>
+              </div> -->
+               <p style="color: #B0B0B0;font-style: italic;">*Repara no implica corrección o tratamiento de alguna patología o daño presentado a nivel bucal.</p>
           </div>
         </div>
-        <!--slide3-->
+        <!--slide4-->
         <div class="item">
           <div class="col-sm-6 col-md-6">
             <img src="<?= Yii::app()->request->baseUrl ?>/images/contenido/sensodyne/3-rapido-alivio.jpg" class="img-responsive" alt="Ama con toda - Corega de venta en La Rebaja virtual">
           </div>
           <div class="col-sm-6 col-md-6">
               <h2 class="title-slide">Sensodyne®<br>Rápido Alivio </h2>
-              <p>Sensodyne® Rápido Alivio, proporciona alivio rápido clínicamente comprobado para dientes <br> sensibles, actuando en sólo 60 segundos para aliviar las molestias de los dientes sensibles,<br>
-                cuando se aplica directamente con la yema del dedo durante un minuto. Esto debido a que <br> su fórmula crea un sello físico contra los desencadenantes de la sensibilidad.<br>
-                Cuando se utiliza dos veces al día, brinda protección duradera contra la sensibilidad.<br>
-                *Siguiendo las instrucciones del empaque</p>
-              <div class="col-md-6">
+              <p>Sensodyne® Rápido Alivio proporciona alivio rápido clínicamente <br>
+                comprobado para dientes sensibles, actuando en sólo 60 <br>
+                segundos* cuando se aplica directamente con la yema del dedo. <br>
+                Esto debido a que su fórmula crea un sello físico contra los <br>
+                 desencadenantes de la sensibilidad.
+    </p>
+              <!-- <div class="col-md-6">
                 <ul  class="ok">
                   <li>Alivio a la sensibilidad en solo 60 segundos</li>
                   <li>Protección contra las caries</li>
@@ -391,22 +394,25 @@ $this->metaTags = "
                 <ul  class="ok">
                   <li>Protección duradera<br>de la sensibilidad dental</li>
                 </ul>
-              </div>
+              </div> -->
+              <p style="color: #B0B0B0;font-style: italic;">* Siguiendo las instrucciones del empaque.</p>
           </div>
         </div>
-        <!--slide4-->
+        <!--slide5-->
         <div class="item">
           <div class="col-sm-6 col-md-6">
             <img src="<?= Yii::app()->request->baseUrl ?>/images/contenido/sensodyne/4-blanqueador-extrafresh.jpg" class="img-responsive" alt="Ama con toda - Corega de venta en La Rebaja virtual">
           </div>
           <div class="col-sm-6 col-md-6">
               <h2 class="title-slide">Sensodyne®<br>Diaria Blanqueadora Extra Fresh</h2>
-              <p>Sensodyne® Diaria Blanqueadora Extra Fresh, es una crema dental de uso diario<br> específicamente formulada para personas con dientes sensibles. Contiene Trifosfato <br>
-                 Pentasódico que  ayuda a devolver el blanco natural de los dientes y flúor que ayuda <br> a fortalecer los dientes y prevenir las caries*. Cepilla tus dientes dos veces al día <br>
-                diariamente con Sensodyne para controlar y ayudar a prevenir la sensibilidad dental.<br>
-                *Cepillandose dos veces al día.
+              <p>Sensodyne Blanqueador Extra Fresh es una crema dental de <br>
+                 uso diario formulada para personas con dientes sensibles. <br>
+                  Contiene Trifosfato Pentasódico que ayuda a devolver el <br>
+                   blanco natural de los dientes y flúor que ayuda a fortalecer los<br>
+                    dientes y prevenir las caries*.
+
                 </p>
-              <div class="col-md-5">
+              <!-- <div class="col-md-5">
                 <ul  class="ok">
                   <li>Alivio a la sensibilidad</li>
                   <li>Protección contra las caries</li>
@@ -419,21 +425,21 @@ $this->metaTags = "
                   <li>Ayuda a devolver el blanco natural a los dientes</li>
                   <li>Refresca el aliento</li>
                 </ul>
-              </div>
+              </div> -->
+              <p style="color: #B0B0B0;font-style: italic;">*cepillándose dos veces al día</p>
           </div>
         </div>
-        <!--slide5-->
+        <!--slide6-->
         <div class="item">
           <div class="col-sm-6 col-md-6">
             <img src="<?= Yii::app()->request->baseUrl ?>/images/contenido/sensodyne/5-multiproteccion.jpg" class="img-responsive" alt="Ama con toda - Corega de venta en La Rebaja virtual">
           </div>
           <div class="col-sm-6 col-md-6">
               <h2 class="title-slide">Sensodyne®<br>Diaria Multi Protección</h2>
-              <p>Sensodyne® Diaria Multi Protección es una crema dental de uso diario específicamente <br>formulada para personas con dientes sensibles. Contiene flúor para proteger, fortalecer<br>
-            y proveer alivio continuo a dientes sensibles* y ayuda a mantener la salud de las encías.<br> Además ayuda a proteger contra las caries. Cepille dos veces al día diariamente para
-            ayudar a controlar y prevenir la sensibilidad dental.
-            * Cepillándose dos veces al día </p>
-              <div class="col-md-5">
+              <p>Sensodyne® Multi Protección Fórmula Avanzada es una crema dental<br>
+                 de uso diario formulada para  personas con dientes sensibles. <br>
+                 Contiene fluoruro para fortalecer los dientes y proteger contra <br> las caries ayudando a mantener la salud de las encías.  </p>
+              <!-- <div class="col-md-5">
                 <ul  class="ok">
                   <li>Alivio a la sensibilidad</li>
                   <li>Protección contra las caries</li>
@@ -446,31 +452,21 @@ $this->metaTags = "
                   <li>Ayuda a devolver el blanco natural a los dientes</li>
                   <li>Refresca el aliento</li>
                 </ul>
-              </div>
+              </div> -->
           </div>
         </div>
-        <!--slide6-->
+        <!--slide7-->
         <div class="item">
           <div class="col-sm-6 col-md-6">
             <img src="<?= Yii::app()->request->baseUrl ?>/images/contenido/sensodyne/6-original.jpg" class="img-responsive" alt="Ama con toda - Corega de venta en La Rebaja virtual">
           </div>
           <div class="col-sm-6 col-md-6">
-              <h2 class="title-slide">Sensodyne®<br>Diaria Multi Protección</h2>
-              <p>Sensodyne® Original esta específicamente formulada para dientes sensibles. Contiene <br>
-                cloruro de estroncio y es la fórmula original sin flúor de Sensodyne; ideal para personas<br>
-                que no toleran el flúor y necesitan aliviar la sensibilidad dental.<br>
-                * Cepillándose dos veces al día </p>
-              <div class="col-md-4">
-                <ul  class="ok">
-                  <li>Alivio a la sensibilidad</li>
-                  <li>Sin flúor</li>
-                </ul>
-              </div>
-              <div class="col-md-8">
-                <ul  class="ok">
-                  <li>Protección duradera de la sensibilidad dental</li>
-                </ul>
-              </div>
+              <h2 class="title-slide">Sensodyne®<br>Original</h2>
+              <p>Sensodyne Original esta específicamente formulada para <br>
+                dientes sensibles. Contiene cloruro de estroncio y es la <br>
+                 fórmula original sin flúor de Sensodyne; ideal para personas <br>
+                  que no toleran el flúor y necesitan aliviar la sensibilidad dental.</p>
+
           </div>
         </div>
       </div>
@@ -508,7 +504,10 @@ $this->metaTags = "
         Your browser does not support HTML5 video.
       </video>
     </div>
+
   </div>
+  <p class="video" style="font-size: 13px;text-align: center;margin-top:10px;">Los videos y fotos usadas son material previamente aprobado en zinc por todos los equipos involucrados en el proceso de aprobación</p>
+
   </div>
 </div>
 

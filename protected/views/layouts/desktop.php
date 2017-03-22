@@ -283,8 +283,6 @@ header("Pragma: no-cache");
                             </div>
                         </div>
                         <div class="col-xs-12"><div class="space-1"></div></div>
-
-
                         <div class="col-xs-12">	
                             <p align="center">
                                 Cooperativa Multiactiva &nbsp;de Servicios Solidarios Copservir  Ltda | NIT &nbsp;830.011.670-3 | LA REBAJA DROGUERIA | 01 8000 93 99  00 

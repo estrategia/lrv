@@ -56,6 +56,9 @@ class BeneficiosCommand extends CConsoleCommand {
                 $idSincronizacion = $result[0]['maximo'];
             }
             
+            if($i == 0)
+            	$idSincronizacion = 63890; 
+            
             $h2 = round(microtime(true) * 1000);
 
             fwrite($file, $sql . ". Time execution: " . ($h2 - $h1) . " miliseconds" . PHP_EOL);

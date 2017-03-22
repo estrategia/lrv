@@ -2,7 +2,7 @@
     <div data-role='main' class='ui-content'>
         <div class="modal-logo">
             <img class="" src="<?php echo Yii::app()->request->baseUrl . '/images/iconos/ubicacion-desktop/ciudad.png' ?>" alt="">
-            <h3 class="titulo-logo center">Selecciona ciudad</h3>
+            <h3 class="titulo-logo center">¿A dónde llevamos tu pedido?</h3>
         </div>
         <div id="select-ubicacion-content" class="center-div">
             <div id="select-ubicacion-psubsector" class="center-div">

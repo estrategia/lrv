@@ -2929,3 +2929,8 @@ ul.info-seleccion-ciudad .glyphicon {
     margin: 5px;
     font-size: 10px;
 }
+
+.btn-producto{
+	padding-left:10px !important;
+	padding-right:10px !important;
+}

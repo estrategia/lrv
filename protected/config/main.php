@@ -138,12 +138,14 @@ return array(
 
                 'proteccion-solar-sol-or' => 'publicidad/contenido/nombre/sol-or',
                 'shampoo-clinical-solution-caspa-severa' => 'publicidad/contenido/nombre/pyg',
-
                 'similac-mama-embarazo' => 'publicidad/contenido/nombre/similac-mama',
                 'similac-3kid' => 'publicidad/contenido/nombre/similac-3-kid',
                 'pediasure' => 'publicidad/contenido/nombre/pediasure',
                 'ensure-nutricion-especializada' => 'publicidad/contenido/nombre/ensure',
                 'glucerna-para-diabeticos' => 'publicidad/contenido/nombre/glucerna',
+                'zahara-protector-solar' => 'publicidad/contenido/nombre/zahara',
+                'prodent-cuidado-oral' => 'publicidad/contenido/nombre/prodent',
+
 
                 // Fin links campañas
 
@@ -249,6 +251,7 @@ return array(
             ),
         ),
     ),
+		
     'params' => array(
         "meses" => array( 1 => "Enero",
                2 => "Febrero",
@@ -631,6 +634,8 @@ return array(
                 'asuntoCorreo' => 'Tienes un bono disponible',
                 'tipoBonoCRM' => 3,
             	'formaPagoBonos' => 8,
+            	'diaMaximoRecordacion' => 5,
+            	'diaMinimoRecordacion' => 1,
             ),
             'reactivacionBono' => array(
                 'asuntoMensaje' => 'Activacion bono cliente fiel',
@@ -855,6 +860,6 @@ return array(
     					'1' => 'Perro',
     					'2' => 'Gato',
     			)
-    	)	
+    	)
     ),
 );

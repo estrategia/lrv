@@ -111,7 +111,7 @@
                         <?php endif;?>
 
                         <div style="margin-bottom:15px;">
-                          Domicilio <?php echo Yii::app()->shoppingCart->getDeliveryStored() ?> horas:
+                          Entrega en <?php echo Yii::app()->shoppingCart->getDeliveryStored() ?> horas:
                           <a href='#' data-toggle="modal" data-target="#modalCondicionesBodega">
                           <span class="glyphicon glyphicon-info-sign" aria-hidden="true"></span>
                           </a>
@@ -126,7 +126,7 @@
 						        <h4 class="modal-title">Condiciones</h4>
 						      </div>
 						      <div class="modal-body">
-						        <p>Los productos agregados ser&aacute;n entregados al tiempo estipulado a traves de Servientrega.</p>
+						        <p>Los productos agregados ser&aacute;n entregados en el tiempo estipulado y tendr&aacute;n un cobro adicional de env&iacute;o que ser&aacute; calculado al final de la compra..</p>
 						      </div>
 						      <div class="modal-footer">
 						        <button type="button" class="btn btn-default" data-dismiss="modal">Cerrar</button>
@@ -177,58 +177,34 @@
          <div class='row line-bottom2'>
             <div class='col-md-12'>
               <hr>
-                 <span class='glyphicon glyphicon-chevron-right der' aria-hidden='true'></span>&nbsp;<h4 style='display:inline-block;color:#EA0001;font-weight: bold;'>POLITICAS DE CAMBIOS Y DEVOLUCIONES.</h4>
+                 
                  <div class="panel-group" id="accordion" role="tablist" aria-multiselectable="true">
                    <div class="panel panel-default">
                      <div class="panel-heading" role="tab" id="headingOne">
                        <h4 class="panel-title">
                          <a role="button" data-toggle="collapse" data-parent="#accordion" href="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
-                          Retracto (producto recibido pero no lo quiero)
+                           POLITICAS DE CAMBIOS Y DEVOLUCIONES.
                          </a>
                        </h4>
                      </div>
                      <div id="collapseOne" class="panel-collapse collapse in" role="tabpanel" aria-labelledby="headingOne">
                        <div class="panel-body">
+                       <span class='glyphicon glyphicon-chevron-right der' aria-hidden='true'></span>&nbsp;<h4 style='display:inline-block;color:#EA0001;font-weight: bold;'>Retracto (producto recibido pero no lo quiero)</h4>
                          <p>El costo de env&iacute;o del PRODUCTO al vendedor lo asume: COMPRADOR <br/>
                          Tiempo solicitud retracto: 5 d&iacute;as<br/>
                          Tiempo de respuesta: 5 d&iacute;as<br/>
                          </p>
-                       </div>
-                     </div>
-                   </div>
-                   <div class="panel panel-default">
-                     <div class="panel-heading" role="tab" id="headingTwo">
-                       <h4 class="panel-title">
-                         <a class="collapsed" role="button" data-toggle="collapse" data-parent="#accordion" href="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
-                           Devoluci&oacute;n (no recib&iacute; el producto / recib&iacute; producto malo)
-                         </a>
-                       </h4>
-                     </div>
-                     <div id="collapseTwo" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingTwo">
-                       <div class="panel-body">
+                         <span class='glyphicon glyphicon-chevron-right der' aria-hidden='true'></span>&nbsp;<h4 style='display:inline-block;color:#EA0001;font-weight: bold;'>Devoluci&oacute;n (no recib&iacute; el producto / recib&iacute; producto malo)</h4>
                          <p>El costo de env&iacute;o del PRODUCTO al vendedor lo asume: Vendedor <br/>
                          Costo de env&iacute;o al cliente lo asume: Vendedor <br/>
                          Tiempo solicitud devoluci&oacute;n: 5 d&iacute;as <br/>
                          Tiempo de respuesta: 5 d&iacute;as <br/>
                          </p>
-                       </div>
-                     </div>
-                   </div>
-                   <div class="panel panel-default">
-                     <div class="panel-heading" role="tab" id="headingThree">
-                       <h4 class="panel-title">
-                         <a class="collapsed" role="button" data-toggle="collapse" data-parent="#accordion" href="#collapseThree" aria-expanded="false" aria-controls="collapseThree">
-                           Garant&iacute;a (el producto se ve averi&oacute;)
-                         </a>
-                       </h4>
-                     </div>
-                     <div id="collapseThree" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingThree">
-                       <div class="panel-body">
+                         <span class='glyphicon glyphicon-chevron-right der' aria-hidden='true'></span>&nbsp;<h4 style='display:inline-block;color:#EA0001;font-weight: bold;'>Garant&iacute;a (el producto se ve averi&oacute;)</h4>
                          <p>El costo de env&iacute;o del PRODUCTO al vendedor lo asume: Vendedor<br/>
                          El costo de env&iacute;o del PRODUCTO al cliente lo asume: Vendedor<br/>
                          Solicitud garant&iacute;a, por producto<br/>
                          Tiempo de respuesta: 30 d&iacute;as despu&eacute;s de recibido el PRODUCTO<br/>
-                         <p/>
                        </div>
                      </div>
                    </div>

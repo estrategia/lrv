@@ -7,7 +7,7 @@
             <div class="modal-body">
                 <div class="row modal-logo">
                     <img class="" src="<?php echo Yii::app()->request->baseUrl . '/images/iconos/ubicacion-desktop/ciudad.png' ?>" alt="">
-                    <h3 class="titulo-logo center">Selecciona ciudad</h3>
+                    <h3 class="titulo-logo center">¿A dónde llevamos tu pedido?</h3>
                 </div>
                 <div class="row">
                     <div class="col-md-8 center-block" style="float: none !important;">
