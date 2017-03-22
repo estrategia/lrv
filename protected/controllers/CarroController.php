@@ -1561,6 +1561,7 @@ class CarroController extends Controller {
             $post = ($post == "true");
         }
 
+        $this->fixedFooter = false;
         if ($this->objSectorCiudad === null) {
             if ($post) {
                 echo CJSON::encode(array('result' => 'ok', 'response' => 'Seleccionar ubicaci&oacute;n', 'redirect' => $this->createUrl('/sitio/ubicacion')));
@@ -2239,7 +2240,7 @@ class CarroController extends Controller {
             Yii::app()->end();
         } else {
             //CVarDumper::dump($modelPago, 3);
-            $this->fixedFooter = true;
+            $this->fixedFooter = false;
 
             /* if ($modelPago->pagoExpress) {
               $paso = Yii::app()->params->pagar['pasos'][1];
@@ -2512,7 +2513,7 @@ class CarroController extends Controller {
             Yii::app()->end();
         } else {
             //CVarDumper::dump($modelPago, 3);
-            $this->fixedFooter = true;
+            $this->fixedFooter = false;
 
             /* if ($modelPago->pagoExpress) {
               $paso = Yii::app()->params->pagar['pasos'][1];
@@ -2720,7 +2721,7 @@ class CarroController extends Controller {
             Yii::app()->end();
         } else {
             //CVarDumper::dump($modelPago, 3);
-            $this->fixedFooter = true;
+            $this->fixedFooter = false;
 
             if ($modelPago->pagoExpress) {
                 $paso = Yii::app()->params->pagar['pasos'][1];

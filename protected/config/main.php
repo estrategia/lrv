@@ -547,6 +547,7 @@ return array(
             'pedidoRealizado' => 'La Rebaja Virtual: Pedido realizado',
             'pedidoRealizadoPasarela' => 'La Rebaja Virtual: Pendiente de Confirmación Pasarela',
             'pedidoRemitido' => 'La Rebaja Virtual: Pedido remitido',
+        	'perrosgatos' => 'La Rebaja Virtual: Gracias por inscribir a tu mascota',
         ),
         'asuntoRecordatorioClave' => 'Clave de Ingreso',
         'asuntoBienvenida' => 'La Rebaja te da la bienvenida',

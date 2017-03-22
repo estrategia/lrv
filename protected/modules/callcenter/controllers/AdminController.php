@@ -645,7 +645,7 @@ class AdminController extends ControllerOperator {
                     $contenidoCorreo = $this->renderPartial(Yii::app()->params->rutasPlantillasCorreo['mensajeHtml'], array('mensaje' => $objObservacion->observacion), true, true);
 
                     $htmlCorreo = PlantillaCorreo::getContenido('observacionPedido', $contenidoCorreo);
-                 
+                    
                     sendHtmlEmail($objCompra->identificacionUsuario == null ? $objCompra->objCompraDireccion->correoElectronico : $objCompra->objUsuario->correoElectronico, Yii::app()->params->callcenter['observacion']['asuntoMensaje'], $htmlCorreo);
                 } catch (Exception $exc) {
                     

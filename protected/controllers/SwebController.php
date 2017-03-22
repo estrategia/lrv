@@ -84,7 +84,7 @@ class SwebController extends CController {
                     INNER JOIN
                     t_BeneficiosProductos AS PBR ON t.IdBeneficio = PBR.IdBeneficio LEFT JOIN 
                     t_BeneficiosPuntosVenta as pv ON (pv.IdBeneficio = t.IdBeneficio)
-                WHERE $condicion AND t.Tipo IN (21,22,23,24,25)";
+                WHERE $condicion AND t.Tipo IN (21,22,23,24,25,26)";
             Yii::app()->db->createCommand($sql)->query();
             //     fwrite($file, $sql . PHP_EOL);
             //    fclose($file);
@@ -110,7 +110,7 @@ class SwebController extends CController {
                         UPDATE t_Beneficios AS t
                         INNER JOIN t_BeneficiosProductos AS PBR ON t.IdBeneficio = PBR.IdBeneficio
                         SET " . $parametros . " 
-                        WHERE $condicion AND t.Tipo IN (21,22,23,24,25)";
+                        WHERE $condicion AND t.Tipo IN (21,22,23,24,25,26)";
             Yii::app()->db->createCommand($sql)->query();
             //    fwrite($file, $sql . PHP_EOL);
             //     fclose($file);
@@ -133,7 +133,7 @@ class SwebController extends CController {
 
             $Transaccion = Yii::app()->db->beginTransaction();
             // Borrar lo anterior que exista en ese punto de venta
-            $beneficios = Beneficios::model()->findAll(
+          /*  $beneficios = Beneficios::model()->findAll(
                     array(
                         'with' => 'listPuntosVenta',
                         'condition' => 'listPuntosVenta.IDComercial =:puntoOrigen AND t.fechaIni >=:fechaVigencia',
@@ -141,9 +141,13 @@ class SwebController extends CController {
                             ':puntoOrigen' => $puntoVentaOrigen,
                             ':fechaVigencia' => Date("Y-m-d"),
                         )
-            ));
+            ));*/
 
-
+            $sql = "SELECT t.idBeneficio FROM t_Beneficios t 
+            		INNER JOIN t_BeneficiosPuntosVenta as listPuntosVenta ON (t.IdBeneficio = listPuntosVenta.IdBeneficio)
+            		WHERE listPuntosVenta.IDComercial ='$puntoVentaOrigen' AND t.fechaIni >='".Date("Y-m-d")."'";
+            $beneficios = Yii::app()->db->createCommand($sql)->queryAll();
+            
             if ($beneficios) {
                 $sql = "DELETE FROM  t_BeneficiosPuntosVenta WHERE IDComercial = '$puntoVentaDestino'";
                 Yii::app()->db->createCommand($sql)->query();
@@ -153,7 +157,7 @@ class SwebController extends CController {
                 $arrayInsert = array();
                 $registros = 0;
                 foreach ($beneficios as $ben) {
-                    $arrayInsert[] = "($ben->idBeneficio, '$puntoVentaDestino')";
+                    $arrayInsert[] = "(".$ben['idBeneficio'].", '$puntoVentaDestino')";
                     $registros++;
                 }
 
@@ -162,6 +166,8 @@ class SwebController extends CController {
                     Yii::app()->db->createCommand($sql)->query();
                     $Transaccion->commit();
                 }
+                
+                echo $sql;
             }
             return 1;
         } catch (Exception $e) {
@@ -172,6 +178,10 @@ class SwebController extends CController {
 
     public function actionVerificarCorreo() {
         $this->recordarCorreos();
+    }
+    
+    public function actionVerificarWs(){
+    //	$this->copiarBeneficios('4A4', '4B4');
     }
 
 }
