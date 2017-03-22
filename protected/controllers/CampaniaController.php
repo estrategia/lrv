@@ -56,13 +56,11 @@ class CampaniaController extends Controller {
     	 	$model->fechaRegistro = Date("Y-m-d h:i:s");
     	 	if($model->save()){
     	 		
-    	 		$contenidoCorreo = $this->renderPartial('correoMascotas', array(
+    	 		$htmlCorreo = $this->renderPartial('correoMascotas', array(
     	 				'model' => $model,), true, true);
     	 		
-    	 		$htmlCorreo = $this->renderPartial('application.views.common.correo', array('contenido' => $contenidoCorreo), true, true);
-    	 		
     	 		try {
-    	 			sendHtmlEmail($model->correo, "Gracias por inscribir a tu mascota", $htmlCorreo);
+    	 			sendHtmlEmail($model->correo, Yii::app()->params->asunto['perrosgatos'], $htmlCorreo);
     	 			echo CJSON::encode(array(
     	 					'result' => 'ok',
     	 					'response' => 'Datos guardados con exito'

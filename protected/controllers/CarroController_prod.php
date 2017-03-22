@@ -2225,7 +2225,7 @@ class CarroController extends Controller {
             Yii::app()->end();
         } else {
             //CVarDumper::dump($modelPago, 3);
-            $this->fixedFooter = true;
+            $this->fixedFooter = false;
 
             /* if ($modelPago->pagoExpress) {
               $paso = Yii::app()->params->pagar['pasos'][1];
@@ -2501,7 +2501,7 @@ class CarroController extends Controller {
             Yii::app()->end();
         } else {
             //CVarDumper::dump($modelPago, 3);
-            $this->fixedFooter = true;
+            $this->fixedFooter = false;
 
             /* if ($modelPago->pagoExpress) {
               $paso = Yii::app()->params->pagar['pasos'][1];
@@ -2712,7 +2712,7 @@ class CarroController extends Controller {
             Yii::app()->end();
         } else {
             //CVarDumper::dump($modelPago, 3);
-            $this->fixedFooter = true;
+            $this->fixedFooter = false;
 
             if ($modelPago->pagoExpress) {
                 $paso = Yii::app()->params->pagar['pasos'][1];
