@@ -84,8 +84,7 @@
                              <button data-role="calificacion" class="btn btn-primary" onclick='calificarProductoDesktop("<?php echo $objProducto->codigoProducto ?>");
                                      return false;'>Calificar</button>
                          </div>
-                     </div>-->
-                    </form>
+                    </div>-->
                 </div>
             </div>
         </div>
