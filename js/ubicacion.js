@@ -28,7 +28,7 @@ function inicializarMapa(){
         locationMarker.setPosition(map.getCenter());
     });
 
-    google.maps.event.addListener(map, 'idle', function() {
+    google.maps.event.addListenerOnce(map, 'idle', function() {
       iniciarTourAutomatico();
     });
 }

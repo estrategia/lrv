@@ -967,18 +967,30 @@ class FormaPagoForm extends CFormModel {
         
         $sqlAdicional = "";
         
-        if(!empty($horaInicioAdicional) && !empty($horaFinAdicional)){
-            $sqlAdicional = "SELECT idHorario, concat('Ma&ntilde;ana a las ', DATE_FORMAT(hora, '%h:%i %p')) as etiqueta, concat(DATE_ADD(CURDATE(), INTERVAL 1 DAY), ' ', DATE_FORMAT(hora, '%H:%i:%s')) as fecha, hora 
-                FROM   m_Horario 
-                WHERE hora between '$horaInicioAdicional' and '$horaFinAdicional' 
+        if(!empty($horaInicioAdicional) && !empty($horaFinAdicional))
+        {
+        	if ($ahora->format('H:i:s') < '23:30')
+        	{
+        		$sqlAdicional = "SELECT idHorario, concat('Ma&ntilde;ana a las ', DATE_FORMAT(hora, '%h:%i %p')) as etiqueta, concat(DATE_ADD(CURDATE(), INTERVAL 1 DAY), ' ', DATE_FORMAT(hora, '%H:%i:%s')) as fecha, hora
+                FROM   m_Horario
+                WHERE hora between '".$horaInicioAdicional."' and '".$horaFinAdicional."'
                 UNION
                 ";
+        	}
+        	else
+        	{
+        		$sqlAdicional = "SELECT idHorario, concat('Ma&ntilde;ana a las ', DATE_FORMAT(hora, '%h:%i %p')) as etiqueta, concat(DATE_ADD(CURDATE(), INTERVAL 1 DAY), ' ', DATE_FORMAT(hora, '%H:%i:%s')) as fecha, hora
+                FROM   m_Horario
+                WHERE hora between ADDTIME('" . $horaInicioAdicional . "', '" . $deltaHorario . "') and '" . $horaFinAdicional . "'
+                UNION
+                ";
+        	}
         }
 
         $sql = "SELECT idHorario, concat('Hoy a las ', DATE_FORMAT(hora, '%h:%i %p')) as etiqueta, concat(curdate(), ' ', DATE_FORMAT(hora, '%H:%i:%s')) as fecha, hora
              FROM   m_Horario
-             WHERE  hora between ADDTIME('" . $horaIniServicio . "', '" . $deltaHorario . "') and '" . $horaFinServicio . "' and (hora >= ADDTIME(CURTIME(), '" . $deltaHorario . "'))
-             UNION 
+             WHERE  (hora between ADDTIME('" . $horaIniServicio . "', '" . $deltaHorario . "') and '" . $horaFinServicio . "') and (hora >= ADDTIME(CURTIME(), '0 1:00:0.000000'))
+             UNION
              $sqlAdicional SELECT idHorario, concat('Ma&ntilde;ana a las ', DATE_FORMAT(hora, '%h:%i %p')) as etiqueta, concat(DATE_ADD(CURDATE(), INTERVAL 1 DAY), ' ', DATE_FORMAT(hora, '%H:%i:%s')) as fecha, hora
              FROM m_Horario
              WHERE (hora between ADDTIME('" . $horaIniServicio . "', '" . $deltaHorario . "') and '12:00') ORDER BY fecha";
