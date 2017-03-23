@@ -25,7 +25,7 @@ header("Pragma: no-cache");
         <link rel="shortcut icon" href="<?php echo Yii::app()->request->baseUrl; ?>/images/favicon_16.ico" type="image/x-icon" />  
         <title><?php echo CHtml::encode($this->pageTitle); ?></title>
 
-        <?php Yii::app()->getClientScript()->registerCssFile(Yii::app()->request->baseUrl . "/css/main-desktop.css"); ?>
+        <?php //Yii::app()->getClientScript()->registerCssFile(Yii::app()->request->baseUrl . "/css/main-desktop.css?" . Yii::app()->params->fechaActualizacion["css"]); ?>
     </head>
 
     <body>
