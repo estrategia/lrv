@@ -1,6 +1,10 @@
 <?php
 
 return array(
+	"fechaActualizacion" => array(
+		"js" => "20170323",
+		"css" => "20170323"
+	),
     "meses" => array(
         1 => "Enero",
         2 => "Febrero",
