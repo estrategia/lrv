@@ -15,6 +15,8 @@
                 <div class="col-md-10">
                     <div id="owl-carousel" class="owl-carousel slide-productos">
                         <?php foreach ($listaProductos as $objProducto): ?>
+                        
+                      
                             <div class="item">
                                 <ul class="listaProductos">
                                     <?php

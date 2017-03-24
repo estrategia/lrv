@@ -1,3 +1,4 @@
+<?php if(count($objModulo->listImagenesBanners) > 0 ):?>
 <section>
     <div class="container-fluid">
         <div class="row">
@@ -18,3 +19,4 @@
         </div>
     </div>
 </section>
+<?php endif;?>
