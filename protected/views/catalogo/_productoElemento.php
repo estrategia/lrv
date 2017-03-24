@@ -8,11 +8,11 @@
 <?php endif; ?>
 
 <?php if ($objProducto->fraccionado == 1): ?>
-    <div class="cdiv_prod_frc">
+   <!--   <div class="cdiv_prod_frc">
         <div class="c_prod_frc">
             <p class="">Producto fraccionado</p>
         </div>
-    </div>
+    </div> -->
 <?php endif; ?>
 <div class="clst_cont_top <?php echo ($objProducto->fraccionado == 1 ? ' top_frc' : '') ?> ">
     <div class="clst_pro_img">
@@ -90,8 +90,8 @@
                             <?php echo CHtml::link('Ver producto', "#popup-carro-controlada-$objProducto->codigoProducto", array('class' => 'ui-btn ui-corner-all ui-shadow ui-btn-inline ui-btn-r', 'data-rel' => 'popup', 'data-mini' => 'true')); ?>
                         <?php else: ?>
                         <?php if ($objProducto->fraccionado == 1): ?>
-				        	     <?php echo CHtml::link('Añadir Unidades', CController::createUrl('/catalogo/producto', array('producto' => $objProducto->codigoProducto, 'descripcion' => $objProducto->getCadenaUrl())), array('class' => 'ui-btn ui-corner-all ui-shadow ui-btn-inline ui-btn-r', 'data-mini' => 'true')); ?>
-				                 <?php echo CHtml::link('Añadir Fracciones', CController::createUrl('/catalogo/producto', array('producto' => $objProducto->codigoProducto, 'descripcion' => $objProducto->getCadenaUrl())), array('class' => 'ui-btn ui-corner-all ui-shadow ui-btn-inline ui-btn-r', 'data-mini' => 'true')); ?>
+				        	     <?php echo CHtml::link('Añadir Unidades', CController::createUrl('/catalogo/producto', array('producto' => $objProducto->codigoProducto, 'descripcion' => $objProducto->getCadenaUrl())), array('class' => 'ui-btn ui-corner-all ui-shadow ui-btn-inline ui-btn-r', 'data-mini' => 'true', 'data-ajax' => "false")); ?>
+				                 <?php echo CHtml::link('Añadir Fracciones', CController::createUrl('/catalogo/producto', array('producto' => $objProducto->codigoProducto, 'descripcion' => $objProducto->getCadenaUrl())), array('class' => 'ui-btn ui-corner-all ui-shadow ui-btn-inline ui-btn-r', 'data-mini' => 'true', 'data-ajax' => "false")); ?>
 				           <?php else:?> 
 	                        	<?php if($this->objSectorCiudad->esDefecto()): ?>
 			                    	<?php echo CHtml::link('Añadir al carro', CController::createUrl('/sitio/ubicacion'), array('class' => 'ui-btn ui-corner-all ui-shadow ui-btn-inline ui-btn-r', 'data-mini' => 'true', 'data-ajax'=>'false')); ?>

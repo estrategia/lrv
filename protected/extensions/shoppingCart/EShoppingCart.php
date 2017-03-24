@@ -701,11 +701,11 @@ class EShoppingCart extends CMap {
       return $tax;
       } */
 
-    public function getTaxPrice() {
+    public function getTaxPrice($total = true) {
         $tax = 0;
         if ($this->objSectorCiudad != null && $this->objSectorCiudad->objCiudad->excentoImpuestos == 0) {
             foreach ($this as $position) {
-                $tax += $position->getTaxPrice(true);
+                $tax += $position->getTaxPrice($total);
             }
         }
         
@@ -732,7 +732,6 @@ class EShoppingCart extends CMap {
     	 
     	$impuesto = $impuestoQuery->valor;
     	
-    	
     	if($base == true)
     		return round(Precio::calcularBaseImpuesto($this->shippingStored, $impuesto/100));
     	else
@@ -749,7 +748,6 @@ class EShoppingCart extends CMap {
         }
         $tax += $this->getTaxShipping(true) + $this->getTaxShippingStored(true);
         
-       
         //$tax = ceil($tax);
         return $tax;
     }

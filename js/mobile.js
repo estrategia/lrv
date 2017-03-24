@@ -1030,6 +1030,7 @@ function recalcularFiltros(tipo) {
 }
 
 function verUbicacion() {
+	
     if ($('#ubicacion-info').attr('data-active') == '0') {
         $('#ubicacion-info').removeClass("hide");
         $('#ubicacion-info').addClass("display");
@@ -1071,6 +1072,7 @@ $(document).on('click', "a[data-cargar='1']", function () {
         },
         success: function (data) {
             if (data.result === "ok") {
+            	
                 $('#panel-carro-canasta').html(data.response.canastaHTML);
                 $('#panel-carro-canasta').trigger("create");
 
