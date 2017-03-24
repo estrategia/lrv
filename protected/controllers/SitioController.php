@@ -29,9 +29,25 @@ class SitioController extends Controller {
         	$this->contenidosInicioDesktop();
         	 $this->render('d_index', array(
 	                'listModulos' => ModulosConfigurados::getModulos($this->objSectorCiudad, Yii::app()->shoppingCart->getCodigoPerfil(), UbicacionModulos::UBICACION_ESCRITORIO_HOME)
+	              // 'listModulos' => array()
 	         ));
         }
         Yii::app()->end();
+    }
+    
+    public function actionIndexCopia() {
+    	if ($this->isMobile) {
+    		$this->contenidosInicioMovil();
+    		$this->actionInicio();
+    	} else {
+    		// verificar los contenidos de bienvenida
+    		$this->contenidosInicioDesktop();
+    		$this->render('d_index', array(
+    				'listModulos' => ModulosConfigurados::getModulos($this->objSectorCiudad, Yii::app()->shoppingCart->getCodigoPerfil(), UbicacionModulos::UBICACION_ESCRITORIO_HOME)
+    				// 'listModulos' => array()
+    		));
+    	}
+    	Yii::app()->end();
     }
     private function contenidosInicioMovil(){
     	if(Yii::app()->user->isGuest){

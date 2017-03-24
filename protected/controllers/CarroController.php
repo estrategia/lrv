@@ -3635,7 +3635,7 @@ class CarroController extends Controller {
 
                 $objPasarelaEnvio = new PasarelaEnvios;
                 $objPasarelaEnvio->idCompra = $objCompra->idCompra;
-                $objPasarelaEnvio->valor = $objCompra->totalCompra;
+                $objPasarelaEnvio->valor = Yii::app()->shoppingCart->getTotalCostClient();
                 $objPasarelaEnvio->iva = $objCompra->impuestosCompra;
                 $objPasarelaEnvio->baseIva = $objCompra->baseImpuestosCompra;
                 $objPasarelaEnvio->moneda = "COP";
@@ -3764,8 +3764,6 @@ class CarroController extends Controller {
                 'response' => $exc->getMessage()
             );
         }
-        
-        
         
     }
 

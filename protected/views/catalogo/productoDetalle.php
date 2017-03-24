@@ -26,11 +26,11 @@
         </div>
     <?php endif; ?>
     <?php if ($objProducto->fraccionado == 1): ?>
-        <div class="cdiv_prod_frc">
+       <!--  <div class="cdiv_prod_frc">
             <div class="c_prod_frc">
                 <p class="">Producto fraccionado</p>
             </div>
-        </div>
+        </div>  -->
     <?php endif; ?>
     <div id="owl-productodetalle-<?php echo $objProducto->codigoProducto ?>" class="owl-carousel owl-theme owl-productodetalle">
         <?php $listImagenes = $objProducto->listImagenesGrandes() ?>
