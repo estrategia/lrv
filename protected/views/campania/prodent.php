@@ -83,6 +83,23 @@ $this->metaTags = "
     @media (min-width: 1601px) and (max-width: 1700px) {.bg-prodent02 {margin-top: -30.6%;}}
     @media (min-width: 1701px) and (max-width: 1800px) {.bg-prodent02 {margin-top: -29.9%;}}
 
+
+    <!-- Google Code para etiquetas de remarketing -->
+    <script type='text/javascript'>
+    /* <![CDATA[ */
+    var google_conversion_id = 858267660;
+    var google_custom_params = window.google_tag_params;
+    var google_remarketing_only = true;
+    /* ]]> */
+    </script>
+    <script type='text/javascript' src='//www.googleadservices.com/pagead/conversion.js'>
+    </script>
+    <noscript>
+    <div style='display:inline;''>
+    <img height='1' width='1' style='border-style:none;' alt='' src='//googleads.g.doubleclick.net/pagead/viewthroughconversion/858267660/?guid=ON&amp;script=0'/>
+    </div>
+    </noscript>
+
 	</style>
     ";
 ?>
@@ -223,7 +240,7 @@ $this->metaTags = "
 <!--Versión escritorio-->
 <?php else: ?>
 	<div class="sidebar-cart">
-  	<a href="#">
+  	<a href="https://www.larebajavirtual.com/catalogo/buscar?busqueda=prodent">
   		<img class="img-responsive" src="<?= Yii::app()->request->baseUrl ?>/images/contenido/coaspharma/prodent/compra-online.png" alt="Comprar sol-or">
   	</a>
 	</div>
