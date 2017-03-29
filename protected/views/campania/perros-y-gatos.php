@@ -129,7 +129,7 @@ $this->metaTags = "
       </div>
       <div style="overflow: hidden;padding: 0 9%;">
           <img class="icono m" src="<?= Yii::app()->request->baseUrl ?>/images/contenido/perros-y-gatos/alimento-perros.png">
-          <a href="<?php echo CController::createUrl('/catalogo/categoria/categoria/222')?>" style="color: #58170C !important;"><span class="item-link m">Alimento seco</span></a>
+          <a href="<?php echo CController::createUrl('/catalogo/categoria/categoria/223')?>" style="color: #58170C !important;"><span class="item-link m">Alimento seco</span></a>
       </div>
       <div style="overflow: hidden;padding: 0 9%;">
           <img class="icono m" src="<?= Yii::app()->request->baseUrl ?>/images/contenido/perros-y-gatos/snacks-perros.png">
@@ -155,7 +155,7 @@ $this->metaTags = "
         </div>
         <div style="overflow: hidden;padding: 0 9%;">
             <img class="icono m" src="<?= Yii::app()->request->baseUrl ?>/images/contenido/perros-y-gatos/a-humedo-gato.png">
-            <a href="<?php echo CController::createUrl('/catalogo/categoria/categoria/217')?>" style="color: #58170C !important;"><span class="item-link m">Alimento húmedo</span></a>
+            <a href="<?php echo CController::createUrl('/catalogo/categoria/categoria/216')?>" style="color: #58170C !important;"><span class="item-link m">Alimento húmedo</span></a>
         </div>
         <div style="overflow: hidden;padding: 0 9%;">
             <img class="icono m" src="<?= Yii::app()->request->baseUrl ?>/images/contenido/perros-y-gatos/alimento-gatos.png">
@@ -274,7 +274,7 @@ $this->metaTags = "
           <div class="col-xs-offset-1 col-sm-offset-1 col-md-offset-1 col-xs-4 col-sm-4 col-md-4">
             <div class="section-button">
               <img class="img-responsive icono" src="<?= Yii::app()->request->baseUrl ?>/images/contenido/perros-y-gatos/alimento-gatos.png">
-              <a href="<?php echo CController::createUrl('/catalogo/categoria/categoria/222')?>"><span class="item-link">Alimento Seco</span></a>
+              <a href="<?php echo CController::createUrl('/catalogo/categoria/categoria/217')?>"><span class="item-link">Alimento Seco</span></a>
             </div>
           </div>
         </div>

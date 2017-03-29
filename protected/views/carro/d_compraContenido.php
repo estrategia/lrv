@@ -1,7 +1,7 @@
 
 <h2 class="text-center title-desp">¡Gracias por su compra!</h2>
 <div class='container'>
-	<?php if($objCompra->invitado=='0' && !empty($objCompra->identificacionUsuario) && $objCompra->codigoCiudad=='11001'):?>
+	<?php /*if($objCompra->invitado=='0' && !empty($objCompra->identificacionUsuario) && $objCompra->codigoCiudad=='11001'):?>
 		<?php
 		$cedula = $objCompra->identificacionUsuario;
 		$idCompra = $objCompra->idCompra;
@@ -14,7 +14,7 @@
 		<a href="<?= $urlToken ?>">
 			<img src="http://www.larebajavirtual.com/images/contenido/copservir/800x300rompecabezas.jpg" class="center-div" style="width: 100%">
 		</a>
-	<?php endif;?>
+	<?php endif;*/?>
 
 
     <div class="blockPago">

@@ -25,7 +25,7 @@ header("Pragma: no-cache");
         <link rel="shortcut icon" href="<?php echo Yii::app()->request->baseUrl; ?>/images/favicon_16.ico" type="image/x-icon" />  
         <title><?php echo CHtml::encode($this->pageTitle); ?></title>
 
-        <?php Yii::app()->getClientScript()->registerCssFile(Yii::app()->request->baseUrl . "/css/main-desktop.css"); ?>
+        <?php //Yii::app()->getClientScript()->registerCssFile(Yii::app()->request->baseUrl . "/css/main-desktop.css?" . Yii::app()->params->fechaActualizacion["css"]); ?>
     </head>
 
     <body>
@@ -170,9 +170,11 @@ header("Pragma: no-cache");
                         </li>
 
 <?php foreach (ModulosConfigurados::getModulosMenu($this->objSectorCiudad) as $objModulo): ?>
+						<?php if(isset($objModulo->objMenuModulo)):?>
                             <li class="modulo-menu" style="background-color: <?php echo $objModulo->objMenuModulo->color; ?>;">
                                 <a href="<?php echo $this->createUrl($objModulo->objMenuModulo->contenido) ?>"><img src="<?php echo Yii::app()->request->baseUrl . Yii::app()->params->carpetaImagen['menuDesktop'] . $objModulo->objMenuModulo->rutaImagen; ?>" /> <?php echo $objModulo->descripcion ?></a>
                             </li>
+                        <?php endif;?>
 <?php endforeach; ?>
                     </ul>
                 </nav>

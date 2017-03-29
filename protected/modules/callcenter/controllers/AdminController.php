@@ -645,7 +645,7 @@ class AdminController extends ControllerOperator {
                     $contenidoCorreo = $this->renderPartial(Yii::app()->params->rutasPlantillasCorreo['mensajeHtml'], array('mensaje' => $objObservacion->observacion), true, true);
 
                     $htmlCorreo = PlantillaCorreo::getContenido('observacionPedido', $contenidoCorreo);
-                 
+                    
                     sendHtmlEmail($objCompra->identificacionUsuario == null ? $objCompra->objCompraDireccion->correoElectronico : $objCompra->objUsuario->correoElectronico, Yii::app()->params->callcenter['observacion']['asuntoMensaje'], $htmlCorreo);
                 } catch (Exception $exc) {
                     
@@ -844,6 +844,11 @@ class AdminController extends ControllerOperator {
     	}
     }
 
+    public function actionSer(){
+    	 echo "<pre>";
+    	$serial = 'a:2:{i:0;a:12:{i:0;s:6:"CODIGO";i:1;s:11:"DESCRIPCION";i:2;s:3:"2W4";i:3;s:3:"216";i:4;s:3:"2F4";i:5;s:3:"218";i:6;i:-1;i:7;i:-1;i:8;i:-1;i:9;i:-1;i:10;i:-1;i:11;i:-1;}i:1;a:2:{i:0;a:13:{s:6:"CODIGO";s:6:"110856";s:11:"DESCRIPCION";s:39:"PANAL HUGGIES NATURAL CARE NIÑA ETAPA 5";s:15:"CANTIDAD_PEDIDA";s:1:"1";s:7:"SALDO_3";s:1:"3";s:7:"SALDO_4";s:1:"4";s:7:"SALDO_5";s:1:"2";s:7:"SALDO_6";s:1:"3";s:7:"SALDO_7";i:-1;s:7:"SALDO_8";i:-1;s:7:"SALDO_9";i:-1;s:8:"SALDO_10";i:-1;s:8:"SALDO_11";i:-1;s:8:"SALDO_12";i:-1;}i:1;a:13:{s:6:"CODIGO";s:5:"73201";s:11:"DESCRIPCION";s:66:"OFERTA PAÑITOS HUMEDOS PEQUEÑIN KARITE PAGUE 70 LLEVE 100 UNIDADES";s:15:"CANTIDAD_PEDIDA";s:1:"1";s:7:"SALDO_3";s:1:"3";s:7:"SALDO_4";s:1:"1";s:7:"SALDO_5";s:1:"4";s:7:"SALDO_6";s:1:"2";s:7:"SALDO_7";i:-1;s:7:"SALDO_8";i:-1;s:7:"SALDO_9";i:-1;s:8:"SALDO_10";i:-1;s:8:"SALDO_11";i:-1;s:8:"SALDO_12";i:-1;}}}';
+    	print_r(unserialize($serial));
+    }
     /* protected function gridDetallePedido($data, $row) {
       $params = array('pedido' => $data->idCompra);
 

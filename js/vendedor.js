@@ -537,9 +537,11 @@ $(document).ready(function () {
 
 $(document).on('click', 'button[data-role="ubicacion-mapa"]', function() {
     if ($('#page-ubicacion-map').length > 0) {
+    	
         $.mobile.changePage('#page-ubicacion-map', {transition: "pop", role: "dialog", reverse: false});
         resizeMap();
     } else {
+    	
         $.ajax({
             type: 'POST',
             dataType: 'html',
@@ -550,7 +552,7 @@ $(document).on('click', 'button[data-role="ubicacion-mapa"]', function() {
             },
             success: function(data) {
                 $.getScript("https://maps.googleapis.com/maps/api/js?client="+gmapKey).done(function(script, textStatus) {
-                    $.getScript(requestUrl + "/js/ubicacion.min.js").done(function(script, textStatus) {
+                    $.getScript(requestUrl + "/js/ubicacion_vendedor.min.js").done(function(script, textStatus) {
                         $('body').append(data);
                         inicializarMapa();
                         $.mobile.changePage('#page-ubicacion-map', {transition: "pop", role: "dialog", reverse: false});

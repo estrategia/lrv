@@ -10,12 +10,12 @@
                 	<?php if (Yii::app()->user->isGuest): ?>
                 		<button class="boton-tipo-ubicacion" style="opacity:0.3; cursor: default;">
 	                        <img src=" <?php echo Yii::app()->request->baseUrl . '/images/iconos/ubicacion-desktop/direcciones.png' ?> " alt="">
-	                        <span class="amarillo">Direcciones</span>
+	                        <span class="amarillo">Usar tus direcciones</span>
 	                    </button>
                 	<?php else: ?>
                 		<button class="boton-tipo-ubicacion" data-role="ubicacion-direccion">
 	                        <img src=" <?php echo Yii::app()->request->baseUrl . '/images/iconos/ubicacion-desktop/direcciones.png' ?> " alt="">
-	                        <span class="amarillo">Direcciones</span>
+	                        <span class="amarillo">Usar tus direcciones</span>
 	                    </button>
                 	<?php endif;?>
                     
@@ -25,11 +25,11 @@
                     </button>
                     <button class="boton-tipo-ubicacion" data-role="ubicacion-gps">
                         <img src=" <?php echo Yii::app()->request->baseUrl . '/images/iconos/ubicacion-desktop/automatica.png' ?> " alt="">
-                        <span class="naranja">Ubicación automatica</span>
+                        <span class="naranja">Ubicación autom&aacute;tica</span>
                     </button>
                     <button class="boton-tipo-ubicacion" data-role="ubicacion-mapa">
                         <img src=" <?php echo Yii::app()->request->baseUrl . '/images/iconos/ubicacion-desktop/ciudad.png' ?> " alt="">
-                        <span class="rojo">Selección de ciudad</span>
+                        <span class="rojo">Seleccionar ciudad</span>
                     </button>
                 </div>
                <!--  <?php if (!Yii::app()->user->isGuest): ?>
