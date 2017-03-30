@@ -56,9 +56,9 @@ class BeneficiosCommand extends CConsoleCommand {
                 $idSincronizacion = $result[0]['maximo'];
             }
             
-            if($i == 0)
+            /*if($i == 0)
             	$idSincronizacion = 63890; 
-            
+            */
             $h2 = round(microtime(true) * 1000);
 
             fwrite($file, $sql . ". Time execution: " . ($h2 - $h1) . " miliseconds" . PHP_EOL);
@@ -232,6 +232,46 @@ class BeneficiosCommand extends CConsoleCommand {
         fclose($file);
         echo "Beneficios sincronizados correctamente";
         Yii::log("Beneficios sincronizados correctamente\n" . date('Y-m-d H:i:s'), CLogger::LEVEL_INFO, 'application');
+    }
+    
+    public function actionEliminarBeneficiosAntiguos(){
+    	
+    	$numeroDias = Yii::app()->params->beneficios['diasBorrado']; 
+    	
+    	$file = fopen(Yii::getPathOfAlias('application') . DIRECTORY_SEPARATOR . "runtime" . DIRECTORY_SEPARATOR . "borradoLog.txt", "a");
+    	// Eliminar beneficios que ya no estan vigentes a partir de X dias.
+    	// borrar los puntos de venta
+    	$sql = "DELETE bpv FROM t_Beneficios t 
+    			INNER JOIN t_BeneficiosPuntosVenta bpv ON (bpv.idBeneficio = t.idBeneficio) WHERE 
+    			DATE_SUB(CURDATE() , INTERVAL $numeroDias DAY) >= t.fechaFin ";
+    	$result = Yii::app()->db->createCommand($sql)->execute();
+    	
+    	fwrite($file, Date("Y-m-d h:i:s ")." t_BeneficiosPuntosVenta No. Eliminados ".$result."" . PHP_EOL);
+    	
+    	// borrar las cedulas registradas
+    	
+    	$sql = "DELETE bpv FROM t_Beneficios t
+    	INNER JOIN t_BeneficiosCedulas bpv ON (bpv.idBeneficio = t.idBeneficio) WHERE
+    	DATE_SUB(CURDATE() , INTERVAL $numeroDias DAY) >= t.fechaFin";
+    	$result = Yii::app()->db->createCommand($sql)->execute();
+    	
+    	fwrite($file, Date("Y-m-d h:i:s ")." t_BeneficiosCedulas No. Eliminados ".$result."" . PHP_EOL);
+    	// borrar los productos
+    	 
+    	$sql = "DELETE bpv FROM t_Beneficios t
+    	INNER JOIN t_BeneficiosProductos bpv ON (bpv.idBeneficio = t.idBeneficio) WHERE
+    	DATE_SUB(CURDATE() , INTERVAL $numeroDias DAY) >= t.fechaFin";
+    	$result = Yii::app()->db->createCommand($sql)->execute();
+    	
+    	fwrite($file, Date("Y-m-d h:i:s ")." t_BeneficiosProductos No. Eliminados ".$result."" . PHP_EOL);
+    	// borrar los beneficios de la maestra
+    	
+    	$sql = "DELETE FROM t_Beneficios WHERE
+    	DATE_SUB(CURDATE() , INTERVAL $numeroDias DAY) >= fechaFin";
+    	$result = Yii::app()->db->createCommand($sql)->execute();
+    	fwrite($file, Date("Y-m-d h:i:s ")." t_Beneficios No. Eliminados ".$result."" . PHP_EOL);
+    	fclose($file);
+    	
     }
 
 }

@@ -289,14 +289,16 @@ class PrecioProducto extends Precio {
                 	$this->porcentajeDescuentoBeneficioBono += $objBeneficio->dsctoUnid;
                 	
                 	$this->ahorroUnidad += self::redondear(floor($this->precioUnidad * ($objBeneficio->dsctoUnid / 100)),1,10);
-                	$this->ahorroUnidadBono = self::redondear(floor($this->precioUnidad * ($objBeneficio->dsctoUnid / 100)),1,10);
+                	$this->ahorroUnidadBono += self::redondear(floor($this->precioUnidad * ($objBeneficio->dsctoUnid / 100)),1,10);
                 }
                 
             } else if (Yii::app()->params->beneficios['configuracionActiva'] == Yii::app()->params->beneficios['configuracion']['mayor']) {
 
                 $cantBeneficios = count($this->listBeneficios);
-
+                $objBeneficioAux = null;
+                $tipoDescuento = 0;
                 if ($cantBeneficios > 0) {
+                	$tipoDescuento = 1;
                     $objBeneficioAux = $this->listBeneficios[0];
                     for($idx=1; $idx<$cantBeneficios; $idx++) {
                         $objBeneficio = $this->listBeneficios[$idx];
@@ -304,9 +306,6 @@ class PrecioProducto extends Precio {
                             $objBeneficioAux = $objBeneficio;
                         }
                     }
-                    $this->porcentajeDescuentoBeneficio = $objBeneficioAux->dsctoUnid;
-                    $this->porcentajeDescuentoBeneficioDescuento = $objBeneficioAux->dsctoUnid;
-                    $this->listBeneficios = array($objBeneficioAux);
                 }
                 
                 // beneficios de los bonos
@@ -314,16 +313,35 @@ class PrecioProducto extends Precio {
                 $cantBeneficiosBonos = count($this->listBeneficiosBonos);
                 
                 if ($cantBeneficiosBonos > 0) {
-                	$objBeneficioAux = $this->listBeneficiosBonos[0];
+                	if($objBeneficioAux == null){
+                		$objBeneficioAux = $this->listBeneficiosBonos[0];
+                		$tipoDescuento = 2;
+                	}
                 	for($idx=1; $idx<$cantBeneficiosBonos; $idx++) {
                 		$objBeneficio = $this->listBeneficiosBonos[$idx];
                 		if ($objBeneficio->dsctoUnid > $objBeneficioAux->dsctoUnid) {
                 			$objBeneficioAux = $objBeneficio;
+                			$tipoDescuento = 2;
                 		}
                 	}
+                }
+                if($tipo == 1){
                 	$this->porcentajeDescuentoBeneficio = $objBeneficioAux->dsctoUnid;
-                	$this->porcentajeDescuentoBeneficioBono = $objBeneficioAux->dsctoUnid;
-                	$this->listBeneficiosBonos = array($objBeneficioAux);
+                	$this->porcentajeDescuentoBeneficioDescuento = $objBeneficioAux->dsctoUnid;
+                	
+                	$this->ahorroUnidadDescuento += self::redondear(floor($this->precioUnidad * ($objBeneficioAux->dsctoUnid / 100)),1,10);
+                	$this->ahorroUnidad += self::redondear(floor($this->precioUnidad * ($objBeneficioAux->dsctoUnid / 100)),1,10);
+                	
+                	$this->listBeneficios = array($objBeneficioAux);
+                }
+                else{
+	                $this->porcentajeDescuentoBeneficio = $objBeneficioAux->dsctoUnid;
+	                $this->porcentajeDescuentoBeneficioBono = $objBeneficioAux->dsctoUnid;
+	                 
+	                $this->ahorroUnidad += self::redondear(floor($this->precioUnidad * ($objBeneficioAux->dsctoUnid / 100)),1,10);
+	                $this->ahorroUnidadBono = self::redondear(floor($this->precioUnidad * ($objBeneficioAux->dsctoUnid / 100)),1,10);
+	                 
+	                $this->listBeneficiosBonos = array($objBeneficioAux);
                 }
             } else {
                 $this->porcentajeDescuentoBeneficio = 0;
@@ -335,6 +353,9 @@ class PrecioProducto extends Precio {
             if ($this->porcentajeDescuentoBeneficio > Yii::app()->params->beneficios['porcentajeMaximo']) {
                 $this->porcentajeDescuentoBeneficio = 0;
                 $this->listBeneficios = array();
+                $this->ahorroUnidad = 0;
+                $this->ahorroUnidadDescuento = 0;
+                $this->ahorroUnidadBono = 0;
             }
 
             if ($objCiudadSector->esDefecto() || ($tienePrecio && $tieneSaldo)) {

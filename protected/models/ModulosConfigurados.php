@@ -229,9 +229,10 @@ class ModulosConfigurados extends CActiveRecord {
             }
 
             $criteria['condition'] .= " $condition";
+           
             
             if (!$objSectorCiudad->esDefecto()) {
-                $criteria['with']['listSaldos'] = array('on' => 'listSaldos.codigoCiudad=:ciudad AND listSaldos.codigoSector=:sector OR listSaldos.idProductoSaldos IS NULL' );
+            	$criteria['with']['listSaldos'] = array('on' => 'listSaldos.codigoCiudad=:ciudad AND listSaldos.codigoSector=:sector OR listSaldos.idProductoSaldo IS NULL');
                 $criteria['with']['listPrecios'] = array('on' => 'listPrecios.codigoCiudad=:ciudad AND listPrecios.codigoSector=:sector OR listPrecios.idProductoPrecios IS NULL');
                 $criteria['with']['listSaldosTerceros'] = array('on' => ' listSaldosTerceros.codigoCiudad=:ciudad AND listSaldosTerceros.codigoSector=:sector OR listSaldosTerceros.idProductoSaldo IS NULL');
                 
@@ -252,10 +253,14 @@ class ModulosConfigurados extends CActiveRecord {
                 
                 $criteria['params'][':ciudad'] = $objSectorCiudad->codigoCiudad;
                 $criteria['params'][':sector'] = $objSectorCiudad->codigoSector;
+            }else{
+            	$criteria['with']['listSaldos'] = array('on' => 'listSaldos.codigoCiudad=:ciudad AND listSaldos.codigoSector=:sector');
+            	$criteria['with']['listPrecios'] = array('on' => 'listPrecios.codigoCiudad=:ciudad AND listPrecios.codigoSector=:sector');
+            	$criteria['with']['listSaldosTerceros'] = array('on' => ' listSaldosTerceros.codigoCiudad=:ciudad AND listSaldosTerceros.codigoSector=:sector');
+            	
+            	$criteria['params'][':ciudad'] = $objSectorCiudad->codigoCiudad;
+            	$criteria['params'][':sector'] = $objSectorCiudad->codigoSector;
             }
-
-            echo "<pre>";
-            print_r($criteria);exit();
            
             $listaProductos = Producto::model()->findAll($criteria);
           	
@@ -452,7 +457,7 @@ class ModulosConfigurados extends CActiveRecord {
             $criteria['params'][':ciudad'] = $objSectorCiudad->codigoCiudad;
         }
         
-        $criteria['condition'].= " AND t.tipo IN (1,3,4,5)";
+    //    $criteria['condition'].= " AND t.tipo IN (1,3,4,5)";
 
         return  ModulosConfigurados::model()->findAll($criteria);
         

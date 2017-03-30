@@ -2114,7 +2114,7 @@ class CatalogoController extends Controller {
 		}
 	}
 	public function actionDescuentos() {
-		$sql = "SELECT idCategoriaBI FROM t_ComprasUsuariosCategorias";
+		$sql = "SELECT distinct(idCategoriaBI) FROM t_ComprasUsuariosCategorias";
 		$fecha = new DateTime ();
 		
 		if (! Yii::app ()->user->isGuest) {
@@ -2148,7 +2148,7 @@ class CatalogoController extends Controller {
 			);
 		
 		$criteria->with ['listPrecios'] = array (
-				'on' => '(listPrecios.codigoCiudad=:ciudad AND listPrecios.codigoSector=:sector) OR listPrecios.idProductoPrecios IS NULL' 
+				'on' => '(listPrecios.codigoCiudad=:ciudad AND listPrecios.codigoSector=:sector) /*OR listPrecios.idProductoPrecios IS NULL*/' 
 		);
 		
 		if ($objSectorCiudad->esDefecto ())
@@ -2775,8 +2775,6 @@ class CatalogoController extends Controller {
 								) 
 						),
 						'listCategoriasBI' => array ()
-
-						 
 				),
 				'condition' => '
     					listCategoriasBI.idCategoriaBI IN (' . implode ( ",", $categoriasPadre ) . ') AND 

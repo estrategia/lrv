@@ -25,7 +25,7 @@ header("Pragma: no-cache");
         <link rel="shortcut icon" href="<?php echo Yii::app()->request->baseUrl; ?>/images/favicon_16.ico" type="image/x-icon" />  
         <title><?php echo CHtml::encode($this->pageTitle); ?></title>
 
-        <?php //Yii::app()->getClientScript()->registerCssFile(Yii::app()->request->baseUrl . "/css/main-desktop.css?" . Yii::app()->params->fechaActualizacion["css"]); ?>
+        <?php Yii::app()->getClientScript()->registerCssFile(Yii::app()->request->baseUrl . "/css/main-desktop.css?" . Yii::app()->params->fechaActualizacion["css"]); ?>
     </head>
 
     <body>
@@ -49,7 +49,7 @@ header("Pragma: no-cache");
                                         <?php if ($this->objSectorCiudad == null): ?>
                                             <?php echo CHtml::link('<span class="text-center title-desp"><br><span class="glyphicon glyphicon-map-marker" style="margin-right: 5px;"></span> Seleccionar ciudad </span>', CController::createUrl('/sitio/ubicacion'), array()); ?>
                                         <?php else: ?>
-                                            <?php echo $this->sectorName ?>
+                                        	<?php echo $this->sectorName ?>
                                             <?php echo CHtml::link('<span class="text-center title-desp"><br><span class="glyphicon glyphicon-map-marker" style="margin-right: 5px;"></span> Cambiar ciudad </span>', CController::createUrl('/sitio/ubicacion'), array()); ?>
                                         <?php endif; ?>
                                     </div>

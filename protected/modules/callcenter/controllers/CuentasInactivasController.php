@@ -107,6 +107,15 @@ class CuentasInactivasController extends ControllerOperator {
  				throw new Exception("Error al activar bloqueo de usuario");
  			}
  			
+			$contenidoCorreo = $this->renderPartial('application.views.common.correoDesbloqueo', array('objUsuario' => $objUsuario), true);
+ 			$htmlCorreo = PlantillaCorreo::getContenido('desbloquearCuenta', $contenidoCorreo);
+ 			
+ 			try {
+ 				sendHtmlEmail($objUsuario->correoElectronico, "La Rebaja Virtual: Desbloqueo de cuenta", $htmlCorreo, Yii::app()->params->callcenter['correo']);
+ 			} catch (Exception $exc) {
+ 				Yii::log("BloqueoCuentaCommand::desbloquearCuenta - Error envio correo [".$exc->getMessage()."] usuario [$objBloqueoUsuario->identificacionUsuario]" . "\nBloqueoUsuario:\n" .  CVarDumper::dumpAsString($objBloqueoUsuario->attributes),CLogger::LEVEL_INFO, 'bloqueo_usuario');
+ 			}
+ 			
  			$transaction->commit();
  			
  			echo CJSON::encode(array(

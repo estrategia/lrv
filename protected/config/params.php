@@ -355,7 +355,8 @@ return array(
             'acumulado' => 1,
             'mayor' => 2
         ),
-        'configuracionActiva' => 1
+        'configuracionActiva' => 1,
+    	'diasBorrado' => 100,
     ),
     'servicioVentaControlada' => 17,
     'gps' => array(
