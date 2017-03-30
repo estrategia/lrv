@@ -1,10 +1,10 @@
 <?php
 
 return array(
-	"fechaActualizacion" => array(
-		"js" => "20170323",
-		"css" => "20170323"
-	),
+    "fechaActualizacion" => array(
+        "js" => "20170323",
+        "css" => "20170323"
+    ),
     "meses" => array(
         1 => "Enero",
         2 => "Febrero",
@@ -47,23 +47,23 @@ return array(
             'elementos' => array(
                 array(
                     'rutaImagen' => '/images/banner/banner_inicio1-2015-10-20.jpg',
-                    'productos' => array(12957,12959,30128,32591,97448,17600,26767,48679,48683)
+                    'productos' => array(12957, 12959, 30128, 32591, 97448, 17600, 26767, 48679, 48683)
                 ),
                 array(
                     'rutaImagen' => '/images/banner/banner_inicio2-2015-10-20.jpg',
-                    'productos' => array(12957,12959,30128,32591,97448,17600,26767,48679,48683)
+                    'productos' => array(12957, 12959, 30128, 32591, 97448, 17600, 26767, 48679, 48683)
                 ),
                 array(
                     'rutaImagen' => '/images/banner/banner_inicio1.jpg',
-                    'productos' => array(12957,12959,30128,32591,97448,17600,26767,48679,48683)
+                    'productos' => array(12957, 12959, 30128, 32591, 97448, 17600, 26767, 48679, 48683)
                 ),
                 array(
                     'rutaImagen' => '/images/banner/banner_inicio2.jpg',
-                    'productos' => array(12957,12959,30128,32591,97448,17600,26767,48679,48683)
+                    'productos' => array(12957, 12959, 30128, 32591, 97448, 17600, 26767, 48679, 48683)
                 ),
                 array(
                     'rutaImagen' => '/images/banner/banner_inicio3.jpg',
-                    'productos' => array(12957,12959,30128,32591,97448,17600,26767,48679,48683)
+                    'productos' => array(12957, 12959, 30128, 32591, 97448, 17600, 26767, 48679, 48683)
                 )
             )
         )
@@ -100,7 +100,7 @@ return array(
     'clienteFiel' => array(
         'correo' => 'cliente_fiel@copservir.com',
         'telefono' => '01 8000 93 99 00',
-        'dias' => array(1,10,15,25),
+        'dias' => array(1, 10, 15, 25),
         'montoCompra' => 1000,
         'puntosCompra' => 10
     ),
@@ -116,6 +116,10 @@ return array(
         )
     ),
     'claveLista' => 'listapersonallrv',
+    'bono' => array(
+        'diaMinimoRecordacion' => 1,
+        'diaMaximoRecordacion' => 5,
+    ),
     'sesion' => array(
         'cookieExpiracion' => 2592000, // 1 dia 86400 --> 30 dias
         'claveCookie' => 'l4r384j4cook13',
@@ -138,7 +142,7 @@ return array(
         'formulaMedica' => 'larebaja.online.compra.formulaMedica'
     ),
     'entrega' => array(
-        'listaTipos' => array(1,2),
+        'listaTipos' => array(1, 2),
         'tipo' => array(
             'presencial' => 1,
             'domicilio' => 2,
@@ -182,7 +186,7 @@ return array(
         )
     ),
     'calificacion' => array(
-        'categoriasNoCalificacion' => array(1,2)
+        'categoriasNoCalificacion' => array(1, 2)
     ),
     'cotizaciones' => array(
         'diasVisualizar' => 100
@@ -283,8 +287,8 @@ return array(
             'noExacta' => '/images/conicidedencias-no-exactas.jpg'
         ),
         'productosPorPagina' => array(
-            4 => array(12,24,36,48,60),
-            5 => array(15,30,50,100,150)
+            4 => array(12, 24, 36, 48, 60),
+            5 => array(15, 30, 50, 100, 150)
         )
     ),
     'ciudad' => array(
@@ -328,9 +332,9 @@ return array(
         'clientefielCompra' => 301
     ),
     'beneficios' => array(
-        'lrv' => array(21,22,23,24,25,26),
-        'descuentos' => array(21,22,23,24), // new
-        'bonos' => array(25,26), // new
+        'lrv' => array(21, 22, 23, 24, 25, 26),
+        'descuentos' => array(21, 22, 23, 24), // new
+        'bonos' => array(25, 26), // new
         'tipoBonoFormaPago' => array(
             25 => 7,
             26 => 8
@@ -339,7 +343,7 @@ return array(
             25 => 15,
             26 => 16
         ),
-        'recambios' => array(1,10),
+        'recambios' => array(1, 10),
         'recambioslabel' => array(
             1 => 'Recambio',
             10 => 'Recambio Cruzado'
@@ -380,15 +384,16 @@ return array(
         'moneda' => '$'
     ),
     'webServiceUrl' => array(
-        //'sincronizarBeneficiosSIICOP' => 'http://sii.copservir.com/beneficios/sweb/wslrv',
-        'sincronizarBeneficiosSIICOP' => 'http://localhost/copservir/beneficios/sweb/wslrv',
-        'envioCorreosRecordatorios' => 'http://localhost/lrv/sweb/wslrv',
         'serverGeo' => 'http://www.copservir.com/webService/serverGeo.php',
         'serverLRV' => 'http://www.copservir.com/webService/serverLRV.php',
         'crmLrv' => "http://www.copservir.com/webService/crmLrv.php",
         'remisionPos' => "http://www.copservir.com/webService/serverLRV.php",
         'remisionPosECommerce' => "http://www.copservir.com/webService/Pos/RemisionPosEcommerce.php",
-        'persona' => 'http://localhost/copservir/wsMultiportal/persona'
+        'persona' => 'http://localhost/copservir/wsMultiportal/persona',
+        //console
+        //'sincronizarBeneficiosSIICOP' => 'http://sii.copservir.com/beneficios/sweb/wslrv',
+        'sincronizarBeneficiosSIICOP' => 'http://localhost/copservir/beneficios/sweb/wslrv',
+        'envioCorreosRecordatorios' => 'http://localhost/lrv/sweb/wslrv',
     ),
     'vendedor' => array(
         'sesion' => array(
@@ -451,7 +456,7 @@ return array(
             'vendedorPDV' => 3,
             'mensajeroVendedor' => 4
         ),
-        'perfiles' => array(1,2,3,4,5),
+        'perfiles' => array(1, 2, 3, 4, 5),
         'usuario' => array(
             'estado' => array(
                 'activo' => 1,
@@ -488,8 +493,6 @@ return array(
             'asuntoCorreo' => 'Tienes un bono disponible',
             'tipoBonoCRM' => 3,
             'formaPagoBonos' => 8,
-            'diaMaximoRecordacion' => 5,
-            'diaMinimoRecordacion' => 1
         ),
         'reactivacionBono' => array(
             'asuntoMensaje' => 'Activacion bono cliente fiel',
@@ -678,7 +681,7 @@ return array(
                 'confirmacion'
             )
         ),
-        'diasRecordatorioFormula' => array(1,3)
+        'diasRecordatorioFormula' => array(1, 3)
     ),
     'entregaNacional' => array(
         'sesion' => array(

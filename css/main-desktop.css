@@ -10,11 +10,7 @@
         url("fonts/geneva.ttf") format('truetype');
     font-weight: normal;
 }
-
-body{
-	overflow-x: hidden;
-}
-
+body {overflow-x: hidden;}
 .not_margin {
     margin: 0;
 }

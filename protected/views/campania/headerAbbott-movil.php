@@ -33,7 +33,7 @@
         </a>
       </div>
       <div class="ui-block-b">
-        <a href="<?= Yii::app()->request->baseUrl ?>/" data-ajax="false">
+        <a href="<?= Yii::app()->request->baseUrl ?>/pedialyte-suero-oral" data-ajax="false">
             <img class="img-responsive-m" src="<?= Yii::app()->request->baseUrl ?>/images/contenido/abbot/general/logo-pedialyte.png" alt="Logo Pedialyte">
         </a>
       </div>

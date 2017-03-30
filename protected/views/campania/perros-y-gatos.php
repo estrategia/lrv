@@ -7,23 +7,10 @@ $this->metaTags = "
     <meta name='description' content=''>
     <meta name='keywords' content=''>
   	<style>
-      @font-face {
-        font-family: Nautilus;
-        src: url(".Yii::app()->request->baseUrl."/images/contenido/perros-y-gatos/fonts/nautilus.otf);
-      }
-      @font-face {
-        font-family: HelveticaNeueLTStd-Lt;
-        src: url(".Yii::app()->request->baseUrl."/images/contenido/perros-y-gatos/fonts/HelveticaNeueLTStd-Lt.otf);
-      }
-      @font-face {
-        font-family: helvetica-bold;
-        src: url(".Yii::app()->request->baseUrl."/images/contenido/perros-y-gatos/fonts/helvetica-bold.otf);
-      }
-      @font-face {
-        font-family: NewJune-Bold;
-        src: url(".Yii::app()->request->baseUrl."/images/contenido/perros-y-gatos/fonts/NewJune-Bold.otf);
-      }
-
+      @font-face {font-family: Nautilus;src: url(".Yii::app()->request->baseUrl."/images/contenido/perros-y-gatos/fonts/nautilus.otf);}
+      @font-face {font-family: HelveticaNeueLTStd-Lt;src: url(".Yii::app()->request->baseUrl."/images/contenido/perros-y-gatos/fonts/HelveticaNeueLTStd-Lt.otf);}
+      @font-face {font-family: helvetica-bold;src: url(".Yii::app()->request->baseUrl."/images/contenido/perros-y-gatos/fonts/helvetica-bold.otf);}
+      @font-face {font-family: NewJune-Bold;src: url(".Yii::app()->request->baseUrl."/images/contenido/perros-y-gatos/fonts/NewJune-Bold.otf);}
       .bg-pattern {background-image:url(".Yii::app()->request->baseUrl."/images/contenido/perros-y-gatos/textura.png);background-repeat: no-repeat;background-size: cover;background-position: center;}
       .bg-pattern  .container-fluid {padding:0px;}
       .logo-perros-gatos {margin: 0px auto 140px !important;width: 33%;padding-top: 80px;}
@@ -39,10 +26,10 @@ $this->metaTags = "
       .space-1 { height: 0px !important;}
       .section-orange {font-family: helvetica-bold;background-color: #E84E0E;color: #fff;text-align: center;font-size: 30px;margin: 15px 0;}
       .contain-muestra { position: relative;}
-      .call-to-action {background-color: #E84E0E;padding: 12px 30px;border-radius: 50px;color: #fff;font-family: helvetica-bold;font-size: 25px;position: absolute;bottom: 30%;margin-left: 44%;}
+      .call-to-action {background-color: #E84E0E;padding: 12px 30px;border-radius: 50px;color: #fff;font-family: helvetica-bold;font-size: 25px;position: absolute;bottom: 11%;margin-left: 40%;}
       .call-to-action:hover {background-color:#58170C; color:#fff;}
       .icono{width: 75px;float: left;position: relative;z-index: 1;}
-      .item-link {background-color: #fff;font-size: 26px;padding: 5px 33px;border-radius: 0px 30px 30px 0;position: absolute;margin-top: 13px;margin-left: -15px;font-family: NewJune-Bold;width: 77%;text-align: center;}
+      .item-link {background-color: #fff;font-size: 19px;padding: 7px 33px;border-radius: 0px 30px 30px 0;position: absolute;margin-top: 17px;margin-left: -15px;font-family: NewJune-Bold;width: 75%;-webkit-box-shadow: 3px 2px 5px -3px rgba(0,0,0,0.75);-moz-box-shadow: 3px 2px 5px -3px rgba(0,0,0,0.75);box-shadow: 3px 2px 5px -3px rgba(0,0,0,0.75);}
       .section-button a {color:#58170C !important;}
       .icono {-webkit-transition: width 2s, height 2s, -webkit-transform 2s;transition: width 2s, height 2s, transform 2s;}
       .section-button:hover .icono {    -ms-transform: rotate(360deg);  -webkit-transform: rotate(360deg); transform: rotate(360deg);}
@@ -50,12 +37,72 @@ $this->metaTags = "
       .hvr-float-shadow:hover, .hvr-float-shadow:focus, .hvr-float-shadow:active {-webkit-transform: translateY(-5px);transform: translateY(-5px);}
       .hvr-float-shadow:hover::before, .hvr-float-shadow:focus::before, .hvr-float-shadow:active::before {opacity: 1;-webkit-transform: translateY(5px);transform: translateY(5px);}
       .hvr-float-shadow::before { pointer-events: none;position: absolute;z-index: -1; content: ''; top: 100%; left: 5%; height: 10px; width: 90%; opacity: 0; background: -webkit-radial-gradient(center, ellipse, rgba(0, 0, 0, 0.35) 0%, transparent 80%);background: radial-gradient(ellipse at center, rgba(0, 0, 0, 0.35) 0%, transparent 80%);-webkit-transition-duration: 0.3s; transition-duration: 0.3s; -webkit-transition-property: transform, opacity; transition-property: transform, opacity;}
-      .item-link.m{ background-color: #fff;font-size: 23px;padding: 3px 29px;border-radius: 0px 30px 30px 0;margin-top: 25px;margin-left: -11px;font-family: NewJune-Bold;width: 194px;text-align: center;}
-      .icono.m {width: 60px;z-index: 1;margin-top: 14px;}
+      .item-link.m{ background-color: #fff;font-size: 23px;padding: 3px 29px;border-radius: 0px 30px 30px 0;margin-top: 25px;margin-left: -11px;font-family: NewJune-Bold;width: 194px;text-align: center;-webkit-box-shadow: 3px 2px 5px -3px rgba(0,0,0,0.75);-moz-box-shadow: 3px 2px 5px -3px rgba(0,0,0,0.75);box-shadow: 3px 2px 5px -3px rgba(0,0,0,0.75);}.icono.m {width: 60px;z-index: 1;margin-top: 14px;}
       .section-orange.m {font-family: helvetica-bold;background-color: #E84E0E;color: #fff;text-align: center;font-size: 19px;margin: 6px 0;padding: 15px;}
       .seccion-entrega.m {background-color: #E30917;font-family: NewJune-Bold;color: #fff;font-size: 19px;margin-top: 10px;text-align: center;padding: 15px 10px;line-height: initial;}
       .seccion-entrega.m span {font-size: 25px;}
-      .call-to-action.m {background-color: #E84E0E;padding: 8px 9px;border-radius: 50px;color: #fff;font-family: helvetica-bold;font-size: 19px;display: block;width: 43%;text-decoration: none;text-align: center;margin-top: -96%;position: absolute;margin-left: 25%;bottom: inherit;}
+      .call-to-action.m {background-color: #E84E0E;padding: 8px 9px;border-radius: 50px;color: #fff;font-family: helvetica-bold;font-size: 19px;display: block;width: 43%;text-decoration: none;text-align: center;margin-top: -13%;position: absolute;margin-left: 25%;bottom: inherit;}
+
+
+
+      @media (min-width: 1100px) and (max-width: 1199px) {
+        .col-md-offset-4 {    margin-left: 0% !important;}
+        .col-md-4 { width: 48.333% !important;}
+        .item-link {width: 76% !important;font-size:14px !important;}
+        .col-md-8 { width: 100% !important;}
+        .col-md-offset-1 { margin-left: 0% !important;}
+      }
+
+      @media (min-width: 1200px) and (max-width: 1299px) {
+        .col-md-offset-4 {    margin-left: 0% !important;}
+        .col-md-4 { width: 48.333% !important;}
+        .item-link {width: 76% !important;font-size:16px !important;}
+        .col-md-8 { width: 100% !important;}
+        .col-md-offset-1 { margin-left: 0% !important;}
+      }
+
+      @media (min-width: 1300px) and (max-width: 1399px) {
+        .col-md-offset-4 {    margin-left: 0% !important;}
+        .col-md-4 { width: 48.333% !important;}
+        .item-link {width: 76% !important;font-size:18px !important;}
+        .col-md-8 { width: 100% !important;}
+        .col-md-offset-1 { margin-left: 0% !important;}
+      }
+
+
+      @media (min-width: 1400px) and (max-width: 1500px) {
+        .col-md-offset-4 {    margin-left: 0% !important;}
+        .col-md-4 { width: 48.333% !important;}
+        .item-link {width: 76% !important;font-size:21px !important;}
+        .col-md-8 { width: 100% !important;}
+        .col-md-offset-1 { margin-left: 0% !important;}
+      }
+
+      @media (min-width: 1501px) and (max-width: 1600px) {
+        .col-md-offset-4 {    margin-left: 0% !important;}
+        .col-md-4 { width: 48.333% !important;}
+        .item-link {width: 76% !important;font-size:23px !important;}
+        .col-md-8 { width: 100% !important;}
+        .col-md-offset-1 { margin-left: 0% !important;}
+      }
+
+
+      @media (min-width: 1601px) and (max-width: 1700px) {
+        .col-md-offset-4 {    margin-left: 0% !important;}
+        .col-md-4 { width: 48.333% !important;}
+        .item-link {width: 76% !important;font-size:22px !important;}
+        .col-md-8 { width: 100% !important;}
+        .col-md-offset-1 { margin-left: 0% !important;}
+      }
+
+
+      @media (min-width: 1701px) and (max-width: 1800px) {
+        .col-md-offset-4 {    margin-left: 9% !important;}
+        .col-md-4 { width: 45.333% !important;}
+        .item-link {width: 69% !important;font-size:22px !important;}
+        .col-md-8 { width: 100% !important;}
+        .col-md-offset-1 { margin-left: 7% !important;}
+      }
 
     </style>
     ";
@@ -120,14 +167,14 @@ $this->metaTags = "
         </div>
       </div>
     </section>
-    <img style="margin: 15px 0 0;width:100%;" src="<?= Yii::app()->request->baseUrl ?>/images/contenido/perros-y-gatos/muestra-gratis-movil.jpg">
+    <img style="margin: 15px 0 0;width:100%;" src="<?= Yii::app()->request->baseUrl ?>/images/contenido/perros-y-gatos/banner-muestra-gratis.jpg">
     <a class="call-to-action m" href="<?= Yii::app()->request->baseUrl ?>/muestra-gratis-perros-y-gatos">Click aquí</a>
     <div class="section-orange m">Descubre como cuidar a tu mascota</div>
-    <img style="width:100%;" style="margin-top: 5px;" src="<?= Yii::app()->request->baseUrl ?>/images/contenido/perros-y-gatos/video1.png">
-    <img style="width:100%;" src="<?= Yii::app()->request->baseUrl ?>/images/contenido/perros-y-gatos/video2.png">
+    <!-- <img style="width:100%;" style="margin-top: 5px;" src="<?= Yii::app()->request->baseUrl ?>/images/contenido/perros-y-gatos/video1.png">
+    <img style="width:100%;" src="<?= Yii::app()->request->baseUrl ?>/images/contenido/perros-y-gatos/video2.png"> -->
     <div class="seccion-entrega m">
       <img style="width: 45%;display: block;margin: 0 auto;" src="<?= Yii::app()->request->baseUrl ?>/images/contenido/perros-y-gatos/icono-domicilio.png" alt="Entrega en 1 hora la rebaja virtual">
-      En la Rebaja Virtual entregamos <br><span> tu pedido en 1 hora</span>
+       Programa la hora de entrega, <br><span> libera tu tiempo</span>
     </div>
 </div>
 
@@ -140,19 +187,19 @@ $this->metaTags = "
     <!-- seccion perro -->
     <div class="col-xs-6 col-sm-6 col-md-6 bg-orange">
       <div class="row">
-        <div class="col-md-9 offset-4">
+        <div class="col-xs-offset-4 col-sm-offset-4 col-md-offset-4 col-xs-8 col-sm-8 col-md-8">
             <img class="img-responsive perro" src="<?= Yii::app()->request->baseUrl ?>/images/contenido/perros-y-gatos/perro.png">
         </div>
       </div>
-      <div class="col-md-10 col-md-offset-2">
+      <div class="col-md-12">
         <div class="row">
-          <div class="col-xs-6 col-sm-6 col-md-6">
+          <div class="col-xs-offset-4 col-sm-offset-4 col-md-offset-4 col-xs-4 col-sm-4 col-md-4">
             <div class="section-button">
               <img class="img-responsive icono" src="<?= Yii::app()->request->baseUrl ?>/images/contenido/perros-y-gatos/accesorio-perro.png">
               <a href="<?php echo CController::createUrl('/catalogo/categoria/categoria/221')?>"><span class="item-link">Accesorios</span></a>
             </div>
           </div>
-          <div class="col-xs-6 col-sm-6 col-md-6">
+          <div class="col-xs-4 col-sm-6 col-md-4">
             <div class="section-button">
               <img class="img-responsive icono" src="<?= Yii::app()->request->baseUrl ?>/images/contenido/perros-y-gatos/aseo-perros.png">
               <a href="<?php echo CController::createUrl('/catalogo/categoria/categoria/224')?>"><span class="item-link">Aseo</span></a>
@@ -160,13 +207,13 @@ $this->metaTags = "
           </div>
         </div>
         <div class="row">
-          <div class="col-xs-6 col-sm-6 col-md-6">
+          <div class="col-xs-offset-4 col-sm-offset-4 col-md-offset-4 col-xs-4 col-sm-4 col-md-4">
             <div class="section-button">
               <img class="img-responsive icono" src="<?= Yii::app()->request->baseUrl ?>/images/contenido/perros-y-gatos/vitaminas-perros.png">
               <a href="<?php echo CController::createUrl('/catalogo/categoria/categoria/226')?>"><span class="item-link">Vitaminas</span></a>
             </div>
           </div>
-          <div class="col-xs-6 col-sm-6 col-md-6">
+          <div class="col-xs-4 col-sm-6 col-md-4">
             <div class="section-button">
               <img class="img-responsive icono" src="<?= Yii::app()->request->baseUrl ?>/images/contenido/perros-y-gatos/snacks-perros.png">
               <a href="<?php echo CController::createUrl('/catalogo/categoria/categoria/225')?>"><span class="item-link">Snacks</span></a>
@@ -174,16 +221,16 @@ $this->metaTags = "
           </div>
         </div>
         <div class="row">
-          <div class="col-xs-6 col-sm-6 col-md-6">
+          <div class="col-xs-offset-4 col-sm-offset-4 col-md-offset-4 col-xs-4 col-sm-4 col-md-4">
             <div class="section-button">
               <img class="img-responsive icono" src="<?= Yii::app()->request->baseUrl ?>/images/contenido/perros-y-gatos/a-humedo-perro.png">
-              <a href="<?php echo CController::createUrl('/catalogo/categoria/categoria/222')?>"><span class="item-link" style="width: 289px;">Alimento h&uacute;medo</span></a>
+              <a href="<?php echo CController::createUrl('/catalogo/categoria/categoria/222')?>"><span class="item-link">Alimento Húmedo</span></a>
             </div>
           </div>
-          <div class="col-xs-6 col-sm-6 col-md-6">
+          <div class="col-xs-4 col-sm-6 col-md-4">
             <div class="section-button">
               <img class="img-responsive icono" src="<?= Yii::app()->request->baseUrl ?>/images/contenido/perros-y-gatos/alimento-perros.png">
-              <a href="<?php echo CController::createUrl('/catalogo/categoria/categoria/223')?>"><span class="item-link" style="width: 289px;">Alimento Seco</span></a>
+              <a href="<?php echo CController::createUrl('/catalogo/categoria/categoria/222')?>"><span class="item-link">Alimento Seco</span></a>
             </div>
           </div>
         </div>
@@ -194,15 +241,15 @@ $this->metaTags = "
       <div class="row">
             <img class="img-responsive gato" src="<?= Yii::app()->request->baseUrl ?>/images/contenido/perros-y-gatos/gato.png">
       </div>
-      <div class="col-md-9 offset-4">
+      <div class="col-md-12">
         <div class="row">
-          <div class="col-xs-6 col-sm-6 col-md-6">
+          <div class="col-xs-offset-1 col-sm-offset-1 col-md-offset-1 col-xs-4 col-sm-4 col-md-4">
             <div class="section-button">
                 <img class="img-responsive icono" src="<?= Yii::app()->request->baseUrl ?>/images/contenido/perros-y-gatos/accesorios-gatos.png">
-                <a href="<?php echo CController::createUrl('/catalogo/categoria/categoria/215')?>"><span class="item-link" style="width: 267px;">Accesorios</span></a>
+                <a href="<?php echo CController::createUrl('/catalogo/categoria/categoria/215')?>"><span class="item-link">Accesorios</span></a>
             </div>
           </div>
-          <div class="col-xs-6 col-sm-6 col-md-6">
+          <div class="col-xs-4 col-sm-4 col-md-4">
             <div class="section-button">
               <img class="img-responsive icono" src="<?= Yii::app()->request->baseUrl ?>/images/contenido/perros-y-gatos/aseo-gatos.png">
               <a href="<?php echo CController::createUrl('/catalogo/categoria/categoria/219')?>"><span class="item-link">Aseo</span></a>
@@ -210,13 +257,13 @@ $this->metaTags = "
           </div>
         </div>
         <div class="row" >
-          <div class="col-xs-6 col-sm-6 col-md-6">
+          <div class="col-xs-offset-1 col-sm-offset-1 col-md-offset-1 col-xs-4 col-sm-4 col-md-4">
             <div class="section-button">
               <img class="img-responsive icono" src="<?= Yii::app()->request->baseUrl ?>/images/contenido/perros-y-gatos/a-humedo-gato.png">
-              <a href="<?php echo CController::createUrl('/catalogo/categoria/categoria/216')?>"><span class="item-link" style="width: 267px;padding: 5px 10px;">Alimento húmedo</span></a>
+              <a href="<?php echo CController::createUrl('/catalogo/categoria/categoria/217')?>"><span class="item-link" >Alimento húmedo</span></a>
             </div>
           </div>
-          <div class="col-xs-6 col-sm-6 col-md-6">
+          <div class="col-xs-4 col-sm-4 col-md-4">
             <div class="section-button">
               <img class="img-responsive icono" src="<?= Yii::app()->request->baseUrl ?>/images/contenido/perros-y-gatos/arena-gatos.png">
               <a href="<?php echo CController::createUrl('/catalogo/categoria/categoria/218')?>"><span class="item-link">Arena</span></a>
@@ -224,7 +271,7 @@ $this->metaTags = "
           </div>
         </div>
         <div class="row">
-          <div class="col-xs-6 col-sm-6 col-md-6">
+          <div class="col-xs-offset-1 col-sm-offset-1 col-md-offset-1 col-xs-4 col-sm-4 col-md-4">
             <div class="section-button">
               <img class="img-responsive icono" src="<?= Yii::app()->request->baseUrl ?>/images/contenido/perros-y-gatos/alimento-gatos.png">
               <a href="<?php echo CController::createUrl('/catalogo/categoria/categoria/217')?>"><span class="item-link">Alimento Seco</span></a>
@@ -236,26 +283,26 @@ $this->metaTags = "
   </div>
   <div class="container">
     <div class="contain-muestra">
-      <img class="img-responsive muestra" src="<?= Yii::app()->request->baseUrl ?>/images/contenido/perros-y-gatos/muestra-gratis.png">
+      <img class="img-responsive muestra" src="<?= Yii::app()->request->baseUrl ?>/images/contenido/perros-y-gatos/banner-muestra-gratis.jpg">
       <a class="call-to-action hvr-float-shadow" href="<?= Yii::app()->request->baseUrl ?>/muestra-gratis-perros-y-gatos">Click aquí</a>
     </div>
     <div class="section-orange">Descubre como cuidar a tu mascota</div>
-    <div class="row">
+    <!-- <div class="row">
       <div class="col-md-6">
         <img class="img-responsive" src="<?= Yii::app()->request->baseUrl ?>/images/contenido/perros-y-gatos/video1.png">
       </div>
       <div class="col-md-6">
         <img class="img-responsive" src="<?= Yii::app()->request->baseUrl ?>/images/contenido/perros-y-gatos/video2.png">
       </div>
-    </div>
+    </div> -->
   </div>
   <div class="seccion-entrega">
     <div class="container ">
       <div class="col-md-2">
         <img class="img-responsive" src="<?= Yii::app()->request->baseUrl ?>/images/contenido/perros-y-gatos/icono-domicilio.png" alt="Entrega en 1 hora la rebaja virtual">
       </div>
-      <div class="col-md-10">
-        En la Rebaja Virtual entregamos tu pedido en 1 hora
+      <div class="col-md-10" >
+         Programa la hora de entrega, libera tu tiempo
       </div>
     </div>
   </div>

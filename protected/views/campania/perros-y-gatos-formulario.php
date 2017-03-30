@@ -23,8 +23,8 @@ $this->metaTags = "
         font-family: NewJune-Bold;
         src: url(".Yii::app()->request->baseUrl."/images/contenido/perros-y-gatos/fonts/NewJune-Bold.otf);
       }
-        		
-        		
+
+
 
       .bg-pattern {background-image:url(".Yii::app()->request->baseUrl."/images/contenido/perros-y-gatos/textura.png);background-repeat: no-repeat;background-size: cover;background-position: center;}
       .bg-pattern  .container-fluid {padding:0px;}
@@ -56,7 +56,7 @@ $this->metaTags = "
       .formulario-registro input[type='text'], select {width: 100%;padding: 10px 20px;border: none;margin: 10px 0;border-radius: 15px;}
       .formulario-registro input[type='button'] {background-color: #E84E0E;color: #fff;border: none;margin: 0 auto;display: block;border-radius: 15px;padding: 15px 30px;font-weight: bold;margin-top: 35px;}
       .formulario-registro input[placeholder] {color: #482583;font-size: 20px;font-family: HelveticaNeueLTStd-Lt;}
-	  .formulario-registro .error {font-size: 20px;font-family: HelveticaNeueLTStd-Lt;}	
+	  .formulario-registro .error {font-size: 20px;font-family: HelveticaNeueLTStd-Lt;}
     </style>
     ";
 ?>
@@ -77,7 +77,7 @@ $this->metaTags = "
       <form id="formulario-mascota" class="formulario-registro" style="padding: 0px 20px;margin-top: 20px;" action=""  method="">
           <div class="col-sm-12 col-md-12">
           	<div class="label-title"> Datos del amo</div>
-          
+
             <input name='Mascotas[cedulaCliente]' type="text" placeholder="C&eacute;dula del amo" value="<?php echo !Yii::app()->user->isGuest?Yii::app()->user->name :''?>">
             <div id='Mascotas_cedulaCliente_em' class="error has-error"></div>
             <br>
@@ -118,7 +118,7 @@ $this->metaTags = "
             <div id='Mascotas_direccion_em' class="error has-error"></div><br>
             <input name='Mascotas[telefono]' type="text" placeholder="Teléfono o celular de contacto">
             <div id='Mascotas_telefono_em' class="error has-error"></div><br>
-            
+
           </div>
           <div class="col-md-12">
             <button type="button" value="ENVIAR" onclick='guardarMascota();'>ENVIAR</button>
@@ -129,7 +129,7 @@ $this->metaTags = "
   </div>
   <div class="seccion-entrega m">
       <img style="width: 45%;display: block;margin: 0 auto;" src="<?= Yii::app()->request->baseUrl ?>/images/contenido/perros-y-gatos/icono-domicilio.png" alt="Entrega en 1 hora la rebaja virtual">
-      En la Rebaja Virtual entregamos <br><span> tu pedido en 1 hora</span>
+    Programa la hora de entrega, <br><span> libera tu tiempo</span>
     </div>
 </div>
 
@@ -161,9 +161,9 @@ $this->metaTags = "
           			<div id='Mascotas_nombreCliente_em' class="error text-danger"></div>
           		</div>
           </div>
-         
+
            <div class='row'>
-          		<div class="col-sm-6 col-md-6"> 
+          		<div class="col-sm-6 col-md-6">
                    <input name='Mascotas[fechaNacimientoCliente]' type="text" title="Fecha de nacimiento" placeholder="Fecha de nacimiento (aaaa-mm-dd)" value="<?php echo !Yii::app()->user->isGuest? Yii::app()->session[Yii::app()->params->usuario['sesion']]->objUsuarioExtendida->fechaNacimiento :''?>">
                    <div id='Mascotas_fechaNacimientoCliente_em' class="error text-danger"></div>
                 </div>
@@ -171,12 +171,12 @@ $this->metaTags = "
 	            <input name='Mascotas[correo]' type="text" title="Correo electr&oacute;nico del amo" placeholder="Correo electr&oacute;nico del amo" value="<?php echo !Yii::app()->user->isGuest? Yii::app()->session[Yii::app()->params->usuario['sesion']]->correoElectronico :''?>">
 	            <div id='Mascotas_correo_em' class="error text-danger"></div>
 	            </div>
-                
+
 		  </div>
 		  <br>
 		  <div class="label-title"><strong>Datos de la mascota</strong></div>
           <div class='row'>
-          		
+
 	            <div class="col-sm-6 col-md-6">
 		            <select name='Mascotas[tipoMascota]'>
 		              <option value="" selected="selected">- Tipo de mascota -</option>
@@ -185,8 +185,8 @@ $this->metaTags = "
 		            </select>
 		            <div id='Mascotas_tipoMascota_em' class="error text-danger"></div>
 	            </div>
-	            
-	            <div class="col-sm-6 col-md-6"> 
+
+	            <div class="col-sm-6 col-md-6">
           			<select name='Mascotas[edadMascota]'>
           				<option =""> - Edad de la mascota (a&ntilde;os)- </option>
 			            <?php for($i = 0;$i<=20;$i++ ):?>
@@ -195,7 +195,7 @@ $this->metaTags = "
 			        </select>
           			<div id='Mascotas_edadMascota_em' class="error text-danger"></div>
           		</div>
-          		
+
          	</div>
          	<div class='row'>
          		<div class="col-sm-6 col-md-6">
@@ -205,9 +205,9 @@ $this->metaTags = "
             </div>
             <br>
          	<div class="label-title"><strong> Datos de entrega de muestra</strong></div>
-         	
+
          	<div class='row'>
-         		<div class="col-sm-6 col-md-6"> 
+         		<div class="col-sm-6 col-md-6">
 		            <?php $ciudades = Ciudad::model()->findAll(array ('condition'  => 'estadoCiudad = 1', 'order' => 'nombreCiudad'));?>
 		            <select name='Mascotas[codigoCiudad]' placeholder="Ciudad">
 		            <option value="" selected="selected">- Seleccione Ciudad -</option>
@@ -217,18 +217,18 @@ $this->metaTags = "
 		            </select>
 		            <div id='Mascotas_codigoCiudad_em' class="error text-danger"></div>
 		        </div>
-          		<div class="col-sm-6 col-md-6"> 
+          		<div class="col-sm-6 col-md-6">
 	            	<input name='Mascotas[telefono]' type="text" placeholder="Teléfono o celular de contacto">
 	            	<div id='Mascotas_telefono_em' class="error text-danger"></div>
 	            </div>
-	            
+
           </div>
           <div class="row">
           		<div class="col-sm-6 col-md-6">
 	          		<input name='Mascotas[direccion]' type="text" placeholder="Dirección">
 	          		<div id='Mascotas_direccion_em' class="error text-danger"></div>
 	          	</div>
-          </div>	
+          </div>
           <div class="col-md-12">
             <input type="button" value="ENVIAR" onclick='guardarMascota();return false;'>
           </div>
@@ -241,8 +241,8 @@ $this->metaTags = "
       <div class="col-sm-2 col-md-2">
         <img class="img-responsive" src="<?= Yii::app()->request->baseUrl ?>/images/contenido/perros-y-gatos/icono-domicilio.png" alt="Entrega en 1 hora la rebaja virtual">
       </div>
-      <div class="col-sm-10 col-md-10">
-        En la Rebaja Virtual entregamos tu pedido en 1 hora
+      <div class="col-sm-10 col-md-10" style="line-height: 100px;">
+         Programa la hora de entrega, libera tu tiempo
       </div>
     </div>
   </div>

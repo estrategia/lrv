@@ -7,6 +7,7 @@ return array(
     'rules' => array(
         /* 'post/<id:\d+>/<title:.*?>'=>'post/view',
           'posts/<tag:.*?>'=>'post/index', */
+
         // Links de campañias
         'atacadol-alivio-dolores-fuertes' => 'publicidad/contenido/nombre/atacadol-alivio-dolores-fuertes',
         'coca-cola-sabores' => 'publicidad/contenido/nombre/coca-cola-sabores',
@@ -37,63 +38,24 @@ return array(
         'glucerna-para-diabeticos' => 'publicidad/contenido/nombre/glucerna',
         'zahara-protector-solar' => 'publicidad/contenido/nombre/zahara',
         'prodent-cuidado-oral' => 'publicidad/contenido/nombre/prodent',
+        'pedialyte-suero-oral' => 'publicidad/contenido/nombre/pedialyte',
+        'pilas-energizer' => 'publicidad/contenido/nombre/energizer',
+        'condones-duo-sensaciones-extremas' => 'publicidad/contenido/nombre/duo-sensaciones-extremas',
+        'condones-duo-maxima-sensacion' => 'publicidad/contenido/nombre/duo-maxima-sensacion',
+        'condones-duo-seguridad-y-confianza' => 'publicidad/contenido/nombre/duo-seguridad-y-confianza',
         // Fin links campañas
         // REST patterns
-        array(
-            'restProducto/producto',
-            'pattern' => 'rest/producto/<codigoProducto:\d+>/ciudad/<codigoCiudad:\d+>/sector/<codigoSector:\d+>',
-            'verb' => 'GET'
-        ),
-        array(
-            'restCiudad/list',
-            'pattern' => 'rest/ciudad',
-            'verb' => 'GET'
-        ),
-        array(
-            'restCiudad/view',
-            'pattern' => 'rest/ciudad/<id:\d+>',
-            'verb' => 'GET'
-        ),
-        array(
-            'restPuntoVenta/puntoventacercano',
-            'pattern' => 'rest/puntoventacercano/lat/<lat:\-?\d+\.?\d+>/lon/<lon:\-?\d+\.?\d+>',
-            'verb' => 'GET'
-        ),
-        array(
-            'restCiudad/sectores',
-            'pattern' => 'rest/ciudad/<id:\d+>/sectores',
-            'verb' => 'GET'
-        ),
-        array(
-            'restPuntoVenta/list',
-            'pattern' => 'rest/puntoventa',
-            'verb' => 'GET'
-        ),
-        array(
-            'restProducto/list',
-            'pattern' => 'rest/producto',
-            'verb' => 'GET'
-        ),
-        array(
-            'restProducto/buscar',
-            'pattern' => 'rest/producto/buscar/<termino:.*>/<laboratorio:\-?\d+>',
-            'verb' => 'GET'
-        ),
-        array(
-            'restProducto/simular',
-            'pattern' => 'rest/producto/simular',
-            'verb' => 'GET'
-        ),
-        array(
-            'restProfesion/ver',
-            'pattern' => 'rest/profesion/ver/<id:\d+>',
-            'verb' => 'GET'
-        ),
-        array(
-            'restProfesion/listar',
-            'pattern' => 'rest/profesion',
-            'verb' => 'GET'
-        ),
+        array('restProducto/producto', 'pattern' => 'rest/producto/<codigoProducto:\d+>/ciudad/<codigoCiudad:\d+>/sector/<codigoSector:\d+>', 'verb' => 'GET'),
+        array('restCiudad/list', 'pattern' => 'rest/ciudad', 'verb' => 'GET'),
+        array('restCiudad/view', 'pattern' => 'rest/ciudad/<id:\d+>', 'verb' => 'GET'),
+        array('restPuntoVenta/puntoventacercano', 'pattern' => 'rest/puntoventacercano/lat/<lat:\-?\d+\.?\d+>/lon/<lon:\-?\d+\.?\d+>', 'verb' => 'GET'),
+        array('restCiudad/sectores', 'pattern' => 'rest/ciudad/<id:\d+>/sectores', 'verb' => 'GET'),
+        array('restPuntoVenta/list', 'pattern' => 'rest/puntoventa', 'verb' => 'GET'),
+        array('restProducto/list', 'pattern' => 'rest/producto', 'verb' => 'GET'),
+        array('restProducto/buscar', 'pattern' => 'rest/producto/buscar/<termino:.*>/<laboratorio:\-?\d+>', 'verb' => 'GET'),
+        array('restProducto/simular', 'pattern' => 'rest/producto/simular', 'verb' => 'GET' ),
+        array('restProfesion/ver', 'pattern' => 'rest/profesion/ver/<id:\d+>', 'verb' => 'GET'),
+        array('restProfesion/listar', 'pattern' => 'rest/profesion', 'verb' => 'GET'),
     /* array('rest/update', 'pattern'=>'api/<model:\w+>/<id:\d+>', 'verb'=>'PUT'),
       array('rest/delete', 'pattern'=>'api/<model:\w+>/<id:\d+>', 'verb'=>'DELETE'),
       array('rest/create', 'pattern'=>'api/<model:\w+>', 'verb'=>'POST'), */
