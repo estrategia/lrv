@@ -7,7 +7,7 @@ return array(
     'rules' => array(
         /* 'post/<id:\d+>/<title:.*?>'=>'post/view',
           'posts/<tag:.*?>'=>'post/index', */
-        
+
         // Links de campañias
         'atacadol-alivio-dolores-fuertes' => 'publicidad/contenido/nombre/atacadol-alivio-dolores-fuertes',
         'coca-cola-sabores' => 'publicidad/contenido/nombre/coca-cola-sabores',
@@ -40,6 +40,9 @@ return array(
         'prodent-cuidado-oral' => 'publicidad/contenido/nombre/prodent',
         'pedialyte-suero-oral' => 'publicidad/contenido/nombre/pedialyte',
         'pilas-energizer' => 'publicidad/contenido/nombre/energizer',
+        'condones-duo-sensaciones-extremas' => 'publicidad/contenido/nombre/duo-sensaciones-extremas',
+        'condones-duo-maxima-sensacion' => 'publicidad/contenido/nombre/duo-maxima-sensacion',
+        'condones-duo-seguridad-y-confianza' => 'publicidad/contenido/nombre/duo-seguridad-y-confianza',
         // Fin links campañas
         // REST patterns
         array('restProducto/producto', 'pattern' => 'rest/producto/<codigoProducto:\d+>/ciudad/<codigoCiudad:\d+>/sector/<codigoSector:\d+>', 'verb' => 'GET'),
