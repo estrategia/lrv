@@ -1,8 +1,15 @@
 <style>.logo:hover{animation: none !important;}.logo{display: inline-block;}.header{margin-top: 20px;}.header h2{font-size: 29px;}.gray{padding: 10px 0;}.container.marcas .logo{left:5%;position:absolute;}</style>
 <div class="header">
 <!--<img class="img-responsive" src="<?= Yii::app()->request->baseUrl ?>/images/contenido/abbot/general/header.png">-->
+<div class="container-fluid">
+  <div class="col-sm-2 col-md-2">
+    <img class="img-responsive" style="margin-top: 20px;" src="<?= Yii::app()->request->baseUrl ?>/images/contenido/abbot/general/logo-abbot.png" alt="Logo Glucerna">
+  </div>
+  <div class="col-sm-9 col-md-9">
+    <h2>ABBOTT NUTRICIÓN TE ACOMPAÑA EN TODAS LAS ETAPAS DE TU VIDA</h2>
+  </div>
+</div>
   <div class="container marcas">
-  <h2><img class="img-responsive logo" src="<?= Yii::app()->request->baseUrl ?>/images/contenido/abbot/general/logo-abbot.png" alt="Logo Glucerna"> ABBOTT NUTRICIÓN TE ACOMPAÑA EN TODAS LAS ETAPAS DE TU VIDA</h2>
   <div class="row">
     <div class="col-sm-2 col-md-2">
       <a href="<?= Yii::app()->request->baseUrl ?>/similac-mama-embarazo">

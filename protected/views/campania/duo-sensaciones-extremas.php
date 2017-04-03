@@ -82,7 +82,7 @@ $this->metaTags = "<meta http-equiv='X-UA-Compatible' content='IE=edge'>
     <div class="colum-black" style="margin-left: -1px;">
       <h2 class="name-product" style="font-size: 42px;">DUO PURE GEL LUBRICANTE</h2>
       <p class="descrip-product">Gel lubricante de larga duración. Perfecto para los que buscan nuevas sensaciones y experiencias sexuales.</p>
-      <a href="#"><img class="img-responsive-m" src="<?= Yii::app()->request->baseUrl ?>/images/contenido/duo/sensaciones-extremas/compra-pure-gel-lubricante.png"></a>
+      <a href="<?php echo CController::createUrl('/catalogo/producto', array('producto' => 115591)) ?>" data-ajax="false"><img class="img-responsive-m" src="<?= Yii::app()->request->baseUrl ?>/images/contenido/duo/sensaciones-extremas/compra-pure-gel-lubricante.png"></a>
     </div>
   </div>
   <div style="height:20px;"></div>
@@ -151,7 +151,7 @@ $this->metaTags = "<meta http-equiv='X-UA-Compatible' content='IE=edge'>
       <div class="col-sm-6 col-md-6 colum-black">
         <h2 class="name-product">DUO PURE GEL LUBRICANTE</h2>
         <p class="descrip-product">Gel lubricante de larga duración. Perfecto para los que buscan nuevas sensaciones y experiencias sexuales.</p>
-        <a href="#"><img class="img-responsive btn-comprar" src="<?= Yii::app()->request->baseUrl ?>/images/contenido/duo/sensaciones-extremas/compra-pure-gel-lubricante.png"></a>
+        <a href="<?php echo CController::createUrl('/catalogo/producto', array('producto' => 115591)) ?>"><img class="img-responsive btn-comprar" src="<?= Yii::app()->request->baseUrl ?>/images/contenido/duo/sensaciones-extremas/compra-pure-gel-lubricante.png"></a>
       </div>
     </div>
     <div style="height:85px;"></div>
