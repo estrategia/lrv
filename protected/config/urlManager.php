@@ -43,6 +43,10 @@ return array(
         'condones-duo-sensaciones-extremas' => 'publicidad/contenido/nombre/duo-sensaciones-extremas',
         'condones-duo-maxima-sensacion' => 'publicidad/contenido/nombre/duo-maxima-sensacion',
         'condones-duo-seguridad-y-confianza' => 'publicidad/contenido/nombre/duo-seguridad-y-confianza',
+        'altex-previene-acne' => 'publicidad/contenido/nombre/altex-previene',
+        'altex-elimina-acne' => 'publicidad/contenido/nombre/altex-elimina',
+        'altex-oculta-acne' => 'publicidad/contenido/nombre/altex-oculta',
+
         // Fin links campañas
         // REST patterns
         array('restProducto/producto', 'pattern' => 'rest/producto/<codigoProducto:\d+>/ciudad/<codigoCiudad:\d+>/sector/<codigoSector:\d+>', 'verb' => 'GET'),
