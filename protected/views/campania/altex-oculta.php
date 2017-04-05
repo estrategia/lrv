@@ -78,7 +78,7 @@ $this->metaTags = "<meta http-equiv='X-UA-Compatible' content='IE=edge'>
       <div class="ui-block-b"><span>Tono medio</span><i class="medio"></i></div>
       <div class="ui-block-c"><span>Tono oscuro</span><i class="oscuro"></i></div>
     </div>
-    <a href="#" data-ajax="false"><img class="img-responsive-m" style="margin-top: -23px;" src="<?= Yii::app()->request->baseUrl ?>/images/contenido/altex/compra-online.png"></a>
+    <a href="<?php echo CController::createUrl('/contenido/ver', array('tipo' => 'grupo', 'contenido' => 2351)) ?>" data-ajax="false"><img class="img-responsive-m" style="margin-top: -23px;" src="<?= Yii::app()->request->baseUrl ?>/images/contenido/altex/compra-online.png"></a>
   </div>
   <hr class="separator">
   <div style="padding: 0px 20px;">
@@ -136,7 +136,7 @@ $this->metaTags = "<meta http-equiv='X-UA-Compatible' content='IE=edge'>
             <div class="col-sm-4 col-md-4"><span>Tono medio</span><i class="medio"></i></div>
             <div class="col-sm-4 col-md-4"><span>Tono oscuro</span><i class="oscuro"></i></div>
           </div>
-          <a href="#"><img class="img-responsive" style="margin-top: -23px;" src="<?= Yii::app()->request->baseUrl ?>/images/contenido/altex/compra-online.png"></a>
+          <a href="<?php echo CController::createUrl('/contenido/ver', array('tipo' => 'grupo', 'contenido' => 2351)) ?>"><img class="img-responsive" style="margin-top: -23px;" src="<?= Yii::app()->request->baseUrl ?>/images/contenido/altex/compra-online.png"></a>
         </div>
       </div>
       <div class="space"></div>
