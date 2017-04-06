@@ -11,18 +11,18 @@ $this->metaTags = "<meta http-equiv='X-UA-Compatible' content='IE=edge'>
     .background {background-image:url(".Yii::app()->request->baseUrl."/images/contenido/altex/background.png);background-size: cover;background-repeat: no-repeat;background-attachment: fixed;}
     .menu h2 {text-align:center;text-transform:uppercase;font-family:ClaireHand-Bold;font-size:50px;line-height: 115px;}
     .menu {margin-top: 110px;}
-    .menu .active {background-position: 35px -176px;background-image: url(/lrv/images/contenido/altex/btn-menu.png);background-repeat: no-repeat;text-decoration:none;height: 154px;width: 100%;display: block;color:#fff;}
+    .menu .active {background-position: 35px -176px;background-image: url(/images/contenido/altex/btn-menu.png);background-repeat: no-repeat;text-decoration:none;height: 154px;width: 100%;display: block;color:#fff;}
     .previene {color: #004ECB;text-decoration: none;}
-    .previene:hover {background-position: 35px -8px;background-image: url(/lrv/images/contenido/altex/btn-menu.png);background-repeat: no-repeat;text-decoration:none;height: 154px;width: 100%;display: block;color:#fff;}
+    .previene:hover {background-position: 35px -8px;background-image: url(/images/contenido/altex/btn-menu.png);background-repeat: no-repeat;text-decoration:none;height: 154px;width: 100%;display: block;color:#fff;}
     .elimina {color:#D52323;text-decoration:none}
-    .elimina:hover {background-position: 35px -176px;background-image: url(/lrv/images/contenido/altex/btn-menu.png);background-repeat: no-repeat;text-decoration:none;height: 154px;width: 100%;display: block;color:#fff;}
+    .elimina:hover {background-position: 35px -176px;background-image: url(/images/contenido/altex/btn-menu.png);background-repeat: no-repeat;text-decoration:none;height: 154px;width: 100%;display: block;color:#fff;}
     .oculta {color: #F47B2A;text-decoration:none}
-    .oculta:hover {background-position: 35px -344px;background-image: url(/lrv/images/contenido/altex/btn-menu.png);text-decoration:none;background-repeat: no-repeat;height: 154px;width: 100%;display: block;color:#fff;}
+    .oculta:hover {background-position: 35px -344px;background-image: url(/images/contenido/altex/btn-menu.png);text-decoration:none;background-repeat: no-repeat;height: 154px;width: 100%;display: block;color:#fff;}
     .previene h2::before, .elimina h2::before {content: '';width: 4px;height: 65px;background-color: #B0B0B0;float: right;margin-top: 24px;}
     .content-text {margin-top: -130px;padding: 0px 50px;}
     .content-text span {font-family: ThrowMyHandsUpintheAir;color: #A6BF26;font-size: 56px;font-weight: bold;}
     .space {height:130px;}
-    .lista {list-style: url(/lrv/images/contenido/altex/2-elimina/item-list.png) ;font-family:SohoGothicPro-Regular ;font-size:20px;margin: 35px auto;}
+    .lista {list-style: url(/images/contenido/altex/2-elimina/item-list.png) ;font-family:SohoGothicPro-Regular ;font-size:20px;margin: 35px auto;}
     .lista li {margin-bottom: 15px;}
     .videoWrapper {position: relative;padding-bottom: 56.25%;padding-top: 25px;height: 0;}
     .videoWrapper iframe {position: absolute;top: 0;left: 0;width: 100%;height: 100%;}
