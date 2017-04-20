@@ -46,6 +46,8 @@ return array(
         'altex-previene-acne' => 'publicidad/contenido/nombre/altex-previene',
         'altex-elimina-acne' => 'publicidad/contenido/nombre/altex-elimina',
         'altex-oculta-acne' => 'publicidad/contenido/nombre/altex-oculta',
+        'cicatricure' => 'publicidad/contenido/nombre/cicatricure',
+        'electrohogar' => 'publicidad/contenido/nombre/electrohogar',
 
         // Fin links campañas
         // REST patterns
