@@ -75,16 +75,13 @@ $this->metaTags = "<meta http-equiv='X-UA-Compatible' content='IE=edge'>
           $("#video3").attr("src", $("#video3").attr("src"));
           $("#video4").attr("src", $("#video4").attr("src"));
           $("#video5").attr("src", $("#video5").attr("src"));
-          $("#video6").attr("src", $("#video6").attr("src"));
       });
-
       $('#next').click(function(){
         $("#video1").attr("src", $("#video1").attr("src"));
         $("#video2").attr("src", $("#video2").attr("src"));
         $("#video3").attr("src", $("#video3").attr("src"));
         $("#video4").attr("src", $("#video4").attr("src"));
         $("#video5").attr("src", $("#video5").attr("src"));
-        $("#video6").attr("src", $("#video6").attr("src"));
       });
   });
 </script>
@@ -155,43 +152,23 @@ $this->metaTags = "<meta http-equiv='X-UA-Compatible' content='IE=edge'>
       </div>
       <div class="item">
         <div class="videoWrapper">
-          <video width="100%" height="auto" controls style="margin-top: -25px;">
-           <source src="<?= Yii::app()->request->baseUrl ?>/images/contenido/cicatricure/videos/2-cicatricure-microdermo.mp4" type="video/mp4">
-          Your browser does not support the video tag.
-          </video>
+          <iframe width="100%" height="auto"  style="height: 178px;" src="https://www.youtube.com/embed/pMfJrS29xXQ?rel=0&showinfo=0" frameborder="0" allowfullscreen></iframe>
         </div>
       </div>
       <div class="item">
         <div class="videoWrapper">
-          <video width="100%" height="auto" controls style="margin-top: -25px;">
-           <source src="<?= Yii::app()->request->baseUrl ?>/images/contenido/cicatricure/videos/3-cicatricure-preferencias.mp4" type="video/mp4">
-          Your browser does not support the video tag.
-          </video>
+          <iframe width="100%" height="auto"  style="height: 178px;" src="https://www.youtube.com/embed/5emFdEHX1fY?rel=0&showinfo=0" frameborder="0" allowfullscreen></iframe>
         </div>
       </div>
       <div class="item">
           <div class="videoWrapper">
-            <video width="100%" height="auto" controls style="margin-top: -25px;">
-             <source src="<?= Yii::app()->request->baseUrl ?>/images/contenido/cicatricure/videos/4-cicatricure-cortaduras.mp4" type="video/mp4">
-            Your browser does not support the video tag.
-            </video>
+            <iframe width="100%" height="auto"  style="height: 178px;" src="https://www.youtube.com/embed/zpqaL06uak0?rel=0&showinfo=0" frameborder="0" allowfullscreen></iframe>
           </div>
       </div>
       <div class="item">
           <div class="videoWrapper">
-            <video width="100%" height="auto" controls style="margin-top: -25px;">
-             <source src="<?= Yii::app()->request->baseUrl ?>/images/contenido/cicatricure/videos/5-cicatricure-operaciones.mp4" type="video/mp4">
-            Your browser does not support the video tag.
-            </video>
+            <iframe width="100%" height="auto"  style="height: 178px;" src="https://www.youtube.com/embed/r_plBOpG594?rel=0&showinfo=0" frameborder="0" allowfullscreen></iframe>
           </div>
-      </div>
-      <div class="item">
-        <div class="videoWrapper">
-          <video width="100%" height="auto" controls style="margin-top: -25px;">
-           <source src="<?= Yii::app()->request->baseUrl ?>/images/contenido/cicatricure/videos/6-cicatricure-quemaduras.mp4" type="video/mp4">
-          Your browser does not support the video tag.
-          </video>
-        </div>
       </div>
     </div>
   </section>
@@ -302,63 +279,35 @@ $this->metaTags = "<meta http-equiv='X-UA-Compatible' content='IE=edge'>
                 </div>
               </div>
               <div class="col-md-6">
-                <!-- <div class="videoWrapper">
-                  <video width="100%" height="auto" controls style="margin-top: -25px;">
-                   <source src="<?= Yii::app()->request->baseUrl ?>/images/contenido/cicatricure/videos/1-lanzamiento-beauty-care.mp4" type="video/mp4">
-                  Your browser does not support the video tag.
-                  </video>
-                </div> -->
                 <div class="videoWrapper">
-                  <video width="100%" height="auto" controls style="margin-top: -25px;">
-                   <source id="video2" src="<?= Yii::app()->request->baseUrl ?>/images/contenido/cicatricure/videos/2-cicatricure-microdermo.mp4" type="video/mp4">
-                  Your browser does not support the video tag.
-                  </video>
+                  <iframe id="video2" width="100%" height="auto"  style="height: 278px;" src="https://www.youtube.com/embed/pMfJrS29xXQ?rel=0&showinfo=0" frameborder="0" allowfullscreen></iframe>
                 </div>
               </div>
             </div>
             <div class="item">
               <div class="col-md-6">
                 <div class="videoWrapper">
-                  <video id="video3" width="100%" height="auto" controls style="margin-top: -25px;">
-                   <source src="<?= Yii::app()->request->baseUrl ?>/images/contenido/cicatricure/videos/3-cicatricure-preferencias.mp4" type="video/mp4">
-                  Your browser does not support the video tag.
-                  </video>
+                  <iframe id="video3" width="100%" height="auto"  style="height: 278px;" src="https://www.youtube.com/embed/5emFdEHX1fY?rel=0&showinfo=0" frameborder="0" allowfullscreen></iframe>
                 </div>
               </div>
               <div class="col-md-6">
                 <div class="videoWrapper">
-                  <video id="video4" width="100%" height="auto" controls style="margin-top: -25px;">
-                   <source src="<?= Yii::app()->request->baseUrl ?>/images/contenido/cicatricure/videos/4-cicatricure-cortaduras.mp4" type="video/mp4">
-                  Your browser does not support the video tag.
-                  </video>
+                  <iframe id="video4" width="100%" height="auto"  style="height: 278px;" src="https://www.youtube.com/embed/zpqaL06uak0?rel=0&showinfo=0" frameborder="0" allowfullscreen></iframe>
                 </div>
               </div>
             </div>
             <div class="item">
               <div class="col-md-6">
                 <div class="videoWrapper">
-                  <video id="video5" width="100%" height="auto" controls style="margin-top: -25px;">
-                   <source src="<?= Yii::app()->request->baseUrl ?>/images/contenido/cicatricure/videos/5-cicatricure-operaciones.mp4" type="video/mp4">
-                  Your browser does not support the video tag.
-                  </video>
+                  <iframe id="video5" width="100%" height="auto"  style="height: 278px;" src="https://www.youtube.com/embed/r_plBOpG594?rel=0&showinfo=0" frameborder="0" allowfullscreen></iframe>
                 </div>
               </div>
               <div class="col-md-6">
                 <div class="videoWrapper">
-                  <video id="video6" width="100%" height="auto" controls style="margin-top: -25px;">
-                   <source src="<?= Yii::app()->request->baseUrl ?>/images/contenido/cicatricure/videos/6-cicatricure-quemaduras.mp4" type="video/mp4">
-                  Your browser does not support the video tag.
-                  </video>
-                </div>
-              </div>
-            </div>
-            <!-- <div class="item">
-              <div class="col-md-6">
 
+                </div>
               </div>
-              <div class="col-md-6">
-              </div>
-            </div> -->
+            </div>
           </div>
           <a id="prev" class="carousel-control left" href="#carousel-video" data-slide="prev"><i class="prev-slide"></i></a>
           <a id="next" class="carousel-control right" href="#carousel-video" data-slide="next"><i class="next-slide"></i></a>
