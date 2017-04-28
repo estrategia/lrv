@@ -48,6 +48,9 @@ return array(
         'altex-oculta-acne' => 'publicidad/contenido/nombre/altex-oculta',
         'cicatricure' => 'publicidad/contenido/nombre/cicatricure',
         'electrohogar' => 'publicidad/contenido/nombre/electrohogar',
+        'nestum-cereales-infantiles' => 'publicidad/contenido/nombre/nestum',
+        'recetas-nestum-cereales-infantiles' => 'publicidad/contenido/nombre/nestum-recetas',
+        'sabias-que-nestum-cereales-infantiles' => 'publicidad/contenido/nombre/nestum-sabias-que',
 
         // Fin links campañas
         // REST patterns
