@@ -116,7 +116,7 @@ $this->metaTags = "
   </section>
   <section>
     <div class="space-m"></div>
-    <a href="#"><img src="<?= Yii::app()->request->baseUrl ?>/images/contenido/corega/boton-comprar.png" class="img-responsive compra-online-m" alt="Comprar Parodontax en la rebaja virtual"></a>
+    <a href="<?php echo CController::createUrl('/catalogo/buscar?busqueda=parodontax') ?>"><img src="<?= Yii::app()->request->baseUrl ?>/images/contenido/corega/boton-comprar.png" class="img-responsive compra-online-m" alt="Comprar Parodontax en la rebaja virtual"></a>
   </section>
   <section class="contenedor">
     <h1 class="title-principal-m">Parodontax ®</h1>
@@ -141,7 +141,7 @@ $this->metaTags = "
     <img src="<?= Yii::app()->request->baseUrl ?>/images/contenido/parodontax/mujer.jpg" class="img-responsive" alt="">
   </section>
   <section class="row">
-    <a href="#"><img style="margin: 35px auto;" src="<?= Yii::app()->request->baseUrl ?>/images/contenido/corega/boton-comprar.png" class="img-responsive compra-online-m" alt="Comprar Parodontax en la rebaja virtual"></a>
+    <a href="<?php echo CController::createUrl('/catalogo/buscar?busqueda=parodontax') ?>"><img style="margin: 35px auto;" src="<?= Yii::app()->request->baseUrl ?>/images/contenido/corega/boton-comprar.png" class="img-responsive compra-online-m" alt="Comprar Parodontax en la rebaja virtual"></a>
   </section>
   <section class="row">
     <iframe width="100%" height="210" src="https://www.youtube.com/embed/A9Dbnbk_P_s" frameborder="0" allowfullscreen></iframe>
@@ -225,7 +225,7 @@ $this->metaTags = "
     </div>
   </div>
   <div class="row">
-    <a href="#"><img src="<?= Yii::app()->request->baseUrl ?>/images/contenido/corega/boton-comprar.png" class="img-responsive compra-online" alt="Comprar Parodontax en la rebaja virtual"></a>
+    <a href="<?php echo CController::createUrl('/catalogo/buscar?busqueda=parodontax') ?>"><img src="<?= Yii::app()->request->baseUrl ?>/images/contenido/corega/boton-comprar.png" class="img-responsive compra-online" alt="Comprar Parodontax en la rebaja virtual"></a>
   </div>
   <div class="row" style="margin: 30px 0px;">
     <div class="col-md-4"></div>
@@ -274,7 +274,7 @@ $this->metaTags = "
 
     <div class="row">
       <div class="col-md-12">
-        <a href="#"><img style="margin: 35px auto;" src="<?= Yii::app()->request->baseUrl ?>/images/contenido/corega/boton-comprar.png" class="img-responsive compra-online" alt="Comprar Parodontax en la rebaja virtual"></a>
+        <a href="<?php echo CController::createUrl('/catalogo/buscar?busqueda=parodontax') ?>"><img style="margin: 35px auto;" src="<?= Yii::app()->request->baseUrl ?>/images/contenido/corega/boton-comprar.png" class="img-responsive compra-online" alt="Comprar Parodontax en la rebaja virtual"></a>
       </div>
     </div>
 

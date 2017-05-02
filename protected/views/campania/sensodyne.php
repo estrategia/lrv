@@ -117,7 +117,7 @@ $this->metaTags = "
     <img src="<?= Yii::app()->request->baseUrl ?>/images/contenido/sensodyne/banner-sensodyne.jpg" class="img-responsive" alt="Sensodyne La rebaja virtual">
   </section>
   <section>
-    <a href="#"><img style="width: 90%;margin: 15px auto;" src="<?= Yii::app()->request->baseUrl ?>/images/contenido/sensodyne/boton-compra.png" class="img-responsive" alt="Comprar Corega en la rebaja virtual"></a>
+    <a href="<?php echo CController::createUrl('/catalogo/buscar?busqueda=sensodyne') ?>"><img style="width: 90%;margin: 15px auto;" src="<?= Yii::app()->request->baseUrl ?>/images/contenido/sensodyne/boton-compra.png" class="img-responsive" alt="Comprar Corega en la rebaja virtual"></a>
   </section>
   <section>
     <div class="image">
@@ -228,7 +228,7 @@ $this->metaTags = "
   <section>
     <div class="image">
       <img src="<?= Yii::app()->request->baseUrl ?>/images/contenido/sensodyne/sonrrisa.png" class="img-responsive" alt="">
-      <p class="pay"><a href="#"><img style="width:30%;" src="<?= Yii::app()->request->baseUrl ?>/images/contenido/sensodyne/compra-online.png" class="img-responsive" alt=""></a></p>
+      <p class="pay"><a href="<?php echo CController::createUrl('/catalogo/buscar?busqueda=sensodyne') ?>"><img style="width:30%;" src="<?= Yii::app()->request->baseUrl ?>/images/contenido/sensodyne/compra-online.png" class="img-responsive" alt=""></a></p>
     </div>
   </section>
   <section style="padding:22px ;">
@@ -276,7 +276,7 @@ $this->metaTags = "
 <div class="container-fluid">
   <div class="row">
     <div class="space"></div>
-    <a href="#"><img style="width: 60%;margin: 0 auto;" src="<?= Yii::app()->request->baseUrl ?>/images/contenido/sensodyne/boton-compra.png" class="img-responsive" alt="Comprar Corega en la rebaja virtual"></a>
+    <a href="<?php echo CController::createUrl('/catalogo/buscar?busqueda=sensodyne') ?>"><img style="width: 60%;margin: 0 auto;" src="<?= Yii::app()->request->baseUrl ?>/images/contenido/sensodyne/boton-compra.png" class="img-responsive" alt="Comprar Corega en la rebaja virtual"></a>
     <div class="space"></div>
   </div>
 </div>
@@ -481,7 +481,7 @@ $this->metaTags = "
       <div class="space"></div>
       <div class="space"></div>
         <center>
-          <a href="#">
+          <a href="<?php echo CController::createUrl('/catalogo/buscar?busqueda=sensodyne') ?>">
             <img class="compra" src="<?= Yii::app()->request->baseUrl ?>/images/contenido/sensodyne/compra-online.png" class="img-responsive" alt="Compra Sensodyne en la Rebaja Virtual">
           </a>
         </center>
