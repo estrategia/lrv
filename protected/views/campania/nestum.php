@@ -106,7 +106,7 @@ $this->metaTags = "<meta http-equiv='X-UA-Compatible' content='IE=edge'>
     </a>
     <p class="legal-m">
       <strong>Aviso importante:</strong> La leche materna es el mejor alimento para el niño. Los Cereales Infantiles NESTUM <sup>®</sup> <br>
-      son un alimento complementario de la leche materna a partir de los 6 meses.
+      son un alimento complementario de la leche materna a partir de los 6 meses o de la edad indicada en el empaque.
     </p>
     <div class="footer" style="font-size: 19px;text-align: center;">
         <span>
@@ -215,7 +215,7 @@ $this->metaTags = "<meta http-equiv='X-UA-Compatible' content='IE=edge'>
     <div class="row">
       <p class="legal">
         <strong>Aviso importante:</strong> La leche materna es el mejor alimento para el niño. Los Cereales Infantiles NESTUM <sup>®</sup> <br>
-        son un alimento complementario de la leche materna a partir de los 6 meses.
+        son un alimento complementario de la leche materna a partir de los 6 meses o de la edad indicada en el empaque.
       </p>
     </div>
     <div class="row footer">
