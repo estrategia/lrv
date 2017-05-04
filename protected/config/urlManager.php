@@ -17,11 +17,9 @@ return array(
         'listerine-cuidado-total' => 'publicidad/contenido/nombre/listerine-cuidado-total',
         'mas-informacion-metamucil' => 'publicidad/contenido/nombre/mas-informacion-metamucil',
         'metamucil-facilita-transito-intestinal' => 'publicidad/contenido/nombre/metamucil-facilita-transito-intestinal',
-
         'nestle-nan-optipro' => 'publicidad/contenido/nombre/nestle-nan-optipro',
         'recetas-nestle-nan-optipro' => 'publicidad/contenido/nombre/nan-recetas',
         'mas-informacion-nan' => 'publicidad/contenido/nombre/mas-informacion-nan',
-
         'parodontax' => 'publicidad/contenido/nombre/parodontax',
         'porque-elejir-metamucil' => 'publicidad/contenido/nombre/porque-elejir-metamucil',
         'prebioticos-klim' => 'publicidad/contenido/nombre/prebioticos-klim',
@@ -52,7 +50,10 @@ return array(
         'nestum-cereales-infantiles' => 'publicidad/contenido/nombre/nestum',
         'recetas-nestum-cereales-infantiles' => 'publicidad/contenido/nombre/nestum-recetas',
         'sabias-que-nestum-cereales-infantiles' => 'publicidad/contenido/nombre/nestum-sabias-que',
-
+        'eucerin-proteccion-solar-facial' => 'publicidad/contenido/nombre/eucerin',
+        'eucerin-proteccion-solar-corporal' => 'publicidad/contenido/nombre/eucerin-corporal',
+        'eucerin-proteccion-solar-infantil' => 'publicidad/contenido/nombre/eucerin-kids',
+        'naturales' => 'publicidad/contenido/nombre/naturales',
         // Fin links campañas
         // REST patterns
         array('restProducto/producto', 'pattern' => 'rest/producto/<codigoProducto:\d+>/ciudad/<codigoCiudad:\d+>/sector/<codigoSector:\d+>', 'verb' => 'GET'),
