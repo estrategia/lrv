@@ -64,7 +64,7 @@ $this->metaTags = "
 <!---FIN VERSIÓN MÓVIL-->
 <!--VERSIÓN ESCRITORIO-->
 <?php else: ?>
-<a href="#"><div class="sidebar-cart"><img class="img-responsive" src="<?= Yii::app()->request->baseUrl ?>/images/contenido/nestum/boton-sticky.png"></div></a>
+<a href="<?php echo CController::createUrl('/contenido/ver', array('tipo' => 'grupo', 'contenido' => 2566)) ?>"><div class="sidebar-cart"><img class="img-responsive" src="<?= Yii::app()->request->baseUrl ?>/images/contenido/nestum/boton-sticky.png"></div></a>
 <img class="img-responsive" src="<?= Yii::app()->request->baseUrl ?>/images/contenido/eucerin/banner.jpg" alt="Eucerin, Protección solar médica para tu piel">
 <div class="container" style="padding: 0 10%;">
   <div class="row">
