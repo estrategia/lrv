@@ -1,4 +1,4 @@
-<?php $this->pageTitle = "Energizer - La Rebaja Virtual"; ?>
+<?php $this->pageTitle = "Energizer PowerSeal- La Rebaja Virtual"; ?>
 <?php
 $this->metaTags = "<meta http-equiv='X-UA-Compatible' content='IE=edge'>
   <meta name='description' content='Energizer® MAX® con Power Seal Technology dura hasta un 30% más y mantiene su carga hasta por 10 años, proporcionando una larga vida útil.'>
@@ -11,9 +11,9 @@ $this->metaTags = "<meta http-equiv='X-UA-Compatible' content='IE=edge'>
     .background-black {background-color:#000;}
     .content {padding: 0 10%;}
     .background-black .content h1 {color:#FFE500;font-family:helvetica-neue-heavy-condObl;font-size: 68px;margin:6px 0;}
-    .background-black .content h2 {color:#FFF;font-family:helvetica-neue-heavy-condObl;font-size: 30px;margin:6px 0;}
-    .background-black .content h3 {color:#FA9000;font-family:helvetica-neue-heavy;font-size: 35px;margin: 6px 0; }
-    .lista {color: #E9E9E6;font-size: 27px;margin-top: 60px;font-family:helvetica-neue-heavy; line-height: 45px;}
+    .background-black .content h2 {color:#FFF;font-family:helvetica-neue-heavy-condObl;font-size: 21px;margin:6px 0;}
+    .background-black .content h3 {color:#FA9000;font-family:helvetica-neue-heavy;font-size: 35px;margin: 12px 0; }
+    .lista {color: #E9E9E6;font-size: 27px;margin-top: 60px;font-family:helvetica-neue-heavy; line-height: 35px;}
     .usos {font-family:helvetica-neue-heavy;color:#DFDFDC;font-size: 25px;margin-top: 14%;}
     .text-bg-yellow {z-index: 5;position: absolute;margin-top: 16px;font-family: helvetica-neue-heavy-condObl;font-size: 24px;color: #000;margin: 32px;}
     .text-bg-yellow span {font-size: 32px;}
@@ -25,6 +25,9 @@ $this->metaTags = "<meta http-equiv='X-UA-Compatible' content='IE=edge'>
     .space-1 {height: 0px !important;}
     .block-yellow {position: absolute;left: 0;margin-top: 16%;width: 33%;margin-top: 14.3%;}
     .img-responsive-movil {width:100%;}
+    .btn-menu{font-family: helvetica-neue-heavy;background-repeat: no-repeat;display: inline-block;padding: 15px 25px;background-size: 100% 100%;color: #FFE500;border: 2px solid #fff;}
+    .btn-menu:hover{background-color: #FFE500;color:#000;border: 2px solid #FFE500;transition: all 0.2s ease-in-out 0s;}
+
     @media (min-width: 1100px) and (max-width: 1199px) {
       .background-black .content h1 {font-size: 45px;}
       .background-black .content h2 {font-size: 33px;}
@@ -72,7 +75,7 @@ $this->metaTags = "<meta http-equiv='X-UA-Compatible' content='IE=edge'>
       .fot-product {margin-top: -9.3%;}
     }
     @media (min-width: 1501px) and (max-width: 1600px) {
-      .background-black .content h1 { font-size: 61px;}
+      .background-black .content h1 { font-size: 50px;}
       .background-black .content h2 {font-size: 24px;}
       .background-black .content h3 {font-size: 27px;}
       .block-yellow {margin-top: 13.2%;}
@@ -118,6 +121,9 @@ $this->metaTags = "<meta http-equiv='X-UA-Compatible' content='IE=edge'>
 <img class="img-responsive-movil" src="<?= Yii::app()->request->baseUrl ?>/images/contenido/energizer/banner.jpg" alt="Energizer max porwer seal">
 <div class="background-black" style="padding: 0;margin-top: -11px;">
   <div class="content">
+    <center>
+      <a href="<?= Yii::app()->request->baseUrl ?>/pilas-especiales-energizer"><h4 class="btn-menu"><span class="glyphicon glyphicon-menu-right" aria-hidden="true"></span> Pilas especiales</h4></a>
+    </center>
     <h1 class="first-title" style="font-size: 27px;">Tecnología PowerSeal Energizer max AA y AAA</h1>
     <h2 style="font-size: 19px;letter-spacing: 1px;">significa que puedes estar seguro de que siempre tendrás energía cuando más la necesitas. Esto sí es positivenergy!<sup>TM</sup></h2>
     <h3 style="font-size: 16px;">¡Energizer se enorgullece en presentar Power Seal Technology!</h3>
@@ -152,12 +158,10 @@ $this->metaTags = "<meta http-equiv='X-UA-Compatible' content='IE=edge'>
 
 <!--VERSIÓN ESCRITORIO-->
 <?php else: ?>
-<!-- <a href="#">
-  <div class="sidebar-cart"><img class="img-responsive" src="<?= Yii::app()->request->baseUrl ?>/images/contenido/energizer/boton-rebaja.png"></div>
-</a> -->
 <img class="img-responsive" src="<?= Yii::app()->request->baseUrl ?>/images/contenido/energizer/banner.jpg" alt="Energizer max porwer seal">
 <div class="container-fluid background-black" style="padding: 0;">
   <div class="content">
+    <a href="<?= Yii::app()->request->baseUrl ?>/pilas-especiales-energizer"><h4 class="btn-menu"><span class="glyphicon glyphicon-menu-right" aria-hidden="true"></span> Pilas especiales</h4></a>
     <h1 class="first-title">Tecnología PowerSeal Energizer max AA y AAA</h1>
     <h2>significa que puedes estar seguro de que siempre tendrás energía cuando más la necesitas. Esto sí es positivenergy!<sup>TM</sup></h2>
     <h3>¡Energizer se enorgullece en presentar Power Seal Technology!</h3>

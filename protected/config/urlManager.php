@@ -39,6 +39,7 @@ return array(
         'prodent-cuidado-oral' => 'publicidad/contenido/nombre/prodent',
         'pedialyte-suero-oral' => 'publicidad/contenido/nombre/pedialyte',
         'pilas-energizer' => 'publicidad/contenido/nombre/energizer',
+        'pilas-especiales-energizer' => 'publicidad/contenido/nombre/energizer-pilas-especiales',
         'condones-duo-sensaciones-extremas' => 'publicidad/contenido/nombre/duo-sensaciones-extremas',
         'condones-duo-maxima-sensacion' => 'publicidad/contenido/nombre/duo-maxima-sensacion',
         'condones-duo-seguridad-y-confianza' => 'publicidad/contenido/nombre/duo-seguridad-y-confianza',
