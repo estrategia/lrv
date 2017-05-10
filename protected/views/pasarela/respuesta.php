@@ -4,7 +4,6 @@
             <tr>
                 <th colspan="2">Resultado de operaci&oacute;n</th>
             </tr>
-            </tr>
         </thead>
         <tbody>
             <tr class="odd">
