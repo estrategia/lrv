@@ -55,7 +55,11 @@ return array(
         'eucerin-proteccion-solar-corporal' => 'publicidad/contenido/nombre/eucerin-corporal',
         'eucerin-proteccion-solar-infantil' => 'publicidad/contenido/nombre/eucerin-kids',
         'naturales' => 'publicidad/contenido/nombre/naturales',
+        'energold-renergen-suplementos-dietarios' => 'publicidad/contenido/nombre/kyron-suplementos-dietarios',
+        'energold-alimento-polvo' => 'publicidad/contenido/nombre/kyron-elimento-polvo',
+        'energold-alimento-ninos' => 'publicidad/contenido/nombre/kyron-alimento-ninos',
         // Fin links campañas
+
         // REST patterns
         array('restProducto/producto', 'pattern' => 'rest/producto/<codigoProducto:\d+>/ciudad/<codigoCiudad:\d+>/sector/<codigoSector:\d+>', 'verb' => 'GET'),
         array('restCiudad/list', 'pattern' => 'rest/ciudad', 'verb' => 'GET'),
