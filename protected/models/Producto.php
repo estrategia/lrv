@@ -358,5 +358,58 @@ class Producto extends CActiveRecord {
             return $object;
         }
     }
+    
+    public static function consultarProducto($producto, $objSectorCiudad){
+    	$objProducto = null;
+    	
+    	if ($objSectorCiudad == null) {
+    		$objProducto = self::model ()->find ( array (
+    				'condition' => 't.activo=:activo AND t.codigoProducto=:codigo',
+    				'params' => array (
+    						':activo' => 1,
+    						':codigo' => $producto
+    				)
+    		) );
+    	} else {
+    		$objProducto = Producto::model ()->find ( array (
+    				'with' => array (
+    						'listSaldos' => array (
+    								'on' => '(listSaldos.codigoCiudad=:ciudad AND listSaldos.codigoSector=:sector) OR listSaldos.idProductoSaldos IS NULL'
+    						),
+    						'listPrecios' => array (
+    								'on' => '(listPrecios.codigoCiudad=:ciudad AND listPrecios.codigoSector=:sector) OR listPrecios.idProductoPrecios IS NULL'
+    						),
+    						'listSaldosTerceros' => array (
+    								'on' => '(listSaldosTerceros.codigoCiudad=:ciudad AND listSaldosTerceros.codigoSector=:sector) OR listSaldosTerceros.idProductoSaldo IS NULL'
+    						)
+    				),
+    				'condition' => 't.activo=:activo AND t.codigoProducto=:codigo',
+    				'params' => array (
+    						':activo' => 1,
+    						':codigo' => $producto,
+    						':ciudad' => $objSectorCiudad->codigoCiudad,
+    						':sector' => $objSectorCiudad->codigoSector
+    				)
+    		) );
+    	}
+    	
+    	return $objProducto;
+    }
+    
+    public static function consultarPrecio($producto, $objSectorCiudad){
+    	$objProducto = self::consultarProducto($producto, $objSectorCiudad);
+    	$objPrecio = new PrecioProducto($objProducto, $objSectorCiudad, Yii::app()->shoppingCart->getCodigoPerfil());
+    	
+    	if(!$objPrecio->inicializado()){
+    		return null;
+    	}
+    	
+    	$arrPrecio = array(
+    		'unidad' => $objPrecio->getPrecio(Precio::PRECIO_UNIDAD),
+    		'fraccion' => ($objProducto->fraccionado == 1) ? $objPrecio->getPrecio(Precio::PRECIO_FRACCION) : null,
+    	);
+    	
+    	return $arrPrecio;
+    }
 
 }
