@@ -1,7 +1,7 @@
 <?php $this->pageTitle = "Nestum - La Rebaja Virtual"; ?>
 <?php
 $this->metaTags = "<meta http-equiv='X-UA-Compatible' content='IE=edge'>
-  <meta name='description' content=' Los cereales infantiles NESTUM® están hechos a base de cereales adicionados con nutrientes y probióticos que ayudan al crecimiento y desarrollo del bebé.'>
+  <meta name='description' content=' Los Cereales infantiles NESTUM® tienen más de 10 vitaminas y minerales, probióticos  y variedad de sabores y es ideal para la alimentación complementaria.'>
   <meta name='keywords' content='nestum, nestle nestum, nestum cereales.'>
 	<style>
     @font-face { font-family:VAGRoundedStd-Bold; src: url(" . Yii::app()->request->baseUrl . "/images/contenido/nestum/fonts/VAGRoundedStd-Bold.otf);}
