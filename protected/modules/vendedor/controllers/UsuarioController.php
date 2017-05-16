@@ -115,11 +115,25 @@ class UsuarioController extends ControllerVendedor {
 
         if (isset($_POST['RecordarVendedorForm'])) {
             $model->attributes = $_POST['RecordarVendedorForm'];
-
+			
             if ($model->validate()) {
                 try {
-                    sendHtmlEmail($model->correoElectronico, Yii::app()->params->asuntoRecordatorioClave, $htmlCorreo);
-                    echo CJSON::encode(array("result" => "ok", "response" => "Se ha enviado a su correo los datos de restauración de clave"));
+                	$characters = '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ';
+                	$password = '';
+                	for ($i = 0; $i < 10; $i++) {
+                		$password .= $characters[rand(0, strlen($characters)-1)];
+                	}
+                	
+                	$model->_usuario->clave = md5($password);
+                	if(!$model->_usuario->save()){
+                		CJSON::encode(array('result' => 'error', 'response' => "Error al reestablecer la clave"));
+                		Yii::app()->end();
+                	}
+                	
+                	$contenido = $this->renderPartial('_correoRecordar', array('objUsuario' => $model->_usuario, 'password' => $password), true, true);
+                    $htmlCorreo = $this->renderPartial('//common/correo', array('contenido' => $contenido), true, true);
+                    sendHtmlEmail($model->_usuario->email, Yii::app()->params->asuntoRecordatorioClave, $htmlCorreo);
+                    echo CJSON::encode(array("result" => "ok", "response" => "Se ha enviado a su correo los datos de restauraci&oacute;n de clave"));
                     Yii::app()->end();
                 } catch (Exception $exc) {
                     Yii::log($exc->getMessage() . "\n" . $exc->getTraceAsString(), CLogger::LEVEL_ERROR, 'application');
@@ -127,6 +141,7 @@ class UsuarioController extends ControllerVendedor {
                     Yii::app()->end();
                 }
             } else {
+            	echo 1;exit();
                 echo CActiveForm::validate($model);
                 Yii::app()->end();
             }

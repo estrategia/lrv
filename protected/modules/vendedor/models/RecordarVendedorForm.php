@@ -11,7 +11,7 @@ class RecordarVendedorForm extends CFormModel {
 
     public $usuario;
     public $_usuario;
-
+	public $correoElectronico;
     /**
      * Declares the validation rules.
      * The rules state that username and password are required,
@@ -45,7 +45,10 @@ class RecordarVendedorForm extends CFormModel {
             ));
 
             if ($this->_usuario === null) {
+            	
                 $this->addError('correoElectronico', $this->getAttributeLabel($attribute) . ' no registrado');
+            }else{
+            	$this->correoElectronico = $this->_usuario->email;
             }
         }
     }

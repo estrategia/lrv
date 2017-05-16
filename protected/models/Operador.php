@@ -40,7 +40,7 @@ class Operador extends CActiveRecord {
             array('clave', 'length', 'min'=>5, 'max' => 32),
             array('email', 'email'),
             array('email', 'length', 'max' => 50),
-            array('idComercial','validarIdComercial'),
+        //    array('idComercial','validarIdComercial'),
           //  array('codigoVendedor','validarCodigoVendedor'),
             // The following rule is used by search().
             // @todo Please remove those attributes that should not be searched.

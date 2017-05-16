@@ -253,10 +253,18 @@
                 <tr>
                     <td style="text-align: right"><strong>Remitir POS</strong></td>
                     <td>
-                        <button class="btn btn-inverse btn-default btn-sm" data-action="remitir" data-compra="<?php echo $objCompra->idCompra ?>">Remitir</button>
-                        <button class="btn btn-inverse btn-default btn-sm" data-action="remitirborrar" data-compra="<?php echo $objCompra->idCompra ?>">Borrar remisión</button>
+                        <button class="btn btn-inverse <?php echo $objCompra->isVentaCentralizada()?"btn-primary":"btn-default"?> btn-sm" data-action="remitir" data-compra="<?php echo $objCompra->idCompra ?>">Remitir</button>
+                        <button class="btn btn-inverse <?php echo $objCompra->isVentaCentralizada()?"btn-primary":"btn-default"?> btn-sm" data-action="remitirborrar" data-compra="<?php echo $objCompra->idCompra ?>">Borrar remisión</button>
                     </td>
                 </tr>
+                <?php if($objCompra->isVentaCentralizada()):?>
+                <tr>
+                	<td></td>
+                	<td>
+                        <button class="btn btn-inverse btn-primary btn-large" data-action="remitirDestino" data-compra="<?php echo $objCompra->idCompra ?>">Remitir Destino</button>
+                    </td> 
+                </tr>
+                <?php endif;?>
                 <?php if($objCompra->idTipoVenta == Yii::app()->params->tipoVenta['nacional']):?>
                 <tr>
                     <td style="text-align: right"><strong>Remitir Nacional</strong></td>

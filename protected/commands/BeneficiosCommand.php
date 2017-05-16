@@ -31,7 +31,7 @@ class BeneficiosCommand extends CConsoleCommand {
         Yii::import('application.models.Beneficios');
         Yii::import('application.models.BeneficioTipo');
         Yii::import('application.models.BeneficiosProductos');
-        Yii::import('application.models.BeneficiosPuntosVenta');
+     //   Yii::import('application.models.BeneficiosPuntosVenta');
         Yii::app()->db->createCommand("SET FOREIGN_KEY_CHECKS=0")->execute();
         ini_set('memory_limit', '-1');
         $file = fopen(Yii::getPathOfAlias('application') . DIRECTORY_SEPARATOR . "runtime" . DIRECTORY_SEPARATOR . "sincronizacionlog_" . date("H-i-s") . ".txt", "w");
@@ -56,9 +56,9 @@ class BeneficiosCommand extends CConsoleCommand {
                 $idSincronizacion = $result[0]['maximo'];
             }
             
-            /*if($i == 0)
-            	$idSincronizacion = 63890; 
-            */
+         /*   if($i == 0)
+            	$idSincronizacion = 64050; 
+           */ 
             $h2 = round(microtime(true) * 1000);
 
             fwrite($file, $sql . ". Time execution: " . ($h2 - $h1) . " miliseconds" . PHP_EOL);
@@ -113,7 +113,7 @@ class BeneficiosCommand extends CConsoleCommand {
                     $h2 = round(microtime(true) * 1000);
                     fwrite($file, "Trying save in tipo beneficios's table" . ". Time execution: " . ($h2 - $h1) . " miliseconds" . PHP_EOL);
                 }
-                $datosPdv = array();
+              //  $datosPdv = array();
                 $beneficiosProductos = array();
                 $beneficiosCedulas = array();
                 foreach ($arrBeneficios as $beneficio) {
@@ -177,12 +177,11 @@ class BeneficiosCommand extends CConsoleCommand {
                         //  echo "Trying save in beneficios producto's table".". Time execution: ".($h2-$h1)." miliseconds\n";
                     }
                     //  echo "lista de productos ".count($beneficio['listBeneficiosPuntoVenta']);
-                    fwrite($file, "lista de productos " . count($beneficio['listBeneficiosPuntoVenta']) . PHP_EOL);
                     $h1 = round(microtime(true) * 1000);
 
-                    foreach ($beneficio['listBeneficiosPuntoVenta'] as $benefPdv) {
+                /*    foreach ($beneficio['listBeneficiosPuntoVenta'] as $benefPdv) {
                         $datosPdv[] = "($objBeneficio->idBeneficio,'" . $benefPdv['IDComercial'] . "')";
-                    }
+                    }*/
 
                     if ($beneficio['listCedulas'] != null) {
                     	fwrite($file, "Insertando cedulas en el beneficio $objBeneficio->idBeneficio \n");
@@ -195,10 +194,10 @@ class BeneficiosCommand extends CConsoleCommand {
                     $h2 = round(microtime(true) * 1000);
                     fwrite($file, "Trying save in beneficios punto de venta's table" . ". Time execution: " . ($h2 - $h1) . " miliseconds" . PHP_EOL);
                 }
-                if (count($datosPdv) > 0) {
+              /*  if (count($datosPdv) > 0) {
                     $sql = "INSERT INTO t_BeneficiosPuntosVenta(idBeneficio,idComercial) VALUES " . implode(",", $datosPdv);
                     Yii::app()->db->createCommand($sql)->execute();
-                }
+                }*/
 
                 if (count($beneficiosProductos) > 0) {
 

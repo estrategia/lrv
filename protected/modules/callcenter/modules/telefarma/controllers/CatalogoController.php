@@ -31,7 +31,11 @@ class CatalogoController extends ControllerTelefarma {
     public function buscar($term) {
     	$this->active = "buscar";
         $sesion = Yii::app()->getSession()->getSessionId();
-        $codigosArray = GSASearch($term, $sesion);
+        
+        $codigosArray = array();
+        if(strlen($term) > 3){
+        	$codigosArray = GSASearch($term, $sesion);
+        }
         $objSectorCiudad = $this->objSectorCiudad;
       
         $codigoPerfil = Yii::app()->params->perfil['defecto'];
@@ -82,13 +86,14 @@ class CatalogoController extends ControllerTelefarma {
                 'listImagenes' => array('on' => 'listImagenes.estadoImagen=:activo AND listImagenes.tipoImagen=:tipoImagen'),
                 'objCodigoEspecial',
                 'listCalificaciones',
-            	'listSaldosCedi' => array ('on' => 'codigoCedi =:codigoCedi'),	
+            //	'listSaldosCedi' => array ('on' => 'codigoCedi =:codigoCedi'),	
                 'objCategoriaBI' => array('with' => array('listCategoriasTienda' => array('on' => 'listCategoriasTienda.tipoDispositivo=:dispositivo'))),
                 'listSaldos' => array('on' => 'listSaldos.codigoCiudad=:ciudad AND listSaldos.codigoSector=:sector'),
                 'listPrecios' => array('on' => 'listPrecios.codigoCiudad=:ciudad AND listPrecios.codigoSector=:sector'),
                 'listSaldosTerceros' => array('on' => 'listSaldosTerceros.codigoCiudad=:ciudad AND listSaldosTerceros.codigoSector=:sector')
             ),
-            'condition' => "t.activo=:activo AND (listSaldos.saldoUnidad>:saldo OR listSaldos.saldoFraccion>:saldo OR listSaldosTerceros.saldoUnidad>:saldo OR listSaldosCedi.saldoUnidad > 0 )",
+         //   'condition' => "t.activo=:activo AND (listSaldos.saldoUnidad>:saldo OR listSaldos.saldoFraccion>:saldo OR listSaldosTerceros.saldoUnidad>:saldo OR listSaldosCedi.saldoUnidad > 0 )",
+        		'condition' => "t.activo=:activo AND (listSaldos.saldoUnidad>:saldo OR listSaldos.saldoFraccion>:saldo OR listSaldosTerceros.saldoUnidad>:saldo)",
             'params' => array(
                 ':tipoImagen' => YII::app()->params->producto['tipoImagen']['mini'],
                 ':activo' => 1,
@@ -96,7 +101,7 @@ class CatalogoController extends ControllerTelefarma {
                 ':saldo' => 0,
                 ':ciudad' => $objSectorCiudad->codigoCiudad,
                 ':sector' => $objSectorCiudad->codigoSector,
-            	':codigoCedi' => $objSectorCiudad->objCiudad->codigoSucursal	
+            //	':codigoCedi' => $objSectorCiudad->objCiudad->codigoSucursal	
             )
         );
         $parametrosProductos['join'] = "JOIN t_relevancia_temp_$sesion rel ON t.codigoProducto  = rel.codigoProducto ";
@@ -378,6 +383,7 @@ class CatalogoController extends ControllerTelefarma {
     
     
     public function actionBodega($producto, $ubicacion, $bodega) {
+    	throw new CHttpException(404, 'Solicitud inválida.');
     	$objSectorCiudad = $this->objSectorCiudad;
     	$this->active = "buscar";
     	if ($objSectorCiudad == null) {

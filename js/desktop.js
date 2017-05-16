@@ -64,7 +64,6 @@ tour.addStep('confirma-ubicacion', {
   ]
 });
 
-
 var intervalTour = null;
 var intervalTourCount = 1;
 

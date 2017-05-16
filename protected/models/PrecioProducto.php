@@ -110,10 +110,12 @@ class PrecioProducto extends Precio {
                 }
                 
                 foreach ($listSaldosBodega as $objProductoSaldoBodega) {
-                	  if ($objProductoSaldoBodega->saldoUnidad > 0 ) {
+                	if ( $objProductoSaldoBodega->codigoCedi==$objCiudadSector->objCiudad->codigoSucursal) {
+                		if ( $objProductoSaldoBodega->saldoUnidad>0 ) {
                 			$tieneSaldo = true;
                 		}
-                	break;
+                		break;
+                	}
                 }
                 
                 /************************ FIN SALDOS DE BODEGA **************************/

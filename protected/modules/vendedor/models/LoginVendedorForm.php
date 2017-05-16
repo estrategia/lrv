@@ -9,6 +9,7 @@ class LoginVendedorForm extends CFormModel {
 
     public $username;
     public $password;
+    public $condiciones;
 
     /**
      *
@@ -24,12 +25,23 @@ class LoginVendedorForm extends CFormModel {
     public function rules() {
         return array(
             // username and password are required
-            array('username, password', 'required', 'message' => '{attribute} no puede estar vacío'),
+        	array('condiciones', 'attributeTrim'),
+        	array('username, password', 'required', 'message' => '{attribute} no puede estar vacío'),
+        	array('condiciones','required', 'message' =>'Debe aceptar los t&eacute;rminos y condiciones'),
             ///array('urlReferrer', 'safe'),
             array('password', 'authenticate'),
         );
     }
 
+    /**
+     * Valida que exista empleado con cedula indicada y que este activo.
+     * Este es un validador declarado en rules().
+     */
+    public function attributeTrim($attribute, $params) {
+    	if($attribute=="condiciones" && empty($this->condiciones)){
+    		$this->condiciones = null;
+    	}
+    }
     /**
      * Declares attribute labels.
      */
@@ -37,6 +49,7 @@ class LoginVendedorForm extends CFormModel {
         return array(
             'username' => 'Usuario',
             'password' => 'Clave',
+        		'condiciones' => 'Acepta t&eacute;rminos y condiciones'
         );
     }
 

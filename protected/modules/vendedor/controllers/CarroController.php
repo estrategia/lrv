@@ -223,6 +223,17 @@ class CarroController extends ControllerVendedor {
 				$objProductoCarro = new ProductoCarro ( $objProducto );
 				Yii::app ()->shoppingCartSalesman->put ( $objProductoCarro, false, $cantidadU );
 			} else {
+				$saldoUnidad = 0 ;
+				if(isset( $objSaldo->saldoUnidad)){
+					$saldoUnidad =  $objSaldo->saldoUnidad;
+				}
+				
+				echo CJSON::encode ( array (
+						'result' => 'error',
+						'response' => "La cantidad solicitada no está disponible en este momento. Saldos disponibles: $saldoUnidad unidades"
+				) );
+				Yii::app ()->end ();
+				
 				$objPagoForm = new FormaPagoVendedorForm ();
 				if (! $objPagoForm->tieneDomicilio ( $this->objSectorCiudad )) {
 					echo CJSON::encode ( array (
@@ -232,10 +243,7 @@ class CarroController extends ControllerVendedor {
 					Yii::app ()->end ();
 				}
 				
-				$saldoUnidad = 0 ;
-				if(isset( $objSaldo->saldoUnidad)){
-					$saldoUnidad =  $objSaldo->saldoUnidad;
-				}
+				
 				
 				$cantidadBodega = $cantidadCarroUnidad + $cantidadU - $saldoUnidad;
 				$cantidadUbicacion = $cantidadU - $cantidadBodega;
@@ -3028,7 +3036,7 @@ class CarroController extends ControllerVendedor {
 								'objCompra' => $objCompraRemision 
 						), true, true );
                                                 
-						$htmlCorreo = PlantillaCorreo::getContenido('compraCallCenter', $contenidoCorreo);
+						$htmlCorreo = PlantillaCorreo::getContenido('compraCallcenter', $contenidoCorreo);
 						try {
 							sendHtmlEmail ( $result [2], Yii::app ()->params->asunto ['pedidoRemitido'], $htmlCorreo );
 						} catch ( Exception $ce ) {

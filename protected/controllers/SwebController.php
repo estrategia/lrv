@@ -75,7 +75,7 @@ class SwebController extends CController {
      * @soap
      */
     public function eliminarBeneficios($condicion) {
-
+    	$file = fopen(Yii::getPathOfAlias('application') . DIRECTORY_SEPARATOR . "runtime" . DIRECTORY_SEPARATOR . "modificarBeneficiosLog.txt", "a");
         try {
              $sql = "SET SQL_SAFE_UPDATES = 0;
                     SET FOREIGN_KEY_CHECKS = 0;
@@ -84,8 +84,10 @@ class SwebController extends CController {
                     t_BeneficiosProductos AS PBR ON t.IdBeneficio = PBR.IdBeneficio LEFT JOIN 
                     t_BeneficiosPuntosVenta as pv ON (pv.IdBeneficio = t.IdBeneficio)
                 WHERE $condicion AND t.Tipo IN (21,22,23,24,25,26)";
-            Yii::app()->db->createCommand($sql)->query();
-           
+             fwrite($file, Date("Y-m-d h:i:s ")." Se ejecuto la consulta: ".$sql."" . PHP_EOL);
+           $result =  Yii::app()->db->createCommand($sql)->execute();
+           fwrite($file, Date("Y-m-d h:i:s ")." Filas afectadas ".$result."" . PHP_EOL);
+            
             return 1;
         } catch (Exception $e) {
             Yii::log($e->getMessage());
@@ -100,7 +102,8 @@ class SwebController extends CController {
      * @soap
      */
     public function actualizarBeneficios($parametros, $condicion) {
-
+    	$file = fopen(Yii::getPathOfAlias('application') . DIRECTORY_SEPARATOR . "runtime" . DIRECTORY_SEPARATOR . "modificarBeneficiosLog.txt", "a");
+    	
         try {
             $sql = "SET SQL_SAFE_UPDATES = 0;
                         SET FOREIGN_KEY_CHECKS = 0;
@@ -108,8 +111,11 @@ class SwebController extends CController {
                         INNER JOIN t_BeneficiosProductos AS PBR ON t.IdBeneficio = PBR.IdBeneficio
                         SET " . $parametros . " 
                         WHERE $condicion AND t.Tipo IN (21,22,23,24,25,26)";
-            Yii::app()->db->createCommand($sql)->query();
-           
+            
+            fwrite($file, Date("Y-m-d h:i:s ")." Se ejecuto la consulta: ".$sql."" . PHP_EOL);
+            $rows = Yii::app()->db->createCommand($sql)->execute();
+            fwrite($file, Date("Y-m-d h:i:s ")." Filas afectadas ".$rows."" . PHP_EOL);
+            
             return 1;
         } catch (Exception $e) {
             Yii::log($e->getMessage());
@@ -165,10 +171,6 @@ class SwebController extends CController {
 
     public function actionVerificarCorreo() {
         $this->recordarCorreos();
-    }
-    
-    public function actionVerificarWs(){
-    	$this->copiarBeneficios('4A4', '4B4');
     }
 
 }

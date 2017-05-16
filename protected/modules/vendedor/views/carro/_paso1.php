@@ -10,7 +10,7 @@
         </div>
         <div class="space-1"></div>
     <?php endif; ?>
-    <?php if (Yii::app()->shoppingCartSalesman->getStoredItemsCount() <= 0): ?>
+    <?php /*if (Yii::app()->shoppingCartSalesman->getStoredItemsCount() <= 0): ?>
         <div class="ui-bar ui-bar-c ui-corner-all center ccont_index<?php echo ($modelPago->tipoEntrega === null ? "" : ($modelPago->tipoEntrega == Yii::app()->params->entrega['tipo']['presencial'] ? " activo" : " inactivo")) ?>" data-role="tipoentrega" data-descripcion="pasar por el pedido" data-tipo="<?php echo Yii::app()->params->entrega['tipo']['presencial']; ?>">
             <a href="#" data-ajax="false" class="ui-btn ui-btn-inline ui-corner-all ui-shadow c_btn_img" >
                 <img src="<?php echo Yii::app()->request->baseUrl; ?>/images/entrega/icon_recoger.png" alt="Pasa por el pedido" class="c_ndx_img">
@@ -20,7 +20,7 @@
                 <p><a href="#panel-info-presencial" data-role="tipoentrega-info">Conocer más [+]</a></p>
             </div>
         </div>
-    <?php endif; ?>
+    <?php endif; */?>
 
     <input type="hidden" id="FormaPagoVendedorForm_tipoEntrega" name="FormaPagoVendedorForm[tipoEntrega]" value="<?php echo $modelPago->tipoEntrega ?>">
     <div id="FormaPagoVendedorForm_tipoEntrega_em_" class="has-error center" style="display: none;"></div>
