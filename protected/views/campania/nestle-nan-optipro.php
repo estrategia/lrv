@@ -50,11 +50,11 @@ $this->metaTags = "
   </a>
   <h4 class="title-video" style="padding: 19px;font-size: 15px;width: 75%;margin: 25px auto;border-radius: 20px;"> ¿QUÉ ES PROTEÍNA? </h4>
   <div class="video-container">
-    <iframe width="560" height="315" src="https://www.youtube.com/embed/T0mduoevXjY?rel=0" frameborder="0" allowfullscreen></iframe>
+    <iframe width="560" height="315" src="https://www.youtube.com/embed/yCbVoCRm1Ww?rel=0&amp;showinfo=0" frameborder="0" allowfullscreen></iframe>
   </div>
   <h4 class="title-video" style="padding: 19px;font-size: 15px;width: 75%;margin: 25px auto;border-radius: 20px;"> IMPORTANCIA DE LA PROTEINA EN LOS NIÑOS DESPUES DE 2 AÑOS DE EDAD </h4>
   <div class="video-container">
-    <iframe width="560" height="315" src="https://www.youtube.com/embed/_1K2GhJOV2Y?rel=0" frameborder="0" allowfullscreen></iframe>
+    <iframe width="560" height="315" src="https://www.youtube.com/embed/_1K2GhJOV2Y?rel=0&amp;showinfo=0" frameborder="0" allowfullscreen></iframe>
   </div>
   <img class="img-responsive-m" style="margin: 15px auto;" src="<?= Yii::app()->request->baseUrl ?>/images/contenido/nan-optipro/home/adecuada-maduracion.png" alt="Contribuye a la adecuada maduración de">
   <img class="img-responsive-m" src="<?= Yii::app()->request->baseUrl ?>/images/contenido/nan-optipro/home/organos.png">
@@ -106,13 +106,13 @@ $this->metaTags = "
         <div class="col-sm-6 col-md-6">
           <h4 class="title-video" style="padding: 19px;font-size: 21px;"> ¿QUÉ ES PROTEÍNA? </h4>
           <div class="video-container">
-            <iframe width="560" height="315" src="https://www.youtube.com/embed/T0mduoevXjY?rel=0" frameborder="0" allowfullscreen></iframe>
+            <iframe width="560" height="315" src="https://www.youtube.com/embed/yCbVoCRm1Ww?rel=0&amp;showinfo=0" frameborder="0" allowfullscreen></iframe>
           </div>
         </div>
         <div class="col-sm-6 col-md-6">
           <h4 class="title-video"> IMPORTANCIA DE LA PROTEINA EN LOS <br> NIÑOS DESPUES DE 2 AÑOS DE EDAD </h4>
           <div class="video-container">
-            <iframe width="560" height="315" src="https://www.youtube.com/embed/_1K2GhJOV2Y?rel=0" frameborder="0" allowfullscreen></iframe>
+            <iframe width="560" height="315" src="https://www.youtube.com/embed/_1K2GhJOV2Y?rel=0&amp;showinfo=0" frameborder="0" allowfullscreen></iframe>
           </div>
         </div>
       </div>
