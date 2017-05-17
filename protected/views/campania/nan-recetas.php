@@ -87,12 +87,12 @@ $this->metaTags = "
     <a href="<?php echo CController::createUrl('/catalogo/producto', array('producto' => 65388)) ?>">
       <img class="img-responsive-m" style="width: 80%;display: block;margin: 0 auto;" src="<?= Yii::app()->request->baseUrl ?>/images/contenido/nan-optipro/compra-online.png" alt="Comprar Nan optipro">
     </a>
-    <h3 class="title-foot">Contribuye a la adecuada <strong>maduración</strong> de</h3>
+    <img class="img-responsive-m" style="margin: 20px auto 0;display:block;" src="<?= Yii::app()->request->baseUrl ?>/images/contenido/nan-optipro/home/adecuada-maduracion.png" alt="Contribuye a la adecuada maduración de">
     <img class="img-responsive-m" src="<?= Yii::app()->request->baseUrl ?>/images/contenido/nan-optipro/home/organos.png">
     <a href="<?= Yii::app()->request->baseUrl ?>/mas-informacion-nan"><h2 class="btn-mas-info" style="width: 65%;">MÁS INFORMACIÓN</h2></a>
     <p class="text-footer">Producto a partir de 24 meses. <br>
     *Junto con una alimentación balanceada y ejercicio físico diario.</p>
-    <img class="img-responsive-m" style="margin-top: -48px;" src="/lrv/images/contenido/nan-optipro/home/pata.png">
+    <img class="img-responsive-m" style="margin-top: -48px;" src="<?= Yii::app()->request->baseUrl ?>/images/contenido/nan-optipro/home/pata.png">
   </div>
 <!--Version movil-->
 <!--Versión escritorio-->
@@ -162,8 +162,9 @@ $this->metaTags = "
         <img class="img-responsive" style="margin-top: 25px;" src="<?= Yii::app()->request->baseUrl ?>/images/contenido/nan-optipro/recetas-y-sabias-que/optipro.png" alt="Nan optipro">
         <a href="<?php echo CController::createUrl('/catalogo/producto', array('producto' => 65388)) ?>">
           <img class="img-responsive compra" src="<?= Yii::app()->request->baseUrl ?>/images/contenido/nan-optipro/compra-online.png" alt="Comprar Nan optipro">
-        </a>
-        <h3 class="title-foot">Contribuye a la adecuada <strong>maduración</strong> de</h3>
+        </a>        
+        <img class="img-responsive-m" style="width:60%;margin: 0px auto;display:block;" src="<?= Yii::app()->request->baseUrl ?>/images/contenido/nan-optipro/home/adecuada-maduracion.png" alt="Contribuye a la adecuada maduración de">
+
         <img class="img-responsive" src="<?= Yii::app()->request->baseUrl ?>/images/contenido/nan-optipro/home/organos.png">
         <a href="<?= Yii::app()->request->baseUrl ?>/mas-informacion-nan"><h2 class="btn-mas-info">MÁS INFORMACIÓN</h2></a>
         <p class="text-footer">Producto a partir de 24 meses. <br>
