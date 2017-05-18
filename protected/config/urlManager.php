@@ -58,6 +58,8 @@ return array(
         'energold-renergen-suplementos-dietarios' => 'publicidad/contenido/nombre/kyron-suplementos-dietarios',
         'energold-alimento-polvo' => 'publicidad/contenido/nombre/kyron-elimento-polvo',
         'energold-alimento-ninos' => 'publicidad/contenido/nombre/kyron-alimento-ninos',
+        'gaviscon' => 'publicidad/contenido/nombre/gaviscon',
+        'promocion-crem-helado-gafamania' => 'publicidad/contenido/nombre/crem-helado',
         // Fin links campañas
 
         // REST patterns
