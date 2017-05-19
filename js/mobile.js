@@ -1030,7 +1030,7 @@ function recalcularFiltros(tipo) {
 }
 
 function verUbicacion() {
-	
+
     if ($('#ubicacion-info').attr('data-active') == '0') {
         $('#ubicacion-info').removeClass("hide");
         $('#ubicacion-info').addClass("display");
@@ -1072,7 +1072,7 @@ $(document).on('click', "a[data-cargar='1']", function () {
         },
         success: function (data) {
             if (data.result === "ok") {
-            	
+
                 $('#panel-carro-canasta').html(data.response.canastaHTML);
                 $('#panel-carro-canasta').trigger("create");
 
@@ -2537,7 +2537,7 @@ $(document).on('click', "input[data-role='codigo-promocional']", function() {
     $.ajax({
         type: 'POST',
         url: requestUrl + "/carro/usarCodigo/",
-        data: {codigoPromocional: codigoPromocional}, 
+        data: {codigoPromocional: codigoPromocional},
         dataType: 'json',
         beforeSend: function() {
         	$.mobile.loading('show');
@@ -2547,11 +2547,11 @@ $(document).on('click', "input[data-role='codigo-promocional']", function() {
         },
         success: function(data) {
             if (data.result === 'ok') {
-            	
+
             	bono = data.bono;
             	$('<div>').mdialog({
-                    content: "<div data-role='main' id='modal-codigo-promo'><div class='ui-content' data-role='content' role='main' >" + 
-                    			data.response + 
+                    content: "<div data-role='main' id='modal-codigo-promo'><div class='ui-content' data-role='content' role='main' >" +
+                    			data.response +
                     			"<a class='ui-btn ui-btn-r ui-corner-all ui-shadow' data-rel='back' data-bono='"+ data.bono+"' data-role='usar-codigo' href='#'>Usar</a>"+
                     			"<a class='ui-btn ui-btn-r ui-corner-all ui-shadow' data-rel='back' href='#'>Cancelar</a>"+
                     			"</div></div>"
@@ -2575,7 +2575,7 @@ $(document).on('click', "a[data-role='usar-codigo']", function() {
 	$.ajax({
 	    type: 'POST',
 	    url: requestUrl + "/carro/guardarCodigo/",
-	    data: {bono: $(this).attr('data-bono')}, 
+	    data: {bono: $(this).attr('data-bono')},
 	    dataType: 'json',
 	    beforeSend: function() {
 	    	$.mobile.loading('show');
@@ -2597,17 +2597,17 @@ $(document).on('click', "a[data-role='usar-codigo']", function() {
 	    		});
 	    	}
 	    }
-	    
+
 	});
 });
 
 
 function guardarMascota(){
-	
+
 	 $.ajax({
 	        type: 'POST',
 	        url: requestUrl + "/campania/guardarDatosMascota/",
-	        data: $("#formulario-mascota").serialize(), 
+	        data: $("#formulario-mascota").serialize(),
 	        dataType: 'json',
 	        beforeSend: function() {
 	        	 $(".error").html("");
@@ -2621,24 +2621,24 @@ function guardarMascota(){
 	            	$('<div>').mdialog({
 		                content: "<div data-role='main'><div class='ui-content' data-role='content' role='main'>Datos registrados<a class='ui-btn ui-btn-r ui-corner-all ui-shadow' data-rel='back' href='#'>Aceptar</a></div></div>"
 		    		});
-	            	document.getElementById("formulario-mascota").reset(); 
+	            	document.getElementById("formulario-mascota").reset();
 	            }else{
 	            /*	errores="";
 	            	$.each(data, function(element, error) {
 	                    errores+=error+"<br/>";
 	                });
-	            	
+
 	            	errores +="";
 	            	$('<div>').mdialog({
 		                content: "<div data-role='main'><div class='ui-content' data-role='content' role='main'>" + errores + "<a class='ui-btn ui-btn-r ui-corner-all ui-shadow' data-rel='back' href='#'>Aceptar</a></div></div>"
 		    		});*/
-	            	
+
 	            	 $.each(data, function(element, error) {
 	                     $('#' + element + '_em').html(error);
 	                     $('#' + element + '_em').css('display', 'block');
 	                 });
 	            }
-	            
+
 	        }});
-	 
+
 } 
