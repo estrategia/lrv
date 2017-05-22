@@ -90,7 +90,7 @@ class SwebController extends CController {
             
             return 1;
         } catch (Exception $e) {
-            Yii::log($e->getMessage());
+        	fwrite($file, Date("Y-m-d h:i:s ").$e->getMessage()."" . PHP_EOL);
             return 0;
         }
     }
@@ -118,7 +118,7 @@ class SwebController extends CController {
             
             return 1;
         } catch (Exception $e) {
-            Yii::log($e->getMessage());
+            fwrite($file, Date("Y-m-d h:i:s ").$e->getMessage()."" . PHP_EOL);
             return 0;
         }
     }

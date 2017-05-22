@@ -1022,6 +1022,25 @@ class CatalogoController extends Controller {
 		if ($this->isMobile) {
 			$parametrosVista ['listProductos'] = $listProductos;
 			$this->render ( 'listaProductos', $parametrosVista );
+				/*
+			$dataProvider = null;
+				
+			if (! empty ( $listProductos )) {
+				$dataProvider = new CArrayDataProvider ( $listProductos, array (
+						'id' => 'codigoProducto',
+						'sort' => array (
+								'attributes' => array (
+										'descripcionProducto'
+								)
+						),
+						'pagination' => array (
+								'pageSize' => 10
+						)
+				) );
+			}
+				
+			$parametrosVista ['dataprovider'] = $dataProvider;
+			$this->render ( 'listaProductos_new', $parametrosVista );*/
 		} else {
 			$pagina = 24;/**** Utilizarlo como variable de configuracion *****/
 			if (isset ( $_GET ['pageSize'] ) and is_numeric ( $_GET ['pageSize'] )) {
@@ -2996,5 +3015,22 @@ class CatalogoController extends Controller {
 		$this->render ( 'promociones', array (
 				'promociones' => $promociones 
 		) );
+	}
+	
+	
+	function actionSearch(){
+		$criteria = new CDbCriteria();
+		$count= Producto::model()->count($criteria);
+		$pages=new CPagination($count);
+	
+		// results per page
+		$pages->pageSize=10;
+		$pages->applyLimit($criteria);
+		$models = Producto::model()->findAll($criteria);
+	
+		$this->render('_search', array(
+				'models' => $models,
+				'pages' => $pages
+		));
 	}
 }

@@ -201,10 +201,34 @@ class ModulosConfigurados extends CActiveRecord {
             
             $condition = "";
 
-            if (!empty($listaCodigos)) {
+           
+            /*
+            $sesion = Yii::app ()->getSession ()->getSessionId ();
+           
+            
+            $insert = array();
+            foreach($listaCodigos as $lista){
+            	$insert[]= "($lista)"; 
+            }
+            $h1 = round(microtime(true) * 1000);
+            if (!empty($insert)) {
+            	$sql = "DROP TEMPORARY TABLE IF EXISTS t_productosmodulos_temp_$sesion;
+            			CREATE TEMPORARY TABLE t_productosmodulos_temp_$sesion (
+			            codigoProducto int(10) unsigned NOT NULL,
+			            KEY `idx_t_productosmodulos_temp_codigoProducto` (`codigoProducto`)
+			             
+			            );
+			            SET FOREIGN_KEY_CHECKS = 0;
+            	INSERT INTO t_productosmodulos_temp_$sesion (codigoProducto) VALUES " . implode(",", $insert);
+            	Yii::app()->db->createCommand($sql)->query();
+            }
+            */
+            $h2 = round(microtime(true) * 1000);
+            
+			
+			if (!empty($listaCodigos)) {
                 $condition .= "t.codigoProducto IN (" . implode(",", $listaCodigos) . ")";
             }
-
             if (!empty($listaCodigosCategoria) || !empty($listaCodigosMarca)) {
                 $conditionAux = "";
 
@@ -236,7 +260,7 @@ class ModulosConfigurados extends CActiveRecord {
             $criteria['with']['listPrecios'] = array('on' => 'listPrecios.codigoCiudad=:ciudad AND listPrecios.codigoSector=:sector');
             $criteria['with']['listSaldosTerceros'] = array('on' => ' listSaldosTerceros.codigoCiudad=:ciudad AND listSaldosTerceros.codigoSector=:sector');
             $criteria['with']['listSaldosCedi'] = array('on' => 'codigoCedi=:codigoCedi');
-            
+         //   $criteria['join'] = "JOIN t_productosmodulos_temp_$sesion rel ON t.codigoProducto = rel.codigoProducto ";
             $criteria['params'][':ciudad'] = $objSectorCiudad->codigoCiudad;
             $criteria['params'][':sector'] = $objSectorCiudad->codigoSector;
             $criteria['params'][':codigoCedi'] = $objSectorCiudad->objCiudad->codigoSucursal;
@@ -246,9 +270,11 @@ class ModulosConfigurados extends CActiveRecord {
             		$criteria['condition'] .= " AND ( listSaldos.saldoUnidad>0 OR listSaldosTerceros.saldoUnidad>0 OR listSaldosCedi.saldoUnidad > 0)";
             	}
             }
-            
+            $h1 = round(microtime(true) * 1000);
             $listaProductos = Producto::model()->findAll($criteria);
-          	
+            $h2 = round(microtime(true) * 1000);
+          //  echo ($h2-$h1);exit();
+            
             foreach ($listaProductos as $objProducto) {
             	if ($objProducto->codigoEspecial != null && $objProducto->codigoEspecial != 0) {
             		CodigoEspecial::setState($objProducto->objCodigoEspecial);
@@ -553,7 +579,7 @@ class ModulosConfigurados extends CActiveRecord {
             $criteria['params'][':ciudad'] = $objSectorCiudad->codigoCiudad;
         }
         
-    //    $criteria['condition'].= " AND t.tipo IN (1,3,4,5)";
+    //    $criteria['condition'].= " AND t.tipo IN (1,3,4,5,12)";
 
         return  ModulosConfigurados::model()->findAll($criteria);
         

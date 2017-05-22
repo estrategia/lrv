@@ -32,6 +32,8 @@ class ControllerVendedor extends Controller {
         $this->registerJs();
         $this->registerCss();
         $this->getSectorName();
+        
+        
     }
 
     public function verificarSesion() {

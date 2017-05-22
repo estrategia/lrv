@@ -1854,8 +1854,7 @@ class TestController extends Controller {
     	CVarDumper::dump($service, 10, true);
     }
     
-<<<<<<< HEAD
-<<<<<<< HEAD
+
     public function actionModificarBeneficios(){
     	$client = new SoapClient("http://www.larebajavirtual.com/sweb/wslrv", array(
     			'uri' => "",
@@ -1868,7 +1867,7 @@ class TestController extends Controller {
     	echo $result;
     }
 
-=======
+
     public function actionPass($pass){
     	$cifrado = CPasswordHelper::hashPassword($pass);
     	echo "Pass: $pass";
@@ -1898,8 +1897,6 @@ class TestController extends Controller {
     	$decoded= JWT::decode($jwt, $key, array('HS256'));
     	CVarDumper::dump($decoded,10,true);echo "<br><br>";
     	
-    	
-    	
     	$key = "example_key";
     	$token = array(
     		"iss" => "http://example.org",
@@ -1918,56 +1915,4 @@ class TestController extends Controller {
     	
     }
     
->>>>>>> origin/master
-=======
-    public function actionPass($pass){
-    	$cifrado = CPasswordHelper::hashPassword($pass);
-    	echo "Pass: $pass";
-    	echo "<br>Cifr: $cifrado";
-    }
-    
-    public function actionPassvalid(){
-    	$pass = "luf9jiw35t";
-    	$hash = '$2y$13$0nOpakDK4jPmDMlBugeWcuJ44V/g7k4Q7bZmHrKhfO2fMjwccuqT2';
-    	
-    	if ( CPasswordHelper::verifyPassword($pass, $hash) ) {
-    		echo "validado OK";
-    	} else {
-    		echo "validado ERROR";
-    	}
-    }
-    public function actionJwt(){
-    	$key= "secret";
-    	
-    	$token= [
-    		"sub"=> "1234567890",
-    		"name" => "John Doe",
-    		"admin" => true
-    	];
-    	$jwt = JWT::encode($token,$key,'HS256');
-    	echo "<br><br>encode: $jwt<br><br>";
-    	$decoded= JWT::decode($jwt, $key, array('HS256'));
-    	CVarDumper::dump($decoded,10,true);echo "<br><br>";
-    	
-    	
-    	
-    	$key = "example_key";
-    	$token = array(
-    		"iss" => "http://example.org",
-    		"aud" => "http://example.com",
-    		"iat" => 1356999524,
-    		"nbf" => 1357000000
-    	);
-    	$jwt = JWT::encode($token,$key,'HS256');
-    	echo "<br><br>encode: $jwt<br><br>";
-    	$decoded = JWT::decode($jwt, $key, array('HS256'));
-    	CVarDumper::dump($decoded,10,true);echo "<br><br>";
-    	
-    	//$decoded_array = (array) $decoded;
-    	//JWT::$leeway = 60; // $leeway in seconds
-    	//$decoded = JWT::decode($jwt, $key, array('HS256'));
-    	
-    }
-    
->>>>>>> origin/master
 }

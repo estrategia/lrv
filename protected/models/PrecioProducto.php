@@ -233,9 +233,8 @@ class PrecioProducto extends Precio {
             
             $this->listBeneficios = Beneficios::model()->findAll(array(
                 'with' => array(
-                	'listCedulas',
-                    'listPuntosVenta' => array('condition' => 'listPuntosVenta.codigoCiudad=:ciudad'),
-                    'listBeneficiosProductos' => array('condition' => 'listBeneficiosProductos.codigoProducto=:producto')
+                	'listBeneficiosProductos' => array('condition' => 'listBeneficiosProductos.codigoProducto=:producto'),
+                	'listPuntosVenta' => array('condition' => 'listPuntosVenta.codigoCiudad=:ciudad'),
                 ),
                 'condition' => $condition,
                 'params' => $params,
@@ -265,9 +264,9 @@ class PrecioProducto extends Precio {
             
             $this->listBeneficiosBonos = Beneficios::model()->findAll(array(
             		'with' => array(
+            				'listBeneficiosProductos' => array('condition' => 'listBeneficiosProductos.codigoProducto=:producto'),
             				'listCedulas',
             				'listPuntosVenta' => array('condition' => 'listPuntosVenta.codigoCiudad=:ciudad'),
-            				'listBeneficiosProductos' => array('condition' => 'listBeneficiosProductos.codigoProducto=:producto')
             		),
             		'condition' => $condition,
             		'params' => $params,

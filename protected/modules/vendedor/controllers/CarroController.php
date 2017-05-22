@@ -2663,38 +2663,38 @@ class CarroController extends ControllerVendedor {
 						) );
 					}
 					
-					if( $position->getQuantityStored() < 1 || $position->getQuantityUnit() > 0 || $position->getQuantity(true) > 0) {
+					if( $position->getQuantityUnit() > 0 || $position->getQuantity(true) > 0) {
 						if ($objSaldo == null) {
 							throw new Exception ( "Producto " . $position->objProducto->codigoProducto . " no disponible" );
 						}
 						
 						if ($objSaldo->saldoUnidad < $position->getQuantityUnit ()) {
-							throw new Exception ( "Producto " . $position->objProducto->codigoProducto . ". La cantidad solicitada no está disponible en este momento. Saldos disponibles: $objSaldo->saldoUnidad unidades" );
+							throw new Exception ( "Producto " . $position->objProducto->codigoProducto . ". La cantidad solicitada no está disponible en este momento. Saldos disponibles: $objSaldo->saldoUnidad unidades -- 101" );
 						}
 						
 						if ($objSaldo->saldoFraccion < $position->getQuantity ( true )) {
-							throw new Exception ( "Producto " . $position->objProducto->codigoProducto . ". La cantidad solicitada no está disponible en este momento. Saldos disponibles: $objSaldo->saldoFraccion fracciones" );
+							throw new Exception ( "Producto " . $position->objProducto->codigoProducto . ". La cantidad solicitada no está disponible en este momento. Saldos disponibles: $objSaldo->saldoFraccion fracciones -- 101" );
 						}
 						
 						$objSaldo->saldoUnidad = $objSaldo->saldoUnidad - $position->getQuantityUnit ();
 						$objSaldo->saldoFraccion = $objSaldo->saldoFraccion - $position->getQuantity ( true );
 						$objSaldo->save ();
 					}
-					
+					/*
 					if ($objSaldo->saldoUnidad < $position->getQuantityUnit ()) {
-						throw new Exception ( "Producto " . $position->objProducto->codigoProducto . ". La cantidad solicitada no está disponible en este momento. Saldos disponibles: $objSaldo->saldoUnidad unidades" );
+						throw new Exception ( "Producto " . $position->objProducto->codigoProducto . ". La cantidad solicitada no está disponible en este momento. Saldos disponibles: $objSaldo->saldoUnidad unidades -- 102" );
 					}
 					
 					if ($objSaldo->saldoFraccion < $position->getQuantity ( true )) {
-						throw new Exception ( "Producto " . $position->objProducto->codigoProducto . ". La cantidad solicitada no está disponible en este momento. Saldos disponibles: $objSaldo->saldoFraccion fracciones" );
+						throw new Exception ( "Producto " . $position->objProducto->codigoProducto . ". La cantidad solicitada no está disponible en este momento. Saldos disponibles: $objSaldo->saldoFraccion fracciones -- 102" );
 					}
 					
 					$objSaldo->saldoUnidad = $objSaldo->saldoUnidad - $position->getQuantityUnit ();
 					$objSaldo->saldoFraccion = $objSaldo->saldoFraccion - $position->getQuantity ( true );
-					$objSaldo->save ();
+					$objSaldo->save ();*/
 					// -- actualizar saldo producto
 					// actualizar saldo bodega //--
-					if ($position->getQuantityStored () > 0) {
+				/*	if ($position->getQuantityStored () > 0) {
 						$objSaldoBodega = ProductosSaldosCedi::model ()->find ( array (
 								'condition' => 'codigoCedi=:cedi AND codigoProducto=:producto',
 								'params' => array (
@@ -2713,7 +2713,7 @@ class CarroController extends ControllerVendedor {
 						
 						$objSaldoBodega->saldoUnidad = $objSaldoBodega->saldoUnidad - $position->getQuantityStored ();
 						$objSaldoBodega->save ();
-					}
+					}*/
 					// -- actualizar saldo bodega
 					
 					$objItem = new ComprasItems ();
@@ -2893,7 +2893,7 @@ class CarroController extends ControllerVendedor {
 					}
 					
 					if ($objSaldo->saldo < $position->getQuantity ()) {
-						throw new Exception ( "Combo " . $position->objCombo->getCodigo () . "La cantidad solicitada no está disponible en este momento. Saldos disponibles: $objSaldo->saldo unidades" );
+						throw new Exception ( "Combo " . $position->objCombo->getCodigo () . "La cantidad solicitada no está disponible en este momento. Saldos disponibles: $objSaldo->saldo unidades -- 103" );
 					}
 					
 					$objSaldo->saldo = $objSaldo->saldo - $position->getQuantity ();

@@ -332,7 +332,7 @@ return array(
         'clientefielCompra' => 301
     ),
     'beneficios' => array(
-      /*  'lrv' => array(21, 22, 23, 24, 25, 26),
+       'lrv' => array(21, 22, 23, 24, 25, 26),
         'descuentos' => array(21, 22, 23, 24), // new
         'bonos' => array(25, 26), // new
         'beneficioCedula' => 25,
@@ -343,7 +343,7 @@ return array(
         'tipoMedioPago' => array(
             25 => 15,
             26 => 16
-        ),*/
+        ),/*
     	'lrv' => array(50,51,52,53,54,55),
     	'descuentos' => array(50,51,52,53), // new
     	'bonos' => array(54,55), // new
@@ -355,7 +355,7 @@ return array(
     	'tipoMedioPago' => array(
     				54 => 15,
     				55 => 16
-    	),
+    	),*/
         'recambios' => array(1, 10),
         'recambioslabel' => array(
             1 => 'Recambio',
