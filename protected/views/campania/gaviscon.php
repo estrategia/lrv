@@ -30,15 +30,15 @@
     .etiqueta {width: 30%;margin: 40px auto 10px;display:block;}
     .gradient {
       background: #ffffff;
-      background: -moz-linear-gradient(top, #ffffff 0%, #ffffff 48%, #f3edf1 48%, #f3edf1 100%);
-      background: -webkit-gradient(left top, left bottom, color-stop(0%, #ffffff), color-stop(48%, #ffffff), color-stop(48%, #f3edf1), color-stop(100%, #f3edf1));
-      background: -webkit-linear-gradient(top, #ffffff 0%, #ffffff 48%, #f3edf1 48%, #f3edf1 100%);
-      background: -o-linear-gradient(top, #ffffff 0%, #ffffff 48%, #f3edf1 48%, #f3edf1 100%);
-      background: -ms-linear-gradient(top, #ffffff 0%, #ffffff 48%, #f3edf1 48%, #f3edf1 100%);
-      background: linear-gradient(to bottom, #ffffff 0%, #ffffff 48%, #f3edf1 48%, #f3edf1 100%);
+      background: -moz-linear-gradient(top, #ffffff 0%, #ffffff 46%, #f3edf1 46%, #f3edf1 100%);
+      background: -webkit-gradient(left top, left bottom, color-stop(0%, #ffffff), color-stop(46%, #ffffff), color-stop(46%, #f3edf1), color-stop(100%, #f3edf1));
+      background: -webkit-linear-gradient(top, #ffffff 0%, #ffffff 46%, #f3edf1 46%, #f3edf1 100%);
+      background: -o-linear-gradient(top, #ffffff 0%, #ffffff 46%, #f3edf1 46%, #f3edf1 100%);
+      background: -ms-linear-gradient(top, #ffffff 0%, #ffffff 46%, #f3edf1 46%, #f3edf1 100%);
+      background: linear-gradient(to bottom, #ffffff 0%, #ffffff 46%, #f3edf1 46%, #f3edf1 100%);
       filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#ffffff', endColorstr='#f3edf1', GradientType=0 );
     }
-    .lista {font-family: HelveticaNeueLight;font-size: 19px;color:#434444;padding-inline-start: 31%;}
+    .lista {font-family: HelveticaNeueLight;font-size: 19px;color:#434444;}
     .lista span {font-family: HelveticaNeueBold;}
     .doble-accion-1{margin-bottom: 15px;list-style-image: url(".Yii::app()->request->baseUrl."/images/contenido/gaviscon/gaviscon-doble-accion/bullet01.png);}
     .doble-accion-2{margin-bottom: 15px;list-style-image: url(".Yii::app()->request->baseUrl."/images/contenido/gaviscon/gaviscon-doble-accion/bullet02.png); }
@@ -81,12 +81,24 @@
     <a data-ajax="false" href="<?php echo CController::createUrl('/contenido/ver', array('tipo' => 'grupo', 'contenido' => 2630)) ?>">
       <img class="btn-compra" style="margin-top: 20px;" src="<?= Yii::app()->request->baseUrl ?>/images/contenido/gaviscon/gaviscon-doble-accion/compra-doble-accion.png" alt="Compra gaviscon doble acción">
     </a>
-    <ul class="lista" style="padding-inline-start: 19%;">
-      <li class="doble-accion-1"><div style="position: absolute;">Doble Alivio de la <span>indigestión</span><br> y el <span>reflujo</span></div></li>
-      <li class="doble-accion-2" ><div style="position: absolute;">Alivio rápido y efectivo: <span>3 minutos</span> y hasta por <span>4 horas</span></div></li>
-      <li class="doble-accion-3"><div style="position: absolute;margin-top: 5px;"><span>No necesita agua</span></div></li>
-      <li class="doble-accion-4"><div style="position: absolute;"><span>Práctica presentación en sachets</span></div></li>
-    </ul>
+    <div class="lista" style="padding: 0 5%;">
+      <div>
+        <img style="display: inline-block;margin-top: -30px;" class="" src="<?= Yii::app()->request->baseUrl ?>/images/contenido/gaviscon/gaviscon-doble-accion/bullet01.png">
+        <p style="display: inline-block;margin-left: 10px;" >Doble Alivio de la <span>indigestión</span><br> y el <span>reflujo</span></p>
+      </div>
+      <div>
+        <img style="display: inline-block;margin-top: -30px;"class="" src="<?= Yii::app()->request->baseUrl ?>/images/contenido/gaviscon/gaviscon-doble-accion/bullet02.png">
+        <p style="display: inline-block;margin-left: 10px;">Alivio rápido y efectivo: <span>3 minutos</span> <br>y hasta por <span>4 horas</span></p>
+      </div>
+      <div>
+        <img style="display: inline-block;"class="" src="<?= Yii::app()->request->baseUrl ?>/images/contenido/gaviscon/gaviscon-doble-accion/bullet03.png">
+        <p style="display: inline-block;margin-left: 10px;"><span>No necesita agua</span> <br> &nbsp;</p>
+      </div>
+      <div>
+        <img style="display: inline-block;"class="" src="<?= Yii::app()->request->baseUrl ?>/images/contenido/gaviscon/gaviscon-doble-accion/bullet04.png">
+        <p style="display: inline-block;margin-left: 10px;"><span>Práctica presentación <br> en sachets</span></p>
+      </div>
+    </div>
   </div>
 </section>
 <section>
@@ -107,12 +119,25 @@
   <a data-ajax="false" href="<?php echo CController::createUrl('/contenido/ver', array('tipo' => 'grupo', 'contenido' => 2628)) ?>">
       <img class="btn-compra" style="margin-top: 20px;" src="<?= Yii::app()->request->baseUrl ?>/images/contenido/gaviscon/gaviscon-original/compra-original.png" alt="Compra gaviscon original">
     </a>
-    <ul class="lista" style="padding-inline-start: 19%;">
-      <li class="original-1"><div style="position: absolute;">Rápido Alivio del <span>reflujo <br> gastroesofágico</span></div></li>
-      <li class="original-2"><div style="position: absolute;">Alivio rápido y efectivo: <span>3 minutos</span> <br> y hasta por <span>4 horas</span></div></li>
-      <li class="original-3"><div style="position: absolute;margin-top: 5px;"><span>No necesita agua</span></div></li>
-      <li class="original-4"><div style="position: absolute;"><span>Es seguro usar en el Embarazo</span></div></li>
-    </ul>
+
+    <div class="lista" style="padding: 0 5%;">
+      <div>
+        <img style="display: inline-block;margin-top: -30px;" class="" src="<?= Yii::app()->request->baseUrl ?>/images/contenido/gaviscon/gaviscon-original/bullet01.png">
+        <p style="display: inline-block;margin-left: 10px;" >Rápido Alivio del <span>reflujo <br> gastroesofágico</span></p>
+      </div>
+      <div>
+        <img style="display: inline-block;margin-top: -30px;" class="" src="<?= Yii::app()->request->baseUrl ?>/images/contenido/gaviscon/gaviscon-original/bullet02.png">
+        <p style="display: inline-block;margin-left: 10px;" >Alivio rápido y efectivo: <span>3 minutos</span> <br> y hasta por <span>4 horas</span></p>
+      </div>
+      <div>
+        <img style="display: inline-block;" class="" src="<?= Yii::app()->request->baseUrl ?>/images/contenido/gaviscon/gaviscon-original/bullet03.png">
+        <p style="display: inline-block;margin-left: 10px;" ><span>No necesita agua</span></p>
+      </div>
+      <div>
+        <img style="display: inline-block;" class="" src="<?= Yii::app()->request->baseUrl ?>/images/contenido/gaviscon/gaviscon-original/bullet04.png">
+        <p style="display: inline-block;margin-left: 10px;" ><span>Es seguro usar en el Embarazo</span></p>
+      </div>
+    </div>
   </div>
 </section>
 <img class="etiqueta" style="width: 80%;margin: 20px auto 10px;" src="<?= Yii::app()->request->baseUrl ?>/images/contenido/gaviscon/gaviscon-doble-accion/mecanismo-de-accion.png" alt="Mecanismo de acción">
@@ -169,12 +194,24 @@
       <a href="<?php echo CController::createUrl('/contenido/ver', array('tipo' => 'grupo', 'contenido' => 2630)) ?>">
         <img class="btn-compra" src="<?= Yii::app()->request->baseUrl ?>/images/contenido/gaviscon/gaviscon-doble-accion/compra-doble-accion.png" alt="Compra gaviscon doble acción">
       </a>
-      <ul class="lista">
-        <li class="doble-accion-1"><div style="position: absolute;">Doble Alivio de la <span>indigestión</span><br> y el <span>reflujo</span></div></li>
-        <li class="doble-accion-2"><div style="position: absolute;">Alivio rápido y efectivo: <span>3 minutos</span> y hasta por <span>4 horas</span></div></li>
-        <li class="doble-accion-3"><div style="position: absolute;margin-top: 5px;"><span>No necesita agua</span></div></li>
-        <li class="doble-accion-4"><div style="position: absolute;"><span>Práctica presentación en sachets</span></div></li>
-      </ul>
+      <div class="lista" style="padding: 0 15%;">
+        <div style="margin-bottom:15px;">
+          <img style="display: inline-block;margin-top: -30px;" class="" src="<?= Yii::app()->request->baseUrl ?>/images/contenido/gaviscon/gaviscon-doble-accion/bullet01.png">
+          <p style="display: inline-block;margin-left: 10px;" >Doble Alivio de la <span>indigestión</span><br> y el <span>reflujo</span></p>
+        </div>
+        <div style="margin-bottom:15px;">
+          <img style="display: inline-block;margin-top: -30px;"class="" src="<?= Yii::app()->request->baseUrl ?>/images/contenido/gaviscon/gaviscon-doble-accion/bullet02.png">
+          <p style="display: inline-block;margin-left: 10px;">Alivio rápido y efectivo: <span>3 minutos</span> <br>y hasta por <span>4 horas</span></p>
+        </div>
+        <div style="margin-bottom:15px;">
+          <img style="display: inline-block;"class="" src="<?= Yii::app()->request->baseUrl ?>/images/contenido/gaviscon/gaviscon-doble-accion/bullet03.png">
+          <p style="display: inline-block;margin-left: 10px;"><span>No necesita agua</span></p>
+        </div>
+        <div style="margin-bottom:15px;">
+          <img style="display: inline-block;"class="" src="<?= Yii::app()->request->baseUrl ?>/images/contenido/gaviscon/gaviscon-doble-accion/bullet04.png">
+          <p style="display: inline-block;margin-left: 10px;"><span>Práctica presentación en sachets</span></p>
+        </div>
+      </div>
     </div>
     <div class="col-sm-6 col-md-6">
       <div class="row">
@@ -196,12 +233,24 @@
       <a href="<?php echo CController::createUrl('/contenido/ver', array('tipo' => 'grupo', 'contenido' => 2628)) ?>">
         <img class="btn-compra" src="<?= Yii::app()->request->baseUrl ?>/images/contenido/gaviscon/gaviscon-original/compra-original.png" alt="Compra gaviscon Original">
       </a>
-      <ul class="lista">
-        <li class="original-1"><div style="position: absolute;">Rápido Alivio del <span>reflujo <br> gastroesofágico</span></div></li>
-        <li class="original-2"><div style="position: absolute;">Alivio rápido y efectivo: <span>3 minutos</span> <br> y hasta por <span>4 horas</span></div></li>
-        <li class="original-3"><div style="position: absolute;margin-top: 5px;"><span>No necesita agua</span></div></li>
-        <li class="original-4"><div style="position: absolute;"><span>Es seguro usar en el Embarazo</span></div></li>
-      </ul>
+      <div class="lista" style="padding: 0 15%;">
+        <div style="margin-bottom:15px;">
+          <img style="display: inline-block;margin-top: -30px;" class="" src="<?= Yii::app()->request->baseUrl ?>/images/contenido/gaviscon/gaviscon-original/bullet01.png">
+          <p style="display: inline-block;margin-left: 10px;" >Rápido Alivio del <span>reflujo <br> gastroesofágico</span></p>
+        </div>
+        <div style="margin-bottom:15px;">
+          <img style="display: inline-block;margin-top: -30px;" class="" src="<?= Yii::app()->request->baseUrl ?>/images/contenido/gaviscon/gaviscon-original/bullet02.png">
+          <p style="display: inline-block;margin-left: 10px;" >Alivio rápido y efectivo: <span>3 minutos</span> <br> y hasta por <span>4 horas</span></p>
+        </div>
+        <div style="margin-bottom:15px;">
+          <img style="display: inline-block;" class="" src="<?= Yii::app()->request->baseUrl ?>/images/contenido/gaviscon/gaviscon-original/bullet03.png">
+          <p style="display: inline-block;margin-left: 10px;" ><span>No necesita agua</span></p>
+        </div>
+        <div style="margin-bottom:15px;">
+          <img style="display: inline-block;" class="" src="<?= Yii::app()->request->baseUrl ?>/images/contenido/gaviscon/gaviscon-original/bullet04.png">
+          <p style="display: inline-block;margin-left: 10px;" ><span>Es seguro usar en el Embarazo</span></p>
+        </div>
+      </div>
     </div>
   </div>
 </div>
