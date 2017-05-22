@@ -77,7 +77,7 @@ $this->metaTags = "
   <div class="contenedor">
     <section>
       <div class="space-m"></div>
-      <a href="#"><img src="<?= Yii::app()->request->baseUrl ?>/images/contenido/corega/boton-comprar.png" class="img-responsive" alt="Comprar Corega en la rebaja virtual"></a>
+      <a href="<?php echo CController::createUrl('/catalogo/buscar?busqueda=corega') ?>"><img src="<?= Yii::app()->request->baseUrl ?>/images/contenido/corega/boton-comprar.png" class="img-responsive" alt="Comprar Corega en la rebaja virtual"></a>
     </section>
     <section>
       <div class="bloque">
@@ -98,7 +98,7 @@ $this->metaTags = "
   <div class="contenedor">
     <section>
       <div class="space-m"></div>
-      <a href="#"><img src="<?= Yii::app()->request->baseUrl ?>/images/contenido/corega/boton-comprar.png" class="img-responsive" alt="Comprar Corega en la rebaja virtual"></a>
+      <a href="<?php echo CController::createUrl('/catalogo/buscar?busqueda=corega') ?>"><img src="<?= Yii::app()->request->baseUrl ?>/images/contenido/corega/boton-comprar.png" class="img-responsive" alt="Comprar Corega en la rebaja virtual"></a>
       <div class="space-m"></div>
       <iframe width="100%" height="250" src="https://www.youtube.com/embed/Lk20DhBIzHo" frameborder="0" allowfullscreen></iframe>
     </section>
@@ -154,7 +154,7 @@ $this->metaTags = "
 <div class="container">
   <div class="row">
     <div class="space"></div>
-    <a href="#"><img src="<?= Yii::app()->request->baseUrl ?>/images/contenido/corega/boton-comprar.png" class="img-responsive" alt="Comprar Corega en la rebaja virtual"></a>
+    <a href="<?php echo CController::createUrl('/catalogo/buscar?busqueda=corega') ?>"><img src="<?= Yii::app()->request->baseUrl ?>/images/contenido/corega/boton-comprar.png" class="img-responsive" alt="Comprar Corega en la rebaja virtual"></a>
     <div class="space"></div>
   </div>
   <div class="row">
@@ -179,7 +179,7 @@ $this->metaTags = "
 <div class="container">
   <div class="row">
     <div class="space"></div>
-    <a href="#"><img src="<?= Yii::app()->request->baseUrl ?>/images/contenido/corega/boton-comprar.png" class="img-responsive" alt="Comprar Corega en la rebaja virtual"></a>
+    <a href="<?php echo CController::createUrl('/catalogo/buscar?busqueda=corega') ?>"><img src="<?= Yii::app()->request->baseUrl ?>/images/contenido/corega/boton-comprar.png" class="img-responsive" alt="Comprar Corega en la rebaja virtual"></a>
     <div class="space"></div>
     <div class="col-md-6">
       <iframe width="100%" height="315" src="https://www.youtube.com/embed/Lk20DhBIzHo" frameborder="0" allowfullscreen></iframe>

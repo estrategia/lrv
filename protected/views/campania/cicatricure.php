@@ -10,7 +10,7 @@ $this->metaTags = "<meta http-equiv='X-UA-Compatible' content='IE=edge'>
     @font-face { font-family:NeutraText-BookItalicAlt; src: url(" . Yii::app()->request->baseUrl . "/images/contenido/cicatricure/font/NeutraText-BookItalicAlt.otf);}
     @font-face { font-family:NeutraText-LightAlt; src: url(" . Yii::app()->request->baseUrl . "/images/contenido/cicatricure/font/NeutraText-LightAlt.ttf);}
     @font-face { font-family:NeutraText-Bold; src: url(" . Yii::app()->request->baseUrl . "/images/contenido/cicatricure/font/NeutraText-Bold.otf);}
-    .sidebar-cart {position: fixed;right: 0px;top: 60%;z-index: 2000;}
+    .sidebar-cart {position: fixed;right: 0px;top: 60%;z-index: 2000;width: 15%;}
     .prev-slide {background-image:url('".Yii::app()->request->baseUrl."/images/contenido/cicatricure/flechas-slide.png') !important;background-position: 0px -13px !important;width: 60px !important;height: 60px !important;}
     .next-slide {background-image:url('".Yii::app()->request->baseUrl."/images/contenido/cicatricure/flechas-slide.png') !important;background-position: 0px 66px !important;width: 60px !important;height: 60px !important;}
     .background {background-image:url(".Yii::app()->request->baseUrl."/images/contenido/cicatricure/background.png);background-size: cover;background-attachment: fixed;background-position:center;}
@@ -176,6 +176,8 @@ $this->metaTags = "<meta http-equiv='X-UA-Compatible' content='IE=edge'>
 <!---FIN VERSIÓN MÓVIL-->
 <!--VERSIÓN ESCRITORIO-->
 <?php else: ?>
+  <a href="<?= Yii::app()->request->baseUrl ?>/catalogo/buscar?busqueda=cicatricure"><div class="sidebar-cart"><img class="img-responsive" src="<?= Yii::app()->request->baseUrl ?>/images/contenido/nan-optipro/btn-sticky.png"></div></a>
+
 <div class="row">
   <div id="carousel-example-generic" class="carousel slide" data-ride="carousel">
     <div class="carousel-inner baner-principal">

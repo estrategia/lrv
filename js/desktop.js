@@ -112,7 +112,7 @@ function iniciarTourAutomaticoAux() {
     }
 }
 
-/* 
+/*
  * To change this license header, choose License Headers in Project Properties.
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
@@ -1037,7 +1037,7 @@ function modificarCarro(position, modificar) {
                 		$('body').append(data.response.dialogoHTML);
                         $("#modalBodegas").modal("show");
                 	}
-                	
+
                 	else
                     alert(data.response.dialogoHTML);//modal
                 }
@@ -1258,7 +1258,7 @@ $(document).on('click', "a[data-role='filtro-listaproductos-reset']", function()
     }else{
         filtrarListaProductos();
     }
-    
+
 });
 
 function recalcularFiltros(tipo) {
@@ -1702,7 +1702,7 @@ $(document).ready(function() {
             "<i class='glyphicon glyphicon-chevron-left'></i>",
             "<i class='glyphicon glyphicon-chevron-right'></i>"
         ],
-         autoPlay: 3000, 
+         autoPlay: 3000,
     });
     $('.ad-gallery').adGallery({
         loader_image: requestUrl + '/libs/ad-gallery/loader.gif',
@@ -1745,7 +1745,7 @@ function cambioUnidadesUbicacion(codigoProducto, valorUnidad, op) {
 function cambioUnidadesBodega(codigoProducto, valorUnidad, op) {
     var cantidadProductoBodega = $("#cantidad-producto-bodega-" + codigoProducto).val();
     var cantidadProductoUbicacion = $("#cantidad-producto-ubicacion-" + codigoProducto).val();
-    
+
     if(!Number.isInteger(cantidadProductoUbicacion)){
     	cantidadProductoUbicacion = 0;
     }
@@ -1862,7 +1862,7 @@ function setCoords(pos) {
 $(document).on('click', 'button[data-role="seleccion-barrio"]', function() {
     if($('#modal-ubicacion-barrios').length > 0) {
     	$('#ubicacion-barrios-respuesta').html("");
-        $('#modal-ubicacion-barrios').modal('show');      
+        $('#modal-ubicacion-barrios').modal('show');
     } else {
         $.ajax({
             type: 'GET',
@@ -2112,7 +2112,7 @@ $(document).on('click', 'button[data-role="ubicacion-mapa"]', function() {
                 $('#main-page').append(data);
                 $('#modal-seleccion-ciudad').modal('show');
                 $('select[data-role="ciudad-despacho-map"]').select2();
-                Loading.hide();                       
+                Loading.hide();
             },
             error: function(jqXHR, textStatus, errorThrown) {
                 Loading.hide();
@@ -2727,7 +2727,7 @@ function visualizarFormulaMedica(){
 $(document).on('click', "#btn-adicionar-formula", function() {
 
     var form = document.getElementById("form-pago-confirmacion");
-    
+
  //   var form = $("#form-pago-confirmacion");
 
     $.ajax({
@@ -2755,7 +2755,7 @@ $(document).on('click', "#btn-adicionar-formula", function() {
 				$("#FormulasMedicas_correoElectronico").val("");
                 $("#formulasAdicionadas").html(data.response);
             } else if (data.result === 'error') {
-            
+
             } else {
                 $.each(data, function(element, error) {
                     $('#' + element + '_em_').html(error);
@@ -2788,7 +2788,7 @@ $(document).on('click', "button[data-role='codigo-promocional']", function() {
     $.ajax({
         type: 'POST',
         url: requestUrl + "/carro/usarCodigo/",
-        data: {codigoPromocional: codigoPromocional}, 
+        data: {codigoPromocional: codigoPromocional},
         dataType: 'json',
         beforeSend: function() {
             Loading.show();
@@ -2798,9 +2798,9 @@ $(document).on('click', "button[data-role='codigo-promocional']", function() {
         },
         success: function(data) {
             if (data.result === 'ok') {
-            	
+
             	bono = data.bono;
-            	
+
             	bootbox.dialog({
                     message: data.response,
                     title: "Bono disponible",
@@ -2809,11 +2809,11 @@ $(document).on('click', "button[data-role='codigo-promocional']", function() {
                             label: "Usar",
                             className: "btn-primary",
                             callback: function() {
-                            	
+
                             		$.ajax({
                                     type: 'POST',
                                     url: requestUrl + "/carro/guardarCodigo/",
-                                    data: {bono: bono}, 
+                                    data: {bono: bono},
                                     dataType: 'json',
                                     beforeSend: function() {
                                         Loading.show();
@@ -2835,10 +2835,10 @@ $(document).on('click', "button[data-role='codigo-promocional']", function() {
                                     		alert(data.response);
                                     	}
                                     }
-                                    
+
                             	});
                                }
-                            
+
                         },
                         close: {
                             label: "Cancelar",
@@ -2864,11 +2864,11 @@ $(document).on('click', "button[data-role='codigo-promocional']", function() {
 });
 
 function guardarMascota(){
-	
+
 	 $.ajax({
 	        type: 'POST',
 	        url: requestUrl + "/campania/guardarDatosMascota/",
-	        data: $("#formulario-mascota").serialize(), 
+	        data: $("#formulario-mascota").serialize(),
 	        dataType: 'json',
 	        beforeSend: function() {
 	            Loading.show();
@@ -2876,28 +2876,28 @@ function guardarMascota(){
 	        },
 	        complete: function(data) {
 	            Loading.hide();
-	           
+
 	        },
 	        success: function(data) {
 	            if (data.result === 'ok') {
 	            	bootbox.alert("Datos registrados");
-	            	document.getElementById("formulario-mascota").reset(); 
+	            	document.getElementById("formulario-mascota").reset();
 	            }else{
 	            	/*errores="<div style='text-align:center'>";
 	            	$.each(data, function(element, error) {
 	                    errores+=error+"<br/>";
 	                });
-	            	
+
 	            	errores +="</div>";
 	            	alert(errores);*/
-	            	
+
 	            	 $.each(data, function(element, error) {
 	                     $('#' + element + '_em').html(error);
 	                     $('#' + element + '_em').css('display', 'block');
 	                 });
 	            }
-	            
+
 	        }});
-	 
-	 
-} 
+
+
+}
