@@ -1,7 +1,7 @@
 <?php $this->pageTitle = "CremHelado - La Rebaja Virtual"; ?>
 <?php
   $this->metaTags = "<meta http-equiv='X-UA-Compatible' content='IE=edge'>
-  <meta name='description' content='La promoción de Crem Helado que viene con millones de paletas y miles de helados, si sacas el palito premiado puedes reclamar tu premio, ya sea paleta o gafas.'>
+  <meta name='description' content='La promoción de Crem Helado que viene con millones de paletas y miles de gafas, si sacas el palito premiado puedes reclamar tu premio, ya sea paleta o gafas.'>
   <meta name='keywords' content='crem helado, productos cremhelado, helados crem helado.'>
   <style>
     .img-responsive-m {width:100%;}
@@ -36,7 +36,7 @@
   <img class="img-responsive-m" src="<?= Yii::app()->request->baseUrl ?>/images/contenido/crem-helado/mobile/step01.png" alt="Compra">
   <img class="img-responsive-m" src="<?= Yii::app()->request->baseUrl ?>/images/contenido/crem-helado/mobile/step02.png" alt="Busca">
   <img class="img-responsive-m" src="<?= Yii::app()->request->baseUrl ?>/images/contenido/crem-helado/mobile/step03.png" alt="Reclama">
-  <a href="<?= Yii::app()->request->baseUrl ?>/catalogo/buscar?busqueda=paleta" data-ajax="false">
+  <a href="<?php echo CController::createUrl('/contenido/ver', array('tipo' => 'grupo', 'contenido' => 2691)) ?>" data-ajax="false">
     <img class="img-responsive-m" src="<?= Yii::app()->request->baseUrl ?>/images/contenido/crem-helado/mobile/premios.png" alt="Premios">
   </a>
   <img class="img-responsive-m" style="margin-top: -20px;margin-left: 10px;" src="<?= Yii::app()->request->baseUrl ?>/images/contenido/crem-helado/mobile/como-vienen-los-palitos.png" alt="Como vienen los palitos marcados">
@@ -75,13 +75,13 @@
 </div>
 <!--Versión escritorio-->
 <?php else: ?>
-<a href="<?= Yii::app()->request->baseUrl ?>/catalogo/buscar?busqueda=paleta">
+<a href="<?php echo CController::createUrl('/contenido/ver', array('tipo' => 'grupo', 'contenido' => 2691)) ?>">
   <div class="sidebar-cart"><img class="img-responsive" src="<?= Yii::app()->request->baseUrl ?>/images/contenido/crem-helado/btn-sticky.png" alt="Compra online"></div>
 </a>
 <div class="background">
   <img class="img-responsive" src="<?= Yii::app()->request->baseUrl ?>/images/contenido/crem-helado/desktop/banner.png" alt="Gafa mania">
   <img class="img-responsive" style="position: absolute;" src="<?= Yii::app()->request->baseUrl ?>/images/contenido/crem-helado/desktop/como-ganar.png" alt="Cómo ganar">
-  <a href="<?= Yii::app()->request->baseUrl ?>/catalogo/buscar?busqueda=paleta">
+  <a href="<?php echo CController::createUrl('/contenido/ver', array('tipo' => 'grupo', 'contenido' => 2691)) ?>">
     <img class="img-responsive" style="margin-top: 36%;" src="<?= Yii::app()->request->baseUrl ?>/images/contenido/crem-helado/desktop/premios.png" alt="Premios">
   </a>
   <img class="img-responsive" style="position: absolute;top: 55%;" src="<?= Yii::app()->request->baseUrl ?>/images/contenido/crem-helado/desktop/como-vienen-los-palitos.png" alt="Cómo vienen los palitos">
