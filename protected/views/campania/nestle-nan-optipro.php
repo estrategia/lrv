@@ -39,7 +39,7 @@ $this->metaTags = "
     <img class="compra-online" src="<?= Yii::app()->request->baseUrl ?>/images/contenido/nan-optipro/home/compra-online.png" alt="Compra online - NAN OPTIPRO">
   </a>
   <div class="bg-blue" style="font-size: 18px;padding: 8px;margin-top: 25px;">
-    <p>Las proteínas influen directamente en el <br>
+    <p>Las proteínas influyen directamente en el <br>
     desarrollo y crecimiento ya que estructuran, <br>
     conforman y mantienen los tejidos, músculos y órganos.</p>
     <p>Darle a tu hijo una proteína de excelente calidad, <br>
@@ -48,7 +48,7 @@ $this->metaTags = "
   <a href="<?= Yii::app()->request->baseUrl ?>/recetas-nestle-nan-optipro">
     <img class="recetas" style="margin-top: 20px;" src="<?= Yii::app()->request->baseUrl ?>/images/contenido/nan-optipro/home/recetas.png" alt="Recetas con NAN OPTIPRO">
   </a>
-  <h4 class="title-video" style="padding: 19px;font-size: 15px;width: 75%;margin: 25px auto;border-radius: 20px;"> ¿QUÉ ES PROTEÍNA? </h4>
+  <h4 class="title-video" style="padding: 19px;font-size: 15px;width: 75%;margin: 25px auto;border-radius: 20px;"> PROTEINAS DE CALIDAD  </h4>
   <div class="video-container">
     <iframe width="560" height="315" src="https://www.youtube.com/embed/yCbVoCRm1Ww?rel=0&amp;showinfo=0" frameborder="0" allowfullscreen></iframe>
   </div>
@@ -89,7 +89,7 @@ $this->metaTags = "
       <div class="row" style="padding-bottom: 35px;">
         <div class="col-sm-6 col-md-6">
           <div class="bg-blue">
-            <p>Las proteínas influen directamente en el <br>
+            <p>Las proteínas influyen directamente en el <br>
             desarrollo y crecimiento ya que estructuran, <br>
             conforman y mantienen los tejidos, músculos y órganos.</p>
             <p>Darle a tu hijo una proteína de excelente calidad, <br>
@@ -104,7 +104,7 @@ $this->metaTags = "
       </div>
       <div class="row" style="padding-bottom: 35px;">
         <div class="col-sm-6 col-md-6">
-          <h4 class="title-video" style="padding: 19px;font-size: 21px;"> ¿QUÉ ES PROTEÍNA? </h4>
+          <h4 class="title-video" style="padding: 19px;font-size: 21px;"> PROTEINAS DE CALIDAD  </h4>
           <div class="video-container">
             <iframe width="560" height="315" src="https://www.youtube.com/embed/yCbVoCRm1Ww?rel=0&amp;showinfo=0" frameborder="0" allowfullscreen></iframe>
           </div>

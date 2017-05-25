@@ -46,57 +46,10 @@ $this->metaTags = "<meta http-equiv='X-UA-Compatible' content='IE=edge'>
   <div class="row background">
     <div class="content" style="margin:0px 15px;background-size: 100%;">
         <img class="img-responsive-m" style="margin-bottom:15px;" src="<?= Yii::app()->request->baseUrl ?>/images/contenido/nan-optipro/recetas-y-sabias-que/proteinas-sabias-que.png" alt="Proteinas  Nan optipro">
-        <p>Las proteínas sirven para construir
-        y renovar las células del organismo.
-        ¿Sabías tú que emplearás un total de
-        925 gramos de proteínas para llevar a
-        término tu embarazo en forma óptima?
-        Es decir, una cantidad que equivale a
-        las proteínas que contienen 3 kilos del
-        mejor bistec de vacuno ¡distribuídos a
-        lo largo del embarazo, por supuesto!. </p>
-        <p>Estos nutrientes servirán para reforzar
-        los tejidos de tu cuerpo y después para
-        alimentar el crecimiento de la placenta
-        y del futuro bebé.</p>
-        <p>La naturaleza es sabia.
-        Desde los primeros meses de gestación
-        tu cuerpo se va adaptando para
-        preservar sus reservas de proteínas y
-        almacenar lo que se necesita para un
-        buen desarrollo del cuerpo de tu hijo.</p>
-        <p>La necesidad adicional de proteínas
-        que requiere tu cuerpo durante el embarazo,
-        se estima aproximadamente
-        en 10 gramos diarios. Esa maravilla
-        que es tu cuerpo, utilizará estos nutrientes
-        para que este embarazo culmine
-        con éxito. De hecho, los aportes de
-        proteínas recomendados como promedio
-        a lo largo del período de gestación,
-        serán de 60 gramos diarios.</p>
-        <p>En principio, tus nuevas necesidades
-        de aporte de proteínas estarán cubiertas
-        por los alimentos que consumes
-        habitualmente, dado que unos 100
-        a 150g. de carne, pescado o huevo,
-        junto con 3 a 4 porciones de lácteos al día,
-        las satisfacen ampliamente. Si consumes
-        demasiadas proteínas, tu cuerpo
-        eliminará el exceso no utilizado
-        pero, cuidado: no elimina el exceso
-        de calorías que esto representa y 1 gramo de
-        proteína aporta tantas calorías como 1
-        gramo de un hidrato de carbono: 4 kcal.</p>
-        <p>Por el contrario, la falta de proteínas
-        puede ser nefasta para tu bebé. En el
-        caso de regímenes vegetarianos (que
-        no incluyen alimentos de origen animal:
-        carnes, pescados, huevos, lácteos) se
-        ha observado un aumento del riesgo
-        de malformaciones genito-urinarias en
-        los varones. Si eres vegetariana, pone
-        especial énfasis en el consumo de huevos y lácteos. </p>
+      <p>¿Te imaginas construir una casa sin columnas? No se sostendría y sería muy fácil que sufra daños y se derrumbe. Así como las casas, muchos de nuestros órganos requieren columnas que los sostenga y den fortaleza a su estructura, y en la alimentación, las proteínas representan esas columnas.</p>
+      <p>Las proteínas son de suma importancia en la alimentación diaria de tu pequeño, porque brindan el material para elaborar todas las sustancias requeridas para la formación de células y así, garantizar el adecuado crecimiento y la maduración de los órganos; por ejemplo, las proteínas que forman las paredes del corazón de tu niño permiten que éste se contraiga de forma adecuada y pueda bombear la sangre a todo el cuerpo. Las proteínas son esenciales para el crecimiento y la resistencia de los huesos dándoles la dureza necesaria para sostener el peso del cuerpo de tu pequeño y soportar caídas y golpes. El crecimiento y la maduración del cerebro para cumplir con sus funciones cognitivas, requiere de proteínas. Se ha demostrado que, en niños con desnutrición, el desarrollo del cerebro, intelecto y rendimiento escolar, es mucho menor. Las  proteínas también actúan favoreciendo el desarrollo del intestino, la piel, el sistema inmunológico, etc. </p>
+      <p>Estas son entre otras, algunas de las funciones que desempeñan las proteínas en la alimentación de tu hijo, por eso debes tener presente que la cantidad y la calidad de las proteínas son fundamentales para que tenga el mejor crecimiento y maduración de sus órganos. </p>
+      <p><strong>Recuerda: </strong>¡Ofrecer las proteínas en cantidad y calidad adecuada, te dará la seguridad de una adecuada maduración de sus órganos!</p>
         <!-- <a href="#">
           <img class="img-responsive-m" style="margin: 15px auto;width: 80%;display:block;" src="<?= Yii::app()->request->baseUrl ?>/images/contenido/nan-optipro/recetas-y-sabias-que/ver-mas.png" alt="Ver más">
         </a> -->
@@ -136,59 +89,14 @@ $this->metaTags = "<meta http-equiv='X-UA-Compatible' content='IE=edge'>
       <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1 content">
         <div class="col-sm-6 col-md-6">
           <img class="img-responsive" style="margin-bottom:15px;" src="<?= Yii::app()->request->baseUrl ?>/images/contenido/nan-optipro/recetas-y-sabias-que/proteinas-sabias-que.png" alt="Proteinas  Nan optipro">
-          <p>Las proteínas sirven para construir
-          y renovar las células del organismo.
-          ¿Sabías tú que emplearás un total de
-          925 gramos de proteínas para llevar a
-          término tu embarazo en forma óptima?
-          Es decir, una cantidad que equivale a
-          las proteínas que contienen 3 kilos del
-          mejor bistec de vacuno ¡distribuídos a
-          lo largo del embarazo, por supuesto!. </p>
-          <p>Estos nutrientes servirán para reforzar
-          los tejidos de tu cuerpo y después para
-          alimentar el crecimiento de la placenta
-          y del futuro bebé.</p>
-          <p>La naturaleza es sabia.
-          Desde los primeros meses de gestación
-          tu cuerpo se va adaptando para
-          preservar sus reservas de proteínas y
-          almacenar lo que se necesita para un
-          buen desarrollo del cuerpo de tu hijo.</p>
+          <p>¿Te imaginas construir una casa sin columnas? No se sostendría y sería muy fácil que sufra daños y se derrumbe. Así como las casas, muchos de nuestros órganos requieren columnas que los sostenga y den fortaleza a su estructura, y en la alimentación, las proteínas representan esas columnas.</p>
+          <p>Las proteínas son de suma importancia en la alimentación diaria de tu pequeño, porque brindan el material para elaborar todas las sustancias requeridas para la formación de células y así, garantizar el adecuado crecimiento y la maduración de los órganos; por ejemplo, las proteínas que forman las paredes del corazón de tu niño permiten que éste se contraiga de forma adecuada y pueda bombear la sangre a todo el cuerpo. </p>
         </div>
         <div class="col-sm-6 col-md-6">
-          <p>La necesidad adicional de proteínas
-          que requiere tu cuerpo durante el embarazo,
-          se estima aproximadamente
-          en 10 gramos diarios. Esa maravilla
-          que es tu cuerpo, utilizará estos nutrientes
-          para que este embarazo culmine
-          con éxito. De hecho, los aportes de
-          proteínas recomendados como promedio
-          a lo largo del período de gestación,
-          serán de 60 gramos diarios.</p>
-          <p>En principio, tus nuevas necesidades
-          de aporte de proteínas estarán cubiertas
-          por los alimentos que consumes
-          habitualmente, dado que unos 100
-          a 150g. de carne, pescado o huevo,
-          junto con 3 a 4 porciones de lácteos al día,
-          las satisfacen ampliamente. Si consumes
-          demasiadas proteínas, tu cuerpo
-          eliminará el exceso no utilizado
-          pero, cuidado: no elimina el exceso
-          de calorías que esto representa y 1 gramo de
-          proteína aporta tantas calorías como 1
-          gramo de un hidrato de carbono: 4 kcal.</p>
-          <p>Por el contrario, la falta de proteínas
-          puede ser nefasta para tu bebé. En el
-          caso de regímenes vegetarianos (que
-          no incluyen alimentos de origen animal:
-          carnes, pescados, huevos, lácteos) se
-          ha observado un aumento del riesgo
-          de malformaciones genito-urinarias en
-          los varones. Si eres vegetariana, pone
-          especial énfasis en el consumo de huevos y lácteos. </p>
+          <p>Las proteínas son esenciales para el crecimiento y la resistencia de los huesos dándoles la dureza necesaria para sostener el peso del cuerpo de tu pequeño y soportar caídas y golpes. </p>
+          <p>El crecimiento y la maduración del cerebro para cumplir con sus funciones cognitivas, requiere de proteínas. Se ha demostrado que, en niños con desnutrición, el desarrollo del cerebro, intelecto y rendimiento escolar, es mucho menor. Las  proteínas también actúan favoreciendo el desarrollo del intestino, la piel, el sistema inmunológico, etc. </p>
+          <p>Estas son entre otras, algunas de las funciones que desempeñan las proteínas en la alimentación de tu hijo, por eso debes tener presente que la cantidad y la calidad de las proteínas son fundamentales para que tenga el mejor crecimiento y maduración de sus órganos. </p>
+          <p><strong>Recuerda: </strong>¡Ofrecer las proteínas en cantidad y calidad adecuada, te dará la seguridad de una adecuada maduración de sus órganos!</p>
         </div>
         <!-- <div class="col-md-12">
           <a href="#">
