@@ -61,6 +61,10 @@ return array(
         'gaviscon' => 'publicidad/contenido/nombre/gaviscon',
         'promocion-crem-helado-gafamania' => 'publicidad/contenido/nombre/crem-helado',
         'proteinas-healthy-sports' => 'publicidad/contenido/nombre/nutralab',
+        'pomys-toallas-desmaquilladoras-piel-mixta' => 'publicidad/contenido/nombre/pommys-piel-mixta',
+        'pomys-toallas-desmaquilladoras-piel-seca'  => 'publicidad/contenido/nombre/pommys-piel-normal-seca',
+        'pomys-rueditas-desmaquilladoras' => 'publicidad/contenido/nombre/pommis-rueda-desmaquilladora',
+
         // Fin links campañas
 
         // REST patterns
