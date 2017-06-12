@@ -23,12 +23,12 @@ class PublicidadController extends Controller {
     			throw new CHttpException(404, 'Campaña no existente.');
     		}
     
-    		try{
+    	//	try{
     			$this->render("application.views.campania.$nombre");
-    		}  catch (Exception $exc){
-    			Yii::log($exc->getMessage(),  CLogger::LEVEL_WARNING);
-    			throw new CHttpException(404, "Error al abrir campaña");
-    		}
+    	//	}  catch (Exception $exc){
+    	//		Yii::log($exc->getMessage(),  CLogger::LEVEL_WARNING);
+    	//		throw new CHttpException(404, "Error al abrir campaña");
+    	//	}
     }
 
 }

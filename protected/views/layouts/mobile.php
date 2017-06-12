@@ -63,6 +63,7 @@ header("Pragma: no-cache");
                     </div>
                 <?php endif; ?>
             </div>
+            <?php $this->renderPartial('//layouts/_menuMicrositio');?>
             <!-- Fin header -->
 
             <div data-role="main" id="main-content">
