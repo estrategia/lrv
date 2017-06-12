@@ -15,8 +15,9 @@
             <div class="items">
                 <?php foreach ($listProductos as $objProducto): ?>
                 <?php   $this->renderPartial('//catalogo/_productoElemento', array(
-                                   'data' => $objProducto,
-                                   'vista' => 'grid'
+                                   'objProducto' => $objProducto,
+                                   'objPrecio' => new PrecioProducto($objProducto, $this->objSectorCiudad, Yii::app()->shoppingCart->getCodigoPerfil()),
+                    				'vista' => 'listaCatalogo',
                         ));   ?>
 
                 <?php endforeach; ?>
