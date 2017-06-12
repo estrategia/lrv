@@ -64,7 +64,7 @@ return array(
         'pomys-toallas-desmaquilladoras-piel-mixta' => 'publicidad/contenido/nombre/pommys-piel-mixta',
         'pomys-toallas-desmaquilladoras-piel-seca'  => 'publicidad/contenido/nombre/pommys-piel-normal-seca',
         'pomys-rueditas-desmaquilladoras' => 'publicidad/contenido/nombre/pommis-rueda-desmaquilladora',
-
+        'strepsils-dolor-garganta' => 'publicidad/contenido/nombre/strepsil',
         // Fin links campañas
 
         // REST patterns
