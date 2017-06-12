@@ -81,7 +81,7 @@
     <a data-ajax="false" href="<?php echo CController::createUrl('/contenido/ver', array('tipo' => 'grupo', 'contenido' => 2630)) ?>">
       <img class="btn-compra" style="margin-top: 20px;" src="<?= Yii::app()->request->baseUrl ?>/images/contenido/gaviscon/gaviscon-doble-accion/compra-doble-accion.png" alt="Compra gaviscon doble acción">
     </a>
-    <div class="lista" style="padding: 0 5%;">
+    <div class="lista" style="padding: 0 5%;font-size: 16px;">
       <div>
         <img style="display: inline-block;margin-top: -30px;" class="" src="<?= Yii::app()->request->baseUrl ?>/images/contenido/gaviscon/gaviscon-doble-accion/bullet01.png">
         <p style="display: inline-block;margin-left: 10px;" >Doble Alivio de la <span>indigestión</span><br> y el <span>reflujo</span></p>
@@ -120,7 +120,7 @@
       <img class="btn-compra" style="margin-top: 20px;" src="<?= Yii::app()->request->baseUrl ?>/images/contenido/gaviscon/gaviscon-original/compra-original.png" alt="Compra gaviscon original">
     </a>
 
-    <div class="lista" style="padding: 0 5%;">
+    <div class="lista" style="padding: 0 5%;font-size: 16px;">
       <div>
         <img style="display: inline-block;margin-top: -30px;" class="" src="<?= Yii::app()->request->baseUrl ?>/images/contenido/gaviscon/gaviscon-original/bullet01.png">
         <p style="display: inline-block;margin-left: 10px;" >Rápido Alivio del <span>reflujo <br> gastroesofágico</span></p>

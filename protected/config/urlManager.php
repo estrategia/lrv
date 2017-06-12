@@ -60,6 +60,7 @@ return array(
         'energold-alimento-ninos' => 'publicidad/contenido/nombre/kyron-alimento-ninos',
         'gaviscon' => 'publicidad/contenido/nombre/gaviscon',
         'promocion-crem-helado-gafamania' => 'publicidad/contenido/nombre/crem-helado',
+        'proteinas-healthy-sports' => 'publicidad/contenido/nombre/nutralab',
         // Fin links campañas
 
         // REST patterns
