@@ -404,8 +404,8 @@ return array(
         'remisionPosECommerce' => "http://www.copservir.com/webService/Pos/RemisionPosEcommerce.php",
         'persona' => 'http://localhost/copservir/wsMultiportal/persona',
         //console
-        //'sincronizarBeneficiosSIICOP' => 'http://sii.copservir.com/beneficios/sweb/wslrv',
-        'sincronizarBeneficiosSIICOP' => 'http://localhost/siicop/beneficios/sweb/wslrv',
+        'sincronizarBeneficiosSIICOP' => 'http://sii.copservir.com/beneficios/sweb/wslrv',
+       // 'sincronizarBeneficiosSIICOP' => 'http://localhost/siicop/beneficios/sweb/wslrv',
         'envioCorreosRecordatorios' => 'http://localhost/lrv/sweb/wslrv',
     ),
     'vendedor' => array(

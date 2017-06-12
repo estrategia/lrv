@@ -150,6 +150,7 @@ class ContenidoController extends ControllerOperator {
             $params['vista'] = '_categoria';
             $params['ubicacionModel'] = new UbicacionModulos();
             if ($_POST) {
+            	
                 $modelUbicacion = new UbicacionModulos();
                 $modelUbicacion->orden = $_POST['UbicacionModulos']['orden'];
                 $modelUbicacion->ubicacion = $_POST['UbicacionModulos']['ubicacion'];
@@ -157,11 +158,11 @@ class ContenidoController extends ControllerOperator {
 
                 if ($modelUbicacion->save()) {
                     $id = $modelUbicacion->idUbicacion;
-                    if (isset($_POST['UbicacionCategoria']) && !empty($_POST['UbicacionCategoria']['idCategoriaBi'])) {
+                    if (isset($_POST['UbicacionCategoria']) && !empty($_POST['UbicacionCategoria'])) {
                         $modelCategoria = new UbicacionCategoria();
                         $modelCategoria->attributes = $_POST['UbicacionCategoria'];
                         $modelCategoria->idUbicacion = $id;
-
+                      
                         if ($modelCategoria->save()) {
                             Yii::app()->user->setFlash('alert alert-success', "La ubicación del módulo fué guardada con éxito");
                         } else {

@@ -26,12 +26,12 @@ class CatalogoController extends Controller {
 				'params' => array (
 						':visible' => 1,
 						':division' => $division,
-						':dispositivo' => CategoriaTienda::DISPOSITIVO_ESCRITORIO
+						':dispositivo' => $this->isMobile?CategoriaTienda::DISPOSITIVO_MOVIL:CategoriaTienda::DISPOSITIVO_ESCRITORIO
 				),
 				'with' => array (
 						'listCategoriasHijas'
 				)
-		) );
+		));
 
 		if (empty ( $objCategoria )) {
 			throw new CHttpException ( 404, 'La Categoria no existe.' );
@@ -52,11 +52,20 @@ class CatalogoController extends Controller {
 			// buscar productos top
 			$listProductos = Categoria::productosDivision ( $division, $this->isMobile );
 		}
-		$this->render ( 'd_division', array (
-				'objCategoria' => $objCategoria,
-				'listModulos' => $modulosConfigurados,
-				'listProductos' => $listProductos
-		) );
+		
+		if($this->isMobile){
+             $this->render ( '_division', array (
+					'objCategoria' => $objCategoria,
+					'listModulos' => $modulosConfigurados,
+					'listProductos' => $listProductos
+			) );
+		}else{
+			$this->render ( 'd_division', array (
+					'objCategoria' => $objCategoria,
+					'listModulos' => $modulosConfigurados,
+					'listProductos' => $listProductos
+			) );
+		}
 	}
 	public function actionCategoria($categoria) {
 		$objSectorCiudad = $this->objSectorCiudad;
@@ -186,6 +195,12 @@ class CatalogoController extends Controller {
 				if (Yii::app ()->session [Yii::app ()->params->sesion ['productosBusquedaOrden']] != null) {
 					$formOrdenamiento = Yii::app ()->session [Yii::app ()->params->sesion ['productosBusquedaOrden']];
 				}
+			}
+			
+			if (Yii::app ()->session [Yii::app ()->params->sesion ['productosBusquedaFiltro']] != null) {
+				$formFiltro = Yii::app ()->session [Yii::app ()->params->sesion ['productosBusquedaFiltro']];
+				$formFiltro->listMarcasCheck = $formFiltro->listMarcas;
+				$formFiltro->listFiltrosCheck = $formFiltro->listFiltros;
 			}
 		} else {
 			if (! isset ( $_GET ['ajax'] )) {
@@ -446,8 +461,40 @@ class CatalogoController extends Controller {
 		$parametrosVista ['imagenBusqueda'] = $imagenBusqueda;
 
 		if ($this->isMobile) {
-			$parametrosVista ['listProductos'] = $listProductos;
-			$this->render ( 'listaProductos', $parametrosVista );
+			/*$parametrosVista ['listProductos'] = $listProductos;
+			$this->render ( 'listaProductos', $parametrosVista );*/
+			$dataProvider = null;
+			
+			if (! empty ( $listProductos )) {
+				$dataProvider = new CArrayDataProvider ( $listProductos, array (
+						'id' => 'codigoProducto',
+						'sort' => array (
+								'attributes' => array (
+										'descripcionProducto'
+								)
+						),
+						'pagination' => array (
+								'pageSize' => 10
+						)
+				) );
+			}
+			
+			if($dataProvider == null){
+				$this->render ( 'listaProductos', array (
+						'listProductos' => array (),
+						'listCombos' => array (),
+						'listCodigoEspecial' => array (),
+						'imagenBusqueda' => Yii::app ()->params->busqueda ['imagen'] ['noExito'],
+						'objSectorCiudad' => $objSectorCiudad,
+						'codigoPerfil' => $codigoPerfil,
+						'nombreBusqueda' => $term
+				) );
+				Yii::app()->end();
+			}
+			
+			$parametrosVista ['dataprovider'] = $dataProvider;
+			$this->render ( 'listaProductos_new', $parametrosVista );
+			
 		} else {
 			$pagina = 24;
 			if (isset ( $_GET ['pageSize'] ) and is_numeric ( $_GET ['pageSize'] )) {
@@ -1038,7 +1085,20 @@ class CatalogoController extends Controller {
 						)
 				) );
 			}
-
+			
+			if($dataProvider == null){
+				$this->render ( 'listaProductos', array (
+						'listProductos' => array (),
+						'listCombos' => array (),
+						'listCodigoEspecial' => array (),
+						'imagenBusqueda' => Yii::app ()->params->busqueda ['imagen'] ['noExito'],
+						'objSectorCiudad' => $objSectorCiudad,
+						'codigoPerfil' => $codigoPerfil,
+						'nombreBusqueda' => $term
+				) );
+				Yii::app()->end();
+			}
+			
 			$parametrosVista ['dataprovider'] = $dataProvider;
 			$this->render ( 'listaProductos_new', $parametrosVista );
 		} else {

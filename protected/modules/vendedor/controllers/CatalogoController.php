@@ -281,8 +281,40 @@ class CatalogoController extends ControllerVendedor {
         $parametrosVista['imagenBusqueda'] = $imagenBusqueda;
         //Yii::log("Buscar:Filtro2\n" . CVarDumper::dumpAsString($formFiltro), CLogger::LEVEL_INFO, 'application');
 
-        $parametrosVista['listProductos'] = $listProductos;
-        $this->render('listaProductos', $parametrosVista);
+      /*  $parametrosVista['listProductos'] = $listProductos;
+        $this->render('listaProductos', $parametrosVista);*/
+        
+        $dataProvider = null;
+        
+        if (! empty ( $listProductos )) {
+        	$dataProvider = new CArrayDataProvider ( $listProductos, array (
+        			'id' => 'codigoProducto',
+        			'sort' => array (
+        					'attributes' => array (
+        							'descripcionProducto'
+        					)
+        			),
+        			'pagination' => array (
+        					'pageSize' => 10
+        			)
+        	) );
+        }
+        	
+        if($dataProvider == null){
+        	$this->render ( 'listaProductos', array (
+        			'listProductos' => array (),
+        			'listCombos' => array (),
+        			'listCodigoEspecial' => array (),
+        			'imagenBusqueda' => Yii::app ()->params->busqueda ['imagen'] ['noExito'],
+        			'objSectorCiudad' => $objSectorCiudad,
+        			'codigoPerfil' => $codigoPerfil,
+        			'nombreBusqueda' => $term
+        	) );
+        	Yii::app()->end();
+        }
+        	
+        $parametrosVista ['dataprovider'] = $dataProvider;
+        $this->render ( 'listaProductos_new', $parametrosVista );
     }
 
     public function actionCategoria($categoria) {
@@ -565,8 +597,40 @@ class CatalogoController extends ControllerVendedor {
         $parametrosVista['imagenBusqueda'] = $imagenBusqueda;
 
 
-        $parametrosVista['listProductos'] = $listProductos;
-        $this->render('listaProductos', $parametrosVista);
+      /*  $parametrosVista['listProductos'] = $listProductos;
+        $this->render('listaProductos', $parametrosVista);*/
+        
+        $dataProvider = null;
+        
+        if (! empty ( $listProductos )) {
+        	$dataProvider = new CArrayDataProvider ( $listProductos, array (
+        			'id' => 'codigoProducto',
+        			'sort' => array (
+        					'attributes' => array (
+        							'descripcionProducto'
+        					)
+        			),
+        			'pagination' => array (
+        					'pageSize' => 10
+        			)
+        	) );
+        }
+         
+        if($dataProvider == null){
+        	$this->render ( 'listaProductos', array (
+        			'listProductos' => array (),
+        			'listCombos' => array (),
+        			'listCodigoEspecial' => array (),
+        			'imagenBusqueda' => Yii::app ()->params->busqueda ['imagen'] ['noExito'],
+        			'objSectorCiudad' => $objSectorCiudad,
+        			'codigoPerfil' => $codigoPerfil,
+        			'nombreBusqueda' => $term
+        	) );
+        	Yii::app()->end();
+        }
+         
+        $parametrosVista ['dataprovider'] = $dataProvider;
+        $this->render ( 'listaProductos_new', $parametrosVista );
     }
 
     public function actionProducto($producto) {

@@ -115,7 +115,7 @@ class AdminController extends ControllerOperator {
                 if (!isset(Yii::app()->session[Yii::app()->params->callcenter['sesion']['formPedidoBusqueda']])) {
                     Yii::app()->session[Yii::app()->params->callcenter['sesion']['formPedidoBusqueda']] = null;
                 }
-
+                
                 $this->busquedas();
                 Yii::app()->end();
             } else if ($parametro == 'seguimiento') {

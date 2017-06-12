@@ -2863,14 +2863,14 @@ ul.info-seleccion-ciudad span {
     margin: 5px 0;
 }
 .clst_cont_top {
-  border: 3px solid #ccc;
+  border: 1px solid #ccc;
   padding: 1em !important;
   overflow: visible;
   border-radius: 5px 5px 0px 0px;
 }
 table.ui-responsive.ctable_list_prod {
   margin-bottom: 1em;
-  border: 3px solid #ccc;
+  border: 1px solid #ccc;
   border-radius: 0px 0px 5px 5px;
   border-top: none;
 }

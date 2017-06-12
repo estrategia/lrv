@@ -1915,4 +1915,194 @@ class TestController extends Controller {
     	
     }
     
+    
+    public function actionSincronizarBeneficio($inicial, $final){
+    	 
+    	Yii::app()->db->createCommand("SET FOREIGN_KEY_CHECKS=0")->execute();
+    	 
+    	$file = fopen(Yii::getPathOfAlias('application') . DIRECTORY_SEPARATOR . "runtime" . DIRECTORY_SEPARATOR . "sincronizacionLog.txt", "a");
+    	$client = new SoapClient(Yii::app()->params->webServiceUrl['sincronizarBeneficiosSIICOP'], array(
+    			"trace" => 1,
+    			'cache_wsdl' => WSDL_CACHE_NONE,
+    			'exceptions' => 0
+    	));
+    	$pendientesSincronizar = true;
+    	fwrite($file, Date("Y-m-d h:i:s")." - Inicio de ejecucion de el proceso" . PHP_EOL);
+    	$i = 0;
+    	 
+    	do {
+    		$start = round(microtime(true) * 1000);
+    		$arrBeneficios = array();
+    		//Beneficios-BeneficiosProductos
+    		$h1 = round(microtime(true) * 1000);
+    		 
+    		$transaction = Yii::app()->db->beginTransaction();
+    		$idSincronizacion = $inicial;
+    
+    		 
+    		$h2 = round(microtime(true) * 1000);
+    		fwrite($file, Date("Y-m-d h:i:s")."- "."Buscando el maximo idSincronizado ".($h2 - $h1)." milisegundos" . PHP_EOL);
+    		// llamar a web service enviandole el id de sincronizacion
+    		 
+    		$h1 = round(microtime(true) * 1000);
+    		 
+    		try {
+    			$result = $client->setBeneficios($idSincronizacion);
+    		} catch (Exception $e) {
+    			$h2 = round(microtime(true) * 1000);
+    			Yii::app()->exit();
+    		}
+    		 
+    		$h2 = round(microtime(true) * 1000);
+    		fwrite($file, Date("Y-m-d h:i:s")."- "."Llamando al webservice del siicop ".($h2 - $h1)." milisegundos" . PHP_EOL);
+    		 
+    		 
+    		if ($result['Result'] == 0) {
+    			Yii::log("Beneficios no han sido sincronizados correctamente\nDescripcion: " . $result['Response'] . date('Y-m-d H:i:s'), CLogger::LEVEL_INFO, 'application');
+    			Yii::app()->end();
+    		}
+    		 
+    		if ($result['Result'] == 2) {
+    			$pendientesSincronizar = false;
+    		}
+    		if ($result['Result'] == 1) {
+    			$pendientesSincronizar = true;
+    			 
+    			$arrBeneficios = $result['arrBeneficios'];
+    			 
+    			 
+    			$datosPdv = array();
+    			$beneficiosProductos = array();
+    			$beneficiosCedulas = array();
+    			$inicio = round(microtime(true) * 1000);
+    			fwrite($file, Date("Y-m-d h:i:s")." - "."Iniciando a guardar  ".count($arrBeneficios)." registros" . PHP_EOL);
+    			foreach ($arrBeneficios as $beneficio) {
+    				$h1 = round(microtime(true) * 1000);
+    
+    				// buscar si el beneficio existe
+    
+    				$inicial = $beneficio['IdBeneficio'];
+    
+    				$sql = "SELECT idBeneficio FROM t_Beneficios WHERE idBeneficioSincronizado = ".$beneficio['IdBeneficio'];
+    				$existeBeneficio = Yii::app()->db->createCommand($sql)->queryAll();
+    
+    				if($existeBeneficio == null){
+    					$objBeneficio = new Beneficios;
+    					 
+    					$objBeneficio->idBeneficioSincronizado = $beneficio['IdBeneficio'];
+    					$objBeneficio->tipo = $beneficio['Tipo'];
+    					$objBeneficio->fechaIni = $beneficio['FechaIni'];
+    					$objBeneficio->fechaFin = $beneficio['FechaFin'];
+    					$objBeneficio->dsctoUnid = $beneficio['DsctoUnid'];
+    					$objBeneficio->dsctoFrac = $beneficio['DsctoFrac'];
+    					$objBeneficio->vtaUnid = $beneficio['VtaUnid'];
+    					$objBeneficio->vtaFrac = $beneficio['VtaFrac'];
+    					$objBeneficio->pagoUnid = $beneficio['PagoUnid'];
+    					$objBeneficio->pagoFrac = $beneficio['PagoFrac'];
+    					$objBeneficio->cuentaCop = $beneficio['CuentaCop'];
+    					$objBeneficio->nitCop = $beneficio['NitCop'];
+    					$objBeneficio->porcCop = $beneficio['PorcCop'];
+    					$objBeneficio->cuentaProv = $beneficio['CuentaProv'];
+    					$objBeneficio->nitProv = $beneficio['NitProv'];
+    					$objBeneficio->porcProv = $beneficio['PorcProv'];
+    					$objBeneficio->promoFiel = $beneficio['PromoFiel'];
+    					$objBeneficio->mensaje = $beneficio['Mensaje'];
+    					$objBeneficio->swobligaCli = $beneficio['SwobligaCli'];
+    					$objBeneficio->fechaCreacionBeneficio = $beneficio['FechaCreacionBeneficio'];
+    
+    					if (!$objBeneficio->save()) {
+    						throw new Exception("Error al guardar tBeneficios {id: " . $beneficio['IdBeneficio'] . ", tipo: " . $beneficio['Tipo'] . " error: " . CActiveForm::validate($objBeneficio) . "}");
+    					}
+    
+    					$h2 = round(microtime(true) * 1000);
+    					fwrite($file, Date("Y-m-d h:i:s")."- "."Guardando el beneficio No. $objBeneficio->idBeneficioSincronizado -   ".($h2 - $h1)." milisegundos" . PHP_EOL);
+    
+    					foreach ($beneficio['listBeneficiosProductos'] as $benefProd) {
+    
+    						$h1 = round(microtime(true) * 1000);
+    
+    						if ($benefProd['Mensaje'] != null) {
+    							$benefProd['Mensaje'] = "'" . $benefProd['Mensaje'] . "'";
+    						} else {
+    							$benefProd['Mensaje'] = "NULL";
+    						}
+    
+    						if ($benefProd['Unid'] == null) {
+    							$benefProd['Unid'] = "NULL";
+    						}
+    
+    						if ($benefProd['Obsequio'] == null) {
+    							$benefProd['Obsequio'] = "NULL";
+    						}
+    
+    						$beneficiosProductos[] = "($objBeneficio->idBeneficio," .
+    						$benefProd['Refe'] . "," .
+    						$benefProd['Mensaje'] . "," .
+    						$benefProd['Unid'] . "," .
+    						$benefProd['Obsequio'] . "," .
+    						$benefProd['tipo'] . ")";
+    
+    						$h2 = round(microtime(true) * 1000);
+    
+    					}
+    
+    					foreach ($beneficio['listBeneficiosPuntoVenta'] as $benefPdv) {
+    						$datosPdv[] = "($objBeneficio->idBeneficio,'" . $benefPdv['IDComercial'] . "')";
+    					}
+    
+    
+    					if ($beneficio['listCedulas']) {
+    						foreach ($beneficio['listCedulas'] as $benCed) {
+    							$beneficiosCedulas[] = "($objBeneficio->idBeneficio,".$benCed['NumeroDocumento'].")";
+    						}
+    					}
+    				}
+    			}
+    			if (count($datosPdv) > 0) {
+    				$h1 = round(microtime(true) * 1000);
+    				$sql = "INSERT INTO t_BeneficiosPuntosVenta(idBeneficio,idComercial) VALUES " . implode(",", $datosPdv);
+    				Yii::app()->db->createCommand($sql)->execute();
+    				$h2 = round(microtime(true)*1000);
+    				fwrite($file, Date("Y-m-d h:i:s")."- "."Insertando puntos de venta -   ".($h2 - $h1)." milisegundos" . PHP_EOL);
+    			}
+    			 
+    			if (count($beneficiosProductos) > 0) {
+    				$h1 = round(microtime(true) * 1000);
+    				$sql = "INSERT INTO t_BeneficiosProductos
+                                    (idBeneficio,
+                                    codigoProducto,
+                                    mensaje,
+                                    unid,
+                                    obsequio,
+                                    tipo)
+                                    VALUES " . implode(",", $beneficiosProductos);
+    				Yii::app()->db->createCommand($sql)->execute();
+    				$h2 = round(microtime(true)*1000);
+    				fwrite($file, Date("Y-m-d h:i:s")."- "."Insertando beneficios productos -   ".($h2 - $h1)." milisegundos" . PHP_EOL);
+    				 
+    			}
+    			 
+    			if (count($beneficiosCedulas) > 0) {
+    				$h1 = round(microtime(true) * 1000);
+    				$sql = "INSERT INTO t_BeneficiosCedulas
+                                    (idBeneficio,
+                                    numeroDocumento)
+                                    VALUES " . implode(",", $beneficiosCedulas);
+    				Yii::app()->db->createCommand($sql)->execute();
+    				$h2 = round(microtime(true)*1000);
+    				fwrite($file, Date("Y-m-d h:i:s")."- "."Insertando cedulas -   ".($h2 - $h1)." milisegundos" . PHP_EOL);
+    					
+    			}
+    			$fin = round(microtime(true) * 1000);
+    			fwrite($file, Date("Y-m-d h:i:s")." - "."Finalizo guardar beneficios en base de datos Tiempo:   ".($fin - $inicio)." milisegundos" . PHP_EOL);
+    		}
+    		$transaction->commit();
+    		$end = round(microtime(true) * 1000);
+    		fwrite($file, Date("Y-m-d h:i:s")." - Finalizo  ejecucion de el Lote:  $i " . ". " . ($end - $start) . " milisegundos" . PHP_EOL);
+    		$i++;
+    	} while ($pendientesSincronizar && $inicial < $final);
+    	echo "Final";
+    }
+    
+    
 }
