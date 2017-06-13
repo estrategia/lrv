@@ -111,9 +111,9 @@ function GSASearch($term, $sesion) {
         $h1 = round(microtime(true) * 1000);
         $arr2 = GSASearchAux($term);
         $h2 = round(microtime(true) * 1000);
-  */      
+  */
         fwrite($file, Date("Y-m-d h:i:s ")." Buscando en el GSA $term: ". ($h2 - $h1)." milisegundos". PHP_EOL);
-        
+
         $arr2 = array();
         foreach ($arr2 as $key => $value) {
             if (in_array($key, $resultado)) {
@@ -130,12 +130,12 @@ function GSASearch($term, $sesion) {
             codigoProducto int(10) unsigned NOT NULL,
             relevancia int(11) NOT NULL,
             KEY `idx_t_relevancia_temp_codigoProducto` (`codigoProducto`)
-         
+
           ) ";
     Yii::app()->db->createCommand($sql)->query();
     $h2 = round(microtime(true) * 1000);
     fwrite($file, Date("Y-m-d h:i:s ")." Creando tabla temporal $term: ". ($h2 - $h1)." milisegundos". PHP_EOL);
-    
+
     $ProductosRelevancia = array();
     foreach ($resultado as $key => $relevancia) {
         $ProductosRelevancia[] = "('$key','$relevancia')";
@@ -150,9 +150,9 @@ function GSASearch($term, $sesion) {
     $h2 = round(microtime(true) * 1000);
     $fin = round(microtime(true) * 1000);
     fwrite($file, Date("Y-m-d h:i:s ")." Insertando datos en tabla temporal $term : ". ($h2 - $h1)." milisegundos". PHP_EOL);
-    fwrite($file, Date("Y-m-d h:i:s ")." Finalizada la busqueda $term en sesion $sesion ".($fin-$inicio). " milisegundos". PHP_EOL);
-    
-    
+  //  fwrite($file, Date("Y-m-d h:i:s ")." Finalizada la busqueda $term en sesion $sesion ".($fin-$inicio). " milisegundos". PHP_EOL);
+
+
     return $resultado;
 
     /* if (Yii::app()->params->busqueda['buscadorActivo'] == Yii::app()->params->busqueda['tipoBuscador']['GSA']) {

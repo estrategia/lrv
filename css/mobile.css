@@ -2910,3 +2910,45 @@ td.ctd_02 p {
 .clst_cont_pr_prod {
     padding-top: 0.8em !important;
 }
+
+/* Estilos menu de naturales*/
+.img-responsive-m {width:100%;}
+.element-menu {
+  border-right: 2px solid #186634 !important;
+  margin-bottom: 45px;
+  padding: 10px 20px;
+}
+.element-menu a {text-decoration: none;}
+.element-menu:last-child {border-right: none;}
+
+.element-menu span{
+  color: #186634;
+  font-family:Helvetica;
+  font-weight: bold;
+  display: block;
+  text-align: center;
+  line-height: 17px;
+
+}
+.icono-menu {margin: 0 auto 15px;width: 50%;display: block;}
+#carrusel-menu .owl-prev {
+    float: left;
+    left: -1px;
+    position: absolute;
+    top: 31px;
+    background-color: #fff;
+    color: #12622D;
+    font-weight: bold;
+    font-size: 22px;
+}
+
+#carrusel-menu .owl-next {
+    float: right;
+    right: -1px;
+    position: absolute;
+    top: 31px;
+    background-color: #fff;
+    color: #12622D;
+    font-weight: bold;
+    font-size: 22px;
+}
