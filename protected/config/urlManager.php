@@ -14,7 +14,7 @@ return array(
         'corega' => 'publicidad/contenido/nombre/corega',
         'klim-fortigrow' => 'publicidad/contenido/nombre/klim-fortigrow',
         'klim1-fortiprotect' => 'publicidad/contenido/nombre/leche-klim-1',
-        'listerine-cuidado-total' => 'publicidad/contenido/nombre/listerine-cuidado-total',
+        'listerine' => 'publicidad/contenido/nombre/listerine-cuidado-total',
         'mas-informacion-metamucil' => 'publicidad/contenido/nombre/mas-informacion-metamucil',
         'metamucil-facilita-transito-intestinal' => 'publicidad/contenido/nombre/metamucil-facilita-transito-intestinal',
         'nestle-nan-optipro' => 'publicidad/contenido/nombre/nestle-nan-optipro',

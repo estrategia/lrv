@@ -22,7 +22,7 @@
     .image-container-all {display:block;width: 100%;height:100%;background: url(".Yii::app()->request->baseUrl."/images/contenido/pomys/todo-tipo-de-piel/item-menu.png),url(".Yii::app()->request->baseUrl."/images/contenido/pomys/todo-tipo-de-piel/item-menu-hover.png);background-size: 100% 100%, 0% 0%;}
     .image-container-all:hover {background-size: 0% 0%, 100% 100%;}
     .flex-container img {width: 15px;margin-right: 9px;height:15px;}
-    .bg-product .flex-container {margin-bottom:11px;}
+    .bg-product .flex-container {margin-bottom:11px;justify-content: initial;}
     .flex-container span {font-family:signika-negative-bold;color: #A81988;font-size: 16px;}
     .form-round {background-color: #fff;border: 2px solid #A81988;margin-bottom: 27px;padding: 8px 31px;border-radius: 60px 0;font-family: signika-negative;color: #A81988;font-size: 16px;line-height: 17px;width: 88%;}
     .line-dotted {border-bottom: 6px dotted #B5C700;width: 52%;display: block;margin-bottom: 20px;}
@@ -305,7 +305,7 @@
 <!--Version movil-->
 <!--Versión escritorio-->
 <?php else: ?>
-<a href="#">
+<a href="<?php echo CController::createUrl('/contenido/ver', array('tipo' => 'grupo', 'contenido' => 2840)) ?>">
   <div class="sidebar-cart"><img class="img-responsive" src="<?= Yii::app()->request->baseUrl ?>/images/contenido/pomys/btn-fijo.png" alt="Compra online"></div>
 </a>
 <img class="img-responsive" src="<?= Yii::app()->request->baseUrl ?>/images/contenido/pomys/banner.jpg" alt="Lo que hagas por tu piel, lo verás mañana.">
