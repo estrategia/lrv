@@ -43,7 +43,7 @@
 <!--Versión movil-->
 <?php if ($this->isMobile): ?>
 <!--Version movil-->
-<img class="img-responsive-m" src="<?= Yii::app()->request->baseUrl ?>/images/contenido/strepsils/banner.jpg" alt="Banner strepsil">
+<img class="img-responsive-m" src="<?= Yii::app()->request->baseUrl ?>/images/contenido/strepsils/banner-movil.jpg" alt="Banner strepsil">
 <div class=" bg-inicial" style="padding:0 15px;">
   <h1 class="title-descrip" style="margin-top: -5px;padding-top: 30px;font-size: 23px;">El tratamiento ideal para <br> <span>el dolor de garganta</span><br> que ataca <span>la inflamación</span></h1>
   <img class="ico-strepsils"  style="margin: 25px auto;width: 51%;" src="<?= Yii::app()->request->baseUrl ?>/images/contenido/strepsils/icono-Strepsils.png">

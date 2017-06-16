@@ -234,7 +234,7 @@
         </div>
       </div>
       <img class="img-responsive-m producto" src="<?= Yii::app()->request->baseUrl ?>/images/contenido/pomys/mixta-a-grasa/toallitas-humedas-desmaquilladoras.png">
-      <a href="<?php echo CController::createUrl('/catalogo/producto', array('producto' => 115464)) ?>">
+      <a href="<?php echo CController::createUrl('/contenido/ver', array('tipo' => 'grupo', 'contenido' => 2843)) ?>">
         <img class="compra-online" style="width: 80%;" src="<?= Yii::app()->request->baseUrl ?>/images/contenido/pomys/compra-online.png">
       </a>
       <div class="space"></div>
@@ -306,7 +306,7 @@
 <!--Version movil-->
 <!--Versión escritorio-->
 <?php else: ?>
-<a href="<?php echo CController::createUrl('/contenido/ver', array('tipo' => 'grupo', 'contenido' => 2843)) ?>">
+<a href="<?php echo CController::createUrl('/contenido/ver', array('tipo' => 'grupo', 'contenido' => 2845)) ?>>">
   <div class="sidebar-cart"><img class="img-responsive" src="<?= Yii::app()->request->baseUrl ?>/images/contenido/pomys/btn-fijo.png" alt="Compra online"></div>
 </a>
 <img class="img-responsive" src="<?= Yii::app()->request->baseUrl ?>/images/contenido/pomys/banner.jpg" alt="Lo que hagas por tu piel, lo verás mañana.">
@@ -366,7 +366,7 @@
         </div>
         <div class="col-sm-6 col-md-6 thumb">
           <img class="img-responsive producto" src="<?= Yii::app()->request->baseUrl ?>/images/contenido/pomys/mixta-a-grasa/toallitas-humedas-desmaquilladoras.png">
-          <a href="<?php echo CController::createUrl('/catalogo/producto', array('producto' => 115464)) ?>">
+          <a href="<?php echo CController::createUrl('/contenido/ver', array('tipo' => 'grupo', 'contenido' => 2843)) ?>">
             <img class="compra-online" src="<?= Yii::app()->request->baseUrl ?>/images/contenido/pomys/compra-online.png">
           </a>
         </div>
