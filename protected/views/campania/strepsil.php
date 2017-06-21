@@ -7,7 +7,8 @@
     @font-face {font-family:MyriadPro-Semibold; src: url(".Yii::app()->request->baseUrl."/images/contenido/strepsils/fonts/MyriadPro-Semibold.otf);}
     @font-face {font-family:MyriadPro-Bold; src: url(".Yii::app()->request->baseUrl."/images/contenido/strepsils/fonts/MyriadPro-Bold.otf);}
     .img-responsive-m {width:100%;}
-    .sidebar-cart {position: fixed;right: 0px;top: 60%;z-index: 2000;width: 25%;}
+    .sidebar-cart {position: fixed;right: 0px;top: 60%;z-index: 2000;width: 20%;}
+    .sidebar-cart-m {position: fixed;right: 0px;top: 30%;z-index: 2000;}
     .title-descrip {letter-spacing: -1px;font-family: MyriadPro-Semibold;text-align: center;color: #000;font-size: 35px;margin-top: 70px;}
     .title-descrip span {font-family:MyriadPro-Bold;color:#DC0912;}
     .bg-inicial {background-image:url(".Yii::app()->request->baseUrl."/images/contenido/strepsils/degradado-debajo-del-banner.png);background-size: cover; }
@@ -43,6 +44,9 @@
 <!--Versión movil-->
 <?php if ($this->isMobile): ?>
 <!--Version movil-->
+<a href="<?php echo CController::createUrl('/catalogo/producto', array('producto' => 117377)) ?>">
+  <div class="sidebar-cart-m"><img class="img-responsive-m" src="<?= Yii::app()->request->baseUrl ?>/images/contenido/strepsils/btn-fijo-mobile.png" alt="Compra online"></div>
+</a>
 <img class="img-responsive-m" src="<?= Yii::app()->request->baseUrl ?>/images/contenido/strepsils/banner-movil.jpg" alt="Banner strepsil">
 <div class=" bg-inicial" style="padding:0 15px;">
   <h1 class="title-descrip" style="margin-top: -5px;padding-top: 30px;font-size: 23px;">El tratamiento ideal para <br> <span>el dolor de garganta</span><br> que ataca <span>la inflamación</span></h1>
