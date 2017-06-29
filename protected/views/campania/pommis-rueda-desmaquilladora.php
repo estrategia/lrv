@@ -210,7 +210,7 @@
           <span style="font-family: signika-negative;">Limpiar tu piel.</span>
         </span>
       </div>
-      <div style="margin-top: 40px;">
+      <!-- <div style="margin-top: 40px;">
         <div class="form-round" style="width: 50%;margin: 0px auto 15px;">
           Dermátologicamente <br> Comprobado
         </div>
@@ -223,7 +223,7 @@
         <div class="form-round" style="width: 50%;margin: 0px auto 15px;">
           Oftalmológicamente <br> comprobado
         </div>
-      </div>
+      </div> -->
       <img class="img-responsive-m producto" style="width:60%;margin-top:40px;" src="<?= Yii::app()->request->baseUrl ?>/images/contenido/pomys/todo-tipo-de-piel/rueditas-desmaquilladoras.png">
       <a href="<?php echo CController::createUrl('/catalogo/producto', array('producto' => 49088)) ?>">
         <img class="compra-online" style="width: 80%;" src="<?= Yii::app()->request->baseUrl ?>/images/contenido/pomys/compra-online.png">
@@ -309,7 +309,7 @@
   </div>
  <div class="bg-product">
     <div class="container padding" style="margin-top: 50px;">
-        <div class="col-sm-6 col-md-6">
+        <div class="col-sm-6 col-md-6" style="margin-top:10%;">
           <h2 class="nombre-producto">Rueditas desmaquilladoras <br> todo tipo de piel</h2>
           <span class="line-dotted"></span>
           <div class="flex-container">
@@ -324,7 +324,7 @@
               <span style="font-family: signika-negative;">Limpiar tu piel.</span>
             </span>
           </div>
-          <div class="row" style="margin-top: 20%;">
+          <!-- <div class="row" style="margin-top: 20%;">
             <div class="col-sm-6 col-md-6">
               <div class="form-round">
                 Dermátologicamente <br> Comprobado
@@ -345,7 +345,7 @@
                 <img class="check twoline" src="<?= Yii::app()->request->baseUrl ?>/images/contenido/pomys/check.png">
               </div>
             </div>
-          </div>
+          </div> -->
         </div>
         <div class="col-sm-6 col-md-6 thumb">
           <img class="img-responsive producto" src="<?= Yii::app()->request->baseUrl ?>/images/contenido/pomys/todo-tipo-de-piel/rueditas-desmaquilladoras.png">

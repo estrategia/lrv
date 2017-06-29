@@ -208,7 +208,7 @@
       </div>
       <div class="flex-container">
         <img src="<?= Yii::app()->request->baseUrl ?>/images/contenido/pomys/normal-a-seca/icono-bullet.png">
-        <span> Con nutripeptides<sup>&reg;</sup> de arroz y alotoina</span>
+        <span> Con nutripeptides<sup>&reg;</sup> de arroz y alantoina</span>
       </div>
       <div class="flex-container">
         <img src="<?= Yii::app()->request->baseUrl ?>/images/contenido/pomys/normal-a-seca/icono-bullet.png">
@@ -330,7 +330,7 @@
           </div>
           <div class="flex-container">
             <img src="<?= Yii::app()->request->baseUrl ?>/images/contenido/pomys/normal-a-seca/icono-bullet.png">
-            <span> Con Nutripeptides <sup style="margin-left: -3px;">&reg;</sup> de arroz y alatoina</span>
+            <span> Con Nutripeptides <sup style="margin-left: -3px;">&reg;</sup> de arroz y alantoina</span>
           </div>
           <div class="flex-container">
             <img src="<?= Yii::app()->request->baseUrl ?>/images/contenido/pomys/normal-a-seca/icono-bullet.png">
