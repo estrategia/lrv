@@ -2936,4 +2936,31 @@ ul.info-seleccion-ciudad .glyphicon {
 	padding-right:10px !important;
 }
 
+
 /* prueba commit */
+
+
+/* Estilos menu de naturales*/
+.flex-container{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.element-menu {
+  flex-grow: 1;
+  padding: 5px 10px;
+  margin: 15px 0;
+  border-right: 2px solid #186634;
+}
+.element-menu:last-child {border-right: none;}
+.element-menu:hover {
+  background-color: #ACBC9F;
+}
+.element-menu span{
+  color: #186634;
+  font-family:Helvetica;
+  font-weight: bold;
+  text-align:center;
+  line-height: 14px;
+}
+.icono-menu {width: 60px;margin-right: 15px;}

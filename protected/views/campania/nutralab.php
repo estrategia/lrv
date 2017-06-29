@@ -119,10 +119,10 @@
   <div style="padding: 0 25px;">
     <img class="img-responsive-m conoce-mas-m" src="<?= Yii::app()->request->baseUrl ?>/images/contenido/nutralab/conoce-mas.png" alt="Conoce más">
     <div class="video" style="margin-bottom: 30px;">
-      <iframe src="https://www.facebook.com/plugins/video.php?href=https%3A%2F%2Fwww.facebook.com%2FHealthysportscolombia%2Fvideos%2F1016163251848788%2F&show_text=0&width=560" width="560" height="315" style="border:none;overflow:hidden" scrolling="no" frameborder="0" allowTransparency="true" allowFullScreen="true"></iframe>
+      <iframe width="560" height="315" src="https://www.youtube.com/embed/tSavcPEjb-I?rel=0&amp;showinfo=0" frameborder="0" allowfullscreen></iframe>
     </div>
     <div class="video">
-      <iframe src="https://www.facebook.com/plugins/video.php?href=https%3A%2F%2Fwww.facebook.com%2FHealthysportscolombia%2Fvideos%2F1030207510444362%2F&show_text=0&width=560" width="560" height="315" style="border:none;overflow:hidden" scrolling="no" frameborder="0" allowTransparency="true" allowFullScreen="true"></iframe>
+      <iframe width="560" height="315" src="https://www.youtube.com/embed/FQLQvR1DArs?rel=0&amp;showinfo=0" frameborder="0" allowfullscreen></iframe>
     </div>
     <p class="text-legal" style="margin-top: 15px;padding: 0;font-size: 12px;">Iso whey 100% por 908 gramos - 27 servicios. Registro INVIMA: RSA INVIMA 000440-2015.
      Alimento en polvo a base de proteína aislada de suero. Endure 12 h por 910 gramos y- 22
@@ -135,7 +135,7 @@
 </section>
 <!--Versión escritorio-->
 <?php else: ?>
-<!-- <a href=""><div class="sidebar-cart"><img class="img-responsive" src="<?= Yii::app()->request->baseUrl ?>/images/contenido/nutralab/bnt-fijo.png" alt="Compra online"></div></a> -->
+<a href="<?php echo CController::createUrl('/contenido/ver', array('tipo' => 'grupo', 'contenido' => 2778)) ?>"><div class="sidebar-cart"><img class="img-responsive" src="<?= Yii::app()->request->baseUrl ?>/images/contenido/nutralab/bnt-fijo.png" alt="Compra online"></div></a>
 <img class="img-responsive" src="<?= Yii::app()->request->baseUrl ?>/images/contenido/nutralab/escritorio/banner-nutralab.jpg" alt="Nutralab">
 <section class="section-iso-whey">
   <div class="container">
@@ -240,12 +240,12 @@
     <div class="row">
       <div class="col-sm-6 col-md-6">
         <div class="video">
-          <iframe src="https://www.facebook.com/plugins/video.php?href=https%3A%2F%2Fwww.facebook.com%2FHealthysportscolombia%2Fvideos%2F1016163251848788%2F&show_text=0&width=560" width="560" height="315" style="border:none;overflow:hidden" scrolling="no" frameborder="0" allowTransparency="true" allowFullScreen="true"></iframe>
+          <iframe width="560" height="315" src="https://www.youtube.com/embed/tSavcPEjb-I?rel=0&amp;showinfo=0" frameborder="0" allowfullscreen></iframe>
         </div>
       </div>
       <div class="col-sm-6 col-md-6">
         <div class="video">
-          <iframe src="https://www.facebook.com/plugins/video.php?href=https%3A%2F%2Fwww.facebook.com%2FHealthysportscolombia%2Fvideos%2F1030207510444362%2F&show_text=0&width=560" width="560" height="315" style="border:none;overflow:hidden" scrolling="no" frameborder="0" allowTransparency="true" allowFullScreen="true"></iframe>
+          <iframe width="560" height="315" src="https://www.youtube.com/embed/FQLQvR1DArs?rel=0&amp;showinfo=0" frameborder="0" allowfullscreen></iframe>
         </div>
       </div>
     </div>

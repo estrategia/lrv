@@ -7,7 +7,7 @@ $this->metaTags = "<meta http-equiv='X-UA-Compatible' content='IE=edge'>
     @font-face { font-family:ClaireHand-Bold ; src: url(" . Yii::app()->request->baseUrl . "/images/contenido/altex/fuentes/ClaireHand-Bold.otf);}
     @font-face { font-family:ThrowMyHandsUpintheAir ; src: url(" . Yii::app()->request->baseUrl . "/images/contenido/altex/fuentes/ThrowMyHandsUpintheAir.ttf);}
     @font-face { font-family:SohoGothicPro-Regular ; src: url(" . Yii::app()->request->baseUrl . "/images/contenido/altex/fuentes/SohoGothicPro-Regular.otf);}
-    .sidebar-cart {position: fixed;right: 0px;top: 60%;z-index: 2000;}
+    .sidebar-cart {width: 18%;position: fixed;right: 0px;top: 60%;z-index: 2000;}
     .background {background-image:url(".Yii::app()->request->baseUrl."/images/contenido/altex/background.png);background-size: cover;background-repeat: no-repeat;background-attachment: fixed;}
     .menu h2 {text-align:center;text-transform:uppercase;font-family:ClaireHand-Bold;font-size:50px;line-height: 115px;}
     .menu {margin-top: 110px;}
@@ -53,7 +53,7 @@ $this->metaTags = "<meta http-equiv='X-UA-Compatible' content='IE=edge'>
 ?>
 <!--VERSIÓN MÓVIL-->
 <?php if ($this->isMobile): ?>
-  <img class="img-responsive-m" src="<?= Yii::app()->request->baseUrl ?>/images/contenido/altex/3-oculta/oculta.gif">
+  <img class="img-responsive-m" src="<?= Yii::app()->request->baseUrl ?>/images/contenido/altex/banner-oculta.png">
   <img class="img-responsive-m" style="margin-top: -23px;" src="<?= Yii::app()->request->baseUrl ?>/images/contenido/altex/post.png" alt="">
   <div class="content-text-m">
     <span> Despreocúpate de las imperfecciones con</span>
@@ -109,7 +109,7 @@ $this->metaTags = "<meta http-equiv='X-UA-Compatible' content='IE=edge'>
 <a href="#"><div class="sidebar-cart"><img class="img-responsive" src="<?= Yii::app()->request->baseUrl ?>/images/contenido/altex/btn-sticky.png"></div></a>
 <div class="background">
   <div class="container">
-    <img class="img-responsive" src="<?= Yii::app()->request->baseUrl ?>/images/contenido/altex/3-oculta/oculta.gif">
+    <img class="img-responsive" src="<?= Yii::app()->request->baseUrl ?>/images/contenido/altex/banner-oculta.png">
     <div style="background-color:#fff;">
       <img class="img-responsive" style="margin-top: -23px;" src="<?= Yii::app()->request->baseUrl ?>/images/contenido/altex/post.png" alt="">
       <div class="content-text">

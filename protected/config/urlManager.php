@@ -14,7 +14,7 @@ return array(
         'corega' => 'publicidad/contenido/nombre/corega',
         'klim-fortigrow' => 'publicidad/contenido/nombre/klim-fortigrow',
         'klim1-fortiprotect' => 'publicidad/contenido/nombre/leche-klim-1',
-        'listerine-cuidado-total' => 'publicidad/contenido/nombre/listerine-cuidado-total',
+        'listerine' => 'publicidad/contenido/nombre/listerine-cuidado-total',
         'mas-informacion-metamucil' => 'publicidad/contenido/nombre/mas-informacion-metamucil',
         'metamucil-facilita-transito-intestinal' => 'publicidad/contenido/nombre/metamucil-facilita-transito-intestinal',
         'nestle-nan-optipro' => 'publicidad/contenido/nombre/nestle-nan-optipro',
@@ -61,6 +61,10 @@ return array(
         'gaviscon' => 'publicidad/contenido/nombre/gaviscon',
         'promocion-crem-helado-gafamania' => 'publicidad/contenido/nombre/crem-helado',
         'proteinas-healthy-sports' => 'publicidad/contenido/nombre/nutralab',
+        'pomys-toallas-desmaquilladoras-piel-mixta' => 'publicidad/contenido/nombre/pommys-piel-mixta',
+        'pomys-toallas-desmaquilladoras-piel-seca'  => 'publicidad/contenido/nombre/pommys-piel-normal-seca',
+        'pomys-rueditas-desmaquilladoras' => 'publicidad/contenido/nombre/pommis-rueda-desmaquilladora',
+        'strepsils-dolor-garganta' => 'publicidad/contenido/nombre/strepsil',
         // Fin links campañas
 
         // REST patterns

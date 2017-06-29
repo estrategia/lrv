@@ -1,7 +1,7 @@
 <div class="container-fluid">
     <div class="row">
         <div class="col-md-2 menu-categorias">
-        	<?php if($objCategoria->rutaImagen != null):?>
+        	<?php if($objCategoria->rutaImagenMenu != null):?>
         		<div>
         			<img src='<?=  Yii::app()->request->baseUrl."/images/menu/desktop/".$objCategoria->rutaImagenMenu ?>' />
         		</div>
@@ -11,9 +11,10 @@
                 <?php foreach ($objCategoria->listCategoriasHijas as $categoriaHija): ?>
                 	
                 	<?php $icon = '<li><span class="glyphicon glyphicon-chevron-right"></span>&nbsp;' . $categoriaHija->nombreCategoriaTienda . '</li>';?>
+                	
                 	<?php if($categoriaHija->rutaImagen):?>
                 	<?php $icon = "<div>
-        							<img src='".Yii::app()->request->baseUrl."/images/menu/desktop/".$objCategoria->rutaImagen."' />
+        							<img src='".Yii::app()->request->baseUrl."/images/menu/desktop/".$categoriaHija->rutaImagen."' />
         							$categoriaHija->nombreCategoriaTienda
         						</div>"; ?>
                 	<?php endif;?>
@@ -50,9 +51,4 @@
 </div>
 
 <!-- productos destacados -->
-
-
-
-
-
 

@@ -96,7 +96,7 @@
                     <tr>
                         <th>
                 <div class="ctbl_presentacion">
-                    <label data-icon="false" class="ctbl_chk_lb"><?php echo $objProducto->objMedidaFraccion->descripcionMedidaFraccion ?> X <?php echo $objProducto->unidadFraccionamiento ?></label>                            
+                    <label data-icon="false" class="ctbl_chk_lb"><?php echo $objProducto->objMedidaFraccion->descripcionMedidaFraccion ?> X <?php echo $objProducto->unidadFraccionamiento ?></label>
                 </div>
                 </th>
                 <th  align="right">
@@ -165,7 +165,7 @@
         <?php endif; ?>
     <?php endif; ?>
 
-      
+
     <?php if ($objSectorCiudad == null): ?>
         <?php echo CHtml::link('Consultar precio', '#popup-consultarprecio', array('data-rel' => "popup", 'class' => 'ui-btn ui-corner-all ui-shadow ui-btn-r')); ?>
     <?php elseif ($objProducto->ventaVirtual == 1): ?>
@@ -175,7 +175,7 @@
 			<?php else: ?>
 				<?php echo CHtml::link('Añadir al carro', '#', array('data-producto' => $objProducto->codigoProducto, 'data-cargar' => 1, 'class' => 'ui-btn ui-corner-all ui-shadow ui-btn-r btn_frc_add_car')); ?>
 			<?php endif;?>
-			
+
             <?php if (!Yii::app()->user->isGuest): ?>
                 <?php echo CHtml::link('Guardar en la lista personal', '#', array('data-role' => 'lstpersonalguardar', 'data-tipo' => 1, 'data-codigo' => $objProducto->codigoProducto, 'class' => 'ui-btn ui-corner-all ui-shadow ui-btn-n btn_add_lst_pr')); ?>
             <?php endif; ?>
@@ -219,12 +219,12 @@
                     <?php if ($objComentario->aprobado == 1): ?>
                         <?php $contadorCalificacion++; ?>
                         <li class="cdtl_coment">
-                            <h3><?php echo $objComentario->objUsuario->nombre ?></h3>
+                            <h3><?php echo isset($objComentario->objUsuario->nombre)?$objComentario->objUsuario->nombre:"" ?></h3>
                             <div class="cdtl_coment_img">
                                 <img src="<?php echo Yii::app()->request->baseUrl; ?>/images/iconos/icons_comments.png">
                             </div>
-                            <div class="cdtl_coment_txt">                            
-                                <p> 
+                            <div class="cdtl_coment_txt">
+                                <p>
                                     <?php echo $objComentario->comentario ?>
                                 </p>
                             </div>
@@ -236,8 +236,8 @@
                             <div class="cdtl_coment_img">
                                 <img src="<?php echo Yii::app()->request->baseUrl; ?>/images/iconos/icons_comments.png">
                             </div>
-                            <div class="cdtl_coment_txt">                            
-                                <p> 
+                            <div class="cdtl_coment_txt">
+                                <p>
                                     <?php echo $objComentario->comentario ?>
                                 </p>
                             </div>
@@ -246,7 +246,7 @@
                 <?php endforeach; ?>
                 <?php if ($contadorCalificacion <= 0): ?>
                     <li class="cdtl_coment">
-                        <p> 
+                        <p>
                             Nadie ha calificado este producto aún
                         </p>
                     </li>
@@ -318,5 +318,3 @@
         </div>
     </div>
 <?php endif; ?>
-
-
