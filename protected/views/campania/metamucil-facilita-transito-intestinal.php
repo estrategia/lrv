@@ -1,259 +1,227 @@
-
 <?php $this->pageTitle = "Metamucil - La Rebaja Virtual"; ?>
-
 <?php
-    $this->metaTags = "<meta http-equiv='X-UA-Compatible' content='IE=edge'>
-    <meta name='description' content='Metamucil es una fibra soluble multi-beneficios que facilita el tránsito intestinal ya que contiene Psyllium, el ingrediente activo de la fibra.'>
-    <meta name='keywords' content='Facilita transito intestinal, estreñimiento, psyllium, fibra'>
-	<!-- styles -->
+  $this->metaTags = "
+  <meta http-equiv='X-UA-Compatible' content='IE=edge'>
+  <meta name='description' content='Metamucil es una fibra soluble multi-beneficios que facilita el tránsito intestinal ya que contiene Psyllium, el ingrediente activo de la fibra.'>
+  <meta name='keywords' content='Facilita transito intestinal, estreñimiento, psyllium, fibra'>
 	<style>
-            @font-face {
-                font-family: HelveticaBold;
-                src: url(".Yii::app()->request->baseUrl."/images/contenido/metamucil/fonts/helvetica-bold.otf);
-            }
-            @font-face {
-                font-family: Interstate regular;
-                src: url(".Yii::app()->request->baseUrl."/images/contenido/metamucil/fonts/interstate-regular.ttf);
-            }
-            @font-face {
-                font-family: DIN alternate bold;
-                src: url(".Yii::app()->request->baseUrl."/images/contenido/metamucil/fonts/DIN-alternate-bold.otf);
-            }
-            .texto {font-family:Interstate regular;}
-            .font-title{font-family:HelveticaBold;}
-            .space{margin-top:30px;}
-            .pattern-background{background-image:url(".Yii::app()->request->baseUrl."/images/contenido/metamucil/pattern.png);margin-top: -22px;background-size:cover;}
-            .banner {background-image:url(".Yii::app()->request->baseUrl."/images/contenido/metamucil/fondo-banner.png);background-size:cover;}
-            .titulo {background-color:#B04996;color:#fff;font-size:30px;padding: 15px 0px 15px 50px;border-radius: 0px 22px 22px 0px;}
-            .titulo_m { background-color: #B04996;color: #fff;font-size: 22px;padding: 15px 0px 15px 50px;border-radius: 0px 22px 22px 0px;}
-            .list {list-style:none;list-style-image: url(".Yii::app()->request->baseUrl."/images/contenido/metamucil/ico.png);font-size: 24px;margin-left: 47px;}
-            .list_m {list-style: none;list-style-image: url(/lrv/images/contenido/metamucil/ico.png); font-size: 20px;}
-            .list_m li {margin-bottom: 10px;}
-            .line-orange{margin-left: 52px;color: rgb(255, 255, 255);font-size: 17px;background-color: rgb(239, 138, 0);padding: 0px 24px;margin-bottom: 0px;width: 437px;}
-            .img-video{margin-left: 37px;margin-top: -18px;width: 470px;}
-            .img-entrega{width: 300px;margin: 0px auto;}
-            .sobre-metamucil {background-color: rgb(255, 255, 255);border: 2px solid rgb(239, 138, 0);width: 400px;margin: 0px auto;padding: 15px}
-            .sobre-metamucil_m { padding:15px; background-color: rgb(255, 255, 255); border: 2px solid rgb(239, 138, 0); width: 100%; margin: 0px auto;}
-            .leer-mas{background-color: rgb(176, 73, 150);color: rgb(255, 255, 255);border-radius: 5px;padding: 5px 20px;}
-            .sobre-metamucil .title {background-color: rgb(239, 138, 0);margin: 0px;color: rgb(255, 255, 255);font-weight: bolder;font-size: 23px;text-align: center;}
-            .sobre-metamucil_m .title {background-color: rgb(239, 138, 0);margin: 0px;color: rgb(255, 255, 255);font-weight: bolder;font-size: 23px;text-align: center;}
-            a:hover {text-decoration:none;}
-            a{text-decoration:none;}
-            .filtro{background-color:#fff;border:1px solid #000;border-radius: 15px;padding: 15px;text-align: center;}
-            .contenedor-filtros {padding: 22px;}
-            .title {background-color: rgb(239, 138, 0);margin: 0px;color: rgb(255, 255, 255);font-weight: bolder;font-size: 23px;text-align: center;}
-            .ico-imagen {width: 28px;}
-            .title-principal {color:#640B34;text-align:center;font-family: DIN alternate bold;font-size:2em !important;}
-            .title-principal span {color:#fff;font-family: helvetica;font-style: italic;}
-            .elementos {color: rgb(136, 17, 60);font-size: 19px;font-family: interstate regular;padding-top: 15px;}
-            .modelo {margin: 0px 7%;width: 66.8%;float: right;}
-            @media (max-width:1199px) {
-                .modelo{margin: 21px 0% 0%;width: 72.8%;}
-	</style>
-
-  <!-- Hotjar Tracking Code for https://www.larebajavirtual.com/metamucil-facilita-transito-intestinal -->
-  <script>
-      (function(h,o,t,j,a,r){
-          h.hj=h.hj||function(){(h.hj.q=h.hj.q||[]).push(arguments)};
-          h._hjSettings={hjid:369667,hjsv:5};
-          a=o.getElementsByTagName('head')[0];
-          r=o.createElement('script');r.async=1;
-          r.src=t+h._hjSettings.hjid+j+h._hjSettings.hjsv;
-          a.appendChild(r);
-      })(window,document,'//static.hotjar.com/c/hotjar-','.js?sv=');
-  </script>
-
-    ";
+    @font-face {font-family:DINPro-Black;src: url(".Yii::app()->request->baseUrl."/images/contenido/metamucil/fonts/DINPro-Black_4.otf);}
+    @font-face {font-family:interstate-regular;src: url(".Yii::app()->request->baseUrl."/images/contenido/metamucil/fonts/interstate-regular.ttf);}
+    @font-face {font-family:DIN-Alternate-Bold;src: url(".Yii::app()->request->baseUrl."/images/contenido/metamucil/fonts/MyriadPro.otf);}
+    @font-face {font-family:MyriadPro;src: url(".Yii::app()->request->baseUrl."/images/contenido/metamucil/fonts/MyriadPro.otf);}
+    .sidebar-cart {position: fixed;right: 0px;top: 60%;z-index: 2000;width: 20%;}
+    .background-pattern{background-image:url(".Yii::app()->request->baseUrl."/images/contenido/metamucil/background.jpg);background-size: cover; }
+    .line-text {display:flex;margin-bottom: 15px;}
+    .line-text img {width:40px;height: 41px;margin-right: 15px;}
+    .line-text p {font-family:interstate-regular;color: #750532 !important;font-size: 24px;line-height: 30px;}
+    .text-red {background-color: #FF3C00;color: #fff;display: inline-block;padding: 5px 25px;border-radius: 12px;font-family: interstate-regular;font-size: 25px;margin-top: 16px;}
+    .bg-products {background-color:#FCE4CE;}
+    .section-conoce-mas{background-color:#F2B689;padding: 35px 0;}
+    .bg-red {font-size: 20px;background-color:#FF3C00;color:#fff;text-align: center;font-family: MyriadPro;padding: 15px;}
+    .bg-red a {text-decoration:underline;color:#fff;}
+    .bg-red a:hover {color:#fff;text-decoration:underline;}
+    .space-1 {height: 0px !important;}
+    .title-principal{margin-bottom: 25px;font-family: DINPro-Black;color: #fff;text-align: center;font-size: 45px;margin-top: 50px;}
+    .subtitle{color: #88113C;font-family: interstate-regular;margin-top: 50px;}
+    .img-responsive.hover-producto:hover {-ms-transform: scale(1.1);-webkit-transform: scale(1.1);transform: scale(1.1);-webkit-transition: ease-out 1s;}
+    .conoce-mas{font-weight: bold;margin-bottom: 35px !important;font-family: DIN-Alternate-Bold;background-color: #FFA800;color: #fff;margin: 0px auto;padding: 8px;text-align: center;width: 58%;border-radius: 15px;}
+    .mod-conoce {background-color: rgba(255, 255, 255, 0.5);border-radius: 25px 25px 0 0;-webkit-box-shadow: 2px 0px 6px 0px rgba(0,0,0,0.2);-moz-box-shadow: 2px 0px 6px 0px rgba(0,0,0,0.2);box-shadow: 2px 0px 6px 0px rgba(0,0,0,0.2);padding: 20px 0;}
+    .mod-conoce p {margin: 0;font-family:DIN-Alternate-Bold;color:#640C34;text-align:center;font-size: 22px;font-weight: bold;}
+    .nota {font-family:interstate-regular;color: #74183D;text-align: center;font-size: 16px;letter-spacing: -1px;}
+    .text-atencion {font-family: MyriadPro;margin-bottom: 20px !important;text-decoration: underline;font-size: 14px;font-weight: bold;font-style: italic;}
+    .datos-contacto {padding: 15px 0;}
+    .datos-contacto p{text-align: center;margin:0px;}
+    .img-responsive-m{width:100%;}
+  </style>
+";
 ?>
-
-
 <!--Versión movil-->
 <?php if ($this->isMobile): ?>
-    <div class="container">
-        <div class="row">
-            <img src="<?= Yii::app()->request->baseUrl ?>/images/contenido/metamucil/banner.png" width="100%">
-        </div>
-        <div class="row pattern-background" style="margin-top: -40px;">
-            <section>
-                <p>&nbsp;</p>
-                <div class="titulo_m font-title">Es una fibra, <span style="text-decoration: underline;">NO</span> un laxante</div>
-            </section>
-            <div class="space"></div>
-            <section>
-                <center>
-                    <a href="<?php echo CController::createUrl('/catalogo/buscar', array('busqueda' => 'metamucil')) ?>"  data-ajax="false"><img src="<?= Yii::app()->request->baseUrl ?>/images/contenido/metamucil/entrega.png" class="img-responsive img-entrega"></a>
-                </center>
-            </section>
-            <section style="padding-left: 28px;padding-right: 41px;">
-                <ul class="list_m texto" style="margin:0;">
-                    <li>Psyllium es el ingrediente activo una fibra vegetal 100% natural.</li>
-                    <li>Gramo a gramo tiene la más alta concentración de fibra soluble entre todos los gramos.</li>
-                    <li>Facilita el tránsito intestinal. Atrapa y elimina residuos que tu cuerpo ya no necesita.</li>
-                    <li>Bebida sabor a naranja, fácil de preparar.</li>
-                    <li>No irrita, es suave con tu organismo.</li>
-                    <li>SIN azúcar.</li>
-                    <li>Regulariza tu intestino sin estimulantes químicos</li>
-                    <li>Te ayuda a reducir los niveles de colesterol+</li>
-                    <li>Ayuda a sentirte más ligero</li>
-                    <p class="texto" style="font-size: 15px; margin-left: 59px;">*Acompañado de una dieta baja en grasas saturadas y ejercicio regular.</p>
-                </ul>
-            </section>
-            <div class="space"></div>
-            <section style="width:82%; margin-left: 5%;">
-                <div class="sobre-metamucil_m texto">
-                    <div class="title"> Sobre Metamucil</div>
-                    <p style="margin-top: 10px;">Hay muchos productos basados en fibra. ¿Pero estos productos usan la fibra qué es multi-beneficios?</p>
-                    <a href="<?= Yii::app()->request->baseUrl ?>/sobre-metamucil" data-ajax="false"><span class="leer-mas">Leer más</span></a>
-                </div>
-            </section>
-            <div class="space"></div>
-            <section  style="width:82%; margin-left: 5%;">
-               <div class="sobre-metamucil_m texto">
-                    <div class="title"> ¿Porqué elegir Metamucil?</div>
-                    <p style="margin-top: 10px;"><span style="font-weight:bolder;color:#EF8A00;">1.</span> Quiere estar en forma y esbelto naturalmente <br>
-                    <span style="font-weight:bolder;color:#EF8A00;">2.</span> Un modo sencillo de agregar fibras a su dieta..</p>
-                    <a href="<?= Yii::app()->request->baseUrl ?>/porque-elejir-metamucil" data-ajax="false"><span class="leer-mas">Leer más</span></a>
-                </div>
-            </section>
-
-            <section style="padding: 20px;">
-                <div class="title">Razones para elegir metamucil</div>
-                <video  style="width:100%;" controls poster="<?= Yii::app()->request->baseUrl ?>/images/contenido/metamucil/poster.png" style="margin-top: 20px;">
-                   <source src="<?= Yii::app()->request->baseUrl ?>/images/contenido/metamucil/metamucil.mp4" type="video/mp4">
-                    Your browser does not support the video tag.
-                </video>
-            </section>
-
-            <section style="padding: 20px;">
-                <div class="title">Fibra Psyllium</div>
-                <iframe width="100%" height="250" src="https://www.youtube.com/embed/Il6Yqjy-WRM" frameborder="0" allowfullscreen></iframe>
-            </section>
-
-
-
-            <section>
-                <div class="contenedor-filtros texto">
-                    <div class="filtro">
-                        <span>Productos relacionados</span>
-                        <a href="<?php echo CController::createUrl('/catalogo/buscar', array('busqueda' => 'metamucil')) ?>" data-ajax="false"><img width="34" src="<?= Yii::app()->request->baseUrl ?>/images/contenido/metamucil/ico-filtro.png" ></a>
-                    </div>
-                    <div class="space"></div>
-                    <div class="filtro">
-                        Más información&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                        <a href="<?= Yii::app()->request->baseUrl ?>/campania/contenido/mas-informacion-metamucil" data-ajax="false"><img width="34" style="margin-left: 17px;" src="<?= Yii::app()->request->baseUrl ?>/images/contenido/metamucil/ico-filtro.png" ></a>
-                    </div>
-                </div>
-            </section>
-
-            <section style="padding: 0px 29px 0px 22px; text-align: justify;">
-                <p style="color:#EF8A00;">Es un medicamento fitoterapeútico. No exceder su consumo. Número de registro sanitario PFM2015-0002427. Leer indicaciones y contraindicaciones. Sí los síntomas persisten, consultar al médico.</p>
-            </section>
-
-
-        </div>
+<a href="<?= Yii::app()->request->baseUrl ?>/catalogo/buscar?busqueda=metamucil" data-ajax="false"><img class="img-responsive-m" src="<?= Yii::app()->request->baseUrl ?>/images/contenido/metamucil/banner-mobile.png" alt="Metamucil"></a>
+<section class="background-pattern" style="margin-top: -5px;padding: 20px 15px;">
+  <h2 class="title-principal" style="margin:0 0 30px;font-size: 27px;">Beneficios de metamucil</h2>
+  <div class="line-text">
+    <img class="img-responsive-m" src="<?= Yii::app()->request->baseUrl ?>/images/contenido/metamucil/check.png">
+    <p style="font-size: 20px;margin: 0;line-height: 20px;">Ayuda en el tratamiento de <strong>estreñimiento</strong> crónico </p>
+  </div>
+  <div class="line-text">
+    <img class="img-responsive-m" src="<?= Yii::app()->request->baseUrl ?>/images/contenido/metamucil/check.png">
+    <p style="font-size: 20px;margin: 0;line-height: 20px;">Ayuda en tu proceso natural de <strong>limpieza</strong></p>
+  </div>
+  <div class="line-text">
+    <img class="img-responsive-m" src="<?= Yii::app()->request->baseUrl ?>/images/contenido/metamucil/check.png">
+    <p style="font-size: 20px;margin: 0;line-height: 20px;">Contiene <strong>Psyllium</strong>, el ingrediente activo de una fibra vegetal 100% natural</p>
+  </div>
+  <div class="line-text">
+    <img class="img-responsive-m" src="<?= Yii::app()->request->baseUrl ?>/images/contenido/metamucil/check.png">
+    <p style="font-size: 20px;margin: 0;line-height: 20px;">Te hace sentirte <strong>ligera</strong></p>
+  </div>
+  <div class="line-text">
+    <img class="img-responsive-m" src="<?= Yii::app()->request->baseUrl ?>/images/contenido/metamucil/check.png">
+    <p style="font-size: 20px;margin: 0;line-height: 20px;"><strong>Atrapa y elimina </strong>residuos que tu cuerpo ya no necesita</p>
+  </div>
+  <div class="line-text">
+    <img class="img-responsive-m" src="<?= Yii::app()->request->baseUrl ?>/images/contenido/metamucil/check.png">
+    <p style="font-size: 20px;margin: 0;line-height: 20px;"><strong>No irrita</strong> es suave con tu organismo</p>
+  </div>
+  <div class="line-text">
+    <img class="img-responsive-m" src="<?= Yii::app()->request->baseUrl ?>/images/contenido/metamucil/check.png">
+    <p style="font-size: 20px;margin: 0;line-height: 20px;"><strong>Regula</strong> tu intestino sin estimulantes químicos</p>
+  </div>
+  <p class="text-red" style="font-size: 22px;">Es una fibra, NO un laxante</p>
+</section>
+<section class="bg-products" style="padding: 20px 15px;">
+  <h2 class="subtitle" style="margin: 0;font-size: 20px;">Encuentra las diferentes presentaciones de <strong>Metamucil Naranja:</strong></h2>
+  <a data-ajax="false" href="<?php echo CController::createUrl('/catalogo/producto', array('producto' => 111299)) ?>"><img class="img-responsive-m" style="margin-top:15px;" src="<?= Yii::app()->request->baseUrl ?>/images/contenido/metamucil/metamucil-caja-mobile.png"></a>
+  <a data-ajax="false" href="<?php echo CController::createUrl('/catalogo/producto', array('producto' => 111298)) ?>"><img class="img-responsive-m" style="margin-top:15px;" src="<?= Yii::app()->request->baseUrl ?>/images/contenido/metamucil/metamucil-174g-mobile.png"></a>
+  <a data-ajax="false" href="<?php echo CController::createUrl('/catalogo/producto', array('producto' => 111297)) ?>"><img class="img-responsive-m" style="margin-top:15px;" src="<?= Yii::app()->request->baseUrl ?>/images/contenido/metamucil/metamucil-425g.png"></a>
+  <a data-ajax="false" href="<?= Yii::app()->request->baseUrl ?>/catalogo/buscar?busqueda=metamucil"><img class="img-responsive-m" style="width: 85%;margin: 30px auto 0;display: block;" src="<?= Yii::app()->request->baseUrl ?>/images/contenido/metamucil/compra-online.png"></a>
+</section>
+<section class="section-conoce-mas" style="padding: 20px 15px;">
+  <h2 class="conoce-mas" style="font-size: 20px;width: 80%;">Conoce más de Metamucil</h2>
+  <a data-ajax="false" href="<?= Yii::app()->request->baseUrl ?>/sobre-metamucil" style="text-decoration:none;">
+    <div class="mod-conoce"><p>Sobre Metamucil</p>
+      <img class="img-responsive-m" src="<?= Yii::app()->request->baseUrl ?>/images/contenido/metamucil/sobre-metamucil.png">
     </div>
+  </a>
+  <a data-ajax="false" href="<?= Yii::app()->request->baseUrl ?>/porque-elejir-metamucil" style="text-decoration:none;">
+    <div class="mod-conoce" style="margin-top:15px;"><p>Porqué elegir Metamucil</p>
+      <img class="img-responsive-m" src="<?= Yii::app()->request->baseUrl ?>/images/contenido/metamucil/porque-metamucil.png">
+    </div>
+  </a>
+  <p class="nota" style="font-size: 13px;">Es un medicamento fitoterapéutico. No exceder su consumo.  No. de registro sanitario: PFM2015-0002427. <br>
+  Leer indicaciones y contraindicaciones. Si los síntomas persisten, consultar al médico.</p>
+</section>
+<div class="datos-contacto" style="padding: 20px 15px;">
+  <p class="text-atencion">Si tienes algún inconveniente con tu pedido comunícate con nosotros a través de los canales que tenemos disponibles:</p>
+  <img class="img-responsive-m"  style="width: 25%;margin: 0 auto;display: block;" src="<?= Yii::app()->request->baseUrl ?>/images/contenido/metamucil/chat.png">
+  <p style="font-family: MyriadPro;font-size: 16px;font-weight: bold;">Chat en linea</p>
+  <img class="img-responsive-m" style="width: 25%;margin: 0 auto;display: block;" src="<?= Yii::app()->request->baseUrl ?>/images/contenido/metamucil/pqrs.png">
+  <p style="font-family: MyriadPro;font-size: 16px;font-weight: bold;">Sistema PQRS</p>
+  <p style="font-size:12px;font-family: MyriadPro;">(preguntas, quejas, reclamos y solicitudes)</p>
+  <img class="img-responsive-m" style="width: 25%;margin: 0 auto;display: block;" src="<?= Yii::app()->request->baseUrl ?>/images/contenido/metamucil/linea.png">
+  <p style="font-family: MyriadPro;font-size: 16px;font-weight: bold;">Linea gratuita</p>
+  <p style="font-family: MyriadPro;">01-8000-939900</p>
+</div>
+<div class="bg-red">
+  <p style="margin:0;">Gracias por comprar en <a href="https://www.larebajavirtual.com">www.larebajavirtual.com</a></p>
+</div>
 <!--Versión movil-->
 <!--Versión escritorio-->
 <?php else: ?>
-    <div class="container">
-        <div class="row banner">
-            <div class="row">
-                <div class="col-md-12">
-                  <h1 class="title-principal">FACILITA EL TRÁNSITO INTESTINAL CON <span>Metamucil</span></h1>
-                </div>
-            </div>
-            <div class="row">
-                <div class="col-md-4">
-                    <img src="<?= Yii::app()->request->baseUrl ?>/images/contenido/metamucil/modelo.png" class="img-responsive modelo" alt="Presentación metamucil">
-                </div>
-                <div class="col-md-4 elementos">
-                    <p><img class="ico-imagen" src="<?= Yii::app()->request->baseUrl ?>/images/contenido/metamucil/icon1.png" alt="">
-                        Facilita el <strong>tránsito</strong> intestinal
-                    </p>
-                    <p><img class="ico-imagen" src="<?= Yii::app()->request->baseUrl ?>/images/contenido/metamucil/icon2.png" alt="">
-                        Ayuda en el tratamiento <br> de <strong>estreñimiento crónico</strong></p>
-                    <p><img class="ico-imagen" src="<?= Yii::app()->request->baseUrl ?>/images/contenido/metamucil/icon3.png" alt="">
-                        Ayuda en tu proceso <br> natural de <strong>limpieza</strong></p>
-                    <p><img class="ico-imagen" src="<?= Yii::app()->request->baseUrl ?>/images/contenido/metamucil/icon4.png" alt="">
-                        Te hace sentir más <strong>ligera</strong></p>
-                    <p><img class="ico-imagen" src="<?= Yii::app()->request->baseUrl ?>/images/contenido/metamucil/icon5.png" alt="">
-                        <strong>Fácil</strong> de preparar</p>
-                    <p><img class="ico-imagen" src="<?= Yii::app()->request->baseUrl ?>/images/contenido/metamucil/icon6.png" alt="">
-                        <strong>Sabor</strong> Naranja</p>
-                    <p><img class="ico-imagen" src="<?= Yii::app()->request->baseUrl ?>/images/contenido/metamucil/icon7.png" alt="">
-                        <strong>Sin</strong> azúcar*</p>
-                </div>
-                <div class="col-md-4">
-                    <img style="width: 60%;margin-top: 5px;position: absolute;" src="<?= Yii::app()->request->baseUrl ?>/images/contenido/metamucil/tarro-metamucil.png" class="img-responsive" alt="Metamucil">
-                </div>
-            </div>
-                <div style="float: left;margin-top: -28px;">
-                    <img class="img-responsive" src="<?= Yii::app()->request->baseUrl ?>/images/contenido/metamucil/franja.png" alt="">
-                </div>
-        </div>
-        <div class="row pattern-background">
-            <div class="col-md-6" style="padding-left: 0px; margin-top: 40px;">
-                <div class="titulo font-title">Es una fibra, <span style="text-decoration: underline;">NO</span> un laxante</div>
-                <div class="space"></div>
-                <ul class="list texto">
-                    <li>Psyllium es el ingrediente activo una fibra<br> vegetal 100% natural.</li>
-                    <li>Gramo a gramo tiene la más alta <br> concentración de fibra soluble <br> entre todos los gramos.</li>
-                    <li>Facilita el tránsito intestinal. Atrapa y <br> elimina residuos que tu cuerpo ya no necesita.</li>
-                    <li>Bebida sabor a naranja, fácil de preparar.</li>
-                    <li>No irrita, es suave con tu organismo.</li>
-                    <li>SIN azúcar.</li>
-                    <li>Regulariza tu intestino sin estimulantes químicos</li>
-                    <li>Te ayuda a reducir los niveles de colesterol*</li>
-                    <li>Ayuda a sentirte más ligero</li>
-                </ul>
-                <p class="texto" style="font-size: 15px; margin-left: 59px;">*Acompañado de una dieta baja en grasas saturadas y ejercicio regular.</p>
-                <div class="space"></div>
-            </div>
-            <div class="col-md-6" style="margin-top: 30px;">
-                <a href="<?php echo CController::createUrl('/catalogo/buscar', array('busqueda' => 'metamucil')) ?>"><img src="<?= Yii::app()->request->baseUrl ?>/images/contenido/metamucil/entrega.png" class="img-responsive img-entrega"></a>
-                <div class="sobre-metamucil texto">
-                    <div class="title"> Sobre Metamucil</div>
-                    <p style="margin-top: 10px;">Hay muchos productos basados en fibra. ¿Pero estos productos usan la fibra qué es multi-beneficios?</p>
-                    <a href="<?= Yii::app()->request->baseUrl ?>/sobre-metamucil"><span class="leer-mas">Leer más</span></a>
-                </div>
-                <div class="space"></div>
-                <div class="sobre-metamucil texto">
-                    <div class="title"> ¿Porqué elegir Metamucil?</div>
-                    <p style="margin-top: 10px;"><span style="font-weight:bolder;color:#EF8A00;">1.</span> Quiere estar en forma y esbelto naturalmente <br>
-                    <span style="font-weight:bolder;color:#EF8A00;">2.</span> Un modo sencillo de agregar fibras a su dieta..</p>
-                    <a href="<?= Yii::app()->request->baseUrl ?>/porque-elejir-metamucil"><span class="leer-mas">Leer más</span></a>
-                </div>
-                <div class="space"></div>
-                <div class="contenedor-filtros texto">
-                    <div class="col-md-6 filtro">
-                        <span>Productos relacionados</span>
-                        <a href="<?php echo CController::createUrl('/catalogo/buscar', array('busqueda' => 'metamucil')) ?>"><img width="34" src="<?= Yii::app()->request->baseUrl ?>/images/contenido/metamucil/ico-filtro.png" ></a>
-                    </div>
-                    <div class="col-md-6 filtro">
-                        Más información
-                        <a href="<?= Yii::app()->request->baseUrl ?>/campania/contenido/mas-informacion-metamucil"><img width="34" src="<?= Yii::app()->request->baseUrl ?>/images/contenido/metamucil/ico-filtro.png" ></a>
-                    </div>
-                </div>
-            </div>
-             <div class="col-md-12">
-                 <div class="col-md-6">
-                    <div class="title">Razones para elegir metamucil</div>
-                        <video  style="width:100%;" controls poster="<?= Yii::app()->request->baseUrl ?>/images/contenido/metamucil/poster.png" style="margin-top: 20px;">
-                            <source src="<?= Yii::app()->request->baseUrl ?>/images/contenido/metamucil/metamucil.mp4" type="video/mp4">
-                            Your browser does not support the video tag.
-                        </video>
-                 </div>
-                 <div class="col-md-6">
-                    <div class="title">Fibra Psyllium</div>
-                    <iframe width="100%" height="303" src="https://www.youtube.com/embed/Il6Yqjy-WRM" frameborder="0" allowfullscreen></iframe>
-                 </div>
-
-              </div>
-            <div class="col-md-12">
-                <div class="space"></div>
-                <p style="color:#EF8A00;">Es un medicamento fitoterapeútico. No exceder su consumo. Número de registro sanitario PFM2015-0002427. Leer indicaciones y contraindicaciones. Sí los síntomas persisten, consultar al médico.</p>
-            </div>
-        </div>
+<a href="<?= Yii::app()->request->baseUrl ?>/catalogo/buscar?busqueda=metamucil"><div class="sidebar-cart"><img class="img-responsive" src="<?= Yii::app()->request->baseUrl ?>/images/contenido/metamucil/btn-fijo.png" alt="Compra online"></div></a>
+<a href="<?= Yii::app()->request->baseUrl ?>/catalogo/buscar?busqueda=metamucil"><img class="img-responsive" src="<?= Yii::app()->request->baseUrl ?>/images/contenido/metamucil/banner-metamucil.jpg" alt="Metamucil"></a>
+<section class="background-pattern">
+  <div class="container-fluid">
+    <div class="col-md-12">
+      <h2 class="title-principal">Beneficios de metamucil</h2>
     </div>
+    <div class="col-sm-6 col-md-6">
+      <img style="width: 67%;margin: 0 auto;display:block;" src="<?= Yii::app()->request->baseUrl ?>/images/contenido/metamucil/presentacion.png" alt="Metamucil">
+    </div>
+    <div class="col-sm-6 col-md-6" style="margin-top: 50px;">
+      <div class="line-text">
+        <img class="img-responsive" src="<?= Yii::app()->request->baseUrl ?>/images/contenido/metamucil/check.png">
+        <p>Ayuda en el tratamiento <br> de <strong>estreñimiento</strong> crónico </p>
+      </div>
+      <div class="line-text">
+        <img class="img-responsive" src="<?= Yii::app()->request->baseUrl ?>/images/contenido/metamucil/check.png">
+        <p>Ayuda en tu proceso <br> natural de <strong>limpieza</strong></p>
+      </div>
+      <div class="line-text">
+        <img class="img-responsive" src="<?= Yii::app()->request->baseUrl ?>/images/contenido/metamucil/check.png">
+        <p>Contiene <strong>Psyllium</strong>, <br>el ingrediente activo de una <br>fibra vegetal 100% natural</p>
+      </div>
+      <div class="line-text">
+        <img class="img-responsive" src="<?= Yii::app()->request->baseUrl ?>/images/contenido/metamucil/check.png">
+        <p>Te hace sentirte <strong>ligera</strong><br> &nbsp;</p>
+      </div>
+      <div class="line-text">
+        <img class="img-responsive" src="<?= Yii::app()->request->baseUrl ?>/images/contenido/metamucil/check.png">
+        <p><strong>Atrapa y elimina </strong>residuos <br>que tu cuerpo ya no necesita</p>
+      </div>
+      <div class="line-text">
+        <img class="img-responsive" src="<?= Yii::app()->request->baseUrl ?>/images/contenido/metamucil/check.png">
+        <p><strong>No irrita</strong> es suave con <br>tu organismo</p>
+      </div>
+      <div class="line-text">
+        <img class="img-responsive" src="<?= Yii::app()->request->baseUrl ?>/images/contenido/metamucil/check.png">
+        <p><strong>Regula</strong> tu intestino sin <br>estimulantes químicos</p>
+      </div>
+      <p class="text-red">Es una fibra, NO un laxante</p>
+    </div>
+  </div>
+</section>
+<img class="img-responsive" src="<?= Yii::app()->request->baseUrl ?>/images/contenido/metamucil/banda-promesa-rebaja.png">
+<section class="bg-products">
+  <div class="container-fluid">
+    <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+      <h2 class="subtitle">Encuentra las diferentes presentaciones <br> de <strong>Metamucil Naranja:</strong></h2>
+        <div style="margin-top: -50px;">
+          <div class="col-sm-4 col-md-4">
+            <a href="<?php echo CController::createUrl('/catalogo/producto', array('producto' => 111299)) ?>"><img class="img-responsive hover-producto" src="<?= Yii::app()->request->baseUrl ?>/images/contenido/metamucil/metamucil-caja.png"></a>
+          </div>
+          <div class="col-sm-4 col-md-4">
+            <a href="<?php echo CController::createUrl('/catalogo/producto', array('producto' => 111298)) ?>"><img class="img-responsive hover-producto" src="<?= Yii::app()->request->baseUrl ?>/images/contenido/metamucil/metamucil-174g.png"></a>
+          </div>
+          <div class="col-sm-4 col-md-4">
+            <a href="<?php echo CController::createUrl('/catalogo/producto', array('producto' => 111297)) ?>"><img class="img-responsive hover-producto" src="<?= Yii::app()->request->baseUrl ?>/images/contenido/metamucil/metamucil-425g.png"></a>
+          </div>
+          <div class="col-md-12">
+            <a href="<?= Yii::app()->request->baseUrl ?>/catalogo/buscar?busqueda=metamucil"><img class="img-responsive" style="width: 35%;margin: 26px auto;" src="<?= Yii::app()->request->baseUrl ?>/images/contenido/metamucil/compra-online.png"></a>
+          </div>
+        </div>
+      </div>
+    </div>
+</section>
+<section class="section-conoce-mas">
+  <div class="container">
+    <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+      <div class="col-sm-12"><h2 class="conoce-mas">Conoce más de Metamucil</h2></div>
+      <div class="col-sm-6 col-md-6">
+        <a href="<?= Yii::app()->request->baseUrl ?>/sobre-metamucil">
+          <div class="mod-conoce">
+            <p>Sobre Metamucil</p>
+            <img class="img-responsive" src="<?= Yii::app()->request->baseUrl ?>/images/contenido/metamucil/sobre-metamucil.png">
+          </div>
+        </a>
+      </div>
+      <div class="col-sm-6 col-md-6">
+        <a href="<?= Yii::app()->request->baseUrl ?>/porque-elejir-metamucil">
+          <div class="mod-conoce">
+            <p>Porqué elegir Metamucil</p>
+            <img class="img-responsive" src="<?= Yii::app()->request->baseUrl ?>/images/contenido/metamucil/porque-metamucil.png">
+          </div>
+        </a>
+      </div>
+      <div class="col-md-12" style="margin-top:26px;">
+      <p class="nota"> Es un medicamento fitoterapéutico. No exceder su consumo.  No. de registro sanitario: PFM2015-0002427. <br>
+        Leer indicaciones y contraindicaciones. Si los síntomas persisten, consultar al médico.</p>
+      </div>
+    </div>
+  </div>
+</section>
+<div class="container datos-contacto">
+  <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+    <p class="text-atencion">Si tienes algún inconveniente con tu pedido comunícate con nosotros a través de los canales que tenemos disponibles:</p>
+    <div class="col-sm-4 col-md-4" style="border-right: 2px solid #FF3C00;">
+      <img class="img-responsive"  style="width: 60%;margin: 0 auto;" src="<?= Yii::app()->request->baseUrl ?>/images/contenido/metamucil/chat.png">
+      <p style="font-family: MyriadPro;font-size: 16px;font-weight: bold;">Chat en linea</p>
+    </div>
+    <div class="col-sm-4 col-md-4" style="border-right: 2px solid #FF3C00;">
+      <img class="img-responsive" style="width: 60%;margin: 0 auto;" src="<?= Yii::app()->request->baseUrl ?>/images/contenido/metamucil/pqrs.png">
+      <p style="font-family: MyriadPro;font-size: 16px;font-weight: bold;">Sistema PQRS</p>
+      <p style="font-size:12px;font-family: MyriadPro;">(preguntas, quejas, reclamos y solicitudes)</p>
+    </div>
+    <div class="col-sm-4 col-md-4">
+      <img class="img-responsive" style="width: 60%;margin: 0 auto;" src="<?= Yii::app()->request->baseUrl ?>/images/contenido/metamucil/linea.png">
+      <p style="font-family: MyriadPro;font-size: 16px;font-weight: bold;">Linea gratuita</p>
+      <p style="font-family: MyriadPro;">01-8000-939900</p>
+    </div>
+  </div>
+</div>
+<div class="bg-red">
+  <p style="margin:0;">Gracias por comprar en <a href="https://www.larebajavirtual.com">www.larebajavirtual.com</a></p>
+</div>
  <!--Fin versión escritorio-->
 <?php endif;?>
