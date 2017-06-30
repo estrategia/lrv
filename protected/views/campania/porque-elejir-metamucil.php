@@ -40,7 +40,7 @@ $this->metaTags = "
       .video iframe {position: absolute;display: block;top: 0;left: 0;width: 100%;height: 100%;}
       .sub{font-family: DINPro-Black;color: #640C34;font-size: 20px;}
       .title3{font-family: DINPro;color: #640C34;font-size: 18px;font-weight: bold;line-height: 18px;margin-top: 7px !important;display: inline-block;}
-      .parrafo {color: #444242;font-family: DINPro;margin-left: 16px;font-size: 14px;margin-top: 15px;}
+      .parrafo {color: #444242;font-family: DINPro-bold;margin-left: 16px;font-size: 15px;margin-top: 15px;}
       .block-image {width: 87%;margin: 20px auto;display: block;background-color: #fff;border-radius: 25px;padding: 0;}
       .title-video {font-family: DINPro-Bold;background-color: rgba(255, 255, 255, 0.6);text-align: center;border-radius: 15px;padding: 8px;font-size: 17px;margin-bottom:15px;}
   </style>
