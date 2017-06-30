@@ -65,6 +65,10 @@ return array(
         'pomys-toallas-desmaquilladoras-piel-seca'  => 'publicidad/contenido/nombre/pommys-piel-normal-seca',
         'pomys-rueditas-desmaquilladoras' => 'publicidad/contenido/nombre/pommis-rueda-desmaquilladora',
         'strepsils-dolor-garganta' => 'publicidad/contenido/nombre/strepsil',
+        'stamyl-forte-antiflatulento' => 'publicidad/contenido/nombre/stamyl',
+        'milpax-antirreflujo' => 'publicidad/contenido/nombre/milpax',
+        'calcibon-suplemento-calcio' => 'publicidad/contenido/nombre/calcibon',
+
         // Fin links campañas
 
         // REST patterns
