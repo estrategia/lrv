@@ -74,7 +74,7 @@ gracias a su gran trayectoria demostrando <i>eficacia</i> y <i>seguridad</i></sp
 </a>
 <img class="img-responsive-m" style="margin-top: 20px;" src="<?= Yii::app()->request->baseUrl ?>/images/contenido/milpax/banner-secundario.jpg" alt="Milpax pionero en efecto balsa">
 <p class="text-legal">Es un medicamento. No exceder su consumo. Leer indicaciones y contraindicaciones en la etiqueta.
-Si los síntomas persisten consulte a su médico. Milpax plus Reg. Sanitario INVIMA 2016M-002763 R2,
+Si los síntomas persisten consulte a su médico. Milpax plus Reg. Sanitario INVIMA 2016M-002763R2,
 Milpax suspensión Reg. Sanitario INVIMA 2007M-006932 R1, Milpax® tabletas masticables. <br>
 Reg. Sanitario INVIMA 2009M 0009509.</p>
 </div>
@@ -142,7 +142,7 @@ Reg. Sanitario INVIMA 2009M 0009509.</p>
     <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
       <img class="img-responsive" style="margin-top: 20px;" src="<?= Yii::app()->request->baseUrl ?>/images/contenido/milpax/banner-secundario.jpg" alt="Milpax pionero en efecto balsa">
       <p class="text-legal">Es un medicamento. No exceder su consumo. Leer indicaciones y contraindicaciones en la etiqueta.<br>
-      Si los síntomas persisten consulte a su médico. Milpax plus Reg. Sanitario INVIMA 2016M-002763 R2, <br>
+      Si los síntomas persisten consulte a su médico. Milpax plus Reg. Sanitario INVIMA 2016M-002763R2, <br>
       Milpax suspensión Reg. Sanitario INVIMA 2007M-006932 R1, Milpax® tabletas masticables.
       <br>Reg. Sanitario INVIMA 2009M 0009509.</p>
     </div>

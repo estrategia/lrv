@@ -54,9 +54,8 @@
 <div style="padding:0 15px;">
   <p class="texto">Alivio temporal y sintomático de los trastornos digestivos por deficiencia de enzimas digestivas. Anti flatulento.</p>
   <p class="text-legal">
-  * Ojo hay advertencias en periodo de embarazos, periodo de lactancia, dolor abdominal, náuseas, vómito y estreñimiento.
   Es un medicamento. No exceder su consumo. Leer indicaciones y contraindicaciones en la etiqueta. Si los síntomas
-  persisten consulte a su médico. Reg. Sanitario INVIMA 2013M-0014182. Material exclusivo para el cuerpo médico.
+  persisten consulte a su médico. Reg. Sanitario INVIMA 2013M-0014182, Stamyl Grageas INVIMA 2008M-000301R3. <br>Material exclusivo para el cuerpo médico.
   </p>
 </div>
 <div class="datos-contacto" style="padding: 20px 15px;">
@@ -104,9 +103,8 @@
          por deficiencia de enzimas digestivas. Anti flatulento.</p>
       <div class="short-line"></div>
       <p class="text-legal">
-        * Ojo hay advertencias en periodo de embarazos, periodo de lactancia, dolor abdominal, náuseas, vómito y estreñimiento. <br>
         Es un medicamento. No exceder su consumo. Leer indicaciones y contraindicaciones en la etiqueta. Si los síntomas <br>
-         persisten consulte a su médico. Reg. Sanitario INVIMA 2013M-0014182. Material exclusivo para el cuerpo médico.
+         persisten consulte a su médico. Reg. Sanitario INVIMA 2013M-0014182, Stamyl Grageas INVIMA 2008M-000301R3. <br>Material exclusivo para el cuerpo médico.
       </p>
     </div>
   </div>
