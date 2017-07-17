@@ -308,7 +308,16 @@
 <a href="<?php echo CController::createUrl('/contenido/ver', array('tipo' => 'grupo', 'contenido' => 2845)) ?>">
   <div class="sidebar-cart"><img class="img-responsive" src="<?= Yii::app()->request->baseUrl ?>/images/contenido/pomys/btn-fijo.png" alt="Compra online"></div>
 </a>
-<img class="img-responsive" src="<?= Yii::app()->request->baseUrl ?>/images/contenido/pomys/banner.jpg" alt="Lo que hagas por tu piel, lo verás mañana.">
+<div id="carousel-example-generic" class="carousel slide" data-ride="carousel">
+  <div class="carousel-inner baner-principal">
+    <div class="item active"><img class="img-responsive" src="<?= Yii::app()->request->baseUrl ?>/images/contenido/pomys/banner.jpg" alt="Lo que hagas por tu piel, lo verás mañana."></div>
+    <div class="item"><img class="img-responsive" src="<?= Yii::app()->request->baseUrl ?>/images/contenido/pomys/promocion-mimos.jpg" alt="Promocion mimos"></div>
+  </div>
+  <ol class="carousel-indicators">
+     <li data-target="#carousel-example-generic" data-slide-to="0" class="active"></li>
+     <li data-target="#carousel-example-generic" data-slide-to="1"></li>
+   </ol>
+</div>
 <div class="pattern">
   <div class="flex-container menu">
     <div class="item"><a href="<?= Yii::app()->request->baseUrl ?>/pomys-toallas-desmaquilladoras-piel-mixta"><div class="image-container-mix"></div></a></div>
