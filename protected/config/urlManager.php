@@ -68,6 +68,9 @@ return array(
         'stamyl-forte-antiflatulento' => 'publicidad/contenido/nombre/stamyl',
         'milpax-antirreflujo' => 'publicidad/contenido/nombre/milpax',
         'calcibon-suplemento-calcio' => 'publicidad/contenido/nombre/calcibon',
+        'igora-tintes-para-cabello' => 'publicidad/contenido/nombre/igora',
+        'nutriben-crecimiento' => 'publicidad/contenido/nombre/nutriben',
+        'baby-dove' => 'publicidad/contenido/nombre/baby-dove',
 
         // Fin links campañas
 
