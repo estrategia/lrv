@@ -29,11 +29,10 @@
   </style>
   ";
 ?>
-
 <!--Versión movil-->
 <?php if ($this->isMobile): ?>
 <!--Version movil-->
-<a href="#" data-ajax="false"><img class="img-responsive-m" src="<?= Yii::app()->request->baseUrl ?>/images/contenido/igora/banner-principal-mobile.jpg" alt="IGORA coloración con tratamiento con keratina y serina para máximo cuidado"></a>
+<a href="<?php echo CController::createUrl('/contenido/ver', array('tipo' => 'grupo', 'contenido' => 3242)) ?>" data-ajax="false"><img class="img-responsive-m" src="<?= Yii::app()->request->baseUrl ?>/images/contenido/igora/banner-principal-mobile.jpg" alt="IGORA coloración con tratamiento con keratina y serina para máximo cuidado"></a>
 <img class="img-responsive-m" src="<?= Yii::app()->request->baseUrl ?>/images/contenido/igora/baneficios-mobile.jpg" alt="Beneficios de igora vital coloración con tratamiento - nuevos tonos rubios">
 <div style="padding:30px 15px;">
   <div class="line-flex">
@@ -54,12 +53,11 @@
   </div>
   <img class="img-responsive-m" src="<?= Yii::app()->request->baseUrl ?>/images/contenido/igora/nuevos-tonos-mobile.jpg" alt="nuevos tonos rubios">
   <img class="img-responsive-m" src="<?= Yii::app()->request->baseUrl ?>/images/contenido/igora/nuevos-tonos-rubios-igora.png" alt="Igora nuevos tonos rubios">
-  <a href="#" data-ajax="false">
+  <a href="<?php echo CController::createUrl('/contenido/ver', array('tipo' => 'grupo', 'contenido' => 3240)) ?>" data-ajax="false">
     <img class="compra-online" style="margin: 0 auto;display: block;" src="<?= Yii::app()->request->baseUrl ?>/images/contenido/igora/compra-online.png" alt="Compra online igora tonos rubios">
   </a>
 </div>
-
-<a href="#" data-ajax="false">
+<a href="<?php echo CController::createUrl('/contenido/ver', array('tipo' => 'grupo', 'contenido' => 3244)) ?>" data-ajax="false">
   <img class="img-responsive-m" src="<?= Yii::app()->request->baseUrl ?>/images/contenido/igora/banner-secundario-mobile.jpg" alt="24 tonos en doble tubo ¡Para que escojas el tuyo!">
 </a>
 <img class="img-responsive-m" src="<?= Yii::app()->request->baseUrl ?>/images/contenido/igora/5-tips-de-cuidado-mobile.jpg" alt="5 tips de cuidado">
@@ -104,7 +102,7 @@
 <a href="#">
   <div class="sidebar-cart"><img class="img-responsive" src="<?= Yii::app()->request->baseUrl ?>/images/contenido/igora/btn-fijo.png" alt="Compra online"></div>
 </a>
-<a href="#">
+<a href="<?php echo CController::createUrl('/contenido/ver', array('tipo' => 'grupo', 'contenido' => 3242)) ?>">
   <img class="img-responsive" src="<?= Yii::app()->request->baseUrl ?>/images/contenido/igora/banner-principal.jpg" alt="IGORA coloración con tratamiento con keratina y serina para máximo cuidado">
 </a>
 <img class="img-responsive" src="<?= Yii::app()->request->baseUrl ?>/images/contenido/igora/beneficios.jpg" alt="Beneficios de igora vital coloración con tratamiento - nuevos tonos rubios">
@@ -130,13 +128,13 @@
     </div>
     <div class="col-sm-6">
       <img class="img-responsive"  style="margin-top: -35px;" src="<?= Yii::app()->request->baseUrl ?>/images/contenido/igora/nuevos-tonos-rubios-igora.png" alt="Igora nuevos tonos rubios">
-      <a href="#">
+      <a href="<?php echo CController::createUrl('/contenido/ver', array('tipo' => 'grupo', 'contenido' => 3240)) ?>">
         <img class="img-responsive compra-online" src="<?= Yii::app()->request->baseUrl ?>/images/contenido/igora/compra-online.png" alt="Compra online igora tonos rubios">
       </a>
     </div>
   </div>
 </div>
-<a href="#">
+<a href="<?php echo CController::createUrl('/contenido/ver', array('tipo' => 'grupo', 'contenido' => 3244)) ?>">
   <img class="img-responsive" style="margin-top: 30px;" src="<?= Yii::app()->request->baseUrl ?>/images/contenido/igora/banner-secundario.jpg" alt="24 tonos en doble tubo ¡Para que escojas el tuyo!">
 </a>
 <img class="img-responsive" src="<?= Yii::app()->request->baseUrl ?>/images/contenido/igora/5-tips-de-cuidado.jpg" alt="5 tips de cuidado">
