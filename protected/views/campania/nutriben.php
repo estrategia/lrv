@@ -66,8 +66,7 @@
   <center>
     <h3 style="font-family: Gotham-Rounded-Medium;color: #0E4190;border-bottom: 2px solid #0E4190;display: inline-block;margin: 45px auto 20px;">CONOCE MÁS</h3>
     <div class="embed-container">
-      <iframe width="560" height="315"  style="margin-bottom: 40px;" src="https://www.youtube.com/embed/seK1XKaDopY?rel=0&amp;showinfo=0" frameborder="0" allowfullscreen></iframe>
-    </div>
+      <iframe width="560" height="315" src="https://www.youtube.com/embed/OsjsILeZJzU?rel=0&amp;showinfo=0" frameborder="0" allowfullscreen></iframe>    </div>
   </center>
   <p style="text-align: center;padding-bottom: 20px;color: #fff;font-family: gotham-rounded-light;font-size: 12px;margin-bottom: 15px;">*La leche materna es el mejor alimento para el niño. El producto promocinado sólo es complementario de la leche
   materna después de los primeros 4 meses de esas del niño. <strong>Registro Sanitario: RSIA02166113</strong></p>
@@ -145,8 +144,7 @@
     </div>
     <center>
       <h3 style="font-family: Gotham-Rounded-Medium;color: #0E4190;border-bottom: 2px solid #0E4190;display: inline-block;margin: 45px auto 20px;">CONOCE MÁS</h3>
-      <iframe width="560" height="315"  style="margin-bottom: 40px;" src="https://www.youtube.com/embed/seK1XKaDopY?rel=0&amp;showinfo=0" frameborder="0" allowfullscreen></iframe>
-    </center>
+        <iframe width="560" height="315" src="https://www.youtube.com/embed/OsjsILeZJzU?rel=0&amp;showinfo=0" frameborder="0" allowfullscreen></iframe>    </center>
     <p style="text-align: center;color: #fff;font-family: gotham-rounded-light;font-size: 12px;margin-bottom: 15px;">*La leche materna es el mejor alimento para el niño. El producto promocinado sólo es complementario de la leche <br>
     materna después de los primeros 4 meses de esas del niño. <strong>Registro Sanitario: RSIA02166113</strong></p>
   </div>
