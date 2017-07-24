@@ -6,6 +6,7 @@
   <style>
     @font-face {font-family:MyriadPro;src: url(".Yii::app()->request->baseUrl."/images/contenido/metamucil/fonts/MyriadPro.otf);}
     @font-face {font-family:kievit_regular;src: url(".Yii::app()->request->baseUrl."/images/contenido/igora/fonts/kievit_regular.ttf);}
+    @font-face {font-family:Kievit_Bold;src: url(".Yii::app()->request->baseUrl."/images/contenido/igora/fonts/Kievit_Bold.ttf);}
     .img-responsive-m {width:100%;}
     .sidebar-cart {position: fixed;right: 0px;top: 60%;z-index: 2000;}
     .nota {font-family:interstate-regular;color: #74183D;text-align: center;font-size: 16px;letter-spacing: -1px;}
@@ -21,7 +22,8 @@
     .number{width:40px;height:40px;margin-right: 8px;}
     .compra-online {width: 75%;margin: 0 auto;}
     .tips{display: flex;margin-bottom: 10px;align-items: start;}
-    .tips p {font-family: kievit_regular;color: #1A1E42;font-size: 12px;}
+    .tips p {font-family: kievit_regular;color: #1A1E42;font-size: 17px;}
+    .tips strong {font-family:Kievit_Bold;}
     .tips .item {padding: 10px;}
     .tips img {width:130px;display:block;margin: 23px auto;}
     .owl-theme .owl-controls .owl-page span {background-color: #AE8D50 !important;}
@@ -106,60 +108,67 @@
   <img class="img-responsive" src="<?= Yii::app()->request->baseUrl ?>/images/contenido/igora/banner-principal.jpg" alt="IGORA coloración con tratamiento con keratina y serina para máximo cuidado">
 </a>
 <img class="img-responsive" src="<?= Yii::app()->request->baseUrl ?>/images/contenido/igora/beneficios.jpg" alt="Beneficios de igora vital coloración con tratamiento - nuevos tonos rubios">
-<div class="container">
-  <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1" style="margin-top: 5%;">
-    <div class="col-sm-6">
-      <div class="line-flex">
-        <img class="number" src="<?= Yii::app()->request->baseUrl ?>/images/contenido/igora/1.png">
-        <p>Perfecta cobertura de canas.</p>
+
+<div style="background-color:#FEF0EF;padding-bottom: 30px;">
+  <div class="container">
+    <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1" style="margin-top: 5%;">
+      <div class="col-sm-6">
+        <div class="line-flex">
+          <img class="number" src="<?= Yii::app()->request->baseUrl ?>/images/contenido/igora/1.png">
+          <p>Perfecta cobertura de canas.</p>
+        </div>
+        <div class="line-flex">
+          <img class="number" src="<?= Yii::app()->request->baseUrl ?>/images/contenido/igora/2.png">
+          <p>Coloración con tratamiento con Keratina y Serina para máximo cuidado.</p>
+        </div>
+        <div class="line-flex">
+          <img class="number" src="<?= Yii::app()->request->baseUrl ?>/images/contenido/igora/3.png">
+          <p>Colores luminosos y duraderos.</p>
+        </div>
+        <div class="line-flex">
+          <img class="number" src="<?= Yii::app()->request->baseUrl ?>/images/contenido/igora/4.png">
+          <p>Exclusivo post tratamiento con 7 aceites para un brillo instantáneo.</p>
+        </div>
       </div>
-      <div class="line-flex">
-        <img class="number" src="<?= Yii::app()->request->baseUrl ?>/images/contenido/igora/2.png">
-        <p>Coloración con tratamiento con Keratina y Serina para máximo cuidado.</p>
+      <div class="col-sm-6">
+        <img class="img-responsive"  style="margin-top: -35px;" src="<?= Yii::app()->request->baseUrl ?>/images/contenido/igora/nuevos-tonos-rubios-igora.png" alt="Igora nuevos tonos rubios">
+        <a href="<?php echo CController::createUrl('/contenido/ver', array('tipo' => 'grupo', 'contenido' => 3240)) ?>">
+          <img class="img-responsive compra-online" src="<?= Yii::app()->request->baseUrl ?>/images/contenido/igora/compra-online.png" alt="Compra online igora tonos rubios">
+        </a>
       </div>
-      <div class="line-flex">
-        <img class="number" src="<?= Yii::app()->request->baseUrl ?>/images/contenido/igora/3.png">
-        <p>Colores luminosos y duraderos.</p>
-      </div>
-      <div class="line-flex">
-        <img class="number" src="<?= Yii::app()->request->baseUrl ?>/images/contenido/igora/4.png">
-        <p>Exclusivo post tratamiento con 7 aceites para un brillo instantáneo.</p>
-      </div>
-    </div>
-    <div class="col-sm-6">
-      <img class="img-responsive"  style="margin-top: -35px;" src="<?= Yii::app()->request->baseUrl ?>/images/contenido/igora/nuevos-tonos-rubios-igora.png" alt="Igora nuevos tonos rubios">
-      <a href="<?php echo CController::createUrl('/contenido/ver', array('tipo' => 'grupo', 'contenido' => 3240)) ?>">
-        <img class="img-responsive compra-online" src="<?= Yii::app()->request->baseUrl ?>/images/contenido/igora/compra-online.png" alt="Compra online igora tonos rubios">
-      </a>
     </div>
   </div>
 </div>
+
+
 <a href="<?php echo CController::createUrl('/contenido/ver', array('tipo' => 'grupo', 'contenido' => 3244)) ?>">
-  <img class="img-responsive" style="margin-top: 30px;" src="<?= Yii::app()->request->baseUrl ?>/images/contenido/igora/banner-secundario.jpg" alt="24 tonos en doble tubo ¡Para que escojas el tuyo!">
+  <img class="img-responsive" src="<?= Yii::app()->request->baseUrl ?>/images/contenido/igora/banner-secundario.jpg" alt="24 tonos en doble tubo ¡Para que escojas el tuyo!">
 </a>
 <img class="img-responsive" src="<?= Yii::app()->request->baseUrl ?>/images/contenido/igora/5-tips-de-cuidado.jpg" alt="5 tips de cuidado">
-<div class="container">
-  <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
-    <div class="tips">
-      <div class="item">
-        <img src="<?= Yii::app()->request->baseUrl ?>/images/contenido/igora/tip01.png">
-        <p style="border-right: 1px solid #CBB079;"><strong>El cepillado estimula tu cuero cabelludo,</strong>  si lo haces por lo menos 3 veces al día se verá hermoso.</p>
-      </div>
-      <div class="item">
-        <img src="<?= Yii::app()->request->baseUrl ?>/images/contenido/igora/tip02.png">
-        <p style="border-right: 1px solid #CBB079;">Para una <strong>coloración perfecta, </strong> utiliza la totalidad de la crema colorante con la loción reveladora.</p>
-      </div>
-      <div class="item">
-        <img src="<?= Yii::app()->request->baseUrl ?>/images/contenido/igora/tip03.png">
-        <p style="border-right: 1px solid #CBB079;">Después de la coloración aplica el tratamiento con proteína de almendras y aceite de albaricoque que <strong>nutre y protege tu cabello.</strong></p>
-      </div>
-      <div class="item">
-        <img src="<?= Yii::app()->request->baseUrl ?>/images/contenido/igora/tip04.png">
-        <p style="border-right: 1px solid #CBB079;">Aplica el exclusivo post-tratamiento con aceites nutritivos que <strong>fortalecen y dan a tu pelo un brillo instantáneo.</strong></p>
-      </div>
-      <div class="item">
-        <img src="<?= Yii::app()->request->baseUrl ?>/images/contenido/igora/tip05.png">
-        <p>Agua fría al finalizar tu baño diario, es el <strong>secreto de sellar las cutículas</strong> del pelo, haciéndolo que se vea <strong>brillante y sedoso.</strong></p>
+<div style="background-color:#FEF0EF;">
+  <div class="container">
+    <div class="col-md-12">
+      <div class="tips">
+        <div class="item">
+          <img src="<?= Yii::app()->request->baseUrl ?>/images/contenido/igora/tip01.png">
+          <p style="border-right: 1px solid #CBB079;"><strong>El cepillado estimula  <br>tu cuero cabelludo,</strong>  si <br> lo haces por lo menos <br> 3 veces al día se verá <br> hermoso.</p>
+        </div>
+        <div class="item">
+          <img src="<?= Yii::app()->request->baseUrl ?>/images/contenido/igora/tip02.png">
+          <p style="border-right: 1px solid #CBB079;">Para una <strong>coloración <br> perfecta, </strong> utiliza la <br>totalidad de la crema <br>colorante con la loción <br>reveladora.</p>
+        </div>
+        <div class="item">
+          <img src="<?= Yii::app()->request->baseUrl ?>/images/contenido/igora/tip03.png">
+          <p style="border-right: 1px solid #CBB079;">Después de la coloración <br>aplica el tratamiento con <br>proteína de almendras y <br> aceite de albaricoque <br> que <strong>nutre y protege tu <br> cabello.</strong></p>
+        </div>
+        <div class="item">
+          <img src="<?= Yii::app()->request->baseUrl ?>/images/contenido/igora/tip04.png">
+          <p style="border-right: 1px solid #CBB079;">Aplica el exclusivo <br> post-tratamiento <br> con aceites nutritivos <br> que <strong>fortalecen y dan a <br> tu pelo un brillo <br> instantáneo.</strong></p>
+        </div>
+        <div class="item">
+          <img src="<?= Yii::app()->request->baseUrl ?>/images/contenido/igora/tip05.png">
+          <p>Agua fría al finalizar <br> tu baño diario, es el <br> <strong>secreto de sellar las <br> cutículas</strong> del pelo, <br> haciéndolo que se <br> vea <strong>brillante y <br>sedoso.</strong></p>
+        </div>
       </div>
     </div>
   </div>
