@@ -71,6 +71,8 @@ return array(
         'igora-tintes-para-cabello' => 'publicidad/contenido/nombre/igora',
         'nutriben-crecimiento' => 'publicidad/contenido/nombre/nutriben',
         'baby-dove' => 'publicidad/contenido/nombre/baby-dove',
+        'denticare-calendula-enjuague-bucal' => 'publicidad/contenido/nombre/denticare',
+        'air-lift-elimina-mal-aliento' => 'publicidad/contenido/nombre/air-lift',
 
         // Fin links campañas
 
