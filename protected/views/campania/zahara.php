@@ -135,11 +135,11 @@ $this->metaTags = "<meta http-equiv='X-UA-Compatible' content='IE=edge'>
 
 <!--Versión escritorio-->
 <?php else: ?>
-	<div class="sidebar-cart">
+	<!-- <div class="sidebar-cart">
   	<a href="#">
   		<img class="img-responsive" src="<?= Yii::app()->request->baseUrl ?>/images/contenido/coaspharma/zahara/compra-online.png" alt="Comprar sol-or">
   	</a>
-	</div>
+	</div> -->
   <img class="img-responsive" src="<?= Yii::app()->request->baseUrl ?>/images/contenido/coaspharma/zahara/banner.jpg" alt="Banner Zahara">
   <div class="background-pattern">
     <div class="container" style="padding-top: 100px;">

@@ -5,7 +5,7 @@
   <meta name='keywords' content='crem helado, productos cremhelado, helados crem helado.'>
   <style>
     .img-responsive-m {width:100%;}
-    .sidebar-cart {position: fixed;right: 0px;top: 60%;z-index: 2000;}
+    .sidebar-cart {position: fixed;right: 0px;top: 60%;z-index: 2000;width: 260px;}
     .background {position:relative;background-size: cover;background-image:url(".Yii::app()->request->baseUrl."/images/contenido/crem-helado/desktop/fondo-naranja.png);}
     .bg-logos {background-color:#8ACCBE;padding: 20px;}
     .modal-header{background-color:  #e74521;color: #fff;}

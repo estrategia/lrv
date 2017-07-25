@@ -109,7 +109,7 @@ $this->metaTags = "<meta http-equiv='X-UA-Compatible' content='IE=edge'>
 
 <!--VERSIÓN ESCRITORIO-->
 <?php else: ?>
-<a href="#"><div class="sidebar-cart"><img class="img-responsive" src="<?= Yii::app()->request->baseUrl ?>/images/contenido/altex/btn-sticky.png"></div></a>
+<!-- <a href="#"><div class="sidebar-cart"><img class="img-responsive" src="<?= Yii::app()->request->baseUrl ?>/images/contenido/altex/btn-sticky.png"></div></a> -->
 <div class="background">
   <div class="container">
     <img class="img-responsive" src="<?= Yii::app()->request->baseUrl ?>/images/contenido/altex/banner-previene.png">

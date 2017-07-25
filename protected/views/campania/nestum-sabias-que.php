@@ -88,7 +88,7 @@ $this->metaTags = "<meta http-equiv='X-UA-Compatible' content='IE=edge'>
 <!---FIN VERSIÓN MÓVIL-->
 <!--VERSIÓN ESCRITORIO-->
 <?php else: ?>
-<a href="#"><div class="sidebar-cart"><img class="img-responsive" src="<?= Yii::app()->request->baseUrl ?>/images/contenido/nestum/boton-sticky.png"></div></a>
+<!-- <a href="#"><div class="sidebar-cart"><img class="img-responsive" src="<?= Yii::app()->request->baseUrl ?>/images/contenido/nestum/boton-sticky.png"></div></a> -->
 <div class="bg-amarillo">
   <img class="img-responsive" src="<?= Yii::app()->request->baseUrl ?>/images/contenido/nestum/home/banner.png">
   <div class="container">

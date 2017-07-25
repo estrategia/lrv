@@ -7,7 +7,7 @@
     @font-face {font-family:MyriadPro-Semibold; src: url(".Yii::app()->request->baseUrl."/images/contenido/strepsils/fonts/MyriadPro-Semibold.otf);}
     @font-face {font-family:MyriadPro-Bold; src: url(".Yii::app()->request->baseUrl."/images/contenido/strepsils/fonts/MyriadPro-Bold.otf);}
     .img-responsive-m {width:100%;}
-    .sidebar-cart {position: fixed;right: 0px;top: 60%;z-index: 2000;width: 20%;}
+    .sidebar-cart {position: fixed;right: 0px;top: 60%;z-index: 2000;width: 260px;}
     .sidebar-cart-m {position: fixed;right: 0px;top: 30%;z-index: 2000;}
     .title-descrip {letter-spacing: -1px;font-family: MyriadPro-Semibold;text-align: center;color: #000;font-size: 35px;margin-top: 70px;}
     .title-descrip span {font-family:MyriadPro-Bold;color:#DC0912;}

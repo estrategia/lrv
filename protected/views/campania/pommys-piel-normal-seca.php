@@ -9,7 +9,7 @@
     @font-face {font-family:signika-negative-bold; src: url(".Yii::app()->request->baseUrl."/images/contenido/pomys/fonts/signika.negative-bold.ttf);}
     @font-face {font-family:signika-negative-light; src: url(".Yii::app()->request->baseUrl."/images/contenido/pomys/fonts/signika.negative-light.ttf);}
     @font-face {font-family:signika-negative-semibold; src: url(".Yii::app()->request->baseUrl."/images/contenido/pomys/fonts/signika.negative-semibold.ttf);}
-    .sidebar-cart {position: fixed;right: 0px;top: 60%;z-index: 2000;width:20%;}
+    .sidebar-cart {position: fixed;right: 0px;top: 60%;z-index: 2000;width:260px;}
     .pattern{background-attachment: fixed;background-size: cover;background-image: url(".Yii::app()->request->baseUrl."/images/contenido/pomys/pattern.png);}
     .bg-product {background-image: url(".Yii::app()->request->baseUrl."/images/contenido/pomys/normal-a-seca/banner-producto-verde.png);background-size: cover;}
     .flex-container {display: flex;}

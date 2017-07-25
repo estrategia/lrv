@@ -9,7 +9,7 @@
     @font-face {font-family:HelveticaNeueLTStd; src: url(".Yii::app()->request->baseUrl."/images/contenido/stamyl/fonts/HelveticaNeueLTStd-MdCn_1.otf);}
     @font-face {font-family:MyriadPro;src: url(".Yii::app()->request->baseUrl."/images/contenido/metamucil/fonts/MyriadPro.otf);}
     .img-responsive-m {width:100%;}
-    .sidebar-cart {position: fixed;right: 0px;top: 60%;z-index: 2000;width: 20%;}
+    .sidebar-cart {position: fixed;right: 0px;top: 60%;z-index: 2000;width: 260px;}
     .degrade {margin-top: -20px;height:70px;background: rgba(240,129,47,0.5);background: -moz-linear-gradient(top, rgba(240,129,47,0.5) 0%, rgba(255,255,255,1) 100%);background: -webkit-gradient(left top, left bottom, color-stop(0%, rgba(240,129,47,0.5)), color-stop(100%, rgba(255,255,255,1)));background: -webkit-linear-gradient(top, rgba(240,129,47,0.5) 0%, rgba(255,255,255,1) 100%);background: -o-linear-gradient(top, rgba(240,129,47,0.5) 0%, rgba(255,255,255,1) 100%);background: -ms-linear-gradient(top, rgba(240,129,47,0.5) 0%,rgba(255,255,255,1)100%);background: linear-gradient(to bottom, rgba(240,129,47,0.5) 0%, rgba(255,255,255,1) 100%);filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#f0812f', endColorstr='#ffffff', GradientType=0 );}
     .producto:hover {-ms-transform: scale(1.1);-webkit-transform: scale(1.1);transform: scale(1.1);-webkit-transition: ease-out 1s;}
     .compra-online{width: 40%;margin: 0 auto;display: block;}

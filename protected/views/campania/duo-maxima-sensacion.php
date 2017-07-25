@@ -127,7 +127,7 @@ $this->metaTags = "<meta http-equiv='X-UA-Compatible' content='IE=edge'>
 
 <!--VERSIÓN ESCRITORIO-->
 <?php else: ?>
-<a href="#"><div class="sidebar-cart"><img class="img-responsive" src="<?= Yii::app()->request->baseUrl ?>/images/contenido/duo/boton-sticky.png"></div></a>
+<!-- <a href="#"><div class="sidebar-cart"><img class="img-responsive" src="<?= Yii::app()->request->baseUrl ?>/images/contenido/duo/boton-sticky.png"></div></a> -->
 <img class="img-responsive" src="<?= Yii::app()->request->baseUrl ?>/images/contenido/duo/banner.jpg" alt="Condones DUO">
   <div class="container bg-gray">
     <div class="row">

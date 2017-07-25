@@ -8,7 +8,7 @@
     @font-face {font-family:GothamRnd-Medium;src: url(".Yii::app()->request->baseUrl."/images/contenido/baby-dove/fonts/GothamRnd-Medium.otf);}
     @font-face {font-family:gotham-rounded-light;src: url(".Yii::app()->request->baseUrl."/images/contenido/baby-dove/fonts/gotham-rounded-light.otf);}
     .img-responsive-m {width:100%;}
-    .sidebar-cart {position: fixed;right: 0px;top: 60%;z-index: 2000;}
+    .sidebar-cart {position: fixed;right: 0px;top: 60%;z-index: 2000;width:260px;}
     .nota {font-family:interstate-regular;color: #74183D;text-align: center;font-size: 16px;letter-spacing: -1px;}
     .text-atencion {font-family: MyriadPro;margin-bottom: 20px !important;text-decoration: underline;font-size: 14px;font-weight: bold;font-style: italic;}
     .datos-contacto {padding: 15px 0;}

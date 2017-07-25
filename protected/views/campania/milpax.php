@@ -9,7 +9,7 @@
     @font-face {font-family:big_noodle_titling;src: url(".Yii::app()->request->baseUrl."/images/contenido/milpax/fonts/big_noodle_titling.ttf);}
     @font-face {font-family:impact;src: url(".Yii::app()->request->baseUrl."/images/contenido/milpax/fonts/impact.ttf);}
     .img-responsive-m {width:100%;}
-    .sidebar-cart {position: fixed;right: 0px;top: 60%;z-index: 2000;width: 20%;}
+    .sidebar-cart {position: fixed;right: 0px;top: 60%;z-index: 2000;width: 260px;}
     .titulo{margin-bottom: 9%;color: #2C345C;font-family: Helvetica;text-align: center;line-height: 35px;font-size: 37px;margin-top: 50px;}
     .compra-online {margin: 15px auto;width: 40%;}
     .text-legal {color: #3A3776;font-family: helvetica;text-align: center;font-weight: bold;font-size: 15px;margin-top: 15px;}

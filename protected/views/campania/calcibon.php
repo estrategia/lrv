@@ -7,10 +7,7 @@
     @font-face {font-family:MyriadPro;src: url(".Yii::app()->request->baseUrl."/images/contenido/metamucil/fonts/MyriadPro.otf);}
     @font-face {font-family:Gobold Bold;src: url(".Yii::app()->request->baseUrl."/images/contenido/calcibon/fonts/GoboldBold.TTF);}
     @font-face {font-family:gill-sans-bold-italic;src: url(".Yii::app()->request->baseUrl."/images/contenido/calcibon/fonts/gill-sans-bold-italic.otf);}
-
-
-
-    .sidebar-cart {position: fixed;right: 0px;top: 60%;z-index: 2000;width: 20%;}
+    .sidebar-cart {position: fixed;right: 0px;top: 60%;z-index: 2000;width: 260px;}
     .main-title {font-family: Gobold Bold;color: #2F3575;text-align: center;margin-top: 50px;margin-bottom: 70px;}
     .degrade {
       background: rgba(255,251,248,1);
