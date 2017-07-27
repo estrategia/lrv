@@ -4,9 +4,24 @@
   <meta name='description' content='gora Vital, la coloración con tratamiento con Keratina y Serina para un máximo cuidado, una perfecta cobertura de canas y colores luminosos y duraderos.'>
   <meta name='keywords' content='Igora, tintes para el cabello, tintes de cabello.'>
   <style>
-    @font-face {font-family:MyriadPro;src: url(".Yii::app()->request->baseUrl."/images/contenido/metamucil/fonts/MyriadPro.otf);}
-    @font-face {font-family:kievit_regular;src: url(".Yii::app()->request->baseUrl."/images/contenido/igora/fonts/kievit_regular.ttf);}
-    @font-face {font-family:Kievit_Bold;src: url(".Yii::app()->request->baseUrl."/images/contenido/igora/fonts/Kievit_Bold.ttf);}
+    @font-face {
+      font-family:MyriadPro;
+      src:  url(".Yii::app()->request->baseUrl."/images/contenido/metamucil/fonts/MyriadPro.otf),
+            url(".Yii::app()->request->baseUrl."/images/contenido/metamucil/fonts/myriadPro-regular.ttf),
+            url(".Yii::app()->request->baseUrl."/images/contenido/metamucil/fonts/myriadPro-regular.woff) format('woff');
+    }
+    @font-face {
+      font-family:kievit_regular;
+      src:  url(".Yii::app()->request->baseUrl."/images/contenido/igora/fonts/kievit_regular.ttf),
+            url(".Yii::app()->request->baseUrl."/images/contenido/igora/fonts/kievit_regular-webfont.woff) format('woff'),
+            url(".Yii::app()->request->baseUrl."/images/contenido/igora/fonts/kievit_regular-webfont.woff2) format('woff2');
+        }
+    @font-face {
+      font-family:Kievit_Bold;
+      src:  url(".Yii::app()->request->baseUrl."/images/contenido/igora/fonts/kievit_bold.ttf),
+            url(".Yii::app()->request->baseUrl."/images/contenido/igora/fonts/kievit_bold-webfont.woff) format('woff'),
+            url(".Yii::app()->request->baseUrl."/images/contenido/igora/fonts/kievit_bold-webfont.woff2) format('woff2');
+    }
     .img-responsive-m {width:100%;}
     .sidebar-cart {position: fixed;right: 0px;top: 60%;z-index: 2000;width:260px;}
     .nota {font-family:interstate-regular;color: #74183D;text-align: center;font-size: 16px;letter-spacing: -1px;}
@@ -19,11 +34,11 @@
     .line-flex{display:flex;margin-bottom: 10px;align-items: start;}
     .line-flex p {font-family: kievit_regular;font-size: 22px;line-height: 22px;color:#000;margin-top: 5px;}
     .item {flex-grow: 1;}
-    .number{width:40px;height:40px;margin-right: 8px;}
+    .number{min-width:40px;width:40px;height:40px;margin-right: 8px;}
     .compra-online {width: 75%;margin: 0 auto;}
     .tips{display: flex;margin-bottom: 10px;align-items: start;}
     .tips p {font-family: kievit_regular;color: #1A1E42;font-size: 17px;}
-    .tips strong {font-family:Kievit_Bold;}
+    .tips span {font-family:Kievit_Bold;}
     .tips .item {padding: 10px;}
     .tips img {width:130px;display:block;margin: 23px auto;}
     .owl-theme .owl-controls .owl-page span {background-color: #AE8D50 !important;}
@@ -151,23 +166,23 @@
       <div class="tips">
         <div class="item">
           <img src="<?= Yii::app()->request->baseUrl ?>/images/contenido/igora/tip01.png">
-          <p style="border-right: 1px solid #CBB079;"><strong>El cepillado estimula  <br>tu cuero cabelludo,</strong>  si <br> lo haces por lo menos <br> 3 veces al día se verá <br> hermoso.</p>
+          <p style="border-right: 1px solid #CBB079;"><span>El cepillado estimula  <br>tu cuero cabelludo,</span>  si <br> lo haces por lo menos <br> 3 veces al día se verá <br> hermoso.</p>
         </div>
         <div class="item">
           <img src="<?= Yii::app()->request->baseUrl ?>/images/contenido/igora/tip02.png">
-          <p style="border-right: 1px solid #CBB079;">Para una <strong>coloración <br> perfecta, </strong> utiliza la <br>totalidad de la crema <br>colorante con la loción <br>reveladora.</p>
+          <p style="border-right: 1px solid #CBB079;">Para una <span>coloración <br> perfecta, </span> utiliza la <br>totalidad de la crema <br>colorante con la loción <br>reveladora.</p>
         </div>
         <div class="item">
           <img src="<?= Yii::app()->request->baseUrl ?>/images/contenido/igora/tip03.png">
-          <p style="border-right: 1px solid #CBB079;">Después de la coloración <br>aplica el tratamiento con <br>proteína de almendras y <br> aceite de albaricoque <br> que <strong>nutre y protege tu <br> cabello.</strong></p>
+          <p style="border-right: 1px solid #CBB079;">Después de la coloración <br>aplica el tratamiento con <br>proteína de almendras y <br> aceite de albaricoque <br> que <span>nutre y protege tu <br> cabello.</span></p>
         </div>
         <div class="item">
           <img src="<?= Yii::app()->request->baseUrl ?>/images/contenido/igora/tip04.png">
-          <p style="border-right: 1px solid #CBB079;">Aplica el exclusivo <br> post-tratamiento <br> con aceites nutritivos <br> que <strong>fortalecen y dan a <br> tu pelo un brillo <br> instantáneo.</strong></p>
+          <p style="border-right: 1px solid #CBB079;">Aplica el exclusivo <br> post-tratamiento <br> con aceites nutritivos <br> que <span>fortalecen y dan a <br> tu pelo un brillo <br> instantáneo.</span></p>
         </div>
         <div class="item">
           <img src="<?= Yii::app()->request->baseUrl ?>/images/contenido/igora/tip05.png">
-          <p>Agua fría al finalizar <br> tu baño diario, es el <br> <strong>secreto de sellar las <br> cutículas</strong> del pelo, <br> haciéndolo que se <br> vea <strong>brillante y <br>sedoso.</strong></p>
+          <p>Agua fría al finalizar <br> tu baño diario, es el <br> <span>secreto de sellar las <br> cutículas</span> del pelo, <br> haciéndolo que se <br> vea <span>brillante y <br>sedoso.</span></p>
         </div>
       </div>
     </div>

@@ -175,7 +175,7 @@ $this->metaTags = "<meta http-equiv='X-UA-Compatible' content='IE=edge'>
     <img style="width: 40%;margin: 0 auto;display: block;" src="<?= Yii::app()->request->baseUrl ?>/images/contenido/listerine/listerine-cuidado-total.png" alt="">
     <div class="bg-gray">
       <p>Es el más completo y avanzado LISTERINE®. ¡Ofrece 6 beneficios en 1!</p>
-      <a href="<?= Yii::app()->request->baseUrl ?>/catalogo/buscar?busqueda=listerine">
+      <a href="<?php echo CController::createUrl('/contenido/ver', array('tipo' => 'grupo', 'contenido' => 3316)) ?>">
         <img src="<?= Yii::app()->request->baseUrl ?>/images/contenido/listerine/compra-online.png" class="img-responsive btn-compra" alt="">
       </a>
       <!-- <img src="<?= Yii::app()->request->baseUrl ?>/images/contenido/listerine/entrega-1-hora.png" class="img-responsive entrega1hora" alt=""> -->
@@ -186,7 +186,7 @@ $this->metaTags = "<meta http-equiv='X-UA-Compatible' content='IE=edge'>
     <img style="width: 40%;margin: 0 auto;display: block;" src="<?= Yii::app()->request->baseUrl ?>/images/contenido/listerine/listerine-cuidado-total-zero.png" alt="">
     <div class="bg-gray">
       <p>Es el más completo y avanzado LISTERINE<sup>®</sup>, ahora también sin alcohol.</p>
-      <a href="<?= Yii::app()->request->baseUrl ?>/catalogo/buscar?busqueda=listerine">
+      <a href="<?php echo CController::createUrl('/contenido/ver', array('tipo' => 'grupo', 'contenido' => 3318)) ?>">
         <img src="<?= Yii::app()->request->baseUrl ?>/images/contenido/listerine/compra-online.png" class="img-responsive btn-compra" alt="">
       </a>
       <!-- <img src="<?= Yii::app()->request->baseUrl ?>/images/contenido/listerine/entrega-1-hora.png" class="img-responsive entrega1hora" alt=""> -->
@@ -277,7 +277,9 @@ $this->metaTags = "<meta http-equiv='X-UA-Compatible' content='IE=edge'>
         <img src="<?= Yii::app()->request->baseUrl ?>/images/contenido/listerine/banner02.jpg" class="img-responsive" alt="">
       </div>
       <div class="item">
-        <img src="<?= Yii::app()->request->baseUrl ?>/images/contenido/listerine/banner03.jpg" class="img-responsive" alt="">
+        <a href="<?php echo CController::createUrl('/contenido/ver', array('tipo' => 'grupo', 'contenido' => 3314)) ?>">
+          <img src="<?= Yii::app()->request->baseUrl ?>/images/contenido/listerine/banner03.jpg" class="img-responsive" alt="">
+        </a>
       </div>
     </div>
     <a class="carousel-control left" href="#carousel-example-generic" data-slide="prev"><i class="prev-slide"></i></a>
@@ -332,7 +334,7 @@ $this->metaTags = "<meta http-equiv='X-UA-Compatible' content='IE=edge'>
         <img style="margin:0 auto; display:block;" src="<?= Yii::app()->request->baseUrl ?>/images/contenido/listerine/listerine-cuidado-total.png" alt="">
         <div class="bg-gray">
           <p>Es el más completo y avanzado LISTERINE®. ¡Ofrece 6 beneficios en 1!</p>
-          <a href="<?= Yii::app()->request->baseUrl ?>/catalogo/buscar?busqueda=listerine">
+          <a href="<?php echo CController::createUrl('/contenido/ver', array('tipo' => 'grupo', 'contenido' => 3316)) ?>">
             <img src="<?= Yii::app()->request->baseUrl ?>/images/contenido/listerine/compra-online.png" class="img-responsive btn-compra" alt="">
           </a>
           <!-- <img src="<?= Yii::app()->request->baseUrl ?>/images/contenido/listerine/entrega-1-hora.png" class="img-responsive entrega1hora" alt=""> -->
@@ -343,7 +345,7 @@ $this->metaTags = "<meta http-equiv='X-UA-Compatible' content='IE=edge'>
         <img style="margin:0 auto; display:block;" src="<?= Yii::app()->request->baseUrl ?>/images/contenido/listerine/listerine-cuidado-total-zero.png" alt="">
         <div class="bg-gray">
           <p>Es el más completo y avanzado LISTERINE<sup>®</sup>, ahora también sin alcohol.</p>
-          <a href="<?= Yii::app()->request->baseUrl ?>/catalogo/buscar?busqueda=listerine">
+          <a href="<?php echo CController::createUrl('/contenido/ver', array('tipo' => 'grupo', 'contenido' => 3318)) ?>">
             <img src="<?= Yii::app()->request->baseUrl ?>/images/contenido/listerine/compra-online.png" class="img-responsive btn-compra" alt="">
           </a>
           <!-- <img src="<?= Yii::app()->request->baseUrl ?>/images/contenido/listerine/entrega-1-hora.png" class="img-responsive entrega1hora" alt=""> -->
