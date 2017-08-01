@@ -70,11 +70,11 @@
   </div>
   <img class="img-responsive-m" src="<?= Yii::app()->request->baseUrl ?>/images/contenido/igora/nuevos-tonos-mobile.jpg" alt="nuevos tonos rubios">
   <img class="img-responsive-m" src="<?= Yii::app()->request->baseUrl ?>/images/contenido/igora/nuevos-tonos-rubios-igora.png" alt="Igora nuevos tonos rubios">
-  <a href="<?php echo CController::createUrl('/contenido/ver', array('tipo' => 'grupo', 'contenido' => 3240)) ?>" data-ajax="false">
+  <a href="<?php echo CController::createUrl('/contenido/ver', array('tipo' => 'grupo', 'contenido' => 3242)) ?>" data-ajax="false">
     <img class="compra-online" style="margin: 0 auto;display: block;" src="<?= Yii::app()->request->baseUrl ?>/images/contenido/igora/compra-online.png" alt="Compra online igora tonos rubios">
   </a>
 </div>
-<a href="<?php echo CController::createUrl('/contenido/ver', array('tipo' => 'grupo', 'contenido' => 3244)) ?>" data-ajax="false">
+<a href="<?php echo CController::createUrl('/contenido/ver', array('tipo' => 'grupo', 'contenido' => 3242)) ?>" data-ajax="false">
   <img class="img-responsive-m" src="<?= Yii::app()->request->baseUrl ?>/images/contenido/igora/banner-secundario-mobile.jpg" alt="24 tonos en doble tubo ¡Para que escojas el tuyo!">
 </a>
 <img class="img-responsive-m" src="<?= Yii::app()->request->baseUrl ?>/images/contenido/igora/5-tips-de-cuidado-mobile.jpg" alt="5 tips de cuidado">
@@ -116,7 +116,7 @@
 </div>
 <!--Versión escritorio-->
 <?php else: ?>
-<a href="#">
+<a href="<?php echo CController::createUrl('/contenido/ver', array('tipo' => 'grupo', 'contenido' => 3242)) ?>">
   <div class="sidebar-cart"><img class="img-responsive" src="<?= Yii::app()->request->baseUrl ?>/images/contenido/igora/btn-fijo.png" alt="Compra online"></div>
 </a>
 <a href="<?php echo CController::createUrl('/contenido/ver', array('tipo' => 'grupo', 'contenido' => 3242)) ?>">
@@ -147,7 +147,7 @@
       </div>
       <div class="col-sm-6">
         <img class="img-responsive"  style="margin-top: -35px;" src="<?= Yii::app()->request->baseUrl ?>/images/contenido/igora/nuevos-tonos-rubios-igora.png" alt="Igora nuevos tonos rubios">
-        <a href="<?php echo CController::createUrl('/contenido/ver', array('tipo' => 'grupo', 'contenido' => 3240)) ?>">
+        <a href="<?php echo CController::createUrl('/contenido/ver', array('tipo' => 'grupo', 'contenido' => 3242)) ?>">
           <img class="img-responsive compra-online" src="<?= Yii::app()->request->baseUrl ?>/images/contenido/igora/compra-online.png" alt="Compra online igora tonos rubios">
         </a>
       </div>
@@ -156,7 +156,7 @@
 </div>
 
 
-<a href="<?php echo CController::createUrl('/contenido/ver', array('tipo' => 'grupo', 'contenido' => 3244)) ?>">
+<a href="<?php echo CController::createUrl('/contenido/ver', array('tipo' => 'grupo', 'contenido' => 3242)) ?>">
   <img class="img-responsive" src="<?= Yii::app()->request->baseUrl ?>/images/contenido/igora/banner-secundario.jpg" alt="24 tonos en doble tubo ¡Para que escojas el tuyo!">
 </a>
 <img class="img-responsive" src="<?= Yii::app()->request->baseUrl ?>/images/contenido/igora/5-tips-de-cuidado.jpg" alt="5 tips de cuidado">
