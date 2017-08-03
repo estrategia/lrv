@@ -44,7 +44,7 @@
     <li>Citrato de Calcio y Carbonato de Calcio</li>
     <li>Tecnología Ultra Dense</li>
     <li>Tomar en cualquier momento del día</li>
-    <li>No produce gases ni distención abdominal</li>
+    <li>No produce gases ni distensión abdominal</li>
     <li>Mayor tolerabilidad</li>
   </ul>
 <img class="img-responsive-m" src="<?= Yii::app()->request->baseUrl ?>/images/contenido/calcibon/calcibon-d80.png" alt="Calcibon d800">
@@ -92,7 +92,7 @@
           <li>Citrato de Calcio y Carbonato de Calcio</li>
           <li>Tecnología Ultra Dense</li>
           <li>Tomar en cualquier momento del día</li>
-          <li>No produce gases ni distención abdominal</li>
+          <li>No produce gases ni distensión abdominal</li>
           <li>Mayor tolerabilidad</li>
         </ul>
       </div>

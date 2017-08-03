@@ -17,12 +17,12 @@
     .bg-red {font-size: 20px;background-color:#FE0000;color:#fff;text-align: center;font-family: MyriadPro;padding: 15px;}
     .bg-red a {text-decoration:underline;color:#fff;}
     .bg-red a:hover {color:#fff;text-decoration:underline;}
-    .beneficios{background-image:url(".Yii::app()->request->baseUrl."/images/contenido/ky/bg-beneficios.jpg);background-size: cover;}
+    .beneficios{margin-top: 15px;background-image:url(".Yii::app()->request->baseUrl."/images/contenido/ky/bg-beneficios.jpg);background-size: cover;}
     .programa {background-color:#D7D8DC;font-family:NewJune-Bold;color:#D40209;font-size:25px;text-align: center;padding: 5px;}
     .producto{width: 85%;margin: 0 auto;display:block;}
     .beneficios h3 {font-family:Champagne-LimousinesBold;color:#fff;text-align:center;font-size: 26px;margin: 40px 0px 30px;}
     .list {padding: 5px 25px;display: flex;font-family: Champagne-LimousinesBold;font-size: 30px;color: #fff;margin-bottom: 25px;}
-    .list p {margin:0 !important;}
+    .list p {margin:0 !important;line-height: 35px;}
     .bg-video{padding: 50px 0 15px;background-image:url(".Yii::app()->request->baseUrl."/images/contenido/ky/bg-video.jpg);background-size: cover;}
     .video {position: relative;padding-bottom: 56.25%;overflow: hidden;}
     .video iframe {position: absolute;display: block;top: 0;left: 0;width: 100%;height: 100%;}
@@ -37,26 +37,27 @@
 ?>
 <!--Versión movil-->
 <?php if ($this->isMobile): ?>
+<a data-ajax="false" href="<?php echo CController::createUrl('/contenido/ver', array('tipo' => 'grupo', 'contenido' => 3434)) ?>"><div class="sidebar-cart"><img class="img-responsive" src="<?= Yii::app()->request->baseUrl ?>/images/contenido/ky/btn-fijo-mobile.png" alt="Compra online"></div></a>
 <a data-ajax="false" href="<?php echo CController::createUrl('/contenido/ver', array('tipo' => 'grupo', 'contenido' => 3434)) ?>"><img class="img-responsive-m" src="<?= Yii::app()->request->baseUrl ?>/images/contenido/ky/banner.jpg" alt="KY, el lubricante íntimo que me ayuda a seguir disfrutando de mi sexualidad."></a>
-<img class="img-responsive-m" src="<?= Yii::app()->request->baseUrl ?>/images/contenido/ky/line.jpg" alt="KY-El-lubricante-intimo-que-te-permite-seguir-disfrutando-de-tu-sexualidad">
+<img class="img-responsive-m" src="<?= Yii::app()->request->baseUrl ?>/images/contenido/ky/line-mobile.jpg" alt="KY-El-lubricante-intimo-que-te-permite-seguir-disfrutando-de-tu-sexualidad">
 <section class="beneficios"style="margin-top:-5px;padding:20px 15px;">
   <h3 style="margin: 0;font-size: 19px;padding-top: 25px;">K-Y® Gel esta especialmente desarrollado para la lubricación íntima:</h3>
   <img class="producto" style="width: 65%;margin: 25px auto;"src="<?= Yii::app()->request->baseUrl ?>/images/contenido/ky/productos.png" alt="Productos KY">
   <div class="list" style="font-size: 20px;">
     <img width="30" height="30" style="margin-right:15px;" src="<?= Yii::app()->request->baseUrl ?>/images/contenido/ky/check.png">
-    <p>Alivia la incomodidad generada por la resequedad vaginal.</p>
+    <p style="line-height: 25px;">Alivia la incomodidad generada por la resequedad vaginal.</p>
   </div>
   <div class="list" style="background-color:rgba(255, 255, 255, 0.11);font-size: 20px;">
     <img width="30" height="30" style="margin-right:15px;" src="<?= Yii::app()->request->baseUrl ?>/images/contenido/ky/check.png">
-    <p>Su fórmula de base acuosa es semejante a la lubricación natural.</p>
+    <p style="line-height: 25px;">Su fórmula de base acuosa es semejante a la lubricación natural.</p>
   </div>
   <div class="list" style="font-size: 20px;">
     <img width="30" height="30" style="margin-right:15px;" src="<?= Yii::app()->request->baseUrl ?>/images/contenido/ky/check.png">
-    <p>No altera el pH de la zona íntima*. <br> *(bajo condiciones normales.)</p>
+    <p style="line-height: 25px;">No altera el pH de la zona íntima*. <br> *(bajo condiciones normales.)</p>
   </div>
   <div class="list" style="background-color:rgba(255, 255, 255, 0.11);font-size: 20px;">
     <img width="30" height="30" style="margin-right:15px;" src="<?= Yii::app()->request->baseUrl ?>/images/contenido/ky/check.png">
-    <p>Puede utilizarse con condones <br>Fácil de remover.</p>
+    <p style="line-height: 25px;">Puede utilizarse con condones <br>Fácil de remover.</p>
   </div>
 </section>
 <section class="programa" style="font-size: 17px;padding: 15px;">
@@ -67,7 +68,7 @@
   <img style="margin: 0 auto;width: 40%;display: block;" src="<?= Yii::app()->request->baseUrl ?>/images/contenido/ky/ky-post-parto.png " alt="KY post parto">
   <hr>
   <span class="condiciones">Post-Parto</span>
-  <p class="txt-cond" style="margin: 0;">Entre el 17 y el 47%<sup>1</sup> <br>de muejres en post-parto</p>
+  <p class="txt-cond" style="margin: 0;">Entre el 17 y el 47%<sup>1</sup> <br>de mujeres en post-parto</p>
   <hr  class="hr-large">
   <img style="margin: 52px auto 0;width: 40%;display: block;" src="<?= Yii::app()->request->baseUrl ?>/images/contenido/ky/ky-menopausia.png " alt="KY Menopausia">
   <hr>
@@ -155,7 +156,7 @@
         <img class="img-responsive" style="margin: 0 auto;" src="<?= Yii::app()->request->baseUrl ?>/images/contenido/ky/ky-post-parto.png " alt="KY post parto">
         <hr>
         <span class="condiciones">Post-Parto</span><br>
-        <p class="txt-cond">Entre el 17 y el 47%<sup>1</sup> <br>de muejres en post-parto</p>
+        <p class="txt-cond">Entre el 17 y el 47%<sup>1</sup> <br>de mujeres en post-parto</p>
         <hr  class="hr-large">
       </div>
       <div class="col-sm-4 col-md-4">
