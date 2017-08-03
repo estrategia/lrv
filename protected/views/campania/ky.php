@@ -37,7 +37,7 @@
 ?>
 <!--Versión movil-->
 <?php if ($this->isMobile): ?>
-<a data-ajax="false" href="<?php echo CController::createUrl('/catalogo/producto', array('producto' => 26251)) ?>"><img class="img-responsive-m" src="<?= Yii::app()->request->baseUrl ?>/images/contenido/ky/banner.jpg" alt="KY, el lubricante íntimo que me ayuda a seguir disfrutando de mi sexualidad."></a>
+<a data-ajax="false" href="<?php echo CController::createUrl('/contenido/ver', array('tipo' => 'grupo', 'contenido' => 3434)) ?>"><img class="img-responsive-m" src="<?= Yii::app()->request->baseUrl ?>/images/contenido/ky/banner.jpg" alt="KY, el lubricante íntimo que me ayuda a seguir disfrutando de mi sexualidad."></a>
 <img class="img-responsive-m" src="<?= Yii::app()->request->baseUrl ?>/images/contenido/ky/line.jpg" alt="KY-El-lubricante-intimo-que-te-permite-seguir-disfrutando-de-tu-sexualidad">
 <section class="beneficios"style="margin-top:-5px;padding:20px 15px;">
   <h3 style="margin: 0;font-size: 19px;padding-top: 25px;">K-Y® Gel esta especialmente desarrollado para la lubricación íntima:</h3>
@@ -108,8 +108,8 @@
 </div>
 <!--Versión escritorio-->
 <?php else: ?>
-<a href="<?php echo CController::createUrl('/catalogo/producto', array('producto' => 26251)) ?>"><div class="sidebar-cart"><img class="img-responsive" src="<?= Yii::app()->request->baseUrl ?>/images/contenido/fybogel/btn-fijo.png" alt="Compra online"></div></a>
-<a href="<?php echo CController::createUrl('/catalogo/producto', array('producto' => 26251)) ?>"><img class="img-responsive" src="<?= Yii::app()->request->baseUrl ?>/images/contenido/ky/banner.jpg" alt="KY, el lubricante íntimo que me ayuda a seguir disfrutando de mi sexualidad."></a>
+<a href="<?php echo CController::createUrl('/contenido/ver', array('tipo' => 'grupo', 'contenido' => 3434)) ?>"><div class="sidebar-cart"><img class="img-responsive" src="<?= Yii::app()->request->baseUrl ?>/images/contenido/fybogel/btn-fijo.png" alt="Compra online"></div></a>
+<a href="<?php echo CController::createUrl('/contenido/ver', array('tipo' => 'grupo', 'contenido' => 3434)) ?>"><img class="img-responsive" src="<?= Yii::app()->request->baseUrl ?>/images/contenido/ky/banner.jpg" alt="KY, el lubricante íntimo que me ayuda a seguir disfrutando de mi sexualidad."></a>
 <img class="img-responsive" src="<?= Yii::app()->request->baseUrl ?>/images/contenido/ky/line.jpg" alt="KY-El-lubricante-intimo-que-te-permite-seguir-disfrutando-de-tu-sexualidad">
 <section class="beneficios">
    <div class="container">

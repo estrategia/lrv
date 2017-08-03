@@ -38,7 +38,7 @@
 ?>
 <!--Versión movil-->
 <?php if ($this->isMobile): ?>
-<a data-ajax="false" href="<?php echo CController::createUrl('/catalogo/producto', array('producto' => 13750)) ?>"><img class="img-responsive-m" src="<?= Yii::app()->request->baseUrl ?>/images/contenido/fybogel/banner.jpg" alt="Sin estreñimiento Fybogel"></a>
+<a data-ajax="false" href="<?= Yii::app()->request->baseUrl ?>/catalogo/buscar?busqueda=fybogel​"><img class="img-responsive-m" src="<?= Yii::app()->request->baseUrl ?>/images/contenido/fybogel/banner.jpg" alt="Sin estreñimiento Fybogel"></a>
 <img class="img-responsive-m" style="margin-top: -5px;" src="<?= Yii::app()->request->baseUrl ?>/images/contenido/fybogel/fybogel-tratamiento-fibra-natural-mobile.jpg" alt="Fybogel tratamiento fibra natural">
 <section class="bg-check" style="padding: 0 15px 20px;">
   <ul class="list-m" style="padding-top: 20px;">
@@ -82,8 +82,8 @@
 </div>
 <!--Versión escritorio-->
 <?php else: ?>
-<a href="<?php echo CController::createUrl('/catalogo/producto', array('producto' => 13750)) ?>"><div class="sidebar-cart"><img class="img-responsive" src="<?= Yii::app()->request->baseUrl ?>/images/contenido/fybogel/btn-fijo.png" alt="Compra online"></div></a>
-<a href="<?php echo CController::createUrl('/catalogo/producto', array('producto' => 13750)) ?>"><img class="img-responsive" src="<?= Yii::app()->request->baseUrl ?>/images/contenido/fybogel/banner.jpg" alt="Sin estreñimiento Fybogel"></a>
+<a href="<?= Yii::app()->request->baseUrl ?>/catalogo/buscar?busqueda=fybogel"><div class="sidebar-cart"><img class="img-responsive" src="<?= Yii::app()->request->baseUrl ?>/images/contenido/fybogel/btn-fijo.png" alt="Compra online"></div></a>
+<a href="<?= Yii::app()->request->baseUrl ?>/catalogo/buscar?busqueda=fybogel"><img class="img-responsive" src="<?= Yii::app()->request->baseUrl ?>/images/contenido/fybogel/banner.jpg" alt="Sin estreñimiento Fybogel"></a>
 <img class="img-responsive" src="<?= Yii::app()->request->baseUrl ?>/images/contenido/fybogel/fybogel-tratamiento-fibra-natural.jpg" alt="Fybogel tratamiento fibra natural">
 <section class="bg-check">
   <div class="container">

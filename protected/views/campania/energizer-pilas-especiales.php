@@ -19,7 +19,7 @@ $this->metaTags = "
     .text-bg-yellow {z-index: 5;position: absolute;margin-top: 16px;font-family: helvetica-neue-heavy-condObl;font-size: 24px;color: #000;margin: 32px;}
     .text-bg-yellow span {font-size: 32px;}
     .precaucion {font-family:helvetica-neue-heavy;color:#FBDA15;font-size: 25px;margin-top: 27%;}
-    .fot-product {margin-top: -20.3%;}
+    .fot-product {margin-top: -22.3%;}
     .btn-compra {margin-top: 20px;}
     .text-foot {color:#fff; text-align:center;font-family:omnes;font-size: 20px;margin-bottom: 30px;margin-top: 40px;}
     .product{width: 77%;margin: 0 auto;}
@@ -29,8 +29,9 @@ $this->metaTags = "
     .btn-menu{font-family: helvetica-neue-heavy;background-repeat: no-repeat;display: inline-block;padding: 15px 25px;background-size: 100% 100%;color: #FFE500;border: 2px solid #fff;}
     .btn-menu:hover{background-color: #FFE500;color:#000;border: 2px solid #FFE500;transition: all 0.2s ease-in-out 0s;}
     .sub-title {color: #FA9000;font-family: helvetica-neue-heavy-condObl;font-size: 35px;margin: 12px 0;}
-
-</style>
+    .btn-menu.active {background-color: #FFE500;color: #000;border: 2px solid #FFE500;transition: all 0.2s ease-in-out 0s;}
+    .menu {margin-bottom: 20px;}
+  </style>
 ";
 ?>
 <!--VERSIÓN MÓVIL-->
@@ -40,8 +41,9 @@ $this->metaTags = "
   <div class="content">
     <center>
       <a href="<?= Yii::app()->request->baseUrl ?>/pilas-energizer"><h4  style="margin-bottom:0px;" class="btn-menu"><span class="glyphicon glyphicon-menu-right" aria-hidden="true"></span> Pilas PowerSeal</h4></a>
-      <a href="<?= Yii::app()->request->baseUrl ?>/pilas-especiales-energizer"><h4 class="btn-menu"><span class="glyphicon glyphicon-menu-right" aria-hidden="true"></span> Pilas Especiales</h4></a>
-
+      <a href="<?= Yii::app()->request->baseUrl ?>/pilas-especiales-energizer"><h4 style="margin-bottom: 0px;" class="btn-menu active"><span class="glyphicon glyphicon-menu-right" aria-hidden="true"></span> Pilas Especiales</h4></a>
+      <a href="<?= Yii::app()->request->baseUrl ?>/pilas-auditivas-energizer"><h4 style="margin-bottom: 0px;" class="btn-menu"><span class="glyphicon glyphicon-menu-right" aria-hidden="true"></span> Pilas Auditivas</h4></a>
+      <a href="<?= Yii::app()->request->baseUrl ?>/pilas-recargables-energizer"><h4 style="margin-bottom: 0px;" class="btn-menu"><span class="glyphicon glyphicon-menu-right" aria-hidden="true"></span>Línea recargable</h4></a>
     </center>
     <div class="lista" style="font-size: 17px;margin-top: 30px;line-height: 22px;">
       <p>* Tamaño más pequeño, menor consumo de energía.</p>
@@ -50,39 +52,16 @@ $this->metaTags = "
       <p>* Pequeñas en tamaño grandes en poder.</p>
       <p>* Protege sus equipos de las fugas hasta 2 años después del agotamiento total.</p>
     </div>
-
     <img style="width: 70%;margin: 35px auto 0;display: block;" src="<?= Yii::app()->request->baseUrl ?>/images/contenido/energizer/pilas-especiales/CR2032.png" alt="CR2032">
     <p class="usos" style="text-align:center;margin: 0;">Usos recomendados:</p>
     <img class="img-responsive-movil" src="<?= Yii::app()->request->baseUrl ?>/images/contenido/energizer/pilas-especiales/iconos-CR2032.png" alt="CR2032">
     <a href="<?php echo CController::createUrl('/catalogo/producto', array('producto' => 21130)) ?>">
       <img class="img-responsive-movil btn-compra" src="<?= Yii::app()->request->baseUrl ?>/images/contenido/energizer/comprar-online.png" alt="Comprar Online">
     </a>
-
-    <img style="width: 70%;margin: 35px auto 0;display: block;" src="<?= Yii::app()->request->baseUrl ?>/images/contenido/energizer/pilas-especiales/A23.png" alt="A23">
-    <p class="usos" style="text-align:center;margin: 0;">Usos recomendados:</p>
-    <img class="img-responsive-movil" src="<?= Yii::app()->request->baseUrl ?>/images/contenido/energizer/pilas-especiales/iconos-A23.png" alt="A23">
-    <a href="#">
-      <img class="img-responsive-movil btn-compra" src="<?= Yii::app()->request->baseUrl ?>/images/contenido/energizer/comprar-online.png" alt="Comprar Online">
-    </a>
-
     <img style="width: 70%;margin: 35px auto 0;display: block;" src="<?= Yii::app()->request->baseUrl ?>/images/contenido/energizer/pilas-especiales/CR2025.png" alt="CR2025">
     <p class="usos" style="text-align:center;margin: 0;">Usos recomendados:</p>
     <img class="img-responsive-movil" src="<?= Yii::app()->request->baseUrl ?>/images/contenido/energizer/pilas-especiales/iconos-CR2025.png" alt="CR2025">
     <a href="<?php echo CController::createUrl('/catalogo/producto', array('producto' => 21129)) ?>">
-      <img class="img-responsive-movil btn-compra" src="<?= Yii::app()->request->baseUrl ?>/images/contenido/energizer/comprar-online.png" alt="Comprar Online">
-    </a>
-
-    <img style="width: 70%;margin: 35px auto 0;display: block;" src="<?= Yii::app()->request->baseUrl ?>/images/contenido/energizer/pilas-especiales/CR2016.png" alt="CR2016">
-    <p class="usos" style="text-align:center;margin: 0;">Usos recomendados:</p>
-    <img class="img-responsive-movil" src="<?= Yii::app()->request->baseUrl ?>/images/contenido/energizer/pilas-especiales/iconos-CR2016.png" alt="CR2016">
-    <a href="#">
-      <img class="img-responsive-movil btn-compra" src="<?= Yii::app()->request->baseUrl ?>/images/contenido/energizer/comprar-online.png" alt="Comprar Online">
-    </a>
-
-    <img style="width: 70%;margin: 35px auto 0;display: block;" src="<?= Yii::app()->request->baseUrl ?>/images/contenido/energizer/pilas-especiales/A76.png" alt="A76">
-    <p class="usos" style="text-align:center;margin: 0;">Usos recomendados:</p>
-    <img class="img-responsive-movil" src="<?= Yii::app()->request->baseUrl ?>/images/contenido/energizer/pilas-especiales/iconos-A76.png" alt="A76">
-    <a href="#">
       <img class="img-responsive-movil btn-compra" src="<?= Yii::app()->request->baseUrl ?>/images/contenido/energizer/comprar-online.png" alt="Comprar Online">
     </a>
     <p class="text-foot" style="font-size: 12px;padding-bottom: 30px;margin-bottom: 0;">
@@ -97,9 +76,12 @@ $this->metaTags = "
 <img class="img-responsive" src="<?= Yii::app()->request->baseUrl ?>/images/contenido/energizer/pilas-especiales/banner-pilas-especiales.jpg" alt="Energizer Pilas especiales">
 <div class="container-fluid background-black" style="padding: 0;">
   <div class="content">
-    <a href="<?= Yii::app()->request->baseUrl ?>/pilas-energizer"><h4 class="btn-menu"><span class="glyphicon glyphicon-menu-right" aria-hidden="true"></span> Pilas PowerSeal</h4></a>
-    <a href="<?= Yii::app()->request->baseUrl ?>/pilas-especiales-energizer"><h4 class="btn-menu"><span class="glyphicon glyphicon-menu-right" aria-hidden="true"></span> Pilas especiales</h4></a>
-
+    <div class="menu">
+      <a href="<?= Yii::app()->request->baseUrl ?>/pilas-energizer"><h4 class="btn-menu"><span class="glyphicon glyphicon-menu-right" aria-hidden="true"></span> Pilas PowerSeal</h4></a>
+      <a href="<?= Yii::app()->request->baseUrl ?>/pilas-especiales-energizer"><h4 class="btn-menu active "><span class="glyphicon glyphicon-menu-right" aria-hidden="true"></span> Pilas especiales</h4></a>
+      <a href="<?= Yii::app()->request->baseUrl ?>/pilas-auditivas-energizer"><h4 class="btn-menu"><span class="glyphicon glyphicon-menu-right" aria-hidden="true"></span> Pilas Auditivas</h4></a>
+      <a href="<?= Yii::app()->request->baseUrl ?>/pilas-recargables-energizer"><h4 class="btn-menu"><span class="glyphicon glyphicon-menu-right" aria-hidden="true"></span> Línea recargable</h4></a>
+    </div>
     <p><span class="first-title">Energizer</span><span class="sub-title"> Pilas especiales</span></p>
     <div class="lista">
       <p>* Tamaño más pequeño, menor consumo de energía.</p>
@@ -108,21 +90,13 @@ $this->metaTags = "
       <p>* Pequeñas en tamaño grandes en poder.</p>
       <p>* Protege sus equipos de las fugas hasta 2 años después del agotamiento total.</p>
     </div>
-
     <div class="row" style="margin-top: 50px;">
+      <div class="col-sm-2 col-md-2"></div>
       <div class="col-sm-4 col-md-4" style="z-index:100;">
         <img class="img-responsive" src="<?= Yii::app()->request->baseUrl ?>/images/contenido/energizer/pilas-especiales/CR2032.png" alt="CR2032">
         <p class="usos">Usos recomendados:</p>
         <img class="img-responsive" src="<?= Yii::app()->request->baseUrl ?>/images/contenido/energizer/pilas-especiales/iconos-CR2032.png" alt="CR2032">
         <a href="<?php echo CController::createUrl('/catalogo/producto', array('producto' => 21130)) ?>">
-          <img class="img-responsive btn-compra" src="<?= Yii::app()->request->baseUrl ?>/images/contenido/energizer/comprar-online.png" alt="Comprar Online">
-        </a>
-      </div>
-      <div class="col-sm-4 col-md-4" style="z-index:100;">
-        <img class="img-responsive" src="<?= Yii::app()->request->baseUrl ?>/images/contenido/energizer/pilas-especiales/A23.png" alt="A23">
-        <p class="usos">Usos recomendados:</p>
-        <img class="img-responsive" src="<?= Yii::app()->request->baseUrl ?>/images/contenido/energizer/pilas-especiales/iconos-A23.png" alt="A23">
-        <a href="#">
           <img class="img-responsive btn-compra" src="<?= Yii::app()->request->baseUrl ?>/images/contenido/energizer/comprar-online.png" alt="Comprar Online">
         </a>
       </div>
@@ -134,42 +108,12 @@ $this->metaTags = "
           <img class="img-responsive btn-compra" src="<?= Yii::app()->request->baseUrl ?>/images/contenido/energizer/comprar-online.png" alt="Comprar Online">
         </a>
       </div>
-    </div>
-  </div>
-  <div class="col-md-12" style="padding: 0;">
-    <img class="img-responsive fot-product" src="<?= Yii::app()->request->baseUrl ?>/images/contenido/energizer/fot-products.jpg">
-  </div>
-<div class="content">
-    <div class="row" style="margin-top: 35px;">
-      <div class="col-sm-2 col-md-2"></div>
-      <div class="col-sm-4 col-md-4" style="z-index:100;">
-        <img class="img-responsive" src="<?= Yii::app()->request->baseUrl ?>/images/contenido/energizer/pilas-especiales/CR2016.png" alt="CR2016">
-        <p class="usos">Usos recomendados:</p>
-        <img class="img-responsive" src="<?= Yii::app()->request->baseUrl ?>/images/contenido/energizer/pilas-especiales/iconos-CR2016.png" alt="CR2016">
-        <a href="#">
-          <img class="img-responsive btn-compra" src="<?= Yii::app()->request->baseUrl ?>/images/contenido/energizer/comprar-online.png" alt="Comprar Online">
-        </a>
-      </div>
-      <div class="col-sm-4 col-md-4" style="z-index:100;">
-        <img class="img-responsive" src="<?= Yii::app()->request->baseUrl ?>/images/contenido/energizer/pilas-especiales/A76.png" alt="A76">
-        <p class="usos">Usos recomendados:</p>
-        <img class="img-responsive" src="<?= Yii::app()->request->baseUrl ?>/images/contenido/energizer/pilas-especiales/iconos-A76.png" alt="A76">
-        <a href="#">
-          <img class="img-responsive btn-compra" src="<?= Yii::app()->request->baseUrl ?>/images/contenido/energizer/comprar-online.png" alt="Comprar Online">
-        </a>
-      </div>
       <div class="col-sm-2 col-md-2"></div>
     </div>
   </div>
-  <div class="col-md-12" style="padding: 0;">
+  <div class="col-md-12" style="padding: 0;margin-bottom:50px;">
     <img class="img-responsive fot-product" src="<?= Yii::app()->request->baseUrl ?>/images/contenido/energizer/fot-products.jpg">
   </div>
-  <div class="content">
-    <p class="text-foot">
-      *Del derrame de las pilas usadas hasta 2 años. <br>
-      *En comparación con Energizer Max anterior en la prueba de DSC (Cámara Digital Fija) de la norma ANSI.
-    </p>
-  </div>
-</div>
+
 <?php endif; ?>
 <!--FIN VERSIÓN ESCRITORIO-->
