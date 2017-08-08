@@ -970,5 +970,9 @@ class Compras extends CActiveRecord {
         }
         return empty($classes) ? false : implode(' ', $classes);
     }
+    
+    public function isVentaCentralizada(){
+    	return false;
+    }
 
 }

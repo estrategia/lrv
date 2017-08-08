@@ -35,13 +35,13 @@ class ProductosVitalCall extends CActiveRecord {
         // will receive user inputs.
         return array(
             array('codigoProducto, descripcion, fechaInicio, fechaFin, fechaCreacion', 'required'),
-            array('estado', 'numerical', 'integerOnly' => true),
+            array('estado,descuento', 'numerical', 'integerOnly' => true),
             array('codigoProducto', 'length', 'max' => 10),
             array('descripcion', 'length', 'max' => 200),
         	array('descripcion','validarExistencia'),
             // The following rule is used by search().
             // @todo Please remove those attributes that should not be searched.
-            array('idProductoVitalCall, codigoProducto, descripcion, estado, fechaInicio, fechaFin, fechaCreacion', 'safe', 'on' => 'search'),
+            array('idProductoVitalCall, codigoProducto, descripcion, estado, fechaInicio, fechaFin, fechaCreacion,descuento', 'safe', 'on' => 'search'),
         );
     }
 
@@ -67,6 +67,7 @@ class ProductosVitalCall extends CActiveRecord {
             'codigoProducto' => 'Codigo Producto',
             'descripcion' => 'Descripcion',
             'estado' => 'Estado',
+        	'descuento' => 'Descuento',
             'fechaInicio' => 'Fecha Inicio',
             'fechaFin' => 'Fecha Fin',
             'fechaCreacion' => 'Fecha Creacion',

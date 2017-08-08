@@ -245,6 +245,36 @@ $(document).on('click', "a[data-role='eliminar-modulo-imagen']", function() {
     });
 });
 
+$(document).on('click', "a[data-role='eliminar-item-menu']", function() {
+
+    var idItem = $(this).attr("data-item");
+    $.ajax({
+        type: 'POST',
+        async: true,
+        url: requestUrl + '/callcenter/contenido/eliminarItemMenu',
+        data: {idItem: idItem},
+        beforeSend: function() {
+
+        },
+        success: function(data) {
+            var data = $.parseJSON(data);
+            if (data.result == "ok") {
+                bootbox.alert("Elemento eliminado con éxito");
+                $("#lista-imagenes").html(data.response);
+            } else if (data.result == "error") {
+                bootbox.alert(data.response);
+            }
+        },
+        complete: function() {
+
+        },
+        error: function(jqXHR, textStatus, errorThrown) {
+
+        }
+    });
+});
+
+
 
 $(document).on('click', "a[data-role='modal-editar-imagen']", function() {
     var idImagen = $(this).attr('data-modulo-imagen');

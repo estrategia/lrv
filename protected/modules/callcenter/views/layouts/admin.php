@@ -68,6 +68,9 @@
                                     <a href="<?php echo $this->createUrl('/callcenter/admin/bonos') ?>" class="ajax-link" ><i class="glyphicon glyphicon-credit-card"></i><span> Bonos CRM</span></a>
                                 </li>
                                 <li class="">
+                                    <a href="<?php echo $this->createUrl('/callcenter/admin/bonosPqrs') ?>" class="ajax-link" ><i class="glyphicon glyphicon-credit-card"></i><span> Bonos PQRS</span></a>
+                                </li>
+                                <li class="">
                                     <a href="<?php echo $this->createUrl('/callcenter/bonos') ?>" class="ajax-link"><i class="glyphicon glyphicon-credit-card"></i><span> Bonos tienda</span></a>
                                 </li>
                                 <li class="">

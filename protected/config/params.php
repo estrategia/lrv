@@ -139,7 +139,8 @@ return array(
         'carroPagarForm' => 'larebaja.online.carro.pagar.form',
         'productosComparar' => 'larebaja.online.productos.agregarProductos',
         'productosNoAgregados' => 'larebaja.online.productos.noAgregados',
-        'formulaMedica' => 'larebaja.online.compra.formulaMedica'
+        'formulaMedica' => 'larebaja.online.compra.formulaMedica',
+    	'mundoSuperior' => 	'larebaja.online.contenido.mundo',
     ),
     'entrega' => array(
         'listaTipos' => array(1, 2),
@@ -332,7 +333,7 @@ return array(
         'clientefielCompra' => 301
     ),
     'beneficios' => array(
-       'lrv' => array(21, 22, 23, 24, 25, 26),
+      /* 'lrv' => array(21, 22, 23, 24, 25, 26),
         'descuentos' => array(21, 22, 23, 24), // new
         'bonos' => array(25, 26), // new
         'beneficioCedula' => 25,
@@ -343,7 +344,7 @@ return array(
         'tipoMedioPago' => array(
             25 => 15,
             26 => 16
-        ),/*
+        ),*/
     	'lrv' => array(50,51,52,53,54,55),
     	'descuentos' => array(50,51,52,53), // new
     	'bonos' => array(54,55), // new
@@ -355,7 +356,7 @@ return array(
     	'tipoMedioPago' => array(
     				54 => 15,
     				55 => 16
-    	),*/
+    	),
         'recambios' => array(1, 10),
         'recambioslabel' => array(
             1 => 'Recambio',
@@ -505,6 +506,8 @@ return array(
             ),
             'asuntoCorreo' => 'Tienes un bono disponible',
             'tipoBonoCRM' => 3,
+        	'tipoBonoPQRS' => 3,
+        	'tipoBonoTiendaPQRS' => 3,
             'formaPagoBonos' => 8,
         ),
         'reactivacionBono' => array(
@@ -599,7 +602,8 @@ return array(
                 8 => 'Cuadricula de productos',
                 9 => 'Grupo de m&oacute;dulos',
                 10 => 'Productos &uacute;ltimo antojo',
-                11 => 'Productos banner'
+                11 => 'Productos banner',
+            	12 => 'Men&uacute; publicidad'
             ),
             'ubicacionModulos' => array(
                 1 => 'Inicio',

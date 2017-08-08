@@ -54,6 +54,12 @@ $form = $this->beginWidget ( 'CActiveForm', array (
 </div>
 
 <div class="form-group">
+    <?php echo $form->labelEx($model, 'descuento'); ?>
+    <?php echo $form->textField($model, 'descuento', array('class' => 'form-control')); ?>
+    <?php echo $form->error($model, 'descuento', array('class' => 'text-danger')); ?>
+</div>
+
+<div class="form-group">
     <?php echo $form->labelEx($model, 'fechaInicio', array('class' => 'control-label')); ?>
     <?php
 				$this->widget ( 'zii.widgets.jui.CJuiDatePicker', array (

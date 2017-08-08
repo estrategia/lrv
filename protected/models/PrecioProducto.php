@@ -219,7 +219,7 @@ class PrecioProducto extends Precio {
             $condition = 't.fechaIni<=:fecha AND t.fechaFin>=:fecha AND t.tipo IN (' . implode(",", Yii::app()->params->beneficios['lrv']) . ')';
             $params = array(
                 ':fecha' => $fecha->format('Y-m-d'),
-                ':ciudad' => $objCiudadSector->codigoCiudad,
+               // ':ciudad' => $objCiudadSector->codigoCiudad,
                 ':producto' => $objProducto->codigoProducto
             );
 
@@ -234,7 +234,7 @@ class PrecioProducto extends Precio {
             $this->listBeneficios = Beneficios::model()->findAll(array(
                 'with' => array(
                 	'listBeneficiosProductos' => array('condition' => 'listBeneficiosProductos.codigoProducto=:producto'),
-                	'listPuntosVenta' => array('condition' => 'listPuntosVenta.codigoCiudad=:ciudad'),
+                //	'listPuntosVenta' => array('condition' => 'listPuntosVenta.codigoCiudad=:ciudad'),
                 ),
                 'condition' => $condition,
                 'params' => $params,
@@ -245,7 +245,7 @@ class PrecioProducto extends Precio {
             $condition = 't.fechaIni<=:fecha AND t.fechaFin>=:fecha AND t.tipo IN (' . implode(",", Yii::app()->params->beneficios['lrv']) . ')';
             $params = array(
             		':fecha' => $fecha->format('Y-m-d'),
-            		':ciudad' => $objCiudadSector->codigoCiudad,
+            	//	':ciudad' => $objCiudadSector->codigoCiudad,
             		':producto' => $objProducto->codigoProducto
             );
             
@@ -258,15 +258,15 @@ class PrecioProducto extends Precio {
             $condition .= " AND (t.tipo IN (".implode(",", Yii::app()->params->beneficios['bonos']).") )";
             
             if(Yii::app()->user->isGuest)
-            	$condition .= " AND (t.tipo != 25)";
+            	$condition .= " AND (t.tipo != ".Yii::app()->params->beneficios['beneficioCedula'].")";
             else
-            	$condition .= " AND ((t.tipo = 25  AND listCedulas.numeroDocumento = '".Yii::app()->user->name."') OR (t.tipo != 25  AND listCedulas.numeroDocumento IS NULL))";
+            	$condition .= " AND ((t.tipo = ".Yii::app()->params->beneficios['beneficioCedula']."  AND listCedulas.numeroDocumento = '".Yii::app()->user->name."') OR (t.tipo != ".Yii::app()->params->beneficios['beneficioCedula']."  AND listCedulas.numeroDocumento IS NULL))";
             
             $this->listBeneficiosBonos = Beneficios::model()->findAll(array(
             		'with' => array(
             				'listBeneficiosProductos' => array('condition' => 'listBeneficiosProductos.codigoProducto=:producto'),
             				'listCedulas',
-            				'listPuntosVenta' => array('condition' => 'listPuntosVenta.codigoCiudad=:ciudad'),
+            			//	'listPuntosVenta' => array('condition' => 'listPuntosVenta.codigoCiudad=:ciudad'),
             		),
             		'condition' => $condition,
             		'params' => $params,

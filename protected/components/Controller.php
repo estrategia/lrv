@@ -34,6 +34,7 @@ class Controller extends CController {
     public $categorias = array();
     public $objSectorCiudad = null;
     public $metaTags = null;
+    public $menuSuperior = null;
 
     public function init() {
         if (Yii::app()->detectMobileBrowser->showMobile) {

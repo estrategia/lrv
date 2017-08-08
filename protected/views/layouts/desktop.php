@@ -180,7 +180,7 @@ header("Pragma: no-cache");
                 </nav>
             </div>
             
-            <?php $this->renderPartial('//layouts/_d_menuMicrositio');?>
+            <?php $this->renderPartial('//layouts/_d_menuMundo');?>
             <!--fin menu-->
 
             <!--inicio migas de pan-->

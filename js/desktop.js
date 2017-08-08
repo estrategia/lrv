@@ -1572,10 +1572,10 @@ function validarCantidadFraccionado(codigoProducto, numeroFracciones, unidadFrac
     var nroFracciones = $("#cantidad-producto-fraccion-" + codigoProducto + "-" + idUnico).val();
     var nroUnidades = $("#cantidad-producto-unidad-" + codigoProducto + "-" + idUnico).val();
 
-
     if (nroFracciones < 0) {
         nroFracciones = 0;
     }
+   
     if ((nroFracciones * unidadFraccionamiento) >= numeroFracciones) {
         var nroUnidadesAdicionales = Math.floor((nroFracciones * unidadFraccionamiento) / numeroFracciones);
         nroUnidades = nroUnidades * 1 + nroUnidadesAdicionales;

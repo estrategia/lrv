@@ -1,7 +1,13 @@
 <?php
-$menu = MenuPublicidad::obtenerDatosCampania();
+$menu = null;
+if($this->menuSuperior != null):
+	$menu = $this->menuSuperior;
+elseif(Yii::app()->session[Yii::app()->params->sesion['mundoSuperior']] != null):
+	$menu = Yii::app()->session[Yii::app()->params->sesion['mundoSuperior']];
+endif;
 
 if($menu): ?>
+	<?php $menuPublicidad = $menu->objMenuMundo;?>
 	<img class="img-responsive-m" src='<?=  Yii::app()->request->baseUrl."/images/contenido/".$menu->imagenMovil ?>' />
 	<div id='carrusel-menu' class="owl-carousel owl-theme">
 		<?php foreach($menu->listMenuItemPublicidad as $itemMenu):?>

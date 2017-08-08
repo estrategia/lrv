@@ -135,9 +135,7 @@ class BonosTienda extends CActiveRecord {
         $criteria->compare('vigenciaFin', $this->vigenciaFin, true);
         $criteria->compare('minimoCompra', $this->minimoCompra, true);
         $criteria->compare('tipo', $this->tipo);
-       /* if(!empty($this->concepto)){
-        	$criteria->condition = "t.concepto LIKE '%$this->concepto%'";
-        }*/
+
         $criteria->compare('concepto', $this->concepto, true);
        
         $criteria->compare('estado', $this->estado);
@@ -157,6 +155,43 @@ class BonosTienda extends CActiveRecord {
                 'criteria' => $criteria,
             ));
         }
+    }
+    
+    
+    public function searchPqrs($todo = false) {
+    	// @todo Please modify the following code to remove attributes that should not be searched.
+    
+    	$criteria = new CDbCriteria;
+    
+    	$criteria->compare('idBonoTienda', $this->idBonoTienda);
+    	$criteria->compare('identificacionUsuario', $this->identificacionUsuario, true);
+    	$criteria->compare('idBonoTiendaTipo', $this->idBonoTiendaTipo, true);
+    	$criteria->compare('valor', $this->valor, true);
+    	$criteria->compare('vigenciaInicio', $this->vigenciaInicio, true);
+    	$criteria->compare('vigenciaFin', $this->vigenciaFin, true);
+    	$criteria->compare('minimoCompra', $this->minimoCompra, true);
+    	$criteria->compare('tipo', $this->tipo);
+    
+    	$criteria->compare('concepto', $this->concepto, true);
+    	 
+    	$criteria->andWhere('idPQRS is not null');
+    	$criteria->compare('estado', $this->estado);
+    	$criteria->compare('fechaCreacion', $this->fechaCreacion, true);
+    	$criteria->compare('idCompra', $this->idCompra);
+    	$criteria->compare('fechaUso', $this->fechaUso, true);
+    	$criteria->compare('valorCompra', $this->valorCompra);
+    
+    	if ($todo) {
+    		return new CActiveDataProvider($this, array(
+    				'criteria' => $criteria,
+    				'pagination' => false
+    		));
+    	} else {
+    
+    		return new CActiveDataProvider($this, array(
+    				'criteria' => $criteria,
+    		));
+    	}
     }
 
     /**

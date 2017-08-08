@@ -34,6 +34,7 @@ class ModulosConfigurados extends CActiveRecord {
     const TIPO_GRUPO_MODULOS = 9;
     const TIPO_PRODUCTOS_CARRO = 10;
     const TIPO_PRODUCTOS_BANNER = 11;
+    const TIPO_MENU_CONFIGURABLE = 12;
 
     /**
      * @return string the associated database table name
@@ -50,13 +51,14 @@ class ModulosConfigurados extends CActiveRecord {
         // will receive user inputs.
         return array(
             array('tipo, inicio, fin, estado, dias, autenticacion', 'required'),
-            array('tipo, estado, aleatorio, lineas, agotado, autenticacion', 'numerical', 'integerOnly' => true),
+            array('tipo, estado, aleatorio, lineas, agotado, autenticacion, esMundo', 'numerical', 'integerOnly' => true),
             array('dias', 'length', 'max' => 30),
             array('descripcion, titulo', 'length', 'max' => 255),
+        	array('urlAmigable', 'length', 'max' => 64),
             array('contenido', 'required', 'on' => 'contenido'),
             // The following rule is used by search().
             // @todo Please remove those attributes that should not be searched.
-            array('idModulo, tipo, inicio, fin, dias, estado, aleatorio, lineas, agotado, descripcion, titulo, contenido, contenidoMovil, autenticacion', 'safe', 'on' => 'search'),
+            array('idModulo, tipo, inicio, fin, dias, estado, aleatorio, lineas, agotado, descripcion, titulo, contenido, contenidoMovil, autenticacion, urlAmigable, esMundo', 'safe', 'on' => 'search'),
         );
     }
 
@@ -75,6 +77,7 @@ class ModulosConfigurados extends CActiveRecord {
             'listModulosGrupo' => array(self::MANY_MANY, 'ModulosConfigurados', 't_GruposModulos(idGrupoModulo, idModulo)', 'order'=>'listModulosGrupo_listModulosGrupo.orden'),
             'objModuloGrupo' => array(self::BELONGS_TO, 'GruposModulos', '','on' => 't.idModulo=objModuloGrupo.idModulo AND objModuloGrupo.idGrupoModulo =:idgrupoModulo'),
             'listPerfiles' => array(self::HAS_MANY, 'ModuloPerfil', 'idModulo'),
+        	'objMenuMundo'	=> array(self::HAS_ONE, 'MenuPublicidad', 'idModulo'),
         );
     }
 
@@ -96,7 +99,10 @@ class ModulosConfigurados extends CActiveRecord {
             'aleatorio' => 'Aleatorio' ,
             'lineas' => 'Número de líneas',
             'Agotado' => 'Mostrar agotados',
-            'autenticacion' => 'Tipo de autenticaci&oacute;n'
+            'autenticacion' => 'Tipo de autenticaci&oacute;n',
+        	'esMundo' => 'Es mundo',
+        	'urlAmigable' => 'Direcci&oacute;n amigable',
+        		
         );
     }
 

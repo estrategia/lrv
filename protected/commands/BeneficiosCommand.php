@@ -179,10 +179,9 @@ class BeneficiosCommand extends CConsoleCommand {
 						
                     }
 
-                    foreach ($beneficio['listBeneficiosPuntoVenta'] as $benefPdv) {
+                  /*  foreach ($beneficio['listBeneficiosPuntoVenta'] as $benefPdv) {
                         $datosPdv[] = "($objBeneficio->idBeneficio,'" . $benefPdv['IDComercial'] . "')";
-                    }
-                    
+                    }*/
                     
                     if ($beneficio['listCedulas']) {
                     	foreach ($beneficio['listCedulas'] as $benCed) {
@@ -190,13 +189,13 @@ class BeneficiosCommand extends CConsoleCommand {
                         }
                     }
                 }
-                if (count($datosPdv) > 0) {
+             /*   if (count($datosPdv) > 0) {
                 	$h1 = round(microtime(true) * 1000);
                     $sql = "INSERT INTO t_BeneficiosPuntosVenta(idBeneficio,idComercial) VALUES " . implode(",", $datosPdv);
                     Yii::app()->db->createCommand($sql)->execute();
                     $h2 = round(microtime(true)*1000);
                     fwrite($file, Date("Y-m-d h:i:s")."- "."Insertando puntos de venta -   ".($h2 - $h1)." milisegundos" . PHP_EOL);
-                }
+                }*/
 
                 if (count($beneficiosProductos) > 0) {
                 	$h1 = round(microtime(true) * 1000);

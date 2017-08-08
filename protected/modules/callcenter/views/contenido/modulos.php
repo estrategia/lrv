@@ -156,7 +156,20 @@
                 <?php echo $form->dropDownList($model, 'autenticacion', Yii::app()->params->callcenter['modulosConfigurados']['autenticacion']['estados'], array('encode' => false, 'id' => 'autenticacion', 'class' => 'form-control')) ?>
                 <?php echo $form->error($model, 'autenticacion'); ?>
             </div>
-
+            <?php if ($model->tipo == ModulosConfigurados::TIPO_MENU_CONFIGURABLE || $model->tipo == ModulosConfigurados::TIPO_GRUPO_MODULOS): ?>
+			<div class="form-group">
+                <!-- checkbox -->
+                <?php echo $form->labelEx($model, 'urlAmigable'); ?><div class="space-1"></div>
+                <?php echo $form->textField($model, 'urlAmigable', array('encode' => false, 'id' => 'autenticacion', 'class' => 'form-control')) ?>
+                <?php echo $form->error($model, 'urlAmigable'); ?>
+            </div>
+            <div class="form-group">
+                <!-- checkbox -->
+                <?php echo $form->labelEx($model, 'esMundo'); ?><div class="space-1"></div>
+                <?php echo $form->dropDownList($model, 'esMundo', array(0 => 'No', 1 => 'Si'), array('encode' => false, 'id' => 'autenticacion', 'class' => 'form-control')) ?>
+                <?php echo $form->error($model, 'esMundo'); ?>
+            </div>
+			<?php endif; ?>
             <div class="col-md-12">
                 <div class="form-group">
                     <?php echo CHtml::submitButton('Guardar Módulo', array('class' => "btn btn-default")); ?>

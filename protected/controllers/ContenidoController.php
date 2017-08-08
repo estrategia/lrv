@@ -143,6 +143,16 @@ class ContenidoController extends Controller {
         if (empty($listModulos)) {
             throw new CHttpException(404, 'Contenido no disponible.');
         }
+        
+        foreach($listModulos as $modulo){
+        	if($modulo->tipo == ModulosConfigurados::TIPO_MENU_CONFIGURABLE){
+        		$this->menuSuperior = $modulo;
+        		
+        		if($modulo->esMundo){
+        			Yii::app()->session[Yii::app()->params->sesion['mundoSuperior']] = $modulo;
+        		}
+        	}
+        }
 
         $this->render($this->isMobile ? 'modulos' : 'd_modulos', array(
             'listModulos' => $listModulos

@@ -182,7 +182,72 @@ class ContenidoController extends ControllerOperator {
                     'idmodulo' => $idModulo
                 )
             ));
-        } else if ($opcion == 'contenido') {
+        }else if($opcion == 'menu'){
+        	$params['vista'] = '_menuConfigurableHeader';
+        //	$model->scenario = 'menuConfigurableHeader';
+        	// 	$params['modelMenuPublicidad'] = new MenuPublicidad();
+        	
+        	$menuPublicidad = MenuPublicidad::model()->find(array(
+        			'condition' => 'idModulo =:modulo',
+        			'params' => array(
+        					':modulo' => $idModulo
+        			)
+        	));
+        	
+        	if($menuPublicidad == null)
+        		$menuPublicidad = new MenuPublicidad();
+        	         	
+        	if (isset($_POST['MenuPublicidad'])) {
+        		if (isset($_FILES)) {
+        			$menuPublicidad->attributes = $_POST['MenuPublicidad'];
+        			$uploadedFile = CUploadedFile::getInstance($menuPublicidad, "imagenDesktop");
+        			$error = false;
+        			
+        			if($uploadedFile){
+        				if ($uploadedFile->getExtensionName() == "jpg" || $uploadedFile->getExtensionName() == "png" ||
+        					$uploadedFile->getExtensionName() == "jpeg" || $uploadedFile->getExtensionName() == "gif") {
+        	
+        						if ($uploadedFile->saveAs(Yii::app()->params->callcenter['modulosConfigurados']['urlImagenes'] . $idModulo . date("Ymdhis") . "." . $uploadedFile->getExtensionName())) {
+        							$menuPublicidad->imagenDesktop = "/" . Yii::app()->params->callcenter['modulosConfigurados']['urlImagenes'] . $idModulo . date("Ymdhis") . "." . $uploadedFile->getExtensionName();
+        							$menuPublicidad->idModulo = $idModulo;
+        						} else {
+        							Yii::app()->user->setFlash('alert alert-danger', 'Error al subir la imagen');
+        							$error = true;
+        						}
+        					} else {
+        						Yii::app()->user->setFlash('alert alert-danger', 'Imagen no valida');
+        						$error = true;
+        					}
+        			}			 
+        					 
+        					if (!$error) {
+        						$uploadedFile2 = CUploadedFile::getInstance($menuPublicidad, "imagenMovil");
+        						 
+        						if ($uploadedFile2) {
+        							if ($uploadedFile2->getExtensionName() == "jpg" || $uploadedFile2->getExtensionName() == "png" ||
+        									$uploadedFile2->getExtensionName() == "jpeg" || $uploadedFile2->getExtensionName() == "gif") {
+        										if ($uploadedFile2->saveAs(Yii::app()->params->callcenter['modulosConfigurados']['urlImagenes'] . $idModulo . " movil_" . date("Ymdhis") . "." . $uploadedFile2->getExtensionName())) {
+        											$menuPublicidad->imagenMovil = "/" . Yii::app()->params->callcenter['modulosConfigurados']['urlImagenes'] . $idModulo . " movil_" . date("Ymdhis") . "." . $uploadedFile2->getExtensionName();
+        										} else {
+        											Yii::app()->user->setFlash('alert alert-danger', 'Error al subir la imagen movil');
+        											$error = true;
+        										}
+        									} else {
+        										Yii::app()->user->setFlash('alert alert-danger', 'Imagen movil no valida');
+        										$error = true;
+        									}
+        						}
+        					}
+        					 
+        					if(!$menuPublicidad->save()){
+        						print_r($menuPublicidad->getErrors());exit();
+        					}
+        		}
+        	}
+        	$params['modelMenuPublicidad'] = $menuPublicidad;
+        	
+        }
+        else if ($opcion == 'contenido') {
 
 
             if ( in_array($model->tipo, array($model->tipo == ModulosConfigurados::TIPO_PRODUCTOS, ModulosConfigurados::TIPO_PRODUCTOS_CUADRICULA, ModulosConfigurados::TIPO_PRODUCTOS_CARRO, ModulosConfigurados::TIPO_PRODUCTOS_BANNER)) ) {
@@ -252,6 +317,68 @@ class ContenidoController extends ControllerOperator {
                         'idmodulo' => $idModulo
                     )
                 ));
+            }
+            if($model->tipo == ModulosConfigurados::TIPO_MENU_CONFIGURABLE){
+            	$params['vista'] = '_menuConfigurable';
+            	$model->scenario = 'menuConfigurable';
+           // 	$params['modelMenuPublicidad'] = new MenuPublicidad();
+            	$params['modelMenuItemPublicidad'] = new MenuItemPublicidad();
+            	
+            	if (isset($_POST['MenuItemPublicidad'])) {
+            		if (isset($_FILES)) {
+            			$modelItem = new MenuItemPublicidad();
+            			$modelItem->attributes = $_POST['MenuItemPublicidad'];
+            			$uploadedFile = CUploadedFile::getInstance($modelItem, "iconoDesktop");
+            			$error = false;
+            			if ($uploadedFile->getExtensionName() == "jpg" || $uploadedFile->getExtensionName() == "png" ||
+            					$uploadedFile->getExtensionName() == "jpeg" || $uploadedFile->getExtensionName() == "gif") {
+            		
+            						if ($uploadedFile->saveAs(Yii::app()->params->callcenter['modulosConfigurados']['urlImagenes'] . $modelItem->titulo . date("Ymdhis") . "." . $uploadedFile->getExtensionName())) {
+            							$modelItem->iconoDesktop = "/" . Yii::app()->params->callcenter['modulosConfigurados']['urlImagenes'] . $modelItem->titulo . date("Ymdhis") . "." . $uploadedFile->getExtensionName();
+            							$modelItem->idModulo = $idModulo;
+            						} else {
+            							Yii::app()->user->setFlash('alert alert-danger', 'Error al subir la imagen');
+            							$error = true;
+            						}
+            					} else {
+            						Yii::app()->user->setFlash('alert alert-danger', 'Imagen no valida');
+            						$error = true;
+            					}
+            					
+            					
+            					if (!$error) {
+            						$uploadedFile2 = CUploadedFile::getInstance($modelItem, "iconoMovil");
+            					
+            						if ($uploadedFile2) {
+            							if ($uploadedFile2->getExtensionName() == "jpg" || $uploadedFile2->getExtensionName() == "png" ||
+            									$uploadedFile2->getExtensionName() == "jpeg" || $uploadedFile2->getExtensionName() == "gif") {
+            										if ($uploadedFile2->saveAs(Yii::app()->params->callcenter['modulosConfigurados']['urlImagenes'] . $modelItem->titulo . " movil_" . date("Ymdhis") . "." . $uploadedFile2->getExtensionName())) {
+            											$modelItem->iconoMovil = "/" . Yii::app()->params->callcenter['modulosConfigurados']['urlImagenes'] . $modelItem->titulo . " movil_" . date("Ymdhis") . "." . $uploadedFile2->getExtensionName();
+            										} else {
+            											Yii::app()->user->setFlash('alert alert-danger', 'Error al subir la imagen movil');
+            											$error = true;
+            										}
+            									} else {
+            										Yii::app()->user->setFlash('alert alert-danger', 'Imagen movil no valida');
+            										$error = true;
+            									}
+            						}
+            					}	
+            					
+            					
+            					if(!$modelItem->save()){
+            						echo "<pre>";print_r($modelItem->getErrors());exit();
+            					}
+            		}
+            	}
+            	
+            	$params['listaItems'] = MenuItemPublicidad::model()->findAll(array(
+            			'condition' => 'idModulo=:idModulo',
+            			'params' => array(
+            					':idModulo' => $idModulo,
+            			)
+            	));
+            
             }
             if ($model->tipo == ModulosConfigurados::TIPO_HTML) {
                 $params['vista'] = 'contenidoHtml';
@@ -528,6 +655,36 @@ class ContenidoController extends ControllerOperator {
             ));
         }
     }
+    
+    public function actionEliminarItemMenu(){
+    	if (!Yii::app()->request->isPostRequest) {
+    		throw new CHttpException(404, 'Solicitud inválida.');
+    	}
+    	$idItem = Yii::app()->getRequest()->getPost('idItem');
+    	$model = MenuItemPublicidad::model()->find(array(
+    			'condition' => 'idItem =:idItem',
+    			'params' => array(
+    					'idItem' => $idItem
+    			)
+    	));
+    	if ($model != null) {
+    		$idModulo = $model->idModulo;
+    		$model->delete();
+    		$listaItems = MenuItemPublicidad::model()->findAll(array(
+    				'condition' => 'idModulo =:idmodulo',
+    				'params' => array(
+    						'idmodulo' => $idModulo
+    				)
+    		));
+    		echo CJSON::encode(array(
+    				'result' => 'ok',
+    				'response' => $this->renderPartial('_listaItemsMenu', array(
+    						'listaItems' => $listaItems
+    				), true, false)
+    		));
+    	}
+    }
+    
 
     public function actionEditarImagen($idBanner) {
 

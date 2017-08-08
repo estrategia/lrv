@@ -31,12 +31,11 @@ class MenuItemPublicidad extends CActiveRecord
 		// NOTE: you should only define rules for those attributes that
 		// will receive user inputs.
 		return array(
-			array('codigoPublicidad, enlace', 'required'),
-			array('codigoPublicidad', 'length', 'max'=>32),
-			array('enlace, iconoMovil, iconoDesktop', 'length', 'max'=>64),
+			array('idModulo, enlace, titulo', 'required'),
+			array('enlace, enlaceMovil, titulo, iconoMovil, iconoDesktop', 'length', 'max'=>64),
 			// The following rule is used by search().
 			// @todo Please remove those attributes that should not be searched.
-			array('idItem, codigoPublicidad, enlace, iconoMovil, iconoDesktop', 'safe', 'on'=>'search'),
+			array('idItem, idModulo,  enlace, iconoMovil, iconoDesktop', 'safe', 'on'=>'search'),
 		);
 	}
 
@@ -48,7 +47,7 @@ class MenuItemPublicidad extends CActiveRecord
 		// NOTE: you may need to adjust the relation name and the related
 		// class name for the relations automatically generated below.
 		return array(
-			'codigoPublicidad0' => array(self::BELONGS_TO, 'MMenuPublicidad', 'codigoPublicidad'),
+			'objMenuPublicidad' => array(self::BELONGS_TO, 'MenuPublicidad', 'idModulo'),
 		);
 	}
 
@@ -59,7 +58,7 @@ class MenuItemPublicidad extends CActiveRecord
 	{
 		return array(
 			'idItem' => 'Id Item',
-			'codigoPublicidad' => 'Codigo Publicidad',
+			'idModulo' => 'Modulo',
 			'enlace' => 'Enlace',
 			'iconoMovil' => 'Icono Movil',
 			'iconoDesktop' => 'Icono Desktop',

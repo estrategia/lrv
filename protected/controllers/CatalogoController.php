@@ -2294,14 +2294,13 @@ class CatalogoController extends Controller {
 		$criteria->condition .= " AND t.codigoProducto IN (
                 SELECT DISTINCT bp.codigoProducto
                 FROM t_Beneficios t
-                JOIN t_BeneficiosPuntosVenta bpdv ON t.idBeneficio=bpdv.idBeneficio
                 JOIN t_BeneficiosProductos bp ON t.idBeneficio=bp.idBeneficio
-                JOIN m_PuntoVenta pdv ON pdv.idComercial=bpdv.idComercial
-                WHERE t.fechaIni<=:fecha AND t.fechaFin>=:fecha AND pdv.codigoCiudad=:ciudad AND t.tipo IN (" . implode ( ",", Yii::app ()->params->beneficios ['lrv'] ) . ") $swobligaCli )";
+                WHERE t.fechaIni<=:fecha AND t.fechaFin>=:fecha AND t.tipo IN (" . implode ( ",", Yii::app ()->params->beneficios ['lrv'] ) . ") $swobligaCli )";
 		$criteria->params [':fecha'] = $fecha->format ( 'Y-m-d' );
 
 		$listProductos = Producto::model ()->findAll ( $criteria );
 
+		print_r($listProductos);exit();
 		if (empty ( $listProductos ) && ! empty ( $listIdsCategoriaBI )) {
 			$criteria->condition = str_replace ( ' AND t.idCategoriaBI IN (' . implode ( ",", $listIdsCategoriaBI ) . ')', "", $criteria->condition );
 			$listProductos = Producto::model ()->findAll ( $criteria );

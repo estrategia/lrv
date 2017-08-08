@@ -83,7 +83,7 @@ class SwebController extends CController {
                     INNER JOIN
                     t_BeneficiosProductos AS PBR ON t.IdBeneficio = PBR.IdBeneficio LEFT JOIN 
                     t_BeneficiosPuntosVenta as pv ON (pv.IdBeneficio = t.IdBeneficio)
-                WHERE $condicion AND t.Tipo IN (21,22,23,24,25,26)";
+                WHERE $condicion ";
              fwrite($file, Date("Y-m-d h:i:s ")." Se ejecuto la consulta: ".$sql."" . PHP_EOL);
            $result =  Yii::app()->db->createCommand($sql)->execute();
            fwrite($file, Date("Y-m-d h:i:s ")." Filas afectadas ".$result."" . PHP_EOL);
@@ -110,7 +110,7 @@ class SwebController extends CController {
                         UPDATE t_Beneficios AS t
                         INNER JOIN t_BeneficiosProductos AS PBR ON t.IdBeneficio = PBR.IdBeneficio
                         SET " . $parametros . " 
-                        WHERE $condicion AND t.Tipo IN (21,22,23,24,25,26)";
+                        WHERE $condicion ";
             
             fwrite($file, Date("Y-m-d h:i:s ")." Se ejecuto la consulta: ".$sql."" . PHP_EOL);
             $rows = Yii::app()->db->createCommand($sql)->execute();
@@ -168,9 +168,54 @@ class SwebController extends CController {
             return 0;
         }
     }
+    
+    /**
+     * @param int $idPQRS,
+     * @param int $cedula
+     * @param int $valor
+     * @param int $valorMinimo 
+     * @param string $fechaInicio
+     * @param string $fechaFin
+     * @return boolean
+     * @soap
+     */
+    
+    public function actionBonoPQRS(){
+    	
+    	// $idPQRS,$cedula,$valor,$valorMinimo, $fechaInicio,$fechaFin
+    	
+    
+    	$bonoTienda = new BonosTienda();
+    	
+    	$bonoTienda->identificacionUsuario = $cedula;
+    	$bonoTienda->valor = $valor;
+    	$bonoTienda->minimoCompra = $valorMinimo;
+    	$bonoTienda->vigenciaInicio = $fechaInicio;
+    	$bonoTienda->vigenciaFin = $fechaFin;
+    	$bonoTienda->idPQRS = $idPQRS;
+    	$bonoTienda->concepto = "Bono compensatorio PQRS";
+    	$bonoTienda->estado = Yii::app()->params->callcenter['bonos']['estado']['activo'];
+    	$bonoTienda->fechaCreacion = Date("Y-m-d h:i:s");
+    	$bonoTienda->tipo = Yii::app()->params->callcenter['bonos']['estado']['activo'];
+    	//$bonoTienda->idBonoTienda = Yii::app()->params->callcenter['bonos']['tipo']['cargue'];
+    	$bonoTienda->idBonoTiendaTipo = Yii::app()->params->callcenter['bonos']['tipoBonoPQRS'];
+    	if($bonoTienda->save()){
+    		return true;
+    	}else{
+    		echo "<pre>";
+    		print_r($bonoTienda->getErrors());
+    	}
+    	
+    	return false;
+    	
+    }
 
     public function actionVerificarCorreo() {
         $this->recordarCorreos();
+    }
+    
+    public function actionBono(){
+    	$this->actionBonoPQRS(1, 1115077082, 100000, 100000, "2016-02-02", "2016-05-01");
     }
 
 }

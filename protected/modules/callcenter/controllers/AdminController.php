@@ -751,6 +751,7 @@ class AdminController extends ControllerOperator {
         }
     }
 
+
     public function actionGeoBarrio() {
         if (!Yii::app()->request->isPostRequest) {
             echo CJSON::encode(array('result' => 'error', 'response' => 'Solicitud invalida.'));

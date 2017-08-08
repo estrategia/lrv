@@ -48,7 +48,7 @@ class ControllerOperator extends CController {
         Yii::app()->getClientScript()->registerScriptFile(Yii::app()->request->baseUrl . '/libs/owl-carousel/owl.carousel.min.js', CClientScript::POS_END);
         Yii::app()->getClientScript()->registerScriptFile(Yii::app()->request->baseUrl . '/js/operator.js', CClientScript::POS_END);
         Yii::app()->getClientScript()->registerScriptFile(Yii::app()->request->baseUrl . '/js/common.js', CClientScript::POS_END);
-        Yii::app()->getClientScript()->registerScriptFile(Yii::app()->request->baseUrl . '/js/modulos.min.js', CClientScript::POS_END);
+        Yii::app()->getClientScript()->registerScriptFile(Yii::app()->request->baseUrl . '/js/modulos.js', CClientScript::POS_END);
     }
 
 //custom application css

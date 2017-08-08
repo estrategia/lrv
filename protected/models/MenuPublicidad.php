@@ -29,12 +29,11 @@ class MenuPublicidad extends CActiveRecord
 		// NOTE: you should only define rules for those attributes that
 		// will receive user inputs.
 		return array(
-			array('codigoPublicidad', 'required'),
-			array('codigoPublicidad', 'length', 'max'=>32),
+			array('idModulo', 'required'),
 			array('imagenDesktop, imagenMovil', 'length', 'max'=>64),
 			// The following rule is used by search().
 			// @todo Please remove those attributes that should not be searched.
-			array('codigoPublicidad, imagenDesktop, imagenMovil', 'safe', 'on'=>'search'),
+			array('idModulo, imagenDesktop, imagenMovil', 'safe', 'on'=>'search'),
 		);
 	}
 
@@ -46,7 +45,7 @@ class MenuPublicidad extends CActiveRecord
 		// NOTE: you may need to adjust the relation name and the related
 		// class name for the relations automatically generated below.
 		return array(
-			'listMenuItemPublicidad' => array(self::HAS_MANY, 'MenuItemPublicidad', 'codigoPublicidad'),
+			'listMenuItemPublicidad' => array(self::HAS_MANY, 'MenuItemPublicidad', 'idModulo'),
 		);
 	}
 
@@ -56,7 +55,6 @@ class MenuPublicidad extends CActiveRecord
 	public function attributeLabels()
 	{
 		return array(
-			'codigoPublicidad' => 'Codigo Publicidad',
 			'imagenDesktop' => 'Imagen Desktop',
 			'imagenMovil' => 'Imagen Movil',
 		);
@@ -80,7 +78,6 @@ class MenuPublicidad extends CActiveRecord
 
 		$criteria=new CDbCriteria;
 
-		$criteria->compare('codigoPublicidad',$this->codigoPublicidad,true);
 		$criteria->compare('imagenDesktop',$this->imagenDesktop,true);
 		$criteria->compare('imagenMovil',$this->imagenMovil,true);
 

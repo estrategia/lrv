@@ -3730,6 +3730,14 @@ class CarroController extends Controller {
                         if (!$objCompra1->save()) {
                             throw new Exception("Error al guardar compra [1]" . $objCompra1->validateErrorsResponse());
                         }
+                        
+                        $objEstadoCompra3 = new ComprasEstados;
+                        $objEstadoCompra3->idCompra = $objCompra->idCompra;
+                        $objEstadoCompra3->idEstadoCompra = Yii::app()->params->callcenter['estadoCompra']['estado']['subasta'];
+                        $objEstadoCompra3->idOperador = 38;
+                        if (!$objEstadoCompra3->save()) {
+                        	throw new Exception("Error al guardar traza de estado: " . $objEstadoCompra2->validateErrorsResponse());
+                        }
                     }
                 } catch (SoapFault $exc) {
                     Yii::log("SoapFault WebService CongelarCompraAutomatica [compra: $objCompra->idCompra]\n" . $exc->getMessage() . "\n" . $exc->getTraceAsString() . "\n" . $client->__getLastResponse(), CLogger::LEVEL_INFO, 'application');
