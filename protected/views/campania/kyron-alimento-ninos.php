@@ -73,19 +73,19 @@ $this->metaTags = "<meta http-equiv='X-UA-Compatible' content='IE=edge'>
       </a>
       <span class="flavor-diabeticos">FRESA- VAINILLA</span>
       <h2 class="almendras" >ENERGOLD KIDS </h2>
-      <span class="sub-title-vainilla">Una buena manera de nutrir a los niños</span>
+      <span class="sub-title-vainilla">Una buena manera de alimentar a los niños</span>
       <div class="content-colum">
         <ul class="lista-check">
-          <li>Útil para el crecimiento físico y mental.</li>
           <li>Recomendado para niños a partir de los 4 años de edad. </li>
           <li>Alimento a base de Maltodextrina con Macronutrientes: Carbohidratos, Proteínas y grasas. Enriquecido con Micronutrientes: Vitaminas y Minerales.</li>
+          <li>Un buen complemento para el crecimiento de los niños.</li>
         </ul>
         <div class="content-colum">
           <h4 class="porcion-suplemento-dietario" style="margin-top: 0px;">PORCIÓN RECOMENDADA</h4>
           <p class="description-porcion-suplemento-dietario">
-            1 cucharada medidora (17 gr.)*  <br>
+            1 cucharada medidora (17 g.)*  <br>
             1 vez al día, por vaso de leche o jugo.<br>
-            Cont. neto 440 gr.  <br>
+            Cont. neto 440 g.  <br>
             26 porciones. <br>
           </p>
           <p class="note"> (Utilice la cuchara dosificadora que se encuentra en el envase).</p>
@@ -106,17 +106,17 @@ $this->metaTags = "<meta http-equiv='X-UA-Compatible' content='IE=edge'>
       <span class="sub-title-vainilla" style="color: #E761A0;">Ideal antes, durante y después del embarazo.</span>
       <div class="content-colum">
         <ul class="lista-check">
-          <li>No contiene azúcar.</li>
-          <li>Con DHA, derivado del Omega 3, que contribuye con el desarrollo y funcionamiento del cerebro del nuevo integrante de la familia. </li>
+          <!-- <li>No contiene azúcar.</li> -->
+          <!-- <li>Con DHA, derivado del Omega 3, que contribuye con el desarrollo y funcionamiento del cerebro del nuevo integrante de la familia. </li> -->
           <li>Alimento en polvo, con Macronutrientes: Carbohidratos, Proteínas y Lípidos, enriquecido con Vitaminas y Minerales. </li>
-          <li>Aporte extra de &Aacute;cido Fólico, Hierro y Calcio, para la correcta formación del bebé.  </li>
+          <li>Alto aporte de Ácido folico, hierro y calcio para la buena formación y desarrollo del bebé. </li>
         </ul>
         <div class="content-colum">
           <h4 class="porcion-suplemento-dietario" style="color:#E761A0;">PORCIÓN RECOMENDADA</h4>
           <p class="description-porcion-suplemento-dietario">
           2 cucharadas medidoras (34 g.)* <br>
             2 veces al día, por vaso de leche o jugo.<br>
-          Contenido neto 440 gr.  <br>
+          Contenido neto 440 g.  <br>
           por envase 13 porciones.
           </p>
         </div>
@@ -143,7 +143,7 @@ $this->metaTags = "<meta http-equiv='X-UA-Compatible' content='IE=edge'>
           <h4 class="porcion-suplemento-dietario" style="color:#903D8F;">PORCIÓN RECOMENDADA</h4>
           <p class="description-porcion-suplemento-dietario">
             2 cucharadas 1 vez al día.  <br>
-            Contenido neto 300 gr.
+            Contenido neto 300 g.
           </p>
         </div>
       </div>
@@ -217,19 +217,19 @@ $this->metaTags = "<meta http-equiv='X-UA-Compatible' content='IE=edge'>
         </a>
         <span class="flavor-diabeticos">FRESA- VAINILLA</span>
         <h2 class="almendras">ENERGOLD KIDS </h2>
-        <span class="sub-title-vainilla" style="padding-inline-start: 10px;display: block;">Una buena manera de nutrir a los niños</span>
+        <span class="sub-title-vainilla" style="padding-inline-start: 10px;display: block;">Una buena manera de alimentar a los niños</span>
         <div class="content-colum">
           <ul class="lista-check">
-            <li>Útil para el crecimiento físico y mental.</li>
             <li>Recomendado para niños a partir de los 4 años de edad. </li>
             <li>Alimento a base de Maltodextrina con Macronutrientes: Carbohidratos, Proteínas y grasas. Enriquecido con Micronutrientes: Vitaminas y Minerales.</li>
+            <li>Un buen complemento para el crecimiento de los niños.</li>
           </ul>
           <div class="content-colum">
             <h4 class="porcion-suplemento-dietario" style="margin-top: 75px;">PORCIÓN RECOMENDADA</h4>
             <p class="description-porcion-suplemento-dietario">
-              1 cucharada medidora (17 gr.)*  <br>
+              1 cucharada medidora (17 g.)*  <br>
               1 vez al día, por vaso de leche o jugo.<br>
-              Cont. neto 440 gr.  <br>
+              Cont. neto 440 g.  <br>
               por envase 26 porciones. <br>
             </p>
           </div>
@@ -252,17 +252,17 @@ $this->metaTags = "<meta http-equiv='X-UA-Compatible' content='IE=edge'>
         <span class="sub-title-vainilla" style="color: #E761A0;padding-inline-start: 10px;display: block;">Ideal antes, durante y después del embarazo.</span>
         <div class="content-colum">
           <ul class="lista-check">
-            <li>No contiene azúcar.</li>
-            <li>Con DHA, derivado del Omega 3, que contribuye con el desarrollo y funcionamiento del cerebro del nuevo integrante de la familia. </li>
+            <!-- <li>No contiene azúcar.</li> -->
+            <!-- <li>Con DHA, derivado del Omega 3, que contribuye con el desarrollo y funcionamiento del cerebro del nuevo integrante de la familia. </li> -->
             <li>Alimento en polvo, con Macronutrientes: Carbohidratos, Proteínas y Lípidos, enriquecido con Vitaminas y Minerales. </li>
-            <li>Aporte extra de &Aacute;cido Fólico, Hierro y Calcio, para la correcta formación del bebé.  </li>
+            <li>Alto aporte de Ácido folico, hierro y calcio para la buena formación y desarrollo del bebé. </li>
           </ul>
-          <div class="content-colum">
+          <div class="content-colum" style="margin-top: 116px;">
             <h4 class="porcion-suplemento-dietario" style="color:#E761A0;margin-top: 10px;">PORCIÓN RECOMENDADA</h4>
             <p class="description-porcion-suplemento-dietario">
               2 cucharadas medidoras (34 g.)*  <br>
               2 veces al día, por vaso de leche o jugo.<br>
-              Cont. neto 440 gr.  <br>
+              Cont. neto 440 g.  <br>
               por envase 13 porciones. <br>
             </p>
           </div>
@@ -291,7 +291,7 @@ $this->metaTags = "<meta http-equiv='X-UA-Compatible' content='IE=edge'>
             <h4 class="porcion-suplemento-dietario" style="color:#903D8F;margin-top: 230px;">PORCIÓN RECOMENDADA</h4>
             <p class="description-porcion-suplemento-dietario">
               2 cucharadas 1 vez al día. <br>
-              Contenido neto 300 gr.<br>
+              Contenido neto 300 g.<br>
             </p>
           </div>
         </div>

@@ -75,12 +75,12 @@ $this->metaTags = "<meta http-equiv='X-UA-Compatible' content='IE=edge'>
       <span class="sub-title-quinua">Balance adecuado de aminoácidos, para el organismo.</span>
       <ul class="lista-check">
         <li>Alimento a base de Maltodextrina con QUINUA. Macronutrientes: Carbohidratos, Proteínas y grasas; Micronutrientes: Vitaminas y Minerales.</li>
-        <li>Por su aporte y componentes nutricionales, la NASA ha seleccionado la QUINUA como componente de la nutrición de los Astronautas.		</li>
+        <!-- <li>Por su aporte y componentes nutricionales, la NASA ha seleccionado la QUINUA como componente de la nutrición de los Astronautas.		</li> -->
         <li>A partir de los 4 años de edad. </li>
-        <li>El aporte proteico vegetal de la QUINUA, es similar a la proteína animal, ya que es elevado, y la calidad de sus nutrientes son superiores a la de otros cereales.</li>
+        <!-- <li>El aporte proteico vegetal de la QUINUA, es similar a la proteína animal, ya que es elevado, y la calidad de sus nutrientes son superiores a la de otros cereales.</li> -->
       </ul>
       <h4 class="porcion-suplemento-dietario">PORCIÓN RECOMENDADA</h4>
-      <p class="description-porcion-suplemento-dietario">1 cucharada medidora (17 gr.)*<br>1 vez al día, por vaso de leche o jugo.<br>Cont. neto 440 gr.<br>por envase 26 porciones<br></p>
+      <p class="description-porcion-suplemento-dietario">1 cucharada medidora (17 g.)*<br>1 vez al día, por vaso de leche o jugo.<br>Cont. neto 440 g.<br>por envase 26 porciones<br></p>
     </div>
     <img class="img-responsive-m" style="background-color: #F8F8F8;float: right;margin-top: -80px;margin-bottom: 20px;" src="<?= Yii::app()->request->baseUrl ?>/images/contenido/kyron/alimento-en-polvo-adulto/quinua-forma.png">
     <div class="bg-gray">
@@ -101,13 +101,13 @@ $this->metaTags = "<meta http-equiv='X-UA-Compatible' content='IE=edge'>
       <ul class="lista-check">
         <li>Alimento en polvo a base de avena para preparar bebida con Almendra enriquecido con Vitaminas y Minerales.</li>
         <li>Ideal para complementar la alimentación diaria, porque brinda elementos nutritivos que el organismo requiere para su normal funcionamiento y desarrollo.</li>
-        <li>El aporte de PROTE&IACUTE;NA VEGETAL de las Almendras es similar a la proteína animal, ya que es elevado y la calidad de sus nutrientes son superiores; por lo tanto, para los partidarios del VEGANISMO, resulta  ser una gran opción en su alimentación.</li>
+        <li>Las Almendras tiene un alto contenido de nutrientes, por lo tanto, para los partidarios del veganismo, resulta ser una gran opción de alimentación.</li>
       </ul>
       <h4 class="porcion-suplemento-dietario" style="color:#215AA7;">PORCIÓN RECOMENDADA</h4>
       <p class="description-porcion-suplemento-dietario">
         1 cucharada por porción <br>
         1 vez al día, por vaso de leche o jugo.<br>
-        Cont. neto 440 gr. <br>
+        Cont. neto 440 g. <br>
         por envase 26 porciones.
       </p>
     </div>
@@ -131,9 +131,9 @@ $this->metaTags = "<meta http-equiv='X-UA-Compatible' content='IE=edge'>
       </ul>
       <h4 class="porcion-suplemento-dietario" style="color:#3D6268;">PORCIÓN RECOMENDADA</h4>
       <p class="description-porcion-suplemento-dietario">
-        1 cucharada medidora (17 gr.)*  <br>
+        1 cucharada medidora (17 g.)*  <br>
         1 vez al día, por vaso de leche o jugo.<br>
-        Cont. neto 440 gr.  <br>
+        Cont. neto 440 g.  <br>
         por envase 26 porciones.
       </p>
     </div>
@@ -157,9 +157,9 @@ $this->metaTags = "<meta http-equiv='X-UA-Compatible' content='IE=edge'>
       </ul>
       <h4 class="porcion-suplemento-dietario" style="color:#931914;">PORCIÓN RECOMENDADA</h4>
       <p class="description-porcion-suplemento-dietario">
-        1 cucharada medidora (17 gr.)*  <br>
+        1 cucharada medidora (17 g.)*  <br>
         1 vez al día, por vaso de leche o jugo.<br>
-        Cont. neto 440 gr.  <br>
+        Cont. neto 440 g.  <br>
         26 porciones. <br>
         (Utilice la cuchara dosificadora que se encuentra en el envase).
       </p>
@@ -181,9 +181,9 @@ $this->metaTags = "<meta http-equiv='X-UA-Compatible' content='IE=edge'>
       </ul>
       <h4 class="porcion-suplemento-dietario" style="color:#487D2F;">PORCIÓN RECOMENDADA</h4>
       <p class="description-porcion-suplemento-dietario">
-        1 cucharada medidora (17 gr.)*  <br>
+        1 cucharada medidora (17 g.)*  <br>
         1 vez al día, por vaso de leche o jugo.<br>
-        Cont. neto 440 gr.  <br>
+        Cont. neto 440 g.  <br>
         26 porciones. <br>
         (Utilice la cuchara dosificadora que se encuentra en el envase).
       </p>
@@ -204,9 +204,9 @@ $this->metaTags = "<meta http-equiv='X-UA-Compatible' content='IE=edge'>
       </ul>
       <h4 class="porcion-suplemento-dietario" style="color:#2180C2;">PORCIÓN RECOMENDADA</h4>
       <p class="description-porcion-suplemento-dietario">
-        1 cucharada medidora (17 gr.)*  <br>
+        1 cucharada medidora (17 g.)*  <br>
         1 vez al día, por vaso de leche o jugo.<br>
-        Cont. neto 440 gr.  <br>
+        Cont. neto 440 g.  <br>
         26 porciones. <br>
         (Utilice la cuchara dosificadora que se encuentra en el envase).
       </p>
@@ -227,9 +227,9 @@ $this->metaTags = "<meta http-equiv='X-UA-Compatible' content='IE=edge'>
       </ul>
       <h4 class="porcion-suplemento-dietario" style="color:#20934E;">PORCIÓN RECOMENDADA</h4>
       <p class="description-porcion-suplemento-dietario">
-        1 cucharada medidora (17 gr.)*  <br>
+        1 cucharada medidora (17 g.)*  <br>
         1 vez al día, por vaso de leche o jugo.<br>
-        Cont. neto 440 gr.  <br>
+        Cont. neto 440 g.  <br>
         26 porciones. <br>
         (Utilice la cuchara dosificadora que se encuentra en el envase).
       </p>
@@ -278,16 +278,16 @@ $this->metaTags = "<meta http-equiv='X-UA-Compatible' content='IE=edge'>
           <span class="flavor">FRUTOS  ROJOS – VAINILLA</span>
           <h2 class="quinua">ENERGOLD CON QUINUA</h2>
           <span class="sub-title-quinua" style="padding-inline-start: 10px;display: block;">Balance adecuado de aminoácidos, para el organismo.</span>
-          <div class="content-colum">
+          <div class="content-colum" >
             <ul class="lista-check">
               <li>Alimento a base de Maltodextrina con QUINUA. Macronutrientes: Carbohidratos, Proteínas y grasas; Micronutrientes: Vitaminas y Minerales.</li>
-              <li>Por su aporte y componentes nutricionales, la NASA ha seleccionado la QUINUA como componente de la nutrición de los Astronautas.		</li>
+              <!-- <li>Por su aporte y componentes nutricionales, la NASA ha seleccionado la QUINUA como componente de la nutrición de los Astronautas.		</li> -->
               <li>A partir de los 4 años de edad. </li>
-              <li>El aporte proteico vegetal de la QUINUA, es similar a la proteína animal, ya que es elevado, y la calidad de sus nutrientes son superiores a la de otros cereales.</li>
+              <!-- <li>El aporte proteico vegetal de la QUINUA, es similar a la proteína animal, ya que es elevado, y la calidad de sus nutrientes son superiores a la de otros cereales.</li> -->
             </ul>
-            <div class="content-colum">
+            <div class="content-colum" style="margin-top: 183px;">
               <h4 class="porcion-suplemento-dietario" style="margin-top: 0px;">PORCIÓN RECOMENDADA</h4>
-              <p class="description-porcion-suplemento-dietario">1 cucharada medidora (17 gr.)*<br>1 vez al día, por vaso de leche o jugo.<br>Cont. neto 440 gr.<br>por envase 26 porciones<br></p>
+              <p class="description-porcion-suplemento-dietario">1 cucharada medidora (17 g.)*<br>1 vez al día, por vaso de leche o jugo.<br>Cont. neto 440 g.<br>por envase 26 porciones<br></p>
             </div>
           </div>
         </div>
@@ -311,14 +311,14 @@ $this->metaTags = "<meta http-equiv='X-UA-Compatible' content='IE=edge'>
           <ul class="lista-check">
             <li>Alimento en polvo a base de avena para preparar bebida con Almendra enriquecido con Vitaminas y Minerales.</li>
             <li>Ideal para complementar la alimentación diaria, porque brinda elementos nutritivos que el organismo requiere para su normal funcionamiento y desarrollo.</li>
-            <li>El aporte de PROTE&IACUTE;NA VEGETAL de las Almendras es similar a la proteína animal, ya que es elevado y la calidad de sus nutrientes son superiores; por lo tanto, para los partidarios del VEGANISMO, resulta  ser una gran opción en su alimentación.</li>
+            <li>Las Almendras tiene un alto contenido de nutrientes, por lo tanto, para los partidarios del veganismo, resulta ser una gran opción de alimentación.</li>
           </ul>
-          <div class="content-colum">
+          <div class="content-colum" style="margin-top: 67px;">
             <h4 class="porcion-suplemento-dietario" style="color:#215AA7;margin-top: 4px;">PORCIÓN RECOMENDADA</h4>
             <p class="description-porcion-suplemento-dietario">
               1 cucharada por porción <br>
               1 vez al día, por vaso de leche o jugo.<br>
-              Cont. neto 440 gr. <br>
+              Cont. neto 440 g. <br>
               por envase 26 porciones.
             </p>
           </div>
@@ -346,9 +346,9 @@ $this->metaTags = "<meta http-equiv='X-UA-Compatible' content='IE=edge'>
           <div class="content-colum">
             <h4 class="porcion-suplemento-dietario" style="color:#3D6268;margin-top: 213px;">PORCIÓN RECOMENDADA</h4>
             <p class="description-porcion-suplemento-dietario">
-              1 cucharada medidora (17 gr.)*  <br>
+              1 cucharada medidora (17 g.)*  <br>
               1 vez al día, por vaso de leche o jugo.<br>
-              Cont. neto 440 gr.  <br>
+              Cont. neto 440 g.  <br>
               por envase 26 porciones.
             </p>
           </div>
@@ -380,9 +380,9 @@ $this->metaTags = "<meta http-equiv='X-UA-Compatible' content='IE=edge'>
         <div class="content-colum">
           <h4 class="porcion-suplemento-dietario" style="color:#931914;margin-top: 75px;">PORCIÓN RECOMENDADA</h4>
           <p class="description-porcion-suplemento-dietario">
-            1 cucharada medidora (17 gr.)*  <br>
+            1 cucharada medidora (17 g.)*  <br>
             1 vez al día, por vaso de leche o jugo.<br>
-            Cont. neto 440 gr.  <br>
+            Cont. neto 440 g.  <br>
             26 porciones. <br>
             (Utilice la cuchara dosificadora que se encuentra en el envase).
           </p>
@@ -406,9 +406,9 @@ $this->metaTags = "<meta http-equiv='X-UA-Compatible' content='IE=edge'>
         <div class="content-colum">
           <h4 class="porcion-suplemento-dietario" style="color:#487D2F;margin-top: 23px;">PORCIÓN RECOMENDADA</h4>
           <p class="description-porcion-suplemento-dietario">
-            1 cucharada medidora (17 gr.)*  <br>
+            1 cucharada medidora (17 g.)*  <br>
             1 vez al día, por vaso de leche o jugo.<br>
-            Cont. neto 440 gr.  <br>
+            Cont. neto 440 g.  <br>
             26 porciones. <br>
             (Utilice la cuchara dosificadora que se encuentra en el envase).
           </p>
@@ -431,9 +431,9 @@ $this->metaTags = "<meta http-equiv='X-UA-Compatible' content='IE=edge'>
         <div class="content-colum">
           <h4 class="porcion-suplemento-dietario" style="color:#2180C2;margin-top: 127px;">PORCIÓN RECOMENDADA</h4>
           <p class="description-porcion-suplemento-dietario">
-            1 cucharada medidora (17 gr.)*  <br>
+            1 cucharada medidora (17 g.)*  <br>
             1 vez al día, por vaso de leche o jugo.<br>
-            Cont. neto 440 gr.  <br>
+            Cont. neto 440 g.  <br>
             26 porciones. <br>
             (Utilice la cuchara dosificadora que se encuentra en el envase).
           </p>
@@ -456,9 +456,9 @@ $this->metaTags = "<meta http-equiv='X-UA-Compatible' content='IE=edge'>
         <div class="content-colum">
           <h4 class="porcion-suplemento-dietario" style="color:#20934E;margin-top: 53px;">PORCIÓN RECOMENDADA</h4>
           <p class="description-porcion-suplemento-dietario">
-            1 cucharada medidora (17 gr.)*  <br>
+            1 cucharada medidora (17 g.)*  <br>
             1 vez al día, por vaso de leche o jugo.<br>
-            Cont. neto 440 gr.  <br>
+            Cont. neto 440 g.  <br>
             26 porciones. <br>
             (Utilice la cuchara dosificadora que se encuentra en el envase).
           </p>
