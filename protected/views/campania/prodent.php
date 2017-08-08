@@ -239,11 +239,11 @@ $this->metaTags = "
 
 <!--Versión escritorio-->
 <?php else: ?>
-	<div class="sidebar-cart">
+	<!-- <div class="sidebar-cart">
   	<a href="https://www.larebajavirtual.com/catalogo/buscar?busqueda=prodent">
   		<img class="img-responsive" src="<?= Yii::app()->request->baseUrl ?>/images/contenido/coaspharma/prodent/compra-online.png" alt="Comprar sol-or">
   	</a>
-	</div>
+	</div> -->
   <img class="img-responsive" src="<?= Yii::app()->request->baseUrl ?>/images/contenido/coaspharma/prodent/banner.jpg" alt="">
   <!-- PRODENT KIDS -->
   <div class="bg-gray">

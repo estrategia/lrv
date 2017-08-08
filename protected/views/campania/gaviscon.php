@@ -282,5 +282,5 @@
     </div>
   </section>
 </section>
-<!--Fin versión escritorio
+<!--Fin versión escritorio -->
 <?php endif; ?>

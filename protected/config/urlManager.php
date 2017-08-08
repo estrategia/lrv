@@ -40,6 +40,8 @@ return array(
         'pedialyte-suero-oral' => 'publicidad/contenido/nombre/pedialyte',
         'pilas-energizer' => 'publicidad/contenido/nombre/energizer',
         'pilas-especiales-energizer' => 'publicidad/contenido/nombre/energizer-pilas-especiales',
+        'pilas-auditivas-energizer' => 'publicidad/contenido/nombre/energizer-pilas-auditivas',
+        'pilas-recargables-energizer' => 'publicidad/contenido/nombre/energizer-pilas-recargables',
         'condones-duo-sensaciones-extremas' => 'publicidad/contenido/nombre/duo-sensaciones-extremas',
         'condones-duo-maxima-sensacion' => 'publicidad/contenido/nombre/duo-maxima-sensacion',
         'condones-duo-seguridad-y-confianza' => 'publicidad/contenido/nombre/duo-seguridad-y-confianza',
@@ -65,6 +67,18 @@ return array(
         'pomys-toallas-desmaquilladoras-piel-seca'  => 'publicidad/contenido/nombre/pommys-piel-normal-seca',
         'pomys-rueditas-desmaquilladoras' => 'publicidad/contenido/nombre/pommis-rueda-desmaquilladora',
         'strepsils-dolor-garganta' => 'publicidad/contenido/nombre/strepsil',
+        'stamyl-forte-antiflatulento' => 'publicidad/contenido/nombre/stamyl',
+        'milpax-antirreflujo' => 'publicidad/contenido/nombre/milpax',
+        'calcibon-suplemento-calcio' => 'publicidad/contenido/nombre/calcibon',
+        'igora-tintes-para-cabello' => 'publicidad/contenido/nombre/igora',
+        'nutriben-crecimiento' => 'publicidad/contenido/nombre/nutriben',
+        'baby-dove' => 'publicidad/contenido/nombre/baby-dove',
+        'denticare-calendula-enjuague-bucal' => 'publicidad/contenido/nombre/denticare',
+        'air-lift-elimina-mal-aliento' => 'publicidad/contenido/nombre/air-lift',
+        'fybogel-fibra-para-estrenimiento' => 'publicidad/contenido/nombre/fybogel',
+        'ky-lubricante-intimo' => 'publicidad/contenido/nombre/ky',
+
+
         // Fin links campañas
 
         // REST patterns

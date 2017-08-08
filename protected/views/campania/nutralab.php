@@ -9,7 +9,7 @@
     @font-face {font-family:HelveticaLTStd-BoldCond; src: url(" . Yii::app()->request->baseUrl . "/images/contenido/nutralab/fonts/HelveticaLTStd-BoldCond.otf);}
     @font-face {font-family:HelveticaLTStd-Roman; src: url(" . Yii::app()->request->baseUrl . "/images/contenido/nutralab/fonts/HelveticaLTStd-Roman.otf);}
     .img-responsive-m {width:100%;}
-    .sidebar-cart {position: fixed;right: 0px;top: 60%;z-index: 2000;}
+    .sidebar-cart {position: fixed;right: 0px;top: 60%;z-index: 2000;width: 260px;}
     .section-iso-whey {background-image:url(".Yii::app()->request->baseUrl."/images/contenido/nutralab/escritorio/iso-whey/background.jpg); background-size: 100% 100%;}
     .name-product {font-family: HelveticaLTStd-BlkCondObl;color: #fff;font-size: 70px;margin-top: 50px;}
     .gramos {font-family: HelveticaLTStd-BlkCond;font-size: 30px;color: #363634;border-top: 2px solid #363634;display: inline-block;border-bottom: 2px solid #363634;padding: 10px 0;margin: 0;}
@@ -260,5 +260,5 @@
     </div>
   </div>
 </section>
-<!--Fin versión escritorio
+<!--Fin versión escritorio -->
 <?php endif; ?>

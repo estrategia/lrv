@@ -13,7 +13,7 @@ $this->metaTags = "<meta http-equiv='X-UA-Compatible' content='IE=edge'>
     .background-black .content h1 {color:#FFE500;font-family:helvetica-neue-heavy-condObl;font-size: 68px;margin:6px 0;margin-top:20px;}
     .background-black .content h2 {color:#FFF;font-family:helvetica-neue-heavy-condObl;font-size: 21px;margin:6px 0;}
     .background-black .content h3 {color:#FA9000;font-family:helvetica-neue-heavy;font-size: 35px;margin: 12px 0; }
-    .lista {color: #E9E9E6;font-size: 27px;margin-top: 60px;font-family:helvetica-neue-heavy; line-height: 35px;}
+    .lista {color: #E9E9E6;font-size: 20px;margin-top: 60px;font-family:helvetica-neue-heavy; line-height: 35px;}
     .usos {font-family:helvetica-neue-heavy;color:#DFDFDC;font-size: 25px;margin-top: 14%;}
     .text-bg-yellow {z-index: 5;position: absolute;margin-top: 16px;font-family: helvetica-neue-heavy-condObl;font-size: 24px;color: #000;margin: 32px;}
     .text-bg-yellow span {font-size: 32px;}
@@ -27,7 +27,8 @@ $this->metaTags = "<meta http-equiv='X-UA-Compatible' content='IE=edge'>
     .img-responsive-movil {width:100%;}
     .btn-menu{font-family: helvetica-neue-heavy;background-repeat: no-repeat;display: inline-block;padding: 15px 25px;background-size: 100% 100%;color: #FFE500;border: 2px solid #fff;}
     .btn-menu:hover{background-color: #FFE500;color:#000;border: 2px solid #FFE500;transition: all 0.2s ease-in-out 0s;}
-
+    .btn-menu.active {background-color: #FFE500;color: #000;border: 2px solid #FFE500;transition: all 0.2s ease-in-out 0s;}
+    .menu {margin-bottom: 20px;}
     @media (min-width: 1100px) and (max-width: 1199px) {
       .background-black .content h1 {font-size: 45px;}
       .background-black .content h2 {font-size: 33px;}
@@ -84,7 +85,7 @@ $this->metaTags = "<meta http-equiv='X-UA-Compatible' content='IE=edge'>
       .text-bg-yellow {font-size: 16px;margin: 38px;}
       .text-bg-yellow span {font-size: 22px;}
       .precaucion {font-size: 18px;margin-top: 34%;}
-      .lista {font-size: 22px;margin-top: 29px;}
+      .lista {font-size: 20px;margin-top: 29px;}
       .fot-product {margin-top: -9.3%;}
     }
     @media (min-width: 1601px) and (max-width: 1700px) {
@@ -97,7 +98,7 @@ $this->metaTags = "<meta http-equiv='X-UA-Compatible' content='IE=edge'>
       .text-bg-yellow {font-size: 16px;margin: 38px;}
       .text-bg-yellow span {font-size: 22px;}
       .precaucion {font-size: 18px;margin-top: 34%;}
-      .lista {font-size: 22px;margin-top: 29px;}
+      .lista {font-size: 20px;margin-top: 29px;}
       .fot-product {margin-top: -9.3%;}
     }
     @media (min-width: 1701px) and (max-width: 1800px) {
@@ -110,7 +111,7 @@ $this->metaTags = "<meta http-equiv='X-UA-Compatible' content='IE=edge'>
       .text-bg-yellow {font-size: 22px;margin: 45px;}
       .text-bg-yellow span {font-size: 27px;}
       .precaucion {font-size: 18px;margin-top: 34%;}
-      .lista {font-size: 22px;margin-top: 29px;}
+      .lista {font-size: 20px;margin-top: 29px;}
       .fot-product {margin-top: -9.3%;}
     }
 </style>
@@ -121,10 +122,12 @@ $this->metaTags = "<meta http-equiv='X-UA-Compatible' content='IE=edge'>
 <img class="img-responsive-movil" src="<?= Yii::app()->request->baseUrl ?>/images/contenido/energizer/banner.jpg" alt="Energizer max porwer seal">
 <div class="background-black" style="padding: 0;margin-top: -11px;">
   <div class="content">
-    <center>
-      <a href="<?= Yii::app()->request->baseUrl ?>/pilas-energizer"><h4 style="margin-bottom: 0px;" class="btn-menu"><span class="glyphicon glyphicon-menu-right" aria-hidden="true"></span> Pilas PowerSeal</h4></a>
-      <a href="<?= Yii::app()->request->baseUrl ?>/pilas-especiales-energizer"><h4 class="btn-menu"><span class="glyphicon glyphicon-menu-right" aria-hidden="true"></span> Pilas Especiales</h4></a>
-    </center>
+    <div class="menu">
+      <a href="<?= Yii::app()->request->baseUrl ?>/pilas-energizer"><h4 class="btn-menu active"><span class="glyphicon glyphicon-menu-right" aria-hidden="true"></span> Pilas PowerSeal</h4></a>
+      <a href="<?= Yii::app()->request->baseUrl ?>/pilas-especiales-energizer"><h4 class="btn-menu"><span class="glyphicon glyphicon-menu-right" aria-hidden="true"></span> Pilas especiales</h4></a>
+      <a href="<?= Yii::app()->request->baseUrl ?>/pilas-auditivas-energizer"><h4 class="btn-menu "><span class="glyphicon glyphicon-menu-right" aria-hidden="true"></span> Pilas Auditivas</h4></a>
+      <a href="<?= Yii::app()->request->baseUrl ?>/pilas-recargables-energizer"><h4 class="btn-menu"><span class="glyphicon glyphicon-menu-right" aria-hidden="true"></span> Línea recargable</h4></a>
+    </div>
     <h1 class="first-title" style="font-size: 27px;">Energizer max AA con tecnología PowerSeal plus</h1>
     <h2 style="font-size: 19px;letter-spacing: 1px;">significa que puedes estar seguro de que siempre tendrás energía cuando más la necesitas.</h2>
     <!-- <h3 style="font-size: 16px;">¡Energizer se enorgullece en presentar Power Seal Technology!</h3> -->
@@ -163,12 +166,14 @@ $this->metaTags = "<meta http-equiv='X-UA-Compatible' content='IE=edge'>
 <img class="img-responsive" src="<?= Yii::app()->request->baseUrl ?>/images/contenido/energizer/banner.jpg" alt="Energizer max porwer seal">
 <div class="container-fluid background-black" style="padding: 0;">
   <div class="content">
-    <a href="<?= Yii::app()->request->baseUrl ?>/pilas-energizer"><h4 class="btn-menu"><span class="glyphicon glyphicon-menu-right" aria-hidden="true"></span> Pilas PowerSeal</h4></a>
+    <a href="<?= Yii::app()->request->baseUrl ?>/pilas-energizer"><h4 class="btn-menu active"><span class="glyphicon glyphicon-menu-right" aria-hidden="true"></span> Pilas PowerSeal</h4></a>
     <a href="<?= Yii::app()->request->baseUrl ?>/pilas-especiales-energizer"><h4 class="btn-menu"><span class="glyphicon glyphicon-menu-right" aria-hidden="true"></span> Pilas Especiales</h4></a>
+    <a href="<?= Yii::app()->request->baseUrl ?>/pilas-auditivas-energizer"><h4 class="btn-menu"><span class="glyphicon glyphicon-menu-right" aria-hidden="true"></span> Pilas Auditivas</h4></a>
+    <a href="<?= Yii::app()->request->baseUrl ?>/pilas-recargables-energizer"><h4 class="btn-menu"><span class="glyphicon glyphicon-menu-right" aria-hidden="true"></span> Línea recargable</h4></a>
     <h1 class="first-title">Energizer max AA con tecnología PowerSeal plus</h1>
     <h2>significa que puedes estar seguro de que siempre tendrás energía cuando más la necesitas.</h2>
     <!-- <h3>¡Energizer se enorgullece en presentar Power Seal Technology!</h3> -->
-    <div class="lista">
+    <div class="lista" style="margin-bottom: 55px;">
       <!-- <p>* La tecnología PoweSeal es un mensaje único en las pilas Energizer MAX AA & AAA.</p> -->
       <!-- <p>* Es el resultado de varios años de investigación e innovación derivado de percerpciones del consumidor.</p> -->
       <p>* La tecnología PowerSeal guarda la energía hasta por 10 años en almacenamiento.</p>

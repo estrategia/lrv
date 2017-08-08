@@ -109,7 +109,7 @@ $this->metaTags = "<meta http-equiv='X-UA-Compatible' content='IE=edge'>
           <li>No contiene azúcar.</li>
           <li>Con DHA, derivado del Omega 3, que contribuye con el desarrollo y funcionamiento del cerebro del nuevo integrante de la familia. </li>
           <li>Alimento en polvo, con Macronutrientes: Carbohidratos, Proteínas y Lípidos, enriquecido con Vitaminas y Minerales. </li>
-          <li>Aporte extra de Ácido Fólico, Hierro y Calcio, para la correcta formación del bebé.  </li>
+          <li>Aporte extra de &Aacute;cido Fólico, Hierro y Calcio, para la correcta formación del bebé.  </li>
         </ul>
         <div class="content-colum">
           <h4 class="porcion-suplemento-dietario" style="color:#E761A0;">PORCIÓN RECOMENDADA</h4>
@@ -255,7 +255,7 @@ $this->metaTags = "<meta http-equiv='X-UA-Compatible' content='IE=edge'>
             <li>No contiene azúcar.</li>
             <li>Con DHA, derivado del Omega 3, que contribuye con el desarrollo y funcionamiento del cerebro del nuevo integrante de la familia. </li>
             <li>Alimento en polvo, con Macronutrientes: Carbohidratos, Proteínas y Lípidos, enriquecido con Vitaminas y Minerales. </li>
-            <li>Aporte extra de Ácido Fólico, Hierro y Calcio, para la correcta formación del bebé.  </li>
+            <li>Aporte extra de &Aacute;cido Fólico, Hierro y Calcio, para la correcta formación del bebé.  </li>
           </ul>
           <div class="content-colum">
             <h4 class="porcion-suplemento-dietario" style="color:#E761A0;margin-top: 10px;">PORCIÓN RECOMENDADA</h4>
@@ -333,5 +333,5 @@ $this->metaTags = "<meta http-equiv='X-UA-Compatible' content='IE=edge'>
     </div>
   </div>
 </div>
-<!--Fin versión escritorio
+<!--Fin versión escritorio -->
 <?php endif; ?>

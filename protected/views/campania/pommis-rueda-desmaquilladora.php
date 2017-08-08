@@ -9,7 +9,7 @@
     @font-face {font-family:signika-negative-bold; src: url(".Yii::app()->request->baseUrl."/images/contenido/pomys/fonts/signika.negative-bold.ttf);}
     @font-face {font-family:signika-negative-light; src: url(".Yii::app()->request->baseUrl."/images/contenido/pomys/fonts/signika.negative-light.ttf);}
     @font-face {font-family:signika-negative-semibold; src: url(".Yii::app()->request->baseUrl."/images/contenido/pomys/fonts/signika.negative-semibold.ttf);}
-    .sidebar-cart {position: fixed;right: 0px;top: 60%;z-index: 2000;width:20%;}
+    .sidebar-cart {position: fixed;right: 0px;top: 60%;z-index: 2000;width:260px;}
     .pattern{background-attachment: fixed;background-size: cover;background-image: url(".Yii::app()->request->baseUrl."/images/contenido/pomys/pattern.png);}
     .bg-product {background-image: url(".Yii::app()->request->baseUrl."/images/contenido/pomys/todo-tipo-de-piel/fondo-producto-naranja.png);background-size: cover;}
     .flex-container {display: flex;}
@@ -48,136 +48,13 @@
     .owl-controls.clickable {margin-top: 9px !important;}
     .owl-theme .owl-controls .owl-page span {background-color: #9C248D !important;}
     .col-sm-3.col-md-3 img {cursor:pointer;}
+    .carousel .carousel-control {top: 0% !important;}
   </style>
   ";
 ?>
 <!-- Funcionamiento de cambio de los videos -->
 <script type='text/javascript'>
-       $(document).ready(function(){
-        $('#receta1').click(function(){
-            $('#video-receta1').removeClass('hide');
-            $('#video-receta2').addClass('hide');
-            $('#video-receta3').addClass('hide');
-            $('#video-receta4').addClass('hide');
-            $('#video-receta5').addClass('hide');
-            $('#video-receta6').addClass('hide');
-            $('#video-receta7').addClass('hide');
-            $('#video-receta8').addClass('hide');
-            $('#video-receta9').addClass('hide');
-            // para pausar el video
-            $("#video-receta2").attr("src", $("#video-receta2").attr("src"));
-            $("#video-receta3").attr("src", $("#video-receta3").attr("src"));
-            $("#video-receta4").attr("src", $("#video-receta4").attr("src"));
-            $("#video-receta5").attr("src", $("#video-receta5").attr("src"));
-            $("#video-receta6").attr("src", $("#video-receta6").attr("src"));
-            $("#video-receta7").attr("src", $("#video-receta7").attr("src"));
-            $("#video-receta8").attr("src", $("#video-receta8").attr("src"));
-            $("#video-receta9").attr("src", $("#video-receta9").attr("src"));
-        });
-        $('#receta2').click(function(){
-            $('#video-receta2').removeClass('hide');
-            $('#video-receta1').addClass('hide');
-            $("#video-receta1").attr("src", $("#video-receta1").attr("src"));
-            $('#video-receta3').addClass('hide');
-            $('#video-receta4').addClass('hide');
-            $('#video-receta5').addClass('hide');
-            $('#video-receta6').addClass('hide');
-            $('#video-receta7').addClass('hide');
-            $('#video-receta8').addClass('hide');
-            $('#video-receta9').addClass('hide');
-            // para pausar el video
-            $("#video-receta1").attr("src", $("#video-receta1").attr("src"));
-            $("#video-receta3").attr("src", $("#video-receta3").attr("src"));
-            $("#video-receta4").attr("src", $("#video-receta4").attr("src"));
-            $("#video-receta5").attr("src", $("#video-receta5").attr("src"));
-            $("#video-receta6").attr("src", $("#video-receta6").attr("src"));
-            $("#video-receta7").attr("src", $("#video-receta7").attr("src"));
-            $("#video-receta8").attr("src", $("#video-receta8").attr("src"));
-            $("#video-receta9").attr("src", $("#video-receta9").attr("src"));
-
-        });
-        $('#receta3').click(function(){
-            $('#video-receta3').removeClass('hide');
-            $('#video-receta1').addClass('hide');
-            $('#video-receta2').addClass('hide');
-            $('#video-receta4').addClass('hide');
-            $('#video-receta5').addClass('hide');
-            $('#video-receta6').addClass('hide');
-            $('#video-receta7').addClass('hide');
-            $('#video-receta8').addClass('hide');
-            $('#video-receta9').addClass('hide');
-            // para pausar el video
-            $("#video-receta1").attr("src", $("#video-receta1").attr("src"));
-            $("#video-receta2").attr("src", $("#video-receta2").attr("src"));
-            $("#video-receta4").attr("src", $("#video-receta4").attr("src"));
-            $("#video-receta5").attr("src", $("#video-receta5").attr("src"));
-            $("#video-receta6").attr("src", $("#video-receta6").attr("src"));
-            $("#video-receta7").attr("src", $("#video-receta7").attr("src"));
-            $("#video-receta8").attr("src", $("#video-receta8").attr("src"));
-            $("#video-receta9").attr("src", $("#video-receta9").attr("src"));
-        });
-        $('#receta4').click(function(){
-            $('#video-receta4').removeClass('hide');
-            $('#video-receta1').addClass('hide');
-            $('#video-receta2').addClass('hide');
-            $('#video-receta3').addClass('hide');
-            $('#video-receta5').addClass('hide');
-            $('#video-receta6').addClass('hide');
-            $('#video-receta7').addClass('hide');
-            $('#video-receta8').addClass('hide');
-            $('#video-receta9').addClass('hide');
-            // para pausar el video
-            $("#video-receta1").attr("src", $("#video-receta1").attr("src"));
-            $("#video-receta2").attr("src", $("#video-receta2").attr("src"));
-            $("#video-receta3").attr("src", $("#video-receta3").attr("src"));
-            $("#video-receta5").attr("src", $("#video-receta5").attr("src"));
-            $("#video-receta6").attr("src", $("#video-receta6").attr("src"));
-            $("#video-receta7").attr("src", $("#video-receta7").attr("src"));
-            $("#video-receta8").attr("src", $("#video-receta8").attr("src"));
-            $("#video-receta9").attr("src", $("#video-receta9").attr("src"));
-        });
-        $('#receta5').click(function(){
-            $('#video-receta5').removeClass('hide');
-            $('#video-receta1').addClass('hide');
-            $('#video-receta2').addClass('hide');
-            $('#video-receta3').addClass('hide');
-            $('#video-receta4').addClass('hide');
-            $('#video-receta6').addClass('hide');
-            $('#video-receta7').addClass('hide');
-            $('#video-receta8').addClass('hide');
-            $('#video-receta9').addClass('hide');
-            // para pausar el video
-            $("#video-receta1").attr("src", $("#video-receta1").attr("src"));
-            $("#video-receta2").attr("src", $("#video-receta2").attr("src"));
-            $("#video-receta3").attr("src", $("#video-receta3").attr("src"));
-            $("#video-receta4").attr("src", $("#video-receta4").attr("src"));
-            $("#video-receta6").attr("src", $("#video-receta6").attr("src"));
-            $("#video-receta7").attr("src", $("#video-receta7").attr("src"));
-            $("#video-receta8").attr("src", $("#video-receta8").attr("src"));
-            $("#video-receta9").attr("src", $("#video-receta9").attr("src"));
-
-        });
-        $('#receta6').click(function(){
-            $('#video-receta6').removeClass('hide');
-            $('#video-receta1').addClass('hide');
-            $('#video-receta2').addClass('hide');
-            $('#video-receta3').addClass('hide');
-            $('#video-receta4').addClass('hide');
-            $('#video-receta5').addClass('hide');
-            $('#video-receta7').addClass('hide');
-            $('#video-receta8').addClass('hide');
-            $('#video-receta9').addClass('hide');
-            // para pausar el video
-            $("#video-receta1").attr("src", $("#video-receta1").attr("src"));
-            $("#video-receta2").attr("src", $("#video-receta2").attr("src"));
-            $("#video-receta3").attr("src", $("#video-receta3").attr("src"));
-            $("#video-receta4").attr("src", $("#video-receta4").attr("src"));
-            $("#video-receta5").attr("src", $("#video-receta5").attr("src"));
-            $("#video-receta7").attr("src", $("#video-receta7").attr("src"));
-            $("#video-receta8").attr("src", $("#video-receta8").attr("src"));
-            $("#video-receta9").attr("src", $("#video-receta9").attr("src"));
-        });
-    });
+  $(document).ready(function(){$("#receta1").click(function(){$("#video-receta1").removeClass("hide"),$("#video-receta2").addClass("hide"),$("#video-receta3").addClass("hide"),$("#video-receta4").addClass("hide"),$("#video-receta5").addClass("hide"),$("#video-receta6").addClass("hide"),$("#video-receta7").addClass("hide"),$("#video-receta8").addClass("hide"),$("#video-receta9").addClass("hide"),$("#video-receta2").attr("src",$("#video-receta2").attr("src")),$("#video-receta3").attr("src",$("#video-receta3").attr("src")),$("#video-receta4").attr("src",$("#video-receta4").attr("src")),$("#video-receta5").attr("src",$("#video-receta5").attr("src")),$("#video-receta6").attr("src",$("#video-receta6").attr("src")),$("#video-receta7").attr("src",$("#video-receta7").attr("src")),$("#video-receta8").attr("src",$("#video-receta8").attr("src")),$("#video-receta9").attr("src",$("#video-receta9").attr("src"))}),$("#receta2").click(function(){$("#video-receta2").removeClass("hide"),$("#video-receta1").addClass("hide"),$("#video-receta1").attr("src",$("#video-receta1").attr("src")),$("#video-receta3").addClass("hide"),$("#video-receta4").addClass("hide"),$("#video-receta5").addClass("hide"),$("#video-receta6").addClass("hide"),$("#video-receta7").addClass("hide"),$("#video-receta8").addClass("hide"),$("#video-receta9").addClass("hide"),$("#video-receta1").attr("src",$("#video-receta1").attr("src")),$("#video-receta3").attr("src",$("#video-receta3").attr("src")),$("#video-receta4").attr("src",$("#video-receta4").attr("src")),$("#video-receta5").attr("src",$("#video-receta5").attr("src")),$("#video-receta6").attr("src",$("#video-receta6").attr("src")),$("#video-receta7").attr("src",$("#video-receta7").attr("src")),$("#video-receta8").attr("src",$("#video-receta8").attr("src")),$("#video-receta9").attr("src",$("#video-receta9").attr("src"))}),$("#receta3").click(function(){$("#video-receta3").removeClass("hide"),$("#video-receta1").addClass("hide"),$("#video-receta2").addClass("hide"),$("#video-receta4").addClass("hide"),$("#video-receta5").addClass("hide"),$("#video-receta6").addClass("hide"),$("#video-receta7").addClass("hide"),$("#video-receta8").addClass("hide"),$("#video-receta9").addClass("hide"),$("#video-receta1").attr("src",$("#video-receta1").attr("src")),$("#video-receta2").attr("src",$("#video-receta2").attr("src")),$("#video-receta4").attr("src",$("#video-receta4").attr("src")),$("#video-receta5").attr("src",$("#video-receta5").attr("src")),$("#video-receta6").attr("src",$("#video-receta6").attr("src")),$("#video-receta7").attr("src",$("#video-receta7").attr("src")),$("#video-receta8").attr("src",$("#video-receta8").attr("src")),$("#video-receta9").attr("src",$("#video-receta9").attr("src"))}),$("#receta4").click(function(){$("#video-receta4").removeClass("hide"),$("#video-receta1").addClass("hide"),$("#video-receta2").addClass("hide"),$("#video-receta3").addClass("hide"),$("#video-receta5").addClass("hide"),$("#video-receta6").addClass("hide"),$("#video-receta7").addClass("hide"),$("#video-receta8").addClass("hide"),$("#video-receta9").addClass("hide"),$("#video-receta1").attr("src",$("#video-receta1").attr("src")),$("#video-receta2").attr("src",$("#video-receta2").attr("src")),$("#video-receta3").attr("src",$("#video-receta3").attr("src")),$("#video-receta5").attr("src",$("#video-receta5").attr("src")),$("#video-receta6").attr("src",$("#video-receta6").attr("src")),$("#video-receta7").attr("src",$("#video-receta7").attr("src")),$("#video-receta8").attr("src",$("#video-receta8").attr("src")),$("#video-receta9").attr("src",$("#video-receta9").attr("src"))}),$("#receta5").click(function(){$("#video-receta5").removeClass("hide"),$("#video-receta1").addClass("hide"),$("#video-receta2").addClass("hide"),$("#video-receta3").addClass("hide"),$("#video-receta4").addClass("hide"),$("#video-receta6").addClass("hide"),$("#video-receta7").addClass("hide"),$("#video-receta8").addClass("hide"),$("#video-receta9").addClass("hide"),$("#video-receta1").attr("src",$("#video-receta1").attr("src")),$("#video-receta2").attr("src",$("#video-receta2").attr("src")),$("#video-receta3").attr("src",$("#video-receta3").attr("src")),$("#video-receta4").attr("src",$("#video-receta4").attr("src")),$("#video-receta6").attr("src",$("#video-receta6").attr("src")),$("#video-receta7").attr("src",$("#video-receta7").attr("src")),$("#video-receta8").attr("src",$("#video-receta8").attr("src")),$("#video-receta9").attr("src",$("#video-receta9").attr("src"))}),$("#receta6").click(function(){$("#video-receta6").removeClass("hide"),$("#video-receta1").addClass("hide"),$("#video-receta2").addClass("hide"),$("#video-receta3").addClass("hide"),$("#video-receta4").addClass("hide"),$("#video-receta5").addClass("hide"),$("#video-receta7").addClass("hide"),$("#video-receta8").addClass("hide"),$("#video-receta9").addClass("hide"),$("#video-receta1").attr("src",$("#video-receta1").attr("src")),$("#video-receta2").attr("src",$("#video-receta2").attr("src")),$("#video-receta3").attr("src",$("#video-receta3").attr("src")),$("#video-receta4").attr("src",$("#video-receta4").attr("src")),$("#video-receta5").attr("src",$("#video-receta5").attr("src")),$("#video-receta7").attr("src",$("#video-receta7").attr("src")),$("#video-receta8").attr("src",$("#video-receta8").attr("src")),$("#video-receta9").attr("src",$("#video-receta9").attr("src"))})});
 </script>
 
 <!--Versión movil-->
@@ -210,7 +87,7 @@
           <span style="font-family: signika-negative;">Limpiar tu piel.</span>
         </span>
       </div>
-      <div style="margin-top: 40px;">
+      <!-- <div style="margin-top: 40px;">
         <div class="form-round" style="width: 50%;margin: 0px auto 15px;">
           Dermátologicamente <br> Comprobado
         </div>
@@ -223,7 +100,7 @@
         <div class="form-round" style="width: 50%;margin: 0px auto 15px;">
           Oftalmológicamente <br> comprobado
         </div>
-      </div>
+      </div> -->
       <img class="img-responsive-m producto" style="width:60%;margin-top:40px;" src="<?= Yii::app()->request->baseUrl ?>/images/contenido/pomys/todo-tipo-de-piel/rueditas-desmaquilladoras.png">
       <a href="<?php echo CController::createUrl('/catalogo/producto', array('producto' => 49088)) ?>">
         <img class="compra-online" style="width: 80%;" src="<?= Yii::app()->request->baseUrl ?>/images/contenido/pomys/compra-online.png">
@@ -300,7 +177,25 @@
 <a href="<?php echo CController::createUrl('/contenido/ver', array('tipo' => 'grupo', 'contenido' => 2845)) ?>">
   <div class="sidebar-cart"><img class="img-responsive" src="<?= Yii::app()->request->baseUrl ?>/images/contenido/pomys/btn-fijo.png" alt="Compra online"></div>
 </a>
-<img class="img-responsive" src="<?= Yii::app()->request->baseUrl ?>/images/contenido/pomys/banner.jpg" alt="Lo que hagas por tu piel, lo verás mañana.">
+<div id="carousel-example-generic" class="carousel slide" data-ride="carousel">
+  <div class="carousel-inner baner-principal">
+    <div class="item active"><img class="img-responsive" src="<?= Yii::app()->request->baseUrl ?>/images/contenido/pomys/promocion-mimos.jpg" alt="Promocion mimos"></div>
+    <div class="item "><img class="img-responsive" src="<?= Yii::app()->request->baseUrl ?>/images/contenido/pomys/banner.jpg" alt="Lo que hagas por tu piel, lo verás mañana."></div>
+  </div>
+  <ol class="carousel-indicators">
+     <li data-target="#carousel-example-generic" data-slide-to="0" class="active"></li>
+     <li data-target="#carousel-example-generic" data-slide-to="1"></li>
+   </ol>
+   <!-- Left and right controls -->
+  <a class="left carousel-control" href="#carousel-example-generic" data-slide="prev">
+    <span class="glyphicon glyphicon-chevron-left"></span>
+    <span class="sr-only">Previous</span>
+  </a>
+  <a class="right carousel-control" href="#carousel-example-generic" data-slide="next">
+    <span class="glyphicon glyphicon-chevron-right"></span>
+    <span class="sr-only">Next</span>
+  </a>
+</div>
 <div class="pattern">
   <div class="flex-container menu">
     <div class="item"><a href="<?= Yii::app()->request->baseUrl ?>/pomys-toallas-desmaquilladoras-piel-mixta"><div class="image-container-mix"></div></a></div>
@@ -309,7 +204,7 @@
   </div>
  <div class="bg-product">
     <div class="container padding" style="margin-top: 50px;">
-        <div class="col-sm-6 col-md-6">
+        <div class="col-sm-6 col-md-6" style="margin-top:10%;">
           <h2 class="nombre-producto">Rueditas desmaquilladoras <br> todo tipo de piel</h2>
           <span class="line-dotted"></span>
           <div class="flex-container">
@@ -324,7 +219,7 @@
               <span style="font-family: signika-negative;">Limpiar tu piel.</span>
             </span>
           </div>
-          <div class="row" style="margin-top: 20%;">
+          <!-- <div class="row" style="margin-top: 20%;">
             <div class="col-sm-6 col-md-6">
               <div class="form-round">
                 Dermátologicamente <br> Comprobado
@@ -345,7 +240,7 @@
                 <img class="check twoline" src="<?= Yii::app()->request->baseUrl ?>/images/contenido/pomys/check.png">
               </div>
             </div>
-          </div>
+          </div> -->
         </div>
         <div class="col-sm-6 col-md-6 thumb">
           <img class="img-responsive producto" src="<?= Yii::app()->request->baseUrl ?>/images/contenido/pomys/todo-tipo-de-piel/rueditas-desmaquilladoras.png">
@@ -402,5 +297,5 @@
     </div>
   </div>
 </div>
-<!--Fin versión escritorio
+<!--Fin versión escritorio -->
 <?php endif; ?>

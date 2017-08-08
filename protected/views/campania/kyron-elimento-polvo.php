@@ -101,7 +101,7 @@ $this->metaTags = "<meta http-equiv='X-UA-Compatible' content='IE=edge'>
       <ul class="lista-check">
         <li>Alimento en polvo a base de avena para preparar bebida con Almendra enriquecido con Vitaminas y Minerales.</li>
         <li>Ideal para complementar la alimentación diaria, porque brinda elementos nutritivos que el organismo requiere para su normal funcionamiento y desarrollo.</li>
-        <li>El aporte de PROTEÍNA VEGETAL de las Almendras es similar a la proteína animal, ya que es elevado y la calidad de sus nutrientes son superiores; por lo tanto, para los partidarios del VEGANISMO, resulta  ser una gran opción en su alimentación.</li>
+        <li>El aporte de PROTE&IACUTE;NA VEGETAL de las Almendras es similar a la proteína animal, ya que es elevado y la calidad de sus nutrientes son superiores; por lo tanto, para los partidarios del VEGANISMO, resulta  ser una gran opción en su alimentación.</li>
       </ul>
       <h4 class="porcion-suplemento-dietario" style="color:#215AA7;">PORCIÓN RECOMENDADA</h4>
       <p class="description-porcion-suplemento-dietario">
@@ -311,7 +311,7 @@ $this->metaTags = "<meta http-equiv='X-UA-Compatible' content='IE=edge'>
           <ul class="lista-check">
             <li>Alimento en polvo a base de avena para preparar bebida con Almendra enriquecido con Vitaminas y Minerales.</li>
             <li>Ideal para complementar la alimentación diaria, porque brinda elementos nutritivos que el organismo requiere para su normal funcionamiento y desarrollo.</li>
-            <li>El aporte de PROTEÍNA VEGETAL de las Almendras es similar a la proteína animal, ya que es elevado y la calidad de sus nutrientes son superiores; por lo tanto, para los partidarios del VEGANISMO, resulta  ser una gran opción en su alimentación.</li>
+            <li>El aporte de PROTE&IACUTE;NA VEGETAL de las Almendras es similar a la proteína animal, ya que es elevado y la calidad de sus nutrientes son superiores; por lo tanto, para los partidarios del VEGANISMO, resulta  ser una gran opción en su alimentación.</li>
           </ul>
           <div class="content-colum">
             <h4 class="porcion-suplemento-dietario" style="color:#215AA7;margin-top: 4px;">PORCIÓN RECOMENDADA</h4>
@@ -468,5 +468,5 @@ $this->metaTags = "<meta http-equiv='X-UA-Compatible' content='IE=edge'>
     </div>
   </div>
 </div>
-<!--Fin versión escritorio
+<!--Fin versión escritorio -->
 <?php endif; ?>

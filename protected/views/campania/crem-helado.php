@@ -5,7 +5,7 @@
   <meta name='keywords' content='crem helado, productos cremhelado, helados crem helado.'>
   <style>
     .img-responsive-m {width:100%;}
-    .sidebar-cart {position: fixed;right: 0px;top: 60%;z-index: 2000;}
+    .sidebar-cart {position: fixed;right: 0px;top: 60%;z-index: 2000;width: 260px;}
     .background {position:relative;background-size: cover;background-image:url(".Yii::app()->request->baseUrl."/images/contenido/crem-helado/desktop/fondo-naranja.png);}
     .bg-logos {background-color:#8ACCBE;padding: 20px;}
     .modal-header{background-color:  #e74521;color: #fff;}
@@ -22,7 +22,7 @@
     $('<div>').mdialog({
         content: "<div data-role='main'><div class='ui-content' data-role='content' role='main'>"+
         "<strong style='color:#e74521'>Términos y condiciones:</strong><br>"+
-          "Mecanica: válida del 15 de mayo al 1 de agosto de 2017. Participan las paletas bajo la marca crem helado*. Se entregarán 1.000.000 de paletas  y 20.000 gafas. Podrás encontrar palitos ganadores con las siguientes frases: “ganaste 1 paleta lenguiletta”, “ganaste 1 paleta aloha agua”, “ganaste 1 helado casero” para reclamar de forma inmediata en puntos autorizados. Para reclamar cualquier premio deberás presentar el palito que certifica que eres ganador. Consulta condiciones y restricciones en www.cremhelado.com.co. Para consultas, reclamos o ampliar información, deberá comunicarse con la línea de servicio al cliente de meals de colombia S.A.S. Al 018000511835 a nivel nacional, o al (1)4578555 en la ciudad de bogotá. Promoción adelantada por meals de colombia s.a.s válida en todo el territorio nacional."+
+          "Mecanica: válida del 15 de mayo al 1 de agosto de 2017. Participan las paletas bajo la marca crem helado*. Se entregarán 1.000.000 de paletas  y 20.000 gafas. Podrás encontrar palitos ganadores con las siguientes frases: “ganaste 1 paleta lenguiletta, “ganaste 1 paleta aloha agua, “ganaste 1 helado casero para reclamar de forma inmediata en puntos autorizados. Para reclamar cualquier premio deberás presentar el palito que certifica que eres ganador. Consulta condiciones y restricciones en www.cremhelado.com.co. Para consultas, reclamos o ampliar información, deberá comunicarse con la línea de servicio al cliente de meals de colombia S.A.S. Al 018000511835 a nivel nacional, o al (1)4578555 en la ciudad de bogotá. Promoción adelantada por meals de colombia s.a.s válida en todo el territorio nacional."+
         "</div></div>"
     });
   }
@@ -111,8 +111,8 @@
       <div class="modal-body">
         <p style="text-align: justify;">Mecanica: válida del 15 de mayo al 1 de agosto de 2017. Participan las paletas bajo
           la marca crem helado*. Se entregarán 1.000.000 de paletas  y 20.000 gafas. Podrás encontrar
-          palitos ganadores con las siguientes frases: “ganaste 1 paleta lenguiletta”, “ganaste 1 paleta
-          aloha agua”, “ganaste 1 helado casero” para reclamar de forma inmediata en puntos autorizados.
+          palitos ganadores con las siguientes frases: ganaste 1 paleta lenguiletta, ganaste 1 paleta
+          aloha agua, ganaste 1 helado casero para reclamar de forma inmediata en puntos autorizados.
           Para reclamar cualquier premio deberás presentar el palito que certifica que eres ganador.
           Consulta condiciones y restricciones en www.cremhelado.com.co. Para consultas, reclamos o
           ampliar información, deberá comunicarse con la línea de servicio al cliente de meals de colombia S.A.S.
@@ -122,5 +122,5 @@
     </div>
   </div>
 </div>
-<!--Fin versión escritorio
+<!--Fin versión escritorio -->
 <?php endif; ?>
