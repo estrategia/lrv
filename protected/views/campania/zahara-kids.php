@@ -1,9 +1,9 @@
-<?php $this->pageTitle = "Zahara Protector Solar - La Rebaja Virtual"; ?>
+<?php $this->pageTitle = "Zahara Protector Solar Kids - La Rebaja Virtual"; ?>
 <?php
 $this->metaTags = "
   <meta http-equiv='X-UA-Compatible' content='IE=edge'>
-  <meta name='description' content='Zahara es una línea completa de productos para el cuidado y protección de la luz solar y artificial. Protección solar con ZAHARA para ti y tu familia.'>
-  <meta name='keywords' content='protector solar zahara, cuidado de la piel, bloqueador solar'>
+  <meta name='description' content=''>
+  <meta name='keywords' content=''>
 	<style>
     @font-face {font-family:MyriadPro;src: url(".Yii::app()->request->baseUrl."/images/contenido/coaspharma/zahara/fonts/MyriadPro.otf);}
 		@font-face {font-family:GothamRounded-medium;src: url(". Yii::app()->request->baseUrl . "/images/contenido/coaspharma/zahara/fonts/GothamRounded-medium.otf);}
@@ -27,7 +27,7 @@ $this->metaTags = "
     item {flex-grow: 1;}
     .flecha {animation-duration: 1s;animation-name: slidein;animation-iteration-count: infinite;animation-direction: alternate;}
     @keyframes slidein {from {margin-left: 4%;}to {margin-left: 0%;}}
-    .producto {width: 285px;margin-left: -65px;margin-top: -160px;}
+    .producto {width: 260px;margin-left: -65px;margin-top: -160px;}
     .info-producto {display:flex;}
     .line {display:block;margin-bottom: 14px;margin-left: -16px;}
     .object {margin-bottom: 25px;font-family:GothamRounded-medium;color:#001971;background-color: rgba(255, 255, 255, 0.6);padding: 8px 22px;border-radius: 25px;font-size: 20px;}
@@ -46,23 +46,22 @@ $this->metaTags = "
 <?php if ($this->isMobile): ?>
   <section class="bg-main">
     <nav class="menu" style="display: initial;">
-      <item><a href="<?= Yii::app()->request->baseUrl ?>/zahara-protector-solar" data-ajax="false"><img width="250" style="margin: 0 auto;display: block;" src='<?= Yii::app()->request->baseUrl ?>/images/contenido/coaspharma/zahara/protector-solar-adultos-active.png' alt="Protector solar adultos"></a></item>
-      <item><a href="<?= Yii::app()->request->baseUrl ?>/zahara-protector-solar-kids" data-ajax="false"><img width="250" style="margin: 0 auto;display: block;" src='<?= Yii::app()->request->baseUrl ?>/images/contenido/coaspharma/zahara/protector-solar-kids.png' alt="Protector solar kids"></a></item>
+      <item><a href="<?= Yii::app()->request->baseUrl ?>/zahara-protector-solar" data-ajax="false"><img width="250" style="margin: 0 auto;display: block;" src='<?= Yii::app()->request->baseUrl ?>/images/contenido/coaspharma/zahara/protector-solar-adultos.png' alt="Protector solar adultos"></a></item>
+      <item><a href="<?= Yii::app()->request->baseUrl ?>/zahara-protector-solar-kids" data-ajax="false"><img width="250" style="margin: 0 auto;display: block;" src='<?= Yii::app()->request->baseUrl ?>/images/contenido/coaspharma/zahara/protector-solar-kids-hover.png' alt="Protector solar kids"></a></item>
       <item><a href="<?= Yii::app()->request->baseUrl ?>/zahara-bronceador" data-ajax="false"><img width="250" style="margin: 0 auto;display: block;" src='<?= Yii::app()->request->baseUrl ?>/images/contenido/coaspharma/zahara/bronceador.png' alt="Bronceador"></a></item>
     </nav>
     <div style="padding:25px">
-      <h1 class="title-principal" style="font-size: 20px;">PROTECTOR SOLAR ZAHARA <br> ADULTOS SPF 50</h1>
+      <h1 class="title-principal" style="font-size: 20px;">PROTECTOR SOLAR ZAHARA KIDS SPF 50</h1>
       <h2 class="subtitle" style="font-size: 18px;margin-bottom: 0;">Te ofrece protección por más tiempo <br> y te da más beneficios</h2>
     </div>
-    <img style="margin: 0 auto;width: 200px;display: block;" src="<?= Yii::app()->request->baseUrl ?>/images/contenido/coaspharma/zahara/bloqueador-adultos-zahara.png">
-    <a href="<?php echo CController::createUrl('/catalogo/producto', array('producto' => 48768)) ?>" data-ajax="false"><img style="width: 250px;margin: 0 auto;display: block;" src="<?= Yii::app()->request->baseUrl ?>/images/contenido/coaspharma/zahara/compra-online.png"></a>
+    <img style="margin: 0 auto;width: 200px;display: block;" src="<?= Yii::app()->request->baseUrl ?>/images/contenido/coaspharma/zahara/bloqueador-kids-zahara.png">
+    <a href="<?php echo CController::createUrl('/catalogo/producto', array('producto' => 48769)) ?>" data-ajax="false"><img style="width: 250px;margin: 0 auto;display: block;" src="<?= Yii::app()->request->baseUrl ?>/images/contenido/coaspharma/zahara/compra-online.png"></a>
     <div style="padding:0 25px">
-      <p class="object" style="margin-bottom: 15px;font-size: 15px;letter-spacing:-1px;display: flex;"><img width="20" height="20" style="display: block;margin-right:5px;" src="<?= Yii::app()->request->baseUrl ?>/images/contenido/coaspharma/zahara/bullet.png">Para personas con piel muy clara</p>
+      <p class="object" style="margin-bottom: 15px;font-size: 15px;letter-spacing:-1px;display: flex;"><img width="20" height="20" style="display: block;margin-right:5px;" src="<?= Yii::app()->request->baseUrl ?>/images/contenido/coaspharma/zahara/bullet.png">Ideal para niños</p>
       <p class="object" style="margin-bottom: 15px;font-size: 15px;letter-spacing:-1px;display: flex;"><img width="20" height="20" style="display: block;margin-right:5px;" src="<?= Yii::app()->request->baseUrl ?>/images/contenido/coaspharma/zahara/bullet.png">Con Vitamina E que protege la piel</p>
       <p class="object" style="margin-bottom: 15px;font-size: 15px;letter-spacing:-1px;display: flex;"><img width="20" height="20" style="display: block;margin-right:5px;" src="<?= Yii::app()->request->baseUrl ?>/images/contenido/coaspharma/zahara/bullet.png">Formúla no grasosa</p>
-      <p class="object" style="margin-bottom: 15px;font-size: 15px;letter-spacing:-1px;display: flex;"><img width="20" height="20" style="display: block;margin-right:5px;" src="<?= Yii::app()->request->baseUrl ?>/images/contenido/coaspharma/zahara/bullet.png">Protege la piel 50 veces más</p>
-      <p class="object" style="margin-bottom: 15px;font-size: 15px;letter-spacing:-1px;display: flex;"><img width="20" height="20" style="display: block;margin-right:5px;" src="<?= Yii::app()->request->baseUrl ?>/images/contenido/coaspharma/zahara/bullet.png">Para todo tipo de climas</p>
-      <p class="object" style="margin-bottom: 15px;font-size: 15px;letter-spacing:-1px;display: flex;"><img width="20" height="20" style="display: block;margin-right:5px;" src="<?= Yii::app()->request->baseUrl ?>/images/contenido/coaspharma/zahara/bullet.png">Permite bonceado mínimo</p>
+      <p class="object" style="margin-bottom: 15px;font-size: 15px;letter-spacing:-1px;display: flex;"><img width="20" height="20" style="display: block;margin-right:5px;" src="<?= Yii::app()->request->baseUrl ?>/images/contenido/coaspharma/zahara/bullet.png">Rápida absorción</p>
+      <p class="object" style="margin-bottom: 15px;font-size: 15px;letter-spacing:-1px;display: flex;"><img width="20" height="20" style="display: block;margin-right:5px;" src="<?= Yii::app()->request->baseUrl ?>/images/contenido/coaspharma/zahara/bullet.png">Con pantalla solar</p>
     </div>
     <img class="img-responsive-m" style="margin-top:25px;" src="<?= Yii::app()->request->baseUrl ?>/images/contenido/coaspharma/zahara/bronceador-oferta-zahara-mobile.png">
   </section>
@@ -79,7 +78,7 @@ $this->metaTags = "
       <img width="60" src="<?= Yii::app()->request->baseUrl ?>/images/contenido/coaspharma/zahara/carrito.png" > <br>En la Rebaja Virtual programa tu hora y lugar de entrega
     </div>
   </section>
-  <div class="datos-contacto" style="padding: 20px 15px;">
+<div class="datos-contacto" style="padding: 20px 15px;">
       <p class="text-atencion">Si tienes algún inconveniente con tu pedido comunícate con nosotros a través de los canales que tenemos disponibles:</p>
       <img class="img-responsive-m"  style="width: 25%;margin: 0 auto;display: block;" src="<?= Yii::app()->request->baseUrl ?>/images/contenido/metamucil/chat.png">
       <p style="font-family: MyriadPro;font-size: 16px;font-weight: bold;">Chat en linea</p>
@@ -101,11 +100,12 @@ $this->metaTags = "
     <div class="row">
       <nav class="menu">
         <item>
-          <img width="40" class="flecha" src="<?= Yii::app()->request->baseUrl ?>/images/contenido/coaspharma/zahara/flecha-protector-solar.png">
-          <a href="<?= Yii::app()->request->baseUrl ?>/zahara-protector-solar"><img width="300" style="margin: 0 auto;" src='<?= Yii::app()->request->baseUrl ?>/images/contenido/coaspharma/zahara/protector-solar-adultos-active.png' onmouseover="this.src='<?= Yii::app()->request->baseUrl ?>/images/contenido/coaspharma/zahara/protector-solar-adultos-active.png';" onmouseout="this.src='<?= Yii::app()->request->baseUrl ?>/images/contenido/coaspharma/zahara/protector-solar-adultos-active.png';" alt="Protector solar adultos"></a>
+          <a href="<?= Yii::app()->request->baseUrl ?>/zahara-protector-solar">
+            <img width="300" style="margin: 0 auto;display: block;" src='<?= Yii::app()->request->baseUrl ?>/images/contenido/coaspharma/zahara/protector-solar-adultos.png' onmouseover="this.src='<?= Yii::app()->request->baseUrl ?>/images/contenido/coaspharma/zahara/protector-solar-adultos-active.png';" onmouseout="this.src='<?= Yii::app()->request->baseUrl ?>/images/contenido/coaspharma/zahara/protector-solar-adultos.png';" alt="Protector solar adultos"></a>
         </item>
         <item>
-          <a href="<?= Yii::app()->request->baseUrl ?>/zahara-protector-solar-kids"><img width="300" style="margin: 0 auto;display: block;" src='<?= Yii::app()->request->baseUrl ?>/images/contenido/coaspharma/zahara/protector-solar-kids.png' onmouseover="this.src='<?= Yii::app()->request->baseUrl ?>/images/contenido/coaspharma/zahara/protector-solar-kids-hover.png';" onmouseout="this.src='<?= Yii::app()->request->baseUrl ?>/images/contenido/coaspharma/zahara/protector-solar-kids.png';" alt="Protector solar kids"></a>
+          <img width="40" class="flecha" src="<?= Yii::app()->request->baseUrl ?>/images/contenido/coaspharma/zahara/flecha-protector-solar-kids.png">
+          <a href="<?= Yii::app()->request->baseUrl ?>/zahara-protector-solar-kids"><img width="300" style="margin: 0 auto;" src='<?= Yii::app()->request->baseUrl ?>/images/contenido/coaspharma/zahara/protector-solar-kids-hover.png' onmouseover="this.src='<?= Yii::app()->request->baseUrl ?>/images/contenido/coaspharma/zahara/protector-solar-kids-hover.png';" onmouseout="this.src='<?= Yii::app()->request->baseUrl ?>/images/contenido/coaspharma/zahara/protector-solar-kids-hover.png';"alt="Protector solar kids"></a>
         </item>
         <item>
           <a href="<?= Yii::app()->request->baseUrl ?>/zahara-bronceador"><img width="300" style="margin: 0 auto;display: block;" src='<?= Yii::app()->request->baseUrl ?>/images/contenido/coaspharma/zahara/bronceador.png' onmouseover="this.src='<?= Yii::app()->request->baseUrl ?>/images/contenido/coaspharma/zahara/bronceador-hover.png';" onmouseout="this.src='<?= Yii::app()->request->baseUrl ?>/images/contenido/coaspharma/zahara/bronceador.png';" alt="Bronceador"></a>
@@ -113,32 +113,30 @@ $this->metaTags = "
       </nav>
     </div>
     <div class="row" style="padding: 0 60px;">
-      <h1 class="title-principal">PROTECTOR SOLAR ZAHARA <br> ADULTOS SPF 50</h1>
+      <h1 class="title-principal">PROTECTOR SOLAR ZAHARA <br> KIDS SPF 50</h1>
       <h2 class="subtitle">Te ofrece protección por más tiempo <br> y te da más beneficios</h2>
     </div>
     <div class="row" style="padding: 0 100px;">
       <div class="info-producto">
         <div class="item">
-          <p class="object">Para personas con piel muy clara</p>
+          <p class="object">Ideal para niños</p>
           <p class="object">Con Vitamina E que protege la piel</p>
           <p class="object">Formúla no grasosa</p>
-          <p class="object">Protege la piel 50 veces más</p>
-          <p class="object">Para todo tipo de climas</p>
-          <p class="object">Permite bonceado mínimo</p>
+          <p class="object">Rápida absorción</p>
+          <p class="object">Con pantalla solar</p>
         </div>
         <div class="item">
-          <img class="line" src="<?= Yii::app()->request->baseUrl ?>/images/contenido/coaspharma/zahara/line-adultos.png">
-          <img class="line" src="<?= Yii::app()->request->baseUrl ?>/images/contenido/coaspharma/zahara/line-adultos.png">
-          <img class="line" src="<?= Yii::app()->request->baseUrl ?>/images/contenido/coaspharma/zahara/line-adultos.png">
-          <img class="line" src="<?= Yii::app()->request->baseUrl ?>/images/contenido/coaspharma/zahara/line-adultos.png">
-          <img class="line" src="<?= Yii::app()->request->baseUrl ?>/images/contenido/coaspharma/zahara/line-adultos.png">
-          <img class="line" src="<?= Yii::app()->request->baseUrl ?>/images/contenido/coaspharma/zahara/line-adultos.png">
+          <img class="line" src="<?= Yii::app()->request->baseUrl ?>/images/contenido/coaspharma/zahara/line-kids.png">
+          <img class="line" src="<?= Yii::app()->request->baseUrl ?>/images/contenido/coaspharma/zahara/line-kids.png">
+          <img class="line" src="<?= Yii::app()->request->baseUrl ?>/images/contenido/coaspharma/zahara/line-kids.png">
+          <img class="line" src="<?= Yii::app()->request->baseUrl ?>/images/contenido/coaspharma/zahara/line-kids.png">
+          <img class="line" src="<?= Yii::app()->request->baseUrl ?>/images/contenido/coaspharma/zahara/line-kids.png">
         </div>
         <div class="item">
-          <img class="producto" src="<?= Yii::app()->request->baseUrl ?>/images/contenido/coaspharma/zahara/bloqueador-adultos-zahara.png">
+          <img class="producto" src="<?= Yii::app()->request->baseUrl ?>/images/contenido/coaspharma/zahara/bloqueador-kids-zahara.png">
         </div>
       </div>
-      <a href="<?php echo CController::createUrl('/catalogo/producto', array('producto' => 48768)) ?>"><img class="compra" src="<?= Yii::app()->request->baseUrl ?>/images/contenido/coaspharma/zahara/compra-online.png"></a>
+      <a href="<?php echo CController::createUrl('/catalogo/producto', array('producto' => 48769)) ?>"><img class="compra" src="<?= Yii::app()->request->baseUrl ?>/images/contenido/coaspharma/zahara/compra-online.png"></a>
     </div>
   </div>
   <img class="img-responsive" src="<?= Yii::app()->request->baseUrl ?>/images/contenido/coaspharma/zahara/bronceador-oferta-zahara.png">

@@ -15,13 +15,13 @@ header("Pragma: no-cache");
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <meta name='author' content='La Rebaja Virtual'>
         <?php  if(isset($this->metaTags) && !empty($this->metaTags)):?>
-            <?php echo $this->metaTags ?> 
+            <?php echo $this->metaTags ?>
         <?php else: ?>
             <meta name="description" content="Pide tus domicilios de farmacia y drogueria de manera rapida y segura. La Rebaja Drogueria despacha tus domicilios con nuestra planta propia de mensajeros. Compra seguro."/>
         <?php endif;?>
         <?php Yii::app()->clientScript->registerCoreScript('jquery'); ?>
         <script>requestUrl = "<?php echo Yii::app()->request->baseUrl; ?>"; gmapKey = "<?php echo Yii::app()->params['google']['llaveMapa']; ?>"; tipoEntrega = {presencial:<?=Yii::app()->params->entrega['tipo']['presencial']?>,domicilio:<?=Yii::app()->params->entrega['tipo']['domicilio']?>}; var lat = 4.704009; var lng = -74.042832;</script>
-        <link rel="shortcut icon" href="<?php echo Yii::app()->request->baseUrl; ?>/images/favicon_16.ico" type="image/x-icon" />  
+        <link rel="shortcut icon" href="<?php echo Yii::app()->request->baseUrl; ?>/images/favicon_16.ico" type="image/x-icon" />
         <title><?php echo CHtml::encode($this->pageTitle); ?></title>
 
         <?php Yii::app()->getClientScript()->registerCssFile(Yii::app()->request->baseUrl . "/css/mobile.css?" . Yii::app()->params->fechaActualizacion["css"]); ?>
@@ -30,7 +30,7 @@ header("Pragma: no-cache");
     <body>
         <div data-role="page" id="main-page" data-theme="c">
             <div data-role="header" data-theme="h">
-                <div class="logo ui-content">                    
+                <div class="logo ui-content">
                     <!-- OPCIONES PARA EL HEADER -->
                     <?php if ($this->showHeaderIcons): ?>
                         <div class="c_icon c_icon_menu"><a href="#panel-menu-ppal"><img src="<?php echo Yii::app()->request->baseUrl; ?>/images/iconos/menu_icon.png"></a></div>
@@ -40,18 +40,18 @@ header("Pragma: no-cache");
                         <?php else: ?>
                             <div class="c_icon c_icon_user"><a href="#panel-menu-usuario"><img src="<?php echo Yii::app()->request->baseUrl; ?>/images/iconos/icon_user.png"></a></div>
                         <?php endif; ?>
-                        <div class="c_icon c_icon_ub"><a href="#" onclick="verUbicacion();"><img src="<?php echo Yii::app()->request->baseUrl; ?>/images/iconos/icon_ub.png"></a></div>                            
-                    <?php endif; ?>  
-                    <a href="<?php echo ($this->showHeaderIcons ? $this->createUrl('/sitio/inicio') : $this->createUrl('/')) ?>" class="<?php echo ($this->showHeaderIcons ? "logo-main" : "logo-home") ?>" data-ajax="false"><img src="<?php echo Yii::app()->request->baseUrl; ?>/images/logotop.png" alt="logo - La Rebaja" title="<?php echo CHtml::encode(Yii::app()->name) ?>"></a>                 
+                        <div class="c_icon c_icon_ub"><a href="#" onclick="verUbicacion();"><img src="<?php echo Yii::app()->request->baseUrl; ?>/images/iconos/icon_ub.png"></a></div>
+                    <?php endif; ?>
+                    <a href="<?php echo ($this->showHeaderIcons ? $this->createUrl('/sitio/inicio') : $this->createUrl('/')) ?>" class="<?php echo ($this->showHeaderIcons ? "logo-main" : "logo-home") ?>" data-ajax="false"><img src="<?php echo Yii::app()->request->baseUrl; ?>/images/logotop.png" alt="logo - La Rebaja" title="<?php echo CHtml::encode(Yii::app()->name) ?>"></a>
                 </div>
 
                 <?php if ($this->showHeaderIcons): ?>
-                    <div id="ubicacion-info" class=" hide" data-active="0"> 
+                    <div id="ubicacion-info" class=" hide" data-active="0">
                         <a href="#" data-role="cambioubicacion" class="title_h">
                             <?php echo $this->sectorName ?>
                         </a>
                     </div>
-                <?php endif; ?>  
+                <?php endif; ?>
                 <?php if ($this->showSeeker): ?>
                     <div class="ui-content search-bar">
                         <form method="get" action="<?php echo CController::createUrl('/catalogo/buscar') ?>" data-ajax="false">
@@ -63,7 +63,7 @@ header("Pragma: no-cache");
                     </div>
                 <?php endif; ?>
             </div>
-            <?php $this->renderPartial('//layouts/_menuMicrositio');?>
+            <?php $this->renderPartial('//layouts/_menuMundo');?>
             <!-- Fin header -->
 
             <div data-role="main" id="main-content">
@@ -80,7 +80,7 @@ header("Pragma: no-cache");
                         </div>
                     </div>
                 </div>
-                
+
                 <div data-role="popup" id="popup-pagoexpress" data-dismissible="false" data-theme="a" data-position-to="window" class="c_lst_pop_cont">
                     <a href="#" data-rel="back" class="ui-btn ui-corner-all ui-shadow ui-btn ui-icon-delete ui-btn-icon-notext ui-btn-right">Close</a>
                     <div data-role="main" class="ui-content">

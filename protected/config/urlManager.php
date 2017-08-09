@@ -36,6 +36,8 @@ return array(
         'ensure-nutricion-especializada' => 'publicidad/contenido/nombre/ensure',
         'glucerna-para-diabeticos' => 'publicidad/contenido/nombre/glucerna',
         'zahara-protector-solar' => 'publicidad/contenido/nombre/zahara',
+        'zahara-protector-solar-kids' => 'publicidad/contenido/nombre/zahara-kids',
+        'zahara-bronceador' => 'publicidad/contenido/nombre/zahara-bronceador',
         'prodent-cuidado-oral' => 'publicidad/contenido/nombre/prodent',
         'pedialyte-suero-oral' => 'publicidad/contenido/nombre/pedialyte',
         'pilas-energizer' => 'publicidad/contenido/nombre/energizer',
