@@ -58,6 +58,7 @@ $this->metaTags = "<meta http-equiv='X-UA-Compatible' content='IE=edge'>
 <div id="owl-productodetalle-inicio" class="owl-carousel owl-theme owl-productodetalle">
     <div class="item"><img class="img-responsive-m"  src="<?= Yii::app()->request->baseUrl ?>/images/contenido/kyron/alimento-en-polvo-adulto/banner01.jpg" alt="Quinua Vainilla"></div>
     <div class="item"><img class="img-responsive-m"  src="<?= Yii::app()->request->baseUrl ?>/images/contenido/kyron/alimento-en-polvo-adulto/banner02.jpg" alt="Almendras vainilla"></div>
+    <div class="item"><img class="img-responsive-m"  src="<?= Yii::app()->request->baseUrl ?>/images/contenido/kyron/alimento-en-polvo-adulto/banner03.jpg" alt="Diabeticos"></div>
 </div>
 <section class="section-menu-mobile">
   <a href="<?= Yii::app()->request->baseUrl ?>/energold-renergen-suplementos-dietarios" data-ajax="false"><div class="item">Suplementos Dietarios</div></a>
@@ -248,6 +249,7 @@ $this->metaTags = "<meta http-equiv='X-UA-Compatible' content='IE=edge'>
   <div class="carousel-inner">
     <div class="item active"><img class="img-responsive" src="<?= Yii::app()->request->baseUrl ?>/images/contenido/kyron/alimento-en-polvo-adulto/banner01.jpg" alt="Quinua vainilla"></div>
     <div class="item"><img class="img-responsive"  src="<?= Yii::app()->request->baseUrl ?>/images/contenido/kyron/alimento-en-polvo-adulto/banner02.jpg"  alt="Almendras vainilla"></div>
+    <div class="item"><img class="img-responsive"  src="<?= Yii::app()->request->baseUrl ?>/images/contenido/kyron/alimento-en-polvo-adulto/banner03.jpg"  alt="Diabéticos"></div>
   </div>
   <a class="carousel-control left" href="#carousel-example-generic" data-slide="prev"><i class="prev-slide"></i></a>
   <a class="carousel-control right" href="#carousel-example-generic" data-slide="next"><i class="next-slide"></i></a>
