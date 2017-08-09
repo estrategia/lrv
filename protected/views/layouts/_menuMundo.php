@@ -8,18 +8,21 @@ endif;
 
 if($menu): ?>
 	<?php $menuPublicidad = $menu->objMenuMundo;?>
-	<img class="img-responsive-m" src='<?=  Yii::app()->request->baseUrl."/images/contenido/".$menu->imagenMovil ?>' />
-	<div id='carrusel-menu' class="owl-carousel owl-theme">
-		<?php foreach($menu->listMenuItemPublicidad as $itemMenu):?>
-			<div class="item">
-				<div class="element-menu">
-					<a href='<?= CController::createUrl($itemMenu->enlaceMovil) ?>' alt="<?= $itemMenu->titulo?>" title="<?= $itemMenu->titulo?>">
-						<img class="img-responsive-m icono-menu" src='<?=  Yii::app()->request->baseUrl."/images/contenido/".$itemMenu->iconoMovil ?>'/>
-						<span><?= $itemMenu->titulo?></span>
-					</a>
+	<div class="menuPublicidad">
+		<a href="#" class="ui-btn ui-icon-delete ui-btn-icon-left close-publicidad"></a>
+		<img class="img-responsive-m" src='<?=  Yii::app()->request->baseUrl.$menuPublicidad->imagenMovil ?>' />
+		<div id='carrusel-menu' class="owl-carousel owl-theme">
+			<?php foreach($menuPublicidad->listMenuItemPublicidad as $itemMenu):?>
+				<div class="item">
+					<div class="element-menu">
+						<a href='<?= CController::createUrl($itemMenu->enlaceMovil) ?>' alt="<?= $itemMenu->titulo?>" title="<?= $itemMenu->titulo?>">
+							<img class="img-responsive-m icono-menu" src='<?=  Yii::app()->request->baseUrl.$itemMenu->iconoMovil ?>'/>
+							<span><?= $itemMenu->titulo?></span>
+						</a>
+					</div>
 				</div>
-			</div>
-		<?php endforeach;?>
+			<?php endforeach;?>
+		</div>
 	</div>
 <script type="text/javascript">
 	$('#carrusel-menu').owlCarousel({

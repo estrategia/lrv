@@ -8,20 +8,22 @@ endif;
 
 if($menu):?>
 	<?php $menuPublicidad = $menu->objMenuMundo;?>
- 
-<img class="img-responsive" src='<?=  Yii::app()->request->baseUrl.$menuPublicidad->imagenDesktop ?>' />
-<div class="flex-container">
 
-<?php foreach($menuPublicidad->listMenuItemPublicidad as $itemMenu):?>
-	<div class="element-menu">
-		<a href='<?= CController::createUrl($itemMenu->enlace) ?>'  title="<?= $itemMenu->titulo?>">
-			<div class="flex-container">
-				<img class="icono-menu" alt="<?= $itemMenu->titulo?>" src='<?=  Yii::app()->request->baseUrl.$itemMenu->iconoDesktop ?>'/>
-				<span> <?= $itemMenu->titulo?> </span>
-			</div>
+ <div class="menuPublicidad">
+	 <a class="close-publicidad" href="#" data-toggle="tooltip" data-placement="left" title="Cerrar"><span class="glyphicon glyphicon-remove"></span></a>
+	 <img class="img-responsive" src='<?=  Yii::app()->request->baseUrl.$menuPublicidad->imagenDesktop ?>' />
+ 	<div class="flex-container">
+ 	<?php foreach($menuPublicidad->listMenuItemPublicidad as $itemMenu):?>
+ 		<div class="element-menu">
+ 			<a href='<?= CController::createUrl($itemMenu->enlace) ?>'  title="<?= $itemMenu->titulo?>">
+ 				<div class="flex-container">
+ 					<img class="icono-menu" alt="<?= $itemMenu->titulo?>" src='<?=  Yii::app()->request->baseUrl.$itemMenu->iconoDesktop ?>'/>
+ 					<span> <?= $itemMenu->titulo?> </span>
+ 				</div>
+ 			</a>
+ 		</div>
+ 	<?php endforeach;?>
+ 	</div>
+ </div>
 
-		</a>
-	</div>
-<?php endforeach;?>
-</div>
 <?php endif;

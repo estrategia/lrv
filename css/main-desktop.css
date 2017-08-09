@@ -2964,3 +2964,14 @@ ul.info-seleccion-ciudad .glyphicon {
   line-height: 14px;
 }
 .icono-menu {width: 60px;margin-right: 15px;}
+.close-publicidad {
+  right: 13px;
+  position: absolute;
+  background-color: #E90000;
+  color: #fff;
+  padding: 1px 5px;
+  border-radius: 25px;
+  margin-top: 9px;
+}
+.close-publicidad:hover {color:#fff;}
+.close-publicidad:active {color:#fff;}

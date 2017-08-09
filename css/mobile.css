@@ -2952,3 +2952,14 @@ td.ctd_02 p {
     font-weight: bold;
     font-size: 22px;
 }
+.close-publicidad {
+  left: 5px;
+  position: absolute;
+  color: #fff;
+  border-radius: 25px;
+  padding: 28px;
+  margin-top: : 0px;
+
+}
+.ui-btn-icon-left.close-publicidad::after {background-color: #B10000 !important;width: 28px;
+height: 28px;}
