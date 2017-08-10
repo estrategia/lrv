@@ -21,8 +21,8 @@ $this->metaTags = "
     .bg-red {font-size: 20px;background-color:#FE0000;color:#fff;text-align: center;font-family: MyriadPro;padding: 15px;}
     .bg-red a {text-decoration:underline;color:#fff;}
     .bg-red a:hover {color:#fff;text-decoration:underline;}
-    .bg-main {background-image:url(".Yii::app()->request->baseUrl."/images/contenido/coaspharma/zahara/bg-adultos.jpg);}
-    .menu {display:flex;width: 100%;padding:45px 0 60px;}
+    .bg-main {background-size:cover;background-image:url(".Yii::app()->request->baseUrl."/images/contenido/coaspharma/zahara/bg-adultos.jpg);}
+    .menu {display:flex;width: 100%;padding: 0 0 60px;margin-top: -72px;}
     .menu.img {margin: 0 auto;display: block;}
     item {flex-grow: 1;}
     .flecha {animation-duration: 1s;animation-name: slidein;animation-iteration-count: infinite;animation-direction: alternate;}
@@ -44,7 +44,8 @@ $this->metaTags = "
 ?>
 <!--Versión movil-->
 <?php if ($this->isMobile): ?>
-  <section class="bg-main">
+  <img class="img-responsive-m" src="<?= Yii::app()->request->baseUrl ?>/images/contenido/coaspharma/zahara/banner-protector-solar.jpg" alt="Protector solar con SPF 50">
+  <section class="bg-main" style="margin-top: -5px;">
     <nav class="menu" style="display: initial;">
       <item><a href="<?= Yii::app()->request->baseUrl ?>/zahara-protector-solar" data-ajax="false"><img width="250" style="margin: 0 auto;display: block;" src='<?= Yii::app()->request->baseUrl ?>/images/contenido/coaspharma/zahara/protector-solar-adultos-active.png' alt="Protector solar adultos"></a></item>
       <item><a href="<?= Yii::app()->request->baseUrl ?>/zahara-protector-solar-kids" data-ajax="false"><img width="250" style="margin: 0 auto;display: block;" src='<?= Yii::app()->request->baseUrl ?>/images/contenido/coaspharma/zahara/protector-solar-kids.png' alt="Protector solar kids"></a></item>
@@ -96,6 +97,7 @@ $this->metaTags = "
 <!--Fin version movil-->
 <!--Versión escritorio-->
 <?php else: ?>
+<img class="img-responsive" src="<?= Yii::app()->request->baseUrl ?>/images/contenido/coaspharma/zahara/banner-protector-solar.jpg" alt="Protector solar con SPF 50">
 <section class="bg-main">
   <div class="container">
     <div class="row">
