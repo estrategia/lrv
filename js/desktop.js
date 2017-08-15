@@ -2901,3 +2901,26 @@ function guardarMascota(){
 
 
 }
+
+
+$(document).on('click', "a[data-role='ocultar-menu']", function() {
+    $.ajax({
+        type: 'POST',
+        url: requestUrl + "/contenido/ocultarMenu/",
+        data: {},
+        dataType: 'json',
+        beforeSend: function() {
+            Loading.show();
+        },
+        complete: function(data) {
+            Loading.hide();
+        },
+        success: function(data) {
+            if (data.result === 'ok') {
+            	$("#menuPublicidad").css("display",'none');
+            } 
+        }
+    });
+    return false;
+});
+

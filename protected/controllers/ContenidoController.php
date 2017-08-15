@@ -159,5 +159,13 @@ class ContenidoController extends Controller {
         ));
         Yii::app()->end();
     }
+    
+    public function actionOcultarMenu(){
+    	unset(Yii::app()->session[Yii::app()->params->sesion['mundoSuperior']] );
+    	echo CJSON::encode( array(
+    			'result' => 'ok'
+    			
+    	));
+    }
 
 }

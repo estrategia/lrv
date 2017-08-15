@@ -199,11 +199,13 @@ class ContenidoController extends ControllerOperator {
         	         	
         	if (isset($_POST['MenuPublicidad'])) {
         		if (isset($_FILES)) {
-        			$menuPublicidad->attributes = $_POST['MenuPublicidad'];
-        			$uploadedFile = CUploadedFile::getInstance($menuPublicidad, "imagenDesktop");
+        			//$menuPublicidad->attributes = $_POST['MenuPublicidad'];
+        			
         			$error = false;
         			
-        			if($uploadedFile){
+        			if($_FILES['MenuPublicidad']['size']['imagenDesktop'] > 0){
+        				$menuPublicidad->imagenDesktop = $_POST['MenuPublicidad']['imagenDesktop'];
+        				$uploadedFile = CUploadedFile::getInstance($menuPublicidad, "imagenDesktop");
         				if ($uploadedFile->getExtensionName() == "jpg" || $uploadedFile->getExtensionName() == "png" ||
         					$uploadedFile->getExtensionName() == "jpeg" || $uploadedFile->getExtensionName() == "gif") {
         	
@@ -220,28 +222,28 @@ class ContenidoController extends ControllerOperator {
         					}
         			}			 
         					 
-        					if (!$error) {
-        						$uploadedFile2 = CUploadedFile::getInstance($menuPublicidad, "imagenMovil");
-        						 
-        						if ($uploadedFile2) {
-        							if ($uploadedFile2->getExtensionName() == "jpg" || $uploadedFile2->getExtensionName() == "png" ||
-        									$uploadedFile2->getExtensionName() == "jpeg" || $uploadedFile2->getExtensionName() == "gif") {
-        										if ($uploadedFile2->saveAs(Yii::app()->params->callcenter['modulosConfigurados']['urlImagenes'] . $idModulo . " movil_" . date("Ymdhis") . "." . $uploadedFile2->getExtensionName())) {
-        											$menuPublicidad->imagenMovil = "/" . Yii::app()->params->callcenter['modulosConfigurados']['urlImagenes'] . $idModulo . " movil_" . date("Ymdhis") . "." . $uploadedFile2->getExtensionName();
-        										} else {
-        											Yii::app()->user->setFlash('alert alert-danger', 'Error al subir la imagen movil');
-        											$error = true;
-        										}
-        									} else {
-        										Yii::app()->user->setFlash('alert alert-danger', 'Imagen movil no valida');
-        										$error = true;
-        									}
+        			if (!$error) {
+        				if($_FILES['MenuPublicidad']['size']['imagenMovil'] > 0){
+        					$menuPublicidad->imagenMovil = $_POST['MenuPublicidad']['imagenMovil'];
+        					$uploadedFile2 = CUploadedFile::getInstance($menuPublicidad, "imagenMovil");
+        					if ($uploadedFile2->getExtensionName() == "jpg" || $uploadedFile2->getExtensionName() == "png" ||
+        							$uploadedFile2->getExtensionName() == "jpeg" || $uploadedFile2->getExtensionName() == "gif") {
+        								if ($uploadedFile2->saveAs(Yii::app()->params->callcenter['modulosConfigurados']['urlImagenes'] . $idModulo . " movil_" . date("Ymdhis") . "." . $uploadedFile2->getExtensionName())) {
+        									$menuPublicidad->imagenMovil = "/" . Yii::app()->params->callcenter['modulosConfigurados']['urlImagenes'] . $idModulo . " movil_" . date("Ymdhis") . "." . $uploadedFile2->getExtensionName();
+        								} else {
+        									Yii::app()->user->setFlash('alert alert-danger', 'Error al subir la imagen movil');
+        									$error = true;
+        								}
+        							} else {
+        								Yii::app()->user->setFlash('alert alert-danger', 'Imagen movil no valida');
+        								$error = true;
+        							}
         						}
         					}
         					 
-        					if(!$menuPublicidad->save()){
-        						print_r($menuPublicidad->getErrors());exit();
-        					}
+        				if(!$menuPublicidad->save()){
+        					print_r($menuPublicidad->getErrors());exit();
+        				}
         		}
         	}
         	$params['modelMenuPublicidad'] = $menuPublicidad;

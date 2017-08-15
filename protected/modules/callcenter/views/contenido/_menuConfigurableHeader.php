@@ -31,4 +31,20 @@ $form = $this->beginWidget('CActiveForm', array(
     <?php echo CHtml::submitButton('Guardar', array('id' => 'btnCargar', 'class' => 'btn btn-primary btn-large'), array('id' => 'btnCargar', 'class' => 'btn btn-primary btn-large')); ?>
 </div>
 
+
+<?php if($modelMenuPublicidad->scenario == 'update'):?>
+		<table class="table table-bordered table-hover table-striped">
+        <tbody>
+            <tr>
+                <th>Imagen</th>
+                <th>Imagen Móvil</th>
+            </tr>
+        	<tr>
+        		<td> <img src='<?php echo  Yii::app()->request->baseUrl.$modelMenuPublicidad->imagenDesktop?>' /></td>
+        		<td> <img src='<?php echo  Yii::app()->request->baseUrl.$modelMenuPublicidad->imagenMovil?>' /></td>
+        	</tr>
+        </tbody>
+        </table>
+<?php endif;?>
+
 <?php $this->endWidget(); ?>

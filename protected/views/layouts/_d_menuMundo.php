@@ -9,9 +9,9 @@ endif;
 if($menu):?>
 	<?php $menuPublicidad = $menu->objMenuMundo;?>
 
- <div class="menuPublicidad">
-	 <a class="close-publicidad" href="#" data-toggle="tooltip" data-placement="left" title="Cerrar"><span class="glyphicon glyphicon-remove"></span></a>
-	 <img class="img-responsive" src='<?=  Yii::app()->request->baseUrl.$menuPublicidad->imagenDesktop ?>' />
+ <div class="menuPublicidad" id='menuPublicidad'>
+	 <?php /*<a class="close-publicidad" href="#" data-toggle="tooltip" data-role='ocultar-menu' data-placement="left" title="Cerrar"><span class="glyphicon glyphicon-remove"></span></a>
+	 <img class="img-responsive" src='<?=  Yii::app()->request->baseUrl.$menuPublicidad->imagenDesktop ?>' />*/ ?>
  	<div class="flex-container">
  	<?php foreach($menuPublicidad->listMenuItemPublicidad as $itemMenu):?>
  		<div class="element-menu">
