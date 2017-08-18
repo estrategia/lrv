@@ -27,11 +27,17 @@
             <?php echo $form->passwordField($model, 'password', array('placeholder' => $model->getAttributeLabel('password'))); ?>
             <?php echo $form->error($model, 'password'); ?>
         </div>
+        <div class="ui-field-container">
+                    <?php echo $form->labelEx($model, 'condiciones', array('class' => 'c_cond_rg')); ?>
+                    <?php echo $form->checkBox($model, 'condiciones', array('data-mini' => 'true')); ?>
+                <?php echo $form->error($model, 'condiciones'); ?>
+        </div>
     </fieldset>
+    <?php echo CHtml::link('Ver condiciones', "#dialog-condiciones", array('class' => 'c_olv_pass', 'data-transition' => 'flip')); ?>
     <div class="ui-input-btn ui-btn ui-corner-all ui-shadow ui-btn-r">
         Ingresar
         <input type="button" data-vendedor='autenticar' data-enhanced="true" value="Ingresar">
     </div>
-
+	<?php $this->extraPageList[] = $this->renderPartial('/sitio/condicionesDialog', null, true); ?>
     <?php $this->endWidget(); ?>
 </div>

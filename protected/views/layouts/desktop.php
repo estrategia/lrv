@@ -179,6 +179,8 @@ header("Pragma: no-cache");
                     </ul>
                 </nav>
             </div>
+            
+            <?php $this->renderPartial('//layouts/_d_menuMundo');?>
             <!--fin menu-->
 
             <!--inicio migas de pan-->

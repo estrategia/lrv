@@ -24,6 +24,7 @@ return array(
         'ext.shoppingCartVitalCall.*',
         'ext.shoppingCartNationalSale.*'
     ),
+	'onBeginRequest' => array('WorldUrlManager', 'initRules'),
     'modules' => require(dirname(__FILE__) . '/modules.php'),
     // application components
     'components' => array(
@@ -55,6 +56,7 @@ return array(
         'shoppingCartNationalSale' => array(
             'class' => 'ext.shoppingCartNationalSale.EShoppingCart',
         ),
+    	
         'ePdf' => array(
             'class' => 'ext.yii-pdf.EYiiPdf',
             'params' => array(
@@ -67,6 +69,8 @@ return array(
                 ),
             ),
         ),
+    	
+    		
         'log' => array(
             'class' => 'CLogRouter',
             'routes' => array(

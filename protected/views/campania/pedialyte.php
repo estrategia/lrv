@@ -254,11 +254,11 @@ $this->metaTags = "<meta http-equiv='X-UA-Compatible' content='IE=edge'>
 
 <!--VERSIÓN ESCRITORIO-->
 <?php else: ?>
-  <a href="">
+  <!-- <a href="">
     <div class="sidebar-cart">
     	<img class="img-responsive" src="<?= Yii::app()->request->baseUrl ?>/images/contenido/abbot/general/compra-online.png">
     </div>
-  </a>
+  </a> -->
 <!--Header-->
 <?php require 'headerAbbott.php'; ?>
 <!--Banner principal-->

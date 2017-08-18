@@ -1,0 +1,101 @@
+<div class="ui-content no-padding-bottom no-padding-top">
+    <h1 class="ct_result"><?php /*= count($listProductos) + count($listCombos)*/ ?> resultados para <?= $nombreBusqueda ?></h1>
+</div>
+
+<div class="ui-content no-padding-top" style="margin-top: -5px">
+    <?php //if(isset($formFiltro) || isset($formOrdenamiento)):?>
+        <div class="ccont_filtro">
+            <div class="left">
+                <a href="<?php echo $this->createUrl("/sitio/categorias") ?>" data-ajax="false">
+                    <img src="<?php echo Yii::app()->request->baseUrl ?>/images/iconos/icon_categorias.png" alt="Categorias" title="Categorias" >
+                </a>
+                <a id="link-relacionados-agregar" style="display:none;" href="#" data-ajax="false">
+                    <img src="<?php echo Yii::app()->request->baseUrl ?>/images/iconos/icon_relacionados.png" alt="Relacionados" title="Relacionados" >
+                </a>
+            </div>
+            <div class="right">
+                <?php if (isset($formFiltro)): ?>
+                    <a href="#panel-filtro">
+                        <img src="<?php echo Yii::app()->request->baseUrl ?>/images/iconos/icon_filtrar.png" alt="Filtrar" >
+                    </a>
+                <?php endif; ?>
+
+                <?php if (isset($formOrdenamiento)): ?>
+                    <a href="#panel-ordenamiento">
+                        <img src="<?php echo Yii::app()->request->baseUrl ?>/images/iconos/icon_ordenar.png" alt="Ordenar">
+                    </a>
+                <?php endif; ?>
+            </div>
+        </div>
+        
+        <div class="clear"></div>
+    <?php //endif;?>
+    <?php if ($imagenBusqueda != null): ?>
+        <img src="<?php echo Yii::app()->request->baseUrl . $imagenBusqueda; ?>" class="ajustada">
+    <?php endif; ?>
+
+    <ul data-role="listview" data-inset="true" data-icon="false" class="c_list_prod_cont" style="margin-top: -1px">
+        <?php foreach ($listCombos as $objCombo): ?>
+            <li class="c_list_prod combo_list_item">
+                <div class="ui-field-contain clst_prod_cont">
+                    <?php
+                    $this->renderPartial('//catalogo/_comboElemento', array(
+                        'objCombo' => $objCombo,
+                        'objPrecio' => new PrecioCombo($objCombo),
+                        'vista' => 'listaCatalogo',
+                    ));
+                    ?>
+                </div>
+            </li>
+        <?php endforeach; ?>
+     
+     <?php    
+    $this->widget('zii.widgets.CListView', array(
+                            'id' => 'id-productos-list',
+                            'dataProvider' => $dataprovider,
+                            //'template' => "{items}\n{pager}",
+                            //'summaryText' => "{start} - {end} из {count}",
+                            'template' => "{summary}<br/>{items}<div class='clear'></div>{pager}",
+                           // 'itemsCssClass' => "items items1",
+                            'itemView' => '_productoElemento_aux',
+                            'beforeAjaxUpdate' => new CJavaScriptExpression("$.mobile.loading('show');"),
+                            'afterAjaxUpdate' => new CJavaScriptExpression("$('.cbtn_cant').css('max-width','2.5em');$.mobile.loading('hide');"),
+                            'pager' => array('class' => 'CLinkPager', 'header' => '','maxButtonCount'=>1,),
+                        )); 
+    ?>
+    </ul>
+</div>
+
+<?php if(isset($objModulo)) $this->renderPartial('//sitio/_modulos', array('objModulo'=>$objModulo)); ?>
+
+<?php if (isset($formOrdenamiento)) $this->extraContentList[] = $this->renderPartial('//catalogo/_formOrdenamiento', array('formOrdenamiento' => $formOrdenamiento, 'objSectorCiudad' => $objSectorCiudad), true); ?>
+<?php if (isset($formFiltro)) $this->extraContentList[] = $this->renderPartial('//catalogo/_formFiltro', array('formFiltro' => $formFiltro, 'tipoBusqueda' => $tipoBusqueda), true); ?>
+
+<?php foreach ($listCodigoEspecial as $especial): ?>
+    <div data-role="popup" id="popup-especial-<?php echo $especial->codigoEspecial ?>" data-dismissible="false" data-theme="a" data-position-to="window" class="c_lst_pop_cont">
+        <!-- <a href="#" data-rel="back" class="ui-btn ui-corner-all ui-shadow ui-btn ui-icon-delete ui-btn-icon-notext ui-btn-right">Close</a> -->
+        <div data-role="main">
+            <div data-role="content">
+                <img src="<?php echo Yii::app()->request->baseUrl . Yii::app()->params->carpetaImagen['codigoEspecial'] . $especial->rutaIcono; ?>" >
+                <p><?php echo $especial->descripcion ?></p>
+            </div>
+        </div>
+        <div data-role="footer">
+            <!-- <a href="#" class="ui-btn ui-corner-all ui-shadow ui-btn-inline ui-btn-r" data-rel="back">Cerrar</a> -->
+            <?php echo CHtml::link('Cerrar', '#', array('class' => 'ui-btn ui-corner-all ui-shadow ui-btn-inline ui-btn-r', 'data-mini' => 'true', 'data-rel' => 'back')); ?>
+        </div>
+    </div>
+<?php endforeach; ?>
+
+<?php if ($objSectorCiudad == null): ?>
+    <div data-role="popup" id="popup-consultarprecio" data-dismissible="false" data-theme="a" data-position-to="window" class="c_lst_pop_cont">
+        <a href="#" data-rel="back" class="ui-btn ui-corner-all ui-shadow ui-btn ui-icon-delete ui-btn-icon-notext ui-btn-right">Close</a>
+        <div data-role="main">
+            <div data-role="content">
+                <h2>Seleccionar ubicación para consultar precio</h2>
+                <?php echo CHtml::link('Seleccionar ubicación', $this->createUrl('/sitio/ubicacion'), array('class' => 'ui-btn ui-corner-all ui-shadow ui-btn-n', 'data-mini' => 'true', 'data-ajax' => 'false')); ?>
+                <?php echo CHtml::link('Cerrar', '#', array('class' => 'ui-btn ui-corner-all ui-shadow ui-btn-r', 'data-mini' => 'true', 'data-rel' => 'back')); ?>
+            </div>
+        </div>
+    </div>
+<?php endif; ?>

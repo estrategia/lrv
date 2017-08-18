@@ -108,7 +108,7 @@ class SitioController extends Controller {
     }
     
     private function contenidosInicioDesktop(){
-    		if(Yii::app()->user->isGuest){
+    	if (Yii::app()->user->isGuest){
     		$objContenido = ContenidoInicio::getContenidoNoAutenticado();
     	
     		if($objContenido){
@@ -117,7 +117,7 @@ class SitioController extends Controller {
     			));
     			Yii::app()->end();
     		}
-    	}else{
+    	} else {
     	
     		// Cumpleanos
     		$objContenido = ContenidoInicio::getContenidoCumpleanhos(Yii::app()->session[Yii::app()->params->usuario['sesion']]);

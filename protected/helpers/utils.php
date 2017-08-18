@@ -88,22 +88,32 @@ function distanciaCoordenadas($lat1, $lon1, $lat2, $lon2, $unit = 'K') {
 
 function GSASearch($term, $sesion) {
     $resultado = array();
-    
+    $file = fopen(Yii::getPathOfAlias('application') . DIRECTORY_SEPARATOR . "runtime" . DIRECTORY_SEPARATOR . "buscadorLog.txt", "a");
     if(is_numeric($term)){
         $resultado = array($term=>4);
     }else{
+    	fwrite($file, Date("Y-m-d h:i:s ")." Inicio Palabra de busqueda $term en sesion $sesion". PHP_EOL);
+    	$inicio = round(microtime(true) * 1000);
         $sql = "SELECT codigoProducto, descripcion, MATCH(descripcion, keyword) AGAINST('(\"$term\") (+$term) ($term) ($term*)' IN BOOLEAN MODE) as relevancia
                        FROM m_Keyword
                        WHERE (MATCH(descripcion, keyword) AGAINST('(\"$term\") (+$term) ($term) ($term*)' IN BOOLEAN MODE)
                       OR (descripcion LIKE '%$term%') /* OR (codigoProducto IN (10002, 44081, 59488, 13910))*/)
                       order by relevancia DESC";
-
+        $h1 = round(microtime(true) * 1000);
         $arr1 = Yii::app()->db->createCommand($sql)->query();
+        $h2 = round(microtime(true) * 1000);
+        fwrite($file, Date("Y-m-d h:i:s ")." Consultando relevancia en la bd local para $term: ". ($h2 - $h1)." milisegundos". PHP_EOL);
+        fwrite($file, Date("Y-m-d h:i:s ")." Query ejecutado para $term: ". $sql." milisegundos". PHP_EOL);
         foreach ($arr1 as $key => $value) {
             $resultado[$value['codigoProducto']] = $value['relevancia'];
         }
 
-       // $arr2 = GSASearchAux($term);
+        $h1 = round(microtime(true) * 1000);
+        $arr2 = GSASearchAux($term);
+        $h2 = round(microtime(true) * 1000);
+
+        fwrite($file, Date("Y-m-d h:i:s ")." Buscando en el GSA $term: ". ($h2 - $h1)." milisegundos". PHP_EOL);
+
         $arr2 = array();
         foreach ($arr2 as $key => $value) {
             if (in_array($key, $resultado)) {
@@ -115,25 +125,33 @@ function GSASearch($term, $sesion) {
             }
         }
     }
-
+    $h1 = round(microtime(true) * 1000);
     $sql = " CREATE TEMPORARY TABLE t_relevancia_temp_$sesion (
             codigoProducto int(10) unsigned NOT NULL,
             relevancia int(11) NOT NULL,
             KEY `idx_t_relevancia_temp_codigoProducto` (`codigoProducto`)
-         
+
           ) ";
     Yii::app()->db->createCommand($sql)->query();
+    $h2 = round(microtime(true) * 1000);
+    fwrite($file, Date("Y-m-d h:i:s ")." Creando tabla temporal $term: ". ($h2 - $h1)." milisegundos". PHP_EOL);
 
     $ProductosRelevancia = array();
     foreach ($resultado as $key => $relevancia) {
         $ProductosRelevancia[] = "('$key','$relevancia')";
     }
 
+    $h1 = round(microtime(true) * 1000);
     if (!empty($ProductosRelevancia)) {
         $sql = "SET FOREIGN_KEY_CHECKS = 0;
                     INSERT INTO t_relevancia_temp_$sesion (codigoProducto, relevancia) VALUES " . implode(",", $ProductosRelevancia);
         Yii::app()->db->createCommand($sql)->query();
     }
+    $h2 = round(microtime(true) * 1000);
+    $fin = round(microtime(true) * 1000);
+    fwrite($file, Date("Y-m-d h:i:s ")." Insertando datos en tabla temporal $term : ". ($h2 - $h1)." milisegundos". PHP_EOL);
+  //  fwrite($file, Date("Y-m-d h:i:s ")." Finalizada la busqueda $term en sesion $sesion ".($fin-$inicio). " milisegundos". PHP_EOL);
+
 
     return $resultado;
 
@@ -164,57 +182,62 @@ function GSASearchAux($term) {
     $codigosArray = array();
 
     if ($term != "") {
-        GSAResult($term, $result);
-
-        if ($result !== false) {
-            require_once (Yii::app()->basePath . DS . 'vendors' . DS . 'XML2Array.php'); //Libreria que convierte el xml a array
-            //Se procesa el XML para cambiarle el formato
-            $dom = new DOMDocument('1.0', 'utf-8');
-            $dom->loadXML($result);
-
-            $array = XML2Array::createArray($dom);
-
-            //Si hay una palabra sugerida se realiza de nuevo busqueda con sugerencia
-            if (isset($array["GSP"]) && isset($array["GSP"]["Spelling"]["Suggestion"]) && $array["GSP"]["Spelling"]["Suggestion"] != "") {
-                $term = $array["GSP"]["Spelling"]["Suggestion"]["@attributes"]["q"];
-                GSAResult($term, $result);
-                if ($result !== false) {
-                    $dom = new DOMDocument('1.0', 'utf-8');
-                    $dom->loadXML($result);
-                    $array = XML2Array::createArray($dom);
-                } else {
-                    $array = array();
-                }
-            }
-
-            if (isset($array["GSP"])) {
-                //Si hay registros
-                if (isset($array["GSP"]["RES"]) && isset($array["GSP"]["RES"]["R"])) {
-                    $cantidad = (isset($array["GSP"]["RES"]["M"])) ? $array["GSP"]["RES"]["M"] : 0;
-
-                    if ($cantidad == 1) {
-                        if (isset($array["GSP"]["RES"]["R"]["S"])) {
-                            $cod = obtenerProductoRefe($array["GSP"]["RES"]["R"]["S"]);
-                            $rank = $array["GSP"]["RES"]["R"]["RK"];
-                            if ($cod !== null)
-                                $codigosArray[$cod] = convertRanking($rank);
-                        }
-                    }
-                    else {
-                        if (sizeof($array["GSP"]["RES"]["R"]) > 0) {
-                            foreach ($array["GSP"]["RES"]["R"] as $prod) {
-                                if (isset($prod["S"])) {
-                                    $cod = obtenerProductoRefe($prod["S"]);
-                                    $rank = $prod["RK"];
-                                    if ($cod !== null)
-                                        $codigosArray[$cod] = convertRanking($rank);
-                                }
-                            }
-                        }
-                    }
-                }
-            }
-        }
+    	try{
+	        GSAResult($term, $result);
+	
+	        if ($result !== false) {
+	            require_once (Yii::app()->basePath . DS . 'vendors' . DS . 'XML2Array.php'); //Libreria que convierte el xml a array
+	            //Se procesa el XML para cambiarle el formato
+	            $dom = new DOMDocument('1.0', 'utf-8');
+	            $dom->loadXML($result);
+	
+	            $array = XML2Array::createArray($dom);
+	
+	            //Si hay una palabra sugerida se realiza de nuevo busqueda con sugerencia
+	            if (isset($array["GSP"]) && isset($array["GSP"]["Spelling"]["Suggestion"]) && $array["GSP"]["Spelling"]["Suggestion"] != "") {
+	                $term = $array["GSP"]["Spelling"]["Suggestion"]["@attributes"]["q"];
+	                GSAResult($term, $result);
+	                if ($result !== false) {
+	                    $dom = new DOMDocument('1.0', 'utf-8');
+	                    $dom->loadXML($result);
+	                    $array = XML2Array::createArray($dom);
+	                } else {
+	                    $array = array();
+	                }
+	            }
+	
+	            if (isset($array["GSP"])) {
+	                //Si hay registros
+	                if (isset($array["GSP"]["RES"]) && isset($array["GSP"]["RES"]["R"])) {
+	                    $cantidad = (isset($array["GSP"]["RES"]["M"])) ? $array["GSP"]["RES"]["M"] : 0;
+	
+	                    if ($cantidad == 1) {
+	                        if (isset($array["GSP"]["RES"]["R"]["S"])) {
+	                            $cod = obtenerProductoRefe($array["GSP"]["RES"]["R"]["S"]);
+	                            $rank = $array["GSP"]["RES"]["R"]["RK"];
+	                            if ($cod !== null)
+	                                $codigosArray[$cod] = convertRanking($rank);
+	                        }
+	                    }
+	                    else {
+	                        if (sizeof($array["GSP"]["RES"]["R"]) > 0) {
+	                            foreach ($array["GSP"]["RES"]["R"] as $prod) {
+	                                if (isset($prod["S"])) {
+	                                    $cod = obtenerProductoRefe($prod["S"]);
+	                                    $rank = $prod["RK"];
+	                                    if ($cod !== null)
+	                                        $codigosArray[$cod] = convertRanking($rank);
+	                                }
+	                            }
+	                        }
+	                    }
+	                }
+	            }
+	        }
+    	}catch (Exception $e){
+    		Yii::log("Error al hacer busqueda ".$e->getMessage());
+    		
+    	}
     }
 
     return $codigosArray;
@@ -225,6 +248,7 @@ function convertRanking($rank){
 }
 
 function GSAResult(&$term, &$result) {
+	try{
     $term = urlencode($term);     //Cadena a buscar
     $site = 'larebaja_collection';   //Coleccion
     $client = 'larebaja_frontend';   //Interfaz de busqueda
@@ -241,6 +265,7 @@ function GSAResult(&$term, &$result) {
     //Se genera la url de busqueda y se invoca
     $url = 'http://gsa.copservir.com/search?site=' . $site . '&client=' . $client . '&output=' . $output . '&q=' . $term . '&filter=' . $filter . '&num=' . $num . '&ie=' . $ie . '&ulang=' . $ulang . '&entqr=' . $entqr . '&entqrm=' . $entqrm . '&wc=' . $wc . '&wc_mc=' . $wc_mc;
     $result = file_get_contents($url);
+	}catch(Exception $e){}
 }
 
 function obtenerProductoRefe($busqueda) {

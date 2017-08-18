@@ -28,7 +28,7 @@
                 <?php $this->renderPartial('//catalogo/_formFiltroAtributos', array('formFiltro' => $formFiltro)) ?>
             </div>
         </fieldset>
-        
+        <input type='hidden' name='filter' value='1'/>
         <div class="ui-input-btn ui-btn ui-corner-all ui-shadow ui-btn-n ui-mini">
             Filtrar
             <input type="submit" data-enhanced="true" value="Filtrar">
@@ -58,7 +58,6 @@
                 <?php $this->renderPartial('//catalogo/_formFiltroCategorias', array('formFiltro' => $formFiltro)) ?>
             </div>
         </fieldset>
-        
         <div class="ui-input-btn ui-btn ui-corner-all ui-shadow ui-btn-n ui-mini">
             Filtrar
             <input type="submit" data-enhanced="true" value="Filtrar">

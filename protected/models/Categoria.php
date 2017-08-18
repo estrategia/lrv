@@ -110,19 +110,20 @@ class Categoria extends CActiveRecord {
         
         $categoriasHijas = CategoriaTienda::model()->findAll(array(
             'with' => array('objCategoriaPadre', 'listCategoriasBI'),
-            'condition' => 't.idCategoriaPadre=:division AND t.tipoDispositivo=:dispositivo',
+            'condition' => 't.idCategoriaPadre=:division AND t.tipoDispositivo=:dispositivo', 
             'params' => array(
                 ':division' => $division,
                 ':dispositivo' => $isMobile ? CategoriaTienda::DISPOSITIVO_MOVIL : CategoriaTienda::DISPOSITIVO_ESCRITORIO
             ),
         ));
         
+        
         if($categoriasHijas == null){
             return false;
         }
         
         // obtener Array de las categorias Hijas
-        $listIdsCategoriaBI = array();
+        $listIdsCategoriaBI = array(337,338,339,341); // ojo solo es de prueba
 
         foreach($categoriasHijas as $categoria){
             $listCategoriasHijas[] = $categoria->idCategoriaTienda;
@@ -131,6 +132,8 @@ class Categoria extends CActiveRecord {
             }
         }
         
+        
+       
         $parametrosProductos = array();
 
         if ($objSectorCiudad == null) {
@@ -152,7 +155,8 @@ class Categoria extends CActiveRecord {
                     'listPrecios' => array('condition' => '(listPrecios.codigoCiudad=:ciudad AND listPrecios.codigoSector=:sector) OR (listPrecios.codigoCiudad IS NULL AND listPrecios.codigoSector IS NULL)'),
                     'listSaldosTerceros' => array('condition' => '(listSaldosTerceros.saldoUnidad>:saldo AND listSaldosTerceros.codigoCiudad=:ciudad AND listSaldosTerceros.codigoSector=:sector) OR (listSaldosTerceros.codigoCiudad IS NULL AND listSaldosTerceros.codigoSector IS NULL)')
                 ),
-                'condition' => "t.activo=:activo AND t.idCategoriaBI IN (" . implode(",", $listIdsCategoriaBI) . ") AND (listImagenes.tipoImagen='" . Yii::app()->params->producto['tipoImagen']['mini'] . "' OR listImagenes.tipoImagen IS NULL) AND ( (listSaldos.saldoUnidad IS NOT NULL AND listPrecios.codigoCiudad IS NOT NULL) OR listSaldosTerceros.codigoCiudad IS NOT NULL)",
+            		 
+                'condition' => "t.activo=:activo AND t.idCategoriaBI IN (" . implode(",", $listIdsCategoriaBI) . ") AND (listImagenes.tipoImagen='" . Yii::app()->params->producto['tipoImagen']['mini'] . "' OR listImagenes.tipoImagen IS NULL) AND ((listSaldos.saldoUnidad IS NOT NULL AND listPrecios.codigoCiudad IS NOT NULL) OR listSaldosTerceros.codigoCiudad IS NOT NULL)",
                 'params' => array(
                     ':activo' => 1,
                     ':saldo' => 0,

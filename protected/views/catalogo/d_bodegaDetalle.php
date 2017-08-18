@@ -1,7 +1,7 @@
 <?php $idUnico = uniqid() ?>
 
 <div class="space-3"></div>
-<section>
+<section class="product_detail">
     <div class="container">
         <div class="col-md-12">
             <div class="col-md-6">
@@ -21,10 +21,11 @@
                                         <?php foreach ($listImagenes as $imagen): ?>
                                             <li>
                                                 <a href="<?php echo Yii::app()->request->baseUrl . Yii::app()->params->carpetaImagen['productos'][YII::app()->params->producto['tipoImagen']['grande']] . $imagen->rutaImagen; ?>">
-                                                    <img   class="img-responsive noimagenProduct product-prom"src="<?php echo Yii::app()->request->baseUrl . Yii::app()->params->carpetaImagen['productos'][YII::app()->params->producto['tipoImagen']['grande']] . $imagen->rutaImagen; ?>" >
+                                                    <img class="img-responsive width-thumb-owl product-prom"src="<?php echo Yii::app()->request->baseUrl . Yii::app()->params->carpetaImagen['productos'][YII::app()->params->producto['tipoImagen']['grande']] . $imagen->rutaImagen; ?>" alt="<?php echo $imagen->nombreImagen ?>" title="<?php echo $imagen->tituloImagen ?>">
                                                 </a>
                                             </li>
                                         <?php endforeach; ?>
+                                   </ul>
                                 </div>
                             </div>
                         </div>

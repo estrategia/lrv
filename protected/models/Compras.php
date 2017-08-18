@@ -310,7 +310,12 @@ class Compras extends CActiveRecord {
         $condition = "true ";
         $params = array();
         if ($form['tipo'] == 'criterio') {
-            if ($form['criterio'] == 1) {
+        	
+        	/************** mejorar como trabajarla *********************************************/
+        	if(strlen(trim($form['valorCriterio'])) < 3){
+        		$condition .= " AND false";
+        	}
+            else if ($form['criterio'] == 1) {
                 $nombre = trim($form['valorCriterio']);
                 if (!empty($nombre)) {
                     $condition .= " AND (objUsuario.nombre LIKE :nombre OR objUsuario.apellido LIKE :nombre)";
@@ -964,6 +969,10 @@ class Compras extends CActiveRecord {
             $classes[] = "presencial";
         }
         return empty($classes) ? false : implode(' ', $classes);
+    }
+    
+    public function isVentaCentralizada(){
+    	return false;
     }
 
 }

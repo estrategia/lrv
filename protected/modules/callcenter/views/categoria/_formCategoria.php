@@ -45,7 +45,7 @@
                 <?php echo $form->dropDownList($model, 'visible', Yii::app()->params->callcenter['categorias']['visible'] , array('class' => 'visible form-control')); ?>
                 <?php echo $form->error($model, 'visible'); ?>
               </div>
-              <?php if($nivel == 1):?>
+              <?php //if($nivel == 1):?>
                 <div class="form-group">
                   <?php echo $form->labelEx($model, 'rutaImagen'); ?>
                   <?php echo CHtml::activeFileField($model, 'rutaImagen' , array('class' => 'rutaImagen')); ?>
@@ -56,7 +56,7 @@
                   <?php echo CHtml::activeFileField($model, 'rutaImagenMenu' , array('class' => 'rutaImagenMenu')); ?>
                   <?php echo $form->error($model, 'rutaImagenMenu'); ?>
                 </div>
-              <?php endif;?>
+              <?php // endif;?>
               <?php  $this->endWidget();?>  
           </div>
           <div class="modal-footer">

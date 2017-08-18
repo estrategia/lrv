@@ -308,6 +308,28 @@ class BonosController extends ControllerOperator {
             )
         ));
     }
+    
+
+    public function actionBonosPqrs(){
+    	$model = new BonosTienda('searchPqrs');
+    	$model->unsetAttributes();  // clear any default values
+    	if (isset($_GET['BonosTienda']))
+    		$model->attributes = $_GET['BonosTienda'];
+    		 
+    
+    		if ($model->idBonoTienda == null && $bono != null) {
+    			$model->idBonoTienda = $bono;
+    		}
+    		 
+    		Yii::app()->session[Yii::app()->params->callcenter['sesion']['modelBonosAdminExport']] = $model;
+    		$this->render('searchBonos', array(
+    				'vista' => 'admin',
+    				'opcion' => 'admin',
+    				'params' => array(
+    						'model' => $model,
+    				)
+    		));
+    }
 
     public function actionExportar() {
         if (isset($_GET['excel'])) {

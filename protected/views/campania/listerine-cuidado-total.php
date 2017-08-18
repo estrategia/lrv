@@ -5,22 +5,10 @@ $this->metaTags = "<meta http-equiv='X-UA-Compatible' content='IE=edge'>
     <meta name='description' content='Listerine® Cuidado Total puede matar hasta el 99% de los gérmenes que causan la placa bacteriana y el mal aliento mientras protege tus encías.'>
     <meta name='keywords' content='Listerine, enjuague bucal, mal aliento.'>
     <style>
-      @font-face {
-          font-family:Knockout-FullLiteweight;
-          src: url(".Yii::app()->request->baseUrl."/images/contenido/listerine/fonts/Knockout-FullLiteweight.otf);
-      }
-      @font-face {
-          font-family:Gotham-Book;
-          src: url(".Yii::app()->request->baseUrl."/images/contenido/listerine/fonts/Gotham-Book.otf);
-      }
-      @font-face {
-          font-family:Gotham-BlackIta;
-          src: url(".Yii::app()->request->baseUrl."/images/contenido/listerine/fonts/Gotham-BlackIta.otf);
-      }
-      @font-face {
-          font-family:GothamMedium;
-          src: url(".Yii::app()->request->baseUrl."/images/contenido/listerine/fonts/GothamMedium.otf);
-      }
+      @font-face {font-family:Knockout-FullLiteweight;src: url(".Yii::app()->request->baseUrl."/images/contenido/listerine/fonts/Knockout-FullLiteweight.otf);}
+      @font-face {font-family:Gotham-Book;src: url(".Yii::app()->request->baseUrl."/images/contenido/listerine/fonts/Gotham-Book.otf);}
+      @font-face {font-family:Gotham-BlackIta;src: url(".Yii::app()->request->baseUrl."/images/contenido/listerine/fonts/Gotham-BlackIta.otf);}
+      @font-face {font-family:GothamMedium;src: url(".Yii::app()->request->baseUrl."/images/contenido/listerine/fonts/GothamMedium.otf);}
       * {padding: 0;margin: 0;-webkit-box-sizing: border-box;-moz-box-sizing: border-box;box-sizing: border-box;}
       .background{background-color:#6657A8;}
       .space {height:32px;}
@@ -87,7 +75,7 @@ $this->metaTags = "<meta http-equiv='X-UA-Compatible' content='IE=edge'>
       .bg-cuidadoTotalZero img {margin:0 auto;}
       .sidebar-cart {position: fixed;right: 0px;top: 65%;z-index: 2000;}
       .sidebar-cart ul li {list-style:none;}
-      .title-banner{font-family:Knockout-FullLiteweight;font-size: 90px;text-transform: uppercase;color: #A092E7;line-height: 76%;margin-top: 102px;}
+      .title-banner{font-family:Knockout-FullLiteweight;font-size: 90px;text-transform: uppercase;color: #A092E7;line-height: 76%;margin-top: 39px;}
       .title-banner-m{font-family: Knockout-FullLiteweight;font-size: 60px;text-transform: uppercase;color: #A092E7;}
       .title-banner2{font-family:Knockout-FullLiteweight;font-size: 80px;text-transform: uppercase;color: #fff;line-height: 76%;}
       .title-banner2-m {font-family: Knockout-FullLiteweight;font-size: 60px;text-transform: uppercase;color: #fff;}
@@ -140,6 +128,7 @@ $this->metaTags = "<meta http-equiv='X-UA-Compatible' content='IE=edge'>
 ?>
 <!--Versión movil-->
 <?php if ($this->isMobile): ?>
+
 <section>
   <img class="img-responsive" src="<?= Yii::app()->request->baseUrl ?>/images/contenido/listerine/banner-mobile.jpg" alt="">
 </section>
@@ -186,10 +175,10 @@ $this->metaTags = "<meta http-equiv='X-UA-Compatible' content='IE=edge'>
     <img style="width: 40%;margin: 0 auto;display: block;" src="<?= Yii::app()->request->baseUrl ?>/images/contenido/listerine/listerine-cuidado-total.png" alt="">
     <div class="bg-gray">
       <p>Es el más completo y avanzado LISTERINE®. ¡Ofrece 6 beneficios en 1!</p>
-      <a href="<?php echo CController::createUrl('/catalogo/producto', array('producto' => 59286)) ?>">
+      <a href="<?php echo CController::createUrl('/contenido/ver', array('tipo' => 'grupo', 'contenido' => 3316)) ?>">
         <img src="<?= Yii::app()->request->baseUrl ?>/images/contenido/listerine/compra-online.png" class="img-responsive btn-compra" alt="">
       </a>
-      <img src="<?= Yii::app()->request->baseUrl ?>/images/contenido/listerine/entrega-1-hora.png" class="img-responsive entrega1hora" alt="">
+      <!-- <img src="<?= Yii::app()->request->baseUrl ?>/images/contenido/listerine/entrega-1-hora.png" class="img-responsive entrega1hora" alt=""> -->
     </div>
   </div>
   <div class="bg-cuidadoTotalZero-m">
@@ -197,10 +186,10 @@ $this->metaTags = "<meta http-equiv='X-UA-Compatible' content='IE=edge'>
     <img style="width: 40%;margin: 0 auto;display: block;" src="<?= Yii::app()->request->baseUrl ?>/images/contenido/listerine/listerine-cuidado-total-zero.png" alt="">
     <div class="bg-gray">
       <p>Es el más completo y avanzado LISTERINE<sup>®</sup>, ahora también sin alcohol.</p>
-      <a href="<?php echo CController::createUrl('/catalogo/producto', array('producto' => 115376)) ?>">
+      <a href="<?php echo CController::createUrl('/contenido/ver', array('tipo' => 'grupo', 'contenido' => 3318)) ?>">
         <img src="<?= Yii::app()->request->baseUrl ?>/images/contenido/listerine/compra-online.png" class="img-responsive btn-compra" alt="">
       </a>
-      <img src="<?= Yii::app()->request->baseUrl ?>/images/contenido/listerine/entrega-1-hora.png" class="img-responsive entrega1hora" alt="">
+      <!-- <img src="<?= Yii::app()->request->baseUrl ?>/images/contenido/listerine/entrega-1-hora.png" class="img-responsive entrega1hora" alt=""> -->
     </div>
   </div>
 </section>
@@ -217,7 +206,7 @@ $this->metaTags = "<meta http-equiv='X-UA-Compatible' content='IE=edge'>
   <div class="row bg-gray footer-m" style="padding-bottom: 25px;">
     <div class="col-md-6"><p>Enjuague Bucal LISTERINE<sup>®</sup></p></div>
     <div class="col-md-6">
-      <a href="<?php echo CController::createUrl('/catalogo/buscar', array('busqueda' => 'listerine cuidado total')) ?>"><img style="width: 75%;margin: 0 auto;display: block;" src="<?= Yii::app()->request->baseUrl ?>/images/contenido/listerine/compra-online.png" class="img-responsive" alt=""></a>
+      <a href="<?= Yii::app()->request->baseUrl ?>/catalogo/buscar?busqueda=listerine"><img style="width: 75%;margin: 0 auto;display: block;" src="<?= Yii::app()->request->baseUrl ?>/images/contenido/listerine/compra-online.png" class="img-responsive" alt=""></a>
     </div>
   </div>
 </section>
@@ -262,23 +251,40 @@ $this->metaTags = "<meta http-equiv='X-UA-Compatible' content='IE=edge'>
 <!--Versión escritorio-->
 <?php else: ?>
   <div class="sidebar-cart">
-	   <ul><li><a href="<?php echo CController::createUrl('/catalogo/producto', array('producto' => 115376)) ?>"><img class="img-responsive" src="<?= Yii::app()->request->baseUrl ?>/images/contenido/listerine/comprar-sticky.png" alt=""></a></li></ul>
+	   <ul><li><a href="<?= Yii::app()->request->baseUrl ?>/catalogo/buscar?busqueda=listerine"><img class="img-responsive" src="<?= Yii::app()->request->baseUrl ?>/images/contenido/listerine/comprar-sticky.png" alt=""></a></li></ul>
 	</div>
-  <section class="background">
-    <div class="container">
-        <div class="row">
-          <div class="col-md-6">
-            <p class="title-banner">listerine <sup style="font-size: 44px;margin-left: -8px;top: -32px;font-weight: bolder;">®</sup><br>cuidado total</p>
-            <p class="title-banner2">boca más protegida <br>en 2 semanas.*</p>
-            <p class="subTitle-banner">*vs solo el cepillado dental</p>
-            <p class="hashtag"><span>#</span>SACA<span>LO</span>MEJOR</p>
+
+  <div id="carousel-example-generic" class="carousel slide" data-ride="carousel">
+    <div class="carousel-inner">
+      <div class="item active">
+        <section class="background">
+          <div class="container">
+              <div class="row">
+                <div class="col-md-6">
+                  <p class="title-banner">listerine <sup style="font-size: 44px;margin-left: -8px;top: -32px;font-weight: bolder;">®</sup><br>cuidado total</p>
+                  <p class="title-banner2">boca más protegida <br>en 2 semanas.*</p>
+                  <p class="subTitle-banner">*vs solo el cepillado dental</p>
+                  <p class="hashtag"><span>#</span>SACA<span>LO</span>MEJOR</p>
+                </div>
+                <div class="col-md-6">
+                  <img  style="width: 89%;" src="<?= Yii::app()->request->baseUrl ?>/images/contenido/listerine/listerineBanner.png" class="img-responsive" alt="Listerine La rebaja virtual">
+                </div>
+              </div>
           </div>
-          <div class="col-md-6">
-            <img src="<?= Yii::app()->request->baseUrl ?>/images/contenido/listerine/listerineBanner.png" class="img-responsive" alt="Listerine La rebaja virtual">
-          </div>
-        </div>
+        </section>
+      </div>
+      <div class="item">
+        <img src="<?= Yii::app()->request->baseUrl ?>/images/contenido/listerine/banner02.jpg" class="img-responsive" alt="">
+      </div>
+      <div class="item">
+        <a href="<?php echo CController::createUrl('/contenido/ver', array('tipo' => 'grupo', 'contenido' => 3314)) ?>">
+          <img src="<?= Yii::app()->request->baseUrl ?>/images/contenido/listerine/banner03.jpg" class="img-responsive" alt="">
+        </a>
+      </div>
     </div>
-  </section>
+    <a class="carousel-control left" href="#carousel-example-generic" data-slide="prev"><i class="prev-slide"></i></a>
+    <a class="carousel-control right" href="#carousel-example-generic" data-slide="next"><i class="next-slide"></i></a>
+  </div>
   <div class="space"></div>
   <div class="container background">
     <div class="row">
@@ -328,10 +334,10 @@ $this->metaTags = "<meta http-equiv='X-UA-Compatible' content='IE=edge'>
         <img style="margin:0 auto; display:block;" src="<?= Yii::app()->request->baseUrl ?>/images/contenido/listerine/listerine-cuidado-total.png" alt="">
         <div class="bg-gray">
           <p>Es el más completo y avanzado LISTERINE®. ¡Ofrece 6 beneficios en 1!</p>
-          <a href="<?php echo CController::createUrl('/catalogo/producto', array('producto' => 59286)) ?>">
+          <a href="<?php echo CController::createUrl('/contenido/ver', array('tipo' => 'grupo', 'contenido' => 3316)) ?>">
             <img src="<?= Yii::app()->request->baseUrl ?>/images/contenido/listerine/compra-online.png" class="img-responsive btn-compra" alt="">
           </a>
-          <img src="<?= Yii::app()->request->baseUrl ?>/images/contenido/listerine/entrega-1-hora.png" class="img-responsive entrega1hora" alt="">
+          <!-- <img src="<?= Yii::app()->request->baseUrl ?>/images/contenido/listerine/entrega-1-hora.png" class="img-responsive entrega1hora" alt=""> -->
         </div>
       </div>
       <div class="col-md-5 bg-cuidadoTotalZero">
@@ -339,10 +345,10 @@ $this->metaTags = "<meta http-equiv='X-UA-Compatible' content='IE=edge'>
         <img style="margin:0 auto; display:block;" src="<?= Yii::app()->request->baseUrl ?>/images/contenido/listerine/listerine-cuidado-total-zero.png" alt="">
         <div class="bg-gray">
           <p>Es el más completo y avanzado LISTERINE<sup>®</sup>, ahora también sin alcohol.</p>
-          <a href="<?php echo CController::createUrl('/catalogo/producto', array('producto' => 115376)) ?>">
+          <a href="<?php echo CController::createUrl('/contenido/ver', array('tipo' => 'grupo', 'contenido' => 3318)) ?>">
             <img src="<?= Yii::app()->request->baseUrl ?>/images/contenido/listerine/compra-online.png" class="img-responsive btn-compra" alt="">
           </a>
-          <img src="<?= Yii::app()->request->baseUrl ?>/images/contenido/listerine/entrega-1-hora.png" class="img-responsive entrega1hora" alt="">
+          <!-- <img src="<?= Yii::app()->request->baseUrl ?>/images/contenido/listerine/entrega-1-hora.png" class="img-responsive entrega1hora" alt=""> -->
         </div>
       </div>
       <div class="col-md-12">
@@ -360,7 +366,7 @@ $this->metaTags = "<meta http-equiv='X-UA-Compatible' content='IE=edge'>
       <div class="row bg-gray footer">
         <div class="col-md-6"><p>Enjuague Bucal LISTERINE<sup>®</sup></p></div>
         <div class="col-md-6">
-          <a href="<?php echo CController::createUrl('/catalogo/buscar', array('busqueda' => 'listerine cuidado total')) ?>"><img style="width: 60%;" src="<?= Yii::app()->request->baseUrl ?>/images/contenido/listerine/compra-online.png" class="img-responsive" alt=""></a>
+          <a href="<?= Yii::app()->request->baseUrl ?>/catalogo/buscar?busqueda=listerine"><img style="width: 60%;" src="<?= Yii::app()->request->baseUrl ?>/images/contenido/listerine/compra-online.png" class="img-responsive" alt=""></a>
         </div>
       </div>
     </section>

@@ -1,10 +1,24 @@
 <div class="container-fluid">
     <div class="row">
         <div class="col-md-2 menu-categorias">
+        	<?php if($objCategoria->rutaImagenMenu != null):?>
+        		<div>
+        			<img src='<?=  Yii::app()->request->baseUrl."/images/menu/desktop/".$objCategoria->rutaImagenMenu ?>' />
+        		</div>
+        	<?php endif;?>
             <h3 style="margin-left:42px;"><?php echo $objCategoria->nombreCategoriaTienda ?></h3>
             <ul>
                 <?php foreach ($objCategoria->listCategoriasHijas as $categoriaHija): ?>
-                    <?php echo CHtml::link('<li><span class="glyphicon glyphicon-chevron-right"></span>&nbsp;' . $categoriaHija->nombreCategoriaTienda . '</li>', CController::createUrl('catalogo/categoria', array('categoria' => $categoriaHija->idCategoriaTienda)))
+                	
+                	<?php $icon = '<li><span class="glyphicon glyphicon-chevron-right"></span>&nbsp;' . $categoriaHija->nombreCategoriaTienda . '</li>';?>
+                	
+                	<?php if($categoriaHija->rutaImagen):?>
+                	<?php $icon = "<div>
+        							<img src='".Yii::app()->request->baseUrl."/images/menu/desktop/".$categoriaHija->rutaImagen."' />
+        							$categoriaHija->nombreCategoriaTienda
+        						</div>"; ?>
+                	<?php endif;?>
+                    <?php echo CHtml::link($icon, CController::createUrl('catalogo/categoria', array('categoria' => $categoriaHija->idCategoriaTienda,'title' => $categoriaHija->nombreCategoriaTienda)))
                     ?>
                 <?php endforeach; ?>
             </ul>
@@ -37,9 +51,4 @@
 </div>
 
 <!-- productos destacados -->
-
-
-
-
-
 

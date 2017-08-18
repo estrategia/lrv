@@ -400,11 +400,11 @@ var google_remarketing_only = true;
 
 <!--Versión escritorio-->
 <?php else: ?>
-	<div class="sidebar-cart">
+	<!-- <div class="sidebar-cart">
 	<a href="#">
 		<img class="img-responsive" src="<?= Yii::app()->request->baseUrl ?>/images/contenido/sol-or/boton-sticky.png" alt="Comprar sol-or">
 	</a>
-	</div>
+	</div> -->
 	<div id="carousel-example-generic" class="carousel slide" data-ride="carousel">
         <div class="carousel-inner">
         	<div class="item active">

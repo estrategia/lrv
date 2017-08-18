@@ -268,12 +268,18 @@ class EShoppingCart extends CMap {
        
 
         $this->codigoPerfil = Yii::app()->getUser()->getState($this->getClass() . '_CodigoPerfilVendedor');
+        
         $this->shipping = Yii::app()->getUser()->getState($this->getClass() . '_ShippingVendedor');
         $codigoPerfil = Yii::app()->params->perfil['defecto'];
         if (isset(Yii::app()->session[Yii::app()->params->vendedor['sesion']['cliente']]) && Yii::app()->session[Yii::app()->params->vendedor['sesion']['cliente']] instanceof Usuario) {
             $objUsuario = Yii::app()->session[Yii::app()->params->vendedor['sesion']['cliente']];
             $codigoPerfil = $objUsuario->getCodigoPerfil();
         }
+        
+        if($codigoPerfil == 2){
+        	$codigoPerfil = Yii::app()->params->perfil['defecto'];
+        }
+        
 
         //CVarDumper::dump($this->codigoPerfil, 10, true);echo "<br>";
         //CVarDumper::dump($this->shipping, 10, true);echo "<br>";
@@ -297,6 +303,7 @@ class EShoppingCart extends CMap {
                	Yii::app()->session[Yii::app()->params->vendedor['sesion']['sectorCiudadEntrega']] = $this->objSectorCiudad;
         }
         
+       // echo $codigoPerfil;exit();
         $this->setCodigoPerfil($codigoPerfil);
 
     	if($this->shipping<=0 && $this->isUnit()){

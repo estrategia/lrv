@@ -160,18 +160,20 @@ class CarroController extends Controller {
             }
 
             //si hay saldo, agrega a carro, sino consulta bodega
-            if (($objSaldo != null) && $cantidadCarroUnidad + $cantidadU <= $objSaldo->saldoUnidad) {
+            if (isset($objSaldo) && $cantidadCarroUnidad + $cantidadU <= $objSaldo->saldoUnidad) {
                 $objProductoCarro = new ProductoCarro($objProducto);
                 Yii::app()->shoppingCart->put($objProductoCarro, false, $cantidadU);
             } else {
                 $objPagoForm = new FormaPagoForm;
-                if (!$objPagoForm->tieneDomicilio($this->objSectorCiudad)) {
-                    echo CJSON::encode(array('result' => 'error', 'response' => "La cantidad solicitada no está disponible en este momento. Saldos disponibles: $objSaldo->saldoUnidad unidades"));
-                    Yii::app()->end();
-                }
+                
                 $saldoUnidad = 0 ;
                 if(isset( $objSaldo->saldoUnidad)){
                 	$saldoUnidad =  $objSaldo->saldoUnidad;
+                }
+                
+                if (!$objPagoForm->tieneDomicilio($this->objSectorCiudad)) {
+                	echo CJSON::encode(array('result' => 'error', 'response' => "La cantidad solicitada no está disponible en este momento. Saldos disponibles: $saldoUnidad unidades"));
+                	Yii::app()->end();
                 }
                 
                 $cantidadBodega = $cantidadCarroUnidad + $cantidadU - $saldoUnidad;
@@ -967,10 +969,10 @@ class CarroController extends Controller {
         }
 
         $objPagoForm = new FormaPagoForm;
-        if (!$objPagoForm->tieneDomicilio($objSectorCiudad)) {
+     /*   if (!$objPagoForm->tieneDomicilio($objSectorCiudad)) {
             echo CJSON::encode(array('result' => 'error', 'response' => "La cantidad solicitada no está disponible en este momento."));
             Yii::app()->end();
-        }
+        }*/
 
         $cantidadCarroUnidad = 0;
         $cantidadCarroBodega = 0;
@@ -1045,6 +1047,7 @@ class CarroController extends Controller {
             Yii::app()->shoppingCart->put($objProductoCarro, false, $cantidadUbicacion);
         }
 
+        
         if ($cantidadBodega > 0) {
             Yii::app()->shoppingCart->putStored($objProductoCarro, $cantidadBodega);
         }
@@ -3309,13 +3312,16 @@ class CarroController extends Controller {
                 $objCompraDireccion = new ComprasDireccionesDespacho;
                 $objCompraDireccion->idCompra = $objCompra->idCompra;
                 $objCompraDireccion->descripcion = "NA";
-                $objCompraDireccion->nombre = "NA";
+                $objCompraDireccion->nombre = $modelPago->nombre; // probar con pago normal
                 $objCompraDireccion->direccion = "NA";
                 $objCompraDireccion->barrio = "NA";
                 $objCompraDireccion->telefono = $modelPago->telefonoContacto;
-
+                $objCompraDireccion->identificacionUsuario = $objCompra->identificacionUsuario;
+                
+                
                 if ($modelPago->pagoInvitado) {
                     $objCompraDireccion->correoElectronico = $modelPago->correoElectronicoContacto;
+                   // $objCompraDireccion->nombre = $modelPago->nombre;
                 }
             }
 
@@ -3723,6 +3729,14 @@ class CarroController extends Controller {
                          $objCompra1->idEstadoCompra = Yii::app()->params->callcenter['estadoCompra']['estado']['subasta'];
                         if (!$objCompra1->save()) {
                             throw new Exception("Error al guardar compra [1]" . $objCompra1->validateErrorsResponse());
+                        }
+                        
+                        $objEstadoCompra3 = new ComprasEstados;
+                        $objEstadoCompra3->idCompra = $objCompra->idCompra;
+                        $objEstadoCompra3->idEstadoCompra = Yii::app()->params->callcenter['estadoCompra']['estado']['subasta'];
+                        $objEstadoCompra3->idOperador = 38;
+                        if (!$objEstadoCompra3->save()) {
+                        	throw new Exception("Error al guardar traza de estado: " . $objEstadoCompra2->validateErrorsResponse());
                         }
                     }
                 } catch (SoapFault $exc) {

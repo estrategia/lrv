@@ -27,6 +27,9 @@
                         <a href="<?php echo $this->createUrl('/callcenter/contenido/editar', array('idModulo' => $params['model']->idModulo, 'opcion'=>'editar')) ?>" class="btn btn-primary <?php echo ($params['opcion']=="editar" ? "active" : "") ?>">Editar</a>
                         <a href="<?php echo $this->createUrl('/callcenter/contenido/editar', array('idModulo' => $params['model']->idModulo, 'opcion'=>'sector')) ?>" class="btn btn-primary <?php echo ($params['opcion']=="sector" ? "active" : "") ?>" >Sector</a>
                         <a href="<?php echo $this->createUrl('/callcenter/contenido/editar', array('idModulo' => $params['model']->idModulo, 'opcion'=>'perfil')) ?>" class="btn btn-primary <?php echo ($params['opcion']=="perfil" ? "active" : "") ?>" >Perfil</a>
+                        <?php if($params['model']->tipo == ModulosConfigurados::TIPO_MENU_CONFIGURABLE):?>
+                        	<a href="<?php echo $this->createUrl('/callcenter/contenido/editar', array('idModulo' => $params['model']->idModulo, 'opcion'=>'menu')) ?>" class="btn btn-primary <?php echo ($params['opcion']=="menu" ? "active" : "") ?>" >Cabecera</a>
+                        <?php endif;?>
                         <a href="<?php echo $this->createUrl('/callcenter/contenido/editar', array('idModulo' => $params['model']->idModulo, 'opcion'=>'contenido')) ?>" class="btn btn-primary <?php echo ($params['opcion']=="contenido" ? "active" : "") ?>" >Contenido</a>
                         <a href="<?php echo $this->createUrl('/callcenter/contenido/editar', array('idModulo' => $params['model']->idModulo, 'opcion'=>'categoria')) ?>" class="btn btn-primary <?php echo ($params['opcion']=="categoria" ? "active" : "") ?>" >Categoria</a>
                     </div>

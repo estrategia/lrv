@@ -134,9 +134,9 @@ $this->metaTags = "<meta http-equiv='X-UA-Compatible' content='IE=edge'>
 
 <!--VERSIÓN ESCRITORIO-->
 <?php else: ?>
-<div class="sidebar-cart">
+<!-- <div class="sidebar-cart">
 	<img class="img-responsive" src="<?= Yii::app()->request->baseUrl ?>/images/contenido/abbot/general/compra-online.png" alt="Compra online Similac 3 Kid">
-</div>
+</div> -->
 <!--Header-->
 <?php require 'headerAbbott.php'; ?>
 <!--Banner principal-->

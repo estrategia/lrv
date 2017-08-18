@@ -44,6 +44,17 @@
                                 <input id="cantidad-item-unidad-<?php echo $objItem->idCompraItem ?>" type="text" style="width:100px" value="<?php echo $objItem->unidades ?>" >
                                 <button type="button" data-role="modificarpedido" data-action="11" data-item="<?php echo $objItem->idCompraItem ?>" class="btn btn-default btn-sm"><i class="glyphicon glyphicon-refresh"></i></button>
                             </div>
+                            <div class='space-2'></div>
+                            <?php if($objItem->unidadesCedi > 0):?>
+                            	<div class="form-inline text-center">
+	                            Unidades CEDI
+	                            </div>
+	                            <div class="form-inline text-center">
+	                            		
+	                                    <input type="text" id="cantidad-item-bodega-<?php echo $objItem->idCompraItem ?>" style="width:100px" value="<?php echo $objItem->unidadesCedi ?>" >
+	                                    <button type="button" data-role="modificarpedido" data-action="13" data-item="<?php echo $objItem->idCompraItem ?>" class="btn btn-default btn-sm"><i class="glyphicon glyphicon-refresh"></i></button>
+	                            </div>
+                            <?php endif;?>
                         </td>
                         <td class="text-right">
                             <span style="text-decoration: line-through;"><?php echo Yii::app()->numberFormatter->format(Yii::app()->params->formatoMoneda['patron'], $objItem->precioBaseUnidad, Yii::app()->params->formatoMoneda['moneda']) ?></span>
