@@ -78,7 +78,7 @@ $this->metaTags = "<meta http-equiv='X-UA-Compatible' content='IE=edge'>
         <ul class="lista-check">
           <li>Recomendado para niños a partir de los 4 años de edad. </li>
           <li>Alimento a base de Maltodextrina con Macronutrientes: Carbohidratos, Proteínas y grasas. Enriquecido con Micronutrientes: Vitaminas y Minerales.</li>
-          <li>Un buen complemento para el crecimiento de los niños.</li>
+          <li>Un buen complemento para el desarrollo de los niños.</li>
         </ul>
         <div class="content-colum">
           <h4 class="porcion-suplemento-dietario" style="margin-top: 0px;">PORCIÓN RECOMENDADA</h4>
@@ -222,7 +222,7 @@ $this->metaTags = "<meta http-equiv='X-UA-Compatible' content='IE=edge'>
           <ul class="lista-check">
             <li>Recomendado para niños a partir de los 4 años de edad. </li>
             <li>Alimento a base de Maltodextrina con Macronutrientes: Carbohidratos, Proteínas y grasas. Enriquecido con Micronutrientes: Vitaminas y Minerales.</li>
-            <li>Un buen complemento para el crecimiento de los niños.</li>
+            <li>Un buen complemento para el desarrollo de los niños.</li>
           </ul>
           <div class="content-colum">
             <h4 class="porcion-suplemento-dietario" style="margin-top: 75px;">PORCIÓN RECOMENDADA</h4>

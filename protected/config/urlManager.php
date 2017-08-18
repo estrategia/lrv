@@ -79,6 +79,13 @@ return array(
         'air-lift-elimina-mal-aliento' => 'publicidad/contenido/nombre/air-lift',
         'fybogel-fibra-para-estrenimiento' => 'publicidad/contenido/nombre/fybogel',
         'ky-lubricante-intimo' => 'publicidad/contenido/nombre/ky',
+        'colgate-uso-en-consultorio' => 'publicidad/contenido/nombre/colgate-consultorio',
+        'colgate-pacientes-con-gingivitis' => 'publicidad/contenido/nombre/colgate-gingivitis',
+        'colgate-pacientes-con-sensibilidad' => 'publicidad/contenido/nombre/colgate-sensibilidad',
+        'colgate-prevencion-caries' => 'publicidad/contenido/nombre/colgate-caries',
+        'colgate-blanqueamiento-para-pacientes' => 'publicidad/contenido/nombre/colgate-blanqueamiento',
+        'colgate-pacientes-con-ortodoncia' => 'publicidad/contenido/nombre/colgate-ortodoncia',
+        'colgate-para-pequenos-pacientes' => 'publicidad/contenido/nombre/colgate-ninos',
 
 
         // Fin links campañas
