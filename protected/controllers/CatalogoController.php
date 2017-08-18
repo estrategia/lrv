@@ -2434,6 +2434,158 @@ class CatalogoController extends Controller {
 			$this->render ( 'd_listaProductos', $parametrosVista );
 		}
 	}
+	
+	public function actionMasvendidos2() {
+		$objSectorCiudad = $this->objSectorCiudad;
+		
+		if ($objSectorCiudad == null) {
+			$this->redirect ( $this->createUrl ( '/sitio/ubicacion' ) );
+		}
+		
+		$limite = 50;
+		$codigoPerfil = Yii::app ()->shoppingCart->getCodigoPerfil ();
+		$listCombos = array ();
+		
+		$criteria = array ();
+		$criteria ['with'] = array (
+				'objCodigoEspecial' , 'listCalificaciones',
+				'listImagenes' => array (
+						'on' => 'listImagenes.estadoImagen=:activo AND listImagenes.tipoImagen=:tipoImagen'
+				),
+				'listSaldos' => array (
+						'on' => '(listSaldos.codigoCiudad=:ciudad AND listSaldos.codigoSector=:sector)'
+				),
+				'listSaldosCedi' => array (
+						'on' => 'codigoCedi =:codigoCedi'
+				),
+				'listPrecios' => array (
+						'on' => 'listPrecios.codigoCiudad=:ciudad AND listPrecios.codigoSector=:sector'
+				),
+				'listSaldosTerceros' => array (
+						'on' => 'listSaldosTerceros.codigoCiudad=:ciudad AND listSaldosTerceros.codigoSector=:sector'
+				)
+		);
+		
+		//$criteria ['condition'] = "t.activo=:activo AND t.idUnidadNegocioBI NOT IN (" . implode ( ",", Yii::app ()->params->calificacion ['categoriasNoCalificacion'] ) . ") AND listImagenes.tipoImagen='" . Yii::app ()->params->producto ['tipoImagen'] ['mini'] . "'";
+		$criteria ['condition'] = "t.activo=:activo AND t.idUnidadNegocioBI NOT IN (" . implode ( ",", Yii::app ()->params->calificacion ['categoriasNoCalificacion'] ) . ") ";
+		
+		if (!$objSectorCiudad->esDefecto ()){
+			$criteria ['condition'] .= " AND (listSaldos.saldoUnidad>:saldo OR listSaldos.saldoFraccion>:saldo OR listSaldosTerceros.saldoUnidad>:saldo  OR listSaldosCedi.saldoUnidad > 0 )";
+		}
+		
+		$criteria ['params'] = array (
+				':activo' => 1,
+				':tipoImagen' => YII::app ()->params->producto ['tipoImagen'] ['mini'],
+				':ciudad' => $objSectorCiudad->codigoCiudad,
+				':sector' => $objSectorCiudad->codigoSector,
+				':codigoCedi' => $objSectorCiudad->objCiudad->codigoSucursal
+		);
+		
+		if (!$objSectorCiudad->esDefecto ()){
+			$criteria ['params'] [':saldo'] = 0;
+		}
+		
+		$criteria1 = $criteria;
+		
+		if (Yii::app ()->user->isGuest) {
+			$criteria1 ['join'] = "JOIN t_ProductosVendidos vendidos ON (vendidos.codigoProducto=t.codigoProducto) ";
+			$criteria1 ['order'] = "vendidos.cantidad DESC, t.orden DESC LIMIT $limite";
+		} else {
+			$criteria1 ['join'] = "JOIN t_ProductosVendidos vendidos ON (vendidos.codigoProducto=t.codigoProducto) " . "JOIN t_ComprasUsuariosCategorias comprascateg ON (comprascateg.idCategoriaBI=vendidos.idCategoriaBI)";
+			$criteria1 ['condition'] .= " AND comprascateg.identificacionUsuario='" . Yii::app ()->user->name . "'";
+			$criteria1 ['order'] = "comprascateg.cantidad DESC, vendidos.cantidad DESC, t.orden DESC LIMIT $limite";
+		}
+		
+		$listProductos = Producto::model ()->findAll ( $criteria1 );
+		
+		$listCodigoEspecial = CodigoEspecial::model ()->findAll ( array (
+				'condition' => 'codigoEspecial<>0'
+		) );
+		
+		$limiteRestante = $limite - count ( $listProductos );
+		$listProductos2 = array ();
+		
+		if ($limiteRestante > 0) {
+			$listCodigosResultado = array ();
+			
+			foreach ( $listProductos as $objProducto ) {
+				$listCodigosResultado [] = $objProducto->codigoProducto;
+			}
+			
+			$criteria2 = $criteria;
+			
+			if (! empty ( $listCodigosResultado )) {
+				$criteria2 ['condition'] .= ' AND t.codigoProducto NOT IN (' . implode ( ",", $listCodigosResultado ) . ')';
+			}
+			
+			$criteria2 ['join'] = "JOIN t_ProductosVendidos vendidos ON (vendidos.codigoProducto=t.codigoProducto) ";
+			$criteria2 ['order'] = "vendidos.cantidad DESC, t.orden DESC LIMIT $limiteRestante";
+			$listProductos2 = Producto::model ()->findAll ( $criteria2 );
+		}
+		
+		if (! empty ( $listProductos2 )) {
+			$listProductos = array_merge ( $listProductos, $listProductos2 );
+		}
+		
+		$imagenBusqueda = null;
+		if (empty ( $listProductos )) {
+			$imagenBusqueda = Yii::app ()->params->busqueda ['imagen'] ['noExito'];
+			try {
+				Busquedas::registrarBusqueda ( array (
+						'idenficacionUsuario' => Yii::app ()->user->isGuest ? null : Yii::app ()->user->name,
+						'tipoBusqueda' => Yii::app ()->params->busqueda ['tipo'] ['categoria'],
+						'msgBusqueda' => "Mas Vendidos",
+						'codigoCiudad' => $objSectorCiudad == null ? null : $objSectorCiudad->codigoCiudad,
+						'codigoSector' => $objSectorCiudad == null ? null : $objSectorCiudad->codigoSector
+				) );
+			} catch ( Exception $exc ) {
+				Yii::log ( $exc->getMessage () . "\n" . $exc->getTraceAsString (), CLogger::LEVEL_ERROR, 'application' );
+			}
+		}
+		
+		foreach ( $listProductos as $objProducto ) {
+			if ($objProducto->codigoEspecial != null && $objProducto->codigoEspecial != 0) {
+				CodigoEspecial::setState ( $objProducto->objCodigoEspecial );
+			}
+		}
+		
+		$parametrosVista = array (
+				'listProductos' => $listProductos,
+				'listCombos' => $listCombos,
+				'listCodigoEspecial' => $listCodigoEspecial,
+				'objSectorCiudad' => $objSectorCiudad,
+				'codigoPerfil' => $codigoPerfil,
+				'tipoBusqueda' => Yii::app ()->params->busqueda ['tipo'] ['categoria'],
+				'nombreBusqueda' => "M&aacute;s vendidos"
+		);
+		
+		$parametrosVista ['imagenBusqueda'] = $imagenBusqueda;
+		
+		if ($this->isMobile) {
+			$this->render ( 'listaProductos', $parametrosVista );
+		} else {
+			$pagina = 30;
+			if (isset ( $_GET ['pageSize'] ) and is_numeric ( $_GET ['pageSize'] )) {
+				$pagina = $_GET ['pageSize'];
+			}
+			
+			$dataProvider = new CArrayDataProvider ( $listProductos, array (
+					'id' => 'codigoProducto',
+					'sort' => array (
+							'attributes' => array (
+									'descripcionProducto'
+							)
+					),
+					'pagination' => array (
+							'pageSize' => $pagina
+					)
+			) );
+			
+			$parametrosVista ['dataprovider'] = $dataProvider;
+			$parametrosVista ['cantidadItems'] = 5;
+			$this->render ( 'd_listaProductos', $parametrosVista );
+		}
+	}
 	public function actionMasvistos() {
 		$objSectorCiudad = $this->objSectorCiudad;
 		

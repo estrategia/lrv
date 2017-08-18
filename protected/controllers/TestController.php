@@ -1,6 +1,9 @@
 <?php
 //controlador de prueba TestController prueba
 class TestController extends Controller {
+    public function actionUrlm(){
+        CVarDumper::dump(Yii::app()->urlManager,10,true);
+    }
     
     public function actionListprod(){
     	//prueba
