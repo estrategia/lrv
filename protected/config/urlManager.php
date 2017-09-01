@@ -38,6 +38,7 @@ return array(
         'zahara-protector-solar' => 'publicidad/contenido/nombre/zahara',
         'zahara-protector-solar-kids' => 'publicidad/contenido/nombre/zahara-kids',
         'zahara-bronceador' => 'publicidad/contenido/nombre/zahara-bronceador',
+        'prodent-cuidado-oral-old' => 'publicidad/contenido/nombre/prodent-old',
         'prodent-cuidado-oral' => 'publicidad/contenido/nombre/prodent',
         'pedialyte-suero-oral' => 'publicidad/contenido/nombre/pedialyte',
         'pilas-energizer' => 'publicidad/contenido/nombre/energizer',
@@ -51,6 +52,10 @@ return array(
         'altex-elimina-acne' => 'publicidad/contenido/nombre/altex-elimina',
         'altex-oculta-acne' => 'publicidad/contenido/nombre/altex-oculta',
         'cicatricure' => 'publicidad/contenido/nombre/cicatricure',
+        'cicatricure-gel' => 'publicidad/contenido/nombre/cicatricure-gel',
+        'cicatricure-contorno-ojos' => 'publicidad/contenido/nombre/cicatricure-ojos',
+        'cicatricure-beauty-care' => 'publicidad/contenido/nombre/cicatricure-beauty',
+        'cicatricure-crema' => 'publicidad/contenido/nombre/cicatricure-crema',
         'electrohogar' => 'publicidad/contenido/nombre/electrohogar',
         'nestum-cereales-infantiles' => 'publicidad/contenido/nombre/nestum',
         'recetas-nestum-cereales-infantiles' => 'publicidad/contenido/nombre/nestum-recetas',
@@ -79,15 +84,14 @@ return array(
         'air-lift-elimina-mal-aliento' => 'publicidad/contenido/nombre/air-lift',
         'fybogel-fibra-para-estrenimiento' => 'publicidad/contenido/nombre/fybogel',
         'ky-lubricante-intimo' => 'publicidad/contenido/nombre/ky',
-        'colgate-uso-en-consultorio' => 'publicidad/contenido/nombre/colgate-consultorio',
+        'colgate-profesional' => 'publicidad/contenido/nombre/colgate-consultorio',
         'colgate-pacientes-con-gingivitis' => 'publicidad/contenido/nombre/colgate-gingivitis',
         'colgate-pacientes-con-sensibilidad' => 'publicidad/contenido/nombre/colgate-sensibilidad',
         'colgate-prevencion-caries' => 'publicidad/contenido/nombre/colgate-caries',
         'colgate-blanqueamiento-para-pacientes' => 'publicidad/contenido/nombre/colgate-blanqueamiento',
         'colgate-pacientes-con-ortodoncia' => 'publicidad/contenido/nombre/colgate-ortodoncia',
         'colgate-para-pequenos-pacientes' => 'publicidad/contenido/nombre/colgate-ninos',
-
-
+        'choco-cono-millonario' => 'publicidad/contenido/nombre/chococono',
         // Fin links campañas
 
         // REST patterns

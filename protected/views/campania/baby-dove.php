@@ -30,6 +30,23 @@
   </style>
   ";
 ?>
+
+<!-- Google Code para etiquetas de remarketing -->
+<script type="text/javascript">
+/* <![CDATA[ */
+var google_conversion_id = 861857907;
+var google_custom_params = window.google_tag_params;
+var google_remarketing_only = true;
+/* ]]> */
+</script>
+<script type="text/javascript" src="//www.googleadservices.com/pagead/conversion.js">
+</script>
+<noscript>
+<div style="display:inline;">
+<img height="1" width="1" style="border-style:none;" alt="" src="//googleads.g.doubleclick.net/pagead/viewthroughconversion/861857907/?guid=ON&amp;script=0"/>
+</div>
+</noscript>
+
 <script type="text/javascript">
   $(document).ready(function(){$('a[href^="#"]').on("click",function(o){o.preventDefault();var n=this.hash,t=$(n);$("html, body").stop().animate({scrollTop:t.offset().top},900,"swing",function(){window.location.hash=n})})});
 </script>

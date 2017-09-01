@@ -122,12 +122,12 @@ $this->metaTags = "<meta http-equiv='X-UA-Compatible' content='IE=edge'>
 <img class="img-responsive-movil" src="<?= Yii::app()->request->baseUrl ?>/images/contenido/energizer/banner.jpg" alt="Energizer max porwer seal">
 <div class="background-black" style="padding: 0;margin-top: -11px;">
   <div class="content">
-    <div class="menu">
+    <center>
       <a href="<?= Yii::app()->request->baseUrl ?>/pilas-energizer"><h4 class="btn-menu active"><span class="glyphicon glyphicon-menu-right" aria-hidden="true"></span> Pilas PowerSeal</h4></a>
       <a href="<?= Yii::app()->request->baseUrl ?>/pilas-especiales-energizer"><h4 class="btn-menu"><span class="glyphicon glyphicon-menu-right" aria-hidden="true"></span> Pilas especiales</h4></a>
       <a href="<?= Yii::app()->request->baseUrl ?>/pilas-auditivas-energizer"><h4 class="btn-menu "><span class="glyphicon glyphicon-menu-right" aria-hidden="true"></span> Pilas Auditivas</h4></a>
       <a href="<?= Yii::app()->request->baseUrl ?>/pilas-recargables-energizer"><h4 class="btn-menu"><span class="glyphicon glyphicon-menu-right" aria-hidden="true"></span> Línea recargable</h4></a>
-    </div>
+    </center>
     <h1 class="first-title" style="font-size: 27px;">Energizer max AA con tecnología PowerSeal plus</h1>
     <h2 style="font-size: 19px;letter-spacing: 1px;">significa que puedes estar seguro de que siempre tendrás energía cuando más la necesitas.</h2>
     <!-- <h3 style="font-size: 16px;">¡Energizer se enorgullece en presentar Power Seal Technology!</h3> -->

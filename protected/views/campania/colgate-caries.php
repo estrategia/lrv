@@ -1,8 +1,8 @@
 <?php $this->pageTitle = "Colgate prevencion de caries - La Rebaja Virtual"; ?>
 <?php
   $this->metaTags = "<meta http-equiv='X-UA-Compatible' content='IE=edge'>
-  <meta name='description' content=''>
-  <meta name='keywords' content=''>
+  <meta name='description' content='Descubre los mejores productos que te entrega Colgate para prevenir la caries dental en tus pacientes. Conózcalos aquí ahora mismo'>
+  <meta name='keywords' content='Productos profesionales colgate, productos para prevenir la caries dental, crema dental colgate total 12 professional clean mint, enjuague bucal soft mint sin alcohol, cepillo colgate 360 interdental,  productos para profesionales de la odontología.'>
   <style>
     @font-face {font-family:MyriadPro;src: url(".Yii::app()->request->baseUrl."/images/contenido/ky/fonts/MyriadPro.otf);}
     @font-face {font-family:Frutiger-LT-Std-Condensed;src: url(".Yii::app()->request->baseUrl."/images/contenido/colgate/fonts/Frutiger-LT-Std-Condensed.ttf);}
@@ -10,7 +10,7 @@
     @font-face {font-family:ColgateReady-Light;src: url(".Yii::app()->request->baseUrl."/images/contenido/colgate/fonts/ColgateReady-Light.otf);}
     .space-1 {height: 0px !important;}
     .img-responsive-m {width:100%;}
-    .sidebar-cart {position: fixed;right: 0px;top: 60%;z-index: 2000;}
+    .sidebar-cart {position: fixed;right: 0px;top: 60%;z-index: 2000;width: 200px;}
     .nota {font-family:interstate-regular;color: #74183D;text-align: center;font-size: 16px;letter-spacing: -1px;}
     .text-atencion {font-family: MyriadPro;margin-bottom: 20px !important;text-decoration: underline;font-size: 14px;font-weight: bold;font-style: italic;}
     .datos-contacto {padding: 15px 0;}
@@ -38,7 +38,7 @@
 <?php if ($this->isMobile): ?>
 <img class="img-responsive-m" src="<?= Yii::app()->request->baseUrl ?>/images/contenido/colgate/banner/banner-caries.png" alt="Compra online">
 <div class="menu-colgate" style="flex-direction: column;padding: 0 5px;">
-  <a data-ajax="false" href="<?= Yii::app()->request->baseUrl ?>/colgate-uso-en-consultorio"><img style="margin: 0 auto;width: 60%;display: block;" src="<?= Yii::app()->request->baseUrl ?>/images/contenido/colgate/uso-consultorio.png" onmouseover="this.src='<?= Yii::app()->request->baseUrl ?>/images/contenido/colgate/uso-consultorio-active.png';" onmouseout="this.src='<?= Yii::app()->request->baseUrl ?>/images/contenido/colgate/uso-consultorio.png';"></a>
+  <a data-ajax="false" href="<?= Yii::app()->request->baseUrl ?>/colgate-profesional"><img style="margin: 0 auto;width: 60%;display: block;" src="<?= Yii::app()->request->baseUrl ?>/images/contenido/colgate/uso-consultorio.png" onmouseover="this.src='<?= Yii::app()->request->baseUrl ?>/images/contenido/colgate/uso-consultorio-active.png';" onmouseout="this.src='<?= Yii::app()->request->baseUrl ?>/images/contenido/colgate/uso-consultorio.png';"></a>
   <a data-ajax="false" href="<?= Yii::app()->request->baseUrl ?>/colgate-pacientes-con-gingivitis"><img style="margin: 0 auto;display: block;width: 60%;" src="<?= Yii::app()->request->baseUrl ?>/images/contenido/colgate/gingivitis.png" onmouseover="this.src='<?= Yii::app()->request->baseUrl ?>/images/contenido/colgate/gingivitis-hover.png';" onmouseout="this.src='<?= Yii::app()->request->baseUrl ?>/images/contenido/colgate/gingivitis.png';"></a>
   <a data-ajax="false" href="<?= Yii::app()->request->baseUrl ?>/colgate-pacientes-con-sensibilidad"><img style="margin: 0 auto;display: block;width: 60%;" src="<?= Yii::app()->request->baseUrl ?>/images/contenido/colgate/sensibilidad.png" onmouseover="this.src='<?= Yii::app()->request->baseUrl ?>/images/contenido/colgate/sensibilidad-hover.png';" onmouseout="this.src='<?= Yii::app()->request->baseUrl ?>/images/contenido/colgate/sensibilidad.png';"></a>
   <a data-ajax="false" href="<?= Yii::app()->request->baseUrl ?>/colgate-prevencion-caries"><img style="margin: 0 auto;display: block;width: 60%;" src="<?= Yii::app()->request->baseUrl ?>/images/contenido/colgate/caries-hover.png" onmouseover="this.src='<?= Yii::app()->request->baseUrl ?>/images/contenido/colgate/caries-hover.png';" onmouseout="this.src='<?= Yii::app()->request->baseUrl ?>/images/contenido/colgate/caries-hover.png';"></a>
@@ -52,10 +52,10 @@
 <img class="img-responsive-m"  src="<?= Yii::app()->request->baseUrl ?>/images/contenido/colgate/4-prevencion-caries/colgate-clean-mint-mobile.png" alt="Colgate Clean mint">
 <h2 class="nombre-producto">CREMA DENTAL</h2>
 <h3 class="componente" style="line-height: 17px;">Colgate<sup>®</sup> TOTAL 12 CLEAN MINT</h3>
-<p class="descripcion" style="margin-top: 0px;">Su fórmula con la Nueva Tecnología NeutrOdor<sup>TM</sup><br> ayuda a eliminar el mal aliento causado por las bacterias.</p>
+<p class="descripcion" style="margin-top: 0px;">Su formula con Triclosan y Copolímero permiten una protección mas duradera.</p>
 <ul class="beneficios" style="padding-inline-start: 20px;">
   <li style="margin-bottom:15px;">Mantiene la boca de sus pacientes más sana y protegida hasta por 12 horas.</li>
-  <li>Ayuda a prevenir: Mal Aliento, Placa, Gingivitis, Acumulación de Sarro, Caries.</li>
+  <li>Ayuda a prevenir: Placa, Gingivitis, Acumulación de Sarro, Caries.</li>
 </ul>
 <img class="img-responsive-m"  style="margin-top:30px;" src="<?= Yii::app()->request->baseUrl ?>/images/contenido/colgate/4-prevencion-caries/colgate-plax-soft.png" alt="Colgate plax soft">
 <h2 class="nombre-producto" style="margin-top: 10px;">ENJUAGUE BUCAL</h2>
@@ -70,7 +70,7 @@
 <p class="descripcion" style="margin-top: 0px;">Diseño y tecnología para una limpieza más completa de toda la boca.</p>
 <ul class="beneficios" style="padding-inline-start: 40px;" >
   <li style="margin-bottom:15px;">Copas pulidoras y cerdas laterales ultra delgadas para una limpieza 4 veces más profunda. </li>
-  <li style="margin-bottom:15px;"> Remueve 151% más bacterias.* <br>*Bacterias que causan mal aliento vs. <br> Cepillarse sólo con un cepillo de cerdas planas</p>
+  <li style="margin-bottom:15px;"> Remueve 151% más bacterias.* <br>*Bacterias que causan mal aliento vs. <br> Cepillarse sólo con un cepillo de cerdas planas.</p>
 </ul>
 <a href="#" data-ajax="false"><img class="img-responsive-m" style="width: 250px;margin: 0 auto;display: block;" src="<?= Yii::app()->request->baseUrl ?>/images/contenido/colgate/compra-online.png" alt="Compra online"></a>
 <img class="img-responsive-m" style="margin-top: 20px;margin-bottom: 20px;" src="<?= Yii::app()->request->baseUrl ?>/images/contenido/colgate/banner-segundario.png" alt="Compra online">
@@ -93,10 +93,10 @@
 </div>
 <!--Versión escritorio-->
 <?php else: ?>
-<a href="#"><div class="sidebar-cart"><img class="img-responsive" src="<?= Yii::app()->request->baseUrl ?>/images/contenido/colgate/btn-fijo.png" alt="Compra online"></div></a>
+<a href="<?php echo CController::createUrl('/contenido/ver', array('tipo' => 'grupo', 'contenido' => 3619)) ?>"><div class="sidebar-cart"><img class="img-responsive" src="<?= Yii::app()->request->baseUrl ?>/images/contenido/colgate/btn-fijo.png" alt="Compra online"></div></a>
 <img class="img-responsive" src="<?= Yii::app()->request->baseUrl ?>/images/contenido/colgate/banner/banner-caries.png" alt="Compra online">
 <nav class="menu">
-  <item><a href="<?= Yii::app()->request->baseUrl ?>/colgate-uso-en-consultorio"><img class="img-responsive" style="margin: 0 auto;" src="<?= Yii::app()->request->baseUrl ?>/images/contenido/colgate/uso-consultorio.png" onmouseover="this.src='<?= Yii::app()->request->baseUrl ?>/images/contenido/colgate/uso-consultorio-active.png';" onmouseout="this.src='<?= Yii::app()->request->baseUrl ?>/images/contenido/colgate/uso-consultorio.png';"></a></item>
+  <item><a href="<?= Yii::app()->request->baseUrl ?>/colgate-profesional"><img class="img-responsive" style="margin: 0 auto;" src="<?= Yii::app()->request->baseUrl ?>/images/contenido/colgate/uso-consultorio.png" onmouseover="this.src='<?= Yii::app()->request->baseUrl ?>/images/contenido/colgate/uso-consultorio-active.png';" onmouseout="this.src='<?= Yii::app()->request->baseUrl ?>/images/contenido/colgate/uso-consultorio.png';"></a></item>
   <item><a href="<?= Yii::app()->request->baseUrl ?>/colgate-pacientes-con-gingivitis"><img class="img-responsive" style="margin: 0 auto;display: block;" src="<?= Yii::app()->request->baseUrl ?>/images/contenido/colgate/gingivitis.png" onmouseover="this.src='<?= Yii::app()->request->baseUrl ?>/images/contenido/colgate/gingivitis-hover.png';" onmouseout="this.src='<?= Yii::app()->request->baseUrl ?>/images/contenido/colgate/gingivitis.png';"></a></item>
   <item><a href="<?= Yii::app()->request->baseUrl ?>/colgate-pacientes-con-sensibilidad"><img class="img-responsive" style="margin: 0 auto;display: block;" src="<?= Yii::app()->request->baseUrl ?>/images/contenido/colgate/sensibilidad.png" onmouseover="this.src='<?= Yii::app()->request->baseUrl ?>/images/contenido/colgate/sensibilidad-hover.png';" onmouseout="this.src='<?= Yii::app()->request->baseUrl ?>/images/contenido/colgate/sensibilidad.png';"></a></item>
   <item><a href="<?= Yii::app()->request->baseUrl ?>/colgate-prevencion-caries"><img class="img-responsive" style="margin: 0 auto;display: block;" src="<?= Yii::app()->request->baseUrl ?>/images/contenido/colgate/caries-hover.png" onmouseover="this.src='<?= Yii::app()->request->baseUrl ?>/images/contenido/colgate/caries-hover.png';" onmouseout="this.src='<?= Yii::app()->request->baseUrl ?>/images/contenido/colgate/caries-hover.png';"></a></item>
@@ -114,10 +114,10 @@
       <img class="img-responsive producto" src="<?= Yii::app()->request->baseUrl ?>/images/contenido/colgate/4-prevencion-caries/colgate-clean-mint.png" alt="Colgate Clea mint">
       <h2 class="nombre-producto">CREMA DENTAL</h2>
       <h3 class="componente">COLGATE<sup>®</sup>  TOTAL 12 CLEAN MINT <br> &nbsp;</h3>
-      <p class="descripcion">Su fórmula con la Nueva Tecnología NeutrOdor<sup>TM</sup> <br>ayuda a eliminar el mal aliento causado por las bacterias. </p>
+      <p class="descripcion">Su formula con Triclosan y Copolímero permiten una protección mas duradera.</p>
       <ul class="beneficios" style="padding-inline-start: 44px;margin-bottom: 47px;">
         <li style="margin-bottom: 10px;">Mantiene la boca de sus pacientes más sana y protegida hasta por 12 horas.</li>
-        <li>Ayuda a prevenir: Mal Aliento, Placa, Gingivitis, <br>Acumulación de Sarro, Caries.</li>
+        <li>Ayuda a prevenir: Placa, Gingivitis, Acumulación de Sarro, Caries.</li>
       </ul>
     </div>
     <div class="column col-sm-4 col-md-4">
@@ -137,12 +137,12 @@
       <p class="descripcion">Diseño y tecnología para una <br>limpieza más completa de toda la boca. <br> &nbsp;</p>
       <ul class="beneficios" style="padding-inline-start: 53px;margin-bottom: 15px;">
         <li style="margin-bottom: 10px;"> Copas pulidoras y cerdas laterales ultra <br> delgadas para una limpieza 4 veces más <br>profunda. </li>
-        <li> Remueve 151% más bacterias.* <br>*Bacterias que causan mal aliento vs. <br> Cepillarse sólo con un cepillo de cerdas planas</li>
+        <li> Remueve 151% más bacterias.* <br>*Bacterias que causan mal aliento vs. <br> Cepillarse sólo con un cepillo de cerdas planas.</li>
       </ul>
     </div>
   </div>
   <div class="row" style="margin-top: 65px;">
-    <a href="#"><img class="img-responsive btn-compra" src="<?= Yii::app()->request->baseUrl ?>/images/contenido/colgate/compra-online.png" alt="Compra online"></a>
+    <a href="<?php echo CController::createUrl('/contenido/ver', array('tipo' => 'grupo', 'contenido' => 3619)) ?>"><img class="img-responsive btn-compra" src="<?= Yii::app()->request->baseUrl ?>/images/contenido/colgate/compra-online.png" alt="Compra online"></a>
   </div>
 </div>
 <div class="row" style="margin-top: -20px;">

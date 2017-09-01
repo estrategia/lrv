@@ -1,8 +1,8 @@
 <?php $this->pageTitle = "Colgate pacientes con gingivitis - La Rebaja Virtual"; ?>
 <?php
   $this->metaTags = "<meta http-equiv='X-UA-Compatible' content='IE=edge'>
-  <meta name='description' content=''>
-  <meta name='keywords' content=''>
+  <meta name='description' content='Encuentra en este link los productos especializados para profesionales de la odontología que ofrece Colgate para el cuidado gingival.'>
+  <meta name='keywords' content='Productos profesionales colgate, productos para el cuidado gingival, crema dental colgate total 12, enjuague antibacteriano colgate, cepillo de dientes slimsoft,  productos para profesionales de la odontología.'>
   <style>
     @font-face {font-family:MyriadPro;src: url(".Yii::app()->request->baseUrl."/images/contenido/ky/fonts/MyriadPro.otf);}
     @font-face {font-family:Frutiger-LT-Std-Condensed;src: url(".Yii::app()->request->baseUrl."/images/contenido/colgate/fonts/Frutiger-LT-Std-Condensed.ttf);}
@@ -10,7 +10,7 @@
     @font-face {font-family:ColgateReady-Light;src: url(".Yii::app()->request->baseUrl."/images/contenido/colgate/fonts/ColgateReady-Light.otf);}
     .space-1 {height: 0px !important;}
     .img-responsive-m {width:100%;}
-    .sidebar-cart {position: fixed;right: 0px;top: 60%;z-index: 2000;}
+    .sidebar-cart {position: fixed;right: 0px;top: 60%;z-index: 2000;width: 200px;}
     .nota {font-family:interstate-regular;color: #74183D;text-align: center;font-size: 16px;letter-spacing: -1px;}
     .text-atencion {font-family: MyriadPro;margin-bottom: 20px !important;text-decoration: underline;font-size: 14px;font-weight: bold;font-style: italic;}
     .datos-contacto {padding: 15px 0;}
@@ -38,7 +38,7 @@
 <?php if ($this->isMobile): ?>
 <img class="img-responsive-m" src="<?= Yii::app()->request->baseUrl ?>/images/contenido/colgate/banner/banner-gingivitis.jpg" alt="Compra online">
 <div class="menu-colgate" style="flex-direction: column;padding: 0 5px;">
-  <a data-ajax="false" href="<?= Yii::app()->request->baseUrl ?>/colgate-uso-en-consultorio"><img style="margin: 0 auto;width: 60%;display: block;" src="<?= Yii::app()->request->baseUrl ?>/images/contenido/colgate/uso-consultorio.png" onmouseover="this.src='<?= Yii::app()->request->baseUrl ?>/images/contenido/colgate/uso-consultorio-active.png';" onmouseout="this.src='<?= Yii::app()->request->baseUrl ?>/images/contenido/colgate/uso-consultorio.png';"></a>
+  <a data-ajax="false" href="<?= Yii::app()->request->baseUrl ?>/colgate-profesional"><img style="margin: 0 auto;width: 60%;display: block;" src="<?= Yii::app()->request->baseUrl ?>/images/contenido/colgate/uso-consultorio.png" onmouseover="this.src='<?= Yii::app()->request->baseUrl ?>/images/contenido/colgate/uso-consultorio-active.png';" onmouseout="this.src='<?= Yii::app()->request->baseUrl ?>/images/contenido/colgate/uso-consultorio.png';"></a>
   <a data-ajax="false" href="<?= Yii::app()->request->baseUrl ?>/colgate-pacientes-con-gingivitis"><img style="margin: 0 auto;display: block;width: 60%;" src="<?= Yii::app()->request->baseUrl ?>/images/contenido/colgate/gingivitis-hover.png" onmouseover="this.src='<?= Yii::app()->request->baseUrl ?>/images/contenido/colgate/gingivitis-hover.png';" onmouseout="this.src='<?= Yii::app()->request->baseUrl ?>/images/contenido/colgate/gingivitis-hover.png';"></a>
   <a data-ajax="false" href="<?= Yii::app()->request->baseUrl ?>/colgate-pacientes-con-sensibilidad"><img style="margin: 0 auto;display: block;width: 60%;" src="<?= Yii::app()->request->baseUrl ?>/images/contenido/colgate/sensibilidad.png" onmouseover="this.src='<?= Yii::app()->request->baseUrl ?>/images/contenido/colgate/sensibilidad-hover.png';" onmouseout="this.src='<?= Yii::app()->request->baseUrl ?>/images/contenido/colgate/sensibilidad.png';"></a>
   <a data-ajax="false" href="<?= Yii::app()->request->baseUrl ?>/colgate-prevencion-caries"><img style="margin: 0 auto;display: block;width: 60%;" src="<?= Yii::app()->request->baseUrl ?>/images/contenido/colgate/caries.png" onmouseover="this.src='<?= Yii::app()->request->baseUrl ?>/images/contenido/colgate/caries-hover.png';" onmouseout="this.src='<?= Yii::app()->request->baseUrl ?>/images/contenido/colgate/caries.png';"></a>
@@ -62,7 +62,7 @@
 <h3 class="componente" style="line-height: 17px;">COLGATE<sup>®</sup> Periogard<sup>®</sup> <br>Clorhexidina 0,12%  </h3>
 <p class="descripcion" style="margin-top: 0px;">Enjuague antibacteriano con seguridad y efectividad comprobadas en el control de la gingivitis y prevención de la periodontitis. </p>
 <ul class="beneficios" style="padding-inline-start: 40px;" >
-  <li>Concentración suficientemente efectiva que puede dejar menos pigmentaciones secundarias que concentraciones mayores</li>
+  <li>Concentración suficientemente efectiva que puede dejar menos pigmentaciones secundarias que concentraciones mayores.</li>
 </ul>
 <img class="img-responsive-m"  style="margin-top:30px;" src="<?= Yii::app()->request->baseUrl ?>/images/contenido/colgate/2-gingivitis/colgate-slimsoft.png" alt="Colgate slimsoft">
 <h2 class="nombre-producto" style="margin-top: 10px;">CEPILLO DE DIENTES</h2>
@@ -73,9 +73,9 @@
   <li style="margin-bottom:15px;">2.5 veces más reducción de placa interproximal*.</li>
   <li style="margin-bottom:15px;">Cabeza pequeña y delgada para alcanzar áreas difíciles.</li>
   <li style="margin-bottom:15px;">Cuello delgado y flexible, absorbe presióncuando el cepillado es fuerte*.</li>
-  <p>*vs. un cepillo regular de cerdas de corte plano con puntas redondeadas</p>
+  <p>*vs. un cepillo regular de cerdas de corte plano con puntas redondeadas.</p>
 </ul>
-<a href="#" data-ajax="false"><img class="img-responsive-m" style="width: 250px;margin: 0 auto;display: block;" src="<?= Yii::app()->request->baseUrl ?>/images/contenido/colgate/compra-online.png" alt="Compra online"></a>
+<a href="<?php echo CController::createUrl('/contenido/ver', array('tipo' => 'grupo', 'contenido' => 3615)) ?>" data-ajax="false"><img class="img-responsive-m" style="width: 250px;margin: 0 auto;display: block;" src="<?= Yii::app()->request->baseUrl ?>/images/contenido/colgate/compra-online.png" alt="Compra online"></a>
 <img class="img-responsive-m" style="margin-top: 20px;margin-bottom: 20px;" src="<?= Yii::app()->request->baseUrl ?>/images/contenido/colgate/banner-segundario.png" alt="Compra online">
 <p class="texto-legal">Texto legal: Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam, eaque ipsa quae ab illo inventore veritatis et quasi architecto beatae vitae dicta sunt explicabo. Nemo enim ipsam voluptatem quia voluptas sit aspernatur aut odit aut fugit, sed quia consequuntur magni dolores eos qui ratione voluptatem sequi nesciunt. Neque porro quisquam est, qui dolorem ipsum quia dolor sit amet, consectetur, adipisci velit, sed quia non numquam eius modi tempora incidunt ut labore et dolore magnam aliquam quaerat voluptatem. Ut enim ad minima veniam, quis nostrum exercitationem ullam corporis suscipit laboriosam, nisi ut aliquid </p>
 </div>
@@ -96,10 +96,10 @@
 </div>
 <!--Versión escritorio-->
 <?php else: ?>
-<a href="#"><div class="sidebar-cart"><img class="img-responsive" src="<?= Yii::app()->request->baseUrl ?>/images/contenido/colgate/btn-fijo.png" alt="Compra online"></div></a>
+<a href="<?php echo CController::createUrl('/contenido/ver', array('tipo' => 'grupo', 'contenido' => 3602)) ?>"><div class="sidebar-cart"><img class="img-responsive" src="<?= Yii::app()->request->baseUrl ?>/images/contenido/colgate/btn-fijo.png" alt="Compra online"></div></a>
 <img class="img-responsive" src="<?= Yii::app()->request->baseUrl ?>/images/contenido/colgate/banner/banner-gingivitis.jpg" alt="Compra online">
 <nav class="menu">
-  <item><a href="<?= Yii::app()->request->baseUrl ?>/colgate-uso-en-consultorio"><img class="img-responsive" style="margin: 0 auto;" src="<?= Yii::app()->request->baseUrl ?>/images/contenido/colgate/uso-consultorio.png" onmouseover="this.src='<?= Yii::app()->request->baseUrl ?>/images/contenido/colgate/uso-consultorio-active.png';" onmouseout="this.src='<?= Yii::app()->request->baseUrl ?>/images/contenido/colgate/uso-consultorio.png';"></a></item>
+  <item><a href="<?= Yii::app()->request->baseUrl ?>/colgate-profesional"><img class="img-responsive" style="margin: 0 auto;" src="<?= Yii::app()->request->baseUrl ?>/images/contenido/colgate/uso-consultorio.png" onmouseover="this.src='<?= Yii::app()->request->baseUrl ?>/images/contenido/colgate/uso-consultorio-active.png';" onmouseout="this.src='<?= Yii::app()->request->baseUrl ?>/images/contenido/colgate/uso-consultorio.png';"></a></item>
   <item><a href="<?= Yii::app()->request->baseUrl ?>/colgate-pacientes-con-gingivitis"><img class="img-responsive" style="margin: 0 auto;display: block;" src="<?= Yii::app()->request->baseUrl ?>/images/contenido/colgate/gingivitis-hover.png" onmouseover="this.src='<?= Yii::app()->request->baseUrl ?>/images/contenido/colgate/gingivitis-hover.png';" onmouseout="this.src='<?= Yii::app()->request->baseUrl ?>/images/contenido/colgate/gingivitis-hover.png';"></a></item>
   <item><a href="<?= Yii::app()->request->baseUrl ?>/colgate-pacientes-con-sensibilidad"><img class="img-responsive" style="margin: 0 auto;display: block;" src="<?= Yii::app()->request->baseUrl ?>/images/contenido/colgate/sensibilidad.png" onmouseover="this.src='<?= Yii::app()->request->baseUrl ?>/images/contenido/colgate/sensibilidad-hover.png';" onmouseout="this.src='<?= Yii::app()->request->baseUrl ?>/images/contenido/colgate/sensibilidad.png';"></a></item>
   <item><a href="<?= Yii::app()->request->baseUrl ?>/colgate-prevencion-caries"><img class="img-responsive" style="margin: 0 auto;display: block;" src="<?= Yii::app()->request->baseUrl ?>/images/contenido/colgate/caries.png" onmouseover="this.src='<?= Yii::app()->request->baseUrl ?>/images/contenido/colgate/caries-hover.png';" onmouseout="this.src='<?= Yii::app()->request->baseUrl ?>/images/contenido/colgate/caries.png';"></a></item>
@@ -136,7 +136,7 @@
       <ul class="beneficios" style="padding-inline-start: 45px;margin-bottom: 137px;">
         <li>Concentración suficientemente efectiva <br>
         que puede dejar menos pigmentaciones <br>
-        secundarias que concentraciones mayores</li>
+        secundarias que concentraciones mayores.</li>
       </ul>
     </div>
     <div class="column col-sm-4 col-md-4">
@@ -145,16 +145,16 @@
       <h3 class="componente">COLGATE<sup>®</sup> SLIMSOFT<sup>TM</sup> COMPACT <br> &nbsp;</h3>
       <p class="descripcion">Cerdas cónicas ultrasuaves <br>17 veces más delgadas*.</p>
       <ul class="beneficios" style="padding-inline-start: 53px;margin-bottom: 15px;">
-        <li>6 veces más acceso subgingival*</li>
+        <li>6 veces más acceso subgingival*.</li>
         <li> 2.5 veces más reducción de placa <br>interproximal*.</li>
         <li>Cabeza pequeña y delgada para <br> alcanzar áreas difíciles.</li>
         <li>Cuello delgado y flexible, absorbe <br>presión cuando el cepillado es fuerte*.</li>
       </ul>
-      <p class="beneficios" style="padding-inline-start: 42px;font-size: 13px;margin-top: 12px;">*vs. un cepillo regular de cerdas de corte plano <br>con puntas redondeadas</p>
+      <p class="beneficios" style="padding-inline-start: 42px;font-size: 13px;margin-top: 12px;">*vs. un cepillo regular de cerdas de corte plano <br>con puntas redondeadas.</p>
     </div>
   </div>
   <div class="row" style="margin-top: 65px;">
-    <a href="#"><img class="img-responsive btn-compra" src="<?= Yii::app()->request->baseUrl ?>/images/contenido/colgate/compra-online.png" alt="Compra online"></a>
+    <a href="<?php echo CController::createUrl('/contenido/ver', array('tipo' => 'grupo', 'contenido' => 3615)) ?>"><img class="img-responsive btn-compra" src="<?= Yii::app()->request->baseUrl ?>/images/contenido/colgate/compra-online.png" alt="Compra online"></a>
   </div>
 </div>
 <div class="row" style="margin-top: -20px;">
