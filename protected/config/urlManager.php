@@ -40,6 +40,8 @@ return array(
         'zahara-bronceador' => 'publicidad/contenido/nombre/zahara-bronceador',
         'prodent-cuidado-oral-old' => 'publicidad/contenido/nombre/prodent-old',
         'prodent-cuidado-oral' => 'publicidad/contenido/nombre/prodent',
+        'prodent-cuidado-oral-ninos' => 'publicidad/contenido/nombre/prodent-ninos',
+        'prodent-ennjuague-bucal' => 'publicidad/contenido/nombre/prodent-enjuague',
         'pedialyte-suero-oral' => 'publicidad/contenido/nombre/pedialyte',
         'pilas-energizer' => 'publicidad/contenido/nombre/energizer',
         'pilas-especiales-energizer' => 'publicidad/contenido/nombre/energizer-pilas-especiales',
@@ -92,6 +94,7 @@ return array(
         'colgate-pacientes-con-ortodoncia' => 'publicidad/contenido/nombre/colgate-ortodoncia',
         'colgate-para-pequenos-pacientes' => 'publicidad/contenido/nombre/colgate-ninos',
         'choco-cono-millonario' => 'publicidad/contenido/nombre/chococono',
+        'klim1-deslactosado' => 'publicidad/contenido/nombre/klim1-deslactosado',
         // Fin links campañas
 
         // REST patterns

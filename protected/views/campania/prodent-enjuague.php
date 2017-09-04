@@ -1,4 +1,4 @@
-<?php $this->pageTitle = "Pro-Dent - La Rebaja Virtual"; ?>
+<?php $this->pageTitle = "Pro-Dent enjuague bucal - La Rebaja Virtual"; ?>
 <?php
 $this->metaTags = "
   <meta http-equiv='X-UA-Compatible' content='IE=edge'>
@@ -35,8 +35,7 @@ $this->metaTags = "
     .name-product {font-family:Campton-Light;color:#008ED7;margin: 0;font-size: 35px;}
     .lista-descrip {font-family: Campton-Light;color: #5B5B5F;font-size: 23px;padding-inline-start: 55px;margin-top: 37px;line-height: 23px;}
     .lista-descrip li {margin-bottom:25px;}
-    .bullet-red {list-style-image: url(".Yii::app()->request->baseUrl."/images/contenido/coaspharma/prodent/bullet-red.png);}
-    .bullet-green {list-style-image: url(".Yii::app()->request->baseUrl."/images/contenido/coaspharma/prodent/more-verde.png);}
+    .bullet-amarillo {list-style-image: url(".Yii::app()->request->baseUrl."/images/contenido/coaspharma/prodent/more-amarillo.png);}
     .button-desplegable {margin-top: 20%;}
     .button-desplegable .icon2 {position: relative;width: 100px;height: 100px;-webkit-transition: .2s color;-o-transition: .2s color;transition: .2s color;z-index: 2;}
     .button-desplegable .text2 {display: none;margin-top: -7px;position: absolute;z-index: 1;}
@@ -44,7 +43,7 @@ $this->metaTags = "
     @-webkit-keyframes appearRight {from {opacity: 0;-webkit-transform: translateX(10%);transform: translateX(10%);}to {opacity: 1;-webkit-transform: translateX(25%);transform: translateX(25%);}}
     @keyframes appearRight {from {opacity: 0;-webkit-transform: translateX(10%);transform: translateX(10%);}to {opacity: 1;-webkit-transform: translateX(25%);transform: translateX(25%);}}
     .img-product {max-width: 90%;display: block;min-width: 90%;}
-    .bg-anticaries{margin-bottom:15px;padding: 60px 0 40px;background-image:url(".Yii::app()->request->baseUrl."/images/contenido/coaspharma/prodent/bg-anticaries.png);background-size: 100%;}
+    .bg-anticaries{margin-bottom:15px;padding: 60px 0 40px;background-image:url(".Yii::app()->request->baseUrl."/images/contenido/coaspharma/prodent/bg-amarillo.png);background-size: cover;}
     .item-menu-m {max-width: 80%;margin: 5px auto;display: block;min-width: 80%;}
   </style>
 ";?>
@@ -53,35 +52,34 @@ $this->metaTags = "
 <script type="text/javascript">wow = new WOW(); wow.init();</script>
 <!--Versión movil-->
 <?php if ($this->isMobile): ?>
-<img class="img-responsive-m" src="<?= Yii::app()->request->baseUrl ?>/images/contenido/coaspharma/prodent/banner01.jpg" alt="">
+<img class="img-responsive-m" src="<?= Yii::app()->request->baseUrl ?>/images/contenido/coaspharma/prodent/banner03.jpg" alt="">
 <div style="margin-top: 10px;padding: 0 15px">
   <a href="<?= Yii::app()->request->baseUrl ?>/prodent-cuidado-oral" data-ajax="false"><img class="item-menu-m" src="<?= Yii::app()->request->baseUrl ?>/images/contenido/coaspharma/prodent/prodent-crema-dental.png" alt="Pro-dent Crema dental"></a>
   <a href="<?= Yii::app()->request->baseUrl ?>/prodent-cuidado-oral-ninos" data-ajax="false"><img class="item-menu-m" src="<?= Yii::app()->request->baseUrl ?>/images/contenido/coaspharma/prodent/prodent-crema-dental-kids.png" alt="Pro-dent Crema dental Kids"></a>
   <a href="<?= Yii::app()->request->baseUrl ?>/prodent-ennjuague-bucal" data-ajax="false"><img class="item-menu-m" src="<?= Yii::app()->request->baseUrl ?>/images/contenido/coaspharma/prodent/prodent-enjuague-bucal.png" alt="Pro-dent Crema enjuague bucal"></a>
 </div>
 <div style="margin-bottom:50px; padding:0 20px;margin-top: 50px;" class="wow bounceInLeft" data-wow-offset="90">
-  <h2 class="main-title" style="font-size: 25px;">CREMA DENTAL</h2>
-  <h3 class="name-product" style="font-size: 25px;margin-top: 2px;line-height: 20px;">Pro-Dent Blanqueadora</h3>
-  <ul class="lista-descrip bullet-red" style="padding-inline-start: 40px;margin-top:25px;">
-    <li>Fortifica el esmalte dental para reducir la incidencia de caries.</li>
-    <li>Su uso continuo ayuda a mantener dientes blancos por más tiempo.</li>
-    <li>Ayuda a mantener un aliento fresco y duradero.</li>
+  <h2 class="main-title" style="font-size: 25px;">ENJUAGUE BUCAL</h2>
+  <h3 class="name-product" style="font-size: 25px;margin-top: 2px;line-height: 20px;">Pro-Dent Fresh Mint</h3>
+  <ul class="lista-descrip bullet-amarillo" style="padding-inline-start: 40px;margin-top:25px;">
+    <li>Elimina la placa bacteriana.</li>
+    <li>Combate los gérmenes que producen el mal aliento y la inflamación de las encías.</li>
+    <li>Permite acabar con aquellas bacterias localizadas en zonas de difícil acceso tanto para el cepillo como para el hilo dental.</li>
   </ul>
-  <img class="img-product" src="<?= Yii::app()->request->baseUrl ?>/images/contenido/coaspharma/prodent/pro-dent-blanqueadora.png" alt="Pro-dent Crema dental blanqueadora">
+  <img class="img-product"  style="max-width: 70%;min-width: 70%;margin: 0 auto;"src="<?= Yii::app()->request->baseUrl ?>/images/contenido/coaspharma/prodent/enjuague-fresh-mint.png" alt="Pro-dent Crema dental blanqueadora">
   <a href="<?php echo CController::createUrl('/catalogo/producto', array('producto' => 116492)) ?>">
     <img class="img-responsive-m" style="width: 80%;margin: 20px auto 0px;display: block;" src="<?= Yii::app()->request->baseUrl ?>/images/contenido/coaspharma/prodent/compra-online-mobile.png" alt="">
   </a>
 </div>
 <section class="bg-anticaries" style="padding: 50px 20px 25px;margin-bottom:0px;">
   <div class="wow bounceInRight" data-wow-offset="50">
-    <h2 class="main-title" style="font-size: 25px;">CREMA DENTAL</h2>
-    <h3 class="name-product" style="font-size: 25px;margin-top: -8px;">Pro-Dent Anticaries</h3>
-      <ul class="lista-descrip bullet-green" style="padding-inline-start: 40px;margin-top:15px;">
-        <li>Fortifica el esmalte dental.</li>
-        <li>Reduce la incidencia de caries.</li>
-        <li>Aliento fresco y con sabor a menta por más tiempo.</li>
+    <h2 class="main-title" style="font-size: 25px;">ENJUAGUE BUCAL</h2>
+    <h3 class="name-product" style="font-size: 25px;margin-top: -8px;">Pro-Dent Original</h3>
+      <ul class="lista-descrip bullet-amarillo" style="padding-inline-start: 40px;margin-top:15px;">
+        <li>Previene la acumulación de Sarro.</li>
+        <li>Combate los gérmenes que producen la placa bacteriana y el mal aliento.</li>
       </ul>
-      <img class="img-product" style="margin-top: -40px;max-width: 100%;" src="<?= Yii::app()->request->baseUrl ?>/images/contenido/coaspharma/prodent/prodent-menta.png" alt="Pro-dent menta anticaries">
+      <img class="img-product"  style="max-width: 70%;min-width: 70%;margin: 0 auto;" src="<?= Yii::app()->request->baseUrl ?>/images/contenido/coaspharma/prodent/enjuague-original.png" alt="Pro-dent menta anticaries">
       <a href="<?php echo CController::createUrl('/catalogo/producto', array('producto' => 115286)) ?>">
         <img class="img-responsive-m" style="width: 80%;margin: 0px auto 0px;display: block;" src="<?= Yii::app()->request->baseUrl ?>/images/contenido/coaspharma/prodent/compra-online-mobile.png" alt="">
       </a>
@@ -110,19 +108,19 @@ $this->metaTags = "
 <!--Fin version movil-->
 <!--Versión escritorio-->
 <?php else: ?>
-<img class="img-responsive" src="<?= Yii::app()->request->baseUrl ?>/images/contenido/coaspharma/prodent/banner01.jpg" alt="">
+<img class="img-responsive" src="<?= Yii::app()->request->baseUrl ?>/images/contenido/coaspharma/prodent/banner03.jpg" alt="">
 <section>
   <div class="line-blue"></div>
   <div class="container">
     <div class="row menu">
       <div class="col-sm-4 col-md-4">
-        <a href="<?= Yii::app()->request->baseUrl ?>/prodent-cuidado-oral" class="item-menu active"><img src="<?= Yii::app()->request->baseUrl ?>/images/contenido/coaspharma/prodent/prodent-crema-dental.png" alt="Pro-dent Crema dental"></a>
+        <a href="<?= Yii::app()->request->baseUrl ?>/prodent-cuidado-oral" class="item-menu"><img src="<?= Yii::app()->request->baseUrl ?>/images/contenido/coaspharma/prodent/prodent-crema-dental.png" alt="Pro-dent Crema dental"></a>
       </div>
       <div class="col-sm-4 col-md-4">
         <a href="<?= Yii::app()->request->baseUrl ?>/prodent-cuidado-oral-ninos" class="item-menu" ><img src="<?= Yii::app()->request->baseUrl ?>/images/contenido/coaspharma/prodent/prodent-crema-dental-kids.png" alt="Pro-dent Crema dental Kids"></a>
       </div>
       <div class="col-sm-4 col-md-4">
-        <a href="<?= Yii::app()->request->baseUrl ?>/prodent-ennjuague-bucal" class="item-menu"><img src="<?= Yii::app()->request->baseUrl ?>/images/contenido/coaspharma/prodent/prodent-enjuague-bucal.png" alt="Pro-dent Crema enjuague bucal"></a>
+        <a href="<?= Yii::app()->request->baseUrl ?>/prodent-ennjuague-bucal" class="item-menu active"><img src="<?= Yii::app()->request->baseUrl ?>/images/contenido/coaspharma/prodent/prodent-enjuague-bucal.png" alt="Pro-dent Crema enjuague bucal"></a>
       </div>
     </div>
   </div>
@@ -130,23 +128,23 @@ $this->metaTags = "
 <div class="container wow bounceInLeft" data-wow-offset="90">
   <div class="row  "  style="margin-bottom: 50px;">
     <div class="col-md-12">
-      <h2 class="main-title">CREMA DENTAL</h2>
-      <h3 class="name-product">Pro-Dent Blanqueadora</h3>
+      <h2 class="main-title">ENJUAGUE BUCAL</h2>
+      <h3 class="name-product">Pro-Dent Fresh Mint</h3>
     </div>
-    <div class="col-sm-5 col-md-5">
-      <ul class="lista-descrip bullet-red">
-        <li>Fortifica el esmalte dental para <br> reducir la incidencia de caries.</li>
-        <li>Su uso continuo ayuda a mantener <br> dientes blancos por más tiempo.</li>
-        <li>Ayuda a mantener un aliento <br> fresco y duradero.</li>
+    <div class="col-sm-6 col-md-6">
+      <ul class="lista-descrip bullet-amarillo">
+        <li>Elimina la placa bacteriana.</li>
+        <li>Combate los gérmenes que producen el <br> mal aliento y la inflamación de las encías.</li>
+        <li>Permite acabar con aquellas bacterias <br> localizadas en zonas de difícil acceso tanto <br>para el cepillo como para el hilo dental.</li>
       </ul>
     </div>
-    <div class="col-sm-7 col-md-7">
+    <div class="col-sm-6 col-md-6">
       <div class="col-sm-8 col-md-8">
-        <img class="img-product" style="margin-top: -25px;" src="<?= Yii::app()->request->baseUrl ?>/images/contenido/coaspharma/prodent/pro-dent-blanqueadora.png" alt="Pro-dent Crema dental blanqueadora">
+        <img class="img-product" style="max-width: 70%;min-width: 70%;margin: -90px auto;" src="<?= Yii::app()->request->baseUrl ?>/images/contenido/coaspharma/prodent/enjuague-fresh-mint.png" alt="Enjuggue bucal fresh">
       </div>
       <div class="col-sm-4 col-md-4">
         <a href="<?php echo CController::createUrl('/catalogo/producto', array('producto' => 116492)) ?>">
-          <div class="button-desplegable">
+          <div class="button-desplegable" style="margin-top: 50%;">
             <div class='icon2'><img style="width: 100%;" src="<?= Yii::app()->request->baseUrl ?>/images/contenido/coaspharma/prodent/circle.png" alt=""></div>
             <div class='text2'><img style="width: 100%;" src="<?= Yii::app()->request->baseUrl ?>/images/contenido/coaspharma/prodent/line-circle.png" alt=""></div>
           </div>
@@ -159,23 +157,22 @@ $this->metaTags = "
   <div class="container">
     <div class="row wow bounceInRight" data-wow-offset="50">
       <div class="col-md-12">
-        <h2 class="main-title">CREMA DENTAL</h2>
-        <h3 class="name-product">Pro-Dent Anticaries</h3>
+        <h2 class="main-title">ENJUAGUE BUCAL</h2>
+        <h3 class="name-product">Pro-Dent Original</h3>
       </div>
-      <div class="col-sm-5 col-md-5">
-        <ul class="lista-descrip bullet-green">
-          <li>Fortifica el esmalte dental.</li>
-          <li>Reduce la incidencia de caries.</li>
-          <li>Aliento fresco y con sabor <br> a menta por más tiempo.</li>
+      <div class="col-sm-6 col-md-6">
+        <ul class="lista-descrip bullet-amarillo">
+          <li>Previene la acumulación de Sarro.</li>
+          <li>Combate los gérmenes que producen <br>la placa bacteriana y el mal aliento.</li>
         </ul>
       </div>
-      <div class="col-sm-7 col-md-7">
+      <div class="col-sm-6 col-md-6">
         <div class="col-sm-8 col-md-8">
-          <img class="img-product" style="margin-top: -60px;max-width: 100%;" src="<?= Yii::app()->request->baseUrl ?>/images/contenido/coaspharma/prodent/prodent-menta.png" alt="Pro-dent menta anticaries">
+          <img class="img-product" style="max-width: 70%;min-width: 70%;margin: -90px auto -30px;"  src="<?= Yii::app()->request->baseUrl ?>/images/contenido/coaspharma/prodent/enjuague-original.png" alt="Pro-dent menta Original">
         </div>
         <div class="col-sm-4 col-md-4">
           <a href="<?php echo CController::createUrl('/catalogo/producto', array('producto' => 115286)) ?>">
-            <div class="button-desplegable" style="margin-top: -20px;">
+            <div class="button-desplegable" style="margin-top: 40%;">
               <div class='icon2'><img style="width: 100%;" src="<?= Yii::app()->request->baseUrl ?>/images/contenido/coaspharma/prodent/circle.png" alt=""></div>
               <div class='text2'><img style="width: 100%;" src="<?= Yii::app()->request->baseUrl ?>/images/contenido/coaspharma/prodent/line-circle.png" alt=""></div>
             </div>
