@@ -61,7 +61,7 @@ $this->metaTags = "<meta http-equiv='X-UA-Compatible' content='IE=edge'>
       .text-bg-yellow span {font-size: 22px;}
       .precaucion {font-size: 18px;margin-top: 34%;}
       .lista {font-size: 19px;margin-top: 29px;}
-      .fot-product { margin-top: -8.3%;}
+      .fot-product { margin-top: -10.3%;}
     }
     @media (min-width: 1400px) and (max-width: 1500px) {
       .background-black .content h1 { font-size: 53px;}
@@ -188,12 +188,14 @@ $this->metaTags = "<meta http-equiv='X-UA-Compatible' content='IE=edge'>
     </div>
     <div class="col-sm-4 col-md-4" style="z-index:100;">
       <img class="img-responsive product" src="<?= Yii::app()->request->baseUrl ?>/images/contenido/energizer/aa2.png" alt="AA2 Energizer Max PowerSeal">
+      <h3 style="color: #fff;font-size: 15px;margin: 0 auto 15px;text-align: center;">Pila Energizer alkalina AA</h3>
       <a href="<?php echo CController::createUrl('/catalogo/producto', array('producto' => 15620)) ?>">
         <img class="img-responsive btn-compra" src="<?= Yii::app()->request->baseUrl ?>/images/contenido/energizer/comprar-online.png" alt="Comprar Online">
       </a>
     </div>
     <div class="col-sm-4 col-md-4" style="z-index:100;">
       <img class="img-responsive product" src="<?= Yii::app()->request->baseUrl ?>/images/contenido/energizer/aaa2.png" alt="AA2 Energizer Max PowerSeal">
+      <h3 style="color: #fff;font-size: 15px;margin: 0 auto 15px;text-align: center;">Pila Energizer alkalina AAA</h3>
       <a href="<?php echo CController::createUrl('/catalogo/producto', array('producto' => 15621)) ?>">
         <img class="img-responsive btn-compra" src="<?= Yii::app()->request->baseUrl ?>/images/contenido/energizer/comprar-online.png" alt="Comprar Online">
       </a>

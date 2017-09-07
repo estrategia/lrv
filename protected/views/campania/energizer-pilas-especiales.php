@@ -53,12 +53,14 @@ $this->metaTags = "
       <p>* Protege sus equipos de las fugas hasta 2 años después del agotamiento total.</p>
     </div>
     <img style="width: 70%;margin: 35px auto 0;display: block;" src="<?= Yii::app()->request->baseUrl ?>/images/contenido/energizer/pilas-especiales/CR2032.png" alt="CR2032">
+        <h3 style="color: #fff;font-size: 15px;margin: 0 auto 15px;text-align: center;">Pila especializada ECR 2032BP Energizer</h3>
     <p class="usos" style="text-align:center;margin: 0;">Usos recomendados:</p>
     <img class="img-responsive-movil" src="<?= Yii::app()->request->baseUrl ?>/images/contenido/energizer/pilas-especiales/iconos-CR2032.png" alt="CR2032">
     <a href="<?php echo CController::createUrl('/catalogo/producto', array('producto' => 21130)) ?>">
       <img class="img-responsive-movil btn-compra" src="<?= Yii::app()->request->baseUrl ?>/images/contenido/energizer/comprar-online.png" alt="Comprar Online">
     </a>
     <img style="width: 70%;margin: 35px auto 0;display: block;" src="<?= Yii::app()->request->baseUrl ?>/images/contenido/energizer/pilas-especiales/CR2025.png" alt="CR2025">
+            <h3 style="color: #fff;font-size: 15px;margin: 0 auto 15px;text-align: center;">Pila especializada ECR 2025BP Energizer</h3>
     <p class="usos" style="text-align:center;margin: 0;">Usos recomendados:</p>
     <img class="img-responsive-movil" src="<?= Yii::app()->request->baseUrl ?>/images/contenido/energizer/pilas-especiales/iconos-CR2025.png" alt="CR2025">
     <a href="<?php echo CController::createUrl('/catalogo/producto', array('producto' => 21129)) ?>">
@@ -94,6 +96,7 @@ $this->metaTags = "
       <div class="col-sm-2 col-md-2"></div>
       <div class="col-sm-4 col-md-4" style="z-index:100;">
         <img class="img-responsive" src="<?= Yii::app()->request->baseUrl ?>/images/contenido/energizer/pilas-especiales/CR2032.png" alt="CR2032">
+        <h3 style="color: #fff;font-size: 15px;margin: 0 auto 15px;text-align: center;">Pila especializada ECR 2032BP Energizer</h3>
         <p class="usos">Usos recomendados:</p>
         <img class="img-responsive" src="<?= Yii::app()->request->baseUrl ?>/images/contenido/energizer/pilas-especiales/iconos-CR2032.png" alt="CR2032">
         <a href="<?php echo CController::createUrl('/catalogo/producto', array('producto' => 21130)) ?>">
@@ -102,6 +105,7 @@ $this->metaTags = "
       </div>
       <div class="col-sm-4 col-md-4" style="z-index:100;">
         <img class="img-responsive" src="<?= Yii::app()->request->baseUrl ?>/images/contenido/energizer/pilas-especiales/CR2025.png" alt="CR2025">
+        <h3 style="color: #fff;font-size: 15px;margin: 0 auto 15px;text-align: center;">Pila especializada ECR 2025BP Energizer</h3>
         <p class="usos">Usos recomendados:</p>
         <img class="img-responsive" src="<?= Yii::app()->request->baseUrl ?>/images/contenido/energizer/pilas-especiales/iconos-CR2025.png" alt="CR2025">
         <a href="<?php echo CController::createUrl('/catalogo/producto', array('producto' => 21129)) ?>">

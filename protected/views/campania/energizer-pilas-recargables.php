@@ -56,21 +56,24 @@ $this->metaTags = "
       <p>* Tiene una vida útil hasta de 5 años.</p>
     </div>
     <img style="width: 90%;margin: 35px auto 0;display: block;" src="<?= Yii::app()->request->baseUrl ?>/images/contenido/energizer/pilas-recargables/recargable-aa2.png" alt="Recargables AA2">
+    <h3 style="color: #fff;font-size: 15px;margin: 0px auto 15px;text-align: center;">Pila Energizer recargable AA2</h3>
     <a data-ajax="false" href="<?php echo CController::createUrl('/catalogo/producto', array('producto' => 18654)) ?>">
       <img class="btn-compra" style="width: 80%;margin: 0 auto;display: block;" src="<?= Yii::app()->request->baseUrl ?>/images/contenido/energizer/comprar-online.png" alt="Comprar Online">
     </a>
     <img style="width: 90%;margin: 35px auto 0;display: block;" src="<?= Yii::app()->request->baseUrl ?>/images/contenido/energizer/pilas-recargables/recargable-aaa2.png" alt="Recargables AAA2">
+    <h3 style="color: #fff;font-size: 15px;margin: 0px auto 15px;text-align: center;">Pila Energizer recargable AAA2</h3>
     <a data-ajax="false" href="<?php echo CController::createUrl('/catalogo/producto', array('producto' => 18656)) ?>">
       <img class="btn-compra" style="width: 80%;margin: 0 auto;display: block;" src="<?= Yii::app()->request->baseUrl ?>/images/contenido/energizer/comprar-online.png" alt="Comprar Online">
     </a>
     <img style="width: 90%;margin: 35px auto 0;display: block;"  src="<?= Yii::app()->request->baseUrl ?>/images/contenido/energizer/pilas-recargables/recargable-mini.png" alt="Recargables mini">
+    <h3 style="color: #fff;font-size: 15px;margin: 0px auto 15px;text-align: center;">Pila Energizer recargable mini</h3>
     <a data-ajax="false" href="<?php echo CController::createUrl('/catalogo/producto', array('producto' => 18660)) ?>">
       <img class="btn-compra" style="width: 80%;margin: 0 auto;display: block;" src="<?= Yii::app()->request->baseUrl ?>/images/contenido/energizer/comprar-online.png" alt="Comprar Online">
     </a>
-    <img  style="width: 90%;margin: 35px auto 0;display: block;" src="<?= Yii::app()->request->baseUrl ?>/images/contenido/energizer/pilas-recargables/recargable-maxi.png" alt="Recargables maxi">
+    <!-- <img  style="width: 90%;margin: 35px auto 0;display: block;" src="<?= Yii::app()->request->baseUrl ?>/images/contenido/energizer/pilas-recargables/recargable-maxi.png" alt="Recargables maxi">
     <a data-ajax="false" href="#">
       <img class="btn-compra" style="width: 80%;margin: 0 auto;display: block;" src="<?= Yii::app()->request->baseUrl ?>/images/contenido/energizer/comprar-online.png" alt="Comprar Online">
-    </a>
+    </a> -->
   </div>
 </div>
 <!---FIN VERSIÓN MÓVIL-->
@@ -106,30 +109,33 @@ $this->metaTags = "
       </div>
     </div>
     <div class="row" style="margin-top: 50px;">
-      <div class="col-sm-3 col-md-3" style="z-index:100;">
+      <div class="col-md-offset-1 col-sm-offset-3 col-sm-3 col-md-3" style="z-index:100;">
         <img class="img-responsive" src="<?= Yii::app()->request->baseUrl ?>/images/contenido/energizer/pilas-recargables/recargable-aa2.png" alt="Recargables AA2">
+        <h3 style="color: #fff;font-size: 15px;margin: 0 auto;text-align: center;">Pila Energizer recargable AA2</h3>
         <a href="<?php echo CController::createUrl('/catalogo/producto', array('producto' => 18654)) ?>">
           <img class="img-responsive btn-compra" src="<?= Yii::app()->request->baseUrl ?>/images/contenido/energizer/comprar-online.png" alt="Comprar Online">
         </a>
       </div>
       <div class="col-sm-3 col-md-3" style="z-index:100;">
         <img class="img-responsive" src="<?= Yii::app()->request->baseUrl ?>/images/contenido/energizer/pilas-recargables/recargable-aaa2.png" alt="Recargables AAA2">
+        <h3 style="color: #fff;font-size: 15px;margin: 0 auto;text-align: center;">Pila Energizer recargable AAA2</h3>
         <a href="<?php echo CController::createUrl('/catalogo/producto', array('producto' => 18656)) ?>">
           <img class="img-responsive btn-compra" src="<?= Yii::app()->request->baseUrl ?>/images/contenido/energizer/comprar-online.png" alt="Comprar Online">
         </a>
       </div>
       <div class="col-sm-3 col-md-3" style="z-index:100;">
         <img class="img-responsive" src="<?= Yii::app()->request->baseUrl ?>/images/contenido/energizer/pilas-recargables/recargable-mini.png" alt="Recargables mini">
+        <h3 style="color: #fff;font-size: 15px;margin: 0 auto;text-align: center;">Pila Energizer recargable mini</h3>
         <a href="<?php echo CController::createUrl('/catalogo/producto', array('producto' => 18660)) ?>">
           <img class="img-responsive btn-compra" src="<?= Yii::app()->request->baseUrl ?>/images/contenido/energizer/comprar-online.png" alt="Comprar Online">
         </a>
       </div>
-      <div class="col-sm-3 col-md-3" style="z-index:100;">
+      <!-- <div class="col-sm-3 col-md-3" style="z-index:100;">
         <img class="img-responsive" src="<?= Yii::app()->request->baseUrl ?>/images/contenido/energizer/pilas-recargables/recargable-maxi.png" alt="Recargables maxi">
         <a href="#">
           <img class="img-responsive btn-compra" src="<?= Yii::app()->request->baseUrl ?>/images/contenido/energizer/comprar-online.png" alt="Comprar Online">
         </a>
-      </div>
+      </div> -->
     </div>
   </div>
   <img class="img-responsive fot-product" style="padding: 0;margin-bottom: 50px;display:inline-block" src="<?= Yii::app()->request->baseUrl ?>/images/contenido/energizer/fot-products.jpg">
