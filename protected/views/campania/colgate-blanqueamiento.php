@@ -156,7 +156,7 @@
     <a href="<?php echo CController::createUrl('/contenido/ver', array('tipo' => 'grupo', 'contenido' => 3602)) ?>"><img class="img-responsive btn-compra" src="<?= Yii::app()->request->baseUrl ?>/images/contenido/colgate/compra-online.png" alt="Compra online"></a>
   </div>
 </div>
-<div class="row" style="margin-top: -20px;">
+<div class="row">
   <img class="img-responsive" src="<?= Yii::app()->request->baseUrl ?>/images/contenido/colgate/banner-segundario.png" alt="Compra online">
 </div>
 <div class="container">
