@@ -39,7 +39,25 @@ $this->metaTags = "
 	</style>
     ";
 ?>
-
+<!-- Facebook Pixel Code -->
+<script>
+!function(f,b,e,v,n,t,s)
+{if(f.fbq)return;n=f.fbq=function(){n.callMethod?
+n.callMethod.apply(n,arguments):n.queue.push(arguments)};
+if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';
+n.queue=[];t=b.createElement(e);t.async=!0;
+t.src=v;s=b.getElementsByTagName(e)[0];
+s.parentNode.insertBefore(t,s)}(window,document,'script',
+'https://connect.facebook.net/en_US/fbevents.js');
+ fbq('init', '1237970366269442');
+fbq('track', 'PageView');
+</script>
+<noscript>
+ <img height="1" width="1"
+src="https://www.facebook.com/tr?id=1237970366269442&ev=PageView
+&noscript=1"/>
+</noscript>
+<!-- End Facebook Pixel Code -->
 <!--Versión movil-->
 <?php if ($this->isMobile): ?>
   <img class="img-responsive-m" src="<?= Yii::app()->request->baseUrl ?>/images/contenido/nan-optipro/recetas-y-sabias-que/banner.png" alt="Banner Nan Optipro">
@@ -162,7 +180,7 @@ $this->metaTags = "
         <img class="img-responsive" style="margin-top: 25px;" src="<?= Yii::app()->request->baseUrl ?>/images/contenido/nan-optipro/recetas-y-sabias-que/optipro.png" alt="Nan optipro">
         <a href="<?php echo CController::createUrl('/catalogo/producto', array('producto' => 65388)) ?>">
           <img class="img-responsive compra" src="<?= Yii::app()->request->baseUrl ?>/images/contenido/nan-optipro/compra-online.png" alt="Comprar Nan optipro">
-        </a>        
+        </a>
         <img class="img-responsive-m" style="width:60%;margin: 0px auto;display:block;" src="<?= Yii::app()->request->baseUrl ?>/images/contenido/nan-optipro/home/adecuada-maduracion.png" alt="Contribuye a la adecuada maduración de">
 
         <img class="img-responsive" src="<?= Yii::app()->request->baseUrl ?>/images/contenido/nan-optipro/home/organos.png">
