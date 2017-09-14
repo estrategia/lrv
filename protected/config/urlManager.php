@@ -95,6 +95,7 @@ return array(
         'colgate-para-pequenos-pacientes' => 'publicidad/contenido/nombre/colgate-ninos',
         'choco-cono-millonario' => 'publicidad/contenido/nombre/chococono',
         'klim1-deslactosado' => 'publicidad/contenido/nombre/klim1-deslactosado',
+        'durex' => 'publicidad/contenido/nombre/durex',
         // Fin links campañas
 
         // REST patterns
