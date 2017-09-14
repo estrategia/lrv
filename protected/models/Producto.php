@@ -396,7 +396,7 @@ class Producto extends CActiveRecord {
     	return $objProducto;
     }
     
-    public static function consultarPrecio($producto, $objSectorCiudad){
+    public static function consultarPrecio($producto, $objSectorCiudad, $tipo=null){
     	$objProducto = self::consultarProducto($producto, $objSectorCiudad);
     	$objPrecio = new PrecioProducto($objProducto, $objSectorCiudad, Yii::app()->shoppingCart->getCodigoPerfil());
     	
@@ -408,6 +408,12 @@ class Producto extends CActiveRecord {
     		'unidad' => $objPrecio->getPrecio(Precio::PRECIO_UNIDAD),
     		'fraccion' => ($objProducto->fraccionado == 1) ? $objPrecio->getPrecio(Precio::PRECIO_FRACCION) : null,
     	);
+    	
+    	if($tipo=='u'){
+    	    return $arrPrecio['unidad'];
+    	}else if($tipo=='f'){
+    	    return $arrPrecio['fraccion'];
+    	}
     	
     	return $arrPrecio;
     }

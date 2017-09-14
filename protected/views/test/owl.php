@@ -46,3 +46,10 @@ $value = (string)Yii::app()->request->cookies['cookie_prueba'];
   <div class="item"><h1>15</h1></div>
   <div class="item"><h1>16</h1></div>
 </div>
+
+
+
+<div>
+<?php $p1 = Producto::consultarPrecio('17885', $this->objSectorCiudad, 'u')?>
+<?= ($p1 == null) ? "--" : $p1 ?>
+</div>
