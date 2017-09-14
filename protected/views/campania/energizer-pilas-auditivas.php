@@ -36,6 +36,7 @@ $this->metaTags = "
 ?>
 <!--VERSIÓN MÓVIL-->
 <?php if ($this->isMobile): ?>
+<img class="img-responsive-m" src="<?= Yii::app()->request->baseUrl ?>/images/contenido/energizer/banner-pilas-auditivas.jpg" alt="Energizer Pilas auditivas">
 <div class="background-black" style="padding: 0;margin-top: -11px;">
   <div class="content">
     <center>
@@ -50,19 +51,23 @@ $this->metaTags = "
       <p>* Equipo para audiología.</p>
     </div>
     <img style="width: 90%;margin: 35px auto 0;display: block;" src="<?= Yii::app()->request->baseUrl ?>/images/contenido/energizer/pilas-auditivas/pilas-auditivas-675.png" alt="Pilas auditivas 675">
-    <a href="#">
+            <h3 style="color: #fff;font-size: 15px;margin: 0px auto 15px;text-align: center;">Pila Energizer auditiva AZ675E4</h3>
+    <a href="<?php echo CController::createUrl('/catalogo/producto', array('producto' => 21137)) ?>">
       <img class="btn-compra" style="width: 80%;margin: 0 auto;display: block;"src="<?= Yii::app()->request->baseUrl ?>/images/contenido/energizer/comprar-online.png" alt="Comprar Online">
     </a>
     <img style="width: 90%;margin: 35px auto 0;display: block;" src="<?= Yii::app()->request->baseUrl ?>/images/contenido/energizer/pilas-auditivas/pilas-auditivas-az10.png" alt="Pilas auditivas az10">
+<h3 style="color: #fff;font-size: 15px;margin: 0px auto 15px;text-align: center;">Pila Energizer auditiva AZ10E -4</h3>
     <a href="<?php echo CController::createUrl('/catalogo/producto', array('producto' => 21132)) ?>">
       <img class="btn-compra"style="width: 80%;margin: 0 auto;display: block;" src="<?= Yii::app()->request->baseUrl ?>/images/contenido/energizer/comprar-online.png" alt="Comprar Online">
     </a>
     <img style="width: 90%;margin: 35px auto 0;display: block;" src="<?= Yii::app()->request->baseUrl ?>/images/contenido/energizer/pilas-auditivas/pilas-auditivas-az13.png" alt="Pilas auditivas az13">
+<h3 style="color: #fff;font-size: 15px;margin: 0px auto 15px;text-align: center;">Pila Energizer auditiva AZ13E4</h3>
     <a href="<?php echo CController::createUrl('/catalogo/producto', array('producto' => 21134)) ?>">
       <img class="btn-compra"style="width: 80%;margin: 0 auto;display: block;" src="<?= Yii::app()->request->baseUrl ?>/images/contenido/energizer/comprar-online.png" alt="Comprar Online">
     </a>
     <img style="width: 90%;margin: 35px auto 0;display: block;"  src="<?= Yii::app()->request->baseUrl ?>/images/contenido/energizer/pilas-auditivas/pilas-auditivas-az312.png" alt="Pilas auditivas az312">
-    <a href="#">
+<h3 style="color: #fff;font-size: 15px;margin: 0px auto 15px;text-align: center;">Pila Energizer auditiva AZ312E4 </h3>
+    <a href="<?php echo CController::createUrl('/catalogo/producto', array('producto' => 21136)) ?>">
       <img class="btn-compra" style="width: 80%;margin: 0 auto;display: block;" src="<?= Yii::app()->request->baseUrl ?>/images/contenido/energizer/comprar-online.png" alt="Comprar Online">
     </a>
   </div>
@@ -70,7 +75,7 @@ $this->metaTags = "
 <!---FIN VERSIÓN MÓVIL-->
 <!--VERSIÓN ESCRITORIO-->
 <?php else: ?>
-<!-- <img class="img-responsive" src="<?= Yii::app()->request->baseUrl ?>/images/contenido/energizer/pilas-especiales/banner-pilas-especiales.jpg" alt="Energizer Pilas especiales"> -->
+<img class="img-responsive" src="<?= Yii::app()->request->baseUrl ?>/images/contenido/energizer/banner-pilas-auditivas.jpg" alt="Energizer Pilas auditivas">
 <div class="container-fluid background-black" style="padding: 0;">
   <div class="content">
     <div class="menu">
@@ -88,25 +93,29 @@ $this->metaTags = "
     <div class="row" style="margin-top: 50px;">
       <div class="col-sm-3 col-md-3" style="z-index:100;">
         <img class="img-responsive" src="<?= Yii::app()->request->baseUrl ?>/images/contenido/energizer/pilas-auditivas/pilas-auditivas-675.png" alt="Pilas auditivas 675">
-        <a href="#">
+        <h3 style="color: #fff;font-size: 15px;margin: 0px auto 15px;text-align: center;">Pila Energizer auditiva AZ675E4</h3>
+        <a href="<?php echo CController::createUrl('/catalogo/producto', array('producto' => 21137)) ?>">
           <img class="img-responsive btn-compra" src="<?= Yii::app()->request->baseUrl ?>/images/contenido/energizer/comprar-online.png" alt="Comprar Online">
         </a>
       </div>
       <div class="col-sm-3 col-md-3" style="z-index:100;">
         <img class="img-responsive" src="<?= Yii::app()->request->baseUrl ?>/images/contenido/energizer/pilas-auditivas/pilas-auditivas-az10.png" alt="Pilas auditivas az10">
+<h3 style="color: #fff;font-size: 15px;margin: 0px auto 15px;text-align: center;">Pila Energizer auditiva AZ10E -4</h3>
         <a href="<?php echo CController::createUrl('/catalogo/producto', array('producto' => 21132)) ?>">
           <img class="img-responsive btn-compra" src="<?= Yii::app()->request->baseUrl ?>/images/contenido/energizer/comprar-online.png" alt="Comprar Online">
         </a>
       </div>
       <div class="col-sm-3 col-md-3" style="z-index:100;">
         <img class="img-responsive" src="<?= Yii::app()->request->baseUrl ?>/images/contenido/energizer/pilas-auditivas/pilas-auditivas-az13.png" alt="Pilas auditivas az13">
+<h3 style="color: #fff;font-size: 15px;margin: 0px auto 15px;text-align: center;">Pila Energizer auditiva AZ13E4</h3>
         <a href="<?php echo CController::createUrl('/catalogo/producto', array('producto' => 21134)) ?>">
           <img class="img-responsive btn-compra" src="<?= Yii::app()->request->baseUrl ?>/images/contenido/energizer/comprar-online.png" alt="Comprar Online">
         </a>
       </div>
       <div class="col-sm-3 col-md-3" style="z-index:100;">
         <img class="img-responsive" src="<?= Yii::app()->request->baseUrl ?>/images/contenido/energizer/pilas-auditivas/pilas-auditivas-az312.png" alt="Pilas auditivas az312">
-        <a href="#">
+<h3 style="color: #fff;font-size: 15px;margin: 0px auto 15px;text-align: center;">Pila Energizer auditiva AZ312E4 </h3>
+        <a href="<?php echo CController::createUrl('/catalogo/producto', array('producto' => 21136)) ?>">
           <img class="img-responsive btn-compra" src="<?= Yii::app()->request->baseUrl ?>/images/contenido/energizer/comprar-online.png" alt="Comprar Online">
         </a>
       </div>

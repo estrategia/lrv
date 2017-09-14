@@ -1,8 +1,8 @@
 <?php $this->pageTitle = "Colgate para pequeños pacientes - La Rebaja Virtual"; ?>
 <?php
   $this->metaTags = "<meta http-equiv='X-UA-Compatible' content='IE=edge'>
-  <meta name='description' content=''>
-  <meta name='keywords' content=''>
+  <meta name='description' content='Conozca aquí la variedad de productos que ofrece Colgate para motivar a los niños a cepillarse y promoverles buenos hábitos de higiene oral.'>
+  <meta name='keywords' content='Productos profesionales colgate, productos para motivar a los niños a cepillarse, colgate smiles,  colgate minions,  productos para profesionales de la odontología.'>
   <style>
     @font-face {font-family:MyriadPro;src: url(".Yii::app()->request->baseUrl."/images/contenido/ky/fonts/MyriadPro.otf);}
     @font-face {font-family:Frutiger-LT-Std-Condensed;src: url(".Yii::app()->request->baseUrl."/images/contenido/colgate/fonts/Frutiger-LT-Std-Condensed.ttf);}
@@ -10,7 +10,7 @@
     @font-face {font-family:ColgateReady-Light;src: url(".Yii::app()->request->baseUrl."/images/contenido/colgate/fonts/ColgateReady-Light.otf);}
     .space-1 {height: 0px !important;}
     .img-responsive-m {width:100%;}
-    .sidebar-cart {position: fixed;right: 0px;top: 60%;z-index: 2000;}
+    .sidebar-cart {position: fixed;right: 0px;top: 60%;z-index: 2000;width: 200px;}
     .nota {font-family:interstate-regular;color: #74183D;text-align: center;font-size: 16px;letter-spacing: -1px;}
     .text-atencion {font-family: MyriadPro;margin-bottom: 20px !important;text-decoration: underline;font-size: 14px;font-weight: bold;font-style: italic;}
     .datos-contacto {padding: 15px 0;}
@@ -39,7 +39,7 @@
 <?php if ($this->isMobile): ?>
 <img class="img-responsive-m" src="<?= Yii::app()->request->baseUrl ?>/images/contenido/colgate/banner/banner-pequenos.png" alt="Compra online">
 <div class="menu-colgate" style="flex-direction: column;padding: 0 5px;">
-  <a data-ajax="false" href="<?= Yii::app()->request->baseUrl ?>/colgate-uso-en-consultorio"><img style="margin: 0 auto;width: 60%;display: block;" src="<?= Yii::app()->request->baseUrl ?>/images/contenido/colgate/uso-consultorio.png" onmouseover="this.src='<?= Yii::app()->request->baseUrl ?>/images/contenido/colgate/uso-consultorio-active.png';" onmouseout="this.src='<?= Yii::app()->request->baseUrl ?>/images/contenido/colgate/uso-consultorio.png';"></a>
+  <a data-ajax="false" href="<?= Yii::app()->request->baseUrl ?>/colgate-profesional"><img style="margin: 0 auto;width: 60%;display: block;" src="<?= Yii::app()->request->baseUrl ?>/images/contenido/colgate/uso-consultorio.png" onmouseover="this.src='<?= Yii::app()->request->baseUrl ?>/images/contenido/colgate/uso-consultorio-active.png';" onmouseout="this.src='<?= Yii::app()->request->baseUrl ?>/images/contenido/colgate/uso-consultorio.png';"></a>
   <a data-ajax="false" href="<?= Yii::app()->request->baseUrl ?>/colgate-pacientes-con-gingivitis"><img style="margin: 0 auto;display: block;width: 60%;" src="<?= Yii::app()->request->baseUrl ?>/images/contenido/colgate/gingivitis.png" onmouseover="this.src='<?= Yii::app()->request->baseUrl ?>/images/contenido/colgate/gingivitis-hover.png';" onmouseout="this.src='<?= Yii::app()->request->baseUrl ?>/images/contenido/colgate/gingivitis.png';"></a>
   <a data-ajax="false" href="<?= Yii::app()->request->baseUrl ?>/colgate-pacientes-con-sensibilidad"><img style="margin: 0 auto;display: block;width: 60%;" src="<?= Yii::app()->request->baseUrl ?>/images/contenido/colgate/sensibilidad.png" onmouseover="this.src='<?= Yii::app()->request->baseUrl ?>/images/contenido/colgate/sensibilidad-hover.png';" onmouseout="this.src='<?= Yii::app()->request->baseUrl ?>/images/contenido/colgate/sensibilidad.png';"></a>
   <a data-ajax="false" href="<?= Yii::app()->request->baseUrl ?>/colgate-prevencion-caries"><img style="margin: 0 auto;display: block;width: 60%;" src="<?= Yii::app()->request->baseUrl ?>/images/contenido/colgate/caries.png" onmouseover="this.src='<?= Yii::app()->request->baseUrl ?>/images/contenido/colgate/caries-hover.png';" onmouseout="this.src='<?= Yii::app()->request->baseUrl ?>/images/contenido/colgate/caries.png';"></a>
@@ -99,12 +99,12 @@
 <img class="img-responsive-m"  style="margin-top:30px;" src="<?= Yii::app()->request->baseUrl ?>/images/contenido/colgate/7-pequenos-pacientes/enjuague-colgate-minions.png">
 <h2 class="nombre-producto" style="margin-top: 10px;">ENJUAGUE BUCAL</h2>
 <h3 class="componente" style="line-height: 17px;">COLGATE® MINIONS<sup>TM</sup></h3>
-<p class="descripcion" style="margin-top: 0px;">Enjuague bucal con flúor que ayuda a fortalecer el esmalte y brinda protección anti caries. Ahora presentado por los personajes favoritos de sus pequeños pacientes, los minions!</p>
+<p class="descripcion" style="margin-top: 0px;">Enjuague bucal con flúor que ayuda a fortalecer el esmalte y brinda protección anti caries. Ahora presentado por los personajes favoritos de sus pequeños pacientes, los minions!.</p>
 <ul class="beneficios" style="padding-inline-start: 40px;" >
   <li style="margin-bottom:15px;">Limpia toda la boca, eliminando las partículas que pudieron haber quedado después del cepillado.</li>
-  <li style="margin-bottom:15px;">Fun Bello™ Bubble Fruit®, con sabor a chicle de frutas que los niños disfrutarán</li>
+  <li style="margin-bottom:15px;">Fun Bello™ Bubble Fruit®, con sabor a chicle de frutas que los niños disfrutarán.</li>
 </ul>
-<a href="#" data-ajax="false"><img class="img-responsive-m" style="width: 250px;margin: 0 auto;display: block;" src="<?= Yii::app()->request->baseUrl ?>/images/contenido/colgate/compra-online.png" alt="Compra online"></a>
+<a href="<?php echo CController::createUrl('/contenido/ver', array('tipo' => 'grupo', 'contenido' => 3604)) ?>" data-ajax="false"><img class="img-responsive-m" style="width: 250px;margin: 0 auto;display: block;" src="<?= Yii::app()->request->baseUrl ?>/images/contenido/colgate/compra-online.png" alt="Compra online"></a>
 <img class="img-responsive-m" style="margin-top: 20px;margin-bottom: 20px;" src="<?= Yii::app()->request->baseUrl ?>/images/contenido/colgate/banner-segundario.png" alt="Compra online">
 <p class="texto-legal">Texto legal: Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam, eaque ipsa quae ab illo inventore veritatis et quasi architecto beatae vitae dicta sunt explicabo. Nemo enim ipsam voluptatem quia voluptas sit aspernatur aut odit aut fugit, sed quia consequuntur magni dolores eos qui ratione voluptatem sequi nesciunt. Neque porro quisquam est, qui dolorem ipsum quia dolor sit amet, consectetur, adipisci velit, sed quia non numquam eius modi tempora incidunt ut labore et dolore magnam aliquam quaerat voluptatem. Ut enim ad minima veniam, quis nostrum exercitationem ullam corporis suscipit laboriosam, nisi ut aliquid </p>
 </div>
@@ -125,10 +125,10 @@
 </div>
 <!--Versión escritorio-->
 <?php else: ?>
-<a href="#"><div class="sidebar-cart"><img class="img-responsive" src="<?= Yii::app()->request->baseUrl ?>/images/contenido/colgate/btn-fijo.png" alt="Compra online"></div></a>
+<a href="<?php echo CController::createUrl('/contenido/ver', array('tipo' => 'grupo', 'contenido' => 3604)) ?>"><div class="sidebar-cart"><img class="img-responsive" src="<?= Yii::app()->request->baseUrl ?>/images/contenido/colgate/btn-fijo.png" alt="Compra online"></div></a>
 <img class="img-responsive" src="<?= Yii::app()->request->baseUrl ?>/images/contenido/colgate/banner/banner-pequenos.png" alt="Compra online">
 <nav class="menu">
-  <item><a href="<?= Yii::app()->request->baseUrl ?>/colgate-uso-en-consultorio"><img class="img-responsive" style="margin: 0 auto;" src="<?= Yii::app()->request->baseUrl ?>/images/contenido/colgate/uso-consultorio.png" onmouseover="this.src='<?= Yii::app()->request->baseUrl ?>/images/contenido/colgate/uso-consultorio-active.png';" onmouseout="this.src='<?= Yii::app()->request->baseUrl ?>/images/contenido/colgate/uso-consultorio.png';"></a></item>
+  <item><a href="<?= Yii::app()->request->baseUrl ?>/colgate-profesional"><img class="img-responsive" style="margin: 0 auto;" src="<?= Yii::app()->request->baseUrl ?>/images/contenido/colgate/uso-consultorio.png" onmouseover="this.src='<?= Yii::app()->request->baseUrl ?>/images/contenido/colgate/uso-consultorio-active.png';" onmouseout="this.src='<?= Yii::app()->request->baseUrl ?>/images/contenido/colgate/uso-consultorio.png';"></a></item>
   <item><a href="<?= Yii::app()->request->baseUrl ?>/colgate-pacientes-con-gingivitis"><img class="img-responsive" style="margin: 0 auto;display: block;" src="<?= Yii::app()->request->baseUrl ?>/images/contenido/colgate/gingivitis.png" onmouseover="this.src='<?= Yii::app()->request->baseUrl ?>/images/contenido/colgate/gingivitis-hover.png';" onmouseout="this.src='<?= Yii::app()->request->baseUrl ?>/images/contenido/colgate/gingivitis.png';"></a></item>
   <item><a href="<?= Yii::app()->request->baseUrl ?>/colgate-pacientes-con-sensibilidad"><img class="img-responsive" style="margin: 0 auto;display: block;" src="<?= Yii::app()->request->baseUrl ?>/images/contenido/colgate/sensibilidad.png" onmouseover="this.src='<?= Yii::app()->request->baseUrl ?>/images/contenido/colgate/sensibilidad-hover.png';" onmouseout="this.src='<?= Yii::app()->request->baseUrl ?>/images/contenido/colgate/sensibilidad.png';"></a></item>
   <item><a href="<?= Yii::app()->request->baseUrl ?>/colgate-prevencion-caries"><img class="img-responsive" style="margin: 0 auto;display: block;" src="<?= Yii::app()->request->baseUrl ?>/images/contenido/colgate/caries.png" onmouseover="this.src='<?= Yii::app()->request->baseUrl ?>/images/contenido/colgate/caries-hover.png';" onmouseout="this.src='<?= Yii::app()->request->baseUrl ?>/images/contenido/colgate/caries.png';"></a></item>
@@ -186,7 +186,7 @@
       <ul class="beneficios" style="padding-inline-start: 64px;margin-bottom: 96px;">
         <li style="margin-bottom: 10px;">Con flúor para niños.</li>
         <li style="margin-bottom: 10px;">Delicioso sabor Tutti-Frutti.</li>
-        <li>Con el personaje de Barbie que motiva <br> a las niñas a cepillarse</li>
+        <li>Con el personaje de Barbie que motiva <br> a las niñas a cepillarse.</li>
       </ul>
     </div>
     <div class="column col-sm-4 col-md-4">
@@ -197,25 +197,25 @@
       <ul class="beneficios" style="padding-inline-start: 83px;margin-bottom: 75px;">
         <li style="margin-bottom: 10px;">Con flúor para niños.</li>
         <li style="margin-bottom: 10px;">Delicioso sabor Tutti-Frutti.</li>
-        <li>Con el personaje de Bob Esponja que motiva <br>   a los niños a cepillarse</li>
+        <li>Con el personaje de Bob Esponja que motiva  a los niños a cepillarse.</li>
       </ul>
     </div>
     <div class="column col-sm-4 col-md-4">
       <img class="img-responsive producto" src="<?= Yii::app()->request->baseUrl ?>/images/contenido/colgate/7-pequenos-pacientes/enjuague-colgate-minions.png" alt="enjuague-colgate-minions">
       <h2 class="nombre-producto">ENJUAGUE BUCAL</h2>
       <h3 class="componente">COLGATE<sup>®</sup> MINIONS<sup>TM</sup></h3>
-      <p class="descripcion">Enjuague bucal con flúor que ayuda a <br>fortalecer el esmalte y brinda protección anti caries. <br>Ahora presentado por los personajes <br>favoritos de sus pequeños pacientes, los minions!</p>
+      <p class="descripcion">Enjuague bucal con flúor que ayuda a <br>fortalecer el esmalte y brinda protección anti caries. <br>Ahora presentado por los personajes <br>favoritos de sus pequeños pacientes, los minions!.</p>
       <ul class="beneficios" style="padding-inline-start: 53px;">
         <li style="margin-bottom: 10px;">Limpia toda la boca, eliminando las partículas que pudieron haber quedado después del cepillado.</li>
-        <li style="margin-bottom: 10px;"> Fun Bello™ Bubble Fruit®, con sabor a chicle de frutas que los niños disfrutarán</li>
+        <li style="margin-bottom: 10px;"> Fun Bello™ Bubble Fruit®, con sabor a chicle de frutas que los niños disfrutarán.</li>
       </ul>
     </div>
   </div>
   <div class="row" style="margin-top: 65px;">
-    <a href="#"><img class="img-responsive btn-compra" src="<?= Yii::app()->request->baseUrl ?>/images/contenido/colgate/compra-online.png" alt="Compra online"></a>
+    <a href="<?php echo CController::createUrl('/contenido/ver', array('tipo' => 'grupo', 'contenido' => 3604)) ?>"><img class="img-responsive btn-compra" src="<?= Yii::app()->request->baseUrl ?>/images/contenido/colgate/compra-online.png" alt="Compra online"></a>
   </div>
 </div>
-<div class="row" style="margin-top: -20px;">
+<div class="row">
   <img class="img-responsive" src="<?= Yii::app()->request->baseUrl ?>/images/contenido/colgate/banner-segundario.png" alt="Compra online">
 </div>
 <div class="container">

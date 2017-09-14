@@ -74,7 +74,9 @@ $this->metaTags = "
       <p class="object" style="margin-bottom: 15px;font-size: 15px;letter-spacing:-1px;display: flex;"><img width="20" height="20" style="display: block;margin-right:5px;" src="<?= Yii::app()->request->baseUrl ?>/images/contenido/coaspharma/zahara/bullet.png">Calma y refresca la piel</p>
       <p class="object" style="margin-bottom: 15px;font-size: 15px;letter-spacing:-1px;display: flex;"><img width="20" height="20" style="display: block;margin-right:5px;" src="<?= Yii::app()->request->baseUrl ?>/images/contenido/coaspharma/zahara/bullet.png">Para después del sol</p>
     </div>
-    <img class="img-responsive-m" style="margin-top:25px;" src="<?= Yii::app()->request->baseUrl ?>/images/contenido/coaspharma/zahara/bronceador-oferta-zahara-mobile.png">
+    <a data-ajax="false" href="<?php echo CController::createUrl('/catalogo/producto', array('producto' => 117300)) ?>">
+      <img class="img-responsive-m" style="margin-top:25px;" src="<?= Yii::app()->request->baseUrl ?>/images/contenido/coaspharma/zahara/bronceador-oferta-zahara-mobile.png">
+    </a>
   </section>
   <section class="bg-video" style="margin-bottom:15px;">
     <h3 class="title-video" style="font-size: 40px;margin: 0;">Conoce más</h3>
@@ -173,7 +175,9 @@ $this->metaTags = "
       <a href="<?php echo CController::createUrl('/catalogo/producto', array('producto' => 29769)) ?>"><img class="compra" src="<?= Yii::app()->request->baseUrl ?>/images/contenido/coaspharma/zahara/compra-online.png"></a>
     </div>
   </div>
-  <img class="img-responsive" src="<?= Yii::app()->request->baseUrl ?>/images/contenido/coaspharma/zahara/bronceador-oferta-zahara.png">
+  <a href="<?php echo CController::createUrl('/catalogo/producto', array('producto' => 117300)) ?>">
+    <img class="img-responsive" style="margin-top: 70px;" src="<?= Yii::app()->request->baseUrl ?>/images/contenido/coaspharma/zahara/bronceador-oferta-zahara.png">
+  </a>
 </section>
 <section class="bg-video">
   <h3 class="title-video">Conoce más</h3>
