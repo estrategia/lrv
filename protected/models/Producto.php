@@ -100,7 +100,7 @@ class Producto extends CActiveRecord {
         	'listVitalCall'	=> array(self::HAS_MANY, 'ProductosVitalCall', 'codigoProducto'),
         	'objVitalCall'	=> array(self::HAS_ONE, 'ProductosVitalCall', 'codigoProducto'),
         	'listComprasItems'	=> array(self::HAS_MANY, 'ComprasItems', 'codigoProducto'),
-        		
+
                 //'listCategoriasTienda' => array(self::MANY_MANY, 'CategoriaTienda', '', 'through' => 'CategoriasCategoriaTienda', 'condition' => 'CategoriasCategoriaTienda.idCategoriaBI=106'),
                 //'listCategoriasCategoriaTienda' => array(self::HAS_MANY, 'CategoriasCategoriaTienda', 'idCategoriaBI'),
         );
@@ -243,7 +243,7 @@ class Producto extends CActiveRecord {
                $list[] = $objImagen;
             }
         }
-        
+
         return $list;
     }
 
@@ -358,10 +358,10 @@ class Producto extends CActiveRecord {
             return $object;
         }
     }
-    
+
     public static function consultarProducto($producto, $objSectorCiudad){
     	$objProducto = null;
-    	
+
     	if ($objSectorCiudad == null) {
     		$objProducto = self::model ()->find ( array (
     				'condition' => 't.activo=:activo AND t.codigoProducto=:codigo',
@@ -392,29 +392,32 @@ class Producto extends CActiveRecord {
     				)
     		) );
     	}
-    	
+
     	return $objProducto;
     }
-    
+
     public static function consultarPrecio($producto, $objSectorCiudad, $tipo=null){
     	$objProducto = self::consultarProducto($producto, $objSectorCiudad);
+      if (is_null($objProducto)) {
+        $objProducto = new Producto;
+      }
     	$objPrecio = new PrecioProducto($objProducto, $objSectorCiudad, Yii::app()->shoppingCart->getCodigoPerfil());
-    	
+
     	if(!$objPrecio->inicializado()){
     		return null;
     	}
-    	
+
     	$arrPrecio = array(
     		'unidad' => $objPrecio->getPrecio(Precio::PRECIO_UNIDAD),
     		'fraccion' => ($objProducto->fraccionado == 1) ? $objPrecio->getPrecio(Precio::PRECIO_FRACCION) : null,
     	);
-    	
+
     	if($tipo=='u'){
     	    return $arrPrecio['unidad'];
     	}else if($tipo=='f'){
     	    return $arrPrecio['fraccion'];
     	}
-    	
+
     	return $arrPrecio;
     }
 
