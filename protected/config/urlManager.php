@@ -94,8 +94,9 @@ return array(
         'colgate-pacientes-con-ortodoncia' => 'publicidad/contenido/nombre/colgate-ortodoncia',
         'colgate-para-pequenos-pacientes' => 'publicidad/contenido/nombre/colgate-ninos',
         'choco-cono-millonario' => 'publicidad/contenido/nombre/chococono',
-        'klim1-deslactosado' => 'publicidad/contenido/nombre/klim1-deslactosado',
+        //'klim1-deslactosado' => 'publicidad/contenido/nombre/klim1-deslactosado',
         'durex' => 'publicidad/contenido/nombre/durex',
+        'klim3-fortilearn' => 'publicidad/contenido/nombre/klim3',
         // Fin links campañas
 
         // REST patterns

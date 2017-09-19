@@ -4,7 +4,7 @@
 
 <p><?php CVarDumper::dump(_getCookie(Yii::app()->params->usuario['sesion']), 10, true) ?></p>
 
-<?php 
+<?php
 //Yii::app()->request->cookies['cookie_prueba'] = new CHttpCookie('cookie_prueba', "hola perra", array('expire'=>time()+20));
 
 /*$objCookie = new CHttpCookie('cookie_prueba', "hola expire");
@@ -51,5 +51,5 @@ $value = (string)Yii::app()->request->cookies['cookie_prueba'];
 
 <div>
 <?php $p1 = Producto::consultarPrecio('17885', $this->objSectorCiudad, 'u')?>
-<?= ($p1 == null) ? "--" : $p1 ?>
+<?= ($p1 == null) ? "--" : Yii::app()->numberFormatter->format(Yii::app()->params->formatoMoneda['patron'], $p1, Yii::app()->params->formatoMoneda['moneda']) ?>
 </div>
