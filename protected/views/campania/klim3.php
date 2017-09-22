@@ -29,6 +29,7 @@
     @media (min-width: 1500px) and (max-width: 1799px){.txt-intro {top: -345px;font-size: 36px;}.section-videos {margin-bottom: 80px;}}
     @media (min-width: 1800px) and (max-width: 1920px){.txt-intro {top: -380px;font-size: 36px;}.section-videos {margin-bottom: 80px;margin-top: -44%;}}
     .bg-nube-m{background-image:url(".Yii::app()->request->baseUrl."/images/contenido/klim3/nube-movil.png);background-repeat: no-repeat;background-size: 35%;background-position: left 41%;}
+    .container p {position:absolute !important;}
   </style>
   ";
 ?>
