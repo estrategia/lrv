@@ -102,6 +102,9 @@ return array(
         'crema-para-peinar-pantene-fuerza-y-reconstruccion' => 'publicidad/contenido/nombre/crema-peinar-pantene',
         'acondicionador-diario-pantene-fuerza-y-reconstruccion' => 'publicidad/contenido/nombre/acondicionador-diario-pantene',
         'acondicionador-pantene-fuerza-y-reconstruccion' => 'publicidad/contenido/nombre/acondicionador-pantene',
+        'nude-protectores-solares' => 'publicidad/contenido/nombre/nude-protector-solar',
+        'nude-autobronceadores' => 'publicidad/contenido/nombre/nude-autobronceador',
+        'nude-repelente-de-insectos' => 'publicidad/contenido/nombre/nude-repelente',
         // Fin links campañas
 
         // REST patterns
