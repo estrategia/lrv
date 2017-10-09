@@ -20,13 +20,14 @@
     .title-image{margin-top: -95px;width: 45%;margin-bottom: 20px;}
     .bg-image{padding-bottom: 10px;background-image:url(".Yii::app()->request->baseUrl."/images/contenido/milpax/bg-general.jpg);background-size: cover;}
     .border p {color: #2D365C;font-family: helvetica;text-align: center;font-weight: bold;margin: 15px 0px 5px;}
-    .border span {background-color: #CB8735;text-align: center;color: #2D365C;font-family: impact;display:block;margin: 0 auto;border-radius: 5px;padding: 5px;}
+    .border span {background-color: #ef711d;text-align: center;color: #2D365C;font-family: impact;display:block;margin: 0 auto;border-radius: 5px;padding: 5px;}
     .text-atencion {font-family: MyriadPro;margin-bottom: 20px !important;text-decoration: underline;font-size: 14px;font-weight: bold;font-style: italic;}
     .datos-contacto {padding: 15px 0;}
     .datos-contacto p{text-align: center;margin:0px;}
-    .bg-red {font-size: 20px;background-color:#FF3C00;color:#fff;text-align: center;font-family: MyriadPro;padding: 15px;}
+    .bg-red {font-size: 20px;background-color:#FE0000;color:#fff;text-align: center;font-family: MyriadPro;padding: 15px;}
     .bg-red a {text-decoration:underline;color:#fff;}
     .bg-red a:hover {color:#fff;text-decoration:underline;}
+    .space-1 {height: 0px !important;}
   </style>
   ";
 ?>
@@ -42,7 +43,8 @@ gracias a su gran trayectoria demostrando <i>eficacia</i> y <i>seguridad</i></sp
 <img class="title-image" style="margin: 20px auto;display: block;width: 85%;" src="<?= Yii::app()->request->baseUrl ?>/images/contenido/milpax/antirreflujo.png" alt="Milpax antireflujo">
 
 <div class="border" style="border: none;border-radius: 0px;padding: 0px;">
-  <div class="ui-grid-b">
+  <img style="width: 100%;margin: 10px auto;display: block;" src="<?= Yii::app()->request->baseUrl ?>/images/contenido/milpax/packs.png" alt="Milpax menta">
+  <!-- <div class="ui-grid-b">
   	<div class="ui-block-a">
       <a data-ajax="false" href="<?php echo CController::createUrl('/catalogo/producto', array('producto' => 14878 )) ?>"><img style="width: 75%;margin: 10px auto;display: block;" src="<?= Yii::app()->request->baseUrl ?>/images/contenido/milpax/milpax-menta.png" alt="Milpax menta"></a>
   	</div>
@@ -52,12 +54,12 @@ gracias a su gran trayectoria demostrando <i>eficacia</i> y <i>seguridad</i></sp
   	<div class="ui-block-c">
       <a data-ajax="false" href="<?php echo CController::createUrl('/catalogo/producto', array('producto' => 26078 )) ?>"><img style="width: 75%;margin: 10px auto;display: block;" src="<?= Yii::app()->request->baseUrl ?>/images/contenido/milpax/milpax-chicle.png" alt="Milpax Chicle"></a>
   	</div>
-  </div>
+  </div> -->
   <p>SUSPENSIÓN</p>
   <span style="width: 70%;">Menta – Cereza – Chicle</span>
   <a data-ajax="false" href="<?php echo CController::createUrl('/catalogo/producto', array('producto' => 68071 )) ?>"><img class="img-responsive" style="margin: -40px auto;display: block;width: 75%;" src="<?= Yii::app()->request->baseUrl ?>/images/contenido/milpax/antirreflujo-caja.png" alt="Milpax antireflujo caja"></a>
   <p style="margin-top: 45px;">TABLETAS</p>
-  <span style="width: 62%;">Para llevar a todas partes</span>
+  <span style="width: 50%;">Para llevar a todas partes</span>
 </div>
 <a data-ajax="false" href="<?= Yii::app()->request->baseUrl ?>/catalogo/buscar?busqueda=milpax">
   <img class="img-responsive compra-online" style="margin: 30px auto;width: 80%;display: block;" src="<?= Yii::app()->request->baseUrl ?>/images/contenido/milpax/compra-online.png" alt="Compra online">
@@ -107,9 +109,9 @@ Reg. Sanitario INVIMA 2009M 0009509.</p>
         <p style="text-align: center;"><img class="title-image" src="<?= Yii::app()->request->baseUrl ?>/images/contenido/milpax/antirreflujo.png" alt="Milpax antireflujo"></p>
         <div class="col-sm-8 col-md-8">
           <div style="display:flex;">
-            <a href="<?php echo CController::createUrl('/catalogo/producto', array('producto' => 14878 )) ?>"><img class="img-responsive" style="flex-grow: 1;margin: 0 15px;" src="<?= Yii::app()->request->baseUrl ?>/images/contenido/milpax/milpax-menta.png" alt="Milpax menta"></a>
-            <a href="<?php echo CController::createUrl('/catalogo/producto', array('producto' => 14877 )) ?>"><img class="img-responsive" style="flex-grow: 1;margin: 0 15px;" src="<?= Yii::app()->request->baseUrl ?>/images/contenido/milpax/milpax-cereza.png" alt="Milpax Cereza"></a>
-            <a href="<?php echo CController::createUrl('/catalogo/producto', array('producto' => 26078 )) ?>"><img class="img-responsive" style="flex-grow: 1;margin: 0 15px;" src="<?= Yii::app()->request->baseUrl ?>/images/contenido/milpax/milpax-chicle.png" alt="Milpax Chicle"></a>
+            <a href="<?php echo CController::createUrl('/catalogo/producto', array('producto' => 14878 )) ?>"><img class="img-responsive" style="flex-grow: 1;" src="<?= Yii::app()->request->baseUrl ?>/images/contenido/milpax/milpax-menta.png" alt="Milpax menta"></a>
+            <a href="<?php echo CController::createUrl('/catalogo/producto', array('producto' => 14877 )) ?>"><img class="img-responsive" style="flex-grow: 1;" src="<?= Yii::app()->request->baseUrl ?>/images/contenido/milpax/milpax-cereza.png" alt="Milpax Cereza"></a>
+            <a href="<?php echo CController::createUrl('/catalogo/producto', array('producto' => 26078 )) ?>"><img class="img-responsive" style="flex-grow: 1;" src="<?= Yii::app()->request->baseUrl ?>/images/contenido/milpax/milpax-chicle.png" alt="Milpax Chicle"></a>
           </div>
           <div class="row">
             <p>SUSPENSIÓN</p>
@@ -117,7 +119,7 @@ Reg. Sanitario INVIMA 2009M 0009509.</p>
           </div>
         </div>
         <div class="col-sm-4 col-md-4">
-          <a href="<?php echo CController::createUrl('/catalogo/producto', array('producto' => 68071 )) ?>"><img class="img-responsive" style="margin-top: 28%;" src="<?= Yii::app()->request->baseUrl ?>/images/contenido/milpax/antirreflujo-caja.png" alt="Milpax antireflujo caja"></a>
+          <a href="<?php echo CController::createUrl('/catalogo/producto', array('producto' => 68071 )) ?>"><img class="img-responsive" style="margin-top: 19px;" src="<?= Yii::app()->request->baseUrl ?>/images/contenido/milpax/antirreflujo-caja.png" alt="Milpax antireflujo caja"></a>
           <p>TABLETAS</p>
           <span>Para llevar a todas partes</span>
         </div>
@@ -129,7 +131,7 @@ Reg. Sanitario INVIMA 2009M 0009509.</p>
     <div class="col-sm-4 col-md-4">
       <div class="border">
         <p style="text-align:center;"><img class="title-image" style="width: 100%;" src="<?= Yii::app()->request->baseUrl ?>/images/contenido/milpax/antiácido.png" alt="Milpax antiácido"></p>
-        <a href="<?php echo CController::createUrl('/catalogo/producto', array('producto' => 23514 )) ?>"><img class="img-responsive" style="margin: 0 auto;width: 50%;" src="<?= Yii::app()->request->baseUrl ?>/images/contenido/milpax/menta-fresca.png" alt="Milpax menta fresca"></a>
+        <a href="<?php echo CController::createUrl('/catalogo/producto', array('producto' => 23514 )) ?>"><img class="img-responsive" style="margin: 0 auto;width: 133px;" src="<?= Yii::app()->request->baseUrl ?>/images/contenido/milpax/menta-fresca.png" alt="Milpax menta fresca"></a>
         <p>SUSPENSIÓN</p>
         <span style="width: 45%;">Plus Menta Fresca</span>
       </div>

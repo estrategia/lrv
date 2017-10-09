@@ -134,7 +134,7 @@ $this->metaTags = "<meta http-equiv='X-UA-Compatible' content='IE=edge'>
       </a>
       <span class="flavor-diabeticos" style="color: #903D8F;">FRESA – VAINILLA</span>
       <h2 class="almendras" style="background-color: #903D8F;">ENERGOLD JALEA   </h2>
-      <span class="sub-title-vainilla" style="color: #903D8F;">Una forma diferente de nutrir a niños y adolescentes</span>
+      <span class="sub-title-vainilla" style="color: #903D8F;">Una forma diferente de complementar la nutrición de los niños</span>
       <div class="content-colum">
         <ul class="lista-check">
           <li>Alimento con extracto de malta en presentación Jalea recomendado para niños y adolescentes.</li>
@@ -282,12 +282,12 @@ $this->metaTags = "<meta http-equiv='X-UA-Compatible' content='IE=edge'>
         </a>
         <span class="flavor-diabeticos" style="color: #903D8F;">FRESA – VAINILLA</span>
         <h2 class="almendras" style="background-color: #903D8F;">ENERGOLD JALEA  </h2>
-        <span class="sub-title-vainilla" style="color: #903D8F;padding-inline-start: 10px;display: block;">Una forma diferente de nutrir a niños y adolescentes</span>
+        <span class="sub-title-vainilla" style="color: #903D8F;padding-inline-start: 10px;display: block;">Una forma diferente de complementar la nutrición de los niños</span>
         <div class="content-colum">
           <ul class="lista-check">
             <li>Alimento con extracto de malta en presentación Jalea recomendado para niños y adolescentes.</li>
           </ul>
-          <div class="content-colum" style="margin-bottom: 45px;">
+          <div class="content-colum" style="margin-bottom: 13px;">
             <h4 class="porcion-suplemento-dietario" style="color:#903D8F;margin-top: 230px;">PORCIÓN RECOMENDADA</h4>
             <p class="description-porcion-suplemento-dietario">
               2 cucharadas 1 vez al día. <br>

@@ -94,7 +94,17 @@ return array(
         'colgate-pacientes-con-ortodoncia' => 'publicidad/contenido/nombre/colgate-ortodoncia',
         'colgate-para-pequenos-pacientes' => 'publicidad/contenido/nombre/colgate-ninos',
         'choco-cono-millonario' => 'publicidad/contenido/nombre/chococono',
-        'klim1-deslactosado' => 'publicidad/contenido/nombre/klim1-deslactosado',
+        //'klim1-deslactosado' => 'publicidad/contenido/nombre/klim1-deslactosado',
+        'durex' => 'publicidad/contenido/nombre/durex',
+        'klim3-fortilearn' => 'publicidad/contenido/nombre/klim3',
+        'pantene-fuerza-y-reconstruccion' => 'publicidad/contenido/nombre/pantene',
+        'shampoo-pantene-fuerza-y-reconstruccion' => 'publicidad/contenido/nombre/shampoo-pantene',
+        'crema-para-peinar-pantene-fuerza-y-reconstruccion' => 'publicidad/contenido/nombre/crema-peinar-pantene',
+        'acondicionador-diario-pantene-fuerza-y-reconstruccion' => 'publicidad/contenido/nombre/acondicionador-diario-pantene',
+        'acondicionador-pantene-fuerza-y-reconstruccion' => 'publicidad/contenido/nombre/acondicionador-pantene',
+        'nude-protectores-solares' => 'publicidad/contenido/nombre/nude-protector-solar',
+        'nude-autobronceadores' => 'publicidad/contenido/nombre/nude-autobronceador',
+        'nude-repelente-de-insectos' => 'publicidad/contenido/nombre/nude-repelente',
         // Fin links campañas
 
         // REST patterns

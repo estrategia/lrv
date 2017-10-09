@@ -40,13 +40,18 @@ $this->metaTags = "<meta http-equiv='X-UA-Compatible' content='IE=edge'>
     .space-1 {height: 0px !important;}
     .owl-pagination { margin-top: 40px !important;}
     .owl-theme .owl-controls .owl-page span {background-color: #ff4392 !important;}
-      a {text-decoration:none !important;}
+    .precio {text-align: center;font-weight: bold;font-family: OpenSans-Light;margin: 10px 0 0;font-size: 15px;}
 </style>
 ";
 ?>
 <link rel="stylesheet" href="<?= Yii::app()->request->baseUrl ?>/images/contenido/cicatricure/animate.min.css">
 <script src="<?= Yii::app()->request->baseUrl ?>/images/contenido/cicatricure/wow.min.js"></script>
 <script type="text/javascript">wow = new WOW(); wow.init();</script>
+
+<?php $gel = Producto::consultarPrecio('63956', $this->objSectorCiudad, 'u')?>
+<?php $contorno_ojos = Producto::consultarPrecio('68091', $this->objSectorCiudad, 'u')?>
+<?php $beauty_care = Producto::consultarPrecio('115890', $this->objSectorCiudad, 'u')?>
+<?php $crema = Producto::consultarPrecio('64629', $this->objSectorCiudad, 'u')?>
 
 <!--VERSIÓN MÓVIL-->
 <?php if ($this->isMobile): ?>
@@ -67,6 +72,7 @@ $this->metaTags = "<meta http-equiv='X-UA-Compatible' content='IE=edge'>
       <h3 class="nombre-producto">CICATRICURE <br> GEL</h3>
       <p class="intro">Gel para aplicar en<br>cicatrices y estrías.</p>
       <a href="<?= Yii::app()->request->baseUrl ?>/cicatricure-gel" class="more">Ver más información</a>
+      <p class="precio"><?= ($gel == null) ? "--" : Yii::app()->numberFormatter->format(Yii::app()->params->formatoMoneda['patron'], $gel, Yii::app()->params->formatoMoneda['moneda']) ?></p>
       <a href="<?php echo CController::createUrl('/contenido/ver', array('tipo' => 'grupo', 'contenido' => 2401)) ?>" class="comprar">COMPRAR</a>
     </div>
   </div>
@@ -76,6 +82,7 @@ $this->metaTags = "<meta http-equiv='X-UA-Compatible' content='IE=edge'>
       <h3 class="nombre-producto">CICATRICURE <br> CONTORNO DE OJOS</h3>
       <p class="intro">Protege tu mirada<br>&nbsp;</p>
       <a href="<?= Yii::app()->request->baseUrl ?>/cicatricure-contorno-ojos" class="more">Ver más información</a>
+      <p class="precio"><?= ($contorno_ojos == null) ? "--" : Yii::app()->numberFormatter->format(Yii::app()->params->formatoMoneda['patron'], $contorno_ojos, Yii::app()->params->formatoMoneda['moneda']) ?></p>
       <a href="<?php echo CController::createUrl('/catalogo/producto', array('producto' => 68091)) ?>" class="comprar">COMPRAR</a>
       </div>
     </div>
@@ -85,6 +92,7 @@ $this->metaTags = "<meta http-equiv='X-UA-Compatible' content='IE=edge'>
       <h3 class="nombre-producto">CICATRICURE <br> BEAUTY CARE</h3>
       <p class="intro">Tu “toque beauty”<br>todos los días</p>
       <a href="<?= Yii::app()->request->baseUrl ?>/cicatricure-beauty-care" class="more">Ver más información</a>
+      <p class="precio"><?= ($beauty_care == null) ? "--" : Yii::app()->numberFormatter->format(Yii::app()->params->formatoMoneda['patron'], $beauty_care, Yii::app()->params->formatoMoneda['moneda']) ?></p>
       <a href="<?php echo CController::createUrl('/catalogo/producto', array('producto' => 115890)) ?>" class="comprar">COMPRAR</a>
       </div>
     </div>
@@ -94,6 +102,7 @@ $this->metaTags = "<meta http-equiv='X-UA-Compatible' content='IE=edge'>
       <h3 class="nombre-producto">CICATRICURE<br>CREMA</h3>
       <p class="intro">Siempre joven y bella <br> &nbsp;</p>
       <a href="<?= Yii::app()->request->baseUrl ?>/cicatricure-crema" class="more">Ver más información</a>
+      <p class="precio"><?= ($crema == null) ? "--" : Yii::app()->numberFormatter->format(Yii::app()->params->formatoMoneda['patron'], $crema, Yii::app()->params->formatoMoneda['moneda']) ?></p>
       <a href="<?php echo CController::createUrl('/catalogo/producto', array('producto' => 64629)) ?>" class="comprar">COMPRAR</a>
     </div>
   </div>
@@ -153,6 +162,7 @@ $this->metaTags = "<meta http-equiv='X-UA-Compatible' content='IE=edge'>
         <h3 class="nombre-producto">CICATRICURE <br> GEL</h3>
         <p class="intro">Gel para aplicar en<br>cicatrices y estrías.</p>
         <a href="<?= Yii::app()->request->baseUrl ?>/cicatricure-gel" class="more">Ver más información</a>
+        <p class="precio"><?= ($gel == null) ? "--" : Yii::app()->numberFormatter->format(Yii::app()->params->formatoMoneda['patron'], $gel, Yii::app()->params->formatoMoneda['moneda']) ?></p>
         <a href="<?php echo CController::createUrl('/contenido/ver', array('tipo' => 'grupo', 'contenido' => 2401)) ?>" class="comprar">COMPRAR</a>
       </div>
     </div>
@@ -162,6 +172,7 @@ $this->metaTags = "<meta http-equiv='X-UA-Compatible' content='IE=edge'>
         <h3 class="nombre-producto">CICATRICURE <br> CONTORNO DE OJOS</h3>
         <p class="intro">Protege tu mirada<br>&nbsp;</p>
         <a href="<?= Yii::app()->request->baseUrl ?>/cicatricure-contorno-ojos" class="more">Ver más información</a>
+        <p class="precio"><?= ($contorno_ojos == null) ? "--" : Yii::app()->numberFormatter->format(Yii::app()->params->formatoMoneda['patron'], $contorno_ojos, Yii::app()->params->formatoMoneda['moneda']) ?></p>
         <a href="<?php echo CController::createUrl('/catalogo/producto', array('producto' => 68091)) ?>" class="comprar">COMPRAR</a>
       </div>
     </div>
@@ -171,6 +182,7 @@ $this->metaTags = "<meta http-equiv='X-UA-Compatible' content='IE=edge'>
         <h3 class="nombre-producto">CICATRICURE <br> BEAUTY CARE</h3>
         <p class="intro">Tu “toque beauty”<br>todos los días</p>
         <a href="<?= Yii::app()->request->baseUrl ?>/cicatricure-beauty-care" class="more">Ver más información</a>
+        <p class="precio"><?= ($beauty_care == null) ? "--" : Yii::app()->numberFormatter->format(Yii::app()->params->formatoMoneda['patron'], $beauty_care, Yii::app()->params->formatoMoneda['moneda']) ?></p>
         <a href="<?php echo CController::createUrl('/catalogo/producto', array('producto' => 115890)) ?>" class="comprar">COMPRAR</a>
       </div>
     </div>
@@ -180,6 +192,7 @@ $this->metaTags = "<meta http-equiv='X-UA-Compatible' content='IE=edge'>
         <h3 class="nombre-producto">CICATRICURE<br>CREMA</h3>
         <p class="intro">Siempre joven y bella <br> &nbsp;</p>
         <a href="<?= Yii::app()->request->baseUrl ?>/cicatricure-crema" class="more">Ver más información</a>
+        <p class="precio"><?= ($crema == null) ? "--" : Yii::app()->numberFormatter->format(Yii::app()->params->formatoMoneda['patron'], $crema, Yii::app()->params->formatoMoneda['moneda']) ?></p>
         <a href="<?php echo CController::createUrl('/catalogo/producto', array('producto' => 64629)) ?>" class="comprar">COMPRAR</a>
       </div>
     </div>
