@@ -81,7 +81,7 @@ $this->metaTags = "
   <p class="reference">*Usando Sistema Pantene **Fuerza contra el daño mecánico ***Fuerza contra
   el daño mecánico vs. Shampoo sin ingredientes acondicionadores.<br>
   [Cálculo de P&amp;G basado en data de ventas de Julio 2015 a Junio 2016]</p>
-  <a data-ajax="false" href="<?php echo CController::createUrl('/catalogo/producto', array('producto' => 119303 )) ?>"><img class="img-responsive-m" style="width: 60%;margin: 30px auto 0;display: block;" src="<?= Yii::app()->request->baseUrl ?>/images/contenido/pantene/btn-comprar.png" alt="Comprar"></a>
+  <a data-ajax="false" href="<?php echo CController::createUrl('/contenido/ver', array('tipo' => 'grupo', 'contenido' => 4274)) ?>"><img class="img-responsive-m" style="width: 60%;margin: 30px auto 0;display: block;" src="<?= Yii::app()->request->baseUrl ?>/images/contenido/pantene/btn-comprar.png" alt="Comprar"></a>
 </div>
 
 <img class="img-responsive-m" style="margin-top: 30px;" src="<?= Yii::app()->request->baseUrl ?>/images/contenido/pantene/un-cabello-10-veces-mas-fuerte-mobile.png" alt="Un cabello 10 veces más fuerte">
@@ -110,7 +110,7 @@ $this->metaTags = "
       <h3 class="title-producto">ACONDICIONADOR</h3>
       <p>Penetra* y ayuda a fortalecer** <br> tu cabello hasta las puntas</p>
       <a data-ajax="false" href="<?= Yii::app()->request->baseUrl ?>/acondicionador-pantene-fuerza-y-reconstruccion">Ver más información</a>
-      <a data-ajax="false" style="margin-top:10px;margin-bottom: 15px;" href="<?php echo CController::createUrl('/catalogo/producto', array('producto' => 119298 )) ?>"><img class="img-responsive boton-compra" src="<?= Yii::app()->request->baseUrl ?>/images/contenido/pantene/btn-comprar.png" alt="Comprar"></a>
+      <a data-ajax="false" style="margin-top:10px;margin-bottom: 15px;" href="<?php echo CController::createUrl('/contenido/ver', array('tipo' => 'grupo', 'contenido' => 4277)) ?>"><img class="img-responsive boton-compra" src="<?= Yii::app()->request->baseUrl ?>/images/contenido/pantene/btn-comprar.png" alt="Comprar"></a>
     </div>
   </div>
 </div>
@@ -167,7 +167,7 @@ $this->metaTags = "
          [Cálculo de P&amp;G basado en data de ventas de Julio 2015 a Junio 2016]</p>
       </div>
       <div class="col-sm-4">
-        <a href="<?php echo CController::createUrl('/catalogo/producto', array('producto' => 119303 )) ?>"><img class="img-responsive" src="<?= Yii::app()->request->baseUrl ?>/images/contenido/pantene/btn-comprar.png" alt="Comprar"></a>
+        <a href="<?php echo CController::createUrl('/contenido/ver', array('tipo' => 'grupo', 'contenido' => 4274)) ?>"><img class="img-responsive" src="<?= Yii::app()->request->baseUrl ?>/images/contenido/pantene/btn-comprar.png" alt="Comprar"></a>
       </div>
     </div>
   </div>
@@ -197,7 +197,7 @@ $this->metaTags = "
         <h3 class="title-producto">ACONDICIONADOR</h3>
         <p>Penetra* y ayuda a fortalecer** <br> tu cabello hasta las puntas</p>
         <a href="<?= Yii::app()->request->baseUrl ?>/acondicionador-pantene-fuerza-y-reconstruccion">Ver más información</a>
-        <a href="<?php echo CController::createUrl('/catalogo/producto', array('producto' => 119298 )) ?>"><img class="img-responsive boton-compra" src="<?= Yii::app()->request->baseUrl ?>/images/contenido/pantene/btn-comprar.png" alt="Comprar"></a>
+        <a href="<?php echo CController::createUrl('/contenido/ver', array('tipo' => 'grupo', 'contenido' => 4277)) ?>"><img class="img-responsive boton-compra" src="<?= Yii::app()->request->baseUrl ?>/images/contenido/pantene/btn-comprar.png" alt="Comprar"></a>
       </div>
     </div>
   </div>

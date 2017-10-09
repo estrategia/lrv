@@ -70,7 +70,7 @@ $this->metaTags = "
   </fieldset>
   <p>Posee una tecnología inteligente que repara y protege el cabello contra el quiebre en las áreas que más lo necesita. Además, fortalece cada hebra desde su interior para hacerlo resistente en su exterior.  </p>
   <p>Encuentrelo en presentacion de <span style="color:#FF3A1E;">200 ml y 400 ml. </span> </p>
-  <a data-ajax="false" href="<?php echo CController::createUrl('/catalogo/producto', array('producto' => 119298 )) ?>"><img class="img-responsive-m" style="width: 60%;margin: 30px auto 0;display: block;" src="<?= Yii::app()->request->baseUrl ?>/images/contenido/pantene/btn-comprar.png" alt="Comprar"></a>
+  <a data-ajax="false" href="<?php echo CController::createUrl('/contenido/ver', array('tipo' => 'grupo', 'contenido' => 4277)) ?>"><img class="img-responsive-m" style="width: 60%;margin: 30px auto 0;display: block;" src="<?= Yii::app()->request->baseUrl ?>/images/contenido/pantene/btn-comprar.png" alt="Comprar"></a>
 </div>
 <img class="img-responsive-m" style="margin-top: 30px;" src="<?= Yii::app()->request->baseUrl ?>/images/contenido/pantene/un-cabello-10-veces-mas-fuerte-mobile.png" alt="Un cabello 10 veces más fuerte">
 <div style="margin-top:15px;" id="owl-productodetalle-inicio" class="owl-carousel owl-theme owl-productodetalle">
@@ -80,7 +80,7 @@ $this->metaTags = "
       <h3 class="title-producto">SHAMPOO</h3>
       <p>Limpia y elimina los residuos <br>en el cabello</p>
       <a data-ajax="false" href="<?= Yii::app()->request->baseUrl ?>/shampoo-pantene-fuerza-y-reconstruccion">Ver más información</a>
-      <a data-ajax="false" style="margin-top:10px;margin-bottom: 15px;" href="<?php echo CController::createUrl('/catalogo/producto', array('producto' => 119303 )) ?>"><img class="img-responsive boton-compra" src="<?= Yii::app()->request->baseUrl ?>/images/contenido/pantene/btn-comprar.png" alt="Comprar"></a>
+      <a data-ajax="false" style="margin-top:10px;margin-bottom: 15px;" href="<?php echo CController::createUrl('/contenido/ver', array('tipo' => 'grupo', 'contenido' => 4274)) ?>"><img class="img-responsive boton-compra" src="<?= Yii::app()->request->baseUrl ?>/images/contenido/pantene/btn-comprar.png" alt="Comprar"></a>
     </div>
   </div>
   <div class="item">
@@ -147,7 +147,7 @@ $this->metaTags = "
       <div class="col-sm-8">
       </div>
       <div class="col-sm-4">
-        <a href="<?php echo CController::createUrl('/catalogo/producto', array('producto' => 119298 )) ?>"><img class="img-responsive" src="<?= Yii::app()->request->baseUrl ?>/images/contenido/pantene/btn-comprar.png" alt="Comprar"></a>
+        <a href="<?php echo CController::createUrl('/contenido/ver', array('tipo' => 'grupo', 'contenido' => 4277)) ?>"><img class="img-responsive" src="<?= Yii::app()->request->baseUrl ?>/images/contenido/pantene/btn-comprar.png" alt="Comprar"></a>
       </div>
     </div>
   </div>
@@ -159,7 +159,7 @@ $this->metaTags = "
         <h3 class="title-producto">SHAMPOO</h3>
         <p>Limpia y elimina los residuos <br>en el cabello</p>
         <a href="<?= Yii::app()->request->baseUrl ?>/shampoo-pantene-fuerza-y-reconstruccion">Ver más información</a>
-        <a href="<?php echo CController::createUrl('/catalogo/producto', array('producto' => 119303 )) ?>"><img class="img-responsive boton-compra" src="<?= Yii::app()->request->baseUrl ?>/images/contenido/pantene/btn-comprar.png" alt="Comprar"></a>
+        <a href="<?php echo CController::createUrl('/contenido/ver', array('tipo' => 'grupo', 'contenido' => 4274)) ?>"><img class="img-responsive boton-compra" src="<?= Yii::app()->request->baseUrl ?>/images/contenido/pantene/btn-comprar.png" alt="Comprar"></a>
       </div>
     </div>
     <div class="col-sm-3 col-md-3">

@@ -82,7 +82,7 @@ $this->metaTags = "
       <h3 class="title-producto">SHAMPOO</h3>
       <p>Limpia y elimina los residuos <br>en el cabello</p>
       <a data-ajax="false" href="<?= Yii::app()->request->baseUrl ?>/shampoo-pantene-fuerza-y-reconstruccion">Ver más información</a>
-      <a data-ajax="false" style="margin-top:10px;margin-bottom: 15px;" href="<?php echo CController::createUrl('/catalogo/producto', array('producto' => 119303 )) ?>"><img class="img-responsive boton-compra" src="<?= Yii::app()->request->baseUrl ?>/images/contenido/pantene/btn-comprar.png" alt="Comprar"></a>
+      <a data-ajax="false" style="margin-top:10px;margin-bottom: 15px;" href="<?php echo CController::createUrl('/contenido/ver', array('tipo' => 'grupo', 'contenido' => 4274)) ?>"><img class="img-responsive boton-compra" src="<?= Yii::app()->request->baseUrl ?>/images/contenido/pantene/btn-comprar.png" alt="Comprar"></a>
     </div>
   </div>
   <div class="item">
@@ -100,7 +100,7 @@ $this->metaTags = "
       <h3 class="title-producto">ACONDICIONADOR</h3>
       <p>Penetra* y ayuda a fortalecer** <br> tu cabello hasta las puntas</p>
       <a data-ajax="false" href="<?= Yii::app()->request->baseUrl ?>/acondicionador-pantene-fuerza-y-reconstruccion">Ver más información</a>
-      <a data-ajax="false" style="margin-top:10px;margin-bottom: 15px;" href="<?php echo CController::createUrl('/catalogo/producto', array('producto' => 119298 )) ?>"><img class="img-responsive boton-compra" src="<?= Yii::app()->request->baseUrl ?>/images/contenido/pantene/btn-comprar.png" alt="Comprar"></a>
+      <a data-ajax="false" style="margin-top:10px;margin-bottom: 15px;" href="<?php echo CController::createUrl('/contenido/ver', array('tipo' => 'grupo', 'contenido' => 4277)) ?>"><img class="img-responsive boton-compra" src="<?= Yii::app()->request->baseUrl ?>/images/contenido/pantene/btn-comprar.png" alt="Comprar"></a>
     </div>
   </div>
 </div>
@@ -165,7 +165,7 @@ $this->metaTags = "
         <h3 class="title-producto">SHAMPOO</h3>
         <p>Limpia y elimina los residuos <br>en el cabello</p>
         <a href="<?= Yii::app()->request->baseUrl ?>/shampoo-pantene-fuerza-y-reconstruccion">Ver más información</a>
-        <a href="<?php echo CController::createUrl('/catalogo/producto', array('producto' => 119303 )) ?>"><img class="img-responsive boton-compra" src="<?= Yii::app()->request->baseUrl ?>/images/contenido/pantene/btn-comprar.png" alt="Comprar"></a>
+        <a href="<?php echo CController::createUrl('/contenido/ver', array('tipo' => 'grupo', 'contenido' => 4274)) ?>"><img class="img-responsive boton-compra" src="<?= Yii::app()->request->baseUrl ?>/images/contenido/pantene/btn-comprar.png" alt="Comprar"></a>
       </div>
     </div>
     <div class="col-sm-3 col-md-3">
@@ -183,7 +183,7 @@ $this->metaTags = "
         <h3 class="title-producto">ACONDICIONADOR</h3>
         <p>Penetra* y ayuda a fortalecer** <br> tu cabello hasta las puntas</p>
         <a href="<?= Yii::app()->request->baseUrl ?>/acondicionador-pantene-fuerza-y-reconstruccion">Ver más información</a>
-        <a href="<?php echo CController::createUrl('/catalogo/producto', array('producto' => 119298 )) ?>"><img class="img-responsive boton-compra" src="<?= Yii::app()->request->baseUrl ?>/images/contenido/pantene/btn-comprar.png" alt="Comprar"></a>
+        <a href="<?php echo CController::createUrl('/contenido/ver', array('tipo' => 'grupo', 'contenido' => 4277)) ?>"><img class="img-responsive boton-compra" src="<?= Yii::app()->request->baseUrl ?>/images/contenido/pantene/btn-comprar.png" alt="Comprar"></a>
       </div>
     </div>
   </div>
