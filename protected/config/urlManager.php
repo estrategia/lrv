@@ -105,6 +105,7 @@ return array(
         'nude-protectores-solares' => 'publicidad/contenido/nombre/nude-protector-solar',
         'nude-autobronceadores' => 'publicidad/contenido/nombre/nude-autobronceador',
         'nude-repelente-de-insectos' => 'publicidad/contenido/nombre/nude-repelente',
+        'mejorflex-ibuprofeno' => 'publicidad/contenido/nombre/mejorflex',
         // Fin links campañas
 
         // REST patterns
