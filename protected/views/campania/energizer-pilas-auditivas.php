@@ -46,7 +46,9 @@ $this->metaTags = "
       <a href="<?= Yii::app()->request->baseUrl ?>/pilas-recargables-energizer"><h4 style="margin-bottom: 0px;" class="btn-menu"><span class="glyphicon glyphicon-menu-right" aria-hidden="true"></span>Línea recargable</h4></a>
     </center>
     <div class="lista" style="font-size: 17px;margin-top: 30px;line-height: 22px;">
-      <p>* Desempeño de Larga Duración y protege los aparatos contra derrame.</p>
+      <ul>
+        <li>Desempeño de Larga Duración y protege los aparatos contra derrame.</li>
+      </ul>
     </div>
     <img style="width: 90%;margin: 35px auto 0;display: block;" src="<?= Yii::app()->request->baseUrl ?>/images/contenido/energizer/pilas-auditivas/pilas-auditivas-675.png" alt="Pilas auditivas 675">
             <h3 style="color: #fff;font-size: 15px;margin: 0px auto 15px;text-align: center;">Pila Energizer auditiva AZ675E4</h3>
@@ -84,8 +86,9 @@ $this->metaTags = "
     </div>
     <p><span class="first-title">Energizer</span><span class="sub-title"> Pilas auditivas</span></p>
     <div class="lista">
-      <p>* Desempeño de Larga Duración y protege los aparatos contra derrame.</p>
-    </div>
+      <ul>
+        <li>Desempeño de Larga Duración y protege los aparatos contra derrame.</li>
+      </ul>    </div>
     <div class="row" style="margin-top: 50px;">
       <div class="col-sm-3 col-md-3" style="z-index:100;">
         <img class="img-responsive" src="<?= Yii::app()->request->baseUrl ?>/images/contenido/energizer/pilas-auditivas/pilas-auditivas-675.png" alt="Pilas auditivas 675">

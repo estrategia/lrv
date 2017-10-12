@@ -132,11 +132,11 @@ $this->metaTags = "<meta http-equiv='X-UA-Compatible' content='IE=edge'>
     <h2 style="font-size: 19px;letter-spacing: 1px;">significa que puedes estar seguro de que siempre tendrás energía cuando más la necesitas.</h2>
     <!-- <h3 style="font-size: 16px;">¡Energizer se enorgullece en presentar Power Seal Technology!</h3> -->
     <div class="lista" style="font-size: 17px;margin-top: 30px;line-height: 22px;">
-      <!-- <p>* La tecnología PoweSeal es un mensaje único en las pilas Energizer MAX AA & AAA.</p> -->
-      <!-- <p>* Es el resultado de varios años de investigación e innovación derivado de percerpciones del consumidor.</p> -->
-      <p>* La tecnología PowerSeal guarda la energía hasta por 10 años*** en almacenamiento.</p>
-      <p>* Ahora con hasta 30% de mayor duración* que las Energizer Max anteriores en cámaras digitales.</p>
-      <p>* Protege sus equipos** de las fugas hasta 2 años después del agotamiento total.</p>
+      <ul>
+        <li>La tecnología PowerSeal guarda la energía hasta por 10 años*** en almacenamiento.</li>
+        <li>Ahora con hasta 30% de mayor duración* que las Energizer Max anteriores en cámaras digitales.</li>
+        <li>Protege sus equipos** de las fugas hasta 2 años después del agotamiento total.</li>
+      </ul>
     </div>
     <p class="usos">Usos recomendados:</p>
     <img class="img-responsive-movil" src="<?= Yii::app()->request->baseUrl ?>/images/contenido/energizer/usos.png" alt="Usos">
@@ -171,13 +171,12 @@ $this->metaTags = "<meta http-equiv='X-UA-Compatible' content='IE=edge'>
     <a href="<?= Yii::app()->request->baseUrl ?>/pilas-recargables-energizer"><h4 class="btn-menu"><span class="glyphicon glyphicon-menu-right" aria-hidden="true"></span> Línea recargable</h4></a>
     <h1 class="first-title">Energizer max AA con tecnología PowerSeal plus</h1>
     <h2>significa que puedes estar seguro de que siempre tendrás energía cuando más la necesitas.</h2>
-    <!-- <h3>¡Energizer se enorgullece en presentar Power Seal Technology!</h3> -->
     <div class="lista" style="margin-bottom: 55px;">
-      <!-- <p>* La tecnología PoweSeal es un mensaje único en las pilas Energizer MAX AA & AAA.</p> -->
-      <!-- <p>* Es el resultado de varios años de investigación e innovación derivado de percerpciones del consumidor.</p> -->
-      <p>* La tecnología PowerSeal guarda la energía hasta por 10 años*** en almacenamiento.</p>
-      <p>* Ahora con hasta 30% de mayor duración* que las Energizer Max anteriores en cámaras digitales.</p>
-      <p>* Protege sus equipos** de las fugas hasta 2 años después del agotamiento total.</p>
+      <ul>
+        <li>La tecnología PowerSeal guarda la energía hasta por 10 años*** en almacenamiento.</li>
+        <li>Ahora con hasta 30% de mayor duración* que las Energizer Max anteriores en cámaras digitales.</li>
+        <li>Protege sus equipos** de las fugas hasta 2 años después del agotamiento total.</li>
+      </ul>
     </div>
     <div class="col-sm-4 col-md-4">
       <p class="usos">Usos recomendados:</p>

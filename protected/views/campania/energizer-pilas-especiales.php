@@ -46,9 +46,11 @@ $this->metaTags = "
       <a href="<?= Yii::app()->request->baseUrl ?>/pilas-recargables-energizer"><h4 style="margin-bottom: 0px;" class="btn-menu"><span class="glyphicon glyphicon-menu-right" aria-hidden="true"></span>Línea recargable</h4></a>
     </center>
     <div class="lista" style="font-size: 17px;margin-top: 30px;line-height: 22px;">
-      <p>* Tamaño más pequeño, menor consumo de energía.</p>
-      <p>* Energizer pilas especializadas la más elegida por consumidores en el mundo.</p>
-      <p>* Pequeñas en tamaño grandes en poder.</p>
+      <ul>
+        <li>Tamaño más pequeño, menor consumo de energía.</li>
+        <li>Energizer pilas especializadas la más elegida por consumidores en el mundo.</li>
+        <li>Pequeñas en tamaño grandes en poder.</li>
+      </ul>
     </div>
     <img style="width: 70%;margin: 35px auto 0;display: block;" src="<?= Yii::app()->request->baseUrl ?>/images/contenido/energizer/pilas-especiales/CR2032.png" alt="CR2032">
         <h3 style="color: #fff;font-size: 15px;margin: 0 auto 15px;text-align: center;">Pila especializada ECR 2032BP Energizer</h3>
@@ -84,9 +86,11 @@ $this->metaTags = "
     </div>
     <p><span class="first-title">Energizer</span><span class="sub-title"> Pilas especiales</span></p>
     <div class="lista">
-      <p>* Tamaño más pequeño, menor consumo de energía.</p>
-      <p>* Energizer pilas especializadas la más elegida por consumidores en el mundo.</p>
-      <p>* Pequeñas en tamaño grandes en poder.</p>
+      <ul>
+        <li>Tamaño más pequeño, menor consumo de energía.</li>
+        <li>Energizer pilas especializadas la más elegida por consumidores en el mundo.</li>
+        <li>Pequeñas en tamaño grandes en poder.</li>
+      </ul>
     </div>
     <div class="row" style="margin-top: 50px;">
       <div class="col-sm-2 col-md-2"></div>
