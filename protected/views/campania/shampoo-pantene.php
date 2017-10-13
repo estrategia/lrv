@@ -78,6 +78,7 @@ $this->metaTags = "
       <li>Fórmula Pro-Vitaminas.</li>
       <li>Fuerza es belleza. </li>
     </ul>
+  <p>Encuéntrelo en presentación de <span style="color:#FF3A1E;">200 ml, 400 ml y 700 ml. </span></p>
   <p class="reference">*Usando Sistema Pantene **Fuerza contra el daño mecánico ***Fuerza contra
   el daño mecánico vs. Shampoo sin ingredientes acondicionadores.<br>
   [Cálculo de P&amp;G basado en data de ventas de Julio 2015 a Junio 2016]</p>
@@ -159,6 +160,7 @@ $this->metaTags = "
         <li>Fórmula Pro-Vitaminas.</li>
         <li>Fuerza es belleza. </li>
       </ul>
+        <p>Encuéntrelo en presentación de <span style="color:#FF3A1E;">200 ml, 400 ml y 700 ml. </span></p>
     </div>
     <div class="row">
       <div class="col-sm-8">

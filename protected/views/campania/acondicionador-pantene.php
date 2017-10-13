@@ -69,7 +69,7 @@ $this->metaTags = "
   	</div>
   </fieldset>
   <p>Posee una tecnología inteligente que repara y protege el cabello contra el quiebre en las áreas que más lo necesita. Además, fortalece cada hebra desde su interior para hacerlo resistente en su exterior.  </p>
-  <p>Encuentrelo en presentacion de <span style="color:#FF3A1E;">200 ml y 400 ml. </span> </p>
+  <p>Encuéntrelo en presentación de <span style="color:#FF3A1E;">200 ml y 400 ml. </span> </p>
   <a data-ajax="false" href="<?php echo CController::createUrl('/contenido/ver', array('tipo' => 'grupo', 'contenido' => 4277)) ?>"><img class="img-responsive-m" style="width: 60%;margin: 30px auto 0;display: block;" src="<?= Yii::app()->request->baseUrl ?>/images/contenido/pantene/btn-comprar.png" alt="Comprar"></a>
 </div>
 <img class="img-responsive-m" style="margin-top: 30px;" src="<?= Yii::app()->request->baseUrl ?>/images/contenido/pantene/un-cabello-10-veces-mas-fuerte-mobile.png" alt="Un cabello 10 veces más fuerte">
@@ -141,7 +141,7 @@ $this->metaTags = "
        protege el cabello contra el quiebre en las áreas que <br>
        más lo necesita. Además, fortalece cada hebra desde <br>
        su interior para hacerlo resistente en su exterior.   </p>
-      <p>Encuentrelo en presentacion de <span style="color:#FF3A1E;">200 ml y 400 ml. </span></p>
+      <p>Encuéntrelo en presentación de <span style="color:#FF3A1E;">200 ml y 400 ml. </span></p>
     </div>
     <div class="row" style="margin-top:20px;">
       <div class="col-sm-8">
