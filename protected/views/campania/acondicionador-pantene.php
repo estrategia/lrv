@@ -53,6 +53,9 @@ $this->metaTags = "
       background: linear-gradient(to bottom, rgba(255,255,255,1) 0%, rgba(255,255,255,1) 36%, rgba(255,255,255,1) 73%, rgba(234,235,230,1) 100%);
       filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#ffffff', endColorstr='#eaebe6', GradientType=0 );
     }
+    a {outline: 0 !important;text-decoration:none;} a:hover {text-decoration:none;} a:visited {text-decoration:none;} a:active {text-decoration:none;}
+    .block-gray {background-color: #EEEFF3;text-align: center;font-family: bebas-neue-regular;color: #1F1F1F;height: 486.6px;align-items: center;display: flex;border-radius: 25px;padding: 38px;}
+    .block-gray p {margin: 0 auto;letter-spacing: 2px;font-size: 20px;}
   </style>
 ";
 ?>
@@ -153,7 +156,14 @@ $this->metaTags = "
   </div>
 </div>
   <div class="row" style="margin-top: 60px;margin-bottom: 40px;">
-    <div class="col-sm-3 col-md-3" style="margin-left: 12.333%;">
+    <div class="col-sm-3 col-md-3">
+      <a href="<?= Yii::app()->request->baseUrl ?>/pantene-fuerza-y-reconstruccion">
+        <div class="block-gray">
+          <p>CONOCE TODOS<br>LOS PRODUCTOS<br>PANTENE FUERZA <br>Y RECONSTRUCCIÓN</p>
+        </div>
+      </a>
+    </div>
+    <div class="col-sm-3 col-md-3">
       <div class="contenedor-producto">
         <img class="producto" src="<?= Yii::app()->request->baseUrl ?>/images/contenido/pantene/shampoo-pantene.png" alt="Shampoo pantene">
         <h3 class="title-producto">SHAMPOO</h3>
