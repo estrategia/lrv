@@ -106,7 +106,8 @@ return array(
         'nude-autobronceadores' => 'publicidad/contenido/nombre/nude-autobronceador',
         'nude-repelente-de-insectos' => 'publicidad/contenido/nombre/nude-repelente',
         'mejorflex-ibuprofeno' => 'publicidad/contenido/nombre/mejorflex',
-        // Fin links campañas
+        'gelicart-colageno-hidrolizado' => 'publicidad/contenido/nombre/gelicart',
+         // Fin links campañas
 
         // REST patterns
         array('restProducto/producto', 'pattern' => 'rest/producto/<codigoProducto:\d+>/ciudad/<codigoCiudad:\d+>/sector/<codigoSector:\d+>', 'verb' => 'GET'),
