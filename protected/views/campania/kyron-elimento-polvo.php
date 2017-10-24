@@ -61,7 +61,7 @@ $this->metaTags = "<meta http-equiv='X-UA-Compatible' content='IE=edge'>
     <div class="item"><img class="img-responsive-m"  src="<?= Yii::app()->request->baseUrl ?>/images/contenido/kyron/alimento-en-polvo-adulto/banner03.jpg" alt="Diabeticos"></div>
 </div>
 <section class="section-menu-mobile">
-  <a href="<?= Yii::app()->request->baseUrl ?>/energold-renergen-suplementos-dietarios" data-ajax="false"><div class="item">Suplementos Dietarios</div></a>
+  <!-- <a href="<?= Yii::app()->request->baseUrl ?>/energold-renergen-suplementos-dietarios" data-ajax="false"><div class="item">Suplementos Dietarios</div></a> -->
   <a href="<?= Yii::app()->request->baseUrl ?>/energold-alimento-polvo" data-ajax="false"><div class="item active">Alimento en polvo Adultos</div></a>
   <a href="<?= Yii::app()->request->baseUrl ?>/energold-alimento-ninos" data-ajax="false"><div class="item">Alimento para Niños</div></a>
 </section>
@@ -258,10 +258,10 @@ $this->metaTags = "<meta http-equiv='X-UA-Compatible' content='IE=edge'>
 
 <section class="section-menu-mobile">
   <div class="container">
-    <div class="col-sm-4 col-md-4">
+    <!-- <div class="col-sm-4 col-md-4">
       <a href="<?= Yii::app()->request->baseUrl ?>/energold-renergen-suplementos-dietarios" data-ajax="false"><div class="item desktop ">Suplementos <br> Dietarios</div></a>
-    </div>
-    <div class="col-sm-4 col-md-4">
+    </div> -->
+    <div class="col-sm-4 col-md-4 col-sm-offset-2 col-md-offset-2">
       <a href="<?= Yii::app()->request->baseUrl ?>/energold-alimento-polvo" data-ajax="false"><div class="item desktop active">Alimento en <br> polvo Adultos</div></a>
     </div>
     <div class="col-sm-4 col-md-4">
