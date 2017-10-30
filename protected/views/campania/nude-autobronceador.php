@@ -158,10 +158,10 @@ $this->metaTags = "
   <div id="carousel-example-generic" class="carousel slide" data-ride="carousel">
     <div class="carousel-inner" role="listbox">
       <div class="item active">
-        <img class="img-responsive" src="<?= Yii::app()->request->baseUrl ?>/images/contenido/nude/banner-autobronceador.png" alt="Autobronceador NUDE">
+        <img class="img-responsive" src="<?= Yii::app()->request->baseUrl ?>/images/contenido/nude/banner-autobronceador.jpg" alt="Autobronceador NUDE">
       </div>
       <div class="item">
-        <img class="img-responsive" src="<?= Yii::app()->request->baseUrl ?>/images/contenido/nude/banner2.png" alt="NUDE sale con el sol todos los días">
+        <img class="img-responsive" src="<?= Yii::app()->request->baseUrl ?>/images/contenido/nude/banner2.jpg" alt="NUDE sale con el sol todos los días">
       </div>
     </div>
     <!-- Controls -->
