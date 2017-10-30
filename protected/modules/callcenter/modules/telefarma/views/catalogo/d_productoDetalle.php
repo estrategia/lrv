@@ -45,7 +45,7 @@
                             <div class="space-2"></div>
                         <h1 style="color: #ED1C24; font-size: 24px;">
                             <!-- producto agregado -->
-                            <a href="" class="itm_ico clst_slct_prod<?php echo (Yii::app()->shoppingCartVitalCall->contains($objProducto->codigoProducto) ? " active" : "") ?>" id="icono-producto-agregado-<?php echo $objProducto->codigoProducto ?>">
+                            <a href="" class="itm_ico clst_slct_prod<?php echo (Yii::app()->getModule('telefarma')->shoppingCartVitalCall->contains($objProducto->codigoProducto) ? " active" : "") ?>" id="icono-producto-agregado-<?php echo $objProducto->codigoProducto ?>">
                                 <img src="<?php echo Yii::app()->request->baseUrl ?>/images/desktop/icon_seleccionado.png">
                             </a>
                             <!-- Titulo del producto -->

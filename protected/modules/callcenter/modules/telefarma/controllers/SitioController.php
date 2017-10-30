@@ -120,7 +120,7 @@ class SitioController extends ControllerTelefarma {
     		Yii::app()->session[Yii::app()->params->telefarma['sesion']['sectorCiudadEntrega']] = $objSectorCiudad;
     
     		if ($objSectorCiudadOld != null && ($objSectorCiudadOld->codigoCiudad != $objSectorCiudad->codigoCiudad || $objSectorCiudadOld->codigoSector != $objSectorCiudad->codigoSector)) {
-    			Yii::app()->shoppingCartVitalCall->clear();
+    			Yii::app()->getModule('telefarma')->shoppingCartVitalCall->clear();
     			Yii::app()->session[Yii::app()->params->telefarma['sesion']['carroPagarForm']] = null;
     		}
     		
@@ -135,7 +135,7 @@ class SitioController extends ControllerTelefarma {
     		$modelPago->direccion = trim($_REQUEST['direccion']);
     		
     		Yii::app()->session[Yii::app()->params->telefarma['sesion']['carroPagarForm']] = $modelPago;
-    		//Yii::app()->shoppingCartVitalCall->CalculateShipping();
+    		//Yii::app()->getModule('telefarma')->shoppingCartVitalCall->CalculateShipping();
     
     		$objHorarioSecCiud = HorariosCiudadSector::model()->find(array(
     				'condition' => 'codigoCiudad=:ciudad AND codigoSector=:sector',

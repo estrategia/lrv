@@ -34,7 +34,7 @@
                 <?php echo Yii::app()->numberFormatter->format(Yii::app()->params->formatoMoneda['patron'], $position->getPrice(false, true), Yii::app()->params->formatoMoneda['moneda']); ?>
             <?php endif; ?>
 
-            <?php if (Yii::app()->shoppingCartVitalCall->getObjCiudad()->excentoImpuestos == 0 && $position->getTax() > 0): ?>
+            <?php if (Yii::app()->getModule('telefarma')->shoppingCartVitalCall->getObjCiudad()->excentoImpuestos == 0 && $position->getTax() > 0): ?>
                 <br>
                 Incluye <?php echo Yii::app()->numberFormatter->formatPercentage($position->getTax()) ?> IVA
             <?php endif; ?>
@@ -83,7 +83,7 @@
                 <?php echo Yii::app()->numberFormatter->format(Yii::app()->params->formatoMoneda['patron'], $position->getPrice(true), Yii::app()->params->formatoMoneda['moneda']); ?>
             <?php endif; ?>
 
-            <?php if (Yii::app()->shoppingCartVitalCall->getObjCiudad()->excentoImpuestos == 0 && $position->getTax() > 0): ?>
+            <?php if (Yii::app()->getModule('telefarma')->shoppingCartVitalCall->getObjCiudad()->excentoImpuestos == 0 && $position->getTax() > 0): ?>
                 <br>
                 Incluye <?php echo Yii::app()->numberFormatter->formatPercentage($position->getTax()) ?> IVA
             <?php endif; ?>
@@ -141,7 +141,7 @@
                 <?php echo Yii::app()->numberFormatter->format(Yii::app()->params->formatoMoneda['patron'], $position->getPrice(false, true), Yii::app()->params->formatoMoneda['moneda']); ?>
             <?php endif; ?>
 
-            <?php if (Yii::app()->shoppingCartVitalCall->getObjCiudad()->excentoImpuestos == 0 && $position->getTax() > 0): ?>
+            <?php if (Yii::app()->getModule('telefarma')->shoppingCartVitalCall->getObjCiudad()->excentoImpuestos == 0 && $position->getTax() > 0): ?>
                 <br>
                 Incluye <?php echo Yii::app()->numberFormatter->formatPercentage($position->getTax()) ?> IVA
             <?php endif; ?>

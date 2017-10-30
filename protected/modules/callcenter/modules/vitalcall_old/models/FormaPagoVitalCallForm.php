@@ -350,27 +350,27 @@ class FormaPagoVitalCallForm extends CFormModel {
 
             //recorrer productos y actualiar carro
             foreach ($puntoVenta[4] as $indiceProd => $producto) {
-                $position = Yii::app()->shoppingCartVitalCall->getItemAtCode($producto->CODIGO_PRODUCTO);
+                $position = Yii::app()->getModule('telefarma')->shoppingCartVitalCall->getItemAtCode($producto->CODIGO_PRODUCTO);
 
                 if ($position !== null) {
                     $arrPositions[$producto->CODIGO_PRODUCTO] = $producto->CODIGO_PRODUCTO;
                     if ($producto->SALDO_UNIDAD >= $producto->CANTIDAD_UNIDAD) {
-                        Yii::app()->shoppingCartVitalCall->update($position, false, $producto->CANTIDAD_UNIDAD);
+                        Yii::app()->getModule('telefarma')->shoppingCartVitalCall->update($position, false, $producto->CANTIDAD_UNIDAD);
                     } else {
-                        Yii::app()->shoppingCartVitalCall->update($position, false, $producto->SALDO_UNIDAD);
+                        Yii::app()->getModule('telefarma')->shoppingCartVitalCall->update($position, false, $producto->SALDO_UNIDAD);
                     }
 
                     if ($producto->SALDO_FRACCION >= $producto->CANTIDAD_FRACCION) {
-                        Yii::app()->shoppingCartVitalCall->update($position, true, $producto->CANTIDAD_FRACCION);
+                        Yii::app()->getModule('telefarma')->shoppingCartVitalCall->update($position, true, $producto->CANTIDAD_FRACCION);
                     } else {
-                        Yii::app()->shoppingCartVitalCall->update($position, true, $producto->SALDO_FRACCION);
+                        Yii::app()->getModule('telefarma')->shoppingCartVitalCall->update($position, true, $producto->SALDO_FRACCION);
                     }
                 }
             }
 
-            foreach (Yii::app()->shoppingCartVitalCall->getPositions() as $position) {
+            foreach (Yii::app()->getModule('telefarma')->shoppingCartVitalCall->getPositions() as $position) {
                 if (!isset($arrPositions[$position->getObjProducto()->codigoProducto])) {
-                    Yii::app()->shoppingCartVitalCall->remove($position->getId());
+                    Yii::app()->getModule('telefarma')->shoppingCartVitalCall->remove($position->getId());
                 }
             }
         }
@@ -493,7 +493,7 @@ class FormaPagoVitalCallForm extends CFormModel {
     }
 
     public function tipoEntregaValidate($attribute, $params) {
-        /*if ($this->tipoEntrega == Yii::app()->params->entrega['tipo']['presencial'] && Yii::app()->shoppingCartVitalCall->getStoredItemsCount() > 0) {
+        /*if ($this->tipoEntrega == Yii::app()->params->entrega['tipo']['presencial'] && Yii::app()->getModule('telefarma')->shoppingCartVitalCall->getStoredItemsCount() > 0) {
             $this->addError($attribute, "Pasar por el pedido no diponible");
         }*/
 

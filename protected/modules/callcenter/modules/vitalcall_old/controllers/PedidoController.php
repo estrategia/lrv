@@ -3,7 +3,7 @@
 class PedidoController extends ControllerVitalcall {
 	
 	public function actionTest(){
-		echo Yii::app()->shoppingCartVitalCall->getClass();
+		echo Yii::app()->getModule('telefarma')->shoppingCartVitalCall->getClass();
 	}
 
     public function actionNuevo() {
@@ -44,7 +44,7 @@ class PedidoController extends ControllerVitalcall {
             $modelPago->objDireccion = $objDireccionVC;
             $modelPago->objSectorCiudad = $objDireccionVC->objSectorCiudad;
             Yii::app()->session[Yii::app()->params->vitalCall['sesion']['carroPagarForm']] = $modelPago;
-            Yii::app()->shoppingCartVitalCall->clear();
+            Yii::app()->getModule('telefarma')->shoppingCartVitalCall->clear();
         }
 
         //CVarDumper::dump($modelPago,10,true);

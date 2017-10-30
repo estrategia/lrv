@@ -113,7 +113,7 @@ class UserPuntoVenta {
 
     public function logout() {
         $sessions = Yii::app()->params->puntoventa['sesion'];
-        Yii::app()->shoppingCartNationalSale->clear();
+        Yii::app()->getModule('puntoventa')->shoppingCartNationalSale->clear();
         foreach ($sessions as $sesion) {
             unset(Yii::app()->session[$sesion]);
         }

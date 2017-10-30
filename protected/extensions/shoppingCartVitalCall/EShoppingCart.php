@@ -354,7 +354,7 @@ class EShoppingCart extends CMap {
         if ($this->objSectorCiudad !== null) {
             $key = $position->getId();
             
-            if(!Yii::app()->shoppingCartVitalCall->contains($key)){
+            if(!Yii::app()->getModule('telefarma')->shoppingCartVitalCall->contains($key)){
 	            $position->generate(array(
 	                'objSectorCiudad' => $this->objSectorCiudad,
 	                'codigoPerfil' => $this->codigoPerfil
@@ -403,7 +403,7 @@ class EShoppingCart extends CMap {
 
             $key = $position->getId();
             
-            if(!Yii::app()->shoppingCartVitalCall->contains($key)){
+            if(!Yii::app()->getModule('telefarma')->shoppingCartVitalCall->contains($key)){
             	$position->generate(array(
 	                'objSectorCiudad' => $this->objSectorCiudad,
 	                'codigoPerfil' => $this->codigoPerfil
@@ -514,13 +514,13 @@ class EShoppingCart extends CMap {
 
         $price -= $this->discountPrice;
         $price += $this->shipping + $this->shippingStored;
-    //    $price -= $this->bonoValue; /***** Valor que está afectando la compra ******/
+    //    $price -= $this->bonoValue; /***** Valor que estï¿½ afectando la compra ******/
 
         return $price;
     }
     
     public function getTotalCostClient() {
-    	$price = $this->getTotalCost(true) - $this->bonoValue; /***** Valor que está afectando la compra ******/
+    	$price = $this->getTotalCost(true) - $this->bonoValue; /***** Valor que estï¿½ afectando la compra ******/
     	return $price;
     }
     

@@ -9,7 +9,7 @@
         </ul>
     <?php endif; ?>
 
-    <?php if (Yii::app()->shoppingCartVitalCall->isEmpty()): ?>
+    <?php if (Yii::app()->getModule('telefarma')->shoppingCartVitalCall->isEmpty()): ?>
         Carro vac&iacute;o
     <?php else: ?>
         <?php $this->renderPartial('_carro', array('lectura'=>false)); ?>
