@@ -2300,7 +2300,7 @@ class CatalogoController extends Controller {
 
 		$listProductos = Producto::model ()->findAll ( $criteria );
 
-		print_r($listProductos);exit();
+	//	print_r($listProductos);exit();
 		if (empty ( $listProductos ) && ! empty ( $listIdsCategoriaBI )) {
 			$criteria->condition = str_replace ( ' AND t.idCategoriaBI IN (' . implode ( ",", $listIdsCategoriaBI ) . ')', "", $criteria->condition );
 			$listProductos = Producto::model ()->findAll ( $criteria );

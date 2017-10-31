@@ -3334,6 +3334,7 @@ class CarroController extends Controller {
 
             if (!$modelPago->pagoInvitado) {
                 $fecha = new DateTime;
+               
                 $parametrosPuntos = array(
                     Yii::app()->params->puntos['categoria'] => Yii::app()->shoppingCart->getCategorias(),
                     Yii::app()->params->puntos['marca'] => Yii::app()->shoppingCart->getMarcas(),

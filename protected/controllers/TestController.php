@@ -2105,4 +2105,21 @@ class TestController extends Controller {
     }
     
     
+    public function actionTestJ(){
+    	$token = array(
+    			"blog" => "http://weblog.nabi.ir",
+    			"name" => "nabi",
+    			"date" => "2017-03-09",
+    			"number" => 1396
+    	);
+    	
+    	$jwt = Yii::app()->JWT->encode($token);
+    	echo "<pre>";
+    	print_r($jwt);
+    	echo "</pre>";
+    	$decode = Yii::app()->JWT->decode($jwt);
+    	echo "<pre>";
+    	var_dump($decode);
+    }
+    
 }

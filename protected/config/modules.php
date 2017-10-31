@@ -41,16 +41,37 @@ return array(
         'components' => array(
             'user' => array(
                 'class' => 'puntoventa.components.UserPuntoVenta'
-            )
+            ),
+        	'shoppingCartNationalSale' => array(
+        	    'class' => 'ext.shoppingCartNationalSale.EShoppingCart',
+        	),
         ),
         'modules' => array(
-            'entreganacional' => array(
+            'venta' => array(
                 'defaultController' => 'usuario',
                 'components' => array(
                     'user' => array(
                         'class' => 'puntoventa.components.UserPuntoVenta'
                     )
-                )
+                ),
+            	'modules' => array(
+            		'entreganacional' => array(
+            			'defaultController' => 'usuario',
+            			'components' => array(
+            					'user' => array(
+            							'class' => 'puntoventa.components.UserPuntoVenta'
+            					)
+            			),
+            		),
+            		'ventaasistida' => array(
+            			'defaultController' => 'usuario',
+            			'components' => array(
+            					'user' => array(
+            							'class' => 'puntoventa.components.UserPuntoVenta'
+            					)
+            			),
+            		)
+            	),
             ),
             'subasta' => array(
                 'defaultController' => 'usuario',

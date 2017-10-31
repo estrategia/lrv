@@ -24,7 +24,7 @@ class PrecioProducto extends Precio {
     protected $ahorroFraccionDescuento = 0;
     protected $ahorroFraccionBono = 0;
 
-    function __construct(Producto $objProducto, $objCiudadSector, $codigoPerfil, $consultaPrecio = false) {
+    function __construct(Producto $objProducto, $objCiudadSector, $codigoPerfil, $consultaPrecio = false, $esVap = false) {
         $fecha = new DateTime;
         $tienePrecio = false;
         $tieneSaldo = false;
@@ -224,12 +224,19 @@ class PrecioProducto extends Precio {
             );
 
             if (esClienteFiel()) {
-                $condition .= " AND (swobligaCli=0 || swobligaCli=2)";
-            } else {
-                $condition .= " AND swobligaCli=0";
+                $condition .= " AND (swobligaCli=0 || swobligaCli=2 || swobligaCli = 3)";
+            }else if($codigoPerfil != Yii::app()->params->perfil['asociado']) {
+            	$condition .= " AND (swobligaCli=0 || swobligaCli = 3)";
+            } 
+            else {
+                $condition .= " AND (swobligaCli=0 )";
             }
             
             $condition .= " AND (t.tipo IN (".implode(",", Yii::app()->params->beneficios['descuentos']).") )";
+            
+            if($codigoPerfil != Yii::app()->params->perfil['asociado']){
+            	$condition .= " AND (t.tipo NOT IN (".implode(",", Yii::app()->params->beneficios['descuentosClienteInterno']).") )";
+            }
             
             $this->listBeneficios = Beneficios::model()->findAll(array(
                 'with' => array(
@@ -239,7 +246,7 @@ class PrecioProducto extends Precio {
                 'condition' => $condition,
                 'params' => $params,
             ));
-            
+         
             /*********************************** BENEFICIOS DE BONOS ******************************/
            
             $condition = 't.fechaIni<=:fecha AND t.fechaFin>=:fecha AND t.tipo IN (' . implode(",", Yii::app()->params->beneficios['lrv']) . ')';
@@ -257,6 +264,10 @@ class PrecioProducto extends Precio {
             
             $condition .= " AND (t.tipo IN (".implode(",", Yii::app()->params->beneficios['bonos']).") )";
             
+            if($codigoPerfil != Yii::app()->params->perfil['asociado']){
+            	$condition .= " AND (t.tipo NOT IN (".implode(",", Yii::app()->params->beneficios['bonosClienteInterno']).") )";
+            }
+            
             if(Yii::app()->user->isGuest)
             	$condition .= " AND (t.tipo != ".Yii::app()->params->beneficios['beneficioCedula'].")";
             else
@@ -271,12 +282,11 @@ class PrecioProducto extends Precio {
             		'condition' => $condition,
             		'params' => $params,
             ));
-
-            $this->porcentajeDescuentoBeneficio = 0;
+            
+             $this->porcentajeDescuentoBeneficio = 0;
 			
-           
             if (Yii::app()->params->beneficios['configuracionActiva'] == Yii::app()->params->beneficios['configuracion']['acumulado']) {
-               foreach ($this->listBeneficios as $objBeneficio) {
+            	foreach ($this->listBeneficios as $objBeneficio) {
                     $this->porcentajeDescuentoBeneficio += $objBeneficio->dsctoUnid;
                     $this->porcentajeDescuentoBeneficioDescuento += $objBeneficio->dsctoUnid;
                     
@@ -346,6 +356,7 @@ class PrecioProducto extends Precio {
                 }
             } else {
                 $this->porcentajeDescuentoBeneficio = 0;
+                
                 $this->listBeneficios = array();
                 $this->listBeneficiosBonos = array();
             }
@@ -361,8 +372,10 @@ class PrecioProducto extends Precio {
 
             if ($objCiudadSector->esDefecto() || ($tienePrecio && $tieneSaldo)) {
                 $this->precioFraccionTotal = $this->precioFraccion * $this->unidadFraccionamiento;
+                
                 $this->precioUnidad = self::redondear($this->precioUnidad, 1);
-                $this->precioFraccionTotal = self::redondear($this->precioFraccionTotal, 1);
+              //  $this->precioFraccionTotal = self::redondear($this->precioFraccionTotal, 1,10);
+               
                 /*
                 $this->ahorroUnidad = floor($this->precioUnidad * ($this->getPorcentajeDescuento() / 100));
                 //$this->ahorroFraccion=  floor($this->precioFraccionTotal * ($this->getPorcentajeDescuento() / 100));
@@ -403,7 +416,7 @@ class PrecioProducto extends Precio {
 
     public function getPrecio() {
         $params = func_get_args();
-
+		
         $tipo = isset($params[0]) ? $params[0] : -1;
         $descuento = isset($params[1]) ? $params[1] : true;
         $tiposBeneficios = isset($params[2]) ? $params[2] : true;
@@ -418,6 +431,7 @@ class PrecioProducto extends Precio {
             	return $this->precioUnidad;
             	
         }else if ($tipo == self::PRECIO_FRACCION) {
+        	
             if ($descuento == true){
             		if($tiposBeneficios)
                 		return $this->precioFraccionTotal - $this->ahorroFraccion;
@@ -428,10 +442,13 @@ class PrecioProducto extends Precio {
             	if($tiposBeneficios)
                 	return $this->precioFraccionTotal;
             }
+            
+            
         }else {
             //throw new Exception("Tipo precio indefinido");
             return "";
         }
+        
     }
 
     public function getAhorro() {

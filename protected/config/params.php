@@ -345,17 +345,21 @@ return array(
             25 => 15,
             26 => 16
         ),*/
-    	'lrv' => array(50,51,52,53,54,55),
-    	'descuentos' => array(50,51,52,53), // new
-    	'bonos' => array(54,55), // new
+    	'lrv' => array(50,51,52,53,54,55,56,57,58),
+    	'descuentos' => array(50,51,52,53,57,58), // new
+    	'bonos' => array(54,55,56), // new
+    	'descuentosClienteInterno' => array(57,58),
+    	'bonosClienteInterno' => array(56),
     	'beneficioCedula' => 54,
     	'tipoBonoFormaPago' => array(
     				54 => 7,
-    				55 => 8
+    				55 => 8,
+    				56 => 8
     	),
     	'tipoMedioPago' => array(
     				54 => 15,
-    				55 => 16
+    				55 => 16,
+    				56 => 16,
     	),
         'recambios' => array(1, 10),
         'recambioslabel' => array(
@@ -366,7 +370,8 @@ return array(
         'recambioCruzado' => 10,
         'swobligaCli' => array(
             0 => 'Todos',
-            2 => 'Cliente fiel'
+            2 => 'Cliente fiel',
+        	3 => 'Cliente interno'	
         ),
         'porcentajeMaximo' => 80,
         'configuracion' => array(
@@ -405,7 +410,7 @@ return array(
         'remisionPosECommerce' => "http://www.copservir.com/webService/Pos/RemisionPosEcommerce.php",
         'persona' => 'http://localhost/copservir/wsMultiportal/persona',
         //console
-        'sincronizarBeneficiosSIICOP' => 'http://sii.copservir.com/beneficios/sweb/wslrv',
+        'sincronizarBeneficiosSIICOP' => 'http://localhost/siicop/beneficios/sweb/wslrv',
        // 'sincronizarBeneficiosSIICOP' => 'http://localhost/siicop/beneficios/sweb/wslrv',
         'envioCorreosRecordatorios' => 'http://localhost/lrv/sweb/wslrv',
     ),
@@ -434,6 +439,7 @@ return array(
             'formPedidoBusqueda' => 'larebaja.online.puntoventa.formpedidobusqueda',
             'objCiudadSector' => 'larebaja.online.puntoventa.objciudadsector',
             'pdv' => 'larebaja.online.puntoventa.pdv',
+        	'tipoEntrega' => 'larebaja.online.puntoventa.tipoentrega',
             'pdvDestino' => 'larebaja.online.puntoventa.pdvdestino',
             'formPedidoBusqueda' => 'larebaja.online.puntoventa.formpedidobusqueda'
         ),
@@ -508,7 +514,11 @@ return array(
             'tipoBonoCRM' => 3,
         	'tipoBonoPQRS' => 3,
         	'tipoBonoTiendaPQRS' => 3,
+        	'codigoFORCO' => 1,
             'formaPagoBonos' => 8,
+        	'vigenciaForco' => 1,
+        	'keyBonos' => 'larebajavirtual.com', 	
+        	'tipoBonoFORCO' => 1,
         ),
         'reactivacionBono' => array(
             'asuntoMensaje' => 'Activacion bono cliente fiel',

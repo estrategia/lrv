@@ -22,6 +22,7 @@ class EShoppingCart extends CMap {
     public $objDireccionVC = null;
     public $objSectorCiudadOrigen = null;
     public $objSectorCiudadDestino = null;
+    public $tipoVenta = null;
     protected $shipping = 0;
     protected $shippingServicio = 0;
     protected $shippingRecogida = 0;
@@ -198,6 +199,14 @@ class EShoppingCart extends CMap {
     		$this->objSectorCiudadOrigen = $modelPago->objCiudadSectorOrigen;
     		$this->objSectorCiudadDestino = $modelPago->objCiudadSectorDestino;
     	}
+    	
+    	if($modelPago instanceof FormaPagoVentaAsistidaForm){
+    		$this->objSectorCiudadDestino = $modelPago->objCiudadSectorDestino;
+    	}
+    	
+    	if(isset(Yii::app()->session[Yii::app()->params->puntoventa['sesion']['tipoEntrega']])){
+    		$this->tipoVenta = Yii::app()->session[Yii::app()->params->puntoventa['sesion']['tipoEntrega']];
+    	}
     		
         $data = Yii::app()->getUser()->getState($this->getClass());
         $this->shipping = Yii::app()->getUser()->getState($this->getClass() . '_Shipping');
@@ -224,15 +233,17 @@ class EShoppingCart extends CMap {
      * @param int $quantity count of elements positions
      * @param bool $fraction adding fraction or not
      */
-    public function put(IECartPosition $position, $fraction, $quantity = 1) {
+    public function put(IECartPosition $position, $fraction, $quantity = 1, $pdv = 0) {
         $key = $position->getId();
+        $numCant = $quantity;
         if ($this->itemAt($key) instanceof IECartPosition) {
+        	
             $position = $this->itemAt($key);
             $oldQuantity = $position->getQuantity($fraction);
             $quantity += $oldQuantity;
         }
 		
-        $this->update($position, $fraction, $quantity);
+        $this->update($position, $fraction, $quantity, $pdv,$numCant);
     }
 
     /**
@@ -255,21 +266,39 @@ class EShoppingCart extends CMap {
     }
 
     public function updatePositions() {
-        if ($this->objSectorCiudadOrigen !== null && $this->codigoPerfil!==null) {
-            foreach ($this as $position) {
-                $key = $position->getId();
-
-                $position->generate(array(
-                    'objSectorCiudad' => $this->objSectorCiudadOrigen,
-                    'codigoPerfil' => $this->codigoPerfil
-                ));
-                parent::add($key, $position);
-
-                $this->applyDiscounts();
-                $this->onUpdatePoistion(new CEvent($this));
-                $this->saveState();
-            }
-        }
+    	if($this->tipoVenta == 1){
+	        if ($this->objSectorCiudadOrigen !== null && $this->codigoPerfil!==null) {
+	            foreach ($this as $position) {
+	                $key = $position->getId();
+	
+	                $position->generate(array(
+	                    'objSectorCiudad' => $this->objSectorCiudadOrigen,
+	                    'codigoPerfil' => $this->codigoPerfil
+	                ));
+	                parent::add($key, $position);
+	
+	                $this->applyDiscounts();
+	                $this->onUpdatePoistion(new CEvent($this));
+	                $this->saveState();
+	            }
+	        }
+    	}else{
+    		if ($this->objSectorCiudadDestino !== null && $this->codigoPerfil!==null) {
+    			foreach ($this as $position) {
+    				$key = $position->getId();
+    		
+    				$position->generate(array(
+    						'objSectorCiudad' => $this->objSectorCiudadDestino,
+    						'codigoPerfil' => $this->codigoPerfil
+    				));
+    				parent::add($key, $position);
+    		
+    				$this->applyDiscounts();
+    				$this->onUpdatePoistion(new CEvent($this));
+    				$this->saveState();
+    			}
+    		}
+    	}
     }
     
     public function updatePositionKey($key) {
@@ -307,29 +336,65 @@ class EShoppingCart extends CMap {
      * @param int $quantity
      * @param bool $fraction adding fraction or not
      */
-    public function update(IECartPosition $position, $fraction, $quantity) {
-    	if ($this->objSectorCiudadOrigen !== null) {
-            $key = $position->getId();
-
-            $position->generate(array(
-                'objSectorCiudad' => $this->objSectorCiudadOrigen,
-                'codigoPerfil' => $this->codigoPerfil
-            ));
-
-            //$position->attachBehavior("CartPosition", new ECartPositionBehaviour());
-
-            $position->setQuantity($quantity, $fraction);
-			
-            if ($position->getQuantity(true) + $position->getQuantity(false) < 1)
-                $this->remove($key);
-            else
-                parent::add($key, $position);
-
-            $this->applyDiscounts();
-            $this->onUpdatePoistion(new CEvent($this));
-            $this->saveState();
-            return true;
-        }
+    public function update(IECartPosition $position, $fraction, $quantity, $pdv,$numCant) {
+    	if($this->tipoVenta == 1){
+	    	if ($this->objSectorCiudadOrigen !== null) {
+	            $key = $position->getId();
+	
+	            $position->generate(array(
+	                'objSectorCiudad' => $this->objSectorCiudadOrigen,
+	                'codigoPerfil' => $this->codigoPerfil
+	            ));
+	
+	            //$position->attachBehavior("CartPosition", new ECartPositionBehaviour());
+	
+	         
+	            $position->setQuantity($quantity, $fraction);
+	           
+	            if ($position->getQuantity(true) + $position->getQuantity(false) < 1)
+	                $this->remove($key);
+	            else
+	                parent::add($key, $position);
+	
+	            $this->applyDiscounts();
+	            $this->onUpdatePoistion(new CEvent($this));
+	            $this->saveState();
+	            return true;
+	        }
+    	}else{
+    		if ($this->objSectorCiudadDestino !== null) {
+    			$key = $position->getId();
+    		
+    			$position->generate(array(
+    					'objSectorCiudad' => $this->objSectorCiudadDestino,
+    					'codigoPerfil' => $this->codigoPerfil
+    			));
+    		
+    			//$position->attachBehavior("CartPosition", new ECartPositionBehaviour());
+    			$position->setQuantity($quantity, $fraction);
+    			
+    			
+    			$QuantityPDV = $position->getUnitPDV($pdv,true);
+    			$FracPDV = $position->getUnitPDV($pdv,false);
+    			
+    			if(!$fraction){
+    				$QuantityPDV+=$numCant;
+    			}else{
+    				$FracPDV+=$numCant;
+    			}
+    			$position->setPDV($pdv,$QuantityPDV,$FracPDV);
+    			
+    			if ($position->getQuantity(true) + $position->getQuantity(false) < 1)
+    				$this->remove($key);
+    				else
+    					parent::add($key, $position);
+    		
+    					$this->applyDiscounts();
+    					$this->onUpdatePoistion(new CEvent($this));
+    					$this->saveState();
+    					return true;
+    		}
+    	}
         return false;
     }
 
@@ -424,7 +489,7 @@ class EShoppingCart extends CMap {
         }
 
         $price -= $this->discountPrice;
-        $price += $this->shipping + $this->shippingStored;
+        $price += $this->shipping /*+ $this->shippingStored*/;
   
         return $price;
     }
