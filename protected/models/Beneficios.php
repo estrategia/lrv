@@ -68,6 +68,7 @@ class Beneficios extends CActiveRecord {
             'listPuntosVenta' => array(self::MANY_MANY, 'PuntoVenta', 't_BeneficiosPuntosVenta(idBeneficio, idComercial)'),
             'listBeneficiosProductos' => array(self::HAS_MANY, 'BeneficiosProductos', 'idBeneficio'),
             'listCedulas' => array(self::HAS_MANY, 'BeneficiosCedulas', 'idBeneficio'),
+            'suscripciones' => array(self::HAS_ONE, 'SuscripcionesProductosUsuario', '','on' => 't.idBeneficio = suscripciones.idBeneficio'),
         );
     }
 

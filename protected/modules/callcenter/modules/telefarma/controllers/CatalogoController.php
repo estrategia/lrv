@@ -284,7 +284,7 @@ class CatalogoController extends ControllerTelefarma {
             throw new CHttpException(404, 'Producto no existe.');
         }
 
-        $codigoPerfil = Yii::app()->shoppingCartVitalCall->getCodigoPerfil();
+        $codigoPerfil = Yii::app()->getModule('callcenter')->getModule('telefarma')->shoppingCartVitalCall->getCodigoPerfil();
         $objCalificacion = null;
 
         if (!Yii::app()->user->isGuest) {
@@ -432,9 +432,9 @@ class CatalogoController extends ControllerTelefarma {
     			$unidadesDisponibles = $objProducto->listSaldos[0]->saldoUnidad;
     	}
     	
-    	$codigoPerfil = Yii::app()->shoppingCartVitalCall->getCodigoPerfil();
+    	$codigoPerfil = Yii::app()->getModule('callcenter')->getModule('telefarma')->shoppingCartVitalCall->getCodigoPerfil();
     	$cantidadCarro = 0;
-    	$position = Yii::app()->shoppingCartVitalCall->itemAt($producto);
+    	$position = Yii::app()->getModule('callcenter')->getModule('telefarma')->shoppingCartVitalCall->itemAt($producto);
     
     	if ($position != null) {
     		$cantidadCarro = $position->getQuantity();

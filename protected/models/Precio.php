@@ -17,12 +17,16 @@ abstract class Precio {
     protected $porcentajeDescuentoBeneficio = 0;
     protected $porcentajeDescuentoBeneficioBono = 0;
     protected $porcentajeDescuentoBeneficioDescuento = 0;
+    protected $porcentajeDescuentoSuscripcion = 0;
     protected $inicializado = false;
     protected $listBeneficios = array();
     protected $listBeneficiosBonos = array();
     protected $listPuntos = array();
     protected $flete = 0;
     protected $tiempoEntrega = 0;
+    protected $suscripcion = null;
+    protected $conSuscripcion = false;
+    protected $cantidadPeriodoSuscripcion = 0;
 
     const PRECIO_UNIDAD = 1;
     const PRECIO_FRACCION = 2;
@@ -33,6 +37,11 @@ abstract class Precio {
     abstract public function getPrecio();
 
     abstract public function getAhorro();
+
+    public function getSuscripcion()
+    {
+        return $this->suscripcion;
+    }
 
     public function getFlete() {
         return $this->flete;
@@ -78,8 +87,13 @@ abstract class Precio {
     }
 
     public function getPorcentajeDescuento($tipo = self::DESCUENTO_COMPLETO) {
-        if ($tipo == self::DESCUENTO_COMPLETO)
-            return $this->porcentajeDescuentoBeneficio + $this->porcentajeDescuentoPerfil;
+        if ($tipo == self::DESCUENTO_COMPLETO) {
+            $descuento = $this->porcentajeDescuentoBeneficio + $this->porcentajeDescuentoPerfil;
+            // if ($this->suscripcion !== null) {
+            //     $descuento += $this->suscripcion->descuentoProducto; 
+            // }
+            return $descuento;
+        }
         else if ($tipo == self::DESCUENTO_PERFIL)
             return $this->porcentajeDescuentoPerfil;
         else if ($tipo == self::DESCUENTO_BENEFICIO)
@@ -89,8 +103,13 @@ abstract class Precio {
     }
     
     public function getPorcentajeDescuentoDescuento($tipo = self::DESCUENTO_COMPLETO) {
-    	if ($tipo == self::DESCUENTO_COMPLETO)
-    		return $this->porcentajeDescuentoBeneficioDescuento + $this->porcentajeDescuentoPerfil;
+    	if ($tipo == self::DESCUENTO_COMPLETO) {
+            $descuento = $this->porcentajeDescuentoBeneficio + $this->porcentajeDescuentoPerfil;
+            // if ($this->suscripcion !== null) {
+            //     $descuento += $this->suscripcion->descuentoProducto; 
+            // }
+            return $descuento;
+        }
     	else if ($tipo == self::DESCUENTO_PERFIL)
     		return $this->porcentajeDescuentoPerfil;
     	else if ($tipo == self::DESCUENTO_BENEFICIO)
@@ -162,6 +181,12 @@ abstract class Precio {
             return 0;
         
         return $valor/(1+($impuesto));
+    }
+
+    public function conSuscripcion()
+    {
+        // var_dump($this->conSuscripcion);
+        return $this->conSuscripcion;
     }
 
 }

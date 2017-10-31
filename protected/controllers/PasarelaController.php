@@ -420,5 +420,23 @@ class PasarelaController extends Controller {
                 break;
         }
     }
+    
+    public function actionCorreoTest(){
+        $correo = "juliana.patino@eiso.com.co"; //juliana.patino@eiso.com.co
+        $cus = "1254";
+        $idCompra = "5886965";
+        $nombre = "Juliana Patiño"; //Juliana Patiño
+       
+        $valor = 250000;
+        
+        $mensaje = "El pedido No. " . $idCompra. " ha obtenido respuesta en validacion de pago por la Pasarela de Pagos, pero se ha generado un NO EXISTE LA COMPRA "
+            . "por lo que la transaccion debe ser verificada en el modulo de administracion. CUS " . $cus;
+        
+             
+       //$this->correo(6, $nombre, $idCompra, $valor, $correo);
+       //$this->correo(1, $nombre, $idCompra, $valor, $correo);
+       //$this->correo(2, $nombre, $idCompra, $valor, $correo);
+       //$this->correo(5, $nombre, $idCompra, $valor, $correo);
+    }
 
 }

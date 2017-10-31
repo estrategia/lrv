@@ -19,7 +19,7 @@ $this->metaTags = "
     .text-bg-yellow {z-index: 5;position: absolute;margin-top: 16px;font-family: helvetica-neue-heavy-condObl;font-size: 24px;color: #000;margin: 32px;}
     .text-bg-yellow span {font-size: 32px;}
     .precaucion {font-family:helvetica-neue-heavy;color:#FBDA15;font-size: 25px;margin-top: 27%;}
-    .fot-product {margin-top: -22.3%;}
+    .fot-product {margin-top: -24.3%;}
     .btn-compra {margin-top: 20px;}
     .text-foot {color:#fff; text-align:center;font-family:omnes;font-size: 20px;margin-bottom: 30px;margin-top: 40px;}
     .product{width: 77%;margin: 0 auto;}
@@ -46,19 +46,21 @@ $this->metaTags = "
       <a href="<?= Yii::app()->request->baseUrl ?>/pilas-recargables-energizer"><h4 style="margin-bottom: 0px;" class="btn-menu"><span class="glyphicon glyphicon-menu-right" aria-hidden="true"></span>Línea recargable</h4></a>
     </center>
     <div class="lista" style="font-size: 17px;margin-top: 30px;line-height: 22px;">
-      <p>* Tamaño más pequeño, menor consumo de energía.</p>
-      <p>* Perfecta para aparatos de hogar inteligentes y salud inteligente.</p>
-      <p>* Energizer pilas especializadas la más elegida por consumidores en el mundo.</p>
-      <p>* Pequeñas en tamaño grandes en poder.</p>
-      <p>* Protege sus equipos de las fugas hasta 2 años después del agotamiento total.</p>
+      <ul>
+        <li>Tamaño más pequeño, menor consumo de energía.</li>
+        <li>Energizer pilas especializadas la más elegida por consumidores en el mundo.</li>
+        <li>Pequeñas en tamaño grandes en poder.</li>
+      </ul>
     </div>
     <img style="width: 70%;margin: 35px auto 0;display: block;" src="<?= Yii::app()->request->baseUrl ?>/images/contenido/energizer/pilas-especiales/CR2032.png" alt="CR2032">
+        <h3 style="color: #fff;font-size: 15px;margin: 0 auto 15px;text-align: center;">Pila especializada ECR 2032BP Energizer</h3>
     <p class="usos" style="text-align:center;margin: 0;">Usos recomendados:</p>
     <img class="img-responsive-movil" src="<?= Yii::app()->request->baseUrl ?>/images/contenido/energizer/pilas-especiales/iconos-CR2032.png" alt="CR2032">
     <a href="<?php echo CController::createUrl('/catalogo/producto', array('producto' => 21130)) ?>">
       <img class="img-responsive-movil btn-compra" src="<?= Yii::app()->request->baseUrl ?>/images/contenido/energizer/comprar-online.png" alt="Comprar Online">
     </a>
     <img style="width: 70%;margin: 35px auto 0;display: block;" src="<?= Yii::app()->request->baseUrl ?>/images/contenido/energizer/pilas-especiales/CR2025.png" alt="CR2025">
+            <h3 style="color: #fff;font-size: 15px;margin: 0 auto 15px;text-align: center;">Pila especializada ECR 2025BP Energizer</h3>
     <p class="usos" style="text-align:center;margin: 0;">Usos recomendados:</p>
     <img class="img-responsive-movil" src="<?= Yii::app()->request->baseUrl ?>/images/contenido/energizer/pilas-especiales/iconos-CR2025.png" alt="CR2025">
     <a href="<?php echo CController::createUrl('/catalogo/producto', array('producto' => 21129)) ?>">
@@ -84,16 +86,17 @@ $this->metaTags = "
     </div>
     <p><span class="first-title">Energizer</span><span class="sub-title"> Pilas especiales</span></p>
     <div class="lista">
-      <p>* Tamaño más pequeño, menor consumo de energía.</p>
-      <p>* Perfecta para aparatos de hogar inteligentes y salud inteligente.</p>
-      <p>* Energizer pilas especializadas la más elegida por consumidores en el mundo.</p>
-      <p>* Pequeñas en tamaño grandes en poder.</p>
-      <p>* Protege sus equipos de las fugas hasta 2 años después del agotamiento total.</p>
+      <ul>
+        <li>Tamaño más pequeño, menor consumo de energía.</li>
+        <li>Energizer pilas especializadas la más elegida por consumidores en el mundo.</li>
+        <li>Pequeñas en tamaño grandes en poder.</li>
+      </ul>
     </div>
     <div class="row" style="margin-top: 50px;">
       <div class="col-sm-2 col-md-2"></div>
       <div class="col-sm-4 col-md-4" style="z-index:100;">
         <img class="img-responsive" src="<?= Yii::app()->request->baseUrl ?>/images/contenido/energizer/pilas-especiales/CR2032.png" alt="CR2032">
+        <h3 style="color: #fff;font-size: 15px;margin: 0 auto 15px;text-align: center;">Pila especializada ECR 2032BP Energizer</h3>
         <p class="usos">Usos recomendados:</p>
         <img class="img-responsive" src="<?= Yii::app()->request->baseUrl ?>/images/contenido/energizer/pilas-especiales/iconos-CR2032.png" alt="CR2032">
         <a href="<?php echo CController::createUrl('/catalogo/producto', array('producto' => 21130)) ?>">
@@ -102,6 +105,7 @@ $this->metaTags = "
       </div>
       <div class="col-sm-4 col-md-4" style="z-index:100;">
         <img class="img-responsive" src="<?= Yii::app()->request->baseUrl ?>/images/contenido/energizer/pilas-especiales/CR2025.png" alt="CR2025">
+        <h3 style="color: #fff;font-size: 15px;margin: 0 auto 15px;text-align: center;">Pila especializada ECR 2025BP Energizer</h3>
         <p class="usos">Usos recomendados:</p>
         <img class="img-responsive" src="<?= Yii::app()->request->baseUrl ?>/images/contenido/energizer/pilas-especiales/iconos-CR2025.png" alt="CR2025">
         <a href="<?php echo CController::createUrl('/catalogo/producto', array('producto' => 21129)) ?>">

@@ -911,7 +911,9 @@ $(document).on('click', "button[data-role='modificarcarro']", function() {
     var modificar = $(this).attr('data-modificar');
     var operacion = $(this).attr('data-operation');
     var cantidad = 0;
+    var cantidadSuscripcion = 0;
     var id = "";
+    var idSuscripcion = "";
 
     if (modificar == 1) {
         var esFraccion = $(this).attr('data-fraction') == 1;
@@ -919,6 +921,7 @@ $(document).on('click', "button[data-role='modificarcarro']", function() {
             id = '#cantidad-producto-fraccion-' + position;
         } else {
             id = '#cantidad-producto-unidad-' + position;
+            idSuscripcion = '#cantidad-producto-unidad-suscripcion-' + position;
         }
     } else if (modificar == 2) {
         id = '#cantidad-producto-' + position;
@@ -926,7 +929,8 @@ $(document).on('click', "button[data-role='modificarcarro']", function() {
         id = '#cantidad-producto-bodega-' + position;
     }
 
-    cantidad = parseInt($(id).val());
+    cantidad = $(id).length > 0 ? parseInt($(id).val()) : 0;
+    cantidadSuscripcion = $(idSuscripcion).length > 0 ? parseInt($(idSuscripcion).val()) : 0;
 
     if (isNaN(cantidad) || cantidad < 1) {
         cantidad = 1;
@@ -944,7 +948,24 @@ $(document).on('click', "button[data-role='modificarcarro']", function() {
         }
     }
 
+    if (isNaN(cantidadSuscripcion) || cantidadSuscripcion < 1) {
+        cantidadSuscripcion = 1;
+    } else {
+        if (operacion == "+") {
+            cantidadSuscripcion++;
+            if (cantidadSuscripcion < 1) {
+                cantidadSuscripcion = 1;
+            }
+        } else if (operacion == "-" && cantidadSuscripcion > 0) {
+            cantidadSuscripcion--;
+            if (cantidadSuscripcion < 1) {
+                cantidadSuscripcion = 1;
+            }
+        }
+    }
+
     $(id).val(cantidad);
+    $(idSuscripcion).val(cantidadSuscripcion);
     modificarCarro(position, modificar);
 });
 
@@ -974,10 +995,15 @@ function modificarCarro(position, modificar) {
             cantidadF = 1;
         }
 
-        var cantidadU = parseInt($('#cantidad-producto-unidad-' + position).val());
+        var cantidadU = $('#cantidad-producto-unidad-' + position).length > 0 ? parseInt($('#cantidad-producto-unidad-' + position).val()) : 0 ;
+        var cantidadSuscripcion = $('#cantidad-producto-unidad-suscripcion-' + position).length > 0 ? parseInt($('#cantidad-producto-unidad-suscripcion-' + position).val()) : 0;
 
         if (isNaN(cantidadU) || cantidadU < 1) {
-            cantidadU = 1;
+            cantidadU = 0;
+        }
+
+        if (isNaN(cantidadSuscripcion) || cantidadSuscripcion < 1) {
+            cantidadSuscripcion = 0;
         }
 
         if (cantidadF > 0) {
@@ -993,8 +1019,9 @@ function modificarCarro(position, modificar) {
             }
         }
 
-        data['cantidadU'] = cantidadU;
+        data['cantidadU'] = cantidadU + cantidadSuscripcion;
         data['cantidadF'] = cantidadF;
+
     } else if (modificar == 2) {
         var cantidad = parseInt($('#cantidad-producto-' + position).val());
         if (isNaN(cantidad) || cantidad < 1) {
@@ -1694,6 +1721,28 @@ $(document).ready(function() {
     $('[data-toggle="popover"]').popover();
     $("input[data-role='bootstrap-slider']").slider();
     $(".slide-productos").owlCarousel({
+        items: 5,
+        lazyLoad: true,
+        navigation: true,
+        pagination: false,
+        navigationText: [
+            "<i class='glyphicon glyphicon-chevron-left'></i>",
+            "<i class='glyphicon glyphicon-chevron-right'></i>"
+        ],
+         autoPlay: 3000,
+    });
+    $(".slide-imagenes").owlCarousel({
+        items: 5,
+        lazyLoad: true,
+        navigation: true,
+        pagination: false,
+        navigationText: [
+            "<i class='glyphicon glyphicon-chevron-left'></i>",
+            "<i class='glyphicon glyphicon-chevron-right'></i>"
+        ],
+         autoPlay: 3000,
+    });
+    $(".slide-videos").owlCarousel({
         items: 5,
         lazyLoad: true,
         navigation: true,
@@ -2924,3 +2973,31 @@ $(document).on('click', "a[data-role='ocultar-menu']", function() {
     return false;
 });
 
+$(document).on('click', "button[data-role='crear-suscripcion']", function () {
+    var boton = $(this);
+    var codigoProducto = boton.attr('data-codigo-producto');
+    boton.attr('disabled', true);
+    $.ajax({
+        type: 'POST',
+        url: requestUrl + "/suscripciones/ocultarMenu/",
+        data: {codigoProducto: codigoProducto},
+        dataType: 'json',
+        beforeSend: function() {
+            Loading.show();
+        },
+        complete: function(data) {
+            Loading.hide();
+        },
+        success: function(data) {
+            if (data.result === 'ok') {
+                console.log(response);
+            } 
+            boton.attr('disabled', false);
+        },
+        error: function(jqXHR, textStatus, errorThrown) {
+            Loading.hide();
+            boton.attr('disabled', false);
+        }
+    });
+    return false;
+});

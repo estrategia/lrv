@@ -60,7 +60,7 @@ $this->metaTags = "<meta http-equiv='X-UA-Compatible' content='IE=edge'>
   <div class="item"><img class="img-responsive-m"  src="<?= Yii::app()->request->baseUrl ?>/images/contenido/kyron/alimento-en-polvo-kids/kids-banner2.jpg"  alt="Fresa prenatal"></div>
 </div>
 <section class="section-menu-mobile">
-  <a href="<?= Yii::app()->request->baseUrl ?>/energold-renergen-suplementos-dietarios" data-ajax="false"><div class="item">Suplementos Dietarios</div></a>
+  <!-- <a href="<?= Yii::app()->request->baseUrl ?>/energold-renergen-suplementos-dietarios" data-ajax="false"><div class="item">Suplementos Dietarios</div></a> -->
   <a href="<?= Yii::app()->request->baseUrl ?>/energold-alimento-polvo" data-ajax="false"><div class="item">Alimento en polvo Adultos</div></a>
   <a href="<?= Yii::app()->request->baseUrl ?>/energold-alimento-ninos" data-ajax="false"><div class="item active">Alimento para Niños</div></a>
 </section>
@@ -78,7 +78,7 @@ $this->metaTags = "<meta http-equiv='X-UA-Compatible' content='IE=edge'>
         <ul class="lista-check">
           <li>Recomendado para niños a partir de los 4 años de edad. </li>
           <li>Alimento a base de Maltodextrina con Macronutrientes: Carbohidratos, Proteínas y grasas. Enriquecido con Micronutrientes: Vitaminas y Minerales.</li>
-          <li>Un buen complemento para el crecimiento de los niños.</li>
+          <li>Un buen complemento para el desarrollo de los niños.</li>
         </ul>
         <div class="content-colum">
           <h4 class="porcion-suplemento-dietario" style="margin-top: 0px;">PORCIÓN RECOMENDADA</h4>
@@ -134,7 +134,7 @@ $this->metaTags = "<meta http-equiv='X-UA-Compatible' content='IE=edge'>
       </a>
       <span class="flavor-diabeticos" style="color: #903D8F;">FRESA – VAINILLA</span>
       <h2 class="almendras" style="background-color: #903D8F;">ENERGOLD JALEA   </h2>
-      <span class="sub-title-vainilla" style="color: #903D8F;">Una forma diferente de nutrir a niños y adolescentes</span>
+      <span class="sub-title-vainilla" style="color: #903D8F;">Una forma diferente de complementar la nutrición de los niños</span>
       <div class="content-colum">
         <ul class="lista-check">
           <li>Alimento con extracto de malta en presentación Jalea recomendado para niños y adolescentes.</li>
@@ -196,10 +196,10 @@ $this->metaTags = "<meta http-equiv='X-UA-Compatible' content='IE=edge'>
 </div>
 <section class="section-menu-mobile">
   <div class="container">
-    <div class="col-sm-4 col-md-4">
+    <!-- <div class="col-sm-4 col-md-4">
       <a href="<?= Yii::app()->request->baseUrl ?>/energold-renergen-suplementos-dietarios" data-ajax="false"><div class="item desktop ">Suplementos <br> Dietarios</div></a>
-    </div>
-    <div class="col-sm-4 col-md-4">
+    </div> -->
+    <div class="col-sm-4 col-md-4 col-sm-offset-2 col-md-offset-2">
       <a href="<?= Yii::app()->request->baseUrl ?>/energold-alimento-polvo" data-ajax="false"><div class="item desktop">Alimento en <br> polvo Adultos</div></a>
     </div>
     <div class="col-sm-4 col-md-4">
@@ -222,7 +222,7 @@ $this->metaTags = "<meta http-equiv='X-UA-Compatible' content='IE=edge'>
           <ul class="lista-check">
             <li>Recomendado para niños a partir de los 4 años de edad. </li>
             <li>Alimento a base de Maltodextrina con Macronutrientes: Carbohidratos, Proteínas y grasas. Enriquecido con Micronutrientes: Vitaminas y Minerales.</li>
-            <li>Un buen complemento para el crecimiento de los niños.</li>
+            <li>Un buen complemento para el desarrollo de los niños.</li>
           </ul>
           <div class="content-colum">
             <h4 class="porcion-suplemento-dietario" style="margin-top: 75px;">PORCIÓN RECOMENDADA</h4>
@@ -282,12 +282,12 @@ $this->metaTags = "<meta http-equiv='X-UA-Compatible' content='IE=edge'>
         </a>
         <span class="flavor-diabeticos" style="color: #903D8F;">FRESA – VAINILLA</span>
         <h2 class="almendras" style="background-color: #903D8F;">ENERGOLD JALEA  </h2>
-        <span class="sub-title-vainilla" style="color: #903D8F;padding-inline-start: 10px;display: block;">Una forma diferente de nutrir a niños y adolescentes</span>
+        <span class="sub-title-vainilla" style="color: #903D8F;padding-inline-start: 10px;display: block;">Una forma diferente de complementar la nutrición de los niños</span>
         <div class="content-colum">
           <ul class="lista-check">
             <li>Alimento con extracto de malta en presentación Jalea recomendado para niños y adolescentes.</li>
           </ul>
-          <div class="content-colum" style="margin-bottom: 45px;">
+          <div class="content-colum" style="margin-bottom: 13px;">
             <h4 class="porcion-suplemento-dietario" style="color:#903D8F;margin-top: 230px;">PORCIÓN RECOMENDADA</h4>
             <p class="description-porcion-suplemento-dietario">
               2 cucharadas 1 vez al día. <br>

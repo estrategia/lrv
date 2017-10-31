@@ -19,7 +19,8 @@ class SessionControlFilter extends CFilter {
 
     protected function preFilter($filterChain) {
     	//CVarDumper::dump($this,10,true);exit();
-        //Yii::app()->request->urlReferrer
+        //echo "<p>URL REFER: " . Yii::app()->request->urlReferrer . "</p>";
+        
         //$sesionUbicacion = false;
         $objSectorCiudad = null;
         Yii::app()->session[Yii::app()->params->sesion['redireccionUbicacion']] = null;

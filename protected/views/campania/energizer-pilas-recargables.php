@@ -36,6 +36,7 @@ $this->metaTags = "
 ?>
 <!--VERSIÓN MÓVIL-->
 <?php if ($this->isMobile): ?>
+<img class="img-responsive-m" src="<?= Yii::app()->request->baseUrl ?>/images/contenido/energizer/banner-pilas-recargables.jpg" alt="Energizer Pilas recargables">
 <div class="background-black" style="padding: 0;margin-top: -11px;">
   <div class="content">
     <center>
@@ -45,37 +46,42 @@ $this->metaTags = "
       <a href="<?= Yii::app()->request->baseUrl ?>/pilas-recargables-energizer"><h4 style="margin-bottom: 0px;" class="btn-menu active"><span class="glyphicon glyphicon-menu-right" aria-hidden="true"></span>Línea recargable</h4></a>
     </center>
     <div class="lista" style="font-size: 17px;margin-top: 30px;line-height: 22px;">
-      <p>* Las Pilas Energizer Recargables Universal Tipo AA y AAA ahora contiene materiales de baterías recicladas.</p>
-      <p>* Se mantiene cargada hasta 1 año en almacenamiento.</p>
-      <p>* Primer Pila Recargable AA en el Mundo fabricada con baterías recicladas 4% baterías recicladas.</p>
-      <p>* Larga Duración.</p>
-      <p>* Carga hasta 1000 ciclos.</p>
-      <p>* Calidad, Confiabilidad.</p>
-      <p>* Responder en cualquier situación.</p>
-      <p>* Tiene una vida útil hasta de 5 años.</p>
+      <ul>
+        <li>Las Pilas Energizer Recargables Universal Tipo AA y AAA ahora contiene materiales de baterías recicladas.</li>
+        <li>Se mantiene cargada hasta 1 año en almacenamiento.</li>
+        <li>Primer Pila Recargable AA en el Mundo fabricada con baterías recicladas 4% baterías recicladas.</li>
+        <li>Larga Duración.</li>
+        <li>Carga hasta 1000 ciclos.</li>
+        <li>Calidad, Confiabilidad.</li>
+        <li>Responder en cualquier situación.</li>
+        <li>Tiene una vida útil hasta de 5 años.</li>
+      </ul>
     </div>
     <img style="width: 90%;margin: 35px auto 0;display: block;" src="<?= Yii::app()->request->baseUrl ?>/images/contenido/energizer/pilas-recargables/recargable-aa2.png" alt="Recargables AA2">
+    <h3 style="color: #fff;font-size: 15px;margin: 0px auto 15px;text-align: center;">Pila Energizer recargable AA2</h3>
     <a data-ajax="false" href="<?php echo CController::createUrl('/catalogo/producto', array('producto' => 18654)) ?>">
       <img class="btn-compra" style="width: 80%;margin: 0 auto;display: block;" src="<?= Yii::app()->request->baseUrl ?>/images/contenido/energizer/comprar-online.png" alt="Comprar Online">
     </a>
     <img style="width: 90%;margin: 35px auto 0;display: block;" src="<?= Yii::app()->request->baseUrl ?>/images/contenido/energizer/pilas-recargables/recargable-aaa2.png" alt="Recargables AAA2">
+    <h3 style="color: #fff;font-size: 15px;margin: 0px auto 15px;text-align: center;">Pila Energizer recargable AAA2</h3>
     <a data-ajax="false" href="<?php echo CController::createUrl('/catalogo/producto', array('producto' => 18656)) ?>">
       <img class="btn-compra" style="width: 80%;margin: 0 auto;display: block;" src="<?= Yii::app()->request->baseUrl ?>/images/contenido/energizer/comprar-online.png" alt="Comprar Online">
     </a>
     <img style="width: 90%;margin: 35px auto 0;display: block;"  src="<?= Yii::app()->request->baseUrl ?>/images/contenido/energizer/pilas-recargables/recargable-mini.png" alt="Recargables mini">
-    <a data-ajax="false" href="#">
+    <h3 style="color: #fff;font-size: 15px;margin: 0px auto 15px;text-align: center;">Pila Energizer recargable mini</h3>
+    <a data-ajax="false" href="<?php echo CController::createUrl('/catalogo/producto', array('producto' => 18660)) ?>">
       <img class="btn-compra" style="width: 80%;margin: 0 auto;display: block;" src="<?= Yii::app()->request->baseUrl ?>/images/contenido/energizer/comprar-online.png" alt="Comprar Online">
     </a>
-    <img  style="width: 90%;margin: 35px auto 0;display: block;" src="<?= Yii::app()->request->baseUrl ?>/images/contenido/energizer/pilas-recargables/recargable-maxi.png" alt="Recargables maxi">
+    <!-- <img  style="width: 90%;margin: 35px auto 0;display: block;" src="<?= Yii::app()->request->baseUrl ?>/images/contenido/energizer/pilas-recargables/recargable-maxi.png" alt="Recargables maxi">
     <a data-ajax="false" href="#">
       <img class="btn-compra" style="width: 80%;margin: 0 auto;display: block;" src="<?= Yii::app()->request->baseUrl ?>/images/contenido/energizer/comprar-online.png" alt="Comprar Online">
-    </a>
+    </a> -->
   </div>
 </div>
 <!---FIN VERSIÓN MÓVIL-->
 <!--VERSIÓN ESCRITORIO-->
 <?php else: ?>
-<!-- <img class="img-responsive" src="<?= Yii::app()->request->baseUrl ?>/images/contenido/energizer/pilas-especiales/banner-pilas-especiales.jpg" alt="Energizer Pilas especiales"> -->
+<img class="img-responsive" src="<?= Yii::app()->request->baseUrl ?>/images/contenido/energizer/banner-pilas-recargables.jpg" alt="Energizer Pilas recargables">
 <div class="container-fluid background-black" style="padding: 0;">
   <div class="content">
     <div class="menu">
@@ -89,46 +95,53 @@ $this->metaTags = "
     <div class="row">
       <div class="col-sm-6 col-md-6">
         <div class="lista">
-          <p>* Las Pilas Energizer Recargables Universal Tipo AA y AAA ahora contiene materiales de baterías recicladas.</p>
-          <p>* Se mantiene cargada hasta 1 año en almacenamiento.</p>
-          <p>* Primer Pila Recargable AA en el Mundo fabricada con baterías recicladas 4% baterías recicladas.</p>
+          <ul style="padding-inline-start: 5px;">
+            <li>Las Pilas Energizer Recargables Universal Tipo AA y AAA ahora contiene materiales de baterías recicladas.</li>
+            <li>Se mantiene cargada hasta 1 año en almacenamiento.</li>
+            <li>Primer Pila Recargable AA en el Mundo fabricada con baterías recicladas 4% baterías recicladas.</li>
+          </ul>
         </div>
       </div>
       <div class="col-sm-6 col-md-6">
         <div class="lista">
-          <p>* Larga Duración.</p>
-          <p>* Carga hasta 1000 ciclos.</p>
-          <p>* Calidad, Confiabilidad.</p>
-          <p>* Responder en cualquier situación.</p>
-          <p>* Tiene una vida útil hasta de 5 años.</p>
+          <ul>
+            <li>Larga Duración.</li>
+            <li>Carga hasta 1000 ciclos.</li>
+            <li>Calidad, Confiabilidad.</li>
+            <li>Responder en cualquier situación.</li>
+            <li>Tiene una vida útil hasta de 5 años.</li>
+          </ul>
         </div>
       </div>
     </div>
     <div class="row" style="margin-top: 50px;">
-      <div class="col-sm-3 col-md-3" style="z-index:100;">
+      <div class="col-md-offset-1 col-sm-offset-3 col-sm-3 col-md-3" style="z-index:100;">
         <img class="img-responsive" src="<?= Yii::app()->request->baseUrl ?>/images/contenido/energizer/pilas-recargables/recargable-aa2.png" alt="Recargables AA2">
+        <h3 style="color: #fff;font-size: 15px;margin: 0 auto;text-align: center;">Pila Energizer recargable AA2</h3>
         <a href="<?php echo CController::createUrl('/catalogo/producto', array('producto' => 18654)) ?>">
           <img class="img-responsive btn-compra" src="<?= Yii::app()->request->baseUrl ?>/images/contenido/energizer/comprar-online.png" alt="Comprar Online">
         </a>
       </div>
       <div class="col-sm-3 col-md-3" style="z-index:100;">
         <img class="img-responsive" src="<?= Yii::app()->request->baseUrl ?>/images/contenido/energizer/pilas-recargables/recargable-aaa2.png" alt="Recargables AAA2">
+        <h3 style="color: #fff;font-size: 15px;margin: 0 auto;text-align: center;">Pila Energizer recargable AAA2</h3>
         <a href="<?php echo CController::createUrl('/catalogo/producto', array('producto' => 18656)) ?>">
           <img class="img-responsive btn-compra" src="<?= Yii::app()->request->baseUrl ?>/images/contenido/energizer/comprar-online.png" alt="Comprar Online">
         </a>
       </div>
       <div class="col-sm-3 col-md-3" style="z-index:100;">
         <img class="img-responsive" src="<?= Yii::app()->request->baseUrl ?>/images/contenido/energizer/pilas-recargables/recargable-mini.png" alt="Recargables mini">
-        <a href="#">
+        <h3 style="color: #fff;font-size: 15px;margin: 0 auto;text-align: center;">Pila Energizer recargable mini</h3>
+        <a href="<?php echo CController::createUrl('/catalogo/producto', array('producto' => 18660)) ?>">
           <img class="img-responsive btn-compra" src="<?= Yii::app()->request->baseUrl ?>/images/contenido/energizer/comprar-online.png" alt="Comprar Online">
         </a>
       </div>
-      <div class="col-sm-3 col-md-3" style="z-index:100;">
+      <!-- <div class="col-sm-3 col-md-3" style="z-index:100;">
         <img class="img-responsive" src="<?= Yii::app()->request->baseUrl ?>/images/contenido/energizer/pilas-recargables/recargable-maxi.png" alt="Recargables maxi">
         <a href="#">
           <img class="img-responsive btn-compra" src="<?= Yii::app()->request->baseUrl ?>/images/contenido/energizer/comprar-online.png" alt="Comprar Online">
         </a>
-      </div>
+      </div> -->
     </div>
   </div>
   <img class="img-responsive fot-product" style="padding: 0;margin-bottom: 50px;display:inline-block" src="<?= Yii::app()->request->baseUrl ?>/images/contenido/energizer/fot-products.jpg">

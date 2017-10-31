@@ -60,7 +60,7 @@ class CarroTestController extends ControllerTelefarma {
 
         if ($cantidadU > 0) {
             $cantidadCarroUnidad = 0;
-            $position = Yii::app()->shoppingCartVitalCall->itemAt($producto);
+            $position = Yii::app()->getModule('callcenter')->getModule('telefarma')->shoppingCartVitalCall->itemAt($producto);
 
             if ($position !== null) {
                 $cantidadCarroUnidad = $position->getQuantityUnit();
@@ -69,7 +69,7 @@ class CarroTestController extends ControllerTelefarma {
             //si hay saldo, agrega a carro, sino consulta bodega
             if ($cantidadCarroUnidad + $cantidadU <= $objSaldo->saldoUnidad) {
                 $objProductoCarro = new ProductoCarro($objProducto);
-                Yii::app()->shoppingCartVitalCall->put($objProductoCarro, false, $cantidadU);
+                Yii::app()->getModule('callcenter')->getModule('telefarma')->shoppingCartVitalCall->put($objProductoCarro, false, $cantidadU);
             } else {
             	echo CJSON::encode(array('result' => 'error', 'response' => "La cantidad solicitada no está disponible en este momento. Saldos disponibles: $objSaldo->saldoUnidad unidades"));
             	Yii::app()->end();
@@ -78,7 +78,7 @@ class CarroTestController extends ControllerTelefarma {
 
         if ($cantidadF > 0) {
             $objProductoCarro = new ProductoCarro($objProducto);
-            Yii::app()->shoppingCartVitalCall->put($objProductoCarro, true, $cantidadF);
+            Yii::app()->getModule('callcenter')->getModule('telefarma')->shoppingCartVitalCall->put($objProductoCarro, true, $cantidadF);
         }
 
         echo CJSON::encode(array(
@@ -90,29 +90,29 @@ class CarroTestController extends ControllerTelefarma {
 
 
     public function actionList() {
-        echo "Descuento: " . Yii::app()->shoppingCartVitalCall->getDiscountPrice();
+        echo "Descuento: " . Yii::app()->getModule('callcenter')->getModule('telefarma')->shoppingCartVitalCall->getDiscountPrice();
         echo "<br/>";
-        echo "ciudad: " . Yii::app()->shoppingCartVitalCall->getCodigoCiudad();
+        echo "ciudad: " . Yii::app()->getModule('callcenter')->getModule('telefarma')->shoppingCartVitalCall->getCodigoCiudad();
         echo "<br/>";
-        echo "sector: " . Yii::app()->shoppingCartVitalCall->getCodigoSector();
+        echo "sector: " . Yii::app()->getModule('callcenter')->getModule('telefarma')->shoppingCartVitalCall->getCodigoSector();
         echo "<br/>";
-        echo "perfil: " . Yii::app()->shoppingCartVitalCall->getCodigoPerfil();
+        echo "perfil: " . Yii::app()->getModule('callcenter')->getModule('telefarma')->shoppingCartVitalCall->getCodigoPerfil();
         echo "<br/>";
-        echo "cantidad productos: " . Yii::app()->shoppingCartVitalCall->getCount();
+        echo "cantidad productos: " . Yii::app()->getModule('callcenter')->getModule('telefarma')->shoppingCartVitalCall->getCount();
         echo "<br/>";
-        echo "cantidad items: " . Yii::app()->shoppingCartVitalCall->getItemsCount();
+        echo "cantidad items: " . Yii::app()->getModule('callcenter')->getModule('telefarma')->shoppingCartVitalCall->getItemsCount();
         echo "<br/>";
-        echo "costo total: " . Yii::app()->shoppingCartVitalCall->getCost();
+        echo "costo total: " . Yii::app()->getModule('callcenter')->getModule('telefarma')->shoppingCartVitalCall->getCost();
         echo "<br/>";
-        echo "costo total: " . Yii::app()->shoppingCartVitalCall->getTotalCost();
+        echo "costo total: " . Yii::app()->getModule('callcenter')->getModule('telefarma')->shoppingCartVitalCall->getTotalCost();
         echo "<br/>";
-        // echo "tiempo: " . Yii::app()->shoppingCartVitalCall->getDelivery();
+        // echo "tiempo: " . Yii::app()->getModule('callcenter')->getModule('telefarma')->shoppingCartVitalCall->getDelivery();
         //echo "<br/>";
-        echo "servicio: " . Yii::app()->shoppingCartVitalCall->getShipping();
+        echo "servicio: " . Yii::app()->getModule('callcenter')->getModule('telefarma')->shoppingCartVitalCall->getShipping();
         echo "<br/>";
         echo "<br/>";
 
-        $positions = Yii::app()->shoppingCartVitalCall->getPositions();
+        $positions = Yii::app()->getModule('callcenter')->getModule('telefarma')->shoppingCartVitalCall->getPositions();
         foreach ($positions as $position) {
             echo "Id: " . $position->getId();
             echo "<br/>";

@@ -61,7 +61,7 @@ $this->metaTags = "<meta http-equiv='X-UA-Compatible' content='IE=edge'>
     <div class="item"><img class="img-responsive-m"  src="<?= Yii::app()->request->baseUrl ?>/images/contenido/kyron/alimento-en-polvo-adulto/banner03.jpg" alt="Diabeticos"></div>
 </div>
 <section class="section-menu-mobile">
-  <a href="<?= Yii::app()->request->baseUrl ?>/energold-renergen-suplementos-dietarios" data-ajax="false"><div class="item">Suplementos Dietarios</div></a>
+  <!-- <a href="<?= Yii::app()->request->baseUrl ?>/energold-renergen-suplementos-dietarios" data-ajax="false"><div class="item">Suplementos Dietarios</div></a> -->
   <a href="<?= Yii::app()->request->baseUrl ?>/energold-alimento-polvo" data-ajax="false"><div class="item active">Alimento en polvo Adultos</div></a>
   <a href="<?= Yii::app()->request->baseUrl ?>/energold-alimento-ninos" data-ajax="false"><div class="item">Alimento para Niños</div></a>
 </section>
@@ -73,7 +73,7 @@ $this->metaTags = "<meta http-equiv='X-UA-Compatible' content='IE=edge'>
       <a href="<?php echo CController::createUrl('/catalogo/producto', array('producto' => 106704)) ?>" data-ajax="false"><img class="btn-compra" src="<?= Yii::app()->request->baseUrl ?>/images/contenido/kyron/compra-online.png" alt="Compra Online"></a>
       <span class="flavor">FRUTOS  ROJOS – VAINILLA</span>
       <h2 class="quinua">ENERGOLD CON QUINUA</h2>
-      <span class="sub-title-quinua">Balance adecuado de aminoácidos, para el organismo.</span>
+      <span class="sub-title-quinua">Aporte de aminoácidos útiles para el organismo.</span>
       <ul class="lista-check">
         <li>Alimento a base de Maltodextrina con QUINUA. Macronutrientes: Carbohidratos, Proteínas y grasas; Micronutrientes: Vitaminas y Minerales.</li>
         <!-- <li>Por su aporte y componentes nutricionales, la NASA ha seleccionado la QUINUA como componente de la nutrición de los Astronautas.		</li> -->
@@ -98,11 +98,11 @@ $this->metaTags = "<meta http-equiv='X-UA-Compatible' content='IE=edge'>
       </a>
       <span class="flavor-vainilla">VAINILLA</span>
       <h2 class="almendras">ENERGOLD CON ALMENDRAS </h2>
-      <span class="sub-title-vainilla">Alimento para una sana nutrición</span>
+      <span class="sub-title-vainilla">Alimento que ayuda a mantener una buena nutrición</span>
       <ul class="lista-check">
-        <li>Alimento en polvo a base de avena para preparar bebida con Almendra enriquecido con Vitaminas y Minerales.</li>
-        <li>Ideal para complementar la alimentación diaria, porque brinda elementos nutritivos que el organismo requiere para su normal funcionamiento y desarrollo.</li>
-        <li>Las Almendras tiene un alto contenido de nutrientes, por lo tanto, para los partidarios del veganismo, resulta ser una gran opción de alimentación.</li>
+        <li>Alimento en Polvo a base de avena para prepara bebida con Almendras, enriquecido con Vitaminas y Minerales.</li>
+        <li>Ayuda a la alimentación diaria, porque brinda elementos nutritivos que el organismo requiere para su normal funcionamiento y desarrollo.</li>
+        <li>Puede ser una alternativa para personas que no pueden tomar leche o tienen otras preferencias, como: intolerantes a la lactosa, veganos, etc. </li>
       </ul>
       <h4 class="porcion-suplemento-dietario" style="color:#215AA7;">PORCIÓN RECOMENDADA</h4>
       <p class="description-porcion-suplemento-dietario">
@@ -128,7 +128,8 @@ $this->metaTags = "<meta http-equiv='X-UA-Compatible' content='IE=edge'>
       <h2 class="almendras" style="background-color: #3D6268;">ENERGOLD DIABÉTICOS  </h2>
       <span class="sub-title-vainilla" style="color: #3D6268;">Alimento en polvo sin azúcar</span>
       <ul class="lista-check">
-        <li>Apto para personas con Diabetes, enriquecido con Vitaminas y Minerales.</li>
+        <li>Alimento en polvo a base de avena, enriquecido con Vitaminas y Minerales.</li>
+        <li>"Este producto puede ser usado por diabéticos dentro de las restricciones calóricas de una dieta con supervisión médica".</li>
       </ul>
       <h4 class="porcion-suplemento-dietario" style="color:#3D6268;">PORCIÓN RECOMENDADA</h4>
       <p class="description-porcion-suplemento-dietario">
@@ -257,10 +258,10 @@ $this->metaTags = "<meta http-equiv='X-UA-Compatible' content='IE=edge'>
 
 <section class="section-menu-mobile">
   <div class="container">
-    <div class="col-sm-4 col-md-4">
+    <!-- <div class="col-sm-4 col-md-4">
       <a href="<?= Yii::app()->request->baseUrl ?>/energold-renergen-suplementos-dietarios" data-ajax="false"><div class="item desktop ">Suplementos <br> Dietarios</div></a>
-    </div>
-    <div class="col-sm-4 col-md-4">
+    </div> -->
+    <div class="col-sm-4 col-md-4 col-sm-offset-2 col-md-offset-2">
       <a href="<?= Yii::app()->request->baseUrl ?>/energold-alimento-polvo" data-ajax="false"><div class="item desktop active">Alimento en <br> polvo Adultos</div></a>
     </div>
     <div class="col-sm-4 col-md-4">
@@ -279,7 +280,7 @@ $this->metaTags = "<meta http-equiv='X-UA-Compatible' content='IE=edge'>
           </a>
           <span class="flavor">FRUTOS  ROJOS – VAINILLA</span>
           <h2 class="quinua">ENERGOLD CON QUINUA</h2>
-          <span class="sub-title-quinua" style="padding-inline-start: 10px;display: block;">Balance adecuado de aminoácidos, para el organismo.</span>
+          <span class="sub-title-quinua" style="padding-inline-start: 10px;display: block;">Aporte de aminoácidos útiles para el organismo.</span>
           <div class="content-colum" >
             <ul class="lista-check">
               <li>Alimento a base de Maltodextrina con QUINUA. Macronutrientes: Carbohidratos, Proteínas y grasas; Micronutrientes: Vitaminas y Minerales.</li>
@@ -308,12 +309,12 @@ $this->metaTags = "<meta http-equiv='X-UA-Compatible' content='IE=edge'>
         </a>
         <span class="flavor-vainilla">VAINILLA</span>
         <h2 class="almendras">ENERGOLD CON ALMENDRAS </h2>
-        <span class="sub-title-vainilla" style="padding-inline-start: 10px;display: block;">Alimento para una sana nutrición</span>
+        <span class="sub-title-vainilla" style="padding-inline-start: 10px;display: block;">Alimento que ayuda a mantener una buena nutrición</span>
         <div class="content-colum">
           <ul class="lista-check">
-            <li>Alimento en polvo a base de avena para preparar bebida con Almendra enriquecido con Vitaminas y Minerales.</li>
-            <li>Ideal para complementar la alimentación diaria, porque brinda elementos nutritivos que el organismo requiere para su normal funcionamiento y desarrollo.</li>
-            <li>Las Almendras tiene un alto contenido de nutrientes, por lo tanto, para los partidarios del veganismo, resulta ser una gran opción de alimentación.</li>
+            <li>Alimento en Polvo a base de avena para prepara bebida con Almendras, enriquecido con Vitaminas y Minerales.</li>
+            <li>Ayuda a la alimentación diaria, porque brinda elementos nutritivos que el organismo requiere para su normal funcionamiento y desarrollo. </li>
+            <li>Puede ser una alternativa para personas que no pueden tomar leche o tienen otras preferencias, como: intolerantes a la lactosa, veganos, etc. </li>
           </ul>
           <div class="content-colum" style="margin-top: 67px;">
             <h4 class="porcion-suplemento-dietario" style="color:#215AA7;margin-top: 4px;">PORCIÓN RECOMENDADA</h4>
@@ -343,10 +344,11 @@ $this->metaTags = "<meta http-equiv='X-UA-Compatible' content='IE=edge'>
         <span class="sub-title-vainilla" style="color: #3D6268;padding-inline-start: 10px;display: block;">Alimento en polvo sin azúcar</span>
         <div class="content-colum">
           <ul class="lista-check">
-            <li>Apto para personas con Diabetes, enriquecido con Vitaminas y Minerales.</li>
+            <li>Alimento en polvo a base de avena, enriquecido con Vitaminas y Minerales.</li>
+            <li>"Este producto puede ser usado por diabéticos dentro de las restricciones calóricas de una dieta con supervisión médica".</li>
           </ul>
           <div class="content-colum">
-            <h4 class="porcion-suplemento-dietario" style="color:#3D6268;margin-top: 213px;">PORCIÓN RECOMENDADA</h4>
+            <h4 class="porcion-suplemento-dietario" style="color:#3D6268;margin-top: 149px;">PORCIÓN RECOMENDADA</h4>
             <p class="description-porcion-suplemento-dietario">
               1 cucharada medidora (17 g.)*  <br>
               1 vez al día, por vaso de leche o jugo.<br>

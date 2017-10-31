@@ -125,7 +125,7 @@ class FormaPago extends CActiveRecord {
     			$condiciones['params'][':credirebaja'] = Yii::app()->params->formaPago['idCredirebaja'];
     		}break;
     		case 3:{
-    			if(Yii::app()->shoppingCartVitalCall->isUnitStored()){
+    			if(Yii::app()->getModule('callcenter')->getModule('telefarma')->shoppingCartVitalCall->isUnitStored()){
     				$condiciones['condition'].= " AND ventaBodega =:formaBodega";
     				$condiciones['params'][':formaBodega'] = 1;
     			}
@@ -141,7 +141,7 @@ class FormaPago extends CActiveRecord {
     			$condiciones['params'][':estadoVitalCall'] = 1;
     		}break;
     		case 5:{
-    			if(Yii::app()->shoppingCartSalesman->isUnitStored()){
+    			if(Yii::app()->getModule('vendedor')->shoppingCartSalesman->isUnitStored()){
     				$condiciones['condition'].= " AND ventaBodega =:formaBodega";
     				$condiciones['params'][':formaBodega'] = 1;
     			}
@@ -149,7 +149,7 @@ class FormaPago extends CActiveRecord {
     			$condiciones['params'][':ventavendedor'] = 1;
     		}break;
     		case 6:{
-    			if(Yii::app()->shoppingCartSalesman->isUnitStored()){
+    			if(Yii::app()->getModule('vendedor')->shoppingCartSalesman->isUnitStored()){
     				$condiciones['condition'].= " AND ventaBodega =:formaBodega";
     				$condiciones['params'][':formaBodega'] = 1;
     			}

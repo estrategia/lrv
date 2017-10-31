@@ -76,7 +76,7 @@ class CarroController extends ControllerVendedor {
 		}
 		
 		if ($opcion == "modal") {
-			$modelPago->consultarDisponibilidad ( Yii::app ()->shoppingCartSalesman );
+			$modelPago->consultarDisponibilidad ( Yii::app()->getModule('vendedor')->shoppingCartSalesman );
 			Yii::app ()->session [Yii::app ()->params->vendedor ['sesion'] ['carroPagarForm']] = $modelPago;
 			
 			echo CJSON::encode ( array (
@@ -212,7 +212,7 @@ class CarroController extends ControllerVendedor {
 		
 		if ($cantidadU > 0) {
 			$cantidadCarroUnidad = 0;
-			$position = Yii::app ()->shoppingCartSalesman->itemAt ( $producto );
+			$position = Yii::app()->getModule('vendedor')->shoppingCartSalesman->itemAt ( $producto );
 			
 			if ($position !== null) {
 				$cantidadCarroUnidad = $position->getQuantityUnit ();
@@ -221,7 +221,7 @@ class CarroController extends ControllerVendedor {
 			// si hay saldo, agrega a carro, sino consulta bodega
 			if (($objSaldo != null) && $cantidadCarroUnidad + $cantidadU <= $objSaldo->saldoUnidad) {
 				$objProductoCarro = new ProductoCarro ( $objProducto );
-				Yii::app ()->shoppingCartSalesman->put ( $objProductoCarro, false, $cantidadU );
+				Yii::app()->getModule('vendedor')->shoppingCartSalesman->put ( $objProductoCarro, false, $cantidadU );
 			} else {
 				$saldoUnidad = 0 ;
 				if(isset( $objSaldo->saldoUnidad)){
@@ -292,7 +292,7 @@ class CarroController extends ControllerVendedor {
 		
 		if ($cantidadF > 0) {
 			$objProductoCarro = new ProductoCarro ( $objProducto );
-			Yii::app ()->shoppingCartSalesman->put ( $objProductoCarro, true, $cantidadF );
+			Yii::app()->getModule('vendedor')->shoppingCartSalesman->put ( $objProductoCarro, true, $cantidadF );
 		}
 		
 		/*
@@ -308,7 +308,7 @@ class CarroController extends ControllerVendedor {
 						'relacionados' => $objProducto->tieneRelacionados (),
 						'canastaHTML' => $this->renderPartial ( "canasta", null, true ),
 						'mensajeHTML' => $this->renderPartial ( '_carroAgregado', null, true ),
-						'objetosCarro' => Yii::app ()->shoppingCartSalesman->getCount () 
+						'objetosCarro' => Yii::app()->getModule('vendedor')->shoppingCartSalesman->getCount () 
 				) 
 		) );
 		Yii::app ()->end ();
@@ -390,7 +390,7 @@ class CarroController extends ControllerVendedor {
 					}
 					
 					$cantidadCarroUnidad = 0;
-					$position = Yii::app ()->shoppingCartSalesman->itemAt ( $objCombo->getcodigo () );
+					$position = Yii::app()->getModule('vendedor')->shoppingCartSalesman->itemAt ( $objCombo->getcodigo () );
 					
 					if ($position !== null) {
 						$cantidadCarroUnidad = $position->getQuantity ();
@@ -398,7 +398,7 @@ class CarroController extends ControllerVendedor {
 					
 					if ($cantidadCarroUnidad + $objItem->unidades <= $objSaldo->saldo) {
 						$objProductoCarro = new ProductoCarro ( $objCombo );
-						Yii::app ()->shoppingCartSalesman->put ( $objProductoCarro, false, $objItem->unidades );
+						Yii::app()->getModule('vendedor')->shoppingCartSalesman->put ( $objProductoCarro, false, $objItem->unidades );
 						$agregadoItem = true;
 						$nUnidadesCarro += $objItem->unidades;
 					} else {
@@ -447,7 +447,7 @@ class CarroController extends ControllerVendedor {
 					continue;
 				}
 				
-				$position = Yii::app ()->shoppingCartSalesman->itemAt ( $objItem->codigoProducto );
+				$position = Yii::app()->getModule('vendedor')->shoppingCartSalesman->itemAt ( $objItem->codigoProducto );
 				
 				if ($objItem->unidades > 0) {
 					$cantidadCarroUnidad = 0;
@@ -458,7 +458,7 @@ class CarroController extends ControllerVendedor {
 					// si hay saldo, agrega a carro
 					if ($cantidadCarroUnidad + $objItem->unidades <= $objSaldo->saldoUnidad) {
 						$objProductoCarro = new ProductoCarro ( $objProducto );
-						Yii::app ()->shoppingCartSalesman->put ( $objProductoCarro, false, $objItem->unidades );
+						Yii::app()->getModule('vendedor')->shoppingCartSalesman->put ( $objProductoCarro, false, $objItem->unidades );
 						$agregadoItem = true;
 						$nUnidadesCarro += $objItem->unidades;
 					} else {
@@ -476,7 +476,7 @@ class CarroController extends ControllerVendedor {
 					// si hay saldo, agrega a carro
 					if ($cantidadCarroFraccion + $objItem->fracciones <= $objSaldo->saldoFraccion) {
 						$objProductoCarro = new ProductoCarro ( $objProducto );
-						Yii::app ()->shoppingCartSalesman->put ( $objProductoCarro, true, $objItem->fracciones );
+						Yii::app()->getModule('vendedor')->shoppingCartSalesman->put ( $objProductoCarro, true, $objItem->fracciones );
 						$agregadoItem = true;
 						$nUnidadesCarro += $objItem->fracciones;
 					} else {
@@ -504,7 +504,7 @@ class CarroController extends ControllerVendedor {
 						$agregadoCompleto = false;
 					} else {
 						$objProductoCarro = new ProductoCarro ( $objProducto );
-						if (Yii::app ()->shoppingCartSalesman->putStored ( $objProductoCarro, $objItem->unidadesCedi )) {
+						if (Yii::app()->getModule('vendedor')->shoppingCartSalesman->putStored ( $objProductoCarro, $objItem->unidadesCedi )) {
 							$agregadoItem = true;
 							$nUnidadesCarro += $objItem->unidadesCedi;
 						} else {
@@ -622,7 +622,7 @@ class CarroController extends ControllerVendedor {
 					}
 					
 					$cantidadCarroUnidad = 0;
-					$position = Yii::app ()->shoppingCartSalesman->itemAt ( $objCombo->getcodigo () );
+					$position = Yii::app()->getModule('vendedor')->shoppingCartSalesman->itemAt ( $objCombo->getcodigo () );
 					
 					if ($position !== null) {
 						$cantidadCarroUnidad = $position->getQuantity ();
@@ -630,7 +630,7 @@ class CarroController extends ControllerVendedor {
 					
 					if ($cantidadCarroUnidad + $objItem->unidades <= $objSaldo->saldo) {
 						$objProductoCarro = new ProductoCarro ( $objCombo );
-						Yii::app ()->shoppingCartSalesman->put ( $objProductoCarro, false, $objItem->unidades );
+						Yii::app()->getModule('vendedor')->shoppingCartSalesman->put ( $objProductoCarro, false, $objItem->unidades );
 						
 						// calcular precio combo
 						$precioCombo = 0;
@@ -641,7 +641,7 @@ class CarroController extends ControllerVendedor {
 						}
 						
 						$objProductoCarro->setPriceUnit ( $precioCombo );
-						Yii::app ()->shoppingCartSalesman->updatePosition ( $objProductoCarro );
+						Yii::app()->getModule('vendedor')->shoppingCartSalesman->updatePosition ( $objProductoCarro );
 						
 						$agregadoItem = true;
 						$nUnidadesCarro += $objItem->unidades;
@@ -691,7 +691,7 @@ class CarroController extends ControllerVendedor {
 					continue;
 				}
 				
-				$position = Yii::app ()->shoppingCartSalesman->itemAt ( $objItem->codigoProducto );
+				$position = Yii::app()->getModule('vendedor')->shoppingCartSalesman->itemAt ( $objItem->codigoProducto );
 				$objProductoCarro = new ProductoCarro ( $objProducto );
 				
 				if ($objItem->unidades > 0) {
@@ -702,7 +702,7 @@ class CarroController extends ControllerVendedor {
 					
 					// si hay saldo, agrega a carro
 					if ($cantidadCarroUnidad + $objItem->unidades <= $objSaldo->saldoUnidad) {
-						Yii::app ()->shoppingCartSalesman->put ( $objProductoCarro, false, $objItem->unidades );
+						Yii::app()->getModule('vendedor')->shoppingCartSalesman->put ( $objProductoCarro, false, $objItem->unidades );
 						$agregadoItem = true;
 						$nUnidadesCarro += $objItem->unidades;
 					} else {
@@ -719,7 +719,7 @@ class CarroController extends ControllerVendedor {
 					
 					// si hay saldo, agrega a carro
 					if ($cantidadCarroFraccion + $objItem->fracciones <= $objSaldo->saldoFraccion) {
-						Yii::app ()->shoppingCartSalesman->put ( $objProductoCarro, true, $objItem->fracciones );
+						Yii::app()->getModule('vendedor')->shoppingCartSalesman->put ( $objProductoCarro, true, $objItem->fracciones );
 						$agregadoItem = true;
 						$nUnidadesCarro += $objItem->fracciones;
 					} else {
@@ -746,7 +746,7 @@ class CarroController extends ControllerVendedor {
 					if ($objSaldoBodega === null) {
 						$agregadoCompleto = false;
 					} else {
-						if (Yii::app ()->shoppingCartSalesman->putStored ( $objProductoCarro, $objItem->unidadesCedi )) {
+						if (Yii::app()->getModule('vendedor')->shoppingCartSalesman->putStored ( $objProductoCarro, $objItem->unidadesCedi )) {
 							$agregadoItem = true;
 							$nUnidadesCarro += $objItem->unidadesCedi;
 						} else {
@@ -772,13 +772,13 @@ class CarroController extends ControllerVendedor {
 						
 						$objProductoCarro->setBeneficios ( $objItem->listBeneficios );
 						
-						Yii::app ()->shoppingCartSalesman->updatePosition ( $objProductoCarro );
+						Yii::app()->getModule('vendedor')->shoppingCartSalesman->updatePosition ( $objProductoCarro );
 					}
 				}
 			}
 			
 			// $position->setPriceUnit(1000);
-			// Yii::app()->shoppingCartSalesman->updatePosition($position);
+			// Yii::app()->getModule('vendedor')->shoppingCartSalesman->updatePosition($position);
 		}
 		
 		if ($nUnidadesCarro == 0) {
@@ -880,7 +880,7 @@ class CarroController extends ControllerVendedor {
 				
 				if ($objDetalle->unidades > 0) {
 					$cantidadCarroUnidad = 0;
-					$position = Yii::app ()->shoppingCartSalesman->itemAt ( $objCombo->getcodigo () );
+					$position = Yii::app()->getModule('vendedor')->shoppingCartSalesman->itemAt ( $objCombo->getcodigo () );
 					
 					if ($position !== null) {
 						$cantidadCarroUnidad = $position->getQuantity ();
@@ -888,7 +888,7 @@ class CarroController extends ControllerVendedor {
 					
 					if ($cantidadCarroUnidad + $objDetalle->unidades <= $objSaldo->saldo) {
 						$objProductoCarro = new ProductoCarro ( $objCombo );
-						Yii::app ()->shoppingCartSalesman->put ( $objProductoCarro, false, $objDetalle->unidades );
+						Yii::app()->getModule('vendedor')->shoppingCartSalesman->put ( $objProductoCarro, false, $objDetalle->unidades );
 						$nUnidadesCarro += $objDetalle->unidades;
 					}
 				}
@@ -927,7 +927,7 @@ class CarroController extends ControllerVendedor {
 					continue;
 				}
 				
-				$position = Yii::app ()->shoppingCartSalesman->itemAt ( $objDetalle->codigoProducto );
+				$position = Yii::app()->getModule('vendedor')->shoppingCartSalesman->itemAt ( $objDetalle->codigoProducto );
 				
 				if ($objDetalle->unidades > 0) {
 					$cantidadCarroUnidad = 0;
@@ -938,7 +938,7 @@ class CarroController extends ControllerVendedor {
 					// si hay saldo, agrega a carro
 					if ($cantidadCarroUnidad + $objDetalle->unidades <= $objSaldo->saldoUnidad) {
 						$objProductoCarro = new ProductoCarro ( $objProducto );
-						Yii::app ()->shoppingCartSalesman->put ( $objProductoCarro, false, $objDetalle->unidades );
+						Yii::app()->getModule('vendedor')->shoppingCartSalesman->put ( $objProductoCarro, false, $objDetalle->unidades );
 						$nUnidadesCarro += $objDetalle->unidades;
 					}
 				}
@@ -1030,7 +1030,7 @@ class CarroController extends ControllerVendedor {
 		}
 		
 		$cantidadCarroUnidad = 0;
-		$position = Yii::app ()->shoppingCartSalesman->itemAt ( $objCombo->getcodigo () );
+		$position = Yii::app()->getModule('vendedor')->shoppingCartSalesman->itemAt ( $objCombo->getcodigo () );
 		
 		if ($position !== null) {
 			$cantidadCarroUnidad = $position->getQuantity ();
@@ -1045,7 +1045,7 @@ class CarroController extends ControllerVendedor {
 		}
 		
 		$objProductoCarro = new ProductoCarro ( $objCombo );
-		Yii::app ()->shoppingCartSalesman->put ( $objProductoCarro, false, $cantidad );
+		Yii::app()->getModule('vendedor')->shoppingCartSalesman->put ( $objProductoCarro, false, $cantidad );
 		
 		$canastaVista = "canasta";
 		
@@ -1056,7 +1056,7 @@ class CarroController extends ControllerVendedor {
 				'response' => array (
 						'canastaHTML' => $this->renderPartial ( $canastaVista, null, true ),
 						'mensajeHTML' => $mensajeCanasta,
-						'objetosCarro' => Yii::app ()->shoppingCartSalesman->getCount () 
+						'objetosCarro' => Yii::app()->getModule('vendedor')->shoppingCartSalesman->getCount () 
 				) 
 		) );
 		Yii::app ()->end ();
@@ -1103,7 +1103,7 @@ class CarroController extends ControllerVendedor {
 		
 		$cantidadCarroUnidad = 0;
 		$cantidadCarroBodega = 0;
-		$position = Yii::app ()->shoppingCartSalesman->itemAt ( $producto );
+		$position = Yii::app()->getModule('vendedor')->shoppingCartSalesman->itemAt ( $producto );
 		
 		if ($position !== null) {
 			$cantidadCarroUnidad = $position->getQuantityUnit ();
@@ -1171,7 +1171,7 @@ class CarroController extends ControllerVendedor {
 						'result' => 'error',
 						'response' => "La cantidad solicitada no está disponible en este momento. No hay unidades disponibles" 
 				)
-				// 'response' => 'Cantidad no disponible para entrega ' . Yii::app()->shoppingCartSalesman->getDeliveryStored() . ' hrs'
+				// 'response' => 'Cantidad no disponible para entrega ' . Yii::app()->getModule('vendedor')->shoppingCartSalesman->getDeliveryStored() . ' hrs'
 				 );
 				Yii::app ()->end ();
 			}
@@ -1179,11 +1179,11 @@ class CarroController extends ControllerVendedor {
 		
 		$objProductoCarro = new ProductoCarro ( $objProducto );
 		if ($cantidadUbicacion > 0) {
-			Yii::app ()->shoppingCartSalesman->put ( $objProductoCarro, false, $cantidadUbicacion );
+			Yii::app()->getModule('vendedor')->shoppingCartSalesman->put ( $objProductoCarro, false, $cantidadUbicacion );
 		}
 		
 		if ($cantidadBodega > 0) {
-			Yii::app ()->shoppingCartSalesman->putStored ( $objProductoCarro, $cantidadBodega );
+			Yii::app()->getModule('vendedor')->shoppingCartSalesman->putStored ( $objProductoCarro, $cantidadBodega );
 		}
 		
 		$mensajeCanasta = $this->renderPartial ( '_carroAgregado', null, true );
@@ -1194,7 +1194,7 @@ class CarroController extends ControllerVendedor {
 				'response' => array (
 						'canastaHTML' => $this->renderPartial ( $canastaVista, null, true ),
 						'mensajeHTML' => $mensajeCanasta,
-						'objetosCarro' => Yii::app ()->shoppingCartSalesman->getCount () 
+						'objetosCarro' => Yii::app()->getModule('vendedor')->shoppingCartSalesman->getCount () 
 				) 
 		) );
 		Yii::app ()->end ();
@@ -1237,8 +1237,8 @@ class CarroController extends ControllerVendedor {
 			Yii::app ()->end ();
 		}
 		
-		$position = Yii::app ()->shoppingCartSalesman->itemAt ( $id );
-		// !Yii::app()->shoppingCartSalesman->contains($id)
+		$position = Yii::app()->getModule('vendedor')->shoppingCartSalesman->itemAt ( $id );
+		// !Yii::app()->getModule('vendedor')->shoppingCartSalesman->contains($id)
 		
 		if ($position === null) {
 			echo CJSON::encode ( array (
@@ -1416,11 +1416,11 @@ class CarroController extends ControllerVendedor {
 		}
 		
 		if ($agregarU) {
-			Yii::app ()->shoppingCartSalesman->update ( $position, false, $cantidadU );
+			Yii::app()->getModule('vendedor')->shoppingCartSalesman->update ( $position, false, $cantidadU );
 		}
 		
 		if ($agregarF) {
-			Yii::app ()->shoppingCartSalesman->update ( $position, true, $cantidadF );
+			Yii::app()->getModule('vendedor')->shoppingCartSalesman->update ( $position, true, $cantidadF );
 		}
 		
 		echo CJSON::encode ( array (
@@ -1477,7 +1477,7 @@ class CarroController extends ControllerVendedor {
 			Yii::app ()->end ();
 		}
 		
-		Yii::app ()->shoppingCartSalesman->update ( $position, false, $cantidad );
+		Yii::app()->getModule('vendedor')->shoppingCartSalesman->update ( $position, false, $cantidad );
 		
 		$canastaVista = "canasta";
 		
@@ -1538,7 +1538,7 @@ class CarroController extends ControllerVendedor {
 			Yii::app ()->end ();
 		}
 		
-		Yii::app ()->shoppingCartSalesman->updateStored ( $position, $cantidad );
+		Yii::app()->getModule('vendedor')->shoppingCartSalesman->updateStored ( $position, $cantidad );
 		$canastaVista = "canasta";
 		
 		echo CJSON::encode ( array (
@@ -1561,7 +1561,7 @@ class CarroController extends ControllerVendedor {
 		
 		echo CJSON::encode ( array (
 				'result' => 'ok',
-				'response' => Yii::app ()->shoppingCartSalesman->isEmpty () 
+				'response' => Yii::app()->getModule('vendedor')->shoppingCartSalesman->isEmpty () 
 		) );
 		Yii::app ()->end ();
 	}
@@ -1577,7 +1577,7 @@ class CarroController extends ControllerVendedor {
 			Yii::app ()->end ();
 		}
 		
-		$position = Yii::app ()->shoppingCartSalesman->itemAt ( $id );
+		$position = Yii::app()->getModule('vendedor')->shoppingCartSalesman->itemAt ( $id );
 		
 		if ($position == null) {
 			echo CJSON::encode ( array (
@@ -1588,11 +1588,11 @@ class CarroController extends ControllerVendedor {
 		}
 		
 		if ($eliminar == 1) {
-			Yii::app ()->shoppingCartSalesman->update ( $position, false, 0 );
+			Yii::app()->getModule('vendedor')->shoppingCartSalesman->update ( $position, false, 0 );
 		} else if ($eliminar == 2) {
-			Yii::app ()->shoppingCartSalesman->update ( $position, true, 0 );
+			Yii::app()->getModule('vendedor')->shoppingCartSalesman->update ( $position, true, 0 );
 		} else if ($eliminar == 3) {
-			Yii::app ()->shoppingCartSalesman->updateStored ( $position, 0 );
+			Yii::app()->getModule('vendedor')->shoppingCartSalesman->updateStored ( $position, 0 );
 		} else {
 			echo CJSON::encode ( array (
 					'result' => 'error',
@@ -1609,7 +1609,7 @@ class CarroController extends ControllerVendedor {
 		Yii::app ()->end ();
 	}
 	public function actionVaciar() {
-		Yii::app ()->shoppingCartSalesman->clear ();
+		Yii::app()->getModule('vendedor')->shoppingCartSalesman->clear ();
 		
 		echo CJSON::encode ( array (
 				'result' => 'ok',
@@ -1648,7 +1648,7 @@ class CarroController extends ControllerVendedor {
 			}
 		}
 		
-		if (Yii::app ()->shoppingCartSalesman->isEmpty ()) {
+		if (Yii::app()->getModule('vendedor')->shoppingCartSalesman->isEmpty ()) {
 			Yii::app ()->session [Yii::app ()->params->vendedor ['sesion'] ['carroPagarForm']] = null;
 			
 			if ($post) {
@@ -1983,7 +1983,7 @@ class CarroController extends ControllerVendedor {
 					break;
 				case Yii::app ()->params->pagar ['pasos'] [4] :
 					$listFormaPago = FormaPago::getFormasPago(5); 
-					$modelPago->consultarBono ( Yii::app ()->shoppingCartSalesman->getTotalCost () );
+					$modelPago->consultarBono ( Yii::app()->getModule('vendedor')->shoppingCartSalesman->getTotalCost () );
 					Yii::app ()->session [Yii::app ()->params->vendedor ['sesion'] ['carroPagarForm']] = $modelPago;
 					$params ['parametros'] ['listFormaPago'] = $listFormaPago;
 					
@@ -1994,8 +1994,8 @@ class CarroController extends ControllerVendedor {
 					$params ['parametros'] ['objDireccion'] = $objDireccion;
 					$params ['parametros'] ['objFormaPago'] = $objFormaPago;
 					
-					Yii::app ()->shoppingCartSalesman->setBono ( $modelPago->calcularBonoRedimido () );
-					$modelPago->calcularConfirmacion ( Yii::app ()->shoppingCartSalesman->getPositions () );
+					Yii::app()->getModule('vendedor')->shoppingCartSalesman->setBono ( $modelPago->calcularBonoRedimido () );
+					$modelPago->calcularConfirmacion ( Yii::app()->getModule('vendedor')->shoppingCartSalesman->getPositions () );
 					break;
 			}
 			
@@ -2278,8 +2278,8 @@ class CarroController extends ControllerVendedor {
 					$params ['parametros'] ['objDireccion'] = null;
 					$params ['parametros'] ['objFormaPago'] = $objFormaPago;
 					
-					Yii::app ()->shoppingCartSalesman->setBono ( $modelPago->calcularBonoRedimido () );
-					$modelPago->calcularConfirmacion ( Yii::app ()->shoppingCartSalesman->getPositions () );
+					Yii::app()->getModule('vendedor')->shoppingCartSalesman->setBono ( $modelPago->calcularBonoRedimido () );
+					$modelPago->calcularConfirmacion ( Yii::app()->getModule('vendedor')->shoppingCartSalesman->getPositions () );
 					break;
 			}
 			
@@ -2299,8 +2299,8 @@ class CarroController extends ControllerVendedor {
 			Yii::app ()->end ();
 		}
 		
-		$modelPago->totalCompra = Yii::app ()->shoppingCartSalesman->getTotalCost ();
-		Yii::app ()->shoppingCartSalesman->setBono ( $modelPago->calcularBonoRedimido () );
+		$modelPago->totalCompra = Yii::app()->getModule('vendedor')->shoppingCartSalesman->getTotalCost ();
+		Yii::app()->getModule('vendedor')->shoppingCartSalesman->setBono ( $modelPago->calcularBonoRedimido () );
 		
 		if (! in_array ( $modelPago->tipoEntrega, Yii::app ()->params->entrega ['listaTipos'] )) {
 			Yii::app ()->user->setFlash ( 'error', "Tipo de entrega inválido, por favor seleccionar tipo de entrega." );
@@ -2311,7 +2311,7 @@ class CarroController extends ControllerVendedor {
 		if ($modelPago->tipoEntrega == Yii::app ()->params->entrega ['tipo'] ['domicilio']) {
 			$pasoValidacion = null;
 			// se valida que cada paso este realizado
-			$modelPago->validarConfirmacion ( Yii::app ()->shoppingCartSalesman->getPositions () );
+			$modelPago->validarConfirmacion ( Yii::app()->getModule('vendedor')->shoppingCartSalesman->getPositions () );
 			$pasosDisponibles = Yii::app ()->params->pagar ['pasosDisponibles'] ['domicilio'];
 			Yii::app ()->session [Yii::app ()->params->vendedor ['sesion'] ['carroPagarForm']] = $modelPago;
 			
@@ -2339,7 +2339,7 @@ class CarroController extends ControllerVendedor {
 		} else if ($modelPago->tipoEntrega == Yii::app ()->params->entrega ['tipo'] ['presencial']) {
 			$pasoValidacion = null;
 			// se valida que cada paso este realizado
-			$modelPago->validarConfirmacion ( Yii::app ()->shoppingCartSalesman->getPositions () );
+			$modelPago->validarConfirmacion ( Yii::app()->getModule('vendedor')->shoppingCartSalesman->getPositions () );
 			$pasosDisponibles = Yii::app ()->params->pagar ['pasosDisponibles'] ['domicilio'];
 			Yii::app ()->session [Yii::app ()->params->vendedor ['sesion'] ['carroPagarForm']] = $modelPago;
 			
@@ -2395,7 +2395,7 @@ class CarroController extends ControllerVendedor {
 			), true );
 			
 			Yii::app ()->session [Yii::app ()->params->vendedor ['sesion'] ['carroPagarForm']] = null;
-			Yii::app ()->shoppingCartSalesman->clear ();
+			Yii::app()->getModule('vendedor')->shoppingCartSalesman->clear ();
 			$this->render ( 'compra', array (
 					'contenido' => $contenidoSitio,
 					'objCompra' => $resultCompra ['response'] ['objCompra'] 
@@ -2417,7 +2417,7 @@ class CarroController extends ControllerVendedor {
 		$productosCompra = array ();
 		$transaction = Yii::app ()->db->beginTransaction ();
 		try {
-			Yii::app ()->shoppingCartSalesman->setBono ( $modelPago->calcularBonoRedimido () );
+			Yii::app()->getModule('vendedor')->shoppingCartSalesman->setBono ( $modelPago->calcularBonoRedimido () );
 			
 			// registrar compra compra
 			$objCompra = new Compras ();
@@ -2445,26 +2445,26 @@ class CarroController extends ControllerVendedor {
 			$objCompra->idTipoVenta = 3;
 			$objCompra->activa = 1;
 			$objCompra->invitado = ($modelPago->pagoInvitado ? 1 : 0);
-			$objCompra->codigoPerfil = Yii::app ()->shoppingCartSalesman->getCodigoPerfil ();
-			$objCompra->codigoCiudad = Yii::app ()->shoppingCartSalesman->getCodigoCiudad ();
-			$objCompra->codigoSector = Yii::app ()->shoppingCartSalesman->getCodigoSector ();
+			$objCompra->codigoPerfil = Yii::app()->getModule('vendedor')->shoppingCartSalesman->getCodigoPerfil ();
+			$objCompra->codigoCiudad = Yii::app()->getModule('vendedor')->shoppingCartSalesman->getCodigoCiudad ();
+			$objCompra->codigoSector = Yii::app()->getModule('vendedor')->shoppingCartSalesman->getCodigoSector ();
 			
 			if ($tipoEntrega == Yii::app ()->params->entrega ['tipo'] ['domicilio']) {
-				$objCompra->tiempoDomicilioCedi = Yii::app ()->shoppingCartSalesman->getDeliveryStored ();
-				$objCompra->valorDomicilioCedi = Yii::app ()->shoppingCartSalesman->getShippingStored ();
-				$objCompra->codigoCedi = Yii::app ()->shoppingCartSalesman->objSectorCiudad->objCiudad->codigoSucursal;
+				$objCompra->tiempoDomicilioCedi = Yii::app()->getModule('vendedor')->shoppingCartSalesman->getDeliveryStored ();
+				$objCompra->valorDomicilioCedi = Yii::app()->getModule('vendedor')->shoppingCartSalesman->getShippingStored ();
+				$objCompra->codigoCedi = Yii::app()->getModule('vendedor')->shoppingCartSalesman->objSectorCiudad->objCiudad->codigoSucursal;
 			} else if ($tipoEntrega == Yii::app ()->params->entrega ['tipo'] ['presencial']) {
 				$objCompra->tiempoDomicilioCedi = 0;
 				$objCompra->valorDomicilioCedi = 0;
 				$objCompra->codigoCedi = 0;
 			}
 			
-			$objCompra->subtotalCompra = Yii::app ()->shoppingCartSalesman->getCostToken ();
-			$objCompra->impuestosCompra = Yii::app ()->shoppingCartSalesman->getTaxPrice ();
-			$objCompra->baseImpuestosCompra = Yii::app ()->shoppingCartSalesman->getBaseTaxPrice ();
-			$objCompra->domicilio = Yii::app ()->shoppingCartSalesman->getShipping ();
-			$objCompra->flete = Yii::app ()->shoppingCartSalesman->getExtraShipping ();
-			$objCompra->totalCompra = Yii::app ()->shoppingCartSalesman->getTotalCost ();
+			$objCompra->subtotalCompra = Yii::app()->getModule('vendedor')->shoppingCartSalesman->getCostToken ();
+			$objCompra->impuestosCompra = Yii::app()->getModule('vendedor')->shoppingCartSalesman->getTaxPrice ();
+			$objCompra->baseImpuestosCompra = Yii::app()->getModule('vendedor')->shoppingCartSalesman->getBaseTaxPrice ();
+			$objCompra->domicilio = Yii::app()->getModule('vendedor')->shoppingCartSalesman->getShipping ();
+			$objCompra->flete = Yii::app()->getModule('vendedor')->shoppingCartSalesman->getExtraShipping ();
+			$objCompra->totalCompra = Yii::app()->getModule('vendedor')->shoppingCartSalesman->getTotalCost ();
 			
 			if (! $objCompra->save ()) {
 				throw new Exception ( "Error al guardar compra" . $objCompra->validateErrorsResponse () );
@@ -2534,11 +2534,11 @@ class CarroController extends ControllerVendedor {
 			
 			$objFormasPago = new FormasPago (); // FormaPago::model()->findByPk($modelPago->idFormaPago);
 			$objFormasPago->idCompra = $objCompra->idCompra;
-			$objFormasPago->valor = Yii::app ()->shoppingCartSalesman->getTotalCostClient ();
+			$objFormasPago->valor = Yii::app()->getModule('vendedor')->shoppingCartSalesman->getTotalCostClient ();
 			$objFormasPago->numeroTarjeta = $modelPago->numeroTarjeta;
 			$objFormasPago->cuotasTarjeta = $modelPago->cuotasTarjeta;
 			$objFormasPago->idFormaPago = $modelPago->idFormaPago;
-			$objFormasPago->valorBono = Yii::app ()->shoppingCartSalesman->getBono ();
+			$objFormasPago->valorBono = Yii::app()->getModule('vendedor')->shoppingCartSalesman->getBono ();
 			
 			if ($objFormasPago->idFormaPago == Yii::app ()->params->formaPago ['pasarela'] ['idPasarela']) {
 				$numValidacion = substr ( ($objCompra->identificacionUsuario + $objCompra->idCompra + $objCompra->totalCompra) * 863, - 7 );
@@ -2561,14 +2561,14 @@ class CarroController extends ControllerVendedor {
 					$objCompraDireccion->barrio = $modelPago->barrio;
 					$objCompraDireccion->telefono = $modelPago->telefono;
 					$objCompraDireccion->celular = $modelPago->celular;
-					$objCompraDireccion->codigoCiudad = Yii::app ()->shoppingCartSalesman->getCodigoCiudad ();
-					$objCompraDireccion->codigoSector = Yii::app ()->shoppingCartSalesman->getCodigoSector ();
+					$objCompraDireccion->codigoCiudad = Yii::app()->getModule('vendedor')->shoppingCartSalesman->getCodigoCiudad ();
+					$objCompraDireccion->codigoSector = Yii::app()->getModule('vendedor')->shoppingCartSalesman->getCodigoSector ();
 					$objCompraDireccion->correoElectronico = $modelPago->correoElectronico;
 				} else {
 					$objDireccion = DireccionesDespacho::model ()->findByPk ( $modelPago->idDireccionDespacho );
 					
-					if ($objDireccion->codigoSector == 0 && Yii::app ()->shoppingCartSalesman->getCodigoSector () != 0) {
-						$objDireccion->codigoSector = Yii::app ()->shoppingCartSalesman->getCodigoSector ();
+					if ($objDireccion->codigoSector == 0 && Yii::app()->getModule('vendedor')->shoppingCartSalesman->getCodigoSector () != 0) {
+						$objDireccion->codigoSector = Yii::app()->getModule('vendedor')->shoppingCartSalesman->getCodigoSector ();
 						$objDireccion->save ();
 					}
 					
@@ -2607,10 +2607,10 @@ class CarroController extends ControllerVendedor {
 			if (! $modelPago->pagoInvitado) {
 				$fecha = new DateTime ();
 				$parametrosPuntos = array (
-						Yii::app ()->params->puntos ['categoria'] => Yii::app ()->shoppingCartSalesman->getCategorias (),
-						Yii::app ()->params->puntos ['marca'] => Yii::app ()->shoppingCartSalesman->getMarcas (),
-						Yii::app ()->params->puntos ['proveedor'] => Yii::app ()->shoppingCartSalesman->getProveedores (),
-						Yii::app ()->params->puntos ['producto'] => Yii::app ()->shoppingCartSalesman->getProductosCantidad (),
+						Yii::app ()->params->puntos ['categoria'] => Yii::app()->getModule('vendedor')->shoppingCartSalesman->getCategorias (),
+						Yii::app ()->params->puntos ['marca'] => Yii::app()->getModule('vendedor')->shoppingCartSalesman->getMarcas (),
+						Yii::app ()->params->puntos ['proveedor'] => Yii::app()->getModule('vendedor')->shoppingCartSalesman->getProveedores (),
+						Yii::app ()->params->puntos ['producto'] => Yii::app()->getModule('vendedor')->shoppingCartSalesman->getProductosCantidad (),
 						Yii::app ()->params->puntos ['monto'] => $objCompra->subtotalCompra,
 						Yii::app ()->params->puntos ['cedula'] => array (
 								'identificacionUsuario' => Yii::app ()->controller->module->user->getCedulaCliente (),
@@ -2638,7 +2638,7 @@ class CarroController extends ControllerVendedor {
 			}
 			// -- guardar puntos //--
 			// items de compra
-			$positions = Yii::app ()->shoppingCartSalesman->getPositions ();
+			$positions = Yii::app()->getModule('vendedor')->shoppingCartSalesman->getPositions ();
 			foreach ( $positions as $position ) {
 				if ($position->isProduct ()) {
 					// actualizar saldo producto //--
@@ -2647,8 +2647,8 @@ class CarroController extends ControllerVendedor {
 						$objSaldo = ProductosSaldosTerceros::model ()->find ( array (
 								'condition' => 'codigoCiudad=:ciudad AND codigoSector=:sector AND codigoProducto=:producto',
 								'params' => array (
-										':ciudad' => Yii::app ()->shoppingCartSalesman->getCodigoCiudad (),
-										':sector' => Yii::app ()->shoppingCartSalesman->getCodigoSector (),
+										':ciudad' => Yii::app()->getModule('vendedor')->shoppingCartSalesman->getCodigoCiudad (),
+										':sector' => Yii::app()->getModule('vendedor')->shoppingCartSalesman->getCodigoSector (),
 										':producto' => $position->objProducto->codigoProducto 
 								) 
 						) );
@@ -2656,8 +2656,8 @@ class CarroController extends ControllerVendedor {
 						$objSaldo = ProductosSaldos::model ()->find ( array (
 								'condition' => 'codigoCiudad=:ciudad AND codigoSector=:sector AND codigoProducto=:producto',
 								'params' => array (
-										':ciudad' => Yii::app ()->shoppingCartSalesman->getCodigoCiudad (),
-										':sector' => Yii::app ()->shoppingCartSalesman->getCodigoSector (),
+										':ciudad' => Yii::app()->getModule('vendedor')->shoppingCartSalesman->getCodigoCiudad (),
+										':sector' => Yii::app()->getModule('vendedor')->shoppingCartSalesman->getCodigoSector (),
 										':producto' => $position->objProducto->codigoProducto 
 								) 
 						) );
@@ -2698,7 +2698,7 @@ class CarroController extends ControllerVendedor {
 						$objSaldoBodega = ProductosSaldosCedi::model ()->find ( array (
 								'condition' => 'codigoCedi=:cedi AND codigoProducto=:producto',
 								'params' => array (
-										':cedi' => Yii::app ()->shoppingCartSalesman->getObjCiudad ()->codigoSucursal,
+										':cedi' => Yii::app()->getModule('vendedor')->shoppingCartSalesman->getObjCiudad ()->codigoSucursal,
 										':producto' => $position->objProducto->codigoProducto 
 								) 
 						) );
@@ -2882,8 +2882,8 @@ class CarroController extends ControllerVendedor {
 					$objSaldo = ComboSectorCiudad::model ()->find ( array (
 							'condition' => 'codigoCiudad=:ciudad AND codigoSector=:sector AND idCombo=:combo',
 							'params' => array (
-									':ciudad' => Yii::app ()->shoppingCartSalesman->getCodigoCiudad (),
-									':sector' => Yii::app ()->shoppingCartSalesman->getCodigoSector (),
+									':ciudad' => Yii::app()->getModule('vendedor')->shoppingCartSalesman->getCodigoCiudad (),
+									':sector' => Yii::app()->getModule('vendedor')->shoppingCartSalesman->getCodigoSector (),
 									':combo' => $position->objCombo->idCombo 
 							) 
 					) );
@@ -3092,28 +3092,28 @@ class CarroController extends ControllerVendedor {
 			$objCotizacion = new Cotizaciones ();
 			$objCotizacion->identificacionUsuario = Yii::app ()->controller->module->user->getCedulaCliente ();
 			
-			$objCotizacion->codigoPerfil = Yii::app ()->shoppingCartSalesman->getCodigoPerfil ();
-			$objCotizacion->codigoCiudad = Yii::app ()->shoppingCartSalesman->getCodigoCiudad ();
-			$objCotizacion->codigoSector = Yii::app ()->shoppingCartSalesman->getCodigoSector ();
+			$objCotizacion->codigoPerfil = Yii::app()->getModule('vendedor')->shoppingCartSalesman->getCodigoPerfil ();
+			$objCotizacion->codigoCiudad = Yii::app()->getModule('vendedor')->shoppingCartSalesman->getCodigoCiudad ();
+			$objCotizacion->codigoSector = Yii::app()->getModule('vendedor')->shoppingCartSalesman->getCodigoSector ();
 			
-			$objCotizacion->tiempoDomicilioCedi = Yii::app ()->shoppingCartSalesman->getDeliveryStored ();
-			$objCotizacion->valorDomicilioCedi = Yii::app ()->shoppingCartSalesman->getShippingStored ();
-			$objCotizacion->codigoCedi = Yii::app ()->shoppingCartSalesman->objSectorCiudad->objCiudad->codigoSucursal;
+			$objCotizacion->tiempoDomicilioCedi = Yii::app()->getModule('vendedor')->shoppingCartSalesman->getDeliveryStored ();
+			$objCotizacion->valorDomicilioCedi = Yii::app()->getModule('vendedor')->shoppingCartSalesman->getShippingStored ();
+			$objCotizacion->codigoCedi = Yii::app()->getModule('vendedor')->shoppingCartSalesman->objSectorCiudad->objCiudad->codigoSucursal;
 			
-			$objCotizacion->subtotalCompra = Yii::app ()->shoppingCartSalesman->getCostToken ();
-			$objCotizacion->impuestosCompra = Yii::app ()->shoppingCartSalesman->getTaxPrice ();
-			$objCotizacion->baseImpuestosCompra = Yii::app ()->shoppingCartSalesman->getBaseTaxPrice ();
-			$objCotizacion->domicilio = Yii::app ()->shoppingCartSalesman->getShipping ();
-			$objCotizacion->flete = Yii::app ()->shoppingCartSalesman->getExtraShipping ();
-			$objCotizacion->totalCompra = Yii::app ()->shoppingCartSalesman->getTotalCost ();
-			$objCotizacion->ahorroCompra = Yii::app ()->shoppingCartSalesman->getDiscountPrice ( true );
+			$objCotizacion->subtotalCompra = Yii::app()->getModule('vendedor')->shoppingCartSalesman->getCostToken ();
+			$objCotizacion->impuestosCompra = Yii::app()->getModule('vendedor')->shoppingCartSalesman->getTaxPrice ();
+			$objCotizacion->baseImpuestosCompra = Yii::app()->getModule('vendedor')->shoppingCartSalesman->getBaseTaxPrice ();
+			$objCotizacion->domicilio = Yii::app()->getModule('vendedor')->shoppingCartSalesman->getShipping ();
+			$objCotizacion->flete = Yii::app()->getModule('vendedor')->shoppingCartSalesman->getExtraShipping ();
+			$objCotizacion->totalCompra = Yii::app()->getModule('vendedor')->shoppingCartSalesman->getTotalCost ();
+			$objCotizacion->ahorroCompra = Yii::app()->getModule('vendedor')->shoppingCartSalesman->getDiscountPrice ( true );
 			
 			if (! $objCotizacion->save ()) {
 				throw new Exception ( "Error al guardar cotizacion" . $objCotizacion->validateErrorsResponse () );
 			}
 			
 			// items de compra
-			$positions = Yii::app ()->shoppingCartSalesman->getPositions ();
+			$positions = Yii::app()->getModule('vendedor')->shoppingCartSalesman->getPositions ();
 			foreach ( $positions as $position ) {
 				if ($position->isProduct ()) {
 					$objItem = new CotizacionesItems ();
@@ -3226,35 +3226,35 @@ class CarroController extends ControllerVendedor {
 	}
 	public function actionList() {
 		// Yii::app()->session[Yii::app()->params->sesion['carroPagarForm']] = null;
-		// Yii::app()->shoppingCartSalesman->clear();
+		// Yii::app()->getModule('vendedor')->shoppingCartSalesman->clear();
 		// exit();
-		// CVarDumper::dump(Yii::app()->shoppingCartSalesman->itemAt(91269), 2, true);
+		// CVarDumper::dump(Yii::app()->getModule('vendedor')->shoppingCartSalesman->itemAt(91269), 2, true);
 		// echo "<br/>";
 		// echo "<br/>";
-		echo "Descuento: " . Yii::app ()->shoppingCartSalesman->getDiscountPrice ();
+		echo "Descuento: " . Yii::app()->getModule('vendedor')->shoppingCartSalesman->getDiscountPrice ();
 		echo "<br/>";
-		echo "ciudad: " . Yii::app ()->shoppingCartSalesman->getCodigoCiudad ();
+		echo "ciudad: " . Yii::app()->getModule('vendedor')->shoppingCartSalesman->getCodigoCiudad ();
 		echo "<br/>";
-		echo "sector: " . Yii::app ()->shoppingCartSalesman->getCodigoSector ();
+		echo "sector: " . Yii::app()->getModule('vendedor')->shoppingCartSalesman->getCodigoSector ();
 		echo "<br/>";
-		echo "perfil: " . Yii::app ()->shoppingCartSalesman->getCodigoPerfil ();
+		echo "perfil: " . Yii::app()->getModule('vendedor')->shoppingCartSalesman->getCodigoPerfil ();
 		echo "<br/>";
-		echo "cantidad productos: " . Yii::app ()->shoppingCartSalesman->getCount ();
+		echo "cantidad productos: " . Yii::app()->getModule('vendedor')->shoppingCartSalesman->getCount ();
 		echo "<br/>";
-		echo "cantidad items: " . Yii::app ()->shoppingCartSalesman->getItemsCount ();
+		echo "cantidad items: " . Yii::app()->getModule('vendedor')->shoppingCartSalesman->getItemsCount ();
 		echo "<br/>";
-		echo "costo total: " . Yii::app ()->shoppingCartSalesman->getCost ();
+		echo "costo total: " . Yii::app()->getModule('vendedor')->shoppingCartSalesman->getCost ();
 		echo "<br/>";
-		echo "costo total: " . Yii::app ()->shoppingCartSalesman->getTotalCost ();
+		echo "costo total: " . Yii::app()->getModule('vendedor')->shoppingCartSalesman->getTotalCost ();
 		echo "<br/>";
-		// echo "tiempo: " . Yii::app()->shoppingCartSalesman->getDelivery();
+		// echo "tiempo: " . Yii::app()->getModule('vendedor')->shoppingCartSalesman->getDelivery();
 		// echo "<br/>";
-		echo "servicio: " . Yii::app ()->shoppingCartSalesman->getShipping ();
+		echo "servicio: " . Yii::app()->getModule('vendedor')->shoppingCartSalesman->getShipping ();
 		echo "<br/>";
 		
 		echo "<br/>";
 		
-		$positions = Yii::app ()->shoppingCartSalesman->getPositions ();
+		$positions = Yii::app()->getModule('vendedor')->shoppingCartSalesman->getPositions ();
 		foreach ( $positions as $position ) {
 			echo "Id: " . $position->getId ();
 			echo "<br/>";
@@ -3423,7 +3423,7 @@ class CarroController extends ControllerVendedor {
 		
 		// validar que el valor total de compra no sea inferior al valor de el bono
 		
-		if (Yii::app ()->shoppingCartSalesman->getCost () < $bonoTienda->valorMinCompra) {
+		if (Yii::app()->getModule('vendedor')->shoppingCartSalesman->getCost () < $bonoTienda->valorMinCompra) {
 			echo CJSON::encode ( array (
 					'result' => 'error',
 					'response' => 'El valor de la compra debe ser mayor a ' . Yii::app ()->numberFormatter->format ( Yii::app ()->params->formatoMoneda ['patron'], $bonoTienda->valorMinCompra, Yii::app ()->params->formatoMoneda ['moneda'] ) 
@@ -3503,15 +3503,15 @@ class CarroController extends ControllerVendedor {
 	 * public function actionPuntos(){
 	 * $fecha = new DateTime;
 	 * $parametrosPuntos = array(
-	 * Yii::app()->params->puntos['categoria'] => Yii::app()->shoppingCartSalesman->getCategorias(),
-	 * Yii::app()->params->puntos['marca'] => Yii::app()->shoppingCartSalesman->getMarcas(),
-	 * Yii::app()->params->puntos['proveedor'] => Yii::app()->shoppingCartSalesman->getProveedores(),
-	 * Yii::app()->params->puntos['producto'] => Yii::app()->shoppingCartSalesman->getProductosCantidad(),
-	 * Yii::app()->params->puntos['monto'] => Yii::app()->shoppingCartSalesman->getTotalCost(),
+	 * Yii::app()->params->puntos['categoria'] => Yii::app()->getModule('vendedor')->shoppingCartSalesman->getCategorias(),
+	 * Yii::app()->params->puntos['marca'] => Yii::app()->getModule('vendedor')->shoppingCartSalesman->getMarcas(),
+	 * Yii::app()->params->puntos['proveedor'] => Yii::app()->getModule('vendedor')->shoppingCartSalesman->getProveedores(),
+	 * Yii::app()->params->puntos['producto'] => Yii::app()->getModule('vendedor')->shoppingCartSalesman->getProductosCantidad(),
+	 * Yii::app()->params->puntos['monto'] => Yii::app()->getModule('vendedor')->shoppingCartSalesman->getTotalCost(),
 	 * Yii::app()->params->puntos['cedula'] => Yii::app()->user->name,
 	 * Yii::app()->params->puntos['rango'] => $fecha,
 	 * Yii::app()->params->puntos['cumpleanhos'] => Yii::app()->session[Yii::app()->params->usuario['sesion']]->objUsuarioExtendida->fechaNacimiento,
-	 * Yii::app()->params->puntos['clientefielCompra'] => Yii::app()->shoppingCartSalesman->getCost(),
+	 * Yii::app()->params->puntos['clientefielCompra'] => Yii::app()->getModule('vendedor')->shoppingCartSalesman->getCost(),
 	 * );
 	 *
 	 * echo "-- PARAMETROS --<br/>";

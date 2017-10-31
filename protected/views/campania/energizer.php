@@ -61,7 +61,7 @@ $this->metaTags = "<meta http-equiv='X-UA-Compatible' content='IE=edge'>
       .text-bg-yellow span {font-size: 22px;}
       .precaucion {font-size: 18px;margin-top: 34%;}
       .lista {font-size: 19px;margin-top: 29px;}
-      .fot-product { margin-top: -8.3%;}
+      .fot-product { margin-top: -10.3%;}
     }
     @media (min-width: 1400px) and (max-width: 1500px) {
       .background-black .content h1 { font-size: 53px;}
@@ -122,26 +122,25 @@ $this->metaTags = "<meta http-equiv='X-UA-Compatible' content='IE=edge'>
 <img class="img-responsive-movil" src="<?= Yii::app()->request->baseUrl ?>/images/contenido/energizer/banner.jpg" alt="Energizer max porwer seal">
 <div class="background-black" style="padding: 0;margin-top: -11px;">
   <div class="content">
-    <div class="menu">
+    <center>
       <a href="<?= Yii::app()->request->baseUrl ?>/pilas-energizer"><h4 class="btn-menu active"><span class="glyphicon glyphicon-menu-right" aria-hidden="true"></span> Pilas PowerSeal</h4></a>
       <a href="<?= Yii::app()->request->baseUrl ?>/pilas-especiales-energizer"><h4 class="btn-menu"><span class="glyphicon glyphicon-menu-right" aria-hidden="true"></span> Pilas especiales</h4></a>
       <a href="<?= Yii::app()->request->baseUrl ?>/pilas-auditivas-energizer"><h4 class="btn-menu "><span class="glyphicon glyphicon-menu-right" aria-hidden="true"></span> Pilas Auditivas</h4></a>
       <a href="<?= Yii::app()->request->baseUrl ?>/pilas-recargables-energizer"><h4 class="btn-menu"><span class="glyphicon glyphicon-menu-right" aria-hidden="true"></span> Línea recargable</h4></a>
-    </div>
+    </center>
     <h1 class="first-title" style="font-size: 27px;">Energizer max AA con tecnología PowerSeal plus</h1>
     <h2 style="font-size: 19px;letter-spacing: 1px;">significa que puedes estar seguro de que siempre tendrás energía cuando más la necesitas.</h2>
     <!-- <h3 style="font-size: 16px;">¡Energizer se enorgullece en presentar Power Seal Technology!</h3> -->
     <div class="lista" style="font-size: 17px;margin-top: 30px;line-height: 22px;">
-      <!-- <p>* La tecnología PoweSeal es un mensaje único en las pilas Energizer MAX AA & AAA.</p> -->
-      <!-- <p>* Es el resultado de varios años de investigación e innovación derivado de percerpciones del consumidor.</p> -->
-      <p>* La tecnología PowerSeal guarda la energía hasta por 10 años en almacenamiento.</p>
-      <p>* Ahora con hasta 30% de mayor duración que las Energizer Max anteriores en cámaras digitales.</p>
-      <p>* Protege sus equipos de las fugas hasta 2 años después del agotamiento total.</p>
+      <ul>
+        <li>La tecnología PowerSeal guarda la energía hasta por 10 años*** en almacenamiento.</li>
+        <li>Ahora con hasta 30% de mayor duración* que las Energizer Max anteriores en cámaras digitales.</li>
+        <li>Protege sus equipos** de las fugas hasta 2 años después del agotamiento total.</li>
+      </ul>
     </div>
     <p class="usos">Usos recomendados:</p>
     <img class="img-responsive-movil" src="<?= Yii::app()->request->baseUrl ?>/images/contenido/energizer/usos.png" alt="Usos">
     <p class="text-bg-yellow" style="font-size: 20px;margin: 31px 0px;">Primeras pilas alcalinas AA y AAA <br> <span style="font-size: 27px;">Sin mercurio del mundo</span></p>
-    <p class="precaucion" style="font-size: 20px;margin-top: 36%;">* No derraman sus equipos.</p>
     <img class="block-yellow" style="width: 95%;height: 75px;margin-top: -35.7%;" src="<?= Yii::app()->request->baseUrl ?>/images/contenido/energizer/bg-yellow.jpg">
     <center>
       <img class="img-responsive-movil" style="margin-top20px;" src="<?= Yii::app()->request->baseUrl ?>/images/contenido/energizer/aa2.png" alt="AA2 Energizer Max PowerSeal">
@@ -154,9 +153,9 @@ $this->metaTags = "<meta http-equiv='X-UA-Compatible' content='IE=edge'>
       </a>
     </center>
     <p class="text-foot" style="font-size: 12px;padding-bottom: 30px;margin-bottom: 0;">
-      *Del derrame de las pilas usadas hasta 2 años. <br>
-      *En comparación con Energizer Max anterior en la prueba de DSC (Cámara Digital Fija) de la norma ANSI.
-    </p>
+      * En comparación con Energizer Max anterior en la prueba de DSC (Cámara Digital Fija) de la norma ANSI. <br>
+      ** Del derrame de las pilas usadas hasta 2 años.  <br>
+      *** Vida de anaquel.  </p>
   </div>
 </div>
 <!---FIN VERSIÓN MÓVIL-->
@@ -172,28 +171,28 @@ $this->metaTags = "<meta http-equiv='X-UA-Compatible' content='IE=edge'>
     <a href="<?= Yii::app()->request->baseUrl ?>/pilas-recargables-energizer"><h4 class="btn-menu"><span class="glyphicon glyphicon-menu-right" aria-hidden="true"></span> Línea recargable</h4></a>
     <h1 class="first-title">Energizer max AA con tecnología PowerSeal plus</h1>
     <h2>significa que puedes estar seguro de que siempre tendrás energía cuando más la necesitas.</h2>
-    <!-- <h3>¡Energizer se enorgullece en presentar Power Seal Technology!</h3> -->
     <div class="lista" style="margin-bottom: 55px;">
-      <!-- <p>* La tecnología PoweSeal es un mensaje único en las pilas Energizer MAX AA & AAA.</p> -->
-      <!-- <p>* Es el resultado de varios años de investigación e innovación derivado de percerpciones del consumidor.</p> -->
-      <p>* La tecnología PowerSeal guarda la energía hasta por 10 años en almacenamiento.</p>
-      <p>* Ahora con hasta 30% de mayor duración que las Energizer Max anteriores en cámaras digitales.</p>
-      <p>* Protege sus equipos de las fugas hasta 2 años después del agotamiento total.</p>
+      <ul>
+        <li>La tecnología PowerSeal guarda la energía hasta por 10 años*** en almacenamiento.</li>
+        <li>Ahora con hasta 30% de mayor duración* que las Energizer Max anteriores en cámaras digitales.</li>
+        <li>Protege sus equipos** de las fugas hasta 2 años después del agotamiento total.</li>
+      </ul>
     </div>
     <div class="col-sm-4 col-md-4">
       <p class="usos">Usos recomendados:</p>
       <img class="img-responsive" style="margin-top: 30px;" src="<?= Yii::app()->request->baseUrl ?>/images/contenido/energizer/usos.png" alt="Usos">
       <p class="text-bg-yellow">Primeras pilas alcalinas AA y AAA <br> <span>Sin mercurio del mundo</span></p>
-      <p class="precaucion">* No derraman sus equipos.</p>
     </div>
     <div class="col-sm-4 col-md-4" style="z-index:100;">
       <img class="img-responsive product" src="<?= Yii::app()->request->baseUrl ?>/images/contenido/energizer/aa2.png" alt="AA2 Energizer Max PowerSeal">
+      <h3 style="color: #fff;font-size: 15px;margin: 0 auto 15px;text-align: center;">Pila Energizer alkalina AA</h3>
       <a href="<?php echo CController::createUrl('/catalogo/producto', array('producto' => 15620)) ?>">
         <img class="img-responsive btn-compra" src="<?= Yii::app()->request->baseUrl ?>/images/contenido/energizer/comprar-online.png" alt="Comprar Online">
       </a>
     </div>
     <div class="col-sm-4 col-md-4" style="z-index:100;">
       <img class="img-responsive product" src="<?= Yii::app()->request->baseUrl ?>/images/contenido/energizer/aaa2.png" alt="AA2 Energizer Max PowerSeal">
+      <h3 style="color: #fff;font-size: 15px;margin: 0 auto 15px;text-align: center;">Pila Energizer alkalina AAA</h3>
       <a href="<?php echo CController::createUrl('/catalogo/producto', array('producto' => 15621)) ?>">
         <img class="img-responsive btn-compra" src="<?= Yii::app()->request->baseUrl ?>/images/contenido/energizer/comprar-online.png" alt="Comprar Online">
       </a>
@@ -205,9 +204,9 @@ $this->metaTags = "<meta http-equiv='X-UA-Compatible' content='IE=edge'>
   </div>
   <div class="content">
     <p class="text-foot">
-      *Del derrame de las pilas usadas hasta 2 años. <br>
-      *En comparación con Energizer Max anterior en la prueba de DSC (Cámara Digital Fija) de la norma ANSI.
-    </p>
+      * En comparación con Energizer Max anterior en la prueba de DSC (Cámara Digital Fija) de la norma ANSI. <br>
+      ** Del derrame de las pilas usadas hasta 2 años.  <br>
+      *** Vida de anaquel.  </p>
   </div>
 </div>
 <?php endif; ?>

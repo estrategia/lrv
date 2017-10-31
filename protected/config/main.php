@@ -23,6 +23,7 @@ return array(
         /*'ext.shoppingCartSalesman.*',
         'ext.shoppingCartVitalCall.*',
         'ext.shoppingCartNationalSale.*'*/
+
     ),
 	'onBeginRequest' => array('WorldUrlManager', 'initRules'),
     'modules' => require(dirname(__FILE__) . '/modules.php'),
@@ -56,11 +57,14 @@ return array(
         'shoppingCartNationalSale' => array(
             'class' => 'ext.shoppingCartNationalSale.EShoppingCart',
         ),*/
+<<<<<<< HEAD
     	'JWT' => array(
     		'class' => 'ext.jwt.JWT',
     		'key' => 'larebajavirtual.com',
     	),
     	
+=======
+>>>>>>> e61a58f30bd47093b5e6fd1ee9f4042ba255786d
         'ePdf' => array(
             'class' => 'ext.yii-pdf.EYiiPdf',
             'params' => array(
@@ -73,8 +77,6 @@ return array(
                 ),
             ),
         ),
-    	
-    		
         'log' => array(
             'class' => 'CLogRouter',
             'routes' => array(
