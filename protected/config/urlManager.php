@@ -19,7 +19,7 @@ return array(
         'metamucil-facilita-transito-intestinal' => 'publicidad/contenido/nombre/metamucil-facilita-transito-intestinal',
         'nestle-nan-optipro' => 'publicidad/contenido/nombre/nestle-nan-optipro',
         'recetas-nestle-nan-optipro' => 'publicidad/contenido/nombre/nan-recetas',
-        'mas-informacion-nan' => 'publicidad/contenido/nombre/mas-informacion-nan',
+        // 'mas-informacion-nan' => 'publicidad/contenido/nombre/mas-informacion-nan',
         'parodontax' => 'publicidad/contenido/nombre/parodontax',
         'porque-elejir-metamucil' => 'publicidad/contenido/nombre/porque-elejir-metamucil',
         'prebioticos-klim' => 'publicidad/contenido/nombre/prebioticos-klim',

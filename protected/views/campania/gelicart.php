@@ -50,14 +50,17 @@ $this->metaTags = "
     .video iframe{position: absolute;display: block;top: 0;left: 0;width: 100%;height: 100%;}
     .content-video {margin: 0 20%;padding: 25px;background-color: #fff;border-radius: 25px;}
     .content-video hr {border-top: 4px solid #F18930;}
-    .fa {background-color: #fff;color: #DA8A39;padding: 10px;border-radius: 50%;width: 40px;height: 40px;margin-right: 8px;margin-top: 20px;}
+    .fa {background-color: #fff;color: #DA8A39;padding: 10px;border-radius: 50%;width: 40px;height: 40px;margin-right: 8px;margin-top: 5px;}
     sub, sup {font-size: 60% !important;}
     .section-intro-m {padding:0 15px 25px;text-align: center;}
     .iconos-g{width: 170px;margin: 0 auto;display: block;}
+    .fa-facebook::before {font-size: 19px;}
+    .fa-instagram::before {font-size: 19px;}
+
   </style>
 ";
 ?>
-<!-- <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css"> -->
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
 <!--Versión movil-->
 <?php if ($this->isMobile): ?>
 <div class="section-logo"><img width="120" class="img-responsive" src="<?= Yii::app()->request->baseUrl ?>/images/contenido/gelicart/logo-sanofi.png" alt="Sanofi"></div>
@@ -110,7 +113,7 @@ $this->metaTags = "
   <h2 style="font-size: 22px;">¿Cómo consumir Gelicart<sup>®</sup>?<sup>¹</sup></h2>
   <div class="content-video" style="margin: 0 5%;border-radius: 15px;">
     <div class="video">
-      <iframe width="560" height="315" src="https://www.youtube.com/embed/vmLJmfpcYWE?rel=0&amp;showinfo=0" frameborder="0" allowfullscreen></iframe>
+      <iframe width="560" height="315" src="https://www.youtube.com/embed/2b6EE7LD1zY?rel=0&amp;showinfo=0" frameborder="0" allowfullscreen></iframe>
     </div>
     <hr>
     <p style="font-size: 12px;margin-bottom:0px;">Sin sabor, sin olor, Gelicart<sup>®</sup> puede ser mezclado en cualquier alimento líquido o alimento de tu preferencia, vierte el contenido total de 1 sobre <br>
@@ -124,11 +127,11 @@ $this->metaTags = "
     NO SIRVE PARA EL TRATAMIENTO, CURA O PREVENCIÓN DE ALGUNA ENFERMEDAD. ESTE PRODUCTO ES UN SUPLEMENTO DIETARIO, NO ES UN MEDICAMENTO Y NO SUPLE UNA
     ALIMENTACIÓN EQUILIBRADA. REGISTRO SANITARIO INVIMA SD2013-0002862.
 </section>
-<!-- <section class="section-social" style="font-size: 13px;">
-  Visita nuestra página <u>www.gelicart.com.co </u><br>
+<section class="section-social" style="font-size: 13px;">
+  <p>Visita nuestra página <u>www.gelicart.com.co </u></p>
   <i class="fa fa-facebook"  style="background-color: #fff;color: #DA8A39;padding: 5px;border-radius: 50%;width: 13px;height: 13px;margin-right: 8px;margin-top: 20px;" aria-hidden="true"></i>gelicartcolombia
   <i class="fa fa-instagram" style="margin-left: 15px;background-color: #fff;color: #DA8A39;padding: 5px;border-radius: 50%;width: 13px;height: 13px;margin-right: 8px;margin-top: 20px;" aria-hidden="true"></i>  @gelicartco
-</section> -->
+</section>
 <section class="programa-hora" style="font-size: 16px;">
   <img width="40" src="<?= Yii::app()->request->baseUrl ?>/images/contenido/pantene/carrito.png"> <br>
   <span style="font-family:HelveticaNeueLight;color:#363636;">Ahora comprando en </span><span style="font-family:HelveticaNeue-BlackCond;color: #BF1A24;letter-spacing: 1px;">larebajavirtual.com</span><span style="color:#717175;font-family:HelveticaNeueItalic;font-weight: bold;">, <br> programa tu hora y lugar de entrega </span>
@@ -226,7 +229,7 @@ $this->metaTags = "
   <h2>¿Cómo consumir Gelicart<sup>®</sup>?<sup>¹</sup></h2>
   <div class="content-video">
     <div class="video">
-      <iframe width="560" height="315" src="https://www.youtube.com/embed/vmLJmfpcYWE?rel=0&amp;showinfo=0" frameborder="0" allowfullscreen></iframe>
+      <iframe width="560" height="315" src="https://www.youtube.com/embed/2b6EE7LD1zY?rel=0&amp;showinfo=0" frameborder="0" allowfullscreen></iframe>
     </div>
     <hr>
     <p style="font-size: 12px;margin-bottom:0px;">Sin sabor, sin olor, Gelicart<sup>®</sup> puede ser mezclado en cualquier alimento líquido o alimento de tu preferencia, vierte el contenido total de 1 sobre <br>
@@ -245,11 +248,11 @@ $this->metaTags = "
     </div>
   </div>
 </section>
-<!-- <section class="section-social" style="font-size: 13px;">
-  Visita nuestra página <u>www.gelicart.com.co </u><br>
+<section class="section-social" style="font-size: 13px;">
+<p>  Visita nuestra página <u>www.gelicart.com.co </u></p>
   <i class="fa fa-facebook" aria-hidden="true"></i>gelicartcolombia
   <i class="fa fa-instagram" style="margin-left: 50px;" aria-hidden="true"></i>  @gelicartco
-</section> -->
+</section>
 <section class="programa-hora">
   <span style="font-family:HelveticaNeueLight;color:#363636;">Ahora comprando en </span><span style="font-family:HelveticaNeue-BlackCond;color: #BF1A24;font-size: 23px;letter-spacing: 1px;">larebajavirtual.com</span><span style="color:#717175;font-family:HelveticaNeueItalic;font-weight: bold;">, programa tu hora y lugar de entrega </span><img width="50" style="margin-left:6px;" src="<?= Yii::app()->request->baseUrl ?>/images/contenido/pantene/carrito.png">
 </section>
