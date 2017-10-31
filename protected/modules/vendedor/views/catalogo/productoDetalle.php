@@ -197,7 +197,7 @@
 
     <div class="cdtl_div_ln"></div>
 
-    <?php ProductoView::generarDetalle($objProducto->objDetalle) ?>
+    <?php //ProductoView::generarDetalle($objProducto->objDetalle) ?>
 
     <div class="cdtl_div_ln"></div>
 

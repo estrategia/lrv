@@ -264,7 +264,8 @@ return array(
         'codigoEspecial' => '/images/codigoespecial/',
         'productos' => array(
             1 => '/images/productos/thumb/',
-            2 => '/images/productos/'
+            2 => '/images/productos/',
+            'detalleImagenes' => '/images/productos-detalle/',
         ),
         'combos' => array(
             1 => '/images/combos/thumb/',

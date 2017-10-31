@@ -1,4 +1,115 @@
 20171030 -- MASM
+---- DETALLE PRODUCTO
+-- BASE DATOS
+CREATE TABLE IF NOT EXISTS t_ProductoDetalle (
+  idProductoDetalle BIGINT(19) UNSIGNED NOT NULL AUTO_INCREMENT,
+  codigoProducto INT(10) UNSIGNED NOT NULL,
+  titulo VARCHAR(45) NOT NULL,
+  contenidoEscritorio LONGTEXT NOT NULL,
+  contenidoMovil LONGTEXT NOT NULL,
+  estado TINYINT(1) NOT NULL DEFAULT 1,
+  fechaCreacion DATETIME NOT NULL,
+  fechaActualizacion TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  INDEX fk_t_ProductoDetalle_m_Producto1_idx (codigoProducto ASC),
+  PRIMARY KEY (idProductoDetalle),
+  CONSTRAINT fk_t_ProductoDetalle_m_Producto1
+    FOREIGN KEY (codigoProducto)
+    REFERENCES m_Producto (codigoProducto)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION)
+ENGINE = InnoDB;
+
+CREATE TABLE IF NOT EXISTS t_ProductoDetalleImagenes (
+  idProductoDetalleImagen BIGINT(19) UNSIGNED NOT NULL AUTO_INCREMENT,
+  idProductoDetalle BIGINT(19) UNSIGNED NOT NULL,
+  rutaImagenEscritorio VARCHAR(255) NOT NULL,
+  rutaImagenMovil VARCHAR(255) NOT NULL,
+  INDEX fk_t_ProductoDetalleImagenes_t_ProductoDetalle1_idx (idProductoDetalle ASC),
+  PRIMARY KEY (idProductoDetalleImagen),
+  CONSTRAINT fk_t_ProductoDetalleImagenes_t_ProductoDetalle1
+    FOREIGN KEY (idProductoDetalle)
+    REFERENCES t_ProductoDetalle (idProductoDetalle)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION)
+ENGINE = InnoDB;
+
+CREATE TABLE IF NOT EXISTS t_ProductoDetalleVideos (
+  idProductoDetalleVideo BIGINT(19) UNSIGNED NOT NULL AUTO_INCREMENT,
+  idProductoDetalle BIGINT(19) UNSIGNED NOT NULL,
+  urlVideo VARCHAR(255) NOT NULL,
+  PRIMARY KEY (idProductoDetalleVideo),
+  INDEX fk_t_ProductoDetalleVideos_t_ProductoDetalle1_idx (idProductoDetalle ASC),
+  CONSTRAINT fk_t_ProductoDetalleVideos_t_ProductoDetalle1
+    FOREIGN KEY (idProductoDetalle)
+    REFERENCES t_ProductoDetalle (idProductoDetalle)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION)
+ENGINE = InnoDB;
+
+---- DETALLE PRODUCTO
+-- ARCHIVOS
+	modified:   cangedev.txt
+	modified:   js/desktop.js
+	modified:   protected/components/Controller.php
+	modified:   protected/config/database.php
+	modified:   protected/config/params.php
+	modified:   protected/controllers/CatalogoController.php
+	modified:   protected/controllers/CatalogoController_.php
+	modified:   protected/controllers/RestBonosTiendaController.php
+	modified:   protected/extensions/shoppingCartVitalCall/EShoppingCart.php
+	modified:   protected/models/FormaPago.php
+	modified:   protected/models/Producto.php
+	modified:   protected/models/ProductoDetalle.php
+	modified:   protected/modules/callcenter/modules/telefarma/controllers/CarroController.php
+	modified:   protected/modules/callcenter/modules/telefarma/controllers/CarroTestController.php
+	modified:   protected/modules/callcenter/modules/telefarma/controllers/CatalogoController.php
+	modified:   protected/modules/callcenter/modules/telefarma/controllers/SitioController.php
+	modified:   protected/modules/callcenter/modules/telefarma/models/FormaPagoTelefarmaForm.php
+	modified:   protected/modules/callcenter/modules/telefarma/views/carro/_carro.php
+	modified:   protected/modules/callcenter/modules/telefarma/views/carro/_carroBodega.php
+	modified:   protected/modules/callcenter/modules/telefarma/views/carro/_carroElementoBodega.php
+	modified:   protected/modules/callcenter/modules/telefarma/views/carro/_carroElementoProducto.php
+	modified:   protected/modules/callcenter/modules/telefarma/views/carro/_paso2.php
+	modified:   protected/modules/callcenter/modules/telefarma/views/carro/canasta.php
+	modified:   protected/modules/callcenter/modules/telefarma/views/carro/carro.php
+	modified:   protected/modules/callcenter/modules/telefarma/views/carro/compraCorreo.php
+	modified:   protected/modules/callcenter/modules/telefarma/views/catalogo/_productoElemento.php
+	modified:   protected/modules/callcenter/modules/telefarma/views/catalogo/bodegaDetalle.php
+	modified:   protected/modules/callcenter/modules/telefarma/views/catalogo/d_productoDetalle.php
+	modified:   protected/modules/callcenter/modules/vitalcall_old/controllers/CarroController.php
+	modified:   protected/modules/callcenter/modules/vitalcall_old/controllers/FormulaController.php
+	modified:   protected/modules/callcenter/modules/vitalcall_old/controllers/PedidoController.php
+	modified:   protected/modules/callcenter/modules/vitalcall_old/models/FormaPagoVitalCallForm.php
+	modified:   protected/modules/callcenter/modules/vitalcall_old/views/carro/_carro.php
+	modified:   protected/modules/callcenter/modules/vitalcall_old/views/carro/_carroElementoProducto.php
+	modified:   protected/modules/callcenter/modules/vitalcall_old/views/carro/_paso2.php
+	modified:   protected/modules/callcenter/modules/vitalcall_old/views/carro/canasta.php
+	modified:   protected/modules/callcenter/modules/vitalcall_old/views/carro/carro.php
+	modified:   protected/modules/puntoventa/modules/entreganacional/views/catalogo/d_productoDetalle.php
+	modified:   protected/modules/vendedor/views/catalogo/productoDetalle.php
+	modified:   protected/views/catalogo/_categoriasDivision.php
+	modified:   protected/views/catalogo/_division.php
+	modified:   protected/views/catalogo/_productoElemento_aux.php
+	modified:   protected/views/catalogo/_search.php
+	modified:   protected/views/catalogo/d_productoDetalle.php
+	modified:   protected/views/catalogo/listaProductos_new.php
+	modified:   protected/views/catalogo/productoDetalle.php
+	modified:   protected/views/layouts/_d_menuMundo.php
+	modified:   protected/views/layouts/_menuMundo.php
+	modified:   protected/views/layouts/desktop_.php
+	modified:   protected/views/layouts/mobile_.php
+	modified:   protected/views/test/CargueMasivoExternoDTO.php
+	modified:   protected/views/test/ConsultarGuia.php
+
+	images/productos-detalle/
+	protected/models/ProductoDetalleImagenes.php
+	protected/models/ProductoDetalleVideos.php
+	protected/models/ProductoDetalle_old.php
+	protected/views/catalogo/_d_productoElementoDetalle.php
+	protected/views/catalogo/_productoElementoDetalle.php
+
+
+20171030 -- MASM
 ---- Cambio de importaciones de carro de compras en modulos
 	modified:   protected/config/database.php
 	modified:   protected/config/main.php

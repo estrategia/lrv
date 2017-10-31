@@ -130,7 +130,7 @@
                 <th style="border-left:1px solid #dddddd;background-color:#f9f9f9;line-height:20px;padding:8px;color:#ff0000;text-align:center;width:12%">Ahorro</th>
                 <th style="border-left:1px solid #dddddd;background-color:#f9f9f9;line-height:20px;padding:8px;color:#ff0000;text-align:center;width:12%">Subtotal</th>
             </tr>
-            <?php foreach (Yii::app()->getModule('telefarma')->shoppingCartVitalCall->getPositions() as $indice => $position): ?>
+            <?php foreach (Yii::app()->getModule('callcenter')->getModule('telefarma')->shoppingCartVitalCall->getPositions() as $indice => $position): ?>
                <tr style="vertical-align:middle; <?php echo ($indice % 2 != 0 ? "background-color:#f9f9f9;" : "") ?>">
                     <?php
                     if ($position->isProduct()):
@@ -157,38 +157,38 @@
                                     <tr>
                                         <td style="padding-left:21px;width:70%">Servicio</td>
                                         <td style="text-align:center">
-                                            <b><?php echo Yii::app()->numberFormatter->format(Yii::app()->params->formatoMoneda['patron'], Yii::app()->getModule('telefarma')->shoppingCartVitalCall->getShipping(), Yii::app()->params->formatoMoneda['moneda']); ?></b>
+                                            <b><?php echo Yii::app()->numberFormatter->format(Yii::app()->params->formatoMoneda['patron'], Yii::app()->getModule('callcenter')->getModule('telefarma')->shoppingCartVitalCall->getShipping(), Yii::app()->params->formatoMoneda['moneda']); ?></b>
                                         </td>
                                     </tr>
                                     <tr>
                                         <td style="padding-left:21px">Subtotal</td>
                                         <td style="text-align:center">
-                                            <b><?php echo Yii::app()->numberFormatter->format(Yii::app()->params->formatoMoneda['patron'], Yii::app()->getModule('telefarma')->shoppingCartVitalCall->getCost(), Yii::app()->params->formatoMoneda['moneda']); ?></b>
+                                            <b><?php echo Yii::app()->numberFormatter->format(Yii::app()->params->formatoMoneda['patron'], Yii::app()->getModule('callcenter')->getModule('telefarma')->shoppingCartVitalCall->getCost(), Yii::app()->params->formatoMoneda['moneda']); ?></b>
                                         </td>
                                     </tr>
                
-                                <?php if (Yii::app()->getModule('telefarma')->shoppingCartVitalCall->getExtraShipping() > 0): ?>
+                                <?php if (Yii::app()->getModule('callcenter')->getModule('telefarma')->shoppingCartVitalCall->getExtraShipping() > 0): ?>
                                     <tr>
                                         <td>Flete adicional</td>
-                                        <td><?php echo Yii::app()->numberFormatter->format(Yii::app()->params->formatoMoneda['patron'], Yii::app()->getModule('telefarma')->shoppingCartVitalCall->getExtraShipping(), Yii::app()->params->formatoMoneda['moneda']); ?></td>
+                                        <td><?php echo Yii::app()->numberFormatter->format(Yii::app()->params->formatoMoneda['patron'], Yii::app()->getModule('callcenter')->getModule('telefarma')->shoppingCartVitalCall->getExtraShipping(), Yii::app()->params->formatoMoneda['moneda']); ?></td>
                                     </tr>
                                 <?php endif; ?>
-                                <?php if (Yii::app()->getModule('telefarma')->shoppingCartVitalCall->getBono() > 0): ?>
+                                <?php if (Yii::app()->getModule('callcenter')->getModule('telefarma')->shoppingCartVitalCall->getBono() > 0): ?>
                                     <tr>
                                         <td>Bono</td>
-                                        <td><?php echo Yii::app()->numberFormatter->format(Yii::app()->params->formatoMoneda['patron'], Yii::app()->getModule('telefarma')->shoppingCartVitalCall->getBono(), Yii::app()->params->formatoMoneda['moneda']); ?></td>
+                                        <td><?php echo Yii::app()->numberFormatter->format(Yii::app()->params->formatoMoneda['patron'], Yii::app()->getModule('callcenter')->getModule('telefarma')->shoppingCartVitalCall->getBono(), Yii::app()->params->formatoMoneda['moneda']); ?></td>
                                     </tr>
                                 <?php endif; ?>
-                                <?php if (Yii::app()->getModule('telefarma')->shoppingCartVitalCall->getObjCiudad()->excentoImpuestos == 0 && Yii::app()->getModule('telefarma')->shoppingCartVitalCall->getTaxPrice() > 0): ?>
+                                <?php if (Yii::app()->getModule('callcenter')->getModule('telefarma')->shoppingCartVitalCall->getObjCiudad()->excentoImpuestos == 0 && Yii::app()->getModule('callcenter')->getModule('telefarma')->shoppingCartVitalCall->getTaxPrice() > 0): ?>
                                     <tr>
                                         <td>Impuestos incluidos</td>
-                                        <td><?php echo Yii::app()->numberFormatter->format(Yii::app()->params->formatoMoneda['patron'], Yii::app()->getModule('telefarma')->shoppingCartVitalCall->getTaxPrice(), Yii::app()->params->formatoMoneda['moneda']) ?></td>
+                                        <td><?php echo Yii::app()->numberFormatter->format(Yii::app()->params->formatoMoneda['patron'], Yii::app()->getModule('callcenter')->getModule('telefarma')->shoppingCartVitalCall->getTaxPrice(), Yii::app()->params->formatoMoneda['moneda']) ?></td>
                                     </tr>
                                 <?php endif; ?>
-                                <?php if (Yii::app()->getModule('telefarma')->shoppingCartVitalCall->getDiscountPrice(true) > 0): ?>
+                                <?php if (Yii::app()->getModule('callcenter')->getModule('telefarma')->shoppingCartVitalCall->getDiscountPrice(true) > 0): ?>
                                     <tr class="rowRed">
                                         <td>Su Ahorro</td>
-                                        <td><?php echo Yii::app()->numberFormatter->format(Yii::app()->params->formatoMoneda['patron'], Yii::app()->getModule('telefarma')->shoppingCartVitalCall->getDiscountPrice(true), Yii::app()->params->formatoMoneda['moneda']) ?></td>
+                                        <td><?php echo Yii::app()->numberFormatter->format(Yii::app()->params->formatoMoneda['patron'], Yii::app()->getModule('callcenter')->getModule('telefarma')->shoppingCartVitalCall->getDiscountPrice(true), Yii::app()->params->formatoMoneda['moneda']) ?></td>
                                     </tr>
                                <?php endif; ?>     
                                 </tbody>
@@ -197,7 +197,7 @@
                                 <tbody>
                                     <tr style="background:#f9f9f9">
                                         <td style="color:#FFFFFF;background-color: #FF0000;font-weight:bold;width:70%;font-size:16px; border-right-width: 0px">TOTAL</td>
-                                        <td style="font-size:16px;color:#FFFFFF;background-color: #FF0000;font-weight:bold;text-align:center;border-left-width: 0px"><?php echo Yii::app()->numberFormatter->format(Yii::app()->params->formatoMoneda['patron'], Yii::app()->getModule('telefarma')->shoppingCartVitalCall->getTotalCost(), Yii::app()->params->formatoMoneda['moneda']) ?></td>
+                                        <td style="font-size:16px;color:#FFFFFF;background-color: #FF0000;font-weight:bold;text-align:center;border-left-width: 0px"><?php echo Yii::app()->numberFormatter->format(Yii::app()->params->formatoMoneda['patron'], Yii::app()->getModule('callcenter')->getModule('telefarma')->shoppingCartVitalCall->getTotalCost(), Yii::app()->params->formatoMoneda['moneda']) ?></td>
                                     </tr>
                                     <?php foreach($objCompra->listFormaPagoCompra as $formaPago):?>
                                     	<tr>
@@ -210,12 +210,12 @@
                                     
                                     <tr style="background:#f9f9f9">
                                         <td style="color:#FFFFFF;background-color: #FF0000;font-weight:bold;width:70%;font-size:16px; border-right-width: 0px">TOTAL A PAGAR</td>
-                                        <td style="font-size:16px;color:#FFFFFF;background-color: #FF0000;font-weight:bold;text-align:center;border-left-width: 0px"><?php echo Yii::app()->numberFormatter->format(Yii::app()->params->formatoMoneda['patron'], Yii::app()->getModule('telefarma')->shoppingCartVitalCall->getTotalCostClient(), Yii::app()->params->formatoMoneda['moneda']) ?></td>
+                                        <td style="font-size:16px;color:#FFFFFF;background-color: #FF0000;font-weight:bold;text-align:center;border-left-width: 0px"><?php echo Yii::app()->numberFormatter->format(Yii::app()->params->formatoMoneda['patron'], Yii::app()->getModule('callcenter')->getModule('telefarma')->shoppingCartVitalCall->getTotalCostClient(), Yii::app()->params->formatoMoneda['moneda']) ?></td>
                                     </tr>
                                 </tbody>
                             </table>
-                            <p style="color:#666666;padding:5px 0;text-align:center;margin:0">- Impuestos incluídos: <?php echo Yii::app()->numberFormatter->format(Yii::app()->params->formatoMoneda['patron'], Yii::app()->getModule('telefarma')->shoppingCartVitalCall->getTaxPrice(), Yii::app()->params->formatoMoneda['moneda']) ?> -</p>
-                            <p style="color:#ff0000;font-size:18px;text-align:center">Su ahorro: <?php echo Yii::app()->numberFormatter->format(Yii::app()->params->formatoMoneda['patron'], Yii::app()->getModule('telefarma')->shoppingCartVitalCall->getDiscountPrice(true), Yii::app()->params->formatoMoneda['moneda']) ?></p>
+                            <p style="color:#666666;padding:5px 0;text-align:center;margin:0">- Impuestos incluídos: <?php echo Yii::app()->numberFormatter->format(Yii::app()->params->formatoMoneda['patron'], Yii::app()->getModule('callcenter')->getModule('telefarma')->shoppingCartVitalCall->getTaxPrice(), Yii::app()->params->formatoMoneda['moneda']) ?> -</p>
+                            <p style="color:#ff0000;font-size:18px;text-align:center">Su ahorro: <?php echo Yii::app()->numberFormatter->format(Yii::app()->params->formatoMoneda['patron'], Yii::app()->getModule('callcenter')->getModule('telefarma')->shoppingCartVitalCall->getDiscountPrice(true), Yii::app()->params->formatoMoneda['moneda']) ?></p>
                         </div>
                     </td>
                 </tr>

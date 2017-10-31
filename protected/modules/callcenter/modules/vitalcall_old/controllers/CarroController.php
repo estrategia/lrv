@@ -92,7 +92,7 @@ class CarroController extends ControllerVitalcall {
         }
 
         $idPosition = "$formula-$producto";
-        $idPositionCart = Yii::app()->getModule('telefarma')->shoppingCartVitalCall->getIdFromCode($objProducto->codigoProducto);
+        $idPositionCart = Yii::app()->getModule('callcenter')->getModule('telefarma')->shoppingCartVitalCall->getIdFromCode($objProducto->codigoProducto);
         
         if($idPositionCart!==null && $idPositionCart!=$idPosition){
         	echo CJSON::encode(array('result' => 'error', 'response' => 'Producto agregado sin f&oacute;rmula o en otra f&oacute;rmula'));
@@ -101,7 +101,7 @@ class CarroController extends ControllerVitalcall {
 
         if ($cantidadU > 0) {
             $cantidadCarroUnidad = 0;
-            $position = Yii::app()->getModule('telefarma')->shoppingCartVitalCall->itemAt($idPosition);
+            $position = Yii::app()->getModule('callcenter')->getModule('telefarma')->shoppingCartVitalCall->itemAt($idPosition);
 
             if ($position !== null) {
                 $cantidadCarroUnidad = $position->getQuantityUnit();
@@ -110,7 +110,7 @@ class CarroController extends ControllerVitalcall {
             //si hay saldo, agrega a carro, sino consulta bodega
             if ($cantidadCarroUnidad + $cantidadU <= $objSaldo->saldoUnidad) {
                 $objProductoCarro = new ProductoCarro($objProductoFormula);
-                Yii::app()->getModule('telefarma')->shoppingCartVitalCall->put($objProductoCarro, false, $cantidadU);
+                Yii::app()->getModule('callcenter')->getModule('telefarma')->shoppingCartVitalCall->put($objProductoCarro, false, $cantidadU);
             } else {
                 echo CJSON::encode(array('result' => 'error', 'response' => "La cantidad solicitada no está disponible en este momento. Saldos disponibles: $objSaldo->saldoUnidad unidades"));
                 Yii::app()->end();
@@ -119,7 +119,7 @@ class CarroController extends ControllerVitalcall {
 
         if ($cantidadF > 0) {
             $objProductoCarro = new ProductoCarro($objProductoFormula);
-            Yii::app()->getModule('telefarma')->shoppingCartVitalCall->put($objProductoCarro, true, $cantidadF);
+            Yii::app()->getModule('callcenter')->getModule('telefarma')->shoppingCartVitalCall->put($objProductoCarro, true, $cantidadF);
         }
 
         /* if (!ctype_digit($cantidad)) {
@@ -133,7 +133,7 @@ class CarroController extends ControllerVitalcall {
             'response' => array(
                 'canastaHTML' => $this->renderPartial("canasta", null, true),
                 'mensajeHTML' => $this->renderPartial('_carroAgregado', array('objProducto' => $objProducto), true),
-                'objetosCarro' => Yii::app()->getModule('telefarma')->shoppingCartVitalCall->getCount()
+                'objetosCarro' => Yii::app()->getModule('callcenter')->getModule('telefarma')->shoppingCartVitalCall->getCount()
             ),
         ));
         Yii::app()->end();
@@ -182,7 +182,7 @@ class CarroController extends ControllerVitalcall {
         }
 
         $idPosition = $producto;
-        $idPositionCart = Yii::app()->getModule('telefarma')->shoppingCartVitalCall->getIdFromCode($objProducto->codigoProducto);
+        $idPositionCart = Yii::app()->getModule('callcenter')->getModule('telefarma')->shoppingCartVitalCall->getIdFromCode($objProducto->codigoProducto);
         
         if($idPositionCart!==null && $idPositionCart!=$idPosition){
             echo CJSON::encode(array('result' => 'error', 'response' => 'Producto agregado sin f&oacute;rmula o en otra f&oacute;rmula'));
@@ -191,7 +191,7 @@ class CarroController extends ControllerVitalcall {
 
         if ($cantidadU > 0) {
             $cantidadCarroUnidad = 0;
-            $position = Yii::app()->getModule('telefarma')->shoppingCartVitalCall->itemAt($idPosition);
+            $position = Yii::app()->getModule('callcenter')->getModule('telefarma')->shoppingCartVitalCall->itemAt($idPosition);
 
             if ($position !== null) {
                 $cantidadCarroUnidad = $position->getQuantityUnit();
@@ -200,7 +200,7 @@ class CarroController extends ControllerVitalcall {
             //si hay saldo, agrega a carro, sino consulta bodega
             if ($cantidadCarroUnidad + $cantidadU <= $objSaldo->saldoUnidad) {
                 $objProductoCarro = new ProductoCarro($objProducto);
-                Yii::app()->getModule('telefarma')->shoppingCartVitalCall->put($objProductoCarro, false, $cantidadU);
+                Yii::app()->getModule('callcenter')->getModule('telefarma')->shoppingCartVitalCall->put($objProductoCarro, false, $cantidadU);
             } else {
                 echo CJSON::encode(array('result' => 'error', 'response' => "La cantidad solicitada no está disponible en este momento. Saldos disponibles: $objSaldo->saldoUnidad unidades"));
                 Yii::app()->end();
@@ -209,7 +209,7 @@ class CarroController extends ControllerVitalcall {
 
         if ($cantidadF > 0) {
             $objProductoCarro = new ProductoCarro($objProducto);
-            Yii::app()->getModule('telefarma')->shoppingCartVitalCall->put($objProductoCarro, true, $cantidadF);
+            Yii::app()->getModule('callcenter')->getModule('telefarma')->shoppingCartVitalCall->put($objProductoCarro, true, $cantidadF);
         }
 
         /* if (!ctype_digit($cantidad)) {
@@ -223,14 +223,14 @@ class CarroController extends ControllerVitalcall {
             'response' => array(
                 'canastaHTML' => $this->renderPartial("canasta", null, true),
                 'mensajeHTML' => $this->renderPartial('_carroAgregado', array('objProducto' => $objProducto), true),
-                'objetosCarro' => Yii::app()->getModule('telefarma')->shoppingCartVitalCall->getCount()
+                'objetosCarro' => Yii::app()->getModule('callcenter')->getModule('telefarma')->shoppingCartVitalCall->getCount()
             ),
         ));
         Yii::app()->end();
     }
 
     public function actionVaciar() {
-        Yii::app()->getModule('telefarma')->shoppingCartVitalCall->clear();
+        Yii::app()->getModule('callcenter')->getModule('telefarma')->shoppingCartVitalCall->clear();
         unset(Yii::app()->session[Yii::app()->params->vitalCall['sesion']['carroPagarForm']]);
         unset(Yii::app()->session[Yii::app()->params->vitalCall['sesion']['formulaMedica']]);
 
@@ -258,7 +258,7 @@ class CarroController extends ControllerVitalcall {
             throw new CHttpException(404, 'Proceso de compra no iniciado');
         }
 
-        if (Yii::app()->getModule('telefarma')->shoppingCartVitalCall->isEmpty()) {
+        if (Yii::app()->getModule('callcenter')->getModule('telefarma')->shoppingCartVitalCall->isEmpty()) {
             if ($post) {
                 echo CJSON::encode(array('result' => 'ok', 'response' => 'Carro vac&iacute;o', 'redirect' => $this->createUrl("/callcenter/vitalcall_old/carro")));
                 Yii::app()->end();
@@ -410,8 +410,8 @@ class CarroController extends ControllerVitalcall {
                     if ($modelPago->tipoEntrega == Yii::app()->params->entrega['tipo']['presencial']) {
                         $modelPago->seleccionarPdv($modelPago->indicePuntoVenta);
                     }
-                    $modelPago->calcularConfirmacion(Yii::app()->getModule('telefarma')->shoppingCartVitalCall->getPositions());
-                    $modelPago->calcularFormulas(Yii::app()->getModule('telefarma')->shoppingCartVitalCall->getPositions());
+                    $modelPago->calcularConfirmacion(Yii::app()->getModule('callcenter')->getModule('telefarma')->shoppingCartVitalCall->getPositions());
+                    $modelPago->calcularFormulas(Yii::app()->getModule('callcenter')->getModule('telefarma')->shoppingCartVitalCall->getPositions());
                     break;
             }
             $params['parametros']['modelPago'] = $modelPago;
@@ -438,7 +438,7 @@ class CarroController extends ControllerVitalcall {
         }
 
         if ($opcion == "modal") {
-            $modelPago->consultarDisponibilidad(Yii::app()->getModule('telefarma')->shoppingCartVitalCall);
+            $modelPago->consultarDisponibilidad(Yii::app()->getModule('callcenter')->getModule('telefarma')->shoppingCartVitalCall);
             Yii::app()->session[Yii::app()->params->vitalCall['sesion']['carroPagarForm']] = $modelPago;
 
             echo CJSON::encode(array(
@@ -482,7 +482,7 @@ class CarroController extends ControllerVitalcall {
             Yii::app()->end();
         }
 
-        $modelPago->totalCompra = Yii::app()->getModule('telefarma')->shoppingCartVitalCall->getTotalCost();
+        $modelPago->totalCompra = Yii::app()->getModule('callcenter')->getModule('telefarma')->shoppingCartVitalCall->getTotalCost();
 
         if (!in_array($modelPago->tipoEntrega, Yii::app()->params->entrega['listaTipos'])) {
             Yii::app()->user->setFlash('error', "Tipo de entrega inválido, por favor seleccionar tipo de entrega.");
@@ -492,7 +492,7 @@ class CarroController extends ControllerVitalcall {
         //validaciones de compra
         $pasoValidacion = null;
         //se valida que cada paso este realizado
-        $modelPago->validarConfirmacion(Yii::app()->getModule('telefarma')->shoppingCartVitalCall->getPositions());
+        $modelPago->validarConfirmacion(Yii::app()->getModule('callcenter')->getModule('telefarma')->shoppingCartVitalCall->getPositions());
         $pasosDisponibles = Yii::app()->params->vitalCall['pagar']['pasosDisponibles'];
         Yii::app()->session[Yii::app()->params->vitalCall['sesion']['carroPagarForm']] = $modelPago;
 
@@ -535,7 +535,7 @@ class CarroController extends ControllerVitalcall {
                 'objFormasPago' => $resultCompra['response']['objFormasPago']), true);
 
             Yii::app()->session[Yii::app()->params->vitalCall['sesion']['carroPagarForm']] = null;
-            Yii::app()->getModule('telefarma')->shoppingCartVitalCall->clear();
+            Yii::app()->getModule('callcenter')->getModule('telefarma')->shoppingCartVitalCall->clear();
             $this->render('application.views.carro.compra', array(
                 'contenido' => $contenidoSitio,
                 'objCompra' => $resultCompra['response']['objCompra'],
@@ -568,21 +568,21 @@ class CarroController extends ControllerVitalcall {
             $objCompra->idTipoVenta = Yii::app()->params->tipoVenta['vitalCall'];
             $objCompra->activa = 1;
             $objCompra->invitado = 1;
-            $objCompra->codigoPerfil = Yii::app()->getModule('telefarma')->shoppingCartVitalCall->getCodigoPerfil();
-            $objCompra->codigoCiudad = Yii::app()->getModule('telefarma')->shoppingCartVitalCall->getCodigoCiudad();
-            $objCompra->codigoSector = Yii::app()->getModule('telefarma')->shoppingCartVitalCall->getCodigoSector();
+            $objCompra->codigoPerfil = Yii::app()->getModule('callcenter')->getModule('telefarma')->shoppingCartVitalCall->getCodigoPerfil();
+            $objCompra->codigoCiudad = Yii::app()->getModule('callcenter')->getModule('telefarma')->shoppingCartVitalCall->getCodigoCiudad();
+            $objCompra->codigoSector = Yii::app()->getModule('callcenter')->getModule('telefarma')->shoppingCartVitalCall->getCodigoSector();
 
             //no se maneja venta bodega
             $objCompra->tiempoDomicilioCedi = 0;
             $objCompra->valorDomicilioCedi = 0;
             $objCompra->codigoCedi = 0;
 
-            $objCompra->subtotalCompra = Yii::app()->getModule('telefarma')->shoppingCartVitalCall->getCost();
-            $objCompra->impuestosCompra = Yii::app()->getModule('telefarma')->shoppingCartVitalCall->getTaxPrice();
-            $objCompra->baseImpuestosCompra = Yii::app()->getModule('telefarma')->shoppingCartVitalCall->getBaseTaxPrice();
-            $objCompra->domicilio = Yii::app()->getModule('telefarma')->shoppingCartVitalCall->getShipping();
-            $objCompra->flete = Yii::app()->getModule('telefarma')->shoppingCartVitalCall->getExtraShipping();
-            $objCompra->totalCompra = Yii::app()->getModule('telefarma')->shoppingCartVitalCall->getTotalCost();
+            $objCompra->subtotalCompra = Yii::app()->getModule('callcenter')->getModule('telefarma')->shoppingCartVitalCall->getCost();
+            $objCompra->impuestosCompra = Yii::app()->getModule('callcenter')->getModule('telefarma')->shoppingCartVitalCall->getTaxPrice();
+            $objCompra->baseImpuestosCompra = Yii::app()->getModule('callcenter')->getModule('telefarma')->shoppingCartVitalCall->getBaseTaxPrice();
+            $objCompra->domicilio = Yii::app()->getModule('callcenter')->getModule('telefarma')->shoppingCartVitalCall->getShipping();
+            $objCompra->flete = Yii::app()->getModule('callcenter')->getModule('telefarma')->shoppingCartVitalCall->getExtraShipping();
+            $objCompra->totalCompra = Yii::app()->getModule('callcenter')->getModule('telefarma')->shoppingCartVitalCall->getTotalCost();
 
             if (!$objCompra->save()) {
                 throw new Exception("Error al guardar compra [0]" . $objCompra->validateErrorsResponse());
@@ -655,7 +655,7 @@ class CarroController extends ControllerVitalcall {
 
             $objFormasPago = new FormasPago; //FormaPago::model()->findByPk($modelPago->idFormaPago);
             $objFormasPago->idCompra = $objCompra->idCompra;
-            $objFormasPago->valor = Yii::app()->getModule('telefarma')->shoppingCartVitalCall->getTotalCost();
+            $objFormasPago->valor = Yii::app()->getModule('callcenter')->getModule('telefarma')->shoppingCartVitalCall->getTotalCost();
             $objFormasPago->numeroTarjeta = $modelPago->numeroTarjeta;
             $objFormasPago->cuotasTarjeta = $modelPago->cuotasTarjeta;
             $objFormasPago->idFormaPago = $modelPago->idFormaPago;
@@ -665,7 +665,7 @@ class CarroController extends ControllerVitalcall {
                 throw new Exception("Error al guardar forma de pago" . $objFormasPago->validateErrorsResponse());
             }
 
-            //$objFormasPago->valorBono = Yii::app()->getModule('telefarma')->shoppingCartVitalCall->getBono();
+            //$objFormasPago->valorBono = Yii::app()->getModule('callcenter')->getModule('telefarma')->shoppingCartVitalCall->getBono();
             $objCompraDireccion = new ComprasDireccionesDespacho;
             $objCompraDireccion->idCompra = $objCompra->idCompra;
             $objCompraDireccion->descripcion = "NA";
@@ -676,8 +676,8 @@ class CarroController extends ControllerVitalcall {
                 $objCompraDireccion->nombre = $modelPago->objDireccion->objUsuarioVC->nombre . " " . $modelPago->objDireccion->objUsuarioVC->apellido;
                 $objCompraDireccion->direccion = $modelPago->objDireccion->direccion;
                 $objCompraDireccion->barrio = $modelPago->objDireccion->barrio;
-                $objCompraDireccion->codigoCiudad = Yii::app()->getModule('telefarma')->shoppingCartVitalCall->getCodigoCiudad();
-                $objCompraDireccion->codigoSector = Yii::app()->getModule('telefarma')->shoppingCartVitalCall->getCodigoSector();
+                $objCompraDireccion->codigoCiudad = Yii::app()->getModule('callcenter')->getModule('telefarma')->shoppingCartVitalCall->getCodigoCiudad();
+                $objCompraDireccion->codigoSector = Yii::app()->getModule('callcenter')->getModule('telefarma')->shoppingCartVitalCall->getCodigoSector();
             } else if ($tipoEntrega == Yii::app()->params->entrega['tipo']['presencial']) {
                 $objCompraDireccion->nombre = "NA";
                 $objCompraDireccion->direccion = "NA";
@@ -689,7 +689,7 @@ class CarroController extends ControllerVitalcall {
             }
 
             //items de compra
-            $positions = Yii::app()->getModule('telefarma')->shoppingCartVitalCall->getPositions();
+            $positions = Yii::app()->getModule('callcenter')->getModule('telefarma')->shoppingCartVitalCall->getPositions();
             foreach ($positions as $position) {
                 //actualizar saldo producto //--
                 $objSaldo = null;
@@ -697,8 +697,8 @@ class CarroController extends ControllerVitalcall {
                     $objSaldo = ProductosSaldos::model()->find(array(
                         'condition' => 'codigoCiudad=:ciudad AND codigoSector=:sector AND codigoProducto=:producto',
                         'params' => array(
-                            ':ciudad' => Yii::app()->getModule('telefarma')->shoppingCartVitalCall->getCodigoCiudad(),
-                            ':sector' => Yii::app()->getModule('telefarma')->shoppingCartVitalCall->getCodigoSector(),
+                            ':ciudad' => Yii::app()->getModule('callcenter')->getModule('telefarma')->shoppingCartVitalCall->getCodigoCiudad(),
+                            ':sector' => Yii::app()->getModule('callcenter')->getModule('telefarma')->shoppingCartVitalCall->getCodigoSector(),
                             ':producto' => $position->getObjProducto()->codigoProducto
                         )
                     ));
@@ -894,7 +894,7 @@ class CarroController extends ControllerVitalcall {
             Yii::app()->end();
         }
 
-        $modelPago->consultarDisponibilidad(Yii::app()->getModule('telefarma')->shoppingCartVitalCall);
+        $modelPago->consultarDisponibilidad(Yii::app()->getModule('callcenter')->getModule('telefarma')->shoppingCartVitalCall);
     }
 
     public function actionList() {
@@ -905,32 +905,32 @@ class CarroController extends ControllerVitalcall {
         //echo "<br/>";
         //echo "<br/>";
 
-        echo "Descuento: " . Yii::app()->getModule('telefarma')->shoppingCartVitalCall->getDiscountPrice();
+        echo "Descuento: " . Yii::app()->getModule('callcenter')->getModule('telefarma')->shoppingCartVitalCall->getDiscountPrice();
         echo "<br/>";
-        echo "ciudad: " . Yii::app()->getModule('telefarma')->shoppingCartVitalCall->getCodigoCiudad();
+        echo "ciudad: " . Yii::app()->getModule('callcenter')->getModule('telefarma')->shoppingCartVitalCall->getCodigoCiudad();
         echo "<br/>";
-        echo "sector: " . Yii::app()->getModule('telefarma')->shoppingCartVitalCall->getCodigoSector();
+        echo "sector: " . Yii::app()->getModule('callcenter')->getModule('telefarma')->shoppingCartVitalCall->getCodigoSector();
         echo "<br/>";
-        echo "perfil: " . Yii::app()->getModule('telefarma')->shoppingCartVitalCall->getCodigoPerfil();
+        echo "perfil: " . Yii::app()->getModule('callcenter')->getModule('telefarma')->shoppingCartVitalCall->getCodigoPerfil();
         echo "<br/>";
-        echo "cantidad productos: " . Yii::app()->getModule('telefarma')->shoppingCartVitalCall->getCount();
+        echo "cantidad productos: " . Yii::app()->getModule('callcenter')->getModule('telefarma')->shoppingCartVitalCall->getCount();
         echo "<br/>";
-        echo "cantidad items: " . Yii::app()->getModule('telefarma')->shoppingCartVitalCall->getItemsCount();
+        echo "cantidad items: " . Yii::app()->getModule('callcenter')->getModule('telefarma')->shoppingCartVitalCall->getItemsCount();
         echo "<br/>";
-        echo "costo total: " . Yii::app()->getModule('telefarma')->shoppingCartVitalCall->getCost();
+        echo "costo total: " . Yii::app()->getModule('callcenter')->getModule('telefarma')->shoppingCartVitalCall->getCost();
         echo "<br/>";
-        echo "costo total: " . Yii::app()->getModule('telefarma')->shoppingCartVitalCall->getTotalCost();
+        echo "costo total: " . Yii::app()->getModule('callcenter')->getModule('telefarma')->shoppingCartVitalCall->getTotalCost();
         echo "<br/>";
-        // echo "tiempo: " . Yii::app()->getModule('telefarma')->shoppingCartVitalCall->getDelivery();
+        // echo "tiempo: " . Yii::app()->getModule('callcenter')->getModule('telefarma')->shoppingCartVitalCall->getDelivery();
         //echo "<br/>";
-        echo "servicio: " . Yii::app()->getModule('telefarma')->shoppingCartVitalCall->getShipping();
+        echo "servicio: " . Yii::app()->getModule('callcenter')->getModule('telefarma')->shoppingCartVitalCall->getShipping();
         echo "<br/>";
 
 
         echo "<br/>";
 
 
-        $positions = Yii::app()->getModule('telefarma')->shoppingCartVitalCall->getPositions();
+        $positions = Yii::app()->getModule('callcenter')->getModule('telefarma')->shoppingCartVitalCall->getPositions();
         foreach ($positions as $position) {
             echo "Id: " . $position->getId();
             echo "<br/>";
@@ -992,7 +992,7 @@ class CarroController extends ControllerVitalcall {
             Yii::app()->end();
         }
 
-        $position = Yii::app()->getModule('telefarma')->shoppingCartVitalCall->itemAt($id);
+        $position = Yii::app()->getModule('callcenter')->getModule('telefarma')->shoppingCartVitalCall->itemAt($id);
         // !Yii::app()->shoppingCart->contains($id)
 
         if ($position === null) {
@@ -1118,11 +1118,11 @@ class CarroController extends ControllerVitalcall {
         }
 
         if ($agregarU) {
-            Yii::app()->getModule('telefarma')->shoppingCartVitalCall->update($position, false, $cantidadU);
+            Yii::app()->getModule('callcenter')->getModule('telefarma')->shoppingCartVitalCall->update($position, false, $cantidadU);
         }
 
         if ($agregarF) {
-            Yii::app()->getModule('telefarma')->shoppingCartVitalCall->update($position, true, $cantidadF);
+            Yii::app()->getModule('callcenter')->getModule('telefarma')->shoppingCartVitalCall->update($position, true, $cantidadF);
         }
 
         echo CJSON::encode(array(
@@ -1144,7 +1144,7 @@ class CarroController extends ControllerVitalcall {
             Yii::app()->end();
         }
 
-        $position = Yii::app()->getModule('telefarma')->shoppingCartVitalCall->itemAt($id);
+        $position = Yii::app()->getModule('callcenter')->getModule('telefarma')->shoppingCartVitalCall->itemAt($id);
 
         if ($position == null) {
             echo CJSON::encode(array('result' => 'error', 'response' => 'Producto no agregado a carro'));
@@ -1152,11 +1152,11 @@ class CarroController extends ControllerVitalcall {
         }
 
         if ($eliminar == 1) {
-            Yii::app()->getModule('telefarma')->shoppingCartVitalCall->update($position, false, 0);
+            Yii::app()->getModule('callcenter')->getModule('telefarma')->shoppingCartVitalCall->update($position, false, 0);
         } else if ($eliminar == 2) {
-            Yii::app()->getModule('telefarma')->shoppingCartVitalCall->update($position, true, 0);
+            Yii::app()->getModule('callcenter')->getModule('telefarma')->shoppingCartVitalCall->update($position, true, 0);
         } else if ($eliminar == 3) {
-            Yii::app()->getModule('telefarma')->shoppingCartVitalCall->updateStored($position, 0);
+            Yii::app()->getModule('callcenter')->getModule('telefarma')->shoppingCartVitalCall->updateStored($position, 0);
         } else {
             echo CJSON::encode(array('result' => 'error', 'response' => 'Solicitud inválida, no se detectan datos'));
             Yii::app()->end();
