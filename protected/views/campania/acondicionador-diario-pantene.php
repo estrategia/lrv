@@ -2,7 +2,7 @@
 <?php
 $this->metaTags = "
 <meta http-equiv='X-UA-Compatible' content='IE=edge'>
-<meta name='description' content='¿Tienes el cabello debilitado o dañado? Fortalécelo de manera efectiva con el Nuevo Acondicionar 3 Minute Miracle Fuerza y Reconstrucción. ¡Conócelo aquí!'>
+<meta name='description' content='El Acondicionador 3 Minute Miracle es ideal para cuando necesitas un buen tratamiento de reconstrucción semanal. Cabello hasta 72 horas libre de frizz.'>
 <meta name='keywords' content='acondicionador 3 minute Miracle, productos para el cabello, cuidado del cabello.'>
   <style>
     @font-face { font-family:Gotham-Medium; src: url(" . Yii::app()->request->baseUrl . "/images/contenido/pantene/fonts/Gotham-Medium.otf);}
