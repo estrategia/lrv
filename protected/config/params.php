@@ -332,6 +332,8 @@ return array(
         'cumpleanhos' => 204,
         'clientefielCompra' => 301
     ),
+    'longitudPeriodoSuscripcion' => 30, // Dias
+    'longitudToleranciaPeriodoSuscripcion' => 5, // Dias
     'beneficios' => array(
       /* 'lrv' => array(21, 22, 23, 24, 25, 26),
         'descuentos' => array(21, 22, 23, 24), // new
@@ -345,10 +347,11 @@ return array(
             25 => 15,
             26 => 16
         ),*/
-    	'lrv' => array(50,51,52,53,54,55),
-    	'descuentos' => array(50,51,52,53), // new
+    	'lrv' => array(50,51,52,53,54,55,63,64),
+    	'descuentos' => array(50,51,52,53,63,64), // new
     	'bonos' => array(54,55), // new
     	'beneficioCedula' => 54,
+        'beneficiosSuscripcion' => array(63,64),
     	'tipoBonoFormaPago' => array(
     				54 => 7,
     				55 => 8

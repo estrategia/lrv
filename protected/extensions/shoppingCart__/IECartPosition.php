@@ -10,7 +10,7 @@
 abstract class IECartPosition {
     protected $priceUnit = 0;
     protected $priceUnitDiscount = 0;
-
+    
     protected $priceFraction = 0;
     protected $priceFractionDiscount = 0;
     
@@ -31,16 +31,7 @@ abstract class IECartPosition {
     protected $listBeneficiosBonos = array();
     
     protected $priceTokenUnit = 0;
-
-    protected $quantitySuscription = 0;
-    protected $discountSuscriptionUnit = 0;
-
-    protected $priceSuscriptionUnit = 0;
-    // protected $priceSuscriptionUnitDiscount = 0;
-    protected $cantidadPeriodoSuscripcion = 0;
-    protected $suscripcion = null;
-    protected $esSuscripcion = false;
-
+    
     public function getBeneficios(){
         return $this->listBeneficios;
     }
@@ -51,11 +42,6 @@ abstract class IECartPosition {
     
     public function getDelivery() {
         return $this->delivery;
-    }
-
-    public function getEsSuscripcion()
-    {
-        return $this->esSuscripcion;
     }
 
     /**
@@ -71,15 +57,11 @@ abstract class IECartPosition {
           $fullSum -=  $this->discountPrice * $this->quantity;
           }
           return $fullSum; */
-        return $this->getPrice(false, $withDiscount) * ($this->quantityUnit + ($withStored ? $this->quantityStored : 0)) + $this->getPrice(true, $withDiscount) * $this->quantityFraction;
+        return $this->getPrice(false, $withDiscount) * ($this->quantityUnit+ ($withStored ? $this->quantityStored : 0)) + $this->getPrice(true, $withDiscount) * $this->quantityFraction;
     }
     
     public function getSumPriceUnit($withStored = true, $withDiscount = true){
-        return $this->getPrice(false, $withDiscount) * ($this->quantityUnit + ($withStored ? $this->quantityStored : 0));
-    }
-
-    public function getSumPriceUnitSuscription() {
-        return $this->getPriceSuscription() * $this->quantitySuscription;
+        return $this->getPrice(false, $withDiscount) * ($this->quantityUnit+ ($withStored ? $this->quantityStored : 0));
     }
     
     public function getSumPriceFraction($withDiscount = true){
@@ -141,39 +123,15 @@ abstract class IECartPosition {
     }
 
     /**
-     * Returns quantity.
-     * @return int
-     */
-    public function getQuantitySuscription() {
-        return $this->quantitySuscription;
-    }
-
-    /**
      * Updates quantity.
      *
      * @param int quantity
      */
     public function setQuantity($newVal, $fraction = false) {
-        // Yii::log("Cart Position: " . $newVal, CLogger::LEVEL_INFO, 'error');
-
         if ($fraction) {
             $this->quantityFraction = $newVal;
         } else {
-            if ($this->suscripcion !== null) {
-                // $this->quantitySuscription = $newVal;
-                // $cantidadDisponiblePeriodoActual = $this->suscripcion->consultarCantidadPeriodo();
-                $cantidadDisponiblePeriodoActual = $this->cantidadPeriodoSuscripcion;
-                if ($newVal > $cantidadDisponiblePeriodoActual) {
-                    $this->quantitySuscription = $cantidadDisponiblePeriodoActual;
-                    $this->quantityUnit = $newVal - $this->quantitySuscription;
-                } 
-                if ($newVal <= $cantidadDisponiblePeriodoActual) {
-                    $this->quantitySuscription = $newVal;
-                    $this->quantityUnit = 0;
-                } 
-            } else {
-                $this->quantityUnit = $newVal;
-            }
+            $this->quantityUnit = $newVal;
         }
     }
 
@@ -184,15 +142,6 @@ abstract class IECartPosition {
      */
     public function setQuantityStored($newVal) {
         $this->quantityStored = $newVal;
-    }
-
-    /**
-     * Updates quantity.
-     *
-     * @param int quantity
-     */
-    public function setQuantitySuscription($newVal) {
-        $this->quantitySuscription = $newVal;
     }
 
     public function setShipping($newVal) {
@@ -226,11 +175,6 @@ abstract class IECartPosition {
     public function setDiscountPriceFraction($discount){
         $this->discountPriceFraction = $discount;
     }
-
-    public function setDiscountSuscriptionUnit($discount)
-    {
-        $this->discountSuscriptionUnit = $discount;
-    }
     
     public function setDelivery($delivery){
         $this->delivery = $delivery;
@@ -247,7 +191,7 @@ abstract class IECartPosition {
     public function getTaxPrice($total = false) {
         $tax = 0.0;
         if ($total)
-            $tax = Precio::calcularImpuesto($this->getPriceToken(true) * $this->quantityFraction,$this->tax) + Precio::calcularImpuesto($this->getPriceToken() * ($this->quantityUnit+$this->quantityStored+$this->quantitySuscription),$this->tax);
+            $tax = Precio::calcularImpuesto($this->getPriceToken(true) * $this->quantityFraction,$this->tax) + Precio::calcularImpuesto($this->getPriceToken() * ($this->quantityUnit+$this->quantityStored),$this->tax);
         else
             $tax = Precio::calcularImpuesto($this->getPriceToken() , $this->tax);
         
@@ -258,7 +202,7 @@ abstract class IECartPosition {
         $base = 0.0;
         
         if ($total)
-            $base = Precio::calcularBaseImpuesto($this->getPriceToken(true) * $this->quantityFraction,$this->tax) + Precio::calcularBaseImpuesto($this->getPriceToken() * ($this->quantityUnit+$this->quantityStored+$this->quantitySuscription),$this->tax);
+            $base = Precio::calcularBaseImpuesto($this->getPriceToken(true) * $this->quantityFraction,$this->tax) + Precio::calcularBaseImpuesto($this->getPriceToken() * ($this->quantityUnit+$this->quantityStored),$this->tax);
         else
             $base = Precio::calcularBaseImpuesto($this->getPriceToken() , $this->tax);
         
@@ -277,16 +221,12 @@ abstract class IECartPosition {
         return ($fraction ? $this->discountPriceFraction : $this->discountPriceUnit);
     }
     
-    public function getDiscountPriceSuscription() {
-        return $this->discountSuscriptionUnit;
-    }
-    
     public function getDiscountPriceToken($fraction = false) {
     	return ($fraction ? $this->discountPriceFractionDiscount : $this->discountPriceUnitDiscount);
     }
     
     public function hasDiscount(){
-        return (($this->discountPriceFraction+$this->discountPriceUnit + $this->discountSuscriptionUnit) > 0);
+        return (($this->discountPriceFraction+$this->discountPriceUnit) > 0);
     }
     
     public function getSumToken(){
@@ -305,12 +245,6 @@ abstract class IECartPosition {
 
         return $price;
     }
-
-    public function getPriceSuscription() {
-        $price = $this->priceSuscriptionUnit;
-        $price -= $this->discountSuscriptionUnit;
-        return $price;
-    }
     
     public function getPriceToken($fraction = false, $withDiscount = true) {
     	$price = ($fraction ? $this->priceFraction : $this->priceUnit);
@@ -323,7 +257,6 @@ abstract class IECartPosition {
     
     public function getTotalPrice() {
         $price = $this->getSumPrice();
-        $price += $this->getSumPriceUnitSuscription();
         $price += $this->shipping;
         return $price;
     }
