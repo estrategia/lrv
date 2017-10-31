@@ -30,7 +30,7 @@
                         <?php
                         $this->renderPartial('/catalogo/_productoElemento', array(
                             'objProducto' => $objDetalle->objProducto,
-                            'objPrecio' => new PrecioProducto($objDetalle->objProducto, Yii::app()->shoppingCartSalesman->getSectorCiudad(), Yii::app()->shoppingCartSalesman->getCodigoPerfil(), true),
+                            'objPrecio' => new PrecioProducto($objDetalle->objProducto, Yii::app()->getModule('vendedor')->shoppingCartSalesman->getSectorCiudad(), Yii::app()->getModule('vendedor')->shoppingCartSalesman->getCodigoPerfil(), true),
                             'vista' => 'listaPersonal',
                         ));
                         ?>

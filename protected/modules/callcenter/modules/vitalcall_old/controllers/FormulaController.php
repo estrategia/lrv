@@ -3,7 +3,7 @@
 class FormulaController extends ControllerVitalcall {
 	
 	public function actionTest(){
-		echo Yii::app()->shoppingCartVitalCall->getClass();
+		echo Yii::app()->getModule('callcenter')->getModule('telefarma')->shoppingCartVitalCall->getClass();
 	}
 
     public function actionNueva() {

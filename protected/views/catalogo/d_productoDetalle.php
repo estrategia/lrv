@@ -247,7 +247,7 @@
 
 <section>
     <div class="container">
-        <?php ProductoView::generarDetalle($objProducto->objDetalle, 1) ?>
+    <?php $this->renderPartial('_d_productoElementoDetalle', array('objProducto' => $objProducto));?>
     </div>
 </section>
 

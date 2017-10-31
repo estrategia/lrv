@@ -61,7 +61,7 @@ class SitioController extends ControllerVendedor {
     }
 
     public function actionInicio() {
-        $codigoPerfil = Yii::app()->shoppingCartSalesman->getCodigoPerfil();
+        $codigoPerfil = Yii::app()->getModule('vendedor')->shoppingCartSalesman->getCodigoPerfil();
         
         $this->render('inicio', array(
             'listModulosPromociones' => ModulosConfigurados::getModulos($this->objSectorCiudad, $codigoPerfil, UbicacionModulos::UBICACION_VENDEDOR_INICIO)
@@ -229,10 +229,10 @@ class SitioController extends ControllerVendedor {
         _setCookie(Yii::app()->params->vendedor['sesion']['sectorCiudadEntrega'], "$objSectorCiudad->codigoCiudad-$objSectorCiudad->codigoSector");
 
         if ($objSectorCiudadOld != null && ($objSectorCiudadOld->codigoCiudad != $objSectorCiudad->codigoCiudad || $objSectorCiudadOld->codigoSector != $objSectorCiudad->codigoSector)) {
-            Yii::app()->shoppingCartSalesman->clear();
+            Yii::app()->getModule('vendedor')->shoppingCartSalesman->clear();
             Yii::app()->session[Yii::app()->params->vendedor['sesion']['carroPagarForm']] = null;
         }
-        Yii::app()->shoppingCartSalesman->CalculateShipping();
+        Yii::app()->getModule('vendedor')->shoppingCartSalesman->CalculateShipping();
 
         $objHorarioSecCiud = HorariosCiudadSector::model()->find(array(
             'condition' => 'codigoCiudad=:ciudad AND codigoSector=:sector',

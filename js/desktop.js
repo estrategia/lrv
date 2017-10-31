@@ -1731,6 +1731,28 @@ $(document).ready(function() {
         ],
          autoPlay: 3000,
     });
+    $(".slide-imagenes").owlCarousel({
+        items: 5,
+        lazyLoad: true,
+        navigation: true,
+        pagination: false,
+        navigationText: [
+            "<i class='glyphicon glyphicon-chevron-left'></i>",
+            "<i class='glyphicon glyphicon-chevron-right'></i>"
+        ],
+         autoPlay: 3000,
+    });
+    $(".slide-videos").owlCarousel({
+        items: 5,
+        lazyLoad: true,
+        navigation: true,
+        pagination: false,
+        navigationText: [
+            "<i class='glyphicon glyphicon-chevron-left'></i>",
+            "<i class='glyphicon glyphicon-chevron-right'></i>"
+        ],
+         autoPlay: 3000,
+    });
     $('.ad-gallery').adGallery({
         loader_image: requestUrl + '/libs/ad-gallery/loader.gif',
         update_window_hash: false,

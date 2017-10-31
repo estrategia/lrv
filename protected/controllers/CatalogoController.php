@@ -1274,7 +1274,7 @@ class CatalogoController extends Controller {
 			$objProducto = Producto::model ()->find ( array (
 					'with' => array (
 							'listImagenesGrandes',
-							'objDetalle',
+							'listDetalleProducto',
 							'objCodigoEspecial',
 							'listCalificaciones' => array (
 									'with' => 'objUsuario'
@@ -1290,7 +1290,7 @@ class CatalogoController extends Controller {
 			$objProducto = Producto::model ()->find ( array (
 					'with' => array (
 							'listImagenesGrandes',
-							'objDetalle',
+							'listDetalleProducto',
 							'objCodigoEspecial',
 							'listCalificaciones' => array (
 									'with' => 'objUsuario'
@@ -1448,7 +1448,7 @@ class CatalogoController extends Controller {
 		$objProducto = Producto::model ()->find ( array (
 				'with' => array (
 						'listImagenesGrandes',
-						'objDetalle',
+						'listDetalleProducto',
 						'objCodigoEspecial',
 						'listCalificaciones' => array (
 								'with' => 'objUsuario'
@@ -1579,7 +1579,7 @@ class CatalogoController extends Controller {
 			$objProducto = Producto::model ()->find ( array (
 					'with' => array (
 							'listImagenes',
-							'objDetalle',
+							'listDetalleProducto',
 							'objCodigoEspecial',
 							'listCalificaciones' => array (
 									'with' => 'objUsuario'
@@ -1595,7 +1595,7 @@ class CatalogoController extends Controller {
 			$objProducto = Producto::model ()->find ( array (
 					'with' => array (
 							'listImagenes',
-							'objDetalle',
+							'listDetalleProducto',
 							'objCodigoEspecial',
 							'listCalificaciones' => array (
 									'with' => 'objUsuario'

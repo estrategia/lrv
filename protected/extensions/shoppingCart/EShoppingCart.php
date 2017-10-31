@@ -690,7 +690,7 @@ class EShoppingCart extends CMap {
     }
     
     public function getTotalCostClient() {
-    	$price = $this->getTotalCost(true) - $this->bonoValue; /***** Valor que está afectando la compra ******/
+    	$price = $this->getTotalCost(true) - $this->bonoValue; /***** Valor que estï¿½ afectando la compra ******/
         return $price;
     }
     

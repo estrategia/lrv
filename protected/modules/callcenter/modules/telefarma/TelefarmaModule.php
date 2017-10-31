@@ -15,6 +15,7 @@ class TelefarmaModule extends CWebModule {
             'callcenter.components.*',
             'application.components.*',
             'application.components.behaviors.*',
+            'ext.shoppingCartVitalCall.*',
         ));
         
         Yii::app()->setComponents(array(

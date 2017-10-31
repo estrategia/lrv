@@ -58,7 +58,7 @@
                             <span class="txt_sub">Subtotal</span> <span id="subtotal-producto-ubicacion-<?php echo $objProducto->codigoProducto ?>"><?php echo Yii::app()->numberFormatter->format(Yii::app()->params->formatoMoneda['patron'], $objPrecio->getPrecio(Precio::PRECIO_UNIDAD) * $cantidadUbicacion, Yii::app()->params->formatoMoneda['moneda']); ?></span>
                         </div>
                         <br/>
-                        Domicilio <?php echo Yii::app()->shoppingCartVitalCall->getDeliveryStored() ?> hrs:
+                        Domicilio <?php echo Yii::app()->shoppingCartNationalSale->getDeliveryStored() ?> hrs:
                         <div class="col-md-12 line-bottom">
                             <button class="col-md-2 min" style="border:1px solid;" id="disminuir_cantidad_bodega_<?php echo $objProducto->codigoProducto ?>" onclick="cambioUnidadesBodega('<?php echo $objProducto->codigoProducto ?>',<?= $objPrecio->getPrecio(Precio::PRECIO_UNIDAD) ?>, 0)" type="button"><span class="glyphicon glyphicon-minus"></span></button>
                             <div class="col-md-2 ressete"><input class="increment" type="text" id="cantidad-producto-bodega-<?php echo $objProducto->codigoProducto ?>" onchange="subtotalProductoBodega(<?php echo $objProducto->codigoProducto ?>,<?= $objPrecio->getPrecio(Precio::PRECIO_UNIDAD) ?>);" maxlength="3" value="<?php echo $cantidadBodega ?>" data-total="700"/></div>

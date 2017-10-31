@@ -19,7 +19,7 @@ return array(
         'metamucil-facilita-transito-intestinal' => 'publicidad/contenido/nombre/metamucil-facilita-transito-intestinal',
         'nestle-nan-optipro' => 'publicidad/contenido/nombre/nestle-nan-optipro',
         'recetas-nestle-nan-optipro' => 'publicidad/contenido/nombre/nan-recetas',
-        'mas-informacion-nan' => 'publicidad/contenido/nombre/mas-informacion-nan',
+        // 'mas-informacion-nan' => 'publicidad/contenido/nombre/mas-informacion-nan',
         'parodontax' => 'publicidad/contenido/nombre/parodontax',
         'porque-elejir-metamucil' => 'publicidad/contenido/nombre/porque-elejir-metamucil',
         'prebioticos-klim' => 'publicidad/contenido/nombre/prebioticos-klim',
@@ -66,7 +66,7 @@ return array(
         'eucerin-proteccion-solar-corporal' => 'publicidad/contenido/nombre/eucerin-corporal',
         'eucerin-proteccion-solar-infantil' => 'publicidad/contenido/nombre/eucerin-kids',
         'naturales' => 'publicidad/contenido/nombre/naturales',
-        'energold-renergen-suplementos-dietarios' => 'publicidad/contenido/nombre/kyron-suplementos-dietarios',
+        // 'energold-renergen-suplementos-dietarios' => 'publicidad/contenido/nombre/kyron-suplementos-dietarios',
         'energold-alimento-polvo' => 'publicidad/contenido/nombre/kyron-elimento-polvo',
         'energold-alimento-ninos' => 'publicidad/contenido/nombre/kyron-alimento-ninos',
         'gaviscon' => 'publicidad/contenido/nombre/gaviscon',
@@ -106,7 +106,8 @@ return array(
         'nude-autobronceadores' => 'publicidad/contenido/nombre/nude-autobronceador',
         'nude-repelente-de-insectos' => 'publicidad/contenido/nombre/nude-repelente',
         'mejorflex-ibuprofeno' => 'publicidad/contenido/nombre/mejorflex',
-        // Fin links campañas
+        'gelicart-colageno-hidrolizado' => 'publicidad/contenido/nombre/gelicart',
+         // Fin links campañas
 
         // REST patterns
         array('restProducto/producto', 'pattern' => 'rest/producto/<codigoProducto:\d+>/ciudad/<codigoCiudad:\d+>/sector/<codigoSector:\d+>', 'verb' => 'GET'),

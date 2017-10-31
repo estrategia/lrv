@@ -1,15 +1,15 @@
 <div class="btn-group minicar">
     <a href="#" data-toggle="dropdown" data-placeholder="false" class="dropdown-toggle">
         <span><img class="ico-carrito" src="<?php echo Yii::app()->request->baseUrl; ?>/images/desktop/ico-carrito.png" alt=""></span>
-        <span id="cantidad-productos" class="cantidad-productos"><?php echo Yii::app()->shoppingCartVitalCall->getCount(); ?></span>
+        <span id="cantidad-productos" class="cantidad-productos"><?php echo Yii::app()->getModule('callcenter')->getModule('telefarma')->shoppingCartVitalCall->getCount(); ?></span>
         <p style="color: #A3A3A3;margin:0;line-height: 16px;">Productos</p>
     </a>
 
     <ul class="dropdown-menu noclose pull-right">
-        <li class="top">Hay <?php echo Yii::app()->shoppingCartVitalCall->getCount(); ?> producto(s) en el carro</li>
-        <?php if (!Yii::app()->shoppingCartVitalCall->isEmpty()): ?>
+        <li class="top">Hay <?php echo Yii::app()->getModule('callcenter')->getModule('telefarma')->shoppingCartVitalCall->getCount(); ?> producto(s) en el carro</li>
+        <?php if (!Yii::app()->getModule('callcenter')->getModule('telefarma')->shoppingCartVitalCall->isEmpty()): ?>
             <div class="scroll">
-                <?php foreach (Yii::app()->shoppingCartVitalCall->getPositions() as $position): ?>
+                <?php foreach (Yii::app()->getModule('callcenter')->getModule('telefarma')->shoppingCartVitalCall->getPositions() as $position): ?>
                     <li class="c_list_prod">
                         <div class="ui-field-contain clst_prod_cont">
                             <?php
@@ -25,7 +25,7 @@
             <li class="vermasc">
                 <?php echo CHtml::link(' ', '#', array('class' => '')); ?>
             </li>
-            <li class="subtotal">Subtotal: <strong><?php echo Yii::app()->numberFormatter->format(Yii::app()->params->formatoMoneda['patron'], Yii::app()->shoppingCartVitalCall->getCost(), Yii::app()->params->formatoMoneda['moneda']); ?></strong></li>
+            <li class="subtotal">Subtotal: <strong><?php echo Yii::app()->numberFormatter->format(Yii::app()->params->formatoMoneda['patron'], Yii::app()->getModule('callcenter')->getModule('telefarma')->shoppingCartVitalCall->getCost(), Yii::app()->params->formatoMoneda['moneda']); ?></strong></li>
             <li>
                 <div class="row btn-pagar">
                     <?php echo CHtml::link('Comprar', CController::createUrl('/callcenter/telefarma/carro'), array('class' => 'btn btn-primary')); ?>

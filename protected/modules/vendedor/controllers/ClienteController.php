@@ -83,7 +83,7 @@ class ClienteController extends ControllerVendedor {
 
         unset(Yii::app()->session[Yii::app()->params->vendedor['sesion']['cliente']]);
 
-        Yii::app()->shoppingCartSalesman->clear();
+        Yii::app()->getModule('vendedor')->shoppingCartSalesman->clear();
 
         $redirect = Yii::app()->request->baseUrl . Yii::app()->controller->module->homeUrl[0];
         if (isset(Yii::app()->session[Yii::app()->params->vendedor['sesion']['redireccionCliente']])) {
@@ -168,7 +168,7 @@ class ClienteController extends ControllerVendedor {
         if ($usuario) {
             unset(Yii::app()->session[Yii::app()->params->vendedor['sesion']['compraInvitado']]);
             Yii::app()->session[Yii::app()->params->vendedor['sesion']['cliente']] = $usuario;
-            Yii::app()->shoppingCartSalesman->clear();
+            Yii::app()->getModule('vendedor')->shoppingCartSalesman->clear();
             
             $redirect = Yii::app()->request->baseUrl . Yii::app()->controller->module->homeUrl[0];
             if (isset(Yii::app()->session[Yii::app()->params->vendedor['sesion']['redireccionCliente']])) {
@@ -523,7 +523,7 @@ class ClienteController extends ControllerVendedor {
         
           $codigosProductos = array ();
           $productosCant = array ();
-          foreach (Yii::app()->shoppingCartSalesman->getPositions() as $position){
+          foreach (Yii::app()->getModule('vendedor')->shoppingCartSalesman->getPositions() as $position){
               if ($position->getDelivery() == 0 && $position->getShipping() == 0){
                   if($position->isProduct()){
                       $codigosProductos[] = $position->objProducto->codigoProducto;

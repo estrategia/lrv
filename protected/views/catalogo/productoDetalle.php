@@ -206,7 +206,7 @@
 
     <div class="cdtl_div_ln"></div>
 
-    <?php ProductoView::generarDetalle($objProducto->objDetalle) ?>
+    <?php $this->renderPartial('_productoElementoDetalle', array('objProducto' => $objProducto));?>
 
     <div class="cdtl_div_ln"></div>
 

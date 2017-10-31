@@ -20,9 +20,9 @@ return array(
         'application.models.view.*',
         'application.components.*',
         'ext.shoppingCart.*',
-        // 'ext.shoppingCartSalesman.*',
-        // 'ext.shoppingCartVitalCall.*',
-        // 'ext.shoppingCartNationalSale.*'
+        //'ext.shoppingCartSalesman.*',
+        //'ext.shoppingCartVitalCall.*',
+        'ext.shoppingCartNationalSale.*'
     ),
 	'onBeginRequest' => array('WorldUrlManager', 'initRules'),
     'modules' => require(dirname(__FILE__) . '/modules.php'),
@@ -47,7 +47,7 @@ return array(
         'shoppingCart' => array(
             'class' => 'ext.shoppingCart.EShoppingCart',
         ),
-        'shoppingCartSalesman' => array(
+        /*'shoppingCartSalesman' => array(
             'class' => 'ext.shoppingCartSalesman.EShoppingCart',
         ),
         'shoppingCartVitalCall' => array(
@@ -55,8 +55,7 @@ return array(
         ),
         'shoppingCartNationalSale' => array(
             'class' => 'ext.shoppingCartNationalSale.EShoppingCart',
-        ),
-    	
+        ),*/
         'ePdf' => array(
             'class' => 'ext.yii-pdf.EYiiPdf',
             'params' => array(
@@ -69,8 +68,6 @@ return array(
                 ),
             ),
         ),
-    	
-    		
         'log' => array(
             'class' => 'CLogRouter',
             'routes' => array(

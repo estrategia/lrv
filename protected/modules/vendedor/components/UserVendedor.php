@@ -114,7 +114,7 @@ class UserVendedor {
         
         // Limpiar carrito de compras
         
-        Yii::app()->shoppingCartSalesman->clear();
+        Yii::app()->getModule('vendedor')->shoppingCartSalesman->clear();
         
         foreach ($sessions as $sesion) {
             _deleteCookie($sesion);
@@ -124,7 +124,7 @@ class UserVendedor {
     
     public function logoutCliente(){
         
-        Yii::app()->shoppingCartSalesman->clear();
+        Yii::app()->getModule('vendedor')->shoppingCartSalesman->clear();
         Yii::app()->session[Yii::app()->params->vendedor['sesion']['cliente']] = null; 
         Yii::app()->session[Yii::app()->params->vendedor['sesion']['compraInvitado']] = null; 
         Yii::app()->session[Yii::app()->params->vendedor['sesion']['sectorCiudadEntrega']] = null; 
