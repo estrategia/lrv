@@ -41,28 +41,28 @@
                         <div class="col-md-4">
                             <p>Subtotal:</p>
                             <p>Envío:</p>
-                            <?php if (Yii::app()->shoppingCartVitalCall->getExtraShipping() > 0): ?>
+                            <?php if (Yii::app()->getModule('telefarma')->shoppingCartVitalCall->getExtraShipping() > 0): ?>
                                 <p>Flete adicional:</p>
                             <?php endif; ?>
-                            <?php if (Yii::app()->shoppingCartVitalCall->getObjCiudad()->excentoImpuestos == 0 && Yii::app()->shoppingCartVitalCall->getTaxPrice() > 0): ?>
+                            <?php if (Yii::app()->getModule('telefarma')->shoppingCartVitalCall->getObjCiudad()->excentoImpuestos == 0 && Yii::app()->getModule('telefarma')->shoppingCartVitalCall->getTaxPrice() > 0): ?>
                                 <p>Impuesto incluidos:</p>
                             <?php endif; ?>
 
-                            <?php if (Yii::app()->shoppingCartVitalCall->getDiscountPrice(true) > 0): ?>
+                            <?php if (Yii::app()->getModule('telefarma')->shoppingCartVitalCall->getDiscountPrice(true) > 0): ?>
                                 <p class="rojo">Su ahorro:</p>
                             <?php endif; ?>
                         </div>
                         <div class="col-md-6">
-                            <p><?php echo Yii::app()->numberFormatter->format(Yii::app()->params->formatoMoneda['patron'], Yii::app()->shoppingCartVitalCall->getCost(), Yii::app()->params->formatoMoneda['moneda']); ?></p>
-                            <p><?php echo Yii::app()->numberFormatter->format(Yii::app()->params->formatoMoneda['patron'], Yii::app()->shoppingCartVitalCall->getShipping(), Yii::app()->params->formatoMoneda['moneda']); ?></p>
-                            <?php if (Yii::app()->shoppingCartVitalCall->getExtraShipping() > 0): ?>
-                                <p><?php echo Yii::app()->numberFormatter->format(Yii::app()->params->formatoMoneda['patron'], Yii::app()->shoppingCartVitalCall->getExtraShipping(), Yii::app()->params->formatoMoneda['moneda']); ?></p>
+                            <p><?php echo Yii::app()->numberFormatter->format(Yii::app()->params->formatoMoneda['patron'], Yii::app()->getModule('telefarma')->shoppingCartVitalCall->getCost(), Yii::app()->params->formatoMoneda['moneda']); ?></p>
+                            <p><?php echo Yii::app()->numberFormatter->format(Yii::app()->params->formatoMoneda['patron'], Yii::app()->getModule('telefarma')->shoppingCartVitalCall->getShipping(), Yii::app()->params->formatoMoneda['moneda']); ?></p>
+                            <?php if (Yii::app()->getModule('telefarma')->shoppingCartVitalCall->getExtraShipping() > 0): ?>
+                                <p><?php echo Yii::app()->numberFormatter->format(Yii::app()->params->formatoMoneda['patron'], Yii::app()->getModule('telefarma')->shoppingCartVitalCall->getExtraShipping(), Yii::app()->params->formatoMoneda['moneda']); ?></p>
                             <?php endif; ?>
-                                 <?php if (Yii::app()->shoppingCartVitalCall->getObjCiudad()->excentoImpuestos == 0 && Yii::app()->shoppingCartVitalCall->getTaxPrice() > 0): ?>
-                                <p><?php echo Yii::app()->numberFormatter->format(Yii::app()->params->formatoMoneda['patron'], Yii::app()->shoppingCartVitalCall->getTaxPrice(), Yii::app()->params->formatoMoneda['moneda']) ?></p>
+                                 <?php if (Yii::app()->getModule('telefarma')->shoppingCartVitalCall->getObjCiudad()->excentoImpuestos == 0 && Yii::app()->getModule('telefarma')->shoppingCartVitalCall->getTaxPrice() > 0): ?>
+                                <p><?php echo Yii::app()->numberFormatter->format(Yii::app()->params->formatoMoneda['patron'], Yii::app()->getModule('telefarma')->shoppingCartVitalCall->getTaxPrice(), Yii::app()->params->formatoMoneda['moneda']) ?></p>
                             <?php endif; ?>
-                            <?php if (Yii::app()->shoppingCartVitalCall->getDiscountPrice(true) > 0): ?>
-                                <p class="rojo"><?php echo Yii::app()->numberFormatter->format(Yii::app()->params->formatoMoneda['patron'], Yii::app()->shoppingCartVitalCall->getDiscountPrice(true), Yii::app()->params->formatoMoneda['moneda']) ?></p>
+                            <?php if (Yii::app()->getModule('telefarma')->shoppingCartVitalCall->getDiscountPrice(true) > 0): ?>
+                                <p class="rojo"><?php echo Yii::app()->numberFormatter->format(Yii::app()->params->formatoMoneda['patron'], Yii::app()->getModule('telefarma')->shoppingCartVitalCall->getDiscountPrice(true), Yii::app()->params->formatoMoneda['moneda']) ?></p>
                             <?php endif; ?>
                         </div>
                     </div>
@@ -128,7 +128,7 @@
             <div style="margin-top:40px;">
                 <div class="row" style="background-color:#fff;">
                     <div class="col-sm-6 col-md-offset-3">
-                        <p class="text-center" style="margin-top:20px;color:#A4A4A4;font-size:20px;">TOTAL A PAGAR: <?php echo Yii::app()->numberFormatter->format(Yii::app()->params->formatoMoneda['patron'], Yii::app()->shoppingCartVitalCall->getTotalCostClient(), Yii::app()->params->formatoMoneda['moneda']) ?></p>
+                        <p class="text-center" style="margin-top:20px;color:#A4A4A4;font-size:20px;">TOTAL A PAGAR: <?php echo Yii::app()->numberFormatter->format(Yii::app()->params->formatoMoneda['patron'], Yii::app()->getModule('telefarma')->shoppingCartVitalCall->getTotalCostClient(), Yii::app()->params->formatoMoneda['moneda']) ?></p>
                     </div>
                     <div class="col-sm-6 col-md-offset-3">
                         <button class="adicionar" style="width:100%;margin-bottom:26px;" id="btn-carropagar-siguiente" data-origin="<?php echo $paso ?>" data-redirect="finalizar">Finalizar compra</button>

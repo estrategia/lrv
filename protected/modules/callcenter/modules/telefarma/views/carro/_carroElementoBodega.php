@@ -11,7 +11,7 @@
             <div>Flete: <?php echo Yii::app()->numberFormatter->format(Yii::app()->params->formatoMoneda['patron'], $position->getShipping(), Yii::app()->params->formatoMoneda['moneda']); ?>]</div>
         <?php endif; ?>
 
-        <div><span>Tiempo de entrega: <?php echo Yii::app()->shoppingCartVitalCall->getDeliveryStored() ?> hora(s)</span></div>
+        <div><span>Tiempo de entrega: <?php echo Yii::app()->getModule('telefarma')->shoppingCartVitalCall->getDeliveryStored() ?> hora(s)</span></div>
     </td>
     <td class="btn-pagar" align="center">
         <?php if ($lectura): ?>
@@ -39,7 +39,7 @@
             <?php echo Yii::app()->numberFormatter->format(Yii::app()->params->formatoMoneda['patron'], $position->getPrice(false, true), Yii::app()->params->formatoMoneda['moneda']); ?>
         <?php endif; ?>
 
-        <?php if (Yii::app()->shoppingCartVitalCall->getObjCiudad()->excentoImpuestos == 0 && $position->getTax() > 0): ?>
+        <?php if (Yii::app()->getModule('telefarma')->shoppingCartVitalCall->getObjCiudad()->excentoImpuestos == 0 && $position->getTax() > 0): ?>
             <br>
             Incluye <?php echo Yii::app()->numberFormatter->formatPercentage($position->getTax()) ?> IVA
         <?php endif; ?>

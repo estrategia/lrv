@@ -120,7 +120,7 @@
             <div style="margin-top:40px;">
                 <div class="row" style="background-color:#fff;">
                     <div class="col-sm-6 col-md-offset-3">
-                        <p class="text-center" style="margin-top:20px;color:#A4A4A4;font-size:20px;">TOTAL A PAGAR: <?php echo Yii::app()->numberFormatter->format(Yii::app()->params->formatoMoneda['patron'], Yii::app()->shoppingCartVitalCall->getTotalCost(), Yii::app()->params->formatoMoneda['moneda']) ?></p>
+                        <p class="text-center" style="margin-top:20px;color:#A4A4A4;font-size:20px;">TOTAL A PAGAR: <?php echo Yii::app()->numberFormatter->format(Yii::app()->params->formatoMoneda['patron'], Yii::app()->shoppingCartNationalSale->getTotalCost(), Yii::app()->params->formatoMoneda['moneda']) ?></p>
                     </div>
                     <div class="col-sm-6 col-md-offset-3">
                         <button class="adicionar" style="width:100%;margin-bottom:26px;" id="btn-carropagar-siguiente" data-origin="<?php echo $paso ?>" data-redirect="finalizar">Finalizar compra</button>
