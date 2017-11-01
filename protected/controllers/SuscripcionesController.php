@@ -98,20 +98,21 @@ class SuscripcionesController extends Controller
 		$response = [];
 		$idSuscripcion = $request->getParam('idSuscripcion');
 		$periodos = $request->getParam('periodos');
-		$suscripcion = SuscripcionesProductosUsuario::model()->find($idSuscripcion);
+		$suscripcion = SuscripcionesProductosUsuario::model()->find(
+			"idSuscripcion=:idSuscripcion",
+			[':idSuscripcion' => $idSuscripcion]
+		);
 		$periodoActual = $suscripcion->consultarPeriodoActual();
 		if ($periodoActual !== null) {
 			if ($periodos <= $periodoActual->numeroPeriodo) {
 				$response = [
 					'result' => 'error', 
-					'response' => "La cantidad de periodos introducida no debe superar la cantidad de periodosTranscurridos ($periodoActual->numeroPeriodo)"
+					'response' => "La cantidad de periodos introducida debe ser mayo que la cantidad de periodos transcurridos ($periodoActual->numeroPeriodo)"
 				];
 				echo CJSON::encode($response);
 				exit();
 			}
 		}
-		$suscripcion->cantidadPeriodos = $periodos;
-		$suscripcion->save();
 		$suscripcion->actualizarPeriodos($periodos);
 		$response = ['result' => 'ok', 'response' => 'Suscripcion actualizada correctamente'];
 		echo CJSON::encode($response);

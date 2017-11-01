@@ -335,6 +335,7 @@ return array(
     ),
     'longitudPeriodoSuscripcion' => 30, // Dias
     'longitudToleranciaPeriodoSuscripcion' => 5, // Dias
+    'diasRecordarSuscripcion' => 5,
     'beneficios' => array(
       /* 'lrv' => array(21, 22, 23, 24, 25, 26),
         'descuentos' => array(21, 22, 23, 24), // new

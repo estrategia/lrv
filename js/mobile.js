@@ -2690,12 +2690,12 @@ $(document).on('click', "button[data-role='crear-suscripcion']", function () {
 })
 
 $(document).on('click', "button[data-role='actualizar-suscripcion']", function () {
-    var idSuscripcion = $(this).attr('data-id-suscripcion');
+    var idSuscripcion = $("button[data-role='actualizar-suscripcion']").attr('data-id-suscripcion');
     var periodos = $("input[data-role='periodos-suscripcion'").val();
     $.ajax({
         type: 'POST',
         url: requestUrl + "/suscripciones/actualizar",
-        data: { codigoProducto: idSuscripcion, periodos: periodos },
+        data: { idSuscripcion: idSuscripcion, periodos: periodos },
         dataType: 'json',
         beforeSend: function () {
             $.mobile.loading('show');

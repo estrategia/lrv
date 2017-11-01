@@ -52,7 +52,7 @@ class PeriodosSuscripcion extends CActiveRecord
 		// NOTE: you may need to adjust the relation name and the related
 		// class name for the relations automatically generated below.
 		return array(
-			'idSuscripcion0' => array(self::BELONGS_TO, 'TSuscripcionesProductosUsuario', 'idSuscripcion'),
+			'suscripcion' => array(self::BELONGS_TO, 'SuscripcionesProductosUsuario', 'idSuscripcion'),
 		);
 	}
 

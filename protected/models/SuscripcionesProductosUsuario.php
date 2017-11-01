@@ -50,7 +50,9 @@ class SuscripcionesProductosUsuario extends CActiveRecord
 		// class name for the relations automatically generated below.
 		return array(
 			'beneficio' => array(self::HAS_ONE, 'Beneficios', 'idBeneficio'),
+			'producto' => array(self::BELONGS_TO, 'Producto', 'idProducto'),
 			'usuario' => array(self::HAS_ONE, 'Usuario', 'identificacionUsuario'),
+			'periodos' => array(self::HAS_MANY, 'PeriodosSuscripcion', 'idSuscripcion'),
 		);
 	}
 
@@ -140,7 +142,7 @@ class SuscripcionesProductosUsuario extends CActiveRecord
 			// echo $e;
 			$transaction->rollBack();
 		}
-		$this->fechaFin = $this->consultarUltimoPeriodo()->fechaFin;
+		$this->fechaFin = end($periodos)['fechaFin'];
 		$this->save();
 	}
 
@@ -167,6 +169,7 @@ class SuscripcionesProductosUsuario extends CActiveRecord
 				$infoBase['numeroPeriodo'] ++;
 			}
 			
+			Yii::log(CVarDumper::dumpAsString($ultimoPeriodo), CLogger::LEVEL_INFO, 'application');
 			$connection = Yii::app()->db;
 			$transaction=$connection->beginTransaction();
 			try {
@@ -174,24 +177,24 @@ class SuscripcionesProductosUsuario extends CActiveRecord
 				$command=$builder->createMultipleInsertCommand('t_PeriodosSuscripcion', $periodos);
 				$command->execute();
 				$transaction->commit();
+				$this->cantidadPeriodos = $numeroPeriodos;			
 				// return true;
 			} catch(Exception $e) {
 				// echo $e;
 				$transaction->rollBack();
 				// return false;
 			}
-		}
-		
-		if ($numeroPeriodos < $this->cantidadPeriodos && $numeroPeriodos > $this->periodoActual) {
-			$periodosAEliminar = $this->cantidadPeriodos - $numeroPeriodos;
+		} else if ($numeroPeriodos < $this->cantidadPeriodos && $numeroPeriodos > $this->periodoActual) {
+			$periodosAEliminar = $this->cantidadPeriodos - $numeroPeriodos + 1;
 			PeriodosSuscripcion::model()->deleteAll(
 				'numeroPeriodo > :numeroPeriodo',
 				[':numeroPeriodo' => $periodosAEliminar]
 			);
 		}
-		$this->fechaFin = $this->consultarUltimoPeriodo()->fechaFin;
+		$ultimoPeriodo = $this->consultarUltimoPeriodo();
+		$this->fechaFin = $ultimoPeriodo->fechaFin;
+		$this->cantidadPeriodos = $ultimoPeriodo->numeroPeriodo;
 		$this->save();
-		Yii::log($periodosACrear, CLogger::LEVEL_INFO, 'application');
 	}
 
 	public static function calcularFechasPeriodos($fechaInicial, $numeroPeriodos)
@@ -268,5 +271,28 @@ class SuscripcionesProductosUsuario extends CActiveRecord
 			$numeroPeriodoActual = $periodo->numeroPeriodo;
 		}
 		return $numeroPeriodoActual;
+	}
+
+	public static function consultarSuscripcionesRecordar($porCedula=true)
+	{
+		$criteria = new CDbCriteria;
+		$criteria->join = 'JOIN t_PeriodosSuscripcion periodos ON periodos.idSuscripcion = t.idSuscripcion';
+		$criteria->condition = 'periodos.fechaInicio <= :fechaActual';
+		$criteria->condition .= ' AND periodos.fechaFin >= :fechaActual';
+		$criteria->condition .= ' AND periodos.notificadoCorreo = 0';
+		$criteria->condition .= ' AND periodos.usado <> 1';
+		$criteria->params = [':fechaActual' => date('Y-m-d')];
+		$suscripciones = self::model()->findAll($criteria);
+		if ($porCedula) {
+			$suscripcionesPorCedula = [];
+			foreach ($suscripciones as $key => $suscripcion) {
+				if (!isset($suscripcionesPorCedula[$suscripcion->identificacionUsuario])) {
+					$suscripcionesPorCedula[$suscripcion->identificacionUsuario] = [];
+				}
+				$suscripcionesPorCedula[$suscripcion->identificacionUsuario][] = $suscripcion;
+			}
+			return $suscripcionesPorCedula;
+		}
+		return $suscripciones;
 	}
 }
