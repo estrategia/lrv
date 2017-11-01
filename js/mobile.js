@@ -2665,3 +2665,49 @@ $(document).on('click', "a[data-role='ocultar-menu']", function() {
     });
     return false;
 });
+
+$(document).on('click', "button[data-role='crear-suscripcion']", function () {
+    var idProducto = $(this).attr('data-id-producto');
+    var periodos = $("input[data-role='periodos-suscripcion'").val();
+    $.ajax({
+        type: 'POST',
+        url: requestUrl + "/suscripciones/crear",
+        data: {codigoProducto: idProducto, periodos: periodos},
+        dataType: 'json',
+        beforeSend: function () {
+            $.mobile.loading('show');
+        },
+        complete: function (data) {
+            $.mobile.loading('hide');
+        },
+        success: function (data) {
+            // if (data.result === 'ok') {
+            // }
+            alert(data.response);
+        }
+    });
+    return false;
+})
+
+$(document).on('click', "button[data-role='actualizar-suscripcion']", function () {
+    var idSuscripcion = $(this).attr('data-id-suscripcion');
+    var periodos = $("input[data-role='periodos-suscripcion'").val();
+    $.ajax({
+        type: 'POST',
+        url: requestUrl + "/suscripciones/actualizar",
+        data: { codigoProducto: idSuscripcion, periodos: periodos },
+        dataType: 'json',
+        beforeSend: function () {
+            $.mobile.loading('show');
+        },
+        complete: function (data) {
+            $.mobile.loading('hide');
+        },
+        success: function (data) {
+            // if (data.result === 'ok') {
+            // }
+            alert(data.response);
+        }
+    });
+    return false;
+})

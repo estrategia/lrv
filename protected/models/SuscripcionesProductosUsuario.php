@@ -30,7 +30,7 @@ class SuscripcionesProductosUsuario extends CActiveRecord
 		// NOTE: you should only define rules for those attributes that
 		// will receive user inputs.
 		return array(
-			array('idSuscripcion, identificacionUsuario, idProducto, idBeneficio, descuentoProducto', 'required'),
+			array('identificacionUsuario, idProducto, idBeneficio, descuentoProducto', 'required'),
 			array('idSuscripcion', 'length', 'max'=>20),
 			array('identificacionUsuario', 'length', 'max'=>100),
 			array('idProducto, cantidadDisponiblePeriodoActual, periodoActual', 'length', 'max'=>10),
@@ -136,12 +136,12 @@ class SuscripcionesProductosUsuario extends CActiveRecord
 			$command=$builder->createMultipleInsertCommand('t_PeriodosSuscripcion', $periodos);
 			$command->execute();
 			$transaction->commit();
-			return true;
 		} catch(Exception $e) {
 			// echo $e;
 			$transaction->rollBack();
-			return false;
 		}
+		$this->fechaFin = $this->consultarUltimoPeriodo()->fechaFin;
+		$this->save();
 	}
 
 	public function actualizarPeriodos($numeroPeriodos)
@@ -166,7 +166,7 @@ class SuscripcionesProductosUsuario extends CActiveRecord
 				$periodos[] = $infoBase + $fechaPeriodo;
 				$infoBase['numeroPeriodo'] ++;
 			}
-
+			
 			$connection = Yii::app()->db;
 			$transaction=$connection->beginTransaction();
 			try {
@@ -181,7 +181,7 @@ class SuscripcionesProductosUsuario extends CActiveRecord
 				// return false;
 			}
 		}
-
+		
 		if ($numeroPeriodos < $this->cantidadPeriodos && $numeroPeriodos > $this->periodoActual) {
 			$periodosAEliminar = $this->cantidadPeriodos - $numeroPeriodos;
 			PeriodosSuscripcion::model()->deleteAll(
@@ -189,6 +189,9 @@ class SuscripcionesProductosUsuario extends CActiveRecord
 				[':numeroPeriodo' => $periodosAEliminar]
 			);
 		}
+		$this->fechaFin = $this->consultarUltimoPeriodo()->fechaFin;
+		$this->save();
+		Yii::log($periodosACrear, CLogger::LEVEL_INFO, 'application');
 	}
 
 	public static function calcularFechasPeriodos($fechaInicial, $numeroPeriodos)

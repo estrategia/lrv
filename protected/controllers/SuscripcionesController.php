@@ -39,8 +39,8 @@ class SuscripcionesController extends Controller
 		$producto = Producto::model()->find(array(
 			'with' => array(
 					'listImagenesGrandes',
-					'objDetalle',
 					'objCodigoEspecial',
+					'listDetalleProducto',
 					'listCalificaciones' => array(
 						'with' => 'objUsuario'
 				)
@@ -52,7 +52,69 @@ class SuscripcionesController extends Controller
 			)
 		));
 		$beneficioProducto = BeneficiosProductos::model()->find($criteriaBeneficio);
-		$this->render('d_crear', ['producto' => $producto, 'beneficio' => $beneficioProducto]);
+		if ($this->isMobile) {
+			$this->render('crear', ['objProducto' => $producto, 'beneficio' => $beneficioProducto]);
+		} else {
+			$this->render('d_crear', ['producto' => $producto, 'beneficio' => $beneficioProducto]);
+		}
+	}
+
+	public function actionEditar()
+	{
+		$request = Yii::app()->request;
+		$codigoProducto = $request->getParam('codigoProducto');
+		$identificacionUsuario = Yii::app()->user->name;
+		$producto = Producto::model()->find(array(
+			'with' => array(
+					'listImagenesGrandes',
+					'objCodigoEspecial',
+					'listDetalleProducto',
+					'listCalificaciones' => array(
+						'with' => 'objUsuario'
+				)
+			),
+			'condition' => 't.activo=:activo AND t.codigoProducto=:codigo',
+			'params' => array (
+				':activo' => 1,
+				':codigo' => $codigoProducto
+			)
+		));
+		$suscripcion = SuscripcionesProductosUsuario::model()->find(
+			'identificacionUsuario=:identificacionUsuario AND idProducto=:codigoProducto',
+			[':identificacionUsuario' => $identificacionUsuario, ':codigoProducto' => $codigoProducto]
+		);
+		// var_dump($codigoProducto);
+		// exit();
+		if ($this->isMobile) {
+			$this->render('actualizar', ['objProducto' => $producto, 'suscripcion' => $suscripcion]);
+		} else {
+			$this->render('d_actualizar', ['producto' => $producto, 'suscripcion' => $suscripcion]);
+		}
+	}
+
+	public function actionActualizar()
+	{
+		$request = Yii::app()->request;
+		$response = [];
+		$idSuscripcion = $request->getParam('idSuscripcion');
+		$periodos = $request->getParam('periodos');
+		$suscripcion = SuscripcionesProductosUsuario::model()->find($idSuscripcion);
+		$periodoActual = $suscripcion->consultarPeriodoActual();
+		if ($periodoActual !== null) {
+			if ($periodos <= $periodoActual->numeroPeriodo) {
+				$response = [
+					'result' => 'error', 
+					'response' => "La cantidad de periodos introducida no debe superar la cantidad de periodosTranscurridos ($periodoActual->numeroPeriodo)"
+				];
+				echo CJSON::encode($response);
+				exit();
+			}
+		}
+		$suscripcion->cantidadPeriodos = $periodos;
+		$suscripcion->save();
+		$suscripcion->actualizarPeriodos($periodos);
+		$response = ['result' => 'ok', 'response' => 'Suscripcion actualizada correctamente'];
+		echo CJSON::encode($response);
 	}
 
 	public function actionCrear()
@@ -60,6 +122,7 @@ class SuscripcionesController extends Controller
 		$request = Yii::app()->request;
 		$response = [];
 		$codigoProducto = $request->getParam('codigoProducto');
+		$periodos = $request->getParam('periodos');
 		$identificacionUsuario = Yii::app()->user->name;
 		$criteriaBeneficio = new CDbCriteria;
 		$criteriaBeneficio->condition = 't.codigoProducto=:codigoProducto';
@@ -71,11 +134,14 @@ class SuscripcionesController extends Controller
 		$suscripcion->identificacionUsuario = Yii::app()->user->name;
 		$suscripcion->idProducto = $codigoProducto;
 		$suscripcion->idBeneficio = $beneficioProducto->idBeneficio;
+		$suscripcion->validate();
 		if ($suscripcion->save()) {
+			$suscripcion->generarPeriodos($periodos);
 			$response = ['result' => 'ok', 'response' => 'Se ha creado la suscripción correctamente'];
 		} else {
 			$response = ['result' => 'ok', 'response' => 'Error al crear la suscripcion'];
 		}
+		echo CJSON::encode($response);
 	}
 
 	// Uncomment the following methods and override them if needed
