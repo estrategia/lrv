@@ -6,11 +6,15 @@
  * The followings are the available columns in table 't_ProductoDetalleImagenes':
  * @property string $idProductoDetalleImagen
  * @property string $idProductoDetalle
+ * @property string $codigoProducto
+ * @property string $tituloImagen
  * @property string $rutaImagenEscritorio
  * @property string $rutaImagenMovil
+ * @property string $fechaCreacion
+ * @property string $fechaActualizacion
  *
  * The followings are the available model relations:
- * @property TProductoDetalle $idProductoDetalle0
+ * @property ProductoDetalle $objProductoDetalle
  */
 class ProductoDetalleImagenes extends CActiveRecord
 {
@@ -30,15 +34,21 @@ class ProductoDetalleImagenes extends CActiveRecord
 		// NOTE: you should only define rules for those attributes that
 		// will receive user inputs.
 		return array(
-			array('idProductoDetalle, rutaImagenEscritorio, rutaImagenMovil', 'required'),
+		    array('idProductoDetalleImagen', 'required', 'on' => 'update', 'message' => '{attribute} no puede estar vac&iacute;o'),
+			array('idProductoDetalle, tituloImagen', 'required'),
 			array('idProductoDetalle', 'length', 'max'=>19),
 			array('rutaImagenEscritorio, rutaImagenMovil', 'length', 'max'=>255),
+		    array('rutaImagenEscritorio, rutaImagenMovil', 'file', 'safe' => true, 'types' => 'jpg, jpeg, gif, png, bmp', 'maxSize' => 2 * 1024 * 1024, 'allowEmpty' => false, 'on' => 'create', 'message' => '{attribute} no puede estar vac&iacute;o'),
+		    array('rutaImagenEscritorio, rutaImagenMovil', 'file', 'safe' => true, 'types' => 'jpg, jpeg, gif, png, bmp', 'maxSize' => 2 * 1024 * 1024, 'allowEmpty' => true, 'on' => 'update', 'message' => '{attribute} no puede estar vac&iacute;o'),
+		    array('tituloImagen', 'length', 'max'=>45),
+		    array('fechaCreacion, fechaActualizacion', 'safe'),
+		    array('codigoProducto', 'safe'),
 			// The following rule is used by search().
 			// @todo Please remove those attributes that should not be searched.
-			array('idProductoDetalleImagen, idProductoDetalle, rutaImagenEscritorio, rutaImagenMovil', 'safe', 'on'=>'search'),
+			array('idProductoDetalleImagen, idProductoDetalle, tituloImagen, rutaImagenEscritorio, rutaImagenMovil, codigoProducto, fechaCreacion, fechaActualizacion', 'safe', 'on'=>'search'),
 		);
 	}
-
+    
 	/**
 	 * @return array relational rules.
 	 */
@@ -47,7 +57,7 @@ class ProductoDetalleImagenes extends CActiveRecord
 		// NOTE: you may need to adjust the relation name and the related
 		// class name for the relations automatically generated below.
 		return array(
-			'idProductoDetalle0' => array(self::BELONGS_TO, 'TProductoDetalle', 'idProductoDetalle'),
+			'objProductoDetalle' => array(self::BELONGS_TO, 'ProductoDetalle', 'idProductoDetalle'),
 		);
 	}
 
@@ -59,8 +69,12 @@ class ProductoDetalleImagenes extends CActiveRecord
 		return array(
 			'idProductoDetalleImagen' => 'Id Producto Detalle Imagen',
 			'idProductoDetalle' => 'Id Producto Detalle',
-			'rutaImagenEscritorio' => 'Ruta Imagen Escritorio',
-			'rutaImagenMovil' => 'Ruta Imagen Movil',
+		    'tituloImagen' => 'Titulo',
+			'rutaImagenEscritorio' => 'Imagen escritorio',
+			'rutaImagenMovil' => 'Imagen movil',
+		    'tituloImagen' => 'Titulo imagen',
+		    'fechaCreacion' => 'Fecha Creacion',
+		    'fechaActualizacion' => 'Fecha Actualizacion',
 		);
 	}
 
@@ -79,13 +93,17 @@ class ProductoDetalleImagenes extends CActiveRecord
 	public function search()
 	{
 		// @todo Please modify the following code to remove attributes that should not be searched.
-
+        
 		$criteria=new CDbCriteria;
-
+        
 		$criteria->compare('idProductoDetalleImagen',$this->idProductoDetalleImagen,true);
 		$criteria->compare('idProductoDetalle',$this->idProductoDetalle,true);
 		$criteria->compare('rutaImagenEscritorio',$this->rutaImagenEscritorio,true);
 		$criteria->compare('rutaImagenMovil',$this->rutaImagenMovil,true);
+		$criteria->compare('tituloImagen',$this->tituloImagen,true);
+		$criteria->compare('codigoProducto',$this->codigoProducto,true);
+		$criteria->compare('fechaCreacion',$this->fechaCreacion,true);
+		$criteria->compare('fechaActualizacion',$this->fechaActualizacion,true);
 
 		return new CActiveDataProvider($this, array(
 			'criteria'=>$criteria,
@@ -101,5 +119,22 @@ class ProductoDetalleImagenes extends CActiveRecord
 	public static function model($className=__CLASS__)
 	{
 		return parent::model($className);
+	}
+	
+	public function beforeSave() {
+	    if ($this->isNewRecord) {
+	        //$this->fechaCreacion = new CDbExpression('NOW()');
+	        $this->fechaCreacion = date('Y-m-d H:i:s');
+	        
+	        /*$codigoProducto = Yii::app()->db->createCommand("SELECT codigoProducto FROM t_ProductoDetalle WHERE idProductoDetalle='. $this->idProductoDetalle.'")->queryScalar();
+	 	        
+	        if($codigoProducto!== false){
+	            $this->codigoProducto = $codigoProducto;
+	        }else {
+	            throw new Exception("Producto no detectado en detalle", 404);
+	        }*/
+	    }
+	    
+	    return parent::beforeSave();
 	}
 }

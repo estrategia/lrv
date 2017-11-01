@@ -6,10 +6,14 @@
  * The followings are the available columns in table 't_ProductoDetalleVideos':
  * @property string $idProductoDetalleVideo
  * @property string $idProductoDetalle
+ * @property string $codigoProducto
+ * @property string $tituloVideo
  * @property string $urlVideo
+ * @property string $fechaCreacion
+ * @property string $fechaActualizacion
  *
  * The followings are the available model relations:
- * @property TProductoDetalle $idProductoDetalle0
+ * @property ProductoDetalle $objProductoDetalle
  */
 class ProductoDetalleVideos extends CActiveRecord
 {
@@ -29,12 +33,16 @@ class ProductoDetalleVideos extends CActiveRecord
 		// NOTE: you should only define rules for those attributes that
 		// will receive user inputs.
 		return array(
-			array('idProductoDetalle, urlVideo', 'required'),
+		    array('idProductoDetalleVideo', 'required', 'on' => 'update', 'message' => '{attribute} no puede estar vac&iacute;o'),
+			array('idProductoDetalle, urlVideo, tituloVideo', 'required'),
 			array('idProductoDetalle', 'length', 'max'=>19),
 			array('urlVideo', 'length', 'max'=>255),
+		    array('tituloVideo', 'length', 'max'=>45),
+		    array('fechaCreacion, fechaActualizacion', 'safe'),
+		    array('codigoProducto', 'safe'),
 			// The following rule is used by search().
 			// @todo Please remove those attributes that should not be searched.
-			array('idProductoDetalleVideo, idProductoDetalle, urlVideo', 'safe', 'on'=>'search'),
+			array('idProductoDetalleVideo, idProductoDetalle, urlVideo, tituloVideo, codigoProducto, fechaCreacion, fechaActualizacion', 'safe', 'on'=>'search'),
 		);
 	}
 
@@ -46,7 +54,7 @@ class ProductoDetalleVideos extends CActiveRecord
 		// NOTE: you may need to adjust the relation name and the related
 		// class name for the relations automatically generated below.
 		return array(
-			'idProductoDetalle0' => array(self::BELONGS_TO, 'TProductoDetalle', 'idProductoDetalle'),
+			'objProductoDetalle' => array(self::BELONGS_TO, 'ProductoDetalle', 'idProductoDetalle'),
 		);
 	}
 
@@ -59,6 +67,9 @@ class ProductoDetalleVideos extends CActiveRecord
 			'idProductoDetalleVideo' => 'Id Producto Detalle Video',
 			'idProductoDetalle' => 'Id Producto Detalle',
 			'urlVideo' => 'Url Video',
+		    'tituloVideo' => 'tituloVideo',
+		    'fechaCreacion' => 'Fecha Creacion',
+		    'fechaActualizacion' => 'Fecha Actualizacion',
 		);
 	}
 
@@ -83,6 +94,10 @@ class ProductoDetalleVideos extends CActiveRecord
 		$criteria->compare('idProductoDetalleVideo',$this->idProductoDetalleVideo,true);
 		$criteria->compare('idProductoDetalle',$this->idProductoDetalle,true);
 		$criteria->compare('urlVideo',$this->urlVideo,true);
+		$criteria->compare('tituloVideo',$this->tituloVideo,true);
+		$criteria->compare('codigoProducto',$this->codigoProducto,true);
+		$criteria->compare('fechaCreacion',$this->fechaCreacion,true);
+		$criteria->compare('fechaActualizacion',$this->fechaActualizacion,true);
 
 		return new CActiveDataProvider($this, array(
 			'criteria'=>$criteria,
@@ -98,5 +113,14 @@ class ProductoDetalleVideos extends CActiveRecord
 	public static function model($className=__CLASS__)
 	{
 		return parent::model($className);
+	}
+	
+	public function beforeSave() {
+	    if ($this->isNewRecord) {
+	        //$this->fechaCreacion = new CDbExpression('NOW()');
+	        $this->fechaCreacion = date('Y-m-d H:i:s');
+	    }
+	    
+	    return parent::beforeSave();
 	}
 }

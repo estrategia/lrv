@@ -1,3 +1,36 @@
+20170111
+---- DETALLE PRODUCTO
+-- BASE DATOS
+
+ALTER TABLE t_ProductoDetalleImagenes ADD COLUMN codigoProducto INT(10) UNSIGNED NOT NULL AFTER idProductoDetalle;
+
+ALTER TABLE t_ProductoDetalleVideos ADD COLUMN codigoProducto INT(10) UNSIGNED NOT NULL AFTER idProductoDetalle;
+
+ALTER TABLE t_ProductoDetalleVideos 
+DROP FOREIGN KEY fk_t_ProductoDetalleVideos_t_ProductoDetalle1;
+ALTER TABLE t_ProductoDetalleVideos 
+ADD CONSTRAINT fk_t_ProductoDetalleVideos_t_ProductoDetalle1
+  FOREIGN KEY (idProductoDetalle)
+  REFERENCES t_ProductoDetalle (idProductoDetalle)
+  ON DELETE CASCADE
+  ON UPDATE CASCADE;
+
+  ALTER TABLE t_ProductoDetalleImagenes 
+DROP FOREIGN KEY fk_t_ProductoDetalleImagenes_t_ProductoDetalle1;
+ALTER TABLE t_ProductoDetalleImagenes 
+DROP INDEX fk_t_ProductoDetalleImagenes_t_ProductoDetalle1_idx ;
+ALTER TABLE t_ProductoDetalleImagenes 
+ADD CONSTRAINT fk_t_ProductoDetalleImagenes_t_ProductoDetalle1
+  FOREIGN KEY (idProductoDetalle)
+  REFERENCES t_ProductoDetalle (idProductoDetalle)
+  ON DELETE CASCADE
+  ON UPDATE CASCADE;
+
+
+20171031
+
+
+
 20171030 -- MASM
 ---- DETALLE PRODUCTO
 -- BASE DATOS
