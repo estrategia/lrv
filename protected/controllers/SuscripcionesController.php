@@ -9,14 +9,14 @@ class SuscripcionesController extends Controller
 
 	public function actionPrueba()
 	{
-		$suscripcion = SuscripcionesProductosUsuario::model()->find('1');
-		// $cantidadPeriodos = 10;
+		$suscripcion = SuscripcionesProductosUsuario::model()->findByPk('2');
+		 $cantidadPeriodos = 10;
 		// $valor = $suscripcion->consultarPeriodoActual();
 		// $valor = $suscripcion->consultarUltimoPeriodo();
 		// $valor = $suscripcion->consultarCantidadPeriodoActual();
 		// $suscripcion->actualizarPeriodos(5);
-		// $suscripcion->generarPeriodos($cantidadPeriodos);
-		CVarDumper::dump($valor,10,true);
+		 $suscripcion->generarPeriodos($cantidadPeriodos);
+		// CVarDumper::dump($valor,10,true);
 	}
 
 	public function actionSuscribirse()
@@ -39,7 +39,7 @@ class SuscripcionesController extends Controller
 		$producto = Producto::model()->find(array(
 			'with' => array(
 					'listImagenesGrandes',
-					'objDetalle',
+					'listDetalleProducto',
 					'objCodigoEspecial',
 					'listCalificaciones' => array(
 						'with' => 'objUsuario'

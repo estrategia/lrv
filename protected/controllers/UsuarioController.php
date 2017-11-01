@@ -641,6 +641,32 @@ class UsuarioController extends Controller {
             $this->render('d_usuario', array('vista' => 'd_pedidos', 'params' => $params));
         }
     }
+    
+    
+    public function actionSuscripciones() {
+    
+    	$model = new SuscripcionesProductosUsuario('search');
+    	$model->unsetAttributes();
+    	if (isset($_GET['SuscripcionesProductosUsuario']))
+    		$model->attributes = $_GET['SuscripcionesProductosUsuario'];
+    	
+    	$model->identificacionUsuario = Yii::app()->user->name;
+    
+    	$params = array('model' => $model);
+    	if ($this->isMobile) {
+    		$this->render('suscripciones', $params);
+    	} else {
+    		$this->breadcrumbs = array(
+    				'Inicio' => array('/'),
+    				'Mi cuenta' => array('/usuario'),
+    				'Mis suscripciones'
+    		);
+    	
+    	 $this->render('d_usuario', array('vista' => 'd_suscripciones', 'params' => $params));
+    	
+    	}
+    }
+    
 
     public function actionPedido($compra) {
         $objCompra = Compras::model()->find(array(

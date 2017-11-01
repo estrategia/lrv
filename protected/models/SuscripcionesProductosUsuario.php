@@ -33,7 +33,7 @@ class SuscripcionesProductosUsuario extends CActiveRecord
 			array('idSuscripcion, identificacionUsuario, idProducto, idBeneficio, descuentoProducto', 'required'),
 			array('idSuscripcion', 'length', 'max'=>20),
 			array('identificacionUsuario', 'length', 'max'=>100),
-			array('idProducto, cantidadDisponiblePeriodoActual, periodoActual', 'length', 'max'=>10),
+			array('idProducto, cantidadDisponiblePeriodoActual', 'length', 'max'=>10),
 			array('idBeneficio', 'length', 'max'=>11),
 			// The following rule is used by search().
 			// @todo Please remove those attributes that should not be searched.
@@ -50,6 +50,7 @@ class SuscripcionesProductosUsuario extends CActiveRecord
 		// class name for the relations automatically generated below.
 		return array(
 			'beneficio' => array(self::HAS_ONE, 'Beneficios', 'idBeneficio'),
+			'objProducto' => array(self::BELONGS_TO, 'Producto', 'idProducto'),
 			'usuario' => array(self::HAS_ONE, 'Usuario', 'identificacionUsuario'),
 		);
 	}
@@ -66,7 +67,6 @@ class SuscripcionesProductosUsuario extends CActiveRecord
 			'idBeneficio' => 'Id Beneficio',
 			'fechaSuscripcion' => 'Fecha Suscripcion',
 			'cantidadDisponiblePeriodoActual' => 'Cantidad Disponible Periodo Actual',
-			'periodoActual' => 'Periodo Actual',
 		);
 	}
 
@@ -94,13 +94,34 @@ class SuscripcionesProductosUsuario extends CActiveRecord
 		$criteria->compare('idBeneficio',$this->idBeneficio,true);
 		$criteria->compare('fechaSuscripcion',$this->fechaSuscripcion,true);
 		$criteria->compare('cantidadDisponiblePeriodoActual',$this->cantidadDisponiblePeriodoActual,true);
-		$criteria->compare('peridoActual',$this->peridoActual,true);
 
+		
+		
 		return new CActiveDataProvider($this, array(
 			'criteria'=>$criteria,
 		));
 	}
 
+	public function searchMisSuscripciones()
+	{
+		// @todo Please modify the following code to remove attributes that should not be searched.
+	
+		$criteria=new CDbCriteria;
+	
+		$criteria->compare('idSuscripcion',$this->idSuscripcion,true);
+		$criteria->compare('identificacionUsuario',$this->identificacionUsuario,true);
+		$criteria->compare('idProducto',$this->idProducto,true);
+		$criteria->compare('idBeneficio',$this->idBeneficio,true);
+		$criteria->compare('fechaSuscripcion',$this->fechaSuscripcion,true);
+		$criteria->compare('cantidadDisponiblePeriodoActual',$this->cantidadDisponiblePeriodoActual,true);
+		
+		$criteria->addCondition("fechaFin >= now()");
+	
+	
+		return new CActiveDataProvider($this, array(
+				'criteria'=>$criteria,
+		));
+	}
 	/**
 	 * Returns the static model of the specified AR class.
 	 * Please note that you should have this exact method in all your CActiveRecord descendants!
@@ -182,7 +203,7 @@ class SuscripcionesProductosUsuario extends CActiveRecord
 			}
 		}
 
-		if ($numeroPeriodos < $this->cantidadPeriodos && $numeroPeriodos > $this->periodoActual) {
+		if ($numeroPeriodos < $this->cantidadPeriodos ) {
 			$periodosAEliminar = $this->cantidadPeriodos - $numeroPeriodos;
 			PeriodosSuscripcion::model()->deleteAll(
 				'numeroPeriodo > :numeroPeriodo',
