@@ -1,17 +1,20 @@
 <?php $this->beginContent('application.modules.puntoventa.views.layouts.admin'); ?>
   <div class="row" >
-  	  <div class="col-xs-5">
+  	  <div class="col-xs-6">
 	      <div class="btn-group">
-	          <a href="<?php echo $this->createUrl('/puntoventa/entreganacional/pedido/ubicacion')?>" class="btn btn-primary <?php echo ($this->active == "ubicacion" ? "active" : "") ?>">Seleccionar Ubicaci&oacute;n</a>
-	          <?php if(!empty($this->objCiudadSectorDestino)):?>
-	          <a href="<?php echo $this->createUrl('/puntoventa/entreganacional/catalogo/buscar')?>" class="btn btn-primary <?php echo ($this->active == "buscar" ? "active" : "") ?>">Buscar Productos</a>
-	          <a href="<?php echo $this->createUrl('/puntoventa/entreganacional/carro/')?>" class="btn btn-primary <?php echo ($this->active=="carro" ? "active" : "") ?>">Compra</a>
+	      	  <a href="<?php echo $this->createUrl('/puntoventa/venta/pedido/tipoEntrega')?>" class="btn btn-primary <?php echo ($this->active == "tipo" ? "active" : "") ?>">Seleccionar Tipo</a>
+	          <?php if(!empty($this->tipoVenta)):?>
+		          <a href="<?php echo $this->createUrl('/puntoventa/venta/pedido/ubicacion')?>" class="btn btn-primary <?php echo ($this->active == "ubicacion" ? "active" : "") ?>">Seleccionar Ubicaci&oacute;n</a>
+		          <a href="<?php echo $this->createUrl('/puntoventa/venta/catalogo/buscar')?>" class="btn btn-primary <?php echo ($this->active == "buscar" ? "active" : "") ?>">Buscar Productos</a>
+		          <a href="<?php echo $this->createUrl('/puntoventa/venta/carro/')?>" class="btn btn-primary <?php echo ($this->active=="carro" ? "active" : "") ?>">Compra</a>
 	          <?php endif;?>
 	      </div>
       </div>
       <?php if($this->active == "buscar"):?>
       <div class="col-xs-6">
-             <form method="get" action="<?php echo CController::createUrl('/puntoventa/entreganacional/catalogo/buscar') ?>">
+             <form method="get" action="<?php echo CController::createUrl(
+             		$this->tipoVenta == 1 ?'/puntoventa/venta/entreganacional/catalogo/buscar':
+             				'/puntoventa/venta/ventaasistida/catalogo/buscar') ?>">
                      <div class="row">
                             <div class="col-xs-12 content-search">
                               <div class="col-xs-11" style="padding: 0;">

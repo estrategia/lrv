@@ -652,19 +652,42 @@ class AdminController extends ControllerSubasta {
     }
 
     public function actionAsignarPdv() {
-        $idCompra = $_POST['dataPedido'];
-        $idPuntoVenta = Yii::app()->session[Yii::app()->params->puntoventa['sesion']['pdv']];
-
-        $objCompra = Compras::model()->findByPk($idCompra);
-
+    	$file = fopen(Yii::getPathOfAlias('application') . DIRECTORY_SEPARATOR . "runtime" . DIRECTORY_SEPARATOR . "AsignarPdvLog.txt", "a");
+    	 
+    	$idCompra = $_POST['dataPedido'];
+    	$idPuntoVenta = Yii::app()->session[Yii::app()->params->puntoventa['sesion']['pdv']];
+    	fwrite($file, Date("Y-m-d H:i:s ")." PDV $idPuntoVenta  - INICIO DEL PROCESO  " . PHP_EOL);
+        
+    	$sql = "SELECT * FROM t_Compras WHERE idCompra = ".$idCompra." FOR UPDATE";
+    	$objCompra = Yii::app()->db->createCommand($sql)->queryRow();
+    	
+    	fwrite($file, Date("Y-m-d H:i:s ")." PDV $idPuntoVenta  - CONSULTA  " . PHP_EOL);
         if ($objCompra === null) {
-            echo CJSON::encode(array(
-                'result' => 'error',
-                'response' => 'Compra no existe'
-            ));
-            Yii::app()->end();
+        	echo CJSON::encode(array(
+        			'result' => 'error',
+        			'response' => 'Compra no existe'
+        	));
+        	Yii::app()->end();
+        }
+        fwrite($file, Date("Y-m-d h:i:s ")." PDV $idPuntoVenta  - Estado verificar el estado subasta  " . PHP_EOL);
+        if($objCompra['estadoSubasta'] == 0){
+        	echo CJSON::encode(array(
+        			'result' => 'error',
+        			'response' => 'El pedido est&aacute; siendo tramitado por otro Punto de Venta'
+        	));
+        	Yii::app()->end();
         }
 
+        fwrite($file, Date("Y-m-d h:i:s ")." PDV $idPuntoVenta  - cambiar el estado subasta  " . PHP_EOL);
+        
+        $sql = "UPDATE  t_Compras SET estadoSubasta = 0 WHERE idCompra = ".$idCompra;
+    	$result = Yii::app()->db->createCommand($sql)->query();
+    	
+        fwrite($file, Date("Y-m-d h:i:s ")." PDV $idPuntoVenta  - guardado el estado subasta  " . PHP_EOL);
+        
+        
+        $objCompra = Compras::model()->findByPk($idCompra);
+        
         if ($objCompra->idComercial != null) {
             echo CJSON::encode(array(
                 'result' => 'error',
@@ -672,11 +695,12 @@ class AdminController extends ControllerSubasta {
             ));
             Yii::app()->end();
         }
+        fwrite($file, Date("Y-m-d h:i:s ")." PDV $idPuntoVenta  - verificar idcomercial " . PHP_EOL);
 
         $transaction = Yii::app()->db->beginTransaction();
 
         $objCompra->idComercial = $idPuntoVenta;
-
+	
         if (!$objCompra->save()) {
             echo CJSON::encode(array(
                 'result' => 'error',
@@ -684,25 +708,47 @@ class AdminController extends ControllerSubasta {
             ));
             Yii::app()->end();
         }
-
+        fwrite($file, Date("Y-m-d h:i:s ")." PDV $idPuntoVenta  - Guardar idComercial " . PHP_EOL);
+        
         $client = new SoapClient(null, array(
             'location' => Yii::app()->params->webServiceUrl['remisionPosECommerce'],
             'uri' => "",
             'trace' => 1
         ));
-        
-    //    $result = $client->__soapCall("CongelarCompraManual", array('idPedido' => $idCompra));
-        $result = $client->__soapCall("CongelarCompraAutomatica", array('idPedido' => $idCompra, 'pdvSubasta' => $idPuntoVenta));
-        //$result = array(0=>0,1=>'congelar prueba error');
-        //$result = array(0=>1,1=>'congelar prueba ok', 2 =>'miguel.sanchez@eiso.com.co');
-        if ($result[0] != 1) {
-            echo CJSON::encode(array(
-                'result' => 'error',
-                'response' => $result[1]
-            ));
-            Yii::app()->end();
+        try{
+	    //    $result = $client->__soapCall("CongelarCompraManual", array('idPedido' => $idCompra));
+        	fwrite($file, Date("Y-m-d h:i:s ")." PDV $idPuntoVenta  - Llamado a webservice " . PHP_EOL);
+        	 
+	        $result = $client->__soapCall("CongelarCompraAutomatica", array('idPedido' => $idCompra, 'pdvSubasta' => $idPuntoVenta));
+	        //$result = array(0=>0,1=>'congelar prueba error');
+	        //$result = array(0=>1,1=>'congelar prueba ok', 2 =>'miguel.sanchez@eiso.com.co');
+	         
+	        if ($result[0] != 1) {
+	        	$transaction->rollBack();
+	        	$objCompra->idComercial = null;
+	        	$objCompra->estadoSubasta = 1;
+	        	$objCompra->save();
+	            echo CJSON::encode(array(
+	                'result' => 'error',
+	                'response' => $result[1]
+	            ));
+	            Yii::app()->end();
+	        }
+	        fwrite($file, Date("Y-m-d h:i:s ")." PDV $idPuntoVenta  - Fin del Llamado a webservice " . PHP_EOL);
+	         
+        }catch(Exception $e){
+        	$transaction->rollBack();
+        	$objCompra->idComercial = null;
+        	$objCompra->estadoSubasta = 1;
+        	$objCompra->save();
+        	echo CJSON::encode(array(
+        			'result' => 'error',
+        			'response' => "Error al conectar con el punto de venta"
+        	));
+        	Yii::app()->end();
         }
-
+        
+        
         $objCompra = Compras::model()->find(array(
             'with' => 'objPuntoVenta',
             'condition' => "idCompra =:idCompra",
@@ -713,11 +759,14 @@ class AdminController extends ControllerSubasta {
         try {
             $objCompra->idEstadoCompra = Yii::app()->params->callcenter['estadoCompra']['estado']['remitido'];
             $objCompra->generarDocumentoCruce(38);
-
-            // Guardar el cambio de estado de la remisión
+            fwrite($file, Date("Y-m-d h:i:s ")." PDV $idPuntoVenta  -Generar documento cruce " . PHP_EOL);
+             
+            // Guardar el cambio de estado de la remision
             if (!$objCompra->save()) {
                 throw new Exception('Error de asignación: ' . $objCompra->validateErrorsResponse());
             }
+            
+            fwrite($file, Date("Y-m-d h:i:s ")." PDV $idPuntoVenta  - Guardar estado remitido de la compra" . PHP_EOL);
 
             $objEstadoCompra = new ComprasEstados;
             $objEstadoCompra->idCompra = $objCompra->idCompra;
@@ -728,7 +777,9 @@ class AdminController extends ControllerSubasta {
             if (!$objEstadoCompra->save()) {
                 throw new Exception("Error al guardar traza de estado: " . $objEstadoCompra->validateErrorsResponse());
             }
+            fwrite($file, Date("Y-m-d h:i:s ")." PDV $idPuntoVenta  - Fin guardar estado remitido" . PHP_EOL);
 
+            fwrite($file, Date("Y-m-d h:i:s ")." PDV $idPuntoVenta  -Generar observacion" . PHP_EOL);
             $objObservacion = new ComprasObservaciones;
             $objObservacion->idCompra = $objCompra->idCompra;
             $objObservacion->observacion = "Cambio de Estado: Remitido por subasta al POS PDV. " . $objCompra->objPuntoVenta->nombrePuntoDeVenta;
@@ -740,9 +791,12 @@ class AdminController extends ControllerSubasta {
                 throw new Exception("Error al guardar observación" . $objObservacion->validateErrorsResponse());
             }
 
+            fwrite($file, Date("Y-m-d h:i:s ")." PDV $idPuntoVenta  -Fin generar observacion " . PHP_EOL);
             // Enviar Correo electronico al punto de venta
             try {
+            	fwrite($file, Date("Y-m-d h:i:s ")." PDV $idPuntoVenta  -Enviar EMAIL " . PHP_EOL);
                 $this->enviarEmail($objCompra);
+                fwrite($file, Date("Y-m-d h:i:s ")." PDV $idPuntoVenta  - Fin envio email" . PHP_EOL);
             } catch (Exception $exc) {
                 
             }
@@ -759,6 +813,9 @@ class AdminController extends ControllerSubasta {
 
             try {
                 $transaction->rollBack();
+                $objCompra->idComercial = null;
+                $objCompra->estadoSubasta = 1;
+                $objCompra->save();
             } catch (Exception $txexc) {
                 Yii::log($txexc->getMessage() . "\n" . $txexc->getTraceAsString(), CLogger::LEVEL_ERROR, 'application');
             }
@@ -766,6 +823,7 @@ class AdminController extends ControllerSubasta {
             echo CJSON::encode(array('result' => 'error', 'response' => $exc->getMessage()));
             Yii::app()->end();
         }
+        fwrite($file, Date("Y-m-d h:i:s ")." PDV $idPuntoVenta  -Fin del proceso " . PHP_EOL);
     }
 
 }

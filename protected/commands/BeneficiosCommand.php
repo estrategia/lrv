@@ -58,6 +58,9 @@ class BeneficiosCommand extends CConsoleCommand {
                 $idSincronizacion = $result[0]['maximo'];
             }
           
+            if($i == 0){
+            	$idSincronizacion = 64250 ;
+            }
             $h2 = round(microtime(true) * 1000);
             fwrite($file, Date("Y-m-d h:i:s")."- "."Buscando el maximo idSincronizado ".($h2 - $h1)." milisegundos" . PHP_EOL);
                     // llamar a web service enviandole el id de sincronizacion
@@ -104,7 +107,6 @@ class BeneficiosCommand extends CConsoleCommand {
                     }
 
                     $objBeneficioTipo->descripcion = $beneficioTipo['Descripcion'];
-                    
 
                     if (!$objBeneficioTipo->save()) {
                         throw new Exception("Error al guardar mBeneficioTipo {id: " . $beneficioTipo['IdBeneficioTipo'] . ", tipo: " . $beneficioTipo['Tipo'] . " error: " . CActiveForm::validate($objBeneficioTipo) . "}");

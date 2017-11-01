@@ -138,6 +138,7 @@ abstract class Precio {
 
         if ($valor > 0) {
             $modulo = $valor % $multiplo;
+            
             if ($modulo > 0) {
                 if ($tipo == 1) {
                     $valor += $multiplo - ($modulo);
@@ -150,6 +151,22 @@ abstract class Precio {
         return $valor;
     }
     
+    public static function redondearAux($valor, $tipo, $multiplo = 50) {
+    	//$multiplo = 50;
+    
+    	if ($valor > 0) {
+    		$modulo = $valor % $multiplo;
+    		if ($modulo > 0) {
+    			if ($tipo == 1) {
+    				$valor += $multiplo - ($modulo);
+    			} else {
+    				$valor -= $modulo;
+    			}
+    		}
+    	}
+    
+    	return $valor;
+    }
     
     public static function calcularImpuesto($valor,$impuesto){
         if($impuesto<=0)
