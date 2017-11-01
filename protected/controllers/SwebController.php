@@ -221,15 +221,20 @@ class SwebController extends CController {
     public function actionEnviarSuscripciones(){
     	$suscripciones = SuscripcionesProductosUsuario::consultarSuscripcionesRecordar();
     	
-    	$vista = Yii::getPathOfAlias('application.views.common.correoRecordacionSuscripciones') . '.php';
-    	$claveEncriptada = encrypt(1115077082, Yii::app()->params->claveLista);
-    	$contenidoCorreo = $this->renderFile($vista, array(
-    			'suscripciones' => array_values($suscripciones)[0],
+        $vista = Yii::getPathOfAlias('application.views.common.correoRecordacionSuscripciones') . '.php';
+        foreach ($suscripciones as $key => $suscripcion) {
+            $claveEncriptada = encrypt($suscripcion->identificacionUsuario, Yii::app()->params->claveLista);
+            $contenidoCorreo = $this->renderFile($vista, array(
+                'suscripciones' => $suscripcion,
     			'clave' => $claveEncriptada
-    	), true, true);
-    	
-    	$htmlCorreo = PlantillaCorreo::getContenidoConsola('bonoPorVencer', $contenidoCorreo);
-    	sendHtmlEmail('juan.aragon@eiso.com.co', "Productos de suscripción", $htmlCorreo, Yii::app()->params->callcenter['correo']);
+            ), true, true);
+            
+            $htmlCorreo = PlantillaCorreo::getContenidoConsola('bonoPorVencer', $contenidoCorreo);
+            sendHtmlEmail($suscripcion->usuario->correoElectronico, "Productos de suscripción", $htmlCorreo, Yii::app()->params->callcenter['correo']);
+            $periodoActual = $suscripcion->consultarPeriodoActual();
+            $periodoActual->notificadoCorreo = 1;
+            // $periodoActual->save();
+        }
     }
 
 }

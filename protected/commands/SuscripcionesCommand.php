@@ -4,8 +4,6 @@ class SuscripcionesCommand extends CConsoleCommand {
     
     public function actionEnviarRecordatorios()
     {
-    	
-    	
     	$client = new SoapClient(Yii::app()->params->webServiceUrl['envioCorreosRecordatorios'], array(
     			"trace" => 1,
     			'cache_wsdl' => WSDL_CACHE_NONE,
