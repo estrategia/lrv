@@ -1856,5 +1856,182 @@ class UsuarioController extends Controller {
          * */
         $this->redirect(CController::createUrl('/carro/index', array('opcion' => 1)));
     }
+    
+    
+    public function actionRecordarSuscripcion($hash, $productos) {
+    
+    	$datosDesencriptados = decrypt($hash, Yii::app()->params->claveLista);
+    	
+    	$sesionUbicacion = false;
+
+    	
+    
+    	if (!Yii::app()->user->isGuest && (Yii::app()->user->name != $datosDesencriptados[0])) {
+    		Yii::app()->session[Yii::app()->params->sesion['sectorCiudadEntrega']] = null;
+    		Yii::app()->shoppingCart->clear();
+    	}
+    
+    	if (Yii::app()->user->isGuest || Yii::app()->user->name != $datosDesencriptados) {
+    		if (true) {
+    			// autenticar a el usuario
+    			try {
+    				$modelLogin = Usuario::model()->findByPk($datosDesencriptados);
+    				$identity = new UserIdentity($modelLogin->identificacionUsuario, $modelLogin->clave);
+    				$identity->authenticate(true);
+    				Yii::app()->user->login($identity);
+    			} catch (Exception $txexc) {
+    				Yii::log($txexc->getMessage() . "\n" . $txexc->getTraceAsString(), CLogger::LEVEL_ERROR, 'application');
+    			}
+    
+    			// Yii::app()->session[Yii::app()->params->sesion['redireccionAutenticacion']] = 'null';
+    		} else {
+    			Yii::app()->end();
+    		}
+    	}
+    	
+    
+    	if ($this->objSectorCiudad) {
+    		$sesionUbicacion = true;
+    	}
+    	
+    	
+    
+    	// Validar si el usuario logueado es el mismo de la lista.
+    	// Si no es el mismo limpiar la sesión y enviarlo.
+    	if (!$sesionUbicacion) {
+    		Yii::app()->session[Yii::app()->params->sesion['redireccionUbicacion']] = Yii::app()->request->url;
+    		$this->redirect(Yii::app()->baseUrl . "/sitio/ubicacion");
+    	} else {
+    		$this->adicionarCanastaSuscripcion(explode("-",$productos));
+    		$this->redirect(CController::$this->createUrl('/carro'));
+    	}
+    }
+    
+    private function adicionarCanastaSuscripcion($productos = null) {
+    	$objSectorCiudad = null;
+    	if ($this->objSectorCiudad)
+    		$objSectorCiudad = $this->objSectorCiudad;
+    
+    		if ($productos === null) {
+    			Yii::app()->end();
+    		}
+    
+    		$listaProductos = array();
+    		Yii::app()->session[Yii::app()->params->sesion['productosNoAgregados']] = null;
+    		if (isset(Yii::app()->session[Yii::app()->params->sesion['productosNoAgregados']]))
+    			$listaProductos = Yii::app()->session[Yii::app()->params->sesion['productosNoAgregados']];
+    
+    			$objLista = SuscripcionesProductosUsuario::model()->findAll(array(
+    					'with' => 'producto',
+    					'condition' => 'identificacionUsuario=:usuario AND idProducto IN ('.implode(",", $productos).')',
+    					'params' => array(
+    							':usuario' => Yii::app()->user->name
+    					)
+    			));
+    
+    			if ($objLista === null) {
+    				//  echo CJSON::encode(array('result' => 'error', 'response' => 'Lista no existente'));
+    				Yii::app()->end();
+    			}
+    
+    			$fecha = new DateTime;
+    			$nUnidadesCompra = 0;
+    			$nUnidadesCarro = 0;
+    
+    			foreach ($objLista as $producto) {
+    				$objDetalle = $producto->producto;
+    				 if ($objDetalle->codigoProducto != null) {
+    					$nUnidadesCompra += 1;
+    
+    					//agregar productos
+    					$objProducto = Producto::model()->find(array(
+    							'with' => array(
+    									'listSaldos' => array('condition' => '(listSaldos.codigoCiudad=:ciudad AND listSaldos.codigoSector=:sector) OR (listSaldos.saldoUnidad IS NULL AND listSaldos.codigoCiudad IS NULL AND listSaldos.codigoSector IS NULL)'),
+    									'listPrecios' => array('condition' => '(listPrecios.codigoCiudad=:ciudad AND listPrecios.codigoSector=:sector) OR (listPrecios.codigoCiudad IS NULL AND listPrecios.codigoSector IS NULL)'),
+    									'listSaldosTerceros' => array('condition' => '(listSaldosTerceros.codigoCiudad=:ciudad AND listSaldosTerceros.codigoSector=:sector) OR (listSaldosTerceros.codigoCiudad IS NULL AND listSaldosTerceros.codigoSector IS NULL)')
+    							),
+    							'condition' => 't.activo=:activo AND t.codigoProducto=:codigo AND ( (listSaldos.saldoUnidad IS NOT NULL AND listPrecios.codigoCiudad IS NOT NULL) OR listSaldosTerceros.codigoCiudad IS NOT NULL)',
+    							'params' => array(
+    									':activo' => 1,
+    									':codigo' => $objDetalle->codigoProducto,
+    									':ciudad' => $objSectorCiudad->codigoCiudad,
+    									':sector' => $objSectorCiudad->codigoSector,
+    							),
+    					));
+    
+    					if ($objProducto === null) {
+    						$objProducto = Producto::model()->find(array(
+    								'with' => array('listImagenes', 'objCodigoEspecial'),
+    								'condition' => 't.activo=:activo AND t.codigoProducto=:codigo',
+    								'params' => array(
+    										':activo' => 1,
+    										':codigo' => $objDetalle->codigoProducto,
+    								),
+    						));
+    
+    						$listaProductos[$objDetalle->codigoProducto] = $objProducto;
+    						continue;
+    					}
+    
+    					$objSaldo = $objProducto->getSaldo($objSectorCiudad->codigoCiudad, $objSectorCiudad->codigoSector);
+    
+    					if ($objSaldo === null) {
+    						$objProducto = Producto::model()->find(array(
+    								'with' => array('listImagenes', 'objCodigoEspecial'),
+    								'condition' => 't.activo=:activo AND t.codigoProducto=:codigo',
+    								'params' => array(
+    										':activo' => 1,
+    										':codigo' => $objDetalle->codigoProducto,
+    								),
+    						));
+    
+    						$listaProductos[$objDetalle->codigoProducto] = $objProducto;
+    						continue;
+    					}
+    
+    					$position = Yii::app()->shoppingCart->itemAt($objDetalle->codigoProducto);
+    
+    					
+    						$cantidadCarroUnidad = 0;
+    						if ($position !== null) {
+    							$cantidadCarroUnidad = $position->getQuantityUnit();
+    						}
+    
+    						//si hay saldo, agrega a carro
+    						if ($cantidadCarroUnidad + 1 <= $objSaldo->saldoUnidad) {
+    							$objProductoCarro = new ProductoCarro($objProducto);
+    							Yii::app()->shoppingCart->put($objProductoCarro, false, 1);
+    							$nUnidadesCarro += 1;
+    						}
+    					
+    				}
+    			}
+    
+    			Yii::app()->session[Yii::app()->params->sesion['productosNoAgregados']] = $listaProductos;
+    
+    
+    			/*
+    			 if ($nUnidadesCarro == 0) {
+    			 // echo CJSON::encode(array('result' => 'error', 'response' => 'Productos no disponibles'));
+    			 Yii::app()->end();
+    			 }
+    
+    			 $porcentajeCarro = floor(100 * ($nUnidadesCarro / $nUnidadesCompra));
+    
+    			 $canasta = 'canasta';
+    			 if (!$this->isMobile) {
+    			 $canasta = 'd_canasta';
+    			 }
+    
+    			 echo CJSON::encode(array(
+    			 'result' => 'ok',
+    			 'response' => array(
+    			 'canastaHTML' => $this->renderPartial($canasta, null, true),
+    			 'mensajeHTML' => $this->renderPartial('/common/mensajeHtml', array('mensaje' => "$porcentajeCarro% de lista agregada"), true),
+    			 ),
+    			 ));
+    			 * */
+    			$this->redirect(CController::createUrl('/carro/index', array('opcion' => 1)));
+    }
 
 }

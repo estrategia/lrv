@@ -19,7 +19,9 @@
                 <th style="background-color:#f9f9f9;line-height:20px;padding:8px;color:#ff0000;text-align:center">Producto</th>
                 <th style="border-left:1px solid #dddddd;background-color:#f9f9f9;line-height:20px;padding:8px;color:#ff0000;text-align:center;width:12%">Cantidad</th>
             </tr>
+            <?php $productos = array();?>
             <?php foreach ($suscripciones as $indice => $suscripcion): ?>
+            	<?php $productos[] = $suscripcion->producto->codigoProducto?>
                <tr style="vertical-align:middle; <?php echo ($indice % 2 != 0 ? "background-color:#f9f9f9;" : "") ?>">
                     
                     <td style="text-align:left;line-height:20px;border-top:1px solid #dddddd;border-right:1px solid #dddddd;vertical-align:top;padding:8px" >
@@ -67,7 +69,7 @@
                             <p style="padding-top:4px;text-align:left;color:#666666">
                                 Para ir a tu 
                                 <span class="il">lista</span>
-                                <a target="_blank" style="color:#ff0000" href="<?php // echo $this->createAbsoluteUrl("/usuario/recordarListaPersonal", array('hash' => $clave)) ?>">Clic aqu&iacute;</a>
+                                <a target="_blank" style="color:#ff0000" href="<?php  echo $this->createAbsoluteUrl("/usuario/recordarSuscripcion", array('hash' => $clave,'productos' => implode("-",$productos) )) ?>">Clic aqu&iacute;</a>
                             </p>
                         </div>
         <div class="yj6qo"></div>

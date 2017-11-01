@@ -4,20 +4,24 @@ class SuscripcionesCommand extends CConsoleCommand {
     
     public function actionEnviarRecordatorios()
     {
-        Yii::import('application.models.SuscripcionesProductosUsuario');
-        Yii::import('application.models.Usuario');
-        Yii::import('application.models.Producto');
-        Yii::import('application.models.PlantillaCorreo');
-
-        $suscripciones = SuscripcionesProductosUsuario::consultarSuscripcionesRecordar();
-        CVarDumper::dump($suscripciones);
-        $vista = Yii::getPathOfAlias('application.views.common.correoRecordacionSuscripciones') . '.php';
-        $contenidoCorreo = $this->renderFile($vista, array(
-            'suscripciones' => array_values($suscripciones)[0],
-        ), true, true);
-            
-        $htmlCorreo = PlantillaCorreo::getContenidoConsola('bonoPorVencer', $contenidoCorreo);
-        sendHtmlEmail('sebastian.velasquez@eiso.com.co', "Productos de suscripción", $htmlCorreo, Yii::app()->params->callcenter['correo']);
+    	
+    	
+    	$client = new SoapClient(Yii::app()->params->webServiceUrl['envioCorreosRecordatorios'], array(
+    			"trace" => 1,
+    			'cache_wsdl' => WSDL_CACHE_NONE,
+    			'exceptions' => 0,
+    			'connection_timeout' => 5)
+    			);
+    	
+    	try {
+    		$result = $client->enviarSuscripciones();
+    		echo $result;
+    	} catch (SoapFault $exc) {
+    		Yii::log("SoapFault WebService recordarCorreos\n" . $exc->getMessage() . "\n" . $exc->getTraceAsString() . "\n" . $client->__getLastResponse(), CLogger::LEVEL_INFO, 'application');
+    	} catch (Exception $exc) {
+    		Yii::log("Exception WebService recordarCorreos\n" . $exc->getMessage() . "\n" . $exc->getTraceAsString(), CLogger::LEVEL_INFO, 'application');
+    	}
+    
     }
 
 }

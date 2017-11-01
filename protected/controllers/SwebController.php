@@ -217,5 +217,19 @@ class SwebController extends CController {
     public function actionBono(){
     	$this->actionBonoPQRS(1, 1115077082, 100000, 100000, "2016-02-02", "2016-05-01");
     }
+    
+    public function actionEnviarSuscripciones(){
+    	$suscripciones = SuscripcionesProductosUsuario::consultarSuscripcionesRecordar();
+    	
+    	$vista = Yii::getPathOfAlias('application.views.common.correoRecordacionSuscripciones') . '.php';
+    	$claveEncriptada = encrypt(1115077082, Yii::app()->params->claveLista);
+    	$contenidoCorreo = $this->renderFile($vista, array(
+    			'suscripciones' => array_values($suscripciones)[0],
+    			'clave' => $claveEncriptada
+    	), true, true);
+    	
+    	$htmlCorreo = PlantillaCorreo::getContenidoConsola('bonoPorVencer', $contenidoCorreo);
+    	sendHtmlEmail('juan.aragon@eiso.com.co', "Productos de suscripción", $htmlCorreo, Yii::app()->params->callcenter['correo']);
+    }
 
 }
