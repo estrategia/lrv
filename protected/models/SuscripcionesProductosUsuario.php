@@ -30,7 +30,7 @@ class SuscripcionesProductosUsuario extends CActiveRecord
 		// NOTE: you should only define rules for those attributes that
 		// will receive user inputs.
 		return array(
-			array('idSuscripcion, identificacionUsuario, idProducto, idBeneficio, descuentoProducto', 'required'),
+			array('identificacionUsuario, idProducto, idBeneficio, descuentoProducto', 'required'),
 			array('idSuscripcion', 'length', 'max'=>20),
 			array('identificacionUsuario', 'length', 'max'=>100),
 			array('idProducto, cantidadDisponiblePeriodoActual', 'length', 'max'=>10),
@@ -51,7 +51,9 @@ class SuscripcionesProductosUsuario extends CActiveRecord
 		return array(
 			'beneficio' => array(self::HAS_ONE, 'Beneficios', 'idBeneficio'),
 			'objProducto' => array(self::BELONGS_TO, 'Producto', 'idProducto'),
+			'producto' => array(self::BELONGS_TO, 'Producto', 'idProducto'),
 			'usuario' => array(self::HAS_ONE, 'Usuario', 'identificacionUsuario'),
+			'periodos' => array(self::HAS_MANY, 'PeriodosSuscripcion', 'idSuscripcion'),
 		);
 	}
 
@@ -157,12 +159,12 @@ class SuscripcionesProductosUsuario extends CActiveRecord
 			$command=$builder->createMultipleInsertCommand('t_PeriodosSuscripcion', $periodos);
 			$command->execute();
 			$transaction->commit();
-			return true;
 		} catch(Exception $e) {
 			// echo $e;
 			$transaction->rollBack();
-			return false;
 		}
+		$this->fechaFin = end($periodos)['fechaFin'];
+		$this->save();
 	}
 
 	public function actualizarPeriodos($numeroPeriodos)
@@ -187,7 +189,8 @@ class SuscripcionesProductosUsuario extends CActiveRecord
 				$periodos[] = $infoBase + $fechaPeriodo;
 				$infoBase['numeroPeriodo'] ++;
 			}
-
+			
+			Yii::log(CVarDumper::dumpAsString($ultimoPeriodo), CLogger::LEVEL_INFO, 'application');
 			$connection = Yii::app()->db;
 			$transaction=$connection->beginTransaction();
 			try {
@@ -195,21 +198,25 @@ class SuscripcionesProductosUsuario extends CActiveRecord
 				$command=$builder->createMultipleInsertCommand('t_PeriodosSuscripcion', $periodos);
 				$command->execute();
 				$transaction->commit();
+				$this->cantidadPeriodos = $numeroPeriodos;			
 				// return true;
 			} catch(Exception $e) {
 				// echo $e;
 				$transaction->rollBack();
 				// return false;
 			}
-		}
 
-		if ($numeroPeriodos < $this->cantidadPeriodos ) {
-			$periodosAEliminar = $this->cantidadPeriodos - $numeroPeriodos;
+		} else if ($numeroPeriodos < $this->cantidadPeriodos && $numeroPeriodos > $this->periodoActual) {
+			$periodosAEliminar = $this->cantidadPeriodos - $numeroPeriodos + 1;
 			PeriodosSuscripcion::model()->deleteAll(
 				'numeroPeriodo > :numeroPeriodo',
 				[':numeroPeriodo' => $periodosAEliminar]
 			);
 		}
+		$ultimoPeriodo = $this->consultarUltimoPeriodo();
+		$this->fechaFin = $ultimoPeriodo->fechaFin;
+		$this->cantidadPeriodos = $ultimoPeriodo->numeroPeriodo;
+		$this->save();
 	}
 
 	public static function calcularFechasPeriodos($fechaInicial, $numeroPeriodos)
@@ -286,5 +293,28 @@ class SuscripcionesProductosUsuario extends CActiveRecord
 			$numeroPeriodoActual = $periodo->numeroPeriodo;
 		}
 		return $numeroPeriodoActual;
+	}
+
+	public static function consultarSuscripcionesRecordar($porCedula=true)
+	{
+		$criteria = new CDbCriteria;
+		$criteria->join = 'JOIN t_PeriodosSuscripcion periodos ON periodos.idSuscripcion = t.idSuscripcion';
+		$criteria->condition = 'periodos.fechaInicio <= :fechaActual';
+		$criteria->condition .= ' AND periodos.fechaFin >= :fechaActual';
+		$criteria->condition .= ' AND periodos.notificadoCorreo = 0';
+		$criteria->condition .= ' AND periodos.usado <> 1';
+		$criteria->params = [':fechaActual' => date('Y-m-d')];
+		$suscripciones = self::model()->findAll($criteria);
+		if ($porCedula) {
+			$suscripcionesPorCedula = [];
+			foreach ($suscripciones as $key => $suscripcion) {
+				if (!isset($suscripcionesPorCedula[$suscripcion->identificacionUsuario])) {
+					$suscripcionesPorCedula[$suscripcion->identificacionUsuario] = [];
+				}
+				$suscripcionesPorCedula[$suscripcion->identificacionUsuario][] = $suscripcion;
+			}
+			return $suscripcionesPorCedula;
+		}
+		return $suscripciones;
 	}
 }

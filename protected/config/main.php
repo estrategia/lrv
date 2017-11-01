@@ -57,10 +57,6 @@ return array(
         'shoppingCartNationalSale' => array(
             'class' => 'ext.shoppingCartNationalSale.EShoppingCart',
         ),*/
-    	'JWT' => array(
-    		'class' => 'ext.jwt.JWT',
-    		'key' => 'larebajavirtual.com',
-    	),
 
         'ePdf' => array(
             'class' => 'ext.yii-pdf.EYiiPdf',
