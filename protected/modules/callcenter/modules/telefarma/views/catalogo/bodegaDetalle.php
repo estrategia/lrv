@@ -33,7 +33,7 @@
                 <div class="descripciones">
                     <div class="col-md-12" style="color:#A3A3A3;font-size: 16px;">
                         <h3 style="color: #ED1C24;"> <!-- producto agregado -->
-                            <a href="" class="itm_ico clst_slct_prod<?php echo (Yii::app()->getModule('telefarma')->shoppingCartVitalCall->contains($objProducto->codigoProducto) ? " active" : "") ?>" id="icono-producto-agregado-<?php echo $objProducto->codigoProducto ?>">
+                            <a href="" class="itm_ico clst_slct_prod<?php echo (Yii::app()->getModule('callcenter')->getModule('telefarma')->shoppingCartVitalCall->contains($objProducto->codigoProducto) ? " active" : "") ?>" id="icono-producto-agregado-<?php echo $objProducto->codigoProducto ?>">
                                 <img src="<?php echo Yii::app()->request->baseUrl ?>/images/desktop/icon_seleccionado.png">
                             </a>
                             <!-- Titulo del producto -->
@@ -69,7 +69,7 @@
 	                        </div>
 	                        <br/>
                         <?php endif;?>
-                        Domicilio <?php echo Yii::app()->getModule('telefarma')->shoppingCartVitalCall->getDeliveryStored() ?> horas:
+                        Domicilio <?php echo Yii::app()->getModule('callcenter')->getModule('telefarma')->shoppingCartVitalCall->getDeliveryStored() ?> horas:
                         <div class="col-md-12 line-bottom">
                             <button class="col-md-2 min" style="border:1px solid;" id="disminuir_cantidad_bodega_<?php echo $objProducto->codigoProducto ?>" onclick="cambioUnidadesBodega('<?php echo $objProducto->codigoProducto ?>',<?= $objPrecio->getPrecio(Precio::PRECIO_UNIDAD) ?>, 0)" type="button"><span class="glyphicon glyphicon-minus"></span></button>
                             <div class="col-md-2 ressete"><input class="increment" type="text" id="cantidad-producto-bodega-<?php echo $objProducto->codigoProducto ?>" onchange="subtotalProductoBodega(<?php echo $objProducto->codigoProducto ?>,<?= $objPrecio->getPrecio(Precio::PRECIO_UNIDAD) ?>);" maxlength="3" value="<?php echo $cantidadBodega ?>" data-total="700"/></div>

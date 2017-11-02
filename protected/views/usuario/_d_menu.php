@@ -29,6 +29,11 @@
             Cotizaciones
         </a>
     </li>
+    <li class="<?php echo ($vista=="d_suscripciones" || $vista == "d_suscripciones" ? "active" : "")?>">
+        <a href="<?php echo CController::createUrl('/usuario/suscripciones') ?>" >
+            Suscripciones
+        </a>
+    </li>
     <li class="<?php echo ($vista=="d_pagoExpress" ? "active" : "")?>">
         <a href="<?php echo CController::createUrl('/usuario/pagoexpress') ?>" >
             Pago express

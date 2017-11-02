@@ -11,6 +11,7 @@ class PuntoventaModule extends CWebModule {
         $this->setImport(array(
             'puntoventa.models.*',
             'puntoventa.components.*',
+        	'ext.shoppingCartNationalSale.*',
         ));
     }
 

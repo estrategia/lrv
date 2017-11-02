@@ -125,7 +125,7 @@ class FormaPago extends CActiveRecord {
     			$condiciones['params'][':credirebaja'] = Yii::app()->params->formaPago['idCredirebaja'];
     		}break;
     		case 3:{
-    			if(Yii::app()->getModule('telefarma')->shoppingCartVitalCall->isUnitStored()){
+    			if(Yii::app()->getModule('callcenter')->getModule('telefarma')->shoppingCartVitalCall->isUnitStored()){
     				$condiciones['condition'].= " AND ventaBodega =:formaBodega";
     				$condiciones['params'][':formaBodega'] = 1;
     			}

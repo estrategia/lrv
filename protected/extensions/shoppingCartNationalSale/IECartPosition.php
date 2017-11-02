@@ -29,12 +29,44 @@ abstract class IECartPosition {
     
     protected $listBeneficios = array();
     protected $listBeneficiosBonos = array();
+    protected $listPDV = array();
+    
     
     protected $priceTokenUnit = 0;
     
     
     public function getBeneficios(){
         return $this->listBeneficios;
+    }
+    
+    public function getPDVs(){
+    	return $this->listPDV;
+    }
+    
+    public function getPDV($pdv){
+    	if(isset($this->listPDV[$pdv]))
+    		return $this->listPDV[$pdv];
+    	else 
+    		return null;
+    }
+    
+    
+    public function getUnitPDV($pdv, $unit = true){
+    	if(isset($this->listPDV[$pdv])){
+    		if($unit)
+    			return $this->listPDV[$pdv]['unidades'];
+    		else
+    			return $this->listPDV[$pdv]['fracciones'];
+    	}
+    	else
+    		return 0;
+    }
+    
+    public function setPDV($pdv, $unit, $frac = 0){
+    	$this->listPDV[$pdv] = array(
+    			'unidades' => $unit,
+    			'fracciones' => $frac
+    	);
     }
     
     public function getBeneficiosBonos(){

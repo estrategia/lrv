@@ -354,7 +354,7 @@ class EShoppingCart extends CMap {
         if ($this->objSectorCiudad !== null) {
             $key = $position->getId();
             
-            if(!Yii::app()->getModule('telefarma')->shoppingCartVitalCall->contains($key)){
+            if(!Yii::app()->getModule('callcenter')->getModule('telefarma')->shoppingCartVitalCall->contains($key)){
 	            $position->generate(array(
 	                'objSectorCiudad' => $this->objSectorCiudad,
 	                'codigoPerfil' => $this->codigoPerfil
@@ -403,7 +403,7 @@ class EShoppingCart extends CMap {
 
             $key = $position->getId();
             
-            if(!Yii::app()->getModule('telefarma')->shoppingCartVitalCall->contains($key)){
+            if(!Yii::app()->getModule('callcenter')->getModule('telefarma')->shoppingCartVitalCall->contains($key)){
             	$position->generate(array(
 	                'objSectorCiudad' => $this->objSectorCiudad,
 	                'codigoPerfil' => $this->codigoPerfil
