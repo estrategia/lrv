@@ -18,6 +18,7 @@
  * @property integer $idOperador
  * @property integer $terceros
  * @property integer $unidades
+ * @property integer $unidadesSuscripcion
  * @property integer $fracciones
  * @property integer $unidadesCedi
  * @property integer $codigoImpuesto
@@ -49,7 +50,7 @@ class ComprasItems extends CActiveRecord {
         // NOTE: you should only define rules for those attributes that
         // will receive user inputs.
         return array(
-            array('idCompra, precioBaseUnidad, precioBaseFraccion, descuentoUnidad, descuentoFraccion, precioTotalUnidad, precioTotalFraccion, idOperador, terceros, unidades, fracciones, unidadesCedi, codigoImpuesto, idEstadoItem, flete, disponible, idCombo', 'numerical', 'integerOnly' => true),
+            array('idCompra, precioBaseUnidad, precioBaseFraccion, descuentoUnidad, descuentoFraccion, precioTotalUnidad, precioTotalFraccion, idOperador, terceros, unidades, fracciones, unidadesCedi, unidadesSuscripcion, codigoImpuesto, idEstadoItem, flete, disponible, idCombo, descuentoSuscripcion, precioTotalSuscripcion', 'numerical', 'integerOnly' => true),
             array('codigoProducto', 'length', 'max' => 10),
             array('descripcion', 'length', 'max' => 200),
             array('presentacion, descripcionCombo', 'length', 'max' => 100),
@@ -99,13 +100,16 @@ class ComprasItems extends CActiveRecord {
             'unidades' => 'Unidades',
             'fracciones' => 'Fracciones',
             'unidadesCedi' => 'Unidades Cedi',
+            'unidadesSuscripcion' => 'Unidades Suscripcion',
             'codigoImpuesto' => 'Impuesto',
             'idEstadoItem' => 'Id Estado Item',
             'flete' => 'Flete',
             'disponible' => 'Disponible',
             'idCombo' => 'Id Combo',
             'descripcionCombo' => 'Sescripcion Combo',
-        	'registroMedico' => 'Registro Medico',
+            'registroMedico' => 'Registro Medico',
+            'descuentoSuscripcion' => 'Descuento Suscripcion',
+            'precioTotalSuscripcion' => 'Precio Unidad Suscripcion'
         );
     }
 
@@ -179,7 +183,8 @@ class ComprasItems extends CActiveRecord {
     }
 
     public function getTotalUnidades() {
-        $unidades = $this->unidades + $this->unidadesCedi;
+        $unidades = $this->unidades + $this->unidadesCedi + $this->unidadesSuscripcion;
+        // $unidades = $this->unidades + $this->unidadesCedi;
         $fracciones = 0;
 
         if ($this->fracciones > 0) {
@@ -222,9 +227,11 @@ class ComprasItems extends CActiveRecord {
 
         $objCompra = $this->objCompra;
         $objCompra->subtotalCompra += $precioDiff;
+        // $objCompra->subtotalCompra += $this->precioTotalSuscripcion;
         $objCompra->impuestosCompra += round(Precio::calcularImpuesto($precioDiff, $this->objImpuesto->porcentaje));
         $objCompra->baseImpuestosCompra += round(Precio::calcularBaseImpuesto($precioDiff, $this->objImpuesto->porcentaje));
         $objCompra->totalCompra += $precioDiff;
+        // $objCompra->totalCompra += $this->precioTotalSuscripcion;
 
         $transaction = Yii::app()->db->beginTransaction();
 
@@ -277,7 +284,9 @@ class ComprasItems extends CActiveRecord {
     }
 
     public function actualizarUnidades($cantidad) {
-        $cantDiff = $cantidad - $this->unidades;
+        $sumaUnidades = $this->unidades + $this->unidadesSuscripcion;
+        // $cantDiff = $cantidad - $this->unidades;
+        $cantDiff = $cantidad - $sumaUnidades;
         //igual
         if ($cantDiff == 0) {
             echo CJSON::encode(array('result' => 'error', 'response' => 'Actualización exitosa.'));
@@ -340,22 +349,47 @@ class ComprasItems extends CActiveRecord {
         		}
         	}	
         }
+        Yii::log("cantDiff: $cantDiff", CLogger::LEVEL_INFO, 'error');
 
-        $precioTotal = $this->precioBaseUnidad - $this->descuentoUnidad ;
-        $precioDiff = $precioTotal * $cantDiff;
-        $this->unidades += $cantDiff;
-        $this->precioTotalUnidad += $precioDiff;
+        
+        $suscripcion = SuscripcionesProductosUsuario::model()->find(
+            'identificacionUsuario=:identificacionUsuario AND idProducto=:idProducto',
+            [':identificacionUsuario' => $this->objCompra->identificacionUsuario, ':idProducto' => $this->codigoProducto]
+        );
+
+        $cantidadMaximaSuscripcion = $suscripcion->cantidadDisponiblePeriodoActual;
+
+        if ($cantidad > $cantidadMaximaSuscripcion) {
+            $this->unidadesSuscripcion = $cantidadMaximaSuscripcion;
+            $this->unidades = $cantidad - $this->unidadesSuscripcion;
+        } 
+        if ($cantidad <= $cantidadMaximaSuscripcion) {
+            $this->unidadesSuscripcion = $cantidad;
+            $this->unidades = 0;
+        } 
+
+        $precioSubTotal = ($this->precioBaseUnidad - $this->descuentoUnidad) * $this->unidades;
+        $precioSubTotal += ($this->precioBaseUnidad - $this->descuentoSuscripcion) * $this->unidadesSuscripcion;
+        
+        // $precioTotal = $this->precioBaseUnidad - $this->descuentoUnidad ;
+        // $precioDiff = $precioTotal * $cantDiff;
+        
+        // Yii::log("cantDiff: $precioDiff", CLogger::LEVEL_INFO, 'error');
         $this->idEstadoItem = Yii::app()->params->callcenter['estadoItem']['estado']['modificado'];
         $this->idOperador = Yii::app()->controller->module->user->id;
-
-        $objCompra = $this->objCompra;
-        $objCompra->subtotalCompra += $precioDiff;
         
-    //    $precioDiff-= $cantDiff*$bonoDescuento;
-        $objCompra->impuestosCompra += round(Precio::calcularImpuesto($precioDiff, $this->objImpuesto->porcentaje));
-        $objCompra->baseImpuestosCompra += round(Precio::calcularBaseImpuesto($precioDiff, $this->objImpuesto->porcentaje));
-        $objCompra->totalCompra += $precioDiff;
-
+        $objCompra = $this->objCompra;
+        // $objCompra->subtotalCompra += $precioDiff;
+        // $objCompra->subtotalCompra += $this->precioTotalSuscripcion;
+        
+        //    $precioDiff-= $cantDiff*$bonoDescuento;
+        $objCompra->impuestosCompra = round(Precio::calcularImpuesto($precioSubTotal, $this->objImpuesto->porcentaje));
+        $objCompra->baseImpuestosCompra = round(Precio::calcularBaseImpuesto($precioSubTotal, $this->objImpuesto->porcentaje));
+        // $objCompra->totalCompra += $precioDiff;
+        // $objCompra->otalCompra += $this->precioTotalSuscripcion;
+        $objCompra->subtotalCompra = $precioSubTotal;
+        // $objCompra->subtotalCompra = $precioSubTotal;
+        
         if ($this->unidades + $this->fracciones == 0) {
             $objCompra->flete -= $this->flete;
         }
@@ -441,9 +475,11 @@ class ComprasItems extends CActiveRecord {
 
         $objCompra = $this->objCompra;
         $objCompra->subtotalCompra += $precioDiff;
+        // $objCompra->subtotalCompra += $this->precioTotalSuscripcion;
         $objCompra->impuestosCompra += round(Precio::calcularImpuesto($precioDiff, $this->objImpuesto->porcentaje));
         $objCompra->baseImpuestosCompra += round(Precio::calcularBaseImpuesto($precioDiff, $this->objImpuesto->porcentaje));
         $objCompra->totalCompra += $precioDiff;
+        // $objCompra->totalCompra += $this->precioTotalSuscripcion;
 
         if ($this->unidades + $this->fracciones == 0) {
             $objCompra->flete -= $this->flete;
@@ -515,9 +551,11 @@ class ComprasItems extends CActiveRecord {
 
         $objCompra = $this->objCompra;
         $objCompra->subtotalCompra += $precioDiff;
+        // $objCompra->subtotalCompra += $this->precioTotalSuscripcion;
         $objCompra->impuestosCompra += round(Precio::calcularImpuesto($precioDiff, $this->objImpuesto->porcentaje));
         $objCompra->baseImpuestosCompra += round(Precio::calcularBaseImpuesto($precioDiff, $this->objImpuesto->porcentaje));
         $objCompra->totalCompra += $precioDiff;
+        // $objCompra->totalCompra += $this->precioTotalSuscripcion;
 
         if ($this->unidades + $this->fracciones == 0) {
             $objCompra->flete -= $this->flete;

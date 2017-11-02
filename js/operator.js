@@ -424,13 +424,21 @@ $(document).on('click', "button[data-role='modificarpedido']", function () {
     if (action == 11) {
         var item = $(this).attr('data-item');
         var cantidadU = parseInt($('#cantidad-item-unidad-' + item).val());
+        var cantidadS = parseInt($('#cantidad-item-unidad-suscripcion-' + item).val());
+        var cantidadTotal = 0;
         if (isNaN(cantidadU)) {
-            cantidadU = -1;
-        } else if (cantidadU < 0) {
-            // cantidadU = 0;
+            cantidadU = 0;
         }
-        data['cantidad'] = cantidadU;
+        if(isNaN(cantidadS)) {
+            cantidadS = 0;
+        }
+        //  else
+        //  if (cantidadU < 0) {
+        //     // cantidadU = 0;
+        // }
+        data['cantidad'] = cantidadU + cantidadS;
         data['item'] = item;
+        console.log(data);
     } else if (action == 12) {
         var item = $(this).attr('data-item');
         var cantidadF = parseInt($('#cantidad-item-fraccion-' + item).val());

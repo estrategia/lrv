@@ -162,28 +162,53 @@
                         </tr>
                     <?php else: ?>
                         <tr style="vertical-align: middle">
-                            <td><?php echo $objItem->codigoProducto ?><br></td>
-                            <td class="center vertical-center">
-                                <?php if (empty($objItem->listBeneficios)): ?>
-                                    NA
-                                <?php else: ?>
-                                    <a href="#" class="btn btn-sm btn-info" data-item="<?php echo $objItem->idCompraItem ?>" data-role="beneficiositem"><i class="icon-white glyphicon glyphicon-eye-open"></i></a>
-                                <?php endif; ?>
-                                <br>
-                            </td>
-                            <td><?php echo $objItem->descripcion ?><br></td>
+                            <?php if ($objItem->unidadesSuscripcion > 0): ?>
+                                <td rowspan="2"><?php echo $objItem->codigoProducto ?><br></td>
+                                <td rowspan="2" class="center vertical-center">
+                                    <?php if (empty($objItem->listBeneficios)): ?>
+                                        NA
+                                    <?php else: ?>
+                                        <a href="#" class="btn btn-sm btn-info" data-item="<?php echo $objItem->idCompraItem ?>" data-role="beneficiositem"><i class="icon-white glyphicon glyphicon-eye-open"></i></a>
+                                    <?php endif; ?>
+                                    <br>
+                                </td>
+                                <td rowspan="2"><?php echo $objItem->descripcion ?><br></td>
+                            <?php else: ?>
+                                <td><?php echo $objItem->codigoProducto ?><br></td>
+                                <td class="center vertical-center">
+                                    <?php if (empty($objItem->listBeneficios)): ?>
+                                        NA
+                                    <?php else: ?>
+                                        <a href="#" class="btn btn-sm btn-info" data-item="<?php echo $objItem->idCompraItem ?>" data-role="beneficiositem"><i class="icon-white glyphicon glyphicon-eye-open"></i></a>
+                                    <?php endif; ?>
+                                    <br>
+                                </td>
+                                <td><?php echo $objItem->descripcion ?><br></td>
+                            <?php endif; ?>
+                            
                             <td style="min-width:180px">
                                 <div class="form-inline text-center">
                                     <input type="text" id="cantidad-item-unidad-<?php echo $objItem->idCompraItem ?>" style="width:100px" value="<?php echo $objItem->unidades ?>" >
                                     <button type="button" data-role="modificarpedido" data-action="11" data-item="<?php echo $objItem->idCompraItem ?>" class="btn btn-default btn-sm"><i class="glyphicon glyphicon-refresh"></i></button>
                                 </div>
                             </td>
-                            <td class="text-right">
-                                <span style="text-decoration: line-through;"><?php echo Yii::app()->numberFormatter->format(Yii::app()->params->formatoMoneda['patron'], $objItem->precioBaseUnidad, Yii::app()->params->formatoMoneda['moneda']) ?></span>
-                                <?php if ($objItem->objImpuesto->porcentaje > 0): ?>
-                                    <div style="font-size: 10px;color: #000">Incluye <?php echo Yii::app()->numberFormatter->formatPercentage($objItem->objImpuesto->porcentaje) ?> IVA</div>
-                                <?php endif; ?>
-                            </td>
+                            
+                            <?php if ($objItem->unidadesSuscripcion > 0): ?>
+                                <td rowspan="2" class="text-right">
+                                    <span style="text-decoration: line-through;"><?php echo Yii::app()->numberFormatter->format(Yii::app()->params->formatoMoneda['patron'], $objItem->precioBaseUnidad, Yii::app()->params->formatoMoneda['moneda']) ?></span>
+                                    <?php if ($objItem->objImpuesto->porcentaje > 0): ?>
+                                        <div style="font-size: 10px;color: #000">Incluye <?php echo Yii::app()->numberFormatter->formatPercentage($objItem->objImpuesto->porcentaje) ?> IVA</div>
+                                        <?php endif; ?>
+                                </td>
+                            <?php else: ?>
+                                <td class="text-right">
+                                    <span style="text-decoration: line-through;"><?php echo Yii::app()->numberFormatter->format(Yii::app()->params->formatoMoneda['patron'], $objItem->precioBaseUnidad, Yii::app()->params->formatoMoneda['moneda']) ?></span>
+                                    <?php if ($objItem->objImpuesto->porcentaje > 0): ?>
+                                        <div style="font-size: 10px;color: #000">Incluye <?php echo Yii::app()->numberFormatter->formatPercentage($objItem->objImpuesto->porcentaje) ?> IVA</div>
+                                    <?php endif; ?>
+                                </td>
+                            <?php endif; ?>
+                            
                             <td class="text-right">
                                 <?php if ($objCompra->objFormaPagoCompra->idFormaPago == Yii::app()->params->formaPago['pasarela']['idPasarela']): ?>
                                     <button style="float: left;" type="button" data-role="modificar-ahorro" data-ahorro="<?php echo $objItem->descuentoUnidad ?>" data-opcion="1" data-item="<?php echo $objItem->idCompraItem ?>" data-descripcion="<?php echo $objItem->descripcion?>" class="btn btn-default btn-sm"><i class="glyphicon glyphicon-refresh"></i></button>
@@ -192,17 +217,50 @@
                             </td>
                             <td class="text-right"><?php echo Yii::app()->numberFormatter->format(Yii::app()->params->formatoMoneda['patron'], ($objItem->precioBaseUnidad - $objItem->descuentoUnidad), Yii::app()->params->formatoMoneda['moneda']) ?></td>
                             <td class="text-right"><?php echo Yii::app()->numberFormatter->format(Yii::app()->params->formatoMoneda['patron'], ($objItem->precioTotalUnidad + $objItem->precioTotalFraccion), Yii::app()->params->formatoMoneda['moneda']) ?></td>
-                            <td>
-                                <strong><?php echo $objItem->objEstadoItem->estadoItem ?></strong>
-                                <?php if ($objItem->objOperador !== null): ?>
-                                    <br/>
-                                    <?php echo $objItem->objOperador->nombre ?>
-                                <?php endif; ?>
-                            </td>
-                            <td class="center vertical-center">
-                                <button type="button" class="btn btn-sm btn-<?php echo ($objItem->disponible == 1 ? "success" : "danger") ?>" data-item="<?php echo $objItem->idCompraItem ?>" data-role="disponibilidaditem"><i class="icon-white glyphicon glyphicon-<?php echo ($objItem->disponible == 1 ? "ok" : "remove") ?>"></i></button>
-                            </td>
+                            <?php if ($objItem->unidadesSuscripcion > 0): ?>
+                                <td rowspan="2">
+                                    <strong><?php echo $objItem->objEstadoItem->estadoItem ?></strong>
+                                    <?php if ($objItem->objOperador !== null): ?>
+                                        <br/>
+                                        <?php echo $objItem->objOperador->nombre ?>
+                                    <?php endif; ?>
+                                </td>
+                                <td rowspan="2" class="center vertical-center">
+                                    <button type="button" class="btn btn-sm btn-<?php echo ($objItem->disponible == 1 ? "success" : "danger") ?>" data-item="<?php echo $objItem->idCompraItem ?>" data-role="disponibilidaditem"><i class="icon-white glyphicon glyphicon-<?php echo ($objItem->disponible == 1 ? "ok" : "remove") ?>"></i></button>
+                                </td>
+                            <?php else: ?>
+                                <td>
+                                    <strong><?php echo $objItem->objEstadoItem->estadoItem ?></strong>
+                                    <?php if ($objItem->objOperador !== null): ?>
+                                        <br/>
+                                        <?php echo $objItem->objOperador->nombre ?>
+                                    <?php endif; ?>
+                                </td>
+                                <td class="center vertical-center">
+                                    <button type="button" class="btn btn-sm btn-<?php echo ($objItem->disponible == 1 ? "success" : "danger") ?>" data-item="<?php echo $objItem->idCompraItem ?>" data-role="disponibilidaditem"><i class="icon-white glyphicon glyphicon-<?php echo ($objItem->disponible == 1 ? "ok" : "remove") ?>"></i></button>
+                                </td>
+                            <?php endif; ?>
                         </tr>
+                        <?php if ($objItem->unidadesSuscripcion > 0): ?>
+                            <tr>
+                                <td style="min-width:180px">
+                                    Productos con suscripción
+                                    <div class="form-inline text-center">
+                                        <input type="text" id="cantidad-item-unidad-suscripcion-<?php echo $objItem->idCompraItem ?>" style="width:100px" value="<?php echo $objItem->unidadesSuscripcion ?>" >
+                                        <button type="button" data-role="modificarpedido" data-action="11" data-item="<?php echo $objItem->idCompraItem ?>" class="btn btn-default btn-sm"><i class="glyphicon glyphicon-refresh"></i></button>
+                                    </div>
+                                </td>
+                            
+                                <td class="text-right">
+                                    <?php if ($objCompra->objFormaPagoCompra->idFormaPago == Yii::app()->params->formaPago['pasarela']['idPasarela']): ?>
+                                        <button style="float: left;" type="button" data-role="modificar-ahorro" data-ahorro="<?php echo $objItem->descuentoUnidad ?>" data-opcion="1" data-item="<?php echo $objItem->idCompraItem ?>" data-descripcion="<?php echo $objItem->descripcion?>" class="btn btn-default btn-sm"><i class="glyphicon glyphicon-refresh"></i></button>
+                                    <?php endif; ?>
+                                    <?php echo Yii::app()->numberFormatter->format(Yii::app()->params->formatoMoneda['patron'], $objItem->descuentoSuscripcion, Yii::app()->params->formatoMoneda['moneda']) ?>
+                                </td>
+                                <td class="text-right"><?php echo Yii::app()->numberFormatter->format(Yii::app()->params->formatoMoneda['patron'], ($objItem->precioBaseUnidad - $objItem->descuentoSuscripcion), Yii::app()->params->formatoMoneda['moneda']) ?></td>
+                                <td class="text-right"><?php echo Yii::app()->numberFormatter->format(Yii::app()->params->formatoMoneda['patron'], ($objItem->precioTotalSuscripcion), Yii::app()->params->formatoMoneda['moneda']) ?></td>
+                            </tr>
+                        <?php endif; ?>
                     <?php endif; ?>
                 <?php endif; ?>
             <?php else: ?>

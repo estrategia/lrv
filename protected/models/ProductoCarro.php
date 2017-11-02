@@ -33,7 +33,7 @@ class ProductoCarro extends IECartPosition {
     public function isProduct(){
         return ($this->objProducto instanceof Producto);
     }
-    
+
     /*public function isFormula(){
     	return ($this->objProductoFormula instanceof ProductosFormulaVitalCall);
     }*/
@@ -50,19 +50,33 @@ class ProductoCarro extends IECartPosition {
             $objprecio = new PrecioProducto($this->objProducto, $params['objSectorCiudad'], $params['codigoPerfil']);
             $this->listBeneficios = $objprecio->getBeneficios();
             $this->listBeneficiosBonos = $objprecio->getBeneficiosBonos();
+            $this->suscripcion = $objprecio->getSuscripcion();
+            if ($this->suscripcion !== null) {
+                $this->cantidadPeriodoSuscripcion = $this->suscripcion->consultarCantidadPeriodoActual();
+                if ($this->cantidadPeriodoSuscripcion == 0) {
+                    $this->suscripcion = null;
+                }
+            }
+            // $this->quantitySuscription = 0;
             
             $this->priceUnit = $objprecio->getPrecio(Precio::PRECIO_UNIDAD, false);
-            $this->priceUnitDiscount = $objprecio->getPrecio(Precio::PRECIO_UNIDAD, false,false);
+            $this->priceSuscriptionUnit = $objprecio->getPrecio(Precio::PRECIO_UNIDAD, false);
             
+            $this->priceUnitDiscount = $objprecio->getPrecio(Precio::PRECIO_UNIDAD, false, true);
+            $this->priceSuscriptionUnitDiscount = $objprecio->getPrecio(Precio::PRECIO_UNIDAD, true, true, true, true);
+
             $this->priceFraction = $objprecio->getPrecio(Precio::PRECIO_FRACCION, false);
             $this->priceFractionDiscount = $objprecio->getPrecio(Precio::PRECIO_FRACCION, false,false);
    
             $this->discountPriceUnit = $objprecio->getAhorro(Precio::PRECIO_UNIDAD);
             $this->discountPriceUnitDiscount = $objprecio->getAhorro(Precio::PRECIO_UNIDAD,false);
+            $this->discountSuscriptionUnit = $objprecio->getAhorro(Precio::PRECIO_UNIDAD, true, true);
             
             $this->discountPriceFraction = $objprecio->getAhorro(Precio::PRECIO_FRACCION);
             $this->discountPriceFractionDiscount = $objprecio->getAhorro(Precio::PRECIO_FRACCION);
             
+            // $this->setQuantitySuscription(1);
+            // $this->hola();
             $this->tax = $this->objProducto->objImpuesto->porcentaje;
             $this->shipping = $objprecio->getFlete();
             $this->delivery = $objprecio->getTiempoEntrega();
@@ -91,6 +105,7 @@ class ProductoCarro extends IECartPosition {
     public function getId() {
         if ($this->isProduct()) {
             return $this->objProducto->codigoProducto;
+            // return $this->suscripcion ? $this->objProducto->codigoProducto : $this->objProducto->codigoProducto . 'suscripcion';
         }else if($this->isCombo()){
             return $this->objCombo->getCodigo();
         }/*else if($this->isFormula()){

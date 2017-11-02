@@ -109,7 +109,7 @@ function GSASearch($term, $sesion) {
         }
 
         $h1 = round(microtime(true) * 1000);
-        $arr2 = GSASearchAux($term);
+//         $arr2 = GSASearchAux($term);
         $h2 = round(microtime(true) * 1000);
 
         fwrite($file, Date("Y-m-d h:i:s ")." Buscando en el GSA $term: ". ($h2 - $h1)." milisegundos". PHP_EOL);

@@ -150,10 +150,17 @@ class CarroController extends Controller {
 //             echo CJSON::encode(array('result' => 'error', 'response' => 'Saldo no disponible'));
 //             Yii::app()->end();
 //         }
+        // $objSuscripcion = 
+        // $objBeneficio
 
         if ($cantidadU > 0) {
             $cantidadCarroUnidad = 0;
-            $position = Yii::app()->shoppingCart->itemAt($producto);
+            $position = null;
+            // if (condition) {
+            //     $position = Yii::app()->shoppingCart->itemAt($producto);
+            // } else {
+            //     $position = Yii::app()->shoppingCart->itemAt($producto);
+            // }
 
             if ($position !== null) {
                 $cantidadCarroUnidad = $position->getQuantityUnit();
@@ -1274,6 +1281,7 @@ class CarroController extends Controller {
 
         if ($agregarU) {
             Yii::app()->shoppingCart->update($position, false, $cantidadU);
+            // Yii::log("Controlador: " . $cantidadU, CLogger::LEVEL_INFO, 'error');
         }
 
         if ($agregarF) {
@@ -3334,6 +3342,7 @@ class CarroController extends Controller {
 
             if (!$modelPago->pagoInvitado) {
                 $fecha = new DateTime;
+               
                 $parametrosPuntos = array(
                     Yii::app()->params->puntos['categoria'] => Yii::app()->shoppingCart->getCategorias(),
                     Yii::app()->params->puntos['marca'] => Yii::app()->shoppingCart->getMarcas(),
@@ -3431,6 +3440,32 @@ class CarroController extends Controller {
                     }
                     //-- actualizar saldo bodega
 
+                    // Usar la suscripcion
+                    $suscripcion = SuscripcionesProductosUsuario::model()->find(
+                        'identificacionUsuario=:identificacionUsuario AND idProducto=:idProducto',
+                        [':identificacionUsuario' => $objCompra->identificacionUsuario, ':idProducto' => $position->objProducto->codigoProducto]
+                    );
+                    if($suscripcion !== null) {
+                        $periodoActual = $suscripcion->consultarPeriodoActual();
+                        if($periodoActual !== null) {
+                            if ($periodoActual->usado == 0 && $position->getQuantitySuscription() > 0) {
+                                $periodoActual->cantidadComprada = $position->getQuantitySuscripcion();
+                                $periodoActual->usado = 1;
+                                $periodoActual->save();
+                            } else if (strtotime($fechaActual) >= strtotime($periodoActual->fechaInicioTolerancia)) {
+                                $idPeriodoSiguiente = $periodoActual->idPeriodo + 1;
+                                $periodoSiguiente = PeriodosSuscripcion::model()->find("$idPeriodoSiguiente");
+                                if($periodoSiguiente !== null) {
+                                    if ($periodoSiguiente->usado == 0) {
+                                        $periodoSiguiente->cantidadComprada = $position->getQuantitySuscripcion();
+                                        $periodoSiguiente->usado = 1;
+                                        $periodoSiguiente->save();
+                                    }
+                                }
+                            }
+                        }
+                    }
+
                     $objItem = new ComprasItems;
                     $objItem->idCompra = $objCompra->idCompra;
                     $objItem->codigoProducto = $position->objProducto->codigoProducto;
@@ -3446,7 +3481,12 @@ class CarroController extends Controller {
                     $objItem->descuentoFraccion = $position->getDiscountPriceToken(true);
                     $objItem->precioTotalUnidad = $position->getSumPriceUnitToken();
                     $objItem->precioTotalFraccion = $position->getSumPriceFractionToken(true);
-                     
+
+                    $objItem->unidadesSuscripcion = $position->getQuantitySuscription();
+                    $objItem->descuentoSuscripcion = $position->getDiscountPriceSuscription();
+                    $objItem->precioTotalSuscripcion = $position->getSumPriceUnitSuscription();
+
+            
                     $objItem->terceros = $position->objProducto->tercero;
                     $objItem->unidades = $position->getQuantityUnit();
                     $objItem->fracciones = $position->getQuantity(true);
@@ -3990,7 +4030,6 @@ class CarroController extends Controller {
         //CVarDumper::dump(Yii::app()->shoppingCart->itemAt(91269), 2, true);
         //echo "<br/>";
         //echo "<br/>";
-
         echo "Descuento: " . Yii::app()->shoppingCart->getDiscountPrice();
         echo "<br/>";
         echo "ciudad: " . Yii::app()->shoppingCart->getCodigoCiudad();
@@ -4018,17 +4057,25 @@ class CarroController extends Controller {
 
         $positions = Yii::app()->shoppingCart->getPositions();
         foreach ($positions as $position) {
+            // var_dump($position);exit();
+            // CVarDumper::dump($position,3,true);exit();
             echo "Id: " . $position->getId();
             echo "<br/>";
             echo "Precio U: " . $position->getPrice();
             echo "<br/>";
             echo "Precio F: " . $position->getPrice(true);
             echo "<br/>";
+            echo "Precio S: " . $position->getPriceSuscription();
+            echo "<br/>";
             echo "Cantidad U: " . $position->getQuantity();
             echo "<br/>";
             echo "Cantidad Stored: " . $position->getQuantityStored();
             echo "<br/>";
-            echo "Cantidad F: " . $position->getQuantity(true);
+            echo "Cantidad Suscripcion: " . $position->getQuantitySuscription();
+            echo "<br/>";
+            echo "Descuento U: " . $position->getDiscountPrice(false, false);
+            echo "<br/>";
+            echo "Descuento S: " . $position->getDiscountPriceSuscription();
             echo "<br/>";
             echo "Precio: " . $position->getSumPrice();
             echo "<br/>";
