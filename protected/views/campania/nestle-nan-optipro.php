@@ -21,16 +21,19 @@ $this->metaTags = "
     .txt-intro-banner {color: #fff;font-family: VAGRoundedStd-Bold;text-align: center;font-size: 30px;line-height: 30px;margin-top: 20px;}
     .line-pie {width: 310px;margin: 15px auto 18px;display: block;}
     .bg-box {background-size: 100% 100%;background-image:url(".Yii::app()->request->baseUrl."/images/contenido/nan-optipro/bg-box.png);}
-    .bg-box p {line-height: 33px;margin-bottom: 30px;text-align: justify;font-family: VAGRoundedStd-Thin;color: #043C9F;font-size: 30px;}
-    .producto {width: 370px;margin: 40px auto 5px;}
+    .bg-box p {line-height: 33px;margin-bottom: 30px;font-family: VAGRoundedStd-Thin;color: #043C9F;font-size: 30px;}
+    .producto {width: 310px;margin: 40px auto 5px;}
     .btn-compra {width: 225px;margin: 0 auto 25px;}
     .recetas {max-height: 167px;min-height: 167px;background-size: 100%;background-repeat: no-repeat;background-image:url(".Yii::app()->request->baseUrl."/images/contenido/nan-optipro/recetas.jpg);}
     svg {width: 55px;}
     .play{fill: rgba(255, 255, 255, 0.4);stroke: #fff;stroke-width: 10;stroke-dasharray: 18;animation: line 4s linear alternate infinite;}
     @keyframes line {to {stroke-dashoffset: 800;}}
+    .precio {font-family: VAGRoundedStd-Bold !important;text-align: center !important;margin: 20px auto 20px !important;font-size: 42px !important;}
   </style>
 ";
 ?>
+<?php $nan = Producto::consultarPrecio('65388', $this->objSectorCiudad, 'u')?>
+
 <!-- Facebook Pixel Code -->
 <script>
   !function(f,b,e,v,n,t,s)
@@ -63,6 +66,7 @@ $this->metaTags = "
     alimento lácteo con proteína de
     calidad.</p>
     <img style="width: 150px;margin: 0 auto 10px;display: block;" src="<?= Yii::app()->request->baseUrl ?>/images/contenido/nan-optipro/nan-optipro3.png">
+    <p class="precio" style="margin: 10px auto 10px !important;font-size: 30px !important;"><?= ($nan == null) ? "--" : Yii::app()->numberFormatter->format(Yii::app()->params->formatoMoneda['patron'], $nan, Yii::app()->params->formatoMoneda['moneda']) ?></p>
     <a data-ajax="false" href="<?php echo CController::createUrl('/catalogo/producto', array('producto' => 65388)) ?>">
       <img style="width: 190px;margin: 0 auto;display: block;" src="<?= Yii::app()->request->baseUrl ?>/images/contenido/nan-optipro/btn-comprar.png">
     </a>
@@ -104,21 +108,19 @@ $this->metaTags = "
         </div>
       </div>
     <div class="row bg-box">
-      <div class="col-sm-7" style="padding: 70px 110px;">
-        <p style="margin-top: 30px;">Las proteínas influyen directamente <br>
-        en el desarrollo y crecimiento ya que <br>
-        estructuran, conforman y mantienen <br>
-        los tejidos, músculos y órganos.<p>
-        <p>Darle a tu hijo una proteína de <br>
-        excelente calidad, es clave para <br>
-        lograr una adecuada nutrición.</p>
-        <p><span style=" font-family:VAGRoundedStd-Bold;">Compra ahora NAN<sup>®</sup> OPTIPRO<sup>®</sup> <br>
-        3 Desarrollo </span>en la Rebaja Virtual, <br>
-        alimento lácteo con proteína de <br>
-        calidad.</p>
+      <div class="col-sm-7" style="padding: 70px 0px 0px 70px;">
+        <p style="margin-top: 30px;">Las proteínas influyen directamente en el <br>
+        desarrollo y crecimiento ya que estructuran,<br>
+        conforman y mantienen los tejidos, <br>
+        músculos y órganos.</p>
+        <p>Darle a tu hijo una proteína de excelente  calidad, es clave para lograr una adecuada nutrición.</p>
+        <p><span style=" font-family:VAGRoundedStd-Bold;">Compra ahora NAN<sup>®</sup> OPTIPRO<sup>®</sup>3 Desarrollo </span> <br>
+        en la Rebaja Virtual, alimento lácteo <br>
+        con proteína de calidad.</p>
       </div>
       <div class="col-sm-5">
         <img class="img-responsive producto" src="<?= Yii::app()->request->baseUrl ?>/images/contenido/nan-optipro/nan-optipro3.png">
+        <p class="precio"><?= ($nan == null) ? "--" : Yii::app()->numberFormatter->format(Yii::app()->params->formatoMoneda['patron'], $nan, Yii::app()->params->formatoMoneda['moneda']) ?></p>
         <a href="<?php echo CController::createUrl('/catalogo/producto', array('producto' => 65388)) ?>"><img class="img-responsive btn-compra" src="<?= Yii::app()->request->baseUrl ?>/images/contenido/nan-optipro/btn-comprar.png"></a>
       </div>
     </div>

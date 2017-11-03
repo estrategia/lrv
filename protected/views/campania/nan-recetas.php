@@ -24,7 +24,7 @@ $this->metaTags = "
     .bg-box {background-size: 100% 100%;background-image:url(".Yii::app()->request->baseUrl."/images/contenido/nan-optipro/bg-box.png);}
     .bg-box p {line-height: 33px;margin-bottom: 30px;text-align: justify;font-family: VAGRoundedStd-Thin;color: #043C9F;font-size: 30px;}
     .producto {width: 370px;margin: 40px auto 5px;}
-    .btn-compra {width: 225px;margin-top: 25px;}
+    .btn-compra {width: 225px;margin-top: 15px;}
     .bg-videos {background-color:#A5B3DA;padding: 15px;margin: 0 8%;}
     .hide {display:none;-webkit-transition: width 2s linear; transition: width 2s linear;}
     .title-principal { font-family:VAGRoundedStd-Bold;text-align:center;color:#fff;font-size: 30px;margin-bottom:30px;}
@@ -34,9 +34,11 @@ $this->metaTags = "
     .btn-inicio {margin: 40px auto 0;width: 225px;}
     #paginador {text-align: center;margin: 10px 0 20px;}
     #paginador a {display: inline-block;width: 20px;height: 20px;text-indent: -999em;background: #fff;border-radius: 10px;-moz-border-radius: 10px;-webkit-border-radius: 10px;box-shadow: 0 0 1px 1px #707173;margin-right: 10px;cursor:pointer;}
+    .precio {font-family: VAGRoundedStd-Bold !important;margin: 0px !important;font-size: 42px !important;color: #fff;}
   </style>
 ";
 ?>
+<?php $nan = Producto::consultarPrecio('65388', $this->objSectorCiudad, 'u')?>
 <!-- Funcionamiento de cambio de los videos -->
 <script type='text/javascript'>
   $(document).ready(function(){
@@ -118,7 +120,8 @@ $this->metaTags = "
           <img class="img-responsive" src="<?= Yii::app()->request->baseUrl ?>/images/contenido/nan-optipro/pack-interno.png">
         </div>
         <div class="col-md-6">
-          <img class="img-responsive" style="margin-top: 50px;" src="<?= Yii::app()->request->baseUrl ?>/images/contenido/nan-optipro/sabias-que.png">
+          <img class="img-responsive" style="margin-top: 40px;width: 538px;" src="<?= Yii::app()->request->baseUrl ?>/images/contenido/nan-optipro/sabias-que.png">
+          <p class="precio"><?= ($nan == null) ? "--" : Yii::app()->numberFormatter->format(Yii::app()->params->formatoMoneda['patron'], $nan, Yii::app()->params->formatoMoneda['moneda']) ?></p>
           <a href="<?php echo CController::createUrl('/catalogo/producto', array('producto' => 65388)) ?>"><img class="img-responsive btn-compra" src="<?= Yii::app()->request->baseUrl ?>/images/contenido/nan-optipro/btn-comprar.png"></a>
         </div>
       </div>

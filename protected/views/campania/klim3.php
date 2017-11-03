@@ -30,6 +30,10 @@
     @media (min-width: 1800px) and (max-width: 1920px){.txt-intro {top: -380px;font-size: 36px;}.section-videos {margin-bottom: 80px;margin-top: -44%;}}
     .bg-nube-m{background-image:url(".Yii::app()->request->baseUrl."/images/contenido/klim3/nube-movil.png);background-repeat: no-repeat;background-size: 35%;background-position: left 41%;}
     .container p {position:absolute !important;}
+    .btn-comprar {margin-top: -23px;
+position: absolute;
+right: 22%;
+width: 300px;}
   </style>
   ";
 ?>
@@ -70,6 +74,7 @@
   <div class="bg-nube">
     <div class="container-fluid">
       <img class="img-responsive" src="<?= Yii::app()->request->baseUrl ?>/images/contenido/klim3/klim-intro.png" alt="">
+      <a href="<?php echo CController::createUrl('/contenido/ver', array('tipo' => 'grupo', 'contenido' => 3947)) ?>"><img class="img-responsive btn-comprar" src="<?= Yii::app()->request->baseUrl ?>/images/contenido/gelicart/btn-comprar.png" alt=""></a>
       <div class="col-sm-offset-3 col-md-offset-3 col-lg-offset-3 col-xs-4 col-sm-4 col-md-4 col-lg-4">
         <p class="txt-intro">Contiene nutrientes que <br> contribuyen al normal <br> desarrollo cognitivo:</p>
       </div>
