@@ -72,28 +72,44 @@ class PrecioProducto extends Precio {
                 $listSaldos = array();
 
                 if ($consultaPrecio) {
-                    $listPrecios = ProductosPrecios::model()->findAll(array(
-                        'condition' => '(codigoProducto=:producto AND codigoCiudad=:ciudad AND codigoSector=:sector)',
-                        'params' => array(
-                            ':producto' => $objProducto->codigoProducto,
-                            ':ciudad' => $objCiudadSector->codigoCiudad,
-                            ':sector' => $objCiudadSector->codigoSector,
-                        ),
-                    ));
-
-                    $listSaldos = ProductosSaldos::model()->findAll(array(
-                        'condition' => '(codigoProducto=:producto AND codigoCiudad=:ciudad AND codigoSector=:sector)',
-                        'params' => array(
-                            ':producto' => $objProducto->codigoProducto,
-                            ':ciudad' => $objCiudadSector->codigoCiudad,
-                            ':sector' => $objCiudadSector->codigoSector,
-                        ),
-                    ));
+                	$listSaldos = ProductosSaldos::model()->findAll(array(
+                			'condition' => '(codigoProducto=:producto AND codigoCiudad=:ciudad AND codigoSector=:sector)',
+                			'params' => array(
+                					':producto' => $objProducto->codigoProducto,
+                					':ciudad' => $objCiudadSector->codigoCiudad,
+                					':sector' => $objCiudadSector->codigoSector,
+                			),
+                	));
                 } else {
-                    $listPrecios = $objProducto->listPrecios;
-                    $listSaldos = $objProducto->listSaldos;
+                	$listSaldos = $objProducto->listSaldos;
                 }
                 
+                if(!$esVap){
+	                if ($consultaPrecio) {
+	                    $listPrecios = ProductosPrecios::model()->findAll(array(
+	                        'condition' => '(codigoProducto=:producto AND codigoCiudad=:ciudad AND codigoSector=:sector)',
+	                        'params' => array(
+	                            ':producto' => $objProducto->codigoProducto,
+	                            ':ciudad' => $objCiudadSector->codigoCiudad,
+	                            ':sector' => $objCiudadSector->codigoSector,
+	                        ),
+	                    ));
+	                } else {
+	                    $listPrecios = $objProducto->listPrecios;
+	                }
+                }else{
+                	if ($consultaPrecio) {
+                		$listPrecios = ProductosPreciosVentaAsistida::model()->findAll(array(
+                				'condition' => '(codigoProducto=:producto AND codigoCiudad=:ciudad)',
+                				'params' => array(
+                						':producto' => $objProducto->codigoProducto,
+                						':ciudad' => $objCiudadSector->codigoCiudad,
+                				),
+                		));
+                	} else {
+                		$listPrecios = $objProducto->listPreciosVAP;
+                	}
+                }
                 /************************ SALDOS DE BODEGA *****************************/
                 
                 $listSaldosBodega = array();
@@ -121,13 +137,24 @@ class PrecioProducto extends Precio {
                 
                 /************************ FIN SALDOS DE BODEGA **************************/
 
-                foreach ($listPrecios as $objProductoPrecio) {
-                    if ($objProductoPrecio->codigoCiudad == $objCiudadSector->codigoCiudad && $objProductoPrecio->codigoSector == $objCiudadSector->codigoSector) {
-                        $this->precioUnidad = $objProductoPrecio->precioUnidad;
-                        $this->precioFraccion = $objProductoPrecio->precioFraccion;
-                        $this->unidadFraccionamiento = $objProducto->unidadFraccionamiento;
-                        break;
-                    }
+                if(!$esVap){
+	                foreach ($listPrecios as $objProductoPrecio) {
+	                    if ($objProductoPrecio->codigoCiudad == $objCiudadSector->codigoCiudad && $objProductoPrecio->codigoSector == $objCiudadSector->codigoSector) {
+	                        $this->precioUnidad = $objProductoPrecio->precioUnidad;
+	                        $this->precioFraccion = $objProductoPrecio->precioFraccion;
+	                        $this->unidadFraccionamiento = $objProducto->unidadFraccionamiento;
+	                        break;
+	                    }
+	                }
+                }else{
+                	foreach ($listPrecios as $objProductoPrecio) {
+                		if ($objProductoPrecio->codigoCiudad == $objCiudadSector->codigoCiudad) {
+                			$this->precioUnidad = $objProductoPrecio->precioUnidad;
+                			$this->precioFraccion = $objProductoPrecio->precioFraccion;
+                			$this->unidadFraccionamiento = $objProducto->unidadFraccionamiento;
+                			break;
+                		}
+                	}
                 }
 
                 if ($this->precioUnidad > 0 || $this->precioFraccion > 0) {

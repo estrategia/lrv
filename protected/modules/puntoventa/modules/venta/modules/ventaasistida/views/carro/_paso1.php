@@ -10,7 +10,13 @@
             <?php $this->renderPartial('/carro/_tipoEntrega', array('modelPago' => $modelPago)) ?>
         </div>
     </div>
-
+	<div class="col-sm-4" >
+        <div class="iconStep step2"></div>
+        <div class="text orange"><p>2.Datos del destinatario</p></div>
+        <div class="step-box">
+            <?php $this->renderPartial('/carro/_pasoDespacho', array('modelPago' => $modelPago)) ?>
+        </div>
+    </div>
     <div class="col-sm-4" >
         <div class="iconStep step3"></div>
         <div class="text orange"><p>&nbsp;2.Fecha/hora entrega</p></div>
@@ -18,18 +24,18 @@
             <?php $this->renderPartial('/carro/_pasoEntrega', array('modelPago' => $modelPago, 'listHorarios' => $listHorarios)) ?>
         </div>
     </div>
-        <div class="col-sm-4" >
+    
+</div>
+<div class="space-1"></div>
+
+<div class="row">
+	<div class="col-sm-4" >
         <div class="iconStep step4"></div>
         <div class="text orange"><p>3.Forma pago</p></div>
         <div class="step-box">
             <?php $this->renderPartial('/carro/_pasoPago', array('modelPago' => $modelPago, 'listFormaPago' => $listFormaPago)) ?>
         </div>
     </div>
-</div>
-<div class="space-1"></div>
-
-<div class="row">
-
     <div class="col-sm-4" >
         <div class="iconStep step6"></div>
         <div class="text orange"><p>&nbsp;4.Comentarios</p></div>

@@ -42,7 +42,9 @@ class FormaPagoVentaAsistidaForm extends CFormModel {
     /***********DATOS REMITENTE*************/
     //datos medico
     public $cedulaRemitente;
+    public $nombreRemitente;
     public $direccionRemitente;
+    public $telefonoRemitente;
     public $barrioRemitente;
     public $correoRemitente;
     public $recogida = 0;
@@ -72,7 +74,7 @@ class FormaPagoVentaAsistidaForm extends CFormModel {
         if($this->recogida == 1){
         	$rules[] = array('direccionRemitente, barrioRemitente', 'required', 'on' => 'entrega, informacion, finalizar', 'message' => '{attribute} no puede estar vacío');
         }
-        $rules[] = array('fechaEntrega, identificacionUsuario,  correoRemitente,  nombre, direccion, barrio, telefono, celular', 'required', 'on' => 'entrega, informacion, finalizar', 'message' => '{attribute} no puede estar vacío');
+        $rules[] = array('fechaEntrega, identificacionUsuario, nombreRemitente, telefonoRemitente,  correoRemitente,  nombre, direccion, barrio, telefono, celular', 'required', 'on' => 'entrega, informacion, finalizar', 'message' => '{attribute} no puede estar vacío');
         $rules[] = array('correoRemitente','email');
         $rules[] = array('comentario', 'length', 'max' => 250, 'on' => 'entrega, informacion, finalizar');
         $rules[] = array('fechaEntrega', 'fechaValidate', 'on' => 'entrega, informacion, finalizar');

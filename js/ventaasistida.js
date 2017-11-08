@@ -30,7 +30,7 @@ $(document).on('click', 'a[data-action="asignar-cliente"]', function () {
         dataType: 'json',
         async: true,
         url: requestUrl + '/puntoventa/venta/ventaasistida/pedido/asignarcliente',
-        data: {usuario: $(this).attr('data-cliente')},
+        data: {usuario: $(this).attr('data-cliente'), beneficiario: $(this).attr('data-beneficiario')},
         beforeSend: function () {
             Loading.show();
         },
@@ -764,8 +764,8 @@ $(document).on('click', "button[id='btn-carropagar-siguiente'], button[id='btn-c
 function pasoInformacion(actual, siguiente, boton) {
     var data = {
         siguiente: siguiente,
-        "FormaPagoEntregaNacionalForm[indicePuntoVenta]": $('input[name="FormaPagoEntregaNacionalForm[indicePuntoVenta]"]').val(),
-        "FormaPagoEntregaNacionalForm[tipoEntrega]": $('input[name="FormaPagoEntregaNacionalForm[tipoEntrega]"]').val()
+        "FormaPagoVentaAsistidaForm[indicePuntoVenta]": $('input[name="FormaPagoVentaAsistidaForm[indicePuntoVenta]"]').val(),
+        "FormaPagoVentaAsistidaForm[tipoEntrega]": $('input[name="FormaPagoVentaAsistidaForm[tipoEntrega]"]').val()
     };
     
     $.ajax({
@@ -775,8 +775,8 @@ function pasoInformacion(actual, siguiente, boton) {
         data: $.param(data) + '&' + $('#form-pago-comentario').serialize() + '&' + $('#form-direccion-pagoinvitado').serialize() + '&' + $('#form-remitente').serialize() + '&' +$('#form-pago-entrega').serialize() + '&' + $('#form-pago').serialize(),
         beforeSend: function() {
             boton.prop('disabled', true);
-            $('div[id^="FormaPagoEntregaNacionalForm_"].text-danger').html('');
-            $('div[id^="FormaPagoEntregaNacionalForm_"].text-danger').css('display', 'none');
+            $('div[id^="FormaPagoVentaAsistidaForm_"].text-danger').html('');
+            $('div[id^="FormaPagoVentaAsistidaForm_"].text-danger').css('display', 'none');
             Loading.show();
         },
         complete: function() {
@@ -855,9 +855,9 @@ $(document).on('click', "div[data-role='formapago']", function() {
     var tipo = $(this).attr('data-tipo');
     if (tipo == "datafono") {
         $("#modal-formapago input[type='radio']").removeAttr('checked');
-        $("#modal-formapago #idFormaPago_" + $("#FormaPagoEntregaNacionalForm_idFormaPago_datafono").val()).prop('checked', true);
+        $("#modal-formapago #idFormaPago_" + $("#FormaPagoVentaAsistidaForm_idFormaPago_datafono").val()).prop('checked', true);
         $("div[data-role^='formapago-logo-']").addClass('display-none');
-        $("div[data-role='formapago-logo-" + $("#FormaPagoEntregaNacionalForm_idFormaPago_datafono").val() + "']").removeClass('display-none');
+        $("div[data-role='formapago-logo-" + $("#FormaPagoVentaAsistidaForm_idFormaPago_datafono").val() + "']").removeClass('display-none');
         $("#modal-formapago").modal("show");
         return false;
     } else {
@@ -870,7 +870,7 @@ $(document).on('click', "div[data-role='formapago']", function() {
     }
 });
 
-$(document).on('click', "input[name='FormaPagoEntregaNacionalForm[recogida]']", function() {
+$(document).on('click', "input[name='FormaPagoVentaAsistidaForm[recogida]']", function() {
     var tipo = $(this).val();
     if (tipo == 1) {
     	$("#recogida").removeClass('display-none');
@@ -896,8 +896,8 @@ $(document).on('click', "#modal-formapago input[type='radio']", function() {
         //$("div[data-role='formapago']").removeClass('activo');
         //$('div[data-tipo="datafono"]').addClass('activo');
         //$('#div-formapago-vacio').remove();
-        $('input[id="FormaPagoEntregaNacionalForm_idFormaPago_datafono"]').prop('checked', true);
-        $('input[id="FormaPagoEntregaNacionalForm_idFormaPago_datafono"]').val($(this).val());
+        $('input[id="FormaPagoVentaAsistidaForm_idFormaPago_datafono"]').prop('checked', true);
+        $('input[id="FormaPagoVentaAsistidaForm_idFormaPago_datafono"]').val($(this).val());
 
         $("div[data-role^='formapago-logo-']").addClass('display-none');
         $("div[data-role='formapago-logo-" + $(this).val() + "']").removeClass('display-none');
