@@ -2976,28 +2976,67 @@ $(document).on('click', "a[data-role='ocultar-menu']", function() {
 $(document).on('click', "button[data-role='crear-suscripcion']", function () {
     var boton = $(this);
     var codigoProducto = boton.attr('data-codigo-producto');
-    boton.attr('disabled', true);
-    $.ajax({
-        type: 'POST',
-        url: requestUrl + "/suscripciones/ocultarMenu/",
-        data: {codigoProducto: codigoProducto},
-        dataType: 'json',
-        beforeSend: function() {
-            Loading.show();
-        },
-        complete: function(data) {
-            Loading.hide();
-        },
-        success: function(data) {
-            if (data.result === 'ok') {
-                console.log(response);
-            } 
-            boton.attr('disabled', false);
-        },
-        error: function(jqXHR, textStatus, errorThrown) {
-            Loading.hide();
-            boton.attr('disabled', false);
-        }
-    });
+    var periodos = $('input[data-role="periodos-suscripcion"]').val();
+    if (periodos < 1) {
+        alert('La cantidad de periodos debe ser mayor o igual a 1');
+    } else {
+        boton.attr('disabled', true);
+        $.ajax({
+            type: 'POST',
+            url: requestUrl + "/suscripciones/crear",
+            data: {codigoProducto: codigoProducto, periodos: periodos},
+            dataType: 'json',
+            beforeSend: function() {
+                Loading.show();
+            },
+            complete: function(data) {
+                Loading.hide();
+            },
+            success: function(data) {
+                // if (data.result === 'ok') {
+                    // } 
+                boton.attr('disabled', false);
+                alert(data.response);
+            },
+            error: function(jqXHR, textStatus, errorThrown) {
+                Loading.hide();
+                boton.attr('disabled', false);
+            }
+        });
+    }
+    return false;
+});
+
+$(document).on('click', "button[data-role='actualizar-suscripcion']", function () {
+    var boton = $(this);
+    var idSuscripcion = boton.attr('data-id-suscripcion');
+    var periodos = $('input[data-role="periodos-suscripcion"]').val();
+    if (periodos < 1) {
+        alert('La cantidad de periodos debe ser mayor o igual a 1');
+    } else {
+        boton.attr('disabled', true);
+        $.ajax({
+            type: 'POST',
+            url: requestUrl + "/suscripciones/actualizar",
+            data: { idSuscripcion: idSuscripcion, periodos: periodos },
+            dataType: 'json',
+            beforeSend: function () {
+                Loading.show();
+            },
+            complete: function (data) {
+                Loading.hide();
+            },
+            success: function (data) {
+                // if (data.result === 'ok') {
+                // } 
+                boton.attr('disabled', false);
+                alert(data.response);
+            },
+            error: function (jqXHR, textStatus, errorThrown) {
+                Loading.hide();
+                boton.attr('disabled', false);
+            }
+        });
+    }
     return false;
 });
