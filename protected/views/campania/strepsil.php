@@ -40,11 +40,11 @@
   </style>
   ";
 ?>
-
 <!--Versión movil-->
 <?php if ($this->isMobile): ?>
 <!--Version movil-->
-<a href="<?php echo CController::createUrl('/catalogo/producto', array('producto' => 117377)) ?>">
+<input type="hidden" id="cantidad-producto-unidad-117377" value="1" >
+<a data-ajax="false" data-cargar="1" data-producto="117377" data-id="1" href="">
   <div class="sidebar-cart-m"><img class="img-responsive-m" src="<?= Yii::app()->request->baseUrl ?>/images/contenido/strepsils/btn-fijo-mobile.png" alt="Compra online"></div>
 </a>
 <img class="img-responsive-m" src="<?= Yii::app()->request->baseUrl ?>/images/contenido/strepsils/banner-movil.jpg" alt="Banner strepsil">
@@ -78,7 +78,7 @@
 <div style="padding:0px;">
   <div class="bg-secundario" >
     <img class="producto" style="width:90%;" src="<?= Yii::app()->request->baseUrl ?>/images/contenido/strepsils/strepsils-caja.png" alt="Strepsils caja 16 tabletas">
-    <a data-ajax="false" href="<?php echo CController::createUrl('/catalogo/producto', array('producto' => 117377)) ?>">
+    <a data-ajax="false" data-cargar="1" data-producto="117377" data-id="1" href="">
       <img class="compra" style="margin: 20px auto 30px;width: 65%;" src="<?= Yii::app()->request->baseUrl ?>/images/contenido/strepsils/compra-online.png" alt="Compra online">
     </a>
     <center style="padding:0 15%;">
@@ -98,7 +98,8 @@
 <!--Versión escritorio-->
 
 <?php else: ?>
-<a href="<?php echo CController::createUrl('/catalogo/producto', array('producto' => 117377)) ?>">
+<input type="hidden" id="cantidad-producto-unidad-117377-1" value="1" >
+<a data-cargar="1" data-producto="117377" data-id="1" href="">
   <div class="sidebar-cart"><img class="img-responsive" src="<?= Yii::app()->request->baseUrl ?>/images/contenido/strepsils/btn-fijo.png" alt="Compra online"></div>
 </a>
 <img class="img-responsive" src="<?= Yii::app()->request->baseUrl ?>/images/contenido/strepsils/banner.jpg" alt="Banner strepsil">
@@ -149,7 +150,7 @@
   <div class="row ">
     <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1 bg-secundario" style="padding:0px;">
       <img class="producto" src="<?= Yii::app()->request->baseUrl ?>/images/contenido/strepsils/strepsils-caja.png" alt="Strepsils caja 16 tabletas">
-      <a href="<?php echo CController::createUrl('/catalogo/producto', array('producto' => 117377)) ?>">
+      <a data-cargar="1" data-producto="117377" data-id="1" href="">
         <img class="compra" src="<?= Yii::app()->request->baseUrl ?>/images/contenido/strepsils/compra-online.png" alt="Compra online">
       </a>
       <center style="padding:0 15%;">

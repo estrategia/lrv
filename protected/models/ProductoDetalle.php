@@ -36,10 +36,11 @@ class ProductoDetalle extends CActiveRecord
 		// NOTE: you should only define rules for those attributes that
 		// will receive user inputs.
 		return array(
-			array('codigoProducto, titulo, contenidoEscritorio, contenidoMovil, fechaCreacion, fechaActualizacion', 'required'),
+			array('codigoProducto, titulo, contenidoEscritorio, contenidoMovil', 'required'),
 			array('estado', 'numerical', 'integerOnly'=>true),
 			array('codigoProducto', 'length', 'max'=>10),
 			array('titulo', 'length', 'max'=>45),
+		    array('fechaCreacion, fechaActualizacion', 'safe'),
 			// The following rule is used by search().
 			// @todo Please remove those attributes that should not be searched.
 			array('idProductoDetalle, codigoProducto, titulo, contenidoEscritorio, contenidoMovil, estado, fechaCreacion, fechaActualizacion', 'safe', 'on'=>'search'),
@@ -118,5 +119,14 @@ class ProductoDetalle extends CActiveRecord
 	public static function model($className=__CLASS__)
 	{
 		return parent::model($className);
+	}
+	
+	public function beforeSave() {
+	    if ($this->isNewRecord) {
+	        //$this->fechaCreacion = new CDbExpression('NOW()');
+	        $this->fechaCreacion = date('Y-m-d H:i:s');
+	    }
+	    
+	    return parent::beforeSave();
 	}
 }
