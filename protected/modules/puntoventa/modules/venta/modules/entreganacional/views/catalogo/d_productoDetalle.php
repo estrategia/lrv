@@ -1,6 +1,4 @@
-<<<<<<< HEAD
 <?php $this->pageTitle = Yii::app()->name . " - " . $objProducto->descripcionProducto; ?>
-
 
 <?php $idUnico = uniqid() ?>
 
@@ -246,7 +244,6 @@
 
 
 
-=======
 <?php $this->pageTitle = Yii::app()->name . " - " . $objProducto->descripcionProducto; ?>
 
 
@@ -492,7 +489,4 @@
     </div>
 </section>
 
-
-
->>>>>>> 39639c1bafec6426600b5c8d6e35bbd2d066039f
 <div class="container"><div class="line-bottom2"></div></div>
