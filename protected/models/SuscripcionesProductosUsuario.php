@@ -49,7 +49,7 @@ class SuscripcionesProductosUsuario extends CActiveRecord
 		// NOTE: you may need to adjust the relation name and the related
 		// class name for the relations automatically generated below.
 		return array(
-			'beneficio' => array(self::HAS_ONE, 'Beneficios', 'idBeneficio'),
+			'beneficio' => array(self::BELONGS_TO, 'Beneficios', 'idBeneficio'),
 			'objProducto' => array(self::BELONGS_TO, 'Producto', 'idProducto'),
 			'producto' => array(self::BELONGS_TO, 'Producto', 'idProducto'),
 			'usuario' => array(self::HAS_ONE, 'Usuario', 'identificacionUsuario'),
@@ -163,7 +163,9 @@ class SuscripcionesProductosUsuario extends CActiveRecord
 			// echo $e;
 			$transaction->rollBack();
 		}
+		$ultimoPeriodo = $this->consultarUltimoPeriodo();
 		$this->fechaFin = end($periodos)['fechaFin'];
+		$this->cantidadPeriodos = $ultimoPeriodo->numeroPeriodo;
 		$this->save();
 	}
 
@@ -317,4 +319,16 @@ class SuscripcionesProductosUsuario extends CActiveRecord
 		}
 		return $suscripciones;
 	}
+
+	public static function consultarBeneficioSuscripcion($codigoProducto)
+	{
+		$criteriaBeneficio = new CDbCriteria;
+		$criteriaBeneficio->condition = 't.codigoProducto=:codigoProducto';
+		$criteriaBeneficio->condition .= ' AND objBeneficio.tipo IN (' . implode(",", Yii::app()->params->beneficios['beneficiosSuscripcion']) . ')';
+		$criteriaBeneficio->with = 'objBeneficio';
+		$criteriaBeneficio->params = [':codigoProducto' => $codigoProducto];
+		$beneficioProducto = BeneficiosProductos::model()->find($criteriaBeneficio);
+		return $beneficioProducto;
+	}
+
 }

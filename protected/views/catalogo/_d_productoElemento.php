@@ -56,7 +56,9 @@
                 <div class="descripcion-lineal" style="display:none">
                     <?php echo $data->presentacionProducto ?>
                 </div>
-                <a href="<?php echo CController::createUrl('/suscripciones/suscribirse', array('codigoProducto' => $data->codigoProducto)) ?>" class="btn btn-default btn-block btn-sm">Suscribete y ahorra</a>
+                <?php if($objPrecio->conSuscripcion()): ?>
+                    <a href="<?php echo CController::createUrl('/suscripciones/suscribirse', array('codigoProducto' => $data->codigoProducto)) ?>" class="btn btn-default btn-block btn-sm">Suscribete y ahorra</a>
+                <?php endif; ?>
             </div>
             
             <!-- Precio del producto -->

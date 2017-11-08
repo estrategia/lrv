@@ -214,7 +214,8 @@ class PrecioProducto extends Precio {
                     $this->ahorroUnidadDescuento += self::redondear(floor($this->precioUnidad * ($this->porcentajeDescuentoPerfil / 100)),1,10);
                 }
             }
-
+            $beneficioSuscripcion = SuscripcionesProductosUsuario::consultarBeneficioSuscripcion($objProducto->codigoProducto);
+            $this->conSuscripcion = $beneficioSuscripcion != null ? true : false;
             //consultar beneficios del producto
             //$fecha = new DateTime;
             $condition = 't.fechaIni<=:fecha AND t.fechaFin>=:fecha AND t.tipo IN (' . implode(",", Yii::app()->params->beneficios['lrv']) . ')';
