@@ -109,7 +109,6 @@ return array(
         'gelicart-colageno-hidrolizado' => 'publicidad/contenido/nombre/gelicart',
         'asepxia' => 'publicidad/contenido/nombre/asepxia',
         'ni-una-dieta-mas' => 'publicidad/contenido/nombre/ni-una-dieta-mas',
-
         'cuidado-en-casa' => 'publicidad/contenido/nombre/cuidado-en-casa',
         'ayudas-de-movilidad' => 'publicidad/contenido/nombre/ayudas-de-movilidad',
         'control-y-prevencion' => 'publicidad/contenido/nombre/control-y-prevencion',
@@ -118,6 +117,7 @@ return array(
         'equipos-para-profesionales' => 'publicidad/contenido/nombre/equipos-para-profesionales',
         'productos-hospitalarios-y-quirurgicos' => 'publicidad/contenido/nombre/productos-hospitalarios-y-quirurgicos',
         'rehabilitacion-y-recuperacion' => 'publicidad/contenido/nombre/rehabilitacion-y-recuperacion',
+        'diabetes' => 'contenido/ver/tipo/grupo/contenido/4812',
 
          // Fin links campañas
 
