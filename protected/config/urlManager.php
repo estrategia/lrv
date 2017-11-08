@@ -107,6 +107,8 @@ return array(
         'nude-repelente-de-insectos' => 'publicidad/contenido/nombre/nude-repelente',
         'mejorflex-ibuprofeno' => 'publicidad/contenido/nombre/mejorflex',
         'gelicart-colageno-hidrolizado' => 'publicidad/contenido/nombre/gelicart',
+        'asepxia' => 'publicidad/contenido/nombre/asepxia',
+        'ni-una-dieta-mas' => 'publicidad/contenido/nombre/ni-una-dieta-mas',
          // Fin links campañas
 
         // REST patterns
