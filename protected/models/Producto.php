@@ -361,66 +361,71 @@ class Producto extends CActiveRecord {
         }
     }
 
-    public static function consultarProducto($producto, $objSectorCiudad){
-    	$objProducto = null;
-
-    	if ($objSectorCiudad == null) {
-    		$objProducto = self::model ()->find ( array (
-    				'condition' => 't.activo=:activo AND t.codigoProducto=:codigo',
-    				'params' => array (
-    						':activo' => 1,
-    						':codigo' => $producto
-    				)
-    		) );
-    	} else {
-    		$objProducto = Producto::model ()->find ( array (
-    				'with' => array (
-    						'listSaldos' => array (
-    								'on' => '(listSaldos.codigoCiudad=:ciudad AND listSaldos.codigoSector=:sector) OR listSaldos.idProductoSaldos IS NULL'
-    						),
-    						'listPrecios' => array (
-    								'on' => '(listPrecios.codigoCiudad=:ciudad AND listPrecios.codigoSector=:sector) OR listPrecios.idProductoPrecios IS NULL'
-    						),
-    						'listSaldosTerceros' => array (
-    								'on' => '(listSaldosTerceros.codigoCiudad=:ciudad AND listSaldosTerceros.codigoSector=:sector) OR listSaldosTerceros.idProductoSaldo IS NULL'
-    						)
-    				),
-    				'condition' => 't.activo=:activo AND t.codigoProducto=:codigo',
-    				'params' => array (
-    						':activo' => 1,
-    						':codigo' => $producto,
-    						':ciudad' => $objSectorCiudad->codigoCiudad,
-    						':sector' => $objSectorCiudad->codigoSector
-    				)
-    		) );
-    	}
-
-    	return $objProducto;
+    public static function consultarProducto($producto, $objSectorCiudad)
+    {
+        	$objProducto = null;
+    
+        	if ($objSectorCiudad == null) {
+        		$objProducto = self::model ()->find ( array (
+        				'condition' => 't.activo=:activo AND t.codigoProducto=:codigo',
+        				'params' => array (
+        						':activo' => 1,
+        						':codigo' => $producto
+        				)
+        		) );
+        	} else {
+        		$objProducto = Producto::model ()->find ( array (
+        				'with' => array (
+        						'listSaldos' => array (
+        								'on' => '(listSaldos.codigoCiudad=:ciudad AND listSaldos.codigoSector=:sector) OR listSaldos.idProductoSaldos IS NULL'
+        						),
+        						'listPrecios' => array (
+        								'on' => '(listPrecios.codigoCiudad=:ciudad AND listPrecios.codigoSector=:sector) OR listPrecios.idProductoPrecios IS NULL'
+        						),
+        						'listSaldosTerceros' => array (
+        								'on' => '(listSaldosTerceros.codigoCiudad=:ciudad AND listSaldosTerceros.codigoSector=:sector) OR listSaldosTerceros.idProductoSaldo IS NULL'
+        						)
+        				),
+        				'condition' => 't.activo=:activo AND t.codigoProducto=:codigo',
+        				'params' => array (
+        						':activo' => 1,
+        						':codigo' => $producto,
+        						':ciudad' => $objSectorCiudad->codigoCiudad,
+        						':sector' => $objSectorCiudad->codigoSector
+        				)
+        		) );
+        	}
+    
+        	return $objProducto;
     }
 
-    public static function consultarPrecio($producto, $objSectorCiudad, $tipo=null){
-    	$objProducto = self::consultarProducto($producto, $objSectorCiudad);
-      if (is_null($objProducto)) {
-        $objProducto = new Producto;
-      }
-    	$objPrecio = new PrecioProducto($objProducto, $objSectorCiudad, Yii::app()->shoppingCart->getCodigoPerfil());
-
-    	if(!$objPrecio->inicializado()){
-    		return null;
-    	}
-
-    	$arrPrecio = array(
-    		'unidad' => $objPrecio->getPrecio(Precio::PRECIO_UNIDAD),
-    		'fraccion' => ($objProducto->fraccionado == 1) ? $objPrecio->getPrecio(Precio::PRECIO_FRACCION) : null,
-    	);
-
-    	if($tipo=='u'){
-    	    return $arrPrecio['unidad'];
-    	}else if($tipo=='f'){
-    	    return $arrPrecio['fraccion'];
-    	}
-
-    	return $arrPrecio;
+    public static function consultarPrecio($producto, $objSectorCiudad, $tipo=null)
+    {
+        	$objProducto = self::consultarProducto($producto, $objSectorCiudad);
+        if (is_null($objProducto)) {
+            $objProducto = new Producto;
+        }
+        	$objPrecio = new PrecioProducto($objProducto, $objSectorCiudad, Yii::app()->shoppingCart->getCodigoPerfil());
+        
+        	if(!$objPrecio->inicializado()){
+        		return null;
+        	}
+        
+        	$arrPrecio = array(
+        		'u' => $objPrecio->getPrecio(Precio::PRECIO_UNIDAD),//precio unidad
+        	    'u-a' => $objPrecio->getPrecio(Precio::PRECIO_UNIDAD, false),//precio unidad antes, sin ahorro
+        	    'ua' =>  $objPrecio->getAhorro(Precio::PRECIO_UNIDAD),//precio unidad ahorro
+        		'f' => ($objProducto->fraccionado == 1) ? $objPrecio->getPrecio(Precio::PRECIO_FRACCION) : null,//precio fraccion
+        	    'f-a' => $objPrecio->getPrecio(Precio::PRECIO_FRACCION, false),//precio fraccion antes, sin ahorro
+        	    'fa' =>  $objPrecio->getAhorro(Precio::PRECIO_FRACCION),//precio fraccion ahorro
+        	    'pd' => $objPrecio->getPorcentajeDescuento(),//porcentaje descuento
+        	);
+        	
+        	if(isset($arrPrecio[$tipo])){
+        	    return $arrPrecio[$tipo];
+        	}
+        
+        	return $arrPrecio;
     }
 
 }
