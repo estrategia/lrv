@@ -127,6 +127,8 @@ class SuscripcionesController extends Controller
 		$suscripcion->identificacionUsuario = Yii::app()->user->name;
 		$suscripcion->idProducto = $codigoProducto;
 		$suscripcion->idBeneficio = $beneficioProducto->idBeneficio;
+		$suscripcion->cantidadDisponiblePeriodoActual = $beneficioProducto->objBeneficio->vtaUnid;
+		$suscripcion->descuentoProducto = $beneficioProducto->objBeneficio->dsctoUnid;
 		$suscripcion->validate();
 		if ($periodos >= 1 && $beneficioProducto != null) {
 			if ($suscripcion->save()) {
