@@ -5,7 +5,7 @@ $this->metaTags = "
 <meta name='description' content='Gelicart Colágeno Hidrolizado en Polvo, Ayuda a Mejorar la Funcionalidad de las Articulaciones en el Cuerpo Mejorando la Calidad de Vida. ¡Cómpralo Aquí!'>
 <meta name='keywords' content='gelicart, gelicart colageno hidrolizado, colageno hidrolizado para articulaciones'>
   <style>
-    @font-face { font-family:HelveticaNeueLight; src: url(" . Yii::app()->request->baseUrl . "/images/contenido/pantene/fonts/HelveticaNeueLight.ttf);}
+  @font-face { font-family:HelveticaNeueLight; src: url(" . Yii::app()->request->baseUrl . "/images/contenido/pantene/fonts/HelveticaNeueLight.ttf);}
     @font-face { font-family:HelveticaNeue-BlackCond; src: url(" . Yii::app()->request->baseUrl . "/images/contenido/pantene/fonts/HelveticaNeue-BlackCond.otf);}
     @font-face { font-family:HelveticaNeueItalic; src: url(" . Yii::app()->request->baseUrl . "/images/contenido/pantene/fonts/HelveticaNeueItalic.ttf);}
     @font-face { font-family:HelveticaNeueBold; src: url(" . Yii::app()->request->baseUrl . "/images/contenido/pantene/fonts/HelveticaNeueBold.ttf);}
@@ -17,15 +17,18 @@ $this->metaTags = "
     @keyframes appearRight {from {opacity: 0;-webkit-transform: translateX(-45%);transform: translateX(-45);}to {opacity: 1;-webkit-transform: translateX(-70%);transform: translateX(-70%);}}
     .space-1 {height: 0px !important;}
     .img-responsive-m {width:100%;}
-    .programa-hora {padding: 10px 0;font-size: 21px;background-color:#ecedef;text-align:center;-webkit-box-shadow: 0px 2px 4px 0px rgba(0,0,0,0.4);-moz-box-shadow: 0px 2px 4px 0px rgba(0,0,0,0.4);box-shadow: 0px 2px 4px 0px rgba(0,0,0,0.4);}
+    .programa-hora {padding: 10px 0;font-size: 21px;background-color:#ecedef;text-align:center;-webkit-box-shadow: 0px 2px 4px 0px rgba(0,0,0,0.4);box-shadow: 0px 2px 4px 0px rgba(0,0,0,0.4);}
     .txt-footer {color: #595959;font-family: HelveticaNeueItalic;text-align: center;font-size: 18px;margin-bottom: 30px;}
     a {text-decoration:none;}
     #main-content {color: #56555A;}
     #main-content h1 {font-family: HelveticaNeueBold;}
     #main-content strong {font-family: HelveticaNeueBold;font-weight:initial;}
     .section-logo {background-color:#F9F7F8;border-bottom:5px solid #C3C3C3;padding: 15px 35px;}
-    .content-icons {display:flex;width: 70.222%;margin: 0 auto;text-align:center;}
-    .content-icons .item {flex-grow: 1;margin: 0 3px;}
+    .content-icons {display:flex;  display: -webkit-box;
+    display: -ms-flexbox;
+    display: -moz-flex;
+    display: -webkit-flex;width: 70.222%;margin: 0 auto;text-align:center;}
+    .content-icons .item {-webkit-box-flex: 1;-ms-flex-positive: 1;flex-grow: 1;margin: 0 3px;}
     .section-intro {background-image:url(".Yii::app()->request->baseUrl."/images/contenido/gelicart/bg-que-es.png);background-size: 100% 100%;text-align: center;padding: 8px 0;margin: 20px 0;}
     .txt-naranja {color:#F28552;font-size: 22px;}
     .que-es {background-color: #F8F6FB;text-align: center;padding: 20px 0;margin-bottom: 30px;}
@@ -33,7 +36,7 @@ $this->metaTags = "
     .por-que {padding-bottom: 25px;}
     .item strong {font-size: 14px;}
     .item p {font-size: 13px;}
-    .item img {transition: 0.4s ease;}
+    .item img {-webkit-transition: 0.4s ease;-o-transition: 0.4s ease;transition: 0.4s ease;}
     .item img:hover {-ms-transform: rotate(5deg);-webkit-transform: rotate(5deg);transform: rotate(5deg);}
     .por-que h2 {font-family: HelveticaNeueBold;text-align:center;color:#F07436;}
     .bg-gray {background-color: #F8F6FB;padding: 20px 0;}
@@ -47,10 +50,13 @@ $this->metaTags = "
     .video iframe{position: absolute;display: block;top: 0;left: 0;width: 100%;height: 100%;}
     .content-video {margin: 0 20%;padding: 25px;background-color: #fff;border-radius: 25px;}
     .content-video hr {border-top: 4px solid #F18930;}
-    .fa {background-color: #fff;color: #DA8A39;padding: 10px;border-radius: 50%;width: 40px;height: 40px;margin-right: 8px;margin-top: 20px;}
+    .fa {background-color: #fff;color: #DA8A39;padding: 10px;border-radius: 50%;width: 40px;height: 40px;margin-right: 8px;margin-top: 5px;}
     sub, sup {font-size: 60% !important;}
     .section-intro-m {padding:0 15px 25px;text-align: center;}
     .iconos-g{width: 170px;margin: 0 auto;display: block;}
+    .fa-facebook::before {font-size: 19px;}
+    .fa-instagram::before {font-size: 19px;}
+
   </style>
 ";
 ?>
@@ -88,7 +94,7 @@ $this->metaTags = "
     <img class="iconos-g" src="<?= Yii::app()->request->baseUrl ?>/images/contenido/gelicart/sin-olor.png" alt="No tiene olor ni sabor">
     <strong>No tiene olor ni sabor</strong>
     <img class="iconos-g" src="<?= Yii::app()->request->baseUrl ?>/images/contenido/gelicart/0-azucar-grasa.png" alt="0% azucar grasa">
-    <div style="display:flex;justify-content: center;align-items: center;margin-top: -11px;">
+    <div style="display:flex;  display: -webkit-box;display: -moz-box;display: -ms-flexbox;display: -moz-flex;display: -webkit-flex;justify-content: center;align-items: center;margin-top: -11px;">
       <strong style="font-size: 45px;margin-right:5px;">0<sup style="font-size: 27px;">%</sup></strong>
       <strong style="line-height: 15px;">Azúcar <br> Grasa</strong>
     </div>
@@ -107,7 +113,7 @@ $this->metaTags = "
   <h2 style="font-size: 22px;">¿Cómo consumir Gelicart<sup>®</sup>?<sup>¹</sup></h2>
   <div class="content-video" style="margin: 0 5%;border-radius: 15px;">
     <div class="video">
-      <iframe width="560" height="315" src="https://www.youtube.com/embed/vmLJmfpcYWE?rel=0&amp;showinfo=0" frameborder="0" allowfullscreen></iframe>
+      <iframe width="560" height="315" src="https://www.youtube.com/embed/2b6EE7LD1zY?rel=0&amp;showinfo=0" frameborder="0" allowfullscreen></iframe>
     </div>
     <hr>
     <p style="font-size: 12px;margin-bottom:0px;">Sin sabor, sin olor, Gelicart<sup>®</sup> puede ser mezclado en cualquier alimento líquido o alimento de tu preferencia, vierte el contenido total de 1 sobre <br>
@@ -122,7 +128,7 @@ $this->metaTags = "
     ALIMENTACIÓN EQUILIBRADA. REGISTRO SANITARIO INVIMA SD2013-0002862.
 </section>
 <section class="section-social" style="font-size: 13px;">
-  Visita nuestra página <u>www.gelicart.com.co </u><br>
+  <p>Visita nuestra página <u>www.gelicart.com.co </u></p>
   <i class="fa fa-facebook"  style="background-color: #fff;color: #DA8A39;padding: 5px;border-radius: 50%;width: 13px;height: 13px;margin-right: 8px;margin-top: 20px;" aria-hidden="true"></i>gelicartcolombia
   <i class="fa fa-instagram" style="margin-left: 15px;background-color: #fff;color: #DA8A39;padding: 5px;border-radius: 50%;width: 13px;height: 13px;margin-right: 8px;margin-top: 20px;" aria-hidden="true"></i>  @gelicartco
 </section>
@@ -199,7 +205,7 @@ $this->metaTags = "
   <div class="content-icons" style="padding: 0 119px;">
     <div class="item">
       <img class="img-responsive" src="<?= Yii::app()->request->baseUrl ?>/images/contenido/gelicart/0-azucar-grasa.png" alt="0% azucar grasa">
-      <div style="display:flex;justify-content: center;align-items: center;margin-top: -11px;">
+      <div style="display:flex;  display: -webkit-box;display: -moz-box;display: -ms-flexbox;display: -moz-flex;display: -webkit-flex;justify-content: center;align-items: center;margin-top: -11px;">
         <strong style="font-size: 45px;margin-right:5px;">0<sup style="font-size: 27px;">%</sup></strong>
         <strong style="line-height: 15px;">Azúcar <br> Grasa</strong>
       </div>
@@ -223,7 +229,7 @@ $this->metaTags = "
   <h2>¿Cómo consumir Gelicart<sup>®</sup>?<sup>¹</sup></h2>
   <div class="content-video">
     <div class="video">
-      <iframe width="560" height="315" src="https://www.youtube.com/embed/vmLJmfpcYWE?rel=0&amp;showinfo=0" frameborder="0" allowfullscreen></iframe>
+      <iframe width="560" height="315" src="https://www.youtube.com/embed/2b6EE7LD1zY?rel=0&amp;showinfo=0" frameborder="0" allowfullscreen></iframe>
     </div>
     <hr>
     <p style="font-size: 12px;margin-bottom:0px;">Sin sabor, sin olor, Gelicart<sup>®</sup> puede ser mezclado en cualquier alimento líquido o alimento de tu preferencia, vierte el contenido total de 1 sobre <br>
@@ -243,7 +249,7 @@ $this->metaTags = "
   </div>
 </section>
 <section class="section-social" style="font-size: 13px;">
-  Visita nuestra página <u>www.gelicart.com.co </u><br>
+<p>  Visita nuestra página <u>www.gelicart.com.co </u></p>
   <i class="fa fa-facebook" aria-hidden="true"></i>gelicartcolombia
   <i class="fa fa-instagram" style="margin-left: 50px;" aria-hidden="true"></i>  @gelicartco
 </section>

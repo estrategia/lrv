@@ -1,5 +1,5 @@
 
-<?php $this->pageTitle = "Recetas Nan optipro - La Rebaja Virtual"; ?>
+<?php $this->pageTitle = "Recetas Nan® Optipro® 3 Desarrollo - La Rebaja Virtual"; ?>
 <?php
 $this->metaTags = "
   <meta name='viewport' content='width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no'>
@@ -7,190 +7,182 @@ $this->metaTags = "
   <meta name='description' content='NAN® OPTIPRO® 3 DESARROLLO de Nestlé trae unas deliciosas recetas fáciles de preparar para que tu hijo consuma proteína de una manera divertida.'>
   <meta name='Recetas para niños, loncheras, proteína para niños.'>
 	<style>
-    .sidebar-cart {position: fixed;right: 0px;top: 60%;z-index: 2000;width: 15%;}
-    .background {background-image:url(".Yii::app()->request->baseUrl."/images/contenido/nan-optipro/home/bg.png);background-size:cover;}
-    @font-face {font-family:Caviar_Dreams_Bold;src: url(".Yii::app()->request->baseUrl."/images/contenido/nan-optipro/fonts/Caviar_Dreams_Bold.ttf);}
-    @font-face {font-family:VAGRoundedStd-Bold;src: url(".Yii::app()->request->baseUrl."/images/contenido/nan-optipro/fonts/VAGRoundedStd-Bold.otf);}
-    .section-menu {background-color:#E2F9FD;padding: 25px;}
-    .item {background-color: #084A9E;text-align: center;color: #fff;font-family: Caviar_Dreams_Bold;padding: 10px;font-size: 20px;border-radius: 25px;-webkit-box-shadow: 2px 2px 5px 0px rgba(0,0,0,0.75);-moz-box-shadow: 2px 2px 5px 0px rgba(0,0,0,0.75);box-shadow: 2px 2px 5px 0px rgba(0,0,0,0.75);}
-    .item:hover{background-color:#10CAD2;}
-    .item.active {background-color: #10CAD2;}
-    .content {background-size: cover;background-position: center center;padding: 35px !important;margin-top: 35px;background-color: #64CEDC;border-radius: 35px;background-image:url(".Yii::app()->request->baseUrl."/images/contenido/nan-optipro/recetas-y-sabias-que/textura-blonque-azul.png);}
-    .content h1 {font-family: VAGRoundedStd-Bold;text-align: center;color: #fff;text-transform: uppercase;font-size: 30px;margin-bottom: 0;}
-    .content h2 {margin:0;font-family:Caviar_Dreams_Bold;text-align:center;color:#2754a2;font-size: 27px;}
-    .video-container {position:relative;padding-bottom:56.25%;padding-top:30px;height:0;overflow:hidden;}
-    .video-container iframe, .video-container object, .video-container embed {position:absolute;top:0;left:0;width:100%;height:100%;}
-    .title-foot {font-family: Caviar_Dreams_Bold;color: #15a1bb;text-align: center;background-color: rgba(255, 255, 255, 0.6);padding: 14px;width: 80%;margin: 35px auto;border-radius: 50px;}
-    .btn-mas-info {background-color: #084A9E;color: #fff;text-align: center;font-family: Caviar_Dreams_Bold;font-size: 22px;border-radius: 25px;padding: 15px;width: 36%;margin: 35px auto;-webkit-box-shadow: 3px 3px 5px 0px rgba(0,0,0,0.37);-moz-box-shadow: 3px 3px 5px 0px rgba(0,0,0,0.37);box-shadow: 3px 3px 5px 0px rgba(0,0,0,0.37);}
-    .text-footer {font-family: Caviar_Dreams_Bold;text-align: center;color: #084A9E;margin-top: 40px;margin-bottom: 60px;}
-    .foot {margin-top: -220px;float: right;}
-    .receta {background-color: #fff;color: #084A9E;border-radius: 50px;padding: 20px;margin-top: 20px;padding: 42px 35px;}
-    .receta h4 {font-family: VAGRoundedStd-Bold;text-align: center;margin-bottom: 20px;font-size: 16px;}
-    .receta strong {font-family: VAGRoundedStd-Bold;font-weight: initial;text-decoration: underline;}
-    .compra {margin: 15px auto;width: 40%;}
+    @font-face { font-family:HelveticaNeue-BlackCond; src: url(" . Yii::app()->request->baseUrl . "/images/contenido/pantene/fonts/HelveticaNeue-BlackCond.otf);}
+    @font-face { font-family:HelveticaNeueItalic; src: url(" . Yii::app()->request->baseUrl . "/images/contenido/pantene/fonts/HelveticaNeueItalic.ttf);}
+    @font-face { font-family:HelveticaNeueBold; src: url(" . Yii::app()->request->baseUrl . "/images/contenido/pantene/fonts/HelveticaNeueBold.ttf);}
+    @font-face { font-family:VAGRoundedStd-Bold; src: url(" . Yii::app()->request->baseUrl . "/images/contenido/nan-optipro/fonts/VAGRoundedStd-Bold.otf);}
+    @font-face { font-family:VAGRoundedStd-Thin; src: url(" . Yii::app()->request->baseUrl . "/images/contenido/nan-optipro/fonts/VAGRoundedStd-Thin.otf);}
     .space-1 {height: 0px !important;}
-    @media (min-width: 1000px) and (max-width: 1199px) {.foot { margin-top: -180px;}}
-    .img-responsive-m{width:100%;}
-    a {text-decoration:none;}
-    .video-container {position: relative;padding-bottom: 56.25%;padding-top: 30px; height: 0; overflow: hidden;}
-    .video-container iframe,
-    .video-container object,
-    .video-container embed {position: absolute;top: 0;left: 0;width: 100%;height: 100%;}
-	</style>
-    ";
+    a {outline: none !important;}
+    .programa-hora {padding: 10px 0;font-size: 21px;background-color:#ecedef;text-align:center;-webkit-box-shadow: 0px 2px 4px 0px rgba(0,0,0,0.4);box-shadow: 0px 2px 4px 0px rgba(0,0,0,0.4);}
+    .txt-footer {color: #595959;font-family: HelveticaNeueItalic;text-align: center;font-size: 18px;margin-bottom: 30px;}
+    .bg-main {background-size: cover;background-image:url(".Yii::app()->request->baseUrl."/images/contenido/nan-optipro/bg-interna-recetas.jpg);}
+    .content-princip {margin: 0 7%;}
+    .sabias-que {width: 580px;margin-top: 90px;}
+    .txt-intro-banner {color: #fff;font-family: VAGRoundedStd-Bold;text-align: center;font-size: 30px;line-height: 30px;margin-top: 20px;}
+    .line-pie {width: 310px;margin: 15px auto 18px;display: block;}
+    .bg-box {background-size: 100% 100%;background-image:url(".Yii::app()->request->baseUrl."/images/contenido/nan-optipro/bg-box.png);}
+    .bg-box p {line-height: 33px;margin-bottom: 30px;text-align: justify;font-family: VAGRoundedStd-Thin;color: #043C9F;font-size: 30px;}
+    .producto {width: 370px;margin: 40px auto 5px;}
+    .btn-compra {width: 225px;margin-top: 15px;}
+    .bg-videos {background-color:#A5B3DA;padding: 15px;margin: 0 8%;}
+    .hide {display:none;-webkit-transition: width 2s linear; transition: width 2s linear;}
+    .title-principal { font-family:VAGRoundedStd-Bold;text-align:center;color:#fff;font-size: 30px;margin-bottom:30px;}
+    .video {position: relative;padding-bottom: 56.25%;overflow: hidden;}
+    .video iframe {position: absolute;display: block;top: 0;left: 0;width: 100%;height: 100%;}
+    .thumb-video:hover {cursor:pointer;-webkit-transition: all 200ms ease-in;-webkit-transform: scale(1.1);-ms-transition: all 200ms ease-in;-ms-transform: scale(1.1);-moz-transition: all 200ms ease-in;-moz-transform: scale(1.1);transition: all 200ms ease-in;transform: scale(1.1);}
+    .btn-inicio {margin: 40px auto 0;width: 225px;}
+    #paginador {text-align: center;margin: 10px 0 20px;}
+    #paginador a {display: inline-block;width: 20px;height: 20px;text-indent: -999em;background: #fff;border-radius: 10px;-moz-border-radius: 10px;-webkit-border-radius: 10px;box-shadow: 0 0 1px 1px #707173;margin-right: 10px;cursor:pointer;}
+    .precio {font-family: VAGRoundedStd-Bold !important;margin: 0px !important;font-size: 42px !important;color: #fff;}
+  </style>
+";
 ?>
+<?php $nan = Producto::consultarPrecio('65388', $this->objSectorCiudad, 'u')?>
+<!-- Funcionamiento de cambio de los videos -->
+<script type='text/javascript'>
+  $(document).ready(function(){
+    $('#receta1').click(function(){
+      $('#video-receta1').removeClass('hide');$('#video-receta2').addClass('hide');$('#video-receta3').addClass('hide');
+      // para pausar el video
+      $("#video-receta2").attr("src", $("#video-receta2").attr("src"));$("#video-receta3").attr("src", $("#video-receta3").attr("src"));
+    });
+    $('#receta2').click(function(){
+      $('#video-receta2').removeClass('hide');$('#video-receta1').addClass('hide');$('#video-receta3').addClass('hide')
+      // para pausar el video
+      $("#video-receta1").attr("src", $("#video-receta1").attr("src"));$("#video-receta3").attr("src", $("#video-receta3").attr("src"));
+    });
+    $('#receta3').click(function(){
+      $('#video-receta3').removeClass('hide');$('#video-receta1').addClass('hide');$('#video-receta2').addClass('hide');
+      // para pausar el video
+      $("#video-receta1").attr("src", $("#video-receta1").attr("src"));$("#video-receta2").attr("src", $("#video-receta2").attr("src"));;
+    });
+  });
+</script>
 <!-- Facebook Pixel Code -->
 <script>
-!function(f,b,e,v,n,t,s)
-{if(f.fbq)return;n=f.fbq=function(){n.callMethod?
-n.callMethod.apply(n,arguments):n.queue.push(arguments)};
-if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';
-n.queue=[];t=b.createElement(e);t.async=!0;
-t.src=v;s=b.getElementsByTagName(e)[0];
-s.parentNode.insertBefore(t,s)}(window,document,'script',
-'https://connect.facebook.net/en_US/fbevents.js');
- fbq('init', '1237970366269442');
-fbq('track', 'PageView');
+  !function(f,b,e,v,n,t,s)
+  {if(f.fbq)return;n=f.fbq=function(){n.callMethod?
+  n.callMethod.apply(n,arguments):n.queue.push(arguments)};
+  if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';
+  n.queue=[];t=b.createElement(e);t.async=!0;
+  t.src=v;s=b.getElementsByTagName(e)[0];
+  s.parentNode.insertBefore(t,s)}(window,document,'script',
+  'https://connect.facebook.net/en_US/fbevents.js');
+   fbq('init', '1237970366269442');
+  fbq('track', 'PageView');
 </script>
 <noscript>
- <img height="1" width="1"
-src="https://www.facebook.com/tr?id=1237970366269442&ev=PageView
-&noscript=1"/>
+ <img height="1" width="1" src="https://www.facebook.com/tr?id=1237970366269442&ev=PageView&noscript=1"/>
 </noscript>
 <!-- End Facebook Pixel Code -->
 <!--Versión movil-->
 <?php if ($this->isMobile): ?>
-  <img class="img-responsive-m" src="<?= Yii::app()->request->baseUrl ?>/images/contenido/nan-optipro/recetas-y-sabias-que/banner.png" alt="Banner Nan Optipro">
-  <section class="section-menu">
-    <a href="<?= Yii::app()->request->baseUrl ?>/nestle-nan-optipro"><div class="item" style="margin-bottom: 10px;">BENEFICIOS</div></a>
-    <a href="<?= Yii::app()->request->baseUrl ?>/recetas-nestle-nan-optipro"><div class="item active" style="margin-bottom: 10px;">RECETAS</div></a>
-    <a href="<?= Yii::app()->request->baseUrl ?>/mas-informacion-nan"><div class="item">¿SABÍAS QUE?</div></a>
-  </section>
-  <div class="row background">
-    <div class="content" style="margin:0px 15px;background-size: 100%;">
-      <h1 style="font-size: 23px;">con NAN® OPTIPRO® 3 DESARROLLO</h1>
-      <h2 style="font-size: 21px;">Sorprende a tu hijo con deliciosas recetas:</h2>
-      <img class="img-responsive-m" src="<?= Yii::app()->request->baseUrl ?>/images/contenido/nan-optipro/recetas-y-sabias-que/gelatina-de-frutas.png" alt="Gelatina de frutas">
-      <div class="receta">
-        <h4 style="margin-top: 0;">GELATINA DE FRUTAS CON NAN<sup>®</sup> OPTIPRO<sup>®</sup> 3 DESARROLLO</h4>
-        <p><strong>Ingredientes</strong> <br>
-        1 vaso o pocillo (7 oz, 210 ml) de NAN<sup>®</sup> <br>
-        OPTIPRO<sup>®</sup> 3 DESARROLLO.</p>
-        <p>Frutas pueden ser mango, fresa, <br>kiwi o duraznos.</p>
-        <p>1 porción de gelatina de mandarina <br>o de frambuesa.</p>
-        <p><strong>Acompañamiento: </strong> <br>
-        4 Galletas SALTINAS<sup>®</sup> TRIS</p>
-      </div>
-      <div class="video-container" style="margin-top: 35px;">
-        <div class="video-container">
-          <iframe width="560" height="315" src="https://www.youtube.com/embed/8bckex25LDs?rel=0" frameborder="0" allowfullscreen></iframe>
-        </div>
-      </div>
-      <img class="img-responsive-m" style="margin-top: 55px;" src="<?= Yii::app()->request->baseUrl ?>/images/contenido/nan-optipro/recetas-y-sabias-que/malteada-de-vainilla.png" alt="Malteada de vainilla">
-      <div class="receta">
-        <h4 style="margin-top: 0;">MALTEADA DE VAINILLA CON NAN<sup>®</sup> OPTIPRO<sup>®</sup> 3 DESARROLLO</h4>
-        <p><strong>Ingredientes</strong> <br>
-        1 vaso o pocillo (7 oz, 210 ml) de NAN® <br>OPTIPRO<sup>®</sup> 3 DESARROLLO.</p>
-        <p>1 o 2 cucharadas soperas de Cereal <br>infantil NESTUM<sup>®</sup> Vainilla. </p>
-        <p><strong>Acompañamiento: </strong> <br>
-        2 Galletas MILO<sup>®</sup> Anillos <br>1 Durazno cortado en 4. </p>
-      </div>
-      <div class="video-container" style="margin-top: 35px;">
-        <div class="video-container">
-          <iframe width="560" height="315" src="https://www.youtube.com/embed/xu9TM2T3Ylo?rel=0" frameborder="0" allowfullscreen></iframe>
-        </div>
-      </div>
-    </div>
-    <img class="img-responsive-m" style="width: 80%;margin: 20px auto;display: block;" src="<?= Yii::app()->request->baseUrl ?>/images/contenido/nan-optipro/recetas-y-sabias-que/optipro.png" alt="Nan optipro">
-    <a href="<?php echo CController::createUrl('/catalogo/producto', array('producto' => 65388)) ?>">
-      <img class="img-responsive-m" style="width: 80%;display: block;margin: 0 auto;" src="<?= Yii::app()->request->baseUrl ?>/images/contenido/nan-optipro/compra-online.png" alt="Comprar Nan optipro">
-    </a>
-    <img class="img-responsive-m" style="margin: 20px auto 0;display:block;" src="<?= Yii::app()->request->baseUrl ?>/images/contenido/nan-optipro/home/adecuada-maduracion.png" alt="Contribuye a la adecuada maduración de">
-    <img class="img-responsive-m" src="<?= Yii::app()->request->baseUrl ?>/images/contenido/nan-optipro/home/organos.png">
-    <a href="<?= Yii::app()->request->baseUrl ?>/mas-informacion-nan"><h2 class="btn-mas-info" style="width: 65%;">MÁS INFORMACIÓN</h2></a>
-    <p class="text-footer">Producto a partir de 24 meses. <br>
-    *Junto con una alimentación balanceada y ejercicio físico diario.</p>
-    <img class="img-responsive-m" style="margin-top: -48px;" src="<?= Yii::app()->request->baseUrl ?>/images/contenido/nan-optipro/home/pata.png">
+<a data-ajax="false" href="<?php echo CController::createUrl('/catalogo/producto', array('producto' => 65388)) ?>"><img class="img-responsive-m" src="<?= Yii::app()->request->baseUrl ?>/images/contenido/nan-optipro/banner-recetas-mobile.jpg"></a>
+<div style="background-color: #013D9F;padding: 15px;margin-top: -6px;">
+  <div class="video" id="video-receta1"><iframe  width="560" height="315" src="https://www.youtube.com/embed/T0mduoevXjY?rel=0&amp;showinfo=0" frameborder="0" allowfullscreen></iframe></div>
+  <div class="video hide" id="video-receta2"><iframe  width="560" height="315" src="https://www.youtube.com/embed/yCbVoCRm1Ww?rel=0&amp;showinfo=0" frameborder="0" allowfullscreen></iframe></div>
+  <div class="video hide" id="video-receta3" ><iframe width="560" height="315" src="https://www.youtube.com/embed/7ajz8NtX6Zc?rel=0&amp;showinfo=0" frameborder="0" allowfullscreen></iframe></div>
+  <div id="paginador">
+    <a id="receta1">1</a>
+    <a id="receta2">2</a>
+    <a id="receta3">3</a>
   </div>
-<!--Version movil-->
+  <a href="<?= Yii::app()->request->baseUrl ?>/nestle-nan-optipro"><img style="margin: 0px auto 0;width: 150px;display: block;" src="<?= Yii::app()->request->baseUrl ?>/images/contenido/nan-optipro/btn-inicio.png"></a>
+</div>
+<img class="img-responsive-m" src="<?= Yii::app()->request->baseUrl ?>/images/contenido/nan-optipro/banner-organos-mobile.jpg">
+<section class="programa-hora" style="font-size: 16px;margin-top: -5px;">
+  <img width="40" src="<?= Yii::app()->request->baseUrl ?>/images/contenido/pantene/carrito.png"> <br>
+  <span style="font-family:HelveticaNeueLight;color:#363636;">Ahora comprando en </span><span style="font-family:HelveticaNeue-BlackCond;color: #BF1A24;letter-spacing: 1px;">larebajavirtual.com</span><span style="color:#717175;font-family:HelveticaNeueItalic;font-weight: bold;">, <br> programa tu hora y lugar de entrega </span>
+</section>
+<div style="margin-top:30px;padding:0 15px;">
+  <div style="padding: 0 25%;">
+    <img class="img-responsive-m" src="<?= Yii::app()->request->baseUrl ?>/images/contenido/pantene/chat-mobile.png" alt="Chat en linea">
+    <p style="font-family:HelveticaNeueBold;text-align:center;font-size: 20px;margin-top: 7px;">Chat en línea</p>
+    <img class="img-responsive-m" src="<?= Yii::app()->request->baseUrl ?>/images/contenido/pantene/pqrs-mobile.png" alt="pqrs">
+    <p style="font-family:HelveticaNeueBold;text-align:center;font-size: 20px;margin-top: 7px;margin-bottom:0px;">Sistema PQRS</p>
+    <p style="color:#7F7F7F;font-family:HelveticaNeueItalic;font-size: 12px;text-align: center;">(preguntas, quejas, reclamos y solicitudes)</p>
+    <img class="img-responsive-m" src="<?= Yii::app()->request->baseUrl ?>/images/contenido/pantene/linea-gratuita-mobile.png" alt="Linea gratuita">
+    <p style="font-family:HelveticaNeueBold;text-align:center;font-size: 20px;margin-top: 7px;margin-bottom:0px;">Línea gratuita</p>
+    <p style="color:#7F7F7F;font-family:HelveticaNeueItalic;font-size: 12px;text-align: center;">01-8000-939900</p>
+  </div>
+</div>
+<section style="font-size: 18px;background-color:#BF1A24;font-family: HelveticaNeueLight;color: #fff;text-align: center;padding: 10px;margin-top:30px;">
+  Gracias por comprar en <span style="font-family:HelveticaNeue-BlackCond;letter-spacing:1px;">larebajavirtual.com</span>
+</section>
+<!--Fin version movil-->
 <!--Versión escritorio-->
 <?php else: ?>
-<a href="<?php echo CController::createUrl('/contenido/ver', array('tipo' => 'grupo', 'contenido' => 2536)) ?>"><div class="sidebar-cart"><img class="img-responsive" src="<?= Yii::app()->request->baseUrl ?>/images/contenido/nan-optipro/btn-sticky.png"></div></a>
-<img class="img-responsive" src="<?= Yii::app()->request->baseUrl ?>/images/contenido/nan-optipro/recetas-y-sabias-que/banner.png" alt="Banner Nan Optipro">
-<section class="section-menu">
-  <div class="container">
-    <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1" style="padding: 0;">
-      <div class="col-sm-4 col-md-4">
-        <a href="nestle-nan-optipro"><div class="item">BENEFICIOS</div></a>
+  <div class="bg-main" style="padding-bottom: 50px;">
+    <div class="content-princip">
+      <div class="row" style="margin-top: 50px;">
+        <div class="col-md-6">
+          <img class="img-responsive" src="<?= Yii::app()->request->baseUrl ?>/images/contenido/nan-optipro/pack-interno.png">
+        </div>
+        <div class="col-md-6">
+          <img class="img-responsive" style="margin-top: 40px;width: 538px;" src="<?= Yii::app()->request->baseUrl ?>/images/contenido/nan-optipro/sabias-que.png">
+          <p class="precio"><?= ($nan == null) ? "--" : Yii::app()->numberFormatter->format(Yii::app()->params->formatoMoneda['patron'], $nan, Yii::app()->params->formatoMoneda['moneda']) ?></p>
+          <a href="<?php echo CController::createUrl('/catalogo/producto', array('producto' => 65388)) ?>"><img class="img-responsive btn-compra" src="<?= Yii::app()->request->baseUrl ?>/images/contenido/nan-optipro/btn-comprar.png"></a>
+        </div>
       </div>
-      <div class="col-sm-4 col-md-4">
-        <a href="<?= Yii::app()->request->baseUrl ?>/recetas-nestle-nan-optipro"><div class="item active">RECETAS</div></a>
+      <div class="row">
+        <h1 class="title-principal"><span style="font-size: 40px;">Sorprende a tu hijo</span> con las deliciosas Recetas <br>NAN<sup>®</sup> OPTIPRO<sup>®</sup> 3 Desarrollo</h1>
       </div>
-      <div class="col-sm-4 col-md-4">
-        <a href="<?= Yii::app()->request->baseUrl ?>/mas-informacion-nan"><div class="item">¿SABÍAS QUE?</div></a>
+      <div class="bg-videos">
+        <div class="row">
+          <div class="col-md-9" style="padding-right:0px;">
+            <div class="video" id="video-receta1">
+              <iframe  width="560" height="315" src="https://www.youtube.com/embed/T0mduoevXjY?rel=0&amp;showinfo=0" frameborder="0" allowfullscreen></iframe>
+            </div>
+            <div class="video hide" id="video-receta2">
+              <iframe  width="560" height="315" src="https://www.youtube.com/embed/yCbVoCRm1Ww?rel=0&amp;showinfo=0" frameborder="0" allowfullscreen></iframe>
+          </div>
+            <div class="video hide" id="video-receta3" >
+              <iframe width="560" height="315" src="https://www.youtube.com/embed/7ajz8NtX6Zc?rel=0&amp;showinfo=0" frameborder="0" allowfullscreen></iframe>
+            </div>
+          </div>
+          <div class="col-md-3">
+            <div class="thumb-video" >
+              <img id="receta1" class="img-responsive" src="<?= Yii::app()->request->baseUrl ?>/images/contenido/nan-optipro/preview01.png">
+            </div>
+            <div  class="thumb-video"  style="margin-top: 15px;">
+              <img id="receta2" class="img-responsive" src="<?= Yii::app()->request->baseUrl ?>/images/contenido/nan-optipro/preview02.png">
+            </div>
+            <div  class="thumb-video" style="margin-top: 15px;">
+              <img id="receta3" class="img-responsive" src="<?= Yii::app()->request->baseUrl ?>/images/contenido/nan-optipro/preview03.png">
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="row">
+        <a href="<?= Yii::app()->request->baseUrl ?>/nestle-nan-optipro"><img class="img-responsive btn-inicio" src="<?= Yii::app()->request->baseUrl ?>/images/contenido/nan-optipro/btn-inicio.png"></a>
       </div>
     </div>
   </div>
-</section>
-<div class="row background">
-<div class="container">
-    <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1 content">
-      <h1>con NAN® OPTIPRO® 3 DESARROLLO</h1>
-      <h2>Sorprende a tu hijo con deliciosas recetas:</h2>
-      <div class="row" style="margin-top: 35px;">
-        <div class="col-sm-6 col-md-6">
-          <img class="img-responsive" src="<?= Yii::app()->request->baseUrl ?>/images/contenido/nan-optipro/recetas-y-sabias-que/gelatina-de-frutas.png" alt="Gelatina de frutas">
-            <div class="receta">
-              <h4>GELATINA DE FRUTAS CON NAN<sup>®</sup> <br>OPTIPRO<sup>®</sup> 3 DESARROLLO</h4>
-              <p><strong>Ingredientes</strong> <br>
-                1 vaso o pocillo (7 oz, 210 ml) de NAN<sup>®</sup> <br>
-                OPTIPRO<sup>®</sup> 3 DESARROLLO.</p>
-              <p>Frutas pueden ser mango, fresa, <br>kiwi o duraznos.</p>
-              <p>1 porción de gelatina de mandarina <br>o de frambuesa.</p>
-              <p><strong>Acompañamiento: </strong> <br>
-                  4 Galletas SALTINAS<sup>®</sup> TRIS</p>
-            </div>
-          <div class="video-container">
-            <div class="video-container">
-              <iframe width="560" height="315" src="https://www.youtube.com/embed/8bckex25LDs?rel=0" frameborder="0" allowfullscreen></iframe>
-            </div>
-          </div>
-        </div>
-        <div class="col-sm-6 col-md-6">
-          <img class="img-responsive" src="<?= Yii::app()->request->baseUrl ?>/images/contenido/nan-optipro/recetas-y-sabias-que/malteada-de-vainilla.png" alt="Malteada de vainilla">
-          <div class="receta">
-            <h4>MALTEADA DE VAINILLA CON NAN<sup>®</sup> <br>OPTIPRO<sup>®</sup> 3 DESARROLLO</h4>
-            <p><strong>Ingredientes</strong> <br>
-            1 vaso o pocillo (7 oz, 210 ml) de NAN® <br>OPTIPRO<sup>®</sup> 3 DESARROLLO.</p>
-            <p>1 o 2 cucharadas soperas de Cereal <br>infantil NESTUM<sup>®</sup> Vainilla. </p>
-            <p><strong>Acompañamiento: </strong> <br>
-              2 Galletas MILO<sup>®</sup> Anillos <br>1 Durazno cortado en 4. </p>
-              <p>&nbsp;</p>
-          </div>
-          <div class="video-container">
-            <div class="video-container">
-              <iframe width="560" height="315" src="https://www.youtube.com/embed/xu9TM2T3Ylo?rel=0" frameborder="0" allowfullscreen></iframe>
-            </div>
-          </div>
-        </div>
+  <img class="img-responsive" src="<?= Yii::app()->request->baseUrl ?>/images/contenido/nan-optipro/banner-organos.jpg">
+  <section class="programa-hora">
+    <span style="font-family:HelveticaNeueLight;color:#363636;">Ahora comprando en </span><span style="font-family:HelveticaNeue-BlackCond;color: #BF1A24;font-size: 23px;letter-spacing: 1px;">larebajavirtual.com</span><span style="color:#717175;font-family:HelveticaNeueItalic;font-weight: bold;">, programa tu hora y lugar de entrega </span><img width="50" style="margin-left:6px;" src="<?= Yii::app()->request->baseUrl ?>/images/contenido/pantene/carrito.png">
+  </section>
+  <div class="container" style="margin-top:30px;">
+    <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+      <div class="col-sm-4" style="padding-right: 0;padding-left: 0;">
+        <img class="img-responsive" src="<?= Yii::app()->request->baseUrl ?>/images/contenido/pantene/chat-escritorio.png" alt="Chat en linea">
+        <p style="font-family:HelveticaNeueBold;text-align:center;font-size: 20px;margin-top: 7px;">Chat en línea</p>
+      </div>
+      <div class="col-sm-4" style="padding-right: 0;padding-left: 0;">
+        <img class="img-responsive" src="<?= Yii::app()->request->baseUrl ?>/images/contenido/pantene/pqrs-escritorio.png" alt="pqrs">
+        <p style="font-family:HelveticaNeueBold;text-align:center;font-size: 20px;margin-top: 7px;margin-bottom:0px;">Sistema PQRS</p>
+        <p style="color:#7F7F7F;font-family:HelveticaNeueItalic;font-size: 12px;text-align: center;">(preguntas, quejas, reclamos y solicitudes)</p>
+      </div>
+      <div class="col-sm-4" style="padding-right: 0;padding-left: 0;">
+        <img class="img-responsive" src="<?= Yii::app()->request->baseUrl ?>/images/contenido/pantene/linea-gratuita-escritorio.png" alt="Linea gratuita">
+        <p style="font-family:HelveticaNeueBold;text-align:center;font-size: 20px;margin-top: 7px;margin-bottom:0px;">Línea gratuita</p>
+        <p style="color:#7F7F7F;font-family:HelveticaNeueItalic;font-size: 12px;text-align: center;">01-8000-939900</p>
       </div>
     </div>
-    <div class="row">
-      <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1 ">
-        <img class="img-responsive" style="margin-top: 25px;" src="<?= Yii::app()->request->baseUrl ?>/images/contenido/nan-optipro/recetas-y-sabias-que/optipro.png" alt="Nan optipro">
-        <a href="<?php echo CController::createUrl('/catalogo/producto', array('producto' => 65388)) ?>">
-          <img class="img-responsive compra" src="<?= Yii::app()->request->baseUrl ?>/images/contenido/nan-optipro/compra-online.png" alt="Comprar Nan optipro">
-        </a>
-        <img class="img-responsive-m" style="width:60%;margin: 0px auto;display:block;" src="<?= Yii::app()->request->baseUrl ?>/images/contenido/nan-optipro/home/adecuada-maduracion.png" alt="Contribuye a la adecuada maduración de">
-
-        <img class="img-responsive" src="<?= Yii::app()->request->baseUrl ?>/images/contenido/nan-optipro/home/organos.png">
-        <a href="<?= Yii::app()->request->baseUrl ?>/mas-informacion-nan"><h2 class="btn-mas-info">MÁS INFORMACIÓN</h2></a>
-        <p class="text-footer">Producto a partir de 24 meses. <br>
-        *Junto con una alimentación balanceada y ejercicio físico diario.</p>
-      </div>
-    </div>
-</div>
-<img class="img-responsive foot" src="/lrv/images/contenido/nan-optipro/home/pata.png">
-</div>
+  </div>
+  <section style="background-color:#BF1A24;font-family: HelveticaNeueLight;color: #fff;text-align: center;font-size: 25px;padding: 10px;margin-top:30px;">
+    Gracias por comprar en <span style="font-family:HelveticaNeue-BlackCond;letter-spacing:1px;">larebajavirtual.com</span>
+  </section>
 <!--Fin versión escritorio-->
 <?php endif; ?>

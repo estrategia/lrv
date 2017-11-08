@@ -178,6 +178,7 @@
 
             <?php if (!Yii::app()->user->isGuest): ?>
                 <?php echo CHtml::link('Guardar en la lista personal', '#', array('data-role' => 'lstpersonalguardar', 'data-tipo' => 1, 'data-codigo' => $objProducto->codigoProducto, 'class' => 'ui-btn ui-corner-all ui-shadow ui-btn-n btn_add_lst_pr')); ?>
+                <?php echo CHtml::link('Suscribete y ahorra', CController::createUrl('/suscripciones/suscribirse', ['codigoProducto' => $objProducto->codigoProducto]), array('data-codigo' => $objProducto->codigoProducto, 'class' => 'ui-btn ui-corner-all ui-shadow ui-btn-n btn_add_lst_pr')); ?>
             <?php endif; ?>
         <?php else: ?>
             <?php echo CHtml::link('Agotado', '#', array('class' => 'ui-btn ui-corner-all ui-shadow ui-btn-r btn_frc_add_car', 'disabled' => 'true', 'onclick' => 'return false;')); ?>
@@ -206,7 +207,7 @@
 
     <div class="cdtl_div_ln"></div>
 
-    <?php ProductoView::generarDetalle($objProducto->objDetalle) ?>
+    <?php $this->renderPartial('_productoElementoDetalle', array('objProducto' => $objProducto));?>
 
     <div class="cdtl_div_ln"></div>
 

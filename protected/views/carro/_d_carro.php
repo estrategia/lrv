@@ -1,5 +1,6 @@
 <?php $listPositionBodega = array(); ?>
 <?php $listPositionDelivery = array(); ?>
+<?php $listPositionSuscription = array(); ?>
 <!-- Vista Carro -->
 <section>
     <div class="row">
@@ -36,6 +37,9 @@
                                 <?php if ($position->getDelivery() == 0 && $position->getShipping() == 0): ?>
                                     <?php
                                     if ($position->isProduct()):
+                                        if ($position->getQuantitySuscription() > 0) {
+                                            $listPositionSuscription[] = $position;
+                                        }
                                         if ($position->getQuantityStored() > 0)
                                             $listPositionBodega[] = $position;
                                         
@@ -58,6 +62,32 @@
                             <?php endforeach; ?>
                         </tbody>
                     </table>
+
+                    <?php if (!empty($listPositionSuscription)): ?>
+                        <h3>Productos con suscripción</h3>
+                        <table class="table table-bordered table-hover table-striped">
+                            <thead class="cabecera-tabla">
+                                <tr>
+                                    <th style="width: 27%;">Producto</th>
+                                    <th style="width: 25%;">Cantidad</th>
+                                    <th style="width: 15%;">Antes</th>
+                                    <th>Ahorro</th>
+                                    <th>Ahora</th>
+                                    <th>Subtotal</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <?php foreach ($listPositionSuscription as $position): ?>
+                                    <?php
+                                    $this->renderPartial('/carro/_d_carroElementoSuscripcion', array(
+                                        'position' => $position,
+                                        'lectura' => $lectura
+                                    ));
+                                    ?>
+                                <?php endforeach; ?>
+                            </tbody>
+                        </table>
+                    <?php endif ?>
 
                     <?php if (!empty($listPositionBodega) || !empty($listPositionDelivery)): ?>
                         <h3>Productos con otras condiciones de entrega</h3>

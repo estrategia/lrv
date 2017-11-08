@@ -11,6 +11,7 @@ class VendedorModule extends CWebModule {
             'vendedor.components.*',
             'application.components.*',
             'application.components.behaviors.*',
+            'ext.shoppingCartSalesman.*',
         ));
     }
 

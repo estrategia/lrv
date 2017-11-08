@@ -15,7 +15,10 @@ return array(
                 'components' => array(
                     'user' => array(
                         'class' => 'callcenter.components.UserOperator'
-                    )
+                    ),
+                    'shoppingCartVitalCall' => array(
+                        'class' => 'ext.shoppingCartVitalCall.EShoppingCart',
+                    ),
                 )
             ),
             'vitalcall_old' => array(
@@ -33,7 +36,10 @@ return array(
         'components' => array(
             'user' => array(
                 'class' => 'vendedor.components.UserVendedor'
-            )
+            ),
+            'shoppingCartSalesman' => array(
+                'class' => 'ext.shoppingCartSalesman.EShoppingCart',
+            ),
         )
     ),
     'puntoventa' => array(
@@ -41,16 +47,37 @@ return array(
         'components' => array(
             'user' => array(
                 'class' => 'puntoventa.components.UserPuntoVenta'
-            )
+            ),
+        	'shoppingCartNationalSale' => array(
+        	    'class' => 'ext.shoppingCartNationalSale.EShoppingCart',
+        	),
         ),
         'modules' => array(
-            'entreganacional' => array(
+            'venta' => array(
                 'defaultController' => 'usuario',
                 'components' => array(
                     'user' => array(
                         'class' => 'puntoventa.components.UserPuntoVenta'
                     )
-                )
+                ),
+            	'modules' => array(
+            		'entreganacional' => array(
+            			'defaultController' => 'usuario',
+            			'components' => array(
+            					'user' => array(
+            							'class' => 'puntoventa.components.UserPuntoVenta'
+            					)
+            			),
+            		),
+            		'ventaasistida' => array(
+            			'defaultController' => 'usuario',
+            			'components' => array(
+            					'user' => array(
+            							'class' => 'puntoventa.components.UserPuntoVenta'
+            					)
+            			),
+            		)
+            	),
             ),
             'subasta' => array(
                 'defaultController' => 'usuario',

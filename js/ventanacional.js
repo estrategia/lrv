@@ -4,7 +4,7 @@ function buscarProductos(text, obj, request) {
     $.ajax({
         type: 'POST',
         async: true,
-        url: request + '/puntoventa/entreganacional/pedido/buscarProducto',
+        url: request + '/puntoventa/venta/entreganacional/pedido/buscarProducto',
         data: {busqueda: text},
         beforeSend: function () {
             $('#modal-productos-busqueda').remove();
@@ -29,7 +29,7 @@ $(document).on('click', 'button[data-action="asignar-pdv-entrega"]', function ()
         type: 'POST',
         dataType: 'json',
         async: true,
-        url: requestUrl + '/puntoventa/entreganacional/pedido/asignarpdv',
+        url: requestUrl + '/puntoventa/venta/entreganacional/pedido/asignarpdv',
         data: {pdv: $('#select-pdv-asignar').val()},
         beforeSend: function () {
             Loading.show();
@@ -58,7 +58,7 @@ $(document).on('click', 'a[data-action="asignar-pdv-direccion"]', function () {
         type: 'POST',
         dataType: 'json',
         async: true,
-        url: requestUrl + '/puntoventa/entreganacional/pedido/asignarpdv',
+        url: requestUrl + '/puntoventa/venta/entreganacional/pedido/asignarpdv',
         data: {pdv: $(this).attr('data-pdv'),idPedido: $(this).attr('data-pedido')},
         beforeSend: function () {
             Loading.show();
@@ -136,7 +136,7 @@ $(document).on('click', "a[data-cargar-nacional='1'], a[data-cargar-nacional='2'
         type: 'POST',
         dataType: 'json',
         async: true,
-        url: requestUrl + '/puntoventa/entreganacional/carro/agregar',
+        url: requestUrl + '/puntoventa/venta/entreganacional/carro/agregar',
         data: data,
         beforeSend: function () {
             Loading.show();
@@ -181,7 +181,7 @@ $(document).on('click', "button[data-role='pdvgeodireccion']", function () {
         type: 'POST',
         dataType: 'json',
         async: true,
-        url: requestUrl + '/puntoventa/entreganacional/pedido/geoDireccion',
+        url: requestUrl + '/puntoventa/venta/entreganacional/pedido/geoDireccion',
         data: {ciudad: $('#select-ciudad-direccion').val(), direccion: $('#input-pedido-direccion').val()},
         beforeSend: function () {
             $('#div-pedido-georeferencia-direcion').html('');
@@ -335,7 +335,7 @@ $(document).on('change', "select[data-role='orden-listaproductos']", function() 
       type: 'POST',
       dataType: 'json',
       async: true,
-      url: requestUrl + '/puntoventa/entreganacional/catalogo/filtrar',
+      url: requestUrl + '/puntoventa/venta/entreganacional/catalogo/filtrar',
       data: {'OrdenamientoForm[orden]': $('#OrdenamientoForm_orden').val()},
       beforeSend: function() {
           Loading.show();
@@ -364,7 +364,7 @@ function filtrarListaProductos() {
         type: 'POST',
         dataType: 'json',
         async: true,
-        url: requestUrl + '/puntoventa/entreganacional/catalogo/filtrar',
+        url: requestUrl + '/puntoventa/venta/entreganacional/catalogo/filtrar',
         data: $('#form-filtro-listaproductos').serialize(),
         beforeSend: function() {
             Loading.show();
@@ -560,7 +560,7 @@ function modificarCarro(position, modificar, maximo) {
         type: 'POST',
         dataType: 'json',
         async: true,
-        url: requestUrl + '/puntoventa/entreganacional/carro/modificar',
+        url: requestUrl + '/puntoventa/venta/entreganacional/carro/modificar',
         data: data,
         beforeSend: function() {
             Loading.show();
@@ -606,7 +606,7 @@ $(document).on('click', "a[data-eliminar='1'], a[data-eliminar='2'], a[data-elim
         type: 'POST',
         dataType: 'json',
         async: true,
-        url: requestUrl + '/puntoventa/entreganacional/carro/eliminar',
+        url: requestUrl + '/puntoventa/venta/entreganacional/carro/eliminar',
         data: {id: position, eliminar: eliminar},
         beforeSend: function() {
             Loading.show();
@@ -691,7 +691,7 @@ $(document).on('click', "a[data-role='carrovaciar-entrega']", function() {
         type: 'POST',
         dataType: 'json',
         async: true,
-        url: requestUrl + '/puntoventa/entreganacional/carro/vaciar',
+        url: requestUrl + '/puntoventa/venta/entreganacional/carro/vaciar',
         beforeSend: function() {
             Loading.show();
         },
@@ -767,7 +767,7 @@ function pasoInformacion(actual, siguiente, boton) {
     $.ajax({
         type: 'POST',
         async: true,
-        url: requestUrl + '/puntoventa/entreganacional/carro/pagar/paso/' + actual + '/post/true',
+        url: requestUrl + '/puntoventa/venta/entreganacional/carro/pagar/paso/' + actual + '/post/true',
         data: $.param(data) + '&' + $('#form-pago-comentario').serialize() + '&' + $('#form-direccion-pagoinvitado').serialize() + '&' + $('#form-remitente').serialize() + '&' +$('#form-pago-entrega').serialize() + '&' + $('#form-pago').serialize(),
         beforeSend: function() {
             boton.prop('disabled', true);
@@ -811,7 +811,7 @@ function pasoConfirmacion(actual, siguiente, boton) {
     $.ajax({
         type: 'POST',
         async: true,
-        url: requestUrl + '/puntoventa/entreganacional/carro/pagar/paso/' + actual + '/post/true',
+        url: requestUrl + '/puntoventa/venta/entreganacional/carro/pagar/paso/' + actual + '/post/true',
         data: $.param(data) + '&' + $('#form-pago-confirmacion').serialize(),
         beforeSend: function() {
             boton.prop('disabled', true);

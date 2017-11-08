@@ -19,7 +19,7 @@ return array(
         'metamucil-facilita-transito-intestinal' => 'publicidad/contenido/nombre/metamucil-facilita-transito-intestinal',
         'nestle-nan-optipro' => 'publicidad/contenido/nombre/nestle-nan-optipro',
         'recetas-nestle-nan-optipro' => 'publicidad/contenido/nombre/nan-recetas',
-        'mas-informacion-nan' => 'publicidad/contenido/nombre/mas-informacion-nan',
+        // 'mas-informacion-nan' => 'publicidad/contenido/nombre/mas-informacion-nan',
         'parodontax' => 'publicidad/contenido/nombre/parodontax',
         'porque-elejir-metamucil' => 'publicidad/contenido/nombre/porque-elejir-metamucil',
         'prebioticos-klim' => 'publicidad/contenido/nombre/prebioticos-klim',
@@ -109,6 +109,15 @@ return array(
         'gelicart-colageno-hidrolizado' => 'publicidad/contenido/nombre/gelicart',
         'asepxia' => 'publicidad/contenido/nombre/asepxia',
         'ni-una-dieta-mas' => 'publicidad/contenido/nombre/ni-una-dieta-mas',
+        'cuidado-en-casa' => 'publicidad/contenido/nombre/cuidado-en-casa',
+        'ayudas-de-movilidad' => 'publicidad/contenido/nombre/ayudas-de-movilidad',
+        'control-y-prevencion' => 'publicidad/contenido/nombre/control-y-prevencion',
+        'confort' => 'publicidad/contenido/nombre/confort',
+        'equipos-terapia-respiratoria' => 'publicidad/contenido/nombre/equipos-terapia-respiratoria',
+        'equipos-para-profesionales' => 'publicidad/contenido/nombre/equipos-para-profesionales',
+        'productos-hospitalarios-y-quirurgicos' => 'publicidad/contenido/nombre/productos-hospitalarios-y-quirurgicos',
+        'rehabilitacion-y-recuperacion' => 'publicidad/contenido/nombre/rehabilitacion-y-recuperacion',
+
          // Fin links campañas
 
         // REST patterns

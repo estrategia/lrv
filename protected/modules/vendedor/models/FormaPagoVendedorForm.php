@@ -369,7 +369,7 @@ class FormaPagoVendedorForm extends CFormModel {
         
           $codigosProductos = array ();
           $productosCant = array ();
-          foreach (Yii::app()->shoppingCartSalesman->getPositions() as $position){
+          foreach (Yii::app()->getModule('vendedor')->shoppingCartSalesman->getPositions() as $position){
               if ($position->getDelivery() == 0 && $position->getShipping() == 0){
                   if($position->isProduct()){
                       $codigosProductos[] = $position->objProducto->codigoProducto;
@@ -769,28 +769,28 @@ class FormaPagoVendedorForm extends CFormModel {
 
             //recorrer productos y actualiar carro
             foreach ($puntoVenta[4] as $indiceProd => $producto) {
-                $position = Yii::app()->shoppingCartSalesman->itemAt($producto->CODIGO_PRODUCTO);
+                $position = Yii::app()->getModule('vendedor')->shoppingCartSalesman->itemAt($producto->CODIGO_PRODUCTO);
 
                 if ($position !== null) {
                     $arrPositions[$producto->CODIGO_PRODUCTO] = $producto->CODIGO_PRODUCTO;
                     if ($producto->SALDO_UNIDAD >= $producto->CANTIDAD_UNIDAD) {
-                        Yii::app()->shoppingCartSalesman->update($position, false, $producto->CANTIDAD_UNIDAD);
+                        Yii::app()->getModule('vendedor')->shoppingCartSalesman->update($position, false, $producto->CANTIDAD_UNIDAD);
                     } else {
-                        Yii::app()->shoppingCartSalesman->update($position, false, $producto->SALDO_UNIDAD);
+                        Yii::app()->getModule('vendedor')->shoppingCartSalesman->update($position, false, $producto->SALDO_UNIDAD);
                     }
 
                     if ($producto->SALDO_FRACCION >= $producto->CANTIDAD_FRACCION) {
-                        Yii::app()->shoppingCartSalesman->update($position, true, $producto->CANTIDAD_FRACCION);
+                        Yii::app()->getModule('vendedor')->shoppingCartSalesman->update($position, true, $producto->CANTIDAD_FRACCION);
                     } else {
-                        Yii::app()->shoppingCartSalesman->update($position, true, $producto->SALDO_FRACCION);
+                        Yii::app()->getModule('vendedor')->shoppingCartSalesman->update($position, true, $producto->SALDO_FRACCION);
                     }
                 }
             }
 
-            foreach (Yii::app()->shoppingCartSalesman->getPositions() as $position) {
+            foreach (Yii::app()->getModule('vendedor')->shoppingCartSalesman->getPositions() as $position) {
                 if ($position->isProduct()) {
                     if (!isset($arrPositions[$position->objProducto->codigoProducto])) {
-                        Yii::app()->shoppingCartSalesman->remove($position->objProducto->codigoProducto);
+                        Yii::app()->getModule('vendedor')->shoppingCartSalesman->remove($position->objProducto->codigoProducto);
                     }
                 }
             }
@@ -917,7 +917,7 @@ class FormaPagoVendedorForm extends CFormModel {
     }
     
     public function tipoEntregaValidate($attribute, $params) {
-        if($this->tipoEntrega == Yii::app()->params->entrega['tipo']['presencial'] && Yii::app()->shoppingCartSalesman->getStoredItemsCount() > 0){
+        if($this->tipoEntrega == Yii::app()->params->entrega['tipo']['presencial'] && Yii::app()->getModule('vendedor')->shoppingCartSalesman->getStoredItemsCount() > 0){
             $this->addError($attribute, "Pasar por el pedido no diponible");
         }
         

@@ -24,7 +24,7 @@
             <a href="<?php echo CController::createUrl('/catalogo/producto', array('producto' => $data->codigoProducto, 'descripcion' => $data->getCadenaUrl())) ?>">
                <img src="<?php echo Yii::app()->request->baseUrl . $data->rutaImagen(); ?>" class="img-responsive noimagenProduct product-prom">
             </a>
-            
+
             <?php if (!in_array($data->idUnidadNegocioBI, Yii::app()->params->calificacion['categoriasNoCalificacion']) && $vista != 'slider'): ?>
                 <div class="" style="text-align:center">
                     <div class="ranking-list" >
@@ -56,8 +56,9 @@
                 <div class="descripcion-lineal" style="display:none">
                     <?php echo $data->presentacionProducto ?>
                 </div>
+                <a href="<?php echo CController::createUrl('/suscripciones/suscribirse', array('codigoProducto' => $data->codigoProducto)) ?>" class="btn btn-default btn-block btn-sm">Suscribete y ahorra</a>
             </div>
-
+            
             <!-- Precio del producto -->
             <?php if ($objPrecio->inicializado()): ?>
                 <?php if ($data->mostrarAhorroVirtual == 1 && $objPrecio->getAhorro(Precio::PRECIO_UNIDAD) > 0 && $this->objSectorCiudad->objCiudad->excentoImpuestos != 1): ?>
@@ -89,6 +90,7 @@
                     <p> Tiempo de entrega: <span> <?php echo $objPrecio->getTiempoEntrega() ?> horas</span></p>
                 <?php endif; ?>
             <?php endif; ?>
+
        </div>
 
         <?php if ($this->objSectorCiudad == null): ?>

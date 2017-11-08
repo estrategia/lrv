@@ -390,7 +390,7 @@ class EShoppingCart extends CMap {
         
         if ($this->itemAt($key) instanceof IECartPosition) {
             $position = $this->itemAt($key);
-            $oldQuantity = $position->getQuantity($fraction);
+            $oldQuantity = $position->getQuantity($fraction) + $position->getQuantitySuscription();
             $quantity += $oldQuantity;
 
             if (!$fraction) {
@@ -417,6 +417,24 @@ class EShoppingCart extends CMap {
         }
 
         $this->updateStored($position, $quantity);
+    }
+
+    /**
+     * Add item to the shopping cart
+     * If the position was previously added to the cart,
+     * then information of it is updated, and count increases by $quantity
+     * @param IECartPosition $position
+     * @param int $quantity count of elements positions
+     */
+    public function putSuscription(IECartPosition $position, $quantity = 1) {
+        $key = $position->getId();
+        if ($this->itemAt($key) instanceof IECartPosition) {
+            $position = $this->itemAt($key);
+            $oldQuantity = $position->getQuantitySuscription();
+            $quantity += $oldQuantity;
+        }
+
+        $this->update($position, $quantity);
     }
 
     /**
@@ -504,10 +522,11 @@ class EShoppingCart extends CMap {
             
             //$position->attachBehavior("CartPosition", new ECartPositionBehaviour());
             //$position->setRefresh($this->refresh);
+            // Yii::log("Shopping cart: " . $quantity, CLogger::LEVEL_INFO, 'error');
 
             $position->setQuantity($quantity, $fraction);
 
-            if ($position->getQuantity(true) + $position->getQuantity(false) < 1)
+            if ($position->getQuantity(true) + $position->getQuantity(false) + $position->getQuantitySuscription() < 1 )
                 $this->remove($key);
             else
                 parent::add($key, $position);
@@ -620,6 +639,7 @@ class EShoppingCart extends CMap {
         $price = 0.0;
         foreach ($this as $position) {
             $price += $position->getSumPrice($withDiscount);
+            $price += $position->getSumPriceUnitSuscription();
         }
 
         if ($withDiscount)
@@ -670,7 +690,7 @@ class EShoppingCart extends CMap {
     }
     
     public function getTotalCostClient() {
-    	$price = $this->getTotalCost(true) - $this->bonoValue; /***** Valor que está afectando la compra ******/
+    	$price = $this->getTotalCost(true) - $this->bonoValue; /***** Valor que estï¿½ afectando la compra ******/
         return $price;
     }
     
@@ -781,6 +801,7 @@ class EShoppingCart extends CMap {
             $discount = 0.0;
             foreach ($this as $position) {
                 $discount += $position->getDiscountPrice() * $position->getQuantity() + $position->getDiscountPrice(true) * $position->getQuantity(true);
+                $discount += $position->getDiscountPriceSuscription() * $position->getQuantitySuscription();
                 //$discount -= $position->getShipping();
             }
             $discount += $this->discountPrice;
