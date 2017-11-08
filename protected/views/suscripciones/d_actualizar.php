@@ -52,14 +52,13 @@
                         <?php endif; ?>
                     </div>
                 </div>
-                <?php if (!is_null($beneficio)): ?>
+                <?php if (!is_null($suscripcion)): ?>
                     <div class="descripciones">
                         <h4>Condiciones</h4>
-                        <p>-El producto se habilitara para compra con descuento del 10% cada 30 días, una vez realices la primera compra.</p>
-                        <p>-Se pueden agregar máximo 4 unidades en cada compra.</p>
-                        <!-- <p class="text-center">Seleccione las veces que desea recordar esta suscripción</p>
-                        <span class="text-center"><input type="number"> Veces</span> -->
-                        <button data-role="crear-suscripcion" data-codigo-producto="<?php echo $producto->codigoProducto ?>" class="btn btn-primary btn-sm btn-block">Suscribirse</button>
+                        <p>-El producto se habilitara para compra con descuento del <?php echo $suscripcion->beneficio->dsctoUnid ?>% cada <?php echo Yii::app()->params['longitudPeriodoSuscripcion'] ?> días, una vez realices la primera compra.</p>
+                        <p>-Se pueden agregar máximo <?php echo $suscripcion->beneficio->vtaUnid ?> unidades en cada compra.</p>
+                        <span class="text-center"><input class="form-control" data-role="periodos-suscripcion" type="number" min=<?php echo $suscripcion->periodoActual ?> value=<?php echo $suscripcion->cantidadPeriodos ?>></span>
+                        <button data-role="actualizar-suscripcion" data-id-suscripcion="<?php echo $suscripcion->idSuscripcion ?>" class="btn btn-primary btn-sm btn-block">Actualizar suscripcion</button>
                     </div>
                 <?php else: ?>
                     <div class="descripciones">
