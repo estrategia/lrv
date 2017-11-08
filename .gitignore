@@ -13,3 +13,4 @@ protected/runtime/*
 /.buildpath
 /images/banner/
 images/banner/*
+/protected/config/database.php
