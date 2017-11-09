@@ -72,20 +72,8 @@ class PrecioProducto extends Precio {
                 $listSaldos = array();
 
                 if ($consultaPrecio) {
-                	$listSaldos = ProductosSaldos::model()->findAll(array(
-                			'condition' => '(codigoProducto=:producto AND codigoCiudad=:ciudad AND codigoSector=:sector)',
-                			'params' => array(
-                					':producto' => $objProducto->codigoProducto,
-                					':ciudad' => $objCiudadSector->codigoCiudad,
-                					':sector' => $objCiudadSector->codigoSector,
-                			),
-                	));
-                } else {
-                	$listSaldos = $objProducto->listSaldos;
-                }
-                
-                if(!$esVap){
-	                if ($consultaPrecio) {
+                	
+                	if(!$esVap){
 	                    $listPrecios = ProductosPrecios::model()->findAll(array(
 	                        'condition' => '(codigoProducto=:producto AND codigoCiudad=:ciudad AND codigoSector=:sector)',
 	                        'params' => array(
@@ -94,11 +82,7 @@ class PrecioProducto extends Precio {
 	                            ':sector' => $objCiudadSector->codigoSector,
 	                        ),
 	                    ));
-	                } else {
-	                    $listPrecios = $objProducto->listPrecios;
-	                }
-                }else{
-                	if ($consultaPrecio) {
+                	}else{
                 		$listPrecios = ProductosPreciosVentaAsistida::model()->findAll(array(
                 				'condition' => '(codigoProducto=:producto AND codigoCiudad=:ciudad)',
                 				'params' => array(
@@ -106,10 +90,24 @@ class PrecioProducto extends Precio {
                 						':ciudad' => $objCiudadSector->codigoCiudad,
                 				),
                 		));
-                	} else {
-                		$listPrecios = $objProducto->listPreciosVAP;
                 	}
+                	
+                    $listSaldos = ProductosSaldos::model()->findAll(array(
+                        'condition' => '(codigoProducto=:producto AND codigoCiudad=:ciudad AND codigoSector=:sector)',
+                        'params' => array(
+                            ':producto' => $objProducto->codigoProducto,
+                            ':ciudad' => $objCiudadSector->codigoCiudad,
+                            ':sector' => $objCiudadSector->codigoSector,
+                        ),
+                    ));
+                } else {
+                	if(!$esVap)
+                    	$listPrecios = $objProducto->listPrecios;
+                	else
+                		$listPrecios = $objProducto->listPreciosVAP;
+                    $listSaldos = $objProducto->listSaldos;
                 }
+                
                 /************************ SALDOS DE BODEGA *****************************/
                 
                 $listSaldosBodega = array();
