@@ -3445,6 +3445,7 @@ class CarroController extends Controller {
                         'identificacionUsuario=:identificacionUsuario AND idProducto=:idProducto',
                         [':identificacionUsuario' => $objCompra->identificacionUsuario, ':idProducto' => $position->objProducto->codigoProducto]
                     );
+                    $fechaActual = date('Y-m-d');
                     if($suscripcion !== null) {
                         $periodoActual = $suscripcion->consultarPeriodoActual();
                         if($periodoActual !== null) {
