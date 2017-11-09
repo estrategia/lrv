@@ -184,6 +184,20 @@
                     <?php elseif ($objProducto->ventaVirtual == 1): ?>
                         <?php if($objPrecio->inicializado()): ?>
                             <div class="" style="margin-top: 13px;">
+                                <?php if (!Yii::app()->user->isGuest): ?>
+                                    <?php echo "<div class='space-1'></div>" ?>
+                                    <?php $suscripcion = $objPrecio->getSuscripcion() ?>
+                                    <?php if($objPrecio->conSuscripcion() && $suscripcion == null): ?>
+                                        <a href="<?php echo CController::createUrl('/suscripciones/suscribirse', array('codigoProducto' => $objProducto->codigoProducto)) ?>" class="btn btn-default btn-block">Suscribete y ahorra</a>
+                                        <?php echo "<div class='space-1'></div>" ?>
+                                    <?php elseif($objPrecio->getSuscripcion() != null): ?>
+                                        <?php $mensaje = "Ahorro por suscripción: $". $objPrecio->getAhorroUnidadSuscripcion() . " Descuento por suscripción: " . $suscripcion->descuentoProducto . "% Cantidad maxima: " . $suscripcion->cantidadDisponiblePeriodoActual . " unidades" ?>
+                                        <a class="btn btn-default btn-block" href="#" onclick="return false" data-toggle="popover" data-trigger="focus" data-placement="bottom" data-content="<?php echo $mensaje ?>">
+                                            Descuento por suscripción
+                                        </a>
+                                        <?php echo "<div class='space-1'></div>" ?>
+                                    <?php endif; ?>
+			                    <?php endif;?>
                             	<?php if($this->objSectorCiudad->esDefecto()): ?>
 			                    	<?php echo CHtml::link('<div class="btn btn-primary btn-block">Añadir&nbsp;<img src="' . Yii::app()->baseUrl . '/images/desktop/button-carrito.png" alt=""></div>', CController::createUrl('/sitio/ubicacion'), array()); ?>
 			                    <?php else: ?>

@@ -56,9 +56,19 @@
                 <div class="descripcion-lineal" style="display:none">
                     <?php echo $data->presentacionProducto ?>
                 </div>
-                <?php if($objPrecio->conSuscripcion()): ?>
+                <?php // CVarDumper::dump($objPrecio,10,true) ?>
+                <?php $suscripcion = $objPrecio->getSuscripcion() ?>
+                <?php if($objPrecio->conSuscripcion() && $suscripcion == null): ?>
                     <a href="<?php echo CController::createUrl('/suscripciones/suscribirse', array('codigoProducto' => $data->codigoProducto)) ?>" class="btn btn-default btn-block btn-sm">Suscribete y ahorra</a>
+                <?php elseif($objPrecio->getSuscripcion() != null): ?>
+                    <?php $mensaje = "Ahorro por suscripción: $". $objPrecio->getAhorroUnidadSuscripcion() . " Descuento por suscripción: " . $suscripcion->descuentoProducto . "% Cantidad maxima: " . $suscripcion->cantidadDisponiblePeriodoActual . " unidades" ?>
+                    <a class=" btn btn-default btn-block btn-sm" href="#" onclick="return false" data-toggle="popover" data-trigger="focus" data-placement="bottom" data-content="<?php echo $mensaje ?>">
+                        Descuento por suscripción
+                    </a>
+                <?php else: ?>
+                    <div style="height: 30px;"></div>
                 <?php endif; ?>
+                
             </div>
             
             <!-- Precio del producto -->
