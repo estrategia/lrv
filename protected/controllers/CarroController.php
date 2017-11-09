@@ -3732,6 +3732,7 @@ class CarroController extends Controller {
             
             $htmlCorreo = PlantillaCorreo::getContenido('finCompra',$contenidoCorreo);
             	
+            
             try {
                 sendHtmlEmail($correoUsuario, $asuntoCorreo, $htmlCorreo);
             } catch (Exception $ce) {
@@ -3805,6 +3806,7 @@ class CarroController extends Controller {
                 )
             );
         } catch (Exception $exc) {
+        	
             Yii::log($exc->getMessage() . "\n" . $exc->getTraceAsString(), CLogger::LEVEL_ERROR, 'application');
 
             try {
