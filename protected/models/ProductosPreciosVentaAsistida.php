@@ -4,7 +4,7 @@
  * This is the model class for table "t_ProductosPreciosVentaAsistida".
  *
  * The followings are the available columns in table 't_ProductosPreciosVentaAsistida':
- * @property integer $idProductoPrecio
+ * @property integer $idProductoPrecios
  * @property string $codigoProducto
  * @property string $codigoCiudad
  * @property string $precioUnidad
@@ -37,7 +37,7 @@ class ProductosPreciosVentaAsistida extends CActiveRecord
 			array('codigoProducto, codigoCiudad, precioUnidad, precioFraccion, costo', 'length', 'max'=>10),
 			// The following rule is used by search().
 			// @todo Please remove those attributes that should not be searched.
-			array('idProductoPrecio, codigoProducto, codigoCiudad, precioUnidad, precioFraccion, costo', 'safe', 'on'=>'search'),
+			array('idProductoPrecios, codigoProducto, codigoCiudad, precioUnidad, precioFraccion, costo', 'safe', 'on'=>'search'),
 		);
 	}
 
@@ -49,8 +49,8 @@ class ProductosPreciosVentaAsistida extends CActiveRecord
 		// NOTE: you may need to adjust the relation name and the related
 		// class name for the relations automatically generated below.
 		return array(
-			'codigoProducto0' => array(self::BELONGS_TO, 'MProducto', 'codigoProducto'),
-			'codigoCiudad0' => array(self::BELONGS_TO, 'MCiudad', 'codigoCiudad'),
+			'objProducto' => array(self::BELONGS_TO, 'Producto', 'codigoProducto'),
+			'objCiudad' => array(self::BELONGS_TO, 'Ciudad', 'codigoCiudad'),
 		);
 	}
 
@@ -60,7 +60,7 @@ class ProductosPreciosVentaAsistida extends CActiveRecord
 	public function attributeLabels()
 	{
 		return array(
-			'idProductoPrecio' => 'Id Producto Precio',
+			'idProductoPrecios' => 'Id Producto Precio',
 			'codigoProducto' => 'Codigo Producto',
 			'codigoCiudad' => 'Codigo Ciudad',
 			'precioUnidad' => 'Precio Unidad',
@@ -87,7 +87,7 @@ class ProductosPreciosVentaAsistida extends CActiveRecord
 
 		$criteria=new CDbCriteria;
 
-		$criteria->compare('idProductoPrecio',$this->idProductoPrecio);
+		$criteria->compare('idProductoPrecios',$this->idProductoPrecios);
 		$criteria->compare('codigoProducto',$this->codigoProducto,true);
 		$criteria->compare('codigoCiudad',$this->codigoCiudad,true);
 		$criteria->compare('precioUnidad',$this->precioUnidad,true);

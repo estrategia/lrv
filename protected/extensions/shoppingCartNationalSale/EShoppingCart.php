@@ -338,6 +338,8 @@ class EShoppingCart extends CMap {
      */
     public function update(IECartPosition $position, $fraction, $quantity, $pdv,$numCant) {
     	if($this->tipoVenta == 1){
+    		
+    		
 	    	if ($this->objSectorCiudadOrigen !== null) {
 	            $key = $position->getId();
 	

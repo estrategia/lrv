@@ -68,27 +68,45 @@ class PedidoController extends ControllerVentaAsistida {
         }
 
         $usuario = Yii::app()->getRequest()->getPost('usuario');
-        $usuario = Yii::app()->getRequest()->getPost('usuario');
+        $beneficiario = Yii::app()->getRequest()->getPost('beneficiario');
 
         if ($usuario === null) {
             echo CJSON::encode(array('result' => 'error', 'response' => 'Solicitud invalida.'));
             Yii::app()->end();
         }
 
-        $objUsuario = Usuario::model()->find(array(
-        		'condition' => 'identificacionUsuario =:usuario',
+        $objUsuario = Cliente::model()->find(array(
+        		'condition' => 'numeroDocumento =:usuario',
         		'params' => array(
         				':usuario' => $usuario
         		)
-        ))   ;
+        ));
+        
+        $objBeneficiario = Beneficiario::model()->find(array(
+        		'condition' => 'idBeneficiario =:beneficiario',
+        		'params' => array(
+        				':beneficiario' => $beneficiario
+        		)
+        ));
         
         
         $modelPago = Yii::app()->session[Yii::app()->params->entregaNacional['sesion']['carroPagarForm']];
-        $modelPago->cedulaRemitente = $objUsuario->identificacionUsuario;
+        $modelPago->cedulaRemitente = $objUsuario->numeroDocumento;
+        $modelPago->identificacionUsuario = $objUsuario->numeroDocumento;
         
-        $modelPago->nombre = $objUsuario->nombre." ".$objUsuario->apellido;
-        $modelPago->correoRemitente = $objUsuario->correoElectronico;
-        $modelPago->identificacionUsuario = $modelPago->cedulaRemitente;
+        $modelPago->nombreRemitente = $objUsuario->nombre;
+        $modelPago->correoRemitente = $objUsuario->email;
+        $modelPago->telefonoRemitente = $objUsuario->telefono;
+        
+        if($objBeneficiario != null){
+        	$modelPago->nombre = $objBeneficiario->nombre;
+        	$modelPago->direccion = $objBeneficiario->direccion;
+        	$modelPago->telefono = $objBeneficiario->telefono;
+        	$modelPago->extension = $objBeneficiario->extension;
+        	$modelPago->celular = $objBeneficiario->celular;
+        	$modelPago->barrio = $objBeneficiario->barrio;
+        }
+        
         Yii::app()->session[Yii::app()->params->entregaNacional['sesion']['carroPagarForm']] = $modelPago;
         
         echo CJSON::encode(array
@@ -134,11 +152,11 @@ class PedidoController extends ControllerVentaAsistida {
 	        	$listProductos = Producto::model()->findAll(array(
 	        			'with' => array('listImagenes', 'objCodigoEspecial', 'listCalificaciones', 'objCategoriaBI',
 	        					'listSaldos' => array('condition' => '(listSaldos.saldoUnidad>:saldo AND listSaldos.codigoCiudad=:ciudad AND listSaldos.codigoSector=:sector) OR (listSaldos.saldoUnidad IS NULL AND listSaldos.codigoCiudad IS NULL AND listSaldos.codigoSector IS NULL)'),
-	        					'listPrecios' => array('condition' => '(listPrecios.codigoCiudad=:ciudad AND listPrecios.codigoSector=:sector) OR (listPrecios.codigoCiudad IS NULL AND listPrecios.codigoSector IS NULL)'),
+	        					'listPreciosVAP' => array('condition' => '(listPreciosVAP.codigoCiudad=:ciudad ) OR (listPreciosVAP.codigoCiudad)'),
 	        					'listSaldosTerceros' => array('condition' => '(listSaldosTerceros.codigoCiudad=:ciudad AND listSaldosTerceros.codigoSector=:sector) OR (listSaldosTerceros.codigoCiudad IS NULL AND listSaldosTerceros.codigoSector IS NULL)')
 	        			),
 	        			'join' => 'JOIN t_relevancia_temp_'.$sesion.' rel ON rel.codigoProducto = t.codigoProducto',
-	        			'condition' => "t.activo=:activo AND ( (listSaldos.saldoUnidad IS NOT NULL AND listPrecios.codigoCiudad IS NOT NULL) OR listSaldosTerceros.codigoCiudad IS NOT NULL)",
+	        			'condition' => "t.activo=:activo AND ( (listSaldos.saldoUnidad IS NOT NULL AND listPreciosVAP.codigoCiudad IS NOT NULL) OR listSaldosTerceros.codigoCiudad IS NOT NULL)",
 	        			'params' => array(
 	        					':activo' => 1,
 	        					':saldo' => 0,

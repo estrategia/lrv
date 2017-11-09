@@ -148,10 +148,15 @@
                 <th style="border-left:1px solid #dddddd;background-color:#f9f9f9;line-height:20px;padding:8px;color:#ff0000;text-align:center;width:12%">Ahorro</th>
                 <th style="border-left:1px solid #dddddd;background-color:#f9f9f9;line-height:20px;padding:8px;color:#ff0000;text-align:center;width:12%">Subtotal</th>
             </tr>
+            <?php  $listPositionSuscription = array();?>
             <?php foreach (Yii::app()->shoppingCart->getPositions() as $indice => $position): ?>
                <tr style="vertical-align:middle; <?php echo ($indice % 2 != 0 ? "background-color:#f9f9f9;" : "") ?>">
                     <?php
+                   
                     if ($position->isProduct()):
+	                    if ($position->getQuantitySuscription() > 0) {
+	                    	$listPositionSuscription[] = $position;
+	                    }
                         $this->renderPartial('compraCorreoProducto', array(
                             'position' => $position,
                             'indice' =>$indice
@@ -164,8 +169,53 @@
                     ?>
                 </tr>
             <?php endforeach; ?>
+            
+            
+            
         </tbody>
     </table>
+    
+    
+    <?php if(count($listPositionSuscription) > 0 ):?>
+    <h4 style="color:#666666">
+        Productos de suscripci&oacute;n del
+        <span class="il">pedido</span>
+    </h4>
+    <table style="width:100%;border-radius:4px 4px 4px 4px;margin-bottom:20px;border-spacing:0;font-size:14px;border:1px #dddddd solid;color:#666666">
+        <tbody>
+         <!--   <tr>
+                <td height="3" style="background-color:#a40014;font-size:3px;line-height:3px;padding:0;height:3px;width:100%" colspan="6">
+                    <p style="margin:0"> </p>
+                </td>
+            </tr> -->
+            <tr>
+                <th style="background-color:#f9f9f9;line-height:20px;padding:8px;color:#ff0000;text-align:center">Producto</th>
+                <th style="border-left:1px solid #dddddd;background-color:#f9f9f9;line-height:20px;padding:8px;color:#ff0000;text-align:center;width:12%">Cantidad</th>
+                <th style="border-left:1px solid #dddddd;background-color:#f9f9f9;line-height:20px;padding:8px;color:#ff0000;text-align:center;width:12%">Antes</th>
+                <th style="border-left:1px solid #dddddd;background-color:#f9f9f9;line-height:20px;padding:8px;color:#ff0000;text-align:center;width:12%">Ahora</th>
+                <th style="border-left:1px solid #dddddd;background-color:#f9f9f9;line-height:20px;padding:8px;color:#ff0000;text-align:center;width:12%">Ahorro</th>
+                <th style="border-left:1px solid #dddddd;background-color:#f9f9f9;line-height:20px;padding:8px;color:#ff0000;text-align:center;width:12%">Subtotal</th>
+            </tr>
+    	<?php foreach ($listPositionSuscription as $indice => $position): ?>
+               <tr style="vertical-align:middle; <?php echo ($indice % 2 != 0 ? "background-color:#f9f9f9;" : "") ?>">
+                    <?php
+                    $listPositionSuscription = array();
+                    if ($position->isProduct()):
+	                  
+                        $this->renderPartial('compraCorreoProductoSuscripcion', array(
+                            'position' => $position,
+                            'indice' =>$indice
+                        ));
+
+                    endif;
+                    ?>
+                </tr>
+          <?php endforeach; ?>
+         </tbody>
+    </table>
+    <?php endif;?>
+    
+    
     <div style="border-top:1px solid #999999">
         <table width="100%" border="0">
             <tbody>

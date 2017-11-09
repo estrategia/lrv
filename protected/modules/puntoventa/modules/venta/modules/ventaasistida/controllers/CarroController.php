@@ -81,10 +81,10 @@ class CarroController extends ControllerVenta{
 		$objProducto = Producto::model()->find(array(
 				'with' => array(
 						'listSaldos' => array('condition' => '(listSaldos.codigoCiudad=:ciudad AND listSaldos.codigoSector=:sector) OR (listSaldos.saldoUnidad IS NULL AND listSaldos.codigoCiudad IS NULL AND listSaldos.codigoSector IS NULL)'),
-						'listPrecios' => array('condition' => '(listPrecios.codigoCiudad=:ciudad AND listPrecios.codigoSector=:sector) OR (listPrecios.codigoCiudad IS NULL AND listPrecios.codigoSector IS NULL)'),
+						'listPreciosVAP' => array('condition' => '(listPreciosVAP.codigoCiudad=:ciudad) OR (listPreciosVAP.codigoCiudad IS NULL)'),
 						'listSaldosTerceros' => array('condition' => '(listSaldosTerceros.codigoCiudad=:ciudad AND listSaldosTerceros.codigoSector=:sector) OR (listSaldosTerceros.codigoCiudad IS NULL AND listSaldosTerceros.codigoSector IS NULL)')
 				),
-				'condition' => 't.activo=:activo AND t.codigoProducto=:codigo AND ( (listSaldos.saldoUnidad IS NOT NULL AND listPrecios.codigoCiudad IS NOT NULL) OR listSaldosTerceros.codigoCiudad IS NOT NULL)',
+				'condition' => 't.activo=:activo AND t.codigoProducto=:codigo AND ( (listSaldos.saldoUnidad IS NOT NULL AND listPreciosVAP.codigoCiudad IS NOT NULL) OR listSaldosTerceros.codigoCiudad IS NOT NULL)',
 				'params' => array(
 						':activo' => 1,
 						':codigo' => $producto,
@@ -129,15 +129,17 @@ class CarroController extends ControllerVenta{
 		if ($cantidadUnidadPDV + $cantidadFraccionPDV + $cantidadU + $cantidadF*$divisionFracciones <= $maximo) {
 			if ($cantidadU >= 0) {
 				$objProducto->saldosDisponibles = $maximo;
-				$objProductoCarro = new ProductoCarro($objProducto);
-				
+				$objProductoCarro = new ProductoCarroAsistida($objProducto);
 				Yii::app()->getModule('puntoventa')->shoppingCartNationalSale->put($objProductoCarro, false, $cantidadU, $puntoVenta);
 			}
 			if ($cantidadF >= 0) {
 				$objProducto->saldosDisponibles = $maximo;
-				$objProductoCarro = new ProductoCarro($objProducto);
+				$objProductoCarro = new ProductoCarroAsistida($objProducto);
 				Yii::app()->getModule('puntoventa')->shoppingCartNationalSale->put($objProductoCarro, true, $cantidadF,$puntoVenta);
 			}
+			
+			$position = Yii::app()->getModule('puntoventa')->shoppingCartNationalSale->itemAt($idPosition);
+			
 		} else {
 			$fracciones = $objProducto->unidadFraccionamiento > 0 ?
 			intval(abs(intval($maximo)-$maximo)*$objProducto->numeroFracciones/$objProducto->unidadFraccionamiento):
@@ -248,10 +250,10 @@ class CarroController extends ControllerVenta{
 		$objProducto = Producto::model()->find(array(
 				'with' => array(
 						'listSaldos' => array('condition' => '(listSaldos.saldoUnidad>:saldo AND listSaldos.codigoCiudad=:ciudad AND listSaldos.codigoSector=:sector) OR (listSaldos.saldoUnidad IS NULL AND listSaldos.codigoCiudad IS NULL AND listSaldos.codigoSector IS NULL)'),
-						'listPrecios' => array('condition' => '(listPrecios.codigoCiudad=:ciudad AND listPrecios.codigoSector=:sector) OR (listPrecios.codigoCiudad IS NULL AND listPrecios.codigoSector IS NULL)'),
+						'listPreciosVAP' => array('condition' => '(listPreciosVAP.codigoCiudad=:ciudad) OR (listPreciosVAP.codigoCiudad IS NULL)'),
 						'listSaldosTerceros' => array('condition' => '(listSaldosTerceros.saldoUnidad>:saldo AND listSaldosTerceros.codigoCiudad=:ciudad AND listSaldosTerceros.codigoSector=:sector) OR (listSaldosTerceros.codigoCiudad IS NULL AND listSaldosTerceros.codigoSector IS NULL)')
 				),
-				'condition' => 't.activo=:activo AND t.codigoProducto=:codigo AND ( (listSaldos.saldoUnidad IS NOT NULL AND listPrecios.codigoCiudad IS NOT NULL) OR listSaldosTerceros.codigoCiudad IS NOT NULL)',
+				'condition' => 't.activo=:activo AND t.codigoProducto=:codigo AND ( (listSaldos.saldoUnidad IS NOT NULL AND listPreciosVAP.codigoCiudad IS NOT NULL) OR listSaldosTerceros.codigoCiudad IS NOT NULL)',
 				'params' => array(
 						':activo' => 1,
 						':codigo' => $codigoProducto,
@@ -387,6 +389,8 @@ class CarroController extends ControllerVenta{
 			}
 			Yii::app()->end();
 		}
+		
+		
 		 
 		if ($modelPago == null) {
 			$modelPago = new FormaPagoVentaAsistidaForm;
@@ -439,6 +443,8 @@ class CarroController extends ControllerVenta{
 						if ($form->validate()) {
 							$modelPago->tipoEntrega = $form->tipoEntrega;
 							/********************************** SE DEBE CAMBIAR POR ENTREGA A DOMICILIO E INCLUIR SERVICIO DE RECOJIDA ************************************/
+								
+
 								$modelPago->nombre = $form->nombre;
 								$modelPago->direccion = $form->direccion;
 								$modelPago->barrio = $form->barrio;
@@ -452,7 +458,8 @@ class CarroController extends ControllerVenta{
 								$modelPago->direccionRemitente = $form->direccionRemitente;
 								$modelPago->barrioRemitente = $form->barrioRemitente;
 								$modelPago->correoRemitente = $form->correoRemitente;
-	
+								$modelPago->nombreRemitente = $form->nombreRemitente;
+								$modelPago->telefonoRemitente = $form->telefonoRemitente;
 								/****************************************************/
 								
 								$modelPago->fechaEntrega = $form->fechaEntrega;
@@ -616,6 +623,7 @@ class CarroController extends ControllerVenta{
 	
 				Yii::app()->session[Yii::app()->params->entregaNacional['sesion']['carroPagarForm']] = null;
 				Yii::app()->getModule('puntoventa')->shoppingCartNationalSale->clear();
+				unset(Yii::app()->session[Yii::app()->params->puntoventa['sesion']['tipoEntrega']]);
 				$this->render('application.views.carro.compra', array(
 						'contenido' => $contenidoSitio,
 						'objCompra' => $resultCompra['response']['objCompra'],
@@ -744,6 +752,7 @@ class CarroController extends ControllerVenta{
 				$objCompraDireccion->direccion = $modelPago->direccion;
 				$objCompraDireccion->barrio = $modelPago->barrio;
 				$objCompraDireccion->telefono = $modelPago->telefono;
+				
 				$objCompraDireccion->celular = $modelPago->celular;
 				$objCompraDireccion->codigoCiudad = $this->objCiudadSectorDestino->codigoCiudad;
 				$objCompraDireccion->codigoSector = $this->objCiudadSectorDestino->codigoSector;
@@ -766,12 +775,16 @@ class CarroController extends ControllerVenta{
 			$objCompraRemitente = new ComprasRemitente();
 			$objCompraRemitente->idCompra = $objCompra->idCompra;
 			$objCompraRemitente->cedulaRemitente =  $modelPago->identificacionUsuario;
-			$objCompraRemitente->nombreRemitente =  $modelPago->nombre;
-			$objCompraRemitente->telefonoRemitente =  $modelPago->telefono;
+			$objCompraRemitente->nombreRemitente =  $modelPago->nombreRemitente;
+			$objCompraRemitente->telefonoRemitente =  $modelPago->telefonoRemitente;
 			$objCompraRemitente->correoRemitente =  $modelPago->correoRemitente;
+			
+			
 			$objCompraRemitente->direccionRemitente =  $modelPago->direccionRemitente;
 			$objCompraRemitente->barrioRemitente =  $modelPago->barrioRemitente;
 			$objCompraRemitente->recogida =  $modelPago->recogida;
+			
+			
 			$objCompraRemitente->puntoVentaDestino = $this->objPuntoVentaDestino->idComercial;
 			$objCompraRemitente->servicioRed = Yii::app()->getModule('puntoventa')->shoppingCartNationalSale->getShippingServicio();
 			$objCompraRemitente->servicioRecogida = Yii::app()->getModule('puntoventa')->shoppingCartNationalSale->getShippingRecogida();
@@ -779,6 +792,42 @@ class CarroController extends ControllerVenta{
 			if (!$objCompraRemitente->save()) {
 				throw new Exception("Error al guardar dirección de compra" . $objCompraRemitente->validateErrorsResponse());
 			}
+			
+			// Guardar datos del Cliente 
+			
+			$objCliente = Cliente::model()->find(array(
+					'condition' => 'numeroDocumento =:documento',
+					'params' => array(
+							':documento' => $modelPago->identificacionUsuario
+					)
+			));
+			
+			if($objCliente == null){
+				$objCliente = new Cliente();
+				$objCliente->numeroDocumento = $modelPago->identificacionUsuario;
+			}
+				
+			$objCliente->nombre = $modelPago->nombreRemitente;
+			$objCliente->telefono = $modelPago->telefonoRemitente;
+			$objCliente->email = $modelPago->correoRemitente;
+			
+			if(!$objCliente->save()){
+				throw new Exception("Error al guardar el cliente" . $objCliente->validateErrorsResponse());
+			}
+			
+			$objBeneficiario = new Beneficiario();
+			$objBeneficiario->celular = $modelPago->celular;
+			$objBeneficiario->direccion = $modelPago->direccion;
+			$objBeneficiario->extension = $modelPago->extension;
+			$objBeneficiario->nombre = $modelPago->nombre;
+			$objBeneficiario->barrio = $modelPago->barrio;
+			$objBeneficiario->numeroDocumento = $modelPago->identificacionUsuario;
+			$objBeneficiario->telefono = $modelPago->telefono;
+			
+			if(!$objBeneficiario->save()){
+				throw new Exception("Error al guardar dirección de compra" . $objBeneficiario->validateErrorsResponse());
+			}
+			
 			//items de compra
 			$positions = Yii::app()->getModule('puntoventa')->shoppingCartNationalSale->getPositions();
 			foreach ($positions as $position) {
@@ -992,57 +1041,15 @@ class CarroController extends ControllerVenta{
 	
 			try {
 				/***************************** VALIDAR CON JAVELA ESTE PEDAZO DE CODIGO ****************************************************/
-			//	if($objCompra->recogida  == 0){
-					$result = $client->__soapCall("CongelarCompraAutomatica", array('idPedido' => $objCompra->idCompra)); //763759, 763743
-					//$result = array(0=>0,1=>'congelar prueba error');
-					//$result = array(0 => 1, 1 => 'congelar prueba ok', 2 => 'miguel.sanchex@gmail.com.co');
-					if (!empty($result) && $result[0] == 1) {
-						
-						/************ agregar descripcion en las observaciones **************/
-						
-						$objEstadoCompra = new ComprasEstados;
-						$objEstadoCompra->idCompra = $objCompra->idCompra;
-						$objEstadoCompra->idEstadoCompra = Yii::app()->params->callcenter['estadoCompra']['estado']['remitido'];
-						$objEstadoCompra->idOperador = 38;
-						if (!$objEstadoCompra->save()) {
-							throw new Exception("Error al guardar traza de estado: " . $objEstadoCompra->validateErrorsResponse());
-						}
-						
-						$objObservacion = new ComprasObservaciones;
-						$objObservacion->idCompra = $objCompra->idCompra;
-						$objObservacion->observacion = "Cambio de Estado: Remitido POS. " . $objCompra->idComercial;
-						$objObservacion->idOperador = 38;
-						$objObservacion->notificarCliente = 0;
-						
-						if (!$objObservacion->save()) {
-							throw new Exception("Error al guardar observación" . $objObservacion->validateErrorsResponse());
-						}
-						
-						$objCompraRemision = Compras::model()->findByPk($objCompra->idCompra, array("with" => "objPuntoVenta"));
-						$contenidoCorreo = $this->renderPartial(Yii::app()->params->rutasPlantillasCorreo['compraCallcenter'], array('objCompra' => $objCompraRemision), true, true);
-					
-						$htmlCorreo = PlantillaCorreo::getContenido('compraCallcenter', $contenidoCorreo);
-                        
-						try {
-							sendHtmlEmail($result[2], Yii::app()->params->asunto['pedidoRemitido'], $htmlCorreo);
-						} catch (Exception $ce) {
-							Yii::log("Error enviando correo de remision automatica #$objCompra->idCompra\n" . $ce->getMessage() . "\n" . $ce->getTraceAsString(), CLogger::LEVEL_INFO, 'application');
-						}
-					} else {
-						$objCompra->idEstadoCompra = Yii::app()->params->callcenter['estadoCompra']['estado']['pendiente'];
-						if (!$objCompra->save()) {
-							throw new Exception("Error al guardar compra [1]" . $objCompra->validateErrorsResponse());
-						}
+						 
+					$objCompra->idEstadoCompra = Yii::app()->params->callcenter['estadoCompra']['estado']['pendiente'];
+					if (!$objCompra->save()) {
+						throw new Exception("Error al guardar compra [1]" . $objCompra->validateErrorsResponse());
 					}
-			//	}
 				
 				/***********************************************VER SI SE MANEJA LA MISMA PLANTILLA********************************************************/
 				
-				
-				/********************************************************************************************************/
-			} catch (SoapFault $exc) {
-				Yii::log("SoapFault WebService CongelarCompraAutomatica [compra: $objCompra->idCompra]\n" . $exc->getMessage() . "\n" . $exc->getTraceAsString() . "\n" . $client->__getLastResponse(), CLogger::LEVEL_INFO, 'application');
-			} catch (Exception $exc) {
+			}catch (Exception $exc) {
 				Yii::log("Exception WebService CongelarCompraAutomatica [compra: $objCompra->idCompra]\n" . $exc->getMessage() . "\n" . $exc->getTraceAsString(), CLogger::LEVEL_INFO, 'application');
 			}
 	

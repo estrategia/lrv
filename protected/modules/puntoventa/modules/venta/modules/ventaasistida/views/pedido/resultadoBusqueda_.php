@@ -24,7 +24,7 @@
                             <?php
                             $this->renderPartial('_elementoProducto', array(
                                 'objProducto' => $objProducto,
-                                'objPrecio' => new PrecioProducto($objProducto, $objSectorCiudad, $codigoPerfil),
+                                'objPrecio' => new PrecioProducto($objProducto, $objSectorCiudad, $codigoPerfil, false, true),
                                 'saldos' => $listaProductosSaldos[$objProducto->codigoProducto],
                             ));
                             ?>
