@@ -3449,7 +3449,7 @@ class CarroController extends Controller {
                         $periodoActual = $suscripcion->consultarPeriodoActual();
                         if($periodoActual !== null) {
                             if ($periodoActual->usado == 0 && $position->getQuantitySuscription() > 0) {
-                                $periodoActual->cantidadComprada = $position->getQuantitySuscripcion();
+                                $periodoActual->cantidadComprada = $position->getQuantitySuscription();
                                 $periodoActual->usado = 1;
                                 $periodoActual->save();
                             } else if (strtotime($fechaActual) >= strtotime($periodoActual->fechaInicioTolerancia)) {
@@ -3457,7 +3457,7 @@ class CarroController extends Controller {
                                 $periodoSiguiente = PeriodosSuscripcion::model()->find("$idPeriodoSiguiente");
                                 if($periodoSiguiente !== null) {
                                     if ($periodoSiguiente->usado == 0) {
-                                        $periodoSiguiente->cantidadComprada = $position->getQuantitySuscripcion();
+                                        $periodoSiguiente->cantidadComprada = $position->getQuantitySuscription();
                                         $periodoSiguiente->usado = 1;
                                         $periodoSiguiente->save();
                                     }
@@ -4058,7 +4058,7 @@ class CarroController extends Controller {
         $positions = Yii::app()->shoppingCart->getPositions();
         foreach ($positions as $position) {
             // var_dump($position);exit();
-            // CVarDumper::dump($position,3,true);exit();
+            CVarDumper::dump($position,3,true);exit();
             echo "Id: " . $position->getId();
             echo "<br/>";
             echo "Precio U: " . $position->getPrice();

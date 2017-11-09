@@ -266,12 +266,12 @@ class PrecioProducto extends Precio {
             if ($this->suscripcion !== null) {
                 $this->porcentajeDescuentoSuscripcion = $this->suscripcion->descuentoProducto;
                 $this->cantidadPeriodoSuscripcion = $this->suscripcion->consultarCantidadPeriodoActual();
-                Yii::log("Suscropcion: " . CVarDumper::dumpAsString($this->cantidadPeriodoSuscripcion), CLogger::LEVEL_INFO, 'error');
                 if ($this->cantidadPeriodoSuscripcion == 0) {
                     $this->porcentajeDescuentoSuscripcion = 0;
                     $this->suscripcion = null;
                 }
             }
+            Yii::log("generate: " . CVarDumper::dumpAsString($this->suscripcion), CLogger::LEVEL_INFO, 'error');
 
            
             // var_dump($this->suscripcion);
@@ -324,9 +324,7 @@ class PrecioProducto extends Precio {
 	                    
 	                    $this->ahorroUnidadDescuento += self::redondear(floor($this->precioUnidad * ($objBeneficio->dsctoUnid / 100)),1,10);
 	                    $this->ahorroUnidad += self::redondear(floor($this->precioUnidad * ($objBeneficio->dsctoUnid / 100)),1,10);
-	                    if ($this->suscripcion !== null) {
-	                        $this->ahorroUnidadSuscripcion += self::redondear(floor($this->precioUnidad * ($this->suscripcion->descuentoProducto / 100)),1,10);
-	                    }
+	                    
 	                    //$this->ahorroFraccion=  floor($this->precioFraccionTotal * ($this->getPorcentajeDescuento() / 100));
 	                }
                 
@@ -396,6 +394,9 @@ class PrecioProducto extends Precio {
                 $this->listBeneficios = array();
                 $this->listBeneficiosBonos = array();
             }
+            if ($this->suscripcion !== null) {
+                $this->ahorroUnidadSuscripcion += self::redondear(floor($this->precioUnidad * ($this->suscripcion->descuentoProducto / 100)),1,10);
+            }
 
             //restriccion de maximo de beneficio
             if ($this->porcentajeDescuentoBeneficio > Yii::app()->params->beneficios['porcentajeMaximo']) {
@@ -463,7 +464,7 @@ class PrecioProducto extends Precio {
             	else
             		return $suscripcion ? $this->precioUnidad - $this->ahorroUnidadDescuento - $this->ahorroUnidadSuscripcion : $this->precioUnidad - $this->ahorroUnidadDescuento;
             }		
-            else
+            else 
             	return $this->precioUnidad;
             	
         }else if ($tipo == self::PRECIO_FRACCION) {
