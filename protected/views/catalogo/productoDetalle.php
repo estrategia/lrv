@@ -211,6 +211,18 @@
 
     <div class="cdtl_div_ln"></div>
 
+    <?php if (!Yii::app()->user->isGuest): ?>
+        <?php $suscripcion = $objPrecio->getSuscripcion() ?>
+        <?php if($objPrecio->conSuscripcion() && $suscripcion == null): ?>
+            <a href="<?php echo CController::createUrl('/suscripciones/suscribirse', array('codigoProducto' => $objProducto->codigoProducto)) ?>" class="ui-btn ui-corner-all ui-shadow ui-btn-n btn_add_lst_pr">Suscribete y ahorra</a>
+            <?php echo "<div class='space-1'></div>" ?>
+        <?php elseif($objPrecio->getSuscripcion() != null): ?>
+            <p> Ahorro por suscripción: $ <?php echo $objPrecio->getAhorroUnidadSuscripcion() ?> </p>
+            <p> Descuento por suscripción: $ <?php echo $suscripcion->descuentoProducto ?>% </p>
+            <p>  Cantidad maxima suscripcion: $ <?php echo $suscripcion->cantidadDisponiblePeriodoActual ?> unidades </p>
+        <?php endif; ?>
+    <?php endif; ?>
+
     <?php if (!in_array($objProducto->idUnidadNegocioBI, Yii::app()->params->calificacion['categoriasNoCalificacion'])): ?>
         <div data-role="collapsible" data-iconpos="right" data-collapsed-icon="carat-d" data-expanded-icon="carat-u" class="c_cont_com_prod ui-nodisc-icon ui-alt-icon">
             <h3>Comentarios del producto</h3>

@@ -538,5 +538,9 @@ class PrecioProducto extends Precio {
     	return $this->ahorroUnidadBono;
     }
     
+    public function getAhorroUnidadSuscripcion()
+    {
+        return $this->ahorroUnidadSuscripcion;
+    }
 
 }
