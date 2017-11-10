@@ -48,10 +48,9 @@ class BeneficiosCommand extends CConsoleCommand {
             $arrBeneficios = array();
             //Beneficios-BeneficiosProductos
             $h1 = round(microtime(true) * 1000);
-
+ 
             $sql = "select max(idBeneficioSincronizado) as maximo from t_Beneficios"; //
             $result = Yii::app()->db->createCommand($sql)->queryAll();
-            
             $transaction = Yii::app()->db->beginTransaction();
             $idSincronizacion = 0;
             if ($result[0]['maximo'] != null) {
