@@ -138,7 +138,7 @@ class CarroController extends ControllerVenta{
 				Yii::app()->getModule('puntoventa')->shoppingCartNationalSale->put($objProductoCarro, true, $cantidadF,$puntoVenta);
 			}
 			
-			$position = Yii::app()->getModule('puntoventa')->shoppingCartNationalSale->itemAt($idPosition);
+			
 			
 		} else {
 			$fracciones = $objProducto->unidadFraccionamiento > 0 ?
@@ -159,21 +159,25 @@ class CarroController extends ControllerVenta{
 		 Yii::app()->end();
 		 }
 		 */
-	
+		$position = Yii::app()->getModule('puntoventa')->shoppingCartNationalSale->itemAt($idPosition);
+		
 		echo CJSON::encode(array(
 				'result' => 'ok',
 				'response' => array(
 					'mensajeHTML' => $this->renderPartial('_carroAgregado', array('objProducto' => $objProducto), true),
-					'objetosCarro' => Yii::app()->getModule('puntoventa')->shoppingCartNationalSale->getCount()
+					'objetosCarro' => Yii::app()->getModule('puntoventa')->shoppingCartNationalSale->getCount(),
+					'cantidadUnidades' => $cantidadUnidadPDV + $cantidadU,
+					'cantidadFracciones' => $cantidadFraccionPDV + $cantidadF,
+					'totales' => Yii::app()->numberFormatter->format(Yii::app()->params->formatoMoneda['patron'], $position->getSumPrice(false, true), Yii::app()->params->formatoMoneda['moneda']) 
 				),
 		));
 		Yii::app()->end();
 	}
 	
-	public function actionModificar() {
+	public function actionEliminarr() {
 	
 		$modificar = Yii::app()->getRequest()->getPost('modificar', null);
-		$id = Yii::app()->getRequest()->getPost('position', null);
+		$id = Yii::app()->getRequest()->getPost('producto', null);
 	
 		$modelPago = null;
 	
@@ -206,6 +210,7 @@ class CarroController extends ControllerVenta{
 	
 		if ($modificar == 1) {
 			$this->modificarProducto($position, $objSectorCiudad);
+			
 		}
 	
 		echo CJSON::encode(array(
@@ -218,110 +223,10 @@ class CarroController extends ControllerVenta{
 		Yii::app()->end();
 	}
 	
-	private function modificarProducto($position, $objSectorCiudad) {
-		$carroVista = "carro";
-	
-	
-		$cantidadU = Yii::app()->getRequest()->getPost('cantidadU', null);
-		$cantidadF = Yii::app()->getRequest()->getPost('cantidadF', null);
-	
-		if ($cantidadU === null || $cantidadF === null) {
-			echo CJSON::encode(array('result' => 'error', 'response' => array(
-					'message' => 'Solicitud inválida, no se detectan datos',
-					'carroHTML' => $this->renderPartial($carroVista, null, true),
-			)));
-			Yii::app()->end();
-		}
-	
-		if ($cantidadF < 0 && $cantidadU < 0) {
-			echo CJSON::encode(array('result' => 'error', 'response' => array(
-					'message' => 'Cantidad no válida',
-					'carroHTML' => $this->renderPartial($carroVista, null, true),
-			)));
-			Yii::app()->end();
-		}
-		
-		if($cantidadF == null){
-			$cantidadF = 0;
-		}
-	
-		$codigoProducto = $position->objProducto->codigoProducto;
-	
-		$objProducto = Producto::model()->find(array(
-				'with' => array(
-						'listSaldos' => array('condition' => '(listSaldos.saldoUnidad>:saldo AND listSaldos.codigoCiudad=:ciudad AND listSaldos.codigoSector=:sector) OR (listSaldos.saldoUnidad IS NULL AND listSaldos.codigoCiudad IS NULL AND listSaldos.codigoSector IS NULL)'),
-						'listPreciosVAP' => array('condition' => '(listPreciosVAP.codigoCiudad=:ciudad) OR (listPreciosVAP.codigoCiudad IS NULL)'),
-						'listSaldosTerceros' => array('condition' => '(listSaldosTerceros.saldoUnidad>:saldo AND listSaldosTerceros.codigoCiudad=:ciudad AND listSaldosTerceros.codigoSector=:sector) OR (listSaldosTerceros.codigoCiudad IS NULL AND listSaldosTerceros.codigoSector IS NULL)')
-				),
-				'condition' => 't.activo=:activo AND t.codigoProducto=:codigo AND ( (listSaldos.saldoUnidad IS NOT NULL AND listPreciosVAP.codigoCiudad IS NOT NULL) OR listSaldosTerceros.codigoCiudad IS NOT NULL)',
-				'params' => array(
-						':activo' => 1,
-						':codigo' => $codigoProducto,
-						':saldo' => 0,
-						':ciudad' => $objSectorCiudad->codigoCiudad,
-						':sector' => $objSectorCiudad->codigoSector,
-				),
-		));
-	
-		if ($objProducto === null) {
-			echo CJSON::encode(array('result' => 'error', 'response' => array(
-					'message' => 'Producto no disponible',
-					'carroHTML' => $this->renderPartial($carroVista, null, true),
-			)));
-			Yii::app()->end();
-		}
-	
-		$agregarU = false;
-		$agregarF = false;
-		$divisionFracciones = $objProducto->numeroFracciones > 0 ? 
-									$objProducto->unidadFraccionamiento/$objProducto->numeroFracciones:
-									0;
-		// $canastaVista = "canasta";
-	
-			//si hay saldo, agrega a carro, sino consulta bodega
-			if ($cantidadU + $cantidadF*$divisionFracciones <= $position->objProducto->saldosDisponibles) {
-				if ($cantidadU >= 0) {
-					$agregarU = true;
-				}
-				if ($cantidadF >= 0) {
-					$agregarF = true;
-				}
-			} else {
-				$fracciones = $objProducto->unidadFraccionamiento > 0 ?
-													intval(abs(intval($position->objProducto->saldosDisponibles)-$position->objProducto->saldosDisponibles)*$objProducto->numeroFracciones/$objProducto->unidadFraccionamiento):
-													0;
-				echo CJSON::encode(array('result' => 'error', 'response' => array(
-							'message' => "La cantidad solicitada no está disponible en este momento. Saldos disponibles: ".intval($position->objProducto->saldosDisponibles)." unidades ".
-										($fracciones > 0 ? ($fracciones." fracciones. ") : ""),
-							'maximoUnidades' => intval($position->objProducto->saldosDisponibles),
-							'maximoFracciones' => $fracciones,
-							//	'carroHTML' => $this->renderPartial($carroVista, null, true),
-					)));
-					Yii::app()->end();
-			}
-		
-		if ($agregarU) {
-			Yii::app()->getModule('puntoventa')->shoppingCartNationalSale->update($position, false, $cantidadU);
-		}
-	
-		if ($agregarF) {
-			Yii::app()->getModule('puntoventa')->shoppingCartNationalSale->update($position, true, $cantidadF);
-		}
-	
-		echo CJSON::encode(array(
-				'result' => 'ok',
-				'response' => array(
-					//	'canasta' => $this->renderPartial("canasta" , null, true),
-						'canastaHTML' => $this->renderPartial('carro', null, true),
-				),
-		));
-		Yii::app()->end();
-	}
-	
 	public function actionEliminar() {
-		$id = Yii::app()->getRequest()->getPost('id', null);
+		$id = Yii::app()->getRequest()->getPost('producto', null);
 		$eliminar = Yii::app()->getRequest()->getPost('eliminar', null);
-	
+		$pdv = Yii::app()->getRequest()->getPost('pdv', null);
 		if ($id === null || $eliminar === null) {
 			echo CJSON::encode(array('result' => 'error', 'response' => 'Solicitud inválida, no se detectan datos'));
 			Yii::app()->end();
@@ -335,9 +240,8 @@ class CarroController extends ControllerVenta{
 		}
 	
 		if ($eliminar == 1) {
-			Yii::app()->getModule('puntoventa')->shoppingCartNationalSale->update($position, false, 0);
-		} else if ($eliminar == 2) {
-			Yii::app()->getModule('puntoventa')->shoppingCartNationalSale->update($position, true, 0);
+			Yii::app()->getModule('puntoventa')->shoppingCartNationalSale->update($position, false, 0, $pdv, 0,  true);
+	//		Yii::app()->getModule('puntoventa')->shoppingCartNationalSale->update($position, true, 0, $pdv, true);
 		} else if ($eliminar == 3) {
 			Yii::app()->getModule('puntoventa')->shoppingCartNationalSale->updateStored($position, 0);
 		} else {
@@ -345,10 +249,15 @@ class CarroController extends ControllerVenta{
 			Yii::app()->end();
 		}
 	
+//		$position = Yii::app()->getModule('puntoventa')->shoppingCartNationalSale->itemAt($id);
+		
 		echo CJSON::encode(array(
 				'result' => 'ok',
 			//	'canasta' => $this->renderPartial("canasta" , null, true),
-				'canastaHTML' => $this->renderPartial("carro", null, true),
+	//			'response' => $this->renderPartial("carro", null, true),
+				'cantidadUnidades' => 0,
+				'cantidadFracciones' => 0,
+				'totales' => Yii::app()->numberFormatter->format(Yii::app()->params->formatoMoneda['patron'], $position->getSumPrice(false, true), Yii::app()->params->formatoMoneda['moneda'])
 		));
 		Yii::app()->end();
 	}

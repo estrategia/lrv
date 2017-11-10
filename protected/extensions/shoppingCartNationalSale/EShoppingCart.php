@@ -336,7 +336,7 @@ class EShoppingCart extends CMap {
      * @param int $quantity
      * @param bool $fraction adding fraction or not
      */
-    public function update(IECartPosition $position, $fraction, $quantity, $pdv,$numCant) {
+    public function update(IECartPosition $position, $fraction, $quantity, $pdv = 0, $numCant = 0, $delete = false) {
     	if($this->tipoVenta == 1){
     		
     		
@@ -348,10 +348,9 @@ class EShoppingCart extends CMap {
 	                'codigoPerfil' => $this->codigoPerfil
 	            ));
 	
-	            //$position->attachBehavior("CartPosition", new ECartPositionBehaviour());
-	
-	         
 	            $position->setQuantity($quantity, $fraction);
+	            
+	            
 	           
 	            if ($position->getQuantity(true) + $position->getQuantity(false) < 1)
 	                $this->remove($key);
@@ -373,28 +372,37 @@ class EShoppingCart extends CMap {
     			));
     		
     			//$position->attachBehavior("CartPosition", new ECartPositionBehaviour());
-    			$position->setQuantity($quantity, $fraction);
-    			
     			
     			$QuantityPDV = $position->getUnitPDV($pdv,true);
     			$FracPDV = $position->getUnitPDV($pdv,false);
     			
-    			if(!$fraction){
-    				$QuantityPDV+=$numCant;
+    			if($delete){
+	    			 $totalQuantityUnit = $position->getQuantity(false);
+	    			 $totalQuantityFrac = $position->getQuantity(true);
+	    			 
+	    			 $position->setQuantity($totalQuantityUnit - $QuantityPDV, false);
+	    			 $position->setQuantity($totalQuantityFrac - $FracPDV, true);
+	    			 
+	    			 $position->deletePDV($pdv);
     			}else{
-    				$FracPDV+=$numCant;
+    				$position->setQuantity($quantity, $fraction);
+    				
+    				if(!$fraction){
+    					$QuantityPDV+=$numCant;
+    				}else{
+    					$FracPDV+=$numCant;
+    				}
+    				$position->setPDV($pdv,$QuantityPDV,$FracPDV);
     			}
-    			$position->setPDV($pdv,$QuantityPDV,$FracPDV);
-    			
+    		
     			if ($position->getQuantity(true) + $position->getQuantity(false) < 1)
     				$this->remove($key);
-    				else
-    					parent::add($key, $position);
-    		
-    					$this->applyDiscounts();
-    					$this->onUpdatePoistion(new CEvent($this));
-    					$this->saveState();
-    					return true;
+    			else
+    				parent::add($key, $position);
+    				$this->applyDiscounts();
+    				$this->onUpdatePoistion(new CEvent($this));
+    				$this->saveState();
+    				return true;
     		}
     	}
         return false;
