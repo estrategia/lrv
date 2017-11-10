@@ -3445,7 +3445,7 @@ class CarroController extends Controller {
                         'identificacionUsuario=:identificacionUsuario AND idProducto=:idProducto',
                         [':identificacionUsuario' => $objCompra->identificacionUsuario, ':idProducto' => $position->objProducto->codigoProducto]
                     );
-                    $fechaActual = date('Y-m-d');
+                    $fechaActual = Date("Y-m-d");
                     if($suscripcion !== null) {
                         $periodoActual = $suscripcion->consultarPeriodoActual();
                         if($periodoActual !== null) {
@@ -3733,6 +3733,7 @@ class CarroController extends Controller {
             
             $htmlCorreo = PlantillaCorreo::getContenido('finCompra',$contenidoCorreo);
             	
+            
             try {
                 sendHtmlEmail($correoUsuario, $asuntoCorreo, $htmlCorreo);
             } catch (Exception $ce) {
@@ -3806,6 +3807,7 @@ class CarroController extends Controller {
                 )
             );
         } catch (Exception $exc) {
+        	
             Yii::log($exc->getMessage() . "\n" . $exc->getTraceAsString(), CLogger::LEVEL_ERROR, 'application');
 
             try {

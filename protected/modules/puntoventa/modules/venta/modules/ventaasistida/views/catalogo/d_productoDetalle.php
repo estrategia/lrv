@@ -75,7 +75,7 @@
 
                         <?php if ($objPrecio->inicializado()): ?>
                         
-                        	                            <?php if ($objProducto->fraccionado == 1): ?> 
+                       <?php if ($objProducto->fraccionado == 1): ?> 
                                 <!-- Producto fraccionado -->
                             </div>
                         </div>
@@ -85,8 +85,8 @@
                                 
                                 Punto de venta: <?= $saldosPDV['Nombre'] ?><br/>
                                 Unidades disponibles: <?= $saldosPDV['Saldos'] ?><br/>
-                                Unidades Agregadas: <?= $position?$position->getUnitPDV($key,true):0 ?>
-                                Fracciones Agregadas: <?= $position ? $position->getUnitPDV($key,false):0 ?> 
+                                Unidades Agregadas: <span id='cantidad-unidades-<?php echo $key?>'><?= $position?$position->getUnitPDV($key,true):0 ?></span>
+                                Fracciones Agregadas: <span id='cantidad-fracciones-<?php echo $key?>'><?= $position ? $position->getUnitPDV($key,false):0 ?></span> 
                                 
 		                        <div  class="descripciones fraccionado_columns">
 		                            <table border="0" cellpadding="0" cellspacing="0" style="margin-top:40px;">
@@ -186,11 +186,11 @@
                                 <div>
                                 Punto de venta: <?= $saldosPDV['Nombre'] ?><br/>
                                 Unidades disponibles: <?= $saldosPDV['Saldos'] ?><br/>
-                                Unidades Agregadas: <?= $position?$position->getUnitPDV($key,true):0 ?>
+                                Unidades Agregadas: <span id='cantidad-unidades-<?php echo $key?>'> <?= $position?$position->getUnitPDV($key,true):0 ?></span>
                                 	
-                                    <?php echo CHtml::link('<div class="btn btn-primary btn-block input-mini">Eliminar;<img src="' . Yii::app()->baseUrl . '/images/desktop/button-carrito.png" alt=""></div>', '#', array('data-producto' => $objProducto->codigoProducto, 'data-cargar-nacional' => 1, 'data-id' => $idUnico, 'data-max' => $objProducto->saldosDisponibles ,'class' => '')); ?><br/>
+                                    <?php echo CHtml::link('<div class="btn btn-primary  btn-sm">Eliminar</div>', '#', array('data-producto' => $objProducto->codigoProducto, 'data-eliminar-asistida' => 1, 'data-pdv' => $key,'data-id' => $idUnico, 'data-max' => $objProducto->saldosDisponibles ,'class' => '')); ?><br/>
                                 	
-                                	
+                                	<br/>
                                     <div class="detPproduct">
                                         <button class=" min" style="border:1px solid;" id="disminuir_unidad_<?php echo $objProducto->codigoProducto ?>_<?= $key?>" data-role="disminuir-cantidad" data-pdv='<?= $key?>'  data-producto="<?php echo $objProducto->codigoProducto ?>" data-precio="<?= $objPrecio->getPrecio(Precio::PRECIO_UNIDAD) ?>"  type="button"><span  class="glyphicon glyphicon-minus"></span></button>
                                         <div class="input_cant ressete"><input id="cantidad-producto-unidad-<?php echo $objProducto->codigoProducto ?>_<?= $key?>"   class="increment" type="text" data-pdv='<?= $key?>' data-role="validar-cantidad-unidad"  data-producto="<?php echo $objProducto->codigoProducto ?>" data-precio="<?= $objPrecio->getPrecio(Precio::PRECIO_UNIDAD) ?>" maxlength="3" value="1" data-total="700"/></div>

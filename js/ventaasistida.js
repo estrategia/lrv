@@ -99,6 +99,49 @@ $("#busqueda-buscar").keypress(function (event) {
 });
 */
 
+
+$(document).on('click', "a[data-eliminar-asistida='1']", function () {
+
+	 var pdv = $(this).attr('data-pdv');
+	 var producto = $(this).attr('data-producto');
+	 var data = {}; 
+	 data['producto'] = producto;
+     data['pdv'] = pdv;
+     data['eliminar'] = 1;
+     
+	 $.ajax({
+	        type: 'POST',
+	        dataType: 'json',
+	        async: true,
+	        url: requestUrl + '/puntoventa/venta/ventaasistida/carro/eliminar',
+	        data: data,
+	        beforeSend: function () {
+	            Loading.show();
+	        },
+	        success: function (data) {
+	            if (data.result === "ok") {
+	            	Loading.hide();
+	                $("#cantidad-unidades-"+pdv).html(data.cantidadUnidades);
+	                $("#subtotal-producto-unidad-"+producto).html(data.totales);
+	                if(data.response.cantidadFracciones > 0){
+	                	$("#cantidad-fracciones-"+pdv).html(data.cantidadFracciones);
+	                }else{
+	                	$("#cantidad-fracciones-"+pdv).html(0);
+	                }
+	                
+	            } else {
+	                Loading.hide();
+	                bootbox.alert(data.response);
+	            }
+	        },
+	        error: function (jqXHR, textStatus, errorThrown) {
+	            Loading.hide();
+	            bootbox.alert('Error: ' + errorThrown);
+	        }
+	    });   
+	    
+});
+
 $(document).on('click', "a[data-cargar-nacional='1'], a[data-cargar-nacional='2']", function () {
     var tipo = $(this).attr('data-cargar-nacional');
     var pedido = $('#btn-pedido-buscar').attr('data-pedido');
@@ -146,6 +189,15 @@ $(document).on('click', "a[data-cargar-nacional='1'], a[data-cargar-nacional='2'
             if (data.result === "ok") {
             	dialogoAnimado(data.response.mensajeHTML);
                 Loading.hide();
+                $("#cantidad-unidades-"+pdv).html(data.response.cantidadUnidades);
+               
+                $("#subtotal-producto-unidad-"+producto).html(data.response.totales);
+                if(data.response.cantidadFracciones > 0){
+                	$("#cantidad-fracciones-"+pdv).html(data.response.cantidadFracciones);
+                }else{
+                	$("#cantidad-fracciones-"+pdv).html(0);
+                }
+                
             } else {
                 Loading.hide();
                 bootbox.alert(data.response);
@@ -602,40 +654,40 @@ function modificarCarro(position, modificar, maximo) {
     });
 }
 
-$(document).on('click', "a[data-eliminar='1'], a[data-eliminar='2'], a[data-eliminar='3']", function() {
-    var position = $(this).attr('data-position');
-    var eliminar = $(this).attr('data-eliminar');
-
-    $.ajax({
-        type: 'POST',
-        dataType: 'json',
-        async: true,
-        url: requestUrl + '/puntoventa/venta/ventaasistida/carro/eliminar',
-        data: {id: position, eliminar: eliminar},
-        beforeSend: function() {
-            Loading.show();
-        },
-        complete: function() {
-            Loading.hide();
-        },
-        success: function(data) {
-            if (data.result == 'ok') {
-            	// carro de compras
-                $('#div-carro-canasta').html(data.canasta);
-                $('#div-carro-canasta').trigger("create");
-                
-                $('#div-carro-vitalcall').html(data.canastaHTML);
-                $('#div-carro-vitalcall').trigger("create");
-            } else {
-                alert(data.response);
-            }
-        },
-        error: function(jqXHR, textStatus, errorThrown) {
-            alert('Error: ' + errorThrown);
-        }
-    });
-
-});
+//$(document).on('click', "a[data-eliminar='1'], a[data-eliminar='2'], a[data-eliminar='3']", function() {
+//    var position = $(this).attr('data-position');
+//    var eliminar = $(this).attr('data-eliminar');
+//
+//    $.ajax({
+//        type: 'POST',
+//        dataType: 'json',
+//        async: true,
+//        url: requestUrl + '/puntoventa/venta/ventaasistida/carro/eliminar',
+//        data: {id: position, eliminar: eliminar},
+//        beforeSend: function() {
+//            Loading.show();
+//        },
+//        complete: function() {
+//            Loading.hide();
+//        },
+//        success: function(data) {
+//            if (data.result == 'ok') {
+//            	// carro de compras
+//                $('#div-carro-canasta').html(data.canasta);
+//                $('#div-carro-canasta').trigger("create");
+//                
+//                $('#div-carro-vitalcall').html(data.canastaHTML);
+//                $('#div-carro-vitalcall').trigger("create");
+//            } else {
+//                alert(data.response);
+//            }
+//        },
+//        error: function(jqXHR, textStatus, errorThrown) {
+//            alert('Error: ' + errorThrown);
+//        }
+//    });
+//
+//});
 
 
 function disminuirCantidadFraccionado(codigoProducto, numeroFracciones, unidadFraccionamiento, valorFraccionado, valorUnidad, idUnico, pdv) {
