@@ -1,7 +1,14 @@
 <?php
 
 return array(
-    // uncomment the following to enable the Gii tool
+    'terceros' => array(
+        'defaultController' => 'default',
+        'components' => array(
+            'user' => array(
+                'class' => 'terceros.components.UserTercero'
+            )
+        ),
+    ),
     'callcenter' => array(
         'defaultController' => 'admin',
         'components' => array(

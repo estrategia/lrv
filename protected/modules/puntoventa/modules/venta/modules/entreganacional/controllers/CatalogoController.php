@@ -342,7 +342,7 @@ class CatalogoController extends ControllerEntregaNacional {
         
         if ($objSectorCiudad == null) {
             $objProducto = Producto::model()->find(array(
-                'with' => array('listImagenesGrandes', 'objDetalle', 'objCodigoEspecial', 'listCalificaciones' => array('with' => 'objUsuario')),
+                'with' => array('listImagenesGrandes',  'objCodigoEspecial', 'listCalificaciones' => array('with' => 'objUsuario')),
                 'condition' => 't.activo=:activo AND t.codigoProducto=:codigo',
                 'params' => array(
                     ':activo' => 1,
@@ -353,7 +353,7 @@ class CatalogoController extends ControllerEntregaNacional {
             $objProducto = Producto::model()->find(array(
                 'with' => array(
                     'listImagenesGrandes',
-                    'objDetalle',
+                  //  'objDetalle',
                     'objCodigoEspecial',
                     'listCalificaciones' => array('with' => 'objUsuario'),
                   //  'listSaldos' => array('on' => 'listSaldos.codigoCiudad=:ciudad AND listSaldos.codigoSector=:sector OR listSaldos.idProductoSaldos IS NULL'),

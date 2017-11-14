@@ -57,13 +57,16 @@ class ProductoCarro extends IECartPosition {
                     $this->suscripcion = null;
                 }
             }
+
+            // Yii::log("generate: " . CVarDumper::dumpAsString($this->suscripcion), CLogger::LEVEL_INFO, 'error');
+
             // $this->quantitySuscription = 0;
             
             $this->priceUnit = $objprecio->getPrecio(Precio::PRECIO_UNIDAD, false);
             $this->priceSuscriptionUnit = $objprecio->getPrecio(Precio::PRECIO_UNIDAD, false);
             
             $this->priceUnitDiscount = $objprecio->getPrecio(Precio::PRECIO_UNIDAD, false, true);
-            $this->priceSuscriptionUnitDiscount = $objprecio->getPrecio(Precio::PRECIO_UNIDAD, true, true, true, true);
+            $this->priceSuscriptionUnitDiscount = $objprecio->getPrecio(Precio::PRECIO_UNIDAD, true, true, true);
 
             $this->priceFraction = $objprecio->getPrecio(Precio::PRECIO_FRACCION, false);
             $this->priceFractionDiscount = $objprecio->getPrecio(Precio::PRECIO_FRACCION, false,false);

@@ -90,10 +90,10 @@ class CatalogoController extends ControllerVentaAsistida {
                 'listCalificaciones',
             	'objCategoriaBI' => array('with' => array('listCategoriasTienda' => array('on' => 'listCategoriasTienda.tipoDispositivo=:dispositivo'))),
             //    'listSaldos' => array('on' => 'listSaldos.codigoCiudad=:ciudad AND listSaldos.codigoSector=:sector'),
-                'listPrecios' => array('on' => 'listPrecios.codigoCiudad=:ciudad AND listPrecios.codigoSector=:sector'),
+                'listPreciosVAP' => array('on' => 'listPreciosVAP.codigoCiudad=:ciudad'),
                 'listSaldosTerceros' => array('on' => 'listSaldosTerceros.codigoCiudad=:ciudad AND listSaldosTerceros.codigoSector=:sector')
             ),
-            'condition' => "t.activo=:activo AND listPrecios.codigoCiudad is not null AND t.ventaVirtual=:activo",
+            'condition' => "t.activo=:activo AND listPreciosVAP.codigoCiudad is not null AND t.ventaVirtual=:activo",
             'params' => array(
                 ':tipoImagen' => YII::app()->params->producto['tipoImagen']['mini'],
                 ':activo' => 1,
@@ -105,10 +105,10 @@ class CatalogoController extends ControllerVentaAsistida {
         $parametrosProductos['join'] = "JOIN t_relevancia_temp_$sesion rel ON t.codigoProducto  = rel.codigoProducto ";
 
         if (!isset($_GET['ajax'])) {
-            $query = "SELECT  MIN(listPrecios.precioUnidad) minproducto, MAX(listPrecios.precioUnidad) maxproducto, 0  mintercero, 0 maxtercero ";
+            $query = "SELECT  MIN(listPreciosVAP.precioUnidad) minproducto, MAX(listPreciosVAP.precioUnidad) maxproducto, 0  mintercero, 0 maxtercero ";
             $query .= "FROM m_Producto t ";
       //      $query .= "LEFT OUTER JOIN t_ProductosSaldos listSaldos ON (listSaldos.codigoProducto=t.codigoProducto) AND listSaldos.codigoCiudad='$objSectorCiudadOrigen->codigoCiudad' AND listSaldos.codigoSector='$objSectorCiudadOrigen->codigoSector'";
-            $query .= "LEFT OUTER JOIN t_ProductosPrecios listPrecios ON (listPrecios.codigoProducto=t.codigoProducto) AND listPrecios.codigoCiudad='$objSectorCiudad->codigoCiudad' AND listPrecios.codigoSector='$objSectorCiudad->codigoSector' ";
+            $query .= "LEFT OUTER JOIN t_ProductosPrecios listPreciosVAP ON (listPreciosVAP.codigoProducto=t.codigoProducto) AND listPreciosVAP.codigoCiudad='$objSectorCiudad->codigoCiudad'";
       //      $query .= "LEFT OUTER JOIN t_ProductosSaldosTerceros listSaldosTerceros ON (listSaldosTerceros.codigoProducto=t.codigoProducto) AND listSaldosTerceros.codigoCiudad='$objSectorCiudadOrigen->codigoCiudad' AND listSaldosTerceros.codigoSector='$objSectorCiudadOrigen->codigoSector'";
             $query .= "WHERE t.activo=1 AND t.codigoProducto IN ($codigosStr) ";
 
@@ -118,9 +118,9 @@ class CatalogoController extends ControllerVentaAsistida {
 
         if ($formOrdenamiento->orden != null) {
             if ($formOrdenamiento->orden == 1) {
-                $parametrosProductos['order'] = "((CASE WHEN listPrecios.precioUnidad IS NULL THEN 0 ELSE listPrecios.precioUnidad END) + (CASE WHEN listSaldosTerceros.precioUnidad IS NULL THEN 0 ELSE listSaldosTerceros.precioUnidad END)) ASC";
+                $parametrosProductos['order'] = "((CASE WHEN listPreciosVAP.precioUnidad IS NULL THEN 0 ELSE listPreciosVAP.precioUnidad END) + (CASE WHEN listSaldosTerceros.precioUnidad IS NULL THEN 0 ELSE listSaldosTerceros.precioUnidad END)) ASC";
             } else if ($formOrdenamiento->orden == 2) {
-                $parametrosProductos['order'] = "((CASE WHEN listPrecios.precioUnidad IS NULL THEN 0 ELSE listPrecios.precioUnidad END) + (CASE WHEN listSaldosTerceros.precioUnidad IS NULL THEN 0 ELSE listSaldosTerceros.precioUnidad END)) DESC";
+                $parametrosProductos['order'] = "((CASE WHEN listPreciosVAP.precioUnidad IS NULL THEN 0 ELSE listPreciosVAP.precioUnidad END) + (CASE WHEN listSaldosTerceros.precioUnidad IS NULL THEN 0 ELSE listSaldosTerceros.precioUnidad END)) DESC";
             } else if ($formOrdenamiento->orden == 3) {
                 $parametrosProductos['order'] = "t.descripcionProducto";
             } else if ($formOrdenamiento->orden == 4) {
@@ -134,11 +134,11 @@ class CatalogoController extends ControllerVentaAsistida {
         }
 
         if ($formFiltro->getPrecioInicio() >= 0) {
-            $parametrosProductos['condition'] = $parametrosProductos['condition'] . " AND ((listPrecios.precioUnidad IS NOT NULL AND listPrecios.precioUnidad>=" . $formFiltro->getPrecioInicio() . ") OR (listSaldosTerceros.precioUnidad IS NOT NULL AND listSaldosTerceros.precioUnidad>=" . $formFiltro->getPrecioInicio() . ") )";
+            $parametrosProductos['condition'] = $parametrosProductos['condition'] . " AND ((listPreciosVAP.precioUnidad IS NOT NULL AND listPreciosVAP.precioUnidad>=" . $formFiltro->getPrecioInicio() . ") OR (listSaldosTerceros.precioUnidad IS NOT NULL AND listSaldosTerceros.precioUnidad>=" . $formFiltro->getPrecioInicio() . ") )";
         }
 
         if ($formFiltro->getPrecioFin() > 0) {
-            $parametrosProductos['condition'] = $parametrosProductos['condition'] . " AND ((listPrecios.precioUnidad IS NOT NULL AND listPrecios.precioUnidad<=" . $formFiltro->getPrecioFin() . ") OR (listSaldosTerceros.precioUnidad IS NOT NULL AND listSaldosTerceros.precioUnidad<=" . $formFiltro->getPrecioFin() . ") )";
+            $parametrosProductos['condition'] = $parametrosProductos['condition'] . " AND ((listPreciosVAP.precioUnidad IS NOT NULL AND listPreciosVAP.precioUnidad<=" . $formFiltro->getPrecioFin() . ") OR (listSaldosTerceros.precioUnidad IS NOT NULL AND listSaldosTerceros.precioUnidad<=" . $formFiltro->getPrecioFin() . ") )";
         }
 
         $listProductos = Producto::model()->findAll($parametrosProductos);
@@ -326,7 +326,7 @@ class CatalogoController extends ControllerVentaAsistida {
 		
         if ($objSectorCiudad == null) {
             $objProducto = Producto::model()->find(array(
-                'with' => array('listImagenesGrandes', 'objDetalle', 'objCodigoEspecial', 'listCalificaciones' => array('with' => 'objUsuario')),
+                'with' => array('listImagenesGrandes', 'objCodigoEspecial', 'listCalificaciones' => array('with' => 'objUsuario')),
                 'condition' => 't.activo=:activo AND t.codigoProducto=:codigo',
                 'params' => array(
                     ':activo' => 1,
@@ -337,11 +337,11 @@ class CatalogoController extends ControllerVentaAsistida {
             $objProducto = Producto::model()->find(array(
                 'with' => array(
                     'listImagenesGrandes',
-                    'objDetalle',
+               //     'objDetalle',
                     'objCodigoEspecial',
                     'listCalificaciones' => array('with' => 'objUsuario'),
                   //  'listSaldos' => array('on' => 'listSaldos.codigoCiudad=:ciudad AND listSaldos.codigoSector=:sector OR listSaldos.idProductoSaldos IS NULL'),
-                    'listPrecios' => array('on' => 'listPrecios.codigoCiudad=:ciudad AND listPrecios.codigoSector=:sector OR listPrecios.idProductoPrecios IS NULL'),
+                    'listPreciosVAP' => array('on' => 'listPreciosVAP.codigoCiudad=:ciudad OR listPreciosVAP.idProductoPrecios IS NULL'),
                     'listSaldosTerceros' => array('on' => 'listSaldosTerceros.codigoCiudad=:ciudad AND listSaldosTerceros.codigoSector=:sector OR listSaldosTerceros.idProductoSaldo IS NULL')
                 ),
                 'condition' => 't.activo=:activo AND t.codigoProducto=:codigo',
@@ -489,7 +489,7 @@ class CatalogoController extends ControllerVentaAsistida {
            
             $this->render('d_productoDetalle', array(
                 'objProducto' => $objProducto,
-                'objPrecio' => new PrecioProducto($objProducto, $objSectorCiudad, $codigoPerfil),
+                'objPrecio' => new PrecioProducto($objProducto, $objSectorCiudad, $codigoPerfil, false, true),
                 'objSectorCiudad' => $objSectorCiudad,
                 'codigoPerfil' => $codigoPerfil,
                 'listaPuntoVenta' => $listaPuntoVenta,
