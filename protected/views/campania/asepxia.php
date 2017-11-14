@@ -122,8 +122,8 @@ $this->metaTags = "
         <div class=" textoproductos-m">
             <h4 class="tituloproductos-m">ASEPXIA TOALLITAS DE LIMPIEZA X25 unidades</h4>
              <p class="textoproductos-m">Dile adiós al brillo de tu cara con Toallitas Asepxia.</p>
-             <p class="precioproductos-m-antes">ANTES: <?= ($jabon_exfoliante == null) ? "--" : Yii::app()->numberFormatter->format(Yii::app()->params->formatoMoneda['patron'], $jabon_exfoliante["u"], Yii::app()->params->formatoMoneda['moneda']) ?></p>
-             <p class="precioproductos-m">AHORA: <?= ($jabon_exfoliante == null) ? "--" : Yii::app()->numberFormatter->format(Yii::app()->params->formatoMoneda['patron'], $jabon_exfoliante["u-a"], Yii::app()->params->formatoMoneda['moneda']) ?></p>
+             <p class="precioproductos-m-antes">ANTES: <?= ($jabon_exfoliante == null) ? "--" : Yii::app()->numberFormatter->format(Yii::app()->params->formatoMoneda['patron'], $jabon_exfoliante["u-a"], Yii::app()->params->formatoMoneda['moneda']) ?></p>
+             <p class="precioproductos-m">AHORA: <?= ($jabon_exfoliante == null) ? "--" : Yii::app()->numberFormatter->format(Yii::app()->params->formatoMoneda['patron'], $jabon_exfoliante["u"], Yii::app()->params->formatoMoneda['moneda']) ?></p>
              <a data-ajax="false" href="<?php echo CController::createUrl('/catalogo/producto', array('producto' => 63948)) ?>"><img class="img-responsive escritorio botoncompra" src="<?= Yii::app()->request->baseUrl ?>/images/contenido/asepxia/images/boton-asepxia.png" > </a>
         </div>
     </div>
@@ -132,8 +132,8 @@ $this->metaTags = "
         <div class=" textoproductos-m">
             <h4 class="tituloproductos-m">ASEPXIA TOALLITAS DE LIMPIEZA X10 unidades</h4>
              <p class="textoproductos-m">Dile adiós al brillo de tu cara con Toallitas Asepxia.</p>
-             <p class="precioproductos-m-antes">ANTES: <?= ($jabon_forte == null) ? "--" : Yii::app()->numberFormatter->format(Yii::app()->params->formatoMoneda['patron'], $jabon_forte["u"], Yii::app()->params->formatoMoneda['moneda']) ?></p>
-             <p class="precioproductos-m">AHORA: <?= ($jabon_forte == null) ? "--" : Yii::app()->numberFormatter->format(Yii::app()->params->formatoMoneda['patron'], $jabon_forte["u-a"], Yii::app()->params->formatoMoneda['moneda']) ?></p>
+             <p class="precioproductos-m-antes">ANTES: <?= ($jabon_forte == null) ? "--" : Yii::app()->numberFormatter->format(Yii::app()->params->formatoMoneda['patron'], $jabon_forte["u-a"], Yii::app()->params->formatoMoneda['moneda']) ?></p>
+             <p class="precioproductos-m">AHORA: <?= ($jabon_forte == null) ? "--" : Yii::app()->numberFormatter->format(Yii::app()->params->formatoMoneda['patron'], $jabon_forte["u"], Yii::app()->params->formatoMoneda['moneda']) ?></p>
              <a data-ajax="false" href="<?php echo CController::createUrl('/catalogo/producto', array('producto' => 63949)) ?>" ><img class="img-responsive escritorio botoncompra" src="<?= Yii::app()->request->baseUrl ?>/images/contenido/asepxia/images/boton-asepxia.png" > </a>
         </div>
     </div>
@@ -142,8 +142,8 @@ $this->metaTags = "
       <div class="textoproductos-m">
           <h4 class="tituloproductos-m">ASEPXIA GEL EXFOLIANTE PARA PUNTOS NEGROS</h4>
            <p class="textoproductos-m">Exfolia suavemente tu piel, renovada y sin imperfecciones.</p>
-           <p class="precioproductos-m-antes">ANTES: <?= ($jabon_soft == null) ? "--" : Yii::app()->numberFormatter->format(Yii::app()->params->formatoMoneda['patron'], $jabon_soft["u"], Yii::app()->params->formatoMoneda['moneda']) ?></p>
-           <p class="precioproductos-m">AHORA: <?= ($jabon_soft == null) ? "--" : Yii::app()->numberFormatter->format(Yii::app()->params->formatoMoneda['patron'], $jabon_soft["u-a"], Yii::app()->params->formatoMoneda['moneda']) ?></p>
+           <p class="precioproductos-m-antes">ANTES: <?= ($jabon_soft == null) ? "--" : Yii::app()->numberFormatter->format(Yii::app()->params->formatoMoneda['patron'], $jabon_soft["u-a"], Yii::app()->params->formatoMoneda['moneda']) ?></p>
+           <p class="precioproductos-m">AHORA: <?= ($jabon_soft == null) ? "--" : Yii::app()->numberFormatter->format(Yii::app()->params->formatoMoneda['patron'], $jabon_soft["u"], Yii::app()->params->formatoMoneda['moneda']) ?></p>
            <a data-ajax="false" href="<?php echo CController::createUrl('/catalogo/producto', array('producto' => 65423)) ?>" ><img class="img-responsive escritorio botoncompra" src="<?= Yii::app()->request->baseUrl ?>/images/contenido/asepxia/images/boton-asepxia.png" > </a>
       </div>
     </div>
@@ -156,8 +156,8 @@ $this->metaTags = "
         <div class=" textoproductos-m">
             <h4 class="tituloproductos-m"> ASEPXIA MAQUILLAJE NATURAL</h4>
              <p class="textoproductos-m">Cubre y cuida tus imperfecciones con Polvos Asepxia. </p>
-             <p class="precioproductos-m-antes">ANTES: <?= ($jabon_maquillajenatural == null) ? "--" : Yii::app()->numberFormatter->format(Yii::app()->params->formatoMoneda['patron'], $jabon_maquillajenatural["u"], Yii::app()->params->formatoMoneda['moneda']) ?></p>
-             <p class="precioproductos-m">AHORA: <?= ($jabon_maquillajenatural == null) ? "--" : Yii::app()->numberFormatter->format(Yii::app()->params->formatoMoneda['patron'], $jabon_maquillajenatural["u-a"], Yii::app()->params->formatoMoneda['moneda']) ?></p>
+             <p class="precioproductos-m-antes">ANTES: <?= ($jabon_maquillajenatural == null) ? "--" : Yii::app()->numberFormatter->format(Yii::app()->params->formatoMoneda['patron'], $jabon_maquillajenatural["u-a"], Yii::app()->params->formatoMoneda['moneda']) ?></p>
+             <p class="precioproductos-m">AHORA: <?= ($jabon_maquillajenatural == null) ? "--" : Yii::app()->numberFormatter->format(Yii::app()->params->formatoMoneda['patron'], $jabon_maquillajenatural["u"], Yii::app()->params->formatoMoneda['moneda']) ?></p>
              <a data-ajax="false" href="<?php echo CController::createUrl('/catalogo/producto', array('producto' => 82323)) ?>" ><img class="img-responsive escritorio botoncompra" src="<?= Yii::app()->request->baseUrl ?>/images/contenido/asepxia/images/boton-asepxia.png" > </a>
         </div>
     </div>
@@ -167,8 +167,8 @@ $this->metaTags = "
             <h4 class="tituloproductos-m">ASEPXIA MAQUILLAJE BRONCE</h4>
              <p class="textoproductos-m">Cubre y cuida tus imperfecciones con Polvos Asepxia.</p>
               <p style="margin: 0px;height:14px;">&nbsp;</p>
-              <p class="precioproductos-m-antes">ANTES: <?= ($jabon_maquillajebronce == null) ? "--" : Yii::app()->numberFormatter->format(Yii::app()->params->formatoMoneda['patron'], $jabon_maquillajebronce["u"], Yii::app()->params->formatoMoneda['moneda']) ?></p>
-             <p class="precioproductos-m">AHORA: <?= ($jabon_maquillajebronce == null) ? "--" : Yii::app()->numberFormatter->format(Yii::app()->params->formatoMoneda['patron'], $jabon_maquillajebronce["u-a"], Yii::app()->params->formatoMoneda['moneda']) ?></p>
+              <p class="precioproductos-m-antes">ANTES: <?= ($jabon_maquillajebronce == null) ? "--" : Yii::app()->numberFormatter->format(Yii::app()->params->formatoMoneda['patron'], $jabon_maquillajebronce["u-a"], Yii::app()->params->formatoMoneda['moneda']) ?></p>
+             <p class="precioproductos-m">AHORA: <?= ($jabon_maquillajebronce == null) ? "--" : Yii::app()->numberFormatter->format(Yii::app()->params->formatoMoneda['patron'], $jabon_maquillajebronce["u"], Yii::app()->params->formatoMoneda['moneda']) ?></p>
              <a data-ajax="false" href="<?php echo CController::createUrl('/catalogo/producto', array('producto' => 82324)) ?>" ><img class="img-responsive escritorio botoncompra" src="<?= Yii::app()->request->baseUrl ?>/images/contenido/asepxia/images/boton-asepxia.png" > </a>
         </div>
     </div>
@@ -177,8 +177,8 @@ $this->metaTags = "
       <div class="textoproductos-m">
           <h4 class="tituloproductos-m"> ASEPXIA MAQUILLAJE <br> BEIGE MATE</h4>
            <p class="textoproductos-m">Cubre y cuida tus imperfecciones con Polvos Asepxia. </p>
-           <p class="precioproductos-m-antes">ANTES: <?= ($jabon_maquillajebeigemate == null) ? "--" : Yii::app()->numberFormatter->format(Yii::app()->params->formatoMoneda['patron'], $jabon_maquillajebeigemate["u"], Yii::app()->params->formatoMoneda['moneda']) ?></p>
-           <p class="precioproductos-m">AHORA: <?= ($jabon_maquillajebeigemate == null) ? "--" : Yii::app()->numberFormatter->format(Yii::app()->params->formatoMoneda['patron'], $jabon_maquillajebeigemate["u-a"], Yii::app()->params->formatoMoneda['moneda']) ?></p>
+           <p class="precioproductos-m-antes">ANTES: <?= ($jabon_maquillajebeigemate == null) ? "--" : Yii::app()->numberFormatter->format(Yii::app()->params->formatoMoneda['patron'], $jabon_maquillajebeigemate["u-a"], Yii::app()->params->formatoMoneda['moneda']) ?></p>
+           <p class="precioproductos-m">AHORA: <?= ($jabon_maquillajebeigemate == null) ? "--" : Yii::app()->numberFormatter->format(Yii::app()->params->formatoMoneda['patron'], $jabon_maquillajebeigemate["u"], Yii::app()->params->formatoMoneda['moneda']) ?></p>
            <a data-ajax="false" href="<?php echo CController::createUrl('/catalogo/producto', array('producto' => 82325)) ?>" ><img class="img-responsive escritorio botoncompra" src="<?= Yii::app()->request->baseUrl ?>/images/contenido/asepxia/images/boton-asepxia.png" > </a>
     </div>
   </div>
@@ -187,8 +187,8 @@ $this->metaTags = "
       <div class=" textoproductos-m">
           <h4 class="tituloproductos-m">  ASEPXIA MAQUILLAJE <br> CLARO MATE</h4>
            <p class="textoproductos-m">Maquillaje en polvo compacto que absorbe la grasa de la piel mientras ayuda a reducir imperfecciones.  </p>
-           <p class="precioproductos-m-antes">ANTES: <?= ($jabon_maquillajeclaromate == null) ? "--" : Yii::app()->numberFormatter->format(Yii::app()->params->formatoMoneda['patron'], $jabon_maquillajeclaromate["u"], Yii::app()->params->formatoMoneda['moneda']) ?></p>
-           <p class="precioproductos-m">AHORA: <?= ($jabon_maquillajeclaromate == null) ? "--" : Yii::app()->numberFormatter->format(Yii::app()->params->formatoMoneda['patron'], $jabon_maquillajeclaromate["u-a"], Yii::app()->params->formatoMoneda['moneda']) ?></p>
+           <p class="precioproductos-m-antes">ANTES: <?= ($jabon_maquillajeclaromate == null) ? "--" : Yii::app()->numberFormatter->format(Yii::app()->params->formatoMoneda['patron'], $jabon_maquillajeclaromate["u-a"], Yii::app()->params->formatoMoneda['moneda']) ?></p>
+           <p class="precioproductos-m">AHORA: <?= ($jabon_maquillajeclaromate == null) ? "--" : Yii::app()->numberFormatter->format(Yii::app()->params->formatoMoneda['patron'], $jabon_maquillajeclaromate["u"], Yii::app()->params->formatoMoneda['moneda']) ?></p>
            <a data-ajax="false" href="<?php echo CController::createUrl('/catalogo/producto', array('producto' => 83241)) ?>" ><img class="img-responsive escritorio botoncompra" src="<?= Yii::app()->request->baseUrl ?>/images/contenido/asepxia/images/boton-asepxia.png" > </a>
     </div>
   </div>
@@ -201,8 +201,8 @@ $this->metaTags = "
         <div class="row textoproductos-m">
             <h4 class="tituloproductos-m">Asepxia Emergencia Spot Transparente</h4>
              <p class="textoproductos-m">Cuando te salen granitos sin avisar, Asepxia Spot está de tu lado para combatirlos.</p>
-             <p class="precioproductos-m-antes">ANTES: <?= ($gel_spot == null) ? "--" : Yii::app()->numberFormatter->format(Yii::app()->params->formatoMoneda['patron'], $gel_spot["u"], Yii::app()->params->formatoMoneda['moneda']) ?></p>
-             <p class="precioproductos-m">AHORA: <?= ($gel_spot == null) ? "--" : Yii::app()->numberFormatter->format(Yii::app()->params->formatoMoneda['patron'], $gel_spot["u-a"], Yii::app()->params->formatoMoneda['moneda']) ?></p>
+             <p class="precioproductos-m-antes">ANTES: <?= ($gel_spot == null) ? "--" : Yii::app()->numberFormatter->format(Yii::app()->params->formatoMoneda['patron'], $gel_spot["u-a"], Yii::app()->params->formatoMoneda['moneda']) ?></p>
+             <p class="precioproductos-m">AHORA: <?= ($gel_spot == null) ? "--" : Yii::app()->numberFormatter->format(Yii::app()->params->formatoMoneda['patron'], $gel_spot["u"], Yii::app()->params->formatoMoneda['moneda']) ?></p>
              <a data-ajax="false" href="<?php echo CController::createUrl('/catalogo/producto', array('producto' => 63950)) ?>" ><img class="img-responsive escritorio botoncompra" src="<?= Yii::app()->request->baseUrl ?>/images/contenido/asepxia/images/boton-asepxia.png" > </a>
         </div>
     </div>
@@ -212,8 +212,8 @@ $this->metaTags = "
           <h4 class="tituloproductos-m">Asepxia Emergencia Color Piel Camouflage</h4>
            <p class="textoproductos-m">Cuando te salen granitos sin avisar, Asepxia Camouflage está de tu lado para combatirlos. </p>
               <p style="margin: 0px;height:14px;">&nbsp;</p>
-              <p class="precioproductos-m-antes">ANTES: <?= ($camouflaje == null) ? "--" : Yii::app()->numberFormatter->format(Yii::app()->params->formatoMoneda['patron'], $camouflaje["u"], Yii::app()->params->formatoMoneda['moneda']) ?></p>
-             <p class="precioproductos-m">AHORA: <?= ($camouflaje == null) ? "--" : Yii::app()->numberFormatter->format(Yii::app()->params->formatoMoneda['patron'], $camouflaje["u-a"], Yii::app()->params->formatoMoneda['moneda']) ?></p>
+              <p class="precioproductos-m-antes">ANTES: <?= ($camouflaje == null) ? "--" : Yii::app()->numberFormatter->format(Yii::app()->params->formatoMoneda['patron'], $camouflaje["u-a"], Yii::app()->params->formatoMoneda['moneda']) ?></p>
+             <p class="precioproductos-m">AHORA: <?= ($camouflaje == null) ? "--" : Yii::app()->numberFormatter->format(Yii::app()->params->formatoMoneda['patron'], $camouflaje["u"], Yii::app()->params->formatoMoneda['moneda']) ?></p>
              <a data-ajax="false" href="<?php echo CController::createUrl('/catalogo/producto', array('producto' => 63944)) ?>" ><img class="img-responsive escritorio botoncompra" src="<?= Yii::app()->request->baseUrl ?>/images/contenido/asepxia/images/boton-asepxia.png" > </a>
         </div>
     </div>
@@ -242,8 +242,8 @@ $this->metaTags = "
               <div class="row textoproductos">
                   <h4 class="tituloproductos"> ASEPXIA TOALLITAS DE LIMPIEZA <br> X25 unidades</h4>
                    <p class="textoproductos">Dile adiós al brillo de tu cara con Toallitas Asepxia. </p>
-                   <p class="precioproductos-antes"> ANTES: <?= ($jabon_exfoliante == null) ? "--" : Yii::app()->numberFormatter->format(Yii::app()->params->formatoMoneda['patron'], $jabon_exfoliante["u"], Yii::app()->params->formatoMoneda['moneda']) ?></p>
-                   <p class="precioproductos"> AHORA: <?= ($jabon_exfoliante == null) ? "--" : Yii::app()->numberFormatter->format(Yii::app()->params->formatoMoneda['patron'], $jabon_exfoliante["u-a"], Yii::app()->params->formatoMoneda['moneda']) ?></p>
+                   <p class="precioproductos-antes"> ANTES: <?= ($jabon_exfoliante == null) ? "--" : Yii::app()->numberFormatter->format(Yii::app()->params->formatoMoneda['patron'], $jabon_exfoliante["u-a"], Yii::app()->params->formatoMoneda['moneda']) ?> </p>
+                   <p class="precioproductos"> AHORA: <?= ($jabon_exfoliante == null) ? "--" : Yii::app()->numberFormatter->format(Yii::app()->params->formatoMoneda['patron'], $jabon_exfoliante["u"], Yii::app()->params->formatoMoneda['moneda']) ?></p>
                    <a href="<?php echo CController::createUrl('/catalogo/producto', array('producto' => 63948)) ?>" ><img class="img-responsive escritorio botoncompra" src="<?= Yii::app()->request->baseUrl ?>/images/contenido/asepxia/images/boton-asepxia.png" > </a>
               </div>
           </div>
@@ -252,8 +252,8 @@ $this->metaTags = "
             <div class="row textoproductos">
                 <h4 class="tituloproductos">ASEPXIA TOALLITAS DE LIMPIEZA <br> X10 unidades</h4>
                  <p class="textoproductos">Dile adiós al brillo de tu cara con Toallitas Asepxia. </p>
-                 <p class="precioproductos-antes">ANTES: <?= ($jabon_forte == null) ? "--" : Yii::app()->numberFormatter->format(Yii::app()->params->formatoMoneda['patron'], $jabon_forte["u"], Yii::app()->params->formatoMoneda['moneda']) ?></p>
-                 <p class="precioproductos">AHORA: <?= ($jabon_forte == null) ? "--" : Yii::app()->numberFormatter->format(Yii::app()->params->formatoMoneda['patron'], $jabon_forte["u-a"], Yii::app()->params->formatoMoneda['moneda']) ?></p>
+                 <p class="precioproductos-antes">ANTES: <?= ($jabon_forte == null) ? "--" : Yii::app()->numberFormatter->format(Yii::app()->params->formatoMoneda['patron'], $jabon_forte["u-a"], Yii::app()->params->formatoMoneda['moneda']) ?></p>
+                 <p class="precioproductos">AHORA: <?= ($jabon_forte == null) ? "--" : Yii::app()->numberFormatter->format(Yii::app()->params->formatoMoneda['patron'], $jabon_forte["u"], Yii::app()->params->formatoMoneda['moneda']) ?></p>
                  <a href="<?php echo CController::createUrl('/catalogo/producto', array('producto' => 63949)) ?>" ><img class="img-responsive escritorio botoncompra" src="<?= Yii::app()->request->baseUrl ?>/images/contenido/asepxia/images/boton-asepxia.png" > </a>
             </div>
           </div>
@@ -263,8 +263,8 @@ $this->metaTags = "
             <div class="row textoproductosparabajar">
                 <h4 class="tituloproductos">ASEPXIA GEL EXFOLIANTE PARA<BR> PUNTOS NEGROS</h4>
                  <p class="textoproductos">Exfolia suavemente tu piel, renovada y sin imperfecciones. </p>
-                 <p class="precioproductos-antes">ANTES: <?= ($jabon_soft == null) ? "--" : Yii::app()->numberFormatter->format(Yii::app()->params->formatoMoneda['patron'], $jabon_soft["u"], Yii::app()->params->formatoMoneda['moneda']) ?></p>
-                 <p class="precioproductos">AHORA: <?= ($jabon_soft == null) ? "--" : Yii::app()->numberFormatter->format(Yii::app()->params->formatoMoneda['patron'], $jabon_soft["u-a"], Yii::app()->params->formatoMoneda['moneda']) ?></p>
+                 <p class="precioproductos-antes">ANTES: <?= ($jabon_soft == null) ? "--" : Yii::app()->numberFormatter->format(Yii::app()->params->formatoMoneda['patron'], $jabon_soft["u-a"], Yii::app()->params->formatoMoneda['moneda']) ?></p>
+                 <p class="precioproductos">AHORA: <?= ($jabon_soft == null) ? "--" : Yii::app()->numberFormatter->format(Yii::app()->params->formatoMoneda['patron'], $jabon_soft["u"], Yii::app()->params->formatoMoneda['moneda']) ?></p>
                  <a href="<?php echo CController::createUrl('/catalogo/producto', array('producto' => 65423)) ?>" ><img class="img-responsive escritorio botoncompra" src="<?= Yii::app()->request->baseUrl ?>/images/contenido/asepxia/images/boton-asepxia.png" > </a>
             </div>
           </div>
@@ -287,8 +287,8 @@ $this->metaTags = "
                   <h4 class="tituloproductos2">ASEPXIA MAQUILLAJE NATURAL</h4>
                    <p class="textoproductos2">Cubre y cuida tus imperfecciones con Polvos Asepxia. </p>
                    <p style="margin:0px;">&nbsp;</p>
-                   <p class="precioproductos-antes">ANTES: <?= ($jabon_maquillajenatural == null) ? "--" : Yii::app()->numberFormatter->format(Yii::app()->params->formatoMoneda['patron'], $jabon_maquillajenatural["u"], Yii::app()->params->formatoMoneda['moneda']) ?></p>
-                   <p class="precioproductos">AHORA: <?= ($jabon_maquillajenatural == null) ? "--" : Yii::app()->numberFormatter->format(Yii::app()->params->formatoMoneda['patron'], $jabon_maquillajenatural["u-a"], Yii::app()->params->formatoMoneda['moneda']) ?></p>
+                   <p class="precioproductos-antes">ANTES: <?= ($jabon_maquillajenatural == null) ? "--" : Yii::app()->numberFormatter->format(Yii::app()->params->formatoMoneda['patron'], $jabon_maquillajenatural["u-a"], Yii::app()->params->formatoMoneda['moneda']) ?></p>
+                   <p class="precioproductos">AHORA: <?= ($jabon_maquillajenatural == null) ? "--" : Yii::app()->numberFormatter->format(Yii::app()->params->formatoMoneda['patron'], $jabon_maquillajenatural["u"], Yii::app()->params->formatoMoneda['moneda']) ?></p>
                    <a href="<?php echo CController::createUrl('/catalogo/producto', array('producto' => 82323)) ?>" ><img class="img-responsive escritorio botoncompra" src="<?= Yii::app()->request->baseUrl ?>/images/contenido/asepxia/images/boton-asepxia.png" > </a>
               </div>
           </div>
@@ -299,8 +299,8 @@ $this->metaTags = "
                 <h4 class="tituloproductos2"> ASEPXIA MAQUILLAJE BRONCE</h4>
                  <p class="textoproductos2">Cubre y cuida tus imperfecciones con Polvos Asepxia. </p>
                  <p style="margin:0px;">&nbsp;</p>
-                 <p class="precioproductos-antes">ANTES: <?= ($jabon_maquillajebronce == null) ? "--" : Yii::app()->numberFormatter->format(Yii::app()->params->formatoMoneda['patron'], $jabon_maquillajebronce["u"], Yii::app()->params->formatoMoneda['moneda']) ?></p>
-                 <p class="precioproductos">AHORA: <?= ($jabon_maquillajebronce == null) ? "--" : Yii::app()->numberFormatter->format(Yii::app()->params->formatoMoneda['patron'], $jabon_maquillajebronce["u-a"], Yii::app()->params->formatoMoneda['moneda']) ?></p>
+                 <p class="precioproductos-antes">ANTES: <?= ($jabon_maquillajebronce == null) ? "--" : Yii::app()->numberFormatter->format(Yii::app()->params->formatoMoneda['patron'], $jabon_maquillajebronce["u-a"], Yii::app()->params->formatoMoneda['moneda']) ?></p>
+                 <p class="precioproductos">AHORA: <?= ($jabon_maquillajebronce == null) ? "--" : Yii::app()->numberFormatter->format(Yii::app()->params->formatoMoneda['patron'], $jabon_maquillajebronce["u"], Yii::app()->params->formatoMoneda['moneda']) ?></p>
                  <a href="<?php echo CController::createUrl('/catalogo/producto', array('producto' => 82324)) ?>" ><img class="img-responsive escritorio botoncompra" src="<?= Yii::app()->request->baseUrl ?>/images/contenido/asepxia/images/boton-asepxia.png" > </a>
             </div>
           </div>
@@ -309,8 +309,8 @@ $this->metaTags = "
             <div class="row textoproductos2">
                 <h4 class="tituloproductos2"> ASEPXIA MAQUILLAJE <br> BEIGE MATE</h4>
                  <p class="textoproductos2">Cubre y cuida tus imperfecciones con Polvos Asepxia. </p>
-                 <p class="precioproductos-antes">ANTES: <?= ($jabon_maquillajebeigemate == null) ? "--" : Yii::app()->numberFormatter->format(Yii::app()->params->formatoMoneda['patron'], $jabon_maquillajebeigemate["u"], Yii::app()->params->formatoMoneda['moneda']) ?></p>
-                 <p class="precioproductos">AHORA: <?= ($jabon_maquillajebeigemate == null) ? "--" : Yii::app()->numberFormatter->format(Yii::app()->params->formatoMoneda['patron'], $jabon_maquillajebeigemate["u-a"], Yii::app()->params->formatoMoneda['moneda']) ?></p>
+                 <p class="precioproductos-antes">ANTES: <?= ($jabon_maquillajebeigemate == null) ? "--" : Yii::app()->numberFormatter->format(Yii::app()->params->formatoMoneda['patron'], $jabon_maquillajebeigemate["u-a"], Yii::app()->params->formatoMoneda['moneda']) ?></p>
+                 <p class="precioproductos">AHORA: <?= ($jabon_maquillajebeigemate == null) ? "--" : Yii::app()->numberFormatter->format(Yii::app()->params->formatoMoneda['patron'], $jabon_maquillajebeigemate["u"], Yii::app()->params->formatoMoneda['moneda']) ?></p>
                  <a href="<?php echo CController::createUrl('/catalogo/producto', array('producto' => 82325)) ?>" ><img class="img-responsive escritorio botoncompra" src="<?= Yii::app()->request->baseUrl ?>/images/contenido/asepxia/images/boton-asepxia.png" > </a>
             </div>
           </div>
@@ -319,8 +319,8 @@ $this->metaTags = "
             <div class="row textoproductos2">
                 <h4 class="tituloproductos2"> ASEPXIA MAQUILLAJE <br> CLARO MATE</h4>
                  <p class="textoproductos2">Cubre y cuida tus imperfecciones con Polvos Asepxia. </p>
-                 <p class="precioproductos-antes">ANTES: <?= ($jabon_maquillajeclaromate == null) ? "--" : Yii::app()->numberFormatter->format(Yii::app()->params->formatoMoneda['patron'], $jabon_maquillajeclaromate["u"], Yii::app()->params->formatoMoneda['moneda']) ?></p>
-                 <p class="precioproductos">AHORA: <?= ($jabon_maquillajeclaromate == null) ? "--" : Yii::app()->numberFormatter->format(Yii::app()->params->formatoMoneda['patron'], $jabon_maquillajeclaromate["u-a"], Yii::app()->params->formatoMoneda['moneda']) ?></p>
+                 <p class="precioproductos-antes">ANTES: <?= ($jabon_maquillajeclaromate == null) ? "--" : Yii::app()->numberFormatter->format(Yii::app()->params->formatoMoneda['patron'], $jabon_maquillajeclaromate["u-a"], Yii::app()->params->formatoMoneda['moneda']) ?></p>
+                 <p class="precioproductos">AHORA: <?= ($jabon_maquillajeclaromate == null) ? "--" : Yii::app()->numberFormatter->format(Yii::app()->params->formatoMoneda['patron'], $jabon_maquillajeclaromate["u"], Yii::app()->params->formatoMoneda['moneda']) ?></p>
                  <a href="<?php echo CController::createUrl('/catalogo/producto', array('producto' => 83241)) ?>" ><img class="img-responsive escritorio botoncompra" src="<?= Yii::app()->request->baseUrl ?>/images/contenido/asepxia/images/boton-asepxia.png" > </a>
             </div>
           </div>
@@ -340,8 +340,8 @@ $this->metaTags = "
           <div class="row textoproductos2">
               <h4 class="tituloproductos2">ASEPXIA EMERGENCIA SPOT TRANSPARENTE</h4>
                <p class="textoproductos2">Cuando te salen granitos sin avisar, Asepxia Spot está de tu lado para combatirlos.</p><br>
-               <p class="precioproductos-antes">ANTES: <?= ($gel_spot == null) ? "--" : Yii::app()->numberFormatter->format(Yii::app()->params->formatoMoneda['patron'], $gel_spot["u"], Yii::app()->params->formatoMoneda['moneda']) ?></p>
-               <p class="precioproductos">AHORA: <?= ($gel_spot == null) ? "--" : Yii::app()->numberFormatter->format(Yii::app()->params->formatoMoneda['patron'], $gel_spot["u-a"], Yii::app()->params->formatoMoneda['moneda']) ?></p>
+               <p class="precioproductos-antes">ANTES: <?= ($gel_spot == null) ? "--" : Yii::app()->numberFormatter->format(Yii::app()->params->formatoMoneda['patron'], $gel_spot["u-a"], Yii::app()->params->formatoMoneda['moneda']) ?></p>
+               <p class="precioproductos">AHORA: <?= ($gel_spot == null) ? "--" : Yii::app()->numberFormatter->format(Yii::app()->params->formatoMoneda['patron'], $gel_spot["u"], Yii::app()->params->formatoMoneda['moneda']) ?></p>
                <a href="<?php echo CController::createUrl('/catalogo/producto', array('producto' => 63950)) ?>" ><img class="img-responsive escritorio botoncompra" src="<?= Yii::app()->request->baseUrl ?>/images/contenido/asepxia/images/boton-asepxia.png" > </a>
           </div>
       </div>
@@ -351,8 +351,8 @@ $this->metaTags = "
         <div class="row textoproductos2">
             <h4 class="tituloproductos2">ASEPXIA EMERGENCIA COLOR PIEL CAMOUFLAGE</h4>
              <p class="textoproductos2">Cuando te salen granitos sin avisar, Asepxia Camouflage está de tu lado para combatirlos. </p>
-             <p class="precioproductos-antes">ANTES: <?= ($camouflaje == null) ? "--" : Yii::app()->numberFormatter->format(Yii::app()->params->formatoMoneda['patron'], $camouflaje["u"], Yii::app()->params->formatoMoneda['moneda']) ?></p>
-             <p class="precioproductos">AHORA: <?= ($camouflaje == null) ? "--" : Yii::app()->numberFormatter->format(Yii::app()->params->formatoMoneda['patron'], $camouflaje["u-a"], Yii::app()->params->formatoMoneda['moneda']) ?></p>
+             <p class="precioproductos-antes">ANTES: <?= ($camouflaje == null) ? "--" : Yii::app()->numberFormatter->format(Yii::app()->params->formatoMoneda['patron'], $camouflaje["u-a"], Yii::app()->params->formatoMoneda['moneda']) ?></p>
+             <p class="precioproductos">AHORA: <?= ($camouflaje == null) ? "--" : Yii::app()->numberFormatter->format(Yii::app()->params->formatoMoneda['patron'], $camouflaje["u"], Yii::app()->params->formatoMoneda['moneda']) ?></p>
              <a href="<?php echo CController::createUrl('/catalogo/producto', array('producto' => 63944)) ?>" ><img class="img-responsive escritorio botoncompra" src="<?= Yii::app()->request->baseUrl ?>/images/contenido/asepxia/images/boton-asepxia.png" > </a>
         </div>
       </div>
