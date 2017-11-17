@@ -66,7 +66,7 @@ $this->metaTags = "
   </ul>
   <img class="img-responsive-m" style="margin: -45px auto 20px;" src="<?= Yii::app()->request->baseUrl ?>/images/contenido/glucoquick/producto/glucometro.png" alt="Glucómetro">
   <p class="precioproductos-antes">ANTES: <?= ($glucometroG30a_tiras_gratis == null) ? "--" : Yii::app()->numberFormatter->format(Yii::app()->params->formatoMoneda['patron'], $glucometroG30a_tiras_gratis["u-a"], Yii::app()->params->formatoMoneda['moneda']) ?></p>
-  <p class="precioproductos">AHORA: <?= ($glucometroG30a_tiras_gratis == null) ? "--" : Yii::app()->numberFormatter->format(Yii::app()->params->formatoMoneda['patron'], $$glucometroG30a_tiras_gratis["u"], Yii::app()->params->formatoMoneda['moneda']) ?></p>
+  <p class="precioproductos">AHORA: <?= ($glucometroG30a_tiras_gratis == null) ? "--" : Yii::app()->numberFormatter->format(Yii::app()->params->formatoMoneda['patron'], $glucometroG30a_tiras_gratis["u"], Yii::app()->params->formatoMoneda['moneda']) ?></p>
   <a data-ajax="false" data-cargar="1" data-producto="73213" data-id="1" href="#"><img class="img-responsive btn-comprar" style="display: block;" src="<?= Yii::app()->request->baseUrl ?>/images/contenido/glucoquick/btn-comprar.png" alt="GlucoQuick"></a>
 </div>
 <h3 class="subtitle" style="font-size: 23px;line-height: 15px;">Conoce nuestros insumos Glucoquick<sup>®</sup> </h3>
