@@ -30,7 +30,7 @@ $(document).on('click', 'a[data-action="asignar-cliente"]', function () {
         dataType: 'json',
         async: true,
         url: requestUrl + '/puntoventa/venta/ventaasistida/pedido/asignarcliente',
-        data: {usuario: $(this).attr('data-cliente')},
+        data: {usuario: $(this).attr('data-cliente'), beneficiario: $(this).attr('data-beneficiario')},
         beforeSend: function () {
             Loading.show();
         },
@@ -99,6 +99,49 @@ $("#busqueda-buscar").keypress(function (event) {
 });
 */
 
+
+$(document).on('click', "a[data-eliminar-asistida='1']", function () {
+
+	 var pdv = $(this).attr('data-pdv');
+	 var producto = $(this).attr('data-producto');
+	 var data = {}; 
+	 data['producto'] = producto;
+     data['pdv'] = pdv;
+     data['eliminar'] = 1;
+     
+	 $.ajax({
+	        type: 'POST',
+	        dataType: 'json',
+	        async: true,
+	        url: requestUrl + '/puntoventa/venta/ventaasistida/carro/eliminar',
+	        data: data,
+	        beforeSend: function () {
+	            Loading.show();
+	        },
+	        success: function (data) {
+	            if (data.result === "ok") {
+	            	Loading.hide();
+	                $("#cantidad-unidades-"+pdv).html(data.cantidadUnidades);
+	                $("#subtotal-producto-unidad-"+producto).html(data.totales);
+	                if(data.response.cantidadFracciones > 0){
+	                	$("#cantidad-fracciones-"+pdv).html(data.cantidadFracciones);
+	                }else{
+	                	$("#cantidad-fracciones-"+pdv).html(0);
+	                }
+	                
+	            } else {
+	                Loading.hide();
+	                bootbox.alert(data.response);
+	            }
+	        },
+	        error: function (jqXHR, textStatus, errorThrown) {
+	            Loading.hide();
+	            bootbox.alert('Error: ' + errorThrown);
+	        }
+	    });   
+	    
+});
+
 $(document).on('click', "a[data-cargar-nacional='1'], a[data-cargar-nacional='2']", function () {
     var tipo = $(this).attr('data-cargar-nacional');
     var pedido = $('#btn-pedido-buscar').attr('data-pedido');
@@ -146,6 +189,15 @@ $(document).on('click', "a[data-cargar-nacional='1'], a[data-cargar-nacional='2'
             if (data.result === "ok") {
             	dialogoAnimado(data.response.mensajeHTML);
                 Loading.hide();
+                $("#cantidad-unidades-"+pdv).html(data.response.cantidadUnidades);
+               
+                $("#subtotal-producto-unidad-"+producto).html(data.response.totales);
+                if(data.response.cantidadFracciones > 0){
+                	$("#cantidad-fracciones-"+pdv).html(data.response.cantidadFracciones);
+                }else{
+                	$("#cantidad-fracciones-"+pdv).html(0);
+                }
+                
             } else {
                 Loading.hide();
                 bootbox.alert(data.response);
@@ -602,40 +654,40 @@ function modificarCarro(position, modificar, maximo) {
     });
 }
 
-$(document).on('click', "a[data-eliminar='1'], a[data-eliminar='2'], a[data-eliminar='3']", function() {
-    var position = $(this).attr('data-position');
-    var eliminar = $(this).attr('data-eliminar');
-
-    $.ajax({
-        type: 'POST',
-        dataType: 'json',
-        async: true,
-        url: requestUrl + '/puntoventa/venta/ventaasistida/carro/eliminar',
-        data: {id: position, eliminar: eliminar},
-        beforeSend: function() {
-            Loading.show();
-        },
-        complete: function() {
-            Loading.hide();
-        },
-        success: function(data) {
-            if (data.result == 'ok') {
-            	// carro de compras
-                $('#div-carro-canasta').html(data.canasta);
-                $('#div-carro-canasta').trigger("create");
-                
-                $('#div-carro-vitalcall').html(data.canastaHTML);
-                $('#div-carro-vitalcall').trigger("create");
-            } else {
-                alert(data.response);
-            }
-        },
-        error: function(jqXHR, textStatus, errorThrown) {
-            alert('Error: ' + errorThrown);
-        }
-    });
-
-});
+//$(document).on('click', "a[data-eliminar='1'], a[data-eliminar='2'], a[data-eliminar='3']", function() {
+//    var position = $(this).attr('data-position');
+//    var eliminar = $(this).attr('data-eliminar');
+//
+//    $.ajax({
+//        type: 'POST',
+//        dataType: 'json',
+//        async: true,
+//        url: requestUrl + '/puntoventa/venta/ventaasistida/carro/eliminar',
+//        data: {id: position, eliminar: eliminar},
+//        beforeSend: function() {
+//            Loading.show();
+//        },
+//        complete: function() {
+//            Loading.hide();
+//        },
+//        success: function(data) {
+//            if (data.result == 'ok') {
+//            	// carro de compras
+//                $('#div-carro-canasta').html(data.canasta);
+//                $('#div-carro-canasta').trigger("create");
+//                
+//                $('#div-carro-vitalcall').html(data.canastaHTML);
+//                $('#div-carro-vitalcall').trigger("create");
+//            } else {
+//                alert(data.response);
+//            }
+//        },
+//        error: function(jqXHR, textStatus, errorThrown) {
+//            alert('Error: ' + errorThrown);
+//        }
+//    });
+//
+//});
 
 
 function disminuirCantidadFraccionado(codigoProducto, numeroFracciones, unidadFraccionamiento, valorFraccionado, valorUnidad, idUnico, pdv) {
@@ -764,8 +816,8 @@ $(document).on('click', "button[id='btn-carropagar-siguiente'], button[id='btn-c
 function pasoInformacion(actual, siguiente, boton) {
     var data = {
         siguiente: siguiente,
-        "FormaPagoEntregaNacionalForm[indicePuntoVenta]": $('input[name="FormaPagoEntregaNacionalForm[indicePuntoVenta]"]').val(),
-        "FormaPagoEntregaNacionalForm[tipoEntrega]": $('input[name="FormaPagoEntregaNacionalForm[tipoEntrega]"]').val()
+        "FormaPagoVentaAsistidaForm[indicePuntoVenta]": $('input[name="FormaPagoVentaAsistidaForm[indicePuntoVenta]"]').val(),
+        "FormaPagoVentaAsistidaForm[tipoEntrega]": $('input[name="FormaPagoVentaAsistidaForm[tipoEntrega]"]').val()
     };
     
     $.ajax({
@@ -775,8 +827,8 @@ function pasoInformacion(actual, siguiente, boton) {
         data: $.param(data) + '&' + $('#form-pago-comentario').serialize() + '&' + $('#form-direccion-pagoinvitado').serialize() + '&' + $('#form-remitente').serialize() + '&' +$('#form-pago-entrega').serialize() + '&' + $('#form-pago').serialize(),
         beforeSend: function() {
             boton.prop('disabled', true);
-            $('div[id^="FormaPagoEntregaNacionalForm_"].text-danger').html('');
-            $('div[id^="FormaPagoEntregaNacionalForm_"].text-danger').css('display', 'none');
+            $('div[id^="FormaPagoVentaAsistidaForm_"].text-danger').html('');
+            $('div[id^="FormaPagoVentaAsistidaForm_"].text-danger').css('display', 'none');
             Loading.show();
         },
         complete: function() {
@@ -855,9 +907,9 @@ $(document).on('click', "div[data-role='formapago']", function() {
     var tipo = $(this).attr('data-tipo');
     if (tipo == "datafono") {
         $("#modal-formapago input[type='radio']").removeAttr('checked');
-        $("#modal-formapago #idFormaPago_" + $("#FormaPagoEntregaNacionalForm_idFormaPago_datafono").val()).prop('checked', true);
+        $("#modal-formapago #idFormaPago_" + $("#FormaPagoVentaAsistidaForm_idFormaPago_datafono").val()).prop('checked', true);
         $("div[data-role^='formapago-logo-']").addClass('display-none');
-        $("div[data-role='formapago-logo-" + $("#FormaPagoEntregaNacionalForm_idFormaPago_datafono").val() + "']").removeClass('display-none');
+        $("div[data-role='formapago-logo-" + $("#FormaPagoVentaAsistidaForm_idFormaPago_datafono").val() + "']").removeClass('display-none');
         $("#modal-formapago").modal("show");
         return false;
     } else {
@@ -870,7 +922,7 @@ $(document).on('click', "div[data-role='formapago']", function() {
     }
 });
 
-$(document).on('click', "input[name='FormaPagoEntregaNacionalForm[recogida]']", function() {
+$(document).on('click', "input[name='FormaPagoVentaAsistidaForm[recogida]']", function() {
     var tipo = $(this).val();
     if (tipo == 1) {
     	$("#recogida").removeClass('display-none');
@@ -896,8 +948,8 @@ $(document).on('click', "#modal-formapago input[type='radio']", function() {
         //$("div[data-role='formapago']").removeClass('activo');
         //$('div[data-tipo="datafono"]').addClass('activo');
         //$('#div-formapago-vacio').remove();
-        $('input[id="FormaPagoEntregaNacionalForm_idFormaPago_datafono"]').prop('checked', true);
-        $('input[id="FormaPagoEntregaNacionalForm_idFormaPago_datafono"]').val($(this).val());
+        $('input[id="FormaPagoVentaAsistidaForm_idFormaPago_datafono"]').prop('checked', true);
+        $('input[id="FormaPagoVentaAsistidaForm_idFormaPago_datafono"]').val($(this).val());
 
         $("div[data-role^='formapago-logo-']").addClass('display-none');
         $("div[data-role='formapago-logo-" + $(this).val() + "']").removeClass('display-none');

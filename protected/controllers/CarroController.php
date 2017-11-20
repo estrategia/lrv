@@ -3446,11 +3446,12 @@ class CarroController extends Controller {
                         'identificacionUsuario=:identificacionUsuario AND idProducto=:idProducto',
                         [':identificacionUsuario' => $objCompra->identificacionUsuario, ':idProducto' => $position->objProducto->codigoProducto]
                     );
+                    $fechaActual = Date("Y-m-d");
                     if($suscripcion !== null) {
                         $periodoActual = $suscripcion->consultarPeriodoActual();
                         if($periodoActual !== null) {
                             if ($periodoActual->usado == 0 && $position->getQuantitySuscription() > 0) {
-                                $periodoActual->cantidadComprada = $position->getQuantitySuscripcion();
+                                $periodoActual->cantidadComprada = $position->getQuantitySuscription();
                                 $periodoActual->usado = 1;
                                 $periodoActual->save();
                             } else if (strtotime($fechaActual) >= strtotime($periodoActual->fechaInicioTolerancia)) {
@@ -3458,7 +3459,7 @@ class CarroController extends Controller {
                                 $periodoSiguiente = PeriodosSuscripcion::model()->find("$idPeriodoSiguiente");
                                 if($periodoSiguiente !== null) {
                                     if ($periodoSiguiente->usado == 0) {
-                                        $periodoSiguiente->cantidadComprada = $position->getQuantitySuscripcion();
+                                        $periodoSiguiente->cantidadComprada = $position->getQuantitySuscription();
                                         $periodoSiguiente->usado = 1;
                                         $periodoSiguiente->save();
                                     }
@@ -3733,6 +3734,7 @@ class CarroController extends Controller {
             
             $htmlCorreo = PlantillaCorreo::getContenido('finCompra',$contenidoCorreo);
             	
+            
             try {
                 sendHtmlEmail($correoUsuario, $asuntoCorreo, $htmlCorreo);
             } catch (Exception $ce) {
@@ -3806,6 +3808,7 @@ class CarroController extends Controller {
                 )
             );
         } catch (Exception $exc) {
+        	
             Yii::log($exc->getMessage() . "\n" . $exc->getTraceAsString(), CLogger::LEVEL_ERROR, 'application');
 
             try {
@@ -4059,7 +4062,7 @@ class CarroController extends Controller {
         $positions = Yii::app()->shoppingCart->getPositions();
         foreach ($positions as $position) {
             // var_dump($position);exit();
-            // CVarDumper::dump($position,3,true);exit();
+            CVarDumper::dump($position,3,true);exit();
             echo "Id: " . $position->getId();
             echo "<br/>";
             echo "Precio U: " . $position->getPrice();

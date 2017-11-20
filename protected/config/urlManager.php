@@ -117,6 +117,11 @@ return array(
         'equipos-para-profesionales' => 'publicidad/contenido/nombre/equipos-para-profesionales',
         'productos-hospitalarios-y-quirurgicos' => 'publicidad/contenido/nombre/productos-hospitalarios-y-quirurgicos',
         'rehabilitacion-y-recuperacion' => 'publicidad/contenido/nombre/rehabilitacion-y-recuperacion',
+        'diabetes' => 'contenido/ver/tipo/grupo/contenido/4812',
+        'chat' => 'contenido/ver/tipo/grupo/contenido/41',
+        'glucoquick-insumos-y-glucometro' => 'publicidad/contenido/nombre/glucoquick-glucometro',
+        'glucoquick-tensiometro' => 'publicidad/contenido/nombre/glucoquick-tensiometro',
+        'glucoquick-educacion' => 'publicidad/contenido/nombre/glucoquick-educacion',
 
          // Fin links campañas
 

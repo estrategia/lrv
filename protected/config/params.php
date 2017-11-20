@@ -312,7 +312,8 @@ return array(
         'virtual' => 1,
         'nacional' => 2, // new
         'asistida' => 3,
-        'telefarma' => 4
+        'telefarma' => 4,
+    	'vap' => 5,
     ),
     'bloqueoUsuario' => array(
         'diasBloqueo' => 15,
@@ -765,5 +766,25 @@ return array(
             '1' => 'Perro',
             '2' => 'Gato'
         )
-    )
+    ),
+    'terceros' => array(
+        // 'correo' => 'alexander_javela@copservir.com',
+        /*'pedidos' => array(
+            'diasVisualizar' => 1,
+            'tiempoRecargarPagina' => 10000
+        ),*/
+        'usuario' => array(
+            'estado' => array(
+                'activo' => 1,
+                'inactivo' => 0
+            ),
+            'estadoNombre' => array(
+                0 => 'Inactivo',
+                1 => 'Activo'
+            )
+        ),
+        'sesion' => array(
+            'usuario' => 'larebaja.online.terceros.usuario',
+        )
+    ),
 );

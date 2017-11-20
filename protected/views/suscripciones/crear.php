@@ -45,6 +45,20 @@
     <?php $this->renderPartial('_productoElementoDetalle', array('objProducto' => $objProducto));?>
 
     <div class="cdtl_div_ln"></div>
+    <?php if (!is_null($beneficio)): ?>
+        <div class="descripciones">
+            <h4>Condiciones</h4>
+            <p>-El producto se habilitara para compra con descuento del <?php echo $beneficio->objBeneficio->dsctoUnid ?>% cada <?php echo Yii::app()->params['longitudPeriodoSuscripcion'] ?> días, una vez realices la primera compra.</p>
+            <p>-Se pueden agregar máximo <?php echo $beneficio->objBeneficio->vtaUnid ?> unidades en cada compra.</p>
+            <p class="text-center">Seleccione las veces que desea recordar esta suscripción</p>
+            <span class="text-center"><input class="form-control" data-role="periodos-suscripcion" type="number" min=1 value=1></span>
+            <button data-role="crear-suscripcion" data-codigo-producto="<?php echo $objProducto->codigoProducto ?>" class="btn btn-primary btn-sm btn-block">Suscribirse</button>
+        </div>
+    <?php else: ?>
+        <div class="descripciones">
+            <h3 class="text-center">El producto seleccionado no esta disponible para suscripción</h3>
+        </div>
+    <?php endif ?>
     <label for="">Cantidad de periodos</label>
     <input data-role="periodos-suscripcion" style="border: 1px solid grey" type="text">
     <button data-role="crear-suscripcion" data-id-producto="<?php echo $objProducto->codigoProducto ?>" class="ui-btn ui-input-btn ui-corner-all ui-shadow ui-btn-inline">Crear</button>

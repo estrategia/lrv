@@ -4,7 +4,7 @@
   */
   class RestBonosTiendaController extends CController
   {
-  	public function actionBonoPQRS($idPQRS,$cedula,$valor,$minimoCompra,$fechaInicio,$fechaFin,$email,$token){
+  	public function actionBonoPQRS($idPQRS,$cedula,$valor,$minimoCompra,$fechaInicio,$fechaFin,$email, $token, $tipoBono){
   		
   		$key = Yii::app()->params->callcenter['bonos']['keyBonos'];
   		
@@ -30,7 +30,11 @@
   		$bonoTienda->fechaCreacion = Date("Y-m-d h:i:s");
   		$bonoTienda->tipo = Yii::app()->params->callcenter['bonos']['tipoBonoPQRS'];
   		//$bonoTienda->idBonoTienda = Yii::app()->params->callcenter['bonos']['tipo']['cargue'];
-  		$bonoTienda->idBonoTiendaTipo = Yii::app()->params->callcenter['bonos']['tipoBonoTiendaPQRS'];
+  		if($tipo == 1)
+  			$bonoTienda->idBonoTiendaTipo = Yii::app()->params->callcenter['bonos']['tipoBonoTiendaPQRS'];
+  		else
+  			$bonoTienda->idBonoTiendaTipo = Yii::app()->params->callcenter['bonos']['tipoBonoTiendaPQRSReintegro'];
+  		
   		if($bonoTienda->save()){
   			 $response = ['result' => 'ok', 'response' => 'Bono Creado'];
       		 echo CJSON::encode($response);

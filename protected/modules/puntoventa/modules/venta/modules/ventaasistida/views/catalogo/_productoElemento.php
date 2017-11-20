@@ -14,7 +14,7 @@
     <?php endif; ?>
 
     <div class=" content-txt2">
-        <?php $objPrecio = new PrecioProducto($data, $this->objCiudadSectorDestino, Yii::app()->getModule('puntoventa')->shoppingCartNationalSale->getCodigoPerfil()); ?>
+        <?php $objPrecio = new PrecioProducto($data, $this->objCiudadSectorDestino, Yii::app()->getModule('puntoventa')->shoppingCartNationalSale->getCodigoPerfil(), false, true); ?>
         <div class="img-list-products">
             <?php if ($objPrecio->tieneBeneficio() && $data->mostrarAhorroVirtual == 1): ?>
                 <!--descuento-->

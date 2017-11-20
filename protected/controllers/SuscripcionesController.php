@@ -10,7 +10,7 @@ class SuscripcionesController extends Controller
 	public function actionPrueba()
 	{
 		$suscripcion = SuscripcionesProductosUsuario::model()->findByPk('2');
-		 $cantidadPeriodos = 10;
+		 $cantidadPeriodos = 1;
 		// $valor = $suscripcion->consultarPeriodoActual();
 		// $valor = $suscripcion->consultarUltimoPeriodo();
 		// $valor = $suscripcion->consultarCantidadPeriodoActual();
@@ -24,11 +24,6 @@ class SuscripcionesController extends Controller
 		$request = Yii::app()->request;
 		$codigoProducto = $request->getParam('codigoProducto');
 		$identificacionUsuario = Yii::app()->user->name;
-		$criteriaBeneficio = new CDbCriteria;
-		$criteriaBeneficio->condition = 't.codigoProducto=:codigoProducto';
-		$criteriaBeneficio->condition .= ' AND objBeneficio.tipo IN (' . implode(",", Yii::app()->params->beneficios['beneficiosSuscripcion']) . ')';
-		$criteriaBeneficio->with = 'objBeneficio';
-		$criteriaBeneficio->params = [':codigoProducto' => $codigoProducto];
 		$suscripcion = SuscripcionesProductosUsuario::model()->find(
 			'identificacionUsuario=:identificacionUsuario AND idProducto=:codigoProducto',
 			[':identificacionUsuario' => $identificacionUsuario, ':codigoProducto' => $codigoProducto]
@@ -52,14 +47,15 @@ class SuscripcionesController extends Controller
 				':codigo' => $codigoProducto
 			)
 		));
-		$beneficioProducto = BeneficiosProductos::model()->find($criteriaBeneficio);
+		$beneficioProducto = SuscripcionesProductosUsuario::consultarBeneficioSuscripcion($codigoProducto);
+		
 		if ($this->isMobile) {
 			$this->render('crear', ['objProducto' => $producto, 'beneficio' => $beneficioProducto]);
 		} else {
 			$this->render('d_crear', ['producto' => $producto, 'beneficio' => $beneficioProducto]);
 		}
 	}
-
+	
 	public function actionEditar()
 	{
 		$request = Yii::app()->request;
@@ -126,24 +122,26 @@ class SuscripcionesController extends Controller
 		$codigoProducto = $request->getParam('codigoProducto');
 		$periodos = $request->getParam('periodos');
 		$identificacionUsuario = Yii::app()->user->name;
-		$criteriaBeneficio = new CDbCriteria;
-		$criteriaBeneficio->condition = 't.codigoProducto=:codigoProducto';
-		$criteriaBeneficio->condition .= ' AND objBeneficio.tipo IN (' . implode(",", Yii::app()->params->beneficios['beneficiosSuscripcion']) . ')';
-		$criteriaBeneficio->with = 'objBeneficio';
-		$criteriaBeneficio->params = [':codigoProducto' => $codigoProducto];
-		$beneficioProducto = BeneficiosProductos::model()->find($criteriaBeneficio);
+		$beneficioProducto = SuscripcionesProductosUsuario::consultarBeneficioSuscripcion($codigoProducto);
 		$suscripcion = new SuscripcionesProductosUsuario;
 		$suscripcion->identificacionUsuario = Yii::app()->user->name;
 		$suscripcion->idProducto = $codigoProducto;
 		$suscripcion->idBeneficio = $beneficioProducto->idBeneficio;
+		$suscripcion->cantidadDisponiblePeriodoActual = $beneficioProducto->objBeneficio->vtaUnid;
+		$suscripcion->descuentoProducto = $beneficioProducto->objBeneficio->dsctoUnid;
 		$suscripcion->validate();
-		if ($suscripcion->save()) {
-			$suscripcion->generarPeriodos($periodos);
-			$response = ['result' => 'ok', 'response' => 'Se ha creado la suscripción correctamente'];
+		if ($periodos >= 1 && $beneficioProducto != null) {
+			if ($suscripcion->save()) {
+				$suscripcion->generarPeriodos($periodos);
+				$response = ['result' => 'ok', 'response' => 'Se ha creado la suscripción correctamente'];
+			} else {
+				$response = ['result' => 'ok', 'response' => 'Error al crear la suscripcion'];
+			}
 		} else {
-			$response = ['result' => 'ok', 'response' => 'Error al crear la suscripcion'];
+			$response = ['result' => 'error', 'response' => 'Error al crear la suscripcion'];
 		}
 		echo CJSON::encode($response);
+		exit();
 	}
 
 	// Uncomment the following methods and override them if needed

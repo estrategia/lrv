@@ -194,7 +194,12 @@ class ContenidoInicio extends CActiveRecord
 	public static function getContenidoUsuarioNoIngresa($objUsuario){
 		if($objUsuario instanceof Usuario){
 			$fechaActual = new DateTime();
-			$fechaUltimoAcceso = new DateTime(Yii::app()->user->lastLoginTime);
+			
+			if(isset(Yii::app()->user->lastLoginTime))
+				$fechaUltimoAcceso = new DateTime(Yii::app()->user->lastLoginTime);
+			else
+				$fechaUltimoAcceso = new DateTime(Date("Y-m-d H:i:s"));
+							
 			$interval = $fechaActual->diff($fechaUltimoAcceso);
 			
 			if($interval->format('%R%a') > Yii::app()->params->contenidoInicio['tiempoNoIngreso']){

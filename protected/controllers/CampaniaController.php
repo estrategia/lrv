@@ -83,6 +83,5 @@ class CampaniaController extends Controller {
     	 }
     	}
     	
-   
 
 }

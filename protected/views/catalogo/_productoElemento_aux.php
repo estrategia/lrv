@@ -7,7 +7,6 @@
         </div>
     </div>
 <?php endif; ?>
-
 <?php if ($data->fraccionado == 1): ?>
    <!--   <div class="cdiv_prod_frc">
         <div class="c_prod_frc">
@@ -15,6 +14,7 @@
         </div>
     </div> -->
 <?php endif; ?>
+
 <div class="clst_cont_top <?php echo ($data->fraccionado == 1 ? ' top_frc' : '') ?> ">
     <div class="clst_pro_img">
         <a href="<?php echo ($objPrecio->inicializado() ? CController::createUrl('/catalogo/producto', array('producto' => $data->codigoProducto, 'descripcion' => $data->getCadenaUrl())) : "#") ?>" data-ajax="false">
@@ -40,6 +40,15 @@
         <?php if (!in_array($data->idUnidadNegocioBI, Yii::app()->params->calificacion['categoriasNoCalificacion'])): ?>
             <div id="raty-lectura-producto-<?php echo $data->codigoProducto ?>" data-role="raty" data-readonly="true" data-score="<?php echo $data->getCalificacion() ?>" class="clst_cal_str"></div>
         <?php endif; ?>
+        <?php $suscripcion = $objPrecio->getSuscripcion() ?>
+            <?php if($objPrecio->conSuscripcion() && $suscripcion == null): ?>
+                <a href="<?php echo CController::createUrl('/suscripciones/suscribirse', array('codigoProducto' => $data->codigoProducto)) ?>" class="ui-btn ui-corner-all ui-shadow ui-btn-inline ui-btn-r">Suscribete y ahorra</a>
+                <?php echo "<div class='space-1'></div>" ?>
+            <?php elseif($objPrecio->getSuscripcion() != null): ?>
+                <p> Ahorro por suscripción: $ <?php echo $objPrecio->getAhorroUnidadSuscripcion() ?> </p>
+                <p> Descuento por suscripción: $ <?php echo $suscripcion->descuentoProducto ?>% </p>
+                <p>  Cantidad maxima suscripcion: $ <?php echo $suscripcion->cantidadDisponiblePeriodoActual ?> unidades </p>
+            <?php endif; ?>
         <?php if ($objPrecio->inicializado()): ?>
             <?php if ($data->mostrarAhorroVirtual == 1 && $objPrecio->getAhorro(Precio::PRECIO_UNIDAD) > 0): ?>
                 <div class="clst_pre_ant"><?php echo Yii::app()->numberFormatter->format(Yii::app()->params->formatoMoneda['patron'], $objPrecio->getPrecio(Precio::PRECIO_UNIDAD, false), Yii::app()->params->formatoMoneda['moneda']); ?></div>

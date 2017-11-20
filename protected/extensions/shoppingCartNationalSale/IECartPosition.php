@@ -69,6 +69,10 @@ abstract class IECartPosition {
     	);
     }
     
+    public function deletePDV($pdv){
+    	unset($this->listPDV[$pdv]);
+    }
+    
     public function getBeneficiosBonos(){
     	return $this->listBeneficiosBonos;
     }
