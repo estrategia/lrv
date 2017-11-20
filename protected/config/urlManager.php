@@ -93,8 +93,7 @@ return array(
         'colgate-blanqueamiento-para-pacientes' => 'publicidad/contenido/nombre/colgate-blanqueamiento',
         'colgate-pacientes-con-ortodoncia' => 'publicidad/contenido/nombre/colgate-ortodoncia',
         'colgate-para-pequenos-pacientes' => 'publicidad/contenido/nombre/colgate-ninos',
-        'choco-cono-millonario' => 'publicidad/contenido/nombre/chococono',
-        //'klim1-deslactosado' => 'publicidad/contenido/nombre/klim1-deslactosado',
+        'choco-cono-millonario' => 'publicidad/contenido/nombre/chococono',       
         'durex' => 'publicidad/contenido/nombre/durex',
         'klim3-fortilearn' => 'publicidad/contenido/nombre/klim3',
         'pantene-fuerza-y-reconstruccion' => 'publicidad/contenido/nombre/pantene',
@@ -122,6 +121,8 @@ return array(
         'glucoquick-insumos-y-glucometro' => 'publicidad/contenido/nombre/glucoquick-glucometro',
         'glucoquick-tensiometro' => 'publicidad/contenido/nombre/glucoquick-tensiometro',
         'glucoquick-educacion' => 'publicidad/contenido/nombre/glucoquick-educacion',
+        'klim1-deslactosado' => 'publicidad/contenido/nombre/klim1-deslactosado',
+        'que-hacer-ante-la-intolerancia-a-la-lactosa-en-ninos' => 'publicidad/contenido/nombre/klim1-deslactosado-intolerancia',
 
          // Fin links campañas
 
