@@ -1339,7 +1339,13 @@ class UsuarioController extends Controller {
             $form = new DireccionesDespacho('update');
             $form->attributes = $_POST['DireccionesDespacho'];
 
-            $model = DireccionesDespacho::model()->findByPk($form->idDireccionDespacho);
+            $model = DireccionesDespacho::model()->find(array(
+                'condition' => 'idDireccionDespacho=:direccion AND identificacionUsuario=:usuario',
+                'params' => array(
+                    ':direccion' => $form->idDireccionDespacho,
+                    ':usuario' => Yii::app()->user->name,
+                )
+            ));
 
             if ($model == null) {
                 //echo CJSON::encode(array('result' => 'error', 'response' => 'Página solicitada no existe'));
@@ -1418,6 +1424,11 @@ class UsuarioController extends Controller {
             throw new CHttpException(404, 'Página solicitada no existe.');
         }
 
+        if($model->identificacionUsuario != Yii::app()->user->name){
+        	echo CJSON::encode(array('result' => 'error', 'response' => 'Solicitud inválida'));
+        	Yii::app()->end();
+        }
+        
         $model->setScenario('updateDelete');
         $model->activo = 0;
 

@@ -573,7 +573,7 @@ class CarroController extends ControllerVenta{
 				
 			}
 			/****************************** CONFIGURAR ESTE TIPO DE ENTREGA *********************************/
-			$objCompra->idTipoVenta = Yii::app()->params->tipoVenta['nacional'];
+			$objCompra->idTipoVenta = Yii::app()->params->tipoVenta['vap'];
 			/************************************************************************************************/
 			
 			$objCompra->activa = 1;

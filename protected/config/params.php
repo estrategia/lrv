@@ -312,7 +312,8 @@ return array(
         'virtual' => 1,
         'nacional' => 2, // new
         'asistida' => 3,
-        'telefarma' => 4
+        'telefarma' => 4,
+    	'vap' => 5,
     ),
     'bloqueoUsuario' => array(
         'diasBloqueo' => 15,

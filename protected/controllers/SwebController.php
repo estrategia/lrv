@@ -214,6 +214,7 @@ class SwebController extends CController {
         $this->recordarCorreos();
     }
     
+    /************ BORRAR ****************/
     public function actionBono(){
     	$this->actionBonoPQRS(1, 1115077082, 100000, 100000, "2016-02-02", "2016-05-01");
     }
