@@ -6,8 +6,8 @@ class OperadorController extends ControllerOperator {
 
     public function filters() {
         return array(
-            'login + admin',
-            'access + admin',
+            'login + admin,create,update',
+            'access + admin,create,update',
                 //'loginajax + direccionActualizar',
         );
     }
