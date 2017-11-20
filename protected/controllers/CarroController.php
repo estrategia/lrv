@@ -1766,6 +1766,7 @@ class CarroController extends Controller {
                     $form->bono = $modelPago->bono;
                     $form->totalCompra = $modelPago->totalCompra;
                     $form->isMobil = false;
+                    $form->objSectorCiudad = $modelPago->objSectorCiudad;
 
                     if (isset($_POST['FormaPagoForm'])) {
                         foreach ($_POST['FormaPagoForm'] as $atributo => $valor) {
@@ -2123,7 +2124,7 @@ class CarroController extends Controller {
                     $form->tipoEntrega = $modelPago->tipoEntrega;
                     $form->idDireccionDespacho = Yii::app()->getRequest()->getPost('direccion', null);
                     $form->objHorarioCiudadSector = $modelPago->objHorarioCiudadSector;
-                    //$form->objSectorCiudad = $modelPago->objSectorCiudad;
+                    $form->objSectorCiudad = $modelPago->objSectorCiudad;
 
                     if (isset($_POST['FormaPagoForm'])) {
                         foreach ($_POST['FormaPagoForm'] as $atributo => $valor) {
@@ -4023,7 +4024,7 @@ class CarroController extends Controller {
         }
     }
 
-    public function actionList() {
+    /*public function actionList() {
         //Yii::app()->session[Yii::app()->params->sesion['carroPagarForm']] = null;
         //Yii::app()->shoppingCart->clear();
         //exit();
@@ -4102,7 +4103,7 @@ class CarroController extends Controller {
             echo "<br/>";
         }
     }
-
+    
     public function actionForm($limpiar = false) {
         $modelPago = null;
 
@@ -4122,8 +4123,8 @@ class CarroController extends Controller {
             Yii::app()->session[Yii::app()->params->sesion['carroPagarForm']] = null;
             //unset(Yii::app()->session[Yii::app()->params->sesion['carroPagarForm']]);
         }
-    }
-
+    }*/
+    
     public function actionAdicionarFormula() {
 
 

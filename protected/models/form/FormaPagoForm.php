@@ -118,6 +118,7 @@ class FormaPagoForm extends CFormModel {
             if ($this->tipoEntrega == Yii::app()->params->entrega['tipo']['domicilio']) {
                 //Yii::log("validacion 8\n", CLogger::LEVEL_INFO, 'application');
                 $rules[] = array('idDireccionDespacho', 'required', 'on' => 'despacho, informacion, finalizar', 'message' => '{attribute} no puede estar vacío');
+                $rules[] = array('idDireccionDespacho', 'direccionValidate', 'on' => 'despacho, informacion, finalizar');
             } else if ($this->tipoEntrega == Yii::app()->params->entrega['tipo']['presencial']) {
                 //Yii::log("validacion 9\n", CLogger::LEVEL_INFO, 'application');
                 $rules[] = array('idDireccionDespacho', 'safe');
@@ -303,6 +304,34 @@ class FormaPagoForm extends CFormModel {
                     $this->addError('usoBono', $this->getAttributeLabel('usoBono') . " inv&aacute;lido");
                 }
             }
+        }
+    }
+    
+    public function direccionValidate($attribute, $params) {
+        $mDireccion = null;
+        
+        if($this->objSectorCiudad==null){
+            $mDireccion = DireccionesDespacho::model()->find(array(
+                'condition' => 'idDireccionDespacho =:direccion AND identificacionUsuario=:usuario',
+                'params' => array(
+                    ':usuario' => $this->identificacionUsuario,
+                    ':direccion' => $this->idDireccionDespacho
+                )
+            ));
+        }else{
+            $mDireccion = DireccionesDespacho::model()->find(array(
+                'condition' => 'idDireccionDespacho =:direccion AND identificacionUsuario=:usuario AND codigoCiudad=:ciudad AND codigoSector=:sector',
+                'params' => array(
+                    ':usuario' => $this->identificacionUsuario,
+                    ':direccion' => $this->idDireccionDespacho,
+                    ':ciudad' => $this->objSectorCiudad->codigoCiudad,
+                    ':sector' => $this->objSectorCiudad->codigoSector,
+                )
+            ));
+        }
+        
+        if($mDireccion==null){
+            $this->addError('idDireccionDespacho', $this->getAttributeLabel('idDireccionDespacho') . " inv&aacute;lido");
         }
     }
 
