@@ -168,9 +168,9 @@
 <input type="hidden" id="cantidad-producto-unidad-2630-1" value="1" >
 <input type="hidden" id="cantidad-producto-unidad-2628-2" value="1" >
 
-<a href="<?= Yii::app()->request->baseUrl ?>/catalogo/buscar?busqueda=GAVISCON">
+<!-- <a href="<?= Yii::app()->request->baseUrl ?>/catalogo/buscar?busqueda=GAVISCON">
   <div class="sidebar-cart"><img class="img-responsive" src="<?= Yii::app()->request->baseUrl ?>/images/contenido/gaviscon/bnt-sticky.png" alt="Compra online"></div>
-</a>
+</a> -->
 <img class="img-responsive" src="<?= Yii::app()->request->baseUrl ?>/images/contenido/gaviscon/banner-desktop/banner01.jpg" alt="Gaviscon - Rápido alivio de la indigestion y el reflujo">
 <section class="bg-gray">
   <div class="row">

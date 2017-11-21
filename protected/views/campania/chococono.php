@@ -141,14 +141,14 @@ margin-left: -20px;" src="<?= Yii::app()->request->baseUrl ?>/images/contenido/c
 </div>
 <!--Versión escritorio-->
 <?php else: ?>
-<a href="<?php echo CController::createUrl('/catalogo/producto', array('producto' => 29915)) ?>">
+<!-- <a href="<?php echo CController::createUrl('/catalogo/producto', array('producto' => 29915)) ?>">
   <div class="sidebar-cart">
     <div class="button-desplegable">
       <div class='icon2'><img style="width: 100%;" src="<?= Yii::app()->request->baseUrl ?>/images/contenido/chococono/circle.png" alt=""></div>
       <div class='text2'><img style="width: 100%;" src="<?= Yii::app()->request->baseUrl ?>/images/contenido/chococono/line-circle.png" alt=""></div>
     </div>
   </div>
-</a>
+</a> -->
 <section class="main-bg">
   <img class="producto-intro" src="<?= Yii::app()->request->baseUrl ?>/images/contenido/chococono/header-promocion-choco-cono.png" alt="Gana con choco cono millonario">
   <img class="title-intro" src="<?= Yii::app()->request->baseUrl ?>/images/contenido/chococono/participar-y-ganar-es-asi-de-facil.png" alt="Participar y ganar es así de fácil">

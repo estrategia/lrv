@@ -371,14 +371,14 @@
 <input type="hidden" id="cantidad-producto-unidad-25068-6" value="1" >
 <input type="hidden" id="cantidad-producto-unidad-25066-7" value="1" >
 
-<a href="<?= Yii::app()->request->baseUrl ?>/catalogo/buscar?busqueda=durex">
+<!-- <a href="<?= Yii::app()->request->baseUrl ?>/catalogo/buscar?busqueda=durex">
   <div class="sidebar-cart">
     <div class="button-desplegable">
       <div class='icon2'><img style="width: 100%;" src="<?= Yii::app()->request->baseUrl ?>/images/contenido/chococono/circle.png" alt=""></div>
       <div class='text2'><img style="width: 100%;" src="<?= Yii::app()->request->baseUrl ?>/images/contenido/chococono/line-circle.png" alt=""></div>
     </div>
   </div>
-</a>
+</a> -->
 <img class="img-responsive" src="<?= Yii::app()->request->baseUrl ?>/images/contenido/durex/banner-durex.jpg">
 <div class="bg-menu">
   <div class="container">

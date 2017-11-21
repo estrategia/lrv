@@ -77,8 +77,8 @@
 
 <!--Versión escritorio-->
 <?php else: ?>
-<a href="<?= Yii::app()->request->baseUrl ?>/catalogo/buscar?busqueda=calcibon+d"><div class="sidebar-cart"><img class="img-responsive" src="<?= Yii::app()->request->baseUrl ?>/images/contenido/calcibon/btn-fijo.png" alt="Compra online"></div></a>
-<img class="img-responsive" src="<?= Yii::app()->request->baseUrl ?>/images/contenido/calcibon/banner.jpg" alt="Calcibon para prevenir y tratar la osteoporosis">
+<!-- <a href="<?= Yii::app()->request->baseUrl ?>/catalogo/buscar?busqueda=calcibon+d"><div class="sidebar-cart"><img class="img-responsive" src="<?= Yii::app()->request->baseUrl ?>/images/contenido/calcibon/btn-fijo.png" alt="Compra online"></div></a>
+ --><img class="img-responsive" src="<?= Yii::app()->request->baseUrl ?>/images/contenido/calcibon/banner.jpg" alt="Calcibon para prevenir y tratar la osteoporosis">
 <div class="container">
   <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
     <div class="row degrade">

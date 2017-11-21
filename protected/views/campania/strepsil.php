@@ -44,9 +44,9 @@
 <?php if ($this->isMobile): ?>
 <!--Version movil-->
 <input type="hidden" id="cantidad-producto-unidad-117377" value="1" >
-<a data-ajax="false" data-cargar="1" data-producto="117377" data-id="1" href="">
+<!-- <a data-ajax="false" data-cargar="1" data-producto="117377" data-id="1" href="">
   <div class="sidebar-cart-m"><img class="img-responsive-m" src="<?= Yii::app()->request->baseUrl ?>/images/contenido/strepsils/btn-fijo-mobile.png" alt="Compra online"></div>
-</a>
+</a> -->
 <img class="img-responsive-m" src="<?= Yii::app()->request->baseUrl ?>/images/contenido/strepsils/banner-movil.jpg" alt="Banner strepsil">
 <div class=" bg-inicial" style="padding:0 15px;">
   <h1 class="title-descrip" style="margin-top: -5px;padding-top: 30px;font-size: 23px;">El tratamiento ideal para <br> <span>el dolor de garganta</span><br> que ataca <span>la inflamación</span></h1>
@@ -99,9 +99,9 @@
 
 <?php else: ?>
 <input type="hidden" id="cantidad-producto-unidad-117377-1" value="1" >
-<a data-cargar="1" data-producto="117377" data-id="1" href="">
+<!-- <a data-cargar="1" data-producto="117377" data-id="1" href="">
   <div class="sidebar-cart"><img class="img-responsive" src="<?= Yii::app()->request->baseUrl ?>/images/contenido/strepsils/btn-fijo.png" alt="Compra online"></div>
-</a>
+</a> -->
 <img class="img-responsive" src="<?= Yii::app()->request->baseUrl ?>/images/contenido/strepsils/banner.jpg" alt="Banner strepsil">
 <div class="container">
   <div class="row ">

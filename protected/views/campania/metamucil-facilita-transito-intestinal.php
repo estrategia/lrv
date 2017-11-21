@@ -109,8 +109,8 @@
 <!--Versión movil-->
 <!--Versión escritorio-->
 <?php else: ?>
-<a href="<?= Yii::app()->request->baseUrl ?>/catalogo/buscar?busqueda=metamucil"><div class="sidebar-cart"><img class="img-responsive" src="<?= Yii::app()->request->baseUrl ?>/images/contenido/metamucil/btn-fijo.png" alt="Compra online"></div></a>
-<a href="<?= Yii::app()->request->baseUrl ?>/catalogo/buscar?busqueda=metamucil"><img class="img-responsive" src="<?= Yii::app()->request->baseUrl ?>/images/contenido/metamucil/banner-metamucil.jpg" alt="Metamucil"></a>
+<!-- <a href="<?= Yii::app()->request->baseUrl ?>/catalogo/buscar?busqueda=metamucil"><div class="sidebar-cart"><img class="img-responsive" src="<?= Yii::app()->request->baseUrl ?>/images/contenido/metamucil/btn-fijo.png" alt="Compra online"></div></a>
+ --><a href="<?= Yii::app()->request->baseUrl ?>/catalogo/buscar?busqueda=metamucil"><img class="img-responsive" src="<?= Yii::app()->request->baseUrl ?>/images/contenido/metamucil/banner-metamucil.jpg" alt="Metamucil"></a>
 <section class="background-pattern">
   <div class="container-fluid">
     <div class="col-md-12">

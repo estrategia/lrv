@@ -183,9 +183,9 @@ $this->metaTags = "<meta http-equiv='X-UA-Compatible' content='IE=edge'>
 <!--Version movil-->
 <!--Versión escritorio-->
 <?php else: ?>
-<a href="<?= Yii::app()->request->baseUrl ?>/catalogo/buscar?busqueda=ENERGOLD+">
+<!-- <a href="<?= Yii::app()->request->baseUrl ?>/catalogo/buscar?busqueda=ENERGOLD+">
   <div class="sidebar-cart"><img class="img-responsive" src="<?= Yii::app()->request->baseUrl ?>/images/contenido/kyron/bnt-sticky.png" alt="Compra online"></div>
-</a>
+</a> -->
 <div id="carousel-example-generic" class="carousel slide" data-ride="carousel">
   <div class="carousel-inner">
     <div class="item active"><img class="img-responsive" src="<?= Yii::app()->request->baseUrl ?>/images/contenido/kyron/alimento-en-polvo-kids/kids-banner1.jpg" alt="Fresa Kids"></div>

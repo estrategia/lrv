@@ -74,9 +74,9 @@
   </div>
 <!--Versión escritorio-->
 <?php else: ?>
-<a href="<?= Yii::app()->request->baseUrl ?>/catalogo/buscar?busqueda=STAMYL">
+<!-- <a href="<?= Yii::app()->request->baseUrl ?>/catalogo/buscar?busqueda=STAMYL">
   <div class="sidebar-cart"><img class="img-responsive" src="<?= Yii::app()->request->baseUrl ?>/images/contenido/stamyl/btn-fijo.png" alt="Compra online"></div>
-</a>
+</a> -->
 <img class="img-responsive" src="<?= Yii::app()->request->baseUrl ?>/images/contenido/stamyl/banner.jpg" alt="Stamyl el digestivo y antiflatulento a la vez">
 <div class="degrade"></div>
   <div class="container">

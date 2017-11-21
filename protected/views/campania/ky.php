@@ -38,8 +38,8 @@
 <!--Versión movil-->
 <?php if ($this->isMobile): ?>
 <input type="hidden" id="cantidad-producto-unidad-3434-1" value="1" >
-<a data-ajax="false" data-cargar="1" data-producto="3434" data-id="1" href=""><div class="sidebar-cart"><img class="img-responsive" src="<?= Yii::app()->request->baseUrl ?>/images/contenido/ky/btn-fijo-mobile.png" alt="Compra online"></div></a>
-<a data-ajax="false" data-cargar="1" data-producto="3434" data-id="1" href=""><img class="img-responsive-m" src="<?= Yii::app()->request->baseUrl ?>/images/contenido/ky/banner.jpg" alt="KY, el lubricante íntimo que me ayuda a seguir disfrutando de mi sexualidad."></a>
+<!-- <a data-ajax="false" data-cargar="1" data-producto="3434" data-id="1" href=""><div class="sidebar-cart"><img class="img-responsive" src="<?= Yii::app()->request->baseUrl ?>/images/contenido/ky/btn-fijo-mobile.png" alt="Compra online"></div></a>
+ --><a data-ajax="false" data-cargar="1" data-producto="3434" data-id="1" href=""><img class="img-responsive-m" src="<?= Yii::app()->request->baseUrl ?>/images/contenido/ky/banner.jpg" alt="KY, el lubricante íntimo que me ayuda a seguir disfrutando de mi sexualidad."></a>
 <img class="img-responsive-m" src="<?= Yii::app()->request->baseUrl ?>/images/contenido/ky/line-mobile.jpg" alt="KY-El-lubricante-intimo-que-te-permite-seguir-disfrutando-de-tu-sexualidad">
 <section class="beneficios"style="margin-top:-5px;padding:20px 15px;">
   <h3 style="margin: 0;font-size: 19px;padding-top: 25px;">K-Y® Gel esta especialmente desarrollado para la lubricación íntima:</h3>
@@ -111,8 +111,8 @@
 <!--Versión escritorio-->
 <?php else: ?>
 <input type="hidden" id="cantidad-producto-unidad-3434-1" value="1" >
-<a data-cargar="1" data-producto="3434" data-id="1" href=""><div class="sidebar-cart"><img class="img-responsive" src="<?= Yii::app()->request->baseUrl ?>/images/contenido/fybogel/btn-fijo.png" alt="Compra online"></div></a>
-<a data-cargar="1" data-producto="3434" data-id="1" href=""><img class="img-responsive" src="<?= Yii::app()->request->baseUrl ?>/images/contenido/ky/banner.jpg" alt="KY, el lubricante íntimo que me ayuda a seguir disfrutando de mi sexualidad."></a>
+<!-- <a data-cargar="1" data-producto="3434" data-id="1" href=""><div class="sidebar-cart"><img class="img-responsive" src="<?= Yii::app()->request->baseUrl ?>/images/contenido/fybogel/btn-fijo.png" alt="Compra online"></div></a>
+ --><a data-cargar="1" data-producto="3434" data-id="1" href=""><img class="img-responsive" src="<?= Yii::app()->request->baseUrl ?>/images/contenido/ky/banner.jpg" alt="KY, el lubricante íntimo que me ayuda a seguir disfrutando de mi sexualidad."></a>
 <img class="img-responsive" src="<?= Yii::app()->request->baseUrl ?>/images/contenido/ky/line.jpg" alt="KY-El-lubricante-intimo-que-te-permite-seguir-disfrutando-de-tu-sexualidad">
 <section class="beneficios">
    <div class="container">

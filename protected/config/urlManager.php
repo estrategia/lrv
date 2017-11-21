@@ -38,7 +38,6 @@ return array(
         'zahara-protector-solar' => 'publicidad/contenido/nombre/zahara',
         'zahara-protector-solar-kids' => 'publicidad/contenido/nombre/zahara-kids',
         'zahara-bronceador' => 'publicidad/contenido/nombre/zahara-bronceador',
-        'prodent-cuidado-oral-old' => 'publicidad/contenido/nombre/prodent-old',
         'prodent-cuidado-oral' => 'publicidad/contenido/nombre/prodent',
         'prodent-cuidado-oral-ninos' => 'publicidad/contenido/nombre/prodent-ninos',
         'prodent-ennjuague-bucal' => 'publicidad/contenido/nombre/prodent-enjuague',
@@ -124,8 +123,6 @@ return array(
         'klim1-deslactosado' => 'publicidad/contenido/nombre/klim1-deslactosado',
         'que-hacer-ante-la-intolerancia-a-la-lactosa-en-ninos' => 'publicidad/contenido/nombre/klim1-deslactosado-intolerancia',
         'cojines-desknza' => 'publicidad/contenido/nombre/desknza',
-
-
 
          // Fin links campañas
 
