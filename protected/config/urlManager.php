@@ -123,6 +123,9 @@ return array(
         'glucoquick-educacion' => 'publicidad/contenido/nombre/glucoquick-educacion',
         'klim1-deslactosado' => 'publicidad/contenido/nombre/klim1-deslactosado',
         'que-hacer-ante-la-intolerancia-a-la-lactosa-en-ninos' => 'publicidad/contenido/nombre/klim1-deslactosado-intolerancia',
+        'cojines-desknza' => 'publicidad/contenido/nombre/desknza',
+
+
 
          // Fin links campañas
 
