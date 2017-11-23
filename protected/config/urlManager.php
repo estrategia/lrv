@@ -123,6 +123,11 @@ return array(
         'klim1-deslactosado' => 'publicidad/contenido/nombre/klim1-deslactosado',
         'que-hacer-ante-la-intolerancia-a-la-lactosa-en-ninos' => 'publicidad/contenido/nombre/klim1-deslactosado-intolerancia',
         'cojines-desknza' => 'publicidad/contenido/nombre/desknza',
+        'nivea-cuidado-facial' => 'publicidad/contenido/nombre/nivea-cuidado-facial',
+        'nivea-cuidado-humectacion-profunda' => 'publicidad/contenido/nombre/nivea-cuidado-humectacion-profunda',
+        'nivea-cuidado-aclarado-natural' => 'publicidad/contenido/nombre/nivea-cuidado-aclarado-natural',
+        'nivea-cuidado-antiarrugas' => 'publicidad/contenido/nombre/nivea-cuidado-antiarrugas',
+
 
          // Fin links campañas
 
