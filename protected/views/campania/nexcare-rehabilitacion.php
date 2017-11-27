@@ -3,14 +3,14 @@
 $this->metaTags = "
 <meta http-equiv='X-UA-Compatible' content='IE=edge'>
 <meta name='description' content='Los productos Nexcare de 3M, son ideales para ayudarte con tus golpes, raspones y heridas. Encuentra los productos en La Rebaja Virtual.'>
-<meta name='keywords' content='micropore, micropore 3m, esparadrapo.'> 
+<meta name='keywords' content='micropore, micropore 3m, esparadrapo.'>
   <style>
     @font-face {font-family:HelveticaNeueLight; src: url(" . Yii::app()->request->baseUrl . "/images/contenido/pantene/fonts/HelveticaNeueLight.ttf);}
     @font-face {font-family:HelveticaNeue-BlackCond; src: url(" . Yii::app()->request->baseUrl . "/images/contenido/pantene/fonts/HelveticaNeue-BlackCond.otf);}
     @font-face {font-family:HelveticaNeueItalic; src: url(" . Yii::app()->request->baseUrl . "/images/contenido/pantene/fonts/HelveticaNeueItalic.ttf);}
     @font-face {font-family:HelveticaNeueBold; src: url(" . Yii::app()->request->baseUrl . "/images/contenido/pantene/fonts/HelveticaNeueBold.ttf);}
     .space-1 {height: 0px !important;}
-    .img-responsive-m {width:100%;}   
+    .img-responsive-m {width:100%;}
     .programa-hora {font-size: 15px;}
     .programa-hora .span1 {font-family:HelveticaNeueLight;color:#363636;}
     .programa-hora .span2 {font-family:HelveticaNeue-BlackCond;color: #BF1A24;font-size: 16px;letter-spacing: 1px;margin-left2px;}
@@ -67,9 +67,9 @@ $this->metaTags = "
 <!--Versión movil-->
 <?php if ($this->isMobile): ?>
 <!--Añadir al carro-->
-<input type="hidden" id="cantidad-producto-unidad-22286" value="1"> 
-<input type="hidden" id="cantidad-producto-unidad-47558" value="1"> 
-<input type="hidden" id="cantidad-producto-unidad-64758" value="1"> 
+<input type="hidden" id="cantidad-producto-unidad-22286" value="1">
+<input type="hidden" id="cantidad-producto-unidad-47558" value="1">
+<input type="hidden" id="cantidad-producto-unidad-64758" value="1">
 
 <img class="img-responsive-m" src="<?= Yii::app()->request->baseUrl ?>/images/contenido/nexcare/banner-nexcare.jpg" alt="Nexcare que nada te detenga">
 <div class="margin: 0 20px;">
@@ -98,7 +98,7 @@ $this->metaTags = "
   </div>
 </section>
 <div style="margin-top: 30px;" id="owl-productodetalle-inicio" class="owl-carousel owl-theme owl-productodetalle">
-  <div class="item" style="margin: 30px 25px;">    
+  <div class="item" style="margin: 30px 25px;">
     <div class="producto" style="width: inherit;">
       <p class="nombre" style="text-align: center;">Bolsa frío/calor Nexcare<sup>&reg;</sup></p>
       <span class="presentacion" style="text-align: center;display: block;">Tamaño estándar - Tamaño Mini hielo </span>
@@ -110,8 +110,8 @@ $this->metaTags = "
         <li><span>Alivia</span> dolores musculares y rigidez</li>
         <li><span>En frío desinflama</span> músculos <br> y articulaciones</li>
       </ul>
-      <p class="precioproductos-antes">ANTES: $0.000</p>
-      <p class="precioproductos">AHORA: $0.000</p>
+      <p class="precioproductos-antes">ANTES: <?= ($bolsa_frio_calor_adultos == null) ? "--" : Yii::app()->numberFormatter->format(Yii::app()->params->formatoMoneda['patron'], $bolsa_frio_calor_adultos["u-a"], Yii::app()->params->formatoMoneda['moneda']) ?></p>
+      <p class="precioproductos">AHORA: <?= ($bolsa_frio_calor_adultos == null) ? "--" : Yii::app()->numberFormatter->format(Yii::app()->params->formatoMoneda['patron'], $bolsa_frio_calor_adultos["u"], Yii::app()->params->formatoMoneda['moneda']) ?></p>
       <a data-ajax="false" data-cargar="1" data-producto="22286" data-id="1" href="#">
         <img class="btn-comprar" style="margin: 20px auto 0;" src="<?= Yii::app()->request->baseUrl ?>/images/contenido/nexcare/btn-comprar.png">
       </a>
@@ -127,8 +127,8 @@ $this->metaTags = "
         <li><span>Delgada, ligera y elástica</span> de fácil secado (cuando se humedece)</li>
         <li><span>No necesita clips</span> adicionales</li>
       </ul>
-      <p class="precioproductos-antes">ANTES: $0.000</p>
-      <p class="precioproductos">AHORA: $0.000</p>
+      <p class="precioproductos-antes">ANTES: <?= ($venda_coban == null) ? "--" : Yii::app()->numberFormatter->format(Yii::app()->params->formatoMoneda['patron'], $venda_coban["u-a"], Yii::app()->params->formatoMoneda['moneda']) ?></p>
+      <p class="precioproductos">AHORA: <?= ($venda_coban == null) ? "--" : Yii::app()->numberFormatter->format(Yii::app()->params->formatoMoneda['patron'], $venda_coban["u"], Yii::app()->params->formatoMoneda['moneda']) ?></p>
       <a data-ajax="false" data-cargar="1" data-producto="47558" data-id="1" href="#">
         <img class="btn-comprar" style="margin: 20px auto 0;" src="<?= Yii::app()->request->baseUrl ?>/images/contenido/nexcare/btn-comprar.png">
       </a>
@@ -144,8 +144,8 @@ $this->metaTags = "
           <li>Triple capa de alta <span>eficiencia de filtración</span></li>
           <li> Protección en un 95% de bacterias y microorganismos </li>
       </ul>
-      <p class="precioproductos-antes">ANTES: $0.000</p>
-      <p class="precioproductos">AHORA: $0.000</p>
+      <p class="precioproductos-antes">ANTES: <?= ($tapabocas == null) ? "--" : Yii::app()->numberFormatter->format(Yii::app()->params->formatoMoneda['patron'], $tapabocas["u-a"], Yii::app()->params->formatoMoneda['moneda']) ?></p>
+      <p class="precioproductos">AHORA: <?= ($tapabocas == null) ? "--" : Yii::app()->numberFormatter->format(Yii::app()->params->formatoMoneda['patron'], $tapabocas["u"], Yii::app()->params->formatoMoneda['moneda']) ?></p>
       <a data-ajax="false" data-cargar="1" data-producto="64758" data-id="1" href="#">
         <img class="btn-comprar" style="margin: 20px auto 0;" src="<?= Yii::app()->request->baseUrl ?>/images/contenido/nexcare/btn-comprar.png">
       </a>
@@ -167,7 +167,7 @@ $this->metaTags = "
       <img style="margin-left: 2px;" width="25" height="18" src="<?= Yii::app()->request->baseUrl ?>/images/contenido/pantene/carrito.png">
     </div>
     <div class="seccion2-m">
-      <div class="agradecimiento">Gracias por comprar en <span>larebajavirtual.com</span></div>      
+      <div class="agradecimiento">Gracias por comprar en <span>larebajavirtual.com</span></div>
     </div>
   </div>
 </section>
@@ -187,9 +187,9 @@ $this->metaTags = "
 <!--VERSION ESCRITORIO-->
 <?php else: ?>
 <!--Añadir al carro-->
-<input type="hidden" id="cantidad-producto-unidad-22286-1" value="1"> 
-<input type="hidden" id="cantidad-producto-unidad-47558-2" value="1"> 
-<input type="hidden" id="cantidad-producto-unidad-64758-3" value="1"> 
+<input type="hidden" id="cantidad-producto-unidad-22286-1" value="1">
+<input type="hidden" id="cantidad-producto-unidad-47558-2" value="1">
+<input type="hidden" id="cantidad-producto-unidad-64758-3" value="1">
 
 <img class="img-responsive" src="<?= Yii::app()->request->baseUrl ?>/images/contenido/nexcare/banner-nexcare.jpg" alt="Nexcare que nada te detenga">
 <div class="main-container">
@@ -235,8 +235,8 @@ $this->metaTags = "
           <li><span>Alivia</span> dolores musculares y rigidez</li>
           <li><span>En frío desinflama</span> músculos <br> y articulaciones</li>
         </ul>
-        <p class="precioproductos-antes">ANTES: $0.000</p>
-        <p class="precioproductos">AHORA: $0.000</p>
+        <p class="precioproductos-antes">ANTES: <?= ($bolsa_frio_calor_adultos == null) ? "--" : Yii::app()->numberFormatter->format(Yii::app()->params->formatoMoneda['patron'], $bolsa_frio_calor_adultos["u-a"], Yii::app()->params->formatoMoneda['moneda']) ?></p>
+        <p class="precioproductos">AHORA: <?= ($bolsa_frio_calor_adultos == null) ? "--" : Yii::app()->numberFormatter->format(Yii::app()->params->formatoMoneda['patron'], $bolsa_frio_calor_adultos["u"], Yii::app()->params->formatoMoneda['moneda']) ?></p>
         <a data-cargar="1" data-producto="22286" data-id="1" href="#">
           <img class="btn-comprar" src="<?= Yii::app()->request->baseUrl ?>/images/contenido/nexcare/btn-comprar.png">
         </a>
@@ -250,8 +250,8 @@ $this->metaTags = "
           <li><span>Delgada, ligera y elástica</span> <br> de fácil secado (cuando se <br> humedece)</li>
           <li><span>No necesita clips</span> adicionales <br> &nbsp;</li>
         </ul>
-        <p class="precioproductos-antes">ANTES: $0.000</p>
-        <p class="precioproductos">AHORA: $0.000</p>
+        <p class="precioproductos-antes">ANTES: <?= ($venda_coban == null) ? "--" : Yii::app()->numberFormatter->format(Yii::app()->params->formatoMoneda['patron'], $venda_coban["u-a"], Yii::app()->params->formatoMoneda['moneda']) ?></p>
+        <p class="precioproductos">AHORA: <?= ($venda_coban == null) ? "--" : Yii::app()->numberFormatter->format(Yii::app()->params->formatoMoneda['patron'], $venda_coban["u"], Yii::app()->params->formatoMoneda['moneda']) ?></p>
         <a data-cargar="1" data-producto="47558" data-id="2" href="#">
           <img class="btn-comprar" src="<?= Yii::app()->request->baseUrl ?>/images/contenido/nexcare/btn-comprar.png">
         </a>
@@ -265,8 +265,8 @@ $this->metaTags = "
           <li>Triple capa de alta <span>eficiencia <br> de filtración</span></li>
           <li> Protección en un 95% de bacterias <br>y microorganismos <br> &nbsp;</li>
         </ul>
-        <p class="precioproductos-antes">ANTES: $0.000</p>
-        <p class="precioproductos">AHORA: $0.000</p>
+        <p class="precioproductos-antes">ANTES: <?= ($tapabocas == null) ? "--" : Yii::app()->numberFormatter->format(Yii::app()->params->formatoMoneda['patron'], $tapabocas["u-a"], Yii::app()->params->formatoMoneda['moneda']) ?></p>
+        <p class="precioproductos">AHORA: <?= ($tapabocas == null) ? "--" : Yii::app()->numberFormatter->format(Yii::app()->params->formatoMoneda['patron'], $tapabocas["u"], Yii::app()->params->formatoMoneda['moneda']) ?></p>
         <a data-cargar="1" data-producto="64758" data-id="3" href="#">
           <img class="btn-comprar" src="<?= Yii::app()->request->baseUrl ?>/images/contenido/nexcare/btn-comprar.png">
         </a>
@@ -289,7 +289,7 @@ $this->metaTags = "
       <img style="margin-left: 2px;" width="25" height="18" src="<?= Yii::app()->request->baseUrl ?>/images/contenido/pantene/carrito.png">
     </div>
     <div class="seccion2">
-      <div class="agradecimiento">Gracias por comprar en <span>larebajavirtual.com</span></div>      
+      <div class="agradecimiento">Gracias por comprar en <span>larebajavirtual.com</span></div>
     </div>
   </div>
 </section>
