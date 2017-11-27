@@ -130,6 +130,7 @@ return array(
         'nexcare-fijacion' => 'publicidad/contenido/nombre/nexcare-fijacion',
         'nexcare-cubrimiento' => 'publicidad/contenido/nombre/nexcare-cubrimiento',
         'nexcare-rehabilitacion' => 'publicidad/contenido/nombre/nexcare-rehabilitacion',
+        'menticol-pies' => 'publicidad/contenido/nombre/menticol',
          // Fin links campañas
 
         // REST patterns
