@@ -35,7 +35,7 @@ $this->metaTags = "
     .border {background-color: #fff;border: 4px solid #6197EC;border-radius: 25px;padding: 20px 45px;-webkit-box-shadow: 2px 2px 5px 0px rgba(0,0,0,0.6);-moz-box-shadow: 2px 2px 5px 0px rgba(0,0,0,0.6);box-shadow: 2px 2px 5px 0px rgba(0,0,0,0.6);margin: 0px 30% 60px 0px;}
     .producto {width: 450px;float: right;position: absolute;top: 60px;right: -35px;}
     .boton-compra {width: 200px;margin-top: 10px;}
-    .nota {background-color: #B5D2EE;color: #0647E4;font-family: HelveticaLight;text-align: center;padding: 13px;}
+    .nota {font-size: 18px;background-color: #B5D2EE;color: #0647E4;font-family: HelveticaLight;text-align: center;padding: 13px;}
     .bg-main-mobile {background-image:url(".Yii::app()->request->baseUrl."/images/contenido/mejorflex/bg-mobile.jpg);background-size: cover;}
   </style>
 ";
@@ -69,7 +69,7 @@ $this->metaTags = "
     </div>
 </div>
 <section class="nota">
-  <p style="margin-bottom:0px;font-size: 15px;">Es un medicamento analgésico, antipirético. No exceder su consumo. Si los síntomas persisten consultar al médico. <br> Leer indicaciones y  contraindicaciones. Reg.San.No. INVIMA 2013M-0014000.</p>
+  <p style="margin-bottom:0px;font-size: 18px;">Es un medicamento analgésico, antipirético. No exceder su consumo. Si los síntomas persisten consultar al médico. <br> Leer indicaciones y  contraindicaciones. Reg.San.No. INVIMA 2013M-0014000.</p>
 </section>
 <section class="programa-hora" style="font-size: 16px;">
   <img width="40" src="<?= Yii::app()->request->baseUrl ?>/images/contenido/pantene/carrito.png"> <br>

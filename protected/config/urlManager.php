@@ -92,7 +92,7 @@ return array(
         'colgate-blanqueamiento-para-pacientes' => 'publicidad/contenido/nombre/colgate-blanqueamiento',
         'colgate-pacientes-con-ortodoncia' => 'publicidad/contenido/nombre/colgate-ortodoncia',
         'colgate-para-pequenos-pacientes' => 'publicidad/contenido/nombre/colgate-ninos',
-        'choco-cono-millonario' => 'publicidad/contenido/nombre/chococono',       
+        'choco-cono-millonario' => 'publicidad/contenido/nombre/chococono',
         'durex' => 'publicidad/contenido/nombre/durex',
         'klim3-fortilearn' => 'publicidad/contenido/nombre/klim3',
         'pantene-fuerza-y-reconstruccion' => 'publicidad/contenido/nombre/pantene',
@@ -123,7 +123,14 @@ return array(
         'klim1-deslactosado' => 'publicidad/contenido/nombre/klim1-deslactosado',
         'que-hacer-ante-la-intolerancia-a-la-lactosa-en-ninos' => 'publicidad/contenido/nombre/klim1-deslactosado-intolerancia',
         'cojines-desknza' => 'publicidad/contenido/nombre/desknza',
-
+        'nivea-cuidado-facial' => 'publicidad/contenido/nombre/nivea-cuidado-facial',
+        'nivea-cuidado-humectacion-profunda' => 'publicidad/contenido/nombre/nivea-cuidado-humectacion-profunda',
+        'nivea-cuidado-aclarado-natural' => 'publicidad/contenido/nombre/nivea-cuidado-aclarado-natural',
+        'nivea-cuidado-antiarrugas' => 'publicidad/contenido/nombre/nivea-cuidado-antiarrugas',
+        'nexcare-fijacion' => 'publicidad/contenido/nombre/nexcare-fijacion',
+        'nexcare-cubrimiento' => 'publicidad/contenido/nombre/nexcare-cubrimiento',
+        'nexcare-rehabilitacion' => 'publicidad/contenido/nombre/nexcare-rehabilitacion',
+        'menticol-pies' => 'publicidad/contenido/nombre/menticol',
          // Fin links campañas
 
         // REST patterns
