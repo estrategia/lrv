@@ -1517,7 +1517,7 @@ function pasoDespacho(actual, siguiente, boton) {
         //dataType: 'json',
         async: true,
         url: requestUrl + '/carro/pagar/paso/' + actual + '/post/true',
-        data: $.param(data) + '&' + $('#form-direccion-pagoinvitado').serialize(),
+        data: $.param(data) + '&' + $('#form-despacho').serialize(),
         beforeSend: function () {
             boton.button('disable');
             $('div[id^="FormaPagoForm_"].has-error').html('');
