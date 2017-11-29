@@ -10,7 +10,7 @@ $this->metaTags = "
     @font-face { font-family:HelveticaNeueItalic; src: url(" . Yii::app()->request->baseUrl . "/images/contenido/pantene/fonts/HelveticaNeueItalic.ttf);}
     @font-face { font-family:HelveticaNeueBold; src: url(" . Yii::app()->request->baseUrl . "/images/contenido/pantene/fonts/HelveticaNeueBold.ttf);}
     .space-1 {height: 0px !important;}
-    .img-responsive-m {width:100%;}    
+    .img-responsive-m {width:100%;}
     .programa-hora {font-size: 15px;}
     .programa-hora .span1 {font-family:HelveticaNeueLight;color:#363636;}
     .programa-hora .span2 {font-family:HelveticaNeue-BlackCond;color: #BF1A24;font-size: 16px;letter-spacing: 1px;margin-left2px;}
@@ -22,9 +22,9 @@ $this->metaTags = "
     .agradecimiento {font-family: HelveticaNeueLight;color: #fff;text-align: center;font-size: 16px;}
     .agradecimiento span {font-family:HelveticaNeue-BlackCond;letter-spacing:1px;}
     .txt-footer {color: #595959;font-family: HelveticaNeueItalic;text-align: center;font-size: 18px;margin-bottom: 30px;}
-    a {text-decoration:none;}    
+    a {text-decoration:none;}
     @font-face { font-family:VAGRoundedStd-Bold; src: url(" . Yii::app()->request->baseUrl . "/images/contenido/klim1-deslactosado/fonts/VAGRoundedStd-Bold.otf);}
-   
+
     @font-face { font-family:VAGRoundedStd-Light; src: url(" . Yii::app()->request->baseUrl . "/images/contenido/klim1-deslactosado/fonts/VAGRoundedStd-Light.otf);}
 
 
@@ -101,7 +101,7 @@ $this->metaTags = "
   <img class="pack" style="width: 70%;margin: 20px auto;display: block;" src="<?= Yii::app()->request->baseUrl ?>/images/contenido/klim1-deslactosado/lata-klim-deslactosado.png" alt="Klim 1+ deslactosado">
   <p class="precioproductos-antes" style="text-align: center;">ANTES: <?= ($klim1_deslactosado == null) ? "$00.000" : Yii::app()->numberFormatter->format(Yii::app()->params->formatoMoneda['patron'], $klim1_deslactosado["u-a"], Yii::app()->params->formatoMoneda['moneda']) ?> </p>
   <p class="precioproductos" style="text-align: center;">AHORA: <?= ($klim1_deslactosado == null) ? "$00.000" : Yii::app()->numberFormatter->format(Yii::app()->params->formatoMoneda['patron'], $klim1_deslactosado["u"], Yii::app()->params->formatoMoneda['moneda']) ?> </p>
-  <a data-ajax="false" data-cargar="1" data-producto="118997" data-id="1" href="#">
+  <a data-ajax="false" href="<?php echo CController::createUrl('/catalogo/producto', array('producto' => 118997 )) ?>">
     <img class="img-responsive-m" style="margin: 20px auto 0;width: 60%;display: block;" src="<?= Yii::app()->request->baseUrl ?>/images/contenido/klim1-deslactosado/btn-comprar.png" alt="Comprar">
   </a>
   <div class="descripcion" style="margin: 35px 20px;">
@@ -110,7 +110,7 @@ $this->metaTags = "
   </div>
   <div class="caracteristicas-m">
     <h3 class="title-special">¿Qué es la intolerancia <br> a la lactosa?</h3>
-      <p>Cualquier alimento que es ingerido por el organismo necesita ser fraccionada en sustancias menores para facilitar la digestión y la obtención de energía.<br>Las encargadas de este fraccionamiento son las enzimas y la lactasa es la enzima encargada de actuar sobre la lactosa, un tipo de azúcar presente en la leche que le das a tu niño.</p>        
+      <p>Cualquier alimento que es ingerido por el organismo necesita ser fraccionada en sustancias menores para facilitar la digestión y la obtención de energía.<br>Las encargadas de este fraccionamiento son las enzimas y la lactasa es la enzima encargada de actuar sobre la lactosa, un tipo de azúcar presente en la leche que le das a tu niño.</p>
       <p>La ausencia de lactasa produce una incapacidad para digerir lactosa, esa incapacidad se manifiesta mediante la aparición de síntomas digestivos molestos, los cuales se harán presentes siempre que tu niño consuma alimentos a base de lácteos. Existen varias formas de disminución de la lactasa. Por ejemplo, puede presentarse desde el nacimiento (deficiencia congénita de lactasa), lo que es muy raro. Lo más frecuente es que la intolerancia a la lactosa ocurra como complicación de una diarrea y generalmente esta intolerancia es transitoria. Es la más frecuente y se denomina deficiencia secundaria de lactasa. Sin embargo, algunos niños, en sus primeros 5 años de edad, pueden tener una intolerancia a la lactosa porque su lactasa se disminuye poco a poco de una manera programada y llega un momento que el niño empieza a presentar los síntomas. Esta se llama deficiencia de la lactasa del tipo adulto. Es la más frecuente en la población general en todo el mundo.</p>
       <h3 class="title-special">Síntomas frecuentes <br> y precauciones generales</h3>
       <p>Los síntomas más comunes que observarás en tu niño, derivados de una intolerancia a la lactosa, son:</p>
@@ -148,7 +148,7 @@ $this->metaTags = "
       <img style="margin-left: 2px;" width="25" height="18" src="<?= Yii::app()->request->baseUrl ?>/images/contenido/pantene/carrito.png">
     </div>
     <div class="seccion2-m">
-      <div class="agradecimiento">Gracias por comprar en <span>larebajavirtual.com</span></div>      
+      <div class="agradecimiento">Gracias por comprar en <span>larebajavirtual.com</span></div>
     </div>
   </div>
 </section>
@@ -163,7 +163,7 @@ $this->metaTags = "
     <p style="font-family:HelveticaNeueBold;text-align:center;font-size: 20px;margin-top: 7px;margin-bottom:0px;">Línea gratuita</p>
     <p style="color:#7F7F7F;font-family:HelveticaNeueItalic;font-size: 12px;text-align: center;">01-8000-939900</p>
   </div>
-</div> 
+</div>
 <!-- Fin Version movil -->
 <!--VERSION ESCRITORIO-->
 <?php else: ?>
@@ -184,11 +184,11 @@ $this->metaTags = "
             <p class="precioproductos">AHORA: <?= ($klim1_deslactosado == null) ? "$00.000" : Yii::app()->numberFormatter->format(Yii::app()->params->formatoMoneda['patron'], $klim1_deslactosado["u"], Yii::app()->params->formatoMoneda['moneda']) ?> </p>
           </div>
           <div class="columna2">
-            <a data-cargar="1" data-producto="118997" data-id="1" href="#">
+            <a href="<?php echo CController::createUrl('/catalogo/producto', array('producto' => 118997 )) ?>">
               <img class="img-responsive" src="<?= Yii::app()->request->baseUrl ?>/images/contenido/klim1-deslactosado/btn-comprar.png" alt="Comprar">
             </a>
           </div>
-        </div>                    
+        </div>
       </div>
     </div>
     <div class="descripcion">
@@ -206,7 +206,7 @@ $this->metaTags = "
         son las enzimas y la lactasa es la enzima<br>
         encargada de actuar sobre la lactosa,<br>
         un tipo de azúcar presente en la leche <br>que le das a tu niño.
-        </p>        
+        </p>
         <p>La ausencia de lactasa produce una <br>
         incapacidad para digerir lactosa, esa <br>
         incapacidad se manifiesta mediante <br>
@@ -291,7 +291,7 @@ $this->metaTags = "
       <img style="margin-left: 2px;" width="25" height="18" src="<?= Yii::app()->request->baseUrl ?>/images/contenido/pantene/carrito.png">
     </div>
     <div class="seccion2">
-      <div class="agradecimiento">Gracias por comprar en <span>larebajavirtual.com</span></div>      
+      <div class="agradecimiento">Gracias por comprar en <span>larebajavirtual.com</span></div>
     </div>
   </div>
 </section>

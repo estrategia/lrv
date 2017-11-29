@@ -10,7 +10,7 @@ $this->metaTags = "
     @font-face { font-family:HelveticaNeueItalic; src: url(" . Yii::app()->request->baseUrl . "/images/contenido/pantene/fonts/HelveticaNeueItalic.ttf);}
     @font-face { font-family:HelveticaNeueBold; src: url(" . Yii::app()->request->baseUrl . "/images/contenido/pantene/fonts/HelveticaNeueBold.ttf);}
     .space-1 {height: 0px !important;}
-    .img-responsive-m {width:100%;}    
+    .img-responsive-m {width:100%;}
     .programa-hora {font-size: 15px;}
     .programa-hora .span1 {font-family:HelveticaNeueLight;color:#363636;}
     .programa-hora .span2 {font-family:HelveticaNeue-BlackCond;color: #BF1A24;font-size: 16px;letter-spacing: 1px;margin-left2px;}
@@ -22,7 +22,7 @@ $this->metaTags = "
     .agradecimiento {font-family: HelveticaNeueLight;color: #fff;text-align: center;font-size: 16px;}
     .agradecimiento span {font-family:HelveticaNeue-BlackCond;letter-spacing:1px;}
     .txt-footer {color: #595959;font-family: HelveticaNeueItalic;text-align: center;font-size: 18px;margin-bottom: 30px;}
-    a {text-decoration:none;}    
+    a {text-decoration:none;}
     @font-face { font-family:VAGRoundedStd-Bold; src: url(" . Yii::app()->request->baseUrl . "/images/contenido/klim1-deslactosado/fonts/VAGRoundedStd-Bold.otf);}
     .animate1 {visibility: hidden;}
     .main-klim {background-size: 100%;background-image:url(".Yii::app()->request->baseUrl."/images/contenido/klim1-deslactosado/bg-main.jpg);}
@@ -77,14 +77,13 @@ $this->metaTags = "
 <!--Versión movil-->
 <?php if ($this->isMobile): ?>
 <!--Añadir al carro-->
-<input type="hidden" id="cantidad-producto-unidad-118997" value="1" >
 <section class="main-klim" style="background-size:cover;">
   <img class="nuevo" src="<?= Yii::app()->request->baseUrl ?>/images/contenido/klim1-deslactosado/nuevo.png" alt="Nuevos deslactosado">
   <img class="img-responsive-m" style="width: 80%;margin: 0 auto;display: block;" src="<?= Yii::app()->request->baseUrl ?>/images/contenido/klim1-deslactosado/nuevo-alimento-lacteo.png" alt="Nuevos Alimento lacteo">
   <img class="pack" style="width: 70%;margin: 20px auto;display: block;" src="<?= Yii::app()->request->baseUrl ?>/images/contenido/klim1-deslactosado/lata-klim-deslactosado.png" alt="Klim 1+ deslactosado">
   <p class="precioproductos-antes" style="text-align: center;">ANTES: <?= ($klim1_deslactosado == null) ? "$00.000" : Yii::app()->numberFormatter->format(Yii::app()->params->formatoMoneda['patron'], $klim1_deslactosado["u-a"], Yii::app()->params->formatoMoneda['moneda']) ?> </p>
   <p class="precioproductos" style="text-align: center;">AHORA: <?= ($klim1_deslactosado == null) ? "$00.000" : Yii::app()->numberFormatter->format(Yii::app()->params->formatoMoneda['patron'], $klim1_deslactosado["u"], Yii::app()->params->formatoMoneda['moneda']) ?> </p>
-  <a data-ajax="false" data-cargar="1" data-producto="118997" data-id="1" href="#">
+  <a data-ajax="false" href="<?php echo CController::createUrl('/catalogo/producto', array('producto' => 118997 )) ?>">
     <img class="img-responsive-m" style="margin: 20px auto 0;width: 60%;display: block;" src="<?= Yii::app()->request->baseUrl ?>/images/contenido/klim1-deslactosado/btn-comprar.png" alt="Comprar">
   </a>
   <div class="descripcion" style="margin: 0 auto;">
@@ -99,18 +98,18 @@ $this->metaTags = "
     <p >Contiene Hierro, Zinc, Vitaminas A y C <br> que contribuyen al funcionamiento <br> normal del sistema inmune</p>
     <img class="img-responsive-m"  src="<?= Yii::app()->request->baseUrl ?>/images/contenido/klim1-deslactosado/prebio1.png" alt="Prebio 1">
     <p>PREBIO 1<sup>&reg;</sup> es una exclusiva mezcla <br> de fibras solubles Prebióticas, <br> Inulina y Oligofructosa </p>
-  </div>  
+  </div>
   <div class="conoce-mas" style="margin-top: 45px;">
     <img class="icono-m" src="<?= Yii::app()->request->baseUrl ?>/images/contenido/klim1-deslactosado/1.png">
     <h3 style="margin: 30px auto 0;font-size: 22px;">¿Qué debo hacer si mi hijo es intolerante a la lactosa? 5 formas de detectarlo</h3>
     <a data-ajax="false" href="<?= Yii::app()->request->baseUrl ?>/que-hacer-ante-la-intolerancia-a-la-lactosa-en-ninos"><img class="btn-conoce-mas" style="width: 50%;margin: 15px auto 0;display: block;" src="<?= Yii::app()->request->baseUrl ?>/images/contenido/klim1-deslactosado/conoce-mas.png" alt="Conoce más"></a>
-  </div>  
+  </div>
 </section>
-<section class="main-video-m">    
+<section class="main-video-m">
   <h2 style="font-family: VAGRoundedStd-Bold;color: #8D2079;font-size: 25px;margin: 0px;text-align: center;">Sorprende a tu hijo con una deliciosa receta</h2>
-    <div class="video-m">       
+    <div class="video-m">
       <iframe width="640" height="360" src="https://www.youtube.com/embed/rtLT3M09UP4?rel=0&amp;showinfo=0" frameborder="0" allowfullscreen></iframe>
-    </div>    
+    </div>
     <img class="img-responsive-m fot" src="<?= Yii::app()->request->baseUrl ?>/images/contenido/klim1-deslactosado/footer.png">
 </section>
 <section class="programa-hora">
@@ -122,7 +121,7 @@ $this->metaTags = "
       <img style="margin-left: 2px;" width="25" height="18" src="<?= Yii::app()->request->baseUrl ?>/images/contenido/pantene/carrito.png">
     </div>
     <div class="seccion2-m">
-      <div class="agradecimiento">Gracias por comprar en <span>larebajavirtual.com</span></div>      
+      <div class="agradecimiento">Gracias por comprar en <span>larebajavirtual.com</span></div>
     </div>
   </div>
 </section>
@@ -158,11 +157,11 @@ $this->metaTags = "
             <p class="precioproductos">AHORA: <?= ($klim1_deslactosado == null) ? "$00.000" : Yii::app()->numberFormatter->format(Yii::app()->params->formatoMoneda['patron'], $klim1_deslactosado["u"], Yii::app()->params->formatoMoneda['moneda']) ?> </p>
           </div>
           <div class="columna2">
-            <a data-cargar="1" data-producto="118997" data-id="1" href="#">
+            <a href="<?php echo CController::createUrl('/catalogo/producto', array('producto' => 118997 )) ?>">
               <img class="img-responsive" src="<?= Yii::app()->request->baseUrl ?>/images/contenido/klim1-deslactosado/btn-comprar.png" alt="Comprar">
             </a>
           </div>
-        </div>                    
+        </div>
       </div>
     </div>
     <div class="descripcion">
@@ -199,9 +198,9 @@ $this->metaTags = "
         </div>
       </div>
     </div>
-  </div>  
+  </div>
 </section>
-<section class="main-video">  
+<section class="main-video">
   <div class="content">
     <h2 class="animate1 wow zoomIn" data-wow-offset="10" data-wow-delay="0.3s">Sorprende a tu hijo con una deliciosa receta</h2>
     <div class="video">
@@ -209,7 +208,7 @@ $this->metaTags = "
         <iframe width="640" height="360" src="https://www.youtube.com/embed/rtLT3M09UP4?rel=0&amp;showinfo=0" frameborder="0" allowfullscreen></iframe>
       </center>
     </div>
-  </div>  
+  </div>
   <img class="img-responsive fot" src="<?= Yii::app()->request->baseUrl ?>/images/contenido/klim1-deslactosado/footer.png">
  </section>
 <section class="programa-hora">
@@ -221,7 +220,7 @@ $this->metaTags = "
       <img style="margin-left: 2px;" width="25" height="18" src="<?= Yii::app()->request->baseUrl ?>/images/contenido/pantene/carrito.png">
     </div>
     <div class="seccion2">
-      <div class="agradecimiento">Gracias por comprar en <span>larebajavirtual.com</span></div>      
+      <div class="agradecimiento">Gracias por comprar en <span>larebajavirtual.com</span></div>
     </div>
   </div>
 </section>

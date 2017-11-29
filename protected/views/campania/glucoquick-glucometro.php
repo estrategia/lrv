@@ -47,11 +47,6 @@ $this->metaTags = "
 
 <!--Versión movil-->
 <?php if ($this->isMobile): ?>
-<!--Añadir al carro-->
-<input type="hidden" id="cantidad-producto-unidad-73213" value="1" >
-<input type="hidden" id="cantidad-producto-unidad-73214" value="1" >
-<input type="hidden" id="cantidad-producto-unidad-26906" value="1" >
-<input type="hidden" id="cantidad-producto-unidad-99369" value="1" >
 <img class="img-responsive-m" src="<?= Yii::app()->request->baseUrl ?>/images/contenido/glucoquick/banner-glucometro-tensiometro.jpg" alt="Yo me cuido en casa con glucoQuick">
 <div class="bg-principal" style="margin: 25px;padding: 29px !important ;">
   <h1 class="title-main" style="font-size: 25px;">OFERTA TIRAS GRATIS </h1>
@@ -67,7 +62,7 @@ $this->metaTags = "
   <img class="img-responsive-m" style="margin: -45px auto 20px;" src="<?= Yii::app()->request->baseUrl ?>/images/contenido/glucoquick/producto/glucometro.png" alt="Glucómetro">
   <p class="precioproductos-antes">ANTES: <?= ($glucometroG30a_tiras_gratis == null) ? "--" : Yii::app()->numberFormatter->format(Yii::app()->params->formatoMoneda['patron'], $glucometroG30a_tiras_gratis["u-a"], Yii::app()->params->formatoMoneda['moneda']) ?></p>
   <p class="precioproductos">AHORA: <?= ($glucometroG30a_tiras_gratis == null) ? "--" : Yii::app()->numberFormatter->format(Yii::app()->params->formatoMoneda['patron'], $glucometroG30a_tiras_gratis["u"], Yii::app()->params->formatoMoneda['moneda']) ?></p>
-  <a data-ajax="false" data-cargar="1" data-producto="73213" data-id="1" href="#"><img class="img-responsive btn-comprar" style="display: block;" src="<?= Yii::app()->request->baseUrl ?>/images/contenido/glucoquick/btn-comprar.png" alt="GlucoQuick"></a>
+  <a data-ajax="false" href="<?php echo CController::createUrl('/catalogo/producto', array('producto' => 73213 )) ?>"><img class="img-responsive btn-comprar" style="display: block;" src="<?= Yii::app()->request->baseUrl ?>/images/contenido/glucoquick/btn-comprar.png" alt="GlucoQuick"></a>
 </div>
 <h3 class="subtitle" style="font-size: 23px;line-height: 15px;">Conoce nuestros insumos Glucoquick<sup>®</sup> </h3>
 <div id="owl-productodetalle-inicio"  style="padding:0px;" class="owl-carousel owl-theme owl-productodetalle section-products">
@@ -77,7 +72,7 @@ $this->metaTags = "
         <p>Oferta Glucoquick<sup>®</sup> <br> Tiras Gratis Lancetas x 50 caja x 1 und.</p>
         <p class="precioproductos-antes">ANTES: <?= ($glucoquickTiras_gratis_lancetasx50 == null) ? "--" : Yii::app()->numberFormatter->format(Yii::app()->params->formatoMoneda['patron'], $glucoquickTiras_gratis_lancetasx50["u-a"], Yii::app()->params->formatoMoneda['moneda']) ?></p>
         <p class="precioproductos">AHORA: <?= ($glucoquickTiras_gratis_lancetasx50 == null) ? "--" : Yii::app()->numberFormatter->format(Yii::app()->params->formatoMoneda['patron'], $glucoquickTiras_gratis_lancetasx50["u"], Yii::app()->params->formatoMoneda['moneda']) ?></p>
-        <a data-ajax="false" data-cargar="1" data-producto="73214" data-id="2" href="#"><img class="img-responsive btn-comprar" src="<?= Yii::app()->request->baseUrl ?>/images/contenido/glucoquick/btn-comprar.png" alt="GlucoQuick"></a>
+        <a data-ajax="false" href="<?php echo CController::createUrl('/catalogo/producto', array('producto' => 73214 )) ?>"><img class="img-responsive btn-comprar" src="<?= Yii::app()->request->baseUrl ?>/images/contenido/glucoquick/btn-comprar.png" alt="GlucoQuick"></a>
       </div>
     </div>
     <div class="item" style="margin:0 35px 15px;">
@@ -86,7 +81,7 @@ $this->metaTags = "
         <p>Oferta Glucoquick<sup>®</sup> <br> Tiras Pague 2 lleve 3 Caja x 50 und.</p>
         <p class="precioproductos-antes">ANTES: <?= ($glucoquickTiras_2x3_cajax50 == null) ? "--" : Yii::app()->numberFormatter->format(Yii::app()->params->formatoMoneda['patron'], $glucoquickTiras_2x3_cajax50["u-a"], Yii::app()->params->formatoMoneda['moneda']) ?></p>
         <p class="precioproductos">AHORA: <?= ($glucoquickTiras_2x3_cajax50 == null) ? "--" : Yii::app()->numberFormatter->format(Yii::app()->params->formatoMoneda['patron'], $glucoquickTiras_2x3_cajax50["u"], Yii::app()->params->formatoMoneda['moneda']) ?></p>
-        <a data-ajax="false" data-cargar="1" data-producto="26906" data-id="3" href="#"><img class="img-responsive btn-comprar" src="<?= Yii::app()->request->baseUrl ?>/images/contenido/glucoquick/btn-comprar.png" alt="GlucoQuick"></a>
+        <a data-ajax="false" href="<?php echo CController::createUrl('/catalogo/producto', array('producto' => 26906 )) ?>"><img class="img-responsive btn-comprar" src="<?= Yii::app()->request->baseUrl ?>/images/contenido/glucoquick/btn-comprar.png" alt="GlucoQuick"></a>
       </div>
     </div>
     <div class="item"  style="margin:0 35px 15px;">
@@ -95,7 +90,7 @@ $this->metaTags = "
         <p>Glucoquick<sup>®</sup> Tiras <br> Caja x 50 und. <br> &nbsp;</p>
         <p class="precioproductos-antes">ANTES: <?= ($glucoquickTiras_cajax50 == null) ? "--" : Yii::app()->numberFormatter->format(Yii::app()->params->formatoMoneda['patron'], $glucoquickTiras_cajax50["u-a"], Yii::app()->params->formatoMoneda['moneda']) ?></p>
         <p class="precioproductos">AHORA: <?= ($glucoquickTiras_cajax50 == null) ? "--" : Yii::app()->numberFormatter->format(Yii::app()->params->formatoMoneda['patron'], $glucoquickTiras_cajax50["u"], Yii::app()->params->formatoMoneda['moneda']) ?></p>
-        <a data-ajax="false" data-cargar="1" data-producto="99369" data-id="4" href="#"><img class="img-responsive btn-comprar" src="<?= Yii::app()->request->baseUrl ?>/images/contenido/glucoquick/btn-comprar.png" alt="GlucoQuick"></a>
+        <a data-ajax="false" href="<?php echo CController::createUrl('/catalogo/producto', array('producto' => 99369 )) ?>"><img class="img-responsive btn-comprar" src="<?= Yii::app()->request->baseUrl ?>/images/contenido/glucoquick/btn-comprar.png" alt="GlucoQuick"></a>
       </div>
     </div>
 </div>
@@ -131,11 +126,6 @@ $this->metaTags = "
 <!-- Fin Version movil -->
 <!--VERSION ESCRITORIO-->
 <?php else: ?>
-<!--Añadir al carro-->
-<input type="hidden" id="cantidad-producto-unidad-73213-1" value="1" >
-<input type="hidden" id="cantidad-producto-unidad-73214-2" value="1" >
-<input type="hidden" id="cantidad-producto-unidad-26906-3" value="1" >
-<input type="hidden" id="cantidad-producto-unidad-99369-4" value="1" >
 <img class="img-responsive" src="<?= Yii::app()->request->baseUrl ?>/images/contenido/glucoquick/banner-glucometro-tensiometro.jpg" alt="Yo me cuido en casa con glucoQuick"></div>
 <div class="container">
   <div class="row bg-principal">
@@ -155,7 +145,7 @@ $this->metaTags = "
         <img class="img-responsive" style="width: 80%;margin: 0 auto;" src="<?= Yii::app()->request->baseUrl ?>/images/contenido/glucoquick/producto/glucometro.png" alt="Glucómetro">
         <p class="precioproductos-antes">ANTES: <?= ($glucometroG30a_tiras_gratis == null) ? "--" : Yii::app()->numberFormatter->format(Yii::app()->params->formatoMoneda['patron'], $glucometroG30a_tiras_gratis["u-a"], Yii::app()->params->formatoMoneda['moneda']) ?></p>
         <p class="precioproductos">AHORA: <?= ($glucometroG30a_tiras_gratis == null) ? "--" : Yii::app()->numberFormatter->format(Yii::app()->params->formatoMoneda['patron'], $glucometroG30a_tiras_gratis["u"], Yii::app()->params->formatoMoneda['moneda']) ?></p>
-        <a data-cargar="1" data-producto="73213" data-id="1" href="#"><img class="img-responsive btn-comprar" src="<?= Yii::app()->request->baseUrl ?>/images/contenido/glucoquick/btn-comprar.png" alt="GlucoQuick"></a>
+        <a href="<?php echo CController::createUrl('/catalogo/producto', array('producto' => 73213 )) ?>"><img class="img-responsive btn-comprar" src="<?= Yii::app()->request->baseUrl ?>/images/contenido/glucoquick/btn-comprar.png" alt="GlucoQuick"></a>
       </div>
     </div>
   <div class="row">
@@ -170,7 +160,7 @@ $this->metaTags = "
           x 50 caja x 1 und.</p>
           <p class="precioproductos-antes">ANTES: <?= ($glucoquickTiras_gratis_lancetasx50 == null) ? "--" : Yii::app()->numberFormatter->format(Yii::app()->params->formatoMoneda['patron'], $glucoquickTiras_gratis_lancetasx50["u-a"], Yii::app()->params->formatoMoneda['moneda']) ?></p>
           <p class="precioproductos">AHORA: <?= ($glucoquickTiras_gratis_lancetasx50 == null) ? "--" : Yii::app()->numberFormatter->format(Yii::app()->params->formatoMoneda['patron'], $glucoquickTiras_gratis_lancetasx50["u"], Yii::app()->params->formatoMoneda['moneda']) ?></p>
-          <a data-cargar="1" data-producto="73214" data-id="2" href="#"><img class="img-responsive btn-comprar" src="<?= Yii::app()->request->baseUrl ?>/images/contenido/glucoquick/btn-comprar.png" alt="GlucoQuick"></a>
+          <a href="<?php echo CController::createUrl('/catalogo/producto', array('producto' => 73214 )) ?>"><img class="img-responsive btn-comprar" src="<?= Yii::app()->request->baseUrl ?>/images/contenido/glucoquick/btn-comprar.png" alt="GlucoQuick"></a>
         </div>
       </div>
       <div class="col-sm-4 col-md-4">
@@ -181,7 +171,7 @@ $this->metaTags = "
           Caja x 50 und.</p>
           <p class="precioproductos-antes">ANTES: <?= ($glucoquickTiras_2x3_cajax50 == null) ? "--" : Yii::app()->numberFormatter->format(Yii::app()->params->formatoMoneda['patron'], $glucoquickTiras_2x3_cajax50["u-a"], Yii::app()->params->formatoMoneda['moneda']) ?></p>
           <p class="precioproductos">AHORA: <?= ($glucoquickTiras_2x3_cajax50 == null) ? "--" : Yii::app()->numberFormatter->format(Yii::app()->params->formatoMoneda['patron'], $glucoquickTiras_2x3_cajax50["u"], Yii::app()->params->formatoMoneda['moneda']) ?></p>
-          <a data-cargar="1" data-producto="26906" data-id="3" href="#"><img class="img-responsive btn-comprar" src="<?= Yii::app()->request->baseUrl ?>/images/contenido/glucoquick/btn-comprar.png" alt="GlucoQuick"></a>
+          <a href="<?php echo CController::createUrl('/catalogo/producto', array('producto' => 26906 )) ?>"><img class="img-responsive btn-comprar" src="<?= Yii::app()->request->baseUrl ?>/images/contenido/glucoquick/btn-comprar.png" alt="GlucoQuick"></a>
         </div>
       </div>
       <div class="col-sm-4 col-md-4">
@@ -191,7 +181,7 @@ $this->metaTags = "
             Caja x 50 und. <br> &nbsp;</p>
             <p class="precioproductos-antes">ANTES: <?= ($glucoquickTiras_cajax50 == null) ? "--" : Yii::app()->numberFormatter->format(Yii::app()->params->formatoMoneda['patron'], $glucoquickTiras_cajax50["u-a"], Yii::app()->params->formatoMoneda['moneda']) ?></p>
             <p class="precioproductos">AHORA: <?= ($glucoquickTiras_cajax50 == null) ? "--" : Yii::app()->numberFormatter->format(Yii::app()->params->formatoMoneda['patron'], $glucoquickTiras_cajax50["u"], Yii::app()->params->formatoMoneda['moneda']) ?></p>
-            <a data-cargar="1" data-producto="99369" data-id="4" href="#"><img class="img-responsive btn-comprar" src="<?= Yii::app()->request->baseUrl ?>/images/contenido/glucoquick/btn-comprar.png" alt="GlucoQuick"></a>
+            <a href="<?php echo CController::createUrl('/catalogo/producto', array('producto' => 99369 )) ?>"><img class="img-responsive btn-comprar" src="<?= Yii::app()->request->baseUrl ?>/images/contenido/glucoquick/btn-comprar.png" alt="GlucoQuick"></a>
         </div>
       </div>
     </div>

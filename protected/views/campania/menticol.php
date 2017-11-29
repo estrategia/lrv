@@ -10,7 +10,7 @@ efectiva acción antibacterial gracias al Triclosán.'>
 	@font-face {font-family:HelveticaNeueItalic; src: url(" . Yii::app()->request->baseUrl . "/images/contenido/pantene/fonts/HelveticaNeueItalic.ttf);}
 	@font-face {font-family:HelveticaNeueBold; src: url(" . Yii::app()->request->baseUrl . "/images/contenido/pantene/fonts/HelveticaNeueBold.ttf);}
 	.space-1 {height: 0px !important;}
-	.img-responsive-m {width:100%;}   
+	.img-responsive-m {width:100%;}
 	.programa-hora {font-size: 15px;}
 	.programa-hora .span1 {font-family:HelveticaNeueLight;color:#363636;}
 	.programa-hora .span2 {font-family:HelveticaNeue-BlackCond;color: #BF1A24;font-size: 16px;letter-spacing: 1px;margin-left2px;}
@@ -25,28 +25,28 @@ efectiva acción antibacterial gracias al Triclosán.'>
 	.agradecimiento span {font-family:HelveticaNeue-BlackCond;letter-spacing:1px;}
 	a:hover, a:active, a:focus {outline: none !important;}
 
-    @font-face {font-family:AvenirBlack; src: url(".Yii::app()->request->baseUrl."/images/contenido/menticol/fonts/AvenirBlack.otf);}
+  @font-face {font-family:AvenirBlack; src: url(".Yii::app()->request->baseUrl."/images/contenido/menticol/fonts/AvenirBlack.otf);}
 	@font-face {font-family:AvenirHeavy; src: url(".Yii::app()->request->baseUrl."/images/contenido/menticol/fonts/AvenirHeavy.ttf);}
 	@font-face {font-family:AvenirLTStd-Roman; src: url(".Yii::app()->request->baseUrl."/images/contenido/menticol/fonts/AvenirLTStd-Roman.otf);}
 	a, a:hover, a:active, a:focus {outline: none !important;cursor:pointer;text-decoration:none !important;}
-    .space-1 {height: 0px !important;}
-    .img-responsive-m {width:100%;}
-    .bg-menu {padding-bottom: 30px;background-image:url(".Yii::app()->request->baseUrl."/images/contenido/menticol/bg-menu.jpg);background-attachment: fixed;background-size:cover;background-position: center;background-repeat:no-repeat;}
+  .space-1 {height: 0px !important;}
+  .img-responsive-m {width:100%;}
+  .bg-menu {padding-bottom: 30px;background-image:url(".Yii::app()->request->baseUrl."/images/contenido/menticol/bg-menu.jpg);background-attachment: fixed;background-size:cover;background-position: center;background-repeat:no-repeat;}
 	.banner {-webkit-box-shadow: 0px 4px 12px -2px rgba(0,0,0,0.4);-moz-box-shadow: 0px 4px 12px -2px rgba(0,0,0,0.4);box-shadow: 0px 4px 12px -2px rgba(0,0,0,0.4);}
 	.title-principal {margin-top: 50px;color:#003383;text-align:center;font-family:AvenirBlack;}
 	sup {font-size: 60% !important; top: -0.8em !important;}
-	.contenedor-principal {width: 100%;max-width: 1000px;margin: auto;}    
+	.contenedor-principal {width: 100%;max-width: 1000px;margin: auto;}
 	.contenedor-menu {display: flex; flex-direction: row; flex-wrap: wrap;margin: 50px auto 0; width: 100%; max-width: 800px; justify-content: center; align-items: center;}
 	.contenedor-menu .item {width: 40%;}
 	.item img {transition: all 0.4s ease-in-out 0s;width: 150px;margin: 0 auto;}
 	.item:hover img {transform: translateY(-5px);-ms-transform: translateY(-5px);-webkit-transform: translateY(-5px);}
 	.nombre {font-family:AvenirBlack;text-align: center;color: #003383;font-size: 14px;line-height: 20px;transition: all 0.4s ease-in-out 0s;}
 	.nombre span {font-family:AvenirHeavy;color:#3979BE;display: block;font-size:22px;margin-bottom:10px;}
-    .guia-menu {width: 100%; height: 10px; background-color: rgba(202, 202, 202, 0.4); border-radius: 25px; margin-top: -65px;}
-    .line-active {transition: all 0.2s ease-in-out 0s;border-radius: 25px;height: 15px;width: 50%;margin: 25px auto;z-index: 1;position: relative;}
-    .show {background-color: #003383;} 
-    .hide {display:none;}
-    .nombre-producto {font-family: AvenirHeavy;color: #3979BE;font-size: 20px;margin: 0;}
+  .guia-menu {width: 100%; height: 10px; background-color: rgba(202, 202, 202, 0.4); border-radius: 25px; margin-top: -65px;}
+  .line-active {transition: all 0.2s ease-in-out 0s;border-radius: 25px;height: 15px;width: 50%;margin: 25px auto;z-index: 1;position: relative;}
+  .show {background-color: #003383;}
+  .hide {display:none;}
+  .nombre-producto {font-family: AvenirHeavy;color: #3979BE;font-size: 20px;margin: 0;}
 	.nombre-producto span {font-family:AvenirBlack;font-size: 30px;}
 	.subtitle{font-family:AvenirLTStd-Roman;color:#003383;margin: 0;}
 	.descripcion {color: #003383;font-family: AvenirLTStd-Roman;	margin-top: 25px;margin-bottom: 30px;text-align: justify;font-size: 16px;}
@@ -56,11 +56,11 @@ efectiva acción antibacterial gracias al Triclosán.'>
 	.contenedor-product {align-items: center;display: flex;flex-direction: row;flex-wrap: wrap;justify-content: space-between;margin: 0 30px;}
 	.contenedor-product .beneficios  {width:70%;padding: 0px 0px 0px 20px;}
 	.contenedor-product .imagen {width:30%;padding: 0 40px;}
-	.btn-comprar {margin: 25px auto 0;width: 75%;max-width: 166px;display: block;}      
-    .precioproductos-antes{text-align:center;text-decoration: line-through;margin: 25px auto 0;font-size: 18px !important;color: #003383;font-family:AvenirBlack;line-height: 18px;}
-    .precioproductos{text-align:center;margin: 0;color: #003383;font-family: AvenirBlack;font-size: 20px;line-height: 20px;}
+	.btn-comprar {margin: 25px auto 0;width: 75%;max-width: 166px;display: block;}
+  .precioproductos-antes{text-align:center;text-decoration: line-through;margin: 25px auto 0;font-size: 18px !important;color: #003383;font-family:AvenirBlack;line-height: 18px;}
+  .precioproductos{text-align:center;margin: 0;color: #003383;font-family: AvenirBlack;font-size: 20px;line-height: 20px;}
 	.linea {margin-bottom: 25px;align-items: center;display: flex;flex-direction: row;flex-wrap: wrap;justify-content: space-between;}
-	.linea .lista-beneficios {width:53%;}	
+	.linea .lista-beneficios {width:53%;}
 	.skew {position: relative;padding: 5px 15px;color: #fff;background-color: #077AC1;font-family: AvenirBlack;font-size: 18px;width: 44%;text-align: center;}
 	.skew::before {position: absolute;left: 0px;content: '';height: 0px;border-style: solid;border-width: 0 0px 35px 12px;border-color: #077AC1 #077AC1 #077AC1 #fff;top: 0;}
 	.skew::after {position: absolute;right: 0px;content: '';height: 0px;border-style: solid;border-width: 0 0 36px 12px;border-color: #fff #fff #fff #077AC1;top: 0;}
@@ -97,24 +97,22 @@ efectiva acción antibacterial gracias al Triclosán.'>
 <?php $menticol_aerosol = Producto::consultarPrecio('100733', $this->objSectorCiudad)?>
 <!-- VERSION MOVIL -->
 <?php if ($this->isMobile): ?>
-<!--Añadir al carro-->
-<input type="hidden" id="cantidad-producto-unidad-100733" value="1">
 <a href="#"><img class="img-responsive-m" src="<?= Yii::app()->request->baseUrl ?>/images/contenido/menticol/banner.jpg"></a>
 <div style="margin: 0 30px;">
 	<h1 class="title-principal" style="font-size: 20px;margin-top: 20px;line-height: 20px;">Talco y desodorante Menticol<sup>&reg;</sup> <br>para tu necesidad</h1>
 	<div  style="margin-top: 30px;" id="owl-productodetalle-inicio" class="owl-carousel owl-theme owl-productodetalle">
 		<div class="item" style="margin-top: 30px;">
-			<div class="contenedor-product" style="margin: 0"> 		
+			<div class="contenedor-product" style="margin: 0">
 			  	<div class="beneficios" style="width: 100%;padding: 0;">
 					<h2 class="nombre-producto" style="line-height: 25px;">Desodorante <br><span style="font-size: 23px;">Triple Acción</span></h2>
-					<h3 class="subtitle" style="font-size: 15px;">Oferta súper precio 120ml + 60ml Talco</h3>			
+					<h3 class="subtitle" style="font-size: 15px;">Oferta súper precio 120ml + 60ml Talco</h3>
 					<p class="descripcion">Talco Desodorante para pies triple acción, con clorhidrato de aluminio que evita la transpiración aún en condiciones de actividad intensa. Posee acción refrescante gracias al mentol y efectiva acción antibacterial gracias al triclosan.</p>
 					<img style="width: 40%;max-width:120px;" src="<?= Yii::app()->request->baseUrl ?>/images/contenido/menticol/menticol-talco.png" alt="Menticol pies">
-					<p class="precioproductos-antes">ANTES:  </p>		
-					<p class="precioproductos">AHORA:  </p>	
+					<p class="precioproductos-antes">ANTES:  </p>
+					<p class="precioproductos">AHORA:  </p>
 					<a href="#"><img class="btn-comprar" style="margin: 20px auto;" src="<?= Yii::app()->request->baseUrl ?>/images/contenido/desknza/btn-comprar.png" alt=""></a>
 					<div style="margin-top: 25px;">
-						<div class="skew" style="width: 80%;height: 25px;">Acción Antitranspirante</div>	
+						<div class="skew" style="width: 80%;height: 25px;">Acción Antitranspirante</div>
 						<dl class="lista-beneficios">
 							<dt>•</dt><dd style="margin-left: 8px;">Evita la sudoración.</dd>
 						</dl>
@@ -123,29 +121,29 @@ efectiva acción antibacterial gracias al Triclosán.'>
 						<div class="skew" style="width: 80%;height: 25px;">Acción Antibacterial </div>
 						<dl class="lista-beneficios">
 							<dt>•</dt><dd style="margin-left: 8px;">Previene y elimina el 99,9% de hongos y bacterias causantes del mal olor.</dd>
-						</dl>					
+						</dl>
 					</div>
 					<div style="margin-top: 25px;">
 						<div class="skew" style="width: 80%;height: 25px;">Acción Refrescante</div>
 						<dl class="lista-beneficios">
 							<dt>•</dt><dd style="margin-left: 8px;">Mantiene los pies frescos durante todo el día.</dd>
-						</dl>						
-					</div>	
-			   	</div> 
+						</dl>
+					</div>
+			   	</div>
 			</div>
-		</div>	
+		</div>
 		<div class="item" style="margin-top: 30px;">
-			<div class="contenedor-product" style="margin: 0"> 		
+			<div class="contenedor-product" style="margin: 0">
 			  	<div class="beneficios" style="width: 100%;padding: 0;">
 					<h2 class="nombre-producto" style="line-height: 25px;">Desodorante Clinical  <br><span style="font-size: 23px;">Sudoración Extrema</span></h2>
-					<h3 class="subtitle" style="font-size: 15px;">Aerosol</h3>			
+					<h3 class="subtitle" style="font-size: 15px;">Aerosol</h3>
 					<p class="descripcion">Desodorante Clinical Menticol® de fácil y rápida aplicación para la sudoración extrema de los pies.<br>Gracias a sus ingredientes activos crea una capa protectora que actúa como desodorante, protegiéndolos de las bacterias causantes del mal olor.</p>
 					<img style="width: 40%;max-width:120px;" src="<?= Yii::app()->request->baseUrl ?>/images/contenido/menticol/menticol-clinical.png" alt="Menticol pies">
-					<p class="precioproductos-antes">ANTES: <?= ($menticol_aerosol == null) ? "--" : Yii::app()->numberFormatter->format(Yii::app()->params->formatoMoneda['patron'], $menticol_aerosol["u-a"], Yii::app()->params->formatoMoneda['moneda']) ?> </p>		
-					<p class="precioproductos">AHORA: <?= ($menticol_aerosol == null) ? "--" : Yii::app()->numberFormatter->format(Yii::app()->params->formatoMoneda['patron'], $menticol_aerosol["u"], Yii::app()->params->formatoMoneda['moneda']) ?> </p>	
-					<a data-cargar="1" data-producto="100733" data-id="1" href="#"><img class="btn-comprar" style="margin: 20px auto;" src="<?= Yii::app()->request->baseUrl ?>/images/contenido/desknza/btn-comprar.png" alt=""></a>
+					<p class="precioproductos-antes">ANTES: <?= ($menticol_aerosol == null) ? "--" : Yii::app()->numberFormatter->format(Yii::app()->params->formatoMoneda['patron'], $menticol_aerosol["u-a"], Yii::app()->params->formatoMoneda['moneda']) ?> </p>
+					<p class="precioproductos">AHORA: <?= ($menticol_aerosol == null) ? "--" : Yii::app()->numberFormatter->format(Yii::app()->params->formatoMoneda['patron'], $menticol_aerosol["u"], Yii::app()->params->formatoMoneda['moneda']) ?> </p>
+					<a data-ajax="false" href="<?php echo CController::createUrl('/catalogo/producto', array('producto' => 100733 )) ?>"><img class="btn-comprar" style="margin: 20px auto;" src="<?= Yii::app()->request->baseUrl ?>/images/contenido/desknza/btn-comprar.png" alt=""></a>
 					<div style="margin-top: 25px;">
-						<div class="skew-v" style="width: 80%;height: 25px;">Acción Antitranspirante</div>	
+						<div class="skew-v" style="width: 80%;height: 25px;">Acción Antitranspirante</div>
 						<dl class="lista-beneficios">
 							<dt>•</dt><dd style="margin-left: 8px;">Reduce la sudoración extrema.</dd>
 						</dl>
@@ -154,23 +152,23 @@ efectiva acción antibacterial gracias al Triclosán.'>
 						<div class="skew-v" style="width: 80%;height: 25px;">Acción Antibacterial </div>
 						<dl class="lista-beneficios">
 							<dt>•</dt><dd style="margin-left: 8px;">Previene y elimina el 99,9% de hongos y bacterias causantes del mal olor.</dd>
-						</dl>					
+						</dl>
 					</div>
 					<div style="margin-top: 25px;">
 						<div class="skew-v" style="width: 80%;height: 25px;">Acción Refrescante</div>
 						<dl class="lista-beneficios">
 							<dt>•</dt><dd style="margin-left: 8px;">Mantiene los pies frescos durante todo el día.</dd>
-						</dl>						
-					</div>	
+						</dl>
+					</div>
 					<div style="margin-top: 25px;">
 						<div class="skew-v" style="width: 80%;height: 25px;">48 horas de protección</div>
 						<dl class="lista-beneficios">
 							<dt>•</dt><dd style="margin-left: 8px;">Libre de preocupaciones.</dd>
-						</dl>						
-					</div>	
-			   	</div> 
+						</dl>
+					</div>
+			   	</div>
 			</div>
-		</div>	
+		</div>
 	</div>
 </div>
 <section class="programa-hora" style="margin-top: 50px;">
@@ -182,7 +180,7 @@ efectiva acción antibacterial gracias al Triclosán.'>
       <img style="margin-left: 2px;" width="25" height="18" src="<?= Yii::app()->request->baseUrl ?>/images/contenido/pantene/carrito.png">
     </div>
     <div class="seccion2-m">
-      <div class="agradecimiento">Gracias por comprar en <span>larebajavirtual.com</span></div>      
+      <div class="agradecimiento">Gracias por comprar en <span>larebajavirtual.com</span></div>
     </div>
   </div>
 </section>
@@ -200,8 +198,6 @@ efectiva acción antibacterial gracias al Triclosán.'>
 </div>
 <!--VERSION DE ESCRITORIO-->
 <?php else: ?>
-<!--Añadir al carro-->
-<input type="hidden" id="cantidad-producto-unidad-100733-1" value="1">
 <section class="bg-menu">
 	<a href="#">
 		<img class="img-responsive banner" src="<?= Yii::app()->request->baseUrl ?>/images/contenido/menticol/banner.jpg">
@@ -230,10 +226,10 @@ efectiva acción antibacterial gracias al Triclosán.'>
 <div class="bg-info">
   <div class="contenedor-principal">
     <div id="info-producto1" class="contenedor-info ">
-	    <div class="contenedor-product"> 
+	    <div class="contenedor-product">
 	      	<div class="beneficios">
 				<h2 class="nombre-producto">Desodorante <br><span>Triple Acción</span></h2>
-				<h3 class="subtitle">Oferta súper precio 120ml + 60ml Talco</h3>			
+				<h3 class="subtitle">Oferta súper precio 120ml + 60ml Talco</h3>
 				<p class="descripcion">
 					Talco Desodorante para pies triple acción, con clorhidrato de <br>
 					aluminio que evita la transpiración aún en condiciones de actividad <br>
@@ -241,7 +237,7 @@ efectiva acción antibacterial gracias al Triclosán.'>
 					antibacterial gracias al triclosan.
 				</p>
 				<div class="linea">
-					<div class="skew">Acción Antitranspirante</div>	
+					<div class="skew">Acción Antitranspirante</div>
 					<dl class="lista-beneficios">
 						<dt>•</dt><dd>Evita la sudoración.</dd>
 					</dl>
@@ -250,28 +246,28 @@ efectiva acción antibacterial gracias al Triclosán.'>
 					<div class="skew">Acción Antibacterial </div>
 					<dl class="lista-beneficios">
 						<dt>•</dt><dd>Previene y elimina el 99,9% de hongos <br> y bacterias causantes del mal olor.</dd>
-					</dl>					
+					</dl>
 				</div>
 				<div class="linea">
 					<div class="skew">Acción Refrescante</div>
 					<dl class="lista-beneficios">
 						<dt>•</dt><dd>Mantiene los pies frescos durante <br>todo el día.</dd>
-					</dl>						
-				</div>	
-	      	</div> 
+					</dl>
+				</div>
+	      	</div>
 	      	<div class="imagen">
 				<img class="img-responsive" src="<?= Yii::app()->request->baseUrl ?>/images/contenido/menticol/menticol-talco.png" alt="Menticol pies">
-	      		<p class="precioproductos-antes">ANTES:  </p>		
-	      		<p class="precioproductos">AHORA: </p>	
+	      		<p class="precioproductos-antes">ANTES:  </p>
+	      		<p class="precioproductos">AHORA: </p>
 	      		<a href="#"><img class="btn-comprar" src="<?= Yii::app()->request->baseUrl ?>/images/contenido/desknza/btn-comprar.png" alt=""></a>
-	      	</div>   
+	      	</div>
 	    </div>
     </div>
     <div id="info-producto2" class="contenedor-info hide ">
-	    <div class="contenedor-product"> 
+	    <div class="contenedor-product">
 	      	<div class="beneficios">
 				<h2 class="nombre-producto">Desodorante Clinical <br><span>Sudoración Extrema</span></h2>
-				<h3 class="subtitle">Aerosol</h3>			
+				<h3 class="subtitle">Aerosol</h3>
 				<p class="descripcion">
 					Desodorante Clinical Menticol® de fácil y rápida aplicación <br>
 					para la sudoración extrema de los pies.  <br>
@@ -280,7 +276,7 @@ efectiva acción antibacterial gracias al Triclosán.'>
 					de las bacterias causantes del mal olor.
 				</p>
 				<div class="linea">
-					<div class="skew-v">Acción Antitranspirante</div>	
+					<div class="skew-v">Acción Antitranspirante</div>
 					<dl class="lista-beneficios">
 						<dt>•</dt><dd>Reduce la sudoración extrema.</dd>
 					</dl>
@@ -289,28 +285,28 @@ efectiva acción antibacterial gracias al Triclosán.'>
 					<div class="skew-v">Acción Antibacterial </div>
 					<dl class="lista-beneficios">
 						<dt>•</dt><dd>Previene y elimina el 99,9% de hongos <br> y bacterias causantes del mal olor.</dd>
-					</dl>					
+					</dl>
 				</div>
 				<div class="linea">
 					<div class="skew-v">Acción Refrescante </div>
 					<dl class="lista-beneficios">
 						<dt>•</dt><dd>Mantiene los pies frescos durante <br>todo el día.</dd>
-					</dl>					
+					</dl>
 				</div>
 				<div class="linea">
 					<div class="skew-v">48 horas de protección</div>
 					<dl class="lista-beneficios">
 						<dt>•</dt><dd>Libre de preocupaciones.</dd>
-					</dl>						
-				</div>	
+					</dl>
+				</div>
 				<p class="descripcion">Encuéntrelo en presentación de 260ml</p>
-	      	</div> 
+	      	</div>
 	      	<div class="imagen">
 				<img class="img-responsive" src="<?= Yii::app()->request->baseUrl ?>/images/contenido/menticol/menticol-clinical.png" alt="Menticol pies">
-	      		<p class="precioproductos-antes">ANTES: <?= ($menticol_aerosol == null) ? "--" : Yii::app()->numberFormatter->format(Yii::app()->params->formatoMoneda['patron'], $menticol_aerosol["u-a"], Yii::app()->params->formatoMoneda['moneda']) ?> </p>		
-	      		<p class="precioproductos">AHORA: <?= ($menticol_aerosol == null) ? "--" : Yii::app()->numberFormatter->format(Yii::app()->params->formatoMoneda['patron'], $menticol_aerosol["u"], Yii::app()->params->formatoMoneda['moneda']) ?> </p>	
-	      		<a data-cargar="1" data-producto="100733" data-id="1" href="#"><img class="btn-comprar" src="<?= Yii::app()->request->baseUrl ?>/images/contenido/desknza/btn-comprar.png" alt=""></a>
-	      	</div>   
+	      		<p class="precioproductos-antes">ANTES: <?= ($menticol_aerosol == null) ? "--" : Yii::app()->numberFormatter->format(Yii::app()->params->formatoMoneda['patron'], $menticol_aerosol["u-a"], Yii::app()->params->formatoMoneda['moneda']) ?> </p>
+	      		<p class="precioproductos">AHORA: <?= ($menticol_aerosol == null) ? "--" : Yii::app()->numberFormatter->format(Yii::app()->params->formatoMoneda['patron'], $menticol_aerosol["u"], Yii::app()->params->formatoMoneda['moneda']) ?> </p>
+	      		<a href="<?php echo CController::createUrl('/catalogo/producto', array('producto' => 100733 )) ?>"><img class="btn-comprar" src="<?= Yii::app()->request->baseUrl ?>/images/contenido/desknza/btn-comprar.png" alt=""></a>
+	      	</div>
 	    </div>
     </div>
   </div>
@@ -324,7 +320,7 @@ efectiva acción antibacterial gracias al Triclosán.'>
       <img style="margin-left: 2px;" width="25" height="18" src="<?= Yii::app()->request->baseUrl ?>/images/contenido/pantene/carrito.png">
     </div>
     <div class="seccion2">
-      <div class="agradecimiento">Gracias por comprar en <span>larebajavirtual.com</span></div>      
+      <div class="agradecimiento">Gracias por comprar en <span>larebajavirtual.com</span></div>
     </div>
   </div>
 </section>

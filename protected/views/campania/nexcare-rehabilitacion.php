@@ -66,11 +66,6 @@ $this->metaTags = "
 
 <!--Versión movil-->
 <?php if ($this->isMobile): ?>
-<!--Añadir al carro-->
-<input type="hidden" id="cantidad-producto-unidad-22286" value="1">
-<input type="hidden" id="cantidad-producto-unidad-47558" value="1">
-<input type="hidden" id="cantidad-producto-unidad-64758" value="1">
-
 <img class="img-responsive-m" src="<?= Yii::app()->request->baseUrl ?>/images/contenido/nexcare/banner-nexcare.jpg" alt="Nexcare que nada te detenga">
 <div class="margin: 0 20px;">
   <h1 class="title-principal" style="font-size: 23px;"><span style="font-size: 30px;">Nexcare<sup>&reg;</sup></span> <br> la solución para cada necesidad</h1>
@@ -112,7 +107,7 @@ $this->metaTags = "
       </ul>
       <p class="precioproductos-antes">ANTES: <?= ($bolsa_frio_calor_adultos == null) ? "--" : Yii::app()->numberFormatter->format(Yii::app()->params->formatoMoneda['patron'], $bolsa_frio_calor_adultos["u-a"], Yii::app()->params->formatoMoneda['moneda']) ?></p>
       <p class="precioproductos">AHORA: <?= ($bolsa_frio_calor_adultos == null) ? "--" : Yii::app()->numberFormatter->format(Yii::app()->params->formatoMoneda['patron'], $bolsa_frio_calor_adultos["u"], Yii::app()->params->formatoMoneda['moneda']) ?></p>
-      <a data-ajax="false" data-cargar="1" data-producto="22286" data-id="1" href="#">
+      <a data-ajax="false" href="<?php echo CController::createUrl('/catalogo/producto', array('producto' => 22286 )) ?>">
         <img class="btn-comprar" style="margin: 20px auto 0;" src="<?= Yii::app()->request->baseUrl ?>/images/contenido/nexcare/btn-comprar.png">
       </a>
     </div>
@@ -129,7 +124,7 @@ $this->metaTags = "
       </ul>
       <p class="precioproductos-antes">ANTES: <?= ($venda_coban == null) ? "--" : Yii::app()->numberFormatter->format(Yii::app()->params->formatoMoneda['patron'], $venda_coban["u-a"], Yii::app()->params->formatoMoneda['moneda']) ?></p>
       <p class="precioproductos">AHORA: <?= ($venda_coban == null) ? "--" : Yii::app()->numberFormatter->format(Yii::app()->params->formatoMoneda['patron'], $venda_coban["u"], Yii::app()->params->formatoMoneda['moneda']) ?></p>
-      <a data-ajax="false" data-cargar="1" data-producto="47558" data-id="1" href="#">
+      <a data-ajax="false" href="<?php echo CController::createUrl('/catalogo/producto', array('producto' => 47558 )) ?>">
         <img class="btn-comprar" style="margin: 20px auto 0;" src="<?= Yii::app()->request->baseUrl ?>/images/contenido/nexcare/btn-comprar.png">
       </a>
     </div>
@@ -146,7 +141,7 @@ $this->metaTags = "
       </ul>
       <p class="precioproductos-antes">ANTES: <?= ($tapabocas == null) ? "--" : Yii::app()->numberFormatter->format(Yii::app()->params->formatoMoneda['patron'], $tapabocas["u-a"], Yii::app()->params->formatoMoneda['moneda']) ?></p>
       <p class="precioproductos">AHORA: <?= ($tapabocas == null) ? "--" : Yii::app()->numberFormatter->format(Yii::app()->params->formatoMoneda['patron'], $tapabocas["u"], Yii::app()->params->formatoMoneda['moneda']) ?></p>
-      <a data-ajax="false" data-cargar="1" data-producto="64758" data-id="1" href="#">
+      <a data-ajax="false" href="<?php echo CController::createUrl('/catalogo/producto', array('producto' => 64758 )) ?>">
         <img class="btn-comprar" style="margin: 20px auto 0;" src="<?= Yii::app()->request->baseUrl ?>/images/contenido/nexcare/btn-comprar.png">
       </a>
     </div>
@@ -186,11 +181,6 @@ $this->metaTags = "
 
 <!--VERSION ESCRITORIO-->
 <?php else: ?>
-<!--Añadir al carro-->
-<input type="hidden" id="cantidad-producto-unidad-22286-1" value="1">
-<input type="hidden" id="cantidad-producto-unidad-47558-2" value="1">
-<input type="hidden" id="cantidad-producto-unidad-64758-3" value="1">
-
 <img class="img-responsive" src="<?= Yii::app()->request->baseUrl ?>/images/contenido/nexcare/banner-nexcare.jpg" alt="Nexcare que nada te detenga">
 <div class="main-container">
   <h1 class="title-principal"><span>Nexcare<sup>&reg;</sup></span> la solución para cada necesidad</h1>
@@ -237,7 +227,7 @@ $this->metaTags = "
         </ul>
         <p class="precioproductos-antes">ANTES: <?= ($bolsa_frio_calor_adultos == null) ? "--" : Yii::app()->numberFormatter->format(Yii::app()->params->formatoMoneda['patron'], $bolsa_frio_calor_adultos["u-a"], Yii::app()->params->formatoMoneda['moneda']) ?></p>
         <p class="precioproductos">AHORA: <?= ($bolsa_frio_calor_adultos == null) ? "--" : Yii::app()->numberFormatter->format(Yii::app()->params->formatoMoneda['patron'], $bolsa_frio_calor_adultos["u"], Yii::app()->params->formatoMoneda['moneda']) ?></p>
-        <a data-cargar="1" data-producto="22286" data-id="1" href="#">
+        <a href="<?php echo CController::createUrl('/catalogo/producto', array('producto' => 22286 )) ?>">
           <img class="btn-comprar" src="<?= Yii::app()->request->baseUrl ?>/images/contenido/nexcare/btn-comprar.png">
         </a>
       </div>
@@ -252,7 +242,7 @@ $this->metaTags = "
         </ul>
         <p class="precioproductos-antes">ANTES: <?= ($venda_coban == null) ? "--" : Yii::app()->numberFormatter->format(Yii::app()->params->formatoMoneda['patron'], $venda_coban["u-a"], Yii::app()->params->formatoMoneda['moneda']) ?></p>
         <p class="precioproductos">AHORA: <?= ($venda_coban == null) ? "--" : Yii::app()->numberFormatter->format(Yii::app()->params->formatoMoneda['patron'], $venda_coban["u"], Yii::app()->params->formatoMoneda['moneda']) ?></p>
-        <a data-cargar="1" data-producto="47558" data-id="2" href="#">
+        <a href="<?php echo CController::createUrl('/catalogo/producto', array('producto' => 47558 )) ?>">
           <img class="btn-comprar" src="<?= Yii::app()->request->baseUrl ?>/images/contenido/nexcare/btn-comprar.png">
         </a>
       </div>
@@ -267,7 +257,7 @@ $this->metaTags = "
         </ul>
         <p class="precioproductos-antes">ANTES: <?= ($tapabocas == null) ? "--" : Yii::app()->numberFormatter->format(Yii::app()->params->formatoMoneda['patron'], $tapabocas["u-a"], Yii::app()->params->formatoMoneda['moneda']) ?></p>
         <p class="precioproductos">AHORA: <?= ($tapabocas == null) ? "--" : Yii::app()->numberFormatter->format(Yii::app()->params->formatoMoneda['patron'], $tapabocas["u"], Yii::app()->params->formatoMoneda['moneda']) ?></p>
-        <a data-cargar="1" data-producto="64758" data-id="3" href="#">
+        <a href="<?php echo CController::createUrl('/catalogo/producto', array('producto' => 64758 )) ?>">
           <img class="btn-comprar" src="<?= Yii::app()->request->baseUrl ?>/images/contenido/nexcare/btn-comprar.png">
         </a>
       </div>

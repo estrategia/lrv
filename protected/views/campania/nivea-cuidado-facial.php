@@ -3,14 +3,14 @@
 $this->metaTags = "
 <meta http-equiv='X-UA-Compatible' content='IE=edge'>
 <meta name='description' content='La nueva crema Nivea Cuidado ayudan a humectar tu piel, prevenir arrugas y a aclarar el tono de tu piel, sin dejar sensación grasosa.'>
-<meta name='keywords' content='crema nivea, crema nivea cara, productos nivea.'> 
+<meta name='keywords' content='crema nivea, crema nivea cara, productos nivea.'>
   <style>
     @font-face {font-family:HelveticaNeueLight; src: url(" . Yii::app()->request->baseUrl . "/images/contenido/pantene/fonts/HelveticaNeueLight.ttf);}
     @font-face {font-family:HelveticaNeue-BlackCond; src: url(" . Yii::app()->request->baseUrl . "/images/contenido/pantene/fonts/HelveticaNeue-BlackCond.otf);}
     @font-face {font-family:HelveticaNeueItalic; src: url(" . Yii::app()->request->baseUrl . "/images/contenido/pantene/fonts/HelveticaNeueItalic.ttf);}
     @font-face {font-family:HelveticaNeueBold; src: url(" . Yii::app()->request->baseUrl . "/images/contenido/pantene/fonts/HelveticaNeueBold.ttf);}
     .space-1 {height: 0px !important;}
-    .img-responsive-m {width:100%;}   
+    .img-responsive-m {width:100%;}
     .programa-hora {font-size: 15px;}
     .programa-hora .span1 {font-family:HelveticaNeueLight;color:#363636;}
     .programa-hora .span2 {font-family:HelveticaNeue-BlackCond;color: #BF1A24;font-size: 16px;letter-spacing: 1px;margin-left2px;}
@@ -30,6 +30,7 @@ $this->metaTags = "
     .intro, .descripcion {text-align:center;margin: 10px auto;}
     .intro .titulo-principal {font-size: 40px;margin: 60px auto 30px;}
     .intro .intro-texto {font-size: 20px;margin-top: 10px;}
+    .intro-texto {font-size: 16px;}
     .contenedor-productos {margin: 60px auto;display: flex; flex-direction: row; flex-wrap: wrap; justify-content: space-between;}
     .titulo-principal, .intro-texto, .nombre {font-family:NiveaLightOT; color:#002D64;}
     .titulo-principal span, .intro-texto span, .nombre span, .ver-mas  {font-family:NiveaBoldOT; }
@@ -49,8 +50,8 @@ $this->metaTags = "
     .descripcion .texto {font-family:NiveaLightOT; color:#002D64;font-size: 12px;margin: 15px auto;}
     .descripcion .nombre {font-size: 16px;letter-spacing: 1px;line-height: 18px;}
     .descripcion .nombre span {font-size: 18px;}
-    .ver-mas { color:#002D64;font-size:14px;text-decoration: underline;}
-    .btn-comprar {  width: 60%;margin: 25px auto 0;max-width: 168px;}
+    .ver-mas { color:#002D64;font-size:16px;text-decoration: underline;}
+    .btn-comprar {  width: 45%;margin: 25px auto 0;}
     .precioproductos-antes{margin:20px auto 0;font-family:NiveaBoldOT; text-decoration: line-through;text-align.center;color: #264A7E;}
     .precioproductos{font-size: 16px;margin:0;font-family:NiveaBoldOT;text-align.center;color: #264A7E; }
     .owl-pagination {margin-top: 20px;}
@@ -59,16 +60,12 @@ $this->metaTags = "
 ";
 ?>
 <!--Consulta el precio de los productos-->
-<?php $nutritivo = Producto::consultarPrecio('118873', $this->objSectorCiudad)?> 
-<?php $aclarado_natural = Producto::consultarPrecio('118871', $this->objSectorCiudad)?> 
-<?php $anti_arrugas = Producto::consultarPrecio('118869', $this->objSectorCiudad)?> 
+<?php $nutritivo = Producto::consultarPrecio('118873', $this->objSectorCiudad)?>
+<?php $aclarado_natural = Producto::consultarPrecio('118871', $this->objSectorCiudad)?>
+<?php $anti_arrugas = Producto::consultarPrecio('118869', $this->objSectorCiudad)?>
 
 <!--Versión movil-->
 <?php if ($this->isMobile): ?>
-<!--Añadir al carro-->
-<input type="hidden" id="cantidad-producto-unidad-118873" value="1">
-<input type="hidden" id="cantidad-producto-unidad-118871" value="1"> 
-<input type="hidden" id="cantidad-producto-unidad-118869" value="1">
 <img class="img-responsive-m" src="<?= Yii::app()->request->baseUrl ?>/images/contenido/nivea/banner-home.jpg" alt="Nueva linea nivea cuidado facial">
 <div class="main-container">
   <div class="intro">
@@ -83,14 +80,14 @@ $this->metaTags = "
               <img class="img-responsive-m img-producto" src="<?= Yii::app()->request->baseUrl ?>/images/contenido/nivea/nivea-facial.png" alt="Nivea cuidado nutritivo">
             </div>
             <div class="descripcion">
-              <p class="nombre">NIVEA CUIDADO <br> <span>NUTRITIVO</span></p>        
+              <p class="nombre">NIVEA CUIDADO <br> <span>NUTRITIVO</span></p>
               <p class="texto">NIVEA Cuidado - La crema que por primera <br>
               vez ofrece hidratación intensiva sin dejar
               sensación grasosa en el rostro.</p>
               <a data-ajax="false" href="<?= Yii::app()->request->baseUrl ?>/nivea-cuidado-humectacion-profunda" class="ver-mas">Ver más información</a>
               <p class="precioproductos-antes">ANTES: <?= ($nutritivo == null) ? "--" : Yii::app()->numberFormatter->format(Yii::app()->params->formatoMoneda['patron'], $nutritivo["u-a"], Yii::app()->params->formatoMoneda['moneda']) ?> </p>
               <p class="precioproductos">AHORA: <?= ($nutritivo == null) ? "--" : Yii::app()->numberFormatter->format(Yii::app()->params->formatoMoneda['patron'], $nutritivo["u"], Yii::app()->params->formatoMoneda['moneda']) ?> </p>
-              <a data-ajax="false" data-cargar="1" data-producto="118873" data-id="1" href="#">
+              <a data-ajax="false" href="<?php echo CController::createUrl('/catalogo/producto', array('producto' => 118873 )) ?>">
                 <img class="btn-comprar" style="margin: 20px auto 0;" src="<?= Yii::app()->request->baseUrl ?>/images/contenido/nivea/btn-comprar.png" alt="Comprar">
               </a>
             </div>
@@ -109,7 +106,7 @@ $this->metaTags = "
               <a data-ajax="false" href="<?= Yii::app()->request->baseUrl ?>/nivea-cuidado-aclarado-natural" class="ver-mas">Ver más información</a>
               <p class="precioproductos-antes">ANTES: <?= ($aclarado_natural == null) ? "--" : Yii::app()->numberFormatter->format(Yii::app()->params->formatoMoneda['patron'], $aclarado_natural["u-a"], Yii::app()->params->formatoMoneda['moneda']) ?> </p>
               <p class="precioproductos">AHORA: <?= ($aclarado_natural == null) ? "--" : Yii::app()->numberFormatter->format(Yii::app()->params->formatoMoneda['patron'], $aclarado_natural["u"], Yii::app()->params->formatoMoneda['moneda']) ?> </p>
-              <a data-ajax="false" data-cargar="1" data-producto="118871" data-id="2" href="#">
+              <a data-ajax="false" href="<?php echo CController::createUrl('/catalogo/producto', array('producto' => 118871 )) ?>">
                 <img class="btn-comprar" style="margin: 20px auto 0;" src="<?= Yii::app()->request->baseUrl ?>/images/contenido/nivea/btn-comprar.png" alt="Comprar">
               </a>
             </div>
@@ -128,7 +125,7 @@ $this->metaTags = "
               <a data-ajax="false" href="<?= Yii::app()->request->baseUrl ?>/nivea-cuidado-antiarrugas" class="ver-mas">Ver más información</a>
               <p class="precioproductos-antes">ANTES: <?= ($anti_arrugas == null) ? "--" : Yii::app()->numberFormatter->format(Yii::app()->params->formatoMoneda['patron'], $anti_arrugas["u-a"], Yii::app()->params->formatoMoneda['moneda']) ?> </p>
               <p class="precioproductos">AHORA: <?= ($anti_arrugas == null) ? "--" : Yii::app()->numberFormatter->format(Yii::app()->params->formatoMoneda['patron'], $anti_arrugas["u"], Yii::app()->params->formatoMoneda['moneda']) ?> </p>
-              <a data-ajax="false" data-cargar="1" data-producto="118869" data-id="3" href="#">
+              <a data-ajax="false" href="<?php echo CController::createUrl('/catalogo/producto', array('producto' => 118869 )) ?>">
                 <img class="btn-comprar" style="margin: 20px auto 0;" src="<?= Yii::app()->request->baseUrl ?>/images/contenido/nivea/btn-comprar.png" alt="Comprar">
               </a>
             </div>
@@ -136,7 +133,7 @@ $this->metaTags = "
         </div>
       </div>
     </div>
-</div> 
+</div>
 <section class="programa-hora">
   <div class="content">
     <div class="seccion1-m" style="margin: -5px;">
@@ -146,7 +143,7 @@ $this->metaTags = "
       <img style="margin-left: 2px;" width="25" height="18" src="<?= Yii::app()->request->baseUrl ?>/images/contenido/pantene/carrito.png">
     </div>
     <div class="seccion2-m">
-      <div class="agradecimiento">Gracias por comprar en <span>larebajavirtual.com</span></div>      
+      <div class="agradecimiento">Gracias por comprar en <span>larebajavirtual.com</span></div>
     </div>
   </div>
 </section>
@@ -165,10 +162,6 @@ $this->metaTags = "
 
 <!--VERSION ESCRITORIO-->
 <?php else: ?>
-<!--Añadir al carro-->
-<input type="hidden" id="cantidad-producto-unidad-118873-1" value="1">
-<input type="hidden" id="cantidad-producto-unidad-118871-2" value="1"> 
-<input type="hidden" id="cantidad-producto-unidad-118869-3" value="1">
 <img class="img-responsive" src="<?= Yii::app()->request->baseUrl ?>/images/contenido/nivea/banner-home.jpg" alt="Nueva linea nivea cuidado facial">
 <div class="main-container">
   <div class="intro">
@@ -181,16 +174,16 @@ $this->metaTags = "
           <img class="img-responsive img-producto" src="<?= Yii::app()->request->baseUrl ?>/images/contenido/nivea/nivea-facial.png" alt="Nivea cuidado nutritivo">
         </div>
         <div class="descripcion">
-          <p class="nombre">NIVEA CUIDADO <br> <span>NUTRITIVO</span></p>        
+          <p class="nombre">NIVEA CUIDADO <br> <span>NUTRITIVO</span></p>
           <p class="texto">NIVEA Cuidado - La crema que por primera <br>
           vez ofrece hidratación intensiva sin dejar
           sensación grasosa en el rostro.</p>
           <a href="<?= Yii::app()->request->baseUrl ?>/nivea-cuidado-humectacion-profunda" class="ver-mas">Ver más información</a>
           <p class="precioproductos-antes">ANTES: <?= ($nutritivo == null) ? "--" : Yii::app()->numberFormatter->format(Yii::app()->params->formatoMoneda['patron'], $nutritivo["u-a"], Yii::app()->params->formatoMoneda['moneda']) ?> </p>
           <p class="precioproductos">AHORA: <?= ($nutritivo == null) ? "--" : Yii::app()->numberFormatter->format(Yii::app()->params->formatoMoneda['patron'], $nutritivo["u"], Yii::app()->params->formatoMoneda['moneda']) ?> </p>
-          <a data-cargar="1" data-producto="118873" data-id="1" href="#">
+          <a href="<?php echo CController::createUrl('/catalogo/producto', array('producto' => 118873 )) ?>">
             <img class="btn-comprar" src="<?= Yii::app()->request->baseUrl ?>/images/contenido/nivea/btn-comprar.png" alt="Comprar">
-          </a>  
+          </a>
         </div>
       </div>
       <div class="producto">
@@ -205,7 +198,7 @@ $this->metaTags = "
           <a href="<?= Yii::app()->request->baseUrl ?>/nivea-cuidado-aclarado-natural" class="ver-mas">Ver más información</a>
               <p class="precioproductos-antes">ANTES: <?= ($aclarado_natural == null) ? "--" : Yii::app()->numberFormatter->format(Yii::app()->params->formatoMoneda['patron'], $aclarado_natural["u-a"], Yii::app()->params->formatoMoneda['moneda']) ?> </p>
               <p class="precioproductos">AHORA: <?= ($aclarado_natural == null) ? "--" : Yii::app()->numberFormatter->format(Yii::app()->params->formatoMoneda['patron'], $aclarado_natural["u"], Yii::app()->params->formatoMoneda['moneda']) ?> </p>
-          <a data-cargar="1" data-producto="118871" data-id="2" href="#">
+          <a href="<?php echo CController::createUrl('/catalogo/producto', array('producto' => 118871 )) ?>">
             <img class="btn-comprar" src="<?= Yii::app()->request->baseUrl ?>/images/contenido/nivea/btn-comprar.png" alt="Comprar">
           </a>
         </div>
@@ -222,7 +215,7 @@ $this->metaTags = "
           <a href="<?= Yii::app()->request->baseUrl ?>/nivea-cuidado-antiarrugas" class="ver-mas">Ver más información</a>
           <p class="precioproductos-antes">ANTES: <?= ($anti_arrugas == null) ? "--" : Yii::app()->numberFormatter->format(Yii::app()->params->formatoMoneda['patron'], $anti_arrugas["u-a"], Yii::app()->params->formatoMoneda['moneda']) ?> </p>
           <p class="precioproductos">AHORA: <?= ($anti_arrugas == null) ? "--" : Yii::app()->numberFormatter->format(Yii::app()->params->formatoMoneda['patron'], $anti_arrugas["u"], Yii::app()->params->formatoMoneda['moneda']) ?> </p>
-          <a data-cargar="1" data-producto="118869" data-id="3" href="#">
+          <a href="<?php echo CController::createUrl('/catalogo/producto', array('producto' => 118869 )) ?>">
             <img class="btn-comprar" src="<?= Yii::app()->request->baseUrl ?>/images/contenido/nivea/btn-comprar.png" alt="Comprar">
           </a>
         </div>
@@ -238,7 +231,7 @@ $this->metaTags = "
       <img style="margin-left: 2px;" width="25" height="18" src="<?= Yii::app()->request->baseUrl ?>/images/contenido/pantene/carrito.png">
     </div>
     <div class="seccion2">
-      <div class="agradecimiento">Gracias por comprar en <span>larebajavirtual.com</span></div>      
+      <div class="agradecimiento">Gracias por comprar en <span>larebajavirtual.com</span></div>
     </div>
   </div>
 </section>
