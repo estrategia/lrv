@@ -38,7 +38,6 @@ return array(
         'zahara-protector-solar' => 'publicidad/contenido/nombre/zahara',
         'zahara-protector-solar-kids' => 'publicidad/contenido/nombre/zahara-kids',
         'zahara-bronceador' => 'publicidad/contenido/nombre/zahara-bronceador',
-        'prodent-cuidado-oral-old' => 'publicidad/contenido/nombre/prodent-old',
         'prodent-cuidado-oral' => 'publicidad/contenido/nombre/prodent',
         'prodent-cuidado-oral-ninos' => 'publicidad/contenido/nombre/prodent-ninos',
         'prodent-ennjuague-bucal' => 'publicidad/contenido/nombre/prodent-enjuague',
@@ -94,7 +93,6 @@ return array(
         'colgate-pacientes-con-ortodoncia' => 'publicidad/contenido/nombre/colgate-ortodoncia',
         'colgate-para-pequenos-pacientes' => 'publicidad/contenido/nombre/colgate-ninos',
         'choco-cono-millonario' => 'publicidad/contenido/nombre/chococono',
-        //'klim1-deslactosado' => 'publicidad/contenido/nombre/klim1-deslactosado',
         'durex' => 'publicidad/contenido/nombre/durex',
         'klim3-fortilearn' => 'publicidad/contenido/nombre/klim3',
         'pantene-fuerza-y-reconstruccion' => 'publicidad/contenido/nombre/pantene',
@@ -118,7 +116,21 @@ return array(
         'productos-hospitalarios-y-quirurgicos' => 'publicidad/contenido/nombre/productos-hospitalarios-y-quirurgicos',
         'rehabilitacion-y-recuperacion' => 'publicidad/contenido/nombre/rehabilitacion-y-recuperacion',
         'diabetes' => 'contenido/ver/tipo/grupo/contenido/4812',
-
+        'chat' => 'contenido/ver/tipo/grupo/contenido/41',
+        'glucoquick-insumos-y-glucometro' => 'publicidad/contenido/nombre/glucoquick-glucometro',
+        'glucoquick-tensiometro' => 'publicidad/contenido/nombre/glucoquick-tensiometro',
+        'glucoquick-educacion' => 'publicidad/contenido/nombre/glucoquick-educacion',
+        'klim1-deslactosado' => 'publicidad/contenido/nombre/klim1-deslactosado',
+        'que-hacer-ante-la-intolerancia-a-la-lactosa-en-ninos' => 'publicidad/contenido/nombre/klim1-deslactosado-intolerancia',
+        'cojines-desknza' => 'publicidad/contenido/nombre/desknza',
+        'nivea-cuidado-facial' => 'publicidad/contenido/nombre/nivea-cuidado-facial',
+        'nivea-cuidado-humectacion-profunda' => 'publicidad/contenido/nombre/nivea-cuidado-humectacion-profunda',
+        'nivea-cuidado-aclarado-natural' => 'publicidad/contenido/nombre/nivea-cuidado-aclarado-natural',
+        'nivea-cuidado-antiarrugas' => 'publicidad/contenido/nombre/nivea-cuidado-antiarrugas',
+        'nexcare-fijacion' => 'publicidad/contenido/nombre/nexcare-fijacion',
+        'nexcare-cubrimiento' => 'publicidad/contenido/nombre/nexcare-cubrimiento',
+        'nexcare-rehabilitacion' => 'publicidad/contenido/nombre/nexcare-rehabilitacion',
+        'menticol-pies' => 'publicidad/contenido/nombre/menticol',
          // Fin links campañas
 
         // REST patterns

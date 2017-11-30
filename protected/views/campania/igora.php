@@ -116,9 +116,9 @@
 </div>
 <!--Versión escritorio-->
 <?php else: ?>
-<a href="<?php echo CController::createUrl('/contenido/ver', array('tipo' => 'grupo', 'contenido' => 3242)) ?>">
+<!-- <a href="<?php echo CController::createUrl('/contenido/ver', array('tipo' => 'grupo', 'contenido' => 3242)) ?>">
   <div class="sidebar-cart"><img class="img-responsive" src="<?= Yii::app()->request->baseUrl ?>/images/contenido/igora/btn-fijo.png" alt="Compra online"></div>
-</a>
+</a> -->
 <a href="<?php echo CController::createUrl('/contenido/ver', array('tipo' => 'grupo', 'contenido' => 3242)) ?>">
   <img class="img-responsive" src="<?= Yii::app()->request->baseUrl ?>/images/contenido/igora/banner-principal.jpg" alt="IGORA coloración con tratamiento con keratina y serina para máximo cuidado">
 </a>

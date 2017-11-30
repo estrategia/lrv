@@ -21,9 +21,11 @@ $listPdv = PuntoVenta::model()->findAll(array(
             <form action="/callcenter/index/generardoccruce/" method="post" id="asignarpdv" name="asignarpdv">
                 <div class="row">
                     <div class="col-md-9">
-                        <?php echo Select2::dropDownList('select-pdv-asignar', $objCompra->idComercial, CHtml::listData($listPdv, 'idComercial', function($model) {
+                        <?php echo 
+                        Select2::dropDownList('select-pdv-asignar', $objCompra->idComercial, CHtml::listData($listPdv, 'idComercial', function($model) {
                                     return "$model->idComercial - $model->nombrePuntoDeVenta";
-                                }), array('prompt' => 'Seleccione punto de venta', 'id' => 'select-pdv-asignar', 'style' => 'width: 100%;')) ?>
+                        }), array('prompt' => 'Seleccione punto de venta', 'id' => 'select-pdv-asignar', 'style' => 'width: 100%;'))
+                        ?>
                     </div>
                     <div class="col-md-3">
                         <button type="button" id="<?php echo uniqid() ?>" data-compra="<?php echo $objCompra->idCompra ?>" data-action="asignar-pdv" style="color: #dd4814;" class="btn btn-sm"><strong>Asignar</strong></button>
@@ -46,7 +48,7 @@ $listPdv = PuntoVenta::model()->findAll(array(
                         <tr>
                             <th>Ciudad</th>
                             <td>
-<?php echo Select2::dropDownList('select-ciudad-direccion', $objCompra->objCompraDireccion->codigoCiudad, CHtml::listData($listCiudad, 'codigoCiudad', 'nombreCiudad'), array('prompt' => 'Seleccione ciudad', 'id' => 'select-ciudad-direccion', 'style' => 'width: 60%;')) ?>
+								<?php echo Select2::dropDownList('select-ciudad-direccion', $objCompra->objCompraDireccion->codigoCiudad, CHtml::listData($listCiudad, 'codigoCiudad', 'nombreCiudad'), array('prompt' => 'Seleccione ciudad', 'id' => 'select-ciudad-direccion', 'style' => 'width: 60%;')) ?>
                             </td>
                             <td style="vertical-align: middle; text-align: center" rowspan="2">  
                                 <button type="button" style="color: #51a351" class="btn btn-sm" data-role="pdvgeodireccion" data-compra="<?php echo $objCompra->idCompra ?>"><i class="glyphicon glyphicon-globe"></i> Geo</button>
@@ -73,7 +75,7 @@ $listPdv = PuntoVenta::model()->findAll(array(
                         <strong>Ciudad </strong>
                     </div>
                     <div class="col-md-9">
-<?php echo Select2::dropDownList('select-ciudad-barrio', $objCompra->objCompraDireccion->codigoCiudad, CHtml::listData($listCiudad, 'codigoCiudad', 'nombreCiudad'), array('prompt' => 'Seleccione ciudad', 'id' => 'select-ciudad-barrio', 'style' => 'width: 50%;')) ?>
+						<?php echo Select2::dropDownList('select-ciudad-barrio', $objCompra->objCompraDireccion->codigoCiudad, CHtml::listData($listCiudad, 'codigoCiudad', 'nombreCiudad'), array('prompt' => 'Seleccione ciudad', 'id' => 'select-ciudad-barrio', 'style' => 'width: 50%;')) ?>
                     </div>  
                 </div>
                 <div class="row">
@@ -99,9 +101,9 @@ $listPdv = PuntoVenta::model()->findAll(array(
             <form action="" method="post" id="pdvform" name="pdvform">
                 <div class="row">
                     <div class="col-md-9">
-<?php echo Select2::dropDownList('select-pdv-saldo', $objCompra->idComercial, CHtml::listData($listPdv, 'idComercial', function($model) {
-            return "$model->idComercial - $model->nombrePuntoDeVenta";
-        }), array('prompt' => 'Seleccione punto de venta', 'id' => 'select-pdv-saldo', 'style' => 'width: 100%;')) ?>
+					<?php echo Select2::dropDownList('select-pdv-saldo', $objCompra->idComercial, CHtml::listData($listPdv, 'idComercial', function($model) {
+                        return "$model->idComercial - $model->nombrePuntoDeVenta";
+                    }), array('prompt' => 'Seleccione punto de venta', 'id' => 'select-pdv-saldo', 'style' => 'width: 100%;')) ?>
                     </div>
                     <div class="col-md-3">
                         <button type="button" data-compra="<?php echo $objCompra->idCompra ?>" data-action="saldo-pdv" style="color: #dd4814;" class="btn btn-sm"><strong>Consultar</strong></button>
@@ -112,7 +114,7 @@ $listPdv = PuntoVenta::model()->findAll(array(
             </form>
 
             <div id="div-saldos-pdv">
-<?php $this->renderPartial('/pedido/_saldosPDV', array('respuesta' => $objCompra->getSaldosPDV())) ?>
+				<?php $this->renderPartial('/pedido/_saldosPDV', array('respuesta' => $objCompra->getSaldosPDV())) ?>
             </div>
 
         </div>
@@ -126,7 +128,7 @@ $listPdv = PuntoVenta::model()->findAll(array(
         <hr>
         <div>
             <span class="title">PDV Anteriores</span>
-<?php $this->renderPartial('_gridAnteriores', array('model' => $modelCompra)) ?>
+			<?php $this->renderPartial('_gridAnteriores', array('model' => $modelCompra)) ?>
         </div>
     </div>
 </div>

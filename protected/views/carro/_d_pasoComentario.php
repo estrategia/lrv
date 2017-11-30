@@ -4,7 +4,7 @@ $form = $this->beginWidget('CActiveForm', array(
     'enableClientValidation' => true,
     //'action' => Yii::app()->createUrl('/carro/pagar', array('paso' => $modelPago->getScenario(), 'post' => 'true')),
     'htmlOptions' => array(
-    //'class' => "", 'data-ajax' => "false"
+        //'class' => "", 'data-ajax' => "false"
     ),
     'errorMessageCssClass' => 'has-error',
     'clientOptions' => array(
@@ -13,25 +13,8 @@ $form = $this->beginWidget('CActiveForm', array(
         'errorCssClass' => 'has-error',
         'successCssClass' => 'has-success',
     ))
-);
+    );
 ?>
-
-<div data-role="tipoentrega-habilitar" data-habilitar="<?php echo Yii::app()->params->entrega['tipo']['presencial'] ?>" class="<?php echo ($modelPago->tipoEntrega == Yii::app()->params->entrega['tipo']['presencial'] ? "" : "display-none") ?>">
-    <div class="form-group">
-        <?php echo $form->labelEx($modelPago, 'telefonoContacto', array('class' => 'control-label')); ?>
-        <?php echo $form->textField($modelPago, 'telefonoContacto', array('class' => 'form-control input-sm', 'maxlength' => 50, 'placeholder' => $modelPago->getAttributeLabel('telefonoContacto'))); ?>
-        <?php echo $form->error($modelPago, 'telefonoContacto', array('class' => 'text-danger')); ?>
-    </div>
-
-    <?php if ($modelPago->pagoInvitado): ?>
-        <div class="form-group">
-            <?php echo $form->labelEx($modelPago, 'correoElectronicoContacto', array('class' => 'control-label')); ?>
-            <?php echo $form->emailField($modelPago, 'correoElectronicoContacto', array('class' => 'form-control input-sm', 'maxlength' => 50, 'placeholder' => $modelPago->getAttributeLabel('correoElectronicoContacto'))); ?>
-            <?php echo $form->error($modelPago, 'correoElectronicoContacto', array('class' => 'text-danger')); ?>
-        </div>
-    <?php endif; ?>
-</div>
-
 
 <div class="form-group">
     <?php echo $form->labelEx($modelPago, 'comentario', array('class' => 'control-label')); ?>

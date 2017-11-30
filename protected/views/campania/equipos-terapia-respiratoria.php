@@ -59,9 +59,9 @@ $this->metaTags = "
 	</div>
 	<div class="ui-block-b" style="padding: 10px;">
     <div class="border-m">
-      <a data-ajax="false" href="#"><img class="img-responsive-m"  style="width: 100%;" src="<?= Yii::app()->request->baseUrl ?>/images/contenido/cuidado-en-casa/productos/nebulizadores.png" alt="Nebulizadores"></a>
+      <a data-ajax="false" href="<?php echo CController::createUrl('/contenido/ver', array('tipo' => 'grupo', 'contenido' => 5116)) ?>"><img class="img-responsive-m"  style="width: 100%;" src="<?= Yii::app()->request->baseUrl ?>/images/contenido/cuidado-en-casa/productos/nebulizadores.png" alt="Nebulizadores"></a>
       <p><span>Nebulizadores</span></p>
-      <a data-ajax="false" href="#"><img class="img-responsive-m" style="width: 100%;"  src="<?= Yii::app()->request->baseUrl ?>/images/contenido/cuidado-en-casa/referencias.jpg" alt=""></a>
+      <a data-ajax="false" href="<?php echo CController::createUrl('/contenido/ver', array('tipo' => 'grupo', 'contenido' => 5116)) ?>"><img class="img-responsive-m" style="width: 100%;"  src="<?= Yii::app()->request->baseUrl ?>/images/contenido/cuidado-en-casa/referencias.jpg" alt=""></a>
     </div>
   </div>
 </div>
@@ -115,9 +115,9 @@ $this->metaTags = "
     </div>
     <div class="col-sm-3 col-md-3">
       <div class="border">
-        <a href="#"><img class="img-responsive" src="<?= Yii::app()->request->baseUrl ?>/images/contenido/cuidado-en-casa/productos/nebulizadores.png" alt="Nebulizadores"></a>
+        <a href="<?php echo CController::createUrl('/contenido/ver', array('tipo' => 'grupo', 'contenido' => 5116)) ?>"><img class="img-responsive" src="<?= Yii::app()->request->baseUrl ?>/images/contenido/cuidado-en-casa/productos/nebulizadores.png" alt="Nebulizadores"></a>
         <p><span>Nebulizadores</span></p>
-        <a href="#"><img class="img-responsive" src="<?= Yii::app()->request->baseUrl ?>/images/contenido/cuidado-en-casa/referencias.jpg" alt=""></a>
+        <a href="<?php echo CController::createUrl('/contenido/ver', array('tipo' => 'grupo', 'contenido' => 5116)) ?>"><img class="img-responsive" src="<?= Yii::app()->request->baseUrl ?>/images/contenido/cuidado-en-casa/referencias.jpg" alt=""></a>
       </div>
     </div>
   </div>

@@ -89,8 +89,8 @@
 
 <!--Versión escritorio-->
 <?php else: ?>
-<a href="<?php echo CController::createUrl('/catalogo/producto', array('producto' => 117942)) ?>"><div class="sidebar-cart"><img class="img-responsive" src="<?= Yii::app()->request->baseUrl ?>/images/contenido/denticare/btn-fijo.png" alt="Compra online"></div></a>
-<img class="img-responsive" src="<?= Yii::app()->request->baseUrl ?>/images/contenido/air-lift/banner-air-lift.png" alt="Banner arlift">
+<!-- <a href="<?php echo CController::createUrl('/catalogo/producto', array('producto' => 117942)) ?>"><div class="sidebar-cart"><img class="img-responsive" src="<?= Yii::app()->request->baseUrl ?>/images/contenido/denticare/btn-fijo.png" alt="Compra online"></div></a>
+ --><img class="img-responsive" src="<?= Yii::app()->request->baseUrl ?>/images/contenido/air-lift/banner-air-lift.png" alt="Banner arlift">
 <div class="container">
   <div class="row">
     <div class="col-sm-8 col-md-8 intro-producto">

@@ -114,8 +114,8 @@
 </div>
 <!--Versión escritorio-->
 <?php else: ?>
-<a href="<?php echo CController::createUrl('/catalogo/producto', array('producto' => 117941)) ?>"><div class="sidebar-cart"><img class="img-responsive" src="<?= Yii::app()->request->baseUrl ?>/images/contenido/denticare/btn-fijo.png" alt="Compra online"></div></a>
-<section class="intro-banner">
+<!-- <a href="<?php echo CController::createUrl('/catalogo/producto', array('producto' => 117941)) ?>"><div class="sidebar-cart"><img class="img-responsive" src="<?= Yii::app()->request->baseUrl ?>/images/contenido/denticare/btn-fijo.png" alt="Compra online"></div></a>
+ --><section class="intro-banner">
   <div class="container" style="padding-bottom: 25px;">
     <div class="col-sm-6 col-md-6">
       <img class="img-responsive" width="350" src="<?= Yii::app()->request->baseUrl ?>/images/contenido/denticare/logo-denticare.png">

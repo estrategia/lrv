@@ -115,7 +115,7 @@ class Compras extends CActiveRecord {
             'objPasarelaEnvio' => array(self::HAS_ONE, 'PasarelaEnvios', 'idCompra'),
             'listPasarelaRespuestas' => array(self::HAS_MANY, 'PasarelaRespuestas', 'idCompra'),
             'listFormulas' => array(self::HAS_MANY, 'FormulasMedicas', 'idCompra'),
-        	'objComprasRemitente' => array(self::HAS_ONE, 'ComprasRemitente', 'idCompra')			
+        	'objComprasRemitente' => array(self::HAS_ONE, 'ComprasRemitente', 'idCompra'),
         );
     }
 
@@ -960,10 +960,14 @@ class Compras extends CActiveRecord {
     }
 
     public function gridOrigenPedido($data, $row) {
-        if ($data->identificacionUsuario == null) {
+        if ($data->identificacionUsuario == null || $data->invitado) {
             return $data->objCompraDireccion->nombre . "<br/>" . $data->objCompraDireccion->correoElectronico;
         } else {
-            return "$data->identificacionUsuario<br/>" . $data->objUsuario->getNombreCompleto() . "<br/>" . $data->objUsuario->correoElectronico;
+            	if(isset($data->objUsuario)){ 
+                	return "$data->identificacionUsuario<br/>" . $data->objUsuario->getNombreCompleto() . "<br/>" . $data->objUsuario->correoElectronico;
+            	}else if($data->idTipoVenta  == Yii::app()->params->tipoVenta['vap']){
+            		return "$data->identificacionUsuario<br/>" .$data->objComprasRemitente->nombreRemitente. "<br/>" . $data->objComprasRemitente->correoRemitente;
+            	}
         }
     }
 

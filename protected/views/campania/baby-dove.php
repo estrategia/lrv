@@ -129,8 +129,8 @@ src="https://www.facebook.com/tr?id=124951688097734&ev=PageView
 </div>
 <!--Versión escritorio-->
 <?php else: ?>
-<a href="<?php echo CController::createUrl('/contenido/ver', array('tipo' => 'grupo', 'contenido' => 3238)) ?>"><div class="sidebar-cart"><img class="img-responsive" src="<?= Yii::app()->request->baseUrl ?>/images/contenido/baby-dove/btn-fijo.png" alt="Compra online"></div></a>
-<div class="bg-enriquecido">
+<!-- <a href="<?php echo CController::createUrl('/contenido/ver', array('tipo' => 'grupo', 'contenido' => 3238)) ?>"><div class="sidebar-cart"><img class="img-responsive" src="<?= Yii::app()->request->baseUrl ?>/images/contenido/baby-dove/btn-fijo.png" alt="Compra online"></div></a>
+ --><div class="bg-enriquecido">
   <header class="header-dove">
     <a href="#humectacion-enriquecida"><span class="item-menu">Humectación Enriquecida</span></a>
     <img class="logo-dove" src="<?= Yii::app()->request->baseUrl ?>/images/contenido/baby-dove/logo-baby-dove.png" alt="Logo Baby Dove">

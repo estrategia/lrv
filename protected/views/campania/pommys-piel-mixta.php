@@ -201,9 +201,9 @@ src="https://www.facebook.com/tr?id=128161331150104&ev=PageView
 <!--Version movil-->
 <!--Versión escritorio-->
 <?php else: ?>
-<a href="<?php echo CController::createUrl('/contenido/ver', array('tipo' => 'grupo', 'contenido' => 2845)) ?>">
+<!-- <a href="<?php echo CController::createUrl('/contenido/ver', array('tipo' => 'grupo', 'contenido' => 2845)) ?>">
   <div class="sidebar-cart"><img class="img-responsive" src="<?= Yii::app()->request->baseUrl ?>/images/contenido/pomys/btn-fijo.png" alt="Compra online"></div>
-</a>
+</a> -->
 <img class="img-responsive" src="<?= Yii::app()->request->baseUrl ?>/images/contenido/pomys/banner.jpg" alt="Lo que hagas por tu piel, lo verás mañana."><!-- <div id="carousel-example-generic" class="carousel slide" data-ride="carousel">
   <div class="carousel-inner baner-principal">
     <div class="item active"></div>

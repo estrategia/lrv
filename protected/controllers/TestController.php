@@ -2108,7 +2108,7 @@ class TestController extends Controller {
     }
     
     
-    public function actionTestJ(){
+    public function actionTestJwt(){
     	$token = array(
     			"blog" => "http://weblog.nabi.ir",
     			"name" => "nabi",
@@ -2123,6 +2123,134 @@ class TestController extends Controller {
     	$decode = Yii::app()->JWT->decode($jwt);
     	echo "<pre>";
     	var_dump($decode);
+    }
+    
+    public function actionSoat($placa){
+        $iBus = [
+            'AuthenticationHeaderUser' => 'admin',
+            'AuthenticationHeaderPassword' => 'adminIbancos123',
+            'urlWebService' => 'http://pre.transfiriendo.com/IBusSE/Services/Basic/EventManagerService.asmx?WSDL',
+        ];
+        
+        $iSoat = [
+            'isoatUser' => 'coopservirpto',
+            'isoatPassword' => 'abc123',
+            'isoatCompanyCode' => '1',
+            'isoatCountry' => '57',
+            'canal' => 'DROGAS LA REBAJA PUNTO',
+            'canalSuperior' => 'DROGAS LA REBAJA',
+            'rangoPapeleria' => [
+                'inicio' => 30075551,
+                'fin' => 30075650,
+                'siguiente' => 30075551
+            ],
+        ];
+        
+        $client = new SoapClient($iBus['urlWebService'], array(
+            "trace" => 1,
+            "exceptions" => 0,
+            'cache_wsdl' => WSDL_CACHE_NONE
+        ));
+        
+        $auth = array(
+            'UserName' => $iBus['AuthenticationHeaderUser'],
+            'Password' => $iBus['AuthenticationHeaderPassword'],
+        );
+        
+        //$auth = new AuthenticationHeader(Yii::$app->params["iBus"]["AuthenticationHeaderUser"], Yii::$app->params["iBus"]["AuthenticationHeaderPassword"]);
+        $header = new SoapHeader("http://tempuri.org/", "AuthenticationHeader", $auth, false);
+        $client->__setSoapHeaders($header);
+        
+        $parm = array();
+        $parm[] = new SoapVar('GetVehicle', XSD_STRING, null, null, 'ns1:serviceName');
+        
+        $cadenaLogin = "<Login>
+                    <Username>" . $iSoat["isoatUser"] . "</Username>
+                    <Password>" . $iSoat["isoatPassword"] . "</Password>
+                    <CompanyCode>" . $iSoat["isoatCompanyCode"] . "</CompanyCode>
+                    <CountryCode>" . $iSoat["isoatCountry"] . "</CountryCode>
+                </Login>";
+        
+        $paramReq = "<GetVehicleReq>";
+        $paramReq .= $cadenaLogin . "
+                        <Data>
+                            <NumberPlate>$placa</NumberPlate>
+                        </Data>
+                    </GetVehicleReq>";
+        
+        $parm[] = new SoapVar($paramReq, XSD_STRING, null, null, 'ns1:parameters');
+        $service = $client->StartService(new SoapVar($parm, SOAP_ENC_OBJECT));
+        //$array = XMLToArray::createArray($service->StartServiceResult);
+        
+        echo "<br><br>Client:<br>";
+        CVarDumper::dump($client,10,true);
+        
+        echo "<br><br>Respuesta:<br>";
+        CVarDumper::dump($service,10,true);
+        
+        echo "<br><br>Peticion:<br>";
+        CVarDumper::dump($client->__getLastRequest(),10,true);
+        
+        echo "<br><br>Respuesta:<br>";
+        CVarDumper::dump($client->__getLastResponse());
+        
+    }
+    
+    
+    public function actionServientrega(){
+        $url = "http://web.servientrega.com:8081/GeneracionGuias.asmx?WSDL";
+        $login = "Testcopservir";
+        $pass = "BpSUh12jBIiWdACDozgOaQ==";
+        $codFactura = "SER408";
+        $cargue = "COPSERVIR_SISCLINET";
+        
+        $client = new \SoapClient($url, array(
+            "trace" => 1,
+            "exceptions" => 0,
+            'cache_wsdl' => WSDL_CACHE_NONE
+        ));
+        
+        $auth = array(
+            'login' => $login,
+            'pwd' => $pass,
+            'Id_CodFacturacion' => $codFactura,
+            'Nombre_Cargue' => $cargue,
+        );
+        
+        $header = new SoapHeader("http://tempuri.org/", "AuthHeader", $auth, false);
+        $client->__setSoapHeaders($header);
+        
+        $paramReq = $this->renderPartial('CargueMasivoExternoDTO', array(), true);
+        $parm[] = new SoapVar($paramReq, XSD_ANYXML);
+        $service = $client->CargueMasivoExterno(new SoapVar($parm, SOAP_ENC_OBJECT));
+        
+        if($service->CargueMasivoExternoResult){
+            echo "<br>EXITO!!!!<br>";
+            
+            echo "<br><br>Respuesta:<br>";
+             CVarDumper::dump($service,10,true);
+            //$resultadoArray = get_object_vars($service->envios);
+             $resultadoArray = json_decode(json_encode($service->envios), true);
+            echo "<br><br>Respuesta array:<br>";
+            CVarDumper::dump($resultadoArray,10,true);
+            
+            
+        } else {
+            echo "<br>ERROR!!!!<br>";
+        }
+        
+        
+        
+        /*echo "<br><br>Respuesta:<br>";
+        CVarDumper::dump($service,10,true);
+        
+        echo "<br><br>Peticion:<br>";
+        CVarDumper::dump($client->__getLastRequest(),10,true);
+        
+        echo "<br><br>Ultima Respuesta:<br>";
+        CVarDumper::dump($client->__getLastResponse(),10,true);*/
+        
+        
     }
     
 }

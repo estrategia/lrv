@@ -32,12 +32,7 @@ $this->metaTags = "
     .roll-back {background-color: #F1F0EE;color: #3F3730;border-radius: 25px;padding: 14px 0px;margin: 35px 25px;}
     .title-main.mobile::after {content: ''; width: 50px;height: 3px; background-color: #F27A2A; position: absolute;left: 30px;top: 306px;}
     .border-m {border: 3px solid #D2D0CD;border-radius: 25px;padding: 15px 8px;margin: 0;}
-    .roll-back-m {background-color: #F1F0EE;
-color: #3F3730;
-border-radius: 25px;
-padding: 3px 0px;
-text-align: center;
-margin: 0 25px;}
+    .roll-back-m {background-color: #F1F0EE;color: #3F3730;border-radius: 25px;padding: 3px 0px;text-align: center;margin: 0 25px;}
   </style>
 ";
 ?>
@@ -56,32 +51,32 @@ margin: 0 25px;}
 <div class="ui-grid-a line-categories" style="padding: 0 15px;">
 	<div class="ui-block-a" style="padding: 10px;">
     <div class="border-m">
-      <a href="#"><img class="img-responsive-m" style="width: 100%;" src="<?= Yii::app()->request->baseUrl ?>/images/contenido/cuidado-en-casa/productos/frio-calor.png" alt="Terapia frio - calor"></a>
+      <a data-ajax="false" href="<?php echo CController::createUrl('/contenido/ver', array('tipo' => 'grupo', 'contenido' => 5126)) ?>"><img class="img-responsive-m" style="width: 100%;" src="<?= Yii::app()->request->baseUrl ?>/images/contenido/cuidado-en-casa/productos/frio-calor.png" alt="Terapia frio - calor"></a>
       <p><span>Terapia <br> frio calor</span></p>
-      <a href="#"><img class="img-responsive-m" style="width: 100%;" src="<?= Yii::app()->request->baseUrl ?>/images/contenido/cuidado-en-casa/referencias.jpg" alt=""></a>
+      <a data-ajax="false" href="<?php echo CController::createUrl('/contenido/ver', array('tipo' => 'grupo', 'contenido' => 5126)) ?>"><img class="img-responsive-m" style="width: 100%;" src="<?= Yii::app()->request->baseUrl ?>/images/contenido/cuidado-en-casa/referencias.jpg" alt=""></a>
     </div>
 	</div>
 	<div class="ui-block-b" style="padding: 10px;">
     <div class="border-m">
-      <a href="#"><img class="img-responsive-m" style="width: 100%;" src="<?= Yii::app()->request->baseUrl ?>/images/contenido/cuidado-en-casa/productos/cuidado-de-la-piel.png" alt="Cuidado de la piel"></a>
+      <a data-ajax="false" href="<?php echo CController::createUrl('/contenido/ver', array('tipo' => 'grupo', 'contenido' => 5132)) ?>"><img class="img-responsive-m" style="width: 100%;" src="<?= Yii::app()->request->baseUrl ?>/images/contenido/cuidado-en-casa/productos/cuidado-de-la-piel.png" alt="Cuidado de la piel"></a>
       <p><span>Cuidado <br>del pie </span></p>
-      <a href="#"><img class="img-responsive-m" style="width: 100%;" src="<?= Yii::app()->request->baseUrl ?>/images/contenido/cuidado-en-casa/referencias.jpg" alt=""></a>
+      <a data-ajax="false" href="<?php echo CController::createUrl('/contenido/ver', array('tipo' => 'grupo', 'contenido' => 5132)) ?>"><img class="img-responsive-m" style="width: 100%;" src="<?= Yii::app()->request->baseUrl ?>/images/contenido/cuidado-en-casa/referencias.jpg" alt=""></a>
     </div>
   </div>
 </div>
 <div class="ui-grid-a line-categories" style="padding: 0 15px;">
 	<div class="ui-block-a" style="padding: 10px;">
     <div class="border-m">
-      <a href="#"><img class="img-responsive-m" style="width: 100%;" src="<?= Yii::app()->request->baseUrl ?>/images/contenido/cuidado-en-casa/productos/accesorios-ortopedicos.png" alt="Accesorios ortopedicos"></a>
+      <a data-ajax="false" href="<?php echo CController::createUrl('/contenido/ver', array('tipo' => 'grupo', 'contenido' => 5128)) ?>"><img class="img-responsive-m" style="width: 100%;" src="<?= Yii::app()->request->baseUrl ?>/images/contenido/cuidado-en-casa/productos/accesorios-ortopedicos.png" alt="Accesorios ortopedicos"></a>
       <p><span>Accesorios <br> ortopedicos</span></p>
-      <a href="#"><img class="img-responsive-m" style="width: 100%;" src="<?= Yii::app()->request->baseUrl ?>/images/contenido/cuidado-en-casa/referencias.jpg" alt=""></a>
+      <a data-ajax="false" href="<?php echo CController::createUrl('/contenido/ver', array('tipo' => 'grupo', 'contenido' => 5128)) ?>"><img class="img-responsive-m" style="width: 100%;" src="<?= Yii::app()->request->baseUrl ?>/images/contenido/cuidado-en-casa/referencias.jpg" alt=""></a>
     </div>
 	</div>
 	<div class="ui-block-b" style="padding: 10px;">
     <div class="border-m">
-      <a href="#"><img class="img-responsive-m" style="width: 100%;" src="<?= Yii::app()->request->baseUrl ?>/images/contenido/cuidado-en-casa/productos/cuidado-heridas.png" alt="Cuidado de heridas"></a>
+      <a data-ajax="false" href="<?php echo CController::createUrl('/contenido/ver', array('tipo' => 'grupo', 'contenido' => 5130)) ?>"><img class="img-responsive-m" style="width: 100%;" src="<?= Yii::app()->request->baseUrl ?>/images/contenido/cuidado-en-casa/productos/cuidado-heridas.png" alt="Cuidado de heridas"></a>
       <p><span>Cuidado <br> de Heridas</span></p>
-      <a href="#"><img class="img-responsive-m" style="width: 100%;" src="<?= Yii::app()->request->baseUrl ?>/images/contenido/cuidado-en-casa/referencias.jpg" alt=""></a>
+      <a data-ajax="false" href="<?php echo CController::createUrl('/contenido/ver', array('tipo' => 'grupo', 'contenido' => 5130)) ?>"><img class="img-responsive-m" style="width: 100%;" src="<?= Yii::app()->request->baseUrl ?>/images/contenido/cuidado-en-casa/referencias.jpg" alt=""></a>
     </div>
   </div>
 </div>
@@ -139,30 +134,30 @@ margin: 0 25px;}
   <div class="row line-categories" style="margin-bottom: 25px;margin-top:25px;">
     <div class="col-sm-3 col-md-3">
       <div class="border">
-        <a href="#"><img class="img-responsive" src="<?= Yii::app()->request->baseUrl ?>/images/contenido/cuidado-en-casa/productos/frio-calor.png" alt="Terapia frio - calor"></a>
+        <a href="<?php echo CController::createUrl('/contenido/ver', array('tipo' => 'grupo', 'contenido' => 5126)) ?>"><img class="img-responsive" src="<?= Yii::app()->request->baseUrl ?>/images/contenido/cuidado-en-casa/productos/frio-calor.png" alt="Terapia frio - calor"></a>
         <p><span>Terapia frio calor<br> &nbsp;</span></p>
-        <a href="#"><img class="img-responsive" src="<?= Yii::app()->request->baseUrl ?>/images/contenido/cuidado-en-casa/referencias.jpg" alt=""></a>
+        <a href="<?php echo CController::createUrl('/contenido/ver', array('tipo' => 'grupo', 'contenido' => 5126)) ?>"><img class="img-responsive" src="<?= Yii::app()->request->baseUrl ?>/images/contenido/cuidado-en-casa/referencias.jpg" alt=""></a>
       </div>
     </div>
     <div class="col-sm-3 col-md-3">
       <div class="border">
-        <a href="#"><img class="img-responsive" src="<?= Yii::app()->request->baseUrl ?>/images/contenido/cuidado-en-casa/productos/cuidado-de-la-piel.png" alt="Cuidado de la piel"></a>
+        <a href="<?php echo CController::createUrl('/contenido/ver', array('tipo' => 'grupo', 'contenido' => 5132)) ?>"><img class="img-responsive" src="<?= Yii::app()->request->baseUrl ?>/images/contenido/cuidado-en-casa/productos/cuidado-de-la-piel.png" alt="Cuidado de la piel"></a>
         <p><span>Cuidado del pie <br> &nbsp;</span></p>
-        <a href="#"><img class="img-responsive" src="<?= Yii::app()->request->baseUrl ?>/images/contenido/cuidado-en-casa/referencias.jpg" alt=""></a>
+        <a href="<?php echo CController::createUrl('/contenido/ver', array('tipo' => 'grupo', 'contenido' => 5132)) ?>"><img class="img-responsive" src="<?= Yii::app()->request->baseUrl ?>/images/contenido/cuidado-en-casa/referencias.jpg" alt=""></a>
       </div>
     </div>
     <div class="col-sm-3 col-md-3">
       <div class="border">
-        <a href="#"><img class="img-responsive" src="<?= Yii::app()->request->baseUrl ?>/images/contenido/cuidado-en-casa/productos/accesorios-ortopedicos.png" alt="Accesorios ortopedicos"></a>
+        <a href="<?php echo CController::createUrl('/contenido/ver', array('tipo' => 'grupo', 'contenido' => 5128)) ?>"><img class="img-responsive" src="<?= Yii::app()->request->baseUrl ?>/images/contenido/cuidado-en-casa/productos/accesorios-ortopedicos.png" alt="Accesorios ortopedicos"></a>
         <p><span>Accesorios <br> ortopedicos</span></p>
-        <a href="#"><img class="img-responsive" src="<?= Yii::app()->request->baseUrl ?>/images/contenido/cuidado-en-casa/referencias.jpg" alt=""></a>
+        <a href="<?php echo CController::createUrl('/contenido/ver', array('tipo' => 'grupo', 'contenido' => 5128)) ?>"><img class="img-responsive" src="<?= Yii::app()->request->baseUrl ?>/images/contenido/cuidado-en-casa/referencias.jpg" alt=""></a>
       </div>
     </div>
     <div class="col-sm-3 col-md-3">
       <div class="border">
-        <a href="#"><img class="img-responsive" src="<?= Yii::app()->request->baseUrl ?>/images/contenido/cuidado-en-casa/productos/cuidado-heridas.png" alt="Cuidado de heridas"></a>
+        <a href="<?php echo CController::createUrl('/contenido/ver', array('tipo' => 'grupo', 'contenido' => 5130)) ?>"><img class="img-responsive" src="<?= Yii::app()->request->baseUrl ?>/images/contenido/cuidado-en-casa/productos/cuidado-heridas.png" alt="Cuidado de heridas"></a>
         <p><span>Cuidado <br> de Heridas</span></p>
-        <a href="#"><img class="img-responsive" src="<?= Yii::app()->request->baseUrl ?>/images/contenido/cuidado-en-casa/referencias.jpg" alt=""></a>
+        <a href="<?php echo CController::createUrl('/contenido/ver', array('tipo' => 'grupo', 'contenido' => 5130)) ?>"><img class="img-responsive" src="<?= Yii::app()->request->baseUrl ?>/images/contenido/cuidado-en-casa/referencias.jpg" alt=""></a>
       </div>
     </div>
     <div class="col-md-12">

@@ -135,8 +135,8 @@
 </section>
 <!--Versión escritorio-->
 <?php else: ?>
-<a href="<?php echo CController::createUrl('/contenido/ver', array('tipo' => 'grupo', 'contenido' => 2778)) ?>"><div class="sidebar-cart"><img class="img-responsive" src="<?= Yii::app()->request->baseUrl ?>/images/contenido/nutralab/bnt-fijo.png" alt="Compra online"></div></a>
-<img class="img-responsive" src="<?= Yii::app()->request->baseUrl ?>/images/contenido/nutralab/escritorio/banner-nutralab.jpg" alt="Nutralab">
+<!-- <a href="<?php echo CController::createUrl('/contenido/ver', array('tipo' => 'grupo', 'contenido' => 2778)) ?>"><div class="sidebar-cart"><img class="img-responsive" src="<?= Yii::app()->request->baseUrl ?>/images/contenido/nutralab/bnt-fijo.png" alt="Compra online"></div></a>
+ --><img class="img-responsive" src="<?= Yii::app()->request->baseUrl ?>/images/contenido/nutralab/escritorio/banner-nutralab.jpg" alt="Nutralab">
 <section class="section-iso-whey">
   <div class="container">
     <div class="col-sm-6 col-md-6">
