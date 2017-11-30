@@ -222,6 +222,7 @@ class Compras extends CActiveRecord {
             $criteria->condition = $condition;
             $criteria->params = $paramsCondition;
         } else {
+            $criteria->with = array("objCiudad", "objCompraDireccion");
             $criteria->compare('t.idCompra', $this->idCompra);
             $criteria->compare('t.identificacionUsuario', $this->identificacionUsuario);
             $criteria->compare('t.documentoCruce', $this->documentoCruce, true);
@@ -253,6 +254,8 @@ class Compras extends CActiveRecord {
             $criteria->compare('t.codigoCedi', $this->codigoCedi);
         }
 
+
+
         if ($params === null) {
             return new CActiveDataProvider($this, array(
                 'criteria' => $criteria,
@@ -266,6 +269,49 @@ class Compras extends CActiveRecord {
         if(isset($params['select'])){
         	$criteria->select = $params['select'];
         }
+
+        return new CActiveDataProvider($this, array(
+            'criteria' => $criteria,
+            'pagination' => array(
+                'pageSize' => isset($params['pageSize']) ? $params['pageSize'] : 50,
+            ),
+        ));
+    }
+
+    public function searchTerceros($codigoProveedor)
+    {
+        $criteria = new CDbCriteria;
+        $criteria->join = 'LEFT JOIN t_ComprasItems items ON items.idCompra = t.idCompra';
+        $criteria->condition = 'items.terceros = 1 AND items.codigoProveedor = :codigoProveedor';
+        $criteria->compare('t.idCompra', $this->idCompra);
+        $criteria->compare('t.identificacionUsuario', $this->identificacionUsuario);
+        $criteria->compare('t.documentoCruce', $this->documentoCruce, true);
+        $criteria->compare('t.fechaCompra', $this->fechaCompra, true);
+        $criteria->compare('t.fechaEntrega', $this->fechaEntrega, true);
+        $criteria->compare('t.tipoEntrega', $this->tipoEntrega);
+        $criteria->compare('t.donacionFundacion', $this->donacionFundacion);
+        $criteria->compare('t.idComercial', $this->idComercial);
+        $criteria->compare('t.subtotalCompra', $this->subtotalCompra);
+        $criteria->compare('t.impuestosCompra', $this->impuestosCompra);
+        $criteria->compare('t.baseImpuestosCompra', $this->baseImpuestosCompra);
+        $criteria->compare('t.totalCompra', $this->totalCompra);
+        $criteria->compare('t.idEstadoCompra', $this->idEstadoCompra);
+        $criteria->compare('t.idOperador', $this->idOperador);
+        $criteria->compare('t.observacion', $this->observacion, true);
+        $criteria->compare('t.idTipoVenta', $this->idTipoVenta);
+        $criteria->compare('t.activa', $this->activa);
+        $criteria->compare('t.domicilio', $this->domicilio);
+        $criteria->compare('t.flete', $this->flete);
+        $criteria->compare('t.invitado', $this->invitado);
+        $criteria->compare('t.codigoPerfil', $this->codigoPerfil);
+        $criteria->compare('t.saldosPdv', $this->saldosPdv, true);
+        $criteria->compare('t.seguimiento', $this->seguimiento);
+        $criteria->compare('t.codigoCiudad', $this->codigoCiudad);
+        $criteria->compare('t.codigoSector', $this->codigoSector);
+        $criteria->compare('t.tiempoDomicilioCedi', $this->tiempoDomicilioCedi);
+        $criteria->compare('t.valorDomicilioCedi', $this->valorDomicilioCedi);
+        $criteria->compare('t.codigoCedi', $this->codigoCedi);
+        $criteria->params = [':codigoProveedor' => $codigoProveedor];
 
         return new CActiveDataProvider($this, array(
             'criteria' => $criteria,
@@ -914,14 +960,14 @@ class Compras extends CActiveRecord {
     }
 
     public function gridOrigenPedido($data, $row) {
-        if ($data->identificacionUsuario == null) {
+        if ($data->identificacionUsuario == null || $data->invitado) {
             return $data->objCompraDireccion->nombre . "<br/>" . $data->objCompraDireccion->correoElectronico;
         } else {
-        	if(isset($data->objUsuario)){ 
-            	return "$data->identificacionUsuario<br/>" . $data->objUsuario->getNombreCompleto() . "<br/>" . $data->objUsuario->correoElectronico;
-        	}else if($data->idTipoVenta  == Yii::app()->params->tipoVenta['vap']){
-        		return "$data->identificacionUsuario<br/>" .$data->objComprasRemitente->nombreRemitente. "<br/>" . $data->objComprasRemitente->correoRemitente;
-        	}
+            	if(isset($data->objUsuario)){ 
+                	return "$data->identificacionUsuario<br/>" . $data->objUsuario->getNombreCompleto() . "<br/>" . $data->objUsuario->correoElectronico;
+            	}else if($data->idTipoVenta  == Yii::app()->params->tipoVenta['vap']){
+            		return "$data->identificacionUsuario<br/>" .$data->objComprasRemitente->nombreRemitente. "<br/>" . $data->objComprasRemitente->correoRemitente;
+            	}
         }
     }
 

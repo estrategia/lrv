@@ -19,8 +19,8 @@ class ControllerTercero extends CController {
 
     public function init() {
         $this->pageTitle = Yii::app()->name;
-        /*$this->registerJs();
-        $this->registerCss();*/
+        $this->registerJs();
+        $this->registerCss();
     }
 
     public function registerJs() {
@@ -46,7 +46,7 @@ class ControllerTercero extends CController {
         //Yii::app()->clientScript->registerCoreScript('jquery');
         
         Yii::app()->getClientScript()->registerScriptFile(Yii::app()->request->baseUrl . '/libs/owl-carousel/owl.carousel.min.js', CClientScript::POS_END);
-        Yii::app()->getClientScript()->registerScriptFile(Yii::app()->request->baseUrl . '/js/operator.js', CClientScript::POS_END);
+        Yii::app()->getClientScript()->registerScriptFile(Yii::app()->request->baseUrl . '/js/terceros.js', CClientScript::POS_END);
         Yii::app()->getClientScript()->registerScriptFile(Yii::app()->request->baseUrl . '/js/common.js', CClientScript::POS_END);
         Yii::app()->getClientScript()->registerScriptFile(Yii::app()->request->baseUrl . '/js/modulos.js', CClientScript::POS_END);
     }
@@ -66,7 +66,7 @@ class ControllerTercero extends CController {
         Yii::app()->getClientScript()->registerCssFile(Yii::app()->request->baseUrl . '/libs/loading/css/Loading.css');
         Yii::app()->getClientScript()->registerCssFile(Yii::app()->request->baseUrl . '/libs/owl-carousel/owl.carousel.css');
         Yii::app()->getClientScript()->registerCssFile(Yii::app()->request->baseUrl . '/libs/owl-carousel/owl.theme.css');
-        //Yii::app()->getClientScript()->registerCssFile(Yii::app()->request->baseUrl . '/css/operator.css');
+        Yii::app()->getClientScript()->registerCssFile(Yii::app()->request->baseUrl . '/css/terceros.css');
         //Yii::app()->getClientScript()->registerCssFile(Yii::app()->request->baseUrl . "/libs/charisma/css/bootstrap-simplex.min.css");
     }
 

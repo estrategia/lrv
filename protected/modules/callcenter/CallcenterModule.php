@@ -17,9 +17,9 @@ class CallcenterModule extends CWebModule {
         ));
         
         Yii::app()->setComponents(array(
-            /*'user' => array(
+            'user' => array(
                 'loginUrl' => array('/callcenter/usuario/autenticar'),
-            ),*/
+            ),
             'errorHandler' => array(
                 'errorAction' => 'callcenter/sitio/error',
             ),
