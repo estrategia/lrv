@@ -43,10 +43,6 @@
 <!--Versión movil-->
 <?php if ($this->isMobile): ?>
 <!--Version movil-->
-<input type="hidden" id="cantidad-producto-unidad-117377" value="1" >
-<!-- <a data-ajax="false" data-cargar="1" data-producto="117377" data-id="1" href="">
-  <div class="sidebar-cart-m"><img class="img-responsive-m" src="<?= Yii::app()->request->baseUrl ?>/images/contenido/strepsils/btn-fijo-mobile.png" alt="Compra online"></div>
-</a> -->
 <img class="img-responsive-m" src="<?= Yii::app()->request->baseUrl ?>/images/contenido/strepsils/banner-movil.jpg" alt="Banner strepsil">
 <div class=" bg-inicial" style="padding:0 15px;">
   <h1 class="title-descrip" style="margin-top: -5px;padding-top: 30px;font-size: 23px;">El tratamiento ideal para <br> <span>el dolor de garganta</span><br> que ataca <span>la inflamación</span></h1>
@@ -78,7 +74,7 @@
 <div style="padding:0px;">
   <div class="bg-secundario" >
     <img class="producto" style="width:90%;" src="<?= Yii::app()->request->baseUrl ?>/images/contenido/strepsils/strepsils-caja.png" alt="Strepsils caja 16 tabletas">
-    <a data-ajax="false" data-cargar="1" data-producto="117377" data-id="1" href="">
+    <a data-ajax="false" href="<?php echo CController::createUrl('/contenido/ver', array('tipo' => 'grupo', 'contenido' => 117377)) ?>">
       <img class="compra" style="margin: 20px auto 30px;width: 65%;" src="<?= Yii::app()->request->baseUrl ?>/images/contenido/strepsils/compra-online.png" alt="Compra online">
     </a>
     <center style="padding:0 15%;">
@@ -98,7 +94,6 @@
 <!--Versión escritorio-->
 
 <?php else: ?>
-<input type="hidden" id="cantidad-producto-unidad-117377-1" value="1" >
 <!-- <a data-cargar="1" data-producto="117377" data-id="1" href="">
   <div class="sidebar-cart"><img class="img-responsive" src="<?= Yii::app()->request->baseUrl ?>/images/contenido/strepsils/btn-fijo.png" alt="Compra online"></div>
 </a> -->
@@ -150,7 +145,7 @@
   <div class="row ">
     <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1 bg-secundario" style="padding:0px;">
       <img class="producto" src="<?= Yii::app()->request->baseUrl ?>/images/contenido/strepsils/strepsils-caja.png" alt="Strepsils caja 16 tabletas">
-      <a data-cargar="1" data-producto="117377" data-id="1" href="">
+      <a href="<?php echo CController::createUrl('/contenido/ver', array('tipo' => 'grupo', 'contenido' => 117377)) ?>">
         <img class="compra" src="<?= Yii::app()->request->baseUrl ?>/images/contenido/strepsils/compra-online.png" alt="Compra online">
       </a>
       <center style="padding:0 15%;">

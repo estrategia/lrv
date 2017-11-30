@@ -56,9 +56,6 @@
 
 <!--Versión movil-->
 <?php if ($this->isMobile): ?>
-<input type="hidden" id="cantidad-producto-unidad-2630" value="1" >
-<input type="hidden" id="cantidad-producto-unidad-2628" value="1" >
-
 <div id="owl-productodetalle-inicio" class="owl-carousel owl-theme owl-productodetalle ">
   <div class="item"><img class="img-responsive-m" src="<?= Yii::app()->request->baseUrl ?>/images/contenido/gaviscon/banner-movil/banner01.jpg" alt="Gaviscon - Rápido alivio de la indigestion y el reflujo"></div>
   <div class="item"><img class="img-responsive-m" src="<?= Yii::app()->request->baseUrl ?>/images/contenido/gaviscon/banner-movil/banner02.jpg" alt="Gaviscon - Rápido alivio del reflujo gastroesofágico"></div>
@@ -81,7 +78,7 @@
   </div>
   <div class="bg-gray" style="padding-bottom: 20px;">
   <div class="bg-rosado"></div>
-    <a data-ajax="false" data-cargar="1" data-producto="2630" data-id="1" href="">
+    <a data-ajax="false" href="<?php echo CController::createUrl('/contenido/ver', array('tipo' => 'grupo', 'contenido' => 2630)) ?>">
       <img class="btn-compra" style="margin-top: 20px;" src="<?= Yii::app()->request->baseUrl ?>/images/contenido/gaviscon/gaviscon-doble-accion/compra-doble-accion.png" alt="Compra gaviscon doble acción">
     </a>
     <div class="lista" style="padding: 0 5%;font-size: 16px;">
@@ -119,7 +116,7 @@
   </div>
   <div class="bg-gray" style="padding-bottom: 20px;">
   <div class="bg-blue"></div>
-  <a data-ajax="false" data-cargar="1" data-producto="2628" data-id="1" href="">
+  <a data-ajax="false" href="<?php echo CController::createUrl('/contenido/ver', array('tipo' => 'grupo', 'contenido' => 2628)) ?>">
       <img class="btn-compra" style="margin-top: 20px;" src="<?= Yii::app()->request->baseUrl ?>/images/contenido/gaviscon/gaviscon-original/compra-original.png" alt="Compra gaviscon original">
   </a>
     <div class="lista" style="padding: 0 5%;font-size: 16px;">
@@ -165,9 +162,6 @@
 <!--Version movil-->
 <!--Versión escritorio-->
 <?php else: ?>
-<input type="hidden" id="cantidad-producto-unidad-2630-1" value="1" >
-<input type="hidden" id="cantidad-producto-unidad-2628-2" value="1" >
-
 <!-- <a href="<?= Yii::app()->request->baseUrl ?>/catalogo/buscar?busqueda=GAVISCON">
   <div class="sidebar-cart"><img class="img-responsive" src="<?= Yii::app()->request->baseUrl ?>/images/contenido/gaviscon/bnt-sticky.png" alt="Compra online"></div>
 </a> -->
@@ -196,7 +190,7 @@
         </div>
       </div>
       <img class="bg-doble-accion" src="<?= Yii::app()->request->baseUrl ?>/images/contenido/gaviscon/gaviscon-doble-accion/bg.png">
-      <a data-cargar="1" data-producto="2630" data-id="1" href="">
+      <a href="<?php echo CController::createUrl('/contenido/ver', array('tipo' => 'grupo', 'contenido' => 2630)) ?>">
         <img class="btn-compra" src="<?= Yii::app()->request->baseUrl ?>/images/contenido/gaviscon/gaviscon-doble-accion/compra-doble-accion.png" alt="Compra gaviscon doble acción">
       </a>
       <div class="lista" style="padding: 0 15%;">
@@ -235,7 +229,7 @@
         </div>
       </div>
       <img class="bg-original" src="<?= Yii::app()->request->baseUrl ?>/images/contenido/gaviscon/gaviscon-original/bg.png">
-      <a data-cargar="1" data-producto="2628" data-id="2" href="">
+      <a href="<?php echo CController::createUrl('/contenido/ver', array('tipo' => 'grupo', 'contenido' => 2628)) ?>">
         <img class="btn-compra" src="<?= Yii::app()->request->baseUrl ?>/images/contenido/gaviscon/gaviscon-original/compra-original.png" alt="Compra gaviscon Original">
       </a>
       <div class="lista" style="padding: 0 15%;">
