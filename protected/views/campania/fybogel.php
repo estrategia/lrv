@@ -38,9 +38,7 @@
 ?>
 <!--Versión movil-->
 <?php if ($this->isMobile): ?>
-<!--Añadir al carro-->
-<input type="hidden" id="cantidad-producto-unidad-13750-1" value="1">
-<a data-ajax="false" data-cargar="1" data-producto="13750" data-id="1" href="#"><img class="img-responsive-m" src="<?= Yii::app()->request->baseUrl ?>/images/contenido/fybogel/banner.jpg" alt="Sin estreñimiento Fybogel"></a>
+<a data-ajax="false" href="<?php echo CController::createUrl('/contenido/ver', array('tipo' => 'grupo', 'contenido' => 13750)) ?>"><img class="img-responsive-m" src="<?= Yii::app()->request->baseUrl ?>/images/contenido/fybogel/banner.jpg" alt="Sin estreñimiento Fybogel"></a>
 <img class="img-responsive-m" style="margin-top: -5px;" src="<?= Yii::app()->request->baseUrl ?>/images/contenido/fybogel/fybogel-tratamiento-fibra-natural-mobile.jpg" alt="Fybogel tratamiento fibra natural">
 <section class="bg-check" style="padding: 0 15px 20px;">
   <ul class="list-m" style="padding-top: 20px;">
@@ -84,9 +82,7 @@
 </div>
 <!--Versión escritorio-->
 <?php else: ?>
-<!--Añadir al carro-->
-<input type="hidden" id="cantidad-producto-unidad-13750-1" value="1">
-<a data-cargar="1" data-producto="13750" data-id="1" href="#"><img class="img-responsive" src="<?= Yii::app()->request->baseUrl ?>/images/contenido/fybogel/banner.jpg" alt="Sin estreñimiento Fybogel"></a>
+<a href="<?php echo CController::createUrl('/contenido/ver', array('tipo' => 'grupo', 'contenido' => 13750)) ?>"><img class="img-responsive" src="<?= Yii::app()->request->baseUrl ?>/images/contenido/fybogel/banner.jpg" alt="Sin estreñimiento Fybogel"></a>
 <img class="img-responsive" src="<?= Yii::app()->request->baseUrl ?>/images/contenido/fybogel/fybogel-tratamiento-fibra-natural.jpg" alt="Fybogel tratamiento fibra natural">
 <section class="bg-check">
   <div class="container">
