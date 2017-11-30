@@ -48,6 +48,25 @@ return array(
         'shoppingCart' => array(
             'class' => 'ext.shoppingCart.EShoppingCart',
         ),
+        'request' => array(
+            'enableCsrfValidation' => false,
+            'class' => 'HttpRequest',
+            'noCsrfValidationRoutes' => array(
+                'sitio/ubicacion',
+                'sitio/ubicacionSeleccion',
+                'sitio/gps',
+                'sitio/mapa',
+                'sitio/ubicacionBarrio',
+                'sitio/seleccionBarrio',
+                'sitio/ciudades',
+                'carro/agregar',
+                'carro/modificar',
+                'carro/eliminar',
+                'carro/pasoporel',
+                'usuario/direccionCrear',
+            )
+            // 'enableCookieValidation'=>true,
+        ),
         /*'shoppingCartSalesman' => array(
             'class' => 'ext.shoppingCartSalesman.EShoppingCart',
         ),

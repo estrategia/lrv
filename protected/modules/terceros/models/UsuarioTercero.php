@@ -65,7 +65,7 @@ class UsuarioTercero extends CActiveRecord
 			'telefonoContacto' => 'Telefono Contacto',
 			'correoContacto' => 'Correo Contacto',
 			'correoNotificaciones' => 'Correo Notificaciones',
-			'codigoProveedor' => 'Codigo Proveedor',
+			'codigoProveedor' => 'Proveedor',
 			'estado' => 'Estado',
 			'clave' => 'Clave'
 		);

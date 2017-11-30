@@ -14,9 +14,26 @@ class TercerosModule extends CWebModule
 		$this->setImport(array(
 			'terceros.models.*',
 			'terceros.components.*',
+            'application.models.Ciudad',
+            'application.models.Producto',
+            'application.models.ProductosSaldosTerceros',
+            'application.models.Compras',
+			'application.models.ComprasItems',
 			// 'application.components.*',
             // 'application.components.behaviors.*',
 		));
+
+		Yii::app()->setComponents(array(
+            'user' => array(
+                'loginUrl' => array('/terceros/usuario/autenticar'),
+            ),
+            'errorHandler' => array(
+                'errorAction' => 'terceros/sitio/error',
+            ),
+        ));
+
+        $this->layoutPath = "protected/modules/terceros/views/layouts";
+        Yii::app()->homeUrl = array('/terceros');
 	}
 
 	public function beforeControllerAction($controller, $action)

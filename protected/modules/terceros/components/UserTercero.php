@@ -8,6 +8,7 @@ class UserTercero {
     public $name = '__GUEST__';
     public $loginUrl = array('/terceros/usuario/autenticar');
     public $homeUrl = array('/terceros');
+    public $codigoProveedor = null;
     // public $profile = null;
 
     public function init() {
@@ -50,6 +51,8 @@ class UserTercero {
             $this->isGuest = false;
             $this->id = $user->idOperador;
             $this->name = $user->correoContacto;
+            $this->shortName = $user->correoContacto;
+            $this->codigoProveedor = $user->codigoProveedor;
         }
     }
 

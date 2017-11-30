@@ -37,8 +37,8 @@ class ProductosSaldosTerceros extends CActiveRecord {
         // will receive user inputs.
         return array(
             array('codigoProducto', 'required'),
-            array('costo, flete, tiempoDomicilio', 'numerical', 'integerOnly' => true),
-            array('codigoProducto, codigoCiudad, codigoSector, precioUnidad, precioFraccion, saldoUnidad, saldoFraccion', 'length', 'max' => 10),
+            array('codigoProducto, saldo', 'numerical', 'integerOnly' => true),
+            array('codigoProducto', 'length', 'max' => 10),
             // The following rule is used by search().
             // @todo Please remove those attributes that should not be searched.
             array('idProductoSaldo, codigoProducto, codigoCiudad, codigoSector, precioUnidad, precioFraccion, saldoUnidad, saldoFraccion, costo, flete, tiempoDomicilio', 'safe', 'on' => 'search'),
