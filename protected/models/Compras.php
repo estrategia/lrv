@@ -914,14 +914,14 @@ class Compras extends CActiveRecord {
     }
 
     public function gridOrigenPedido($data, $row) {
-        if ($data->identificacionUsuario == null) {
+        if ($data->identificacionUsuario == null || $data->invitado) {
             return $data->objCompraDireccion->nombre . "<br/>" . $data->objCompraDireccion->correoElectronico;
         } else {
-        	if(isset($data->objUsuario)){ 
-            	return "$data->identificacionUsuario<br/>" . $data->objUsuario->getNombreCompleto() . "<br/>" . $data->objUsuario->correoElectronico;
-        	}else if($data->idTipoVenta  == Yii::app()->params->tipoVenta['vap']){
-        		return "$data->identificacionUsuario<br/>" .$data->objComprasRemitente->nombreRemitente. "<br/>" . $data->objComprasRemitente->correoRemitente;
-        	}
+            	if(isset($data->objUsuario)){ 
+                	return "$data->identificacionUsuario<br/>" . $data->objUsuario->getNombreCompleto() . "<br/>" . $data->objUsuario->correoElectronico;
+            	}else if($data->idTipoVenta  == Yii::app()->params->tipoVenta['vap']){
+            		return "$data->identificacionUsuario<br/>" .$data->objComprasRemitente->nombreRemitente. "<br/>" . $data->objComprasRemitente->correoRemitente;
+            	}
         }
     }
 
