@@ -34,17 +34,17 @@ $this->metaTags = "
     .title-principal span sup {font-size:25px;top: -17px;}
     .main-container {width: 100%; max-width: 1100px; margin: auto;}
     .bg-menu {background-image:url(".Yii::app()->request->baseUrl."/images/contenido/nexcare/bg-main.jpg); background-size: cover; padding: 40px 0 0;}
-    .contenedor-menu {display: flex;flex-direction: row; flex-wrap: wrap; justify-content: space-between; background-image:url(".Yii::app()->request->baseUrl."/images/contenido/nexcare/line.png); background-size: cover; margin: 0 auto;padding: 0 80px 0;}
+    .contenedor-menu {background-position: center;display: flex;flex-direction: row; flex-wrap: wrap; justify-content: space-between; background-image:url(".Yii::app()->request->baseUrl."/images/contenido/nexcare/line.png); background-size: cover; margin: 0 auto;padding: 0 165px 0;}
     .contenedor-menu .item {width:33.333%;}
     .contenedor-menu .item a {color:#fff;}
-    .contenedor-menu .item p {font-family:HelveticaNeueLTStd-BdCn; text-align: center;font-size: 30px;text-shadow: 4px 3px 3px rgba(0, 0, 0, 0.6);}
+    .contenedor-menu .item p {font-family:HelveticaNeueLTStd-BdCn; text-align: center;font-size: 20px;text-shadow: 4px 3px 3px rgba(0, 0, 0, 0.6);}
     .contenedor-menu .item .indicative {margin: 0 auto;display: block;}
-    .icon-menu {transition: all .2s ease-in-out;}
+    .icon-menu {transition: all .2s ease-in-out;width: 60%;margin: 0 auto;}
     .contenedor-menu .item:hover .icon-menu {transform: scale(0.98);}
     .bg-productos {padding: 60px 0 0px;}
     .contenedor-productos { display: flex; flex-direction: row;flex-wrap: wrap; justify-content: space-between;}
     .producto {width: 32%;border: 3px solid #01AFD7;border-radius: 25px;padding: 30px;}
-    .producto .imagen-producto {width: 90%;margin: 28px auto 20px;display: block;}
+    .producto .imagen-producto {width: 100%;margin: 28px auto 20px;display: block;}
     .producto .nombre {color:#004FA5;font-family:Roboto-Bold;font-size: 22px;margin:0;}
     .producto .presentacion {font-family: Roboto-Light;color: #004FA5;font-size: 16px;}
     .lista {font-family: Roboto-Light; color:#606062;font-size: 17px;-webkit-padding-start: 17px;-moz-padding-start: 17px;padding-inline-start: 17px;}
@@ -200,20 +200,20 @@ $this->metaTags = "
     <div class="item">
       <a href="<?= Yii::app()->request->baseUrl ?>/nexcare-fijacion">
         <img class="img-responsive icon-menu" src="<?= Yii::app()->request->baseUrl ?>/images/contenido/nexcare/fijacion.png" alt="Fijacion">
-        <p class="item-menu" style="margin-left: 20%;">FIJACIÓN</p>
+        <p class="item-menu" style="margin-left: 15%;">FIJACIÓN</p>
       </a>
     </div>
     <div class="item">
       <a href="<?= Yii::app()->request->baseUrl ?>/nexcare-cubrimiento">
         <img class="img-responsive icon-menu" src="<?= Yii::app()->request->baseUrl ?>/images/contenido/nexcare/cubrimiento.png" alt="Cubrimiento">
         <p class="item-menu">CUBRIMIENTO</p>
-        <img class="indicative" width="60"  style="margin: 0 42% -3px;" src="<?= Yii::app()->request->baseUrl ?>/images/contenido/nexcare/select.png">
+        <img class="indicative" width="40"  style="margin: 0 45% -3px;" src="<?= Yii::app()->request->baseUrl ?>/images/contenido/nexcare/select.png">
       </a>
     </div>
     <div class="item">
       <a href="<?= Yii::app()->request->baseUrl ?>/nexcare-rehabilitacion">
         <img class="img-responsive icon-menu" src="<?= Yii::app()->request->baseUrl ?>/images/contenido/nexcare/rehabilitacion.png" alt="Rehabilitacion">
-        <p class="item-menu" style="margin-left: -20%;">REHABILITACIÓN</p>
+        <p class="item-menu" style="margin-left: -10%;">REHABILITACIÓN</p>
       </a>
     </div>
   </div>
