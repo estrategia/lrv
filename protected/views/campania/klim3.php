@@ -52,7 +52,7 @@
   ";
 ?>
 <!--Consulta el precio de los productos-->
-<?php $klim3 = Producto::consultarPrecio('3947', $this->objSectorCiudad)?>
+<?php $klim3 = Producto::consultarPrecio('47111', $this->objSectorCiudad)?>
 
 <!--Versión movil-->
 <?php if ($this->isMobile): ?>

@@ -131,6 +131,7 @@ return array(
         'nexcare-cubrimiento' => 'publicidad/contenido/nombre/nexcare-cubrimiento',
         'nexcare-rehabilitacion' => 'publicidad/contenido/nombre/nexcare-rehabilitacion',
         'menticol-pies' => 'publicidad/contenido/nombre/menticol',
+        'tecnigo' => 'publicidad/contenido/nombre/tecnigo',
          // Fin links campañas
 
         // REST patterns

@@ -57,8 +57,7 @@ class Controller extends CController {
                 Yii::app()->user->logout();
             }
         }
-
-		    // $this->isMobile = true;
+		  // $this->isMobile = true;
 		  // $this->layout = '//layouts/mobile';
 
         $this->verificarDispositivo();
