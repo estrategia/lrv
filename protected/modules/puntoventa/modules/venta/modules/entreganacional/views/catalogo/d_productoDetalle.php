@@ -67,10 +67,10 @@
                         <?php if ($objPrecio->getFlete() > 0): ?>
                             <div><span>Flete: <?php echo Yii::app()->numberFormatter->format(Yii::app()->params->formatoMoneda['patron'], $objPrecio->getFlete(), Yii::app()->params->formatoMoneda['moneda']); ?></span></div>
                         <?php endif; ?>
-                        <?php if ($objPrecio->getTiempoEntrega() > 0): ?>
-                            <div><span>Tiempo de entrega: <?php echo $objPrecio->getTiempoEntrega() ?> horas</span></div>
+                        <?php if ($objPrecio->tieneTiempoEntrega()): ?>
+                            <div><span>Tiempo de entrega: Entre <?php echo $objPrecio->getTiempoEntrega('start') ?> y <?php echo $objPrecio->getTiempoEntrega('end') ?> d&iacute;as</span></div>
                         <?php endif; ?>
-
+						
                         <?php if ($objPrecio->inicializado()): ?>
                             <?php if ($objProducto->fraccionado == 1): ?> 
                                 <!-- Producto fraccionado -->
@@ -314,8 +314,8 @@
                         <?php if ($objPrecio->getFlete() > 0): ?>
                             <div><span>Flete: <?php echo Yii::app()->numberFormatter->format(Yii::app()->params->formatoMoneda['patron'], $objPrecio->getFlete(), Yii::app()->params->formatoMoneda['moneda']); ?></span></div>
                         <?php endif; ?>
-                        <?php if ($objPrecio->getTiempoEntrega() > 0): ?>
-                            <div><span>Tiempo de entrega: <?php echo $objPrecio->getTiempoEntrega() ?> horas</span></div>
+                        <?php if ($objPrecio->tieneTiempoEntrega()): ?>
+                            <div><span>Tiempo de entrega: Entre <?php echo $objPrecio->getTiempoEntrega('start') ?> y <?php echo $objPrecio->getTiempoEntrega('end') ?> d&iacute;as</span></div>
                         <?php endif; ?>
 
                         <?php if ($objPrecio->inicializado()): ?>

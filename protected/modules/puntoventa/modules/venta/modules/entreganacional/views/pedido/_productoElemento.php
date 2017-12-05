@@ -84,8 +84,8 @@
                 <?php if ($objPrecio->getFlete() > 0): ?>
                     <p>Flete: <span> <?php echo Yii::app()->numberFormatter->format(Yii::app()->params->formatoMoneda['patron'], $objPrecio->getFlete(), Yii::app()->params->formatoMoneda['moneda']); ?>]</span></p>
                 <?php endif; ?>
-                <?php if ($objPrecio->getTiempoEntrega() > 0): ?>
-                    <p> Tiempo de entrega: <span> <?php echo $objPrecio->getTiempoEntrega() ?> horas</span></p>
+                <?php if ($objPrecio->tieneTiempoEntrega()): ?>
+                    <p> Tiempo de entrega: <span> Entre <?php echo $objPrecio->getTiempoEntrega('start') ?> y <?php echo $objPrecio->getTiempoEntrega('end') ?> d&iacute;as</span></p>
                 <?php endif; ?>
 
             <?php endif; ?>

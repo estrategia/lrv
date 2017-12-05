@@ -12,7 +12,7 @@
  * @author miguel.sanchez
  */
 class PrecioProducto extends Precio {
-    
+
     protected $precioUnidad = 0;
     protected $precioFraccion = 0;
     protected $unidadFraccionamiento = 0;
@@ -29,70 +29,41 @@ class PrecioProducto extends Precio {
         $fecha = new DateTime;
         $tienePrecio = false;
         $tieneSaldo = false;
-        $this->unidadFraccionamiento = $objProducto->unidadFraccionamiento;
         
         if ($objCiudadSector != null) {
             if ($objProducto->tercero == 1) {
                 $listSaldosTerceros = array();
-                $listPrecios = array();
-                $listFletes = array();
-                
+
                 if ($consultaPrecio) {
                     $listSaldosTerceros = ProductosSaldosTerceros::model()->findAll(array(
-                        'condition' => 'codigoProducto=:producto',
-                        'params' => array(
-                            ':producto' => $objProducto->codigoProducto,
-                            ':ciudad' => $objCiudadSector->codigoCiudad
-                        ),
-                    ));
-                    
-                    $listPrecios = ProductosPrecios::model()->findAll(array(
-                        'condition' => 'codigoProducto=:producto AND codigoCiudad=:ciudad AND codigoSector=:sector',
+                        'condition' => '(codigoProducto=:producto AND codigoCiudad=:ciudad AND codigoSector=:sector)',
                         'params' => array(
                             ':producto' => $objProducto->codigoProducto,
                             ':ciudad' => $objCiudadSector->codigoCiudad,
                             ':sector' => $objCiudadSector->codigoSector,
                         ),
                     ));
-                    
-                    $listFletes = FleteProductoTercero::model()->findAll(array(
-                        'condition' => 'codigoProducto=:producto AND codigoCiudad=:ciudad',
-                        'params' => array(
-                            ':producto' => $objProducto->codigoProducto,
-                            ':ciudad' => $objCiudadSector->codigoCiudad,
-                        ),
-                    ));
                 } else {
                     $listSaldosTerceros = $objProducto->listSaldosTerceros;
-                    $listPrecios = $objProducto->listPrecios;
-                    $listFletes = $objProducto->listFletesTerceros;
                 }
-                
+
                 foreach ($listSaldosTerceros as $objProductoSaldoTercero) {
-                    if ($objProductoSaldoTercero->saldoUnidad > 0) {
-                        $tieneSaldo = true;
-                    }
-                    break;
-                }
-                
-                foreach ($listPrecios as $objProductoPrecio) {
-                    if ($objProductoPrecio->codigoCiudad == $objCiudadSector->codigoCiudad) {
-                        $this->precioUnidad = $objProductoPrecio->precioUnidad;
-                        $this->precioFraccion = $objProductoPrecio->precioFraccion;
+                    if ($objProductoSaldoTercero->codigoCiudad == $objCiudadSector->codigoCiudad && $objProductoSaldoTercero->codigoSector == $objCiudadSector->codigoSector) {
+                        $this->precioUnidad = $objProductoSaldoTercero->precioUnidad;
+                        $this->precioFraccion = $objProductoSaldoTercero->precioFraccion;
+                        $this->unidadFraccionamiento = $objProducto->unidadFraccionamiento;
+                        $this->flete = $objProductoSaldoTercero->flete;
+                        $this->tiempoEntrega = $objProductoSaldoTercero->tiempoDomicilio;
+
+                        if ($objProductoSaldoTercero->saldoUnidad > 0 || $objProductoSaldoTercero->saldoFraccion > 0) {
+                            $tieneSaldo = true;
+                        }
+
                         break;
                     }
                 }
-                
-                foreach ($listFletes as $objFlete) {
-                    if ($objFlete->codigoCiudad == $objCiudadSector->codigoCiudad) {
-                        $this->flete = $objFlete->valorFlete;
-                        $this->tiempoEntregaInicio = $objFlete->tiempoEntregaInicial;
-                        $this->tiempoEntregaFin = $objFlete->tiempoEntregaFinal;
-                        $this->unidadesPorFlete = $objFlete->unidadesMismoValor;
-                        break;
-                    }
-                }
-                
+
+
                 if ($this->precioUnidad > 0 || $this->precioFraccion > 0) {
                     $tienePrecio = true;
                 }
@@ -101,6 +72,26 @@ class PrecioProducto extends Precio {
                 $listSaldos = array();
 
                 if ($consultaPrecio) {
+                	
+                	if(!$esVap){
+	                    $listPrecios = ProductosPrecios::model()->findAll(array(
+	                        'condition' => '(codigoProducto=:producto AND codigoCiudad=:ciudad AND codigoSector=:sector)',
+	                        'params' => array(
+	                            ':producto' => $objProducto->codigoProducto,
+	                            ':ciudad' => $objCiudadSector->codigoCiudad,
+	                            ':sector' => $objCiudadSector->codigoSector,
+	                        ),
+	                    ));
+                	}else{
+                		$listPrecios = ProductosPreciosVentaAsistida::model()->findAll(array(
+                				'condition' => '(codigoProducto=:producto AND codigoCiudad=:ciudad)',
+                				'params' => array(
+                						':producto' => $objProducto->codigoProducto,
+                						':ciudad' => $objCiudadSector->codigoCiudad,
+                				),
+                		));
+                	}
+                	
                     $listSaldos = ProductosSaldos::model()->findAll(array(
                         'condition' => '(codigoProducto=:producto AND codigoCiudad=:ciudad AND codigoSector=:sector)',
                         'params' => array(
@@ -109,32 +100,12 @@ class PrecioProducto extends Precio {
                             ':sector' => $objCiudadSector->codigoSector,
                         ),
                     ));
-                    
-                    if(!$esVap){
-                    	   $listPrecios = ProductosPrecios::model()->findAll(array(
-	                       'condition' => '(codigoProducto=:producto AND codigoCiudad=:ciudad AND codigoSector=:sector)',
-	                       'params' => array(
-	                           ':producto' => $objProducto->codigoProducto,
-	                           ':ciudad' => $objCiudadSector->codigoCiudad,
-	                           ':sector' => $objCiudadSector->codigoSector,
-	                        ),
-	                   ));
-                    }else{
-                    	   $listPrecios = ProductosPreciosVentaAsistida::model()->findAll(array(
-                    	       'condition' => '(codigoProducto=:producto AND codigoCiudad=:ciudad)',
-                    	       'params' => array(
-                    	           ':producto' => $objProducto->codigoProducto,
-                    	           ':ciudad' => $objCiudadSector->codigoCiudad,
-                            ),
-                        ));
-                    }
                 } else {
+                	if(!$esVap)
+                    	$listPrecios = $objProducto->listPrecios;
+                	else
+                		$listPrecios = $objProducto->listPreciosVAP;
                     $listSaldos = $objProducto->listSaldos;
-                    if(!$esVap){
-                        $listPrecios = $objProducto->listPrecios;
-                    } else {
-                        $listPrecios = $objProducto->listPreciosVAP;
-                    }   
                 }
                 
                 /************************ SALDOS DE BODEGA *****************************/
@@ -142,24 +113,24 @@ class PrecioProducto extends Precio {
                 $listSaldosBodega = array();
                 
                 if ($consultaPrecio) {
-                    $listSaldosBodega = ProductosSaldosCedi::model()->findAll(array(
-                        'condition' => '(codigoProducto=:producto AND codigoCedi=:codigoCedi)',
-                        'params' => array(
-                            ':codigoCedi' => $objCiudadSector->objCiudad->codigoSucursal,
-                            ':producto' => $objProducto->codigoProducto,
+                	$listSaldosBodega = ProductosSaldosCedi::model()->findAll(array(
+                			'condition' => '(codigoProducto=:producto AND codigoCedi=:codigoCedi)',
+                			'params' => array(
+                					':codigoCedi' => $objCiudadSector->objCiudad->codigoSucursal,
+                					':producto' => $objProducto->codigoProducto,
                 			),
-                	   ));
+                	));
                 } else {
-                	   $listSaldosBodega = $objProducto->listSaldosCedi;
+                	$listSaldosBodega = $objProducto->listSaldosCedi;
                 }
                 
                 foreach ($listSaldosBodega as $objProductoSaldoBodega) {
-                    	if ( $objProductoSaldoBodega->codigoCedi==$objCiudadSector->objCiudad->codigoSucursal) {
-                    		if ( $objProductoSaldoBodega->saldoUnidad>0 ) {
-                    			$tieneSaldo = true;
-                    		}
-                    		break;
-                    	}
+                	if ( $objProductoSaldoBodega->codigoCedi==$objCiudadSector->objCiudad->codigoSucursal) {
+                		if ( $objProductoSaldoBodega->saldoUnidad>0 ) {
+                			$tieneSaldo = true;
+                		}
+                		break;
+                	}
                 }
                 
                 /************************ FIN SALDOS DE BODEGA **************************/
@@ -174,14 +145,14 @@ class PrecioProducto extends Precio {
 	                    }
 	                }
                 }else{
-                    	foreach ($listPrecios as $objProductoPrecio) {
-                    		if ($objProductoPrecio->codigoCiudad == $objCiudadSector->codigoCiudad) {
-                    			$this->precioUnidad = $objProductoPrecio->precioUnidad;
-                    			$this->precioFraccion = $objProductoPrecio->precioFraccion;
-                    			$this->unidadFraccionamiento = $objProducto->unidadFraccionamiento;
-                    			break;
-                    		}
-                    	}
+                	foreach ($listPrecios as $objProductoPrecio) {
+                		if ($objProductoPrecio->codigoCiudad == $objCiudadSector->codigoCiudad) {
+                			$this->precioUnidad = $objProductoPrecio->precioUnidad;
+                			$this->precioFraccion = $objProductoPrecio->precioFraccion;
+                			$this->unidadFraccionamiento = $objProducto->unidadFraccionamiento;
+                			break;
+                		}
+                	}
                 }
 
                 if ($this->precioUnidad > 0 || $this->precioFraccion > 0) {
@@ -196,8 +167,8 @@ class PrecioProducto extends Precio {
                         break;
                     }
                 }
-            }
-            
+            }   
+
             $objDescuentoEspecial = ProductosDescuentosEspeciales::model()->find(array(
                 'condition' => 'codigoCiudad=:ciudad AND codigoSector=:sector AND codigoProducto=:producto AND codigoPerfil=:perfil AND fechaInicio<=:fecha AND fechaFin>=:fecha ',
                 'params' => array(
@@ -208,7 +179,7 @@ class PrecioProducto extends Precio {
                     ':fecha' => $fecha->format('Y-m-d H:i:s'),
                 )
             ));
-            
+
             if ($objDescuentoEspecial === null) {
                 $objDescuentoEspecial = ProductosDescuentosEspeciales::model()->find(array(
                     'condition' => 'codigoCiudad=:ciudad AND codigoSector=:sector AND codigoProducto=:producto AND codigoPerfil=:perfil AND fechaInicio<=:fecha AND fechaFin>=:fecha ',
@@ -250,8 +221,8 @@ class PrecioProducto extends Precio {
 
             if ($objDescuentoEspecial !== null){
                 $this->porcentajeDescuentoPerfil = $objDescuentoEspecial->descuentoPerfil;
-                $this->ahorroUnidad += self::redondear(floor($this->precioUnidad * ($this->porcentajeDescuentoPerfil / 100)),1,10);
-                $this->ahorroUnidadDescuento += self::redondear(floor($this->precioUnidad * ($this->porcentajeDescuentoPerfil / 100)),1,10);
+            	$this->ahorroUnidad += self::redondear(floor($this->precioUnidad * ($this->porcentajeDescuentoPerfil / 100)),1,10);
+            	$this->ahorroUnidadDescuento += self::redondear(floor($this->precioUnidad * ($this->porcentajeDescuentoPerfil / 100)),1,10);
             }
             else {
                 $objDescuentoPerfil = ProductosDescuentosPerfiles::model()->find(array(
@@ -275,7 +246,7 @@ class PrecioProducto extends Precio {
             $condition = 't.fechaIni<=:fecha AND t.fechaFin>=:fecha AND t.tipo IN (' . implode(",", Yii::app()->params->beneficios['lrv']) . ')';
             $params = array(
                 ':fecha' => $fecha->format('Y-m-d'),
-                // ':ciudad' => $objCiudadSector->codigoCiudad,
+               // ':ciudad' => $objCiudadSector->codigoCiudad,
                 ':producto' => $objProducto->codigoProducto
             );
 
@@ -325,7 +296,7 @@ class PrecioProducto extends Precio {
                     $this->suscripcion = null;
                 }
             }
-            //Yii::log("generate: " . CVarDumper::dumpAsString($this->suscripcion), CLogger::LEVEL_INFO, 'error');
+            Yii::log("generate: " . CVarDumper::dumpAsString($this->suscripcion), CLogger::LEVEL_INFO, 'error');
 
            
             // var_dump($this->suscripcion);
@@ -340,21 +311,21 @@ class PrecioProducto extends Precio {
             );
             
             if (esClienteFiel()) {
-                	$condition .= " AND (swobligaCli=0 || swobligaCli=2)";
+            	$condition .= " AND (swobligaCli=0 || swobligaCli=2)";
             } else {
-                	$condition .= " AND swobligaCli=0";
+            	$condition .= " AND swobligaCli=0";
             }
             
             $condition .= " AND (t.tipo IN (".implode(",", Yii::app()->params->beneficios['bonos']).") )";
             
             if($codigoPerfil != Yii::app()->params->perfil['asociado']){
-                	$condition .= " AND (t.tipo NOT IN (".implode(",", Yii::app()->params->beneficios['bonosClienteInterno']).") )";
+            	$condition .= " AND (t.tipo NOT IN (".implode(",", Yii::app()->params->beneficios['bonosClienteInterno']).") )";
             }
             
             if(Yii::app()->user->isGuest)
-                	$condition .= " AND (t.tipo != ".Yii::app()->params->beneficios['beneficioCedula'].")";
+            	$condition .= " AND (t.tipo != ".Yii::app()->params->beneficios['beneficioCedula'].")";
             else
-            	   $condition .= " AND ((t.tipo = ".Yii::app()->params->beneficios['beneficioCedula']."  AND listCedulas.numeroDocumento = '".Yii::app()->user->name."') OR (t.tipo != ".Yii::app()->params->beneficios['beneficioCedula']."  AND listCedulas.numeroDocumento IS NULL))";
+            	$condition .= " AND ((t.tipo = ".Yii::app()->params->beneficios['beneficioCedula']."  AND listCedulas.numeroDocumento = '".Yii::app()->user->name."') OR (t.tipo != ".Yii::app()->params->beneficios['beneficioCedula']."  AND listCedulas.numeroDocumento IS NULL))";
             
             $this->listBeneficiosBonos = Beneficios::model()->findAll(array(
             		'with' => array(
@@ -369,16 +340,18 @@ class PrecioProducto extends Precio {
              $this->porcentajeDescuentoBeneficio = 0;
 			
             if (Yii::app()->params->beneficios['configuracionActiva'] == Yii::app()->params->beneficios['configuracion']['acumulado']) {
-                $this->porcentajeDescuentoBeneficio += $this->porcentajeDescuentoSuscripcion;
-                $this->porcentajeDescuentoBeneficioDescuento += $this->porcentajeDescuentoSuscripcion;
-	            
-	            foreach ($this->listBeneficios as $objBeneficio) {
-	                $this->porcentajeDescuentoBeneficio += $objBeneficio->dsctoUnid;
-	                $this->porcentajeDescuentoBeneficioDescuento += $objBeneficio->dsctoUnid;
-	                $this->ahorroUnidadDescuento += self::redondear(floor($this->precioUnidad * ($objBeneficio->dsctoUnid / 100)),1,10);
-	                $this->ahorroUnidad += self::redondear(floor($this->precioUnidad * ($objBeneficio->dsctoUnid / 100)),1,10);
-	                //$this->ahorroFraccion=  floor($this->precioFraccionTotal * ($this->getPorcentajeDescuento() / 100));
-	            }
+                    $this->porcentajeDescuentoBeneficio += $this->porcentajeDescuentoSuscripcion;
+                    $this->porcentajeDescuentoBeneficioDescuento += $this->porcentajeDescuentoSuscripcion;
+	               foreach ($this->listBeneficios as $objBeneficio) {
+	
+	                    $this->porcentajeDescuentoBeneficio += $objBeneficio->dsctoUnid;
+	                    $this->porcentajeDescuentoBeneficioDescuento += $objBeneficio->dsctoUnid;
+	                    
+	                    $this->ahorroUnidadDescuento += self::redondear(floor($this->precioUnidad * ($objBeneficio->dsctoUnid / 100)),1,10);
+	                    $this->ahorroUnidad += self::redondear(floor($this->precioUnidad * ($objBeneficio->dsctoUnid / 100)),1,10);
+	                    
+	                    //$this->ahorroFraccion=  floor($this->precioFraccionTotal * ($this->getPorcentajeDescuento() / 100));
+	                }
                 
                 foreach ($this->listBeneficiosBonos as $objBeneficio) {
                 	$this->porcentajeDescuentoBeneficio += $objBeneficio->dsctoUnid;
@@ -390,6 +363,7 @@ class PrecioProducto extends Precio {
                 // Yii::app()->shoppingCart['suscriptions'][] = null;
                 // CVarDumper::dump(Yii::app()->shoppingCart,10,true);
             } else if (Yii::app()->params->beneficios['configuracionActiva'] == Yii::app()->params->beneficios['configuracion']['mayor']) {
+
                 $cantBeneficios = count($this->listBeneficios);
                 $objBeneficioAux = null;
                 $tipoDescuento = 0;
@@ -409,26 +383,26 @@ class PrecioProducto extends Precio {
                 $cantBeneficiosBonos = count($this->listBeneficiosBonos);
                 
                 if ($cantBeneficiosBonos > 0) {
-                   	if($objBeneficioAux == null){
-                    		$objBeneficioAux = $this->listBeneficiosBonos[0];
-                    		$tipoDescuento = 2;
-                    }
-                    for($idx=1; $idx<$cantBeneficiosBonos; $idx++) {
-                    	   $objBeneficio = $this->listBeneficiosBonos[$idx];
-                    	   if ($objBeneficio->dsctoUnid > $objBeneficioAux->dsctoUnid) {
-                    	       $objBeneficioAux = $objBeneficio;
-                    	       $tipoDescuento = 2;
-                        }
-                    }
+                	if($objBeneficioAux == null){
+                		$objBeneficioAux = $this->listBeneficiosBonos[0];
+                		$tipoDescuento = 2;
+                	}
+                	for($idx=1; $idx<$cantBeneficiosBonos; $idx++) {
+                		$objBeneficio = $this->listBeneficiosBonos[$idx];
+                		if ($objBeneficio->dsctoUnid > $objBeneficioAux->dsctoUnid) {
+                			$objBeneficioAux = $objBeneficio;
+                			$tipoDescuento = 2;
+                		}
+                	}
                 }
                 if($tipo == 1){
-                    	$this->porcentajeDescuentoBeneficio = $objBeneficioAux->dsctoUnid;
-                    	$this->porcentajeDescuentoBeneficioDescuento = $objBeneficioAux->dsctoUnid;
-                    	
-                    	$this->ahorroUnidadDescuento += self::redondear(floor($this->precioUnidad * ($objBeneficioAux->dsctoUnid / 100)),1,10);
-                    	$this->ahorroUnidad += self::redondear(floor($this->precioUnidad * ($objBeneficioAux->dsctoUnid / 100)),1,10);
-                    	
-                    	$this->listBeneficios = array($objBeneficioAux);
+                	$this->porcentajeDescuentoBeneficio = $objBeneficioAux->dsctoUnid;
+                	$this->porcentajeDescuentoBeneficioDescuento = $objBeneficioAux->dsctoUnid;
+                	
+                	$this->ahorroUnidadDescuento += self::redondear(floor($this->precioUnidad * ($objBeneficioAux->dsctoUnid / 100)),1,10);
+                	$this->ahorroUnidad += self::redondear(floor($this->precioUnidad * ($objBeneficioAux->dsctoUnid / 100)),1,10);
+                	
+                	$this->listBeneficios = array($objBeneficioAux);
                 }
                 else{
 	                $this->porcentajeDescuentoBeneficio = $objBeneficioAux->dsctoUnid;
@@ -448,7 +422,7 @@ class PrecioProducto extends Precio {
             if ($this->suscripcion !== null) {
                 $this->ahorroUnidadSuscripcion += self::redondear(floor($this->precioUnidad * ($this->suscripcion->descuentoProducto / 100)),1,10);
             }
-            
+
             //restriccion de maximo de beneficio
             if ($this->porcentajeDescuentoBeneficio > Yii::app()->params->beneficios['porcentajeMaximo']) {
                 $this->porcentajeDescuentoBeneficio = 0;
@@ -482,7 +456,7 @@ class PrecioProducto extends Precio {
                 $this->inicializado = true;
                 
                 if($this->precioUnidad<=0){
-                	   $this->inicializado = false;
+                	$this->inicializado = false;
                 }
             }
         }

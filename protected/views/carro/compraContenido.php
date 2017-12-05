@@ -79,7 +79,7 @@
         <?php $listPositionDelivery = array(); ?>
         <ul data-role="listview" data-inset="true" data-icon="false" class="c_list_prod_cont">
             <?php foreach (Yii::app()->shoppingCart->getPositions() as $position): ?>
-                <?php if ($position->getDelivery() == 0): ?>
+                <?php if (!$position->hasDelivery()): ?>
                     <li class="c_list_prod">
                         <div class="ui-field-contain clst_prod_cont">
                             <?php

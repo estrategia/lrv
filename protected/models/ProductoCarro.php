@@ -33,6 +33,14 @@ class ProductoCarro extends IECartPosition {
     public function isProduct(){
         return ($this->objProducto instanceof Producto);
     }
+    
+    public function isInventoryProduct(){
+        if($this->isProduct()) {
+            return $this->objProducto->tercero == 1;
+        }
+        
+        return false;
+    }
 
     /*public function isFormula(){
     	return ($this->objProductoFormula instanceof ProductosFormulaVitalCall);
@@ -51,16 +59,13 @@ class ProductoCarro extends IECartPosition {
             $this->listBeneficios = $objprecio->getBeneficios();
             $this->listBeneficiosBonos = $objprecio->getBeneficiosBonos();
             $this->suscripcion = $objprecio->getSuscripcion();
+            
             if ($this->suscripcion !== null) {
                 $this->cantidadPeriodoSuscripcion = $this->suscripcion->consultarCantidadPeriodoActual();
                 if ($this->cantidadPeriodoSuscripcion == 0) {
                     $this->suscripcion = null;
                 }
             }
-
-            // Yii::log("generate: " . CVarDumper::dumpAsString($this->suscripcion), CLogger::LEVEL_INFO, 'error');
-
-            // $this->quantitySuscription = 0;
             
             $this->priceUnit = $objprecio->getPrecio(Precio::PRECIO_UNIDAD, false);
             $this->priceSuscriptionUnit = $objprecio->getPrecio(Precio::PRECIO_UNIDAD, false);
@@ -82,7 +87,9 @@ class ProductoCarro extends IECartPosition {
             // $this->hola();
             $this->tax = $this->objProducto->objImpuesto->porcentaje;
             $this->shipping = $objprecio->getFlete();
-            $this->delivery = $objprecio->getTiempoEntrega();
+            $this->shippingMaxUnits = $objprecio->getUnidadesPorFlete();
+            $this->deliveryStart = $objprecio->getTiempoEntrega('start');
+            $this->deliveryEnd = $objprecio->getTiempoEntrega('end');
             
             $this->priceTokenUnit = $objprecio->getBono();
         }else if($this->isCombo()){

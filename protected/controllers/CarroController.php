@@ -108,8 +108,8 @@ class CarroController extends Controller {
         }
 
         $producto = Yii::app()->getRequest()->getPost('producto', null);
-        $cantidadU = Yii::app()->getRequest()->getPost('cantidadU', null);
-        $cantidadF = Yii::app()->getRequest()->getPost('cantidadF', null);
+        $cantidadU = Yii::app()->getRequest()->getPost('cantidadU', 0);
+        $cantidadF = Yii::app()->getRequest()->getPost('cantidadF', 0);
 
         if ($producto === null || $cantidadU === null || $cantidadF === null) {
             echo CJSON::encode(array('result' => 'error', 'response' => 'Solicitud inválida, no se detectan datos'));
@@ -123,19 +123,20 @@ class CarroController extends Controller {
 
         $objProducto = Producto::model()->find(array(
             'with' => array(
-                'listSaldos' => array('on' => '(listSaldos.codigoCiudad=:ciudad AND listSaldos.codigoSector=:sector) OR (listSaldos.saldoUnidad IS NULL AND listSaldos.codigoCiudad IS NULL AND listSaldos.codigoSector IS NULL)'),
-            	'listSaldosCedi' => array('on' => '(codigoCedi =:codigoCedi)'),
-                'listPrecios' => array('condition' => '(listPrecios.codigoCiudad=:ciudad AND listPrecios.codigoSector=:sector) OR (listPrecios.codigoCiudad IS NULL AND listPrecios.codigoSector IS NULL)'),
-                'listSaldosTerceros' => array('condition' => '(listSaldosTerceros.codigoCiudad=:ciudad AND listSaldosTerceros.codigoSector=:sector) OR (listSaldosTerceros.codigoCiudad IS NULL AND listSaldosTerceros.codigoSector IS NULL)')
+                'listSaldos' => array('on' => '(listSaldos.codigoCiudad=:ciudad AND listSaldos.codigoSector=:sector) OR listSaldos.idProductoSaldos IS NULL'),
+                'listSaldosCedi' => array('on' => 'codigoCedi =:codigoCedi'),
+                'listPrecios' => array('condition' => '(listPrecios.codigoCiudad=:ciudad AND listPrecios.codigoSector=:sector) OR listPrecios.idProductoPrecios IS NULL'),
+                'listSaldosTerceros',
+                'listFletesTerceros' => array('on' => 'listFletesTerceros.codigoCiudad=:ciudad OR listFletesTerceros.idFleteProducto IS NULL'),
             ),
-            'condition' => 't.activo=:activo AND t.codigoProducto=:codigo AND ( (listSaldos.saldoUnidad IS NOT NULL AND listPrecios.codigoCiudad IS NOT NULL) OR (listSaldosCedi.saldoUnidad IS NOT NULL AND listPrecios.codigoCiudad IS NOT NULL) OR listSaldosTerceros.codigoCiudad IS NOT NULL)',
+            'condition' => 't.activo=:activo AND t.codigoProducto=:codigo AND ( (listSaldos.idProductoSaldos IS NOT NULL AND listPrecios.idProductoPrecios IS NOT NULL) OR (listSaldosCedi.idProductosSaldosCedi IS NOT NULL AND listPrecios.idProductoPrecios IS NOT NULL) OR (listSaldosTerceros.idProductoSaldo IS NOT NULL AND listPrecios.idProductoPrecios IS NOT NULL AND listFletesTerceros.idFleteProducto IS NOT NULL))',
             'params' => array(
                 ':activo' => 1,
                 ':codigo' => $producto,
                 //':saldo' => 0,
                 ':ciudad' => $this->objSectorCiudad->codigoCiudad,
                 ':sector' => $this->objSectorCiudad->codigoSector,
-            	':codigoCedi' => $this->objSectorCiudad->objCiudad->codigoSucursal,
+                	':codigoCedi' => $this->objSectorCiudad->objCiudad->codigoSucursal,
             ),
         ));
 
@@ -145,22 +146,10 @@ class CarroController extends Controller {
         }
 
         $objSaldo = $objProducto->getSaldo($this->objSectorCiudad->codigoCiudad, $this->objSectorCiudad->codigoSector);
-
-//         if ($objSaldo === null) {
-//             echo CJSON::encode(array('result' => 'error', 'response' => 'Saldo no disponible'));
-//             Yii::app()->end();
-//         }
-        // $objSuscripcion = 
-        // $objBeneficio
-
+        
         if ($cantidadU > 0) {
             $cantidadCarroUnidad = 0;
             $position = null;
-            // if (condition) {
-            //     $position = Yii::app()->shoppingCart->itemAt($producto);
-            // } else {
-            //     $position = Yii::app()->shoppingCart->itemAt($producto);
-            // }
 
             if ($position !== null) {
                 $cantidadCarroUnidad = $position->getQuantityUnit();
@@ -171,76 +160,81 @@ class CarroController extends Controller {
                 $objProductoCarro = new ProductoCarro($objProducto);
                 Yii::app()->shoppingCart->put($objProductoCarro, false, $cantidadU);
             } else {
-                $objPagoForm = new FormaPagoForm;
-                
                 $saldoUnidad = 0 ;
                 if(isset( $objSaldo->saldoUnidad)){
-                	$saldoUnidad =  $objSaldo->saldoUnidad;
+                    $saldoUnidad =  $objSaldo->saldoUnidad;
                 }
                 
-                if (!$objPagoForm->tieneDomicilio($this->objSectorCiudad)) {
-                	echo CJSON::encode(array('result' => 'error', 'response' => "La cantidad solicitada no está disponible en este momento. Saldos disponibles: $saldoUnidad unidades"));
-                	Yii::app()->end();
-                }
-                
-                $cantidadBodega = $cantidadCarroUnidad + $cantidadU - $saldoUnidad;
-                $cantidadUbicacion = $cantidadU - $cantidadBodega;
-
-                //si hay en bodegas, mensaje para ver detalle bodega, sino, mensaje error
-                $objSaldoBodega = ProductosSaldosCedi::model()->find(array(
-                    'condition' => 'codigoProducto=:producto AND codigoCedi=:cedi',
-                    'params' => array(
-                        ':producto' => $producto,
-                        ':cedi' => $this->objSectorCiudad->objCiudad->codigoSucursal,
-                        //':saldo' => $cantidadBodega
-                    )
-                ));
-
-                
-                // revisar
-                if ($objSaldoBodega === null) {
+                //los productos de tercero no manejan bodega
+                if($objProducto->tercero == 1) {
                     echo CJSON::encode(array('result' => 'error', 'response' => "La cantidad solicitada no está disponible en este momento. Saldos disponibles: $saldoUnidad unidades"));
                     Yii::app()->end();
                 }
-
-                if($objSaldoBodega->saldoUnidad < $cantidadBodega){
-                	$cantidadBodega = $objSaldoBodega->saldoUnidad;
-                }
                 
-                if($saldoUnidad - $cantidadCarroUnidad > 0 ){
-                	$tipo = 1;
-                }else{
-                	$tipo =  2;
-                }
-                
-                if ($this->isMobile) {
-                    $htmlBodega = $this->renderPartial('_carroBodega', array(
-                        'saldoUnidad' => $saldoUnidad,
-                        'objProducto' => $objProducto,
-                        'cantidadUbicacion' => $cantidadUbicacion,
-                        'cantidadBodega' => $cantidadBodega,
-                    	'tipo' => $tipo,
-                    ), true);
-                } else {
-                    $htmlBodega = $this->renderPartial('_d_carroBodega', array(
-                        'saldoUnidad' => $saldoUnidad,
-                        'objProducto' => $objProducto,
-                        'cantidadUbicacion' => $cantidadUbicacion,
-                        'cantidadBodega' => $cantidadBodega,
-                    	'tipo' => $tipo,
-                    ), true);
-                }
-                echo CJSON::encode(array(
-                    'result' => 'ok',
-                    'response' => array(
-                        'dialogoHTML' => $htmlBodega,
-                    	'bodega' => '1'
-                    ),
-                ));
-                Yii::app()->end();
+                    $objPagoForm = new FormaPagoForm;
+                    
+                    if (!$objPagoForm->tieneDomicilio($this->objSectorCiudad)) {
+                        echo CJSON::encode(array('result' => 'error', 'response' => "La cantidad solicitada no está disponible en este momento. Saldos disponibles: $saldoUnidad unidades"));
+                        Yii::app()->end();
+                    }
+                    
+                    $cantidadBodega = $cantidadCarroUnidad + $cantidadU - $saldoUnidad;
+                    $cantidadUbicacion = $cantidadU - $cantidadBodega;
+                    
+                    //si hay en bodegas, mensaje para ver detalle bodega, sino, mensaje error
+                    $objSaldoBodega = ProductosSaldosCedi::model()->find(array(
+                        'condition' => 'codigoProducto=:producto AND codigoCedi=:cedi',
+                        'params' => array(
+                            ':producto' => $producto,
+                            ':cedi' => $this->objSectorCiudad->objCiudad->codigoSucursal,
+                            //':saldo' => $cantidadBodega
+                        )
+                    ));
+                    
+                    // revisar
+                    if ($objSaldoBodega === null) {
+                        echo CJSON::encode(array('result' => 'error', 'response' => "La cantidad solicitada no está disponible en este momento. Saldos disponibles: $saldoUnidad unidades"));
+                        Yii::app()->end();
+                    }
+                    
+                    if($objSaldoBodega->saldoUnidad < $cantidadBodega){
+                        $cantidadBodega = $objSaldoBodega->saldoUnidad;
+                    }
+                    
+                    if($saldoUnidad - $cantidadCarroUnidad > 0 ){
+                        $tipo = 1;
+                    }else{
+                        $tipo =  2;
+                    }
+                    
+                    if ($this->isMobile) {
+                        $htmlBodega = $this->renderPartial('_carroBodega', array(
+                            'saldoUnidad' => $saldoUnidad,
+                            'objProducto' => $objProducto,
+                            'cantidadUbicacion' => $cantidadUbicacion,
+                            'cantidadBodega' => $cantidadBodega,
+                            'tipo' => $tipo,
+                        ), true);
+                    } else {
+                        $htmlBodega = $this->renderPartial('_d_carroBodega', array(
+                            'saldoUnidad' => $saldoUnidad,
+                            'objProducto' => $objProducto,
+                            'cantidadUbicacion' => $cantidadUbicacion,
+                            'cantidadBodega' => $cantidadBodega,
+                            'tipo' => $tipo,
+                        ), true);
+                    }
+                    echo CJSON::encode(array(
+                        'result' => 'ok',
+                        'response' => array(
+                            'dialogoHTML' => $htmlBodega,
+                            'bodega' => '1'
+                        ),
+                    ));
+                    Yii::app()->end();
             }
         }
-
+        
         if ($cantidadF > 0) {
             $objProductoCarro = new ProductoCarro($objProducto);
             Yii::app()->shoppingCart->put($objProductoCarro, true, $cantidadF);
@@ -1167,11 +1161,12 @@ class CarroController extends Controller {
 
         $objProducto = Producto::model()->find(array(
             'with' => array(
-                'listSaldos' => array('condition' => '(listSaldos.saldoUnidad>:saldo AND listSaldos.codigoCiudad=:ciudad AND listSaldos.codigoSector=:sector) OR (listSaldos.saldoUnidad IS NULL AND listSaldos.codigoCiudad IS NULL AND listSaldos.codigoSector IS NULL)'),
-                'listPrecios' => array('condition' => '(listPrecios.codigoCiudad=:ciudad AND listPrecios.codigoSector=:sector) OR (listPrecios.codigoCiudad IS NULL AND listPrecios.codigoSector IS NULL)'),
-                'listSaldosTerceros' => array('condition' => '(listSaldosTerceros.saldoUnidad>:saldo AND listSaldosTerceros.codigoCiudad=:ciudad AND listSaldosTerceros.codigoSector=:sector) OR (listSaldosTerceros.codigoCiudad IS NULL AND listSaldosTerceros.codigoSector IS NULL)')
+                'listSaldos' => array('condition' => '(listSaldos.saldoUnidad>:saldo AND listSaldos.codigoCiudad=:ciudad AND listSaldos.codigoSector=:sector) OR listSaldos.idProductoSaldos IS NULL'),
+                'listPrecios' => array('condition' => '(listPrecios.codigoCiudad=:ciudad AND listPrecios.codigoSector=:sector) OR listPrecios.idProductoPrecios IS NULL'),
+                'listSaldosTerceros' => array('condition' => 'listSaldosTerceros.saldoUnidad>:saldo OR listSaldosTerceros.idProductoSaldo IS NULL'),
+                'listFletesTerceros' => array('condition' => 'listFletesTerceros.codigoCiudad=:ciudad OR listFletesTerceros.idFleteProducto IS NULL')
             ),
-            'condition' => 't.activo=:activo AND t.codigoProducto=:codigo AND ( (listSaldos.saldoUnidad IS NOT NULL AND listPrecios.codigoCiudad IS NOT NULL) OR listSaldosTerceros.codigoCiudad IS NOT NULL)',
+            'condition' => 't.activo=:activo AND t.codigoProducto=:codigo AND ( (listSaldos.idProductoSaldos IS NOT NULL AND listPrecios.idProductoPrecios IS NOT NULL) OR (listSaldosTerceros.idProductoSaldo IS NOT NULL AND listPrecios.idProductoPrecios IS NOT NULL AND listFletesTerceros.idFleteProducto IS NOT NULL) )',
             'params' => array(
                 ':activo' => 1,
                 ':codigo' => $position->objProducto->codigoProducto,
@@ -1212,6 +1207,15 @@ class CarroController extends Controller {
             if ($cantidadU <= $objSaldo->saldoUnidad) {
                 $agregarU = true;
             } else {
+                
+                if($objProducto->tercero == 1) {
+                    echo CJSON::encode(array('result' => 'error', 'response' => array(
+                        'message' => "La cantidad solicitada no está disponible en este momento. Saldos disponibles: $objSaldo->saldoUnidad unidades",
+                        'carroHTML' => $this->renderPartial($carroVista, null, true),
+                    )));
+                    Yii::app()->end();
+                }
+                
                 $objPagoForm = new FormaPagoForm;
                 if (!$objPagoForm->tieneDomicilio($this->objSectorCiudad)) {
                     echo CJSON::encode(array('result' => 'error', 'response' => array(
@@ -1223,7 +1227,7 @@ class CarroController extends Controller {
 
                 $saldoUnidad = 0 ;
                 if(isset( $objSaldo->saldoUnidad)){
-                	$saldoUnidad =  $objSaldo->saldoUnidad;
+                	   $saldoUnidad =  $objSaldo->saldoUnidad;
                 }
                 
                 $cantidadBodega = $cantidadU - $objSaldo->saldoUnidad;
@@ -1268,6 +1272,15 @@ class CarroController extends Controller {
         }
 
         if ($cantidadF >= 0) {
+            if($objProducto->tercero == 1) {
+                echo CJSON::encode(array('result' => 'error', 'response' => array(
+                    'message' => "Producto no disponible en fracciones",
+                    'carroHTML' => $this->renderPartial($carroVista, null, true),
+                )));
+                Yii::app()->end();
+            }
+            
+            
             if ($cantidadF <= $objSaldo->saldoFraccion) {
                 $agregarF = true;
             } else {
@@ -3312,8 +3325,8 @@ class CarroController extends Controller {
             $objFormasPago->idCompra = $objCompra->idCompra;
             $objFormasPago->idFormaPago = $modelPago->idFormaPago;
             if ($objFormasPago->idFormaPago == Yii::app()->params->formaPago['pasarela']['idPasarela']) {
-            	$numValidacion = substr(($objCompra->identificacionUsuario + $objCompra->idCompra - $objCompra->totalCompra) * 863, -7);
-            	$objFormasPago->numeroValidacion = $numValidacion;
+                $numValidacion = substr(($objCompra->identificacionUsuario + $objCompra->idCompra - $objCompra->totalCompra) * 863, -7);
+                $objFormasPago->numeroValidacion = $numValidacion;
             }
             $valor = Yii::app()->shoppingCart->getTotalCostClient();
             $objFormasPago->numeroTarjeta = $modelPago->numeroTarjeta;
@@ -3542,6 +3555,11 @@ class CarroController extends Controller {
                     //$objItem->idEstadoItemTercero = null;
                     $objItem->flete = $position->getShipping();
                     $objItem->disponible = 1;
+                    
+                    if ($position->hasDelivery()) {
+                        $objItem->fechaEntregaInicial = $position->getDelivery('start', 'date');
+                        $objItem->fechaEntregaFinal = $position->getDelivery('end', 'date');
+                    }
 
                     if ($objCompra->identificacionUsuario !== null) {
                         $categoriasCompra[] = "('" . $objCompra->identificacionUsuario . "','" . $position->objProducto->idCategoriaBI . "')";
@@ -3779,7 +3797,7 @@ class CarroController extends Controller {
             
             $transaction->commit();
             
-            if ($modelPago->idFormaPago != Yii::app()->params->formaPago['pasarela']['idPasarela']) {
+            if (!Yii::app()->shoppingCart->hasInventoryProducts() && $modelPago->idFormaPago != Yii::app()->params->formaPago['pasarela']['idPasarela']) {
                 ini_set('default_socket_timeout', 5);
                 $client = new SoapClient(null, array(
                     'location' => Yii::app()->params->webServiceUrl['remisionPosECommerce'],
@@ -3804,7 +3822,7 @@ class CarroController extends Controller {
                             Yii::log("Error enviando correo de remision automatica #$objCompra->idCompra\n" . $ce->getMessage() . "\n" . $ce->getTraceAsString(), CLogger::LEVEL_INFO, 'application');
                         }
                     } else {
-                    	$objCompra1 = Compras::model()->findByPk($objCompra->idCompra);
+                    	   $objCompra1 = Compras::model()->findByPk($objCompra->idCompra);
                          $objCompra1->idEstadoCompra = Yii::app()->params->callcenter['estadoCompra']['estado']['subasta'];
                         if (!$objCompra1->save()) {
                             throw new Exception("Error al guardar compra [1]" . $objCompra1->validateErrorsResponse());
@@ -3828,7 +3846,7 @@ class CarroController extends Controller {
          
 			//echo $objFormasPago->valorBono;exit();
             if (Yii::app()->shoppingCart->getBono() > 0) {
-            	$modelPago->actualizarBonoCRM($objCompra);
+                	$modelPago->actualizarBonoCRM($objCompra);
             }
           
             return array(
@@ -4063,7 +4081,7 @@ class CarroController extends Controller {
         }
     }
 
-    /*public function actionList() {
+    public function actionList() {
         //Yii::app()->session[Yii::app()->params->sesion['carroPagarForm']] = null;
         //Yii::app()->shoppingCart->clear();
         //exit();
@@ -4098,7 +4116,7 @@ class CarroController extends Controller {
         $positions = Yii::app()->shoppingCart->getPositions();
         foreach ($positions as $position) {
             // var_dump($position);exit();
-            CVarDumper::dump($position,3,true);exit();
+            //CVarDumper::dump($position,3,true);exit();
             echo "Id: " . $position->getId();
             echo "<br/>";
             echo "Precio U: " . $position->getPrice();
@@ -4141,7 +4159,7 @@ class CarroController extends Controller {
 
             echo "<br/>";
         }
-    }*/
+    }
     
     /*public function actionForm($limpiar = false) {
         $modelPago = null;

@@ -37,6 +37,7 @@ class FleteProductoTercero extends CActiveRecord
 			array('codigoProducto, codigoCiudad, tiempoEntregaInicial, tiempoEntregaFinal, unidadesMismoValor', 'required'),
 			array('valorFlete', 'numerical', 'integerOnly'=>true),
 			array('idFleteProducto', 'length', 'max'=>20),
+
 			array('codigoProducto, codigoCiudad, tiempoEntregaInicial, tiempoEntregaFinal, unidadesMismoValor', 'length', 'max'=>10),
 			// The following rule is used by search().
 			// @todo Please remove those attributes that should not be searched.

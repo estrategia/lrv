@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 <?php
 
 /**
@@ -22,7 +21,7 @@
  * @property Ciudad $objCiudad
  * @property Sector $objSector
  */
-class ProductosSaldosTerceros extends CActiveRecord {
+class ProductosSaldosTerceros_old extends CActiveRecord {
     /**
      * @return string the associated database table name
      */
@@ -38,8 +37,8 @@ class ProductosSaldosTerceros extends CActiveRecord {
         // will receive user inputs.
         return array(
             array('codigoProducto', 'required'),
-            array('codigoProducto, saldoUnidad', 'numerical', 'integerOnly' => true),
-            array('codigoProducto', 'length', 'max' => 10),
+            array('costo, flete, tiempoDomicilio', 'numerical', 'integerOnly' => true),
+            array('codigoProducto, codigoCiudad, codigoSector, precioUnidad, precioFraccion, saldoUnidad, saldoFraccion', 'length', 'max' => 10),
             // The following rule is used by search().
             // @todo Please remove those attributes that should not be searched.
             array('idProductoSaldo, codigoProducto, codigoCiudad, codigoSector, precioUnidad, precioFraccion, saldoUnidad, saldoFraccion, costo, flete, tiempoDomicilio', 'safe', 'on' => 'search'),
@@ -116,7 +115,7 @@ class ProductosSaldosTerceros extends CActiveRecord {
      * Returns the static model of the specified AR class.
      * Please note that you should have this exact method in all your CActiveRecord descendants!
      * @param string $className active record class name.
-     * @return ProductosSaldosTerceros the static model class
+     * @return ProductosSaldosTerceros_old the static model class
      */
     public static function model($className = __CLASS__) {
         return parent::model($className);

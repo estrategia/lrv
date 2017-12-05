@@ -12,8 +12,8 @@
     <?php if ($objPrecio->getFlete() > 0): ?>
         <h3>Flete: <?php echo Yii::app()->numberFormatter->format(Yii::app()->params->formatoMoneda['patron'], $objPrecio->getFlete(), Yii::app()->params->formatoMoneda['moneda']); ?></h3>
     <?php endif; ?>
-    <?php if ($objPrecio->getTiempoEntrega() > 0): ?>
-        <h3>Tiempo de entrega: <?php echo $objPrecio->getTiempoEntrega() ?> horas</h3>
+    <?php if ($objPrecio->tieneTiempoEntrega()): ?>
+        <h3>Tiempo de entrega: Entre <?php echo $objPrecio->getTiempoEntrega('start') ?> y <?php echo $objPrecio->getTiempoEntrega('end') ?> d&iacute;as</h3>
     <?php endif; ?>
 
     <!-- <div class="cdt_line_spc"><span></span></div>-->

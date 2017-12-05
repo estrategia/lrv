@@ -65,8 +65,8 @@
                         <?php if ($objPrecio->getFlete() > 0): ?>
                             <div><span>Flete: <?php echo Yii::app()->numberFormatter->format(Yii::app()->params->formatoMoneda['patron'], $objPrecio->getFlete(), Yii::app()->params->formatoMoneda['moneda']); ?></span></div>
                         <?php endif; ?>
-                        <?php if ($objPrecio->getTiempoEntrega() > 0): ?>
-                            <div><span>Tiempo de entrega: <?php echo $objPrecio->getTiempoEntrega() ?> horas</span></div>
+                        <?php if ($objPrecio->tieneTiempoEntrega()): ?>
+                            <div><span>Tiempo de entrega: Entre <?php echo $objPrecio->getTiempoEntrega('start') ?> y <?php echo $objPrecio->getTiempoEntrega('end') ?> d&iacute;as</span></div>
                         <?php endif; ?>
 
                         <?php if ($objPrecio->inicializado()): ?>
@@ -169,8 +169,6 @@
                                         <button class=" min" style="border:1px solid;" id="aumentar_unidad_<?php echo $objProducto->codigoProducto ?>" data-id="<?php echo $idUnico ?>" data-role="aumentar-cantidad"  data-producto="<?php echo $objProducto->codigoProducto ?>" data-precio="<?= $objPrecio->getPrecio(Precio::PRECIO_UNIDAD) ?>" type="button"><span  class="glyphicon glyphicon-plus"></span></button>
                                         <div class="clear"></div>
                                     </div>
-
-
                                 </div>
                             <?php endif; ?>
                         <?php endif; ?>

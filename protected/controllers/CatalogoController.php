@@ -1303,18 +1303,18 @@ class CatalogoController extends Controller {
             $objProducto = Producto::model()->find(array(
                 'with' => array (
                     'listImagenesGrandes',
-                    'listDetalleProducto',
-                    'objCodigoEspecial',
-                    'listCalificaciones' => array (
-                       'with' => 'objUsuario'
-                    ),
-                    'listSaldos' => array (
-                       'on' => '(listSaldos.codigoCiudad=:ciudad AND listSaldos.codigoSector=:sector) OR listSaldos.idProductoSaldos IS NULL'
-                    ),
-                    'listPrecios' => array (
-                       'on' => '(listPrecios.codigoCiudad=:ciudad AND listPrecios.codigoSector=:sector) OR listPrecios.idProductoPrecios IS NULL'
-                    ),
-                    'listSaldosTerceros',
+					'listDetalleProducto',
+					'objCodigoEspecial',
+					'listCalificaciones' => array (
+					   'with' => 'objUsuario'
+					),
+					'listSaldos' => array (
+					   'on' => '(listSaldos.codigoCiudad=:ciudad AND listSaldos.codigoSector=:sector) OR listSaldos.idProductoSaldos IS NULL'
+					),
+					'listPrecios' => array (
+					   'on' => '(listPrecios.codigoCiudad=:ciudad AND listPrecios.codigoSector=:sector) OR listPrecios.idProductoPrecios IS NULL'
+					),
+					'listSaldosTerceros',
                     'listFletesTerceros' => array (
                         'on' => 'listFletesTerceros.codigoCiudad=:ciudad OR listFletesTerceros.idFleteProducto IS NULL'
                     )
@@ -1328,119 +1328,120 @@ class CatalogoController extends Controller {
                     ':sector' => $objSectorCiudad->codigoSector
                 ))
             );
-        }
+		}
 
-        if ($objProducto == null) {
-            throw new CHttpException ( 404, 'Producto no existe.' );
-        }
+		if ($objProducto == null) {
+			throw new CHttpException ( 404, 'Producto no existe.' );
+		}
 
-        $codigoPerfil = Yii::app ()->shoppingCart->getCodigoPerfil ();
-        $objCalificacion = null;
+		$codigoPerfil = Yii::app ()->shoppingCart->getCodigoPerfil ();
+		$objCalificacion = null;
 
-        if (! Yii::app ()->user->isGuest) {
-            $fecha = new DateTime ();
-            $fecha->modify ( "-1 day" );
+		if (! Yii::app ()->user->isGuest) {
+			$fecha = new DateTime ();
+			$fecha->modify ( "-1 day" );
 
-            $objCalificacion = ProductosCalificaciones::model ()->find ( array (
-                    'condition' => 'codigoProducto=:producto AND identificacionUsuario=:usuario AND fecha>=:fecha',
-                    'params' => array (
-                            ':producto' => $producto,
-                            ':usuario' => Yii::app ()->user->name,
-                            ':fecha' => $fecha->format ( 'Y-m-d H:i:s' )
-                    )
-            ) );
-        }
+			$objCalificacion = ProductosCalificaciones::model ()->find ( array (
+					'condition' => 'codigoProducto=:producto AND identificacionUsuario=:usuario AND fecha>=:fecha',
+					'params' => array (
+							':producto' => $producto,
+							':usuario' => Yii::app ()->user->name,
+							':fecha' => $fecha->format ( 'Y-m-d H:i:s' )
+					)
+			) );
+		}
 
-        $listaPuntoVenta = array ();
+		$listaPuntoVenta = array ();
 
-        if ($objProducto->ventaVirtual == 0 && $objSectorCiudad != null) {
-            $listaPuntoVenta = PuntoVenta::model ()->findAll ( array (
-                    'with' => array (
-                            'listServicios' => array (
-                                    'condition' => 'listServicios.idTipoServicio=:servicio'
-                            )
-                    ),
-                    'condition' => 'codigoCiudad=:ciudad AND idSectorLRV=:sector AND estado=:estado',
-                    'params' => array (
-                            ':ciudad' => $objSectorCiudad->codigoCiudad,
-                            ':sector' => $objSectorCiudad->codigoSector,
-                            ':estado' => 1,
-                            ':servicio' => Yii::app ()->params->servicioVentaControlada
-                    )
-            ) );
-        }
+		if ($objProducto->ventaVirtual == 0 && $objSectorCiudad != null) {
+			$listaPuntoVenta = PuntoVenta::model ()->findAll ( array (
+					'with' => array (
+							'listServicios' => array (
+									'condition' => 'listServicios.idTipoServicio=:servicio'
+							)
+					),
+					'condition' => 'codigoCiudad=:ciudad AND idSectorLRV=:sector AND estado=:estado',
+					'params' => array (
+							':ciudad' => $objSectorCiudad->codigoCiudad,
+							':sector' => $objSectorCiudad->codigoSector,
+							':estado' => 1,
+							':servicio' => Yii::app ()->params->servicioVentaControlada
+					)
+			) );
+		}
 
-        $listRelacionados = ProductosRelacionados::model ()->findAll ( array (
-                'with' => 'objProductoRelacionado',
-                'order' => 't.orden',
-                'condition' => 't.codigoProducto=:producto',
-                'params' => array (
-                        ':producto' => $producto
-                )
-        ) );
+		$listRelacionados = ProductosRelacionados::model ()->findAll ( array (
+				'with' => 'objProductoRelacionado',
+				'order' => 't.orden',
+				'condition' => 't.codigoProducto=:producto',
+				'params' => array (
+						':producto' => $producto
+				)
+		) );
 
-        try {
-            $sql = "INSERT INTO t_ProductosVistos(codigoProducto, idCategoriaBI) VALUES ($objProducto->codigoProducto,$objProducto->idCategoriaBI) ON DUPLICATE KEY UPDATE cantidad=cantidad+1";
-            Yii::app ()->db->createCommand ( $sql )->execute ();
-        } catch ( Exception $ex ) {
-        }
+		try {
+			$sql = "INSERT INTO t_ProductosVistos(codigoProducto, idCategoriaBI) VALUES ($objProducto->codigoProducto,$objProducto->idCategoriaBI) ON DUPLICATE KEY UPDATE cantidad=cantidad+1";
+			Yii::app ()->db->createCommand ( $sql )->execute ();
+		} catch ( Exception $ex ) {
+		}
 
-        if ($this->isMobile) {
-            $this->render ( 'productoDetalle', array (
-                    'objProducto' => $objProducto,
-                    'objPrecio' => new PrecioProducto ( $objProducto, $objSectorCiudad, $codigoPerfil ),
-                    'objSectorCiudad' => $objSectorCiudad,
-                    'codigoPerfil' => $codigoPerfil,
-                    'listaPuntoVenta' => $listaPuntoVenta,
-                    'objCalificacion' => $objCalificacion,
-                    'listRelacionados' => $listRelacionados,
-                    'tipoBusqueda' => Yii::app ()->params->busqueda ['tipo'] ['buscador']
-            ) );
-        } else {
-            $objCategoria = CategoriasCategoriaTienda::model ()->find ( array (
-                    'with' => array (
-                            'objCategoriaTienda'
-                    ),
-                    'condition' => 't.idCategoriaBI=:categoriabi AND objCategoriaTienda.tipoDispositivo=:dispositivo',
-                    'params' => array (
-                            ':categoriabi' => $objProducto->idCategoriaBI,
-                            ':dispositivo' => CategoriaTienda::DISPOSITIVO_ESCRITORIO
-                    )
-            ) );
+		if ($this->isMobile) {
+			$this->render ( 'productoDetalle', array (
+					'objProducto' => $objProducto,
+					'objPrecio' => new PrecioProducto ( $objProducto, $objSectorCiudad, $codigoPerfil ),
+					'objSectorCiudad' => $objSectorCiudad,
+					'codigoPerfil' => $codigoPerfil,
+					'listaPuntoVenta' => $listaPuntoVenta,
+					'objCalificacion' => $objCalificacion,
+					'listRelacionados' => $listRelacionados,
+					'tipoBusqueda' => Yii::app ()->params->busqueda ['tipo'] ['buscador']
+			) );
+		} else {
+			$objCategoria = CategoriasCategoriaTienda::model ()->find ( array (
+					'with' => array (
+							'objCategoriaTienda'
+					),
+					'condition' => 't.idCategoriaBI=:categoriabi AND objCategoriaTienda.tipoDispositivo=:dispositivo',
+					'params' => array (
+							':categoriabi' => $objProducto->idCategoriaBI,
+							':dispositivo' => CategoriaTienda::DISPOSITIVO_ESCRITORIO
+					)
+			) );
 
-            if ($objCategoria == null) {
-                $this->breadcrumbs = array (
-                        'Inicio' => array (
-                                '/'
-                        ),
-                        $objProducto->descripcionProducto
-                );
-            } else {
-                $this->breadcrumbs = array (
-                        'Inicio' => array (
-                                '/'
-                        ),
-                        $objCategoria->objCategoriaTienda->nombreCategoriaTienda => array (
-                                '/catalogo/categoria/categoria/' . $objCategoria->objCategoriaTienda->idCategoriaTienda
-                        ),
-                        $objProducto->descripcionProducto
-                );
-            }
+			if ($objCategoria == null) {
+				$this->breadcrumbs = array (
+						'Inicio' => array (
+								'/'
+						),
+						$objProducto->descripcionProducto
+				);
+			} else {
+				$this->breadcrumbs = array (
+						'Inicio' => array (
+								'/'
+						),
+						$objCategoria->objCategoriaTienda->nombreCategoriaTienda => array (
+								'/catalogo/categoria/categoria/' . $objCategoria->objCategoriaTienda->idCategoriaTienda
+						),
+						$objProducto->descripcionProducto
+				);
+			}
 
-            $objFormCalificacion = new CalificacionForm ();
-            $this->render ( 'd_productoDetalle', array (
-                    'objProducto' => $objProducto,
-                    'objPrecio' => new PrecioProducto ( $objProducto, $objSectorCiudad, $codigoPerfil ),
-                    'objSectorCiudad' => $objSectorCiudad,
-                    'codigoPerfil' => $codigoPerfil,
-                    'listaPuntoVenta' => $listaPuntoVenta,
-                    'objCalificacion' => $objCalificacion,
-                    'listRelacionados' => $listRelacionados,
-                    'tipoBusqueda' => Yii::app ()->params->busqueda ['tipo'] ['buscador'],
-                    'objFormCalificacion' => $objFormCalificacion
-            ) );
-        }
-    }
+			$objFormCalificacion = new CalificacionForm ();
+			$this->render ( 'd_productoDetalle', array (
+					'objProducto' => $objProducto,
+					'objPrecio' => new PrecioProducto ( $objProducto, $objSectorCiudad, $codigoPerfil ),
+					'objSectorCiudad' => $objSectorCiudad,
+					'codigoPerfil' => $codigoPerfil,
+					'listaPuntoVenta' => $listaPuntoVenta,
+					'objCalificacion' => $objCalificacion,
+					'listRelacionados' => $listRelacionados,
+					'tipoBusqueda' => Yii::app ()->params->busqueda ['tipo'] ['buscador'],
+					'objFormCalificacion' => $objFormCalificacion
+			) );
+		}
+	}
+	
 	public function actionBodega($producto, $ubicacion, $bodega) {
 		$objSectorCiudad = $this->objSectorCiudad;
 
