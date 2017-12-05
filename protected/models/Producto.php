@@ -86,6 +86,7 @@ class Producto extends CActiveRecord {
             'listCalificaciones' => array(self::HAS_MANY, 'ProductosCalificaciones', 'codigoProducto'),
             'listSaldos' => array(self::HAS_MANY, 'ProductosSaldos', 'codigoProducto'),
             'listPrecios' => array(self::HAS_MANY, 'ProductosPrecios', 'codigoProducto'),
+            'listFletesTerceros' => array(self::HAS_MANY, 'FleteProductoTercero', 'codigoProducto'),
         	'listPreciosVAP' => array(self::HAS_MANY, 'ProductosPreciosVentaAsistida', 'codigoProducto'),
             'listSaldosTerceros' => array(self::HAS_MANY, 'ProductosSaldosTerceros', 'codigoProducto'),
         	'listSaldosCedi' => array(self::HAS_MANY, 'ProductosSaldosCedi', 'codigoProducto'),
@@ -184,11 +185,11 @@ class Producto extends CActiveRecord {
         ));
     }
 
-    public function searchTerceros() {
+    public function searchTerceros($codigoProveedor) {
         // @todo Please modify the following code to remove attributes that should not be searched.
 
         $criteria = new CDbCriteria;
-
+        $criteria->condition = 't.tercero = 1 AND t.codigoProveedor = :codigoProveedor';
         $criteria->compare('codigoProducto', $this->codigoProducto, true);
         $criteria->compare('codigoBarras', $this->codigoBarras, true);
         $criteria->compare('descripcionProducto', $this->descripcionProducto, true);
@@ -211,6 +212,8 @@ class Producto extends CActiveRecord {
         $criteria->compare('mostrarAhorroVirtual', $this->mostrarAhorroVirtual);
         $criteria->compare('tercero', $this->tercero);
         $criteria->compare('orden', $this->orden);
+        $criteria->params = [':codigoProveedor' => $codigoProveedor];
+
 
         return new CActiveDataProvider($this, array(
             'criteria' => $criteria,

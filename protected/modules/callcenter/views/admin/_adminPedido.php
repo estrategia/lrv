@@ -41,8 +41,12 @@
                         <td rowspan='2'><?php echo $objItem->descripcion ?><br></td>
                         <td style="min-width:180px;">
                             <div class="form-inline text-center">
-                                <input id="cantidad-item-unidad-<?php echo $objItem->idCompraItem ?>" type="text" style="width:100px" value="<?php echo $objItem->unidades ?>" >
-                                <button type="button" data-role="modificarpedido" data-action="11" data-item="<?php echo $objItem->idCompraItem ?>" class="btn btn-default btn-sm"><i class="glyphicon glyphicon-refresh"></i></button>
+                                <?php if ($objItem->terceros == 1): ?>
+                                    <input id="cantidad-item-unidad-<?php echo $objItem->idCompraItem ?>" type="text" style="width:100px" readonly value="<?php echo $objItem->unidades ?>" >
+                                <?php else: ?>
+                                    <input id="cantidad-item-unidad-<?php echo $objItem->idCompraItem ?>" type="text" style="width:100px" value="<?php echo $objItem->unidades ?>" >
+                                    <button type="button" data-role="modificarpedido" data-action="11" data-item="<?php echo $objItem->idCompraItem ?>" class="btn btn-default btn-sm"><i class="glyphicon glyphicon-refresh"></i></button>
+                                <?php endif ?>
                             </div>
                             <div class='space-2'></div>
                             <?php if($objItem->unidadesCedi > 0):?>
@@ -122,8 +126,12 @@
                             <td rowspan='2'><?php echo $objItem->descripcion ?><br></td>
                             <td style="min-width:180px">
                                 <div class="form-inline text-center">
-                                    <input id="cantidad-item-unidad-<?php echo $objItem->idCompraItem ?>" type="text" style="width:100px" value="<?php echo $objItem->unidades ?>" >
-                                    <button type="button" data-role="modificarpedido" data-action="11" data-item="<?php echo $objItem->idCompraItem ?>" class="btn btn-default btn-sm"><i class="glyphicon glyphicon-refresh"></i></button>
+                                    <?php if ($objItem->terceros == 1): ?>
+                                        <input id="cantidad-item-unidad-<?php echo $objItem->idCompraItem ?>" type="text" style="width:100px" readonly value="<?php echo $objItem->unidades ?>" >
+                                    <?php else: ?>
+                                        <input id="cantidad-item-unidad-<?php echo $objItem->idCompraItem ?>" type="text" style="width:100px" value="<?php echo $objItem->unidades ?>" >
+                                        <button type="button" data-role="modificarpedido" data-action="11" data-item="<?php echo $objItem->idCompraItem ?>" class="btn btn-default btn-sm"><i class="glyphicon glyphicon-refresh"></i></button>
+                                    <?php endif ?>
                                 </div>
                             </td>
                             <td rowspan='2' class="text-right">
@@ -188,8 +196,12 @@
                             
                             <td style="min-width:180px">
                                 <div class="form-inline text-center">
-                                    <input type="text" id="cantidad-item-unidad-<?php echo $objItem->idCompraItem ?>" style="width:100px" value="<?php echo $objItem->unidades ?>" >
-                                    <button type="button" data-role="modificarpedido" data-action="11" data-item="<?php echo $objItem->idCompraItem ?>" class="btn btn-default btn-sm"><i class="glyphicon glyphicon-refresh"></i></button>
+                                    <?php if ($objItem->terceros == 1): ?>
+                                        <input type="text" id="cantidad-item-unidad-<?php echo $objItem->idCompraItem ?>" readonly style="width:100px" value="<?php echo $objItem->unidades ?>" >
+                                    <?php else: ?>
+                                        <input type="text" id="cantidad-item-unidad-<?php echo $objItem->idCompraItem ?>" style="width:100px" value="<?php echo $objItem->unidades ?>" >
+                                        <button type="button" data-role="modificarpedido" data-action="11" data-item="<?php echo $objItem->idCompraItem ?>" class="btn btn-default btn-sm"><i class="glyphicon glyphicon-refresh"></i></button>
+                                    <?php endif ?>
                                 </div>
                             </td>
                             
@@ -217,29 +229,31 @@
                             </td>
                             <td class="text-right"><?php echo Yii::app()->numberFormatter->format(Yii::app()->params->formatoMoneda['patron'], ($objItem->precioBaseUnidad - $objItem->descuentoUnidad), Yii::app()->params->formatoMoneda['moneda']) ?></td>
                             <td class="text-right"><?php echo Yii::app()->numberFormatter->format(Yii::app()->params->formatoMoneda['patron'], ($objItem->precioTotalUnidad + $objItem->precioTotalFraccion), Yii::app()->params->formatoMoneda['moneda']) ?></td>
-                            <?php if ($objItem->unidadesSuscripcion > 0): ?>
-                                <td rowspan="2">
-                                    <strong><?php echo $objItem->objEstadoItem->estadoItem ?></strong>
-                                    <?php if ($objItem->objOperador !== null): ?>
-                                        <br/>
-                                        <?php echo $objItem->objOperador->nombre ?>
-                                    <?php endif; ?>
-                                </td>
-                                <td rowspan="2" class="center vertical-center">
-                                    <button type="button" class="btn btn-sm btn-<?php echo ($objItem->disponible == 1 ? "success" : "danger") ?>" data-item="<?php echo $objItem->idCompraItem ?>" data-role="disponibilidaditem"><i class="icon-white glyphicon glyphicon-<?php echo ($objItem->disponible == 1 ? "ok" : "remove") ?>"></i></button>
-                                </td>
-                            <?php else: ?>
-                                <td>
-                                    <strong><?php echo $objItem->objEstadoItem->estadoItem ?></strong>
-                                    <?php if ($objItem->objOperador !== null): ?>
-                                        <br/>
-                                        <?php echo $objItem->objOperador->nombre ?>
-                                    <?php endif; ?>
-                                </td>
-                                <td class="center vertical-center">
-                                    <button type="button" class="btn btn-sm btn-<?php echo ($objItem->disponible == 1 ? "success" : "danger") ?>" data-item="<?php echo $objItem->idCompraItem ?>" data-role="disponibilidaditem"><i class="icon-white glyphicon glyphicon-<?php echo ($objItem->disponible == 1 ? "ok" : "remove") ?>"></i></button>
-                                </td>
-                            <?php endif; ?>
+                            <?php if ($objItem->terceros != 1): ?>
+                                <?php if ($objItem->unidadesSuscripcion > 0): ?>
+                                    <td rowspan="2">
+                                        <strong><?php echo $objItem->objEstadoItem->estadoItem ?></strong>
+                                        <?php if ($objItem->objOperador !== null): ?>
+                                            <br/>
+                                            <?php echo $objItem->objOperador->nombre ?>
+                                        <?php endif; ?>
+                                    </td>
+                                    <td rowspan="2" class="center vertical-center">
+                                        <button type="button" class="btn btn-sm btn-<?php echo ($objItem->disponible == 1 ? "success" : "danger") ?>" data-item="<?php echo $objItem->idCompraItem ?>" data-role="disponibilidaditem"><i class="icon-white glyphicon glyphicon-<?php echo ($objItem->disponible == 1 ? "ok" : "remove") ?>"></i></button>
+                                    </td>
+                                <?php else: ?>
+                                    <td>
+                                        <strong><?php echo $objItem->objEstadoItem->estadoItem ?></strong>
+                                        <?php if ($objItem->objOperador !== null): ?>
+                                            <br/>
+                                            <?php echo $objItem->objOperador->nombre ?>
+                                        <?php endif; ?>
+                                    </td>
+                                    <td class="center vertical-center">
+                                        <button type="button" class="btn btn-sm btn-<?php echo ($objItem->disponible == 1 ? "success" : "danger") ?>" data-item="<?php echo $objItem->idCompraItem ?>" data-role="disponibilidaditem"><i class="icon-white glyphicon glyphicon-<?php echo ($objItem->disponible == 1 ? "ok" : "remove") ?>"></i></button>
+                                    </td>
+                                <?php endif; ?>
+                            <?php endif ?>
                         </tr>
                         <?php if ($objItem->unidadesSuscripcion > 0): ?>
                             <tr>

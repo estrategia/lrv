@@ -81,7 +81,10 @@ return array(
         'formulasVencer' => 'formulasVencer',
         'recordarLista' => 'recordarLista',
         'observacionPedido' => 'observacionPedido',
-        'compraCallcenter' => 'compraCallcenter'
+        'compraCallcenter' => 'compraCallcenter',
+        'cambioEstadoCompraItemTercero' => 'cambioEstadoCompraItemTercero',
+        'registroUsuarioTercero' => 'cambioEstadoCompraItemTercero',
+        'recordarClaveTercero' => 'recordarClaceTercero',
     ),
     'rutasPlantillasCorreo' => array(
         'compraCorreo' => 'compraCorreo',
@@ -92,7 +95,8 @@ return array(
         'correoBloqueo' => '//common/correoBloqueo',
         'reactivacionBono' => '_mensajeCorreoReactivacion',
         'mensajeHtml' => '//common/mensajeHtml',
-        'bonoCorreo' => 'bonoCorreo'
+        'bonoCorreo' => 'bonoCorreo',
+        'cambioEstadoCompraItemTercero' => 'application.modules.terceros.views.compras.correoCambioEstadoItem'
     ),
     'maximoComparacion' => 5,
     'urlSitio' => 'www.larebajavirtual.com',
@@ -402,6 +406,11 @@ return array(
         'pedidoRealizado' => 'La Rebaja Virtual: Pedido realizado',
         'pedidoRealizadoPasarela' => 'La Rebaja Virtual: Pendiente de Confirmación Pasarela',
         'pedidoRemitido' => 'La Rebaja Virtual: Pedido remitido'
+    ),
+    'asuntoTercero' => array(
+        'registroUsuario' => 'Se ha registrado su usuario',
+        'cambioEstadoCompraItem' => 'Notificacion de cambio de estado de producto',
+        'cambioClave' => 'Restauracion de contraseña'
     ),
     'asuntoRecordatorioClave' => 'Clave de Ingreso',
     'asuntoBienvenida' => 'La Rebaja te da la bienvenida',

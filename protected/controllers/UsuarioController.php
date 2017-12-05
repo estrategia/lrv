@@ -641,7 +641,19 @@ class UsuarioController extends Controller {
             $this->render('d_usuario', array('vista' => 'd_pedidos', 'params' => $params));
         }
     }
-    
+
+    public function actionTrazaProducto($idCompraItem)
+    {
+        $estados = TrazaComprasItemsTerceros::model()->with('estado')->findAll(
+            't.idCompraItem = :idCompraItem',
+            [':idCompraItem' => $idCompraItem]
+        );
+        if ($this->isMobile) {
+            $this->renderPartial('trazaItem', array('estados' => $estados));     
+        } else {
+            $this->renderPartial('d_trazaItem', array('estados' => $estados));     
+        }
+    }
     
     public function actionSuscripciones() {
     

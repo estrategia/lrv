@@ -74,4 +74,24 @@ class UsuarioController extends ControllerTercero {
         $this->redirect(Yii::app()->controller->module->homeUrl);
     }
 
+   public function actionClave() {
+        $tercero = UsuarioTercero::model()->findByPk(Yii::app()->controller->module->user->id);
+        $model = new RegistroForm('contrasena');
+        if (isset($_POST['RegistroForm'])) {
+            $model->attributes = $_POST['RegistroForm'];
+            if ($model->validate()) {
+                $tercero->clave = md5($model->clave);
+                if ($tercero->save()) {
+                     Yii::app()->user->setFlash('alert alert-success', "Datos actualizados ");
+                     $model->clave = "";
+                     $model->claveConfirmar = "";
+                }else{
+                    Yii::app()->user->setFlash('alert alert-danger', "Error al actualizar");
+                }
+            }
+        }
+
+        $this->render('cambiarClave', array('model' => $model));
+    }
+
 }

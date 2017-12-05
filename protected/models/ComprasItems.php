@@ -36,6 +36,7 @@
  */
 class ComprasItems extends CActiveRecord {
 
+    private $estadoAnterior;
     /**
      * @return string the associated database table name
      */
@@ -50,10 +51,11 @@ class ComprasItems extends CActiveRecord {
         // NOTE: you should only define rules for those attributes that
         // will receive user inputs.
         return array(
-            array('idCompra, precioBaseUnidad, precioBaseFraccion, descuentoUnidad, descuentoFraccion, precioTotalUnidad, precioTotalFraccion, idOperador, terceros, unidades, fracciones, unidadesCedi, unidadesSuscripcion, codigoImpuesto, idEstadoItem, flete, disponible, idCombo, descuentoSuscripcion, precioTotalSuscripcion', 'numerical', 'integerOnly' => true),
+            array('idCompra, precioBaseUnidad, precioBaseFraccion, descuentoUnidad, descuentoFraccion, precioTotalUnidad, precioTotalFraccion, idOperador, terceros, unidades, fracciones, unidadesCedi, unidadesSuscripcion, codigoImpuesto, idEstadoItem, flete, disponible, idCombo, descuentoSuscripcion, precioTotalSuscripcion, idEstadoItemTercero, codigoProveedor', 'numerical', 'integerOnly' => true),
             array('codigoProducto', 'length', 'max' => 10),
+            array('codigoProducto, fechaEntregaInicial, fechaEntregaFinal', 'safe'),
             array('descripcion', 'length', 'max' => 200),
-            array('presentacion, descripcionCombo', 'length', 'max' => 100),
+            array('presentacion, descripcionCombo, operadorLogistico, numeroGuia', 'length', 'max' => 100),
         	array('registroMedico', 'length', 'max'=>20),
             // The following rule is used by search().
             // @todo Please remove those attributes that should not be searched.
@@ -75,7 +77,8 @@ class ComprasItems extends CActiveRecord {
             'objOperador' => array(self::BELONGS_TO, 'Operador', 'idOperador'),
             'objEstadoItem' => array(self::BELONGS_TO, 'EstadoItem', 'idEstadoItem'),
             'listBeneficios' => array(self::HAS_MANY, 'BeneficiosComprasItems', 'idCompraItem'),
-        	'objMedico' => array(self::BELONGS_TO, 'Medico', 'registroMedico'),
+            'objMedico' => array(self::BELONGS_TO, 'Medico', 'registroMedico'),
+        	'estadoTercero' => array(self::BELONGS_TO, 'EstadosComprasItemsTerceros', 'idEstadoItemTercero'),
         );
     }
 
@@ -111,6 +114,52 @@ class ComprasItems extends CActiveRecord {
             'descuentoSuscripcion' => 'Descuento Suscripcion',
             'precioTotalSuscripcion' => 'Precio Unidad Suscripcion'
         );
+    }
+
+    public function afterFind() {
+        $this->estadoAnterior = $this->idEstadoItemTercero;
+        parent::afterFind();
+    }
+
+    public function afterSave() {
+        if ($this->estadoAnterior != $this->idEstadoItemTercero) {
+            if ($this->guardarTraza()) {
+                $this->notificarCorreoCambioEstado();
+            }
+        }
+        parent::afterSave();
+    }
+
+    private function guardarTraza()
+    {
+        $traza = new TrazaComprasItemsTerceros;
+        $traza->idCompraItem = $this->idCompraItem;
+        $traza->idEstadoItemTercero = $this->idEstadoItemTercero;
+        $traza->fechaCreacion = date('Y-m-d H:i:s');
+        return $traza->save();
+    }
+
+    private function notificarCorreoCambioEstado()
+    {
+        $asuntoCorreo = Yii::app()->params['asuntoTercero']['cambioEstadoCompraItem'];
+        $contenidoCorreo = Yii::app()->controller->renderPartial(
+            Yii::app()->params['rutasPlantillasCorreo']['cambioEstadoCompraItemTercero'], 
+            array('item' => $this,), true, true);
+        $compra = $this->objCompra;
+        $correo = "";
+        if ($compra->invitado == 0) {
+            $correo = $compra->objUsuario->correoElectronico;
+        } else {
+            $direccion = ComprasDireccionesDespacho::find('t.idCompra = :idCompra', [':idCompra' => $this->idCompra]);
+            $correo = $direccion->correoElectronico;
+        }
+        $htmlCorreo = PlantillaCorreo::getContenido('registroUsuarioTercero',$contenidoCorreo);
+        
+        try {
+            sendHtmlEmail($correo, $asuntoCorreo, $htmlCorreo);
+        } catch (Exception $ce) {
+            Yii::log("Error enviando correo al cambiar estado item compra #$this->idCompraItem\n" . $ce->getMessage() . "\n" . $ce->getTraceAsString(), CLogger::LEVEL_INFO, 'application');
+        }
     }
 
     /**

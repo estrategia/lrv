@@ -3041,3 +3041,34 @@ $(document).on('click', "button[data-role='actualizar-suscripcion']", function (
     }
     return false;
 });
+
+$(document).on('click', "a[data-role='mostrar-traza-item']", function () {
+    var boton = $(this);
+    var idCompraItem = boton.attr('data-id-compra-item');
+    boton.attr('disabled', true);
+    $.ajax({
+        type: 'GET',
+        url: requestUrl + "/usuario/trazaProducto",
+        data: {idCompraItem: idCompraItem},
+        dataType: 'html',
+        beforeSend: function () {
+            Loading.show();
+        },
+        complete: function (data) {
+            Loading.hide();
+        },
+        success: function (data) {
+            boton.attr('disabled', false);
+            $('#traza-item-body').html(data);
+            $('#traza-item').modal('show');
+
+            // alert(data.response);
+        },
+        error: function (jqXHR, textStatus, errorThrown) {
+            Loading.hide();
+            boton.attr('disabled', false);
+        }
+    });
+    return false;
+});
+

@@ -9,6 +9,8 @@
                 <tr>
                     <th>Producto</th>
                     <th>Cantidad</th>
+                    <th>Estado</th>
+                    <th>Fecha de Entrega</th>
                     <th>Antes</th>
                     <th>Ahorro</th>
                     <th>Ahora</th>
@@ -39,6 +41,24 @@
                                 <?php if ($objItem->unidadesCedi > 0): ?>
                                     <p>Bodega: <?php echo $objItem->unidadesCedi ?></p>
                                 <?php endif; ?>
+                            </td>
+                            <td class="text-center">
+                                <?php if ($objItem->idEstadoItemTercero != null): ?>
+                                    <?php echo $objItem->estadoTercero->nombre; ?>
+                                    (<a href="" data-role="mostrar-traza-item" data-id-compra-item="<?php echo $objItem->idCompraItem?>">Historial</a>)
+                                <?php else: ?>
+                                    <?php echo $objItem->objCompra->objEstadoCompra->compraEstado; ?>
+                                <?php endif ?>
+                            </td>
+                            <td class="text-center">
+                                <?php if ($objItem->terceros == 1): ?>
+                                    Entre
+                                    <?php echo date('Y-m-d', strtotime($objItem->fechaEntregaFinal)); ?>
+                                    y
+                                    <?php echo date('Y-m-d', strtotime($objItem->fechaEntregaFinal)); ?>
+                                <?php else: ?>
+                                    <?php echo $objItem->objCompra->fechaEntrega; ?>
+                                <?php endif ?>
                             </td>
                             <td class="text-right">
                                 <strike><?php echo Yii::app()->numberFormatter->format(Yii::app()->params->formatoMoneda['patron'], $objItem->precioBaseUnidad, Yii::app()->params->formatoMoneda['moneda']); ?></strike>
@@ -137,3 +157,20 @@
         </div>
     </div>
 <?php endif; ?>
+
+<div class="modal fade" id="traza-item" tabindex="-1" role="dialog">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        <h4 class="modal-title">Historial de estados</h4>
+      </div>
+      <div class="modal-body" id="traza-item-body">
+        <p>Traza</p>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal">OK</button>
+      </div>
+    </div><!-- /.modal-content -->
+  </div><!-- /.modal-dialog -->
+</div><!-- /.modal -->
