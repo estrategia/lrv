@@ -350,24 +350,24 @@ return array(
             25 => 15,
             26 => 16
         ),*/
-    	'lrv' => array(50,51,52,53,54,55,56,57,58),
-    	'descuentos' => array(50,51,52,53,57,58,63,64), // new
-    	'bonos' => array(54,55,56), // new
-    	'descuentosClienteInterno' => array(57,58),
-    	'bonosClienteInterno' => array(56),
-
-    	'beneficioCedula' => 54,
-        'beneficiosSuscripcion' => array(63,64),
-    	'tipoBonoFormaPago' => array(
-    				54 => 7,
-    				55 => 8,
-    				56 => 8
-    	),
-    	'tipoMedioPago' => array(
-    				54 => 15,
-    				55 => 16,
-    				56 => 16,
-    	),
+    	   'lrv' => array(50,51,52,53,54,55,56,57,58),
+        	'descuentos' => array(50,51,52,53,57,58,63,64), // new
+        	'bonos' => array(54,55,56), // new
+        	'descuentosClienteInterno' => array(57,58),
+        	'bonosClienteInterno' => array(56),
+    
+        	'beneficioCedula' => 54,
+            'beneficiosSuscripcion' => array(63,64),
+        	'tipoBonoFormaPago' => array(
+        				54 => 7,
+        				55 => 8,
+        				56 => 8
+        	),
+        	'tipoMedioPago' => array(
+        				54 => 15,
+        				55 => 16,
+        				56 => 16,
+        	),
         'recambios' => array(1, 10),
         'recambioslabel' => array(
             1 => 'Recambio',
@@ -386,7 +386,7 @@ return array(
             'mayor' => 2
         ),
         'configuracionActiva' => 1,
-    	'diasBorrado' => 100,
+        'diasBorrado' => 100,
     ),
     'servicioVentaControlada' => 17,
     'gps' => array(

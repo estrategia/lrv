@@ -1,6 +1,14 @@
 <?php
 //controlador de prueba TestController prueba
 class TestController extends Controller {
+    
+    public function actionRound(){
+        $valor = 0.2;
+        $round = ceil($valor);
+        echo "$round";
+        
+    }
+    
     public function actionUrlm(){
         CVarDumper::dump(Yii::app()->urlManager,10,true);
     }

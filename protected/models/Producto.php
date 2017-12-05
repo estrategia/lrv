@@ -86,9 +86,10 @@ class Producto extends CActiveRecord {
             'listCalificaciones' => array(self::HAS_MANY, 'ProductosCalificaciones', 'codigoProducto'),
             'listSaldos' => array(self::HAS_MANY, 'ProductosSaldos', 'codigoProducto'),
             'listPrecios' => array(self::HAS_MANY, 'ProductosPrecios', 'codigoProducto'),
-        	'listPreciosVAP' => array(self::HAS_MANY, 'ProductosPreciosVentaAsistida', 'codigoProducto'),
+            'listFletesTerceros' => array(self::HAS_MANY, 'FleteProductoTercero', 'codigoProducto'),
+            'listPreciosVAP' => array(self::HAS_MANY, 'ProductosPreciosVentaAsistida', 'codigoProducto'),
             'listSaldosTerceros' => array(self::HAS_MANY, 'ProductosSaldosTerceros', 'codigoProducto'),
-        	'listSaldosCedi' => array(self::HAS_MANY, 'ProductosSaldosCedi', 'codigoProducto'),
+            'listSaldosCedi' => array(self::HAS_MANY, 'ProductosSaldosCedi', 'codigoProducto'),
             'listDescuentosPerfiles' => array(self::HAS_MANY, 'ProductosDescuentosPerfiles', 'codigoProducto'),
             'listDescuentosEspeciales' => array(self::HAS_MANY, 'ProductosDescuentosEspeciales', 'codigoProducto'),
             //'listPerfiles' => array(self::MANY_MANY, 'Perfil', 't_ProductosDescuentosPerfiles(codigoProducto, codigoPerfil)'),
@@ -99,9 +100,9 @@ class Producto extends CActiveRecord {
             'objCategoriaBI' => array(self::BELONGS_TO, 'Categoria', 'idCategoriaBI'),
             'objUnidadNegocioBI' => array(self::BELONGS_TO, 'Categoria', 'idUnidadNegocioBI'),
             'objBusqueda' => array(self::BELONGS_TO, 'RelevanciaTemp', '','on' => 't.codigoProducto = objBusqueda.codigoProducto'),
-        	'listVitalCall'	=> array(self::HAS_MANY, 'ProductosVitalCall', 'codigoProducto'),
-        	'objVitalCall'	=> array(self::HAS_ONE, 'ProductosVitalCall', 'codigoProducto'),
-        	'listComprasItems'	=> array(self::HAS_MANY, 'ComprasItems', 'codigoProducto'),
+            'listVitalCall'	=> array(self::HAS_MANY, 'ProductosVitalCall', 'codigoProducto'),
+            'objVitalCall'	=> array(self::HAS_ONE, 'ProductosVitalCall', 'codigoProducto'),
+            'listComprasItems'	=> array(self::HAS_MANY, 'ComprasItems', 'codigoProducto'),
 
                 //'listCategoriasTienda' => array(self::MANY_MANY, 'CategoriaTienda', '', 'through' => 'CategoriasCategoriaTienda', 'condition' => 'CategoriasCategoriaTienda.idCategoriaBI=106'),
                 //'listCategoriasCategoriaTienda' => array(self::HAS_MANY, 'CategoriasCategoriaTienda', 'idCategoriaBI'),
@@ -284,9 +285,7 @@ class Producto extends CActiveRecord {
     public function getSaldo($codigoCiudad, $codigoSector) {
         if ($this->tercero == 1) {
             foreach ($this->listSaldosTerceros as $objProductoSaldoTercero) {
-                if ($objProductoSaldoTercero->codigoCiudad == $codigoCiudad && $objProductoSaldoTercero->codigoSector == $codigoSector) {
-                    return $objProductoSaldoTercero;
-                }
+                return $objProductoSaldoTercero;
             }
         } else {
             foreach ($this->listSaldos as $objSaldo) {

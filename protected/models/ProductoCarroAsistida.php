@@ -79,7 +79,9 @@ class ProductoCarroAsistida extends IECartPosition {
             // $this->hola();
             $this->tax = $this->objProducto->objImpuesto->porcentaje;
             $this->shipping = $objprecio->getFlete();
-            $this->delivery = $objprecio->getTiempoEntrega();
+            $this->shippingMaxUnits = $objprecio->getUnidadesPorFlete();
+            $this->deliveryStart = $objprecio->getTiempoEntrega('start');
+            $this->deliveryEnd = $objprecio->getTiempoEntrega('end');
             
             $this->priceTokenUnit = $objprecio->getBono();
         }else if($this->isCombo()){

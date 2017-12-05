@@ -1,24 +1,29 @@
 <?php
 
 /**
- * This is the model class for table "t_ProductossaldoUnidadsTerceros".
+ * This is the model class for table "t_FleteProductoTercero".
  *
- * The followings are the available columns in table 't_ProductossaldoUnidadsTerceros':
- * @property integer $idProductosaldoUnidad
+ * The followings are the available columns in table 't_FleteProductoTercero':
+ * @property string $idFleteProducto
  * @property string $codigoProducto
- * @property string $saldoUnidad
+ * @property string $codigoCiudad
+ * @property integer $valorFlete
+ * @property string $tiempoEntregaInicial
+ * @property string $tiempoEntregaFinal
+ * @property string $unidadesMismoValor
  *
  * The followings are the available model relations:
+ * @property MCiudad $codigoCiudad0
  * @property MProducto $codigoProducto0
  */
-class ProductosSaldosTerceros extends CActiveRecord
+class FleteProductoTercero extends CActiveRecord
 {
 	/**
 	 * @return string the associated database table name
 	 */
 	public function tableName()
 	{
-		return 't_ProductosSaldosTerceros';
+		return 't_FleteProductoTercero';
 	}
 
 	/**
@@ -29,11 +34,12 @@ class ProductosSaldosTerceros extends CActiveRecord
 		// NOTE: you should only define rules for those attributes that
 		// will receive user inputs.
 		return array(
-			array('codigoProducto', 'required'),
-			array('codigoProducto, saldoUnidad', 'length', 'max'=>10),
+			array('codigoProducto, codigoCiudad, tiempoEntregaInicial, tiempoEntregaFinal', 'required'),
+			array('valorFlete', 'numerical', 'integerOnly'=>true),
+			array('codigoProducto, codigoCiudad, tiempoEntregaInicial, tiempoEntregaFinal, unidadesMismoValor', 'length', 'max'=>10),
 			// The following rule is used by search().
 			// @todo Please remove those attributes that should not be searched.
-			array('idProductosaldoUnidad, codigoProducto, saldoUnidad', 'safe', 'on'=>'search'),
+			array('idFleteProducto, codigoProducto, codigoCiudad, valorFlete, tiempoEntregaInicial, tiempoEntregaFinal, unidadesMismoValor', 'safe', 'on'=>'search'),
 		);
 	}
 
@@ -45,6 +51,7 @@ class ProductosSaldosTerceros extends CActiveRecord
 		// NOTE: you may need to adjust the relation name and the related
 		// class name for the relations automatically generated below.
 		return array(
+			'codigoCiudad0' => array(self::BELONGS_TO, 'MCiudad', 'codigoCiudad'),
 			'codigoProducto0' => array(self::BELONGS_TO, 'MProducto', 'codigoProducto'),
 		);
 	}
@@ -55,9 +62,13 @@ class ProductosSaldosTerceros extends CActiveRecord
 	public function attributeLabels()
 	{
 		return array(
-			'idProductosaldoUnidad' => 'Id Producto saldoUnidad',
+			'idFleteProducto' => 'Id Flete Producto',
 			'codigoProducto' => 'Codigo Producto',
-			'saldoUnidad' => 'Saldo Unidad',
+			'codigoCiudad' => 'Codigo Ciudad',
+			'valorFlete' => 'Valor Flete',
+			'tiempoEntregaInicial' => 'Tiempo Entrega Inicial',
+			'tiempoEntregaFinal' => 'Tiempo Entrega Final',
+			'unidadesMismoValor' => 'Unidades Mismo Valor',
 		);
 	}
 
@@ -79,9 +90,13 @@ class ProductosSaldosTerceros extends CActiveRecord
 
 		$criteria=new CDbCriteria;
 
-		$criteria->compare('idProductosaldoUnidad',$this->idProductosaldoUnidad);
+		$criteria->compare('idFleteProducto',$this->idFleteProducto,true);
 		$criteria->compare('codigoProducto',$this->codigoProducto,true);
-		$criteria->compare('saldoUnidad',$this->saldoUnidad,true);
+		$criteria->compare('codigoCiudad',$this->codigoCiudad,true);
+		$criteria->compare('valorFlete',$this->valorFlete);
+		$criteria->compare('tiempoEntregaInicial',$this->tiempoEntregaInicial,true);
+		$criteria->compare('tiempoEntregaFinal',$this->tiempoEntregaFinal,true);
+		$criteria->compare('unidadesMismoValor',$this->unidadesMismoValor,true);
 
 		return new CActiveDataProvider($this, array(
 			'criteria'=>$criteria,
@@ -92,7 +107,7 @@ class ProductosSaldosTerceros extends CActiveRecord
 	 * Returns the static model of the specified AR class.
 	 * Please note that you should have this exact method in all your CActiveRecord descendants!
 	 * @param string $className active record class name.
-	 * @return ProductosSaldoTerceros the static model class
+	 * @return FleteProductoTercero the static model class
 	 */
 	public static function model($className=__CLASS__)
 	{
