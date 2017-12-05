@@ -57,8 +57,7 @@
 <a href="<?php echo CController::createUrl('/catalogo/producto', array('producto' => 104776 )) ?>">
   <img class="img-responsive" style="width: 80%;margin: 0 auto;display: block;" src="<?= Yii::app()->request->baseUrl ?>/images/contenido/calcibon/compra-online.png" alt="Compra Calcibon d800">
 </a>
-  <p style="font-size: 11px;padding: 25px;">Es un medicamento. No exceder su consumo. Leer indicaciones y contraindicaciones en la etiqueta. Si los síntomas persisten consulte a su médico. <br>
-  Reg. Sanitario INVIMA 2013M-0014237, CALCIBON MIN INVIMA 2011M-0012065, CALCIBON SOYA FORTE INVIMA 2013-0014183, CALCIBON NATAL FORTE INVIMA 2014M-0015487, Calcibon  D 800 UI Reg. Sanitario INVIMA 2013M-0014237. </p>
+  <p style="font-size: 11px;padding: 25px;">Es un medicamento. No exceder su consumo. Leer indicaciones y contraindicaciones en la etiqueta. si los síntomas persisten consulte a su médico. <br> CALCIBON D 800 UI Reg. Sanitario INVIMA 2013M-0014237, CALCIBON NATAL FORTE  Reg. Sanitario INVIMA 2014M-0015487, CALCIBON MIN Reg. Sanitario INVIMA 2017M-0012065-R1. </p>
 </div>
 <div class="datos-contacto" style="padding: 20px 15px;">
     <p class="text-atencion">Si tienes algún inconveniente con tu pedido comunícate con nosotros a través de los canales que tenemos disponibles:</p>
@@ -110,8 +109,7 @@
       <a href="<?php echo CController::createUrl('/catalogo/producto', array('producto' => 104776 )) ?>">
         <img class="img-responsive" style="width: 45%;margin: 15px auto;" src="<?= Yii::app()->request->baseUrl ?>/images/contenido/calcibon/compra-online.png" alt="Compra Calcibon d800">
       </a>
-      <p style="font-size: 11px;padding: 7px;">Es un medicamento. No exceder su consumo. Leer indicaciones y contraindicaciones en la etiqueta. Si los síntomas persisten consulte a su médico. <br>
-       Reg. Sanitario INVIMA 2013M-0014237, CALCIBON MIN INVIMA 2011M-0012065, CALCIBON SOYA FORTE INVIMA 2013-0014183, CALCIBON NATAL FORTE INVIMA 2014M-0015487, Calcibon  D 800 UI Reg. Sanitario INVIMA 2013M-0014237. </p>
+      <p style="font-size: 11px;padding: 7px;">Es un medicamento. No exceder su consumo. Leer indicaciones y contraindicaciones en la etiqueta. si los síntomas persisten consulte a su médico. <br> CALCIBON D 800 UI Reg. Sanitario INVIMA 2013M-0014237, CALCIBON NATAL FORTE  Reg. Sanitario INVIMA 2014M-0015487, CALCIBON MIN Reg. Sanitario INVIMA 2017M-0012065-R1.</p>
     </div>
   </div>
 </div>
