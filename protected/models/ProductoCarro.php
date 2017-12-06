@@ -115,4 +115,56 @@ class ProductoCarro extends IECartPosition {
         	return $this->objProductoFormula->idFormula . "-" . $this->objProductoFormula->idProductoVitalCall;
         }*/
     }
+    
+    
+    public function calculateUnidadesBodega($bodegas){
+    	
+    	$peso = $this->objProducto->PesoUnidad;
+    	 
+    	$largo = $this->objProducto->Largo;
+    	$ancho = $this->objProducto->Ancho;
+    	$profundo = $this->objProducto->Profundo;
+    	
+    	$cantidadesBodega = $volumenBodegas = array();
+    	
+    	$volumetria = calcularVolumetriaOperador(0, $largo, $ancho, $profundo);
+    	 
+    	$indiceVolumen = $volumetria > $peso ? $volumetria : $peso ;
+    	 
+    	$cantidad = $this->getQuantityStored();
+    	 
+    	$listSaldosCedi = ProductosSaldosCedi::model()->findAll( array(
+    			'condition' => 'codigoProducto =:codigoProducto AND codigoCedi IN ('.implode(",",$bodegas).') ',
+    			'params' => array(
+    					'codigoProducto' => $this->objProducto->codigoProducto
+    			),
+    			'order' => 'field(codigoCedi,'. implode(",", $bodegas).' )'
+    	));
+    	 
+    	$i = 0;
+    	do {
+    		$saldoBodega = $listSaldosCedi[$i];
+    		$unidadesBodega = 0;
+    	
+    		if($cantidad > $saldoBodega->saldoUnidad){
+    			$unidadesBodega = $saldoBodega->saldoUnidad;
+    		}else{
+    			$unidadesBodega = $cantidad;
+    		}
+    	
+    		$cantidad -=$unidadesBodega;
+    	
+    		$cantidadesBodega[$saldoBodega->codigoCedi] = $unidadesBodega;
+    	
+    		
+    		$volumenBodegas[$saldoBodega->codigoCedi] = $unidadesBodega * $volumetria;
+    		
+    		$i++;
+    	} while ( $cantidad > 0 );
+    	
+    	return array(
+    		'cantidades' => $cantidadesBodega,
+    		'volumen' => $volumenBodegas
+    	);
+    }
 }

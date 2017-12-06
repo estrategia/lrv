@@ -2049,9 +2049,9 @@ class TestController extends Controller {
     
     					}
     
-    					foreach ($beneficio['listBeneficiosPuntoVenta'] as $benefPdv) {
-    						$datosPdv[] = "($objBeneficio->idBeneficio,'" . $benefPdv['IDComercial'] . "')";
-    					}
+//     					foreach ($beneficio['listBeneficiosPuntoVenta'] as $benefPdv) {
+//     						$datosPdv[] = "($objBeneficio->idBeneficio,'" . $benefPdv['IDComercial'] . "')";
+//     					}
     
     
     					if ($beneficio['listCedulas']) {
@@ -2124,5 +2124,10 @@ class TestController extends Controller {
     	echo "<pre>";
     	var_dump($decode);
     }
+    
+    public function actionEnvio(){
+    	generateXMLPedido();
+    }
+    
     
 }

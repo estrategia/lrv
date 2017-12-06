@@ -978,5 +978,112 @@ class Compras extends CActiveRecord {
     public function isVentaCentralizada(){
     	return false;
     }
+    
+    public function getBodegas( $order = " ASC"){
+    	$listBodegas = array();
+    	$bodegas = CiudadBodega::model()->findAll(array(
+    			'condition' => 'codigoCiudad =:codigoCiudad',
+    			'params' => array(
+    					'codigoCiudad' => $this->objCiudad->codigoCiudad
+    			),
+    			'order' => "prioridad $order"
+    	));
+    	
+    	if($bodegas){
+    		foreach($bodegas as $bodega){
+    			$listBodegas[] = $bodega->idBodega;
+    		}
+    	}
+    	
+    	return $listBodegas;
+    }
+    
+    
+    public function calcularFlete(){
+    	$bodegas = $this->getBodegas();
+    	
+    }
 
+    
+    public function getValorFlete(){
+    	$positions = $this->listItems();
+    	$suma = 0;
+    	$cantidadesBodega = array();
+    	$volumenBodegas = array();
+    	$volumetria = array();
+    	$valorFlete = 0;
+    	foreach($positions as $position){
+    		if ($position->unidadesCedi > 0){
+    			 
+    			$peso = $position->objProducto->PesoUnidad;
+    			
+    			$largo = $position->objProducto->Largo;
+    			$ancho = $position->objProducto->Ancho;
+    			$profundo = $position->objProducto->Profundo;
+    			 
+    			$volumetria = calcularVolumetriaOperador(0, $largo, $ancho, $profundo);
+    			
+    			$indiceVolumen = $volumetria > $peso ? $volumetria : $peso ;
+    			
+    			$arrayCantidades = $position->listBodegas;
+    			 
+    			foreach($arrayCantidades as $cantidadBodega){
+    				
+    				if(isset($cantidadesBodega[$cantidadBodega->idBodega])){
+    					$cantidadesBodega[$cantidadBodega->idBodega] += $cantidadBodega->cantidad;
+    				}else{
+    					$cantidadesBodega[$cantidadBodega->idBodega] = $cantidadBodega->cantidad;
+    				}
+    				if(isset($volumenBodegas[$cantidadBodega->idBodega])){
+    					$volumenBodegas[$cantidadBodega->idBodega] += $cantidadBodega->cantidad*$volumetria;
+    				}else{
+    					$volumenBodegas[$cantidadBodega->idBodega] = $cantidadBodega->cantidad*$volumetria;
+    				}
+    			}
+    			
+    			$suma += $position->precioBaseUnidad * $position->unidadesCedi;
+    		}
+    	}
+    	 
+    
+    	foreach($volumenBodegas as $codigoCedi => $volumetria ){
+    		$flete = Flete::model()->find(array(
+    				'with' => array('objOperadorLogistico' => array('with' => 'listOperadorRangos')),
+    				'condition' => 'codigoCiudad =:codigoCiudad AND bodegaVirtual =:bodegaVirtual',
+    				'params' => array(
+    						'codigoCiudad' => $this->objSectorCiudad->codigoCiudad,
+    						'bodegaVirtual' => $codigoCedi,
+    				)
+    		));
+    		 
+    		$rangos = $flete->objOperadorLogistico->listOperadorRangos;
+    		$claseRango = 2;
+    		$ultimoPeso = 0;
+    		foreach($rangos as $objRango){
+    			if($objRango->valorInicial <= $volumetria && $volumetria <= $objRango->valorFinal ){
+    				$claseRango = $objRango->tipo;
+    			}
+    			$ultimoPeso =  $objRango->valorFinal;
+    		}
+    
+    		if($claseRango == 1){
+    			$valorFlete += $flete->rango1;
+    		}else{
+    			$valorFlete += $flete->rango2;
+    		}
+    
+    		if($volumetria-$ultimoPeso > 0){
+    			 
+    			$valorFlete += ($volumetria-$ultimoPeso) * $flete->valorKiloAdicional;
+    		}
+    	}
+    	
+    	if($suma < Yii::app()->params->servientrega['valorMinimoSeguroVariable']){
+    		$valorFlete +=  Yii::app()->params->servientrega['valorMinimoSeguro'];
+    	} else {
+    		$valorFlete +=  $suma*Yii::app()->params->servientrega['porcentajeSeguro'];
+    	}
+    	 
+    	return $valorFlete;
+    }
 }

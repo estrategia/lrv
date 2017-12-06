@@ -347,3 +347,66 @@ function decrypt($string, $key) {
     }
     return $result;
 }
+
+
+function inicializarWebService() {
+	$client = new \SoapClient(Yii::app()->params->servientrega["urlWebService"], array(
+			"trace" => 1,
+			"exceptions" => 0,
+			'cache_wsdl' => WSDL_CACHE_NONE
+	));
+
+	Yii::import('application.models.servientrega.AuthHeader');
+	$auth = new AuthHeader(Yii::app()->params->servientrega["username"], Yii::app()->params->servientrega["password"], 
+						   Yii::app()->params->servientrega["codigoFacturacion"], Yii::app()->params->servientrega["NombreCargue"]);
+	
+
+	$header = new SoapHeader("http://tempuri.org/", "AuthenticationHeader", $auth, false);
+	
+	$client->__setSoapHeaders($header);
+
+	return $client;
+}
+
+function generateXMLPedido(){
+	$client = inicializarWebService();
+	Yii::import('application.models.servientrega.CadenasWebService');
+	$CadenasWebService = new CadenasWebService();
+    $paramReq = $CadenasWebService->generarGuia();
+    $parm[] = new SoapVar($paramReq, XSD_ANYXML, null, null, 'ns1:parameters');
+    $service = $client->StartService(new SoapVar($parm, SOAP_ENC_OBJECT));
+ echo "<pre>";
+ print_r($paramReq);exit();
+}
+
+
+function round_time( $time, $round_to_minutes = 5, $type = 'auto' ) {
+	$round = array( 'auto' => 'round', 'up' => 'ceil', 'down' => 'floor' );
+	$round = @$round[ $type ] ? $round[ $type ] : 'round';
+	$seconds = $round_to_minutes * 60;
+	if(substr_count($time,":")==2)
+		return date( 'H:i:s', $round( strtotime( $time ) / $seconds ) * $seconds );
+	else
+		return date( 'H:i', $round( strtotime( $time ) / $seconds ) * $seconds );
+}
+
+
+function obtenerFechaEnLetra($fecha){
+	
+	$dia= conocerDiaSemanaFecha($fecha);
+	$num = date("j", strtotime($fecha));
+	$anno = date("Y", strtotime($fecha));
+	$mes = array('enero', 'febrero', 'marzo', 'abril', 'mayo', 'junio', 'julio', 'agosto', 'septiembre', 'octubre', 'noviembre', 'diciembre');
+	$mes = $mes[(date('m', strtotime($fecha))*1)-1];
+	return $dia.', '.$num.' de '.$mes.' del '.$anno;
+}
+
+function conocerDiaSemanaFecha($fecha) {
+	$dias = array('Domingo', 'Lunes', 'Martes', 'Mi&eacute;rcoles', 'Jueves', 'Viernes', 'S&acute;bado');
+	$dia = $dias[date('w', strtotime($fecha))];
+	return $dia;
+}
+
+function calcularVolumetriaOperador($idOperador, $largo, $ancho, $profundo){
+	return $largo*$ancho*$profundo*(1/1000000)*400;
+}

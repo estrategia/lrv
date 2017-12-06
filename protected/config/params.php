@@ -787,4 +787,14 @@ return array(
             'usuario' => 'larebaja.online.terceros.usuario',
         )
     ),
+	'servientrega' => array(
+			'urlWebService' => 'http://web.servientrega.com:8081/GeneracionGuias.asmx?WSDL',
+			'username' => 'Testcopservir',
+			'password' => 'BpSUh12jBIiWdACDozgOaQ',
+			'codigoFacturacion' => 'BpSUh12jBIiWdACDozgOaQ',
+			'NombreCargue' => 'COPSERVIR_SISCLINET',
+			'valorMinimoSeguro' => 300,
+			'porcentajeSeguro' => 0.01,
+			'valorMinimoSeguroVariable' => 30000
+	)
 );
