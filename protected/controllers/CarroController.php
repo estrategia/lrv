@@ -123,11 +123,13 @@ class CarroController extends Controller {
 
         $objProducto = Producto::model()->find(array(
             'with' => array(
+
                 'listSaldos' => array('on' => '(listSaldos.codigoCiudad=:ciudad AND listSaldos.codigoSector=:sector) OR listSaldos.idProductoSaldos IS NULL'),
-                'listSaldosCedi' => array('on' => 'codigoCedi =:codigoCedi'),
+                'listSaldosCedi' => array('on' => '(codigoCedi IN ('.implode(",",$this->bodegas)  .'))'),
                 'listPrecios' => array('condition' => '(listPrecios.codigoCiudad=:ciudad AND listPrecios.codigoSector=:sector) OR listPrecios.idProductoPrecios IS NULL'),
                 'listSaldosTerceros',
                 'listFletesTerceros' => array('on' => 'listFletesTerceros.codigoCiudad=:ciudad OR listFletesTerceros.idFleteProducto IS NULL'),
+
             ),
             'condition' => 't.activo=:activo AND t.codigoProducto=:codigo AND ( (listSaldos.idProductoSaldos IS NOT NULL AND listPrecios.idProductoPrecios IS NOT NULL) OR (listSaldosCedi.idProductosSaldosCedi IS NOT NULL AND listPrecios.idProductoPrecios IS NOT NULL) OR (listSaldosTerceros.idProductoSaldo IS NOT NULL AND listPrecios.idProductoPrecios IS NOT NULL AND listFletesTerceros.idFleteProducto IS NOT NULL))',
             'params' => array(
@@ -136,7 +138,9 @@ class CarroController extends Controller {
                 //':saldo' => 0,
                 ':ciudad' => $this->objSectorCiudad->codigoCiudad,
                 ':sector' => $this->objSectorCiudad->codigoSector,
-                	':codigoCedi' => $this->objSectorCiudad->objCiudad->codigoSucursal,
+
+          //  	':codigoCedi' => $this->objSectorCiudad->objCiudad->codigoSucursal,
+
             ),
         ));
 
@@ -167,9 +171,45 @@ class CarroController extends Controller {
                 
                 //los productos de tercero no manejan bodega
                 if($objProducto->tercero == 1) {
+                	echo CJSON::encode(array('result' => 'error', 'response' => "La cantidad solicitada no está disponible en este momento. Saldos disponibles: $saldoUnidad unidades"));
+                	Yii::app()->end();
+                }
+                
+
+                if (!$objPagoForm->tieneDomicilio($this->objSectorCiudad)) {
+                	echo CJSON::encode(array('result' => 'error', 'response' => "La cantidad solicitada no está disponible en este momento. Saldos disponibles: $saldoUnidad unidades"));
+                	Yii::app()->end();
+                }
+                
+                $cantidadBodega = $cantidadCarroUnidad + $cantidadU - $saldoUnidad;
+                $cantidadUbicacion = $cantidadU - $cantidadBodega;
+
+                //si hay en bodegas, mensaje para ver detalle bodega, sino, mensaje error
+               /* $objSaldoBodega = ProductosSaldosCedi::model()->find(array(
+                    'condition' => 'codigoProducto=:producto AND codigoCedi=:cedi',
+                    'params' => array(
+                        ':producto' => $producto,
+                        ':cedi' => $this->objSectorCiudad->objCiudad->codigoSucursal,
+                        //':saldo' => $cantidadBodega
+                    )
+                ));*/
+
+                $sql = "SELECT sum(saldoUnidad) as saldoUnidades FROM t_ProductosSaldosCedi WHERE codigoProducto=:codigoProducto AND 
+                		codigoCedi IN (".implode(",",$this->bodegas).")";
+                $query = Yii::app()->db->createCommand($sql);
+                $query->bindParam(":codigoProducto", $producto, PDO::PARAM_STR);
+				$objSaldoBodega = $query->queryRow();
+                // revisar
+                
+                if ($objSaldoBodega['saldoUnidades'] == 0) {
                     echo CJSON::encode(array('result' => 'error', 'response' => "La cantidad solicitada no está disponible en este momento. Saldos disponibles: $saldoUnidad unidades"));
                     Yii::app()->end();
                 }
+
+                if($objSaldoBodega['saldoUnidades'] < $cantidadBodega){
+                	$cantidadBodega = $objSaldoBodega['saldoUnidades'];
+                }
+/*
                 
                     $objPagoForm = new FormaPagoForm;
                     
@@ -200,7 +240,7 @@ class CarroController extends Controller {
                     if($objSaldoBodega->saldoUnidad < $cantidadBodega){
                         $cantidadBodega = $objSaldoBodega->saldoUnidad;
                     }
-                    
+                    */
                     if($saldoUnidad - $cantidadCarroUnidad > 0 ){
                         $tipo = 1;
                     }else{
@@ -989,7 +1029,7 @@ class CarroController extends Controller {
                 'listSaldos' => array('on' => '(listSaldos.codigoCiudad=:ciudad AND listSaldos.codigoSector=:sector) OR (listSaldos.saldoUnidad IS NULL AND listSaldos.codigoCiudad IS NULL AND listSaldos.codigoSector IS NULL)'),
                 'listPrecios' => array('condition' => '(listPrecios.codigoCiudad=:ciudad AND listPrecios.codigoSector=:sector) OR (listPrecios.codigoCiudad IS NULL AND listPrecios.codigoSector IS NULL)'),
                 'listSaldosTerceros' => array('on' => '(listSaldosTerceros.codigoCiudad=:ciudad AND listSaldosTerceros.codigoSector=:sector) OR (listSaldosTerceros.codigoCiudad IS NULL AND listSaldosTerceros.codigoSector IS NULL)'),
-            	'listSaldosCedi' => array ('on' => 'codigoCedi =:codigoCedi'),
+            	'listSaldosCedi' => array ('on' => 'codigoCedi IN ('.implode(",",$this->bodegas).')'),
             		 
             ),
             'condition' => 't.activo=:activo AND t.codigoProducto=:codigo AND ( ((listSaldos.saldoUnidad IS NOT NULL OR listSaldosCedi.saldoUnidad IS NOT NULL) AND listPrecios.codigoCiudad IS NOT NULL) OR listSaldosTerceros.codigoCiudad IS NOT NULL)',
@@ -998,7 +1038,7 @@ class CarroController extends Controller {
                 ':codigo' => $producto,
                 ':ciudad' => $objSectorCiudad->codigoCiudad,
                 ':sector' => $objSectorCiudad->codigoSector,
-            	':codigoCedi' => $objSectorCiudad->objCiudad->codigoSucursal,
+          //  	':codigoCedi' => $objSectorCiudad->objCiudad->codigoSucursal,
             ),
         ));
 
@@ -1024,16 +1064,24 @@ class CarroController extends Controller {
         }
 
         if ($cantidadBodega > 0) {
-            $objSaldoBodega = ProductosSaldosCedi::model()->find(array(
+          /*  $objSaldoBodega = ProductosSaldosCedi::model()->find(array(
                 'condition' => 'codigoProducto=:producto AND codigoCedi=:cedi AND saldoUnidad>=:saldo',
                 'params' => array(
                     ':producto' => $producto,
                     ':cedi' => $objSectorCiudad->objCiudad->codigoSucursal,
                     ':saldo' => $cantidadBodega + $cantidadCarroBodega
                 )
-            ));
+            )); */
+        	
+        	$sql = "SELECT sum(saldoUnidad)-($cantidadBodega + $cantidadCarroBodega) as saldoUnidades FROM t_ProductosSaldosCedi WHERE codigoProducto=:codigoProducto AND
+                		codigoCedi IN (".implode(",", $this->bodegas).")";
+        	$query = Yii::app()->db->createCommand($sql);
+        	$query->bindParam(":codigoProducto", $producto, PDO::PARAM_STR);
+  //      	$query->bindParam(":saldo", (), PDO::PARAM_INT);
+        	
+        	$objSaldoBodega = $query->queryRow();
 
-            if ($objSaldoBodega === null) {
+            if ($objSaldoBodega['saldoUnidades'] < 0) {
                 echo CJSON::encode(array(
                     'result' => 'error',
                     'response' => "La cantidad solicitada no está disponible en este momento. No hay unidades disponibles",
@@ -1049,7 +1097,7 @@ class CarroController extends Controller {
         }
 
         
-        if ($cantidadBodega > 0) {
+        if ($objSaldoBodega['saldoUnidades'] >= 0) {
             Yii::app()->shoppingCart->putStored($objProductoCarro, $cantidadBodega);
         }
 
@@ -1391,23 +1439,40 @@ class CarroController extends Controller {
             Yii::app()->end();
         }
 
-        $objSaldoBodega = ProductosSaldosCedi::model()->find(array(
-            'condition' => 'codigoProducto=:producto AND codigoCedi=:cedi AND saldoUnidad>=:saldo',
-            'params' => array(
-                ':producto' => $position->objProducto->codigoProducto,
-                ':cedi' => $objSectorCiudad->objCiudad->codigoSucursal,
-                ':saldo' => $cantidad
-            )
-        ));
+//         $objSaldoBodega = ProductosSaldosCedi::model()->find(array(
+//             'condition' => 'codigoProducto=:producto AND codigoCedi=:cedi AND saldoUnidad>=:saldo',
+//             'params' => array(
+//                 ':producto' => $position->objProducto->codigoProducto,
+//                 ':cedi' => $objSectorCiudad->objCiudad->codigoSucursal,
+//                 ':saldo' => $cantidad
+//             )
+//         ));
 
-        if ($objSaldoBodega === null) {
-            echo CJSON::encode(array('result' => 'error', 'response' => array(
-                    'message' => 'La cantidad solicitada no está disponible en este momento. No hay unidades disponibles',
-                    'carroHTML' => $this->renderPartial($carroVista, null, true),
+//         if ($objSaldoBodega === null) {
+//             echo CJSON::encode(array('result' => 'error', 'response' => array(
+//                     'message' => 'La cantidad solicitada no está disponible en este momento. No hay unidades disponibles',
+//                     'carroHTML' => $this->renderPartial($carroVista, null, true),
+//             )));
+//             Yii::app()->end();
+//         }
+
+        $producto = $position->objProducto->codigoProducto;
+        $sql = "SELECT sum(saldoUnidad)-($cantidad) as saldoUnidades FROM t_ProductosSaldosCedi WHERE codigoProducto=:codigoProducto AND
+        codigoCedi IN (".implode(",", $this->bodegas).")";
+        $query = Yii::app()->db->createCommand($sql);
+        $query->bindParam(":codigoProducto", $producto, PDO::PARAM_STR);
+        //      	$query->bindParam(":saldo", (), PDO::PARAM_INT);
+         
+        $objSaldoBodega = $query->queryRow();
+        
+        if ($objSaldoBodega['saldoUnidades'] < 0) {
+        	echo CJSON::encode(array('result' => 'error', 'response' => array(
+                    'message' => 'Unidades no disponiles',
+        			'carroHTML' => $this->renderPartial($carroVista, null, true),
             )));
-            Yii::app()->end();
+        	Yii::app()->end();
         }
-
+        
         Yii::app()->shoppingCart->updateStored($position, $cantidad);
         $canastaVista = "canasta";
         if (!$this->isMobile) {
@@ -1749,8 +1814,10 @@ class CarroController extends Controller {
             $modelPago->pagoInvitado = true;
             //$modelPago->identificacionUsuario = null;
             Yii::app()->session[Yii::app()->params->sesion['carroPagarForm']] = $modelPago;
+            
             $this->pagarInvitadoDesktop($paso, $post, $modelPago);
         } else {
+        	
             $this->pagarAutenticadoDesktop($paso, $post, $modelPago);
         }
     }
@@ -3476,27 +3543,7 @@ class CarroController extends Controller {
                     
                     //-- actualizar saldo producto
                     //actualizar saldo bodega //--
-                    if ($position->getQuantityStored() > 0) {
-                        $objSaldoBodega = ProductosSaldosCedi::model()->find(array(
-                            'condition' => 'codigoCedi=:cedi AND codigoProducto=:producto',
-                            'params' => array(
-                                ':cedi' => Yii::app()->shoppingCart->getObjCiudad()->codigoSucursal,
-                                ':producto' => $position->objProducto->codigoProducto
-                            )
-                        ));
-
-                        if ($objSaldoBodega == null) {
-                            throw new Exception("Producto " . $position->objProducto->codigoProducto . " no disponible en bodega");
-                        }
-
-                        if ($objSaldoBodega->saldoUnidad < $position->getQuantityStored()) {
-                            throw new Exception("Producto " . $position->objProducto->codigoProducto . ". La cantidad solicitada no está disponible en este momento. Saldos disponibles: $objSaldoBodega->saldoUnidad unidades");
-                        }
-
-                        $objSaldoBodega->saldoUnidad = $objSaldoBodega->saldoUnidad - $position->getQuantityStored();
-                        $objSaldoBodega->save();
-                    }
-                    //-- actualizar saldo bodega
+                    
 
                     // Usar la suscripcion
                     $suscripcion = SuscripcionesProductosUsuario::model()->find(
@@ -3570,6 +3617,73 @@ class CarroController extends Controller {
                     if (!$objItem->save()) {
                         throw new Exception("Error al guardar item de compra $objItem->codigoProducto. " . $objItem->validateErrorsResponse());
                     }
+                    
+                    
+                    if ($position->getQuantityStored() > 0) {
+                    	 
+                    	$cantidadAlmacenadaBodega = $position->getQuantityStored();
+                    	$sql = "SELECT sum(saldoUnidad)-($cantidadAlmacenadaBodega) as saldoUnidades FROM t_ProductosSaldosCedi WHERE codigoProducto=:codigoProducto AND
+                    	codigoCedi IN (".implode(",", $this->bodegas).")";
+                    	$query = Yii::app()->db->createCommand($sql);
+                    	$producto = $position->objProducto->codigoProducto;
+                    	$query->bindParam(":codigoProducto", $producto, PDO::PARAM_INT);
+                    	 
+                    	$objSaldoBodega = $query->queryRow();
+                    	// revisar
+                    	 
+                    	if ($objSaldoBodega['saldoUnidades'] < 0) {
+                    		throw new Exception("Producto " . $position->objProducto->codigoProducto . " no disponible en bodega");
+                    	}
+                    	 
+                    	foreach($position->calculateUnidadesBodega($this->bodegas, $objCompra->codigoCiudad)['cantidades'] as $codigoSucursal => $cantidadBodega){
+                    		$objSaldoBodega = ProductosSaldosCedi::model()->find(array(
+                    				'condition' => 'codigoCedi=:cedi AND codigoProducto=:producto',
+                    				'params' => array(
+                    						':cedi' => $codigoSucursal,
+                    						':producto' => $position->objProducto->codigoProducto
+                    				)
+                    		));
+                    
+                    		$objSaldoBodega->saldoUnidad = $objSaldoBodega->saldoUnidad - $cantidadBodega;
+                    		
+                    		if(!$objSaldoBodega->save()){
+                    			throw new Exception("Producto " . $position->objProducto->codigoProducto . " no se pudo registrar en bodega, intente de nuevo");
+                    		}
+                    
+                    		
+                    		
+                    		$objProductoBodega = new ComprasUnidadesBodega();
+                    		$objProductoBodega->idCompra = $objCompra->idCompra;
+                    		$objProductoBodega->idCompraItem = $objItem->idCompraItem;
+                    		$objProductoBodega->codigoProducto = $objItem->codigoProducto;
+                    		$objProductoBodega->idBodega = $codigoSucursal;
+                    		$objProductoBodega->cantidad = $cantidadBodega;
+                    
+                    		if(!$objProductoBodega->save()){
+                    			throw new Exception("Producto " . $position->objProducto->codigoProducto . " no se pudo registrar en bodega, intente de nuevo");
+                    		}
+                    	}
+                    	 
+                    	//                         $objSaldoBodega = ProductosSaldosCedi::model()->find(array(
+                    	//                             'condition' => 'codigoCedi=:cedi AND codigoProducto=:producto',
+                    	//                             'params' => array(
+                    	//                                 ':cedi' => Yii::app()->shoppingCart->getObjCiudad()->codigoSucursal,
+                    	//                                 ':producto' => $position->objProducto->codigoProducto
+                    	//                             )
+                    	//                         ));
+                    
+                    	//                         if ($objSaldoBodega == null) {
+                    	//                             throw new Exception("Producto " . $position->objProducto->codigoProducto . " no disponible en bodega");
+                    	//                         }
+                    
+                    	//                         if ($objSaldoBodega->saldoUnidad < $position->getQuantityStored()) {
+                    	//                             throw new Exception("Producto " . $position->objProducto->codigoProducto . ". La cantidad solicitada no está disponible en este momento. Saldos disponibles: $objSaldoBodega->saldoUnidad unidades");
+                    	//                         }
+                    
+                    	//                         $objSaldoBodega->saldoUnidad = $objSaldoBodega->saldoUnidad - $position->getQuantityStored();
+                    	//                         $objSaldoBodega->save();
+                    }
+                    //-- actualizar saldo bodega
 
 			        //beneficios
                     foreach ($position->getBeneficios() as $objBeneficio) {
@@ -3842,11 +3956,35 @@ class CarroController extends Controller {
                     Yii::log("Exception WebService CongelarCompraAutomatica [compra: $objCompra->idCompra]\n" . $exc->getMessage() . "\n" . $exc->getTraceAsString(), CLogger::LEVEL_INFO, 'application');
                 }
             }
-          	
          
 			//echo $objFormasPago->valorBono;exit();
             if (Yii::app()->shoppingCart->getBono() > 0) {
                 	$modelPago->actualizarBonoCRM($objCompra);
+            }
+            
+            if(Yii::app()->shoppingCart->isUnitStored()){
+            	
+            	$arrayFlete = Yii::app()->shoppingCart->getArrayFlete();
+            	
+            	foreach($arrayFlete as $idBodega => $positionBodega){
+            		
+            		$compraDespacho = new ComprasDespachoCedi();
+            		$compraDespacho->idCompra = $objCompra->idCompra;
+            		$compraDespacho->idOperadorLogistico = $positionBodega['operadorLogistico'];
+            		$compraDespacho->idBodega = $idBodega;
+            		$compraDespacho->codigoCiudad = $objCompra->codigoCiudad;
+            		$compraDespacho->valorDeclaradoTotal = $positionBodega['valorDeclarado'];
+            		$compraDespacho->valorFlete = $positionBodega['valorFlete'];
+            		
+            		$compraDespacho->valorVolumetrico = $positionBodega['valorVolumetrico'];
+            		
+            		if($compraDespacho->save()){
+            			if($positionBodega['operadorLogistico'] == 1){
+            				$this->servientrega($objCompra, $compraDespacho->objBodega,$compraDespacho);
+            			}
+            		}
+            	}
+            	
             }
           
             return array(
@@ -4354,6 +4492,49 @@ class CarroController extends Controller {
         	*/
         	
         	echo CJSON::encode(array('result' => 'ok', 'response' => 'Se ha adquirido el bono por '.Yii::app()->numberFormatter->format(Yii::app()->params->formatoMoneda['patron'], $objBono->valorBono, Yii::app()->params->formatoMoneda['moneda']) ));
+    }
+    
+    
+
+    public function servientrega($objCompra, $objBodega, $compraDespacho){
+    	$url = "sismilenio.servientrega.com.co/wsrastreoenvios/wsrastreoenvios.asmx?WDSL";
+    	$login = "Testcopservir";
+    	$pass = "BpSUh12jBIiWdACDozgOaQ==";
+    	$codFactura = "SER408";
+    	$cargue = "COPSERVIR_SISCLINET";
+    
+    	$client = new \SoapClient($url, array(
+    			"trace" => 1,
+    			"exceptions" => 0,
+    			'cache_wsdl' => WSDL_CACHE_NONE
+    	));
+    
+    	$auth = array(
+    			'login' => $login,
+    			'pwd' => $pass,
+    			'Id_CodFacturacion' => $codFactura,
+    			'Nombre_Cargue' => $cargue,
+    	);
+    
+    	$header = new SoapHeader("http://tempuri.org/", "AuthHeader", $auth, false);
+    	$client->__setSoapHeaders($header);
+    
+    	$paramReq = $this->renderPartial('CargueMasivoExternoDTO', array(
+    			'objCompra' => $objCompra,
+    			'objBodega' => $objBodega, 
+    			'objCompraDespacho' => $compraDespacho), true);
+    	
+    	
+    	$parm[] = new SoapVar($paramReq, XSD_ANYXML);
+    	$service = $client->CargueMasivoExterno(new SoapVar($parm, SOAP_ENC_OBJECT));
+    	
+    	
+    	if($service->CargueMasivoExternoResult){
+    		$compraDespacho->numeroGuia = $service->arrayGuias->string;
+    	} else {
+    		
+    	}
+    
     }
     
     

@@ -67,6 +67,8 @@ class CatalogoController extends Controller {
 			) );
 		}
 	}
+	
+	
 	public function actionCategoria($categoria) {
 		$objSectorCiudad = $this->objSectorCiudad;
 
@@ -301,7 +303,7 @@ class CatalogoController extends Controller {
 			                        'on' => 'listFletesTerceros.codigoCiudad=:ciudad OR listFletesTerceros.idFleteProducto IS NULL'
 			                    ),
 								'listSaldosCedi' => array(
-										'on' => 'codigoCedi=:codigoCedi'
+										'on' => 'codigoCedi IN (:codigoCedi)'
 								)
 						)
 						// 'listSaldos' => array('condition' => '(listSaldos.saldoUnidad>:saldo AND listSaldos.codigoCiudad=:ciudad AND listSaldos.codigoSector=:sector) OR (listSaldos.saldoUnidad IS NULL AND listSaldos.codigoCiudad IS NULL AND listSaldos.codigoSector IS NULL)'),
@@ -316,7 +318,7 @@ class CatalogoController extends Controller {
 								':saldo' => 0,
 								':ciudad' => $objSectorCiudad->codigoCiudad,
 								':sector' => $objSectorCiudad->codigoSector,
-								':codigoCedi' => $objSectorCiudad->objCiudad->codigoSucursal
+								':codigoCedi' => implode(",",$this->bodegas)
 						)
 				);
 			}
@@ -910,7 +912,7 @@ class CatalogoController extends Controller {
 										'on' => 'listSaldos.codigoCiudad=:ciudad AND listSaldos.codigoSector=:sector'
 								),
 								'listSaldosCedi' => array (
-										'on' => 'codigoCedi =:codigoCedi'
+										 'on' => 'codigoCedi IN ('.implode(",", $this->bodegas).')'
 								),
 								'listPrecios' => array (
 										'on' => 'listPrecios.codigoCiudad=:ciudad AND listPrecios.codigoSector=:sector'
@@ -930,7 +932,7 @@ class CatalogoController extends Controller {
 								':saldo' => 0,
 								':ciudad' => $objSectorCiudad->codigoCiudad,
 								':sector' => $objSectorCiudad->codigoSector,
-								':codigoCedi' => $objSectorCiudad->objCiudad->codigoSucursal
+							//	':codigoCedi' => ,
 						)
 				);
 			}

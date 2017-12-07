@@ -48,6 +48,11 @@ $this->widget('application.widgets.PedidosGridView', array(
             'type' => 'raw',
             'value' => array($this, 'gridDetallePedido'),
         ),
+    	array(
+    		'header' => 'Ver Rastreo',
+    		'type' => 'raw',
+    		'value' => array($this, 'gridTracking'),
+    	),
         array(
             'header' => 'Agregar al carro',
             'type' => 'raw',

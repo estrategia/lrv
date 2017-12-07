@@ -35,6 +35,7 @@ class Controller extends CController {
     public $objSectorCiudad = null;
     public $metaTags = null;
     public $menuSuperior = null;
+    public $bodegas = array();
 
     public function init() {
         if (Yii::app()->detectMobileBrowser->showMobile) {
@@ -64,12 +65,26 @@ class Controller extends CController {
 
         if (isset(Yii::app()->session[Yii::app()->params->sesion['sectorCiudadEntrega']]) && Yii::app()->session[Yii::app()->params->sesion['sectorCiudadEntrega']] != null) {
             $this->objSectorCiudad = Yii::app()->session[Yii::app()->params->sesion['sectorCiudadEntrega']];
+            
+            $bodegas = CiudadBodega::model()->findAll(array(
+            	'condition' => 'codigoCiudad =:codigoCiudad',
+            	'params' => array(
+            			'codigoCiudad' => $this->objSectorCiudad->codigoCiudad
+            	)
+            ));
+            
+            if($bodegas){
+            	foreach($bodegas as $bodega){
+            		$this->bodegas[] = $bodega->idBodega;
+            	}
+            }
         }
 
         $this->verificarSesion();
 
         if($this->objSectorCiudad==null && Yii::app()->params->ubicacionDefecto){
         	$this->objSectorCiudad = SectorCiudad::getDefecto();
+        	$this->bodegas = array();
         }
 
         //CVarDumper::dump($this->objSectorCiudad,10,true);echo "<br>";

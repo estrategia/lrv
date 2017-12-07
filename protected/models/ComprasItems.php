@@ -78,9 +78,13 @@ class ComprasItems extends CActiveRecord {
             'objOperador' => array(self::BELONGS_TO, 'Operador', 'idOperador'),
             'objEstadoItem' => array(self::BELONGS_TO, 'EstadoItem', 'idEstadoItem'),
             'listBeneficios' => array(self::HAS_MANY, 'BeneficiosComprasItems', 'idCompraItem'),
+
+            'listBodegas' => array(self::HAS_MANY, 'ComprasUnidadesBodega', 'idCompraItem'),
             'objMedico' => array(self::BELONGS_TO, 'Medico', 'registroMedico'),
-            'estadoTercero' => array(self::BELONGS_TO, 'EstadosComprasItemsTerceros', 'idEstadoItemTercero'),
+
         	'operadorLogisticoTerceros' => array(self::BELONGS_TO, 'OperadorLogisticoTerceros', 'idOperadorLogistico'),
+        	'estadoTercero' => array(self::BELONGS_TO, 'EstadosComprasItemsTerceros', 'idEstadoItemTercero'),
+
         );
     }
 
@@ -618,24 +622,43 @@ class ComprasItems extends CActiveRecord {
             echo CJSON::encode(array('result' => 'error', 'response' => 'Actualización exitosa.'));
             Yii::app()->end();
         }
-
+        $transaction = Yii::app()->db->beginTransaction();
+        
         //aumentar
         if ($cantDiff > 0) {
-            $objSaldo = ProductosSaldosCedi::model()->find(array(
-                'condition' => 'codigoProducto=:codigo AND codigoCedi=:cedi',
-                'params' => array(
-                    ':codigo' => $this->codigoProducto,
-                    ':cedi' => $this->objCompra->objCiudad->codigoSucursal
-                )
-            ));
 
-            if ($objSaldo === null) {
-                throw new Exception("La cantidad solicitada no está disponible en este momento. No hay unidades disponibles");
+        	$bodegas = $this->objCompra->getBodegas("ASC");
+        	$sql = "SELECT sum(saldoUnidad)-($cantDiff) as saldoUnidades FROM t_ProductosSaldosCedi WHERE codigoProducto=$this->codigoProducto AND
+        	codigoCedi IN (".implode(",", $bodegas).")";
+        	$query = Yii::app()->db->createCommand($sql);
+        	 
+        	$objSaldoBodega = $query->queryRow();
+        	
+        	if ($objSaldoBodega['saldoUnidades'] < 0) {
+        		echo CJSON::encode(array(
+        				'result' => 'error',
+        				'response' => "La cantidad solicitada no está disponible en este momento. No hay unidades disponibles",
+        				//'response' => 'Cantidad no disponible para entrega ' . Yii::app()->shoppingCart->getDeliveryStored() . ' hrs'
+        		));
+        		Yii::app()->end();
+        	}
+        	
+            if ($cantDiff > $objSaldoBodega['saldoUnidades']) {
+                throw new Exception("La cantidad solicitada no está disponible en este momento. Saldos disponibles: ".$objSaldoBodega['saldoUnidades']." unidades");
             }
-
-            if ($cantDiff > $objSaldo->saldoUnidad) {
-                throw new Exception("La cantidad solicitada no está disponible en este momento. Saldos disponibles: $objSaldo->saldoUnidad unidades");
-            }
+        }
+        
+        // Actualizar las unidades de las bodegas
+        
+        if($cantDiff > 0){
+        	$bodegas = $this->objCompra->getBodegas("ASC");
+        	// Tomar cantidades de las bodegas
+        	$this->calculateUnidadesBodega($bodegas,$cantDiff);
+        }else if($cantDiff < 0){
+        	$bodegas = $this->objCompra->getBodegas("DESC");
+        	// Devolver cantidades de las bodegas
+        	$this->restarUnidadesBodega($bodegas,$cantDiff);
+        	
         }
 
         $precioTotal = $this->precioBaseUnidad - $this->descuentoUnidad;
@@ -653,11 +676,10 @@ class ComprasItems extends CActiveRecord {
         $objCompra->totalCompra += $precioDiff;
         // $objCompra->totalCompra += $this->precioTotalSuscripcion;
 
-        if ($this->unidades + $this->fracciones == 0) {
-            $objCompra->flete -= $this->flete;
-        }
-
-        $transaction = Yii::app()->db->beginTransaction();
+        $fleteDiff = $this->objCompra->getValorFlete()- $this->objCompra->flete;
+        $objCompra->flete = $this->objCompra->getValorFlete();
+        $objCompra->totalCompra += $fleteDiff;
+       
 
         if (!$this->save()) {
             try {
@@ -685,5 +707,131 @@ class ComprasItems extends CActiveRecord {
         }
         $transaction->commit();
     }
+    
+    
+    
+    public function calculateUnidadesBodega($bodegas, $cantidad){
+    	 
+
+    	$cantidadesBodega = array();
+    	 
+    	$listSaldosCedi = ProductosSaldosCedi::model()->findAll( array(
+    			'condition' => 'codigoProducto =:codigoProducto AND codigoCedi IN ('.implode(",",$bodegas).') ',
+    			'params' => array(
+    					'codigoProducto' => $this->objProducto->codigoProducto
+    			),
+    			'order' => 'field(codigoCedi,'. implode(",", $bodegas).' )'
+    	));
+    
+    	$i = 0;
+    	do {
+    		$saldoBodega = $listSaldosCedi[$i];
+    		$unidadesBodega = 0;
+    		
+    		if($saldoBodega->saldoUnidad > 0){
+	    		if($cantidad > $saldoBodega->saldoUnidad){
+	    			$unidadesBodega = $saldoBodega->saldoUnidad;
+	    		}else{
+	    			$unidadesBodega = $cantidad;
+	    		}
+	    		 
+	    		$cantidad -=$unidadesBodega;
+	    		 
+	    		$cantidadesBodega[$saldoBodega->codigoCedi] = $unidadesBodega;
+	    		
+	    		$saldoBodega->saldoUnidad -=$unidadesBodega;
+	    		
+	    	
+	    		if(!$saldoBodega->save()){
+	    			throw new Exception('Error de actualización compra: ' . $saldoBodega->validateErrorsResponse());
+	    		}
+	    		
+	    		$objUnidadesBodega = ComprasUnidadesBodega::model()->find( array(
+	    				'condition' => 'idCompraItem =:idCompraItem AND idBodega =:idBodega ',
+	    				'params' => array(
+	    						'idCompraItem' => $this->idCompraItem,
+	    						'idBodega' => $saldoBodega->codigoCedi
+	    				),
+	    		));
+	    		
+	    		if(!$objUnidadesBodega){
+	    			$objUnidadesBodega = new ComprasUnidadesBodega();
+	    			$objUnidadesBodega->codigoProducto = $this->codigoProducto;
+	    			$objUnidadesBodega->idCompraItem = $this->idCompraItem;
+	    			$objUnidadesBodega->idCompra = $this->idCompra;
+	    			$objUnidadesBodega->idBodega = $saldoBodega->codigoCedi;
+	    			$objUnidadesBodega->cantidad = 0;
+	    		}
+	    		
+	    		$objUnidadesBodega->cantidad += $unidadesBodega;
+	    		
+	    		if(!$objUnidadesBodega->save()){
+            		throw new Exception('Error de actualización compra: ' . implode(",",$objUnidadesBodega->getErrors()));
+	    		}
+	    		
+	    	//	$volumenBodegas[$saldoBodega->codigoCedi] = $unidadesBodega * $volumetria;
+    		}
+    		$i++;
+    	} while ( $cantidad > 0 );
+    	 
+    	return  $cantidadesBodega;
+    }
+    
+    public function restarUnidadesBodega($bodegas, $cantidad){
+    	$cantidadesBodega = array();
+    	$cantidad = abs($cantidad);
+    	$listVentaCedi = ComprasUnidadesBodega::model()->findAll( array(
+    			'condition' => 'idCompraItem =:idCompraItem AND idBodega IN ('.implode(",",$bodegas).') ',
+    			'params' => array(
+    					'idCompraItem' => $this->idCompraItem
+    			),
+    			'order' => 'field(idBodega,'. implode(",", $bodegas).' )'
+    	));
+    	
+    	$i = 0;
+    	do {
+    		$unidadesCedi = $listVentaCedi[$i];
+    		$unidadesBodega = 0;
+    		$cantidadesSubstraidas = 0;
+    		
+    		if($cantidad > $unidadesCedi->cantidad){
+    			$cantidad -= $unidadesCedi->cantidad;
+    			$cantidadesSubstraidas = $unidadesCedi->cantidad;
+    			$unidadesCedi->cantidad = 0;
+    			
+    		}else if($cantidad <= $unidadesCedi->cantidad){
+    			$unidadesCedi->cantidad -= $cantidad;
+    			$cantidadesSubstraidas = $cantidad;
+    			$cantidad = 0;
+    			
+    		}
+    		
+    		if(!$unidadesCedi->save()) {
+            	throw new Exception('Error de actualización compra: ' . $unidadesCedi->validateErrorsResponse());
+	    	};
+    		
+    		$saldoCedi = ProductosSaldosCedi::model()->find(array(
+    				'condition' => 'codigoProducto =:codigoProducto AND codigoCedi =:codigoCedi',
+    				'params' => array(
+    						':codigoProducto' => $unidadesCedi->codigoProducto,
+    						':codigoCedi' => $unidadesCedi->idBodega,
+    				)
+    		));
+    		
+    		if($unidadesCedi->cantidad < 0){
+    			$unidadesCedi->delete();
+    		}
+    		    
+    		$saldoCedi->saldoUnidad += $cantidadesSubstraidas;
+    		
+    		if(!$saldoCedi->save()){
+            	throw new Exception('Error de actualización compra: ' . $saldoCedi->validateErrorsResponse());
+	    	}
+    		$i++;
+    	} while ( $cantidad > 0 );
+    	
+    	return  $cantidadesBodega;
+    }
+    
 
 }

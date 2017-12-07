@@ -1031,19 +1031,21 @@ class FormaPagoForm extends CFormModel {
 
     public function fechaValidate($attribute, $params) {
         if ($this->fechaEntrega != null) {
-            $listHoras = $this->listDataHoras();
-            $valido = false;
-
-            foreach ($listHoras as $hora) {
-                if ($hora['fecha'] == $this->fechaEntrega) {
-                    $valido = true;
-                    break;
-                }
-            }
-
-            if (!$valido) {
-                $this->addError('fechaEntrega', $this->getAttributeLabel('fechaEntrega') . " no disponible");
-            }
+        	if(Yii::app()->shoppingCart->getItemsCountNormal() > 0){
+	            $listHoras = $this->listDataHoras();
+	            $valido = false;
+	
+	            foreach ($listHoras as $hora) {
+	                if ($hora['fecha'] == $this->fechaEntrega) {
+	                    $valido = true;
+	                    break;
+	                }
+	            }
+	
+	            if (!$valido) {
+	                $this->addError('fechaEntrega', $this->getAttributeLabel('fechaEntrega') . " no disponible");
+	            }
+        	}
         }
     }
 

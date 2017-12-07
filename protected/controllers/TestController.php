@@ -2057,9 +2057,9 @@ class TestController extends Controller {
     
     					}
     
-    					foreach ($beneficio['listBeneficiosPuntoVenta'] as $benefPdv) {
-    						$datosPdv[] = "($objBeneficio->idBeneficio,'" . $benefPdv['IDComercial'] . "')";
-    					}
+//     					foreach ($beneficio['listBeneficiosPuntoVenta'] as $benefPdv) {
+//     						$datosPdv[] = "($objBeneficio->idBeneficio,'" . $benefPdv['IDComercial'] . "')";
+//     					}
     
     
     					if ($beneficio['listCedulas']) {
@@ -2132,6 +2132,11 @@ class TestController extends Controller {
     	echo "<pre>";
     	var_dump($decode);
     }
+    
+    public function actionEnvio(){
+    	generateXMLPedido();
+    }
+    
     
     public function actionSoat($placa){
         $iBus = [
@@ -2231,7 +2236,8 @@ class TestController extends Controller {
         $paramReq = $this->renderPartial('CargueMasivoExternoDTO', array(), true);
         $parm[] = new SoapVar($paramReq, XSD_ANYXML);
         $service = $client->CargueMasivoExterno(new SoapVar($parm, SOAP_ENC_OBJECT));
-        
+        echo "<pre>";
+        print_r($service);exit();
         if($service->CargueMasivoExternoResult){
             echo "<br>EXITO!!!!<br>";
             
@@ -2259,6 +2265,63 @@ class TestController extends Controller {
         CVarDumper::dump($client->__getLastResponse(),10,true);*/
         
         
+    }
+    
+    
+    public function actionTrack(){
+    	$url = "http://sismilenio.servientrega.com.co/wsrastreoenvios/wsrastreoenvios.asmx?WSDL";
+    	$login = "Testcopservir";
+    	$pass = "BpSUh12jBIiWdACDozgOaQ==";
+    	$codFactura = "SER408";
+    	$cargue = "COPSERVIR_SISCLINET";
+    
+    	$client = new \SoapClient($url, array(
+    			"trace" => 1,
+    			"exceptions" => 0,
+    			'cache_wsdl' => WSDL_CACHE_NONE
+    	));
+    
+    	$auth = array(
+    			'login' => $login,
+    			'pwd' => $pass,
+    			'Id_CodFacturacion' => $codFactura,
+    			'Nombre_Cargue' => $cargue,
+    	);
+    
+    //	$header = new SoapHeader("http://tempuri.org/", "AuthHeader", $auth, false);
+    //	$client->__setSoapHeaders($header);
+    
+    	$paramReq = $this->renderPartial('RastreoGuia', array(), true);
+    	$parm[] = new SoapVar($paramReq, XSD_ANYXML);
+    	$service = $client->ConsultarGuiaExterno(new SoapVar($parm, SOAP_ENC_OBJECT));
+    	CVarDumper::dump($service->ConsultarGuiaExternoResult,10,true);exit();
+    	if($service->CargueMasivoExternoResult){
+    		echo "<br>EXITO!!!!<br>";
+    
+    		echo "<br><br>Respuesta:<br>";
+    		CVarDumper::dump($service,10,true);
+    		//$resultadoArray = get_object_vars($service->envios);
+    		$resultadoArray = json_decode(json_encode($service->envios), true);
+    		echo "<br><br>Respuesta array:<br>";
+    		CVarDumper::dump($resultadoArray,10,true);
+    
+    
+    	} else {
+    		echo "<br>ERROR!!!!<br>";
+    	}
+    
+    
+    
+    	/*echo "<br><br>Respuesta:<br>";
+    	 CVarDumper::dump($service,10,true);
+    
+    	 echo "<br><br>Peticion:<br>";
+    	 CVarDumper::dump($client->__getLastRequest(),10,true);
+    
+    	 echo "<br><br>Ultima Respuesta:<br>";
+    	 CVarDumper::dump($client->__getLastResponse(),10,true);*/
+    
+    
     }
     
 }

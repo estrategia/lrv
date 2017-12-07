@@ -26,6 +26,9 @@ class EShoppingCart extends CMap {
     protected $deliveryStored = 0; //tiempo entrega bodega
     protected $bonoValue = 0;
     protected $objPagoExpress = null;
+    protected $bodegas = array();
+    protected $arrayFletes = array(); 
+    
     
     private function getClass(){
     	return __CLASS__ . "Tienda";
@@ -336,13 +339,37 @@ class EShoppingCart extends CMap {
                 
 		if (isset(Yii::app()->session[Yii::app()->params->sesion['sectorCiudadEntrega']])) {
             $this->objSectorCiudad = Yii::app()->session[Yii::app()->params->sesion['sectorCiudadEntrega']];
-               	if ($this->objSectorCiudad->objCiudad->getDomicilio() != null) {
-               		if($this->isUnitStored()){
-               			$this->shippingStored = $this->objSectorCiudad->objCiudad->getDomicilio()->valorDomicilio;
-               		}
-               		$this->deliveryStored = $this->objSectorCiudad->objCiudad->getDomicilio()->tiempoDomicilio;
-               	}
-               	Yii::app()->session[Yii::app()->params->sesion['sectorCiudadEntrega']] = $this->objSectorCiudad;
+            
+            $bodegas = CiudadBodega::model()->findAll(array(
+            		'condition' => 'codigoCiudad =:codigoCiudad',
+            		'params' => array(
+            				'codigoCiudad' => $this->objSectorCiudad->codigoCiudad
+            		),
+            		'order' => 'prioridad'
+            ));
+            
+            if($bodegas){
+            	foreach($bodegas as $bodega){
+            		$this->bodegas[] = $bodega->idBodega;
+            	}
+            }
+            
+            if ($this->objSectorCiudad->objCiudad->getDomicilio() != null) {
+            	if($this->isUnitStored()){
+             			//$this->shippingStored = $this->objSectorCiudad->objCiudad->getDomicilio()->valorDomicilio;
+               			
+               			$precioBodega = $this->getStoredPrice();
+               			
+               			if($precioBodega < Yii::app()->params->servientrega['valorMinimoSeguroVariable']){
+               				$this->shippingStored +=  Yii::app()->params->servientrega['valorMinimoSeguro'];
+               			} else {
+               				$this->shippingStored +=  $precioBodega*Yii::app()->params->servientrega['porcentajeSeguro'];
+               			}
+               			// Calcular precio de productos de bodega
+            	}
+            	$this->deliveryStored = $this->objSectorCiudad->objCiudad->getDomicilio()->tiempoDomicilio;
+            }
+            Yii::app()->session[Yii::app()->params->sesion['sectorCiudadEntrega']] = $this->objSectorCiudad;
         }
         $this->setCodigoPerfil($codigoPerfil);
         
@@ -383,6 +410,104 @@ class EShoppingCart extends CMap {
         	}
         	
         	return false;
+    }
+    
+    public function getHourStore(){
+    	$positions = $this->getPositions();
+    	$horaEntrega = 0; 
+    	foreach($positions as $position){
+    		if ($position->getDelivery() == 0 && $position->getShipping() == 0 && $position->isProduct() && $position->getQuantityStored() > 0){
+    			$horaEntrega = Yii::app()->shoppingCart->getDeliveryStored();
+    		}
+    	}
+    	
+    	$fecha = Date("Y-m-d H:i");
+    	
+    	$horaReferencia = round_time($fecha,60, "up");
+    	$horaInicio =  Date("Y-m-d H:i",strtotime(Date("Y-m-d $horaReferencia")));
+    	
+    	$nuevafecha = Date("Y-m-d H:i", strtotime ( "+$horaEntrega hour" , strtotime ( $horaInicio ) ));
+    	
+    	return array('value' => $nuevafecha, 'label' => obtenerFechaEnLetra($nuevafecha));
+    }
+    
+    public function getStoredPrice(){
+    	$positions = $this->getPositions();
+    	$suma = 0;
+    	$cantidadesBodega = array();
+    	$volumenBodegas = array();
+    	$volumetria = array();
+    	$this->shippingStored = 0;
+    	foreach($positions as $position){
+    		if ($position->getDelivery() == 0 && $position->getShipping() == 0 && $position->isProduct() && $position->getQuantityStored() > 0){
+    			
+    			$informacionBodega = $position->calculateUnidadesBodega($this->bodegas, $this->objSectorCiudad->codigoCiudad);
+    			
+    			$arrayCantidades = $informacionBodega['cantidades'];
+    			$arrayVolumen = $informacionBodega['volumen'];
+    			
+    			foreach($arrayVolumen as $idBodega => $cantidad){
+    				if(isset($volumenBodegas[$idBodega])){
+    					$volumenBodegas[$idBodega] += $cantidad;
+    				}else{
+    					$volumenBodegas[$idBodega] = $cantidad;
+    				}
+    				$arrayFletes[$idBodega]['volumen'] = $volumenBodegas[$idBodega];
+    			}
+    			
+    			$suma += $position->getSumPriceStored();
+    			
+    			if(isset($this->arrayFletes[$idBodega]['valorDeclarado'])){
+    				$this->arrayFletes[$idBodega]['valorDeclarado'] += $position->getSumPriceStored();
+    			}else{
+    				$this->arrayFletes[$idBodega]['valorDeclarado'] = $position->getSumPriceStored();
+    			}
+    		}
+    	}
+    	    	
+    	foreach($volumenBodegas as $codigoCedi => $volumetria ){
+    		$flete = Flete::model()->find(array(
+    				'with' => array('objOperadorLogistico' => array('with' => 'listOperadorRangos')),
+    				'condition' => 'codigoCiudad =:codigoCiudad AND bodegaVirtual =:bodegaVirtual',
+    				'params' => array(
+    						'codigoCiudad' => $this->objSectorCiudad->codigoCiudad,
+    						'bodegaVirtual' => $codigoCedi,
+    				)
+    		));
+    	
+    		$rangos = $flete->objOperadorLogistico->listOperadorRangos;
+    		$claseRango = 2;
+    		$ultimoPeso = 0;
+    		foreach($rangos as $objRango){
+    			if($objRango->valorInicial <= $volumetria && $volumetria <= $objRango->valorFinal ){
+    				$claseRango = $objRango->tipo;
+    			}
+    			$ultimoPeso =  $objRango->valorFinal;
+    		}
+    		
+    		$valorFlete = 0;
+    		if($claseRango == 1){
+    			$valorFlete += $flete->rango1;
+    		}else{
+    			$valorFlete += $flete->rango2;
+    		}
+    		
+    		if($volumetria-$ultimoPeso > 0){
+    			$valorFlete += ($volumetria-$ultimoPeso) * $flete->valorKiloAdicional;
+    		}
+    		
+    		$this->shippingStored += $valorFlete;
+    		$this->arrayFletes[$codigoCedi]['valorVolumetrico'] = $volumetria;
+    		$this->arrayFletes[$codigoCedi]['valorFlete'] = $valorFlete;
+    		$this->arrayFletes[$codigoCedi]['operadorLogistico'] = $flete->idOperadorLogistico;
+    		
+    	}
+    	
+    	return $suma;
+    }
+    
+    public function getArrayFlete(){
+    	return $this->arrayFletes;
     }
     
     
@@ -633,11 +758,24 @@ class EShoppingCart extends CMap {
     public function getItemsCount() {
         $count = 0;
         foreach ($this as $position) {
+        //	CVarDumper::dump($position->quantityUnit,10,true);exit();
             $count += $position->getQuantity() + $position->getQuantity(true);
         }
 
         return $count;
     }
+    
+    public function getItemsCountNormal() {
+    	$count = 0;
+    	foreach ($this as $position) {
+    		//	CVarDumper::dump($position->quantityUnit,10,true);exit();
+    		$count += $position->getQuantityUnit() + $position->getQuantity(true);
+    	}
+    
+    	return $count;
+    }
+    
+    
     
     /**
      * Returns count of items in shopping cart
@@ -843,4 +981,6 @@ class EShoppingCart extends CMap {
     	$this->CalculateShipping();
     	parent::clear();
     }
+    
+    
 }

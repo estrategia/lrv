@@ -122,4 +122,70 @@ class ProductoCarro extends IECartPosition {
         	return $this->objProductoFormula->idFormula . "-" . $this->objProductoFormula->idProductoVitalCall;
         }*/
     }
+    
+    
+    public function calculateUnidadesBodega($bodegas, $ciudad){
+    	
+    	$peso = $this->objProducto->PesoUnidad;
+    	 
+    	$largo = $this->objProducto->Largo;
+    	$ancho = $this->objProducto->Ancho;
+    	$profundo = $this->objProducto->Profundo;
+    	
+    	$cantidadesBodega = $volumenBodegas = array();
+    	
+    	$listSaldosCedi = ProductosSaldosCedi::model()->findAll( array(
+    			'condition' => 'codigoProducto =:codigoProducto AND codigoCedi IN ('.implode(",",$bodegas).') ',
+    			'params' => array(
+    					'codigoProducto' => $this->objProducto->codigoProducto
+    			),
+    			'order' => 'field(codigoCedi,'. implode(",", $bodegas).' )'
+    	));
+    	
+    	
+    	 
+    	$cantidad = $this->getQuantityStored();
+    	 
+    
+    	$i = 0;
+    	do {
+    		
+    		$saldoBodega = $listSaldosCedi[$i];
+    		
+    		$objFlete = Flete::model()->find( array(
+    				'condition' => 'codigoCiudad =:codigoCiudad AND bodegaVirtual =:bodegaVirtual',
+    				'params' => array(
+    						'codigoCiudad' => $ciudad,
+    						'bodegaVirtual' => $saldoBodega->codigoCedi
+    				)
+    		));
+    		
+    		$volumetria = calcularVolumetriaOperador($objFlete->idOperadorLogistico, $largo, $ancho, $profundo);
+    		
+    		$indiceVolumen = $volumetria > $peso ? $volumetria : $peso ;
+    		
+    		
+    		$unidadesBodega = 0;
+    	
+    		if($cantidad > $saldoBodega->saldoUnidad){
+    			$unidadesBodega = $saldoBodega->saldoUnidad;
+    		}else{
+    			$unidadesBodega = $cantidad;
+    		}
+    	
+    		$cantidad -=$unidadesBodega;
+    	
+    		$cantidadesBodega[$saldoBodega->codigoCedi] = $unidadesBodega;
+    	
+    		
+    		$volumenBodegas[$saldoBodega->codigoCedi] = $unidadesBodega * $volumetria;
+    		
+    		$i++;
+    	} while ( $cantidad > 0 );
+    	
+    	return array(
+    		'cantidades' => $cantidadesBodega,
+    		'volumen' => $volumenBodegas
+    	);
+    }
 }

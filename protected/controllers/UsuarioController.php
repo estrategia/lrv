@@ -711,6 +711,78 @@ class UsuarioController extends Controller {
             $this->render('d_usuario', array('vista' => 'd_pedido', 'params' => $params));
         }
     }
+    
+    
+    public function actionRastreo($compra) {
+    	$objCompra = Compras::model()->find(array(
+    			'with' => 'objPuntoVenta',
+    			'condition' => 'idCompra=:compra AND identificacionUsuario=:usuario',
+    			'params' => array(
+    					':compra' => $compra,
+    					':usuario' => Yii::app()->user->name
+    			)
+    	));
+    
+    	if ($objCompra === null) {
+    		$this->redirect($this->createUrl('listapedidos'));
+    	}
+    
+    	$comprasDespachoCedi = ComprasDespachoCedi::model()->findAll(array(
+    			'condition' => 'idCompra =:idCompra',
+    			'params' => array(
+    				'idCompra' => $compra		
+    			)
+    	));
+    	
+    	$arrayTrack = array();
+    	foreach($comprasDespachoCedi as $comprasRastreo){
+    		if($comprasRastreo->numeroGuia != null)
+    		$arrayTrack[$comprasRastreo->idBodega]['Despacho'] =  $comprasRastreo;
+    		
+    		$url = "http://sismilenio.servientrega.com.co/wsrastreoenvios/wsrastreoenvios.asmx?WSDL";
+    		
+    		$client = new \SoapClient($url, array(
+    				"trace" => 1,
+    				"exceptions" => 0,
+    				'cache_wsdl' => WSDL_CACHE_NONE
+    		));
+    		
+    		$paramReq = "<ns1:NumeroGuia>$comprasRastreo->numeroGuia</ns1:NumeroGuia>";
+    		$parm[] = new SoapVar($paramReq, XSD_ANYXML);
+    		$service = $client->ConsultarGuiaExterno(new SoapVar($parm, SOAP_ENC_OBJECT));
+    		
+    		if(isset($service->ConsultarGuiaExternoResult->Mov->InformacionMov)){
+    			
+    			$arrayTrack[$comprasRastreo->idBodega]['Rastreo'] =  $service->ConsultarGuiaExternoResult->Mov->InformacionMov;
+    			
+    		}else
+    			$arrayTrack[$comprasRastreo->idBodega]['Rastreo'] = array();
+    		
+    		
+    	}
+    	
+    	
+    	
+    	
+   
+    	$params = array(
+    			'objCompra' => $objCompra,
+    			'arrayTrack' => $arrayTrack
+    	);
+    
+    	if ($this->isMobile) {
+    		$this->render('rastreo', $params);
+    	} else {
+    		$this->breadcrumbs = array(
+    				'Inicio' => array('/'),
+    				'Mi cuenta' => array('/usuario'),
+    				'Listado de pedidos' => array('/usuario/listapedidos'),
+    				"#$compra"
+    		);
+    
+    		$this->render('d_usuario', array('vista' => 'd_rastreo', 'params' => $params));
+    	}
+    }
 
     public function actionListacotizaciones() {
         $model = new Cotizaciones('search');
@@ -1616,6 +1688,20 @@ class UsuarioController extends Controller {
         }
 
         return CHtml::link($texto, $this->createUrl('/usuario/pedido', array('compra' => $data->idCompra)), array('class' => $clase, 'data-ajax' => 'false'));
+    }
+    
+    protected function gridTracking($data, $row){
+        $clase = 'ui-btn ui-btn-inline ui-icon-view-circle ui-btn-icon-notext ui-icon-center ui-nodisc-icon';
+        $texto = 'Ver';
+        if (!$this->isMobile) {
+            $clase = 'center';
+            $texto = '<span class="glyphicon glyphicon-inbox center-div" aria-hidden="true">';
+        }
+
+        if($data->getIsBodega())
+        	return CHtml::link($texto, $this->createUrl('/usuario/rastreo', array('compra' => $data->idCompra)), array('class' => $clase, 'data-ajax' => 'false'));
+        else 
+        	return "";
     }
 
     protected function gridFechaPedido($data, $row) {

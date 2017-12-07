@@ -30,7 +30,7 @@
   		$bonoTienda->fechaCreacion = Date("Y-m-d h:i:s");
   		$bonoTienda->tipo = Yii::app()->params->callcenter['bonos']['tipoBonoPQRS'];
   		//$bonoTienda->idBonoTienda = Yii::app()->params->callcenter['bonos']['tipo']['cargue'];
-  		if($tipo == 1)
+  		if($tipoBono == 1)
   			$bonoTienda->idBonoTiendaTipo = Yii::app()->params->callcenter['bonos']['tipoBonoTiendaPQRS'];
   		else
   			$bonoTienda->idBonoTiendaTipo = Yii::app()->params->callcenter['bonos']['tipoBonoTiendaPQRSReintegro'];
