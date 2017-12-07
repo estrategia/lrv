@@ -1,7 +1,6 @@
 <?php
 /* @var $this DefaultController */
 // CVarDumper::dump(Yii::app()->params['terceros']['usuario']['estado']['activo'],10,true);
-var_dump(Yii::app()->controller->module->user->isGuest);
 $this->breadcrumbs=array(
 	$this->module->id,
 );

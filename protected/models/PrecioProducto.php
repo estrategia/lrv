@@ -29,6 +29,7 @@ class PrecioProducto extends Precio {
         $fecha = new DateTime;
         $tienePrecio = false;
         $tieneSaldo = false;
+        $tieneFlete = true;
         $this->unidadFraccionamiento = $objProducto->unidadFraccionamiento;
         
         if ($objCiudadSector != null) {
@@ -36,6 +37,7 @@ class PrecioProducto extends Precio {
                 $listSaldosTerceros = array();
                 $listPrecios = array();
                 $listFletes = array();
+                $tieneFlete = false;
                 
                 if ($consultaPrecio) {
                     $listSaldosTerceros = ProductosSaldosTerceros::model()->findAll(array(
@@ -89,6 +91,7 @@ class PrecioProducto extends Precio {
                         $this->tiempoEntregaInicio = $objFlete->tiempoEntregaInicial;
                         $this->tiempoEntregaFin = $objFlete->tiempoEntregaFinal;
                         $this->unidadesPorFlete = $objFlete->unidadesMismoValor;
+                        $tieneFlete = true;
                         break;
                     }
                 }
@@ -481,7 +484,7 @@ class PrecioProducto extends Precio {
                 //$this->ahorroFraccion = self::redondear($this->ahorroFraccion, 1);
                 $this->inicializado = true;
                 
-                if($this->precioUnidad<=0){
+                if($this->precioUnidad<=0 || !$tieneFlete || !$tieneSaldo || !$tienePrecio){
                 	   $this->inicializado = false;
                 }
             }

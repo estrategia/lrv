@@ -2,7 +2,7 @@
 
 class TercerosModule extends CWebModule
 {
-    public $homeUrl = array('/terceros');
+    public $homeUrl = array('/terceros/compras');
     // public $user = ;
 
 	public function init()
@@ -21,22 +21,21 @@ class TercerosModule extends CWebModule
             'application.models.Compras',
             'application.models.ComprasItems',
             'application.models.EstadosComprasItemsTerceros',
-			'application.models.TrazaComprasItemsTerceros',
-			// 'application.components.*',
-            // 'application.components.behaviors.*',
+            'application.models.TrazaComprasItemsTerceros',
+			'application.models.OperadorLogisticoTerceros',
 		));
 
 		Yii::app()->setComponents(array(
             'user' => array(
-                'loginUrl' => array('/terceros/usuario/autenticar'),
+                'loginUrl' => Yii::app()->createUrl('/terceros/usuario/autenticar'),
             ),
             'errorHandler' => array(
-                'errorAction' => 'terceros/sitio/error',
+                'errorAction' => Yii::app()->createUrl('/terceros/sitio/error'),
             ),
         ));
 
         $this->layoutPath = "protected/modules/terceros/views/layouts";
-        Yii::app()->homeUrl = array('/terceros');
+        Yii::app()->homeUrl = Yii::app()->createUrl('/terceros/compras');
 	}
 
 	public function beforeControllerAction($controller, $action)

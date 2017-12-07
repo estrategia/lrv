@@ -37,6 +37,7 @@
 class ComprasItems extends CActiveRecord {
 
     private $estadoAnterior;
+    public $filtroCallcenter;
     /**
      * @return string the associated database table name
      */
@@ -52,10 +53,10 @@ class ComprasItems extends CActiveRecord {
         // will receive user inputs.
         return array(
             array('idCompra, precioBaseUnidad, precioBaseFraccion, descuentoUnidad, descuentoFraccion, precioTotalUnidad, precioTotalFraccion, idOperador, terceros, unidades, fracciones, unidadesCedi, unidadesSuscripcion, codigoImpuesto, idEstadoItem, flete, disponible, idCombo, descuentoSuscripcion, precioTotalSuscripcion, idEstadoItemTercero, codigoProveedor', 'numerical', 'integerOnly' => true),
-            array('codigoProducto', 'length', 'max' => 10),
+            array('codigoProducto, idOperadorLogistico', 'length', 'max' => 10),
             array('codigoProducto, fechaEntregaInicial, fechaEntregaFinal', 'safe'),
             array('descripcion', 'length', 'max' => 200),
-            array('presentacion, descripcionCombo, operadorLogistico, numeroGuia', 'length', 'max' => 100),
+            array('presentacion, descripcionCombo, numeroGuia', 'length', 'max' => 100),
         	array('registroMedico', 'length', 'max'=>20),
             // The following rule is used by search().
             // @todo Please remove those attributes that should not be searched.
@@ -78,9 +79,10 @@ class ComprasItems extends CActiveRecord {
             'objEstadoItem' => array(self::BELONGS_TO, 'EstadoItem', 'idEstadoItem'),
             'listBeneficios' => array(self::HAS_MANY, 'BeneficiosComprasItems', 'idCompraItem'),
 
-        	'listBodegas' => array(self::HAS_MANY, 'ComprasUnidadesBodega', 'idCompraItem'),
-        	'objMedico' => array(self::BELONGS_TO, 'Medico', 'registroMedico'),
+            'listBodegas' => array(self::HAS_MANY, 'ComprasUnidadesBodega', 'idCompraItem'),
+            'objMedico' => array(self::BELONGS_TO, 'Medico', 'registroMedico'),
 
+        	'operadorLogisticoTerceros' => array(self::BELONGS_TO, 'OperadorLogisticoTerceros', 'idOperadorLogistico'),
         	'estadoTercero' => array(self::BELONGS_TO, 'EstadosComprasItemsTerceros', 'idEstadoItemTercero'),
 
         );
@@ -206,6 +208,51 @@ class ComprasItems extends CActiveRecord {
         $criteria->compare('idCombo', $this->idCombo);
         $criteria->compare('descripcionCombo', $this->descripcionCombo, true);
         $criteria->compare('registroMedico',$this->registroMedico,true);
+
+        return new CActiveDataProvider($this, array(
+            'criteria' => $criteria,
+        ));
+    }
+
+    public function searchTercerosCallcenter() {
+        // @todo Please modify the following code to remove attributes that should not be searched.
+
+        $criteria = new CDbCriteria;
+        $criteria->condition = 't.terceros = 1';
+        $fechaActual = date('Y-m-d H:i:s');
+
+        if ($this->filtroCallcenter == 1) {
+            $criteria->condition .= ' AND t.idEstadoItemTercero = 2';
+        }
+        if ($this->filtroCallcenter == 2) {
+            $criteria->condition .= ' AND t.idEstadoItemTercero <> 5';
+            $criteria->condition .= " AND t.fechaEntregaFinal < '$fechaActual'";
+        }
+        if ($this->filtroCallcenter == 3) {
+            $criteria->condition .= ' AND t.idEstadoItemTercero = 6';
+        }
+        // $criteria->compare('idCompra', $this->idCompra);
+        $criteria->compare('codigoProducto', $this->codigoProducto, true);
+        $criteria->compare('descripcion', $this->descripcion, true);
+        $criteria->compare('presentacion', $this->presentacion, true);
+        // $criteria->compare('precioBaseUnidad', $this->precioBaseUnidad);
+        // $criteria->compare('precioBaseFraccion', $this->precioBaseFraccion);
+        // $criteria->compare('descuentoUnidad', $this->descuentoUnidad);
+        // $criteria->compare('descuentoFraccion', $this->descuentoFraccion);
+        // $criteria->compare('precioTotalUnidad', $this->precioTotalUnidad);
+        // $criteria->compare('precioTotalFraccion', $this->precioTotalFraccion);
+        // $criteria->compare('idOperador', $this->idOperador);
+        // $criteria->compare('terceros', $this->terceros);
+        // $criteria->compare('unidades', $this->unidades);
+        // $criteria->compare('fracciones', $this->fracciones);
+        // $criteria->compare('unidadesCedi', $this->unidadesCedi);
+        // $criteria->compare('codigoImpuesto', $this->codigoImpuesto);
+        // $criteria->compare('idEstadoItem', $this->idEstadoItem);
+        // $criteria->compare('flete', $this->flete);
+        // $criteria->compare('disponible', $this->disponible);
+        // $criteria->compare('idCombo', $this->idCombo);
+        // $criteria->compare('descripcionCombo', $this->descripcionCombo, true);
+        // $criteria->compare('registroMedico',$this->registroMedico,true);
 
         return new CActiveDataProvider($this, array(
             'criteria' => $criteria,
