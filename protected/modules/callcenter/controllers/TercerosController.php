@@ -60,8 +60,8 @@ class TercerosController extends ControllerOperator {
             $model->attributes = $_POST['UsuarioTercero'];
             $password = generatePass(10);
             $model->clave = $model->hash($password);
-            // var_dump($password);
             if ($model->save()) {
+                $this->notificarRegistroTercero($model->correoContacto, $password);
                 $this->redirect(array('admin'));
             }
         }
@@ -72,6 +72,23 @@ class TercerosController extends ControllerOperator {
             'model' => $model,
             'proveedores' => $listadoProveedores
         ));
+    }
+
+    private function notificarRegistroTercero($correo, $clave)
+    {
+        $asuntoCorreo = Yii::app()->params['asuntoTercero']['registroUsuario'];
+        $contenidoCorreo = $this->renderPartial('correoRegistroUsuario', array(
+            'correo' => $correo,
+            'clave' => $clave
+            ), true, true);
+        
+        $htmlCorreo = PlantillaCorreo::getContenido('registroUsuarioTercero',$contenidoCorreo);
+        
+        try {
+            sendHtmlEmail($correo, $asuntoCorreo, $htmlCorreo);
+        } catch (Exception $ce) {
+            Yii::log("Error enviando correo al registrar usuario #$objCompra->idCompra\n" . $ce->getMessage() . "\n" . $ce->getTraceAsString(), CLogger::LEVEL_INFO, 'application');
+        }
     }
 
     public function actionActualizar($id)

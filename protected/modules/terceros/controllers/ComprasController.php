@@ -52,13 +52,16 @@ class ComprasController extends ControllerTercero
 	public function actionDetalle($id)
 	{
 		// CVarDumper::dump(Yii::app()->controller->module->user);
+		$estadosProductos = EstadosComprasItemsTerceros::model()->findAll('t.editableTercero = 1 AND t.estado = 1');
+		$listadoEstados = CHtml::listData($estadosProductos, 'idEstadoItemTercero', 'nombre');
 		$productos = ComprasItems::model()->findAll(
 			't.idCompra = :idCompra AND t.terceros = 1',
 			[':idCompra' => $id]
 		);
 		$this->render('detalle',array(
 			'model'=>$this->loadModel($id),
-			'productos' => $productos
+			'productos' => $productos,
+			'estadosProducto' => $listadoEstados
 		));
 	}
 

@@ -110,6 +110,15 @@
                                         <div class="clst_pre_cantidad">Bodega: <?php echo $objItem->unidadesCedi ?></div>
                                     <?php endif; ?>
 
+                                    <?php if ($objItem->terceros == 1): ?>
+                                        <div class="clst_pre_cantidad">
+                                            Estado: <?php echo $objItem->estadoTercero->nombre ?>
+                                        </div>
+                                        <div class="clst_pre_cantidad">
+                                            Entrega entre <?php echo date('Y-m-d', strtotime($objItem->fechaEntregaInicial)) ?> y <?php echo date('Y-m-d', strtotime($objItem->fechaEntregaFinal)) ?> 
+                                        </div>
+                                    <?php endif ?>
+
                                     <p style="font-size:medium;">Subtotal <?php echo Yii::app()->numberFormatter->format(Yii::app()->params->formatoMoneda['patron'], ($objItem->precioTotalUnidad + $objItem->precioTotalFraccion), Yii::app()->params->formatoMoneda['moneda']); ?></p>
                                 </div>
                                 <div class="clear"></div>

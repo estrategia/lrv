@@ -34,7 +34,7 @@
                         </thead>
                         <tbody>
                             <?php foreach (Yii::app()->shoppingCart->getPositions() as $position): ?>
-                                <?php if ($position->getDelivery() == 0 && $position->getShipping() == 0): ?>
+                                <?php if (!$position->hasDelivery() && $position->getShipping() == 0): ?>
                                     <?php
                                     if ($position->isProduct()):
                                         if ($position->getQuantitySuscription() > 0) {

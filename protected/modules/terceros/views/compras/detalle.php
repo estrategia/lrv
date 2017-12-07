@@ -11,67 +11,58 @@ $this->breadcrumbs=array(
 
 <h1>Pedido #<?php echo $model->idCompra; ?></h1>
 
-<?php $this->widget('zii.widgets.CDetailView', array(
-	'data'=>$model,
-	'attributes'=>array(
-		'idCompra',
-		'identificacionUsuario',
-		'fechaCompra',
-		'codigoCiudad',
-	),
-)); ?>
 <?php //CVarDumper::dump($productos,10,true) ?>
 <table class="table">
 	<td> 
 		<div class="col-md-6">
 			<strong>Datos del Remitente</strong> <br>
 			
-        		<?php if ($objCompra->invitado): ?>
+        		<?php if ($model->invitado): ?>
                 	<strong>Invitado: </strong>S&iacute;<br>
-                	<strong>C&eacute;dula: </strong><?php echo $objCompra->identificacionUsuario ?><br>
-                	<strong>Nombre: </strong><?php echo $objCompra->objCompraDireccion->nombre ?><br>
-                	<strong>Correo: </strong><?php echo $objCompra->objCompraDireccion->correoElectronico ?> <br/>
+                	<strong>C&eacute;dula: </strong><?php echo $model->identificacionUsuario ?><br>
+                	<strong>Nombre: </strong><?php echo $model->objCompraDireccion->nombre ?><br>
+                	<strong>Correo: </strong><?php echo $model->objCompraDireccion->correoElectronico ?> <br/>
             	<?php else: ?>
             		<strong>Invitado: </strong>No<br>
-                	<strong>C&eacute;dula: </strong><?php echo $objCompra->identificacionUsuario ?><br>
+                	<strong>C&eacute;dula: </strong><?php echo $model->identificacionUsuario ?><br>
                 	
-                	<?php if(isset($objCompra->objUsuario)):?>
-                		<strong>Nombre: </strong><?php echo $objCompra->objUsuario->nombre . " " . $objCompra->objUsuario->apellido ?><br>
-                		<strong>Correo: </strong><?php echo $objCompra->objUsuario->correoElectronico ?> <br/>
+                	<?php if(isset($model->objUsuario)):?>
+                		<strong>Nombre: </strong><?php echo $model->objUsuario->nombre . " " . $model->objUsuario->apellido ?><br>
+                		<strong>Correo: </strong><?php echo $model->objUsuario->correoElectronico ?> <br/>
             		<?php endif;?>
             		
-                	<?php if(isset($objCompra->objComprasRemitente)):?>
-                		<strong>Recogida: </strong> <?php echo $objCompra->objComprasRemitente->recogida == 1 ? "Si":"No"?><br>
-                 		<?php if($objCompra->objComprasRemitente->recogida == 1):?>
-                 				<strong>Direcci&oacute;n: </strong><?php echo $objCompra->objComprasRemitente->direccionRemitente ?><br>
-                 				<strong>Barrio: </strong><?php echo $objCompra->objComprasRemitente->barrioRemitente ?><br>
+                	<?php if(isset($model->objComprasRemitente)):?>
+                		<strong>Recogida: </strong> <?php echo $model->objComprasRemitente->recogida == 1 ? "Si":"No"?><br>
+                 		<?php if($model->objComprasRemitente->recogida == 1):?>
+                 				<strong>Direcci&oacute;n: </strong><?php echo $model->objComprasRemitente->direccionRemitente ?><br>
+                 				<strong>Barrio: </strong><?php echo $model->objComprasRemitente->barrioRemitente ?><br>
                  		<?php endif;?>
-                 	<strong>Tel&eacute;fono: </strong><?php echo $objCompra->objComprasRemitente->telefonoRemitente ?><br>
+                 	<strong>Tel&eacute;fono: </strong><?php echo $model->objComprasRemitente->telefonoRemitente ?><br>
                  <?php endif;?>   
             <?php endif; ?>
-            <strong>TipoEntrega: </strong><?php echo Yii::app()->params->entrega["tipo"][$objCompra->tipoEntrega] ?> 
+            <strong>TipoEntrega: </strong><?php echo Yii::app()->params->entrega["tipo"][$model->tipoEntrega] ?> 
 
         </div>
-        <?php if ($objCompra->objCompraDireccion !== null): ?>
+        <?php if ($model->objCompraDireccion !== null): ?>
             <div class="col-md-6">
                 <strong>Datos del Destinatario</strong> <br>
-                <strong>Nombre: </strong><?php echo $objCompra->objCompraDireccion->nombre ?> <br>
-                <strong>Direcci&oacute;n: </strong><?php echo $objCompra->objCompraDireccion->direccion . " - " . $objCompra->objCompraDireccion->barrio ?><br>
-                <strong>Tel&eacute;fono: </strong> <?php echo $objCompra->objCompraDireccion->telefono ?> - <strong>Celular: </strong> <?php echo $objCompra->objCompraDireccion->celular ?><br>
-                <?php if ($objCompra->objCompraDireccion->objCiudad != null): ?>
-                    <strong>Ciudad: </strong><?php echo $objCompra->objCompraDireccion->objCiudad->nombreCiudad . " - " . $objCompra->objCompraDireccion->objSector->nombreSector ?><br/>
+                <strong>Nombre: </strong><?php echo $model->objCompraDireccion->nombre ?> <br>
+                <strong>Direcci&oacute;n: </strong><?php echo $model->objCompraDireccion->direccion . " - " . $model->objCompraDireccion->barrio ?><br>
+                <strong>Tel&eacute;fono: </strong> <?php echo $model->objCompraDireccion->telefono ?> - <strong>Celular: </strong> <?php echo $model->objCompraDireccion->celular ?><br>
+                <?php if ($model->objCompraDireccion->objCiudad != null): ?>
+                    <strong>Ciudad: </strong><?php echo $model->objCompraDireccion->objCiudad->nombreCiudad . " - " . $model->objCompraDireccion->objSector->nombreSector ?><br/>
                 <?php else: ?>
                     <strong>Ciudad: </strong> NA <br/>
                 <?php endif; ?>
-                <?php if(isset($objCompra->objComprasRemitente) && isset($objCompra->objComprasRemitente->puntoVentaDestino)):?>
-                <?php $puntoVenta = PuntoVenta::model()->find('idComercial ="'.$objCompra->objComprasRemitente->puntoVentaDestino.'"')?>
-                	<strong>Destino: </strong> <?php echo $objCompra->objComprasRemitente->puntoVentaDestino ?> - <?php echo $puntoVenta->nombrePuntoDeVenta?>
+                <?php if(isset($model->objComprasRemitente) && isset($model->objComprasRemitente->puntoVentaDestino)):?>
+                <?php $puntoVenta = PuntoVenta::model()->find('idComercial ="'.$model->objComprasRemitente->puntoVentaDestino.'"')?>
+                	<strong>Destino: </strong> <?php echo $model->objComprasRemitente->puntoVentaDestino ?> - <?php echo $puntoVenta->nombrePuntoDeVenta?>
                 <?php endif;?>
             </div>
         <?php else: ?>
             <div class="col-md-6">
                 <strong>Datos del Destinatario</strong> <br>
-                <strong>Ciudad: </strong><?php echo $objCompra->objCiudad->nombreCiudad . " - " . $objCompra->objSector->nombreSector ?>
+                <strong>Ciudad: </strong><?php echo $model->objCiudad->nombreCiudad . " - " . $model->objSector->nombreSector ?>
             </div>
         <?php endif; ?>
         	
@@ -95,6 +86,9 @@ $this->breadcrumbs=array(
 			<th>
 				Numero de Guía
 			</th>
+			<th>
+				Operador Logistico
+			</th>
 		</tr>
 	</thead>
 	<tbody>
@@ -111,14 +105,20 @@ $this->breadcrumbs=array(
 			</td>
 			<td>
 				<div class="form-inline">
-					<select class="form-control input-sm" name="" id=""></select>
-					<button class="btn btn-default btn-sm"><i class="glyphicon glyphicon-refresh"></i></button>
+					<?php echo CHtml::dropDownList('estado-producto-tercero', $producto->idEstadoItemTercero, $estadosProducto, ['class' => 'input-sm form-control']); ?>
+					<button class="btn btn-default btn-sm" data-codigo-producto-tercero="<?php echo $producto->idCompraItem ?>" data-role="actualizar-estado-producto-tercero"><i class="glyphicon glyphicon-refresh"></i></button>
 				</div>
 			</td>
 			<td>
 				<div class="form-inline">
-					<input type="text" class="form-control input-sm">
-					<button class="btn btn-default btn-sm"><i class="glyphicon glyphicon-refresh"></i></button>
+					<?php echo CHtml::textField('numero-guia-producto-tercero', $producto->numeroGuia, ['class' => 'form-control input-sm']); ?>
+					<button class="btn btn-default btn-sm" data-codigo-producto-tercero="<?php echo $producto->idCompraItem ?>" data-role="actualizar-numero-guia-producto-tercero"><i class="glyphicon glyphicon-refresh"></i></button>
+				</div>
+			</td>
+			<td>
+				<div class="form-inline">
+					<?php echo CHtml::textField('operador-logistico-producto-tercero', $producto->operadorLogistico, ['class' => 'form-control input-sm']); ?>
+					<button class="btn btn-default btn-sm" data-codigo-producto-tercero="<?php echo $producto->idCompraItem ?>" data-role="actualizar-operador-logistico-producto-tercero"><i class="glyphicon glyphicon-refresh"></i></button>
 				</div>
 			</td>
 		</tr>

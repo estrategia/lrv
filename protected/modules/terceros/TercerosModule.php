@@ -17,8 +17,11 @@ class TercerosModule extends CWebModule
             'application.models.Ciudad',
             'application.models.Producto',
             'application.models.ProductosSaldosTerceros',
+            'application.models.FleteProductoTercero',
             'application.models.Compras',
-			'application.models.ComprasItems',
+            'application.models.ComprasItems',
+            'application.models.EstadosComprasItemsTerceros',
+			'application.models.TrazaComprasItemsTerceros',
 			// 'application.components.*',
             // 'application.components.behaviors.*',
 		));

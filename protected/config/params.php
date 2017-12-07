@@ -81,7 +81,10 @@ return array(
         'formulasVencer' => 'formulasVencer',
         'recordarLista' => 'recordarLista',
         'observacionPedido' => 'observacionPedido',
-        'compraCallcenter' => 'compraCallcenter'
+        'compraCallcenter' => 'compraCallcenter',
+        'cambioEstadoCompraItemTercero' => 'cambioEstadoCompraItemTercero',
+        'registroUsuarioTercero' => 'cambioEstadoCompraItemTercero',
+        'recordarClaveTercero' => 'recordarClaceTercero',
     ),
     'rutasPlantillasCorreo' => array(
         'compraCorreo' => 'compraCorreo',
@@ -92,7 +95,8 @@ return array(
         'correoBloqueo' => '//common/correoBloqueo',
         'reactivacionBono' => '_mensajeCorreoReactivacion',
         'mensajeHtml' => '//common/mensajeHtml',
-        'bonoCorreo' => 'bonoCorreo'
+        'bonoCorreo' => 'bonoCorreo',
+        'cambioEstadoCompraItemTercero' => 'application.modules.terceros.views.compras.correoCambioEstadoItem'
     ),
     'maximoComparacion' => 5,
     'urlSitio' => 'www.larebajavirtual.com',
@@ -350,24 +354,24 @@ return array(
             25 => 15,
             26 => 16
         ),*/
-    	'lrv' => array(50,51,52,53,54,55,56,57,58),
-    	'descuentos' => array(50,51,52,53,57,58,63,64), // new
-    	'bonos' => array(54,55,56), // new
-    	'descuentosClienteInterno' => array(57,58),
-    	'bonosClienteInterno' => array(56),
-
-    	'beneficioCedula' => 54,
-        'beneficiosSuscripcion' => array(63,64),
-    	'tipoBonoFormaPago' => array(
-    				54 => 7,
-    				55 => 8,
-    				56 => 8
-    	),
-    	'tipoMedioPago' => array(
-    				54 => 15,
-    				55 => 16,
-    				56 => 16,
-    	),
+    	   'lrv' => array(50,51,52,53,54,55,56,57,58),
+        	'descuentos' => array(50,51,52,53,57,58,63,64), // new
+        	'bonos' => array(54,55,56), // new
+        	'descuentosClienteInterno' => array(57,58),
+        	'bonosClienteInterno' => array(56),
+    
+        	'beneficioCedula' => 54,
+            'beneficiosSuscripcion' => array(63,64),
+        	'tipoBonoFormaPago' => array(
+        				54 => 7,
+        				55 => 8,
+        				56 => 8
+        	),
+        	'tipoMedioPago' => array(
+        				54 => 15,
+        				55 => 16,
+        				56 => 16,
+        	),
         'recambios' => array(1, 10),
         'recambioslabel' => array(
             1 => 'Recambio',
@@ -386,7 +390,7 @@ return array(
             'mayor' => 2
         ),
         'configuracionActiva' => 1,
-    	'diasBorrado' => 100,
+        'diasBorrado' => 100,
     ),
     'servicioVentaControlada' => 17,
     'gps' => array(
@@ -402,6 +406,11 @@ return array(
         'pedidoRealizado' => 'La Rebaja Virtual: Pedido realizado',
         'pedidoRealizadoPasarela' => 'La Rebaja Virtual: Pendiente de Confirmación Pasarela',
         'pedidoRemitido' => 'La Rebaja Virtual: Pedido remitido'
+    ),
+    'asuntoTercero' => array(
+        'registroUsuario' => 'Se ha registrado su usuario',
+        'cambioEstadoCompraItem' => 'Notificacion de cambio de estado de producto',
+        'cambioClave' => 'Restauracion de contraseña'
     ),
     'asuntoRecordatorioClave' => 'Clave de Ingreso',
     'asuntoBienvenida' => 'La Rebaja te da la bienvenida',

@@ -52,14 +52,14 @@ class CarroController extends ControllerEntregaNacional{
 		Yii::app()->end();
 	}
 	
-	public function agregarProducto() {
-		$producto = Yii::app()->getRequest()->getPost('producto', null);
-		$cantidadU = Yii::app()->getRequest()->getPost('cantidadU', null);
-		$cantidadF = Yii::app()->getRequest()->getPost('cantidadF', null);
-		$maximo = Yii::app()->getRequest()->getPost('maximo', null);
-		$puntoVenta = Yii::app()->session[Yii::app()->params->puntoventa['sesion']['pdv']];
+    public function agregarProducto() {
+	   $producto = Yii::app()->getRequest()->getPost('producto', null);
+	   $cantidadU = Yii::app()->getRequest()->getPost('cantidadU', null);
+	   $cantidadF = Yii::app()->getRequest()->getPost('cantidadF', null);
+	   $maximo = Yii::app()->getRequest()->getPost('maximo', null);
+	   $puntoVenta = Yii::app()->session[Yii::app()->params->puntoventa['sesion']['pdv']];
 		
-		$objPuntoVenta = PuntoVenta::model()->find(array(
+	   $objPuntoVenta = PuntoVenta::model()->find(array(
 			'condition' => 'IDComercial = :idcomercial',
 			'params' => array(
 					':idcomercial' => $puntoVenta
@@ -77,21 +77,23 @@ class CarroController extends ControllerEntregaNacional{
 			Yii::app()->end();
 		}
 	
-		$objProducto = Producto::model()->find(array(
-				'with' => array(
-						'listSaldos' => array('condition' => '(listSaldos.codigoCiudad=:ciudad AND listSaldos.codigoSector=:sector) OR (listSaldos.saldoUnidad IS NULL AND listSaldos.codigoCiudad IS NULL AND listSaldos.codigoSector IS NULL)'),
-						'listPrecios' => array('condition' => '(listPrecios.codigoCiudad=:ciudad AND listPrecios.codigoSector=:sector) OR (listPrecios.codigoCiudad IS NULL AND listPrecios.codigoSector IS NULL)'),
-						'listSaldosTerceros' => array('condition' => '(listSaldosTerceros.codigoCiudad=:ciudad AND listSaldosTerceros.codigoSector=:sector) OR (listSaldosTerceros.codigoCiudad IS NULL AND listSaldosTerceros.codigoSector IS NULL)')
-				),
-				'condition' => 't.activo=:activo AND t.codigoProducto=:codigo AND ( (listSaldos.saldoUnidad IS NOT NULL AND listPrecios.codigoCiudad IS NOT NULL) OR listSaldosTerceros.codigoCiudad IS NOT NULL)',
-				'params' => array(
-						':activo' => 1,
-						':codigo' => $producto,
-						':ciudad' => $objPuntoVenta->codigoCiudad,
-						':sector' => $objPuntoVenta->idSectorLRV,
-				),
-		));
-	
+        $objProducto = Producto::model()->find(array(
+		    'with' => array(
+                'listSaldos' => array('condition' => '(listSaldos.codigoCiudad=:ciudad AND listSaldos.codigoSector=:sector) OR listSaldos.idProductoSaldos IS NULL'),
+                'listPrecios' => array('condition' => '(listPrecios.codigoCiudad=:ciudad AND listPrecios.codigoSector=:sector) OR listPrecios.idProductoPrecios IS NULL'),
+                //'listSaldosTerceros' => array('condition' => '(listSaldosTerceros.codigoCiudad=:ciudad AND listSaldosTerceros.codigoSector=:sector) OR (listSaldosTerceros.codigoCiudad IS NULL AND listSaldosTerceros.codigoSector IS NULL)')
+		        'listSaldosTerceros',
+		        'listFletesTerceros' => array('on' => 'listFletesTerceros.codigoCiudad=:ciudad OR listFletesTerceros.idFleteProducto IS NULL'),
+            ),
+            'condition' => 't.activo=:activo AND t.codigoProducto=:codigo AND ( (listSaldos.idProductoSaldos IS NOT NULL AND listPrecios.idProductoPrecios IS NOT NULL) OR (listSaldosTerceros.idProductoSaldo IS NOT NULL AND listPrecios.idProductoPrecios IS NOT NULL AND listFletesTerceros.idFleteProducto IS NOT NULL))',
+            'params' => array(
+                ':activo' => 1,
+                ':codigo' => $producto,
+                ':ciudad' => $objPuntoVenta->codigoCiudad,
+                ':sector' => $objPuntoVenta->idSectorLRV,
+            ),
+        ));
+        
 		if ($objProducto === null) {
 			echo CJSON::encode(array('result' => 'error', 'response' => 'Producto no disponible'));
 			Yii::app()->end();

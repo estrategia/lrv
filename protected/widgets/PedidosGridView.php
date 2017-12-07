@@ -22,7 +22,11 @@ class PedidosGridView extends CGridView {
         parent::renderTableRow($row);
         echo "<tr>\n";
         echo "<td class='center' colspan='".count($this->columns)."'>\n";
-        echo $this->dataProvider->data[$row]->objEstadoCompra->compraEstadoCliente;
+        if ($this->dataProvider->data[$row]->tieneTerceros()) {
+            echo "Esta compra contiene productos con condiciones de entrega especial, por favor ingrese al detalle del pedido para ver más.";
+        } else {
+            echo $this->dataProvider->data[$row]->objEstadoCompra->compraEstadoCliente;
+        }
         echo "</td>";
         echo "</tr>\n";
     }

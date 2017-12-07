@@ -11,8 +11,8 @@
             <div>Flete: <?php echo Yii::app()->numberFormatter->format(Yii::app()->params->formatoMoneda['patron'], $position->getShipping(), Yii::app()->params->formatoMoneda['moneda']); ?>]</div>
         <?php endif; ?>
 
-        <?php if ($position->getDelivery() > 0): ?>
-            <div>Tiempo de entrega: <?php echo $position->getDelivery() ?> hora(s)</div>
+        <?php if ($position->hasDelivery()): ?>
+            <div>Entrega: Entre <?php echo $position->getDelivery('start', 'number') ?> y <?php echo $position->getDelivery('end', 'number') ?>  d&iacute;as</div>
         <?php endif; ?>
     </td>
     <td  class="btn-pagar" align="center">

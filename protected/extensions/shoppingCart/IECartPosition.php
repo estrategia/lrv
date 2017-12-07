@@ -25,7 +25,11 @@ abstract class IECartPosition {
     protected $discountPriceFractionDiscount = 0.0;
     
     protected $shipping = 0;
-    protected $delivery = 0;
+    protected $shippingMaxUnits = 0;
+    //protected $delivery = 0;
+    protected $deliveryStart = 0;
+    protected $deliveryEnd = 0;
+    
     protected $tax = 0.0;
     protected $listBeneficios = array();
     protected $listBeneficiosBonos = array();
@@ -46,13 +50,47 @@ abstract class IECartPosition {
     }
     
     public function getBeneficiosBonos(){
-    	return $this->listBeneficiosBonos;
+    	   return $this->listBeneficiosBonos;
     }
     
-    public function getDelivery() {
+    /*public function getDelivery() {
         return $this->delivery;
+    }*/
+    
+    public function hasDelivery()
+    {
+        return ( $this->deliveryStart>0 || $this->deliveryEnd>0 );
     }
-
+    
+    public function getDelivery($type = 'end', $format = 'number') 
+    {
+        if ($format=='number') {
+            if ($type=='start') {
+                return $this->deliveryStart;
+            } else {
+                return $this->deliveryEnd;
+            }
+        } else if ($format=='date') {
+            $fecha = new DateTime();
+            
+            if ($type=='start') {
+                $fecha->modify("+$this->deliveryStart days");
+            } else {
+                $fecha->modify("+$this->deliveryEnd days");
+            }
+            
+            return $fecha->format("Y-m-d");
+        } else {
+            $fecha = new DateTime();
+            $fechaInicio = clone $fecha;
+            $fechaInicio->modify("+$this->deliveryStart days");
+            $fechaFin = clone $fecha;
+            $fechaFin->modify("+$this->deliveryEnd days");
+            $tiempoEntrega = $fechaInicio->format("Y-m-d") . " , " . $fechaFin->format("Y-m-d");
+            return $tiempoEntrega;
+        }
+    }
+    
     public function getEsSuscripcion()
     {
         return $this->esSuscripcion;
@@ -200,7 +238,12 @@ abstract class IECartPosition {
     }
 
     public function getShipping() {
-        return $this->shipping;
+        if($this->shippingMaxUnits==0) {
+            return $this->shipping;
+        } else {
+            $cantidadEnvios = ceil($this->quantityUnit/$this->shippingMaxUnits);
+            return  $cantidadEnvios * $this->shipping;
+        }
     }
 
     public function setTax($newVal) {

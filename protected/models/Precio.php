@@ -23,7 +23,9 @@ abstract class Precio {
     protected $listBeneficiosBonos = array();
     protected $listPuntos = array();
     protected $flete = 0;
-    protected $tiempoEntrega = 0;
+    protected $unidadesPorFlete = 0;//cantidad de unidades con mismo valor, 0: todas
+    protected $tiempoEntregaInicio = 0;
+    protected $tiempoEntregaFin = 0;
     protected $suscripcion = null;
     protected $conSuscripcion = false;
     protected $cantidadPeriodoSuscripcion = 0;
@@ -46,9 +48,26 @@ abstract class Precio {
     public function getFlete() {
         return $this->flete;
     }
-
-    public function getTiempoEntrega() {
-        return $this->tiempoEntrega;
+    
+    public function tieneTiempoEntrega() {
+        return ($this->tiempoEntregaInicio>0 || $this->tiempoEntregaFin>0);
+    }
+    
+    /**
+     * 
+     * @param string $tipo start, end
+     * @return int
+     */
+    public function getTiempoEntrega($tipo = 'end') {
+        if($tipo=="start") {
+            return $this->tiempoEntregaInicio;
+        } else{
+            return $this->tiempoEntregaFin;
+        }
+    }
+    
+    public function getUnidadesPorFlete() {
+        return $this->unidadesPorFlete;
     }
 
     public function tieneBeneficio() {

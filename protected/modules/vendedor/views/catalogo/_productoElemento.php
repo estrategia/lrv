@@ -50,8 +50,8 @@
             <?php if ($objPrecio->getFlete() > 0): ?>
                 <div class="whitespace-normal">[Flete <?php echo Yii::app()->numberFormatter->format(Yii::app()->params->formatoMoneda['patron'], $objPrecio->getFlete(), Yii::app()->params->formatoMoneda['moneda']); ?>]</div>
             <?php endif; ?>
-            <?php if ($objPrecio->getTiempoEntrega() > 0): ?>
-                <div class="whitespace-normal">[Tiempo de entrega <?php echo $objPrecio->getTiempoEntrega() ?> horas]</div>
+            <?php if ($objPrecio->tieneTiempoEntrega()): ?>
+                <div class="whitespace-normal">[Tiempo de entrega entre <?php echo $objPrecio->getTiempoEntrega('start') ?> y <?php echo $objPrecio->getTiempoEntrega('end') ?> d&iacute;as]</div>
             <?php endif; ?>
         <?php endif; ?>
         <?php foreach ($objPrecio->getPuntosDescripcion() as $descripcionPunto): ?>

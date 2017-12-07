@@ -10,8 +10,8 @@
         <?php if ($position->getShipping() > 0): ?>
             <div class="clst_pre_act"><span>[Flete <?php echo Yii::app()->numberFormatter->format(Yii::app()->params->formatoMoneda['patron'], $position->getShipping(), Yii::app()->params->formatoMoneda['moneda']); ?>]</span></div>
         <?php endif; ?>
-        <?php if ($position->getDelivery() > 0): ?>
-            <div class="clst_pre_act"><span>Tiempo de entrega: <?php echo $position->getDelivery() ?> hora(s)</span></div>
+        <?php if ($position->hasDelivery()): ?>
+            <div class="clst_pre_act"><span>Entrega: Entre <?php echo $position->getDelivery('start', 'number') ?> y <?php echo $position->getDelivery('end', 'number ') ?> d&iacute;as</span></div>
         <?php endif; ?>
 
         <div class="clst_pre_cantidad">Cantidad: <span><?php echo $position->getQuantityStored() ?></span></div>

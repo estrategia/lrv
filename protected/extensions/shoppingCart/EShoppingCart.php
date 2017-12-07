@@ -150,7 +150,7 @@ class EShoppingCart extends CMap {
             if ($objDomicilio !== null ){
                 $this->shipping = $objDomicilio->valorDomicilio;
             }else{
-            	$this->shipping = 0;
+            	   $this->shipping = 0;
             }
 
             $this->saveStateAttributes();
@@ -160,9 +160,23 @@ class EShoppingCart extends CMap {
     public function getShipping() {
         return $this->shipping;
     }
-
+    
+    public function getShippingByProduct(){
+        $shippingInventory = 0.0;
+        foreach ($this as $position) {
+            if ($position->isProduct()) {
+                $shippingInventory += $position->getShipping();
+            }
+        }
+        return $shippingInventory;
+    }
+    
     public function getShippingStored() {
         return $this->shippingStored;
+    }
+    
+    public function getExtraShipping() {
+        return $this->getShippingByProduct() + $this->shippingStored;
     }
 
     public function getDeliveryStored() {
@@ -179,11 +193,19 @@ class EShoppingCart extends CMap {
         $this->saveStateAttributes();
     }
     
+    public function hasInventoryProducts(){
+        foreach ($this as $position) {
+            if ($position->isInventoryProduct()) {
+                return true;
+            }
+        }
+        return false;
+    }
     
     public function setCalcularUnidades(){
-    	$this->updatePositions();
-    	$this->CalculateShipping();
-    	$this->saveStateAttributes();
+        	$this->updatePositions();
+        	$this->CalculateShipping();
+        	$this->saveStateAttributes();
     }
     
     public function getSectorCiudad() {
@@ -379,15 +401,15 @@ class EShoppingCart extends CMap {
     }
     
     public function isUnitStored(){
-    	$positions = $this->getPositions();
-    	
-    	foreach($positions as $position){
-    		if ($position->getDelivery() == 0 && $position->getShipping() == 0 && $position->isProduct() && $position->getQuantityStored() > 0){
-    			return true;
-    		}
-    	}
-    	
-    	return false;
+        	$positions = $this->getPositions();
+        	
+        	foreach($positions as $position){
+        		if ($position->isProduct() && $position->getQuantityStored() > 0){
+        			return true;
+        		}
+        	}
+        	
+        	return false;
     }
     
     public function getHourStore(){
@@ -490,15 +512,15 @@ class EShoppingCart extends CMap {
     
     
     public function isUnit(){
-    	$positions = $this->getPositions();
-    	 
-    	foreach($positions as $position){
-    		if ($position->isProduct() && ($position->getQuantityUnit() > 0 ||  $position->getQuantity(true) > 0)){
-    			return true;
-    		}
-    	}
-    	
-    	return false;
+        	$positions = $this->getPositions();
+        	 
+        	foreach($positions as $position){
+        		if ($position->isProduct() && ($position->getQuantityUnit() > 0 ||  $position->getQuantity(true) > 0)){
+        			return true;
+        		}
+        	}
+        	
+        	return false;
     }
     
 
@@ -828,19 +850,8 @@ class EShoppingCart extends CMap {
     }
     
     public function getTotalCostClient() {
-    	$price = $this->getTotalCost(true) - $this->bonoValue; /***** Valor que est� afectando la compra ******/
+        	$price = $this->getTotalCost(true) - $this->bonoValue; /***** Valor que est� afectando la compra ******/
         return $price;
-    }
-    
-
-    public function getExtraShipping() {
-        $shipping = 0.0;
-        foreach ($this as $position) {
-        	$shipping += $position->getShipping();
-        }
-        
-        $shipping += $this->shippingStored;
-        return $shipping;
     }
 
     /* public function getTax($position = null) {

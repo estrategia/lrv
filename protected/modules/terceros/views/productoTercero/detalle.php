@@ -37,7 +37,7 @@ $this->menu=array(
 <div class="form form-inline">
 	<div class="form-group">
 		<label for="">Actualizar Inventario</label>
-		<input type="number" min="0" class="form-control" data-role="cantidad-producto" value="<?php echo $model->saldoTercero == null ? 0 : $model->saldoTercero->saldo ?>">
+		<input type="number" min="0" class="form-control" data-role="cantidad-producto" value="<?php echo $model->saldoTercero == null ? 0 : $model->saldoTercero->saldoUnidad ?>">
 	</div>
 	<button data-role="actualizar-inventario" data-codigo-producto="<?php echo $model->codigoProducto ?>" class="btn btn-primary">Actualizar</button>
 </div>

@@ -68,7 +68,7 @@ class ProductoTerceroController extends ControllerTercero
 					$inventario = new ProductosSaldosTerceros;
 				}
 				$inventario->codigoProducto = $codigoProducto;
-				$inventario->saldo = $cantidad;
+				$inventario->saldoUnidad = $cantidad;
 				if ($inventario->save()) {
 					$response = ['result' => 'ok', 'response' => 'Cantidad actualizada'];
 				} else {

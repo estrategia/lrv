@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 <?php
 
 /**
@@ -37,7 +38,7 @@ class ProductosSaldosTerceros extends CActiveRecord {
         // will receive user inputs.
         return array(
             array('codigoProducto', 'required'),
-            array('codigoProducto, saldo', 'numerical', 'integerOnly' => true),
+            array('codigoProducto, saldoUnidad', 'numerical', 'integerOnly' => true),
             array('codigoProducto', 'length', 'max' => 10),
             // The following rule is used by search().
             // @todo Please remove those attributes that should not be searched.
