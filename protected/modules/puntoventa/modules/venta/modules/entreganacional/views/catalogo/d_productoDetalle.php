@@ -485,7 +485,7 @@
 
 <section>
     <div class="container">
-        <?php ProductoView::generarDetalle($objProducto->objDetalle, 1) ?>
+        <?php // ProductoView::generarDetalle($objProducto->objDetalle, 1) ?>
     </div>
 </section>
 

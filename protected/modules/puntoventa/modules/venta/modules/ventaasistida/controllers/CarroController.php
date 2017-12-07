@@ -82,9 +82,12 @@ class CarroController extends ControllerVenta{
 				'with' => array(
 						'listSaldos' => array('condition' => '(listSaldos.codigoCiudad=:ciudad AND listSaldos.codigoSector=:sector) OR (listSaldos.saldoUnidad IS NULL AND listSaldos.codigoCiudad IS NULL AND listSaldos.codigoSector IS NULL)'),
 						'listPreciosVAP' => array('condition' => '(listPreciosVAP.codigoCiudad=:ciudad) OR (listPreciosVAP.codigoCiudad IS NULL)'),
-						'listSaldosTerceros' => array('condition' => '(listSaldosTerceros.codigoCiudad=:ciudad AND listSaldosTerceros.codigoSector=:sector) OR (listSaldosTerceros.codigoCiudad IS NULL AND listSaldosTerceros.codigoSector IS NULL)')
+						'listSaldosTerceros',
+                		'listFletesTerceros' => array (
+                			'on' => 'listFletesTerceros.codigoCiudad=:ciudad OR listFletesTerceros.idFleteProducto IS NULL'
+                		)
 				),
-				'condition' => 't.activo=:activo AND t.codigoProducto=:codigo AND ( (listSaldos.saldoUnidad IS NOT NULL AND listPreciosVAP.codigoCiudad IS NOT NULL) OR listSaldosTerceros.codigoCiudad IS NOT NULL)',
+				'condition' => 't.activo=:activo AND t.codigoProducto=:codigo AND ( (listSaldos.saldoUnidad IS NOT NULL AND listPreciosVAP.codigoCiudad IS NOT NULL))',
 				'params' => array(
 						':activo' => 1,
 						':codigo' => $producto,

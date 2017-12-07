@@ -91,7 +91,10 @@ class CatalogoController extends ControllerVentaAsistida {
             	'objCategoriaBI' => array('with' => array('listCategoriasTienda' => array('on' => 'listCategoriasTienda.tipoDispositivo=:dispositivo'))),
             //    'listSaldos' => array('on' => 'listSaldos.codigoCiudad=:ciudad AND listSaldos.codigoSector=:sector'),
                 'listPreciosVAP' => array('on' => 'listPreciosVAP.codigoCiudad=:ciudad'),
-                'listSaldosTerceros' => array('on' => 'listSaldosTerceros.codigoCiudad=:ciudad AND listSaldosTerceros.codigoSector=:sector')
+            	'listSaldosTerceros',
+            	'listFletesTerceros' => array (
+            		'on' => 'listFletesTerceros.codigoCiudad=:ciudad OR listFletesTerceros.idFleteProducto IS NULL'
+            	)
             ),
             'condition' => "t.activo=:activo AND listPreciosVAP.codigoCiudad is not null AND t.ventaVirtual=:activo",
             'params' => array(
@@ -342,7 +345,10 @@ class CatalogoController extends ControllerVentaAsistida {
                     'listCalificaciones' => array('with' => 'objUsuario'),
                   //  'listSaldos' => array('on' => 'listSaldos.codigoCiudad=:ciudad AND listSaldos.codigoSector=:sector OR listSaldos.idProductoSaldos IS NULL'),
                     'listPreciosVAP' => array('on' => 'listPreciosVAP.codigoCiudad=:ciudad OR listPreciosVAP.idProductoPrecios IS NULL'),
-                    'listSaldosTerceros' => array('on' => 'listSaldosTerceros.codigoCiudad=:ciudad AND listSaldosTerceros.codigoSector=:sector OR listSaldosTerceros.idProductoSaldo IS NULL')
+                	'listSaldosTerceros',
+                	'listFletesTerceros' => array (
+                		'on' => 'listFletesTerceros.codigoCiudad=:ciudad OR listFletesTerceros.idFleteProducto IS NULL'
+                	)
                 ),
                 'condition' => 't.activo=:activo AND t.codigoProducto=:codigo',
                 'params' => array(

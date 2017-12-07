@@ -91,7 +91,10 @@ class CatalogoController extends ControllerEntregaNacional {
             	'objCategoriaBI' => array('with' => array('listCategoriasTienda' => array('on' => 'listCategoriasTienda.tipoDispositivo=:dispositivo'))),
             //    'listSaldos' => array('on' => 'listSaldos.codigoCiudad=:ciudad AND listSaldos.codigoSector=:sector'),
                 'listPrecios' => array('on' => 'listPrecios.codigoCiudad=:ciudad AND listPrecios.codigoSector=:sector'),
-                'listSaldosTerceros' => array('on' => 'listSaldosTerceros.codigoCiudad=:ciudad AND listSaldosTerceros.codigoSector=:sector')
+                'listSaldosTerceros',// => array('on' => 'listSaldosTerceros.codigoCiudad=:ciudad AND listSaldosTerceros.codigoSector=:sector')
+            	'listFletesTerceros' => array (
+            				'on' => 'listFletesTerceros.codigoCiudad=:ciudad OR listFletesTerceros.idFleteProducto IS NULL'
+            	)
             ),
             'condition' => "t.activo=:activo AND listPrecios.codigoCiudad is not null AND t.ventaVirtual=:activo",
             'params' => array(
@@ -358,7 +361,10 @@ class CatalogoController extends ControllerEntregaNacional {
                     'listCalificaciones' => array('with' => 'objUsuario'),
                   //  'listSaldos' => array('on' => 'listSaldos.codigoCiudad=:ciudad AND listSaldos.codigoSector=:sector OR listSaldos.idProductoSaldos IS NULL'),
                     'listPrecios' => array('on' => 'listPrecios.codigoCiudad=:ciudad AND listPrecios.codigoSector=:sector OR listPrecios.idProductoPrecios IS NULL'),
-                    'listSaldosTerceros' => array('on' => 'listSaldosTerceros.codigoCiudad=:ciudad AND listSaldosTerceros.codigoSector=:sector OR listSaldosTerceros.idProductoSaldo IS NULL')
+                    'listSaldosTerceros',
+                    'listFletesTerceros' => array (
+                        'on' => 'listFletesTerceros.codigoCiudad=:ciudad OR listFletesTerceros.idFleteProducto IS NULL'
+                    )
                 ),
                 'condition' => 't.activo=:activo AND t.codigoProducto=:codigo',
                 'params' => array(
