@@ -364,6 +364,7 @@ class ModulosConfigurados extends CActiveRecord {
                 $criteria['with']['listSaldos'] = array('on' => 'listSaldos.codigoCiudad=:ciudad AND listSaldos.codigoSector=:sector');
                 $criteria['with']['listPrecios'] = array('on' => 'listPrecios.codigoCiudad=:ciudad AND listPrecios.codigoSector=:sector');
                 $criteria['with']['listSaldosTerceros'] = 'listSaldosTerceros';
+                $criteria['with']['listFletesTerceros'] = array('on' => 'listFletesTerceros.codigoCiudad=:ciudad');
                 $criteria['with']['listSaldosCedi'] = array('on' => 'codigoCedi=:codigoCedi');
                 //   $criteria['join'] = "JOIN t_productosmodulos_temp_$sesion rel ON t.codigoProducto = rel.codigoProducto ";
                 $criteria['params'][':ciudad'] = $objSectorCiudad->codigoCiudad;
