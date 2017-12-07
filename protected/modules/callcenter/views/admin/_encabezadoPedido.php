@@ -25,27 +25,31 @@
                 </tr>
                 <tr>
                     <td> 
-                        <div class="col-md-6">
-                            <?php if ($objCompra->identificacionUsuario == null): ?>
-                                <strong>Datos del Remitente</strong> <br>
-                                <strong>C&eacute;dula: </strong>Invitado<br>
-                                <strong>Nombre: </strong><?php echo $objCompra->objCompraDireccion->nombre ?><br>
-                                <strong>Correo: </strong><?php echo $objCompra->objCompraDireccion->correoElectronico ?> <br/>
-                            <?php else: ?>
-                                <strong>Datos del Remitente</strong> <br>
-                                <strong>C&eacute;dula: </strong><?php echo $objCompra->identificacionUsuario ?><br>
-                                <?php if(isset($objCompra->objUsuario)):?>
-                                <strong>Nombre: </strong><?php echo $objCompra->objUsuario->nombre . " " . $objCompra->objUsuario->apellido ?><br>
-                                <strong>Correo: </strong><?php echo $objCompra->objUsuario->correoElectronico ?> <br/>
-                                <?php endif;?>
-                             <?php if(isset($objCompra->objComprasRemitente)):?>
-                             		<strong>Recogida: </strong> <?php echo $objCompra->objComprasRemitente->recogida == 1 ? "Si":"No"?><br>
-                             		<?php if($objCompra->objComprasRemitente->recogida == 1):?>
-                             				<strong>Direcci&oacute;n: </strong><?php echo $objCompra->objComprasRemitente->direccionRemitente ?><br>
-                             				<strong>Barrio: </strong><?php echo $objCompra->objComprasRemitente->barrioRemitente ?><br>
-                             		<?php endif;?>
-                             	<strong>Tel&eacute;fono: </strong><?php echo $objCompra->objComprasRemitente->telefonoRemitente ?><br>
-                             <?php endif;?>   
+						<div class="col-md-6">
+							<strong>Datos del Remitente</strong> <br>
+							
+                        		<?php if ($objCompra->invitado): ?>
+                                	<strong>Invitado: </strong>S&iacute;<br>
+                                	<strong>C&eacute;dula: </strong><?php echo $objCompra->identificacionUsuario ?><br>
+                                	<strong>Nombre: </strong><?php echo $objCompra->objCompraDireccion->nombre ?><br>
+                                	<strong>Correo: </strong><?php echo $objCompra->objCompraDireccion->correoElectronico ?> <br/>
+                            	<?php else: ?>
+                            		<strong>Invitado: </strong>No<br>
+                                	<strong>C&eacute;dula: </strong><?php echo $objCompra->identificacionUsuario ?><br>
+                                	
+                                	<?php if(isset($objCompra->objUsuario)):?>
+                                		<strong>Nombre: </strong><?php echo $objCompra->objUsuario->nombre . " " . $objCompra->objUsuario->apellido ?><br>
+                                		<strong>Correo: </strong><?php echo $objCompra->objUsuario->correoElectronico ?> <br/>
+                            		<?php endif;?>
+                            		
+                                	<?php if(isset($objCompra->objComprasRemitente)):?>
+                                		<strong>Recogida: </strong> <?php echo $objCompra->objComprasRemitente->recogida == 1 ? "Si":"No"?><br>
+                                 		<?php if($objCompra->objComprasRemitente->recogida == 1):?>
+                                 				<strong>Direcci&oacute;n: </strong><?php echo $objCompra->objComprasRemitente->direccionRemitente ?><br>
+                                 				<strong>Barrio: </strong><?php echo $objCompra->objComprasRemitente->barrioRemitente ?><br>
+                                 		<?php endif;?>
+                                 	<strong>Tel&eacute;fono: </strong><?php echo $objCompra->objComprasRemitente->telefonoRemitente ?><br>
+                                 <?php endif;?>   
                             <?php endif; ?>
                             <strong>TipoEntrega: </strong><?php echo Yii::app()->params->entrega["tipo"][$objCompra->tipoEntrega] ?> 
 

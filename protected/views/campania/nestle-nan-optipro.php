@@ -28,11 +28,12 @@ $this->metaTags = "
     svg {width: 55px;}
     .play{fill: rgba(255, 255, 255, 0.4);stroke: #fff;stroke-width: 10;stroke-dasharray: 18;animation: line 4s linear alternate infinite;}
     @keyframes line {to {stroke-dashoffset: 800;}}
-    .precio {font-family: VAGRoundedStd-Bold !important;text-align: center !important;margin: 20px auto 20px !important;font-size: 42px !important;}
+    .precio-antes {text-decoration: line-through;font-family: VAGRoundedStd-Bold !important;text-align: center !important;margin: 20px auto 0px !important;font-size: 30px !important;}
+    .precio {font-family: VAGRoundedStd-Bold !important;text-align: center !important;margin: 0px auto 20px !important;font-size: 32px !important;}
   </style>
 ";
 ?>
-<?php $nan = Producto::consultarPrecio('65388', $this->objSectorCiudad, 'u')?>
+<?php $nan = Producto::consultarPrecio('65388', $this->objSectorCiudad)?>
 
 <!-- Facebook Pixel Code -->
 <script>
@@ -66,7 +67,8 @@ $this->metaTags = "
     alimento lácteo con proteína de
     calidad.</p>
     <img style="width: 150px;margin: 0 auto 10px;display: block;" src="<?= Yii::app()->request->baseUrl ?>/images/contenido/nan-optipro/nan-optipro3.png">
-    <p class="precio" style="margin: 10px auto 10px !important;font-size: 30px !important;"><?= ($nan == null) ? "--" : Yii::app()->numberFormatter->format(Yii::app()->params->formatoMoneda['patron'], $nan, Yii::app()->params->formatoMoneda['moneda']) ?></p>
+    <p class="precio-antes">ANTES: <?= ($nan == null) ? "--" : Yii::app()->numberFormatter->format(Yii::app()->params->formatoMoneda['patron'], $nan["u-a"], Yii::app()->params->formatoMoneda['moneda']) ?></p>
+    <p class="precio">AHORA: <?= ($nan == null) ? "--" : Yii::app()->numberFormatter->format(Yii::app()->params->formatoMoneda['patron'], $nan["u"], Yii::app()->params->formatoMoneda['moneda']) ?></p>
     <a data-ajax="false" href="<?php echo CController::createUrl('/catalogo/producto', array('producto' => 65388)) ?>">
       <img style="width: 190px;margin: 0 auto;display: block;" src="<?= Yii::app()->request->baseUrl ?>/images/contenido/nan-optipro/btn-comprar.png">
     </a>
@@ -120,7 +122,8 @@ $this->metaTags = "
       </div>
       <div class="col-sm-5">
         <img class="img-responsive producto" src="<?= Yii::app()->request->baseUrl ?>/images/contenido/nan-optipro/nan-optipro3.png">
-        <p class="precio"><?= ($nan == null) ? "--" : Yii::app()->numberFormatter->format(Yii::app()->params->formatoMoneda['patron'], $nan, Yii::app()->params->formatoMoneda['moneda']) ?></p>
+        <p class="precio-antes">ANTES: <?= ($nan == null) ? "--" : Yii::app()->numberFormatter->format(Yii::app()->params->formatoMoneda['patron'], $nan["u-a"], Yii::app()->params->formatoMoneda['moneda']) ?></p>
+        <p class="precio">AHORA: <?= ($nan == null) ? "--" : Yii::app()->numberFormatter->format(Yii::app()->params->formatoMoneda['patron'], $nan["u"], Yii::app()->params->formatoMoneda['moneda']) ?></p>
         <a href="<?php echo CController::createUrl('/catalogo/producto', array('producto' => 65388)) ?>"><img class="img-responsive btn-compra" src="<?= Yii::app()->request->baseUrl ?>/images/contenido/nan-optipro/btn-comprar.png"></a>
       </div>
     </div>

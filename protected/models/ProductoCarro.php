@@ -117,7 +117,7 @@ class ProductoCarro extends IECartPosition {
     }
     
     
-    public function calculateUnidadesBodega($bodegas){
+    public function calculateUnidadesBodega($bodegas, $ciudad){
     	
     	$peso = $this->objProducto->PesoUnidad;
     	 
@@ -127,12 +127,6 @@ class ProductoCarro extends IECartPosition {
     	
     	$cantidadesBodega = $volumenBodegas = array();
     	
-    	$volumetria = calcularVolumetriaOperador(0, $largo, $ancho, $profundo);
-    	 
-    	$indiceVolumen = $volumetria > $peso ? $volumetria : $peso ;
-    	 
-    	$cantidad = $this->getQuantityStored();
-    	 
     	$listSaldosCedi = ProductosSaldosCedi::model()->findAll( array(
     			'condition' => 'codigoProducto =:codigoProducto AND codigoCedi IN ('.implode(",",$bodegas).') ',
     			'params' => array(
@@ -140,10 +134,30 @@ class ProductoCarro extends IECartPosition {
     			),
     			'order' => 'field(codigoCedi,'. implode(",", $bodegas).' )'
     	));
+    	
+    	
     	 
+    	$cantidad = $this->getQuantityStored();
+    	 
+    
     	$i = 0;
     	do {
+    		
     		$saldoBodega = $listSaldosCedi[$i];
+    		
+    		$objFlete = Flete::model()->find( array(
+    				'condition' => 'codigoCiudad =:codigoCiudad AND bodegaVirtual =:bodegaVirtual',
+    				'params' => array(
+    						'codigoCiudad' => $ciudad,
+    						'bodegaVirtual' => $saldoBodega->codigoCedi
+    				)
+    		));
+    		
+    		$volumetria = calcularVolumetriaOperador($objFlete->idOperadorLogistico, $largo, $ancho, $profundo);
+    		
+    		$indiceVolumen = $volumetria > $peso ? $volumetria : $peso ;
+    		
+    		
     		$unidadesBodega = 0;
     	
     		if($cantidad > $saldoBodega->saldoUnidad){

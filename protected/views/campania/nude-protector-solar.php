@@ -183,14 +183,14 @@ $this->metaTags = "
 <!-- Fin Version movil-->
 <?php else: ?>
 <!--Versión escritorio-->
-<a href="#">
+<!-- <a href="#">
   <div class="sidebar-cart animate1 wow rotateInDownRight" data-wow-offset="350">
     <div class="button-desplegable">
       <div class='icon2'><img style="width: 100%;" src="<?= Yii::app()->request->baseUrl ?>/images/contenido/chococono/circle.png" alt=""></div>
       <div class='text2'><img style="width: 100%;" src="<?= Yii::app()->request->baseUrl ?>/images/contenido/chococono/line-circle.png" alt=""></div>
     </div>
   </div>
-</a>
+</a> -->
 <div class="bg-principal">
   <div id="carousel-example-generic" class="carousel slide" data-ride="carousel">
     <div class="carousel-inner" role="listbox">

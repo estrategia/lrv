@@ -150,7 +150,7 @@ de peso ya que reduce la ansiedad por comer. Hay sabor vainilla y chocolate.'>
   <a href="<?php echo CController::createUrl('/contenido/ver', array('tipo' => 'grupo', 'contenido' => 3632)) ?>" > <img class="img-responsive-m" src="<?= Yii::app()->request->baseUrl ?>/images/contenido/ni-una-dieta-mas/img/banner-movil.jpg"> </a>
 
 <div class="bg-menu" style="margin-top:-5px;background-size: cover;padding-bottom: 0;">
-<h1 class="titulo-principal" style="margin-top: 0;font-size: 26px;line-height: 28px;margin-bottom: 0px;">Proteína Whey  <br> para tu necesidad</h1>
+<h1 class="titulo-principal" style="margin-top: 0;font-size: 26px;line-height: 28px;margin-bottom: 0px;">Proteína Whey  <br> para Adelgazar</h1>
   <a style="position: absolute;left: 25px;top: 25%;" href="" data-role="button" data-icon="arrow-l" data-iconpos="left"></a>
   <a style="position: absolute;right: 25px;top: 25%;" href="" data-role="button" data-icon="arrow-r" data-iconpos="right"></a>
   <div id="owl-productodetalle-inicio" class="owl-carousel owl-theme owl-productodetalle">
@@ -215,6 +215,8 @@ de peso ya que reduce la ansiedad por comer. Hay sabor vainilla y chocolate.'>
           </div> <!-- sabor avellana ------>
 
   </div>
+
+  <img class="img-responsive-m" src="<?= Yii::app()->request->baseUrl ?>/images/contenido/ni-una-dieta-mas/img/banner-footer.jpg" alt="">
   <section class="programa-hora" style="font-size: 16px;">
     <img width="40" src="<?= Yii::app()->request->baseUrl ?>/images/contenido/pantene/carrito.png"> <br>
     <span style="font-family:HelveticaNeueLight;color:#363636;">Ahora comprando en </span><span style="font-family:HelveticaNeue-BlackCond;color: #BF1A24;letter-spacing: 1px;">larebajavirtual.com</span><span style="color:#717175;font-family:HelveticaNeueItalic;font-weight: bold;">, <br> programa tu hora y lugar de entrega </span>
@@ -240,7 +242,7 @@ de peso ya que reduce la ansiedad por comer. Hay sabor vainilla y chocolate.'>
 
 <div class="bg-menu">
   <div class="container">
-    <h1 class="titulo-principal">Proteína Whey para tu necesidad</h1>
+    <h1 class="titulo-principal">Proteína Whey para Adelgazar</h1>
     <div class="row seven-cols" style="margin: 58px auto 0px;width: 96%;">
       <div class="col-md-1 col-md-offset-0"> <!--el que empuja al resto-->
       </div>
@@ -363,6 +365,10 @@ modificar la dieta y no sustituye las comidas.</p>
     </div>                 final de este producto-->
   </div>
 </div>
+
+
+<img class="img-responsive" src="<?= Yii::app()->request->baseUrl ?>/images/contenido/ni-una-dieta-mas/img/banner-footer.jpg" alt="">
+
 
 <section class="programa-hora">
   <span style="font-family:HelveticaNeueLight;color:#363636;">Ahora comprando en </span><span style="font-family:HelveticaNeue-BlackCond;color: #BF1A24;font-size: 23px;letter-spacing: 1px;">larebajavirtual.com</span><span style="color:#717175;font-family:HelveticaNeueItalic;font-weight: bold;">, programa tu hora y lugar de entrega </span><img width="50" style="margin-left:6px;" src="<?= Yii::app()->request->baseUrl ?>/images/contenido/pantene/carrito.png">

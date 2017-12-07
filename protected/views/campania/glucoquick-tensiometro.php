@@ -45,7 +45,6 @@ $this->metaTags = "
 
 <!--Versión movil-->
 <?php if ($this->isMobile): ?>
-<input type="hidden" id="cantidad-producto-unidad-31897" value="1" >
 <img class="img-responsive-m" src="<?= Yii::app()->request->baseUrl ?>/images/contenido/glucoquick/banner-glucometro-tensiometro.jpg" alt="Yo me cuido en casa con glucoQuick">
 <div class="bg-principal" style="margin: 25px;padding: 29px;">
   <h1 class="title-main" style="font-size: 25px;line-height: 26px;">TENSIÓMETRO <br> P30 PLUS </h1>
@@ -61,7 +60,7 @@ $this->metaTags = "
   <img class="img-responsive-m" style="margin: -25px auto 0px;" src="<?= Yii::app()->request->baseUrl ?>/images/contenido/glucoquick/producto/tensiometro.png" alt="Tensiómetro">
   <p class="precioproductos-antes">ANTES: <?= ($tensiometroP30Plus == null) ? "--" : Yii::app()->numberFormatter->format(Yii::app()->params->formatoMoneda['patron'], $tensiometroP30Plus["u-a"], Yii::app()->params->formatoMoneda['moneda']) ?></p>
   <p class="precioproductos">AHORA: <?= ($tensiometroP30Plus == null) ? "--" : Yii::app()->numberFormatter->format(Yii::app()->params->formatoMoneda['patron'], $tensiometroP30Plus["u"], Yii::app()->params->formatoMoneda['moneda']) ?></p>
-  <a data-ajax="false" data-cargar="1" data-producto="31897" data-id="1" href="#"><img class="img-responsive btn-comprar" style="display: block;" src="<?= Yii::app()->request->baseUrl ?>/images/contenido/glucoquick/btn-comprar.png" alt="GlucoQuick"></a>
+  <a data-ajax="false" href="<?php echo CController::createUrl('/catalogo/producto', array('producto' => 31897 )) ?>"><img class="img-responsive btn-comprar" style="display: block;" src="<?= Yii::app()->request->baseUrl ?>/images/contenido/glucoquick/btn-comprar.png" alt="GlucoQuick"></a>
 </div>
 <div class="img-zoom" style="margin-top:20px;">
   <a data-ajax="false" href="<?= Yii::app()->request->baseUrl ?>/glucoquick-insumos-y-glucometro">
@@ -95,7 +94,6 @@ $this->metaTags = "
 <!-- Fin Version movil -->
 <!--VERSION ESCRITORIO-->
 <?php else: ?>
-<input type="hidden" id="cantidad-producto-unidad-31897-1" value="1" >
 <img class="img-responsive" src="<?= Yii::app()->request->baseUrl ?>/images/contenido/glucoquick/banner-glucometro-tensiometro.jpg" alt="Yo me cuido en casa con glucoQuick"></div>
 <div class="container">
   <div class="row bg-principal">
@@ -115,7 +113,7 @@ $this->metaTags = "
         <img class="img-responsive" style="margin: 0 auto;" src="<?= Yii::app()->request->baseUrl ?>/images/contenido/glucoquick/producto/tensiometro.png" alt="Tensiómetro">
         <p class="precioproductos-antes" style="margin-top: -50px;">ANTES: <?= ($tensiometroP30Plus == null) ? "--" : Yii::app()->numberFormatter->format(Yii::app()->params->formatoMoneda['patron'], $tensiometroP30Plus["u-a"], Yii::app()->params->formatoMoneda['moneda']) ?></p>
         <p class="precioproductos">AHORA: <?= ($tensiometroP30Plus == null) ? "--" : Yii::app()->numberFormatter->format(Yii::app()->params->formatoMoneda['patron'], $tensiometroP30Plus["u"], Yii::app()->params->formatoMoneda['moneda']) ?></p>
-        <a data-cargar="1" data-producto="31897" data-id="1" href="#"><img class="img-responsive btn-comprar" style="margin: 0px auto;" src="<?= Yii::app()->request->baseUrl ?>/images/contenido/glucoquick/btn-comprar.png" alt="GlucoQuick"></a>
+        <a href="<?php echo CController::createUrl('/catalogo/producto', array('producto' => 31897 )) ?>"><img class="img-responsive btn-comprar" style="margin: 0px auto;" src="<?= Yii::app()->request->baseUrl ?>/images/contenido/glucoquick/btn-comprar.png" alt="GlucoQuick"></a>
       </div>
     </div>
 </div>

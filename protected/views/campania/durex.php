@@ -235,14 +235,6 @@
 </script>
 <!--Versión movil-->
 <?php if ($this->isMobile): ?>
-<input type="hidden" id="cantidad-producto-unidad-103180" value="1" >
-<input type="hidden" id="cantidad-producto-unidad-105865" value="1" >
-<input type="hidden" id="cantidad-producto-unidad-103179" value="1" >
-<input type="hidden" id="cantidad-producto-unidad-105872" value="1" >
-<input type="hidden" id="cantidad-producto-unidad-110786" value="1" >
-<input type="hidden" id="cantidad-producto-unidad-25068" value="1" >
-<input type="hidden" id="cantidad-producto-unidad-25066" value="1" >
-
 <img class="img-responsive-m" src="<?= Yii::app()->request->baseUrl ?>/images/contenido/durex/banner-durex.jpg">
 <div class="bg-menu" style="margin-top:-5px;background-size: cover;padding-bottom: 0;">
 <h1 class="titulo-principal" style="margin-top: 0;font-size: 35px;line-height: 35px;margin-bottom: 0px;">EL PRODUCTO IDEAL <br> PARA TU NECESIDAD</h1>
@@ -257,7 +249,7 @@
           <img class="line-title" style="margin: 0;" src="<?= Yii::app()->request->baseUrl ?>/images/contenido/durex/line-producto.png">
           <p class="descrip-producto" style="font-size: 18px;"><span>Más gruesos</span> y con lubricación <span>extra.</span></p>
           <p class="descrip-producto" style="font-size: 18px;"><span>Mayor seguridad y</span> <span>confianza</span> en la relación.</p>
-          <a data-ajax="false" data-cargar="1" data-producto="103180" data-id="1" href=""><img style="width: 100px;margin: 30px auto 0;display: block;" src="<?= Yii::app()->request->baseUrl ?>/images/contenido/durex/circle.png" alt="Compra online"></a>
+          <a data-ajax="false" href="<?php echo CController::createUrl('/contenido/ver', array('tipo' => 'grupo', 'contenido' => 103180)) ?>"><img style="width: 100px;margin: 30px auto 0;display: block;" src="<?= Yii::app()->request->baseUrl ?>/images/contenido/durex/circle.png" alt="Compra online"></a>
         </div>
       </div>
     </div>
@@ -269,7 +261,7 @@
           <img class="line-title" style="margin: 0;" src="<?= Yii::app()->request->baseUrl ?>/images/contenido/durex/line-producto.png">
           <p class="descrip-producto" style="font-size: 18px;">Con <span>tecnología Sensi-Fit<sup>TM</sup></span>, un látex 20% más delgado.</p>
           <p class="descrip-producto" style="font-size: 18px;"><span>Aumenta la sensibilidad </span>durante la relación y <span>mantiene</span><span>el nivel de protección.</span></p>
-          <a data-ajax="false" data-cargar="1" data-producto="105865" data-id="2" href=""><img style="width: 100px;margin: 30px auto 0;display: block;" src="<?= Yii::app()->request->baseUrl ?>/images/contenido/durex/circle.png" alt="Compra online"></a>
+          <a data-ajax="false" href="<?php echo CController::createUrl('/contenido/ver', array('tipo' => 'grupo', 'contenido' => 105865)) ?>"><img style="width: 100px;margin: 30px auto 0;display: block;" src="<?= Yii::app()->request->baseUrl ?>/images/contenido/durex/circle.png" alt="Compra online"></a>
         </div>
       </div>
     </div>
@@ -281,7 +273,7 @@
             <img class="line-title" style="margin: 0;" src="<?= Yii::app()->request->baseUrl ?>/images/contenido/durex/line-producto.png">
             <p class="descrip-producto" style="font-size: 18px;">Tiene <span>puntos y estrías</span> en el látex.</p>
             <p class="descrip-producto" style="font-size: 18px;">Estimula y aumenta <br>el <span>placer para ella</span>.</p>
-            <a data-ajax="false" data-cargar="1" data-producto="103179" data-id="3" href=""><img style="width: 100px;margin: 30px auto 0;display: block;" src="<?= Yii::app()->request->baseUrl ?>/images/contenido/durex/circle.png" alt="Compra online"></a>
+            <a data-ajax="false" href="<?php echo CController::createUrl('/contenido/ver', array('tipo' => 'grupo', 'contenido' => 103179)) ?>"><img style="width: 100px;margin: 30px auto 0;display: block;" src="<?= Yii::app()->request->baseUrl ?>/images/contenido/durex/circle.png" alt="Compra online"></a>
           </div>
         </div>
       </div>
@@ -293,7 +285,7 @@
           <img class="line-title" style="margin: 0;" src="<?= Yii::app()->request->baseUrl ?>/images/contenido/durex/line-producto.png">
           <p class="descrip-producto" style="font-size: 18px;">Contiene <span>benzocaína</span> para <span>retardar el clímax</span> del hombre e intensificar el de ella.</p>
           <p class="descrip-producto" style="font-size: 18px;">Logra un <span>mejor rendimiento físico.</span></p>
-          <a data-ajax="false" data-cargar="1" data-producto="105872" data-id="4" href=""><img style="width: 100px;margin: 30px auto 0;display: block;" src="<?= Yii::app()->request->baseUrl ?>/images/contenido/durex/circle.png" alt="Compra online"></a>
+          <a data-ajax="false" href="<?php echo CController::createUrl('/contenido/ver', array('tipo' => 'grupo', 'contenido' => 105872)) ?>"><img style="width: 100px;margin: 30px auto 0;display: block;" src="<?= Yii::app()->request->baseUrl ?>/images/contenido/durex/circle.png" alt="Compra online"></a>
         </div>
       </div>
     </div>
@@ -305,7 +297,7 @@
             <img class="line-title" style="margin: 0;" src="<?= Yii::app()->request->baseUrl ?>/images/contenido/durex/line-producto.png">
             <p class="descrip-producto" style="font-size: 18px;">Diseñados para <span>acelerar</span> <br><span> el clímax de la mujer</span> por medio de <span>puntos y estrías.</span></p>
             <p class="descrip-producto" style="font-size: 18px;">Con benzocaína que <span>retarda</span> <span>el rendimiento.</span></p>
-            <a data-ajax="false" data-cargar="1" data-producto="110786" data-id="5" href=""><img style="width: 100px;margin: 30px auto 0;display: block;" src="<?= Yii::app()->request->baseUrl ?>/images/contenido/durex/circle.png" alt="Compra online"></a>
+            <a data-ajax="false" href="<?php echo CController::createUrl('/contenido/ver', array('tipo' => 'grupo', 'contenido' => 110786)) ?>"><img style="width: 100px;margin: 30px auto 0;display: block;" src="<?= Yii::app()->request->baseUrl ?>/images/contenido/durex/circle.png" alt="Compra online"></a>
           </div>
         </div>
       </div>
@@ -317,7 +309,7 @@
             <img class="line-title" style="margin: 0;" src="<?= Yii::app()->request->baseUrl ?>/images/contenido/durex/line-producto.png">
             <p class="descrip-producto" style="font-size: 18px;">Proporciona hasta <span>20 minutos</span> de <span>palpitante placer </span>para los dos.</p>
             <p class="descrip-producto" style="font-size: 18px;">La experimentación está servida.</p>
-            <a data-ajax="false" data-cargar="1" data-producto="25068" data-id="6" href=""><img style="width: 100px;margin: 30px auto 0;display: block;" src="<?= Yii::app()->request->baseUrl ?>/images/contenido/durex/circle.png" alt="Compra online"></a>
+            <a data-ajax="false" href="<?php echo CController::createUrl('/contenido/ver', array('tipo' => 'grupo', 'contenido' => 25068)) ?>"><img style="width: 100px;margin: 30px auto 0;display: block;" src="<?= Yii::app()->request->baseUrl ?>/images/contenido/durex/circle.png" alt="Compra online"></a>
           </div>
         </div>
     </div>
@@ -328,7 +320,7 @@
           <h2 class="titulo-producto producto7" style="font-size: 30px;margin-top: 0;line-height: 30px;"><span style="color: #0096E0;font-family: inherit;">DUREX</span><sup style="color: #0096E0;">&reg;</sup> <br><span>GEL <strong>PLAY CEREZAS</strong></span></h2>
           <img class="line-title" style="margin: 0;" src="<?= Yii::app()->request->baseUrl ?>/images/contenido/durex/line-producto.png">
           <p class="descrip-producto" style="font-size: 18px;">Brinda a la pareja una experiencia deliciosa con <span>sabor a cereza</span> para complementar a su relación.</p>
-          <a data-ajax="false" data-cargar="1" data-producto="25066" data-id="7" href=""><img style="width: 100px;margin: 30px auto 0;display: block;" src="<?= Yii::app()->request->baseUrl ?>/images/contenido/durex/circle.png" alt="Compra online"></a>
+          <a data-ajax="false" href="<?php echo CController::createUrl('/contenido/ver', array('tipo' => 'grupo', 'contenido' => 25066)) ?>"><img style="width: 100px;margin: 30px auto 0;display: block;" src="<?= Yii::app()->request->baseUrl ?>/images/contenido/durex/circle.png" alt="Compra online"></a>
         </div>
       </div>
     </div>
@@ -362,23 +354,14 @@
 </div>
 <!--Versión escritorio-->
 <?php else: ?>
-
-<input type="hidden" id="cantidad-producto-unidad-103180-1" value="1" >
-<input type="hidden" id="cantidad-producto-unidad-105865-2" value="1" >
-<input type="hidden" id="cantidad-producto-unidad-103179-3" value="1" >
-<input type="hidden" id="cantidad-producto-unidad-105872-4" value="1" >
-<input type="hidden" id="cantidad-producto-unidad-110786-5" value="1" >
-<input type="hidden" id="cantidad-producto-unidad-25068-6" value="1" >
-<input type="hidden" id="cantidad-producto-unidad-25066-7" value="1" >
-
-<a href="<?= Yii::app()->request->baseUrl ?>/catalogo/buscar?busqueda=durex">
+<!-- <a href="<?= Yii::app()->request->baseUrl ?>/catalogo/buscar?busqueda=durex">
   <div class="sidebar-cart">
     <div class="button-desplegable">
       <div class='icon2'><img style="width: 100%;" src="<?= Yii::app()->request->baseUrl ?>/images/contenido/chococono/circle.png" alt=""></div>
       <div class='text2'><img style="width: 100%;" src="<?= Yii::app()->request->baseUrl ?>/images/contenido/chococono/line-circle.png" alt=""></div>
     </div>
   </div>
-</a>
+</a> -->
 <img class="img-responsive" src="<?= Yii::app()->request->baseUrl ?>/images/contenido/durex/banner-durex.jpg">
 <div class="bg-menu">
   <div class="container">
@@ -441,7 +424,7 @@
           <p class="descrip-producto"><span>Mayor seguridad y</span> <br> <span>confianza</span> en la relación.</p>
         </div>
         <img class="pack-product" src="<?= Yii::app()->request->baseUrl ?>/images/contenido/durex/productos/extra-seguro-durex.png" alt="Extra seguro">
-        <a data-cargar="1" data-producto="103180" data-id="1" href=""><img class="compra-producto" src="<?= Yii::app()->request->baseUrl ?>/images/contenido/durex/circle.png" alt="Compra online"></a>
+        <a href="<?php echo CController::createUrl('/contenido/ver', array('tipo' => 'grupo', 'contenido' => 103180)) ?>"><img class="compra-producto" src="<?= Yii::app()->request->baseUrl ?>/images/contenido/durex/circle.png" alt="Compra online"></a>
       </div>
     </div>
     <div id="info-producto2" class="row contenedor-info hide ">
@@ -453,7 +436,7 @@
           <p class="descrip-producto"><span>Aumenta la sensibilidad </span><br>durante la relación y <span>mantiene</span> <br> <span>el nivel de protección.</span></p>
         </div>
         <img class="pack-product" src="<?= Yii::app()->request->baseUrl ?>/images/contenido/durex/productos/sensit-ultra-delgado-durex.png" alt="Sensitivo ultra delgado">
-        <a data-cargar="1" data-producto="105865" data-id="2" href=""><img class="compra-producto" src="<?= Yii::app()->request->baseUrl ?>/images/contenido/durex/circle.png" alt="Compra online"></a>
+        <a href="<?php echo CController::createUrl('/contenido/ver', array('tipo' => 'grupo', 'contenido' => 105865)) ?>"><img class="compra-producto" src="<?= Yii::app()->request->baseUrl ?>/images/contenido/durex/circle.png" alt="Compra online"></a>
       </div>
     </div>
     <div id="info-producto3" class="row contenedor-info hide ">
@@ -465,7 +448,7 @@
           <p class="descrip-producto">Estimula y aumenta <br>el <span>placer para ella</span>.</p>
         </div>
         <img class="pack-product" src="<?= Yii::app()->request->baseUrl ?>/images/contenido/durex/productos/maximo-placer-durex.png" alt="Maximo placer durex">
-        <a data-cargar="1" data-producto="103179" data-id="3" href=""><img class="compra-producto" src="<?= Yii::app()->request->baseUrl ?>/images/contenido/durex/circle.png" alt="Compra online"></a>
+        <a href="<?php echo CController::createUrl('/contenido/ver', array('tipo' => 'grupo', 'contenido' => 103179)) ?>"><img class="compra-producto" src="<?= Yii::app()->request->baseUrl ?>/images/contenido/durex/circle.png" alt="Compra online"></a>
       </div>
     </div>
     <div id="info-producto4" class="row contenedor-info hide ">
@@ -477,7 +460,7 @@
           <p class="descrip-producto">Logra un <span>mejor <br>rendimiento físico.</span></p>
         </div>
         <img class="pack-product" src="<?= Yii::app()->request->baseUrl ?>/images/contenido/durex/productos/placer-prolongado-durex.png" alt="Placer prolongado">
-        <a data-cargar="1" data-producto="105872" data-id="4" href=""><img class="compra-producto" src="<?= Yii::app()->request->baseUrl ?>/images/contenido/durex/circle.png" alt="Compra online"></a>
+        <a href="<?php echo CController::createUrl('/contenido/ver', array('tipo' => 'grupo', 'contenido' => 105872)) ?>"><img class="compra-producto" src="<?= Yii::app()->request->baseUrl ?>/images/contenido/durex/circle.png" alt="Compra online"></a>
       </div>
     </div>
     <div id="info-producto5" class="row contenedor-info hide ">
@@ -489,7 +472,7 @@
           <p class="descrip-producto">Con benzocaína que <span>retarda</span> <br> <span>el rendimiento.</span></p>
         </div>
         <img class="pack-product" src="<?= Yii::app()->request->baseUrl ?>/images/contenido/durex/productos/climax-mutuo-durex.png" alt="Climax mutuo">
-        <a data-cargar="1" data-producto="110786" data-id="5" href=""><img class="compra-producto" src="<?= Yii::app()->request->baseUrl ?>/images/contenido/durex/circle.png" alt="Compra online"></a>
+        <a href="<?php echo CController::createUrl('/contenido/ver', array('tipo' => 'grupo', 'contenido' => 110786)) ?>"><img class="compra-producto" src="<?= Yii::app()->request->baseUrl ?>/images/contenido/durex/circle.png" alt="Compra online"></a>
       </div>
     </div>
     <div id="info-producto6" class="row contenedor-info hide ">
@@ -501,7 +484,7 @@
           <p class="descrip-producto">La experimentación está servida.</p>
         </div>
         <img class="pack-product" style="width: 500px;margin-top: -135px;" src="<?= Yii::app()->request->baseUrl ?>/images/contenido/durex/productos/anillo-vibrador-durex.png" alt="Anillo vibrador">
-          <a data-cargar="1" data-producto="25068" data-id="6" href=""><img class="compra-producto" src="<?= Yii::app()->request->baseUrl ?>/images/contenido/durex/circle.png" alt="Compra online"></a>
+          <a href="<?php echo CController::createUrl('/contenido/ver', array('tipo' => 'grupo', 'contenido' => 25068)) ?>"><img class="compra-producto" src="<?= Yii::app()->request->baseUrl ?>/images/contenido/durex/circle.png" alt="Compra online"></a>
       </div>
     </div>
     <div id="info-producto7" class="row contenedor-info hide ">
@@ -512,7 +495,7 @@
           <p class="descrip-producto">Brinda a la pareja <span>una experiencia deliciosa con sabor a cereza</span> para complementar su relación.</p>
         </div>
         <img class="pack-product" style="width: 440px;margin-top:-95px;right:-207px;" src="<?= Yii::app()->request->baseUrl ?>/images/contenido/durex/productos/gel-cerezas-durex.png" alt="Gel cerezas">
-        <a data-cargar="1" data-producto="25066" data-id="7" href=""><img class="compra-producto" src="<?= Yii::app()->request->baseUrl ?>/images/contenido/durex/circle.png" alt="Compra online"></a>
+        <a href="<?php echo CController::createUrl('/contenido/ver', array('tipo' => 'grupo', 'contenido' => 25066)) ?>"><img class="compra-producto" src="<?= Yii::app()->request->baseUrl ?>/images/contenido/durex/circle.png" alt="Compra online"></a>
       </div>
     </div>
   </div>

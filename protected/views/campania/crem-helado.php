@@ -75,9 +75,9 @@
 </div>
 <!--Versión escritorio-->
 <?php else: ?>
-<a href="<?php echo CController::createUrl('/contenido/ver', array('tipo' => 'grupo', 'contenido' => 2691)) ?>">
+<!-- <a href="<?php echo CController::createUrl('/contenido/ver', array('tipo' => 'grupo', 'contenido' => 2691)) ?>">
   <div class="sidebar-cart"><img class="img-responsive" src="<?= Yii::app()->request->baseUrl ?>/images/contenido/crem-helado/btn-sticky.png" alt="Compra online"></div>
-</a>
+</a> -->
 <div class="background">
   <img class="img-responsive" src="<?= Yii::app()->request->baseUrl ?>/images/contenido/crem-helado/desktop/banner.png" alt="Gafa mania">
   <img class="img-responsive" style="position: absolute;" src="<?= Yii::app()->request->baseUrl ?>/images/contenido/crem-helado/desktop/como-ganar.png" alt="Cómo ganar">

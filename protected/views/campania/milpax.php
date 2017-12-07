@@ -97,7 +97,7 @@ Reg. Sanitario INVIMA 2009M 0009509.</p>
   </div>
 <!--Versión escritorio-->
 <?php else: ?>
-<a href="<?= Yii::app()->request->baseUrl ?>/catalogo/buscar?busqueda=milpax"><div class="sidebar-cart"><img class="img-responsive" src="<?= Yii::app()->request->baseUrl ?>/images/contenido/milpax/btn-fijo.png" alt="Compra online"></div></a>
+<!-- <a href="<?= Yii::app()->request->baseUrl ?>/catalogo/buscar?busqueda=milpax"><div class="sidebar-cart"><img class="img-responsive" src="<?= Yii::app()->request->baseUrl ?>/images/contenido/milpax/btn-fijo.png" alt="Compra online"></div></a> -->
 <img class="img-responsive" src="<?= Yii::app()->request->baseUrl ?>/images/contenido/milpax/banner-principal.jpg" alt="Milpax protege y devuelve la calma">
 <div class="bg-image">
   <div class="container">

@@ -87,8 +87,8 @@
 </div>
 <!--Versión escritorio-->
 <?php else: ?>
-<a href="<?php echo CController::createUrl('/contenido/ver', array('tipo' => 'grupo', 'contenido' => 3232)) ?>"><div class="sidebar-cart"><img class="img-responsive" src="<?= Yii::app()->request->baseUrl ?>/images/contenido/nutriben/btn-fijo.png" alt="Compra online"></div></a>
-<img class="img-responsive" src="<?= Yii::app()->request->baseUrl ?>/images/contenido/nutriben/banner-nutriben-crecimiento.jpg" alt="Nutribén crecimiento, fórmula láctea de crecimiento en polvo">
+<!-- <a href="<?php echo CController::createUrl('/contenido/ver', array('tipo' => 'grupo', 'contenido' => 3232)) ?>"><div class="sidebar-cart"><img class="img-responsive" src="<?= Yii::app()->request->baseUrl ?>/images/contenido/nutriben/btn-fijo.png" alt="Compra online"></div></a>
+ --><img class="img-responsive" src="<?= Yii::app()->request->baseUrl ?>/images/contenido/nutriben/banner-nutriben-crecimiento.jpg" alt="Nutribén crecimiento, fórmula láctea de crecimiento en polvo">
 <div class="container">
   <div class="pattern col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1" style="margin-top: 50px;">
     <img class="experience" src="<?= Yii::app()->request->baseUrl ?>/images/contenido/nutriben/anos-de-experiencia.png" alt="Alter - 75 años de experiencia">

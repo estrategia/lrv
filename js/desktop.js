@@ -2227,6 +2227,7 @@ $(document).on('change', 'select[data-role="ciudad-despacho-map"]', function() {
 
 function ubicacionSeleccion() {
     var form = $("#form-ubicacion");
+    console.log(form);
     $.ajax({
         type: 'POST',
         async: true,

@@ -27,6 +27,7 @@ class EShoppingCart extends CMap {
     protected $bonoValue = 0;
     protected $objPagoExpress = null;
     protected $bodegas = array();
+    protected $arrayFletes = array(); 
     
     
     private function getClass(){
@@ -418,7 +419,7 @@ class EShoppingCart extends CMap {
     	foreach($positions as $position){
     		if ($position->getDelivery() == 0 && $position->getShipping() == 0 && $position->isProduct() && $position->getQuantityStored() > 0){
     			
-    			$informacionBodega = $position->calculateUnidadesBodega($this->bodegas);
+    			$informacionBodega = $position->calculateUnidadesBodega($this->bodegas, $this->objSectorCiudad->codigoCiudad);
     			
     			$arrayCantidades = $informacionBodega['cantidades'];
     			$arrayVolumen = $informacionBodega['volumen'];
@@ -429,14 +430,19 @@ class EShoppingCart extends CMap {
     				}else{
     					$volumenBodegas[$idBodega] = $cantidad;
     				}
+    				$arrayFletes[$idBodega]['volumen'] = $volumenBodegas[$idBodega];
     			}
     			
     			$suma += $position->getSumPriceStored();
+    			
+    			if(isset($this->arrayFletes[$idBodega]['valorDeclarado'])){
+    				$this->arrayFletes[$idBodega]['valorDeclarado'] += $position->getSumPriceStored();
+    			}else{
+    				$this->arrayFletes[$idBodega]['valorDeclarado'] = $position->getSumPriceStored();
+    			}
     		}
     	}
-    	
-    
-    	
+    	    	
     	foreach($volumenBodegas as $codigoCedi => $volumetria ){
     		$flete = Flete::model()->find(array(
     				'with' => array('objOperadorLogistico' => array('with' => 'listOperadorRangos')),
@@ -457,19 +463,29 @@ class EShoppingCart extends CMap {
     			$ultimoPeso =  $objRango->valorFinal;
     		}
     		
+    		$valorFlete = 0;
     		if($claseRango == 1){
-    			$this->shippingStored += $flete->rango1;
+    			$valorFlete += $flete->rango1;
     		}else{
-    			$this->shippingStored += $flete->rango2;
+    			$valorFlete += $flete->rango2;
     		}
     		
     		if($volumetria-$ultimoPeso > 0){
-    			
-    			$this->shippingStored += ($volumetria-$ultimoPeso) * $flete->valorKiloAdicional;
+    			$valorFlete += ($volumetria-$ultimoPeso) * $flete->valorKiloAdicional;
     		}
+    		
+    		$this->shippingStored += $valorFlete;
+    		$this->arrayFletes[$codigoCedi]['valorVolumetrico'] = $volumetria;
+    		$this->arrayFletes[$codigoCedi]['valorFlete'] = $valorFlete;
+    		$this->arrayFletes[$codigoCedi]['operadorLogistico'] = $flete->idOperadorLogistico;
+    		
     	}
     	
     	return $suma;
+    }
+    
+    public function getArrayFlete(){
+    	return $this->arrayFletes;
     }
     
     

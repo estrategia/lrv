@@ -100,8 +100,9 @@ class Producto extends CActiveRecord {
             'objUnidadNegocioBI' => array(self::BELONGS_TO, 'Categoria', 'idUnidadNegocioBI'),
             'objBusqueda' => array(self::BELONGS_TO, 'RelevanciaTemp', '','on' => 't.codigoProducto = objBusqueda.codigoProducto'),
         	'listVitalCall'	=> array(self::HAS_MANY, 'ProductosVitalCall', 'codigoProducto'),
-        	'objVitalCall'	=> array(self::HAS_ONE, 'ProductosVitalCall', 'codigoProducto'),
-        	'listComprasItems'	=> array(self::HAS_MANY, 'ComprasItems', 'codigoProducto'),
+            'objVitalCall'  => array(self::HAS_ONE, 'ProductosVitalCall', 'codigoProducto'),
+            'listComprasItems'  => array(self::HAS_MANY, 'ComprasItems', 'codigoProducto'),
+        	'saldoTercero'	=> array(self::HAS_ONE, 'ProductosSaldosTerceros', 'codigoProducto'),
 
                 //'listCategoriasTienda' => array(self::MANY_MANY, 'CategoriaTienda', '', 'through' => 'CategoriasCategoriaTienda', 'condition' => 'CategoriasCategoriaTienda.idCategoriaBI=106'),
                 //'listCategoriasCategoriaTienda' => array(self::HAS_MANY, 'CategoriasCategoriaTienda', 'idCategoriaBI'),
@@ -151,6 +152,39 @@ class Producto extends CActiveRecord {
      * based on the search/filter conditions.
      */
     public function search() {
+        // @todo Please modify the following code to remove attributes that should not be searched.
+
+        $criteria = new CDbCriteria;
+
+        $criteria->compare('codigoProducto', $this->codigoProducto, true);
+        $criteria->compare('codigoBarras', $this->codigoBarras, true);
+        $criteria->compare('descripcionProducto', $this->descripcionProducto, true);
+        $criteria->compare('presentacionProducto', $this->presentacionProducto, true);
+        $criteria->compare('idMarca', $this->idMarca);
+        $criteria->compare('codigoProveedor', $this->codigoProveedor, true);
+        $criteria->compare('codigoImpuesto', $this->codigoImpuesto);
+        $criteria->compare('idCategoriaBI', $this->idCategoriaBI);
+        $criteria->compare('idUnidadNegocioBI', $this->idUnidadNegocioBI);
+        $criteria->compare('activo', $this->activo);
+        $criteria->compare('codigoEspecial', $this->codigoEspecial);
+        $criteria->compare('fraccionado', $this->fraccionado);
+        $criteria->compare('numeroFracciones', $this->numeroFracciones, true);
+        $criteria->compare('codigoMedidaFraccion', $this->codigoMedidaFraccion);
+        $criteria->compare('unidadFraccionamiento', $this->unidadFraccionamiento, true);
+        $criteria->compare('codigoUnidadMedida', $this->codigoUnidadMedida, true);
+        $criteria->compare('cantidadUnidadMedida', $this->cantidadUnidadMedida, true);
+        $criteria->compare('fechaCreacion', $this->fechaCreacion, true);
+        $criteria->compare('ventaVirtual', $this->ventaVirtual);
+        $criteria->compare('mostrarAhorroVirtual', $this->mostrarAhorroVirtual);
+        $criteria->compare('tercero', $this->tercero);
+        $criteria->compare('orden', $this->orden);
+
+        return new CActiveDataProvider($this, array(
+            'criteria' => $criteria,
+        ));
+    }
+
+    public function searchTerceros() {
         // @todo Please modify the following code to remove attributes that should not be searched.
 
         $criteria = new CDbCriteria;

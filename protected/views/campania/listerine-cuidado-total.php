@@ -250,9 +250,9 @@ $this->metaTags = "<meta http-equiv='X-UA-Compatible' content='IE=edge'>
 
 <!--Versión escritorio-->
 <?php else: ?>
-  <div class="sidebar-cart">
+<!--   <div class="sidebar-cart">
 	   <ul><li><a href="<?= Yii::app()->request->baseUrl ?>/catalogo/buscar?busqueda=listerine"><img class="img-responsive" src="<?= Yii::app()->request->baseUrl ?>/images/contenido/listerine/comprar-sticky.png" alt=""></a></li></ul>
-	</div>
+	</div> -->
 
   <div id="carousel-example-generic" class="carousel slide" data-ride="carousel">
     <div class="carousel-inner">
