@@ -14,36 +14,31 @@ class ComprasController extends ControllerTercero
 	public function filters()
 	{
 		return array(
-			'accessControl', // perform access control for CRUD operations
-			'postOnly + delete', // we only allow deletion via POST request
+			'login + index, detalle',
 		);
 	}
 
-	/**
-	 * Specifies the access control rules.
-	 * This method is used by the 'accessControl' filter.
-	 * @return array access control rules
-	 */
-	// public function accessRules()
-	// {
-	// 	return array(
-	// 		array('allow',  // allow all users to perform 'index' and 'view' actions
-	// 			'actions'=>array('index','view'),
-	// 			'users'=>array('*'),
-	// 		),
-	// 		array('allow', // allow authenticated user to perform 'create' and 'update' actions
-	// 			'actions'=>array('create','update'),
-	// 			'users'=>array('@'),
-	// 		),
-	// 		array('allow', // allow admin user to perform 'admin' and 'delete' actions
-	// 			'actions'=>array('admin','delete'),
-	// 			'users'=>array('admin'),
-	// 		),
-	// 		array('deny',  // deny all users
-	// 			'users'=>array('*'),
-	// 		),
-	// 	);
-	// }
+	public function filterAccess($filter) {
+        if (!Yii::app()->controller->module->user->isGuest) {
+            $this->redirect(Yii::app()->controller->module->homeUrl);
+        }
+        $filter->run();
+    }
+
+    public function filterLogin($filter) {
+        if (Yii::app()->controller->module->user->isGuest) {
+            $this->redirect(Yii::app()->user->loginUrl);
+        }
+        $filter->run();
+    }
+
+    public function filterLoginajax($filter) {
+        if (Yii::app()->controller->module->user->isGuest) {
+            echo CJSON::encode(array('result' => 'error', 'response' => 'No se detecta usuario autenticado, por favor iniciar sesión para continuar'));
+            Yii::app()->end();
+        }
+        $filter->run();
+    }
 
 	/**
 	 * Displays a particular model.
@@ -51,9 +46,10 @@ class ComprasController extends ControllerTercero
 	 */
 	public function actionDetalle($id)
 	{
-		// CVarDumper::dump(Yii::app()->controller->module->user);
 		$estadosProductos = EstadosComprasItemsTerceros::model()->findAll('t.editableTercero = 1 AND t.estado = 1');
 		$listadoEstados = CHtml::listData($estadosProductos, 'idEstadoItemTercero', 'nombre');
+		$operadoresLogisticos = OperadorLogisticoTerceros::model()->findAll('t.estado = 1');
+		$listadoOperadores = CHtml::listData($operadoresLogisticos, 'idOperadorLogistico', 'nombre');
 		$productos = ComprasItems::model()->findAll(
 			't.idCompra = :idCompra AND t.terceros = 1',
 			[':idCompra' => $id]
@@ -61,7 +57,8 @@ class ComprasController extends ControllerTercero
 		$this->render('detalle',array(
 			'model'=>$this->loadModel($id),
 			'productos' => $productos,
-			'estadosProducto' => $listadoEstados
+			'estadosProducto' => $listadoEstados,
+			'operadoresLogisticos' => $listadoOperadores
 		));
 	}
 

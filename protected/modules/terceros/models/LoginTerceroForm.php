@@ -47,7 +47,6 @@ class LoginTerceroForm extends CFormModel {
     public function authenticate($attribute, $params) {
         if (!$this->hasErrors()) {
             $this->_identity = new TerceroIdentity($this->username, $this->password);
-            var_dump($this->_identity);
             $this->_identity->authenticate();
 
             switch ($this->_identity->errorCode) {

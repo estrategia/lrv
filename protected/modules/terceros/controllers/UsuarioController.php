@@ -8,19 +8,9 @@ class UsuarioController extends ControllerTercero {
      * */
     public function filters() {
         return array(
-            // 'access + index, autenticar',
-            //'login + index, infoPersonal, direcciones, direccionCrear, pagoexpress, listapedidos, pedido, listapersonal, listadetalle',
-            //'loginajax + direccionActualizar',
+            'login +, clave',
         );
     }
-
-    /*
-      public function filters() {
-      return array(
-      array('tienda.filters.AccessControlFilter'),
-      array('tienda.filters.LanzamientoControlFilter'),
-      );
-      } */
 
     public function filterAccess($filter) {
         if (!Yii::app()->controller->module->user->isGuest) {
@@ -52,7 +42,7 @@ class UsuarioController extends ControllerTercero {
      * Visualiza la pagina de autenticacion de usuario
      */
     public function actionAutenticar() {
-        // $this->layout = "simple";
+        $this->layout = "simple";
 
         $model = new LoginTerceroForm;
 
@@ -75,6 +65,7 @@ class UsuarioController extends ControllerTercero {
     }
 
    public function actionClave() {
+        $this->layout = "main";
         $tercero = UsuarioTercero::model()->findByPk(Yii::app()->controller->module->user->id);
         $model = new RegistroForm('contrasena');
         if (isset($_POST['RegistroForm'])) {

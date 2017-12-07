@@ -13,10 +13,9 @@ class ProductoTerceroController extends ControllerTercero
 	 */
 	public function filters()
 	{
-		// return array(
-		// 	'accessControl', // perform access control for CRUD operations
-		// 	'postOnly + delete', // we only allow deletion via POST request
-		// );
+		return array(
+			'login + index, detalle',
+		);
 	}
 
 	public function filterAccess($filter) {

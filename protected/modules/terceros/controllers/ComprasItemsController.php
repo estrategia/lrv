@@ -53,7 +53,7 @@ class ComprasItemsController extends ControllerTercero
             't.idCompraItem = :id',
             [':id' => $id]
         );
-        $compraItem->operadorLogistico = $operadorLogistico;
+        $compraItem->idOperadorLogistico = $operadorLogistico;
         if ($compraItem->save()) {
             $response = ['result' => 'ok', 'response' => $compraItem];
         } else {

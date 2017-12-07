@@ -117,7 +117,7 @@ $this->breadcrumbs=array(
 			</td>
 			<td>
 				<div class="form-inline">
-					<?php echo CHtml::textField('operador-logistico-producto-tercero', $producto->operadorLogistico, ['class' => 'form-control input-sm']); ?>
+					<?php echo CHtml::dropDownList('operador-logistico-producto-tercero', $producto->idOperadorLogistico, $operadoresLogisticos, ['class' => 'form-control input-sm', 'empty' => 'Seleccionar']); ?>
 					<button class="btn btn-default btn-sm" data-codigo-producto-tercero="<?php echo $producto->idCompraItem ?>" data-role="actualizar-operador-logistico-producto-tercero"><i class="glyphicon glyphicon-refresh"></i></button>
 				</div>
 			</td>

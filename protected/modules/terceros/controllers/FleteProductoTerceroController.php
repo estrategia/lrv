@@ -13,10 +13,31 @@ class FleteProductoTerceroController extends ControllerTercero
      */
     public function filters()
     {
-        // return array(
-        //     'accessControl', // perform access control for CRUD operations
-        //     'postOnly + delete', // we only allow deletion via POST request
-        // );
+        return array(
+            'login + fletesProducto, crear, actualizar',
+        );
+    }
+
+    public function filterAccess($filter) {
+        if (!Yii::app()->controller->module->user->isGuest) {
+            $this->redirect(Yii::app()->controller->module->homeUrl);
+        }
+        $filter->run();
+    }
+
+    public function filterLogin($filter) {
+        if (Yii::app()->controller->module->user->isGuest) {
+            $this->redirect(Yii::app()->user->loginUrl);
+        }
+        $filter->run();
+    }
+
+    public function filterLoginajax($filter) {
+        if (Yii::app()->controller->module->user->isGuest) {
+            echo CJSON::encode(array('result' => 'error', 'response' => 'No se detecta usuario autenticado, por favor iniciar sesión para continuar'));
+            Yii::app()->end();
+        }
+        $filter->run();
     }
 
     protected function beforeAction($action)

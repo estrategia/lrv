@@ -51,10 +51,17 @@
                         <div class="nav-sm nav nav-stacked">
                         </div>
                         <ul class="nav nav-pills nav-stacked main-menu">
-                            <li class="nav-header">PRODUCTOS</li>
-                                <li class="">
-                                    <a href="<?php echo $this->createUrl('/productoTercero') ?>" class="ajax-link"><i class="glyphicon glyphicon-home"></i><span> Panel de control</span></a>
+                            <li class="nav-header">TERCEROS</li>
+                                 <li class="">
+                                    <a href="<?php echo $this->createUrl('/terceros/compras') ?>" class="ajax-link"><i class="glyphicon glyphicon-shopping-cart"></i><span> Pedidos </span></a>
                                 </li>
+                            </li>
+                            <li class="">
+                                <a href="<?php echo $this->createUrl('/terceros/productoTercero') ?>" class="ajax-link"><i class="glyphicon glyphicon-tags"></i><span> Productos </span></a>
+                            </li>
+                            <li class="">
+                                <a href="<?php echo $this->createUrl('/terceros/usuario/clave') ?>" class="ajax-link"><i class="glyphicon glyphicon-user"></i><span> Cambiar Contraseña </span></a>
+                            </li>
                         </ul>
                     </div>
                 </div>

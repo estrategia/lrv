@@ -176,9 +176,8 @@ class AdminController extends ControllerOperator {
                 $fecha = Compras::calcularFechaVisualizar();
                 $model->fechaCompra = null;
 
-                $this->render('pedidos', array(
-                    'model' => $model,
-                    'dataProvider' => $model->searchTercerosCallcenter(),
+                $this->render('tercerosPedidos', array(
+                    'model' => new ComprasItems,
                     'arrCantidadPedidos' => Compras::cantidadComprasPorEstado($fecha)
                 ));
             }

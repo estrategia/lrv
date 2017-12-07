@@ -83,7 +83,7 @@ $(document).on('click', 'button[data-role=actualizar-numero-guia-producto-tercer
 
 $(document).on('click', 'button[data-role=actualizar-operador-logistico-producto-tercero]', function () {
     var idCompraItem = $(this).attr('data-codigo-producto-tercero');
-    var operadorLogistico = $('input[name="operador-logistico-producto-tercero"]').val();
+    var operadorLogistico = $('select[name="operador-logistico-producto-tercero"]').val();
     $.ajax({
         type: 'POST',
         dataType: 'json',
