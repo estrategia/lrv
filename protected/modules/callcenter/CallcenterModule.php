@@ -2,6 +2,7 @@
 
 class CallcenterModule extends CWebModule {
     public $homeUrl = array('/callcenter');
+    // public $defaultController = 'compras';
 
     public function init() {
         // this method is called when the module is being created
@@ -23,6 +24,7 @@ class CallcenterModule extends CWebModule {
             'errorHandler' => array(
                 'errorAction' => 'callcenter/sitio/error',
             ),
+            // 'defaultController' => 'compras'
         ));
 
         $this->layoutPath = "protected/modules/callcenter/views/layouts";

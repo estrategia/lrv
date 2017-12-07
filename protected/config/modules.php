@@ -2,7 +2,7 @@
 
 return array(
     'terceros' => array(
-        'defaultController' => 'default',
+        'defaultController' => 'compras',
         'components' => array(
             'user' => array(
                 'class' => 'terceros.components.UserTercero'
