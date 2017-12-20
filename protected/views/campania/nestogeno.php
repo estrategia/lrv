@@ -1,8 +1,8 @@
-<?php $this->pageTitle = "Nestogeno 3 Kids - La Rebaja Virtual"; ?>
+<?php $this->pageTitle = "Nestogeno 3 KIDS - La Rebaja Virtual"; ?>
 <?php
   $this->metaTags = "
   <meta http-equiv='X-UA-Compatible' content='IE=edge'>
-  <meta name='description' content='NESTOGENO® 3 Kids es un alimento lácteo para niños desde los dos años en adelante. Con el exclusivo probiótico Lcomfortis®, DHA-ARA y 19 vitaminas y minerales.'>
+  <meta name='description' content='NESTOGENO® 3 KIDS es un alimento lácteo para niños desde los dos años en adelante. Con el exclusivo probiótico Lcomfortis®, DHA-ARA y 19 vitaminas y minerales.'>
   <meta name='keywords' content='Nestogeno, nestogeno 3, leche nestogeno.'>
   <style>
     @font-face {font-family:HelveticaNeueLight; src: url(" . Yii::app()->request->baseUrl . "/images/contenido/pantene/fonts/HelveticaNeueLight.ttf);}
@@ -72,24 +72,24 @@
 </a>
 <div class="bg-texture" style="padding-bottom: 40px;">
   <section class="intro-title" style="padding: 0 20px 80px; font-size: 12px; margin-top: 20px;">
-    <h1>NESTOGENO<sup>&reg;</sup> 3 Kids <br> es un alimento lácteo para niños sanos desde los dos años en adelante</h1>
+    <h1>NESTOGENO<sup>&reg;</sup> 3 KIDS <br> es un alimento lácteo para niños sanos desde los dos años en adelante</h1>
   </section>
   <div class="bg-blanco" style="margin-top: -70px; margin-bottom: 0;">
     <img width="150" style="margin: 0 auto; display: block;" src="<?= Yii::app()->request->baseUrl ?>/images/contenido/nestogeno/felicidad-que-se-nota.png" >
-    <h2 class="nombre-producto" style="margin: 15px 0 0; font-size: 19px; text-align: center;">NESTOGENO<sup>&reg;</sup> 3 Kids </h2>
+    <h2 class="nombre-producto" style="margin: 15px 0 0; font-size: 19px; text-align: center;">NESTOGENO<sup>&reg;</sup> 3 KIDS </h2>
     <p class="txt-description" style="color:#4F4F4F;">
-      Exclusivo probiótico <span>Lcomfortis<sup>&reg;</sup></span> que ayuda
+      Con el exclusivo probiótico <span>Lcomfortis<sup>&reg;</sup></span> que ayuda
       a que la barriguita de tu bebé esté feliz,
       además contiene <span>DHA-ARA, 19 vitaminas
       y minerales</span> que junto con una alimentación
       balanceada y ejercicio físico contribuyen al adecuado
       desarrollo y crecimiento de tu hijo.
     </p>
-    <img class="img-responsive-m" src="<?= Yii::app()->request->baseUrl ?>/images/contenido/nestogeno/pack-nestogeno.png" alt="Compra Nestogeno Kids">
+    <img class="img-responsive-m" src="<?= Yii::app()->request->baseUrl ?>/images/contenido/nestogeno/pack-nestogeno.png" alt="Compra Nestogeno KIDS">
     <p class="precioproductos-antes">ANTES: <span><?= ($nestogeno == null) ? "$00.000" : Yii::app()->numberFormatter->format(Yii::app()->params->formatoMoneda['patron'], $nestogeno["u-a"], Yii::app()->params->formatoMoneda['moneda']) ?> </span> </p>
     <p class="precioproductos">AHORA: <?= ($nestogeno == null) ? "$00.000" : Yii::app()->numberFormatter->format(Yii::app()->params->formatoMoneda['patron'], $nestogeno["u"], Yii::app()->params->formatoMoneda['moneda']) ?> </p>
     <a href="<?php echo CController::createUrl('/catalogo/producto', array('producto' => 104212)) ?>">
-      <img class="btn-compra" style="margin-top:20px;" src="<?= Yii::app()->request->baseUrl ?>/images/contenido/nestogeno/btn-comprar.png" alt="Compra Nestogeno Kids">
+      <img class="btn-compra" style="margin-top:20px;" src="<?= Yii::app()->request->baseUrl ?>/images/contenido/nestogeno/btn-comprar.png" alt="Compra Nestogeno KIDS">
     </a>
   </div>
 </div>
@@ -137,20 +137,20 @@
 </a>
 <section class="section-info">
   <section class="intro-title">
-    <h1>NESTOGENO<sup>&reg;</sup> 3 Kids es un alimento lácteo <br>para niños sanos desde los dos años en adelante</h1>
+    <h1>NESTOGENO<sup>&reg;</sup> 3 KIDS es un alimento lácteo <br>para niños sanos desde los dos años en adelante</h1>
   </section>
   <div class="contenedor-info">
     <div class="columna-imagen">
-      <img class="pack-nestogeno" src="<?= Yii::app()->request->baseUrl ?>/images/contenido/nestogeno/pack-nestogeno.png" alt="Compra Nestogeno Kids">
+      <img class="pack-nestogeno" src="<?= Yii::app()->request->baseUrl ?>/images/contenido/nestogeno/pack-nestogeno.png" alt="Compra Nestogeno KIDS">
     </div>
     <div class="columna-info">
-      <h2 class="nombre-producto">NESTOGENO<sup>&reg;</sup> 3 Kids <img width="150" class="note" src="<?= Yii::app()->request->baseUrl ?>/images/contenido/nestogeno/felicidad-que-se-nota.png" ></h2>
+      <h2 class="nombre-producto">NESTOGENO<sup>&reg;</sup> 3 KIDS <img width="150" class="note" src="<?= Yii::app()->request->baseUrl ?>/images/contenido/nestogeno/felicidad-que-se-nota.png" ></h2>
       <p class="txt-description">
-        Exclusivo probiótico <span>Lcomfortis<sup>&reg;</sup></span> que ayuda <br>
-        a que la barriguita de tu bebé esté feliz, <br>
-        además contiene <span>DHA-ARA, 19 vitaminas <br>
-        y minerales</span> que junto con una alimentación <br>
-        balanceada y ejercicio físico contribuyen al adecuado <br>
+        Con el exclusivo probiótico <span>Lcomfortis<sup>&reg;</sup></span> que ayuda <br>
+        a que la barriguita de tu bebé esté feliz, además <br>
+        contiene <span>DHA-ARA, 19 vitaminas y minerales</span>  <br>
+        que junto con una alimentación balanceada  <br>
+        y ejercicio físico contribuyen al adecuado <br>
         desarrollo y crecimiento de tu hijo.
       </p>
       <div class="proceso-compra">
@@ -160,7 +160,7 @@
         </div>
         <div style="width: 50%;">
           <a href="<?php echo CController::createUrl('/catalogo/producto', array('producto' => 104212)) ?>">
-            <img class="btn-compra" src="<?= Yii::app()->request->baseUrl ?>/images/contenido/nestogeno/btn-comprar.png" alt="Compra Nestogeno Kids">
+            <img class="btn-compra" src="<?= Yii::app()->request->baseUrl ?>/images/contenido/nestogeno/btn-comprar.png" alt="Compra Nestogeno KIDS">
           </a>
         </div>
       </div>
