@@ -132,6 +132,7 @@ return array(
         'nexcare-rehabilitacion' => 'publicidad/contenido/nombre/nexcare-rehabilitacion',
         'menticol-pies' => 'publicidad/contenido/nombre/menticol',
         'tecnigo' => 'publicidad/contenido/nombre/tecnigo',
+        'nestogeno-3-kids' => 'publicidad/contenido/nombre/nestogeno',
          // Fin links campañas
 
         // REST patterns

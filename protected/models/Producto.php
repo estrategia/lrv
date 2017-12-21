@@ -398,7 +398,7 @@ class Producto extends CActiveRecord {
     public static function consultarProducto($producto, $objSectorCiudad)
     {
         	$objProducto = null;
-    
+
         	if ($objSectorCiudad == null) {
         		$objProducto = self::model ()->find ( array (
         				'condition' => 't.activo=:activo AND t.codigoProducto=:codigo',
@@ -416,9 +416,7 @@ class Producto extends CActiveRecord {
         						'listPrecios' => array (
         								'on' => '(listPrecios.codigoCiudad=:ciudad AND listPrecios.codigoSector=:sector) OR listPrecios.idProductoPrecios IS NULL'
         						),
-        						'listSaldosTerceros' => array (
-        								'on' => '(listSaldosTerceros.codigoCiudad=:ciudad AND listSaldosTerceros.codigoSector=:sector) OR listSaldosTerceros.idProductoSaldo IS NULL'
-        						)
+        						'listSaldosTerceros',
         				),
         				'condition' => 't.activo=:activo AND t.codigoProducto=:codigo',
         				'params' => array (
@@ -429,7 +427,7 @@ class Producto extends CActiveRecord {
         				)
         		) );
         	}
-    
+
         	return $objProducto;
     }
 
@@ -440,11 +438,11 @@ class Producto extends CActiveRecord {
             $objProducto = new Producto;
         }
         	$objPrecio = new PrecioProducto($objProducto, $objSectorCiudad, Yii::app()->shoppingCart->getCodigoPerfil());
-        
+
         	if(!$objPrecio->inicializado()){
         		return null;
         	}
-        
+
         	$arrPrecio = array(
         		'u' => $objPrecio->getPrecio(Precio::PRECIO_UNIDAD),//precio unidad
         	    'u-a' => $objPrecio->getPrecio(Precio::PRECIO_UNIDAD, false),//precio unidad antes, sin ahorro
@@ -454,11 +452,11 @@ class Producto extends CActiveRecord {
         	    'fa' =>  $objPrecio->getAhorro(Precio::PRECIO_FRACCION),//precio fraccion ahorro
         	    'pd' => $objPrecio->getPorcentajeDescuento(),//porcentaje descuento
         	);
-        	
+
         	if(isset($arrPrecio[$tipo])){
         	    return $arrPrecio[$tipo];
         	}
-        
+
         	return $arrPrecio;
     }
 

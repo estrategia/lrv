@@ -37,25 +37,28 @@ $this->metaTags = "<meta http-equiv='X-UA-Compatible' content='IE=edge'>
     .embed-container embed { position: absolute; top: 0; left: 0; width: 100%; height: 100%;}
     .header-m h2 {font-size: 17px;padding: 0px 18px;}
     .background{
-      background: rgba(255,255,255,1);
-      background: -moz-linear-gradient(top, rgba(255,255,255,1) 50%, rgba(244,241,234,1) 70%, rgba(243,239,230,1) 100%);
-      background: -webkit-gradient(left top, left bottom, color-stop(50%, rgba(255,255,255,1)), color-stop(70%, rgba(244,241,234,1)), color-stop(100%, rgba(243,239,230,1)));
-      background: -webkit-linear-gradient(top, rgba(255,255,255,1) 50%, rgba(244,241,234,1) 70%, rgba(243,239,230,1) 100%);
-      background: -o-linear-gradient(top, rgba(255,255,255,1) 50%, rgba(244,241,234,1) 70%, rgba(243,239,230,1) 100%);
-      background: -ms-linear-gradient(top, rgba(255,255,255,1) 50%, rgba(244,241,234,1) 70%, rgba(243,239,230,1) 100%);
-      background: linear-gradient(to bottom, rgba(255,255,255,1) 50%, rgba(244,241,234,1) 70%, rgba(243,239,230,1) 100%);
+
+      background: rgba(254,254,254,1);
+      background: -moz-linear-gradient(top, rgba(254,254,254,1) 0%, rgba(254,254,254,1) 53%, rgba(217,222,228,1) 80%, rgba(217,222,228,1) 100%);
+      background: -webkit-gradient(left top, left bottom, color-stop(0%, rgba(254,254,254,1)), color-stop(53%, rgba(254,254,254,1)), color-stop(80%, rgba(217,222,228,1)), color-stop(100%, rgba(217,222,228,1)));
+      background: -webkit-linear-gradient(top, rgba(254,254,254,1) 0%, rgba(254,254,254,1) 53%, rgba(217,222,228,1) 80%, rgba(217,222,228,1) 100%);
+      background: -o-linear-gradient(top, rgba(254,254,254,1) 0%, rgba(254,254,254,1) 53%, rgba(217,222,228,1) 80%, rgba(217,222,228,1) 100%);
+      background: -ms-linear-gradient(top, rgba(254,254,254,1) 0%, rgba(254,254,254,1) 53%, rgba(217,222,228,1) 80%, rgba(217,222,228,1) 100%);
+      background: linear-gradient(to bottom, rgba(254,254,254,1) 0%, rgba(254,254,254,1) 53%, rgba(217,222,228,1) 80%, rgba(217,222,228,1) 100%);
+      filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#fefefe', endColorstr='#d9dee4', GradientType=0 );
+
       padding-top: 70px;
     }
     .background .product {margin:0 auto;}
     .background .sabores {padding: 0px 49px;}
     .name-product {color:#76279C;  font-family:BrandonGrotesque-Bold ;text-align:center;font-size: 24px;margin-top: 10px;}
-    .name-product::before { background: #E0D1D8 none repeat scroll 0 0; bottom: 159px; content: ''; height: 5px; position: absolute; width: 172px;}
+    .name-product::before { background: #C8C0D5 none repeat scroll 0 0; bottom: 159px; content: ''; height: 5px; position: absolute; width: 172px;}
     .background .btn-comprar{margin: 50px auto;}
     .background .sabores img:hover {-webkit-animation-name: wobble-to-top-right;animation-name: wobble-to-top-right;-webkit-animation-duration: 1s;animation-duration: 1s;-webkit-animation-timing-function: ease-in-out;animation-timing-function: ease-in-out;-webkit-animation-iteration-count: 1;animation-iteration-count: 1;}
     .bg-img {background-image:url(".Yii::app()->request->baseUrl."/images/contenido/abbot/pediasure/banner-secundario.jpg);background-size:cover;}
     .bg-img .princip {font-family: helvetica-neue-lt-std;color:#572F76;margin-top:90px;}
-    .princip span:nth-child(1) {font-size: 36px;font-weight: bold;font-style: italic;}
-    .princip span:nth-child(3) {font-family: brandonGrotesque-regular;font-size: 22px;margin-left: 188px;}
+    .princip span:nth-child(1) {font-size: 30px;font-weight: bold;font-style: italic;}
+    .princip span:nth-child(3) {font-family: brandonGrotesque-regular;font-size: 22px;margin-left: 55px;}
     .lista {color: #572F76;font-size: 21px;margin-top: 46px;list-style-image: url('".Yii::app()->request->baseUrl."/images/contenido/abbot/pediasure/icono.png');}
     .lista li {margin-bottom: 10px;}
     .nuevos-sabores {z-index: 100;position: absolute;margin-top: -103px;}
@@ -152,8 +155,8 @@ $this->metaTags = "<meta http-equiv='X-UA-Compatible' content='IE=edge'>
   </p>
 </div>
 <div class="cont-video" style="padding: 0px 35px;">
-    <div class='embed-container'><iframe src='https://www.youtube.com/embed/nrsmPX_QpHE?rel=0' frameborder='0' allowfullscreen></iframe></div>
-    <div class='embed-container'><iframe src='https://www.youtube.com/embed/gX95PfdVgVc?rel=0' frameborder='0' allowfullscreen></iframe></div>
+    <div class='embed-container'><iframe width="560" height="315" src="https://www.youtube.com/embed/-z9-TvT_eBg?rel=0&amp;showinfo=0" frameborder="0" gesture="media" allow="encrypted-media" allowfullscreen></iframe></div>
+    <!-- <div class='embed-container'><iframe src='https://www.youtube.com/embed/gX95PfdVgVc?rel=0' frameborder='0' allowfullscreen></iframe></div> -->
 </div>
 
 <!---FIN VERSIÓN MÓVIL-->
@@ -226,7 +229,7 @@ $this->metaTags = "<meta http-equiv='X-UA-Compatible' content='IE=edge'>
       </div>
   </div>
   <div class="row bg-img" style="height: 536px;">
-    <div class="col-sm-8 col-md-8 col-sm-offset-4 col-md-offset-4">
+    <div class="col-sm-8 col-md-8 col-sm-offset-5 col-md-offset-5">
       <p class="princip">
         <span>Con PediaSure ayúdalos a llegar más alto</span> <br>
         <span>Complemento nutricional para niños de 2 a 13 años de edad.</span>
@@ -235,7 +238,7 @@ $this->metaTags = "<meta http-equiv='X-UA-Compatible' content='IE=edge'>
         <li><span style="font-family: helvetica-neue-lt-std;font-style: italic;">Contiene los 5 grupos de nutrientes:</span><br>
         proteínas, carbohidratos, grasas, vitaminas y minerales.</li>
         <li>Contribuye a una nutrición completa y balanceada.</li>
-        <li>Es un producto que aporta a los niños nutrientes clave que apoyan su crecimiento y desarrollo.</li>
+        <li>Es un producto que aporta a los niños nutrientes clave <br> que apoyan su crecimiento y desarrollo.</li>
       </ul>
     </div>
   </div>
@@ -250,7 +253,7 @@ $this->metaTags = "<meta http-equiv='X-UA-Compatible' content='IE=edge'>
       <img class="img-responsive nuevos-sabores" src="<?= Yii::app()->request->baseUrl ?>/images/contenido/abbot/pediasure/nuevos-sabores.png" alt="nuevos sabores pediasure">
     </div>
   </div>
-  <div class="row" style="background-color:#F9F8F4;padding: 76px 25px 20px;">
+  <div class="row background" style="padding: 76px 25px 20px;">
     <div class="text-legal">
       <p>Pediasure® Alimento líquido a base de proteína, lípidos, carbohidratos, vitaminas y minerales para niños en crecimiento, nutrición completa y balanceada. <br>
       Registro Sanitario: RSiA16I188015. Este producto no reemplaza una alimentación adecuada. Complementa a diario su nutrición con Pediasure®. El ejercicio y una dieta balanceada contribuyen a una vida más saludable.</p>
@@ -259,11 +262,10 @@ $this->metaTags = "<meta http-equiv='X-UA-Compatible' content='IE=edge'>
       </p>
     </div>
     <div class="row cont-video">
-      <div class="col-sm-6 col-md-6">
-        <div class='embed-container'><iframe src='https://www.youtube.com/embed/nrsmPX_QpHE?rel=0' frameborder='0' allowfullscreen></iframe></div>
-      </div>
-      <div class="col-sm-6 col-md-6">
-        <div class='embed-container'><iframe src='https://www.youtube.com/embed/gX95PfdVgVc?rel=0' frameborder='0' allowfullscreen></iframe></div>
+      <div class="col-sm-6 col-md-6 col-sm-offset-3 col-md-offset-3">
+        <div class='embed-container'>
+          <iframe width="560" height="315" src="https://www.youtube.com/embed/-z9-TvT_eBg?rel=0&amp;showinfo=0" frameborder="0" gesture="media" allow="encrypted-media" allowfullscreen></iframe>
+        </div>
       </div>
     </div>
   </div>
