@@ -64,6 +64,8 @@
      .logo-padel-m { width: 99px; display: block; }
      .bg-azul-m { background-color: rgba(13, 107, 252, 0.7); width: 100%; text-align: center; font-family: Lato-Regular; color: #fff; text-transform: uppercase; font-size: 11px; padding: 5px;}
      .bg-azul-m span {font-family:Lato-Bold;}
+     .video {position: relative; padding-bottom: 56.25%; overflow: hidden; width: 95%; margin: 20px auto;}
+     .video iframe{position: absolute;display: block; top: 0; left: 0; width: 100%; height: 100%;}
   </style>
 ";
 ?>
@@ -86,11 +88,11 @@ var google_remarketing_only = true;
 
 <!-- VERSION MOVIL -->
 <?php if ($this->isMobile): ?>
-  <div class="main-bg-m" style="padding: 25px;">
+<div class="main-bg-m" style="padding: 25px;">
     <img class="logo-padel-m" src="<?= Yii::app()->request->baseUrl ?>/images/contenido/padel/logo-padel.png" alt="Logo padel">
     <img class="img-responsive-m" style="width: 70%; margin: 15px auto; display: block;" src="<?= Yii::app()->request->baseUrl ?>/images/contenido/padel/titulo-fosfodel.png" alt="Compra online">
     <img class="img-responsive-m" style="width: 70%; margin: 15px auto; display: block;" src="<?= Yii::app()->request->baseUrl ?>/images/contenido/padel/fosfodel-pack.png" alt="Compra online">
-    <a href="#"><img class="btn-comprar" src="<?= Yii::app()->request->baseUrl ?>/images/contenido/padel/btn-comprar.png" alt="Compra online"></a>
+    <a href="<?php echo CController::createUrl('/catalogo/producto', array('producto' => 120416)) ?>"><img class="btn-comprar" src="<?= Yii::app()->request->baseUrl ?>/images/contenido/padel/btn-comprar.png" alt="Compra online"></a>
     <div class="bg-azul-m">
       <p>No te preocupes, el cansancio es uno de los síntomas más comunes en nuestra
       sociedad y puede ser provocado por el estrés y la falta de <span>ciertas vitaminas
@@ -114,10 +116,9 @@ var google_remarketing_only = true;
         <p class="descrip-beneficios"><span>MEJORA</span> <br> EL RENDIMIENTO FÍSICO</p>
       </div>
     </div>
-
     <div class="row-flexidel" style="margin-top: 60px;">
       <img class="img-responsive-m" style="width: 70%; margin: 15px auto; display: block;"src="<?= Yii::app()->request->baseUrl ?>/images/contenido/padel/flexidel-pack.png" alt="Flexidel">
-      <a href="#"><img class="btn-comprar" style="max-width: initial; margin: 0 auto;" src="<?= Yii::app()->request->baseUrl ?>/images/contenido/padel/btn-comprar.png" alt="Compra online"></a>
+      <a data-ajax="false" href="<?php echo CController::createUrl('/catalogo/producto', array('producto' => 120417)) ?>"><img class="btn-comprar" style="max-width: initial; margin: 0 auto;" src="<?= Yii::app()->request->baseUrl ?>/images/contenido/padel/btn-comprar.png" alt="Compra online"></a>
     </div>
     <div class="bg-azul-m" style="margin-top: 20px;">
       <p><span>harpagophytum procumbens,</span> potente antiinflamatorio y analgésico
@@ -142,8 +143,6 @@ var google_remarketing_only = true;
      <iframe width="560" height="315" src="https://www.youtube.com/embed/WfL0ttjA6m4?controls=0&amp;showinfo=0&amp;autoplay=!" frameborder="0" gesture="media" allow="encrypted-media" allowfullscreen></iframe>
     </div>
   </div>
-
-
 <section class="programa-hora">
   <div class="content">
     <div class="seccion1-m" style="margin: -5px;">
@@ -179,7 +178,7 @@ var google_remarketing_only = true;
   <div class="contenedor-principal">
     <div class="columna">
       <img class="img-responsive" src="<?= Yii::app()->request->baseUrl ?>/images/contenido/padel/titulo-fosfodel.png" alt="Compra online">
-      <a href="#"><img class="btn-comprar" src="<?= Yii::app()->request->baseUrl ?>/images/contenido/padel/btn-comprar.png" alt="Compra online"></a>
+      <a href="<?php echo CController::createUrl('/catalogo/producto', array('producto' => 120416)) ?>"><img class="btn-comprar" src="<?= Yii::app()->request->baseUrl ?>/images/contenido/padel/btn-comprar.png" alt="Compra online"></a>
     </div>
     <div class="columna">
       <img class="img-responsive" style="margin-top: 50px;" src="<?= Yii::app()->request->baseUrl ?>/images/contenido/padel/fosfodel-pack.png" alt="Compra online">
@@ -214,15 +213,12 @@ var google_remarketing_only = true;
       </a>
     </div>
     <div class="row-flexidel">
-
         <div class="column">
         <img class="img-responsive" src="<?= Yii::app()->request->baseUrl ?>/images/contenido/padel/flexidel-pack.png" alt="Flexidel">
       </div>
-
       <div class="column">
-        <a href="#"><img class="btn-comprar" src="<?= Yii::app()->request->baseUrl ?>/images/contenido/padel/btn-comprar.png" alt="Compra online"></a>
+        <a href="<?php echo CController::createUrl('/catalogo/producto', array('producto' => 120417)) ?>"><img class="btn-comprar" src="<?= Yii::app()->request->baseUrl ?>/images/contenido/padel/btn-comprar.png" alt="Compra online"></a>
       </div>
-    
     </div>
     <div class="bg-azul-flexi">
       <p><span>harpagophytum procumbens,</span> potente antiinflamatorio y analgésico <br>
@@ -244,7 +240,9 @@ var google_remarketing_only = true;
       </div>
     </div>
     <div style="width: 100%;">
-      <img class="img-responsive demo-video" src="<?= Yii::app()->request->baseUrl ?>/images/contenido/padel/demovideo.png">
+      <div class="video">
+      <iframe width="560" height="315" src="https://www.youtube.com/embed/WfL0ttjA6m4?rel=0&amp;showinfo=0" frameborder="0" allow="autoplay; encrypted-media" allowfullscreen></iframe>
+      </div>
     </div>
   </div>
 </div>
