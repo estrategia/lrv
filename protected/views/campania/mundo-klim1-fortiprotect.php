@@ -68,7 +68,7 @@
     .video {position: relative; padding-bottom: 56.25%; overflow: hidden; width: 95%; margin: 20px auto;}
     .video iframe{position: absolute;display: block; top: 0; left: 0; width: 100%; height: 100%;}
     @media only screen and (max-width: 1920px) and (min-width: 1700px)  {
-      .foot {margin-top: -190px;}
+      .foot {margin-top: -145px;}
       .programa-hora .content .seccion1 {width: 55%;}
       .programa-hora .content .seccion2 { width: 45%;}
       .programa-hora .content .seccion1 {padding-left: 400px;}
@@ -99,7 +99,7 @@
         <h2 class="subtitle-producto" style="text-align: center;">FORTALECE SUS DEFENSAS</h2>
         <p class="main-txt" style="font-size: 18px; padding: 0 15px; text-align:center;">Tu hijo empieza a descubrir el mundo, prepáralo
         con Alimento Lácteo <span> KLIM<sup>&reg;</sup> 1+ FORTIPROTECT<sup>&reg;</sup></span>
-        con Zinc, Hierro y Vitaminas A y C que ayudan
+        con <span>Zinc, Hierro y Vitaminas A y C  </span> que ayudan
         al funcionamiento normal del sistema de defensas
         mientras juegan y exploran.</p>
         <p class="note" style="padding: 0 25px;">La leche materna es el mejor alimento para el niño, KLIM<sup>&reg;</sup> 1+ es un alimento lácteo complementario
@@ -220,7 +220,7 @@
       <h2 class="subtitle-producto">FORTALECE SUS DEFENSAS</h2>
       <p class="main-txt">Tu hijo empieza a descubrir el mundo, prepáralo <br>
         con Alimento Lácteo <span> KLIM<sup>&reg;</sup> 1+ FORTIPROTECT<sup>&reg;</sup></span> <br>
-        con Zinc, Hierro y Vitaminas A y C que ayudan  <br>
+        con <span>Zinc, Hierro y Vitaminas A y C  </span> que ayudan  <br>
         al funcionamiento normal del sistema de defensas <br>
         mientras juegan y exploran.
       </p>
@@ -270,24 +270,24 @@
   </section>
   <div class="row-productos">
     <div class="column">
-      <img id="Image-Maps-Com-image-maps-2018-01-09-153711" src="<?= Yii::app()->request->baseUrl ?>/images/contenido/mundo-klim/home/02-klim-deslactosado.png" border="0" width="276" height="467" orgWidth="276" orgHeight="467" usemap="#image-maps-2018-01-09-153711" alt="" />
-      <map name="image-maps-2018-01-09-153711" id="ImageMapsCom-image-maps-2018-01-09-153711">
-        <area  alt="Ver más información" title="Ver más información" href="<?= Yii::app()->request->baseUrl ?>/mundo-klim1-deslactosado" shape="rect" coords="64,369,195,387" style="outline:none;" target="_self"     />
-        <area  alt="Comprar" title="Comprar" href="<?php echo CController::createUrl('/catalogo/producto', array('producto' => 118997)) ?>" shape="rect" coords="68,401,191,428" style="outline:none;" target="_self"     />
+      <img id="Image-Maps-Com-image-maps-2018-01-10-111843" src="<?= Yii::app()->request->baseUrl ?>/images/contenido/mundo-klim/home/02-klim-deslactosado.png" border="0" width="276" height="467" orgWidth="276" orgHeight="467" usemap="#image-maps-2018-01-10-111843" alt="" />
+      <map name="image-maps-2018-01-10-111843" id="ImageMapsCom-image-maps-2018-01-10-111843">
+        <area  alt="" title="" href="<?= Yii::app()->request->baseUrl ?>/mundo-klim1-deslactosado" shape="rect" coords="21,10,253,393" style="outline:none;" target="_self"     />
+        <area  alt="" title="" href="<?php echo CController::createUrl('/catalogo/producto', array('producto' => 118997)) ?>" shape="rect" coords="76,399,191,424" style="outline:none;" target="_self"     />
       </map>
     </div>
     <div class="column">
-      <img id="Image-Maps-Com-image-maps-2018-01-09-154054" src="<?= Yii::app()->request->baseUrl ?>/images/contenido/mundo-klim/home/klim-fortilearn.png" border="0" width="276" height="467" orgWidth="276" orgHeight="467" usemap="#image-maps-2018-01-09-154054" alt="Klim3+ fortilearn" />
-      <map name="image-maps-2018-01-09-154054" id="ImageMapsCom-image-maps-2018-01-09-154054">
-        <area alt="Ver más información" title="Ver más información" href="<?= Yii::app()->request->baseUrl ?>/mundo-klim3-fortilearn" shape="rect" coords="63,368,195,387" style="outline:none;" target="_self"     />
-        <area alt="Comprar" title="Comprar" href="<?php echo CController::createUrl('/contenido/ver', array('tipo' => 'grupo', 'contenido' => 3947)) ?>" shape="rect" coords="72,400,194,427" style="outline:none;" target="_self"     />
+      <img id="Image-Maps-Com-image-maps-2018-01-10-112114" src="<?= Yii::app()->request->baseUrl ?>/images/contenido/mundo-klim/home/klim-fortilearn.png" border="0" width="276" height="467" orgWidth="276" orgHeight="467" usemap="#image-maps-2018-01-10-112114" alt="" />
+      <map name="image-maps-2018-01-10-112114" id="ImageMapsCom-image-maps-2018-01-10-112114">
+        <area  alt="" title="" href="<?= Yii::app()->request->baseUrl ?>/mundo-klim3-fortilearn" shape="rect" coords="22,8,254,389" style="outline:none;" target="_self"     />
+        <area  alt="" title="" href="<?php echo CController::createUrl('/contenido/ver', array('tipo' => 'grupo', 'contenido' => 3947)) ?>" shape="rect" coords="81,400,196,425" style="outline:none;" target="_self"     />
       </map>
     </div>
     <div class="column">
-      <img id="Image-Maps-Com-image-maps-2018-01-09-154808" src="<?= Yii::app()->request->baseUrl ?>/images/contenido/mundo-klim/home/klim-fortifrow.png" border="0" width="276" height="467" orgWidth="276" orgHeight="467" usemap="#image-maps-2018-01-09-154808"  alt="Klim fortigrow" />
-      <map name="image-maps-2018-01-09-154808" id="ImageMapsCom-image-maps-2018-01-09-154808">
-        <area  alt="Ver más información" title="Ver más información" href="<?= Yii::app()->request->baseUrl ?>/mundo-klim-fortigrow" shape="rect" coords="68,359,197,383" style="outline:none;" target="_self"     />
-        <area  alt="Comprar" title="Comprar" href="<?= Yii::app()->request->baseUrl ?>/catalogo/producto/producto/114669/" shape="rect" coords="72,392,192,419" style="outline:none;" target="_self"     />
+      <img id="Image-Maps-Com-image-maps-2018-01-10-112601" src="<?= Yii::app()->request->baseUrl ?>/images/contenido/mundo-klim/home/klim-fortifrow.png" border="0" width="276" height="467" orgWidth="276" orgHeight="467" usemap="#image-maps-2018-01-10-112601" alt="" />
+      <map name="image-maps-2018-01-10-112601" id="ImageMapsCom-image-maps-2018-01-10-112601">
+        <area  alt="" title="" href="<?= Yii::app()->request->baseUrl ?>/mundo-klim-fortigrow" shape="rect" coords="23,9,252,390" style="outline:none;" target="_self"     />
+        <area  alt="" title="" href="<?= Yii::app()->request->baseUrl ?>/catalogo/producto/producto/114669/" shape="rect" coords="80,399,194,426" style="outline:none;" target="_self"     />
       </map>
     </div>
   </div>

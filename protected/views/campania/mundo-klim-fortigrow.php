@@ -77,7 +77,6 @@
   </style>
 ";
 ?>
-
 <!-- VERSION MOVIL -->
 <?php if ($this->isMobile): ?>
   <div class="main-bg" style="padding-bottom: 35px;">
@@ -99,7 +98,7 @@
           es una edad en la que se muestran más independientes
           y más pilos. Por lo que es importante contar con una
           alimentación que favorezca el normal funcionamiento de
-          sus defensas y su normal crecimiento y desarrollo cognitivo.
+          sus defensas, su normal crecimiento y desarrollo cognitivo.
           Incluye en su alimentación el alimento lácteo <span>KLIM<sup>&reg;</sup>
           FORTIGROW<sup>&reg;</sup></span> que aporta nutrientes como <span>Hierro, Zinc,
           Proteína, Calcio y Vitaminas A, C, y D. </span>   </p>
@@ -190,7 +189,7 @@
         es una edad en la que se muestran más independientes  <br>
         y más pilos. Por lo que es importante contar con una <br>
         alimentación que favorezca el normal funcionamiento de <br>
-        sus defensas y su normal crecimiento y desarrollo cognitivo. <br>
+        sus defensas, su normal crecimiento y desarrollo cognitivo. <br>
         Incluye en su alimentación el alimento lácteo <span>KLIM<sup>&reg;</sup> <br>
         FORTIGROW<sup>&reg;</sup></span> que aporta nutrientes como <span>Hierro, Zinc,  <br>
         Proteína, Calcio y Vitaminas A, C, y D. </span>   </p>
@@ -208,24 +207,24 @@
   </section>
   <div class="row-productos">
     <div class="column">
-      <img id="Image-Maps-Com-image-maps-2018-01-09-151801" src="<?= Yii::app()->request->baseUrl ?>/images/contenido/mundo-klim/home/01-klim-fortiprotect.png" border="0" width="276" height="467" orgWidth="276" orgHeight="467" usemap="#image-maps-2018-01-09-151801" alt="" />
-      <map name="image-maps-2018-01-09-151801" id="ImageMapsCom-image-maps-2018-01-09-151801">
-        <area alt="Ver más información" title="Ver más información" href="<?= Yii::app()->request->baseUrl ?>/mundo-klim1-fortiprotect" shape="rect" coords="52,369,208,389" style="outline:none;" target="_self"     />
-        <area alt="Comprar" title="Comprar" href="<?php echo CController::createUrl('/catalogo/producto', array('producto' => 39646)) ?>" shape="rect" coords="69,401,193,428" style="outline:none;" target="_self"     />
+      <img id="Image-Maps-Com-image-maps-2018-01-10-112837" src="<?= Yii::app()->request->baseUrl ?>/images/contenido/mundo-klim/home/01-klim-fortiprotect.png" border="0" width="276" height="467" orgWidth="276" orgHeight="467" usemap="#image-maps-2018-01-10-112837" alt="" />
+      <map name="image-maps-2018-01-10-112837" id="ImageMapsCom-image-maps-2018-01-10-112837">
+        <area  alt="" title="" href="<?= Yii::app()->request->baseUrl ?>/mundo-klim1-fortiprotect" shape="rect" coords="23,9,252,391" style="outline:none;" target="_self"     />
+        <area  alt="" title="" href="<?php echo CController::createUrl('/catalogo/producto', array('producto' => 39646)) ?>" shape="rect" coords="76,398,193,425" style="outline:none;" target="_self"     />
       </map>
     </div>
     <div class="column">
-      <img id="Image-Maps-Com-image-maps-2018-01-09-153711" src="<?= Yii::app()->request->baseUrl ?>/images/contenido/mundo-klim/home/02-klim-deslactosado.png" border="0" width="276" height="467" orgWidth="276" orgHeight="467" usemap="#image-maps-2018-01-09-153711" alt="" />
-      <map name="image-maps-2018-01-09-153711" id="ImageMapsCom-image-maps-2018-01-09-153711">
-        <area  alt="Ver más información" title="Ver más información" href="<?= Yii::app()->request->baseUrl ?>/mundo-klim1-deslactosado" shape="rect" coords="64,369,195,387" style="outline:none;" target="_self"     />
-        <area  alt="Comprar" title="Comprar" href="<?php echo CController::createUrl('/catalogo/producto', array('producto' => 118997)) ?>" shape="rect" coords="68,401,191,428" style="outline:none;" target="_self"     />
+      <img id="Image-Maps-Com-image-maps-2018-01-10-111843" src="<?= Yii::app()->request->baseUrl ?>/images/contenido/mundo-klim/home/02-klim-deslactosado.png" border="0" width="276" height="467" orgWidth="276" orgHeight="467" usemap="#image-maps-2018-01-10-111843" alt="" />
+      <map name="image-maps-2018-01-10-111843" id="ImageMapsCom-image-maps-2018-01-10-111843">
+        <area  alt="" title="" href="<?= Yii::app()->request->baseUrl ?>/mundo-klim1-deslactosado" shape="rect" coords="21,10,253,393" style="outline:none;" target="_self"     />
+        <area  alt="" title="" href="<?php echo CController::createUrl('/catalogo/producto', array('producto' => 118997)) ?>" shape="rect" coords="76,399,191,424" style="outline:none;" target="_self"     />
       </map>
     </div>
     <div class="column">
-      <img id="Image-Maps-Com-image-maps-2018-01-09-154054" src="<?= Yii::app()->request->baseUrl ?>/images/contenido/mundo-klim/home/klim-fortilearn.png" border="0" width="276" height="467" orgWidth="276" orgHeight="467" usemap="#image-maps-2018-01-09-154054" alt="Klim3+ fortilearn" />
-      <map name="image-maps-2018-01-09-154054" id="ImageMapsCom-image-maps-2018-01-09-154054">
-        <area alt="Ver más información" title="Ver más información" href="<?= Yii::app()->request->baseUrl ?>/mundo-klim3-fortilearn" shape="rect" coords="63,368,195,387" style="outline:none;" target="_self"     />
-        <area alt="Comprar" title="Comprar" href="<?php echo CController::createUrl('/contenido/ver', array('tipo' => 'grupo', 'contenido' => 3947)) ?>" shape="rect" coords="72,400,194,427" style="outline:none;" target="_self"     />
+      <img id="Image-Maps-Com-image-maps-2018-01-10-112114" src="<?= Yii::app()->request->baseUrl ?>/images/contenido/mundo-klim/home/klim-fortilearn.png" border="0" width="276" height="467" orgWidth="276" orgHeight="467" usemap="#image-maps-2018-01-10-112114" alt="" />
+      <map name="image-maps-2018-01-10-112114" id="ImageMapsCom-image-maps-2018-01-10-112114">
+        <area  alt="" title="" href="<?= Yii::app()->request->baseUrl ?>/mundo-klim3-fortilearn" shape="rect" coords="22,8,254,389" style="outline:none;" target="_self"     />
+        <area  alt="" title="" href="<?php echo CController::createUrl('/contenido/ver', array('tipo' => 'grupo', 'contenido' => 3947)) ?>" shape="rect" coords="81,400,196,425" style="outline:none;" target="_self"     />
       </map>
     </div>
   </div>

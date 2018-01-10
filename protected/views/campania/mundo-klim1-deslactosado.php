@@ -102,7 +102,7 @@
             vómito y heces acuosas después de consumir alimentos
             que contienen lactosa. </p>
             <p class="main-txt" style="font-size: 18px; padding: 0 11px; text-align:center;margin: 5px 0;">
-              <span>KLIM® 1+ Deslactosado</span> es un alimento lácteo instantáneo
+              <span>KLIM<sup>&reg;</sup> 1+ Deslactosado</span> es un alimento lácteo instantáneo
               en polvo, <span>con 11 vitaminas y minerales</span> que contribuyen al
               normal crecimiento, además es <span>Deslactosado y contiene
               Prebióticos y Probióticos.</span>
@@ -208,7 +208,7 @@
         vómito y heces acuosas después de consumir alimentos <br>
         que contienen lactosa. </p>
         <p class="main-txt">
-          <span>KLIM® 1+ Deslactosado</span> es un alimento lácteo instantáneo <br>
+          <span>KLIM<sup>&reg;</sup> 1+ Deslactosado</span> es un alimento lácteo instantáneo <br>
           en polvo, <span>con 11 vitaminas y minerales</span> que contribuyen al <br>
           normal crecimiento, además es <span>Deslactosado y contiene <br>
           Prebióticos y Probióticos.</span>
@@ -226,24 +226,24 @@
     </section>
     <div class="row-productos">
       <div class="column">
-        <img id="Image-Maps-Com-image-maps-2018-01-09-151801" src="<?= Yii::app()->request->baseUrl ?>/images/contenido/mundo-klim/home/01-klim-fortiprotect.png" border="0" width="276" height="467" orgWidth="276" orgHeight="467" usemap="#image-maps-2018-01-09-151801" alt="" />
-        <map name="image-maps-2018-01-09-151801" id="ImageMapsCom-image-maps-2018-01-09-151801">
-          <area alt="Ver más información" title="Ver más información" href="<?= Yii::app()->request->baseUrl ?>/mundo-klim1-fortiprotect" shape="rect" coords="52,369,208,389" style="outline:none;" target="_self"     />
-          <area alt="Comprar" title="Comprar" href="<?php echo CController::createUrl('/catalogo/producto', array('producto' => 39646)) ?>" shape="rect" coords="69,401,193,428" style="outline:none;" target="_self"     />
+        <img id="Image-Maps-Com-image-maps-2018-01-10-112837" src="<?= Yii::app()->request->baseUrl ?>/images/contenido/mundo-klim/home/01-klim-fortiprotect.png" border="0" width="276" height="467" orgWidth="276" orgHeight="467" usemap="#image-maps-2018-01-10-112837" alt="" />
+        <map name="image-maps-2018-01-10-112837" id="ImageMapsCom-image-maps-2018-01-10-112837">
+          <area  alt="" title="" href="<?= Yii::app()->request->baseUrl ?>/mundo-klim1-fortiprotect" shape="rect" coords="23,9,252,391" style="outline:none;" target="_self"     />
+          <area  alt="" title="" href="<?php echo CController::createUrl('/catalogo/producto', array('producto' => 39646)) ?>" shape="rect" coords="76,398,193,425" style="outline:none;" target="_self"     />
         </map>
       </div>
       <div class="column">
-        <img id="Image-Maps-Com-image-maps-2018-01-09-154054" src="<?= Yii::app()->request->baseUrl ?>/images/contenido/mundo-klim/home/klim-fortilearn.png" border="0" width="276" height="467" orgWidth="276" orgHeight="467" usemap="#image-maps-2018-01-09-154054" alt="Klim3+ fortilearn" />
-        <map name="image-maps-2018-01-09-154054" id="ImageMapsCom-image-maps-2018-01-09-154054">
-          <area alt="Ver más información" title="Ver más información" href="<?= Yii::app()->request->baseUrl ?>/mundo-klim3-fortilearn" shape="rect" coords="63,368,195,387" style="outline:none;" target="_self"     />
-          <area alt="Comprar" title="Comprar" href="<?php echo CController::createUrl('/contenido/ver', array('tipo' => 'grupo', 'contenido' => 3947)) ?>" shape="rect" coords="72,400,194,427" style="outline:none;" target="_self"     />
+        <img id="Image-Maps-Com-image-maps-2018-01-10-112114" src="<?= Yii::app()->request->baseUrl ?>/images/contenido/mundo-klim/home/klim-fortilearn.png" border="0" width="276" height="467" orgWidth="276" orgHeight="467" usemap="#image-maps-2018-01-10-112114" alt="" />
+        <map name="image-maps-2018-01-10-112114" id="ImageMapsCom-image-maps-2018-01-10-112114">
+          <area  alt="" title="" href="<?= Yii::app()->request->baseUrl ?>/mundo-klim3-fortilearn" shape="rect" coords="22,8,254,389" style="outline:none;" target="_self"     />
+          <area  alt="" title="" href="<?php echo CController::createUrl('/contenido/ver', array('tipo' => 'grupo', 'contenido' => 3947)) ?>" shape="rect" coords="81,400,196,425" style="outline:none;" target="_self"     />
         </map>
       </div>
       <div class="column">
-        <img id="Image-Maps-Com-image-maps-2018-01-09-154808" src="<?= Yii::app()->request->baseUrl ?>/images/contenido/mundo-klim/home/klim-fortifrow.png" border="0" width="276" height="467" orgWidth="276" orgHeight="467" usemap="#image-maps-2018-01-09-154808"  alt="Klim fortigrow" />
-        <map name="image-maps-2018-01-09-154808" id="ImageMapsCom-image-maps-2018-01-09-154808">
-          <area  alt="" title="" href="<?= Yii::app()->request->baseUrl ?>/mundo-klim-fortigrow" shape="rect" coords="68,359,197,383" style="outline:none;" target="_self"     />
-          <area  alt="" title="" href="<?= Yii::app()->request->baseUrl ?>/catalogo/producto/producto/114669/" shape="rect" coords="72,392,192,419" style="outline:none;" target="_self"     />
+        <img id="Image-Maps-Com-image-maps-2018-01-10-112601" src="<?= Yii::app()->request->baseUrl ?>/images/contenido/mundo-klim/home/klim-fortifrow.png" border="0" width="276" height="467" orgWidth="276" orgHeight="467" usemap="#image-maps-2018-01-10-112601" alt="" />
+        <map name="image-maps-2018-01-10-112601" id="ImageMapsCom-image-maps-2018-01-10-112601">
+          <area  alt="" title="" href="<?= Yii::app()->request->baseUrl ?>/mundo-klim-fortigrow" shape="rect" coords="23,9,252,390" style="outline:none;" target="_self"     />
+          <area  alt="" title="" href="<?= Yii::app()->request->baseUrl ?>/catalogo/producto/producto/114669/" shape="rect" coords="80,399,194,426" style="outline:none;" target="_self"     />
         </map>
       </div>
     </div>

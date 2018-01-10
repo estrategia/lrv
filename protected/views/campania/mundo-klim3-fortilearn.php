@@ -278,24 +278,24 @@
   </section>
   <div class="row-productos">
     <div class="column">
-      <img id="Image-Maps-Com-image-maps-2018-01-09-151801" src="<?= Yii::app()->request->baseUrl ?>/images/contenido/mundo-klim/home/01-klim-fortiprotect.png" border="0" width="276" height="467" orgWidth="276" orgHeight="467" usemap="#image-maps-2018-01-09-151801" alt="" />
-      <map name="image-maps-2018-01-09-151801" id="ImageMapsCom-image-maps-2018-01-09-151801">
-        <area alt="Ver más información" title="Ver más información" href="<?= Yii::app()->request->baseUrl ?>/mundo-klim1-fortiprotect" shape="rect" coords="52,369,208,389" style="outline:none;" target="_self"     />
-        <area alt="Comprar" title="Comprar" href="<?php echo CController::createUrl('/catalogo/producto', array('producto' => 39646)) ?>" shape="rect" coords="69,401,193,428" style="outline:none;" target="_self"     />
+      <img id="Image-Maps-Com-image-maps-2018-01-10-112837" src="<?= Yii::app()->request->baseUrl ?>/images/contenido/mundo-klim/home/01-klim-fortiprotect.png" border="0" width="276" height="467" orgWidth="276" orgHeight="467" usemap="#image-maps-2018-01-10-112837" alt="" />
+      <map name="image-maps-2018-01-10-112837" id="ImageMapsCom-image-maps-2018-01-10-112837">
+        <area  alt="" title="" href="<?= Yii::app()->request->baseUrl ?>/mundo-klim1-fortiprotect" shape="rect" coords="23,9,252,391" style="outline:none;" target="_self"     />
+        <area  alt="" title="" href="<?php echo CController::createUrl('/catalogo/producto', array('producto' => 39646)) ?>" shape="rect" coords="76,398,193,425" style="outline:none;" target="_self"     />
       </map>
     </div>
     <div class="column">
-      <img id="Image-Maps-Com-image-maps-2018-01-09-153711" src="<?= Yii::app()->request->baseUrl ?>/images/contenido/mundo-klim/home/02-klim-deslactosado.png" border="0" width="276" height="467" orgWidth="276" orgHeight="467" usemap="#image-maps-2018-01-09-153711" alt="" />
-      <map name="image-maps-2018-01-09-153711" id="ImageMapsCom-image-maps-2018-01-09-153711">
-        <area  alt="Ver más información" title="Ver más información" href="<?= Yii::app()->request->baseUrl ?>/mundo-klim1-deslactosado" shape="rect" coords="64,369,195,387" style="outline:none;" target="_self"     />
-        <area  alt="Comprar" title="Comprar" href="<?php echo CController::createUrl('/catalogo/producto', array('producto' => 118997)) ?>" shape="rect" coords="68,401,191,428" style="outline:none;" target="_self"     />
+      <img id="Image-Maps-Com-image-maps-2018-01-10-111843" src="<?= Yii::app()->request->baseUrl ?>/images/contenido/mundo-klim/home/02-klim-deslactosado.png" border="0" width="276" height="467" orgWidth="276" orgHeight="467" usemap="#image-maps-2018-01-10-111843" alt="" />
+      <map name="image-maps-2018-01-10-111843" id="ImageMapsCom-image-maps-2018-01-10-111843">
+        <area  alt="" title="" href="<?= Yii::app()->request->baseUrl ?>/mundo-klim1-deslactosado" shape="rect" coords="21,10,253,393" style="outline:none;" target="_self"     />
+        <area  alt="" title="" href="<?php echo CController::createUrl('/catalogo/producto', array('producto' => 118997)) ?>" shape="rect" coords="76,399,191,424" style="outline:none;" target="_self"     />
       </map>
     </div>
     <div class="column">
-      <img id="Image-Maps-Com-image-maps-2018-01-09-154808" src="<?= Yii::app()->request->baseUrl ?>/images/contenido/mundo-klim/home/klim-fortifrow.png" border="0" width="276" height="467" orgWidth="276" orgHeight="467" usemap="#image-maps-2018-01-09-154808"  alt="Klim fortigrow" />
-      <map name="image-maps-2018-01-09-154808" id="ImageMapsCom-image-maps-2018-01-09-154808">
-        <area  alt="" title="" href="<?= Yii::app()->request->baseUrl ?>/mundo-klim-fortigrow" shape="rect" coords="68,359,197,383" style="outline:none;" target="_self"     />
-        <area  alt="" title="" href="<?= Yii::app()->request->baseUrl ?>/catalogo/producto/producto/114669/" shape="rect" coords="72,392,192,419" style="outline:none;" target="_self"     />
+      <img id="Image-Maps-Com-image-maps-2018-01-10-112601" src="<?= Yii::app()->request->baseUrl ?>/images/contenido/mundo-klim/home/klim-fortifrow.png" border="0" width="276" height="467" orgWidth="276" orgHeight="467" usemap="#image-maps-2018-01-10-112601" alt="" />
+      <map name="image-maps-2018-01-10-112601" id="ImageMapsCom-image-maps-2018-01-10-112601">
+        <area  alt="" title="" href="<?= Yii::app()->request->baseUrl ?>/mundo-klim-fortigrow" shape="rect" coords="23,9,252,390" style="outline:none;" target="_self"     />
+        <area  alt="" title="" href="<?= Yii::app()->request->baseUrl ?>/catalogo/producto/producto/114669/" shape="rect" coords="80,399,194,426" style="outline:none;" target="_self"     />
       </map>
     </div>
   </div>
