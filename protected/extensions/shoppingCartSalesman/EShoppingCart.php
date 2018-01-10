@@ -32,6 +32,8 @@ class EShoppingCart extends CMap {
     }
 
     public function init() {
+    	$file = fopen(Yii::getPathOfAlias('application') . DIRECTORY_SEPARATOR . "runtime" . DIRECTORY_SEPARATOR . "shoppingCartLog.txt", "a");
+    	fwrite($file, Date("Y-m-d H:i:s ")." Ejecutando Init Carro EShoppingCartSalesman"."" . PHP_EOL);
         $this->restoreFromSession();
     }
 
