@@ -33,18 +33,18 @@
      .contenedor-principal {display: -webkit-box;display: -ms-flexbox;display: flex; -webkit-box-orient: horizontal; -webkit-box-direction: normal; -ms-flex-direction: row; flex-direction: row; -ms-flex-wrap: wrap; flex-wrap: wrap; -webkit-box-pack: justify; -ms-flex-pack: justify; justify-content: space-between; width: 100%; max-width: 600px; margin: auto;}
      .btn-comprar {width: 60%; max-width: 180px; margin: 20px auto; display:block; }
      .contenedor-principal .columna {width:50%;}
-     .bg-azul { background-image:url(".Yii::app()->request->baseUrl."/images/contenido/padel/rectangulo-fosfodel.png); background-size: 100% 100%; background-repeat:no-repeat; padding-top: 50px; width: 100%; text-align: center; font-family:Lato-Regular; color:#fff; text-transform: uppercase; font-size: 11px; padding: 49px 15px 5px; }
+     .bg-azul { background-image:url(".Yii::app()->request->baseUrl."/images/contenido/padel/rectangulo-fosfodel.png); background-size: 100% 100%; background-repeat:no-repeat; padding-top: 50px; width: 100%; text-align: center; font-family:Lato-Regular; color:#fff; text-transform: uppercase; font-size: 13px; padding: 62px 15px 5px; }
      .bg-azul span {font-family:Lato-Bold;}
      .row-icons{display: -webkit-box;display: -ms-flexbox;display: flex; -webkit-box-orient: horizontal; -webkit-box-direction: normal; -ms-flex-direction: row; flex-direction: row; -ms-flex-wrap: wrap; flex-wrap: wrap; -webkit-box-pack: justify; -ms-flex-pack: justify; justify-content: space-between; margin: 25px auto 0; }
      .row-icons .column {width: 25%;}
-     .ico-beneficios {width: 65%; margin: 0 auto 10px; display: block; }
-     .descrip-beneficios {line-height: 15px; font-family:Lato-Regular;color:#fff;text-align:center;font-size: 12px;}
+     .ico-beneficios {width: 75%; margin: 0 auto 10px; display: block; }
+     .descrip-beneficios {line-height: 15px; font-family:Lato-Regular;color:#fff;text-align:center;font-size: 13px;}
      .descrip-beneficios span {font-family:Lato-Bold; text-shadow: 1px 1px 1px rgba(0, 0, 0, 0.7);}
      .conoce-mas {color:#C00000; text-align:center; margin:0; font-family:Lato-Black; text-transform: uppercase;}
      .img-video-fosfodel { margin: -15px auto 0; display: block; width: 50%; max-width: 300px;}
      .row-flexidel {-webkit-box-align: end;-ms-flex-align: end; align-items: flex-end; display: -webkit-box; display: -ms-flexbox; display: flex; -webkit-box-orient: horizontal; -webkit-box-direction: normal; -ms-flex-direction: row; flex-direction: row; -ms-flex-wrap: wrap; flex-wrap: wrap; -webkit-box-pack: justify; -ms-flex-pack: justify; justify-content: space-between; margin: auto;}
      .row-flexidel .column {width:50%;}
-     .bg-azul-flexi {margin-top: 25px; background-image:url(".Yii::app()->request->baseUrl."/images/contenido/padel/rectangulo-flexidel.png); background-size: 100% 100%; background-repeat:no-repeat; width: 100%; text-align: center; font-family:Lato-Regular; color:#fff; text-transform: uppercase; font-size: 11px; padding: 40px 15px 5px; }
+     .bg-azul-flexi {margin-top: 25px; background-image:url(".Yii::app()->request->baseUrl."/images/contenido/padel/rectangulo-flexidel.png); background-size: 100% 100%; background-repeat:no-repeat; width: 100%; text-align: center; font-family:Lato-Regular; color:#fff; text-transform: uppercase; font-size: 13px; padding: 40px 15px 5px; }
      .bg-azul-flexi span {font-family:Lato-Bold;}
      .row-beneficios-flexi {width:100%; display: -webkit-box; display: -ms-flexbox; display: flex; -webkit-box-orient: horizontal; -webkit-box-direction: normal; -ms-flex-direction: row; flex-direction: row; -ms-flex-wrap: wrap; flex-wrap: wrap; -webkit-box-pack: justify; -ms-flex-pack: justify; justify-content: space-between; margin: 25px auto 0;}
      .row-beneficios-flexi .column {width:33.333%;}
@@ -139,7 +139,7 @@ var google_remarketing_only = true;
       </div>
     </div>
     <div style="width: 100%;">
-      <img class="img-responsive demo-video" style="width: 100%; margin: 0 auto;" src="<?= Yii::app()->request->baseUrl ?>/images/contenido/padel/demovideo.png">
+     <iframe width="560" height="315" src="https://www.youtube.com/embed/WfL0ttjA6m4?controls=0&amp;showinfo=0&amp;autoplay=!" frameborder="0" gesture="media" allow="encrypted-media" allowfullscreen></iframe>
     </div>
   </div>
 
@@ -214,12 +214,15 @@ var google_remarketing_only = true;
       </a>
     </div>
     <div class="row-flexidel">
+
+        <div class="column">
+        <img class="img-responsive" src="<?= Yii::app()->request->baseUrl ?>/images/contenido/padel/flexidel-pack.png" alt="Flexidel">
+      </div>
+
       <div class="column">
         <a href="#"><img class="btn-comprar" src="<?= Yii::app()->request->baseUrl ?>/images/contenido/padel/btn-comprar.png" alt="Compra online"></a>
       </div>
-      <div class="column">
-        <img class="img-responsive" src="<?= Yii::app()->request->baseUrl ?>/images/contenido/padel/flexidel-pack.png" alt="Flexidel">
-      </div>
+    
     </div>
     <div class="bg-azul-flexi">
       <p><span>harpagophytum procumbens,</span> potente antiinflamatorio y analgésico <br>
