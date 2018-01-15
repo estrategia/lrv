@@ -77,9 +77,18 @@
       .programa-hora .content .seccion1 {padding-left: 400px;}
       .programa-hora .content .seccion2 {padding-right: 295px;}
     }
+    .precioproductos-antes{text-decoration: line-through; color: #515151; font-family: VAGRoundedStd-Thin; margin: 0 auto; text-align: center; font-size: 19px; line-height: 19px;}
+    .precioproductos{color: #515151; font-family: VAGRoundedStd-Bold; text-align: center;font-size: 21px;margin: 0px;line-height: 21px;}
+    .section-compra {display:flex;}
+    .section-compra .precios {margin-right: 20px;}
   </style>
 ";
 ?>
+
+<!--Consulta el precio de los productos-->
+<?php $klim1Deslactosado = Producto::consultarPrecio('118997', $this->objSectorCiudad)?>
+
+
 <!-- VERSION MOVIL -->
 <?php if ($this->isMobile): ?>
 <div class="main-bg" style="background-image: 100%;">
@@ -107,9 +116,15 @@
               normal crecimiento, además es <span>Deslactosado y contiene
               Prebióticos y Probióticos.</span>
             </p>
-            <a data-ajax="false"  href="<?php echo CController::createUrl('/catalogo/producto', array('producto' => 118997 )) ?>">
-              <img width="200" style="margin: 25px auto; display: block;" src="<?= Yii::app()->request->baseUrl ?>/images/contenido/mundo-klim/btn-compra.png" alt="Comprar Klim fortiprotect">
-            </a>
+            <div class="section-compra" style="flex-direction: column;">
+              <div class="precios" style="margin: 20px auto 0;">
+                <p class="precioproductos-antes">ANTES: <?= ($klim1Deslactosado == null) ? "$00.000" : Yii::app()->numberFormatter->format(Yii::app()->params->formatoMoneda['patron'], $klim1Deslactosado["u-a"], Yii::app()->params->formatoMoneda['moneda']) ?></p>
+                <p class="precioproductos">AHORA: <?= ($klim1Deslactosado == null) ? "$00.000" : Yii::app()->numberFormatter->format(Yii::app()->params->formatoMoneda['patron'], $klim1Deslactosado["u"], Yii::app()->params->formatoMoneda['moneda']) ?></p>
+              </div>
+              <a data-ajax="false" href="<?php echo CController::createUrl('/catalogo/producto', array('producto' => 118997 )) ?>">
+                <img width="200" style="margin: 15px auto; display: block;" src="<?= Yii::app()->request->baseUrl ?>/images/contenido/mundo-klim/btn-compra.png" alt="Comprar Klim fortiprotect">
+              </a>
+            </div>
           </div>
         </section>
       </div>
@@ -213,9 +228,15 @@
           normal crecimiento, además es <span>Deslactosado y contiene <br>
           Prebióticos y Probióticos.</span>
         </p>
-        <a href="<?php echo CController::createUrl('/catalogo/producto', array('producto' => 118997 )) ?>">
-          <img width="200" src="<?= Yii::app()->request->baseUrl ?>/images/contenido/mundo-klim/btn-compra.png" alt="Comprar Klim fortiprotect">
-        </a>
+        <div class="section-compra">
+          <div class="precios">
+            <p class="precioproductos-antes">ANTES: <?= ($klim1Deslactosado == null) ? "$00.000" : Yii::app()->numberFormatter->format(Yii::app()->params->formatoMoneda['patron'], $klim1Deslactosado["u-a"], Yii::app()->params->formatoMoneda['moneda']) ?></p>
+            <p class="precioproductos">AHORA: <?= ($klim1Deslactosado == null) ? "$00.000" : Yii::app()->numberFormatter->format(Yii::app()->params->formatoMoneda['patron'], $klim1Deslactosado["u"], Yii::app()->params->formatoMoneda['moneda']) ?></p>
+          </div>
+          <a href="<?php echo CController::createUrl('/catalogo/producto', array('producto' => 118997 )) ?>">
+            <img width="200" src="<?= Yii::app()->request->baseUrl ?>/images/contenido/mundo-klim/btn-compra.png" alt="Comprar Klim fortiprotect">
+          </a>
+        </div>
       </div>
     </section>
     <section class="content-products">

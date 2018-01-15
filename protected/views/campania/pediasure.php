@@ -37,16 +37,14 @@ $this->metaTags = "<meta http-equiv='X-UA-Compatible' content='IE=edge'>
     .embed-container embed { position: absolute; top: 0; left: 0; width: 100%; height: 100%;}
     .header-m h2 {font-size: 17px;padding: 0px 18px;}
     .background{
-
-      // background: rgba(254,254,254,1);
-      // background: -moz-linear-gradient(top, rgba(254,254,254,1) 0%, rgba(254,254,254,1) 53%, rgba(217,222,228,1) 80%, rgba(217,222,228,1) 100%);
-      // background: -webkit-gradient(left top, left bottom, color-stop(0%, rgba(254,254,254,1)), color-stop(53%, rgba(254,254,254,1)), color-stop(80%, rgba(217,222,228,1)), color-stop(100%, rgba(217,222,228,1)));
-      // background: -webkit-linear-gradient(top, rgba(254,254,254,1) 0%, rgba(254,254,254,1) 53%, rgba(217,222,228,1) 80%, rgba(217,222,228,1) 100%);
-      // background: -o-linear-gradient(top, rgba(254,254,254,1) 0%, rgba(254,254,254,1) 53%, rgba(217,222,228,1) 80%, rgba(217,222,228,1) 100%);
-      // background: -ms-linear-gradient(top, rgba(254,254,254,1) 0%, rgba(254,254,254,1) 53%, rgba(217,222,228,1) 80%, rgba(217,222,228,1) 100%);
-      // background: linear-gradient(to bottom, rgba(254,254,254,1) 0%, rgba(254,254,254,1) 53%, rgba(217,222,228,1) 80%, rgba(217,222,228,1) 100%);
-      // filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#fefefe', endColorstr='#d9dee4', GradientType=0 );
-
+      background: rgba(255,255,255,1);
+      background: -moz-linear-gradient(top, rgba(255,255,255,1) 0%, rgba(255,255,255,1) 47%, rgba(252,252,250,1) 100%);
+      background: -webkit-gradient(left top, left bottom, color-stop(0%, rgba(255,255,255,1)), color-stop(47%, rgba(255,255,255,1)), color-stop(100%, rgba(252,252,250,1)));
+      background: -webkit-linear-gradient(top, rgba(255,255,255,1) 0%, rgba(255,255,255,1) 47%, rgba(252,252,250,1) 100%);
+      background: -o-linear-gradient(top, rgba(255,255,255,1) 0%, rgba(255,255,255,1) 47%, rgba(252,252,250,1) 100%);
+      background: -ms-linear-gradient(top, rgba(255,255,255,1) 0%, rgba(255,255,255,1) 47%, rgba(252,252,250,1) 100%);
+      background: linear-gradient(to bottom, rgba(255,255,255,1) 0%, rgba(255,255,255,1) 47%, rgba(252,252,250,1) 100%);
+      filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#ffffff', endColorstr='#fcfcfa', GradientType=0 );
       padding-top: 70px;
     }
     .background .product {margin:0 auto;}
@@ -242,7 +240,7 @@ $this->metaTags = "<meta http-equiv='X-UA-Compatible' content='IE=edge'>
       </ul>
     </div>
   </div>
-  <div class="row" style="background-color:#FCFCFA;padding: 25px;">
+  <div class="row" style="padding: 25px;">
     <div class="col-sm-6 col-md-6">
       <img class="img-responsive" style="margin-top: 30px;" src="<?= Yii::app()->request->baseUrl ?>/images/contenido/abbot/pediasure/complementa-su-nutricion-a-diario-con-pediasure.png">
       <p class="sub-title"><span>Pediasure listo para tomar,</span><br>

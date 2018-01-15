@@ -74,9 +74,18 @@
       .programa-hora .content .seccion1 {padding-left: 400px;}
       .programa-hora .content .seccion2 {padding-right: 295px;}
     }
+    .precioproductos-antes{text-decoration: line-through; color: #515151; font-family: VAGRoundedStd-Thin; margin: 0 auto; text-align: center; font-size: 19px; line-height: 19px;}
+    .precioproductos{color: #515151; font-family: VAGRoundedStd-Bold; text-align: center;font-size: 21px;margin: 0px;line-height: 21px;}
+    .section-compra {display:flex;}
+    .section-compra .precios {margin-right: 20px;}
   </style>
 ";
 ?>
+
+<!--Consulta el precio de los productos-->
+<?php $klimFortigrow = Producto::consultarPrecio('114669', $this->objSectorCiudad)?>
+
+
 <!-- VERSION MOVIL -->
 <?php if ($this->isMobile): ?>
   <div class="main-bg" style="padding-bottom: 35px;">
@@ -102,9 +111,15 @@
           Incluye en su alimentación el alimento lácteo <span>KLIM<sup>&reg;</sup>
           FORTIGROW<sup>&reg;</sup></span> que aporta nutrientes como <span>Hierro, Zinc,
           Proteína, Calcio y Vitaminas A, C, y D. </span>   </p>
-          <a data-ajax="false" href="<?= Yii::app()->request->baseUrl ?>/catalogo/producto/producto/114669">
-            <img width="200" style="margin: 40px auto; display: block;" src="<?= Yii::app()->request->baseUrl ?>/images/contenido/mundo-klim/btn-compra.png" alt="Comprar Klim fortiprotect">
-          </a>
+          <div class="section-compra" style="flex-direction:column;">
+            <div class="precios" style="margin: 0px auto;">
+              <p class="precioproductos-antes">ANTES: <?= ($klimFortigrow == null) ? "$00.000" : Yii::app()->numberFormatter->format(Yii::app()->params->formatoMoneda['patron'], $klimFortigrow["u-a"], Yii::app()->params->formatoMoneda['moneda']) ?></p>
+              <p class="precioproductos">AHORA: <?= ($klimFortigrow == null) ? "$00.000" : Yii::app()->numberFormatter->format(Yii::app()->params->formatoMoneda['patron'], $klimFortigrow["u"], Yii::app()->params->formatoMoneda['moneda']) ?></p>
+            </div>
+            <a href="<?php echo CController::createUrl('/catalogo/producto', array('producto' => 114669 )) ?>">
+              <img width="200" style="margin: 20px auto 0; display: block;" src="<?= Yii::app()->request->baseUrl ?>/images/contenido/mundo-klim/btn-compra.png" alt="Comprar Klim fortiprotect">
+            </a>
+          </div>
         </div>
       </section>
     </div>
@@ -193,9 +208,15 @@
         Incluye en su alimentación el alimento lácteo <span>KLIM<sup>&reg;</sup> <br>
         FORTIGROW<sup>&reg;</sup></span> que aporta nutrientes como <span>Hierro, Zinc,  <br>
         Proteína, Calcio y Vitaminas A, C, y D. </span>   </p>
-        <a href="<?= Yii::app()->request->baseUrl ?>/catalogo/producto/producto/114669/">
-          <img width="200" src="<?= Yii::app()->request->baseUrl ?>/images/contenido/mundo-klim/btn-compra.png" alt="Comprar Klim fortiprotect">
-        </a>
+        <div class="section-compra">
+          <div class="precios">
+            <p class="precioproductos-antes">ANTES: <?= ($klimFortigrow == null) ? "$00.000" : Yii::app()->numberFormatter->format(Yii::app()->params->formatoMoneda['patron'], $klimFortigrow["u-a"], Yii::app()->params->formatoMoneda['moneda']) ?></p>
+            <p class="precioproductos">AHORA: <?= ($klimFortigrow == null) ? "$00.000" : Yii::app()->numberFormatter->format(Yii::app()->params->formatoMoneda['patron'], $klimFortigrow["u"], Yii::app()->params->formatoMoneda['moneda']) ?></p>
+          </div>
+          <a href="<?php echo CController::createUrl('/catalogo/producto', array('producto' => 114669 )) ?>">
+            <img width="200" src="<?= Yii::app()->request->baseUrl ?>/images/contenido/mundo-klim/btn-compra.png" alt="Comprar Klim fortiprotect">
+          </a>
+        </div>
       </div>
     </section>
   </div>
