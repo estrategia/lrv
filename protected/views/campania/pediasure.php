@@ -38,14 +38,14 @@ $this->metaTags = "<meta http-equiv='X-UA-Compatible' content='IE=edge'>
     .header-m h2 {font-size: 17px;padding: 0px 18px;}
     .background{
 
-      background: rgba(254,254,254,1);
-      background: -moz-linear-gradient(top, rgba(254,254,254,1) 0%, rgba(254,254,254,1) 53%, rgba(217,222,228,1) 80%, rgba(217,222,228,1) 100%);
-      background: -webkit-gradient(left top, left bottom, color-stop(0%, rgba(254,254,254,1)), color-stop(53%, rgba(254,254,254,1)), color-stop(80%, rgba(217,222,228,1)), color-stop(100%, rgba(217,222,228,1)));
-      background: -webkit-linear-gradient(top, rgba(254,254,254,1) 0%, rgba(254,254,254,1) 53%, rgba(217,222,228,1) 80%, rgba(217,222,228,1) 100%);
-      background: -o-linear-gradient(top, rgba(254,254,254,1) 0%, rgba(254,254,254,1) 53%, rgba(217,222,228,1) 80%, rgba(217,222,228,1) 100%);
-      background: -ms-linear-gradient(top, rgba(254,254,254,1) 0%, rgba(254,254,254,1) 53%, rgba(217,222,228,1) 80%, rgba(217,222,228,1) 100%);
-      background: linear-gradient(to bottom, rgba(254,254,254,1) 0%, rgba(254,254,254,1) 53%, rgba(217,222,228,1) 80%, rgba(217,222,228,1) 100%);
-      filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#fefefe', endColorstr='#d9dee4', GradientType=0 );
+      // background: rgba(254,254,254,1);
+      // background: -moz-linear-gradient(top, rgba(254,254,254,1) 0%, rgba(254,254,254,1) 53%, rgba(217,222,228,1) 80%, rgba(217,222,228,1) 100%);
+      // background: -webkit-gradient(left top, left bottom, color-stop(0%, rgba(254,254,254,1)), color-stop(53%, rgba(254,254,254,1)), color-stop(80%, rgba(217,222,228,1)), color-stop(100%, rgba(217,222,228,1)));
+      // background: -webkit-linear-gradient(top, rgba(254,254,254,1) 0%, rgba(254,254,254,1) 53%, rgba(217,222,228,1) 80%, rgba(217,222,228,1) 100%);
+      // background: -o-linear-gradient(top, rgba(254,254,254,1) 0%, rgba(254,254,254,1) 53%, rgba(217,222,228,1) 80%, rgba(217,222,228,1) 100%);
+      // background: -ms-linear-gradient(top, rgba(254,254,254,1) 0%, rgba(254,254,254,1) 53%, rgba(217,222,228,1) 80%, rgba(217,222,228,1) 100%);
+      // background: linear-gradient(to bottom, rgba(254,254,254,1) 0%, rgba(254,254,254,1) 53%, rgba(217,222,228,1) 80%, rgba(217,222,228,1) 100%);
+      // filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#fefefe', endColorstr='#d9dee4', GradientType=0 );
 
       padding-top: 70px;
     }
