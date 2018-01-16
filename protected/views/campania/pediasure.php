@@ -169,8 +169,8 @@ $this->metaTags = "<meta http-equiv='X-UA-Compatible' content='IE=edge'>
 <?php require 'headerAbbott.php'; ?>
 <!--Banner principal-->
 <img class="img-responsive bn-principal" src="<?= Yii::app()->request->baseUrl ?>/images/contenido/abbot/pediasure/banner-principal.jpg" alt="Con pedriasure ayudalos a llegar más alto">
-<div class="container">
-  <div class="row background">
+<div class="container background">
+  <div class="row ">
       <div class="col-sm-4 sol-md-4">
         <div class="row">
           <div class="col-md-12">
@@ -251,7 +251,7 @@ $this->metaTags = "<meta http-equiv='X-UA-Compatible' content='IE=edge'>
       <img class="img-responsive nuevos-sabores" src="<?= Yii::app()->request->baseUrl ?>/images/contenido/abbot/pediasure/nuevos-sabores.png" alt="nuevos sabores pediasure">
     </div>
   </div>
-  <div class="row background" style="padding: 76px 25px 20px;">
+  <div class="row" style="padding: 76px 25px 20px;">
     <div class="text-legal">
       <p>Pediasure® Alimento líquido a base de proteína, lípidos, carbohidratos, vitaminas y minerales para niños en crecimiento, nutrición completa y balanceada. <br>
       Registro Sanitario: RSiA16I188015. Este producto no reemplaza una alimentación adecuada. Complementa a diario su nutrición con Pediasure®. El ejercicio y una dieta balanceada contribuyen a una vida más saludable.</p>
