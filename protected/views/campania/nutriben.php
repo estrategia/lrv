@@ -8,6 +8,9 @@
     @font-face {font-family:GothamRnd-Bold;src: url(".Yii::app()->request->baseUrl."/images/contenido/nutriben/fonts/GothamRnd-Bold.otf);}
     @font-face {font-family:Gotham-Rounded-Medium;src: url(".Yii::app()->request->baseUrl."/images/contenido/nutriben/fonts/Gotham-Rounded-Medium.otf);}
     @font-face {font-family:gotham-rounded-light;src: url(".Yii::app()->request->baseUrl."/images/contenido/nutriben/fonts/gotham-rounded-light.otf);}
+    @font-face {font-family:VAGRoundedStd-Bold; src: url(" . Yii::app()->request->baseUrl . "/images/contenido/mundo-klim/fonts/VAGRoundedStd-Bold.otf);}
+    @font-face {font-family:VAGRoundedStd-Thin; src: url(" . Yii::app()->request->baseUrl . "/images/contenido/mundo-klim/fonts/VAGRoundedStd-Thin.otf);}
+
     .img-responsive-m {width:100%;}
     .sidebar-cart {position: fixed;right: 0px;top: 60%;z-index: 2000;width:260px;}
     .nota {font-family:interstate-regular;color: #74183D;text-align: center;font-size: 16px;letter-spacing: -1px;}
@@ -28,6 +31,15 @@
     .content-table{height: 105px;border-radius: 0 0 25px 25px;color:#fff;font-family:gotham-rounded-light;padding-inline-start: 83px;font-size: 17px;}
     .embed-container {position: relative;padding-bottom: 56.25%;height: 0;overflow: hidden;}
     .embed-container iframe {position: absolute;top:0;left: 0;width: 100%;height: 100%;}
+    .cuadros-compra{height: 150px;margin: 10px 0px;}
+    .precioproductos-antes{text-decoration: line-through; color: #515151; margin: 0 auto; font-size: 17px; line-height: 30px;    font-family: VAGRoundedStd-Thin;}
+    .precioproductos{color: #515151;font-size: 19px;margin: 0px;line-height: 21px;        font-family: VAGRoundedStd-Bold;}
+
+    .cuadros-compra-m{height: 150px;margin: 10px 0px 30px 0px; text-align:center;}
+    .precioproductos-antes-m{text-decoration: line-through;text-align:center; color: #515151; margin: 0 auto; font-size: 17px; line-height: 30px;    font-family: VAGRoundedStd-Thin;}
+    .precioproductos-m{color: #515151;font-size: 19px;margin: 0px;line-height: 21px;text-align:center;font-family: VAGRoundedStd-Bold;}
+    .section-compra-m {}
+    .section-compra-m .precios {margin-right: 20px;}
   </style>
   ";
 ?>
@@ -42,7 +54,33 @@
   <h3 style="font-family: Gotham-Rounded-Medium;color: #0E4190;border-bottom: 2px solid #0E4190;display: inline-block;">FORTALECE:</h3>
   <img style="width: 80%;margin: 30px auto;display: block;" src="<?= Yii::app()->request->baseUrl ?>/images/contenido/nutriben/sistema.png" alt="Fortalece sistema digestivo, inmune, óseo y función visual">
   <img style="width: 80%;margin: -35px auto;display: block;margin: 0 auto;display: block;" src="<?= Yii::app()->request->baseUrl ?>/images/contenido/nutriben/nutriben-crecimiento.png " alt="Nutribén crecimiento disponible en colombia">
-  <a data-ajax="false" href="<?php echo CController::createUrl('/contenido/ver', array('tipo' => 'grupo', 'contenido' => 3232)) ?>"><img style="width: 80%;margin: 0 auto 85px;display: block;" src="<?= Yii::app()->request->baseUrl ?>/images/contenido/nutriben/compra-online.png " alt="Compra online Nutribén"></a>
+
+  <div class="row" style="margin-bottom: 20px;padding: 0 30px;">
+    <div class="cuadros-compra-m">
+
+      <h3 style="font-family: Gotham-Rounded-Medium;">Presentación   <strong style="margin-left: 55px;font-family: Gotham-Rounded-Medium;">400gr</strong></h3> 
+      <div class="section-compra-m">
+          <div class="precios-m">
+            <p class="precioproductos-antes-m">ANTES: $36.700</p>
+            <p class="precioproductos-m">AHORA: $28.620</p>
+            <a href="<?php echo CController::createUrl('/contenido/ver', array('tipo' => 'grupo', 'contenido' => 115484)) ?>"><img class="img-responsive" style="width: 47%;margin: 15px 71px 30px;" src="<?= Yii::app()->request->baseUrl ?>/images/contenido/nutriben/compra-online.png " alt="Compra online Nutribén"></a>
+          </div>
+      </div>
+    </div>
+
+    <div "cuadros-compra-m">
+
+      <h3 style="font-family: Gotham-Rounded-Medium;padding-left: 25px;">Presentación   <strong style="margin-left: 60px;font-family: Gotham-Rounded-Medium;">900gr</strong></h3> 
+        <div class="section-compra-m">
+            <div class="precios-m">
+              <p class="precioproductos-antes-m">ANTES: $61.500</p>
+              <p class="precioproductos-m">AHORA: $50.420</p>
+              <a href="<?php echo CController::createUrl('/contenido/ver', array('tipo' => 'grupo', 'contenido' => 73375)) ?>"><img class="img-responsive" style="width: 50%;margin: 15px 71px 30px;" src="<?= Yii::app()->request->baseUrl ?>/images/contenido/nutriben/compra-online.png " alt="Compra online Nutribén"></a>
+            </div>
+        </div>
+    </div>
+
+
   <h4 class="head-table blue">Favorece Sistema Digestivo</h4>
   <ul class="content-table" style="height: 60px;background-color:#2A77BB;padding-inline-start: 45px;margin-top: 5px;">
     <li style="padding-top: 12px;">Contiene Maltodextrina</li>
@@ -95,12 +133,39 @@
     <h2 class="main-title">Especialistas en nutrición infantil <br> para niños entre 1 a 3 años</h2>
     <img class="img-responsive" style="width: 90%;margin: 35px auto;" src="<?= Yii::app()->request->baseUrl ?>/images/contenido/nutriben/mayor-rendimiento.png" alt="27 Vasos - Mayor rendimiento">
     <div class="col-sm-6 col-md-6">
-      <h3 style="font-family: Gotham-Rounded-Medium;color: #0E4190;border-bottom: 2px solid #0E4190;display: inline-block;margin-top: 15%;">FORTALECE:</h3>
-      <img class="img-responsive" style="width: 80%;margin: 30px auto;" src="<?= Yii::app()->request->baseUrl ?>/images/contenido/nutriben/sistema.png" alt="Fortalece sistema digestivo, inmune, óseo y función visual">
+      <h3 style="font-family: Gotham-Rounded-Medium;color: #0E4190;border-bottom: 2px solid #0E4190;display: inline-block;margin-top: -2%;">FORTALECE:</h3>
+      <img class="img-responsive" style="width: 80%;margin: 8px auto;" src="<?= Yii::app()->request->baseUrl ?>/images/contenido/nutriben/sistema.png" alt="Fortalece sistema digestivo, inmune, óseo y función visual">
     </div>
     <div class="col-sm-6 col-md-6">
       <img class="img-responsive" style="width: 80%;margin: -35px auto;" src="<?= Yii::app()->request->baseUrl ?>/images/contenido/nutriben/nutriben-crecimiento.png " alt="Nutribén crecimiento disponible en colombia">
-      <a href="<?php echo CController::createUrl('/contenido/ver', array('tipo' => 'grupo', 'contenido' => 3232)) ?>"><img class="img-responsive" style="width: 80%;margin: 25px auto 30px;" src="<?= Yii::app()->request->baseUrl ?>/images/contenido/nutriben/compra-online.png " alt="Compra online Nutribén"></a>
+
+    </div>
+    <div class="row" style="margin-bottom: 20px;padding: 0 30px;">
+      <div class="col-sm-6 col-md-6 cuadros-compra" style="border-right: 1px solid black;padding-left: 0px;">
+
+        <h3 style="font-family: Gotham-Rounded-Medium;margin-top: 34px;margin-bottom: -5px;">Presentación   <strong style="margin-left: 55px;font-family: Gotham-Rounded-Medium;">400gr</strong></h3> 
+        <div class="section-compra">
+            <div class="precios">
+              <p class="precioproductos-antes">ANTES: $36.700</p>
+              <p class="precioproductos">AHORA: $28.620</p>
+              <a href="<?php echo CController::createUrl('/contenido/ver', array('tipo' => 'grupo', 'contenido' => 115484)) ?>"><img class="img-responsive" style="width: 47%;margin: -41px 168px 30px;" src="<?= Yii::app()->request->baseUrl ?>/images/contenido/nutriben/compra-online.png " alt="Compra online Nutribén"></a>
+            </div>
+        </div>
+      </div>
+
+      <div class="col-sm-6 col-md-6 cuadros-compra" style="padding-left: 27px;">
+
+        <h3 style="font-family: Gotham-Rounded-Medium;margin-top: 34px;margin-bottom: -5px;">Presentación   <strong style="margin-left: 55px;font-family: Gotham-Rounded-Medium;">900gr</strong></h3> 
+          <div class="section-compra">
+              <div class="precios">
+                <p class="precioproductos-antes">ANTES: $61.500</p>
+                <p class="precioproductos">AHORA: $50.420</p>
+                <a href="<?php echo CController::createUrl('/contenido/ver', array('tipo' => 'grupo', 'contenido' => 73375)) ?>"><img class="img-responsive" style="width: 50%;margin: -41px 168px 30px;" src="<?= Yii::app()->request->baseUrl ?>/images/contenido/nutriben/compra-online.png " alt="Compra online Nutribén"></a>
+              </div>
+
+        </div>
+      </div>
+
     </div>
     <div class="row" style="margin-bottom: 20px;padding: 0 30px;">
       <div class="col-sm-6 col-md-6">
