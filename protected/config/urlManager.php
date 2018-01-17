@@ -133,6 +133,12 @@ return array(
         'menticol-pies' => 'publicidad/contenido/nombre/menticol',
         'tecnigo' => 'publicidad/contenido/nombre/tecnigo',
         'nestogeno-3-kids' => 'publicidad/contenido/nombre/nestogeno',
+        'fosfodel-suplemento-multivitaminico' => 'publicidad/contenido/nombre/fosfodel',
+        'mundo-klim' => 'publicidad/contenido/nombre/mundo-klim',
+        'mundo-klim1-fortiprotect' => 'publicidad/contenido/nombre/mundo-klim1-fortiprotect',
+        'mundo-klim1-deslactosado' => 'publicidad/contenido/nombre/mundo-klim1-deslactosado',
+        'mundo-klim3-fortilearn' => 'publicidad/contenido/nombre/mundo-klim3-fortilearn',
+        'mundo-klim-fortigrow' => 'publicidad/contenido/nombre/mundo-klim-fortigrow',
          // Fin links campañas
 
         // REST patterns

@@ -24,7 +24,7 @@
     .programa-hora .content .seccion2-m {background-color: #BF1A24;width: 100%;padding: 15px;}
     .agradecimiento {font-family: HelveticaNeueLight;color: #fff;text-align: center;font-size: 16px;}
     .agradecimiento span {font-family:HelveticaNeue-BlackCond;letter-spacing:1px;}
-    a:hover, a:active, a:focus {outline: none !important; text-decoration:none !important;}
+    a:hover, a:active, a:focus {outline: none !important;}
     .contenedor-principal {width: 100%;max-width: 1100px;margin: auto;}
     .bg-rotor {background-attachment:fixed; background-size: contain;padding: 30px 0; background-image:url(".Yii::app()->request->baseUrl."/images/contenido/tecnigo/bg-dots.png);}
     .titulo-principal {font-size: 34px;text-align:center;color:#5B5A5F;font-family:Montserrat-Light;letter-spacing:-1px;}
@@ -36,19 +36,29 @@
     .carousel-seat.active {background-image:url(".Yii::app()->request->baseUrl."/images/contenido/tecnigo/sombra.png); background-repeat: no-repeat;background-position: center 75%;background-size: 90%; }
     .contenedor-info {display:flex;}
     .contenedor-info .column {width:50%;}
-    .lista-beneficios {display: flex;font-size: 20px;padding-inline-start: 25px;}
+    .lista-beneficios {display: flex;font-size: 21px;padding-inline-start: 25px;}
   	.lista-beneficios dt {margin-right: 5px; margin-top:-6px;}
   	.lista-beneficios dd {color:#483A44;font-family:Montserrat-Light;line-height: 21px;}
   	.lista-beneficios span {font-family:Montserrat-bold;font-size: 22px;}
   	.btn-comprar {margin: 25px 0;width: 50%;max-width: 221px;}
     .precioproductos{font-size: 23px;line-height:23px;margin: 0;font-family: Montserrat-Bold;color: #483A44;}
     .precioproductos-antes{margin-top:40px !important;font-size: 20px;line-height:20px;text-decoration: line-through;margin: 0;important;font-family: Montserrat-Bold;color: #483A44;}
-    .wrap {display: flex; flex-direction: row; flex-wrap: wrap; justify-content: space-between; margin-top: 30px;}
-    .wrap div {width:25%;}
-    .wrap .active {background-image:url(".Yii::app()->request->baseUrl."/images/contenido/tecnigo/sombra.png); background-repeat: no-repeat;background-position: center 78%;background-size: 90%; }
-    .wrap .img-product {width: 85% !important; max-width: 233px; margin: 0 auto; display: block;}
-    .carousel-control { border: none !important; padding: 0 !important; margin: 40px 40px 0 !important; text-align: center; font-family: Montserrat-bold; color: #5B5A5F !important;  position: relative !important; text-shadow: none !important; opacity: 1 !important; font-size: 17px !important;}
-    .carousel-control img {margin: 0px 15px 0 !important;}
+    .wrap {width: 100%; margin: 0 auto; overflow: hidden;margin: 60px auto 0;}
+		.carousel {display: flex; left: -100%; list-style: none; margin: 0; padding: 0; position: relative; transform: translateX(100%);}
+		@media (min-width: 30em) { .carousel {left: -50%; transform: translateX(50%);}}
+		@media (min-width: 40em) { .carousel {left: -25%; transform: translateX(25%);}}
+		.carousel.is-reversing {transform: translateX(-100%);}
+		@media (min-width: 30em) { .carousel.is-reversing {transform: translateX(-50%);}}
+		@media (min-width: 40em) { .carousel.is-reversing {transform: translateX(-25%);}}
+		.carousel.is-set {transform: none; transition: transform 0.5s ease-in-out;}
+		.carousel-seat {flex: 1 0 100%; order: 2;}
+		@media (min-width: 30em) {.carousel-seat {flex-basis: 50%;}}
+		@media (min-width: 40em) {.carousel-seat {flex-basis: 25%;}}
+		.carousel-seat.is-ref {order: 1;}
+		.controls {border: none !important;padding: 0 !important; margin: 40px 0 0 !important; text-align: center;font-family: Montserrat-bold; color: #5B5A5F !important;}
+    .controls button {margin:0 40px 0;}
+    .controls button {border: none;background: none;}
+		.controls button img {width:30px; margin: 0px 15px 0;}
     .titulo-producto {margin-bottom: 40px;font-size: 47px;color: #483A44;font-family: Montserrat-Light;letter-spacing: -1px;}
     .titulo-producto  span {font-family: Montserrat-Bold;color:#483A44;}
     .compra {padding-inline-start: 25px;}
@@ -65,300 +75,6 @@
 <?php $cable_audio = Producto::consultarPrecio('110095', $this->objSectorCiudad)?>
 <?php $cargador_usb_carro = Producto::consultarPrecio('110097', $this->objSectorCiudad)?>
 <?php $cargador_usb_pared = Producto::consultarPrecio('110099', $this->objSectorCiudad)?>
-
-<!-- Cambio de productos -->
-<script type="text/javascript">
-  $(document).ready(function(){
-    $('#producto1').click(function(){
-      $('#producto1').addClass('active');
-      $('#producto2').removeClass('active');
-      $('#producto3').removeClass('active');
-      $('#producto4').removeClass('active');
-      $('#producto5').removeClass('active');
-      $('#producto6').removeClass('active');
-      $('#producto7').removeClass('active');
-      $('#producto8').removeClass('active');
-      $('#info1').removeClass('hidden');
-      $('#info2').addClass('hidden');
-      $('#info3').addClass('hidden');
-      $('#info4').addClass('hidden');
-      $('#info5').addClass('hidden');
-      $('#info6').addClass('hidden');
-      $('#info7').addClass('hidden');
-      $('#info8').addClass('hidden');
-    });
-    $('#producto2').click(function(){
-      $('#producto2').addClass('active');
-      $('#producto1').removeClass('active');
-      $('#producto3').removeClass('active');
-      $('#producto4').removeClass('active');
-      $('#producto5').removeClass('active');
-      $('#producto6').removeClass('active');
-      $('#producto7').removeClass('active');
-      $('#producto8').removeClass('active');
-      $('#info2').removeClass('hidden');
-      $('#info1').addClass('hidden');
-      $('#info3').addClass('hidden');
-      $('#info4').addClass('hidden');
-      $('#info5').addClass('hidden');
-      $('#info6').addClass('hidden');
-      $('#info7').addClass('hidden');
-      $('#info8').addClass('hidden');
-    });
-    $('#producto3').click(function(){
-      $('#producto3').addClass('active');
-      $('#producto1').removeClass('active');
-      $('#producto2').removeClass('active');
-      $('#producto4').removeClass('active');
-      $('#producto5').removeClass('active');
-      $('#producto6').removeClass('active');
-      $('#producto7').removeClass('active');
-      $('#producto8').removeClass('active');
-      $('#info3').removeClass('hidden');
-      $('#info1').addClass('hidden');
-      $('#info2').addClass('hidden');
-      $('#info4').addClass('hidden');
-      $('#info5').addClass('hidden');
-      $('#info6').addClass('hidden');
-      $('#info7').addClass('hidden');
-      $('#info8').addClass('hidden');
-    });
-    $('#producto4').click(function(){
-      $('#producto4').addClass('active');
-      $('#producto1').removeClass('active');
-      $('#producto2').removeClass('active');
-      $('#producto3').removeClass('active');
-      $('#producto5').removeClass('active');
-      $('#producto6').removeClass('active');
-      $('#producto7').removeClass('active');
-      $('#producto8').removeClass('active');
-      $('#info4').removeClass('hidden');
-      $('#info1').addClass('hidden');
-      $('#info2').addClass('hidden');
-      $('#info3').addClass('hidden');
-      $('#info5').addClass('hidden');
-      $('#info6').addClass('hidden');
-      $('#info7').addClass('hidden');
-      $('#info8').addClass('hidden');
-    });
-    $('#producto5').click(function(){
-      $('#producto5').addClass('active');
-      $('#producto1').removeClass('active');
-      $('#producto2').removeClass('active');
-      $('#producto3').removeClass('active');
-      $('#producto4').removeClass('active');
-      $('#producto6').removeClass('active');
-      $('#producto7').removeClass('active');
-      $('#producto8').removeClass('active');
-      $('#info5').removeClass('hidden');
-      $('#info1').addClass('hidden');
-      $('#info2').addClass('hidden');
-      $('#info3').addClass('hidden');
-      $('#info4').addClass('hidden');
-      $('#info6').addClass('hidden');
-      $('#info7').addClass('hidden');
-      $('#info8').addClass('hidden');
-    });
-    $('#producto6').click(function(){
-      $('#producto6').addClass('active');
-      $('#producto1').removeClass('active');
-      $('#producto2').removeClass('active');
-      $('#producto3').removeClass('active');
-      $('#producto4').removeClass('active');
-      $('#producto5').removeClass('active');
-      $('#producto7').removeClass('active');
-      $('#producto8').removeClass('active');
-      $('#info6').removeClass('hidden');
-      $('#info1').addClass('hidden');
-      $('#info2').addClass('hidden');
-      $('#info3').addClass('hidden');
-      $('#info4').addClass('hidden');
-      $('#info5').addClass('hidden');
-      $('#info7').addClass('hidden');
-      $('#info8').addClass('hidden');
-    });
-    $('#producto7').click(function(){
-      $('#producto7').addClass('active');
-      $('#producto1').removeClass('active');
-      $('#producto2').removeClass('active');
-      $('#producto3').removeClass('active');
-      $('#producto4').removeClass('active');
-      $('#producto5').removeClass('active');
-      $('#producto6').removeClass('active');
-      $('#producto8').removeClass('active');
-      $('#info7').removeClass('hidden');
-      $('#info1').addClass('hidden');
-      $('#info2').addClass('hidden');
-      $('#info3').addClass('hidden');
-      $('#info4').addClass('hidden');
-      $('#info5').addClass('hidden');
-      $('#info6').addClass('hidden');
-      $('#info8').addClass('hidden');
-    });
-    $('#producto8').click(function(){
-      $('#producto8').addClass('active');
-      $('#producto1').removeClass('active');
-      $('#producto2').removeClass('active');
-      $('#producto3').removeClass('active');
-      $('#producto4').removeClass('active');
-      $('#producto5').removeClass('active');
-      $('#producto6').removeClass('active');
-      $('#producto7').removeClass('active');
-      $('#info8').removeClass('hidden');
-      $('#info1').addClass('hidden');
-      $('#info2').addClass('hidden');
-      $('#info3').addClass('hidden');
-      $('#info4').addClass('hidden');
-      $('#info5').addClass('hidden');
-      $('#info6').addClass('hidden');
-      $('#info7').addClass('hidden');
-    });
-    if (location.href == 'https://www.larebajavirtual.com/tecnigo#audifonos-tipo-beats'){
-      $('#producto1').addClass('active');
-      $('#producto2').removeClass('active');
-      $('#producto3').removeClass('active');
-      $('#producto4').removeClass('active');
-      $('#producto5').removeClass('active');
-      $('#producto6').removeClass('active');
-      $('#producto7').removeClass('active');
-      $('#producto8').removeClass('active');
-      $('#info1').removeClass('hidden');
-      $('#info2').addClass('hidden');
-      $('#info3').addClass('hidden');
-      $('#info4').addClass('hidden');
-      $('#info5').addClass('hidden');
-      $('#info6').addClass('hidden');
-      $('#info7').addClass('hidden');
-      $('#info8').addClass('hidden');
-    }
-    if (location.href == 'https://www.larebajavirtual.com/tecnigo#powerbank'){
-      $('#producto2').addClass('active');
-      $('#producto1').removeClass('active');
-      $('#producto3').removeClass('active');
-      $('#producto4').removeClass('active');
-      $('#producto5').removeClass('active');
-      $('#producto6').removeClass('active');
-      $('#producto7').removeClass('active');
-      $('#producto8').removeClass('active');
-      $('#info2').removeClass('hidden');
-      $('#info1').addClass('hidden');
-      $('#info3').addClass('hidden');
-      $('#info4').addClass('hidden');
-      $('#info5').addClass('hidden');
-      $('#info6').addClass('hidden');
-      $('#info7').addClass('hidden');
-      $('#info8').addClass('hidden');
-    }
-    if (location.href == 'https://www.larebajavirtual.com/tecnigo#cable-datos-iphone4'){
-      $('#producto3').addClass('active');
-      $('#producto1').removeClass('active');
-      $('#producto2').removeClass('active');
-      $('#producto4').removeClass('active');
-      $('#producto5').removeClass('active');
-      $('#producto6').removeClass('active');
-      $('#producto7').removeClass('active');
-      $('#producto8').removeClass('active');
-      $('#info3').removeClass('hidden');
-      $('#info1').addClass('hidden');
-      $('#info2').addClass('hidden');
-      $('#info4').addClass('hidden');
-      $('#info5').addClass('hidden');
-      $('#info6').addClass('hidden');
-      $('#info7').addClass('hidden');
-      $('#info8').addClass('hidden');
-    }
-    if (location.href == 'https://www.larebajavirtual.com/tecnigo#cable-datos-iphone5-6'){
-      $('#producto4').addClass('active');
-      $('#producto1').removeClass('active');
-      $('#producto2').removeClass('active');
-      $('#producto3').removeClass('active');
-      $('#producto5').removeClass('active');
-      $('#producto6').removeClass('active');
-      $('#producto7').removeClass('active');
-      $('#producto8').removeClass('active');
-      $('#info4').removeClass('hidden');
-      $('#info1').addClass('hidden');
-      $('#info2').addClass('hidden');
-      $('#info3').addClass('hidden');
-      $('#info5').addClass('hidden');
-      $('#info6').addClass('hidden');
-      $('#info7').addClass('hidden');
-      $('#info8').addClass('hidden');
-    }
-    if (location.href == 'https://www.larebajavirtual.com/tecnigo#cable-micro-usb-a-usb-plano'){
-      $('#producto5').addClass('active');
-      $('#producto1').removeClass('active');
-      $('#producto2').removeClass('active');
-      $('#producto3').removeClass('active');
-      $('#producto4').removeClass('active');
-      $('#producto6').removeClass('active');
-      $('#producto7').removeClass('active');
-      $('#producto8').removeClass('active');
-      $('#info5').removeClass('hidden');
-      $('#info1').addClass('hidden');
-      $('#info2').addClass('hidden');
-      $('#info3').addClass('hidden');
-      $('#info4').addClass('hidden');
-      $('#info6').addClass('hidden');
-      $('#info7').addClass('hidden');
-      $('#info8').addClass('hidden');
-    }
-    if (location.href == 'https://www.larebajavirtual.com/tecnigo#cable-audio-1x1-plano'){
-      $('#producto6').addClass('active');
-      $('#producto1').removeClass('active');
-      $('#producto2').removeClass('active');
-      $('#producto3').removeClass('active');
-      $('#producto4').removeClass('active');
-      $('#producto5').removeClass('active');
-      $('#producto7').removeClass('active');
-      $('#producto8').removeClass('active');
-      $('#info6').removeClass('hidden');
-      $('#info1').addClass('hidden');
-      $('#info2').addClass('hidden');
-      $('#info3').addClass('hidden');
-      $('#info4').addClass('hidden');
-      $('#info5').addClass('hidden');
-      $('#info7').addClass('hidden');
-      $('#info8').addClass('hidden');
-    }
-    if (location.href == 'https://www.larebajavirtual.com/tecnigo#cargador-usb-para-carro'){
-      $('#producto7').addClass('active');
-      $('#producto1').removeClass('active');
-      $('#producto2').removeClass('active');
-      $('#producto3').removeClass('active');
-      $('#producto4').removeClass('active');
-      $('#producto5').removeClass('active');
-      $('#producto6').removeClass('active');
-      $('#producto8').removeClass('active');
-      $('#info7').removeClass('hidden');
-      $('#info1').addClass('hidden');
-      $('#info2').addClass('hidden');
-      $('#info3').addClass('hidden');
-      $('#info4').addClass('hidden');
-      $('#info5').addClass('hidden');
-      $('#info6').addClass('hidden');
-      $('#info8').addClass('hidden');
-    }
-    if (location.href == 'https://www.larebajavirtual.com/tecnigo#cargador-usb-de-pared'){
-      $('#producto8').addClass('active');
-      $('#producto1').removeClass('active');
-      $('#producto2').removeClass('active');
-      $('#producto3').removeClass('active');
-      $('#producto4').removeClass('active');
-      $('#producto5').removeClass('active');
-      $('#producto6').removeClass('active');
-      $('#producto7').removeClass('active');
-      $('#info8').removeClass('hidden');
-      $('#info1').addClass('hidden');
-      $('#info2').addClass('hidden');
-      $('#info3').addClass('hidden');
-      $('#info4').addClass('hidden');
-      $('#info5').addClass('hidden');
-      $('#info6').addClass('hidden');
-      $('#info7').addClass('hidden');
-    }
-  });
-</script>
 
 <!-- VERSION MOVIL -->
 <?php if ($this->isMobile): ?>
@@ -565,75 +281,47 @@
 <?php else: ?>
 <a href="<?= Yii::app()->request->baseUrl ?>/catalogo/buscar?busqueda=tecnigo"><img class="img-responsive" src="<?= Yii::app()->request->baseUrl ?>/images/contenido/tecnigo/banner.png"></a>
 <div class="bg-rotor">
-  <div class="contenedor-principal">
+  <div class="contenedor-principal" style="position: relative;">
       <h1 class="titulo-principal"><span>Las 8 mejores soluciones </span>de energía al alcance de tu mano</h1>
-      <div id="carousel-example-generic" class="carousel slide" data-ride="carousel" data-interval="5000">
-        <div class="carousel-inner" role="listbox">
-          <div class="item active" >
-            <div class='wrap'>
-              <div class="active" id="producto1">
-                <a href="#audifonos-tipo-beats">
-                  <img class="img-product" src="<?= Yii::app()->request->baseUrl ?>/images/contenido/tecnigo/rotor/audifonos-tipo-beats.png " alt="">
-                  <p class="nombre-producto">Audífonos tipo Beats</p>
-                </a>
-              </div>
-            	<div id="producto2" >
-                <a href="#powerbank">
-                  <img class="img-product" src="<?= Yii::app()->request->baseUrl ?>/images/contenido/tecnigo/rotor/bateria-externa.png" alt="">
-                  <p class="nombre-producto">Powerbank</p>
-                </a>
-               </div>
-            	 <div id="producto3">
-                 <a href="#cable-datos-iphone4">
-                   <img class="img-product" src="<?= Yii::app()->request->baseUrl ?>/images/contenido/tecnigo/rotor/cable-datps-iphone4.png" alt="">
-                    <p class="nombre-producto">Cable de datos <br><span>Iphone 4</span>  </p>
-                 </a>
-                </div>
-            	  <div id="producto4">
-                  <a href="#cable-datos-iphone5-6">
-                    <img class="img-product" src="<?= Yii::app()->request->baseUrl ?>/images/contenido/tecnigo/rotor/cable-de-datos-iphone-5-6.png" alt="">
-                    <p class="nombre-producto">Cable de datos<br><span>iphone 5 y 6</span>  </p>
-                  </a>
-                </div>
-            </div>
-          </div>
-          <div class="item">
-            <div class='wrap'>
-              <div id="producto5">
-                <a href="#cable-micro-usb-a-usb-plano">
-                  <img class="img-product" src="<?= Yii::app()->request->baseUrl ?>/images/contenido/tecnigo/rotor/cable-microUSB-plano.png" alt="">
-                  <p class="nombre-producto">Cable Micro USB <br> <span>a USB plano</span></p>
-                </a>
-              </div>
-            	<div id="producto6">
-                <a href="#cable-audio-1x1-plano">
-                  <img class="img-product" src="<?= Yii::app()->request->baseUrl ?>/images/contenido/tecnigo/rotor/cable-audio1x1-plano.png" alt="">
-                  <p class="nombre-producto">Cable audio<span> <br> 1x1 plano</span> </p>
-                </a>
-              </div>
-            	<div id="producto7">
-                <a href="#cargador-usb-para-carro">
-                  <img class="img-product" src="<?= Yii::app()->request->baseUrl ?>/images/contenido/tecnigo/rotor/cargador-para-carro.png" alt="">
-                  <p class="nombre-producto">Cargador USB <br> <span>para carro</span> </p>
-                </a>
-              </div>
-            	<div id="producto8">
-                <a href="#cargador-usb-de-pared">
-                  <img class="img-product" src="<?= Yii::app()->request->baseUrl ?>/images/contenido/tecnigo/rotor/cargador-pared.png" alt="">
-                  <p class="nombre-producto">Cargador USB <br> <span>de pared</span></p>
-                </a>
-              </div>
-            </div>
-          </div>
-        </div>
-        <center style="margin-top:40px;">
-          <a class="left carousel-control" href="#carousel-example-generic" role="button" data-slide="prev">
-            <img src="<?= Yii::app()->request->baseUrl ?>/images/contenido/tecnigo/prev.png" alt=""> Anterior
-          </a>
-          <a class="right carousel-control" href="#carousel-example-generic" role="button" data-slide="next">
-            Siguiente<img src="<?= Yii::app()->request->baseUrl ?>/images/contenido/tecnigo/next.png" alt="">
-          </a>
-        </center>
+      <div class='wrap'>
+        <ul class='carousel is-set'>
+      	   <li class='carousel-seat' data-id="1">
+      	     <img class="img-product" src="<?= Yii::app()->request->baseUrl ?>/images/contenido/tecnigo/rotor/audifonos-tipo-beats.png " alt="">
+             <p class="nombre-producto">Audífonos tipo Beats</p>
+            </li>
+      	   <li class='carousel-seat' data-id="2">
+      	      <img class="img-product" src="<?= Yii::app()->request->baseUrl ?>/images/contenido/tecnigo/rotor/bateria-externa.png" alt="">
+              <p class="nombre-producto">Batería externa</p>
+           </li>
+      	   <li class='carousel-seat' data-id="3">
+      	      <img class="img-product" src="<?= Yii::app()->request->baseUrl ?>/images/contenido/tecnigo/rotor/cable-datps-iphone4.png" alt="">
+              <p class="nombre-producto">Cable de datos <br><span>Iphone 4</span>  </p>
+            </li>
+      	    <li class='carousel-seat' data-id="4">
+      	      <img class="img-product" src="<?= Yii::app()->request->baseUrl ?>/images/contenido/tecnigo/rotor/cable-de-datos-iphone-5-6.png" alt="">
+              <p class="nombre-producto">Cable de datos<br><span>iphone 5 y 6</span>  </p>
+            </li>
+      	    <li class='carousel-seat' data-id="5">
+      	      <img class="img-product" src="<?= Yii::app()->request->baseUrl ?>/images/contenido/tecnigo/rotor/cable-microUSB-plano.png" alt="">
+              <p class="nombre-producto">Cable Micro USB <br> <span>a USB plano</span></p>
+            </li>
+      	    <li class='carousel-seat ' data-id="6">
+      	      <img class="img-product" src="<?= Yii::app()->request->baseUrl ?>/images/contenido/tecnigo/rotor/cable-audio1x1-plano.png" alt="">
+              <p class="nombre-producto">Cable audio<span> <br> 1x1 plano</span> </p>
+            </li>
+      	    <li class='carousel-seat' data-id="7">
+      	      <img class="img-product" src="<?= Yii::app()->request->baseUrl ?>/images/contenido/tecnigo/rotor/cargador-para-carro.png" alt="">
+              <p class="nombre-producto">Cargador USB <br> <span>para carro</span> </p>
+            </li>
+      	    <li class='carousel-seat is-ref' data-id="8">
+      	      <img class="img-product" src="<?= Yii::app()->request->baseUrl ?>/images/contenido/tecnigo/rotor/cargador-pared.png" alt="">
+              <p class="nombre-producto">Cargador USB <br> <span>de pared</span></p>
+            </li>
+      	  </ul>
+      </div>
+      <div class='controls'>
+        <button class='toggle prev' data-toggle='prev'><img src="<?= Yii::app()->request->baseUrl ?>/images/contenido/tecnigo/prev.png" alt="">Anterior</button>
+      	<button class='toggle next' data-toggle='next'>Siguiente<img src="<?= Yii::app()->request->baseUrl ?>/images/contenido/tecnigo/next.png" alt=""></button>
       </div>
   </div>
 </div>
@@ -675,7 +363,7 @@
         <img class="img-responsive" style="margin-left: -80px;" src="<?= Yii::app()->request->baseUrl ?>/images/contenido/tecnigo/bateria-externa-descrip.png">
       </div>
       <div class="column">
-        <h3 class="titulo-producto"><span>Powerbank</span> </h3>
+        <h3 class="titulo-producto">Batería <span>externa</span> </h3>
           <dl class="lista-beneficios">
             <dt><img width="13" src="<?= Yii::app()->request->baseUrl ?>/images/contenido/tecnigo/bullet.png"></dt>
             <dd>Banco de energía portable que le da<span> carga extra <br> en todo momento a tus</span> dispositivos inteligentes</dd>
@@ -887,5 +575,8 @@
     </div>
   </div>
 </div>
+<script type="text/javascript">
+function mostrarBanner(r){"anterior"==r&&(mostrar=--mostrar<1?8:mostrar),"siguiente"==r&&(mostrar=++mostrar>8?1:mostrar),$(".contenedor-info").addClass("hidden"),$("#info"+mostrar).removeClass("hidden"),$(".carousel-seat").removeClass("active"),$('li[data-id="'+mostrar+'"]').addClass("active")}$('li[data-id="1"]').addClass("active");var totalBanners=8,mostrar=1,$carousel=$(".carousel"),$seats=$(".carousel-seat");$(".toggle").on("click",function(r){function s(r){return r.next().length?r.next():$seats.first()}mostrarBanner("prev"==$(this).attr("data-toggle")?"anterior":"siguiente");var e,a=$(".is-ref"),t=$(r.currentTarget);a.removeClass("is-ref"),"next"===t.data("toggle")?(e=s(a),$carousel.removeClass("is-reversing")):(e=function(r){return r.prev().length?r.prev():$seats.last()}(a),$carousel.addClass("is-reversing")),e.addClass("is-ref").css("order",1);for(var o=2;o<=$seats.length;o++)e=s(e).css("order",o);return $carousel.removeClass("is-set"),setTimeout(function(){return $carousel.addClass("is-set")},50)});
+</script>
 <!--Fin versión escritorio -->
 <?php endif; ?>
