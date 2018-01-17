@@ -145,8 +145,7 @@ class ProductoCarro extends IECartPosition {
     	
     	 
     	$cantidad = $this->getQuantityStored();
-    	 
-    
+    	
     	$i = 0;
     	do {
     		
@@ -160,11 +159,8 @@ class ProductoCarro extends IECartPosition {
     				)
     		));
     		
-    		$volumetria = calcularVolumetriaOperador($objFlete->idOperadorLogistico, $largo, $ancho, $profundo);
-    		
-    		$indiceVolumen = $volumetria > $peso ? $volumetria : $peso ;
-    		
-    		
+    		$volumetria = calcularVolumetriaOperador(1, $largo, $ancho, $profundo, $peso);
+
     		$unidadesBodega = 0;
     	
     		if($cantidad > $saldoBodega->saldoUnidad){

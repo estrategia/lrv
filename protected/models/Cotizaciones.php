@@ -19,7 +19,6 @@
  * @property string $codigoSector
  * @property integer $tiempoDomicilioCedi
  * @property integer $valorDomicilioCedi
- * @property integer $codigoCedi
  *
  * The followings are the available model relations:
  * @property Ciudad $objCiudad
@@ -43,13 +42,13 @@ class Cotizaciones extends CActiveRecord {
         // will receive user inputs.
         return array(
             array('identificacionUsuario, codigoCiudad, codigoSector', 'required'),
-            array('subtotalCompra, impuestosCompra, baseImpuestosCompra, totalCompra, ahorroCompra, domicilio, flete, codigoPerfil, tiempoDomicilioCedi, valorDomicilioCedi, codigoCedi', 'numerical', 'integerOnly' => true),
+            array('subtotalCompra, impuestosCompra, baseImpuestosCompra, totalCompra, ahorroCompra, domicilio, flete, codigoPerfil, tiempoDomicilioCedi, valorDomicilioCedi', 'numerical', 'integerOnly' => true),
             array('identificacionUsuario', 'length', 'max' => 100),
             array('codigoCiudad, codigoSector', 'length', 'max' => 10),
             array('fechaCotizacion', 'safe'),
             // The following rule is used by search().
             // @todo Please remove those attributes that should not be searched.
-            array('idCotizacion, identificacionUsuario, fechaCotizacion, subtotalCompra, impuestosCompra, baseImpuestosCompra, totalCompra, ahorroCompra, domicilio, flete, codigoPerfil, codigoCiudad, codigoSector, tiempoDomicilioCedi, valorDomicilioCedi, codigoCedi', 'safe', 'on' => 'search'),
+            array('idCotizacion, identificacionUsuario, fechaCotizacion, subtotalCompra, impuestosCompra, baseImpuestosCompra, totalCompra, ahorroCompra, domicilio, flete, codigoPerfil, codigoCiudad, codigoSector, tiempoDomicilioCedi, valorDomicilioCedi', 'safe', 'on' => 'search'),
         );
     }
 
@@ -86,7 +85,6 @@ class Cotizaciones extends CActiveRecord {
             'codigoSector' => 'Codigo Sector',
             'tiempoDomicilioCedi' => 'Tiempo Domicilio Cedi',
             'valorDomicilioCedi' => 'Valor Domicilio Cedi',
-            'codigoCedi' => 'Codigo Cedi',
         );
     }
 
@@ -121,7 +119,6 @@ class Cotizaciones extends CActiveRecord {
         $criteria->compare('t.codigoSector', $this->codigoSector);
         $criteria->compare('t.tiempoDomicilioCedi', $this->tiempoDomicilioCedi);
         $criteria->compare('t.valorDomicilioCedi', $this->valorDomicilioCedi);
-        $criteria->compare('t.codigoCedi', $this->codigoCedi);
         
         if(isset($params['with'])){
             $criteria->with = $params['with'];

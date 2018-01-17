@@ -2210,12 +2210,34 @@ class TestController extends Controller {
     }
     
     
-    public function actionServientrega(){
+    public function actionServientrega($idCompra){
+    	
         $url = "http://web.servientrega.com:8081/GeneracionGuias.asmx?WSDL";
         $login = "Testcopservir";
         $pass = "BpSUh12jBIiWdACDozgOaQ==";
         $codFactura = "SER408";
         $cargue = "COPSERVIR_SISCLINET";
+        
+        $despachos = ComprasDespachoCedi::model()->findAll(array(
+        		'condition' => 'idCompra =:compra',
+        		'params' => array(
+        				':compra' => $idCompra
+        		)
+        ));
+        
+        $objCompra = Compras::model()->findByPk($idCompra);
+        
+        $despacho = array();
+        
+        if($despachos){
+        	foreach($despachos as $compraDespacho){
+        		if($compraDespacho->idOperadorLogistico == 1){
+        			$despacho = $compraDespacho;
+        			break;
+        		}
+        	}
+        }
+        
         
         $client = new \SoapClient($url, array(
             "trace" => 1,
@@ -2233,11 +2255,13 @@ class TestController extends Controller {
         $header = new SoapHeader("http://tempuri.org/", "AuthHeader", $auth, false);
         $client->__setSoapHeaders($header);
         
-        $paramReq = $this->renderPartial('CargueMasivoExternoDTO', array(), true);
+        $paramReq = $this->renderPartial('CargueMasivoExternoDTO', array(
+        		'objCompra' => $objCompra,
+    			'objBodega' => $despacho->objBodega,
+    			'objCompraDespacho' => $despacho), true);
         $parm[] = new SoapVar($paramReq, XSD_ANYXML);
         $service = $client->CargueMasivoExterno(new SoapVar($parm, SOAP_ENC_OBJECT));
-        echo "<pre>";
-        print_r($service);exit();
+     
         if($service->CargueMasivoExternoResult){
             echo "<br>EXITO!!!!<br>";
             
@@ -2247,7 +2271,8 @@ class TestController extends Controller {
              $resultadoArray = json_decode(json_encode($service->envios), true);
             echo "<br><br>Respuesta array:<br>";
             CVarDumper::dump($resultadoArray,10,true);
-            
+            $despacho->numeroGuia = $service->arrayGuias->string;
+            $despacho->save();
             
         } else {
             echo "<br>ERROR!!!!<br>";

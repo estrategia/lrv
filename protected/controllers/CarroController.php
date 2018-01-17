@@ -168,7 +168,7 @@ class CarroController extends Controller {
                 if(isset( $objSaldo->saldoUnidad)){
                     $saldoUnidad =  $objSaldo->saldoUnidad;
                 }
-                
+              
                 //los productos de tercero no manejan bodega
                 if($objProducto->tercero == 1) {
                 	echo CJSON::encode(array('result' => 'error', 'response' => "La cantidad solicitada no está disponible en este momento. Saldos disponibles: $saldoUnidad unidades"));
@@ -176,10 +176,10 @@ class CarroController extends Controller {
                 }
                 
 
-                if (!$objPagoForm->tieneDomicilio($this->objSectorCiudad)) {
-                	echo CJSON::encode(array('result' => 'error', 'response' => "La cantidad solicitada no está disponible en este momento. Saldos disponibles: $saldoUnidad unidades"));
-                	Yii::app()->end();
-                }
+//                 if (!$objPagoForm->tieneDomicilio($this->objSectorCiudad)) {
+//                 	echo CJSON::encode(array('result' => 'error', 'response' => "La cantidad solicitada no está disponible en este momento. Saldos disponibles: $saldoUnidad unidades"));
+//                 	Yii::app()->end();
+//                 }
                 
                 $cantidadBodega = $cantidadCarroUnidad + $cantidadU - $saldoUnidad;
                 $cantidadUbicacion = $cantidadU - $cantidadBodega;
@@ -200,7 +200,6 @@ class CarroController extends Controller {
                 $query->bindParam(":codigoProducto", $producto, PDO::PARAM_STR);
 				$objSaldoBodega = $query->queryRow();
                 // revisar
-                
                 if ($objSaldoBodega['saldoUnidades'] == 0) {
                     echo CJSON::encode(array('result' => 'error', 'response' => "La cantidad solicitada no está disponible en este momento. Saldos disponibles: $saldoUnidad unidades"));
                     Yii::app()->end();
@@ -402,9 +401,12 @@ class CarroController extends Controller {
                     'with' => array(
                         'listSaldos' => array('condition' => '(listSaldos.codigoCiudad=:ciudad AND listSaldos.codigoSector=:sector) OR (listSaldos.saldoUnidad IS NULL AND listSaldos.codigoCiudad IS NULL AND listSaldos.codigoSector IS NULL)'),
                         'listPrecios' => array('condition' => '(listPrecios.codigoCiudad=:ciudad AND listPrecios.codigoSector=:sector) OR (listPrecios.codigoCiudad IS NULL AND listPrecios.codigoSector IS NULL)'),
-                        'listSaldosTerceros' => array('condition' => '(listSaldosTerceros.codigoCiudad=:ciudad AND listSaldosTerceros.codigoSector=:sector) OR (listSaldosTerceros.codigoCiudad IS NULL AND listSaldosTerceros.codigoSector IS NULL)')
+                    	'listSaldosTerceros',
+                    	'listFletesTerceros' => array (
+                    				'on' => 'listFletesTerceros.codigoCiudad=:ciudad OR listFletesTerceros.idFleteProducto IS NULL'
+                    	)
                     ),
-                    'condition' => 't.activo=:activo AND t.codigoProducto=:codigo AND ( (listSaldos.saldoUnidad IS NOT NULL AND listPrecios.codigoCiudad IS NOT NULL) OR listSaldosTerceros.codigoCiudad IS NOT NULL)',
+                    'condition' => 't.activo=:activo AND t.codigoProducto=:codigo AND ( (listSaldos.saldoUnidad IS NOT NULL AND listPrecios.codigoCiudad IS NOT NULL) /*OR listSaldosTerceros.codigoCiudad IS NOT NULL*/)',
                     'params' => array(
                         ':activo' => 1,
                         ':codigo' => $objItem->codigoProducto,
@@ -469,6 +471,10 @@ class CarroController extends Controller {
                         $cantidadCarroBodega = $position->getQuantityStored();
                     }
 
+                    /************MODIFICAR POR LOS CEDIS QUE PUEDA TENER
+                     * 
+                     * 
+                     * @var unknown $objSaldoBodega**********/
                     $objSaldoBodega = ProductosSaldosCedi::model()->find(array(
                         'condition' => 'codigoProducto=:producto AND codigoCedi=:cedi AND saldoUnidad>=:saldo',
                         'params' => array(
@@ -626,9 +632,13 @@ class CarroController extends Controller {
                     'with' => array(
                         'listSaldos' => array('condition' => '(listSaldos.codigoCiudad=:ciudad AND listSaldos.codigoSector=:sector) OR (listSaldos.saldoUnidad IS NULL AND listSaldos.codigoCiudad IS NULL AND listSaldos.codigoSector IS NULL)'),
                         'listPrecios' => array('condition' => '(listPrecios.codigoCiudad=:ciudad AND listPrecios.codigoSector=:sector) OR (listPrecios.codigoCiudad IS NULL AND listPrecios.codigoSector IS NULL)'),
-                        'listSaldosTerceros' => array('condition' => '(listSaldosTerceros.codigoCiudad=:ciudad AND listSaldosTerceros.codigoSector=:sector) OR (listSaldosTerceros.codigoCiudad IS NULL AND listSaldosTerceros.codigoSector IS NULL)')
+                        
+                    		'listSaldosTerceros',
+                    		'listFletesTerceros' => array (
+                    				'on' => 'listFletesTerceros.codigoCiudad=:ciudad OR listFletesTerceros.idFleteProducto IS NULL'
+                    		)
                     ),
-                    'condition' => 't.activo=:activo AND t.codigoProducto=:codigo AND ( (listSaldos.saldoUnidad IS NOT NULL AND listPrecios.codigoCiudad IS NOT NULL) OR listSaldosTerceros.codigoCiudad IS NOT NULL)',
+                    'condition' => 't.activo=:activo AND t.codigoProducto=:codigo AND ( (listSaldos.saldoUnidad IS NOT NULL AND listPrecios.codigoCiudad IS NOT NULL)/* OR listSaldosTerceros.codigoCiudad IS NOT NULL*/)',
                     'params' => array(
                         ':activo' => 1,
                         ':codigo' => $objItem->codigoProducto,
@@ -846,9 +856,12 @@ class CarroController extends Controller {
                     'with' => array(
                         'listSaldos' => array('condition' => '(listSaldos.codigoCiudad=:ciudad AND listSaldos.codigoSector=:sector) OR (listSaldos.saldoUnidad IS NULL AND listSaldos.codigoCiudad IS NULL AND listSaldos.codigoSector IS NULL)'),
                         'listPrecios' => array('condition' => '(listPrecios.codigoCiudad=:ciudad AND listPrecios.codigoSector=:sector) OR (listPrecios.codigoCiudad IS NULL AND listPrecios.codigoSector IS NULL)'),
-                        'listSaldosTerceros' => array('condition' => '(listSaldosTerceros.codigoCiudad=:ciudad AND listSaldosTerceros.codigoSector=:sector) OR (listSaldosTerceros.codigoCiudad IS NULL AND listSaldosTerceros.codigoSector IS NULL)')
+                        'listSaldosTerceros',
+								'listFletesTerceros' => array (
+			                        'on' => 'listFletesTerceros.codigoCiudad=:ciudad OR listFletesTerceros.idFleteProducto IS NULL'
+			                    )
                     ),
-                    'condition' => 't.activo=:activo AND t.codigoProducto=:codigo AND ( (listSaldos.saldoUnidad IS NOT NULL AND listPrecios.codigoCiudad IS NOT NULL) OR listSaldosTerceros.codigoCiudad IS NOT NULL)',
+                    'condition' => 't.activo=:activo AND t.codigoProducto=:codigo AND ( (listSaldos.saldoUnidad IS NOT NULL AND listPrecios.codigoCiudad IS NOT NULL)/* OR listSaldosTerceros.codigoCiudad IS NOT NULL*/)',
                     'params' => array(
                         ':activo' => 1,
                         ':codigo' => $objDetalle->codigoProducto,
@@ -1028,11 +1041,11 @@ class CarroController extends Controller {
             'with' => array(
                 'listSaldos' => array('on' => '(listSaldos.codigoCiudad=:ciudad AND listSaldos.codigoSector=:sector) OR (listSaldos.saldoUnidad IS NULL AND listSaldos.codigoCiudad IS NULL AND listSaldos.codigoSector IS NULL)'),
                 'listPrecios' => array('condition' => '(listPrecios.codigoCiudad=:ciudad AND listPrecios.codigoSector=:sector) OR (listPrecios.codigoCiudad IS NULL AND listPrecios.codigoSector IS NULL)'),
-                'listSaldosTerceros' => array('on' => '(listSaldosTerceros.codigoCiudad=:ciudad AND listSaldosTerceros.codigoSector=:sector) OR (listSaldosTerceros.codigoCiudad IS NULL AND listSaldosTerceros.codigoSector IS NULL)'),
+               // 'listSaldosTerceros' => array('on' => '(listSaldosTerceros.codigoCiudad=:ciudad AND listSaldosTerceros.codigoSector=:sector) OR (listSaldosTerceros.codigoCiudad IS NULL AND listSaldosTerceros.codigoSector IS NULL)'),
             	'listSaldosCedi' => array ('on' => 'codigoCedi IN ('.implode(",",$this->bodegas).')'),
             		 
             ),
-            'condition' => 't.activo=:activo AND t.codigoProducto=:codigo AND ( ((listSaldos.saldoUnidad IS NOT NULL OR listSaldosCedi.saldoUnidad IS NOT NULL) AND listPrecios.codigoCiudad IS NOT NULL) OR listSaldosTerceros.codigoCiudad IS NOT NULL)',
+            'condition' => 't.activo=:activo AND t.codigoProducto=:codigo AND ( ((listSaldos.saldoUnidad IS NOT NULL OR listSaldosCedi.saldoUnidad IS NOT NULL) AND listPrecios.codigoCiudad IS NOT NULL) /*OR listSaldosTerceros.codigoCiudad IS NOT NULL*/)',
             'params' => array(
                 ':activo' => 1,
                 ':codigo' => $producto,
@@ -1098,6 +1111,7 @@ class CarroController extends Controller {
 
         
         if ($objSaldoBodega['saldoUnidades'] >= 0) {
+        	
             Yii::app()->shoppingCart->putStored($objProductoCarro, $cantidadBodega);
         }
 
@@ -3306,11 +3320,11 @@ class CarroController extends Controller {
             if ($tipoEntrega == Yii::app()->params->entrega['tipo']['domicilio']) {
                 $objCompra->tiempoDomicilioCedi = Yii::app()->shoppingCart->getDeliveryStored();
                 $objCompra->valorDomicilioCedi = Yii::app()->shoppingCart->getShippingStored();
-                $objCompra->codigoCedi = Yii::app()->shoppingCart->objSectorCiudad->objCiudad->codigoSucursal;
+             //   $objCompra->codigoCedi = Yii::app()->shoppingCart->objSectorCiudad->objCiudad->codigoSucursal;
             } else if ($tipoEntrega == Yii::app()->params->entrega['tipo']['presencial']) {
                 $objCompra->tiempoDomicilioCedi = 0;
                 $objCompra->valorDomicilioCedi = 0;
-                $objCompra->codigoCedi = 0;
+             //   $objCompra->codigoCedi = 0;
             }
 
             $objCompra->subtotalCompra = Yii::app()->shoppingCart->getCostToken();
@@ -3468,24 +3482,24 @@ class CarroController extends Controller {
             if (!$modelPago->pagoInvitado) {
                 $fecha = new DateTime;
                
-                $parametrosPuntos = array(
-                    Yii::app()->params->puntos['categoria'] => Yii::app()->shoppingCart->getCategorias(),
-                    Yii::app()->params->puntos['marca'] => Yii::app()->shoppingCart->getMarcas(),
-                    Yii::app()->params->puntos['proveedor'] => Yii::app()->shoppingCart->getProveedores(),
-                    Yii::app()->params->puntos['producto'] => Yii::app()->shoppingCart->getProductosCantidad(),
-                    Yii::app()->params->puntos['monto'] => $objCompra->subtotalCompra,
-                    Yii::app()->params->puntos['cedula'] => array(
-                        'identificacionUsuario' => Yii::app()->user->name,
-                        'valor' => $objCompra->subtotalCompra),
-                    Yii::app()->params->puntos['rango'] => array(
-                        'fecha' => $fecha,
-                        'valor' => $objCompra->subtotalCompra),
-                    Yii::app()->params->puntos['cumpleanhos'] => array(
-                        'fechaNacimiento' => Yii::app()->session[Yii::app()->params->usuario['sesion']]->objUsuarioExtendida->fechaNacimiento,
-                        'valor' => $objCompra->subtotalCompra),
-                    Yii::app()->params->puntos['clientefielCompra'] => $objCompra->subtotalCompra,
-                );
-                $listPuntosCompra = ComprasPuntos::generarPuntos($fecha, Yii::app()->session[Yii::app()->params->usuario['sesion']], $parametrosPuntos);
+//                 $parametrosPuntos = array(
+//                     Yii::app()->params->puntos['categoria'] => Yii::app()->shoppingCart->getCategorias(),
+//                     Yii::app()->params->puntos['marca'] => Yii::app()->shoppingCart->getMarcas(),
+//                     Yii::app()->params->puntos['proveedor'] => Yii::app()->shoppingCart->getProveedores(),
+//                     Yii::app()->params->puntos['producto'] => Yii::app()->shoppingCart->getProductosCantidad(),
+//                     Yii::app()->params->puntos['monto'] => $objCompra->subtotalCompra,
+//                     Yii::app()->params->puntos['cedula'] => array(
+//                         'identificacionUsuario' => Yii::app()->user->name,
+//                         'valor' => $objCompra->subtotalCompra),
+//                     Yii::app()->params->puntos['rango'] => array(
+//                         'fecha' => $fecha,
+//                         'valor' => $objCompra->subtotalCompra),
+//                     Yii::app()->params->puntos['cumpleanhos'] => array(
+//                         'fechaNacimiento' => Yii::app()->session[Yii::app()->params->usuario['sesion']]->objUsuarioExtendida->fechaNacimiento,
+//                         'valor' => $objCompra->subtotalCompra),
+//                     Yii::app()->params->puntos['clientefielCompra'] => $objCompra->subtotalCompra,
+//                 );
+//                 $listPuntosCompra = ComprasPuntos::generarPuntos($fecha, Yii::app()->session[Yii::app()->params->usuario['sesion']], $parametrosPuntos);
             }
             //-- generar puntos
             // guardar puntos  //--
@@ -3504,10 +3518,8 @@ class CarroController extends Controller {
                     $objSaldo = null;
                     if ($position->objProducto->tercero == 1) {
                         $objSaldo = ProductosSaldosTerceros::model()->find(array(
-                            'condition' => 'codigoCiudad=:ciudad AND codigoSector=:sector AND codigoProducto=:producto',
+                            'condition' => 'codigoProducto=:producto',
                             'params' => array(
-                                ':ciudad' => Yii::app()->shoppingCart->getCodigoCiudad(),
-                                ':sector' => Yii::app()->shoppingCart->getCodigoSector(),
                                 ':producto' => $position->objProducto->codigoProducto
                             )
                         ));
@@ -3522,7 +3534,7 @@ class CarroController extends Controller {
                         ));
                     }
 
-                    if( $position->getQuantityStored() < 1 || $position->getQuantityUnit() > 0 || $position->getQuantity(true) > 0) {
+                    if(( $position->getQuantityStored() < 1 || $position->getQuantityUnit() > 0 || $position->getQuantity(true) > 0) && $position->objProducto->tercero != 1) {
 	                    if ($objSaldo == null) {
 	                        throw new Exception("Producto " . $position->objProducto->codigoProducto . " no disponible");
 	                    }
@@ -3540,11 +3552,24 @@ class CarroController extends Controller {
 	                    $objSaldo->save();
 	                    
                     }
+                    // Actualizando saldos de terceros en la maestra
+                    else if($position->objProducto->tercero == 1){
+                    	if ($objSaldo == null) {
+                    		throw new Exception("Producto " . $position->objProducto->codigoProducto . " no disponible");
+                    	}
+                    	
+                    	if ($objSaldo->saldoUnidad < $position->getQuantityUnit()) {
+                    		throw new Exception("Producto " . $position->objProducto->codigoProducto . ". La cantidad solicitada no está disponible en este momento. Saldos disponibles: $objSaldo->saldoUnidad unidades");
+                    	}
+                   
+                    	
+                    	$objSaldo->saldoUnidad = $objSaldo->saldoUnidad - $position->getQuantityUnit();
+                    	$objSaldo->save();
+                    }
                     
                     //-- actualizar saldo producto
                     //actualizar saldo bodega //--
                     
-
                     // Usar la suscripcion
                     $suscripcion = SuscripcionesProductosUsuario::model()->find(
                         'identificacionUsuario=:identificacionUsuario AND idProducto=:idProducto',
@@ -3618,7 +3643,6 @@ class CarroController extends Controller {
                         throw new Exception("Error al guardar item de compra $objItem->codigoProducto. " . $objItem->validateErrorsResponse());
                     }
                     
-                    
                     if ($position->getQuantityStored() > 0) {
                     	 
                     	$cantidadAlmacenadaBodega = $position->getQuantityStored();
@@ -3650,8 +3674,6 @@ class CarroController extends Controller {
                     			throw new Exception("Producto " . $position->objProducto->codigoProducto . " no se pudo registrar en bodega, intente de nuevo");
                     		}
                     
-                    		
-                    		
                     		$objProductoBodega = new ComprasUnidadesBodega();
                     		$objProductoBodega->idCompra = $objCompra->idCompra;
                     		$objProductoBodega->idCompraItem = $objItem->idCompraItem;
@@ -3663,25 +3685,6 @@ class CarroController extends Controller {
                     			throw new Exception("Producto " . $position->objProducto->codigoProducto . " no se pudo registrar en bodega, intente de nuevo");
                     		}
                     	}
-                    	 
-                    	//                         $objSaldoBodega = ProductosSaldosCedi::model()->find(array(
-                    	//                             'condition' => 'codigoCedi=:cedi AND codigoProducto=:producto',
-                    	//                             'params' => array(
-                    	//                                 ':cedi' => Yii::app()->shoppingCart->getObjCiudad()->codigoSucursal,
-                    	//                                 ':producto' => $position->objProducto->codigoProducto
-                    	//                             )
-                    	//                         ));
-                    
-                    	//                         if ($objSaldoBodega == null) {
-                    	//                             throw new Exception("Producto " . $position->objProducto->codigoProducto . " no disponible en bodega");
-                    	//                         }
-                    
-                    	//                         if ($objSaldoBodega->saldoUnidad < $position->getQuantityStored()) {
-                    	//                             throw new Exception("Producto " . $position->objProducto->codigoProducto . ". La cantidad solicitada no está disponible en este momento. Saldos disponibles: $objSaldoBodega->saldoUnidad unidades");
-                    	//                         }
-                    
-                    	//                         $objSaldoBodega->saldoUnidad = $objSaldoBodega->saldoUnidad - $position->getQuantityStored();
-                    	//                         $objSaldoBodega->save();
                     }
                     //-- actualizar saldo bodega
 
@@ -3978,10 +3981,8 @@ class CarroController extends Controller {
             		
             		$compraDespacho->valorVolumetrico = $positionBodega['valorVolumetrico'];
             		
-            		if($compraDespacho->save()){
-            			if($positionBodega['operadorLogistico'] == 1){
-            				$this->servientrega($objCompra, $compraDespacho->objBodega,$compraDespacho);
-            			}
+            		if(!$compraDespacho->save()){
+            			throw new Exception("Error al guardar volumetr�a: " . $compraDespacho->validateErrorsResponse());
             		}
             	}
             	
@@ -4090,7 +4091,7 @@ class CarroController extends Controller {
 
             $objCotizacion->tiempoDomicilioCedi = Yii::app()->shoppingCart->getDeliveryStored();
             $objCotizacion->valorDomicilioCedi = Yii::app()->shoppingCart->getShippingStored();
-            $objCotizacion->codigoCedi = Yii::app()->shoppingCart->objSectorCiudad->objCiudad->codigoSucursal;
+        //    $objCotizacion->codigoCedi = Yii::app()->shoppingCart->objSectorCiudad->objCiudad->codigoSucursal;
 
             $objCotizacion->subtotalCompra = Yii::app()->shoppingCart->getCost();
             $objCotizacion->impuestosCompra = Yii::app()->shoppingCart->getTaxPrice();
@@ -4439,7 +4440,6 @@ class CarroController extends Controller {
         		Yii::app()->end();
         	}
         	
-        	
         	// validar cantidades
         	
         	// revisar si ese bono ya esta cargado en sesion.
@@ -4493,50 +4493,6 @@ class CarroController extends Controller {
         	
         	echo CJSON::encode(array('result' => 'ok', 'response' => 'Se ha adquirido el bono por '.Yii::app()->numberFormatter->format(Yii::app()->params->formatoMoneda['patron'], $objBono->valorBono, Yii::app()->params->formatoMoneda['moneda']) ));
     }
-    
-    
-
-    public function servientrega($objCompra, $objBodega, $compraDespacho){
-    	$url = "sismilenio.servientrega.com.co/wsrastreoenvios/wsrastreoenvios.asmx?WDSL";
-    	$login = "Testcopservir";
-    	$pass = "BpSUh12jBIiWdACDozgOaQ==";
-    	$codFactura = "SER408";
-    	$cargue = "COPSERVIR_SISCLINET";
-    
-    	$client = new \SoapClient($url, array(
-    			"trace" => 1,
-    			"exceptions" => 0,
-    			'cache_wsdl' => WSDL_CACHE_NONE
-    	));
-    
-    	$auth = array(
-    			'login' => $login,
-    			'pwd' => $pass,
-    			'Id_CodFacturacion' => $codFactura,
-    			'Nombre_Cargue' => $cargue,
-    	);
-    
-    	$header = new SoapHeader("http://tempuri.org/", "AuthHeader", $auth, false);
-    	$client->__setSoapHeaders($header);
-    
-    	$paramReq = $this->renderPartial('CargueMasivoExternoDTO', array(
-    			'objCompra' => $objCompra,
-    			'objBodega' => $objBodega, 
-    			'objCompraDespacho' => $compraDespacho), true);
-    	
-    	
-    	$parm[] = new SoapVar($paramReq, XSD_ANYXML);
-    	$service = $client->CargueMasivoExterno(new SoapVar($parm, SOAP_ENC_OBJECT));
-    	
-    	
-    	if($service->CargueMasivoExternoResult){
-    		$compraDespacho->numeroGuia = $service->arrayGuias->string;
-    	} else {
-    		
-    	}
-    
-    }
-    
     
 
     /* public function actionPuntos(){

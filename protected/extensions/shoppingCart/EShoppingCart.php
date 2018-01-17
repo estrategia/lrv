@@ -362,11 +362,6 @@ class EShoppingCart extends CMap {
                			
                			$precioBodega = $this->getStoredPrice();
                			
-               			if($precioBodega < Yii::app()->params->servientrega['valorMinimoSeguroVariable']){
-               				$this->shippingStored +=  Yii::app()->params->servientrega['valorMinimoSeguro'];
-               			} else {
-               				$this->shippingStored +=  $precioBodega*Yii::app()->params->servientrega['porcentajeSeguro'];
-               			}
                			// Calcular precio de productos de bodega
             	}
             	$this->deliveryStored = $this->objSectorCiudad->objCiudad->getDomicilio()->tiempoDomicilio;
@@ -427,7 +422,6 @@ class EShoppingCart extends CMap {
     	
     	$horaReferencia = round_time($fecha,60, "up");
     	$horaInicio =  Date("Y-m-d H:i",strtotime(Date("Y-m-d $horaReferencia")));
-    	
     	$nuevafecha = Date("Y-m-d H:i", strtotime ( "+$horaEntrega hour" , strtotime ( $horaInicio ) ));
     	
     	return array('value' => $nuevafecha, 'label' => obtenerFechaEnLetra($nuevafecha));
@@ -439,12 +433,13 @@ class EShoppingCart extends CMap {
     	$cantidadesBodega = array();
     	$volumenBodegas = array();
     	$volumetria = array();
+    	$valorDeclaradoBodega = array();
     	$this->shippingStored = 0;
     	foreach($positions as $position){
     		if ($position->getDelivery() == 0 && $position->getShipping() == 0 && $position->isProduct() && $position->getQuantityStored() > 0){
     			
     			$informacionBodega = $position->calculateUnidadesBodega($this->bodegas, $this->objSectorCiudad->codigoCiudad);
-    			
+    		
     			$arrayCantidades = $informacionBodega['cantidades'];
     			$arrayVolumen = $informacionBodega['volumen'];
     			
@@ -454,10 +449,16 @@ class EShoppingCart extends CMap {
     				}else{
     					$volumenBodegas[$idBodega] = $cantidad;
     				}
+    				
+    				if(isset($valorDeclaradoBodega[$idBodega])){
+    					$valorDeclaradoBodega[$idBodega] += $cantidad * $position->getPrice();
+    				} else {
+    					$valorDeclaradoBodega[$idBodega] = $cantidad * $position->getPrice();
+    				}
+    				
     				$arrayFletes[$idBodega]['volumen'] = $volumenBodegas[$idBodega];
+    				
     			}
-    			
-    			$suma += $position->getSumPriceStored();
     			
     			if(isset($this->arrayFletes[$idBodega]['valorDeclarado'])){
     				$this->arrayFletes[$idBodega]['valorDeclarado'] += $position->getSumPriceStored();
@@ -466,7 +467,7 @@ class EShoppingCart extends CMap {
     			}
     		}
     	}
-    	    	
+    	
     	foreach($volumenBodegas as $codigoCedi => $volumetria ){
     		$flete = Flete::model()->find(array(
     				'with' => array('objOperadorLogistico' => array('with' => 'listOperadorRangos')),
@@ -477,7 +478,12 @@ class EShoppingCart extends CMap {
     				)
     		));
     	
-    		$rangos = $flete->objOperadorLogistico->listOperadorRangos;
+    		if(isset($flete->objOperadorLogistico->listOperadorRangos)){
+    			$rangos = $flete->objOperadorLogistico->listOperadorRangos;
+    		}else{
+    			echo "<pre>";
+    			print_r( $codigoCedi);exit();
+    		}
     		$claseRango = 2;
     		$ultimoPeso = 0;
     		foreach($rangos as $objRango){
@@ -495,7 +501,15 @@ class EShoppingCart extends CMap {
     		}
     		
     		if($volumetria-$ultimoPeso > 0){
-    			$valorFlete += ($volumetria-$ultimoPeso) * $flete->valorKiloAdicional;
+    			$valorFlete += ceil($volumetria-$ultimoPeso) * $flete->valorKiloAdicional;
+    		}
+    		
+    		if(isset($valorDeclaradoBodega[$codigoCedi])){
+    			if($valorDeclaradoBodega[$codigoCedi] < Yii::app()->params->servientrega['valorMinimoSeguroVariable']){
+               		$valorFlete +=  Yii::app()->params->servientrega['valorMinimoSeguro'];
+               	} else {
+               		$valorFlete +=  floor($valorDeclaradoBodega[$codigoCedi]*Yii::app()->params->servientrega['porcentajeSeguro']);
+               	}
     		}
     		
     		$this->shippingStored += $valorFlete;
@@ -504,7 +518,7 @@ class EShoppingCart extends CMap {
     		$this->arrayFletes[$codigoCedi]['operadorLogistico'] = $flete->idOperadorLogistico;
     		
     	}
-    	
+    	 
     	return $suma;
     }
     
@@ -706,9 +720,9 @@ class EShoppingCart extends CMap {
         if ($this->objSectorCiudad !== null) {
             
             $objPagoForm = new FormaPagoForm;
-            if (!$objPagoForm->tieneDomicilio($this->objSectorCiudad)) {
-                return false;
-            }
+//             if (!$objPagoForm->tieneDomicilio($this->objSectorCiudad)) {
+//                 return false;
+//             }
 
             $key = $position->getId();
             
@@ -919,7 +933,6 @@ class EShoppingCart extends CMap {
         }
         $tax += $this->getTaxShipping(true) + $this->getTaxShippingStored(true);
         
-        //$tax = ceil($tax);
         return $tax;
     }
     

@@ -923,7 +923,7 @@ class CatalogoController extends Controller {
 			                    )
 						),
 						// 'condition' => "t.activo=:activo AND (listSaldos.saldoUnidad>:saldo OR listSaldosTerceros.saldoUnidad>:saldo)",
-						'condition' => "t.activo=:activo AND (listSaldos.saldoUnidad>:saldo OR listSaldos.saldoFraccion>:saldo OR listSaldosCedi.saldoUnidad > 0 )",
+						'condition' => "t.activo=:activo AND (listSaldos.saldoUnidad>:saldo OR listSaldos.saldoFraccion>:saldo OR listSaldosCedi.saldoUnidad > 0 OR listSaldosTerceros.saldoUnidad > 0)",
 						// 'condition' => "t.activo=:activo AND ( (listSaldos.saldoUnidad IS NOT NULL AND listPrecios.codigoCiudad IS NOT NULL) OR listSaldosTerceros.codigoCiudad IS NOT NULL)",
 						'params' => array (
 								':tipoImagen' => YII::app ()->params->producto ['tipoImagen'] ['mini'],
@@ -935,6 +935,7 @@ class CatalogoController extends Controller {
 							//	':codigoCedi' => ,
 						)
 				);
+				
 			}
 
 			$parametrosProductos ['join'] = "JOIN t_relevancia_temp_$sesion rel ON t.codigoProducto  = rel.codigoProducto ";
@@ -1014,6 +1015,7 @@ class CatalogoController extends Controller {
 
 		// $h1 = round(microtime(true) * 1000);
 		$listProductos = Producto::model ()->findAll ( $parametrosProductos );
+		
 		// $h2 = round(microtime(true) * 1000);
 
 		$listCodigoEspecial = CodigoEspecial::model ()->findAll ( array (
@@ -1471,7 +1473,7 @@ class CatalogoController extends Controller {
 								'on' => '(listSaldos.codigoCiudad=:ciudad AND listSaldos.codigoSector=:sector)'
 						),
 						'listSaldosCedi' => array (
-								'on' => '(codigoCedi =:codigoCedi)'
+								'on' => '(codigoCedi IN ('.implode(",",$this->bodegas).'))'
 						),
 						'listPrecios' => array (
 								'condition' => '(listPrecios.codigoCiudad=:ciudad AND listPrecios.codigoSector=:sector) OR (listPrecios.codigoCiudad IS NULL AND listPrecios.codigoSector IS NULL)'
@@ -1489,7 +1491,6 @@ class CatalogoController extends Controller {
 						':saldo' => 0,
 						':ciudad' => $objSectorCiudad->codigoCiudad,
 						':sector' => $objSectorCiudad->codigoSector,
-						':codigoCedi' => $objSectorCiudad->objCiudad->codigoSucursal
 				)
 		) );
 

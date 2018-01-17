@@ -68,6 +68,7 @@ class PrecioProducto extends Precio {
                     $listSaldosTerceros = $objProducto->listSaldosTerceros;
                     $listPrecios = $objProducto->listPrecios;
                     $listFletes = $objProducto->listFletesTerceros;
+                   
                 }
                 
                 foreach ($listSaldosTerceros as $objProductoSaldoTercero) {
@@ -138,6 +139,7 @@ class PrecioProducto extends Precio {
                     } else {
                         $listPrecios = $objProducto->listPreciosVAP;
                     }   
+                    
                 }
                 
                 /************************ SALDOS DE BODEGA *****************************/
@@ -145,25 +147,38 @@ class PrecioProducto extends Precio {
                 $listSaldosBodega = array();
                 
                 if ($consultaPrecio) {
-                    $listSaldosBodega = ProductosSaldosCedi::model()->findAll(array(
-                        'condition' => '(codigoProducto=:producto AND codigoCedi=:codigoCedi)',
+                    
+                	// cambiar logica de calculo de bodegas
+                	/*
+                	 * 
+                	 * 
+                	 * 
+                	 * 
+                	 * 
+                	 */
+                	$listSaldosBodega = ProductosSaldosCedi::model()->findAll(array(
+                        'condition' => '(codigoProducto=:producto AND codigoCedi IN ('.implode(",",$this->bodegas).'))',
                         'params' => array(
                             ':codigoCedi' => $objCiudadSector->objCiudad->codigoSucursal,
                             ':producto' => $objProducto->codigoProducto,
                 			),
                 	   ));
+                    
+                    
                 } else {
                 	   $listSaldosBodega = $objProducto->listSaldosCedi;
                 }
                 
                 foreach ($listSaldosBodega as $objProductoSaldoBodega) {
-                    	if ( $objProductoSaldoBodega->codigoCedi==$objCiudadSector->objCiudad->codigoSucursal) {
-                    		if ( $objProductoSaldoBodega->saldoUnidad>0 ) {
+                    //	if ( $objProductoSaldoBodega->codigoCedi == $objCiudadSector->objCiudad->codigoSucursal) {
+                    		if ( $objProductoSaldoBodega->saldoUnidad > 0 ) {
                     			$tieneSaldo = true;
                     		}
                     		break;
-                    	}
+                    //	}
                 }
+                
+               
                 
                 /************************ FIN SALDOS DE BODEGA **************************/
 

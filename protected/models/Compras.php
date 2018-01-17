@@ -31,7 +31,6 @@
  * @property string $codigoSector
  * @property integer $tiempoDomicilioCedi
  * @property integer $valorDomicilioCedi
- * @property integer $codigoCedi
  *
  * The followings are the available model relations:
  * @property SectorCiudad $objSectorCiudad
@@ -77,7 +76,7 @@ class Compras extends CActiveRecord {
         // will receive user inputs.
         return array(
             array('tipoEntrega, codigoCiudad, codigoSector', 'required'),
-            array('donacionFundacion, subtotalCompra, impuestosCompra, baseImpuestosCompra, totalCompra, idEstadoCompra, idOperador, idTipoVenta, activa, domicilio, flete, invitado, codigoPerfil, seguimiento, tiempoDomicilioCedi, valorDomicilioCedi, codigoCedi', 'numerical', 'integerOnly' => true),
+            array('donacionFundacion, subtotalCompra, impuestosCompra, baseImpuestosCompra, totalCompra, idEstadoCompra, idOperador, idTipoVenta, activa, domicilio, flete, invitado, codigoPerfil, seguimiento, tiempoDomicilioCedi, valorDomicilioCedi', 'numerical', 'integerOnly' => true),
             array('identificacionUsuario', 'length', 'max' => 100),
             array('idComercial', 'length', 'max' => 10),
             array('documentoCruce', 'length', 'max' => 8),
@@ -88,7 +87,7 @@ class Compras extends CActiveRecord {
             array('identificacionUsuario', 'default', 'value' => null),
             // The following rule is used by search().
             // @todo Please remove those attributes that should not be searched.
-            array('busquedaSearch, formaPagoSearch, idCompra, identificacionUsuario, documentoCruce, fechaCompra, fechaEntrega, tipoEntrega, donacionFundacion, idComercial, subtotalCompra, impuestosCompra, baseImpuestosCompra, totalCompra, idEstadoCompra, idOperador, observacion, idTipoVenta, activa, domicilio, flete, invitado, codigoPerfil, saldosPdv, seguimiento, codigoCiudad, codigoSector, tiempoDomicilioCedi, valorDomicilioCedi, codigoCedi, codigoProveedor, estadoTercero', 'safe', 'on' => 'search'),
+            array('busquedaSearch, formaPagoSearch, idCompra, identificacionUsuario, documentoCruce, fechaCompra, fechaEntrega, tipoEntrega, donacionFundacion, idComercial, subtotalCompra, impuestosCompra, baseImpuestosCompra, totalCompra, idEstadoCompra, idOperador, observacion, idTipoVenta, activa, domicilio, flete, invitado, codigoPerfil, saldosPdv, seguimiento, codigoCiudad, codigoSector, tiempoDomicilioCedi, valorDomicilioCedi, codigoProveedor, estadoTercero', 'safe', 'on' => 'search'),
         );
     }
 
@@ -153,7 +152,6 @@ class Compras extends CActiveRecord {
             'codigoSector' => 'Codigo Sector',
             'tiempoDomicilioCedi' => 'Tiempo Domicilio Cedi',
             'valorDomicilioCedi' => 'Valor Domicilio Cedi',
-            'codigoCedi' => 'Codigo Cedi',
         );
     }
 
@@ -253,7 +251,6 @@ class Compras extends CActiveRecord {
             $criteria->compare('t.codigoSector', $this->codigoSector);
             $criteria->compare('t.tiempoDomicilioCedi', $this->tiempoDomicilioCedi);
             $criteria->compare('t.valorDomicilioCedi', $this->valorDomicilioCedi);
-            $criteria->compare('t.codigoCedi', $this->codigoCedi);
         }
 
 
@@ -312,7 +309,6 @@ class Compras extends CActiveRecord {
         $criteria->compare('t.codigoSector', $this->codigoSector);
         $criteria->compare('t.tiempoDomicilioCedi', $this->tiempoDomicilioCedi);
         $criteria->compare('t.valorDomicilioCedi', $this->valorDomicilioCedi);
-        $criteria->compare('t.codigoCedi', $this->codigoCedi);
         $criteria->params = [':codigoProveedor' => $codigoProveedor];
 
         return new CActiveDataProvider($this, array(
@@ -356,7 +352,6 @@ class Compras extends CActiveRecord {
         $criteria->compare('t.codigoSector', $this->codigoSector);
         $criteria->compare('t.tiempoDomicilioCedi', $this->tiempoDomicilioCedi);
         $criteria->compare('t.valorDomicilioCedi', $this->valorDomicilioCedi);
-        $criteria->compare('t.codigoCedi', $this->codigoCedi);
 
         return new CActiveDataProvider($this, array(
             'criteria' => $criteria,
