@@ -63,7 +63,7 @@
           <div class="precios-m">
             <p class="precioproductos-antes-m">ANTES: $36.700</p>
             <p class="precioproductos-m">AHORA: $28.620</p>
-            <a href="<?php echo CController::createUrl('/contenido/ver', array('tipo' => 'grupo', 'contenido' => 115484)) ?>"><img class="img-responsive" style="width: 47%;margin: 15px 71px 30px;" src="<?= Yii::app()->request->baseUrl ?>/images/contenido/nutriben/compra-online.png " alt="Compra online Nutribén"></a>
+            <a href="<?php echo CController::createUrl('/catalogo/producto', array('producto' => 115484)) ?>"><img class="img-responsive" style="width: 47%;margin: 15px 71px 30px;" src="<?= Yii::app()->request->baseUrl ?>/images/contenido/nutriben/compra-online.png " alt="Compra online Nutribén"></a>
           </div>
       </div>
     </div>
@@ -75,7 +75,7 @@
             <div class="precios-m">
               <p class="precioproductos-antes-m">ANTES: $61.500</p>
               <p class="precioproductos-m">AHORA: $50.420</p>
-              <a href="<?php echo CController::createUrl('/contenido/ver', array('tipo' => 'grupo', 'contenido' => 73375)) ?>"><img class="img-responsive" style="width: 50%;margin: 15px 71px 30px;" src="<?= Yii::app()->request->baseUrl ?>/images/contenido/nutriben/compra-online.png " alt="Compra online Nutribén"></a>
+              <a href="<?php echo CController::createUrl('/catalogo/producto', array('producto' => 73375)) ?>"><img class="img-responsive" style="width: 50%;margin: 15px 71px 30px;" src="<?= Yii::app()->request->baseUrl ?>/images/contenido/nutriben/compra-online.png " alt="Compra online Nutribén"></a>
             </div>
         </div>
     </div>
@@ -148,7 +148,7 @@
             <div class="precios">
               <p class="precioproductos-antes">ANTES: $36.700</p>
               <p class="precioproductos">AHORA: $28.620</p>
-              <a href="<?php echo CController::createUrl('/contenido/ver', array('tipo' => 'grupo', 'contenido' => 115484)) ?>"><img class="img-responsive" style="width: 47%;margin: -41px 168px 30px;" src="<?= Yii::app()->request->baseUrl ?>/images/contenido/nutriben/compra-online.png " alt="Compra online Nutribén"></a>
+              <a href="<?php echo CController::createUrl('/catalogo/producto', array('producto' =>115484)) ?>"><img class="img-responsive" style="width: 47%;margin: -41px 168px 30px;" src="<?= Yii::app()->request->baseUrl ?>/images/contenido/nutriben/compra-online.png " alt="Compra online Nutribén"></a>
             </div>
         </div>
       </div>
@@ -160,7 +160,7 @@
               <div class="precios">
                 <p class="precioproductos-antes">ANTES: $61.500</p>
                 <p class="precioproductos">AHORA: $50.420</p>
-                <a href="<?php echo CController::createUrl('/contenido/ver', array('tipo' => 'grupo', 'contenido' => 73375)) ?>"><img class="img-responsive" style="width: 50%;margin: -41px 168px 30px;" src="<?= Yii::app()->request->baseUrl ?>/images/contenido/nutriben/compra-online.png " alt="Compra online Nutribén"></a>
+                <a href="<?php echo CController::createUrl('/catalogo/producto', array('producto' => 73375)) ?>"><img class="img-responsive" style="width: 50%;margin: -41px 168px 30px;" src="<?= Yii::app()->request->baseUrl ?>/images/contenido/nutriben/compra-online.png " alt="Compra online Nutribén"></a>
               </div>
 
         </div>
