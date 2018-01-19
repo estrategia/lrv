@@ -37,7 +37,7 @@
 				<!--CAMPOS OPCIONALES CON CAIDA IMPRESA EN LA GUIA:-->
 				<ns1:Doc_Relacionado>Valor10</ns1:Doc_Relacionado>
 				<!--campo remision en la guia:-->
-				<ns1:Des_VlrCampoPersonalizado1>Novedades 3166913218</ns1:Des_VlrCampoPersonalizado1>
+				<ns1:Des_VlrCampoPersonalizado1>Novedades</ns1:Des_VlrCampoPersonalizado1>
 				<!--observaciones para la entrega hasta 60 caracteres:-->
 				<ns1:Ide_Num_Referencia_Dest>Valor12</ns1:Ide_Num_Referencia_Dest>
 				<!--campo Ref2 en formato de guia sticker:-->
@@ -133,7 +133,7 @@
 									<ns1:Num_Largo><?= $position->objProducto->Largo ?></ns1:Num_Largo>
 									<ns1:Num_Peso><?= $position->objProducto->PesoUnidad ?></ns1:Num_Peso>
 									
-									
+									<ns1:Num_Cantidad><?= $positionBodega->cantidad ?></ns1:Num_Cantidad>
 									<!--Optional:-->
 									<ns1:Des_DiceContener>PRODUCTO</ns1:Des_DiceContener>
 									<!--Optional:-->

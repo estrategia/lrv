@@ -1,6 +1,7 @@
 <?php
 
 return array(
+	'clientefiel',
     'terceros' => array(
         'defaultController' => 'default',
         'components' => array(

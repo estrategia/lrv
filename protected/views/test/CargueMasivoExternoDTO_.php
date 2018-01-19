@@ -23,11 +23,10 @@
 				<ns1:Num_Alto>5</ns1:Num_Alto>
 				<ns1:Num_Ancho>5</ns1:Num_Ancho>
 				<ns1:Num_Largo>5</ns1:Num_Largo>
-				<ns1:Num_PesoTotal><?= $objCompraDespacho->valorVolumetrico < 3 ? 3 :  $objCompraDespacho->valorVolumetrico ?></ns1:Num_PesoTotal>
+				<ns1:Num_PesoTotal>4</ns1:Num_PesoTotal>
 				<ns1:Des_UnidadLongitud>cm</ns1:Des_UnidadLongitud>
 				<ns1:Des_UnidadPeso>kg</ns1:Des_UnidadPeso>
 				<ns1:Nom_UnidadEmpaque>GENERICO</ns1:Nom_UnidadEmpaque>
-				
 				<!--ingresar el nombre de la unidad de empaque que se encuentre registrada en sisclinet:-->
 				<ns1:Gen_Cajaporte>false</ns1:Gen_Cajaporte>
 				<ns1:Gen_Sobreporte>false</ns1:Gen_Sobreporte>
@@ -68,45 +67,45 @@
 				<!--dejar en 0:-->
 
 				<!--VALORES:-->
-				<ns1:Num_ValorDeclaradoTotal><?= $objCompraDespacho->valorDeclaradoTotal ?></ns1:Num_ValorDeclaradoTotal> 
+				<ns1:Num_ValorDeclaradoTotal>24150</ns1:Num_ValorDeclaradoTotal>
 				<!--valor declarado del envio total:-->
 				<ns1:Num_ValorLiquidado>0</ns1:Num_ValorLiquidado>
 				<ns1:Num_VlrSobreflete>0</ns1:Num_VlrSobreflete>
-				<ns1:Num_VlrFlete> <?= $objCompraDespacho->valorFlete ?> </ns1:Num_VlrFlete>
+				<ns1:Num_VlrFlete>0</ns1:Num_VlrFlete>
 				<ns1:Num_Descuento>0</ns1:Num_Descuento>
 				<ns1:Num_ValorDeclaradoSobreTotal>0</ns1:Num_ValorDeclaradoSobreTotal>
 
 				<!--INFORMACION DEL DESTINATARIO:-->
-				<ns1:Des_Telefono><?= $objCompra->objCompraDireccion->telefono?></ns1:Des_Telefono>
+				<ns1:Des_Telefono>3134079955</ns1:Des_Telefono>
 				<!--Telefono Destinatario-->
-				<ns1:Des_Ciudad> <?php echo  $objCompra->objCompraDireccion->objCiudad->codigoDane?></ns1:Des_Ciudad>
+				<ns1:Des_Ciudad>73449000</ns1:Des_Ciudad>
 				<!--Ciudad de Destino:-->
-				<ns1:Des_DepartamentoDestino><?php //echo  $objCompra->objCompraDireccion->objCiudad->nombreCiudad?></ns1:Des_DepartamentoDestino>
+				<ns1:Des_DepartamentoDestino>47268000</ns1:Des_DepartamentoDestino>
 				<!--nombre o codigo DANE de departamento de destino:-->
-				<ns1:Des_Direccion><?= $objCompra->objCompraDireccion->direccion?></ns1:Des_Direccion>
+				<ns1:Des_Direccion>calle 6 #24-39-local 1 centro</ns1:Des_Direccion>
 				<!--Direccion de Destino:-->
-				<ns1:Nom_Contacto><?= $objCompra->objCompraDireccion->nombre?></ns1:Nom_Contacto>
+				<ns1:Nom_Contacto>david franco</ns1:Nom_Contacto>
 				<!--Nombre de Destinatario:-->
-				<ns1:Des_DiceContener>PRODUCTO</ns1:Des_DiceContener>
+				<ns1:Des_DiceContener>VARIOS PAPELES</ns1:Des_DiceContener>
 				<!--conteneido del envio hasta 20 caracteres:-->
-				<ns1:Ide_Num_Identific_Dest><?= $objCompra->identificacionUsuario?></ns1:Ide_Num_Identific_Dest>
+				<ns1:Ide_Num_Identific_Dest>1000100530100</ns1:Ide_Num_Identific_Dest>
 				<!--identificacion de destinario :-->
-				<ns1:Num_Celular><?= $objCompra->objCompraDireccion->celular?></ns1:Num_Celular>
+				<ns1:Num_Celular></ns1:Num_Celular>
 				<!--numero de celular de destinatario:-->
-				<ns1:Des_CorreoElectronico><?= $objCompra->objCompraDireccion->correoElectronico?></ns1:Des_CorreoElectronico>
+				<ns1:Des_CorreoElectronico>juan.franco@servientrega.com</ns1:Des_CorreoElectronico>
 
 				<!--INFORMACION DEL REMITENTE:-->
-				<ns1:Des_CiudadRemitente><?php echo  $objBodega->objCiudad->codigoDane ?></ns1:Des_CiudadRemitente>
+				<ns1:Des_CiudadRemitente></ns1:Des_CiudadRemitente>
 				<!--ciudad de remitente:-->
-				<ns1:Des_DireccionRemitente><?= $objBodega->direccion ?></ns1:Des_DireccionRemitente>
+				<ns1:Des_DireccionRemitente></ns1:Des_DireccionRemitente>
 				<!--direccion del remitente:-->
-				<ns1:Des_DepartamentoOrigen><?php //echo  $objBodega->departamento ?></ns1:Des_DepartamentoOrigen>
+				<ns1:Des_DepartamentoOrigen></ns1:Des_DepartamentoOrigen>
 				<!--nombre o codigo DANE de departamento de Origen:-->
-				<ns1:Num_TelefonoRemitente><?= $objBodega->telefono ?></ns1:Num_TelefonoRemitente>
+				<ns1:Num_TelefonoRemitente></ns1:Num_TelefonoRemitente>
 				<!--telefono del remitente:-->
-				<ns1:Num_IdentiRemitente>12331244</ns1:Num_IdentiRemitente>
+				<ns1:Num_IdentiRemitente></ns1:Num_IdentiRemitente>
 				<!--identificacion del remitente:-->
-				<ns1:Nom_Remitente>COPSERVIR LTDA</ns1:Nom_Remitente>
+				<ns1:Nom_Remitente></ns1:Nom_Remitente>
 				<!--no aplica, dejar vacio:-->
 
 				<!--MAYORISTA , NO APICA PARA CLIENTES:-->
@@ -117,57 +116,43 @@
 				<ns1:Des_IdArchivoOrigen>1000100530100</ns1:Des_IdArchivoOrigen>
 
 				<!--NODO DE MERCANCIA INDUSTRIAL, PIEZAS DEL ENVIO, CUANDO SEA MAS DE 1 PIEZA CON DIFERENTES DIMENSIONES REPETIR NODO:-->
-				
-				<?php foreach($objCompra->listItems as $position):?>
-				
-					<?php if($position->unidadesCedi > 0 ):?>
-					
-						<?php foreach($position->listBodegas as $positionBodega):?>
-							<?php if($positionBodega->idBodega == $objBodega->idBodega ):?>
-							<ns1:objEnviosUnidadEmpaqueCargue>
-								<!--Zero or more repetitions:-->
-								<ns1:EnviosUnidadEmpaqueCargue>
-									<ns1:Num_Alto><?= $position->objProducto->Profundo ?></ns1:Num_Alto>
-									<ns1:Num_Distribuidor>0</ns1:Num_Distribuidor>
-									<ns1:Num_Ancho><?= $position->objProducto->Ancho ?></ns1:Num_Ancho>
-									<ns1:Num_Largo><?= $position->objProducto->Largo ?></ns1:Num_Largo>
-									<ns1:Num_Peso><?= $position->objProducto->PesoUnidad ?></ns1:Num_Peso>
-									
-									
-									<!--Optional:-->
-									<ns1:Des_DiceContener>PRODUCTO</ns1:Des_DiceContener>
-									<!--Optional:-->
-									<ns1:Des_IdArchivoOrigen>1000100530100</ns1:Des_IdArchivoOrigen>
-									
-									<!--Optional:-->
-									<ns1:Nom_UnidadEmpaque>VARIOS</ns1:Nom_UnidadEmpaque>
-									
-									<!--Optional:-->
-									<ns1:Des_UnidadLongitud>cms</ns1:Des_UnidadLongitud>
-									<!--Optional:-->
-									<ns1:Des_UnidadPeso>kgs</ns1:Des_UnidadPeso>
-									<ns1:Ide_UnidadEmpaque>00000000-0000-0000-0000-000000000000</ns1:Ide_UnidadEmpaque>
-									<ns1:Ide_Envio>00000000-0000-0000-0000-000000000000</ns1:Ide_Envio>
-									<!--Optional:-->
-									<ns1:Num_Volumen>?</ns1:Num_Volumen>
-			
-									<ns1:Num_Consecutivo>0</ns1:Num_Consecutivo>
-									<!--Optional:-->
-									<ns1:Cod_Facturacion>?</ns1:Cod_Facturacion>
-									<!--Optional:-->
-									<ns1:Num_ValorDeclarado>1</ns1:Num_ValorDeclarado>
-									<!--Optional:-->
-									<ns1:Indicador>1</ns1:Indicador>
-									<!--Optional:-->
-									<ns1:NumeroDeCaja>?</ns1:NumeroDeCaja>
-									<!--Optional:-->
-									<ns1:Id_archivo>?</ns1:Id_archivo>
-								</ns1:EnviosUnidadEmpaqueCargue>
-							</ns1:objEnviosUnidadEmpaqueCargue>
-							<?php endif;?>
-						<?php endforeach?>
-					<?php endif;?>
-				<?php endforeach?>
+				<ns1:objEnviosUnidadEmpaqueCargue>
+					<!--Zero or more repetitions:-->
+					<ns1:EnviosUnidadEmpaqueCargue>
+						<ns1:Num_Alto>5</ns1:Num_Alto>
+						<ns1:Num_Distribuidor>0</ns1:Num_Distribuidor>
+						<ns1:Num_Ancho>5</ns1:Num_Ancho>
+						<ns1:Num_Cantidad>1</ns1:Num_Cantidad>
+						<!--Optional:-->
+						<ns1:Des_DiceContener>?</ns1:Des_DiceContener>
+						<!--Optional:-->
+						<ns1:Des_IdArchivoOrigen>1000100530100</ns1:Des_IdArchivoOrigen>
+						<ns1:Num_Largo>5</ns1:Num_Largo>
+						<!--Optional:-->
+						<ns1:Nom_UnidadEmpaque>VARIOS</ns1:Nom_UnidadEmpaque>
+						<ns1:Num_Peso>1</ns1:Num_Peso>
+						<!--Optional:-->
+						<ns1:Des_UnidadLongitud>?</ns1:Des_UnidadLongitud>
+						<!--Optional:-->
+						<ns1:Des_UnidadPeso>?</ns1:Des_UnidadPeso>
+						<ns1:Ide_UnidadEmpaque>00000000-0000-0000-0000-000000000000</ns1:Ide_UnidadEmpaque>
+						<ns1:Ide_Envio>00000000-0000-0000-0000-000000000000</ns1:Ide_Envio>
+						<!--Optional:-->
+						<ns1:Num_Volumen>?</ns1:Num_Volumen>
+
+						<ns1:Num_Consecutivo>0</ns1:Num_Consecutivo>
+						<!--Optional:-->
+						<ns1:Cod_Facturacion>?</ns1:Cod_Facturacion>
+						<!--Optional:-->
+						<ns1:Num_ValorDeclarado>1</ns1:Num_ValorDeclarado>
+						<!--Optional:-->
+						<ns1:Indicador>1</ns1:Indicador>
+						<!--Optional:-->
+						<ns1:NumeroDeCaja>?</ns1:NumeroDeCaja>
+						<!--Optional:-->
+						<ns1:Id_archivo>?</ns1:Id_archivo>
+					</ns1:EnviosUnidadEmpaqueCargue>
+				</ns1:objEnviosUnidadEmpaqueCargue>
 			</ns1:EnviosExterno>
 		</ns1:objEnvios>
 	</ns1:CargueMasivoExternoDTO>

@@ -80,6 +80,24 @@ class PasarelaController extends Controller {
                 if (!$model->save()) {
                     $this->log($model->idCompra, 504, "ERROR RESPUESTA: INSERTANDO LA TABLA t_PasarelaRespuestas. " . $model->validateErrorsResponse());
                 }
+                
+                // Buscar Despachos de cedi por compra
+                
+                $despachos = ComprasDespachoCedi::model()->findAll(array(
+                		'condition' => 'idCompra =:compra',
+                		'params' => array(
+                				':compra' => $model->idCompra
+                		)
+                ));
+                
+                if($despachos){
+                	foreach($despachos as $compraDespacho){
+	                	if($compraDespacho->idOperadorLogistico == 1){
+	                		$this->servientrega($model->objCompra, $compraDespacho->objBodega,$compraDespacho);
+	                	}
+                	}
+                }
+                
             } catch (Exception $exc) {
                 $this->log($model->idCompra, 600, "ERROR AL REGISTRAR PASARELA: " . $exc->getMessage());
             }
@@ -420,6 +438,54 @@ class PasarelaController extends Controller {
                 break;
         }
     }
+    
+    
+    
+    
+    
+    public function servientrega($objCompra, $objBodega, $compraDespacho){
+    	$url = "http://web.servientrega.com:8081/GeneracionGuias.asmx?WSDL";
+    	$login = "Testcopservir";
+    	$pass = "BpSUh12jBIiWdACDozgOaQ==";
+    	$codFactura = "SER408";
+    	$cargue = "COPSERVIR_SISCLINET";
+    
+    	$client = new SoapClient($url, array(
+    			"trace" => 1,
+    			"exceptions" => 0,
+    			'cache_wsdl' => WSDL_CACHE_NONE
+    	));
+    
+    	$auth = array(
+    			'login' => $login,
+    			'pwd' => $pass,
+    			'Id_CodFacturacion' => $codFactura,
+    			'Nombre_Cargue' => $cargue,
+    	);
+    
+    	//     	$header = new SoapHeader("http://tempuri.org/", "AuthHeader", $auth, false);
+    	//     	$client->__setSoapHeaders($header);
+    
+    	$paramReq = $this->renderPartial('CargueMasivoExternoDTO', array(
+    			'objCompra' => $objCompra,
+    			'objBodega' => $objBodega,
+    			'objCompraDespacho' => $compraDespacho), true);
+    	 
+    	 
+    	$parm[] = new SoapVar($paramReq, XSD_ANYXML);
+    	 
+    	$service = $client->CargueMasivoExterno(new SoapVar($parm, SOAP_ENC_OBJECT));
+    	 
+    	// CVarDumper::dump(new SoapVar($parm, SOAP_ENC_OBJECT),10,true);exit();
+    	 
+    	if($service->CargueMasivoExternoResult){
+    		$compraDespacho->numeroGuia = $service->arrayGuias->string;
+    		$compraDespacho->save();
+    	} 
+    
+    }
+    
+    
     
     public function actionCorreoTest(){
         $correo = "juliana.patino@eiso.com.co"; //juliana.patino@eiso.com.co

@@ -407,8 +407,10 @@ function conocerDiaSemanaFecha($fecha) {
 	return $dia;
 }
 
-function calcularVolumetriaOperador($idOperador, $largo, $ancho, $profundo){
-	return $largo*$ancho*$profundo*(1/1000000)*400;
+function calcularVolumetriaOperador($idOperador, $largo, $ancho, $profundo, $peso){
+	$volumetria = $largo*$ancho*$profundo*(1/1000000)*222;
+	
+	 return  $volumetria > $peso ? $volumetria : $peso ;
 }
 
 			function generatePass($length) {

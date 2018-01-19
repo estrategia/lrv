@@ -158,7 +158,7 @@ class FormaPago extends CActiveRecord {
     			$condiciones['params'][':ventavendedor'] = 1;
     		}break;
     	}
-    	
+
     	return self::model()->findAll($condiciones);
     	
     }

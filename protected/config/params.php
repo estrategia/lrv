@@ -321,8 +321,8 @@ return array(
     ),
     'bloqueoUsuario' => array(
         'diasBloqueo' => 15,
-        'cantidadCompras' => 14,
-        'acumuladoCompras' => 200000
+        'cantidadCompras' => 80,
+        'acumuladoCompras' => 20000000000000
     ),
     'logueo' => array(
         '*' => 3
