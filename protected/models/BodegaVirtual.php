@@ -101,4 +101,6 @@ class BodegaVirtual extends CActiveRecord
 	{
 		return parent::model($className);
 	}
+	
+	
 }

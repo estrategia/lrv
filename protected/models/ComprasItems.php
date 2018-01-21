@@ -473,7 +473,6 @@ class ComprasItems extends CActiveRecord {
         
         // $precioTotal = $this->precioBaseUnidad - $this->descuentoUnidad ;
         // $precioDiff = $precioTotal * $cantDiff;
-        
         // Yii::log("cantDiff: $precioDiff", CLogger::LEVEL_INFO, 'error');
         $this->idEstadoItem = Yii::app()->params->callcenter['estadoItem']['estado']['modificado'];
         $this->idOperador = Yii::app()->controller->module->user->id;

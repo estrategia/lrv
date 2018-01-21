@@ -117,4 +117,20 @@ class Flete extends CActiveRecord
 	{
 		return parent::model($className);
 	}
+	
+	public function getFechaMinimaEntrega(){
+		$fecha = date('Y-m-j');
+		$nuevafecha = strtotime ( '+'.$this->tiempoEntregaInicial.' day' , strtotime ( $fecha ) ) ;
+		$nuevafecha = date ( 'Y-m-j' , $nuevafecha );
+		
+		return $nuevafecha;
+	}
+	
+	public function getFechaMaximaEntrega(){
+		$fecha = date('Y-m-j');
+		$nuevafecha = strtotime ( '+'.$this->tiempoEntregaFinal.' day' , strtotime ( $fecha ) ) ;
+		$nuevafecha = date ( 'Y-m-j' , $nuevafecha );
+		
+		return $nuevafecha;
+	}
 }

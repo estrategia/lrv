@@ -11,6 +11,7 @@
             <div class="btn-group">
                 <a href="<?php echo $this->createUrl('/callcenter/admin/detallepedido', array('pedido' => $params['objCompra']->idCompra, 'opcion'=>'pdv')) ?>" class="btn btn-primary <?php echo ($opcion=="pdv" ? "active" : "") ?>">Ubicar PDV</a>
                 <a href="<?php echo $this->createUrl('/callcenter/admin/detallepedido', array('pedido' => $params['objCompra']->idCompra, 'opcion'=>'pedido')) ?>" class="btn btn-primary <?php echo ($opcion=="pedido" ? "active" : "") ?>">Pedido</a>
+                <a href="<?php echo $this->createUrl('/callcenter/admin/detallepedido', array('pedido' => $params['objCompra']->idCompra, 'opcion'=>'envio')) ?>" class="btn btn-primary <?php echo ($opcion=="envio" ? "active" : "") ?>">Informaci&oacute;n de env&iacute;o</a>
                 <a href="<?php echo $this->createUrl('/callcenter/admin/detallepedido', array('pedido' => $params['objCompra']->idCompra, 'opcion'=>'cliente')) ?>" class="btn btn-primary <?php echo ($opcion=="cliente" ? "active" : "") ?>">Información del cliente</a>
                 <a href="<?php echo $this->createUrl('/callcenter/admin/detallepedido', array('pedido' => $params['objCompra']->idCompra, 'opcion'=>'observacion')) ?>" class="btn btn-primary <?php echo ($opcion=="observacion" ? "active" : "") ?>">Observaciones</a>
             </div>

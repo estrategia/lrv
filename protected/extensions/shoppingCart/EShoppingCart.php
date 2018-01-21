@@ -443,6 +443,7 @@ class EShoppingCart extends CMap {
     			$arrayCantidades = $informacionBodega['cantidades'];
     			$arrayVolumen = $informacionBodega['volumen'];
     			
+    		
     			foreach($arrayVolumen as $idBodega => $cantidad){
     				if(isset($volumenBodegas[$idBodega])){
     					$volumenBodegas[$idBodega] += $cantidad;
@@ -451,9 +452,9 @@ class EShoppingCart extends CMap {
     				}
     				
     				if(isset($valorDeclaradoBodega[$idBodega])){
-    					$valorDeclaradoBodega[$idBodega] += $cantidad * $position->getPrice();
+    					$valorDeclaradoBodega[$idBodega] += $arrayCantidades[$idBodega] * $position->getPrice();
     				} else {
-    					$valorDeclaradoBodega[$idBodega] = $cantidad * $position->getPrice();
+    					$valorDeclaradoBodega[$idBodega] = $arrayCantidades[$idBodega] * $position->getPrice();
     				}
     				
     				$arrayFletes[$idBodega]['volumen'] = $volumenBodegas[$idBodega];

@@ -478,7 +478,58 @@ class AdminController extends ControllerOperator {
 
         if ($opcion == "pedido") {
             $params['vista'] = "_adminPedido";
-        } else if ($opcion == "cliente") {
+        } else if($opcion == "envio"){
+        	$params['vista'] = "_envioPedido";
+        	
+        	$comprasDespachoCedi = ComprasDespachoCedi::model()->findAll(array(
+        			'condition' => 'idCompra =:idCompra',
+        			'params' => array(
+        					'idCompra' => $pedido
+        			)
+        	));
+        	 
+        	$arrayTrack = array();
+        	foreach($comprasDespachoCedi as $comprasRastreo){
+        		$arrayTrack[$comprasRastreo->idBodega]['Despacho'] =  $comprasRastreo;
+        	
+        		if($comprasRastreo->numeroGuia != null){
+        			$arrayTrack[$comprasRastreo->idBodega]['Despacho'] =  $comprasRastreo;
+        	
+        			$url = "http://sismilenio.servientrega.com.co/wsrastreoenvios/wsrastreoenvios.asmx?WSDL";
+        	
+        			$client = new \SoapClient($url, array(
+        					"trace" => 1,
+        					"exceptions" => 0,
+        					'cache_wsdl' => WSDL_CACHE_NONE
+        			));
+        	
+        			$paramReq = "<ns1:NumeroGuia>$comprasRastreo->numeroGuia</ns1:NumeroGuia>";
+        			$parm[] = new SoapVar($paramReq, XSD_ANYXML);
+        			$service = $client->ConsultarGuiaExterno(new SoapVar($parm, SOAP_ENC_OBJECT));
+        	
+        			if(isset($service->ConsultarGuiaExternoResult->Mov->InformacionMov)){
+        				$arrayTrack[$comprasRastreo->idBodega]['Rastreo'] =  $service->ConsultarGuiaExternoResult->Mov->InformacionMov;
+        			}
+        	
+        		}
+        	
+        	}
+        	
+        	$productosBodega = ComprasUnidadesBodega::model()->findAll(array(
+        			'with' => array('objProducto','objBodega'),
+        			'condition' => 'idCompra =:idCompra',
+        			'params' => array(
+        					':idCompra' => $pedido
+        			)
+        	));
+        	
+        	$params['params']['productosBodega'] = $productosBodega;
+        	$params['params']['arrayTrack'] = $arrayTrack;
+        	 
+        }
+        
+        
+        else if ($opcion == "cliente") {
             $params['vista'] = "_clienteDespacho";
             $listDirecciones = DireccionesDespacho::model()->findAll(array(
                 'with' => 'objCiudad',
@@ -858,6 +909,43 @@ class AdminController extends ControllerOperator {
     	}
     }
 
+    
+    public function actionActualizarGuia(){
+    	$objDespachoCedi = ComprasDespachoCedi::model()->findByPk($_POST['idCompraDespacho']);
+    	$objDespachoCedi->numeroGuia = $_POST['numeroGuia'];
+    	if($objDespachoCedi->save()){
+    		echo CJSON::encode( array(
+    				'result' => 'ok',
+    				'response' => 'Actualizado'
+    		));
+    	}else{
+    		echo CJSON::encode( array(
+    				'result' => 'error',
+    				'response' => 'No fue actualizado'
+    		));
+    	}
+    }
+    
+    public function actionModalAsistida(){
+    	$compra = Yii::app()->getRequest()->getPost('compra');
+    	$producto = Yii::app()->getRequest()->getPost('producto');
+    	
+    	$puntosVenta = ComprasPuntoVentaAsistida::model()->findAll( array(
+    			'condition' => ' idCompra=:compra AND codigoProducto =:producto',
+    			'params' => array(
+    					'compra' => $compra,
+    					'producto' => $producto
+    			)
+    	));
+    	
+    	echo CJSON::encode( array(
+    			'result' => 'ok', 
+    			'response' => $this->renderPartial('_modalPuntosVenta', array(
+    			'puntosVenta' => $puntosVenta
+    	), true, false)));
+    	
+    }
+    
     
     /********* borrar **********/
     public function actionSer(){

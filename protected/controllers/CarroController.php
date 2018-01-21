@@ -3971,6 +3971,15 @@ class CarroController extends Controller {
             	
             	foreach($arrayFlete as $idBodega => $positionBodega){
             		
+            		$objBodegaCiudad = Flete::model()->find(
+            				array(
+            						'condition' => 'codigoCiudad =:codigoCiudad AND bodegaVirtual =:bodega',
+            						'params' => array(
+            								'codigoCiudad' => $this->objSectorCiudad->codigoCiudad,
+            								'bodega' => $idBodega
+            						)
+            				));
+            		
             		$compraDespacho = new ComprasDespachoCedi();
             		$compraDespacho->idCompra = $objCompra->idCompra;
             		$compraDespacho->idOperadorLogistico = $positionBodega['operadorLogistico'];
@@ -3978,8 +3987,12 @@ class CarroController extends Controller {
             		$compraDespacho->codigoCiudad = $objCompra->codigoCiudad;
             		$compraDespacho->valorDeclaradoTotal = $positionBodega['valorDeclarado'];
             		$compraDespacho->valorFlete = $positionBodega['valorFlete'];
-            		
             		$compraDespacho->valorVolumetrico = $positionBodega['valorVolumetrico'];
+            		$compraDespacho->tiempoMinimoEntrega = $objBodegaCiudad->tiempoEntregaInicial;
+            		$compraDespacho->tiempoMaximoEntrega = $objBodegaCiudad->tiempoEntregaFinal; 
+            		$compraDespacho->fechaMinimaEntrega = $objBodegaCiudad->getFechaMinimaEntrega();
+            		$compraDespacho->fechaMaximaEntrega = $objBodegaCiudad->getFechaMaximaEntrega();
+            		
             		
             		if(!$compraDespacho->save()){
             			throw new Exception("Error al guardar volumetría: " . $compraDespacho->validateErrorsResponse());
