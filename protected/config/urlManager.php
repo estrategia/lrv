@@ -139,6 +139,7 @@ return array(
         'mundo-klim1-deslactosado' => 'publicidad/contenido/nombre/mundo-klim1-deslactosado',
         'mundo-klim3-fortilearn' => 'publicidad/contenido/nombre/mundo-klim3-fortilearn',
         'mundo-klim-fortigrow' => 'publicidad/contenido/nombre/mundo-klim-fortigrow',
+        'promocion-tinte-happy-new-look' => 'publicidad/contenido/nombre/henkel',
          // Fin links campañas
 
         // REST patterns

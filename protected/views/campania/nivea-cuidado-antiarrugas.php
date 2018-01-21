@@ -4,73 +4,74 @@ $this->metaTags = "
 <meta http-equiv='X-UA-Compatible' content='IE=edge'>
 <meta name='description' content='La nueva crema Nivea Cuidado Antiarrugas, ayuda a prevenir la aparición de líneas finas y arrugas en la piel de tu rostro. Sin sensación grasosa.'>
 <meta name='keywords' content='crema antiarrugas, mejor crema antiarrugas, cremas antiarrugas efectivas.'>
-  <style>
-    @font-face {font-family:HelveticaNeueLight; src: url(" . Yii::app()->request->baseUrl . "/images/contenido/pantene/fonts/HelveticaNeueLight.ttf);}
-    @font-face {font-family:HelveticaNeue-BlackCond; src: url(" . Yii::app()->request->baseUrl . "/images/contenido/pantene/fonts/HelveticaNeue-BlackCond.otf);}
-    @font-face {font-family:HelveticaNeueItalic; src: url(" . Yii::app()->request->baseUrl . "/images/contenido/pantene/fonts/HelveticaNeueItalic.ttf);}
-    @font-face {font-family:HelveticaNeueBold; src: url(" . Yii::app()->request->baseUrl . "/images/contenido/pantene/fonts/HelveticaNeueBold.ttf);}
-    .space-1 {height: 0px !important;}
-    .img-responsive-m {width:100%;}
-    .programa-hora {font-size: 15px;}
-    .programa-hora .span1 {font-family:HelveticaNeueLight;color:#363636;}
-    .programa-hora .span2 {font-family:HelveticaNeue-BlackCond;color: #BF1A24;font-size: 16px;letter-spacing: 1px;margin-left2px;}
-    .programa-hora .span3{color:#717175;font-family:HelveticaNeueItalic;font-weight: bold;}
-    .programa-hora .content {display: flex;width: 100%;flex-direction: row;max-width: 100%;flex-wrap: wrap;margin: 0 auto;}
-    .programa-hora .content .seccion1 {padding-left: 100px;width: 60%;background-color: #C9C8C6;position: relative;}
-    .programa-hora .content .seccion1:after {position: absolute;right: 0px;content: '';height: 0px;border-style: solid;border-width: 0 0 23px 28px;border-color: #BF1A24 #BF1A24 #BF1A24 #C9C8C6;top: 0;}
-    .programa-hora .content .seccion2 {width: 40%;background-color: #BF1A24;padding-right: 100px;}
-    .programa-hora .content .seccion1-m {background-color: #C9C8C6;padding: 15px;text-align: center;}
-    .programa-hora .content .seccion2-m {background-color: #BF1A24;width: 100%;padding: 15px;}
-    .agradecimiento {font-family: HelveticaNeueLight;color: #fff;text-align: center;font-size: 16px;}
-    .agradecimiento span {font-family:HelveticaNeue-BlackCond;letter-spacing:1px;}
+<style>
+  @font-face {font-family:HelveticaNeueLight; src: url(" . Yii::app()->request->baseUrl . "/images/contenido/pantene/fonts/HelveticaNeueLight.ttf);}
+  @font-face {font-family:HelveticaNeue-BlackCond; src: url(" . Yii::app()->request->baseUrl . "/images/contenido/pantene/fonts/HelveticaNeue-BlackCond.otf);}
+  @font-face {font-family:HelveticaNeueItalic; src: url(" . Yii::app()->request->baseUrl . "/images/contenido/pantene/fonts/HelveticaNeueItalic.ttf);}
+  @font-face {font-family:HelveticaNeueBold; src: url(" . Yii::app()->request->baseUrl . "/images/contenido/pantene/fonts/HelveticaNeueBold.ttf);}
+  .space-1 {height: 0px !important;}
+  .img-responsive-m {width:100%;}
+  .programa-hora {font-size: 15px;}
+  .programa-hora .span1 {font-family:HelveticaNeueLight;color:#363636;}
+  .programa-hora .span2 {font-family:HelveticaNeue-BlackCond;color: #BF1A24;font-size: 16px;letter-spacing: 1px;margin-left2px;}
+  .programa-hora .span3{color:#717175;font-family:HelveticaNeueItalic;font-weight: bold;}
+  .programa-hora .content {display: flex;width: 100%;flex-direction: row;max-width: 100%;flex-wrap: wrap;margin: 0 auto;}
+  .programa-hora .content .seccion1 {padding-left: 100px;width: 60%;background-color: #C9C8C6;position: relative;}
+  .programa-hora .content .seccion1:after {position: absolute;right: 0px;content: '';height: 0px;border-style: solid;border-width: 0 0 23px 28px;border-color: #BF1A24 #BF1A24 #BF1A24 #C9C8C6;top: 0;}
+  .programa-hora .content .seccion2 {width: 40%;background-color: #BF1A24;padding-right: 100px;}
+  .programa-hora .content .seccion1-m {background-color: #C9C8C6;padding: 15px;text-align: center;}
+  .programa-hora .content .seccion2-m {background-color: #BF1A24;width: 100%;padding: 15px;}
+  .agradecimiento {font-family: HelveticaNeueLight;color: #fff;text-align: center;font-size: 16px;}
+  .agradecimiento span {font-family:HelveticaNeue-BlackCond;letter-spacing:1px;}
 
-    @font-face {font-family:NiveaLightOT; src: url(" . Yii::app()->request->baseUrl . "/images/contenido/nivea/fonts/NiveaLightOT.otf);}
-    @font-face {font-family:NiveaBoldOT; src: url(" . Yii::app()->request->baseUrl . "/images/contenido/nivea/fonts/NiveaBoldOT.otf);}
-    .bg-intro { background-color:#F0F3F8;padding: 60px 0;}
-    .main-container {width: 100%; max-width: 1100px; margin: auto;}
-    .linea-nueva {display: flex;padding: 0 70px 0;justify-content: center;align-items: center;margin: 25px auto 0;}
-    .intro {display: flex; flex-direction: row; flex-wrap: wrap; justify-content: space-between;padding: 0 70px 0;}
-    .intro .imagen-producto,
-    .intro .descripcion-producto {width:50%;}
-    .descripcion-producto .titulo-principal {font-size: 30px;}
-    .sub-title {font-family: NiveaBoldOT; color: #00154E; font-size: 17px;}
-    .lista {font-family: NiveaLightOT;color: #00154E; padding-inline-start: 15px;font-size: 12px;}
-    .lista  li {font-size: 14px;margin-bottom:15px;}
-    .lista span{font-family: NiveaBoldOT;}
-    .imagen-producto .img-producto {width: 100%; margin: 0 auto; transition: all 0.4s ease-in-out 0s;}
-    .imagen-producto:hover .img-producto {transform: translateY(-5px);-ms-transform: translateY(-5px);-webkit-transform: translateY(-5px);}
-    .imagen-producto .btn-comprar {margin: 40px auto 0; display: block;}
-    .linea-nueva .nuevo {width: 120px;margin-right:20px;}
-    .linea-nueva h3 {font-family: NiveaLightOT;color: #00154E;font-size: 35px;}
-    .linea-nueva h3 span {font-family: NiveaBoldOT;}
-    .intro .imagen-producto {padding-bottom: 30px; background-image:url(".Yii::app()->request->baseUrl."/images/contenido/nivea/sombra.png); background-repeat: no-repeat; background-position: center 58%;}
-    .contenedor-productos {padding: 0 160px 0;margin: 40px auto;display: flex; flex-direction: row; flex-wrap: wrap; justify-content: space-between;}
-    .titulo-principal, .intro-texto, .nombre {font-family:NiveaLightOT; color:#00154E;}
-    .titulo-principal span, .intro-texto span, .nombre span, .ver-mas  {font-family:NiveaBoldOT; }
-    .intro-texto {font-size: 16px;}
-    .imagen-producto {padding-bottom: 30px; background-image:url(".Yii::app()->request->baseUrl."/images/contenido/nivea/sombra.png); background-repeat: no-repeat; background-position: center 94%;}
-    .producto {text-align: center;padding: 50px 20px 30px;width: 45%;; -webkit-box-shadow: 0px 0px 7px 1px rgb(159, 159, 159); -moz-box-shadow: 0px 0px 7px 1px rgb(159, 159, 159); box-shadow: 0px 0px 7px 1px rgb(159, 159, 159); margin: 0px 5px 0px; border-radius: 25px;
-              background: rgba(255,255,255,1);
-              background: -moz-linear-gradient(top, rgba(255,255,255,1) 0%, rgba(255,255,255,1) 58%, rgba(240,240,240,1) 76%, rgba(255,255,255,1) 93%, rgba(255,255,255,1) 100%);
-              background: -webkit-gradient(left top, left bottom, color-stop(0%, rgba(255,255,255,1)), color-stop(58%, rgba(255,255,255,1)), color-stop(76%, rgba(240,240,240,1)), color-stop(93%, rgba(255,255,255,1)), color-stop(100%, rgba(255,255,255,1)));
-              background: -webkit-linear-gradient(top, rgba(255,255,255,1) 0%, rgba(255,255,255,1) 58%, rgba(240,240,240,1) 76%, rgba(255,255,255,1) 93%, rgba(255,255,255,1) 100%);
-              background: -o-linear-gradient(top, rgba(255,255,255,1) 0%, rgba(255,255,255,1) 58%, rgba(240,240,240,1) 76%, rgba(255,255,255,1) 93%, rgba(255,255,255,1) 100%);
-              background: -ms-linear-gradient(top, rgba(255,255,255,1) 0%, rgba(255,255,255,1) 58%, rgba(240,240,240,1) 76%, rgba(255,255,255,1) 93%, rgba(255,255,255,1) 100%);
-              background: linear-gradient(to bottom, rgba(255,255,255,1) 0%, rgba(255,255,255,1) 58%, rgba(240,240,240,1) 76%, rgba(255,255,255,1) 93%, rgba(255,255,255,1) 100%);
-              filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#ffffff', endColorstr='#ffffff', GradientType=0 );
-    }
-    .producto:hover .img-producto {transform: translateY(-5px);-ms-transform: translateY(-5px);-webkit-transform: translateY(-5px);}
-    .imagen-producto .img-producto {transition: all 0.4s ease-in-out 0s;}
-    .descripcion .texto {font-family:NiveaLightOT; color:#002D64;font-size: 12px;margin: 15px auto;}
-    .descripcion .nombre {font-size: 16px;letter-spacing: 1px;line-height: 18px;}
-    .descripcion .nombre span {font-size: 18px;}
-    .ver-mas { color:#002D64;font-size:16px;text-decoration: underline;}
-    .btn-comprar {  width: 45%;margin: 25px auto 0;}
-    .precioproductos-antes{margin:20px auto 0;font-family:NiveaBoldOT; text-decoration: line-through;text-align.center;color: #264A7E;}
-    .precioproductos{font-size: 16px;margin:0;font-family:NiveaBoldOT;text-align.center;color: #264A7E; }
-    .owl-pagination {margin-top: 20px;}
-    .owl-theme .owl-controls .owl-page span {background-color: #264A7E !important;}
-  </style>
+  @font-face {font-family:NiveaLightOT; src: url(" . Yii::app()->request->baseUrl . "/images/contenido/nivea/fonts/NiveaLightOT.otf);}
+  @font-face {font-family:NiveaBoldOT; src: url(" . Yii::app()->request->baseUrl . "/images/contenido/nivea/fonts/NiveaBoldOT.otf);}
+  .bg-intro { background-color:#F0F3F8;padding: 60px 0;}
+  .main-container {width: 100%; max-width: 1100px; margin: auto;}
+  .linea-nueva {display: flex;padding: 0 70px 0;justify-content: center;align-items: center;margin: 25px auto 0;}
+  .intro {display: flex; flex-direction: row; flex-wrap: wrap; justify-content: space-between;padding: 0 70px 0;}
+  .intro .imagen-producto,
+  .intro .descripcion-producto {width:50%;}
+  .descripcion-producto .titulo-principal {font-size: 30px;}
+  .sub-title {font-family: NiveaBoldOT; color: #00154E; font-size: 17px;}
+  .lista {font-family: NiveaLightOT;color: #00154E; padding-inline-start: 15px;font-size: 12px;}
+  .lista  li {font-size: 14px;margin-bottom:15px;}
+  .lista span{font-family: NiveaBoldOT;}
+  .imagen-producto .img-producto {width: 100%; margin: 0 auto; transition: all 0.4s ease-in-out 0s;}
+  .imagen-producto:hover .img-producto {transform: translateY(-5px);-ms-transform: translateY(-5px);-webkit-transform: translateY(-5px);}
+  .imagen-producto .btn-comprar {margin: 55px auto 0; display: block;}
+  .linea-nueva .nuevo {width: 120px;margin-right:20px;}
+  .linea-nueva h3 {font-family: NiveaLightOT;color: #00154E;font-size: 35px;}
+  .linea-nueva h3 span {font-family: NiveaBoldOT;}
+  .intro .imagen-producto {padding-bottom: 30px; background-image:url(".Yii::app()->request->baseUrl."/images/contenido/nivea/sombra.png); background-repeat: no-repeat; background-position: center 66%;}
+  .contenedor-productos {margin: 40px auto;display: flex; flex-direction: row;  justify-content: space-between;} /* flex-wrap: wrap;*/
+  .titulo-principal, .intro-texto, .nombre {font-family:NiveaLightOT; color:#00154E;}
+  .intro-texto {font-size: 16px;}
+  .titulo-principal span, .intro-texto span, .nombre span, .ver-mas  {font-family:NiveaBoldOT; }
+  .imagen-producto {padding-bottom: 30px; background-image:url(".Yii::app()->request->baseUrl."/images/contenido/nivea/sombra.png); background-repeat: no-repeat; background-position: center 94%;}
+  .producto {margin: 0px 20px !important;text-align: center;padding: 50px 20px 30px;width: 45%;; -webkit-box-shadow: 0px 0px 7px 1px rgb(159, 159, 159); -moz-box-shadow: 0px 0px 7px 1px rgb(159, 159, 159); box-shadow: 0px 0px 7px 1px rgb(159, 159, 159); margin: 0px 5px 0px; border-radius: 25px;
+            background: rgba(255,255,255,1);
+            background: -moz-linear-gradient(top, rgba(255,255,255,1) 0%, rgba(255,255,255,1) 58%, rgba(240,240,240,1) 76%, rgba(255,255,255,1) 93%, rgba(255,255,255,1) 100%);
+            background: -webkit-gradient(left top, left bottom, color-stop(0%, rgba(255,255,255,1)), color-stop(58%, rgba(255,255,255,1)), color-stop(76%, rgba(240,240,240,1)), color-stop(93%, rgba(255,255,255,1)), color-stop(100%, rgba(255,255,255,1)));
+            background: -webkit-linear-gradient(top, rgba(255,255,255,1) 0%, rgba(255,255,255,1) 58%, rgba(240,240,240,1) 76%, rgba(255,255,255,1) 93%, rgba(255,255,255,1) 100%);
+            background: -o-linear-gradient(top, rgba(255,255,255,1) 0%, rgba(255,255,255,1) 58%, rgba(240,240,240,1) 76%, rgba(255,255,255,1) 93%, rgba(255,255,255,1) 100%);
+            background: -ms-linear-gradient(top, rgba(255,255,255,1) 0%, rgba(255,255,255,1) 58%, rgba(240,240,240,1) 76%, rgba(255,255,255,1) 93%, rgba(255,255,255,1) 100%);
+            background: linear-gradient(to bottom, rgba(255,255,255,1) 0%, rgba(255,255,255,1) 58%, rgba(240,240,240,1) 76%, rgba(255,255,255,1) 93%, rgba(255,255,255,1) 100%);
+            filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#ffffff', endColorstr='#ffffff', GradientType=0 );
+  }
+  .producto:hover .img-producto {transform: translateY(-5px);-ms-transform: translateY(-5px);-webkit-transform: translateY(-5px);}
+  .imagen-producto .img-producto {transition: all 0.4s ease-in-out 0s;}
+  .descripcion .texto {font-family:NiveaLightOT; color:#002D64;font-size: 12px;margin: 15px auto;}
+  .descripcion .nombre {font-size: 16px;letter-spacing: 1px;line-height: 18px;}
+  .descripcion .nombre span {font-size: 18px;}
+  .botonback{    padding: 200px 0px;}
+  .ver-mas { color:#002D64;font-size:16px;text-decoration: underline;}
+  .btn-comprar {  width: 45%;margin: 25px auto 0;}
+  .precioproductos-antes{margin:20px auto 0;font-family:NiveaBoldOT; text-decoration: line-through;text-align.center;color: #264A7E;}
+  .precioproductos{font-size: 16px;margin:0;font-family:NiveaBoldOT;text-align.center;color: #264A7E; }
+  .owl-pagination {margin-top: 20px;}
+  .owl-theme .owl-controls .owl-page span {background-color: #264A7E !important;}
+</style>
 ";
 ?>
 <!--Consulta el precio de los productos-->
@@ -158,6 +159,18 @@ $this->metaTags = "
           </div>
         </div>
       </div>
+      <div class="item" style="padding: 17px 0 ">
+        <div class="producto " style="padding:50px 20px 30px;width: 72% !important;"  >
+          <a data-ajax="false" href="<?= Yii::app()->request->baseUrl ?>/nivea-cuidado-facial" >
+            <div class="botonback descripcion" >
+
+
+              <p class="nombre">CONOCE<br>TODA LA NUEVA<br>LÍNEA NIVEA<br><span>CUIDADO FACIAL</span></p>
+
+            </div>
+            </a>
+        </div>
+      </div>
     </div>
   </div>
 </div>
@@ -228,6 +241,16 @@ $this->metaTags = "
     <h3>CONOZCA TODA LA LÍNEA NIVEA <span>CUIDADO FACIAL</span></h3>
   </div>
   <div class="contenedor-productos">
+    <div class="producto col-sm-4 col-md-4" >
+      <a href="<?= Yii::app()->request->baseUrl ?>/nivea-cuidado-facial" >
+        <div class="botonback descripcion" >
+
+
+          <p class="nombre">CONOCE<br>TODA LA NUEVA<br>LÍNEA NIVEA<br><span>CUIDADO FACIAL</span></p>
+
+        </div>
+        </a>
+    </div>
     <div class="producto">
       <div class="imagen-producto">
         <img class="img-responsive img-producto" src="<?= Yii::app()->request->baseUrl ?>/images/contenido/nivea/nivea-aclarado.png" alt="Nivea cuidado aclarado natural">

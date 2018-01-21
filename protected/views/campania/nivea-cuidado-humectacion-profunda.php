@@ -44,12 +44,12 @@ $this->metaTags = "
     .linea-nueva h3 {font-family: NiveaLightOT;color: #00154E;font-size: 35px;}
     .linea-nueva h3 span {font-family: NiveaBoldOT;}
     .intro .imagen-producto {padding-bottom: 30px; background-image:url(".Yii::app()->request->baseUrl."/images/contenido/nivea/sombra.png); background-repeat: no-repeat; background-position: center 66%;}
-    .contenedor-productos {padding: 0 160px 0;margin: 40px auto;display: flex; flex-direction: row; flex-wrap: wrap; justify-content: space-between;}
+    .contenedor-productos {margin: 40px auto;display: flex; flex-direction: row;  justify-content: space-between;} /* flex-wrap: wrap;*/
     .titulo-principal, .intro-texto, .nombre {font-family:NiveaLightOT; color:#00154E;}
     .intro-texto {font-size: 16px;}
     .titulo-principal span, .intro-texto span, .nombre span, .ver-mas  {font-family:NiveaBoldOT; }
     .imagen-producto {padding-bottom: 30px; background-image:url(".Yii::app()->request->baseUrl."/images/contenido/nivea/sombra.png); background-repeat: no-repeat; background-position: center 94%;}
-    .producto {text-align: center;padding: 50px 20px 30px;width: 45%;; -webkit-box-shadow: 0px 0px 7px 1px rgb(159, 159, 159); -moz-box-shadow: 0px 0px 7px 1px rgb(159, 159, 159); box-shadow: 0px 0px 7px 1px rgb(159, 159, 159); margin: 0px 5px 0px; border-radius: 25px;
+    .producto {margin: 0px 20px !important;text-align: center;padding: 50px 20px 30px;width: 45%;; -webkit-box-shadow: 0px 0px 7px 1px rgb(159, 159, 159); -moz-box-shadow: 0px 0px 7px 1px rgb(159, 159, 159); box-shadow: 0px 0px 7px 1px rgb(159, 159, 159); margin: 0px 5px 0px; border-radius: 25px;
               background: rgba(255,255,255,1);
               background: -moz-linear-gradient(top, rgba(255,255,255,1) 0%, rgba(255,255,255,1) 58%, rgba(240,240,240,1) 76%, rgba(255,255,255,1) 93%, rgba(255,255,255,1) 100%);
               background: -webkit-gradient(left top, left bottom, color-stop(0%, rgba(255,255,255,1)), color-stop(58%, rgba(255,255,255,1)), color-stop(76%, rgba(240,240,240,1)), color-stop(93%, rgba(255,255,255,1)), color-stop(100%, rgba(255,255,255,1)));
@@ -64,6 +64,7 @@ $this->metaTags = "
     .descripcion .texto {font-family:NiveaLightOT; color:#002D64;font-size: 12px;margin: 15px auto;}
     .descripcion .nombre {font-size: 16px;letter-spacing: 1px;line-height: 18px;}
     .descripcion .nombre span {font-size: 18px;}
+    .botonback{    padding: 200px 0px;}
     .ver-mas { color:#002D64;font-size:16px;text-decoration: underline;}
     .btn-comprar {  width: 45%;margin: 25px auto 0;}
     .precioproductos-antes{margin:20px auto 0;font-family:NiveaBoldOT; text-decoration: line-through;text-align.center;color: #264A7E;}
@@ -117,7 +118,7 @@ $this->metaTags = "
   </div>
   <div class="contenedor-productos" style="flex-direction: column;margin: 20px auto;padding: 0 20px;">
     <div id="owl-productodetalle-inicio" class="owl-carousel owl-theme owl-productodetalle">
-      <div class="item" style="padding: 17px 0">
+        <div class="item" style="padding: 17px 0">
         <div class="producto" style="width: 75%;margin: 0 auto;">
           <div class="imagen-producto">
             <img class="img-responsive-m img-producto" src="<?= Yii::app()->request->baseUrl ?>/images/contenido/nivea/nivea-aclarado.png" alt="Nivea cuidado aclarado natural">
@@ -155,6 +156,20 @@ $this->metaTags = "
           </div>
         </div>
       </div>
+
+      <div class="item" style="padding: 17px 0 ">
+        <div class="producto " style="padding:50px 20px 30px;width: 72% !important;"  >
+          <a data-ajax="false" href="<?= Yii::app()->request->baseUrl ?>/nivea-cuidado-facial" >
+            <div class="botonback descripcion" >
+
+
+              <p class="nombre">CONOCE<br>TODA LA NUEVA<br>LÍNEA NIVEA<br><span>CUIDADO FACIAL</span></p>
+
+            </div>
+            </a>
+        </div>
+      </div>
+
     </div>
   </div>
 </div>
@@ -221,7 +236,17 @@ $this->metaTags = "
    <h3>CONOZCA TODA LA LÍNEA NIVEA <span>CUIDADO FACIAL</span></h3>
   </div>
   <div class="contenedor-productos">
-    <div class="producto">
+    <div class="producto col-sm-4 col-md-4" >
+      <a href="<?= Yii::app()->request->baseUrl ?>/nivea-cuidado-facial" >
+        <div class="botonback descripcion" >
+
+
+          <p class="nombre">CONOCE<br>TODA LA NUEVA<br>LÍNEA NIVEA<br><span>CUIDADO FACIAL</span></p>
+
+        </div>
+        </a>
+    </div>
+    <div class="producto col-sm-4 col-md-4">
         <div class="imagen-producto">
           <img class="img-responsive img-producto" src="<?= Yii::app()->request->baseUrl ?>/images/contenido/nivea/nivea-aclarado.png" alt="Nivea cuidado aclarado natural">
         </div>
@@ -238,7 +263,7 @@ $this->metaTags = "
           </a>
         </div>
     </div>
-      <div class="producto">
+      <div class="producto col-sm-4 col-md-4">
         <div class="imagen-producto">
           <img class="img-responsive img-producto" src="<?= Yii::app()->request->baseUrl ?>/images/contenido/nivea/nivea-anti-arrugas.png" alt="Nivea Anti-arrugas">
         </div>
