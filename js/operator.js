@@ -1249,3 +1249,128 @@ $(document).on('click', "a[data-role='eliminar-categoria-promocion']", function(
         }
     });
 });
+
+
+$(document).on('click', "a[data-role='actualizar-guia']", function() {
+    var despacho = $(this).attr("data-guia");
+    var numeroGuia = $("#guia-"+despacho).val();
+    $.ajax({
+        type: 'POST',
+        async: true,
+        url: requestUrl + '/callcenter/admin/actualizarGuia',
+        data: {idCompraDespacho: despacho, numeroGuia: numeroGuia },
+        dataType: 'json',
+        beforeSend: function() {
+            Loading.show();
+        },
+        complete: function(data) {
+            Loading.hide();
+        },
+        success: function(data) {
+            if (data.result == "ok") {
+                bootbox.alert("Guia actualizada");
+                $("#guia-"+despacho).html(numeroGuia);
+                $("#update-guia-"+despacho).css('display','none');
+                
+            } else if (data.result == "error") {
+                bootbox.alert(data.response);
+            }
+        },
+        error: function(jqXHR, textStatus, errorThrown) {
+
+        }
+    });
+});
+
+$(document).on('click', "button[data-role='ver-cantidad-vap']", function() {
+    var compra = $(this).attr("data-compra");
+    var producto = $(this).attr("data-producto");
+    $.ajax({
+        type: 'POST',
+        async: true,
+        url: requestUrl + '/callcenter/admin/modalAsistida',
+        data: {compra: compra, producto: producto},
+        dataType: 'json',
+        beforeSend: function() {
+        	 $('#modal-pdv').remove();
+             Loading.show();
+        },
+        complete: function(data) {
+            Loading.hide();
+        },
+        success: function(data) {
+            if (data.result == "ok") {
+            	$('#container').append(data.response);
+                $('#modal-pdv').modal('show');
+            } else if (data.result == "error") {
+                bootbox.alert(data.response);
+            }
+        },
+        error: function(jqXHR, textStatus, errorThrown) {
+        	 bootbox.alert(data.response);
+        }
+    });
+});
+
+
+$(document).on('click', "button[data-role='modificarpedidovap']", function () {
+    var action = $(this).attr('data-action');
+    var data = {accion: action};
+
+   
+    if (action == 11) {
+        var item = $(this).attr('data-item');
+        var cantidadU = parseInt($('#cantidad-item-unidad-vap-' + item).val());
+        
+        var cantidadTotal = 0;
+        if (isNaN(cantidadU)) {
+            cantidadU = 0;
+        }
+        
+        data['cantidad'] = cantidadU;
+        data['item'] = item;
+        console.log(data);
+    } else if (action == 12) {
+        var item = $(this).attr('data-item');
+        var cantidadF = parseInt($('#cantidad-item-fraccion-vap-' + item).val());
+        if (isNaN(cantidadF)) {
+            cantidadF = -1;
+        } else if (cantidadF < 0) {
+            //   cantidadF = 0;
+        }
+        data['cantidad'] = cantidadF;
+        data['item'] = item;
+    }
+
+    $.ajax({
+        type: 'POST',
+        dataType: 'json',
+        async: true,
+        url: requestUrl + '/callcenter/pedido/modificarVap',
+        data: data,
+        beforeSend: function () {
+        	 
+            Loading.show();
+        },
+        success: function (data) {
+            if (data.result === "ok") {
+                $('#div-detalle-pedido').html(data.response.htmlDetalle);
+                $('#div-encabezado-pedido').html(data.response.htmlEncabezado);
+                $('#modal-pdv').modal('hide');
+                $('#modal-pdv').remove();
+                $('#container').append(data.modal);
+                $('#modal-pdv').modal('show');
+                Loading.hide();
+                
+            } else {
+                Loading.hide();
+                bootbox.alert(data.response);
+            }
+        },
+        error: function (jqXHR, textStatus, errorThrown) {
+            Loading.hide();
+            bootbox.alert('Error: ' + errorThrown);
+        }
+    });
+});
+
