@@ -370,9 +370,9 @@ class EShoppingCart extends CMap {
         }
         $this->setCodigoPerfil($codigoPerfil);
         
-        if($this->shipping<=0 && $this->isUnit()){
+        if($this->shipping<=0 && $this->isUnit() && $this->hasShopProducts()){
       		$this->CalculateShipping();
-        }else if(!$this->isUnit()){
+        }else if(!$this->isUnit() || !$this->hasShopProducts()){
         	$this->shipping = 0;
         }
         
@@ -699,7 +699,7 @@ class EShoppingCart extends CMap {
             $this->onUpdatePoistion(new CEvent($this));
             $this->saveState();
             
-            if(!$this->isUnit()){
+            if(!$this->isUnit() || !$this->hasShopProducts()){
             	$this->shipping = 0;
             }
             
@@ -998,5 +998,20 @@ class EShoppingCart extends CMap {
     	parent::clear();
     }
     
+    public function getMixedCount()
+    {
+        $count = 0;
+        foreach ($this as $position) {
+            if ($position->isProduct() && ($position->isInventoryProduct() || $position->getQuantityStored())) {
+                $count++;
+            }
+        }
+        return $count;
+    }
+
+    public function hasShopProducts()
+    {
+        return $this->getCount() != $this->getMixedCount();
+    }
     
 }
