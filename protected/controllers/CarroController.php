@@ -3995,7 +3995,7 @@ class CarroController extends Controller {
             		
             		
             		if(!$compraDespacho->save()){
-            			throw new Exception("Error al guardar volumetría: " . $compraDespacho->validateErrorsResponse());
+            			throw new Exception("Error al guardar volumetr?: " . $compraDespacho->validateErrorsResponse());
             		}
             	}
             	
@@ -4259,6 +4259,9 @@ class CarroController extends Controller {
         // echo "tiempo: " . Yii::app()->shoppingCart->getDelivery();
         //echo "<br/>";
         echo "servicio: " . Yii::app()->shoppingCart->getShipping();
+        echo "<br/>";
+        // echo "Tiene Productos de tienda: " . Yii::app()->shoppingCart->hasShopProducts();
+        var_dump(Yii::app()->shoppingCart->hasShopProducts());
         echo "<br/>";
 
 
