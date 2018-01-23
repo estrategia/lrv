@@ -1,24 +1,23 @@
 <?php
 
 /**
- * This is the model class for table "m_BodegaVirtual".
+ * This is the model class for table "t_TareasPerfiles".
  *
- * The followings are the available columns in table 'm_BodegaVirtual':
- * @property integer $idBodega
- * @property string $nombreBodega
+ * The followings are the available columns in table 't_TareasPerfiles':
+ * @property integer $idTareaPerfil
+ * @property string $rutaArchivo
+ * @property integer $tipoTarea
  * @property integer $estado
- *
- * The followings are the available model relations:
- * @property MCiudad[] $mCiudads
+ * @property string $fechaRegistro
  */
-class BodegaVirtual extends CActiveRecord
+class TareasPerfiles extends CActiveRecord
 {
 	/**
 	 * @return string the associated database table name
 	 */
 	public function tableName()
 	{
-		return 'm_BodegaVirtual';
+		return 't_TareasPerfiles';
 	}
 
 	/**
@@ -29,12 +28,12 @@ class BodegaVirtual extends CActiveRecord
 		// NOTE: you should only define rules for those attributes that
 		// will receive user inputs.
 		return array(
-			array('nombreBodega', 'required'),
-			array('estado', 'numerical', 'integerOnly'=>true),
-			array('nombreBodega', 'length', 'max'=>64),
+			array('rutaArchivo, tipoTarea, estado', 'required'),
+			array('tipoTarea, estado', 'numerical', 'integerOnly'=>true),
+			array('rutaArchivo', 'length', 'max'=>256),
 			// The following rule is used by search().
 			// @todo Please remove those attributes that should not be searched.
-			array('idBodega, nombreBodega, estado', 'safe', 'on'=>'search'),
+			array('idTareaPerfil, rutaArchivo, tipoTarea, estado, fechaRegistro', 'safe', 'on'=>'search'),
 		);
 	}
 
@@ -46,9 +45,6 @@ class BodegaVirtual extends CActiveRecord
 		// NOTE: you may need to adjust the relation name and the related
 		// class name for the relations automatically generated below.
 		return array(
-			'listCiudades' => array(self::MANY_MANY, 'Ciudad', 'm_CiudadBodega(idBodega, codigoCiudad)'),
-			'objBodega' => array(self::BELONGS_TO, 'BodegaVirtual', 'idBodega'),
-			'objCiudad' => array(self::BELONGS_TO, 'Ciudad', 'codigoCiudad'),
 		);
 	}
 
@@ -58,9 +54,11 @@ class BodegaVirtual extends CActiveRecord
 	public function attributeLabels()
 	{
 		return array(
-			'idBodega' => 'Id Bodega',
-			'nombreBodega' => 'Nombre Bodega',
+			'idTareaPerfil' => 'Id Tarea Perfil',
+			'rutaArchivo' => 'Ruta Archivo',
+			'tipoTarea' => 'Tipo Tarea',
 			'estado' => 'Estado',
+			'fechaRegistro' => 'Fecha Registro',
 		);
 	}
 
@@ -82,9 +80,11 @@ class BodegaVirtual extends CActiveRecord
 
 		$criteria=new CDbCriteria;
 
-		$criteria->compare('idBodega',$this->idBodega);
-		$criteria->compare('nombreBodega',$this->nombreBodega,true);
+		$criteria->compare('idTareaPerfil',$this->idTareaPerfil);
+		$criteria->compare('rutaArchivo',$this->rutaArchivo,true);
+		$criteria->compare('tipoTarea',$this->tipoTarea);
 		$criteria->compare('estado',$this->estado);
+		$criteria->compare('fechaRegistro',$this->fechaRegistro,true);
 
 		return new CActiveDataProvider($this, array(
 			'criteria'=>$criteria,
@@ -95,12 +95,10 @@ class BodegaVirtual extends CActiveRecord
 	 * Returns the static model of the specified AR class.
 	 * Please note that you should have this exact method in all your CActiveRecord descendants!
 	 * @param string $className active record class name.
-	 * @return BodegaVirtual the static model class
+	 * @return TareasPerfiles the static model class
 	 */
 	public static function model($className=__CLASS__)
 	{
 		return parent::model($className);
 	}
-	
-	
 }

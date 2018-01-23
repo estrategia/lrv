@@ -736,7 +736,9 @@ class UsuarioController extends Controller {
     	
     	$arrayTrack = array();
     	foreach($comprasDespachoCedi as $comprasRastreo){
-    		if($comprasRastreo->numeroGuia != null)
+    		$arrayTrack[$comprasRastreo->idBodega]['Despacho'] =  $comprasRastreo;
+    		
+    		if($comprasRastreo->numeroGuia != null){
     		$arrayTrack[$comprasRastreo->idBodega]['Despacho'] =  $comprasRastreo;
     		
     		$url = "http://sismilenio.servientrega.com.co/wsrastreoenvios/wsrastreoenvios.asmx?WSDL";
@@ -751,21 +753,16 @@ class UsuarioController extends Controller {
     		$parm[] = new SoapVar($paramReq, XSD_ANYXML);
     		$service = $client->ConsultarGuiaExterno(new SoapVar($parm, SOAP_ENC_OBJECT));
     		
-    		if(isset($service->ConsultarGuiaExternoResult->Mov->InformacionMov)){
-    			
-    			$arrayTrack[$comprasRastreo->idBodega]['Rastreo'] =  $service->ConsultarGuiaExternoResult->Mov->InformacionMov;
-    			
-    		}else
-    			$arrayTrack[$comprasRastreo->idBodega]['Rastreo'] = array();
+	    		if(isset($service->ConsultarGuiaExternoResult->Mov->InformacionMov)){
+	    			$arrayTrack[$comprasRastreo->idBodega]['Rastreo'] =  $service->ConsultarGuiaExternoResult->Mov->InformacionMov;
+	    		}else
+	    			$arrayTrack[$comprasRastreo->idBodega]['Rastreo'] = array();
     		
+    		}
     		
     	}
     	
-    	
-    	
-    	
-   
-    	$params = array(
+    	    	$params = array(
     			'objCompra' => $objCompra,
     			'arrayTrack' => $arrayTrack
     	);
