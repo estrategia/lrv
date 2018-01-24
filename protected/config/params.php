@@ -354,12 +354,11 @@ return array(
             25 => 15,
             26 => 16
         ),*/
-    	   'lrv' => array(50,51,52,53,54,55,56,57,58),
-        	'descuentos' => array(50,51,52,53,57,58,63,64), // new
+    	   'lrv' => array(50,51,52,53,54,55,56,57,58,70,71),
+        	'descuentos' => array(50,51,52,53,57,58,63,64,70,71), // new
         	'bonos' => array(54,55,56), // new
         	'descuentosClienteInterno' => array(57,58),
-        	'bonosClienteInterno' => array(56),
-    
+        	'bonosClienteInterno' => array(56),    
         	'beneficioCedula' => 54,
             'beneficiosSuscripcion' => array(63,64),
         	'tipoBonoFormaPago' => array(

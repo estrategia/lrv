@@ -307,11 +307,14 @@ class PrecioProducto extends Precio {
             }
             
             $condition .= " AND (t.tipo IN (".implode(",", Yii::app()->params->beneficios['descuentos']).") )";
-
             $condition .= " AND (t.tipo NOT IN (".implode(",", Yii::app()->params->beneficios['beneficiosSuscripcion']).") )";
             // if(Yii::app()->user->isGuest)
             // else
             //     $condition .= " AND (suscripciones.identificacionUsuario = '".Yii::app()->user->name."' AND suscripciones.cantidadDisponiblePeriodoActual > 0) OR (suscripciones.identificacionUsuario IS NULL)";
+            
+            $condition .= " AND (t.codigoPerfil IS NULL OR t.codigoPerfil =:codigoPerfil)";
+            
+            $params[':codigoPerfil'] = $codigoPerfil;
             
             if($codigoPerfil != Yii::app()->params->perfil['asociado']){
             	$condition .= " AND (t.tipo NOT IN (".implode(",", Yii::app()->params->beneficios['descuentosClienteInterno']).") )";
