@@ -87,6 +87,17 @@ class RegistroClienteFielForm extends CFormModel {
         return $tipo;
     }
     
+    public function getContentClass(){
+    	$clase = "ui-content";
+    	$escenario = $this->getScenario();
+    	 
+    	if($escenario == "registro"){
+    		$clase = "";
+    	}
+    	 
+    	return $clase;
+    }
+    
     /**
      * Declares attribute labels.
      */

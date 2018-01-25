@@ -107,16 +107,16 @@ header("Pragma: no-cache");
         	<?php endif; ?>
 
             <div data-role="panel" id="panel-menu-ppal" data-display="overlay" data-position="right" data-position-fixed="false">
-                <?php $this->renderPartial('/sitio/menu'); ?>
+                <?php $this->renderPartial('//sitio/menu'); ?>
             </div>
 
             <div data-role="panel" id="panel-carro-canasta" data-display="overlay" data-position="right" data-position-fixed="false">
-                <?php $this->renderPartial('/carro/canasta'); ?>
+                <?php $this->renderPartial('//carro/canasta'); ?>
             </div>
 
             <?php if (!Yii::app()->user->isGuest): ?>
                 <div data-role="panel" id="panel-menu-usuario" data-display="overlay" data-position="right" data-position-fixed="false" class="no-padding">
-                    <?php $this->renderPartial('/usuario/menu'); ?>
+                    <?php $this->renderPartial('//usuario/menu'); ?>
                 </div>
             <?php endif; ?>
 
