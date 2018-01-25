@@ -199,7 +199,7 @@ abstract class Precio {
         if($impuesto<=0)
             return 0;
         
-        return $valor/(1+($impuesto));
+        return $valor/(1+($impuesto)); 
     }
 
     public function conSuscripcion()
