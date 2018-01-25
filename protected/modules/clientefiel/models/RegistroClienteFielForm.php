@@ -12,11 +12,18 @@ class RegistroClienteFielForm extends CFormModel {
     public $claveConfirmar = null;
     public $nombre;
     public $apellido;
+    
+    public $telefonoFijo;
+    public $telefonoCelular;
+    public $ciudad;
+
     public $correoElectronico;
     public $genero;
     public $fechaNacimiento;
     public $profesion;
     public $condiciones;
+    public $tieneHijos;
+    public $tieneMascotas;
     
     /**
      * Declares the validation rules.
@@ -25,28 +32,19 @@ class RegistroClienteFielForm extends CFormModel {
      */
     public function rules() {
         return array(
-            array('cedula, condiciones, nombre, apellido, correoElectronico, genero, fechaNacimiento, condiciones', 'attributeTrim'),
-            
-            array('cedula', 'required', 'on' => 'registro', 'message' => '{attribute} no puede estar vacío'),
-            array('condiciones', 'required', 'on' => 'registro', 'message' => 'Aceptar términos y condiciones'),
+             
+            array('cedula,nombre, apellido, correoElectronico, fechaNacimiento, genero, fechaNacimiento, tieneHijos, profesion, tieneMascotas, telefonoFijo, telefonoCelular, ciudad', 'required', 'message' => '{attribute} no puede estar vacío'),
+            array('condiciones', 'required', 'message' => 'Aceptar términos y condiciones'),
             array('cedula', 'numerical','integerOnly'=>true),
             array('cedula', 'length', 'min'=>5, 'max'=>12),
-            array('nombre, apellido', 'required', 'on' => 'registro, actualizar', 'message' => '{attribute} no puede estar vacío'),
-            array('clave, claveConfirmar', 'required', 'on' => 'registro, restablecer, contrasena', 'message' => '{attribute} no puede estar vacío'),
-            array('clave, claveConfirmar', 'length', 'min'=>5, 'max'=>15, 'on' => 'registro, restablecer, contrasena'),
-            array('correoElectronico', 'email', 'on' => 'registro, actualizar', 'allowEmpty' => false),
-            array('fechaNacimiento', 'date', 'on' => 'registro, actualizar', 'format' => 'yyyy-M-d', 'allowEmpty' => true),
+            array('correoElectronico', 'email', 'allowEmpty' => false),
+            array('fechaNacimiento', 'date', 'format' => 'yyyy-M-d', 'allowEmpty' => true),
             array('genero', 'in', 'range' => array(1, 2), 'on' => 'registro, actualizar', 'allowEmpty' => true),
-            array('genero, fechaNacimiento', 'default', 'on' => 'registro, actualizar', 'value' => null),
-            
             
             array('cedula, nombre, apellido, correoElectronico', 'length', 'max' => 50),
             
-            array('claveConfirmar', 'validarClave', 'on' => 'registro, restablecer, contrasena'),
-            array('cedula', 'safe', 'on' => 'restablecer, actualizar'),
-            array('profesion', 'safe', 'on' => 'actualizar'),
-            array('profesion', 'default', 'value' => null),
-            array('profesion', 'validarProfesion'),
+            array('cedula,nombre, apellido, correoElectronico, fechaNacimiento, genero, fechaNacimiento, tieneHijos, 
+            	  tieneMascotas, telefonoFijo, telefonoCelular, ciudad', 'safe', 'on' => 'registro'),
             array('cedula', 'validarCedula', 'on' => 'registro'),
             array('correoElectronico', 'validarCorreo', 'on' => 'registro, actualizar'),
         );
@@ -107,19 +105,19 @@ class RegistroClienteFielForm extends CFormModel {
         );
     }
     
-    /**
-     * Valida que exista empleado con cedula indicada y que este activo.
-     * Este es un validador declarado en rules().
-     */
-    public function attributeTrim($attribute, $params) {
-        if($this->$attribute != null && gettype($this->$attribute)=="string"){
-            $this->$attribute = trim($this->$attribute);
-        }
+//     /**
+//      * Valida que exista empleado con cedula indicada y que este activo.
+//      * Este es un validador declarado en rules().
+//      */
+//     public function attributeTrim($attribute, $params) {
+//         if($this->$attribute != null && gettype($this->$attribute)=="string"){
+//             $this->$attribute = trim($this->$attribute);
+//         }
         
-        if($attribute=="condiciones" && empty($this->condiciones)){
-            $this->condiciones = null;
-        }
-    }
+//         if($attribute=="condiciones" && empty($this->condiciones)){
+//             $this->condiciones = null;
+//         }
+//     }
 
     /**
      * Valida existencia de usuario con correo ingresado

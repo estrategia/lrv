@@ -15,6 +15,7 @@ class ConveniosCommand extends CConsoleCommand{
 						':tarea' => 2
 				)
 		));
+		
 		// Insertar los convenios en base de datos
 		foreach($tareas as $tarea){
 			
@@ -31,9 +32,11 @@ class ConveniosCommand extends CConsoleCommand{
 					
 					$result =  Yii::app()->db->createCommand($sqlVerificar)->queryRow(); 
 					if($result){
-						$queryUpdate .= "UPDATE m_Usuario SET codigoPerfil = ".$datos[6].
-						" WHERE identificacionUsuario = ".$datos[1].";";
-						$insertPerfilAntiguo[] = "('".$datos[1]."','".$result['codigoPerfil']."', now())";
+						if($datos[6] != $result['codigoPerfil']){ // si son diferentes para evitar duplicidad de informacion
+							$queryUpdate .= "UPDATE m_Usuario SET codigoPerfil = ".$datos[6].
+							" WHERE identificacionUsuario = ".$datos[1].";";
+							$insertPerfilAntiguo[] = "('".$datos[1]."','".$result['codigoPerfil']."', now())";
+						}
 					}else{
 						$insertPerfilEspecial[] = "('".$datos[1]."','".$datos[6]."')";
 					}
@@ -55,6 +58,9 @@ class ConveniosCommand extends CConsoleCommand{
 				$result =  Yii::app()->db->createCommand($queryUpdate)->execute(); 
 			}
 		}
+		
+		$tarea->estado = 2;
+		$tarea->save();
 	}
 	
 	public function actionCopiarArchivo($path = null){
@@ -96,7 +102,6 @@ class ConveniosCommand extends CConsoleCommand{
 	public function actionConveniosEliminar(){
 
 		Yii::import('application.models.TareasPerfiles');
-		
 		
 		$tareas = TareasPerfiles::model()->findAll(array(
 				'condition' => 'estado =:estado AND tipoTarea =:tarea',

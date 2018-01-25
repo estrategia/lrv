@@ -20,7 +20,7 @@ class RestConveniosController extends CController{
 		
 		$objConvenio->codigoPerfil = $codigoPerfil;
 		$objConvenio->nombrePerfil = $nombreConvenio;
-		$objConvenio->mensajeBienvenida = "";
+		$objConvenio->mensajeBienvenida = "Bienvenido al convenio ".$nombreConvenio;
 		
 		if($objConvenio->save()){
 			echo CJSON::encode(array(
@@ -28,7 +28,6 @@ class RestConveniosController extends CController{
 					'response' => 'Perfil creado',	
 			));
 		}else{
-			
 			echo CJSON::encode(array(
 					'result' => 'error',
 					'response' => 'Error al crear el perfil',
