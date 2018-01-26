@@ -98,7 +98,7 @@ header("Pragma: no-cache");
                                     <?php endif; ?>
                                     <div class="info-compra" style="margin-right:0;">
                                         <div data-role="panel" id="div-carro-canasta">
-                                            <?php $this->renderPartial('/carro/d_canasta'); ?>
+                                            <?php $this->renderPartial('//carro/d_canasta'); ?>
                                         </div>
                                     </div>
                                     <div class="info-compra">

@@ -26,9 +26,12 @@
     a:hover, a:active, a:focus {outline: none !important;}
 
     .sidebar-cart {position: fixed;right: 0px;top: 60%;z-index: 100;width: 200px;}
-    .precioproductos-antes{font-family:VAGRoundedStd-Bold; color:#474747;margin: 0 auto;font-size: 19px;text-align: center; }
+    .precioproductos-antes{font-family:VAGRoundedStd-Bold; color:#474747;margin: 0 auto;font-size: 19px;text-align: center;margin-left: 71px; }
     .precioproductos-antes span::before {content: ''; width: 75px; height: 3px; background-color: #D60203; position: absolute; margin-top: 11px;}
     .precioproductos{font-family:VAGRoundedStd-Bold; color: #D60203;margin: 0 auto;font-size: 22px;text-align: center; }
+    .precioproductos-antes-m{font-family:VAGRoundedStd-Bold; color:#474747;margin: 0 auto;font-size: 19px;text-align: center; }
+    .precioproductos-antes-m span::before {content: ''; width: 75px; height: 3px; background-color: #D60203; position: absolute; margin-top: 11px;}
+    .precioproductos-m{font-family:VAGRoundedStd-Bold; color: #D60203;margin: 0 auto;font-size: 22px;text-align: center; }
     @font-face { font-family:VAGRoundedStd-Bold; src: url(" . Yii::app()->request->baseUrl . "/images/contenido/klim1-deslactosado/fonts/VAGRoundedStd-Bold.otf);}
     @font-face { font-family:VAGRoundedStd-Light; src: url(" . Yii::app()->request->baseUrl . "/images/contenido/klim1-deslactosado/fonts/VAGRoundedStd-Light.otf);}
     .intro-title {font-family:VAGRoundedStd-Bold;color:#B6038C;text-align: center;padding: 30px 0 80px;background-color: #fff;}
@@ -42,7 +45,7 @@
     .bmd-modalContent .close:hover, .bmd-modalContent .close:focus {opacity: 1; outline: none;}
     .bmd-modalContent iframe {display: block; margin: 0 auto;}
     .section-info {background-image:url(".Yii::app()->request->baseUrl."/images/contenido/nestogeno/bg-beneficios.png); background-size: 100%; background-repeat: no-repeat; background-position: bottom; padding-bottom: 30px; }
-    .contenedor-info {max-width: 944px; margin-bottom: 80px !important; display: flex; flex-direction: row; flex-wrap: wrap; justify-content: space-between; width: 70%; margin: -60px auto 0; background-image:url(".Yii::app()->request->baseUrl."/images/contenido/nestogeno/cuadro.png); background-size: 100%; padding: 70px 50px; background-repeat: no-repeat;}
+    .contenedor-info {max-width: 1100px; margin-bottom: 80px !important; display: flex; flex-direction: row; flex-wrap: wrap; justify-content: space-between; width: 82%; margin: -60px auto 0; background-image:url(".Yii::app()->request->baseUrl."/images/contenido/nestogeno/cuadro.png); background-size: 100%; padding: 70px 50px; background-repeat: no-repeat;}
     .contenedor-info .columna-imagen , .contenedor-info .columna-info {width:50%;}
     .proceso-compra {align-items: center;  margin-top: 30px; display: flex; width: 90%; flex-direction: row; flex-wrap: wrap; justify-content: space-between;}
     .pack-nestogeno {width: 80%; margin: 0 auto; display: block; max-width: 337px; height: 348px; max-height: 348px;}
@@ -50,7 +53,9 @@
     .note {margin-left: 16px;margin-top: -40px;}
     .txt-description{font-family:VAGRoundedStd-Light;font-size: 17px;margin-top: 25px;}
     .txt-description span {font-family:VAGRoundedStd-Bold;}
-    .btn-compra {width: 90%;margin: 0 auto;display: block;max-width: 180px;}
+    .btn-compra {width: 90%;margin: 0 -100%;display: block;max-width: 180px;}
+    .btn-compra-m {width: 90%;margin: 0 auto;display: block;max-width: 180px;margin-top: 10px;}
+
     @media (min-width: 1900px) and (max-width: 1920px){
         .contenedor-info {margin-bottom: 100px !important;}
     }
@@ -67,7 +72,7 @@
 
 <!-- VERSION MOVIL -->
 <?php if ($this->isMobile): ?>
-<a href="<?php echo CController::createUrl('/catalogo/producto', array('producto' => 104212)) ?>">
+<a href="<?php echo CController::createUrl('/contenido/ver', array('tipo' => 'grupo', 'contenido' => 5826)) ?>">
   <img class="img-responsive-m" src="<?= Yii::app()->request->baseUrl ?>/images/contenido/nestogeno/movil/banner.jpg">
 </a>
 <div class="bg-texture" style="padding-bottom: 40px;">
@@ -86,11 +91,40 @@
       desarrollo y crecimiento de tu hijo.
     </p>
     <img class="img-responsive-m" src="<?= Yii::app()->request->baseUrl ?>/images/contenido/nestogeno/pack-nestogeno.png" alt="Compra Nestogeno KIDS">
-    <p class="precioproductos-antes">ANTES: <span><?= ($nestogeno == null) ? "$00.000" : Yii::app()->numberFormatter->format(Yii::app()->params->formatoMoneda['patron'], $nestogeno["u-a"], Yii::app()->params->formatoMoneda['moneda']) ?> </span> </p>
-    <p class="precioproductos">AHORA: <?= ($nestogeno == null) ? "$00.000" : Yii::app()->numberFormatter->format(Yii::app()->params->formatoMoneda['patron'], $nestogeno["u"], Yii::app()->params->formatoMoneda['moneda']) ?> </p>
-    <a href="<?php echo CController::createUrl('/catalogo/producto', array('producto' => 104212)) ?>">
-      <img class="btn-compra" style="margin-top:20px;" src="<?= Yii::app()->request->baseUrl ?>/images/contenido/nestogeno/btn-comprar.png" alt="Compra Nestogeno KIDS">
-    </a>
+    <div class="row col-md-12">
+        <div class="col-md-12">
+      <div class="col-sm-6 col-md-6 cuadros-compra">
+
+          <h2 style="font-family: VAGRoundedStd-Bold;color: #b6048b;text-align: center;margin-bottom: -5px;">Presentación   <strong style="margin-left: 11px;font-family:VAGRoundedStd-Bold;color: #b6048b;">800gr</strong></h2>&nbsp;
+          <div class="row">
+              <div class="col-sm-6 col-md-6" class="precios">
+                <p class="precioproductos-antes-m">ANTES: $32.850</p>
+              </div>
+              <div class="col-sm-5 col-md-5" class="precios">
+                <p class="precioproductos-m">AHORA: $31.860</p>
+            </div>
+          </div>
+        </div>
+        <div class="col-sm-6 col-md-6 cuadros-compra">
+
+          <h2 style="font-family: VAGRoundedStd-Bold;color: #b6048b;text-align: center;;margin-bottom: -5px;">Presentación   <strong style="margin-left: 11px;font-family: VAGRoundedStd-Bold;color: #b6048b;">350gr</strong></h2>&nbsp;
+          <div class="row">
+              <div class="col-sm-6 col-md-6" class="precios">
+                <p class="precioproductos-antes-m">ANTES: $16.150</p>
+              </div>
+              <div class="col-sm-5 col-md-5" class="precios">
+                <p class="precioproductos-m">AHORA: $15.660</p>
+            </div>
+          </div>
+        </div>
+
+    </div>
+  </div>
+  <a href="<?php echo CController::createUrl('/contenido/ver', array('tipo' => 'grupo', 'contenido' => 5826)) ?>">
+
+    <img class="btn-compra-m" src="<?= Yii::app()->request->baseUrl ?>/images/contenido/nestogeno/btn-comprar.png" alt="Compra Nestogeno KIDS">
+
+  </a>
   </div>
 </div>
 <section class="bg-video-movil">
@@ -132,7 +166,7 @@
 <a href="<?php echo CController::createUrl('/contenido/ver', array('tipo' => 'grupo', 'contenido' => 5826)) ?>">
   <div class="sidebar-cart"><img class="img-responsive" src="<?= Yii::app()->request->baseUrl ?>/images/contenido/nestogeno/btn-fijo.png" alt="Compra online"></div>
 </a>
-<a href="<?php echo CController::createUrl('/catalogo/producto', array('producto' => 104212)) ?>">
+<a href="<?php echo CController::createUrl('/contenido/ver', array('tipo' => 'grupo', 'contenido' => 5826)) ?>">
   <img class="img-responsive" src="<?= Yii::app()->request->baseUrl ?>/images/contenido/nestogeno/banner.jpg">
 </a>
 <section class="section-info">
@@ -155,16 +189,44 @@
       </p>
       <div class="proceso-compra">
         <div style="width: 50%;">
-          <p class="precioproductos-antes">ANTES: <span><?= ($nestogeno == null) ? "$00.000" : Yii::app()->numberFormatter->format(Yii::app()->params->formatoMoneda['patron'], $nestogeno["u-a"], Yii::app()->params->formatoMoneda['moneda']) ?> </span> </p>
-          <p class="precioproductos">AHORA: <?= ($nestogeno == null) ? "$00.000" : Yii::app()->numberFormatter->format(Yii::app()->params->formatoMoneda['patron'], $nestogeno["u"], Yii::app()->params->formatoMoneda['moneda']) ?> </p>
         </div>
         <div style="width: 50%;">
-          <a href="<?php echo CController::createUrl('/catalogo/producto', array('producto' => 104212)) ?>">
+          <a href="<?php echo CController::createUrl('/contenido/ver', array('tipo' => 'grupo', 'contenido' => 5826)) ?>">
             <img class="btn-compra" src="<?= Yii::app()->request->baseUrl ?>/images/contenido/nestogeno/btn-comprar.png" alt="Compra Nestogeno KIDS">
           </a>
         </div>
       </div>
     </div>
+<div class="row col-md-12">
+    <div class="col-md-12">
+  <div class="col-sm-6 col-md-6 cuadros-compra" style="border-right: 1px solid black;">
+
+      <h2 style="font-family: VAGRoundedStd-Bold;color: #b6048b;text-align: center;;margin-bottom: -5px;margin-left: 20px">Presentación   <strong style="margin-left: 11px;font-family:VAGRoundedStd-Bold;color: #b6048b;">800gr</strong></h2>&nbsp;
+      <div class="row">
+          <div class="col-sm-6 col-md-6" class="precios">
+            <p class="precioproductos-antes">ANTES: $32.850</p>
+          </div>
+          <div class="col-sm-5 col-md-5" class="precios">
+            <p class="precioproductos">AHORA: $31.860</p>
+        </div>
+      </div>
+    </div>
+    <div class="col-sm-6 col-md-6 cuadros-compra">
+
+      <h2 style="font-family: VAGRoundedStd-Bold;color: #b6048b;text-align: center;;margin-bottom: -5px;margin-left: 20px">Presentación   <strong style="margin-left: 11px;font-family: VAGRoundedStd-Bold;color: #b6048b;">350gr</strong></h2>&nbsp;
+      <div class="row">
+          <div class="col-sm-6 col-md-6" class="precios">
+            <p class="precioproductos-antes">ANTES: $16.150</p>
+          </div>
+          <div class="col-sm-5 col-md-5" class="precios">
+            <p class="precioproductos">AHORA: $15.660</p>
+        </div>
+      </div>
+    </div>
+
+</div>
+</div>
+
   </div>
 </section>
 <section style="margin-top: -53px;">

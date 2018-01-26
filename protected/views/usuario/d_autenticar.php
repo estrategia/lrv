@@ -59,7 +59,7 @@
                     </div>
                 </div>
 
-                <?php if ($pagar): ?>
+                <?php /*if ($pagar): ?>
                     <div class="panel panel-default">
                         <div class="panel-heading head-desplegable">
                             <h4 class="panel-title">
@@ -70,7 +70,7 @@
                         </div>
                         <div style="height:5px;background-color: #F5F5F5;border-top: 1px solid #E9E1E1;"></div>
                     </div>
-                <?php endif; ?>
+                <?php endif;*/ ?>
                 
             </div>
         </div>

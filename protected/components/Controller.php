@@ -36,7 +36,7 @@ class Controller extends CController {
     public $metaTags = null;
     public $menuSuperior = null;
     public $bodegas = array(0);
-    
+
     public function init() {
         if (Yii::app()->detectMobileBrowser->showMobile) {
             $this->isMobile = true;
@@ -60,8 +60,8 @@ class Controller extends CController {
         }
 
 
-		  // $this->isMobile = true;
-		  // $this->layout = '//layouts/mobile';
+// 		  $this->isMobile = true;
+// 		  $this->layout = '//layouts/mobile';
 
         $this->verificarDispositivo();
 
@@ -151,7 +151,7 @@ class Controller extends CController {
                 if ($objSectorCiudad !== null) {
                     $this->objSectorCiudad = $objSectorCiudad;
                     Yii::app()->session[Yii::app()->params->sesion['sectorCiudadEntrega']] = $objSectorCiudad;
-                    
+
                     $bodegas = CiudadBodega::model()->findAll(array(
                     		'condition' => 'codigoCiudad =:codigoCiudad',
                     		'params' => array(
@@ -159,14 +159,14 @@ class Controller extends CController {
                     		),
                     		'order' => 'prioridad'
                     ));
-                    
+
                     if($bodegas){
                     	foreach($bodegas as $bodega){
                     		$this->bodegas[] = $bodega->idBodega;
                     	}
                     }
                 }
-                
+
             }
 
             $direccionEntrega = null;
@@ -188,7 +188,7 @@ class Controller extends CController {
         			),
         			'order' => 'prioridad'
         	));
-        	
+
         	if($bodegas){
         		foreach($bodegas as $bodega){
         			$this->bodegas[] = $bodega->idBodega;

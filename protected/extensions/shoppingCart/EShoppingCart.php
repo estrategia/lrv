@@ -370,9 +370,9 @@ class EShoppingCart extends CMap {
         }
         $this->setCodigoPerfil($codigoPerfil);
         
-        if($this->shipping<=0 && $this->isUnit()){
+        if($this->shipping<=0 && $this->isUnit() && $this->hasShopProducts()){
       		$this->CalculateShipping();
-        }else if(!$this->isUnit()){
+        }else if(!$this->isUnit() || !$this->hasShopProducts()){
         	$this->shipping = 0;
         }
         
@@ -443,6 +443,7 @@ class EShoppingCart extends CMap {
     			$arrayCantidades = $informacionBodega['cantidades'];
     			$arrayVolumen = $informacionBodega['volumen'];
     			
+    		
     			foreach($arrayVolumen as $idBodega => $cantidad){
     				if(isset($volumenBodegas[$idBodega])){
     					$volumenBodegas[$idBodega] += $cantidad;
@@ -451,9 +452,9 @@ class EShoppingCart extends CMap {
     				}
     				
     				if(isset($valorDeclaradoBodega[$idBodega])){
-    					$valorDeclaradoBodega[$idBodega] += $cantidad * $position->getPrice();
+    					$valorDeclaradoBodega[$idBodega] += $arrayCantidades[$idBodega] * $position->getPrice();
     				} else {
-    					$valorDeclaradoBodega[$idBodega] = $cantidad * $position->getPrice();
+    					$valorDeclaradoBodega[$idBodega] = $arrayCantidades[$idBodega] * $position->getPrice();
     				}
     				
     				$arrayFletes[$idBodega]['volumen'] = $volumenBodegas[$idBodega];
@@ -698,7 +699,7 @@ class EShoppingCart extends CMap {
             $this->onUpdatePoistion(new CEvent($this));
             $this->saveState();
             
-            if(!$this->isUnit()){
+            if(!$this->isUnit() || !$this->hasShopProducts()){
             	$this->shipping = 0;
             }
             
@@ -894,7 +895,7 @@ class EShoppingCart extends CMap {
             }
         }
         
-        $tax += $this->getTaxShipping() + $this->getTaxShippingStored();  
+        $tax += $this->getTaxShipping() + $this->getTaxExtraShipping();  
         //$tax = ceil($tax);
         return $tax;
     }
@@ -917,11 +918,25 @@ class EShoppingCart extends CMap {
     	 
     	$impuesto = $impuestoQuery->valor;
     	
+    	
     	if($base == true)
     		return round(Precio::calcularBaseImpuesto($this->shippingStored, $impuesto/100));
     	else
     		return round(Precio::calcularImpuesto($this->shippingStored, $impuesto/100));
     }
+    
+    public function getTaxExtraShipping($base = false){
+    	$impuestoQuery = Impuesto::model()->findByPk(Yii::app()->params->impuestoDomicilio);
+    
+    	$impuesto = $impuestoQuery->valor;
+    	 
+    	 
+    	if($base == true)
+    		return round(Precio::calcularBaseImpuesto($this->getExtraShipping(), $impuesto/100));
+    		else
+    			return round(Precio::calcularImpuesto($this->getExtraShipping(), $impuesto/100));
+    }
+    
     
     
     public function getBaseTaxPrice(){
@@ -997,5 +1012,20 @@ class EShoppingCart extends CMap {
     	parent::clear();
     }
     
+    public function getMixedCount()
+    {
+        $count = 0;
+        foreach ($this as $position) {
+            if ($position->isProduct() && ($position->isInventoryProduct() || $position->getQuantityStored())) {
+                $count++;
+            }
+        }
+        return $count;
+    }
+
+    public function hasShopProducts()
+    {
+        return $this->getCount() != $this->getMixedCount();
+    }
     
 }

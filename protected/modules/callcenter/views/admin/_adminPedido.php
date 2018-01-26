@@ -45,7 +45,12 @@
                                     <input id="cantidad-item-unidad-<?php echo $objItem->idCompraItem ?>" type="text" style="width:100px" readonly value="<?php echo $objItem->unidades ?>" >
                                 <?php else: ?>
                                     <input id="cantidad-item-unidad-<?php echo $objItem->idCompraItem ?>" type="text" style="width:100px" value="<?php echo $objItem->unidades ?>" >
-                                    <button type="button" data-role="modificarpedido" data-action="11" data-item="<?php echo $objItem->idCompraItem ?>" class="btn btn-default btn-sm"><i class="glyphicon glyphicon-refresh"></i></button>
+                                    
+                                    <?php if($objCompra->idTipoVenta == 5):?>
+                                    	<button type="button" data-role="ver-cantidad-vap" data-compra="<?php echo $objCompra->idCompra?>" data-item="<?php echo $objItem->idCompraItem ?>" class="btn btn-default btn-sm"><i class="glyphicon glyphicon-refresh"></i></button>
+                                    <?php else:?>
+                                    	<button type="button" data-role="modificarpedido" data-action="11" data-item="<?php echo $objItem->idCompraItem ?>" class="btn btn-default btn-sm"><i class="glyphicon glyphicon-refresh"></i></button>
+                                	<?php endif ?>
                                 <?php endif ?>
                             </div>
                             <div class='space-2'></div>
@@ -56,7 +61,7 @@
 	                            <div class="form-inline text-center">
 	                            		
 	                                    <input type="text" id="cantidad-item-bodega-<?php echo $objItem->idCompraItem ?>" style="width:100px" value="<?php echo $objItem->unidadesCedi ?>" >
-	                                    <button type="button" data-role="modificarpedido" data-action="13" data-item="<?php echo $objItem->idCompraItem ?>" class="btn btn-default btn-sm"><i class="glyphicon glyphicon-refresh"></i></button>
+	                                  <!--  <button type="button" data-role="modificarpedido" data-action="13" data-item="<?php echo $objItem->idCompraItem ?>" class="btn btn-default btn-sm"><i class="glyphicon glyphicon-refresh"></i></button> -->
 	                            </div>
                             <?php endif;?>
                         </td>
@@ -130,7 +135,7 @@
                                         <input id="cantidad-item-unidad-<?php echo $objItem->idCompraItem ?>" type="text" style="width:100px" readonly value="<?php echo $objItem->unidades ?>" >
                                     <?php else: ?>
                                         <input id="cantidad-item-unidad-<?php echo $objItem->idCompraItem ?>" type="text" style="width:100px" value="<?php echo $objItem->unidades ?>" >
-                                        <button type="button" data-role="modificarpedido" data-action="11" data-item="<?php echo $objItem->idCompraItem ?>" class="btn btn-default btn-sm"><i class="glyphicon glyphicon-refresh"></i></button>
+                                        <button type="button" data-role="modificarpedido" data-action="11" data-item="<?php echo $objItem->idCompraItem ?>" class="btn btn-default btn-sm"><i class="glyphicon glyphicon-refresh"></i></button> 
                                     <?php endif ?>
                                 </div>
                             </td>
@@ -164,7 +169,7 @@
                                 Unidades bodega
                                 <div class="form-inline text-center">
                                     <input type="text" id="cantidad-item-bodega-<?php echo $objItem->idCompraItem ?>" style="width:100px" value="<?php echo $objItem->unidadesCedi ?>" >
-                                    <button type="button" data-role="modificarpedido" data-action="13" data-item="<?php echo $objItem->idCompraItem ?>" class="btn btn-default btn-sm"><i class="glyphicon glyphicon-refresh"></i></button>
+                                  <!--  <button type="button" data-role="modificarpedido" data-action="13" data-item="<?php echo $objItem->idCompraItem ?>" class="btn btn-default btn-sm"><i class="glyphicon glyphicon-refresh"></i></button> -->
                                 </div>
                             </td> 
                         </tr>
@@ -200,7 +205,11 @@
                                         <input type="text" id="cantidad-item-unidad-<?php echo $objItem->idCompraItem ?>" readonly style="width:100px" value="<?php echo $objItem->unidades ?>" >
                                     <?php else: ?>
                                         <input type="text" id="cantidad-item-unidad-<?php echo $objItem->idCompraItem ?>" style="width:100px" value="<?php echo $objItem->unidades ?>" >
-                                        <button type="button" data-role="modificarpedido" data-action="11" data-item="<?php echo $objItem->idCompraItem ?>" class="btn btn-default btn-sm"><i class="glyphicon glyphicon-refresh"></i></button>
+                                         <?php if($objCompra->idTipoVenta == 5):?>
+                                    		<button type="button" data-role="ver-cantidad-vap" data-compra="<?php echo $objCompra->idCompra?>" data-producto="<?php echo $objItem->codigoProducto ?>" class="btn btn-default btn-sm">Ver puntos de venta</button>
+                                    	<?php else:?>
+                                        	<button type="button" data-role="modificarpedido" data-action="11" data-item="<?php echo $objItem->idCompraItem ?>" class="btn btn-default btn-sm"><i class="glyphicon glyphicon-refresh"></i></button>
+                                    	<?php endif ?>
                                     <?php endif ?>
                                 </div>
                             </td>

@@ -147,9 +147,6 @@ class TestController extends Controller {
         
         $result = $client->getPuntoVenta(array('codciudad'=>76001));
         CVarDumper::dump($result, 10, true);
-        
-        
-       
     }
     
     public function actionRemanu(){
@@ -209,6 +206,10 @@ class TestController extends Controller {
         }
     }
 
+    public function test(){
+    	echo "Hola mundo";
+    }
+    
     public function actionTipoentrega() {
         CVarDumper::dump(Yii::app()->session[Yii::app()->params->sesion['tipoEntrega']], 10, true);
     }

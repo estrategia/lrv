@@ -11,4 +11,7 @@ require_once($yii);
 require_once($utils);
  
 // creating and running console application
-Yii::createConsoleApplication($config)->run();
+$application = Yii::createConsoleApplication($config);
+Yii::setPathOfAlias('webroot',dirname(Yii::app()->request->scriptFile).DIRECTORY_SEPARATOR."..");
+
+$application->run();

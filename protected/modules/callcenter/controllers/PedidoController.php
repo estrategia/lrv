@@ -219,6 +219,55 @@ class PedidoController extends ControllerOperator {
             Yii::app()->end();
         }
     }
+    
+    public function actionModificarVap(){
+    	if (!Yii::app()->request->isPostRequest) {
+    		echo CJSON::encode(array('result' => 'error', 'response' => 'Solicitud invalida.'));
+    		Yii::app()->end();
+    	}
+    	
+    	$accion = Yii::app()->getRequest()->getPost('accion');
+    	$cantidad = Yii::app()->getRequest()->getPost('cantidad');
+    	$producto = Yii::app()->getRequest()->getPost('item');
+    	
+    	if ($accion === null) {
+    		echo CJSON::encode(array('result' => 'error', 'response' => 'Solicitud invalida.'));
+    		Yii::app()->end();
+    	}
+    	
+    	$objProductoVap = ComprasPuntoVentaAsistida::model()->findByPk($producto);
+    	if ($accion == 11 ) {
+    		$objProductoVap->modificarUnidadesVap($cantidad,$producto);
+    	} else if($accion == 12) {
+    		$objProductoVap->modificarFraccionesVap($cantidad,$producto);
+    	}else {
+    		echo CJSON::encode(array('result' => 'error', 'response' => 'Solicitud invalida.'));
+    		Yii::app()->end();
+    	}
+    	
+    	$puntosVenta = ComprasPuntoVentaAsistida::model()->findAll( array(
+    			'condition' => ' idCompra=:compra AND codigoProducto =:producto',
+    			'params' => array(
+    					'compra' => $objProductoVap->idCompra,
+    					'producto' => $objProductoVap->codigoProducto
+    			)
+    	));
+    	
+    	echo CJSON::encode(array(
+    			'result' => 'ok',
+    			'response' => array(
+    					'msg' => 'Producto actualizado.',
+    					'htmlDetalle' => $this->renderPartial('/admin/_adminPedido', array('objCompra' => $objProductoVap->objCompra), true, false),
+    					'htmlEncabezado' => $this->renderPartial('/admin/_encabezadoPedido', array('objCompra' => $objProductoVap->objCompra), true, false),
+    					'modal' => $this->renderPartial('/admin/_modalPuntosVenta', array(
+				    			'puntosVenta' => $puntosVenta
+				    	), true, false)
+    					
+    			)));
+    	Yii::app()->end();
+    }
+    
+    
 
     private function modificarProducto($accion) {
         $cantidad = Yii::app()->getRequest()->getPost('cantidad');

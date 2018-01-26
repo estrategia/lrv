@@ -588,8 +588,6 @@ class CarroController extends ControllerVenta{
 			//no se maneja venta bodega
 			$objCompra->tiempoDomicilioCedi = 0;
 			$objCompra->valorDomicilioCedi = 0;
-			$objCompra->codigoCedi = 0;
-	
 			$objCompra->subtotalCompra = Yii::app()->getModule('puntoventa')->shoppingCartNationalSale->getCostToken();
 			$objCompra->impuestosCompra = Yii::app()->getModule('puntoventa')->shoppingCartNationalSale->getTaxPrice();
 			$objCompra->baseImpuestosCompra = Yii::app()->getModule('puntoventa')->shoppingCartNationalSale->getBaseTaxPrice();

@@ -30,19 +30,19 @@
      @font-face {font-family:Lato-Black; src: url(" . Yii::app()->request->baseUrl . "/images/contenido/padel/fonts/Lato-Black.ttf);}
      .main-bg {padding: 25px 0; background-image:url(".Yii::app()->request->baseUrl."/images/contenido/padel/bg.jpg); background-size:cover;}
      .logo-padel {width: 135px;margin-left: 50px;}
-     .contenedor-principal {display: -webkit-box;display: -ms-flexbox;display: flex; -webkit-box-orient: horizontal; -webkit-box-direction: normal; -ms-flex-direction: row; flex-direction: row; -ms-flex-wrap: wrap; flex-wrap: wrap; -webkit-box-pack: justify; -ms-flex-pack: justify; justify-content: space-between; width: 100%; max-width: 600px; margin: auto;}
+     .contenedor-principal {display: -webkit-box;display: -ms-flexbox;display: flex; -webkit-box-orient: horizontal; -webkit-box-direction: normal; -ms-flex-direction: row; flex-direction: row; -ms-flex-wrap: wrap; flex-wrap: wrap; -webkit-box-pack: justify; -ms-flex-pack: justify; justify-content: space-between; width: 100%; max-width: 680px; margin: auto;}
      .btn-comprar {width: 60%; max-width: 180px; margin: 20px auto; display:block; }
      .contenedor-principal .columna {width:50%;}
-     .bg-azul { background-image:url(".Yii::app()->request->baseUrl."/images/contenido/padel/rectangulo-fosfodel.png); background-size: 100% 100%; background-repeat:no-repeat; padding-top: 50px; width: 100%; text-align: center; font-family:Lato-Regular; color:#fff; text-transform: uppercase; font-size: 13px; padding: 62px 15px 5px; }
+     .bg-azul { background-image:url(".Yii::app()->request->baseUrl."/images/contenido/padel/rectangulo-fosfodel.png); background-size: 100% 100%; background-repeat:no-repeat; padding-top: 50px; width: 100%; text-align: center; font-family:Lato-Regular; color:#fff; text-transform: uppercase; font-size: 12px; padding: 55px 25px 5px; }
      .bg-azul span {font-family:Lato-Bold;}
-     .row-icons{display: -webkit-box;display: -ms-flexbox;display: flex; -webkit-box-orient: horizontal; -webkit-box-direction: normal; -ms-flex-direction: row; flex-direction: row; -ms-flex-wrap: wrap; flex-wrap: wrap; -webkit-box-pack: justify; -ms-flex-pack: justify; justify-content: space-between; margin: 25px auto 0; }
+     .row-icons{display: -webkit-box;display: -ms-flexbox;display: flex; -webkit-box-orient: horizontal; -webkit-box-direction: normal; -ms-flex-direction: row; flex-direction: row; -ms-flex-wrap: wrap; flex-wrap: wrap; -webkit-box-pack: justify; -ms-flex-pack: justify; justify-content: space-between; margin: 10px auto 0; }
      .row-icons .column {width: 25%;}
      .ico-beneficios {width: 75%; margin: 0 auto 10px; display: block; }
-     .descrip-beneficios {line-height: 15px; font-family:Lato-Regular;color:#fff;text-align:center;font-size: 13px;}
-     .descrip-beneficios span {font-family:Lato-Bold; text-shadow: 1px 1px 1px rgba(0, 0, 0, 0.7);}
-     .conoce-mas {color:#C00000; text-align:center; margin:0; font-family:Lato-Black; text-transform: uppercase;}
+     .descrip-beneficios {line-height: 18px; font-family:Lato-Regular;color:#fff;text-align:center;font-size: 13px;}
+     .descrip-beneficios span {font-family:Lato-Bold; font-size:15px;}
+     .conoce-mas {color:#fff; text-align:center; margin:25px 0; font-family:Lato-Black; text-transform: uppercase;}
      .img-video-fosfodel { margin: -15px auto 0; display: block; width: 50%; max-width: 300px;}
-     .row-flexidel {-webkit-box-align: end;-ms-flex-align: end; align-items: flex-end; display: -webkit-box; display: -ms-flexbox; display: flex; -webkit-box-orient: horizontal; -webkit-box-direction: normal; -ms-flex-direction: row; flex-direction: row; -ms-flex-wrap: wrap; flex-wrap: wrap; -webkit-box-pack: justify; -ms-flex-pack: justify; justify-content: space-between; margin: auto;}
+     .row-flexidel {margin-top: 35px; -webkit-box-align: end;-ms-flex-align: end; align-items: flex-end; display: -webkit-box; display: -ms-flexbox; display: flex; -webkit-box-orient: horizontal; -webkit-box-direction: normal; -ms-flex-direction: row; flex-direction: row; -ms-flex-wrap: wrap; flex-wrap: wrap; -webkit-box-pack: justify; -ms-flex-pack: justify; justify-content: space-between; margin: auto;}
      .row-flexidel .column {width:50%;}
      .bg-azul-flexi {margin-top: 25px; background-image:url(".Yii::app()->request->baseUrl."/images/contenido/padel/rectangulo-flexidel.png); background-size: 100% 100%; background-repeat:no-repeat; width: 100%; text-align: center; font-family:Lato-Regular; color:#fff; text-transform: uppercase; font-size: 13px; padding: 40px 15px 5px; }
      .bg-azul-flexi span {font-family:Lato-Bold;}
@@ -66,6 +66,8 @@
      .bg-azul-m span {font-family:Lato-Bold;}
      .video {position: relative; padding-bottom: 56.25%; overflow: hidden; width: 95%; margin: 20px auto;}
      .video iframe{position: absolute;display: block; top: 0; left: 0; width: 100%; height: 100%;}
+     .title-descrip {text-align: center;font-family: Lato-Regular;color: #fff;font-size: 22px;}
+     .title-descrip span{font-family: Lato-Bold; font-size:30px;}
   </style>
 ";
 ?>
@@ -188,6 +190,9 @@ var google_remarketing_only = true;
       sociedad y puede ser provocado por el estrés y la falta de <span>ciertas vitaminas <br>
       esenciales para nuestro cerebro que te indican que tienes agotamiento físico y mental.</span> </p>
     </div>
+    <div style="margin-top: 20px; width:100%;">
+      <h2 class="title-descrip"><span>FOSFODEL<sup>&reg;</sup></span> SUPLEMENTO <br> MULTIVITAMINICO CON BOROJÓ</h2>
+    </div>
     <div class="row-icons">
       <div class="column">
         <img class="ico-beneficios" src="<?= Yii::app()->request->baseUrl ?>/images/contenido/padel/fosfodel01.png" alt="Aporta vitalidad">
@@ -195,7 +200,7 @@ var google_remarketing_only = true;
       </div>
       <div class="column">
         <img class="ico-beneficios" src="<?= Yii::app()->request->baseUrl ?>/images/contenido/padel/fosfodel02.png" alt="Nutrición y energia">
-        <p class="descrip-beneficios">PROPORCIONA <br> <span>LA NUTRICIÓN Y ENERGÍA</span> <br>NECESARIA DURANTE <br>LA LACTANCIA</p>
+        <p class="descrip-beneficios">PROPORCIONA <br> <span>LA NUTRICIÓN Y ENERGÍA</span> NECESARIA <br> DURANTE LA LACTANCIA</p>
       </div>
       <div class="column">
         <img class="ico-beneficios" src="<?= Yii::app()->request->baseUrl ?>/images/contenido/padel/fosfodel03.png" alt="Mejora el redimiento">
@@ -203,18 +208,13 @@ var google_remarketing_only = true;
       </div>
       <div class="column">
         <img class="ico-beneficios" src="<?= Yii::app()->request->baseUrl ?>/images/contenido/padel/fosfodel04.png" alt="Suplemento dietario">
-        <p class="descrip-beneficios"><span>SUPLEMENTO DIETARIO</span> <br> CON VITAMINAS, <br> MINERALES Y BOROJÓ</p>
+        <p class="descrip-beneficios"><span>SUPLEMENTO DIETARIO</span> <br> CON VITAMINAS, MINERALES Y BOROJÓ</p>
       </div>
     </div>
-    <div style="margin-top: 40px; width:100%;">
-      <p class="conoce-mas">Conoce más</p>
-      <a href="#">
-        <img class="img-video-fosfodel" src="<?= Yii::app()->request->baseUrl ?>/images/contenido/padel/video.png" alt="Conoce más fosfodel">
-      </a>
-    </div>
+
     <div class="row-flexidel">
         <div class="column">
-        <img class="img-responsive" src="<?= Yii::app()->request->baseUrl ?>/images/contenido/padel/flexidel-pack.png" alt="Flexidel">
+        <img class="img-responsive" style="margin-top: 75px;" src="<?= Yii::app()->request->baseUrl ?>/images/contenido/padel/flexidel-pack.png" alt="Flexidel">
       </div>
       <div class="column">
         <a href="<?php echo CController::createUrl('/catalogo/producto', array('producto' => 120417)) ?>"><img class="btn-comprar" src="<?= Yii::app()->request->baseUrl ?>/images/contenido/padel/btn-comprar.png" alt="Compra online"></a>
@@ -240,6 +240,7 @@ var google_remarketing_only = true;
       </div>
     </div>
     <div style="width: 100%;">
+        <h3 class="conoce-mas">Conoce más</h3>
       <div class="video">
       <iframe width="560" height="315" src="https://www.youtube.com/embed/WfL0ttjA6m4?rel=0&amp;showinfo=0" frameborder="0" allow="autoplay; encrypted-media" allowfullscreen></iframe>
       </div>

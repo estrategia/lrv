@@ -141,7 +141,9 @@ class BeneficiosCommand extends CConsoleCommand {
                     $objBeneficio->porcProv = $beneficio['PorcProv'];
                     $objBeneficio->promoFiel = $beneficio['PromoFiel'];
                     $objBeneficio->mensaje = $beneficio['Mensaje'];
-                    $objBeneficio->swobligaCli = $beneficio['SwobligaCli'];
+                    $objBeneficio->mensaje = $beneficio['Mensaje'];
+                    $objBeneficio->idConvenio = $beneficio['idConvenio'];
+                    $objBeneficio->codigoPerfil = $beneficio['codigoPerfil'];
                     $objBeneficio->fechaCreacionBeneficio = $beneficio['FechaCreacionBeneficio'];
                     
                     if (!$objBeneficio->save()) {
