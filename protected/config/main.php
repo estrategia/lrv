@@ -20,6 +20,7 @@ return array(
         'application.models.view.*',
         'application.components.*',
         'ext.shoppingCart.*',
+        'ext.rest.*',
         /*'ext.shoppingCartSalesman.*',
         'ext.shoppingCartVitalCall.*',
         'ext.shoppingCartNationalSale.*'*/

@@ -2,6 +2,34 @@
 //controlador de prueba TestController prueba
 class TestController extends Controller {
     
+    public function actionRestConsume()
+    {
+        $username = "admin";
+        $password = "admin";
+        $token = "$username:$password";
+        $token = base64_encode( $token );
+        $restURL = "http://localhost/siicop/clientefiel/api/";
+        
+        $restClient = new RESTClient ();
+        $restClient->initialize ( array (
+            'server' => $restURL,
+        ) );
+        
+        //$restClient->set_header("Authorization","Basic $token");
+        $response = $restClient->get('ciudad/index', array('term'=>'cal'));
+        
+        if($restClient->status()==200) {
+            echo $response;
+        } else {
+            //echo "Error: " . $restClient->status() . "<br>";
+            //CVarDumper::dump($restClient,10,true);
+            $restClient->debug();
+        }
+        
+        Yii::app()->end();
+        
+    }
+    
     public function actionRound(){
         $valor = 0.2;
         $round = ceil($valor);
