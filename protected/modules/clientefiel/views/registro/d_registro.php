@@ -116,7 +116,7 @@ $form = $this->beginWidget ( 'CActiveForm', array (
 			        <?php echo $form->error($model,'tieneMascotas',  array("class" => "text-danger")); ?>
 			    </div>
 	
-				<?php if ($model->isNewRecord) : ?>
+				<?php if ($model->getScenario()) : ?>
 	
 	                <?php echo $form->checkBox($model, 'condiciones', array("style" => "display:block;float:left;")); ?>
 	                <?php echo $form->labelEx($model, 'condiciones'); ?>
@@ -132,7 +132,7 @@ $form = $this->beginWidget ( 'CActiveForm', array (
 
 <div class="row">
 	<div class="col-md-4">
-        <?php if ($model-isNewRecord): ?>
+        <?php if ($model->getScenario()): ?>
             <input class='btn btn-primary' type="submit" data-enhanced="true" value="Registrar">
         <?php else: ?>
             <input class='btn btn-primary' type="submit" data-enhanced="true" value="Guardar">
