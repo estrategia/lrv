@@ -1,4 +1,6 @@
 <?php
+//use Elibom\APIClient\ElibomClient as ElibomClient;
+
 //controlador de prueba TestController prueba
 class TestController extends Controller {
     
@@ -20,6 +22,7 @@ class TestController extends Controller {
         
         if($restClient->status()==200) {
             echo $response;
+            $restClient->debug();
         } else {
             //echo "Error: " . $restClient->status() . "<br>";
             //CVarDumper::dump($restClient,10,true);
@@ -28,6 +31,144 @@ class TestController extends Controller {
         
         Yii::app()->end();
         
+    }
+    
+    public function actionElibom () {
+        $telefono = "573002817433";
+        $mensaje = "elibom%20prueba%20" . date('Y-m-d %20 H:i:s');
+        
+        $elibom = new ElibomClient(Yii::app()->params['elibom']['url'], Yii::app()->params['elibom']['usuario'], Yii::app()->params['elibom']['password']);
+        try {
+            $response = $elibom->sendMessage($telefono, $mensaje);
+            
+            if($response['action'] == 'sendmessage') {
+                echo "EXITO: " . CJSON::encode($response['data']['acceptreport']) . "<br>";
+                CVarDumper::dump($response['data']['acceptreport'],10,true);
+            } else {
+                echo "ERROR [+" . $response['data']['errorcode'] ."]: " . $response['data']['errormessage'];
+            }
+        } catch (Exception $e) {
+            echo "ERROR [-" . $e->getCode() ."]: " . $e->getMessage();
+        }
+    }
+    
+    public function actionSmsCurl() {
+        $curl = curl_init();
+        
+        $telefono = "573002817433";
+        $mensaje = "masm%20prueba%20" . date('Y-m-d %20 H:i:s');
+        
+        curl_setopt_array($curl, array(
+            CURLOPT_URL => "https://api.masivapp.com/SmsHandlers/sendhandler.ashx?action=sendmessage&username=Api_7V7K-&password=68IK0BHE-W&recipient=$telefono&messagedata=$mensaje&longMessage=false",
+            CURLOPT_RETURNTRANSFER => true,
+            //CURLOPT_ENCODING => "",
+            CURLOPT_MAXREDIRS => 10,
+            CURLOPT_TIMEOUT => 30,
+            CURLOPT_SSL_VERIFYPEER => false,
+            //CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
+            CURLOPT_CUSTOMREQUEST => "GET",
+            CURLOPT_HTTPHEADER => array(
+                //"Cache-Control: no-cache",
+                //"Postman-Token: cfb6a12d-0dd5-52c8-b230-40f50bd0781a",
+                //'Accept: application/json'
+            ),
+        ));
+        
+        //curl_setopt($curl, CURLOPT_USERPWD, "Api_7V7K-:68IK0BHE-W");
+        //curl_setopt($curl, CURLOPT_HTTPAUTH, CURLAUTH_BASIC);
+        //curl_setopt($curl, CURLOPT_SSLVERSION,3);
+       // curl_setopt($curl, CURLOPT_SSL_VERIFYPEER,false); // este es el reimportante
+        
+        //curl_setopt($curl,CURLOPT_HTTPHEADER,array('Accept: application/variant_div(left, right).epg.vrt.be.playlist_1.1+xml'));
+        
+        $response = curl_exec($curl);
+        $err = curl_error($curl);
+        
+        curl_close($curl);
+        
+        //echo "<pre>";
+        if ($err) {
+            echo "cURL Error #:" . $err . "<br>";
+            
+            CVarDumper::dump($err,10,true);
+            
+        } else {
+            CVarDumper::dump($response,10,true);
+            
+            echo "<br>";
+            
+            $xml = simplexml_load_string($response, "SimpleXMLElement", LIBXML_NOCDATA);
+            $json = json_encode($xml);
+            $array = json_decode($json,TRUE);
+            
+            CVarDumper::dump($array,10,true); 
+            
+        }
+        
+                
+    }
+    
+    public function actionSms()
+    {
+        $restURL = "https://api.masivapp.com/SmsHandlers/sendhandler.ashx";
+        
+        $restClient = new RESTClient ();
+        $restClient->initialize ( array (
+            'server' => $restURL,
+        ) );
+        
+        $restClient->format('json');
+        $restClient->option('RETURNTRANSFER', true);
+        $restClient->option('MAXREDIRS', 10);
+        $restClient->option('TIMEOUT', 30);
+        $restClient->option('SSL_VERIFYPEER', false);
+        $restClient->option('CUSTOMREQUEST', 'GET');
+        
+        $params = array(
+            'action'=>'sendmessage',
+            'username' => 'Api_7V7K-',
+            'password' => '68IK0BHE-W',
+            'recipient' => '573002817433',
+            'messagedata' => 'Prueba ('.date('YmdHis').'): Saludando al sinverguenza',
+            'longMessage' => false,
+        );
+        
+        
+        
+        $response = $restClient->get(null, $params);
+        
+        /*
+        CVarDumper::dump($restClient,10,true); echo "<br>";
+        echo "<br>Status: " . $restClient->status() . "<br>";
+        CVarDumper::dump($response,10,true);
+        echo "<br><br>DEBUG<br>";
+        $restClient->debug();
+        exit();
+        */
+        
+        echo "<br>Status: " . $restClient->status() . "<br><br>";
+        if($restClient->status()==200) {
+            //CVarDumper::dump($response,15,true);
+            echo "<br><br>";
+            //$response =  utf8_encode($response);
+            $xml = simplexml_load_string($response, "SimpleXMLElement", LIBXML_NOCDATA);
+            $json = json_encode($xml);
+            $array = json_decode($json,TRUE);
+            
+            CVarDumper::dump($array,10,true); 
+            
+        } else {
+            echo "cURL Error #:" . $restClient->error() . "<br><br>";
+            
+            CVarDumper::dump($restClient,10,true);
+            
+            //$restClient->debug();
+        }
+        
+        echo "<br><br>";
+        CVarDumper::dump($restClient,10,true); echo "<br>";
+        
+        Yii::app()->end();
     }
     
     public function actionRound(){

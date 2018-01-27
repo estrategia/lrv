@@ -231,6 +231,11 @@ class RESTClient extends CComponent
 		echo "</pre>";
 
 	}
+	
+	public function error()
+	{
+	    return $this->_curl->error_string;
+	}
 
 
 	// Return HTTP status code

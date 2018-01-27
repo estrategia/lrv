@@ -21,6 +21,7 @@ return array(
         'application.components.*',
         'ext.shoppingCart.*',
         'ext.rest.*',
+        'ext.elibom.ElibomClient',
         /*'ext.shoppingCartSalesman.*',
         'ext.shoppingCartVitalCall.*',
         'ext.shoppingCartNationalSale.*'*/
