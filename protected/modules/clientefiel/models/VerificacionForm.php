@@ -7,6 +7,7 @@
  */
 class VerificacionForm extends CFormModel {
 
+	public $cedula;
     public $codigoVerificacion;
   
     
@@ -18,10 +19,10 @@ class VerificacionForm extends CFormModel {
     public function rules() {
         return array(
              
-            array('codigoVerificacion', 'required', 'message' => '{attribute} no puede estar vacío'),
+            array('codigoVerificacion,cedula', 'required', 'message' => '{attribute} no puede estar vacío'),
             array('codigoVerificacion', 'numerical','integerOnly'=>true),
-            array('codigoVerificacion', 'length', 'min'=>6, 'max'=>6),
-            array('codigoVerificacion', 'safe', ),
+            array('codigoVerificacion,cedula', 'length', 'min'=> 1, 'max'=>6),
+            array('codigoVerificacion,cedula', 'safe', ),
         );
     }
   
@@ -42,6 +43,8 @@ class VerificacionForm extends CFormModel {
      */
     public function attributeLabels() {
         return array(
+        	0+
+        		'cedula' => 'Cedula',
             'codigoVerificacion' => 'Digite el c&oacute;digo de verificaci&oacute;n',
         );
     }

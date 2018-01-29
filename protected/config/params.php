@@ -15,7 +15,6 @@ return array(
         2 => "Febrero",
         3 => "Marzo",
         4 => "Abril",
-        5 => "Mayo",
         6 => "Junio",
         7 => "Julio",
         8 => "Agosto",
@@ -116,7 +115,8 @@ return array(
     	'url' => "http://localhost/siicop/clientefiel/api/",
     	'usuario' => 'admin',
     	'password' => 'admin',
-    	'sesion' => 'lrv.clientefiel.clientefielregistro'
+    	'sesion' => 'lrv.clientefiel.clientefielregistro',
+    	'sesionVerificacion' => 'lrv.clientefiel.codigoverificacion',
     ),
     'usuario' => array(
         'sesion' => 'larebaja.online.usuario',
