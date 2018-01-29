@@ -1,0 +1,53 @@
+new file:   css/fonts/HelveticaNeueLTStd-Bd.otf
+new file:   css/fonts/HelveticaNeueLTStd-Hv.otf
+new file:   css/fonts/HelveticaNeueLTStd-Lt.otf
+new file:   css/fonts/HelveticaNeueLTStd-LtEx.otf
+new file:   css/fonts/HelveticaNeueLTStd-Md.otf
+new file:   css/fonts/HelveticaNeueLTStd-Roman.otf
+modified:   css/main-desktop.css
+copied:     css/main-desktop.css -> css/main-desktop_2017.css
+new file:   images/desktop/alimentos-bebidas.jpg
+new file:   images/desktop/bebes.jpg
+new file:   images/desktop/bienestar.jpg
+modified:   images/desktop/cliente-fiel.png
+new file:   images/desktop/cuidado-en-casa.jpg
+new file:   images/desktop/cupones.png
+new file:   images/desktop/demo-cupones/1.png
+new file:   images/desktop/demo-cupones/10.png
+new file:   images/desktop/demo-cupones/11.png
+new file:   images/desktop/demo-cupones/12.png
+new file:   images/desktop/demo-cupones/2.png
+new file:   images/desktop/demo-cupones/3.png
+new file:   images/desktop/demo-cupones/4.png
+new file:   images/desktop/demo-cupones/5.png
+new file:   images/desktop/demo-cupones/6.png
+new file:   images/desktop/demo-cupones/7.png
+new file:   images/desktop/demo-cupones/8.png
+new file:   images/desktop/demo-cupones/9.png
+new file:   images/desktop/dermocosmetica.jpg
+new file:   images/desktop/electro-hogar.jpg
+new file:   images/desktop/header-cupones.jpg
+modified:   images/desktop/ico-actividad-comercial.png
+modified:   images/desktop/ico-buscar.png
+modified:   images/desktop/ico-carrito.png
+modified:   images/desktop/ico-contactanos.png
+new file:   images/desktop/ico-facebook.png
+modified:   images/desktop/ico-iniciar-sesion.png
+modified:   images/desktop/ico-menu-categorias.png
+new file:   images/desktop/ico-twitter.png
+new file:   images/desktop/ico-youtube.png
+modified:   images/desktop/informacion-y-servicios.png
+new file:   images/desktop/mascotas.jpg
+new file:   images/desktop/medicina.jpg
+new file:   images/desktop/movilidad.jpg
+new file:   images/desktop/naturales.jpg
+new file:   images/desktop/productos-destacados.png
+new file:   images/desktop/select-ciudad.png
+modified:   images/logotop.png
+modified:   js/desktop.js
+modified:   protected/components/Controller.php
+modified:   protected/config/database.php
+modified:   protected/views/carro/d_canasta.php
+new file:   protected/views/layouts/_d_cupones.php
+modified:   protected/views/layouts/desktop.php
+copied:     protected/views/layouts/desktop.php -> protected/views/layouts/desktop_2017.php
