@@ -52,11 +52,14 @@ class RegistroController extends Controller{
 			Yii::app()->session[Yii::app()->params->clienteFiel['sesion']] = $model;
 			
 			$this->redirect(CController::createUrl('realizarRegistro', array()));
-		}else{
+		} else {
 			
 			$modelCedula = new CedulaForm();
+			
+			
 			if($_POST){
 				$modelCedula->attributes = $_POST['CedulaForm'];
+				
 				try {
 					$cedula = $modelCedula->cedula;
 					$codigoSeguridad = Yii::app()->params->codigoSeguridadCRM;
@@ -66,6 +69,7 @@ class RegistroController extends Controller{
 							array( 'identificacion' => $cedula,
 									'key' => $llave
 							));
+					
 					
 					
 					if (!empty($result) && isset($result[0])) {
@@ -83,14 +87,10 @@ class RegistroController extends Controller{
 						$model->fechaNacimiento = $result[0]->C_FECHA_NACIMIENTO;
 						$model->ciudad = $result[0]->C_CIUDAD;
 						$model->genero = $result[0]->C_SEXO;
-						$this->render('codigoVerificacion', array(
-								
-						));
 						
 						Yii::app()->session[Yii::app()->params->clienteFiel['sesion']] = $model;
 						
 						// redireccionar vista de sms
-						
 						$this->redirect(CController::createUrl('codigoVerificacion'));
 					}
 					
@@ -99,12 +99,14 @@ class RegistroController extends Controller{
 					
 				}
 				
+				$model->cedula = $modelCedula->cedula;
+				Yii::app()->session[Yii::app()->params->clienteFiel['sesion']] = $model;
 				// Se debe redireccionar para continuar el registro
 				$this->redirect(CController::createUrl('realizarRegistro', array(
-						'numeroDocumento' => $_POST['numeroDocumento']
+						
 				)));
+				Yii::app()->end();
 			}
-			
 			
 			
 			if($this->isMobile){ 
@@ -116,6 +118,20 @@ class RegistroController extends Controller{
 						'model' => $modelCedula
 				));
 			}
+		}
+	}
+	
+	
+	public function actionCodigoVerificacion(){
+		
+		if($this->isMobile){
+			$this->render('codigoVerificacion', array(
+					'model' => $modelCedula
+			));
+		}else{
+			$this->render('d_codigoVerificacion', array(
+					'model' => $modelCedula
+			));
 		}
 	}
 	
