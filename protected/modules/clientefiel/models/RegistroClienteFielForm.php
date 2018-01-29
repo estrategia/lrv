@@ -44,9 +44,9 @@ class RegistroClienteFielForm extends CFormModel {
             array('cedula, nombre, apellido, correoElectronico', 'length', 'max' => 50),
             
             array('cedula,nombre, apellido, correoElectronico, fechaNacimiento, genero, fechaNacimiento, tieneHijos, 
-            	  tieneMascotas, telefonoFijo, telefonoCelular, ciudad', 'safe', 'on' => 'registro'),
+            	  tieneMascotas, telefonoFijo, telefonoCelular, ciudad',),
             array('cedula', 'validarCedula', 'on' => 'registro'),
-            array('correoElectronico', 'validarCorreo', 'on' => 'registro, actualizar'),
+            array('correoElectronico', 'validarCorreo', ),
         );
     }
     

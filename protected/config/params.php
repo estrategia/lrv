@@ -106,7 +106,12 @@ return array(
         'telefono' => '01 8000 93 99 00',
         'dias' => array(1, 10, 15, 25),
         'montoCompra' => 1000,
-        'puntosCompra' => 10
+        'puntosCompra' => 10,
+    	// nuevo portal
+    	'url' => "http://localhost/siicop/clientefiel/api/",
+    	'usuario' => 'admin',
+    	'password' => 'admin',
+    	'sesion' => 'lrv.clientefiel.clientefielregistro'
     ),
     'usuario' => array(
         'sesion' => 'larebaja.online.usuario',
@@ -417,6 +422,8 @@ return array(
         'patron' => "¤#,##0;(¤#,##0)",
         'moneda' => '$'
     ),
+	'codigoSeguridadCRM' => 'EiS0-CoPserv1r-12#54'	
+	,	
     'webServiceUrl' => array(
         'serverGeo' => 'http://www.copservir.com/webService/serverGeo.php',
         'serverLRV' => 'http://www.copservir.com/webService/serverLRV.php',
