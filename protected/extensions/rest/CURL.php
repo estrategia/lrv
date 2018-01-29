@@ -330,7 +330,7 @@ class CURL extends CComponent
 			$this->error_string = curl_error($this->session);
 
 			curl_close($this->session);
-			$this->set_defaults();
+			//$this->set_defaults();
 
 			return FALSE;
 		}

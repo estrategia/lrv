@@ -5,6 +5,11 @@ return array(
         "js" => "20170323",
         "css" => "20170323"
     ),
+    'elibom' => array(
+        'url' => 'https://api.masivapp.com/SmsHandlers/sendhandler.ashx',
+        'usuario' => 'Api_7V7K-',
+        'password' => '68IK0BHE-W',
+    ),
     "meses" => array(
         1 => "Enero",
         2 => "Febrero",
