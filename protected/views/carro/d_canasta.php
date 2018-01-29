@@ -1,10 +1,9 @@
 <div class="btn-group minicar">
     <a href="#" data-toggle="dropdown" data-placeholder="false" class="dropdown-toggle">
-        <span><img class="ico-carrito" src="<?php echo Yii::app()->request->baseUrl; ?>/images/desktop/ico-carrito.png" alt=""></span>
+        <img class="ico-carrito" src="<?php echo Yii::app()->request->baseUrl; ?>/images/desktop/ico-carrito.png">
+        <span style="margin-left: 10px;">Productos</span>
         <span id="cantidad-productos" class="cantidad-productos"><?php echo Yii::app()->shoppingCart->getCount(); ?></span>
-        <p style="color: #A3A3A3;">Productos</p>
     </a>
-
     <ul class="dropdown-menu noclose pull-right">
         <li class="top">Hay <?php echo Yii::app()->shoppingCart->getCount(); ?> producto(s) en el carro</li>
         <?php if (!Yii::app()->shoppingCart->isEmpty()): ?>
@@ -22,10 +21,10 @@
                     <li role="separator" class="divider"></li>
                 <?php endforeach; ?>
             </div>
-            <li class="vermasc">
-                <?php echo CHtml::link(' ', '#', array('class' => '')); ?>
+            <!-- <li class="vermasc">
+                <?php //echo CHtml::link(' ', '#', array('class' => '')); ?>
                 <?php //echo CHtml::link('Editar carro', CController::createUrl('/carro'), array('class' => '')); ?>
-            </li>
+            </li> -->
             <li class="subtotal">Subtotal: <strong><?php echo Yii::app()->numberFormatter->format(Yii::app()->params->formatoMoneda['patron'], Yii::app()->shoppingCart->getCost(), Yii::app()->params->formatoMoneda['moneda']); ?></strong></li>
             <li>
                 <div class="row btn-pagar">

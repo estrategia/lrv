@@ -60,8 +60,8 @@ class Controller extends CController {
         }
 
 
-		  $this->isMobile = true;
-		  $this->layout = '//layouts/mobile';
+		  // $this->isMobile = true;
+		  // $this->layout = '//layouts/mobile';
 
         $this->verificarDispositivo();
 
@@ -241,7 +241,7 @@ class Controller extends CController {
             if ($objSectorCiudad->objSector->codigoSector != 0)
                 $this->sectorName .= " - " . $objSectorCiudad->objSector->nombreSector;
         }else {
-            $this->sectorName = "Seleccionar ciudad";
+            $this->sectorName = "Selecciona tu ciudad";
         }
     }
 

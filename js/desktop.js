@@ -1602,7 +1602,7 @@ function validarCantidadFraccionado(codigoProducto, numeroFracciones, unidadFrac
     if (nroFracciones < 0) {
         nroFracciones = 0;
     }
-   
+
     if ((nroFracciones * unidadFraccionamiento) >= numeroFracciones) {
         var nroUnidadesAdicionales = Math.floor((nroFracciones * unidadFraccionamiento) / numeroFracciones);
         nroUnidades = nroUnidades * 1 + nroUnidadesAdicionales;
@@ -2968,7 +2968,7 @@ $(document).on('click', "a[data-role='ocultar-menu']", function() {
         success: function(data) {
             if (data.result === 'ok') {
             	$("#menuPublicidad").css("display",'none');
-            } 
+            }
         }
     });
     return false;
@@ -2995,7 +2995,7 @@ $(document).on('click', "button[data-role='crear-suscripcion']", function () {
             },
             success: function(data) {
                 // if (data.result === 'ok') {
-                    // } 
+                    // }
                 boton.attr('disabled', false);
                 alert(data.response);
             },
@@ -3029,7 +3029,7 @@ $(document).on('click', "button[data-role='actualizar-suscripcion']", function (
             },
             success: function (data) {
                 // if (data.result === 'ok') {
-                // } 
+                // }
                 boton.attr('disabled', false);
                 alert(data.response);
             },
@@ -3072,3 +3072,18 @@ $(document).on('click', "a[data-role='mostrar-traza-item']", function () {
     return false;
 });
 
+
+
+// Mega Menu
+$(document).ready(function() {
+  $( "button.toggle-categorias" ).click(function() {
+    $(".row.mega-menu").toggleClass("hidden");
+  });
+});
+
+$(document).on('click', "a[data-role='menu-menu']", function () {
+  var idMenu = $(this).attr('data-menu');
+  $("div[data-role='menu-submenu']").addClass('hidden');
+  $("div[data-role='menu-submenu'][data-menu='"+idMenu+"']").removeClass('hidden');
+
+});
