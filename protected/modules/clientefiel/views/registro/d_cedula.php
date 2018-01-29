@@ -27,5 +27,11 @@ $form = $this->beginWidget ( 'CActiveForm', array (
 	</div>
 </div>
 
+<div class="row">
+	<div class="col-md-4">
+        <input class='btn btn-primary' type="submit" data-enhanced="true" value="Continuar">
+	</div>
+</div>
+
 
 <?php $this->endWidget(); ?>

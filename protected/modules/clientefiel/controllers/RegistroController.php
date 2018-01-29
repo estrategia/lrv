@@ -51,23 +51,19 @@ class RegistroController extends Controller{
 			
 			Yii::app()->session[Yii::app()->params->clienteFiel['sesion']] = $model;
 			
-			
-			
-			$this->redirect(CController::createUrl('realizarRegistro', array(
-				
-			)));
+			$this->redirect(CController::createUrl('realizarRegistro', array()));
 		}else{
 			
-			
+			$modelCedula = new CedulaForm();
 			if($_POST){
-									
+				$modelCedula->attributes = $_POST['CedulaForm'];
 				try {
-					$cedula = Yii::app()->user->name;
+					$cedula = $modelCedula->cedula;
 					$codigoSeguridad = Yii::app()->params->codigoSeguridadCRM;
 					$llave = md5($cedula.$codigoSeguridad);
 					
 					$result = $clientSugar->__soapCall("ConsultarCliente",
-							array( 'identificacion' => $numeroDocumento,
+							array( 'identificacion' => $cedula,
 									'key' => $llave
 							));
 					
@@ -94,8 +90,10 @@ class RegistroController extends Controller{
 						Yii::app()->session[Yii::app()->params->clienteFiel['sesion']] = $model;
 						
 						// redireccionar vista de sms
-						Yii::app()->end();
+						
+						$this->redirect(CController::createUrl('codigoVerificacion'));
 					}
+					
 				} catch (Exception $e){
 					// not implemented yet
 					
@@ -107,6 +105,17 @@ class RegistroController extends Controller{
 				)));
 			}
 			
+			
+			
+			if($this->isMobile){ 
+				$this->render('cedula', array(
+						'model' => $modelCedula
+				));
+			}else{
+				$this->render('d_cedula', array(
+						'model' => $modelCedula
+				));
+			}
 		}
 	}
 	

@@ -25,6 +25,8 @@ $form = $this->beginWidget ( 'CActiveForm', array (
 	                </div>
 </fieldset>
 </div>
+
+
 	
 	
 <?php $this->endWidget(); ?>
