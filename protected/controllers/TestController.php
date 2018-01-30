@@ -2,6 +2,16 @@
 //controlador de prueba TestController prueba
 class TestController extends Controller {
     
+    public function actionDiv()
+    {
+        /*$result = 15/19;
+        print_r($result);echo "<br>";
+        print_r(floor($result));*/
+        
+        
+        CVarDumper::dump($this->categoriasMenu,10,true);
+    }
+    
     public function actionRound(){
         $valor = 0.2;
         $round = ceil($valor);

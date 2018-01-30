@@ -107,18 +107,24 @@ header("Pragma: no-cache");
                 <div class="col-md-6 col-lg-6">
                   <?php foreach ($this->categorias as $idxCategoria => $categoria): ?>
                     <div class="<?= ($idxCategoria==0 ? "" : "hidden") ?>" data-role="menu-submenu" data-menu="<?= $categoria->idCategoriaTienda ?>">
-                    <?php foreach ($categoria->listCategoriasHijas as $subcategoria): ?>
-                      <div class="category-title"  data-menu="<?= $categoria->idCategoriaTienda ?>" data-submenu="<?= $subcategoria->idCategoriaTienda ?>"><?php echo ucfirst(strtolower($subcategoria->nombreCategoriaTienda)); ?></div>
-                      <div class="subcategory-link">
-                        <?php for ($i = 0; $i < count($subcategoria->listCategoriasHijasMenu) && $i < 5; $i++): ?>
-                        <?php $categoriaHija = $subcategoria->listCategoriasHijasMenu[$i]; ?>
-                        <?php echo CHtml::link(ucfirst(strtolower($categoriaHija->nombreCategoriaTienda)), CController::createUrl('/catalogo/categoria', array('categoria' => $categoriaHija->idCategoriaTienda))); ?>
-                        <?php endfor; ?>
-                      </div>
-                    <?php endforeach; ?>
-                  </div>
+                    	<?php foreach ($this->categoriasMenu[$categoria->idCategoriaTienda] as $subcategorias): ?>
+                    		<?php $cols = round(12/count($this->categoriasMenu[$categoria->idCategoriaTienda])) ?>
+                    		<div class="col-md-<?=$cols?> col-lg-<?=$cols?>">
+                    			<?php foreach ($subcategorias as $subcategoria): ?>
+                    				<div class="category-title"  data-menu="<?= $categoria->idCategoriaTienda ?>" data-submenu="<?= $subcategoria->idCategoriaTienda ?>"><?php echo ucfirst(strtolower($subcategoria->nombreCategoriaTienda)); ?></div>
+                         		<div class="subcategory-link">
+                         			<?php for ($i = 0; $i < count($subcategoria->listCategoriasHijasMenu); $i++): ?>
+                                 	<?php $categoriaHija = $subcategoria->listCategoriasHijasMenu[$i]; ?>
+                                    	<?php echo CHtml::link(ucfirst(strtolower($categoriaHija->nombreCategoriaTienda)), CController::createUrl('/catalogo/categoria', array('categoria' => $categoriaHija->idCategoriaTienda))); ?>
+                                    	<?php endfor; ?>
+                           		</div>
+                    			<?php endforeach;?>
+                    		</div>
+                    	<?php endforeach;?>
+                  	</div>
                 <?php endforeach; ?>
                 </div>
+                
                 <div class="col-md-6 col-lg-6">
 
                 </div>
