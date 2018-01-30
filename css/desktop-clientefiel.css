@@ -1,0 +1,128 @@
+* {
+  font-family: Helvetica;
+  color: #676767;
+}
+
+.red-background {
+  background-color: #EE3E27;
+}
+
+.nav {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  height: 160px;
+  width: 100%;
+}
+
+.nav .clientefiel-logo {
+  height: 100px;
+  margin-right: auto;
+  margin-left: 3%;
+}
+
+.nav .lrv-logo {
+  height: 30px;
+  align-self: flex-end;
+  margin-left: auto;
+  margin-right: 3%;
+  margin-bottom: 10px;
+}
+
+.banner {
+  height: 288px;
+}
+
+.banner-image {
+  position: relative;
+}
+
+.banner-text {
+  position: absolute;
+  top: 35%;
+  right: 45%;
+  width: 100%;
+  color: #EE3E27;
+  font-size: 3rem;
+  font-weight: bold;
+}
+
+.banner-text * {
+  color: #EE3E27;
+  font-size: 3rem;
+  font-weight: bold;
+}
+
+.banner-link {
+  color: white;
+  position: absolute;
+  top: 68%;
+  left: 10%;
+}
+
+a.banner-link {
+  text-decoration: underline;
+}
+
+a:hover.banner-link {
+  color: white;
+}
+
+.emphasis {
+  font-weight: black;
+  font-size: 4rem;
+}
+
+.buttons-section {
+  margin-top: 3%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.buttons-section a {
+  max-width: 35%;
+}
+
+.content {
+  margin: 3%;
+}
+
+.footer {
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  height: 230px;
+}
+
+.footer-logos {
+  display: flex;
+  align-items: center;
+  justify-content: space-around;
+  height: 145px;
+}
+
+.footer-logos .logos {
+  align-self: flex-end;
+  margin-bottom: 25px;
+}
+
+.footer-section {
+  height: 85px;
+  text-align: center;
+  font-size: 1.5rem;
+}
+
+.footer-text {
+  position: relative;
+  top: 50%;
+  transform: translateY(-50%);
+}
+
+.footer-section * {
+  color: white !important;
+}
+
+.footer-section p {
+  margin: 0;
+}

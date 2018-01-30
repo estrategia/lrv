@@ -2,6 +2,7 @@
 
 class SitioController extends Controller
 {
+
 	public function actionIndex()
 	{
 		if($this->isMobile){
