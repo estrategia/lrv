@@ -22,7 +22,7 @@ class UsuarioForm extends CFormModel {
             array('cedula,clave, claveConfirmar', 'required', 'message' => '{attribute} no puede estar vacío'),
             array('cedula', 'numerical','integerOnly'=>true),
             array('cedula', 'length', 'min'=>5, 'max'=>12),
-         
+         	array('clave', 'validarClave'),
             array('cedula, clave, claveConfirmar', 'safe'),
          
         );
