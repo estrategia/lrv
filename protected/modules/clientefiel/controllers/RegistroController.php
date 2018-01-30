@@ -322,8 +322,8 @@ class RegistroController extends Controller{
 				'server' => $restURL,
 		) );
 		
-		$params['select2'] = 1;
 		$params = array();
+		$params['select2'] = '1';
 		if($term != null){
 			$params['term'] = $term;
 		}else if($id != null){
