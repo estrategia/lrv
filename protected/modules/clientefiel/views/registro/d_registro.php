@@ -203,8 +203,27 @@ $form = $this->beginWidget ( 'CActiveForm', array (
 		   </div>
 		</div>		
 	</div>
-   
+	
 <?php endif;?>
+
+	<?php if($model->solicitarVerificacion):?>
+		
+		<div class="form">
+				<div class="form-section">
+					<div class="form-input">
+			            <?php echo $form->textField($model, 'codigoVerificacion', array('placeholder' => $model->getAttributeLabel('codigoVerificacion'))); ?>
+			            <?php echo $form->error($model, 'codigoVerificacion', array("class" => "text-danger")); ?>
+				   </div>
+				</div>
+		</div>
+		<div class="form">
+				<div class="form-section">
+					<div class="form-input">
+						 <a class='button-form' data-role='enviar-mensaje-verificacion' data-tipo='1'  type="button" data-enhanced="true" href="#">Enviar C&oacute;digo de verificaci&oacute;n</a>
+					</div>
+				</div>
+		</div>
+	<?php endif;?>
 </div>
 
 <div class="terms-conditions">
