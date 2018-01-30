@@ -25,6 +25,7 @@ class RegistroClienteFielForm extends CFormModel {
     public $condiciones;
     public $tieneHijos;
     public $tieneMascotas;
+    public $clienteInterno;
     
     /**
      * Declares the validation rules.

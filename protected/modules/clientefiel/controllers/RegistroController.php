@@ -44,7 +44,17 @@ class RegistroController extends Controller{
 		try {
 			
 			$usuario = Usuario::model()->findByPK($cedula);
-				
+			
+			// consultar si es asociado
+			
+			$asociado = self::callWSUsuarioInterno($cedula);
+			
+			echo "<pre>";
+			print_r($asociado);exit();
+			
+			
+			
+			
 			if($usuario == null){
 				$model->cedula = $cedula;
 				$model->scenario = "registro";
@@ -138,6 +148,27 @@ class RegistroController extends Controller{
 		}
 		
 	}
+	
+	
+	public static function callWSUsuarioInterno($username) {
+		$client = new SoapClient(Yii::app()->params->webServiceUrl['persona'], array(
+				"trace" => 1,
+				"exceptions" => 0,
+				'connection_timeout' => 5,
+				'cache_wsdl' => WSDL_CACHE_NONE
+		));
+	
+		try {
+			$result = $client->getPersona($username);
+	
+			return $result;
+		} catch (SoapFault $exc) {
+			//$this->addError('password', 'ha ocurrido un error');
+		} catch (Exception $exc) {
+			//$this->addError('password', 'ha ocurrido un error');
+		}
+	}
+	
 	
 	
 	public function actionCodigoVerificacion(){
@@ -264,26 +295,23 @@ class RegistroController extends Controller{
 			if(!$error){
 				if($model->scenario == 'registro'){
 					$response = $restClientSII->post('cliente/crear', array(
-							'ClienteFiel[numeroDocumento]' => $model->cedula,
-							'ClienteFiel[IdTipoDocumento]' => 1,
-							'ClienteFiel[apellidos]' => $model->apellido,
-							'ClienteFiel[nombres]' => $model->nombre,
-							'ClienteFiel[apellidosNombres]' =>$model->apellido." ". $model->nombre,
-							'ClienteFiel[telefono]' => $model->telefonoFijo,
-							'ClienteFiel[celular]' => $model->telefonoCelular,
-							'ClienteFiel[IdCiudad]' => $model->ciudad,
-							'ClienteFiel[numeroDocumento]' => $model->correoElectronico,
-							'ClienteFiel[IdSexo]' => $model->genero,
-							'ClienteFiel[fechaNacimiento]' => $model->fechaNacimiento,
-							'ClienteFiel[IdProfesion]' => $model->profesion,
-							'ClienteFiel[idOcupacion]' => $model->ocupacion,
-							'ClienteFiel[tieneHijosMenores]' => $model->tieneHijos,
-							'ClienteFiel[tieneMascota]' => $model->tieneMascotas,
+							'numeroDocumento' => $model->cedula,
+							'IdTipoDocumento' => 1,
+							'apellidos' => $model->apellido,
+							'nombres' => $model->nombre,
+							'apellidosNombres' =>$model->apellido." ". $model->nombre,
+							'telefono' => $model->telefonoFijo,
+							'celular' => $model->telefonoCelular,
+							'IdCiudad' => $model->ciudad,
+							'email' => $model->correoElectronico,
+							'IdSexo' => $model->genero,
+							'fechaNacimiento' => $model->fechaNacimiento,
+							'IdProfesion' => $model->profesion,
+							'idOcupacion' => $model->ocupacion,
+							'tieneHijosMenores' => $model->tieneHijos,
+							'tieneMascota' => $model->tieneMascotas,
 							
 					));
-					
-					echo "<pre>";
-					print_r($restClientSII);exit();
 					
 					if($restClientSII->status()==200 ) { // guardo con exito
 						
@@ -323,23 +351,27 @@ class RegistroController extends Controller{
 						// error al guardar
 					}
 				}else if($model->scenario == 'actualizar'){
-					$response = $restClientSII->post('cliente/actualizar', array(
+					$response = $restClientSII->put('cliente/actualizar', array(
 							'numeroDocumento' => $model->cedula,
-							'ClienteFiel[numeroDocumento]' => $model->cedula,
-							'ClienteFiel[apellidos]' => $model->apellido,
-							'ClienteFiel[nombres]' => $model->nombre,
-							'ClienteFiel[apellidosNombres]' =>$model->apellido." ". $model->nombre,
-							'ClienteFiel[telefono]' => $model->telefonoFijo,
-							'ClienteFiel[celular]' => $model->telefonoCelular,
-							'ClienteFiel[IdCiudad]' => $model->ciudad,
-							'ClienteFiel[numeroDocumento]' => $model->correoElectronico,
-							'ClienteFiel[idSexo]' => $model->genero,
-							'ClienteFiel[fechaNacimiento]' => $model->fechaNacimiento,
-							'ClienteFiel[IdProfesion]' => $model->profesion,
-							'ClienteFiel[idOcupacion]' => $model->ocupacion,
-							'ClienteFiel[tieneHijosMenores]' => $model->tieneHijos,
-							'ClienteFiel[tieneMascota]' => $model->tieneMascotas,
+							'apellidos' => $model->apellido,
+							'nombres' => $model->nombre,
+							'apellidosNombres' =>$model->apellido." ". $model->nombre,
+							'telefono' => $model->telefonoFijo,
+							'celular' => $model->telefonoCelular,
+							'IdCiudad' => $model->ciudad,
+							'numeroDocumento' => $model->correoElectronico,
+							'idSexo' => $model->genero,
+							'fechaNacimiento' => $model->fechaNacimiento,
+							'IdProfesion' => $model->profesion,
+							'idOcupacion' => $model->ocupacion,
+							'tieneHijosMenores' => $model->tieneHijos,
+							'tieneMascota' => $model->tieneMascotas,
 					));
+					
+					if($restClientSII->status()==200 ) {
+					
+					}
+					exit();
 				}
 			}
 				
