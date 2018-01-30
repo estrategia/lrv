@@ -34,8 +34,8 @@ class TestController extends Controller {
     }
     
     public function actionElibom () {
-        $telefono = "3167022606";
-        $mensaje = "Prueba.";
+        $telefono = "3165466295";
+        $mensaje = "Bancolombia le informa un Pago de Nomina por $50,000 en su Cuenta Ahorros. 09:29 30/01/2018.";
         $mensaje = str_replace(" ", "%20", $mensaje);
         $elibom = new ElibomClient(Yii::app()->params['elibom']['url'], Yii::app()->params['elibom']['usuario'], Yii::app()->params['elibom']['password']);
         try {

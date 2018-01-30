@@ -16,6 +16,9 @@ class RegistroController extends Controller{
 			if($_POST){
 				$modelCedula->attributes = $_POST['CedulaForm'];
 				$this->verificarUsuario($modelCedula->cedula);
+			}else{
+				$modelCliente = new RegistroClienteFielForm();
+				Yii::app()->session[Yii::app()->params->clienteFiel['sesion']] = $modelCliente;
 			}
 			
 			if($this->isMobile){ 
@@ -210,11 +213,30 @@ class RegistroController extends Controller{
 		) );
 		
 		// Buscar para ver si existe el cliente
-		if($model->scenario != 'registro'){
+		
+		$response = $restClientSII->get('cliente/ver', array(
+				'numeroDocumento' => $model->cedula,
+		));
 			
-			// consultar y copiar la informacion de SII en el modelo
+		if($restClientSII->status()==200) {
+			$model->scenario = 'actualizar';
+			$response = json_decode( preg_replace('/[\x00-\x1F\x80-\xFF]/', '', $response), true );
+			$data = $response['data'];
+			$model->cedula = $model->cedula;
+			$model->nombre = $data['nombres'];
+			$model->apellido = $data['apellidos'];
+			$model->telefonoCelular = $data['celular'];
+			$model->telefonoFijo = $data['telefono'];
+			$model->correoElectronico = $data['email'];
+			$model->tieneMascotas = $data['tieneMascota'];
+			$model->tieneHijos = $data['tieneHijosMenores'];
+			$model->fechaNacimiento = $data['fechaNacimiento'];
+			$model->ciudad = $data['IdCiudad'];
+			$model->genero = $data['IdSexo'];
 			
-		}else{
+			$model->scenario = 'actualizar';
+		} else {
+			$model->scenario = 'registro';
 			
 			if(!$usuario){
 				$params['modelUsuario'] = new UsuarioForm();
@@ -225,77 +247,101 @@ class RegistroController extends Controller{
 		if($_POST){
 			$model->attributes = $_POST['RegistroClienteFielForm'];
 			
-			if(isset($_POST['RegistroClienteFielForm'])){
-				$params['modelUsuario']->attributes = $_POST['UsuarioForm'];
+			$error = false;
+			if(isset($_POST['UsuarioForm'])){
 				
+				$params['modelUsuario']->attributes = $_POST['UsuarioForm'];
 				$params['modelUsuario']->cedula = $model->cedula;
 				
-				if($params['modelUsuario']->validate()){
-					
+				if(!$params['modelUsuario']->validate()){
+					echo"Hola";
+					$error = true;
 				}
 			}
 			
 			// si guarda
 		
-			if($model->scenario == 'registro'){
-// 				$response = $restClientSII->post('crear', array(
-// 						'ClienteFiel[numeroDocumento]' => $model->cedula,
-// 						'ClienteFiel[apellidos]' => $model->apellido,
-// 						'ClienteFiel[nombres]' => $model->nombre,
-// 						'ClienteFiel[apellidosNombres]' =>$model->apellido." ". $model->nombre,
-// 						'ClienteFiel[telefono]' => $model->telefonoFijo,
-// 						'ClienteFiel[celular]' => $model->telefonoCelular,
-// 						'ClienteFiel[IdCiudad]' => $model->ciudad,
-// 						'ClienteFiel[numeroDocumento]' => $model->correoElectronico,
-// 						'ClienteFiel[idSexo]' => $model->genero,
-// 						'ClienteFiel[fechaNacimiento]' => $model->fechaNacimiento,
-// 						'ClienteFiel[IdProfesion]' => $model->profesion,
-// 						'ClienteFiel[idOcupacion]' => $model->ocupacion,
-// 						'ClienteFiel[tieneHijosMenores]' => $model->tieneHijos,
-// 						'ClienteFiel[tieneMascotas]' => $model->tieneMascotas,
-						
-// 				));
-				
-				if(true) { // guardo con exito
-					
-					
-					// verificar si es usuario de la rebaja virtual
-					
-					
-					
-					if($usuario){
-						// actualizar usuario con el perfil de cliente fiel
-						$usuario->codigoPerfil = Yii::app()->params->clienteFiel['codigoPerfilActivo'];
-						$usuario->esClienteFiel = 1;
-						
-						
-						if($usuario->save()){
+			if(!$error){
+				if($model->scenario == 'registro'){
+					$response = $restClientSII->post('cliente/crear', array(
+							'ClienteFiel[numeroDocumento]' => $model->cedula,
+							'ClienteFiel[IdTipoDocumento]' => 1,
+							'ClienteFiel[apellidos]' => $model->apellido,
+							'ClienteFiel[nombres]' => $model->nombre,
+							'ClienteFiel[apellidosNombres]' =>$model->apellido." ". $model->nombre,
+							'ClienteFiel[telefono]' => $model->telefonoFijo,
+							'ClienteFiel[celular]' => $model->telefonoCelular,
+							'ClienteFiel[IdCiudad]' => $model->ciudad,
+							'ClienteFiel[numeroDocumento]' => $model->correoElectronico,
+							'ClienteFiel[IdSexo]' => $model->genero,
+							'ClienteFiel[fechaNacimiento]' => $model->fechaNacimiento,
+							'ClienteFiel[IdProfesion]' => $model->profesion,
+							'ClienteFiel[idOcupacion]' => $model->ocupacion,
+							'ClienteFiel[tieneHijosMenores]' => $model->tieneHijos,
+							'ClienteFiel[tieneMascota]' => $model->tieneMascotas,
 							
+					));
+					
+					echo "<pre>";
+					print_r($restClientSII);exit();
+					
+					if($restClientSII->status()==200 ) { // guardo con exito
+						
+						// verificar si es usuario de la rebaja virtual
+						
+						if($usuario){
+							// actualizar usuario con el perfil de cliente fiel
+							$usuario->codigoPerfil = Yii::app()->params->clienteFiel['codigoPerfilActivo'];
+							$usuario->esClienteFiel = 1;
+							
+							
+							if($usuario->save()){
+								$this->redirect(CController::createUrl('bienvenida'));
+							}
+							
+							// enviar correo electronico de bienvenida al club
+							
+						}else{
+							
+							$usuario = new Usuario();
+							$usuario->apellido = $model->apellido;
+							$usuario->codigoPerfil = Yii::app()->params->clienteFiel['codigoPerfilActivo'];
+							$usuario->correoElectronico;
+							$usuario->esClienteFiel = 1;
+							$usuario->identificacionUsuario = $model->cedula;
+							$usuario->nombre = $model->nombre;
+							
+							$usuario->clave = md5($params['modelUsuario']->clave);
+							$usuario->save();
+						//	Yii::app()->session[Yii::app()->params->clienteFiel['sesionUsuario']] = $usuario;
+						//	$this->redirect(CController::createUrl('clave'));
+							$this->redirect(CController::createUrl('bienvenida'));
+							Yii::app()->end();
 						}
 						
-						// enviar correo electronico de bienvenida al club
-						
-					}else{
-						
-						$usuario = new Usuario();
-						$usuario->apellido = $model->apellido;
-						$usuario->codigoPerfil = Yii::app()->params->clienteFiel['codigoPerfilActivo'];
-						$usuario->correoElectronico;
-						$usuario->esClienteFiel = 1;
-						$usuario->identificacionUsuario = $model->cedula;
-						$usuario->nombre = $model->nombre;
-						
-						Yii::app()->session[Yii::app()->params->clienteFiel['sesionUsuario']] = $usuario;
-						$this->redirect(CController::createUrl('clave'));
-						Yii::app()->end();
+					} else {
+						// error al guardar
 					}
-					
-				} else {
-					// error al guardar
+				}else if($model->scenario == 'actualizar'){
+					$response = $restClientSII->post('cliente/actualizar', array(
+							'numeroDocumento' => $model->cedula,
+							'ClienteFiel[numeroDocumento]' => $model->cedula,
+							'ClienteFiel[apellidos]' => $model->apellido,
+							'ClienteFiel[nombres]' => $model->nombre,
+							'ClienteFiel[apellidosNombres]' =>$model->apellido." ". $model->nombre,
+							'ClienteFiel[telefono]' => $model->telefonoFijo,
+							'ClienteFiel[celular]' => $model->telefonoCelular,
+							'ClienteFiel[IdCiudad]' => $model->ciudad,
+							'ClienteFiel[numeroDocumento]' => $model->correoElectronico,
+							'ClienteFiel[idSexo]' => $model->genero,
+							'ClienteFiel[fechaNacimiento]' => $model->fechaNacimiento,
+							'ClienteFiel[IdProfesion]' => $model->profesion,
+							'ClienteFiel[idOcupacion]' => $model->ocupacion,
+							'ClienteFiel[tieneHijosMenores]' => $model->tieneHijos,
+							'ClienteFiel[tieneMascota]' => $model->tieneMascotas,
+					));
 				}
 			}
-				
-		}else{
 				
 		}
 		

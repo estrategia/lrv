@@ -34,7 +34,8 @@ class RegistroClienteFielForm extends CFormModel {
     public function rules() {
         return array(
              
-            array('cedula,nombre, apellido, correoElectronico, fechaNacimiento, ocupacion, genero, fechaNacimiento, tieneHijos, profesion, tieneMascotas, telefonoFijo, telefonoCelular, ciudad', 
+            array('cedula,nombre, apellido, correoElectronico, fechaNacimiento,  genero, 
+            		fechaNacimiento, tieneHijos,  tieneMascotas, telefonoFijo, telefonoCelular', 
             		'required', 'message' => '{attribute} no puede estar vacío'),
              array('condiciones', 'required', 'message' => 'Aceptar términos y condiciones'),
          //    array('cedula', 'numerical','integerOnly' => true),

@@ -117,6 +117,7 @@ return array(
     	'password' => 'admin',
     	'sesion' => 'lrv.clientefiel.clientefielregistro',
     	'sesionVerificacion' => 'lrv.clientefiel.codigoverificacion',
+    	'codigoPerfilActivo' => 5,
     ),
     'usuario' => array(
         'sesion' => 'larebaja.online.usuario',
