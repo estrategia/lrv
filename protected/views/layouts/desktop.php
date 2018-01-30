@@ -69,9 +69,9 @@ header("Pragma: no-cache");
                 <div class="col-md-4 col-lg-4">
                     <?php if (Yii::app()->user->isGuest): ?>
                         <ul class="user">
-                            <li><a href="<?= Yii::app()->request->baseUrl; ?>/usuario/autenticar/opcion/inicio" ><img class="ico-user" src="<?php echo Yii::app()->request->baseUrl; ?>/images/desktop/ico-iniciar-sesion.png" alt=""> Inicia Sesión</a></li>
+                            <li><a href="<?= Yii::app()->request->baseUrl; ?>/usuario/ingresar" ><img class="ico-user" src="<?php echo Yii::app()->request->baseUrl; ?>/images/desktop/ico-iniciar-sesion.png" alt=""> Inicia Sesión</a></li>
                             <span class="line-divider">|</span>
-                            <li><a href="<?= Yii::app()->request->baseUrl; ?>/usuario/autenticar/opcion/registro">Registrate</a></li>
+                            <li><a href="<?= Yii::app()->request->baseUrl; ?>/usuario/registro">Registrate</a></li>
                         </ul>
                     <?php else: ?>
                         <ul class="user login_in">
@@ -93,7 +93,7 @@ header("Pragma: no-cache");
           </div>
           <!--- menuMenu categorias --->
           <div class="row mega-menu hidden">
-            <nav class="col-md-3 col-lg-3 main-menu-categories">
+            <nav class="col-md-2 col-lg-2 main-menu-categories">
               <ul class="nav nav-stacked menu">
                 <?php foreach ($this->categorias as $categoria): ?>
                   <li class="nav-item">
@@ -102,7 +102,7 @@ header("Pragma: no-cache");
                   <?php endforeach; ?>
               </ul>
             </nav>
-            <div class="col-md-9 col-lg-9 lazy-menu">
+            <div class="col-md-10 col-lg-10 lazy-menu">
               <div class="row">
                 <div class="col-md-6 col-lg-6">
                   <?php foreach ($this->categorias as $idxCategoria => $categoria): ?>
@@ -118,6 +118,9 @@ header("Pragma: no-cache");
                     <?php endforeach; ?>
                   </div>
                 <?php endforeach; ?>
+                </div>
+                <div class="col-md-6 col-lg-6">
+
                 </div>
               </div>
             </div>
@@ -203,12 +206,11 @@ header("Pragma: no-cache");
         </div>
       </nav>
     </header>
-
     <div class="wrapper" id="main-content">
-        <?php $this->renderPartial('//layouts/_d_cupones'); ?>
-		    <?php echo $content; ?>
+        <?php  //$this->renderPartial('//layouts/_d_cupones'); ?>
+        <?php // $this->renderPartial('//layouts/_d_productos-destacados'); ?>
+        <?php echo $content; ?>
     </div>
-
     <?php if (CodigoEspecial::hasState()): ?>
 		    <div class="container-fluid">
           <div class="row">
@@ -227,7 +229,6 @@ header("Pragma: no-cache");
         	</div>
         </div>
 		<?php endif; ?>
-
     <footer>
       <div class="container-fluid">
         <div class="row pre-footer">
@@ -285,9 +286,9 @@ header("Pragma: no-cache");
             <div class="item" style="width: 11%;">
               <div class="social">
                 <ul>
-                  <li><a href="#"><img src="<?php echo Yii::app()->request->baseUrl; ?>/images/desktop/ico-facebook.png"></a></li>
-                  <li><a href="#"><img src="<?php echo Yii::app()->request->baseUrl; ?>/images/desktop/ico-youtube.png"></a></li>
-                  <li><a href="#"><img src="<?php echo Yii::app()->request->baseUrl; ?>/images/desktop/ico-twitter.png"></a></li>
+                  <li><a href="https://www.facebook.com/LaRebaja/" target="_blank"><img src="<?php echo Yii::app()->request->baseUrl; ?>/images/desktop/ico-facebook.png"></a></li>
+                  <li><a href="https://www.youtube.com/user/larebaja/" target="_blank"><img src="<?php echo Yii::app()->request->baseUrl; ?>/images/desktop/ico-youtube.png"></a></li>
+                  <li><a href="https://twitter.com/larebaja" target="_blank"><img src="<?php echo Yii::app()->request->baseUrl; ?>/images/desktop/ico-twitter.png"></a></li>
                 </ul>
               </div>
             </div>
@@ -303,8 +304,6 @@ header("Pragma: no-cache");
         </div>
       </div>
     </footer>
-
   </div>
 </body>
-
 </html>

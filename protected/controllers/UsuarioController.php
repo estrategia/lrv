@@ -12,7 +12,7 @@ class UsuarioController extends Controller {
                 'application.filters.SessionControlFilter + pagoexpress, cotizacion, direcciones',
                 'isMobile' => $this->isMobile
             ),
-            'access + autenticar, recordar, registro, restablecer',
+            //'access + autenticar, recordar, registro, restablecer',
             'login + index, infoPersonal, contrasena, direcciones, pagoexpress, listapedidos, pedido, listadetalle, listacotizaciones, bonos',
             'loginajax + direccionCrear, direccionActualizar',
         );
@@ -69,10 +69,10 @@ class UsuarioController extends Controller {
     }
 
     public function actionIngresar() {
-        if (!Yii::app()->request->isPostRequest) {
+        /*if (!Yii::app()->request->isPostRequest) {
             $this->redirect(Yii::app()->homeUrl);
             Yii::app()->end();
-        }
+        }*/
 
         $model = new LoginForm;
 
@@ -102,18 +102,17 @@ class UsuarioController extends Controller {
                 echo CActiveForm::validate($model);
                 Yii::app()->end();
             }
-        } else {
-            echo CJSON::encode(array("result" => "error", "response" => "Datos inv&aacute;lidos"));
-            //echo CActiveForm::validate($model);
-            Yii::app()->end();
         }
+
+        $this->render('d_ingreso', array('model' => $model));
+        Yii::app()->end();
     }
 
     public function actionRegistro() {
-        if (!Yii::app()->request->isPostRequest) {
+        /*if (!Yii::app()->request->isPostRequest) {
             $this->redirect(Yii::app()->homeUrl);
             Yii::app()->end();
-        }
+        }*/
 
         $model = new RegistroForm('registro');
 
@@ -211,11 +210,10 @@ class UsuarioController extends Controller {
                 echo CActiveForm::validate($model);
                 Yii::app()->end();
             }
-        } else {
-            echo CJSON::encode(array("result" => "error", "response" => "Datos inv&aacute;lidos"));
-            //echo CActiveForm::validate($model);
-            Yii::app()->end();
         }
+
+        $this->render('d_registro', array('model' => $model));
+        Yii::app()->end();
     }
 
     /**
@@ -233,10 +231,10 @@ class UsuarioController extends Controller {
     }
 
     public function actionRecordar() {
-        if (!Yii::app()->request->isPostRequest) {
+        /*if (!Yii::app()->request->isPostRequest) {
             $this->redirect(Yii::app()->homeUrl);
             Yii::app()->end();
-        }
+        }*/
 
         $model = new RecordarForm;
 
@@ -255,8 +253,8 @@ class UsuarioController extends Controller {
                     $model->usuario->objUsuarioExtendida = $objUsuarioExtendida;
 
                     $contenido = $this->renderPartial(Yii::app()->params->rutasPlantillasCorreo['correoRecordarClave'], array('objUsuario' => $model->usuario), true, true);
-                    
-                    
+
+
                     $htmlCorreo = $this->renderPartial('//common/correo', array('contenido' => $contenido), true, true);
                     sendHtmlEmail($model->correoElectronico, Yii::app()->params->asuntoRecordatorioClave, $htmlCorreo);
 
@@ -271,11 +269,10 @@ class UsuarioController extends Controller {
                 echo CActiveForm::validate($model);
                 Yii::app()->end();
             }
-        } else {
-            echo CJSON::encode(array("result" => "error", "response" => "Datos inv&aacute;lidos"));
-            //echo CActiveForm::validate($model);
-            Yii::app()->end();
         }
+
+        $this->render('d_recordar', array('model' => $model));
+        Yii::app()->end();
     }
 
     public function actionRestablecer($codigo) {
@@ -526,7 +523,7 @@ class UsuarioController extends Controller {
             Yii::app()->user->setFlash('error', "Seleccionar ubicación.");
             $this->redirect($this->createUrl('/sitio/ubicacion'));
         }*/
-		
+
         $objPagoExpress = PagoExpress::model()->find(array(
             'with' => array('objDireccionDespacho' => array('condition' => 'objDireccionDespacho.codigoCiudad=:ciudad AND objDireccionDespacho.codigoSector=:sector')),
             'condition' => 't.identificacionUsuario=:cedula AND t.activo=:activo',
@@ -600,12 +597,12 @@ class UsuarioController extends Controller {
     }
 
     public function actionBonos(){
-        
+
         $modelPago = new FormaPagoForm;
         $modelPago->identificacionUsuario = Yii::app()->user->name;
         $modelPago->consultarBono();
-        
-     
+
+
         $params = array('bonos' => $modelPago->bono);
         if ($this->isMobile) {
             $this->render('bonos', $params);
@@ -619,7 +616,7 @@ class UsuarioController extends Controller {
             $this->render('d_usuario', array('vista' => 'd_bonos', 'params' => $params));
         }
     }
-    
+
     public function actionListapedidos() {
 
         $model = new Compras('search');
@@ -649,21 +646,21 @@ class UsuarioController extends Controller {
             [':idCompraItem' => $idCompraItem]
         );
         if ($this->isMobile) {
-            $this->renderPartial('trazaItem', array('estados' => $estados));     
+            $this->renderPartial('trazaItem', array('estados' => $estados));
         } else {
-            $this->renderPartial('d_trazaItem', array('estados' => $estados));     
+            $this->renderPartial('d_trazaItem', array('estados' => $estados));
         }
     }
-    
+
     public function actionSuscripciones() {
-    
+
     	$model = new SuscripcionesProductosUsuario('search');
     	$model->unsetAttributes();
     	if (isset($_GET['SuscripcionesProductosUsuario']))
     		$model->attributes = $_GET['SuscripcionesProductosUsuario'];
-    	
+
     	$model->identificacionUsuario = Yii::app()->user->name;
-    
+
     	$params = array('model' => $model);
     	if ($this->isMobile) {
     		$this->render('suscripciones', $params);
@@ -673,12 +670,12 @@ class UsuarioController extends Controller {
     				'Mi cuenta' => array('/usuario'),
     				'Mis suscripciones'
     		);
-    	
+
     	 $this->render('d_usuario', array('vista' => 'd_suscripciones', 'params' => $params));
-    	
+
     	}
     }
-    
+
 
     public function actionPedido($compra) {
         $objCompra = Compras::model()->find(array(
@@ -711,8 +708,8 @@ class UsuarioController extends Controller {
             $this->render('d_usuario', array('vista' => 'd_pedido', 'params' => $params));
         }
     }
-    
-    
+
+
     public function actionRastreo($compra) {
     	$objCompra = Compras::model()->find(array(
     			'with' => 'objPuntoVenta',
@@ -722,51 +719,51 @@ class UsuarioController extends Controller {
     					':usuario' => Yii::app()->user->name
     			)
     	));
-    
+
     	if ($objCompra === null) {
     		$this->redirect($this->createUrl('listapedidos'));
     	}
-    
+
     	$comprasDespachoCedi = ComprasDespachoCedi::model()->findAll(array(
     			'condition' => 'idCompra =:idCompra',
     			'params' => array(
-    				'idCompra' => $compra		
+    				'idCompra' => $compra
     			)
     	));
-    	
+
     	$arrayTrack = array();
     	foreach($comprasDespachoCedi as $comprasRastreo){
     		$arrayTrack[$comprasRastreo->idBodega]['Despacho'] =  $comprasRastreo;
-    		
+
     		if($comprasRastreo->numeroGuia != null){
     		$arrayTrack[$comprasRastreo->idBodega]['Despacho'] =  $comprasRastreo;
-    		
+
     		$url = "http://sismilenio.servientrega.com.co/wsrastreoenvios/wsrastreoenvios.asmx?WSDL";
-    		
+
     		$client = new \SoapClient($url, array(
     				"trace" => 1,
     				"exceptions" => 0,
     				'cache_wsdl' => WSDL_CACHE_NONE
     		));
-    		
+
     		$paramReq = "<ns1:NumeroGuia>$comprasRastreo->numeroGuia</ns1:NumeroGuia>";
     		$parm[] = new SoapVar($paramReq, XSD_ANYXML);
     		$service = $client->ConsultarGuiaExterno(new SoapVar($parm, SOAP_ENC_OBJECT));
-    		
+
 	    		if(isset($service->ConsultarGuiaExternoResult->Mov->InformacionMov)){
 	    			$arrayTrack[$comprasRastreo->idBodega]['Rastreo'] =  $service->ConsultarGuiaExternoResult->Mov->InformacionMov;
 	    		}else
 	    			$arrayTrack[$comprasRastreo->idBodega]['Rastreo'] = array();
-    		
+
     		}
-    		
+
     	}
-    	
+
     	    	$params = array(
     			'objCompra' => $objCompra,
     			'arrayTrack' => $arrayTrack
     	);
-    
+
     	if ($this->isMobile) {
     		$this->render('rastreo', $params);
     	} else {
@@ -776,7 +773,7 @@ class UsuarioController extends Controller {
     				'Listado de pedidos' => array('/usuario/listapedidos'),
     				"#$compra"
     		);
-    
+
     		$this->render('d_usuario', array('vista' => 'd_rastreo', 'params' => $params));
     	}
     }
@@ -943,8 +940,8 @@ class UsuarioController extends Controller {
         } else if (isset($_POST['ListasPersonales'])) {
             $lista = Yii::app()->getRequest()->getPost('lista', null);
             $model = null;
-            
-            
+
+
 
             if ($lista !== null) {
                 $model = ListasPersonales::model()->find(array(
@@ -1509,7 +1506,7 @@ class UsuarioController extends Controller {
         	echo CJSON::encode(array('result' => 'error', 'response' => 'Solicitud inválida'));
         	Yii::app()->end();
         }
-        
+
         $model->setScenario('updateDelete');
         $model->activo = 0;
 
@@ -1686,7 +1683,7 @@ class UsuarioController extends Controller {
 
         return CHtml::link($texto, $this->createUrl('/usuario/pedido', array('compra' => $data->idCompra)), array('class' => $clase, 'data-ajax' => 'false'));
     }
-    
+
     protected function gridTracking($data, $row){
         $clase = 'ui-btn ui-btn-inline ui-icon-view-circle ui-btn-icon-notext ui-icon-center ui-nodisc-icon';
         $texto = 'Ver';
@@ -1697,7 +1694,7 @@ class UsuarioController extends Controller {
 
         if($data->getIsBodega())
         	return CHtml::link($texto, $this->createUrl('/usuario/rastreo', array('compra' => $data->idCompra)), array('class' => $clase, 'data-ajax' => 'false'));
-        else 
+        else
         	return "";
     }
 
@@ -1753,7 +1750,7 @@ class UsuarioController extends Controller {
 
         if (Yii::app()->user->isGuest || Yii::app()->user->name != $datosDesencriptados[0]) {
             if ($model) {
-                // autenticar a el usuario                
+                // autenticar a el usuario
                 try {
                     $modelLogin = Usuario::model()->findByPk($datosDesencriptados[0]);
                     $identity = new UserIdentity($modelLogin->identificacionUsuario, $modelLogin->clave);
@@ -1884,7 +1881,7 @@ class UsuarioController extends Controller {
                             ':codigo' => $objDetalle->codigoProducto,
                         ),
                     ));
-                    
+
                     $listaProductos[$objDetalle->codigoProducto] = $objProducto;
                     continue;
                 }
@@ -1900,7 +1897,7 @@ class UsuarioController extends Controller {
                             ':codigo' => $objDetalle->codigoProducto,
                         ),
                     ));
-                    
+
                     $listaProductos[$objDetalle->codigoProducto] = $objProducto;
                     continue;
                 }
@@ -1929,16 +1926,16 @@ class UsuarioController extends Controller {
                             ':codigo' => $objDetalle->codigoProducto,
                         ),
                     ));
-                    
+
                     $listaProductos[$objDetalle->codigoProducto] = $objProducto;
-                    
+
                 }
             }
         }
 
         Yii::app()->session[Yii::app()->params->sesion['productosNoAgregados']] = $listaProductos;
-        
-    
+
+
         /*
           if ($nUnidadesCarro == 0) {
           // echo CJSON::encode(array('result' => 'error', 'response' => 'Productos no disponibles'));
@@ -1962,21 +1959,21 @@ class UsuarioController extends Controller {
          * */
         $this->redirect(CController::createUrl('/carro/index', array('opcion' => 1)));
     }
-    
-    
+
+
     public function actionRecordarSuscripcion($hash, $productos) {
-    
+
     	$datosDesencriptados = decrypt($hash, Yii::app()->params->claveLista);
-    	
+
     	$sesionUbicacion = false;
 
-    	
-    
+
+
     	if (!Yii::app()->user->isGuest && (Yii::app()->user->name != $datosDesencriptados[0])) {
     		Yii::app()->session[Yii::app()->params->sesion['sectorCiudadEntrega']] = null;
     		Yii::app()->shoppingCart->clear();
     	}
-    
+
     	if (Yii::app()->user->isGuest || Yii::app()->user->name != $datosDesencriptados) {
     		if (true) {
     			// autenticar a el usuario
@@ -1988,20 +1985,20 @@ class UsuarioController extends Controller {
     			} catch (Exception $txexc) {
     				Yii::log($txexc->getMessage() . "\n" . $txexc->getTraceAsString(), CLogger::LEVEL_ERROR, 'application');
     			}
-    
+
     			// Yii::app()->session[Yii::app()->params->sesion['redireccionAutenticacion']] = 'null';
     		} else {
     			Yii::app()->end();
     		}
     	}
-    	
-    
+
+
     	if ($this->objSectorCiudad) {
     		$sesionUbicacion = true;
     	}
-    	
-    	
-    
+
+
+
     	// Validar si el usuario logueado es el mismo de la lista.
     	// Si no es el mismo limpiar la sesión y enviarlo.
     	if (!$sesionUbicacion) {
@@ -2012,21 +2009,21 @@ class UsuarioController extends Controller {
     		$this->redirect(CController::$this->createUrl('/carro'));
     	}
     }
-    
+
     private function adicionarCanastaSuscripcion($productos = null) {
     	$objSectorCiudad = null;
     	if ($this->objSectorCiudad)
     		$objSectorCiudad = $this->objSectorCiudad;
-    
+
     		if ($productos === null) {
     			Yii::app()->end();
     		}
-    
+
     		$listaProductos = array();
     		Yii::app()->session[Yii::app()->params->sesion['productosNoAgregados']] = null;
     		if (isset(Yii::app()->session[Yii::app()->params->sesion['productosNoAgregados']]))
     			$listaProductos = Yii::app()->session[Yii::app()->params->sesion['productosNoAgregados']];
-    
+
     			$objLista = SuscripcionesProductosUsuario::model()->findAll(array(
     					'with' => 'producto',
     					'condition' => 'identificacionUsuario=:usuario AND idProducto IN ('.implode(",", $productos).')',
@@ -2034,21 +2031,21 @@ class UsuarioController extends Controller {
     							':usuario' => Yii::app()->user->name
     					)
     			));
-    
+
     			if ($objLista === null) {
     				//  echo CJSON::encode(array('result' => 'error', 'response' => 'Lista no existente'));
     				Yii::app()->end();
     			}
-    
+
     			$fecha = new DateTime;
     			$nUnidadesCompra = 0;
     			$nUnidadesCarro = 0;
-    
+
     			foreach ($objLista as $producto) {
     				$objDetalle = $producto->producto;
     				 if ($objDetalle->codigoProducto != null) {
     					$nUnidadesCompra += 1;
-    
+
     					//agregar productos
     					$objProducto = Producto::model()->find(array(
     							'with' => array(
@@ -2064,7 +2061,7 @@ class UsuarioController extends Controller {
     									':sector' => $objSectorCiudad->codigoSector,
     							),
     					));
-    
+
     					if ($objProducto === null) {
     						$objProducto = Producto::model()->find(array(
     								'with' => array('listImagenes', 'objCodigoEspecial'),
@@ -2074,13 +2071,13 @@ class UsuarioController extends Controller {
     										':codigo' => $objDetalle->codigoProducto,
     								),
     						));
-    
+
     						$listaProductos[$objDetalle->codigoProducto] = $objProducto;
     						continue;
     					}
-    
+
     					$objSaldo = $objProducto->getSaldo($objSectorCiudad->codigoCiudad, $objSectorCiudad->codigoSector);
-    
+
     					if ($objSaldo === null) {
     						$objProducto = Producto::model()->find(array(
     								'with' => array('listImagenes', 'objCodigoEspecial'),
@@ -2090,45 +2087,45 @@ class UsuarioController extends Controller {
     										':codigo' => $objDetalle->codigoProducto,
     								),
     						));
-    
+
     						$listaProductos[$objDetalle->codigoProducto] = $objProducto;
     						continue;
     					}
-    
+
     					$position = Yii::app()->shoppingCart->itemAt($objDetalle->codigoProducto);
-    
-    					
+
+
     						$cantidadCarroUnidad = 0;
     						if ($position !== null) {
     							$cantidadCarroUnidad = $position->getQuantityUnit();
     						}
-    
+
     						//si hay saldo, agrega a carro
     						if ($cantidadCarroUnidad + 1 <= $objSaldo->saldoUnidad) {
     							$objProductoCarro = new ProductoCarro($objProducto);
     							Yii::app()->shoppingCart->put($objProductoCarro, false, 1);
     							$nUnidadesCarro += 1;
     						}
-    					
+
     				}
     			}
-    
+
     			Yii::app()->session[Yii::app()->params->sesion['productosNoAgregados']] = $listaProductos;
-    
-    
+
+
     			/*
     			 if ($nUnidadesCarro == 0) {
     			 // echo CJSON::encode(array('result' => 'error', 'response' => 'Productos no disponibles'));
     			 Yii::app()->end();
     			 }
-    
+
     			 $porcentajeCarro = floor(100 * ($nUnidadesCarro / $nUnidadesCompra));
-    
+
     			 $canasta = 'canasta';
     			 if (!$this->isMobile) {
     			 $canasta = 'd_canasta';
     			 }
-    
+
     			 echo CJSON::encode(array(
     			 'result' => 'ok',
     			 'response' => array(

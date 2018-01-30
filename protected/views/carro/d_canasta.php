@@ -28,7 +28,11 @@
             <li class="subtotal">Subtotal: <strong><?php echo Yii::app()->numberFormatter->format(Yii::app()->params->formatoMoneda['patron'], Yii::app()->shoppingCart->getCost(), Yii::app()->params->formatoMoneda['moneda']); ?></strong></li>
             <li>
                 <div class="row btn-pagar">
-                    <?php echo CHtml::link('Comprar', CController::createUrl('/carro'), array('class' => 'btn btn-primary')); ?>
+                    <a href="<?= Yii::app()->request->baseUrl; ?>/carro">
+                      <img src="<?php echo Yii::app()->request->baseUrl; ?>/images/desktop/comprar-carrito.png"></a>
+
+                    </a>
+                    <?php //echo CHtml::link('Comprar', CController::createUrl('/carro'), array('class' => 'btn btn-primary')); ?>
 
                     <?php if (Yii::app()->shoppingCart->getObjExpress() != null): ?>
                         <?php echo CHtml::link('Pago Express', "#", array('class' => 'btn btn-primary', 'data-toggle' => "modal", 'data-target' => "#modal-pagoexpress")); ?>

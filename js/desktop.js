@@ -3087,3 +3087,42 @@ $(document).on('click', "a[data-role='menu-menu']", function () {
   $("div[data-role='menu-submenu'][data-menu='"+idMenu+"']").removeClass('hidden');
 
 });
+
+// Categorias productos destacados
+$(document).ready(function() {
+  $(".head-categorias .item").click(function () {
+    var itemId = $(this).attr("data-id");
+    $('.seccion-productos-destacados').addClass("hidden");
+    var selector = '.seccion-productos-destacados[data-id="' + itemId + '"]';
+    $(selector).removeClass("hidden");
+    $('.line-active').removeClass("active");
+    var selectorLinea = '.line-active[data-id="' + itemId + '"]';
+    $(selectorLinea).addClass("active");
+  });
+});
+
+
+// Carousel Productos destacados
+function activarMarca(event) {
+  if (event.property.name = "position") {
+    var posicionMarca = event.property.value;
+    console.log(posicionMarca);
+    if(posicionMarca == undefined || posicionMarca == null || !Number.isInteger(posicionMarca)) {
+      posicionMarca = 4;
+    }
+    $('.item-marca').addClass('inactive');
+    var selector = '.item-marca[data-posicion="' + posicionMarca + '"]';
+    $(selector).removeClass('inactive');
+  }
+}
+
+$('.slide-productos-destacados').owlCarousel({
+    loop:true,
+    margin:0,
+    items:1,
+    lazyLoad:true,
+    nav:true,
+    dots:false,
+    navText: ["<img src='images/desktop/izq-destacados.png'>","<img src='images/desktop/der-destacados.png'>"],
+    onChanged : activarMarca
+});
