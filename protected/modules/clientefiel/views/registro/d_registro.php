@@ -93,11 +93,95 @@ $form = $this->beginWidget ( 'CActiveForm', array (
 	                    <?php echo $form->error($model, 'fechaNacimiento',  array("class" => "text-danger")); ?>
 	
 	                </div>
-	
+					<div class="form-group">
+	                    <?php echo $form->labelEx($model, 'ciudad', array('style' => 'display:block;')); ?>
+	                    <?php  echo Select2::activeDropDownList($model, 'ciudad', array(), array(
+			                    'empty' => '',
+			                    'id' => 'RegistroClienteFielForm_ciudad',
+			                    'style' => 'width:100%',
+			                    'select2Options' => array(
+			                        'allowClear' => true,
+			                        'placeholder' => 'Digite su ciudad ...',
+			                        'minimumInputLength' => '3',
+			                        'ajax' => array(
+			                            'url' => $this->createUrl('/clientefiel/registro/ajaxCompleteCiudad'),
+			                            'type' => 'GET',
+			                            'dataType' => 'json',
+			                            'data' => new CJavaScriptExpression('function (term, page) {return {term: term, select2: 1}}'),
+			                            'results' => new CJavaScriptExpression('function (data, page) {return {results:  data}}')
+			                        
+			                        ),
+			                        'initSelection'=>new CJavaScriptExpression('function(element, callback) { alert(jQuery(element).val());'
+			                         . 'var id=jQuery(element).val(); '
+			                         . 'if (id!=="") {'
+			                         . ' jQuery.ajax("'.$this->createUrl('/clientefiel/registro/ajaxCompleteCiudad').'", { dataType: "json", data:{ select2: 1, id: id  } } ).done( function(data) {'
+			                         . 'callback(data);'
+			                         . '});'
+			                         . '}}'),
+			                        'escapeMarkup' => new CJavaScriptExpression('function (m) {return m;}')
+			                    )))?>
+	                    
+	                    <?php echo $form->error($model, 'ciudad', array("class" => "text-danger")); ?>
+	                </div>
 					<div class="form-group">
 	                    <?php echo $form->labelEx($model, 'profesion', array('style' => 'display:block;')); ?>
-	                    <?php echo $form->dropDownList($model, 'profesion', CHtml::listData(ProfesionCliente::listData(), 'codigoProfesion', 'nombreProfesion'), array('class'=>'form-control', 'prompt' => $model->getAttributeLabel('profesion'), 'encode' => false)); ?>
+	                    <?php  echo Select2::activeDropDownList($model, 'profesion', array(), array(
+			                    'empty' => '',
+			                    'id' => 'RegistroClienteFielForm_profesion',
+			                    'style' => 'width:100%',
+			                    'select2Options' => array(
+			                        'allowClear' => true,
+			                        'placeholder' => 'Digite su profesi&oacute;n ...',
+			                        'minimumInputLength' => '3',
+			                        'ajax' => array(
+			                            'url' => $this->createUrl('/clientefiel/registro/ajaxCompleteProfesiones'),
+			                            'type' => 'GET',
+			                            'dataType' => 'json',
+			                            'data' => new CJavaScriptExpression('function (term, page) {return {term: term, select2: 1}}'),
+			                            'results' => new CJavaScriptExpression('function (data, page) {return {results:  data}}')
+			                        
+			                        ),
+			                        'initSelection'=>new CJavaScriptExpression('function(element, callback) { '
+			                         . 'var id=jQuery(element).val(); '
+			                         . 'if (id!=="") {'
+			                         . ' jQuery.ajax("'.$this->createUrl('/clientefiel/registro/ajaxCompleteProfesiones').'", { dataType: "json", data:{ select2: 1, id: id  } } ).done( function(data) {'
+			                         . 'callback(data);'
+			                         . '});'
+			                         . '}}'),
+			                        'escapeMarkup' => new CJavaScriptExpression('function (m) {return m;}')
+			                    )))?>
+	                    
 	                    <?php echo $form->error($model, 'profesion', array("class" => "text-danger")); ?>
+	                </div>
+	                
+	                <div class="form-group">
+	                    <?php echo $form->labelEx($model, 'ocupacion', array('style' => 'display:block;')); ?>
+	                    <?php  echo Select2::activeDropDownList($model, 'ocupacion', array(), array(
+			                    'empty' => '',
+			                    'id' => 'RegistroClienteFielForm_ocupacion',
+			                    'style' => 'width:100%',
+			                    'select2Options' => array(
+			                        'allowClear' => true,
+			                        'placeholder' => 'Digite su ocupaci&oacute;n...',
+			                        'ajax' => array(
+			                            'url' => $this->createUrl('/clientefiel/registro/ajaxCompleteProfesiones'),
+			                            'type' => 'GET',
+			                            'dataType' => 'json',
+			                            'data' => new CJavaScriptExpression('function (term, page) {return {term: term, select2: 1}}'),
+			                            'results' => new CJavaScriptExpression('function (data, page) {return {results:  data}}')
+			                        
+			                        ),
+			                        'initSelection'=>new CJavaScriptExpression('function(element, callback) { '
+			                         . 'var id=jQuery(element).val(); '
+			                         . 'if (id!=="") {'
+			                         . ' jQuery.ajax("'.$this->createUrl('/clientefiel/registro/ajaxCompleteProfesiones').'", { dataType: "json", data:{ select2: 1, id: id  } } ).done( function(data) {'
+			                         . 'callback(data);'
+			                         . '});'
+			                         . '}}'),
+			                        'escapeMarkup' => new CJavaScriptExpression('function (m) {return m;}')
+			                    )))?>
+	                    
+	                    <?php echo $form->error($model, 'ocupacion', array("class" => "text-danger")); ?>
 	                </div>
 	
 				<div class="row">
@@ -116,6 +200,21 @@ $form = $this->beginWidget ( 'CActiveForm', array (
 			        <?php echo $form->error($model,'tieneMascotas',  array("class" => "text-danger")); ?>
 			    </div>
 	
+				<?php if(isset($modelUsuario)):?>
+					Clave para ser usada en la tienda virtual:
+					
+					<div class="form-group">
+		                <?php echo $form->labelEx($modelUsuario, 'clave'); ?>
+		                <?php echo $form->passwordField($modelUsuario, 'clave', array('placeholder' => $modelUsuario->getAttributeLabel('clave'), 'class' => 'form-control')); ?>
+		                <?php echo $form->error($modelUsuario, 'clave', array("class" => "text-danger")); ?>
+				   </div>
+				   <div class="form-group">
+				                <?php echo $form->labelEx($modelUsuario, 'claveConfirmar'); ?>
+				                <?php echo $form->passwordField($modelUsuario, 'claveConfirmar', array('placeholder' => $modelUsuario->getAttributeLabel('claveConfirmar'), 'class' => 'form-control')); ?>
+				                <?php echo $form->error($modelUsuario, 'claveConfirmar', array("class" => "text-danger")); ?>
+				   </div>
+			   
+			   <?php endif;?>
 				<?php if ($model->getScenario()) : ?>
 	
 	                <?php echo $form->checkBox($model, 'condiciones', array("style" => "display:block;float:left;")); ?>
@@ -125,6 +224,9 @@ $form = $this->beginWidget ( 'CActiveForm', array (
 	                    <?php echo CHtml::link('Ver condiciones', "#dialog-condiciones", array('class' => 'c_olv_pass', 'data-transition' => 'flip', 'data-toggle' => "modal", 'data-target' => "#modalTerminos")); ?>
 	                </div>
 	            <?php endif; ?>
+	            
+	            
+	            
 
 	            
 	</div>

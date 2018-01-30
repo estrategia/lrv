@@ -20,9 +20,9 @@ $form = $this->beginWidget ( 'CActiveForm', array (
 <div class=" container row">
 	<div class='col-md-12'>
 		<div class="form-group">
-	                    <?php echo $form->labelEx($model, 'cedula'); ?>
-	                    <?php echo $form->textField($model, 'cedula', array('maxlength' => 50, 'placeholder' => $model->getAttributeLabel('cedula'), 'class' => 'form-control')); ?>
-	                    <?php echo $form->error($model, 'cedula', array("class" => "text-danger")); ?>
+	                    <?php echo $form->labelEx($model, 'codigoVerificacion'); ?>
+	                    <?php echo $form->textField($model, 'codigoVerificacion', array('maxlength' => 50, 'placeholder' => $model->getAttributeLabel('cedula'), 'class' => 'form-control')); ?>
+	                    <?php echo $form->error($model, 'codigoVerificacion', array("class" => "text-danger")); ?>
 	                </div>
 	</div>
 </div>
