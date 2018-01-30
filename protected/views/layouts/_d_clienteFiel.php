@@ -8,6 +8,7 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name='author' content='La Rebaja Virtual'>
+    <script>requestUrl = "<?php echo Yii::app()->request->baseUrl; ?>";</script>
     <?php Yii::app()->getClientScript()->registerCssFile(Yii::app()->request->baseUrl . "/css/desktop-clientefiel.css?"); ?>
 </head>
 <body>
@@ -18,7 +19,7 @@
     <div class="banner">
         <img class="img img-responsive banner-image" src="<?php echo Yii::app()->request->baseUrl; ?>/images/clientefiel/banner-clientefiel.png" alt="">
         <h3 class="banner-text" align="right">El programa que te da 10% de descuento <br> <span class="emphasis">en todas tus compras*</span></h3>
-        <a href="" class="banner-link">* Aplica según términos y condiciones del programa Cliente Fiel</a>
+        <a href="" data-toggle="modal" data-target = "#modalCondiciones" class="banner-link">* Aplica según términos y condiciones del programa Cliente Fiel</a>
     </div>
     
     <div class="buttons-section">
@@ -45,5 +46,7 @@
             </div>
         </div>
     </footer>
+
+    <?php $this->renderPartial('/sitio/d_modalCondiciones'); ?>
 </body>
 </html>
