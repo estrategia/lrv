@@ -26,14 +26,15 @@
     <div class="banner">
         <img class="img img-responsive banner-image" src="<?php echo Yii::app()->request->baseUrl; ?>/images/clientefiel/banner-clientefiel-movil.png" alt="">
         <h3 class="banner-text" align="right">El programa que te da 10% de descuento <br> <span class="emphasis">en todas tus compras*</span></h3>
-        <a href="#modalCondiciones" data-toggle="modal" data-target="#modalCondiciones" class="banner-link">* Aplica según términos y condiciones del programa Cliente Fiel</a>
+        <div class="banner-link-container">
+            <a href="#modalCondiciones" data-toggle="modal" data-target="#modalCondiciones" class="banner-link">* Aplica según términos y condiciones del programa Cliente Fiel</a>
+        </div>
     </div>
 
     <div class="buttons-section">
-        <a href="" class="navigation-button"></a>
-        <a href="" class="navigation-button"></a>
+        <a href="" class="navigation-button">¿Cómo funciona?</a>
+        <a href="" class="navigation-button">Regístrate</a>
     </div>
-
 
     <div class="content">
         <?php echo $content; ?>
@@ -45,8 +46,9 @@
         </div>
         <div class="footer-section red-background">
             <div class="footer-text">
-                <p>Copservir Ltda.&#169; Todos los derechos reservados 2014 - <b>Políticas de Privacidad</b></p>
-                <p><b>La Rebaja</b> línea de atención al cliente 01 8000 939 900 y en Cali: (2) 485 2289</p>
+                <p>Copservir Ltda.&#169; Todos los derechos reservados 2014 <br><b>Políticas de Privacidad</b></p>
+                <br>
+                <p><b>La Rebaja</b> línea de atención al cliente: <br> 01 8000 939 900 y en Cali: (2) 485 2289</p>
             </div>
         </div>
     </footer>
