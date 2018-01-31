@@ -43,8 +43,8 @@ class VerificacionForm extends CFormModel {
      */
     public function attributeLabels() {
         return array(
-        	0+
-        		'cedula' => 'Cedula',
+        	
+        	'cedula' => 'Cedula',
             'codigoVerificacion' => 'Digite el c&oacute;digo de verificaci&oacute;n',
         );
     }

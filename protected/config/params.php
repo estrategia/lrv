@@ -89,6 +89,8 @@ return array(
         'cambioEstadoCompraItemTercero' => 'cambioEstadoCompraItemTercero',
         'registroUsuarioTercero' => 'cambioEstadoCompraItemTercero',
         'recordarClaveTercero' => 'recordarClaceTercero',
+    	'codigoVerificacion' => 'codigoVerificacion',
+    	'bienvenidaClienteFiel'  => 'bienvenidaClienteFiel',
     ),
     'rutasPlantillasCorreo' => array(
         'compraCorreo' => 'compraCorreo',
@@ -100,7 +102,9 @@ return array(
         'reactivacionBono' => '_mensajeCorreoReactivacion',
         'mensajeHtml' => '//common/mensajeHtml',
         'bonoCorreo' => 'bonoCorreo',
-        'cambioEstadoCompraItemTercero' => 'application.modules.terceros.views.compras.correoCambioEstadoItem'
+        'cambioEstadoCompraItemTercero' => 'application.modules.terceros.views.compras.correoCambioEstadoItem',
+    	'verificacionClienteFiel' => '//common/correoVerificacion',
+    	'bienvenidaClienteFiel' => '//common/bienvenidaClienteFiel',
     ),
     'maximoComparacion' => 5,
     'urlSitio' => 'www.larebajavirtual.com',
@@ -118,6 +122,7 @@ return array(
     	'sesion' => 'lrv.clientefiel.clientefielregistro',
     	'sesionVerificacion' => 'lrv.clientefiel.codigoverificacion',
     	'codigoPerfilActivo' => 5,
+    	'asuntoVerificacion' => 'La Rebaja Virtual: Verificacion de datos',
     ),
     'usuario' => array(
         'sesion' => 'larebaja.online.usuario',
