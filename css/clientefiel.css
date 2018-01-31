@@ -121,7 +121,7 @@ img {
 @media only screen and (max-width: 375px) {
   .banner-text {
     position: absolute;
-    top: 220px;
+    top: 195px;
     color: white;
     font-size: 1rem;
     right: 5px;
@@ -142,7 +142,7 @@ img {
 
   .banner-link {
     color: #EE3E27!important;
-    font-size: 0.7rem;
+    font-size: 0.6rem;
     margin-right: 5px;
   }
 
@@ -167,6 +167,14 @@ img {
   color: white !important;
 }
 
+.content {
+  margin: auto;
+  max-width: 90%;
+  -webkit-box-shadow: 0px 0px 8px 1px rgba(209,209,209,1);
+  -moz-box-shadow: 0px 0px 8px 1px rgba(209,209,209,1);
+  box-shadow: 0px 0px 8px 1px rgba(209,209,209,1);
+}
+
 .footer {
   bottom: 0;
   left: 0;
@@ -183,7 +191,6 @@ img {
 }
 
 .footer-logos .logos {
-  /*align-self: flex-end;*/
   margin-bottom: 25px;
   max-width: 90%;
   margin: 0;
@@ -208,6 +215,166 @@ img {
 .footer-section p {
   margin: 0;
 }
+
 /*----------------- Layout -----------------*/
+
+
+/*----------------- index -----------------*/
+  
+.instructions-section {
+  margin: auto;
+  max-width: 90%;
+  display: flex;
+  flex-flow: column;
+  align-items: flex-start;
+  justify-content: center;
+  counter-reset: instruction;
+}
+
+.instructions-section p {
+  border-radius: 5px;
+  font-size: 0.9rem;
+  margin-top: 5%;
+  margin-bottom: 5%;
+  display: flex;
+  align-items: center;
+  text-align: justify;
+}
+
+.instructions-section .counter::before {
+  counter-increment: instruction;
+  content: counter(instruction);
+}
+
+.instructions-section .counter {
+  background-color: red;
+  color: white;
+  font-size: 1.4rem;
+  font-weight: bold;
+  border-radius: 50%;
+  padding-top: 2px;
+  padding-bottom: 2px;
+  padding-left: 10px;
+  padding-right: 10px;
+  margin-right: 10px;
+}
+
+.instructions-section .emphasis {
+  color: #EE3E27;
+  font-size: 1rem;
+  font-weight: bold;
+  text-align: center;
+  width: 85%;
+  margin: 5% auto 3% auto;
+}
+
+/*----------------- index -----------------*/
+
+
+/*----------------- realizarRegistro -----------------*/
+
+.form {
+  display: flex;
+  align-items: flex-start;
+  justify-content: center;
+  margin: auto;
+}
+
+.form-section {
+  width: 90%;
+  margin: 1%;
+}
+
+.form-section input{ 
+  font-weight: bold;
+  border: 1px solid #D2D2D2;
+  padding-left: 15px;
+  width: 100%;
+  height: 45px;
+  margin-top: 5px;
+  margin-bottom: 5px;
+}
+
+.form-input {
+  margin:auto;
+  width: 100%;
+}
+
+.form-section select{
+  font-weight: bold;
+  border: 1px solid #D2D2D2;
+  width: 100%;
+  height: 45px;
+  margin-top: 5px;
+  margin-bottom: 5px;
+  padding-left: 15px;
+  background-color: white;
+}
+
+.form-section .select2-container{ 
+  width: 100%;
+  height: 45px;
+  margin-top: 5px;
+  margin-bottom: 5px;
+}
+
+.form-section .select2-container .select2-choice {
+  font-weight: bold;
+  height: 45px; 
+  padding: 0 0 0 15px;
+  overflow: hidden;
+  position: relative;
+  border: 1px solid #D2D2D2;
+  white-space: nowrap;
+  line-height: 45px; 
+  text-decoration: none;
+  border-radius: 0px; 
+  background-clip: padding-box; 
+  -webkit-touch-callout: none;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+  background-color: #fff;
+  background-image: none;
+}
+
+.form-section .select2-arrow {
+  background: white !important;
+  background-image: none !important;
+  border-left: none !important;
+}
+
+.form-action {
+  text-align: center;
+}
+
+.form-action input[type="submit"] {
+  width: 25%;
+  height: 45px;
+  font-weight: bold;
+  font-size: 2.7rem;
+  line-height: 2.7rem;
+  color: white;
+  background-color: #EE3E27;
+  border: none;
+  border-radius: 5px;
+}
+
+.form .ui-input-text.ui-body-inherit.ui-corner-all.ui-shadow-inset {
+  
+}
+
+.terms-conditions {
+  text-align: center;
+  font-weight: bold;
+  margin: 3%;
+}
+
+.terms-conditions input[type="checkbox"] {
+  display: inline-block;
+}
+
+/*----------------- realizarRegistro -----------------*/
 
 
