@@ -18,11 +18,12 @@ class TestController extends Controller {
         ) );
         
         //$restClient->set_header("Authorization","Basic $token");
-        $response = $restClient->get('ciudad/index', array('term'=>'cal'));
+        $response = $restClient->put('cliente/actualizar', array('numeroDocumento'=>'10283'));
         
         if($restClient->status()==200) {
-            echo $response;
-            $restClient->debug();
+            $response = CJSON::decode($response);
+            CVarDumper::dump($response,10,true);
+            //$restClient->debug();
         } else {
             //echo "Error: " . $restClient->status() . "<br>";
             //CVarDumper::dump($restClient,10,true);
