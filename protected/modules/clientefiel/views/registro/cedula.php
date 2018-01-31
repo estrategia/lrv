@@ -16,6 +16,8 @@ $form = $this->beginWidget ( 'CActiveForm', array (
 ) );
 ?>
 
+Bienvenido a nuestro programa Cliente Fiel, por favor digita tu n&uacute;mero de c&eacute;dula
+
 <div class="<?php echo $model->getContentClass() ?> c_form_rgs ui-body-c">
 <fieldset>
 		  <div class="ui-field-container">

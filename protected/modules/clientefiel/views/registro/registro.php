@@ -16,6 +16,8 @@ $form = $this->beginWidget ( 'CActiveForm', array (
 ) );
 ?>
 
+A continuaci&oacute;n, completa este formulario con tus datos y verifica que la informaci&oacute;n est&eacute; actualizada.
+
 <div class="<?php echo $model->getContentClass() ?> c_form_rgs ui-body-c">
 <fieldset>
 		  <div class="ui-field-container">
@@ -113,7 +115,39 @@ $form = $this->beginWidget ( 'CActiveForm', array (
    							 'separator'=>'  ',)); ?>
 			        <?php echo $form->error($model,'tieneMascotas',  array("class" => "text-danger")); ?>
 			    </div>
-	
+			    
+			    <?php if(isset($modelUsuario)):?>
+				    Escribe una contrase&ntilde;a de m&iacute;nimo 5 caracteres y &uacute;sala para ingresar a 
+					nuestro programa Cliente fiel y  realizar las compras que desees desde nuestra tienda virtual.
+		
+					<div class="ui-field-container">
+		                <?php echo $form->labelEx($modelUsuario, 'clave'); ?>
+		                <?php echo $form->passwordField($modelUsuario, 'clave', array('placeholder' => $modelUsuario->getAttributeLabel('clave'), 'class' => 'form-control')); ?>
+		                <?php echo $form->error($modelUsuario, 'clave', array("class" => "text-danger")); ?>
+		   			</div>
+				    
+				    <div class="ui-field-container">
+		                <?php echo $form->labelEx($modelUsuario, 'claveConfirmar'); ?>
+		                <?php echo $form->passwordField($modelUsuario, 'claveConfirmar', array('placeholder' => $modelUsuario->getAttributeLabel('claveConfirmar'), 'class' => 'form-control')); ?>
+		                <?php echo $form->error($modelUsuario, 'claveConfirmar', array("class" => "text-danger")); ?>
+		   			</div>
+			    <?php endif;?>
+			    
+			    	<?php if($model->solicitarVerificacion):?>
+		
+						<div class="ui-field-container">
+										<?php echo $form->labelEx($modelUsuario, 'codigoVerificacion'); ?>
+							            <?php echo $form->textField($model, 'codigoVerificacion', array('placeholder' => $model->getAttributeLabel('codigoVerificacion'))); ?>
+							            <?php echo $form->error($model, 'codigoVerificacion', array("class" => "text-danger")); ?>
+						</div>
+						<div class="form">
+								<div class="form-section">
+									<div class="form-input">
+										 <a class='button-form' data-role='enviar-mensaje-verificacion' data-tipo='1'  type="button" data-enhanced="true" href="#">Enviar C&oacute;digo de verificaci&oacute;n</a>
+									</div>
+								</div>
+						</div>
+					<?php endif;?>
 				<?php if ($model->getScenario()) : ?>
 	
 	                <?php echo $form->checkBox($model, 'condiciones', array("style" => "display:block;float:left;")); ?>
