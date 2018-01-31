@@ -13,12 +13,12 @@
   display: flex;
   align-items: center;
   justify-content: space-between;
-  height: 160px;
+  height: 130px;
   width: 100%;
 }
 
 .nav .clientefiel-logo {
-  height: 100px;
+  height: 70px;
   margin-right: auto;
   margin-left: 3%;
 }
@@ -41,7 +41,7 @@
 
 .banner-text {
   position: absolute;
-  top: 240px;
+  top: 200px;
   right: 45%;
   width: 100%;
   color: #EE3E27;
@@ -58,7 +58,7 @@
 .banner-link {
   color: white;
   position: absolute;
-  top: 438px;
+  top: 408px;
   left: 10%;
 }
 
@@ -289,7 +289,36 @@ a:hover.banner-link {
 
 /*----------------- modalCondiciones -----------------*/
 
+.conditions-modal {
+  font-size: 1.6rem;
+}
 
+.conditions-modal .modal-content {
+  border-radius: 0px !important;
+}
+
+.conditions-modal .modal-header {
+  border: none;
+}
+
+.conditions-modal .modal-header span {
+  font-size: 3rem;
+}
+
+.conditions-section-modal {
+  width: 90%;
+  margin: auto;
+}
+
+.conditions-section-modal ul li {
+  margin-top: 20px;
+  margin-bottom: 20px;
+}
+
+.conditions-modal .emphasis {
+  color: #EE3E27;
+  font-size: 2.5rem;
+}
 
 /*----------------- modalCondiciones -----------------*/
 

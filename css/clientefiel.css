@@ -1,0 +1,66 @@
+/*----------------- Layout -----------------*/
+
+* {
+  font-family: Helvetica;
+  color: #676767;
+}
+
+.img-responsive {
+    display: block;
+    max-width: 100%;
+    /*height: auto;*/
+}
+
+img {
+    vertical-align: middle;
+}
+
+img {
+    border: 0;
+}
+
+.red-background {
+  background-color: #EE3E27;
+}
+
+.nav {
+  display: flex;
+  flex-flow: column;
+  align-items: center;
+  justify-content: center;
+  height: 100px;
+  width: 100%;
+  background-color: white;
+}
+
+.nav .clientefiel-logo {
+  height: 70px;
+  /*margin: auto;*/
+}
+
+.nav .lrv-logo {
+  height: 20px;
+  align-self: flex-end;
+  margin-right: 3%;
+}
+
+.banner {
+  height: 300px;
+}
+
+.banner-image {
+  /*position: relative;*/
+}
+
+.navigation-button {
+  width: 25%;
+  height: 45px;
+  font-weight: bold;
+  font-size: 2.7rem;
+  line-height: 2.7rem;
+  color: white;
+  background-color: #EE3E27;
+  border: none;
+  border-radius: 5px;
+}
+/*----------------- Layout -----------------*/
