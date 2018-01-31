@@ -32,6 +32,7 @@ class Controller extends CController {
     public $extraPageList = array();
     public $sectorName = "";
     public $categorias = array();
+    public $categoriasMenu = array();
     public $objSectorCiudad = null;
     public $metaTags = null;
     public $menuSuperior = null;
@@ -324,6 +325,8 @@ class Controller extends CController {
     }
 
     public function getCategorias() {
+        $cantidadPorColumna = 18 + 1;
+        
         $this->categorias = CategoriaTienda::model()->findAll(array(
             'order' => 't.orden',
             'condition' => 't.tipoDispositivo=:dispositivo AND t.visible=:visible AND t.idCategoriaPadre IS NULL ',
@@ -333,6 +336,27 @@ class Controller extends CController {
             ),
             'with' => array('listCategoriasHijas' => array('order' => 'listCategoriasHijas.nombreCategoriaTienda', 'with' => 'listModulosConfigurados')),
         ));
+        
+        foreach ($this->categorias as $idxCategoria => $categoria) {
+            $contador = 0;
+            $this->categoriasMenu[$categoria->idCategoriaTienda] = array();
+            
+            foreach ($categoria->listCategoriasHijas as $idxSubCategoria => $subcategoria) {
+                $contador++;
+                $contador += count($subcategoria->listCategoriasHijasMenu);
+                $posicion = $contador/$cantidadPorColumna;
+                $posicion = floor($posicion);
+                
+                if(!isset($this->categoriasMenu[$categoria->idCategoriaTienda][$posicion])) {
+                    $this->categoriasMenu[$categoria->idCategoriaTienda][$posicion] = array();
+                }
+                
+                $this->categoriasMenu[$categoria->idCategoriaTienda][$posicion][] = $subcategoria;
+            }
+        }
+        
+        
+        
+        
     }
-
 }
