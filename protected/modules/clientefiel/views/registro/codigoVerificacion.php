@@ -28,7 +28,9 @@ Hemos enviado un c&oacute;digo a tu celular <?php echo $celular?> y correo elect
 	</div>
 </fieldset>
 </div>
-
+&#191; A&uacute;n no recibes tu c&oacute;digo?, <a class='button-form' data-role='enviar-mensaje-verificacion' data-tipo='2' 
+data-cedula='<?php echo $model->cedula?>' type="button" data-enhanced="true" href="#">Enviar de nuevo</a>
+o comun&iacute;cate con nuestra l&iacute;nea de atenci&oacute;n o escr&iacute;benos a nuestro chat.
 
 	
 	
