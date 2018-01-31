@@ -3079,6 +3079,16 @@ $(document).on('click', "a[data-role='enviar-mensaje-verificacion']", function (
     if(tipo == 1){
     	 cedula= $("#RegistroClienteFielForm_cedula").val();
     	 celular = $("#RegistroClienteFielForm_telefonoCelular").val();
+    	 
+    	 if(cedula == ""){
+    		 alert("Debes completar tu cedula");
+    		 return;
+    	 }
+    	 
+    	 if(celular == ""){
+    		 alert("Debes completar tu numero de celular");
+    		 return;
+    	 }
     }else{
     	cedula = $(this).attr('data-cedula');
     }
@@ -3096,7 +3106,9 @@ $(document).on('click', "a[data-role='enviar-mensaje-verificacion']", function (
         },
         success: function (data) {
           
-            
+            if(data.result == 'ok'){
+            	alert("se ha enviado un codigo a tu celular");
+            }
             // alert(data.response);
         },
         error: function (jqXHR, textStatus, errorThrown) {

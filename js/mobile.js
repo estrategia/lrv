@@ -2710,4 +2710,51 @@ $(document).on('click', "button[data-role='actualizar-suscripcion']", function (
         }
     });
     return false;
-})
+});
+
+$(document).on('click', "a[data-role='enviar-mensaje-verificacion']", function () {
+    var tipo = $(this).attr('data-tipo');
+    var data = {tipo: tipo};
+    var celular,cedula;
+    if(tipo == 1){
+    	 cedula= $("#RegistroClienteFielForm_cedula").val();
+    	 celular = $("#RegistroClienteFielForm_telefonoCelular").val();
+    	 
+    	 if(cedula == ""){
+    		 alert("Debes completar tu cedula");
+    		 return;
+    	 }
+    	 
+    	 if(celular == ""){
+    		 alert("Debes completar tu numero de celular");
+    		 return;
+    	 }
+    }else{
+    	cedula = $(this).attr('data-cedula');
+    }
+    
+    $.ajax({
+        type: 'POST',
+        url: requestUrl + "/clientefiel/registro/envioVerificacion",
+        data: {tipo:tipo, cedula:cedula, celular:celular},
+        dataType: 'json',
+        beforeSend: function () {
+        	$.mobile.loading('show');
+        },
+        complete: function (data) {
+        	 $.mobile.loading('hide');
+        },
+        success: function (data) {
+          
+            if(data.result== 'ok'){
+            	alert("Se ha enviado un codigo a tu celular");
+            }
+            // alert(data.response);
+        },
+        error: function (jqXHR, textStatus, errorThrown) {
+            Loading.hide();
+            boton.attr('disabled', false);
+        }
+    });
+    return false;
+});
