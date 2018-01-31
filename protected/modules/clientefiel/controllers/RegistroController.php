@@ -44,15 +44,18 @@ class RegistroController extends Controller{
 		try {
 			
 			$usuario = Usuario::model()->findByPK($cedula);
-			
+			$model->clienteInterno = false;
 			// consultar si es asociado
 			
 			$asociado = self::callWSUsuarioInterno($cedula);
-	
+			if($asociado){
+				$model->clienteInterno = true;
+			}
 			if($usuario == null){
 				$model->cedula = $cedula;
 				$model->scenario = "registro";
 				$model->solicitarVerificacion = true;
+				
 				Yii::app()->session[Yii::app()->params->clienteFiel['sesion']] = $model;
 				// Se debe redireccionar para continuar el registro
 				$this->redirect(CController::createUrl('realizarRegistro', array()));
@@ -182,6 +185,16 @@ class RegistroController extends Controller{
 			Yii::app()->end();
 		}
 		
+		if(isset(Yii::app()->session[Yii::app()->params->clienteFiel['sesion']])){
+			$model = Yii::app()->session[Yii::app()->params->clienteFiel['sesion']];
+		}else{
+			$model = new RegistroClienteFielForm();
+		}
+		
+		$celular = $model->telefonoCelular;
+		
+		$celular = "XXX-XXX-X". substr($celular,-3);
+		
 		if($_POST){
 			$modelCedula->attributes = $_POST['VerificacionForm'];
 			
@@ -207,11 +220,13 @@ class RegistroController extends Controller{
 		
 		if($this->isMobile){
 			$this->render('codigoVerificacion', array(
-					'model' => $modelCedula
+					'model' => $modelCedula,
+					'celular' => $celular
 			));
 		}else{
 			$this->render('d_codigoVerificacion', array(
-					'model' => $modelCedula
+					'model' => $modelCedula,
+					'celular' => $celular
 			));
 		}
 	}
@@ -323,7 +338,9 @@ class RegistroController extends Controller{
 						
 						if($usuario){
 							// actualizar usuario con el perfil de cliente fiel
-							$usuario->codigoPerfil = Yii::app()->params->clienteFiel['codigoPerfilActivo'];
+							if(!$model->clienteInterno){
+								$usuario->codigoPerfil = Yii::app()->params->clienteFiel['codigoPerfilActivo'];
+							}
 							$usuario->esClienteFiel = 1;
 							
 							
@@ -337,7 +354,11 @@ class RegistroController extends Controller{
 							
 							$usuario = new Usuario();
 							$usuario->apellido = $model->apellido;
-							$usuario->codigoPerfil = Yii::app()->params->clienteFiel['codigoPerfilActivo'];
+							if($model->clienteInterno){
+								$usuario->codigoPerfil = Yii::app()->params->perfil['asociado'];
+							}else{
+								$usuario->codigoPerfil = Yii::app()->params->clienteFiel['codigoPerfilActivo'];
+							}
 							$usuario->correoElectronico;
 							$usuario->esClienteFiel = 1;
 							$usuario->identificacionUsuario = $model->cedula;
@@ -353,6 +374,7 @@ class RegistroController extends Controller{
 						
 					} else {
 						// error al guardar
+						throw new Exception("Error al guardar los datos en Cliente fiel");
 					}
 				}else if($model->scenario == 'actualizar'){
 					$response = $restClientSII->put("cliente/actualizar/numeroDocumento/$model->cedula", array(

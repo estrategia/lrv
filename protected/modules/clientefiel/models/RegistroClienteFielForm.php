@@ -59,7 +59,7 @@ class RegistroClienteFielForm extends CFormModel {
     }
     
     
-    public function actionValidarCodigo(){
+    public function validarCodigo(){
     	if(!$this->hasErrors()){
     		if($this->solicitarVerificacion){
     			if(empty($this->codigoVerificacion) || $this->codigoVerificacion == ""){
@@ -75,7 +75,7 @@ class RegistroClienteFielForm extends CFormModel {
     							'estado' => 1
     					)
     			));
-    				
+    		//	print_r($this->codigoVerificacion);exit();
     			if($codigoVerificacion){
     				// codigo verificado satisfactoriamente
     				$codigoVerificacion->estado = 0;

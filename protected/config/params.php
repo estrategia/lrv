@@ -319,7 +319,7 @@ return array(
     'perfil' => array(
         'defecto' => 1,
         'asociado' => 2,
-        'clienteFiel' => 3,
+        'clienteFiel' => 5,
         'telefarma' => 20,
         '*' => 99
     ),

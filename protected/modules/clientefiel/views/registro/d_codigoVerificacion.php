@@ -16,7 +16,7 @@ $form = $this->beginWidget ( 'CActiveForm', array (
 ) );
 ?>
 
-
+Hemos enviado un c&oacute;digo a tu celular <?php echo $celular?>, dig&iacute;talo aqu&iacute;
 <div class=" container row">
 	<div class='col-md-12'>
 		<div class="form-group">
@@ -26,6 +26,8 @@ $form = $this->beginWidget ( 'CActiveForm', array (
 	                </div>
 	</div>
 </div>
+¿A&uacute;n no recibes tu c&oacute;digo?, <a class='button-form' data-role='enviar-mensaje-verificacion' data-tipo='2' 
+data-cedula='<?php echo $model->cedula?>' type="button" data-enhanced="true" href="#">Enviar de nuevo</a>
 
 <div class="row">
 	<div class="col-md-4">
