@@ -319,7 +319,7 @@ return array(
     'perfil' => array(
         'defecto' => 1,
         'asociado' => 2,
-        'clienteFiel' => 3,
+        'clienteFiel' => 5,
         'telefarma' => 20,
         '*' => 99
     ),
@@ -436,7 +436,7 @@ return array(
         'crmLrv' => "http://www.copservir.com/webService/crmLrv.php",
         'remisionPos' => "http://www.copservir.com/webService/serverLRV.php",
         'remisionPosECommerce' => "http://www.copservir.com/webService/Pos/RemisionPosEcommerce.php",
-        'persona' => 'http://localhost/copservir/wsMultiportal/persona',
+        'persona' => 'http://localhost/siicop/wsMultiportal/persona',
         //console
         'sincronizarBeneficiosSIICOP' => 'http://localhost/siicop/beneficios/sweb/wslrv',
        // 'sincronizarBeneficiosSIICOP' => 'http://localhost/siicop/beneficios/sweb/wslrv',

@@ -3072,3 +3072,38 @@ $(document).on('click', "a[data-role='mostrar-traza-item']", function () {
     return false;
 });
 
+$(document).on('click', "a[data-role='enviar-mensaje-verificacion']", function () {
+    var tipo = $(this).attr('data-tipo');
+    var data = {tipo: tipo};
+    var celular,cedula;
+    if(tipo == 1){
+    	 cedula= $("#RegistroClienteFielForm_cedula").val();
+    	 celular = $("#RegistroClienteFielForm_telefonoCelular").val();
+    }else{
+    	cedula = $(this).attr('data-cedula');
+    }
+    
+    $.ajax({
+        type: 'POST',
+        url: requestUrl + "/clientefiel/registro/envioVerificacion",
+        data: {tipo:tipo, cedula:cedula, celular:celular},
+        dataType: 'json',
+        beforeSend: function () {
+            Loading.show();
+        },
+        complete: function (data) {
+            Loading.hide();
+        },
+        success: function (data) {
+          
+            
+            // alert(data.response);
+        },
+        error: function (jqXHR, textStatus, errorThrown) {
+            Loading.hide();
+            boton.attr('disabled', false);
+        }
+    });
+    return false;
+});
+

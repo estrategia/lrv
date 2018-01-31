@@ -18,11 +18,12 @@ class TestController extends Controller {
         ) );
         
         //$restClient->set_header("Authorization","Basic $token");
-        $response = $restClient->get('ciudad/index', array('term'=>'cal'));
+        $response = $restClient->put('cliente/actualizar', array('numeroDocumento'=>'10283'));
         
         if($restClient->status()==200) {
-            echo $response;
-            $restClient->debug();
+            $response = CJSON::decode($response);
+            CVarDumper::dump($response,10,true);
+            //$restClient->debug();
         } else {
             //echo "Error: " . $restClient->status() . "<br>";
             //CVarDumper::dump($restClient,10,true);
@@ -34,8 +35,8 @@ class TestController extends Controller {
     }
     
     public function actionElibom () {
-        $telefono = "3165466295";
-        $mensaje = "Bancolombia le informa un Pago de Nomina por $50,000 en su Cuenta Ahorros. 09:29 30/01/2018.";
+        $telefono = "3104629251";
+        $mensaje = "La factura de su linea 3104629251 ha sido enviada a su correo electronico. Valor $425620.58 Fecha de Pago 31/01/2018";
         $mensaje = str_replace(" ", "%20", $mensaje);
         $elibom = new ElibomClient(Yii::app()->params['elibom']['url'], Yii::app()->params['elibom']['usuario'], Yii::app()->params['elibom']['password']);
         try {

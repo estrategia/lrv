@@ -25,7 +25,10 @@ class RegistroClienteFielForm extends CFormModel {
     public $condiciones;
     public $tieneHijos;
     public $tieneMascotas;
+    public $clienteInterno;
     
+    public $codigoVerificacion;
+    public $solicitarVerificacion;
     /**
      * Declares the validation rules.
      * The rules state that username and password are required,
@@ -47,10 +50,42 @@ class RegistroClienteFielForm extends CFormModel {
               array('cedula, nombre, apellido, correoElectronico', 'length', 'max' => 50),
             
              array('cedula,nombre, apellido, correoElectronico, fechaNacimiento, genero, fechaNacimiento, tieneHijos, 
-              	  tieneMascotas, telefonoFijo, telefonoCelular, ciudad','safe'),
+              	  tieneMascotas, telefonoFijo, telefonoCelular, ciudad, codigoVerificacion','safe'),
 
               array('correoElectronico', 'validarCorreo' ),
+        		
+        	  array('solicitarVerificacion', 'validarCodigo' ),
         );
+    }
+    
+    
+    public function validarCodigo(){
+    	if(!$this->hasErrors()){
+    		if($this->solicitarVerificacion){
+    			if(empty($this->codigoVerificacion) || $this->codigoVerificacion == ""){
+    				$this->addError('codigoVerificacion', 'El codigo no puede estar vacío');
+    				return false;
+    			}
+    			
+    			$codigoVerificacion = CodigoVerificacion::model()->find(array(
+    					'condition' => 'numeroDocumento =:documento AND idCodigo=:codigo AND estado =:estado',
+    					'params' => array(
+    							'documento' => $this->cedula,
+    							'codigo' => $this->codigoVerificacion,
+    							'estado' => 1
+    					)
+    			));
+    		//	print_r($this->codigoVerificacion);exit();
+    			if($codigoVerificacion){
+    				// codigo verificado satisfactoriamente
+    				$codigoVerificacion->estado = 0;
+    				$codigoVerificacion->save();
+    			}else{
+    				$this->addError('codigoVerificacion', "El c&oacute;digo no es correcto");
+    			}
+    			
+    		}
+    	}
     }
     
     public function getSubmitName(){

@@ -44,10 +44,18 @@ class RegistroController extends Controller{
 		try {
 			
 			$usuario = Usuario::model()->findByPK($cedula);
-				
+			$model->clienteInterno = false;
+			// consultar si es asociado
+			
+			$asociado = self::callWSUsuarioInterno($cedula);
+			if($asociado){
+				$model->clienteInterno = true;
+			}
 			if($usuario == null){
 				$model->cedula = $cedula;
 				$model->scenario = "registro";
+				$model->solicitarVerificacion = true;
+				
 				Yii::app()->session[Yii::app()->params->clienteFiel['sesion']] = $model;
 				// Se debe redireccionar para continuar el registro
 				$this->redirect(CController::createUrl('realizarRegistro', array()));
@@ -55,13 +63,14 @@ class RegistroController extends Controller{
 			} else if($usuario->esClienteFiel){
 				$model->cedula = $cedula;
 				$model->scenario = "actualizar";
+				$model->solicitarVerificacion = false;
 				Yii::app()->session[Yii::app()->params->clienteFiel['sesion']] = $model;
 				// Se debe redireccionar para continuar el registro
 				$this->redirect(CController::createUrl('realizarRegistro', array()));
 				Yii::app()->end();
 			}else{
 				$model->scenario = "registro";
-				
+				$model->solicitarVerificacion = true;
 				$clientSugar = new SoapClient(null, array(
 						'location' => Yii::app()->params->webServiceUrl['crmLrv'],
 						'uri' => "",
@@ -93,6 +102,7 @@ class RegistroController extends Controller{
 					$model->ciudad = $result[0]->C_CIUDAD;
 					$model->genero = $result[0]->C_SEXO == 'M'?Yii::app()->params->genero['valor']['masculino']:Yii::app()->params->genero['valor']['femenino'];
 				
+					$model->solicitarVerificacion = false;
 					Yii::app()->session[Yii::app()->params->clienteFiel['sesion']] = $model;
 				
 					try{
@@ -129,6 +139,10 @@ class RegistroController extends Controller{
 						exit();
 					}
 				
+				}else{
+					$model->solicitarVerificacion = true;
+					Yii::app()->session[Yii::app()->params->clienteFiel['sesion']] = $model;
+					$this->redirect(CController::createUrl('realizarRegistro', array()));
 				}
 				
 			}
@@ -140,6 +154,27 @@ class RegistroController extends Controller{
 	}
 	
 	
+	public static function callWSUsuarioInterno($username) {
+		$client = new SoapClient(Yii::app()->params->webServiceUrl['persona'], array(
+				"trace" => 1,
+				"exceptions" => 0,
+				'connection_timeout' => 5,
+				'cache_wsdl' => WSDL_CACHE_NONE
+		));
+	
+		try {
+			$result = $client->getPersona($username);
+	
+			return $result;
+		} catch (SoapFault $exc) {
+			//$this->addError('password', 'ha ocurrido un error');
+		} catch (Exception $exc) {
+			//$this->addError('password', 'ha ocurrido un error');
+		}
+	}
+	
+	
+	
 	public function actionCodigoVerificacion(){
 		
 		
@@ -149,6 +184,16 @@ class RegistroController extends Controller{
 			$this->redirect(CController::createUrl('index'));
 			Yii::app()->end();
 		}
+		
+		if(isset(Yii::app()->session[Yii::app()->params->clienteFiel['sesion']])){
+			$model = Yii::app()->session[Yii::app()->params->clienteFiel['sesion']];
+		}else{
+			$model = new RegistroClienteFielForm();
+		}
+		
+		$celular = $model->telefonoCelular;
+		
+		$celular = "XXX-XXX-X". substr($celular,-3);
 		
 		if($_POST){
 			$modelCedula->attributes = $_POST['VerificacionForm'];
@@ -175,11 +220,13 @@ class RegistroController extends Controller{
 		
 		if($this->isMobile){
 			$this->render('codigoVerificacion', array(
-					'model' => $modelCedula
+					'model' => $modelCedula,
+					'celular' => $celular
 			));
 		}else{
 			$this->render('d_codigoVerificacion', array(
-					'model' => $modelCedula
+					'model' => $modelCedula,
+					'celular' => $celular
 			));
 		}
 	}
@@ -254,9 +301,12 @@ class RegistroController extends Controller{
 				$params['modelUsuario']->cedula = $model->cedula;
 				
 				if(!$params['modelUsuario']->validate()){
-					echo"Hola";
 					$error = true;
 				}
+			}
+			
+			if(!$model->validate()){
+				$error = true;
 			}
 			
 			// si guarda
@@ -264,26 +314,23 @@ class RegistroController extends Controller{
 			if(!$error){
 				if($model->scenario == 'registro'){
 					$response = $restClientSII->post('cliente/crear', array(
-							'ClienteFiel[numeroDocumento]' => $model->cedula,
-							'ClienteFiel[IdTipoDocumento]' => 1,
-							'ClienteFiel[apellidos]' => $model->apellido,
-							'ClienteFiel[nombres]' => $model->nombre,
-							'ClienteFiel[apellidosNombres]' =>$model->apellido." ". $model->nombre,
-							'ClienteFiel[telefono]' => $model->telefonoFijo,
-							'ClienteFiel[celular]' => $model->telefonoCelular,
-							'ClienteFiel[IdCiudad]' => $model->ciudad,
-							'ClienteFiel[numeroDocumento]' => $model->correoElectronico,
-							'ClienteFiel[IdSexo]' => $model->genero,
-							'ClienteFiel[fechaNacimiento]' => $model->fechaNacimiento,
-							'ClienteFiel[IdProfesion]' => $model->profesion,
-							'ClienteFiel[idOcupacion]' => $model->ocupacion,
-							'ClienteFiel[tieneHijosMenores]' => $model->tieneHijos,
-							'ClienteFiel[tieneMascota]' => $model->tieneMascotas,
+							'numeroDocumento' => $model->cedula,
+							'IdTipoDocumento' => 1,
+							'apellidos' => $model->apellido,
+							'nombres' => $model->nombre,
+							'apellidosNombres' =>$model->apellido." ". $model->nombre,
+							'telefono' => $model->telefonoFijo,
+							'celular' => $model->telefonoCelular,
+							'IdCiudad' => $model->ciudad,
+							'email' => $model->correoElectronico,
+							'IdSexo' => $model->genero,
+							'fechaNacimiento' => $model->fechaNacimiento,
+							'IdProfesion' => $model->profesion,
+							'idOcupacion' => $model->ocupacion,
+							'tieneHijosMenores' => $model->tieneHijos,
+							'tieneMascota' => $model->tieneMascotas,
 							
 					));
-					
-					echo "<pre>";
-					print_r($restClientSII);exit();
 					
 					if($restClientSII->status()==200 ) { // guardo con exito
 						
@@ -291,7 +338,9 @@ class RegistroController extends Controller{
 						
 						if($usuario){
 							// actualizar usuario con el perfil de cliente fiel
-							$usuario->codigoPerfil = Yii::app()->params->clienteFiel['codigoPerfilActivo'];
+							if(!$model->clienteInterno){
+								$usuario->codigoPerfil = Yii::app()->params->clienteFiel['codigoPerfilActivo'];
+							}
 							$usuario->esClienteFiel = 1;
 							
 							
@@ -305,7 +354,11 @@ class RegistroController extends Controller{
 							
 							$usuario = new Usuario();
 							$usuario->apellido = $model->apellido;
-							$usuario->codigoPerfil = Yii::app()->params->clienteFiel['codigoPerfilActivo'];
+							if($model->clienteInterno){
+								$usuario->codigoPerfil = Yii::app()->params->perfil['asociado'];
+							}else{
+								$usuario->codigoPerfil = Yii::app()->params->clienteFiel['codigoPerfilActivo'];
+							}
 							$usuario->correoElectronico;
 							$usuario->esClienteFiel = 1;
 							$usuario->identificacionUsuario = $model->cedula;
@@ -321,25 +374,30 @@ class RegistroController extends Controller{
 						
 					} else {
 						// error al guardar
+						throw new Exception("Error al guardar los datos en Cliente fiel");
 					}
 				}else if($model->scenario == 'actualizar'){
-					$response = $restClientSII->post('cliente/actualizar', array(
-							'numeroDocumento' => $model->cedula,
-							'ClienteFiel[numeroDocumento]' => $model->cedula,
-							'ClienteFiel[apellidos]' => $model->apellido,
-							'ClienteFiel[nombres]' => $model->nombre,
-							'ClienteFiel[apellidosNombres]' =>$model->apellido." ". $model->nombre,
-							'ClienteFiel[telefono]' => $model->telefonoFijo,
-							'ClienteFiel[celular]' => $model->telefonoCelular,
-							'ClienteFiel[IdCiudad]' => $model->ciudad,
-							'ClienteFiel[numeroDocumento]' => $model->correoElectronico,
-							'ClienteFiel[idSexo]' => $model->genero,
-							'ClienteFiel[fechaNacimiento]' => $model->fechaNacimiento,
-							'ClienteFiel[IdProfesion]' => $model->profesion,
-							'ClienteFiel[idOcupacion]' => $model->ocupacion,
-							'ClienteFiel[tieneHijosMenores]' => $model->tieneHijos,
-							'ClienteFiel[tieneMascota]' => $model->tieneMascotas,
+					$response = $restClientSII->put("cliente/actualizar/numeroDocumento/$model->cedula", array(
+							//'numeroDocumento' => $model->cedula,
+							'apellidos' => $model->apellido,
+							'nombres' => $model->nombre,
+							'apellidosNombres' =>$model->apellido." ". $model->nombre,
+							'telefono' => $model->telefonoFijo,
+							'celular' => $model->telefonoCelular,
+							'IdCiudad' => $model->ciudad,
+							'numeroDocumento' => $model->correoElectronico,
+							'idSexo' => $model->genero,
+							'fechaNacimiento' => $model->fechaNacimiento,
+							'IdProfesion' => $model->profesion,
+							'idOcupacion' => $model->ocupacion,
+							'tieneHijosMenores' => $model->tieneHijos,
+							'tieneMascota' => $model->tieneMascotas,
 					));
+					
+					if($restClientSII->status()==200 ) {
+					
+					}
+					exit();
 				}
 			}
 				
@@ -352,6 +410,55 @@ class RegistroController extends Controller{
 		}else{
 			$this->render('d_registro', $params);
 		}
+	}
+	
+	
+	public function actionEnvioVerificacion(){
+		$cedula = $_POST['cedula'];
+		$tipo = $_POST['tipo'];
+		
+		if($tipo == 1){
+			$celular = $_POST['celular'];
+		}else{
+			$clientSugar = new SoapClient(null, array(
+					'location' => Yii::app()->params->webServiceUrl['crmLrv'],
+					'uri' => "",
+					'trace' => 1,
+					'connection_timeout' => 5,
+			));
+			
+			$codigoSeguridad = Yii::app()->params->codigoSeguridadCRM;
+			$llave = md5($cedula.$codigoSeguridad);
+			
+			$result = $clientSugar->__soapCall("ConsultarCliente",
+					array( 'identificacion' => $cedula,
+							'key' => $llave
+					));
+			
+			$celular = $result[0]->C_CELULAR;
+		}
+		
+		$sql = "update t_CodigoVerificacion set estado = 0 WHERE numeroDocumento = $cedula";
+		Yii::app()->db->createCommand($sql)->execute();
+		
+		$codigoVerificacion = new CodigoVerificacion();
+		$codigoVerificacion->numeroTelefono = $celular;
+		$codigoVerificacion->numeroDocumento = $cedula;
+		
+		$elibom = new ElibomClient(Yii::app()->params['elibom']['url'], Yii::app()->params['elibom']['usuario'], Yii::app()->params['elibom']['password']);
+		
+		if($codigoVerificacion->save()){
+			$telefono = $celular;
+			$mensaje = "El codigo de verificacion es ".$codigoVerificacion->idCodigo;
+			$mensaje = str_replace(" ", "%20", $mensaje);
+			$response = $elibom->sendMessage($telefono, $mensaje);
+			
+			echo CJSON::encode(array('result' => 'ok', 'response' => 'Se ha enviado un codigo a tu celular'));
+			Yii::app()->end();
+		}
+		
+		echo CJSON::encode(array('result' => 'error', 'response' => 'Error al enviar la comprobación al celular, comunicate con nosotros'));
+		Yii::app()->end();
 	}
 	
 
