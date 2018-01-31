@@ -1,5 +1,5 @@
-<div class="container">
-    <h2>Carro de compras</h2>
+<div class="container seccion-carrito-compra">
+    <h3>Tu carrito de compras</h3>
 
     <?php $mensajes = Yii::app()->user->getFlashes(); ?>
     <?php if ($mensajes): ?>
@@ -20,7 +20,7 @@
                 <?php if (isset(Yii::app()->session[Yii::app()->params->sesion['productosNoAgregados']]) && count(Yii::app()->session[Yii::app()->params->sesion['productosNoAgregados']]) > 0): ?>
                     <div class="col-md-12">
                         <div class="detalles"> <h3>Estos productos no se agregaron porque se encuentran agotados</h3> </div>
-                      
+
                         <div class="row">
                             <div class="col-md-12 side">
                                 <div class="list_cuadricula">

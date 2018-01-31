@@ -1,5 +1,4 @@
 <div class="<?= ($model->getScenario() == "registro" ? "bg-micuenta" : "") ?> ">
-  <div class="container">
     <div class="mi-cuenta <?= ($model->getScenario() !== "registro" ? "interna-cuenta" : "") ?> ">
       <?php $mensajes = Yii::app()->user->getFlashes(); ?>
       <?php if ($mensajes): ?>
@@ -28,18 +27,16 @@
       ?>
 
     <?php if ($model->getScenario() == "contrasena"): ?>
-
         <div class="row">
-            <div class="col-md-4">
-                <?php echo $form->labelEx($model, 'clave'); ?>
-                <?php echo $form->passwordField($model, 'clave', array('placeholder' => $model->getAttributeLabel('clave'), 'autocomplete' => 'off', 'class' => 'form-control')); ?>
-                <?php echo $form->error($model, 'clave', array("class" => "text-danger")); ?>
-            </div>
+          <div class="col-md-6">
+              <h3 class="t-change-pass">Cambia tu contraseña</h3>
+              <?php echo $form->passwordField($model, 'clave', array('placeholder' => 'Contraseña nueva', 'autocomplete' => 'off', 'class' => 'form-control')); ?>
+              <?php echo $form->error($model, 'clave', array("class" => "text-danger")); ?>
+          </div>
         </div>
         <div class="row">
-            <div class="col-md-4">
-                <?php echo $form->labelEx($model, 'claveConfirmar'); ?>
-                <?php echo $form->passwordField($model, 'claveConfirmar', array('placeholder' => $model->getAttributeLabel('claveConfirmar'), 'autocomplete' => 'off', 'class' => 'form-control')); ?>
+            <div class="col-md-6">
+                <?php echo $form->passwordField($model, 'claveConfirmar', array('placeholder' => 'Confirma tu contraseña nueva', 'autocomplete' => 'off', 'class' => 'form-control')); ?>
                 <?php echo $form->error($model, 'claveConfirmar', array("class" => "text-danger")); ?>
             </div>
         </div>
@@ -48,7 +45,9 @@
 
         <div class="row">
             <div class="col-md-12 col-lg-12">
+              <?php if ($model->getScenario() == 'registro'): ?>
               <h3>Crea tu cuenta</h3>
+            <?php endif; ?>
 
               <div class="form-group">
                   <?php echo $form->textField($model, 'nombre', array('placeholder' => $model->getAttributeLabel('nombre'), 'class' => 'form-control')); ?>
@@ -164,7 +163,7 @@
 
       <div class="col-md-12">
         <?php if ($model->getScenario() == 'registro' || $model->getScenario() == 'invitado') : ?>
-            <?php echo $form->checkBox($model, 'condiciones', array("style" => "display:block;float:left;margin-right: 8px;")); ?>
+            <?php echo $form->checkBox($model, 'condiciones'); ?>
             <?php echo $form->labelEx($model, 'condiciones'); ?>
             <?php echo $form->error($model, 'condiciones', array("class" => "text-danger")); ?>
         <?php endif; ?>
@@ -178,7 +177,7 @@
 
         <div class="col-md-12">
             <?php if ($model->getScenario() == 'registro' || $model->getScenario() == 'invitado'): ?>
-                <input class='btn-registrarse' type="button" data-enhanced="true" data-registro-desktop="registro" value="Registrar">
+                <input class='btn btn-primary btn-lg center' type="button" data-enhanced="true" data-registro-desktop="registro" value="Regístrate">
             <?php elseif ($model->getScenario() == 'actualizar'): ?>
                 <input class='btn btn-primary' type="submit" data-enhanced="true" value="Guardar">
             <?php elseif ($model->getScenario() == "contrasena"): ?>
@@ -209,5 +208,4 @@
     <?php endif; ?>
 
     </div>
-  </div>
 </div>

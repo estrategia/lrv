@@ -37,7 +37,7 @@
         </div>
 
         <div class="col-md-12 col-lg-12">
-          <input class='btn-recordar-contrasena'  type="button" data-enhanced="true" data-registro-desktop="recordar" value="Enviar">
+          <input class='btn btn-primary btn-lg center' value="Enviar" style="margin-top:25px;"  type="button" data-enhanced="true" data-registro-desktop="recordar">
         </div>
 
       </div>

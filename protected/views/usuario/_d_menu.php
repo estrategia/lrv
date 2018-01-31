@@ -1,4 +1,4 @@
-<ul class="nav nav-pills nav-stacked menu-user">
+<ul class="nav nav-pills nav-stacked menu-tucuenta">
     <li class="<?php echo ($vista=="d_registro" ? "active" : "")?>">
         <a href="<?php echo CController::createUrl('/usuario/infoPersonal') ?>" >
             Informaci&oacute;n personal
@@ -6,12 +6,12 @@
     </li>
     <li class="<?php echo ($vista=="d_contrasena" ? "active" : "")?>">
         <a href="<?php echo CController::createUrl('/usuario/contrasena') ?>" >
-            Cambiar contrase&ntilde;a
+            Cambia tu contrase&ntilde;a
         </a>
     </li>
     <li class="<?php echo ($vista=="d_direcciones" ? "active" : "")?>">
         <a href="<?php echo CController::createUrl('/usuario/direcciones') ?>" >
-            Direcciones de despacho
+            Tus direcciones de despacho
         </a>
     </li>
     <li class="<?php echo ($vista=="d_pedidos" || $vista=="d_pedido" ? "active" : "")?>">
@@ -21,14 +21,14 @@
     </li>
     <li class="<?php echo ( $vista=="d_listaPersonal" || $vista=="d_listaDetalle" ? "active" : "")?>">
         <a href="<?php echo CController::createUrl('/usuario/listapersonal') ?>" >
-            Listas personales
+            Tus listas personales
         </a>
     </li>
-    <li class="<?php echo ($vista=="d_cotizaciones" || $vista == "d_cotizacion" ? "active" : "")?>">
+    <!-- <li class="<?php echo ($vista=="d_cotizaciones" || $vista == "d_cotizacion" ? "active" : "")?>">
         <a href="<?php echo CController::createUrl('/usuario/listacotizaciones') ?>" >
             Cotizaciones
         </a>
-    </li>
+    </li> -->
     <li class="<?php echo ($vista=="d_suscripciones" || $vista == "d_suscripciones" ? "active" : "")?>">
         <a href="<?php echo CController::createUrl('/usuario/suscripciones') ?>" >
             Suscripciones
@@ -41,7 +41,7 @@
     </li>
     <li class="<?php echo ($vista=="d_bonos" ? "active" : "")?>">
         <a href="<?php echo CController::createUrl('/usuario/bonos') ?>">
-            Bonos
+            Tus bonos de promoción
         </a>
     </li>
     <li class="<?php echo ($vista=="" ? "active" : "")?>">

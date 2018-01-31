@@ -207,8 +207,8 @@ header("Pragma: no-cache");
       </nav>
     </header>
     <div class="wrapper" id="main-content">
-        <?php  //$this->renderPartial('//layouts/_d_cupones'); ?>
-        <?php // $this->renderPartial('//layouts/_d_productos-destacados'); ?>
+        <?php  // $this->renderPartial('//layouts/_d_cupones'); ?>
+        <?php  // $this->renderPartial('//layouts/_d_productos-destacados'); ?>
         <?php echo $content; ?>
     </div>
     <?php if (CodigoEspecial::hasState()): ?>

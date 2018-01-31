@@ -1678,7 +1678,7 @@ class UsuarioController extends Controller {
         $texto = 'Ver';
         if (!$this->isMobile) {
             $clase = 'center';
-            $texto = '<span class="glyphicon glyphicon-eye-open center-div" aria-hidden="true">';
+            $texto = '<div class="btn btn-primary">Ver detalles</div>';
         }
 
         return CHtml::link($texto, $this->createUrl('/usuario/pedido', array('compra' => $data->idCompra)), array('class' => $clase, 'data-ajax' => 'false'));
@@ -1696,6 +1696,14 @@ class UsuarioController extends Controller {
         	return CHtml::link($texto, $this->createUrl('/usuario/rastreo', array('compra' => $data->idCompra)), array('class' => $clase, 'data-ajax' => 'false'));
         else
         	return "";
+    }
+
+    protected function gridPedido($data, $row) {
+      $texto = "<p class='idpedido'>Pedido: $data->idCompra </p>";
+      $fecha = DateTime::createFromFormat('Y-m-d H:i:s', $data->fechaCompra);
+
+      $texto .= "<p class='fecha'>".$fecha->format('F d - Y')."</p>";
+      return $texto;
     }
 
     protected function gridFechaPedido($data, $row) {

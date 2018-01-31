@@ -29,7 +29,7 @@
             <?php echo $form->error($model, 'password',array( "class" => "text-danger")); ?>
           </div>
           <p><?php echo CHtml::link('Recuerda la contraseña', CController::createUrl('/usuario/recordar'), array('class' => 'c_olv_pass', 'data-ajax'=>'false')); ?></p>
-          <input type="button" class='btn-inciar-sesion' data-enhanced="true" data-registro-desktop="autenticar">
+          <input type="button" class='btn btn-primary btn-lg center' style="margin-top:30px;" data-enhanced="true" data-registro-desktop="autenticar" value="Iniciar sesión">
           <hr>
           <p class="link-registro">¿Eres nuevo? <?php echo CHtml::link('Regístrate aquí', CController::createUrl('/usuario/registro'), array('class' => '', 'data-ajax'=>"false")); ?></p>
         </div>

@@ -1,7 +1,7 @@
 <?php $radio = isset($radio) ? $radio : false; ?>
 <?php $idDireccionSeleccionada = isset($idDireccionSeleccionada) ? $idDireccionSeleccionada : 0; ?>
 
-<table class="table table-striped">
+<table class="table table-striped tabla-adicionar-direccion">
     <tr>
         <td <?php echo ( $radio ? "" : 'colspan="2"') ?> class="text-truncate" title="<?php echo $model->descripcion ?>">
             <?php echo $model->descripcion ?>
@@ -38,10 +38,9 @@
     </tr>
 
     <?php if ($editar): ?>
-        <tr>
+        <tr class="seccion-botones">
             <td><button class="btn btn-primary" data-role="direccion-editar" data-direccion="<?php echo $model->idDireccionDespacho ?>" data-radio="<?php echo ($radio ? 1 : 0) ?>">Editar</button></td>
             <td><button class="btn btn-default" data-role="direccion-eliminar" data-direccion="<?php echo $model->idDireccionDespacho ?>">Eliminar</button></td>
         </tr>
     <?php endif; ?>
 </table>
-

@@ -10,8 +10,6 @@
                     </a>
                 </h4>
             </div>
-            <div style="height:5px;background-color: #F5F5F5;border-top: 1px solid #E9E1E1;"></div>
-
             <div class="panel-collapse collapse" id="div-infodireccion-<?php echo $objDireccion->idDireccionDespacho ?>" aria-labelledby="encabezado-pago-direccion-express-<?php echo $objDireccion->idDireccionDespacho; ?>" role="tabpanel">
                 <div class="panel-body">
                     <?php $this->renderPartial('/usuario/_d_direccionVista', array('model' => $objDireccion, 'editar' => false)); ?>
