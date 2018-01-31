@@ -505,7 +505,7 @@ class RegistroController extends ControllerCliente{
 			Yii::app()->end();
 		}
 		
-		echo CJSON::encode(array('result' => 'error', 'response' => 'Error al enviar la comprobación al celular, comunicate con nosotros'));
+		echo CJSON::encode(array('result' => 'error', 'response' => 'Error al enviar la comprobaci&oacute;n al celular, comunicate con nosotros'));
 		Yii::app()->end();
 	}
 	
