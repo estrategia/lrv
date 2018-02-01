@@ -49,18 +49,11 @@ $form = $this->beginWidget ( 'CActiveForm', array (
 	                <?php echo $form->error($model, 'telefonoCelular', array("class" => "text-danger")); ?>
 	   </div>
 	     <div class="ui-field-container">
-	                <?php if ($model->getScenario() == 'actualizar') : ?>
-	                    <?php echo $form->labelEx($model, 'correoElectronico'); ?>
-	                    <?php echo $form->emailField($model, 'correoElectronico', array('placeholder' => $model->getAttributeLabel('correoElectronico'), 'class' => 'form-control', 'disabled' => 'disabled')); ?>
-	                    <?php echo $form->error($model, 'correoElectronico', array("class" => "text-danger")); ?>
-	                <?php else: ?>
-	                    <?php echo $form->labelEx($model, 'correoElectronico'); ?>
-	                    <?php echo $form->emailField($model, 'correoElectronico', array('placeholder' => $model->getAttributeLabel('correoElectronico'), 'class' => 'form-control', 'maxlength' => 50)); ?>
-	                    <?php echo $form->error($model, 'correoElectronico', array("class" => "text-danger")); ?>
-	                <?php endif; ?>
+	                <?php echo $form->labelEx($model, 'correoElectronico'); ?>
+	                <?php echo $form->emailField($model, 'correoElectronico', array('placeholder' => $model->getAttributeLabel('correoElectronico'), 'class' => 'form-control', 'maxlength' => 50)); ?>
+	                <?php echo $form->error($model, 'correoElectronico', array("class" => "text-danger")); ?>
 	    </div>
 	            
-	
 		  <div class="ui-field-container">
 	            		<?php echo $form->labelEx($model, 'genero'); ?>	
 	            	 	<?php echo $form->dropDownList($model,'genero',Yii::app()->params->generos); ?>
@@ -104,6 +97,7 @@ $form = $this->beginWidget ( 'CActiveForm', array (
 	        <?php echo $form->labelEx($model, 'profesion', array('style' => 'display:block;')); ?>
 	        <?php echo $form->dropDownList($model, 'profesion', $listProfesion, array('class'=>'form-control', 'prompt' => $model->getAttributeLabel('profesion'), 'encode' => false)); ?>
 	        <?php echo $form->error($model, 'profesion', array("class" => "text-danger")); ?>
+
 	    </div>
 	    
 	    <div class="ui-field-container">

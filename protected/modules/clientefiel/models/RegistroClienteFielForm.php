@@ -29,6 +29,8 @@ class RegistroClienteFielForm extends CFormModel {
     
     public $codigoVerificacion;
     public $solicitarVerificacion;
+    public $verificacionValidada;
+    public $password;
     /**
      * Declares the validation rules.
      * The rules state that username and password are required,
@@ -190,15 +192,15 @@ class RegistroClienteFielForm extends CFormModel {
         if (!$this->hasErrors("correoElectronico")) {
             $usuario = null;
             
-//             if ($this->getScenario() == 'registro') {
-//                 $usuario = Usuario::model()->find('correoElectronico=:correo', array(':correo' => $this->correoElectronico));
-//             }else if($this->getScenario() == 'actualizar'){
-//                 $usuario = Usuario::model()->find('correoElectronico=:correo AND identificacionUsuario<>:cedula', array(':correo' => $this->correoElectronico, ':cedula' => $this->cedula));
-//             }
-
-//             if ($usuario !== null) {
-//                 $this->addError('correoElectronico', 'Correo electrónico ya registrado');
-//             }
+			$usuario = Usuario::model()->find(array(
+					'condition' => 'identificacionUsuario !=:usuario AND correoElectronico =:correo',
+					'params' => array(
+							'usuario' => $this->cedula,
+							'correo' => $this->correoElectronico
+					)
+			));
+			if($usuario)
+				$this->addError('correoElectronico', 'Correo ya registrado');
         }
     }
 
