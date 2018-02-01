@@ -37,7 +37,7 @@ class RegistroClienteFielForm extends CFormModel {
     public function rules() {
         return array(
              
-            array('cedula,nombre, apellido, correoElectronico, fechaNacimiento,  genero, 
+            array('cedula,nombre, apellido, correoElectronico, fechaNacimiento, ciudad, genero, 
             		fechaNacimiento, tieneHijos,  tieneMascotas, telefonoFijo, telefonoCelular', 
             		'required', 'message' => '{attribute} no puede estar vacío'),
              array('condiciones', 'required', 'message' => 'Aceptar términos y condiciones'),
@@ -48,9 +48,10 @@ class RegistroClienteFielForm extends CFormModel {
              array('genero', 'in', 'range' => array(1, 2),  'allowEmpty' => true),
             
               array('cedula, nombre, apellido, correoElectronico', 'length', 'max' => 50),
+            array('profesion', 'validarProfesion'),
             
              array('cedula,nombre, apellido, correoElectronico, fechaNacimiento, genero, fechaNacimiento, tieneHijos, 
-              	  tieneMascotas, telefonoFijo, telefonoCelular, ciudad, codigoVerificacion','safe'),
+              	  tieneMascotas, telefonoFijo, telefonoCelular, codigoVerificacion','safe'),
 
               array('correoElectronico', 'validarCorreo' ),
         		
@@ -63,7 +64,7 @@ class RegistroClienteFielForm extends CFormModel {
     	if(!$this->hasErrors()){
     		if($this->solicitarVerificacion){
     			if(empty($this->codigoVerificacion) || $this->codigoVerificacion == ""){
-    				$this->addError('codigoVerificacion', 'El codigo no puede estar vac�o');
+    				$this->addError('codigoVerificacion', 'El codigo no puede estar vac�o');
     				return false;
     			}
     			
@@ -162,11 +163,9 @@ class RegistroClienteFielForm extends CFormModel {
      */
     public function validarProfesion() {
         if (!$this->hasErrors()) {
-            if ($this->profesion != null) {
-                $objProfesion = ProfesionCliente::model()->findByPk($this->profesion);
-                
-                if($objProfesion==null)
-                    $this->addError('profesion', 'Profesión no válida');
+            if (empty($this->profesion) && empty($this->ocupacion)) {
+                $this->addError('profesion', 'Profesi&oacute;n/ocupaci&oacute;n no puede estar vac&iacute;o');
+                $this->addError('ocupacion', 'Profesi&oacute;n/ocupaci&oacute;n no puede estar vac&iacute;o');
             }
         }
     }
