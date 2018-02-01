@@ -227,6 +227,17 @@ class RegistroController extends Controller{
 			Yii::app()->end();
 		}
 		
+		if(isset(Yii::app()->session[Yii::app()->params->clienteFiel['sesion']])){
+			$model = Yii::app()->session[Yii::app()->params->clienteFiel['sesion']];
+		}
+		
+		$celular = $model->telefonoCelular;
+		$email =  $model->correoElectronico;
+		
+		$celular = "XXX-XXX-X". substr($celular,-3);
+		$email = substr($email,0,3)."XXXX@XXXXX.XXX";
+		
+		
 		if($_POST){
 			$modelCedula->attributes = $_POST['VerificacionForm'];
 			
@@ -252,11 +263,15 @@ class RegistroController extends Controller{
 		
 		if($this->isMobile){
 			$this->render('codigoVerificacion', array(
-					'model' => $modelCedula
+					'model' => $modelCedula,
+					'celular' => $celular,
+					'email' => $email
 			));
 		}else{
 			$this->render('d_codigoVerificacion', array(
-					'model' => $modelCedula
+					'model' => $modelCedula,
+					'celular' => $celular,
+					'email' => $email
 			));
 		}
 	}
@@ -424,6 +439,7 @@ class RegistroController extends Controller{
 							
 							$usuario->clave = md5($params['modelUsuario']->clave);
 							$usuario->save();
+							
 							$this->enviarCorreoBienvenida($usuario,$usuario->correoElectronico);
 						//	Yii::app()->session[Yii::app()->params->clienteFiel['sesionUsuario']] = $usuario;
 						//	$this->redirect(CController::createUrl('clave'));
