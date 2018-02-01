@@ -129,8 +129,8 @@ class TestController extends Controller {
             'action'=>'sendmessage',
             'username' => 'Api_7V7K-',
             'password' => '68IK0BHE-W',
-            'recipient' => '573002817433',
-            'messagedata' => 'Prueba ('.date('YmdHis').'): Saludando al sinverguenza',
+            'recipient' => '573104629251',
+            'messagedata' => 'Isabella gasta hoy!!!! :)',
             'longMessage' => false,
         );
         
