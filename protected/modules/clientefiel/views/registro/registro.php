@@ -93,11 +93,23 @@ $form = $this->beginWidget ( 'CActiveForm', array (
             <?php echo $form->error($model, 'fechaNacimiento',  array("class" => "text-danger")); ?>
 
         </div>
+        
+        <div class="ui-field-container">
+	        <?php echo $form->labelEx($model, 'ciudad', array('style' => 'display:block;')); ?>
+	        <?php echo $form->dropDownList($model, 'ciudad', $listCiudad, array('class'=>'form-control', 'prompt' => $model->getAttributeLabel('ciudad'), 'encode' => false)); ?>
+	        <?php echo $form->error($model, 'ciudad', array("class" => "text-danger")); ?>
+	    </div>
 	
-		  <div class="ui-field-container">
+		<div class="ui-field-container">
 	        <?php echo $form->labelEx($model, 'profesion', array('style' => 'display:block;')); ?>
-	        <?php echo $form->dropDownList($model, 'profesion', CHtml::listData(ProfesionCliente::listData(), 'codigoProfesion', 'nombreProfesion'), array('class'=>'form-control', 'prompt' => $model->getAttributeLabel('profesion'), 'encode' => false)); ?>
+	        <?php echo $form->dropDownList($model, 'profesion', $listProfesion, array('class'=>'form-control', 'prompt' => $model->getAttributeLabel('profesion'), 'encode' => false)); ?>
 	        <?php echo $form->error($model, 'profesion', array("class" => "text-danger")); ?>
+	    </div>
+	    
+	    <div class="ui-field-container">
+	        <?php echo $form->labelEx($model, 'ocupacion', array('style' => 'display:block;')); ?>
+	        <?php echo $form->dropDownList($model, 'ocupacion', $listOcupacion, array('class'=>'form-control', 'prompt' => $model->getAttributeLabel('ocupacion'), 'encode' => false)); ?>
+	        <?php echo $form->error($model, 'ocupacion', array("class" => "text-danger")); ?>
 	    </div>
 	
 		<div class="ui-field-container">
