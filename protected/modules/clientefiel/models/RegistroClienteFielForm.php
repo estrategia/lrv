@@ -30,7 +30,7 @@ class RegistroClienteFielForm extends CFormModel {
     public $codigoVerificacion;
     public $solicitarVerificacion;
     public $verificacionValidada;
-    
+    public $password;
     /**
      * Declares the validation rules.
      * The rules state that username and password are required,

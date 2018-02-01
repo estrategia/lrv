@@ -190,6 +190,7 @@ class RegistroController extends ControllerCliente{
 						$codigoVerificacion->numeroTelefono = $model->telefonoCelular;
 						$codigoVerificacion->numeroDocumento = $cedula;
 						
+						
 						$elibom = new ElibomClient(Yii::app()->params['elibom']['url'], Yii::app()->params['elibom']['usuario'], Yii::app()->params['elibom']['password']);
 				
 						if($codigoVerificacion->save()){
@@ -342,13 +343,15 @@ class RegistroController extends ControllerCliente{
 			$this->render('codigoVerificacion', array(
 					'model' => $modelCedula,
 					'celular' => $celular,
-					'email' => $email
+					'email' => $email,
+					'paso' => 1
 			));
 		}else{
 			$this->render('d_codigoVerificacion', array(
 					'model' => $modelCedula,
 					'celular' => $celular,
-					'email' => $email
+					'email' => $email,
+					'paso' => 1
 			));
 		}
 	}
@@ -368,24 +371,26 @@ class RegistroController extends ControllerCliente{
 			$this->redirect(CController::createUrl('index'));
 			Yii::app()->end();
 		}
-		$restURL = Yii::app()->params->clienteFiel['url'];
+		
 		$listCiudad = array();
 		$listProfesion = array();
 		$listOcupacion = array();
 		
 		// cliente SII
+		$restURL = Yii::app()->params->clienteFiel['url'];
 		$restClientDatos = new RESTClient ();
 		$restClientDatos->initialize ( array (
 		    'server' => $restURL,
 		) );
 		
 		//descomentar
-		/*$listCiudad = $restClientDatos->get('ciudad/list');
+		$listCiudad = $restClientDatos->get('ciudad/list');
 		if($restClientDatos->status() == 200) {
 		    $listCiudad = CJSON::decode($listCiudad);
-		}*/
+		}
 		
 		//comentar
+		/*
 		$listCiudad2 = $restClientDatos->get('ciudad/index', array('term'=>'a'));
 		if($restClientDatos->status() == 200) {
 		    $listCiudad2 = CJSON::decode($listCiudad2);
@@ -393,16 +398,17 @@ class RegistroController extends ControllerCliente{
 		        $listCiudad[$dataRow['value']] = $dataRow['label'];
 		    }
 		}
-		
+		*/
 		//descomentar
-		/*$listProfesion = $restClientDatos->get('profesion/list');
+		$listProfesion = $restClientDatos->get('profesion/list');
 		if($restClientDatos->status() == 200) {
 		    $listProfesion = CJSON::decode($listProfesion);
 		    $listOcupacion = $listProfesion['ocupaciones'];
 		    $listProfesion = $listProfesion['profesiones'];
-		}*/
+		}
 		
 		//comentar
+		/*
 		$listProfesion2 = $restClientDatos->get('profesion/index', array('term'=>'a', 'tipo'=>1));
 		if($restClientDatos->status() == 200) {
 		    $listProfesion2 = CJSON::decode($listProfesion2);
@@ -419,7 +425,7 @@ class RegistroController extends ControllerCliente{
 		        $listOcupacion[$dataRow['value']] = $dataRow['label'];
 		    }
 		}
-		
+		*/
 		$params[] = array();
 		$params['listCiudad'] = $listCiudad;
 		$params['listProfesion'] = $listProfesion;
@@ -480,6 +486,8 @@ class RegistroController extends ControllerCliente{
 				
 				if(!$params['modelUsuario']->validate()){
 					$error = true;
+				}else{
+					$model->password = $params['modelUsuario']->clave;
 				}
 			}
 			
@@ -490,81 +498,42 @@ class RegistroController extends ControllerCliente{
 			// si guarda
 		
 			if(!$error){
+				
+				// solicitar un nuevo codigo de verificacion por correo
+				
+				
 				if($model->scenario == 'registro'){
 					
-					$response = $restClientSII->post('cliente/crear', array(
-							'numeroDocumento' => $model->cedula,
-							'IdTipoDocumento' => 1,
-							'apellidos' => $model->apellido,
-							'nombres' => $model->nombre,
-							'apellidosNombres' =>$model->apellido." ". $model->nombre,
-							'telefono' => $model->telefonoFijo,
-							'celular' => $model->telefonoCelular,
-							'IdCiudad' => $model->ciudad,
-							'email' => $model->correoElectronico,
-							'IdSexo' => $model->genero,
-							'fechaNacimiento' => $model->fechaNacimiento,
-							'IdProfesion' => $model->profesion,
-							'idOcupacion' => $model->ocupacion,
-							'tieneHijos' => $model->tieneHijos,
-							'tieneHijosMenores' => $model->tieneHijos,
-							'tieneMascota' => $model->tieneMascotas,
-							'aceptaPolitica' => 1,
-					));
+					Yii::app()->session[Yii::app()->params->clienteFiel['sesion']] = $model;
 					
-					if($restClientSII->status()==200 ) { // guardo con exito
-						
-						// verificar si es usuario de la rebaja virtual
-						
-						if($usuario){
-							// actualizar usuario con el perfil de cliente fiel
-							if(!$model->clienteInterno){
-								$usuario->codigoPerfil = Yii::app()->params->clienteFiel['codigoPerfilActivo'];
-							}
-							$usuario->esClienteFiel = 1;
-							
-							
-							if($usuario->save()){
+					try{
+						$cedula = $model->cedula;
+						// inactivar los demas codigos de verificaion del usuario para evitar fraudes
+					
+						$sql = "update t_CodigoVerificacion set estado = 0 WHERE numeroDocumento = $cedula";
+						Yii::app()->db->createCommand($sql)->execute();
+					
+						$codigoVerificacion = new CodigoVerificacion();
+						$codigoVerificacion->numeroTelefono = $model->telefonoCelular;
+						$codigoVerificacion->numeroDocumento = $cedula;
+									
+						$elibom = new ElibomClient(Yii::app()->params['elibom']['url'], Yii::app()->params['elibom']['usuario'], Yii::app()->params['elibom']['password']);
+					
+						if($codigoVerificacion->save()){
+							$telefono = $codigoVerificacion->numeroTelefono;
+															
+							$this->enviarCodigoVerificacion($model->nombre,$codigoVerificacion->idCodigo,$model->correoElectronico);
 								
-								$this->enviarCorreoBienvenida($usuario,$usuario->correoElectronico);
-								$this->limpiarVariables();
-								$this->redirect(CController::createUrl('bienvenida'));
-							}
-							
-							// enviar correo electronico de bienvenida al club
-							
-						}else{
-							
-							$usuario = new Usuario();
-							$usuario->apellido = $model->apellido;
-							if($model->clienteInterno){
-								$usuario->codigoPerfil = Yii::app()->params->perfil['asociado'];
-							}else{
-								$usuario->codigoPerfil = Yii::app()->params->clienteFiel['codigoPerfilActivo'];
-							}
-							$usuario->correoElectronico = $model->correoElectronico;
-							$usuario->esClienteFiel = 1;
-							$usuario->identificacionUsuario = $model->cedula;
-							$usuario->nombre = $model->nombre;
-							
-							$usuario->clave = md5($params['modelUsuario']->clave);
-							$usuario->save();
-							
-							$usuarioExtendida = new UsuarioExtendida();
-							$usuarioExtendida->identificacionUsuario = $model->cedula;
-							$usuarioExtendida->fechaNacimiento = $model->fechaNacimiento;
-							$usuarioExtendida->genero = $model->genero;
-							$usuarioExtendida->fechaRegistro = Date("Y-m-d H:i:s");
-							$usuarioExtendida->save();
-							
-							$this->enviarCorreoBienvenida($usuario,$usuario->correoElectronico);
-							$this->limpiarVariables();
-							$this->redirect(CController::createUrl('bienvenida'));
-							Yii::app()->end();
+							$modelCedula = new VerificacionForm();
+							$modelCedula->cedula = $cedula;
+								
+							Yii::app()->session[Yii::app()->params->clienteFiel['sesionVerificacion']] = $modelCedula;
+							$this->redirect(CController::createUrl('codigoVerificacionFinal'));
 						}
-						
-					} else {
-						// error al guardar
+					
+					}catch(Exception $e){
+						echo $e->getMessage();
+						exit();
 					}
 				}else if($model->scenario == 'actualizar'){
 					
@@ -580,7 +549,7 @@ class RegistroController extends ControllerCliente{
 							'idSexo' => $model->genero,
 							'fechaNacimiento' => $model->fechaNacimiento,
 							'IdProfesion' => $model->profesion,
-							'idOcupacion' => $model->ocupacion,
+							'IdOcupacion' => $model->ocupacion,
 							'tieneHijos' => $model->tieneHijos,
 							'tieneHijosMenores' => $model->tieneHijos,
 							'tieneMascota' => $model->tieneMascotas,
@@ -660,6 +629,55 @@ class RegistroController extends ControllerCliente{
 		Yii::app()->end();
 	}
 	
+	public function actionCodigoVerificacionFinal(){
+	
+		if(isset(Yii::app()->session[Yii::app()->params->clienteFiel['sesionVerificacion']]) && 
+				isset(Yii::app()->session[Yii::app()->params->clienteFiel['sesion']])){
+			$modelCedula = Yii::app()->session[Yii::app()->params->clienteFiel['sesionVerificacion']];
+		}else{
+			$this->redirect(CController::createUrl('index'));
+			Yii::app()->end();
+		}
+		
+		if($_POST){
+			$modelCedula->attributes = $_POST['VerificacionForm'];
+				
+			$codigoVerificacion = CodigoVerificacion::model()->find(array(
+					'condition' => 'numeroDocumento =:documento AND idCodigo=:codigo AND estado =:estado',
+					'params' => array(
+							'documento' => $modelCedula->cedula,
+							'codigo' => $modelCedula->codigoVerificacion,
+							'estado' => 1
+					)
+			));
+				
+			if($codigoVerificacion){
+				// codigo verificado satisfactoriamente
+				$codigoVerificacion->estado = 0;
+				$codigoVerificacion->save();
+	
+				$this->actionGuardarDatos();
+				
+				Yii::app()->end();
+			}else{
+				$modelCedula->addError('codigoVerificacion', "El c&oacute;digo no es correcto");
+			}
+		}
+	
+		if($this->isMobile){
+			$this->render('codigoVerificacion', array(
+					'model' => $modelCedula,
+					'paso' => 2
+			));
+		}else{
+			$this->render('d_codigoVerificacion', array(
+					'model' => $modelCedula,
+					'paso' => 2
+			));
+		}
+	}
+	
+	
 	public function actionBienvenida(){
 		if($this->isMobile){
 			$this->render('bienvenida');
@@ -721,6 +739,97 @@ class RegistroController extends ControllerCliente{
 		$response = $restClientSII->get('ciudad/index', $params);
 		echo CJSON::encode($response);
 		Yii::app()->end();
+	}
+	
+	private function  actionGuardarDatos(){
+		
+		$restClientSII = new RESTClient ();
+		$restURL = Yii::app()->params->clienteFiel['url'];
+		
+		$restClientSII->initialize ( array (
+				'server' => $restURL,
+		) );
+		if(isset(Yii::app()->session[Yii::app()->params->clienteFiel['sesion']])) {
+			$model = Yii::app()->session[Yii::app()->params->clienteFiel['sesion']];
+		}
+		
+		$usuario = Usuario::model()->findByPk($model->cedula);
+		
+		$response = $restClientSII->post('cliente/crear', array(
+				'numeroDocumento' => $model->cedula,
+				'IdTipoDocumento' => 1,
+				'apellidos' => $model->apellido,
+				'nombres' => $model->nombre,
+				'apellidosNombres' =>$model->apellido." ". $model->nombre,
+				'telefono' => $model->telefonoFijo,
+				'celular' => $model->telefonoCelular,
+				'IdCiudad' => $model->ciudad,
+				'email' => $model->correoElectronico,
+				'IdSexo' => $model->genero,
+				'fechaNacimiento' => $model->fechaNacimiento,
+				'IdProfesion' => $model->profesion,
+				'IdOcupacion' => $model->ocupacion,
+				'tieneHijos' => $model->tieneHijos,
+				'tieneHijosMenores' => $model->tieneHijos,
+				'tieneMascota' => $model->tieneMascotas,
+				'aceptaPolitica' => 1,
+		));
+			
+		
+		if($restClientSII->status()==200 ) { // guardo con exito
+		
+			// verificar si es usuario de la rebaja virtual
+		
+			if($usuario){
+				// actualizar usuario con el perfil de cliente fiel
+				if(!$model->clienteInterno){
+					$usuario->codigoPerfil = Yii::app()->params->clienteFiel['codigoPerfilActivo'];
+				}
+				$usuario->esClienteFiel = 1;
+					
+					
+				if($usuario->save()){
+		
+					$this->enviarCorreoBienvenida($usuario,$usuario->correoElectronico);
+					$this->limpiarVariables();
+					$this->redirect(CController::createUrl('bienvenida'));
+				}
+					
+				// enviar correo electronico de bienvenida al club
+					
+			} else{
+					
+				$usuario = new Usuario();
+				$usuario->apellido = $model->apellido;
+				if($model->clienteInterno){
+					$usuario->codigoPerfil = Yii::app()->params->perfil['asociado'];
+				}else{
+					$usuario->codigoPerfil = Yii::app()->params->clienteFiel['codigoPerfilActivo'];
+				}
+				$usuario->correoElectronico = $model->correoElectronico;
+				$usuario->esClienteFiel = 1;
+				$usuario->identificacionUsuario = $model->cedula;
+				$usuario->nombre = $model->nombre;
+					
+				$usuario->clave = md5($model->password);
+				$usuario->save();
+					
+				$usuarioExtendida = new UsuarioExtendida();
+				$usuarioExtendida->identificacionUsuario = $model->cedula;
+				$usuarioExtendida->fechaNacimiento = $model->fechaNacimiento;
+				$usuarioExtendida->genero = $model->genero;
+				$usuarioExtendida->fechaRegistro = Date("Y-m-d H:i:s");
+				$usuarioExtendida->save();
+					
+				$this->enviarCorreoBienvenida($usuario,$usuario->correoElectronico);
+				$this->limpiarVariables();
+				$this->redirect(CController::createUrl('bienvenida'));
+				Yii::app()->end();
+			}
+		
+		} else {
+			// error al guardar
+		}
 	}
 	
 	public function limpiarVariables(){
