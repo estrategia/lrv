@@ -120,11 +120,11 @@ class RegistroController extends Controller{
 				
 						if($codigoVerificacion->save()){
 							$telefono = $codigoVerificacion->numeroTelefono;
-							$mensaje = "El codigo de verificacion es ".$codigoVerificacion->idCodigo;
+							$mensaje = "La Rebaja te informa el cÃ³digo de verificacion: ".$codigoVerificacion->idCodigo;
 							$mensaje = str_replace(" ", "%20", $mensaje);
 							$response = $elibom->sendMessage($telefono, $mensaje);
 							
-							// Se envia correo electrónico al número
+							// Se envia correo electrï¿½nico al nï¿½mero
 							
 							if($response['action'] == 'sendmessage') {
 								Yii::log("Error enviando numero telefono $telefono codigo Verificacion  \n" , CLogger::LEVEL_INFO, 'application');
