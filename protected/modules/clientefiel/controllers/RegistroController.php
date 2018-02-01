@@ -1,6 +1,6 @@
 <?php
 
-class RegistroController extends Controller{
+class RegistroController extends ControllerCliente{
 	
 	
 	public function actionIndex(){
