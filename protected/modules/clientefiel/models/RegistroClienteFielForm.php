@@ -57,7 +57,7 @@ class RegistroClienteFielForm extends CFormModel {
 
               array('correoElectronico', 'validarCorreo' ),
         		
-        	  array('solicitarVerificacion', 'validarCodigo' ),
+        	//  array('solicitarVerificacion', 'validarCodigo' ),
         );
     }
     
