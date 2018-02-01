@@ -1,6 +1,6 @@
 <?php
 
-class RegistroController extends Controller{
+class RegistroController extends ControllerCliente{
 	
 	
 	public function actionIndex(){
@@ -275,7 +275,6 @@ class RegistroController extends Controller{
 		}
 	}
 	
-	
 	public function actionRealizarRegistro(){
 	    Yii::import('ext.select2.Select2');
 		
@@ -297,18 +296,45 @@ class RegistroController extends Controller{
 		    'server' => $restURL,
 		) );
 		
-		$listCiudad = $restClientDatos->get('ciudad/list');
-
+		//descomentar
+		/*$listCiudad = $restClientDatos->get('ciudad/list');
 		if($restClientDatos->status() == 200) {
 		    $listCiudad = CJSON::decode($listCiudad);
+		}*/
+		
+		//comentar
+		$listCiudad2 = $restClientDatos->get('ciudad/index', array('term'=>'a'));
+		if($restClientDatos->status() == 200) {
+		    $listCiudad2 = CJSON::decode($listCiudad2);
+		    foreach ($listCiudad2 as $dataRow) {
+		        $listCiudad[$dataRow['value']] = $dataRow['label'];
+		    }
 		}
 		
-		$listProfesion = $restClientDatos->get('profesion/list');
-		
+		//descomentar
+		/*$listProfesion = $restClientDatos->get('profesion/list');
 		if($restClientDatos->status() == 200) {
 		    $listProfesion = CJSON::decode($listProfesion);
 		    $listOcupacion = $listProfesion['ocupaciones'];
 		    $listProfesion = $listProfesion['profesiones'];
+		}*/
+		
+		//comentar
+		$listProfesion2 = $restClientDatos->get('profesion/index', array('term'=>'a', 'tipo'=>1));
+		if($restClientDatos->status() == 200) {
+		    $listProfesion2 = CJSON::decode($listProfesion2);
+		    foreach ($listProfesion2 as $dataRow) {
+		        $listProfesion[$dataRow['value']] = $dataRow['label'];
+		    }
+		}
+		
+		//comentar
+		$listOcupacion2 = $restClientDatos->get('profesion/index', array('term'=>'a', 'tipo'=>3));
+		if($restClientDatos->status() == 200) {
+		    $listOcupacion2 = CJSON::decode($listOcupacion2);
+		    foreach ($listOcupacion2 as $dataRow) {
+		        $listOcupacion[$dataRow['value']] = $dataRow['label'];
+		    }
 		}
 		
 		$params[] = array();
