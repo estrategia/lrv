@@ -240,7 +240,7 @@ $form = $this->beginWidget ( 'CActiveForm', array (
 
 <div class="form-action">
 	<?php if ($model->getScenario()): ?>
-	    <input class='button-form' type="submit" data-enhanced="true" value="Registrar">
+	    <input class='button-form' type="submit" data-enhanced="true" value="Guardar">
 	<?php else: ?>
 	    <input class='button-form' type="submit" data-enhanced="true" value="Guardar">
 	<?php endif;?>

@@ -35,18 +35,20 @@
       <div class="contenedor-flex">
         <div class="row-flex">
           <div class="column">
-            <div class="item">
-              <a href="#">¿Comó funciona?</a>
+            <div class="item <?php echo $this->menuActivo == 'index' ? 'active' : ''  ?>">
+              <a href="<?php echo Yii::app()->createUrl('clientefiel/sitio/index') ?>">¿Comó funciona?</a>
             </div>
-            <div class="item active">
-              <a href="#">Ganadores del mes</a>
-            </div>
-            <div class="item">
-              <a href="#">Concursos</a>
+            <!-- <div class="item <?php echo $this->menuActivo == 'ganadores' ? 'active' : ''  ?>"">
+              <a href="<?php echo Yii::app()->createUrl('clientefiel/sitio/ganadores') ?>">Ganadores del mes</a>
+            </div> -->
+            <div class="item <?php echo $this->menuActivo == 'concursos' ? 'active' : ''  ?>"">
+              <a href="<?php echo Yii::app()->createUrl('clientefiel/sitio/reglamentos') ?>">Concursos</a>
             </div>
           </div>
           <div class="column">
-            <div class="btn btn-primary btn-lg btn-block" type="button" name="button"><a href="#">Tu cuenta</a></div>
+            <div class="btn btn-primary btn-lg btn-block" type="button" name="button">
+                <a href="<?php echo Yii::app()->createUrl('clientefiel/registro/realizarRegistro') ?>">Tu cuenta</a>
+            </div>
           </div>
         </div>
       </div>

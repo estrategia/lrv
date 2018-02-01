@@ -4,7 +4,6 @@ class RegistroController extends ControllerCliente{
 	
 	
 	public function actionIndex(){
-		
 		if(!Yii::app()->user->isGuest){
 			$cedula = Yii::app()->user->name;
 			$this->verificarUsuario($cedula);
