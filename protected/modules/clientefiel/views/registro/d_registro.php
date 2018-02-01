@@ -17,8 +17,6 @@ $form = $this->beginWidget ( 'CActiveForm', array (
 ?>
 
 
-A continuaci&oacute;n, completa este formulario con tus datos y verifica que la informaci&oacute;n est&eacute; actualizada.
-
 <div class="form">
 	
 	<div class="form-section">
@@ -188,8 +186,7 @@ A continuaci&oacute;n, completa este formulario con tus datos y verifica que la 
 <?php if(isset($modelUsuario)):?>
 	<div class="form">
 		<div class="form-section">
-			<h4>Escribe una contrase&ntilde;a de m&iacute;nimo 5 caracteres y &uacute;sala para ingresar a 
-nuestro programa Cliente fiel y  realizar las compras que desees desde nuestra tienda virtual.	</h4>
+			<h4>Contraseña para ser usada en la tienda virtual:	</h4>
 		</div>
 	</div>
 	<div class="form">
