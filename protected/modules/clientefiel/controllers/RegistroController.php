@@ -1,6 +1,6 @@
 <?php
 
-class RegistroController extends ControllerCliente{
+class RegistroController extends Controller{
 	
 	
 	public function actionIndex(){
@@ -43,11 +43,14 @@ class RegistroController extends ControllerCliente{
 		try {
 			
 			$usuario = Usuario::model()->findByPK($cedula);
-			
+			$model->clienteInterno = false;
 			// consultar si es asociado
 			
 			$asociado = self::callWSUsuarioInterno($cedula);
 	
+			if($asociado){
+				$model->clienteInterno = true;
+			}
 			if($usuario == null){
 				$model->cedula = $cedula;
 				$model->scenario = "registro";
@@ -116,18 +119,23 @@ class RegistroController extends ControllerCliente{
 				
 						if($codigoVerificacion->save()){
 							$telefono = $codigoVerificacion->numeroTelefono;
-							$mensaje = "El codigo de verificacion es ".$codigoVerificacion->idCodigo;
+							$mensaje = "La Rebaja te informa el código de verificacion: ".$codigoVerificacion->idCodigo;
 							$mensaje = str_replace(" ", "%20", $mensaje);
 							$response = $elibom->sendMessage($telefono, $mensaje);
-								
+							
+							// Se envia correo electr�nico al n�mero
+							
 							if($response['action'] == 'sendmessage') {
-								
-								$modelCedula = new VerificacionForm();
-								$modelCedula->cedula = $cedula;
-								
-								Yii::app()->session[Yii::app()->params->clienteFiel['sesionVerificacion']] = $modelCedula;
-								$this->redirect(CController::createUrl('codigoVerificacion'));
+								Yii::log("Error enviando numero telefono $telefono codigo Verificacion  \n" , CLogger::LEVEL_INFO, 'application');
 							}
+							
+							$this->enviarCodigoVerificacion($model->nombre,$codigoVerificacion->idCodigo,$model->correoElectronico);
+							
+							$modelCedula = new VerificacionForm();
+							$modelCedula->cedula = $cedula;
+							
+							Yii::app()->session[Yii::app()->params->clienteFiel['sesionVerificacion']] = $modelCedula;
+							$this->redirect(CController::createUrl('codigoVerificacion'));
 						}
 				
 					}catch(Exception $e){
@@ -254,8 +262,7 @@ class RegistroController extends ControllerCliente{
 	
 	
 	public function actionRealizarRegistro(){
-		
-		Yii::import('ext.select2.Select2');
+	    Yii::import('ext.select2.Select2');
 		
 		if(isset(Yii::app()->session[Yii::app()->params->clienteFiel['sesion']])){
 			$model = Yii::app()->session[Yii::app()->params->clienteFiel['sesion']];
@@ -264,13 +271,40 @@ class RegistroController extends ControllerCliente{
 			Yii::app()->end();
 		}
 		
-		$params[] = array();
-		$username = Yii::app()->params->clienteFiel['usuario'];
-		$password = Yii::app()->params->clienteFiel['password'];
-		$token = "$username:$password";
-		$token = base64_encode( $token );
 		$restURL = Yii::app()->params->clienteFiel['url'];
+		$listCiudad = array();
+		$listProfesion = array();
+		$listOcupacion = array();
 		
+		// cliente SII
+		$restClientDatos = new RESTClient ();
+		$restClientDatos->initialize ( array (
+		    'server' => $restURL,
+		) );
+		
+		$listCiudad = $restClientDatos->get('ciudad/list');
+		
+		if($restClientDatos->status() == 200) {
+		    $listCiudad = CJSON::decode($listCiudad);
+		}
+		
+		$listProfesion = $restClientDatos->get('profesion/list');
+		
+		if($restClientDatos->status() == 200) {
+		    $listProfesion = CJSON::decode($listProfesion);
+		    $listOcupacion = $listProfesion['ocupaciones'];
+		    $listProfesion = $listProfesion['profesiones'];
+		}
+		
+		$params[] = array();
+		$params['listCiudad'] = $listCiudad;
+		$params['listProfesion'] = $listProfesion;
+		$params['listOcupacion'] = $listOcupacion;
+		//$username = Yii::app()->params->clienteFiel['usuario'];
+		//$password = Yii::app()->params->clienteFiel['password'];
+		//$token = "$username:$password";
+		//$token = base64_encode( $token );
+		//$restURL = Yii::app()->params->clienteFiel['url'];
 		
 		$usuario = Usuario::model()->findByPk($model->cedula);
 		
@@ -283,7 +317,7 @@ class RegistroController extends ControllerCliente{
 		// Buscar para ver si existe el cliente
 		
 		$response = $restClientSII->get('cliente/ver', array(
-				'numeroDocumento' => $model->cedula,
+            'numeroDocumento' => $model->cedula,
 		));
 			
 		if($restClientSII->status()==200) {
@@ -310,7 +344,6 @@ class RegistroController extends ControllerCliente{
 				$params['modelUsuario'] = new UsuarioForm();
 			}
 		}
-		
 		
 		if($_POST){
 			$model->attributes = $_POST['RegistroClienteFielForm'];
@@ -360,10 +393,12 @@ class RegistroController extends ControllerCliente{
 						
 						if($usuario){
 							// actualizar usuario con el perfil de cliente fiel
-							$usuario->codigoPerfil = Yii::app()->params->clienteFiel['codigoPerfilActivo'];
+							if(!$model->clienteInterno){
+								$usuario->codigoPerfil = Yii::app()->params->clienteFiel['codigoPerfilActivo'];
+							}
 							$usuario->esClienteFiel = 1;
 							
-							
+							$this->enviarCorreoBienvenida($usuario,$usuario->correoElectronico);
 							if($usuario->save()){
 								$this->redirect(CController::createUrl('bienvenida'));
 							}
@@ -374,14 +409,19 @@ class RegistroController extends ControllerCliente{
 							
 							$usuario = new Usuario();
 							$usuario->apellido = $model->apellido;
-							$usuario->codigoPerfil = Yii::app()->params->clienteFiel['codigoPerfilActivo'];
-							$usuario->correoElectronico;
+							if($model->clienteInterno){
+								$usuario->codigoPerfil = Yii::app()->params->perfil['asociado'];
+							}else{
+								$usuario->codigoPerfil = Yii::app()->params->clienteFiel['codigoPerfilActivo'];
+							}
+							$usuario->correoElectronico = $model->correoElectronico;
 							$usuario->esClienteFiel = 1;
 							$usuario->identificacionUsuario = $model->cedula;
 							$usuario->nombre = $model->nombre;
 							
 							$usuario->clave = md5($params['modelUsuario']->clave);
 							$usuario->save();
+							$this->enviarCorreoBienvenida($usuario,$usuario->correoElectronico);
 						//	Yii::app()->session[Yii::app()->params->clienteFiel['sesionUsuario']] = $usuario;
 						//	$this->redirect(CController::createUrl('clave'));
 							$this->redirect(CController::createUrl('bienvenida'));
@@ -432,7 +472,7 @@ class RegistroController extends ControllerCliente{
 	public function actionEnvioVerificacion(){
 		$cedula = $_POST['cedula'];
 		$tipo = $_POST['tipo'];
-		
+		$correo = $nombre =  null;
 		if($tipo == 1){
 			$celular = $_POST['celular'];
 		}else{
@@ -452,6 +492,8 @@ class RegistroController extends ControllerCliente{
 					));
 			
 			$celular = $result[0]->C_CELULAR;
+			$correo = $result[0]->C_CORREO_MAIN;
+			$nombre = $result[0]->NAME;
 		}
 		
 		$sql = "update t_CodigoVerificacion set estado = 0 WHERE numeroDocumento = $cedula";
@@ -465,9 +507,13 @@ class RegistroController extends ControllerCliente{
 		
 		if($codigoVerificacion->save()){
 			$telefono = $celular;
-			$mensaje = "El codigo de verificacion es ".$codigoVerificacion->idCodigo;
+			$mensaje = "La Rebaja te informa el código de verificacion: ".$codigoVerificacion->idCodigo;
 			$mensaje = str_replace(" ", "%20", $mensaje);
 			$response = $elibom->sendMessage($telefono, $mensaje);
+			
+			if($tipo != 1 && $correo != ""){
+				$this->enviarCodigoVerificacion($nombre,$codigoVerificacion->idCodigo,$correo);
+			}
 			
 			echo CJSON::encode(array('result' => 'ok', 'response' => 'Se ha enviado un codigo a tu celular'));
 			Yii::app()->end();

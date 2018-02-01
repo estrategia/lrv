@@ -88,87 +88,16 @@ $form = $this->beginWidget ( 'CActiveForm', array (
 		</div>
 
 		<div class="form-input">
-	        <?php  echo Select2::activeDropDownList($model, 'ciudad', array(), array(
-	                'empty' => '',
-	                'id' => 'RegistroClienteFielForm_ciudad',
-	                'select2Options' => array(
-	                    'allowClear' => true,
-	                    'placeholder' => 'Digite su Ciudad ...',
-	                    'minimumInputLength' => '3',
-	                    'ajax' => array(
-	                        'url' => $this->createUrl('/clientefiel/registro/ajaxCompleteCiudad'),
-	                        'type' => 'GET',
-	                        'dataType' => 'json',
-	                        'data' => new CJavaScriptExpression('function (term, page) {return {term: term, select2: 1}}'),
-	                        'results' => new CJavaScriptExpression('function (data, page) {return {results:  data}}')
-	                    
-	                    ),
-	                    'initSelection'=>new CJavaScriptExpression('function(element, callback) { alert(jQuery(element).val());'
-	                     . 'var id=jQuery(element).val(); '
-	                     . 'if (id!=="") {'
-	                     . ' jQuery.ajax("'.$this->createUrl('/clientefiel/registro/ajaxCompleteCiudad').'", { dataType: "json", data:{ select2: 1, id: id  } } ).done( function(data) {'
-	                     . 'callback(data);'
-	                     . '});'
-	                     . '}}'),
-	                    'escapeMarkup' => new CJavaScriptExpression('function (m) {return m;}')
-	                )))?>
-	        
+	        <?php  echo Select2::activeDropDownList($model, 'ciudad', $listCiudad, array('prompt' => 'Seleccione ciudad ...', 'style' => 'width: 100%;')) ?>
 	        <?php echo $form->error($model, 'ciudad', array("class" => "text-danger")); ?>
 	    </div>
 		<div class="form-input">
-	        <?php  echo Select2::activeDropDownList($model, 'profesion', array(), array(
-	                'empty' => '',
-	                'id' => 'RegistroClienteFielForm_profesion',
-	                'select2Options' => array(
-	                    'allowClear' => true,
-	                    'placeholder' => 'Digite su Profesi&oacute;n ...',
-	                    'minimumInputLength' => '3',
-	                    'ajax' => array(
-	                        'url' => $this->createUrl('/clientefiel/registro/ajaxCompleteProfesiones'),
-	                        'type' => 'GET',
-	                        'dataType' => 'json',
-	                        'data' => new CJavaScriptExpression('function (term, page) {return {term: term, select2: 1}}'),
-	                        'results' => new CJavaScriptExpression('function (data, page) {return {results:  data}}')
-	                    
-	                    ),
-	                    'initSelection'=>new CJavaScriptExpression('function(element, callback) { '
-	                     . 'var id=jQuery(element).val(); '
-	                     . 'if (id!=="") {'
-	                     . ' jQuery.ajax("'.$this->createUrl('/clientefiel/registro/ajaxCompleteProfesiones').'", { dataType: "json", data:{ select2: 1, id: id  } } ).done( function(data) {'
-	                     . 'callback(data);'
-	                     . '});'
-	                     . '}}'),
-	                    'escapeMarkup' => new CJavaScriptExpression('function (m) {return m;}')
-	                )))?>
-	        
+	        <?php  echo Select2::activeDropDownList($model, 'profesion', $listProfesion, array('prompt' => 'Seleccione profesi&oacute;n ...', 'style' => 'width: 100%;')) ?>
 	        <?php echo $form->error($model, 'profesion', array("class" => "text-danger")); ?>
 	    </div>
 	    
 	    <div class="form-input">
-	        <?php  echo Select2::activeDropDownList($model, 'ocupacion', array(), array(
-	                'empty' => '',
-	                'id' => 'RegistroClienteFielForm_ocupacion',
-	                'select2Options' => array(
-	                    'allowClear' => true,
-	                    'placeholder' => 'Digite su Ocupaci&oacute;n...',
-	                    'ajax' => array(
-	                        'url' => $this->createUrl('/clientefiel/registro/ajaxCompleteProfesiones'),
-	                        'type' => 'GET',
-	                        'dataType' => 'json',
-	                        'data' => new CJavaScriptExpression('function (term, page) {return {term: term, select2: 1}}'),
-	                        'results' => new CJavaScriptExpression('function (data, page) {return {results:  data}}')
-	                    
-	                    ),
-	                    'initSelection'=>new CJavaScriptExpression('function(element, callback) { '
-	                     . 'var id=jQuery(element).val(); '
-	                     . 'if (id!=="") {'
-	                     . ' jQuery.ajax("'.$this->createUrl('/clientefiel/registro/ajaxCompleteProfesiones').'", { dataType: "json", data:{ select2: 1, id: id  } } ).done( function(data) {'
-	                     . 'callback(data);'
-	                     . '});'
-	                     . '}}'),
-	                    'escapeMarkup' => new CJavaScriptExpression('function (m) {return m;}')
-	                )))?>
-	        
+	        <?php  echo Select2::activeDropDownList($model, 'ocupacion', $listOcupacion, array('prompt' => 'Seleccione ocupac&oacute;n ...', 'style' => 'width: 100%;')) ?>
 	        <?php echo $form->error($model, 'ocupacion', array("class" => "text-danger")); ?>
 	    </div>
 
