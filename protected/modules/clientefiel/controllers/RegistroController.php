@@ -34,6 +34,8 @@ class RegistroController extends ControllerCliente{
 	
 	private function verificarUsuario($cedula){
 		
+		$restURL = Yii::app()->params->clienteFiel['url'];
+		
 		if(isset(Yii::app()->session[Yii::app()->params->clienteFiel['sesion']])){
 			$model = Yii::app()->session[Yii::app()->params->clienteFiel['sesion']];
 		}else{
@@ -55,6 +57,7 @@ class RegistroController extends ControllerCliente{
 				$model->cedula = $cedula;
 				$model->scenario = "registro";
 				$model->solicitarVerificacion = true;
+				$model->verificacionValidada = true;
 				Yii::app()->session[Yii::app()->params->clienteFiel['sesion']] = $model;
 				// Se debe redireccionar para continuar el registro
 				$this->redirect(CController::createUrl('realizarRegistro', array()));
@@ -63,13 +66,84 @@ class RegistroController extends ControllerCliente{
 				$model->cedula = $cedula;
 				$model->scenario = "actualizar";
 				$model->solicitarVerificacion = false;
-				Yii::app()->session[Yii::app()->params->clienteFiel['sesion']] = $model;
-				// Se debe redireccionar para continuar el registro
-				$this->redirect(CController::createUrl('realizarRegistro', array()));
-				Yii::app()->end();
+				
+				// consultar y enviar a la verificacion por celular y correo electronico
+				
+				try{
+				
+					$restClientSII = new RESTClient ();
+					$restClientSII->initialize ( array (
+							'server' => $restURL,
+					) );
+					
+					// Buscar para ver si existe el cliente
+					
+					$response = $restClientSII->get('cliente/ver', array(
+							'numeroDocumento' => $model->cedula,
+					));
+					
+					if($restClientSII->status()==200) {
+						
+						$response = json_decode( preg_replace('/[\x00-\x1F\x80-\xFF]/', '', $response), true );
+						$data = $response['data'];
+						$model->telefonoCelular = $data['celular'];
+						$model->correoElectronico = $data['email'];
+						$sql = "update t_CodigoVerificacion set estado = 0 WHERE numeroDocumento = $cedula";
+						Yii::app()->db->createCommand($sql)->execute();
+						
+						$codigoVerificacion = new CodigoVerificacion();
+						$codigoVerificacion->numeroTelefono = $model->telefonoCelular;
+						$codigoVerificacion->numeroDocumento = $cedula;
+						
+						$elibom = new ElibomClient(Yii::app()->params['elibom']['url'], Yii::app()->params['elibom']['usuario'], Yii::app()->params['elibom']['password']);
+						
+						if($codigoVerificacion->save()){
+							$telefono = $codigoVerificacion->numeroTelefono;
+							$mensaje = "La Rebaja te informa el código de verificacion: ".$codigoVerificacion->idCodigo;
+							$mensaje = str_replace(" ", "%20", $mensaje);
+							$response = $elibom->sendMessage($telefono, $mensaje);
+								
+							// Se envia correo electr�nico al n�mero
+								
+							if($response['action'] == 'sendmessage') {
+								Yii::log("Error enviando numero telefono $telefono codigo Verificacion  \n" , CLogger::LEVEL_INFO, 'application');
+							}
+								
+							$this->enviarCodigoVerificacion($model->nombre,$codigoVerificacion->idCodigo,$model->correoElectronico);
+								
+							$modelCedula = new VerificacionForm();
+							$modelCedula->cedula = $cedula;
+								
+							Yii::app()->session[Yii::app()->params->clienteFiel['sesionVerificacion']] = $modelCedula;
+							
+							$model->verificacionValidada = false;
+							Yii::app()->session[Yii::app()->params->clienteFiel['sesion']] = $model;
+							
+							$this->redirect(CController::createUrl('codigoVerificacion'));
+						}
+					}else{
+						$model->scenario = "registro";
+						$model->solicitarVerificacion = true;
+						$model->verificacionValidada = false;
+						Yii::app()->session[Yii::app()->params->clienteFiel['sesion']] = $model;
+						// Se debe redireccionar para continuar el registro
+						$this->redirect(CController::createUrl('realizarRegistro', array()));
+						Yii::app()->end();
+					}
+					// inactivar los demas codigos de verificaion del usuario para evitar fraudes
+				
+					
+				
+				}catch(Exception $e){
+					echo $e->getMessage();
+					exit();
+				}
+				
+				
 			}else{
 				$model->scenario = "registro";
 				$model->solicitarVerificacion = true;
+				$model->verificacionValidada = true;
 				$clientSugar = new SoapClient(null, array(
 						'location' => Yii::app()->params->webServiceUrl['crmLrv'],
 						'uri' => "",
@@ -102,6 +176,7 @@ class RegistroController extends ControllerCliente{
 					$model->genero = $result[0]->C_SEXO == 'M'?Yii::app()->params->genero['valor']['masculino']:Yii::app()->params->genero['valor']['femenino'];
 				
 					$model->solicitarVerificacion = false;
+					$model->verificacionValidada = false;
 					Yii::app()->session[Yii::app()->params->clienteFiel['sesion']] = $model;
 				
 					try{
@@ -253,6 +328,9 @@ class RegistroController extends ControllerCliente{
 				// codigo verificado satisfactoriamente
 				$codigoVerificacion->estado = 0;
 				$codigoVerificacion->save();
+				
+				$model->verificacionValidada = true;
+				Yii::app()->session[Yii::app()->params->clienteFiel['sesion']] = $model;
 				$this->redirect(CController::createUrl('realizarRegistro'));
 				Yii::app()->end();
 			}else{
@@ -285,6 +363,11 @@ class RegistroController extends ControllerCliente{
 			Yii::app()->end();
 		}
 		
+		
+		if(!$model->verificacionValidada){
+			$this->redirect(CController::createUrl('index'));
+			Yii::app()->end();
+		}
 		$restURL = Yii::app()->params->clienteFiel['url'];
 		$listCiudad = array();
 		$listProfesion = array();
@@ -442,7 +525,9 @@ class RegistroController extends ControllerCliente{
 							
 							
 							if($usuario->save()){
+								
 								$this->enviarCorreoBienvenida($usuario,$usuario->correoElectronico);
+								$this->limpiarVariables();
 								$this->redirect(CController::createUrl('bienvenida'));
 							}
 							
@@ -465,9 +550,15 @@ class RegistroController extends ControllerCliente{
 							$usuario->clave = md5($params['modelUsuario']->clave);
 							$usuario->save();
 							
+							$usuarioExtendida = new UsuarioExtendida();
+							$usuarioExtendida->identificacionUsuario = $model->cedula;
+							$usuarioExtendida->fechaNacimiento = $model->fechaNacimiento;
+							$usuarioExtendida->genero = $model->genero;
+							$usuarioExtendida->fechaRegistro = Date("Y-m-d H:i:s");
+							$usuarioExtendida->save();
+							
 							$this->enviarCorreoBienvenida($usuario,$usuario->correoElectronico);
-						//	Yii::app()->session[Yii::app()->params->clienteFiel['sesionUsuario']] = $usuario;
-						//	$this->redirect(CController::createUrl('clave'));
+							$this->limpiarVariables();
 							$this->redirect(CController::createUrl('bienvenida'));
 							Yii::app()->end();
 						}
@@ -495,7 +586,9 @@ class RegistroController extends ControllerCliente{
 							'tieneMascota' => $model->tieneMascotas,
 					));
 					if($restClientSII->status()==200 ) {
+						$this->limpiarVariables();
 						$this->redirect(CController::createUrl('bienvenida'));
+						
 						Yii::app()->end();
 					}
 				}
@@ -628,5 +721,10 @@ class RegistroController extends ControllerCliente{
 		$response = $restClientSII->get('ciudad/index', $params);
 		echo CJSON::encode($response);
 		Yii::app()->end();
+	}
+	
+	public function limpiarVariables(){
+		unset(Yii::app()->session[Yii::app()->params->clienteFiel['sesion']]);
+		unset(Yii::app()->session[Yii::app()->params->clienteFiel['sesionVerificacion']]);
 	}
 }

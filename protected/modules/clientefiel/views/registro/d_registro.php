@@ -48,13 +48,8 @@ $form = $this->beginWidget ( 'CActiveForm', array (
 		</div>
 
 		<div class="form-input">
-		    <?php if ($model->getScenario() == 'actualizar') : ?>
-		        <?php echo $form->emailField($model, 'correoElectronico', array('placeholder' => $model->getAttributeLabel('correoElectronico'), 'disabled' => 'disabled')); ?>
-		        <?php echo $form->error($model, 'correoElectronico', array("class" => "text-danger")); ?>
-		    <?php else: ?>
-		        <?php echo $form->emailField($model, 'correoElectronico', array('placeholder' => $model->getAttributeLabel('correoElectronico'), 'maxlength' => 50)); ?>
-		        <?php echo $form->error($model, 'correoElectronico', array("class" => "text-danger")); ?>
-		    <?php endif; ?>
+		    <?php echo $form->emailField($model, 'correoElectronico', array('placeholder' => $model->getAttributeLabel('correoElectronico'), 'maxlength' => 50)); ?>
+		    <?php echo $form->error($model, 'correoElectronico', array("class" => "text-danger")); ?>
 		</div>
 
 		<div class="form-input">
