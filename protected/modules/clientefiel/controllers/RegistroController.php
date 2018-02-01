@@ -505,7 +505,7 @@ class RegistroController extends ControllerCliente{
 				
 				
 				if($model->scenario == 'registro'){
-					
+
 					Yii::app()->session[Yii::app()->params->clienteFiel['sesion']] = $model;
 					
 					try{
