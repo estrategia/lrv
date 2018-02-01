@@ -51,7 +51,7 @@ class RegistroClienteFielForm extends CFormModel {
             array('profesion', 'validarProfesion'),
             
              array('cedula,nombre, apellido, correoElectronico, fechaNacimiento, genero, fechaNacimiento, tieneHijos, 
-              	  tieneMascotas, telefonoFijo, telefonoCelular, codigoVerificacion','safe'),
+              	  tieneMascotas, telefonoFijo, telefonoCelular, codigoVerificacion, ocupacion','safe'),
 
               array('correoElectronico', 'validarCorreo' ),
         		

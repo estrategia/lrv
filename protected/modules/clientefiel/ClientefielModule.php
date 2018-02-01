@@ -2,6 +2,7 @@
 
 class ClientefielModule extends CWebModule
 {
+    public $defaultController = 'sitio';
 
 	public function init()
 	{
@@ -9,8 +10,7 @@ class ClientefielModule extends CWebModule
 		// you may place code here to customize the module or the application
 
 		// import the module-level models and components
-		
-		$this->setImport(array(
+	    $this->setImport(array(
 			'clientefiel.models.*',
 			'clientefiel.components.*',
 		));

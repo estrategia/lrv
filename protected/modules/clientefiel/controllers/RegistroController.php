@@ -226,6 +226,17 @@ class RegistroController extends ControllerCliente{
 			Yii::app()->end();
 		}
 		
+		if(isset(Yii::app()->session[Yii::app()->params->clienteFiel['sesion']])){
+			$model = Yii::app()->session[Yii::app()->params->clienteFiel['sesion']];
+		}
+		
+		$celular = $model->telefonoCelular;
+		$email =  $model->correoElectronico;
+		
+		$celular = "XXX-XXX-X". substr($celular,-3);
+		$email = substr($email,0,3)."XXXX@XXXXX.XXX";
+		
+		
 		if($_POST){
 			$modelCedula->attributes = $_POST['VerificacionForm'];
 			
@@ -251,11 +262,15 @@ class RegistroController extends ControllerCliente{
 		
 		if($this->isMobile){
 			$this->render('codigoVerificacion', array(
-					'model' => $modelCedula
+					'model' => $modelCedula,
+					'celular' => $celular,
+					'email' => $email
 			));
 		}else{
 			$this->render('d_codigoVerificacion', array(
-					'model' => $modelCedula
+					'model' => $modelCedula,
+					'celular' => $celular,
+					'email' => $email
 			));
 		}
 	}
@@ -283,7 +298,7 @@ class RegistroController extends ControllerCliente{
 		) );
 		
 		$listCiudad = $restClientDatos->get('ciudad/list');
-		
+
 		if($restClientDatos->status() == 200) {
 		    $listCiudad = CJSON::decode($listCiudad);
 		}
@@ -347,7 +362,7 @@ class RegistroController extends ControllerCliente{
 		
 		if($_POST){
 			$model->attributes = $_POST['RegistroClienteFielForm'];
-			
+			$model->ocupacion= $_POST['RegistroClienteFielForm']['ocupacion'];
 			$error = false;
 			if(isset($_POST['UsuarioForm'])){
 				
@@ -367,6 +382,7 @@ class RegistroController extends ControllerCliente{
 		
 			if(!$error){
 				if($model->scenario == 'registro'){
+					
 					$response = $restClientSII->post('cliente/crear', array(
 							'numeroDocumento' => $model->cedula,
 							'IdTipoDocumento' => 1,
@@ -398,8 +414,9 @@ class RegistroController extends ControllerCliente{
 							}
 							$usuario->esClienteFiel = 1;
 							
-							$this->enviarCorreoBienvenida($usuario,$usuario->correoElectronico);
+							
 							if($usuario->save()){
+								$this->enviarCorreoBienvenida($usuario,$usuario->correoElectronico);
 								$this->redirect(CController::createUrl('bienvenida'));
 							}
 							
@@ -421,6 +438,7 @@ class RegistroController extends ControllerCliente{
 							
 							$usuario->clave = md5($params['modelUsuario']->clave);
 							$usuario->save();
+							
 							$this->enviarCorreoBienvenida($usuario,$usuario->correoElectronico);
 						//	Yii::app()->session[Yii::app()->params->clienteFiel['sesionUsuario']] = $usuario;
 						//	$this->redirect(CController::createUrl('clave'));
@@ -432,6 +450,7 @@ class RegistroController extends ControllerCliente{
 						// error al guardar
 					}
 				}else if($model->scenario == 'actualizar'){
+					
 					$response = $restClientSII->put("cliente/actualizar/numeroDocumento/$model->cedula", array(
 							//'numeroDocumento' => $model->cedula,
 							'apellidos' => $model->apellido,
@@ -440,7 +459,7 @@ class RegistroController extends ControllerCliente{
 							'telefono' => $model->telefonoFijo,
 							'celular' => $model->telefonoCelular,
 							'IdCiudad' => $model->ciudad,
-							'numeroDocumento' => $model->correoElectronico,
+							'email' => $model->correoElectronico,
 							'idSexo' => $model->genero,
 							'fechaNacimiento' => $model->fechaNacimiento,
 							'IdProfesion' => $model->profesion,
@@ -449,7 +468,6 @@ class RegistroController extends ControllerCliente{
 							'tieneHijosMenores' => $model->tieneHijos,
 							'tieneMascota' => $model->tieneMascotas,
 					));
-					
 					if($restClientSII->status()==200 ) {
 						$this->redirect(CController::createUrl('bienvenida'));
 						Yii::app()->end();
