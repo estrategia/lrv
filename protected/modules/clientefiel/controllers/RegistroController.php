@@ -120,15 +120,20 @@ class RegistroController extends ControllerCliente{
 							$mensaje = "El codigo de verificacion es ".$codigoVerificacion->idCodigo;
 							$mensaje = str_replace(" ", "%20", $mensaje);
 							$response = $elibom->sendMessage($telefono, $mensaje);
-								
+							
+							// Se envia correo electrónico al número
+							
 							if($response['action'] == 'sendmessage') {
-								
-								$modelCedula = new VerificacionForm();
-								$modelCedula->cedula = $cedula;
-								
-								Yii::app()->session[Yii::app()->params->clienteFiel['sesionVerificacion']] = $modelCedula;
-								$this->redirect(CController::createUrl('codigoVerificacion'));
+								Yii::log("Error enviando numero telefono $telefono codigo Verificacion  \n" , CLogger::LEVEL_INFO, 'application');
 							}
+							
+							$this->enviarCodigoVerificacion($model->nombre,$codigoVerificacion->idCodigo,$model->correoElectronico);
+							
+							$modelCedula = new VerificacionForm();
+							$modelCedula->cedula = $cedula;
+							
+							Yii::app()->session[Yii::app()->params->clienteFiel['sesionVerificacion']] = $modelCedula;
+							$this->redirect(CController::createUrl('codigoVerificacion'));
 						}
 				
 					}catch(Exception $e){
@@ -469,6 +474,10 @@ class RegistroController extends ControllerCliente{
 			$mensaje = "El codigo de verificacion es ".$codigoVerificacion->idCodigo;
 			$mensaje = str_replace(" ", "%20", $mensaje);
 			$response = $elibom->sendMessage($telefono, $mensaje);
+			
+			if($tipo != 1 && $correo != ""){
+				$this->enviarCodigoVerificacion($nombre,$codigoVerificacion->idCodigo,$correo);
+			}
 			
 			echo CJSON::encode(array('result' => 'ok', 'response' => 'Se ha enviado un codigo a tu celular'));
 			Yii::app()->end();
