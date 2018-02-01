@@ -59,9 +59,8 @@ class Controller extends CController {
             }
         }
 
-
-// 		  $this->isMobile = true;
-// 		  $this->layout = '//layouts/mobile';
+        //$this->isMobile = true;
+		//$this->layout = '//layouts/mobile';
 
         $this->verificarDispositivo();
 
