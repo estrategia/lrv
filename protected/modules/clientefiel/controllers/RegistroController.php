@@ -284,7 +284,7 @@ class RegistroController extends Controller{
 		) );
 		
 		$listCiudad = $restClientDatos->get('ciudad/list');
-		
+
 		if($restClientDatos->status() == 200) {
 		    $listCiudad = CJSON::decode($listCiudad);
 		}
@@ -348,7 +348,7 @@ class RegistroController extends Controller{
 		
 		if($_POST){
 			$model->attributes = $_POST['RegistroClienteFielForm'];
-			
+			$model->ocupacion= $_POST['RegistroClienteFielForm']['ocupacion'];
 			$error = false;
 			if(isset($_POST['UsuarioForm'])){
 				
@@ -368,6 +368,7 @@ class RegistroController extends Controller{
 		
 			if(!$error){
 				if($model->scenario == 'registro'){
+					
 					$response = $restClientSII->post('cliente/crear', array(
 							'numeroDocumento' => $model->cedula,
 							'IdTipoDocumento' => 1,
@@ -399,8 +400,9 @@ class RegistroController extends Controller{
 							}
 							$usuario->esClienteFiel = 1;
 							
-							$this->enviarCorreoBienvenida($usuario,$usuario->correoElectronico);
+							
 							if($usuario->save()){
+								$this->enviarCorreoBienvenida($usuario,$usuario->correoElectronico);
 								$this->redirect(CController::createUrl('bienvenida'));
 							}
 							
@@ -433,6 +435,7 @@ class RegistroController extends Controller{
 						// error al guardar
 					}
 				}else if($model->scenario == 'actualizar'){
+					
 					$response = $restClientSII->put("cliente/actualizar/numeroDocumento/$model->cedula", array(
 							//'numeroDocumento' => $model->cedula,
 							'apellidos' => $model->apellido,
@@ -441,7 +444,7 @@ class RegistroController extends Controller{
 							'telefono' => $model->telefonoFijo,
 							'celular' => $model->telefonoCelular,
 							'IdCiudad' => $model->ciudad,
-							'numeroDocumento' => $model->correoElectronico,
+							'email' => $model->correoElectronico,
 							'idSexo' => $model->genero,
 							'fechaNacimiento' => $model->fechaNacimiento,
 							'IdProfesion' => $model->profesion,
@@ -450,7 +453,6 @@ class RegistroController extends Controller{
 							'tieneHijosMenores' => $model->tieneHijos,
 							'tieneMascota' => $model->tieneMascotas,
 					));
-					
 					if($restClientSII->status()==200 ) {
 						$this->redirect(CController::createUrl('bienvenida'));
 						Yii::app()->end();
