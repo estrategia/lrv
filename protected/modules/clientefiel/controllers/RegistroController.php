@@ -120,15 +120,20 @@ class RegistroController extends Controller{
 							$mensaje = "El codigo de verificacion es ".$codigoVerificacion->idCodigo;
 							$mensaje = str_replace(" ", "%20", $mensaje);
 							$response = $elibom->sendMessage($telefono, $mensaje);
-								
+							
+							// Se envia correo electrónico al número
+							
 							if($response['action'] == 'sendmessage') {
-								
-								$modelCedula = new VerificacionForm();
-								$modelCedula->cedula = $cedula;
-								
-								Yii::app()->session[Yii::app()->params->clienteFiel['sesionVerificacion']] = $modelCedula;
-								$this->redirect(CController::createUrl('codigoVerificacion'));
+								Yii::log("Error enviando numero telefono $telefono codigo Verificacion  \n" , CLogger::LEVEL_INFO, 'application');
 							}
+							
+							$this->enviarCodigoVerificacion($model->nombre,$codigoVerificacion->idCodigo,$model->correoElectronico);
+							
+							$modelCedula = new VerificacionForm();
+							$modelCedula->cedula = $cedula;
+							
+							Yii::app()->session[Yii::app()->params->clienteFiel['sesionVerificacion']] = $modelCedula;
+							$this->redirect(CController::createUrl('codigoVerificacion'));
 						}
 				
 					}catch(Exception $e){
@@ -145,11 +150,48 @@ class RegistroController extends Controller{
 			}
 			
 		} catch (Exception $e){
+			print_r($e->getMessage());exit();
 			// not implemented yet
 		}
 		
 	}
 	
+
+	public function enviarCodigoVerificacion($nombre,$codigoVerificacion,$email){
+		$asuntoCorreo = Yii::app()->params->clienteFiel['asuntoVerificacion'];
+		$contenidoCorreo = $this->renderPartial(Yii::app()->params->rutasPlantillasCorreo['verificacionClienteFiel'], array(
+				'nombre' => $nombre,
+				'codigo' =>$codigoVerificacion
+					
+		), true, true);
+			
+		$htmlCorreo = PlantillaCorreo::getContenido('codigoVerificacion',$contenidoCorreo);
+			
+		try {
+			sendHtmlEmail($email, $asuntoCorreo, $htmlCorreo);
+		} catch (Exception $ce) {
+			Yii::log("Error enviando correo $email - $asuntoCorreo codigo Verificacion  \n" . $ce->getMessage() . "\n" . $ce->getTraceAsString(), CLogger::LEVEL_INFO, 'application');
+		}
+		
+		return true;
+	}
+	
+	public function enviarCorreoBienvenida($objUsuario,$email){
+		$asuntoCorreo = Yii::app()->params->clienteFiel['asuntoVerificacion'];
+		$contenidoCorreo = $this->renderPartial(Yii::app()->params->rutasPlantillasCorreo['bienvenidaClienteFiel'], array(
+				'objUsuario' => $objUsuario,
+		), true, true);
+			
+		$htmlCorreo = PlantillaCorreo::getContenido('bienvenidaClienteFiel',$contenidoCorreo);
+		try {
+			sendHtmlEmail($email, $asuntoCorreo, $htmlCorreo);
+		} catch (Exception $ce) {
+			Yii::log("Error enviando correo $email - $asuntoCorreo codigo Verificacion  \n" . $ce->getMessage() . "\n" . $ce->getTraceAsString(), CLogger::LEVEL_INFO, 'application');
+		}
+	
+		return true;
+	}
+
 	
 	public static function callWSUsuarioInterno($username) {
 		$client = new SoapClient(Yii::app()->params->webServiceUrl['persona'], array(
@@ -337,9 +379,10 @@ class RegistroController extends Controller{
 							'fechaNacimiento' => $model->fechaNacimiento,
 							'IdProfesion' => $model->profesion,
 							'idOcupacion' => $model->ocupacion,
+							'tieneHijos' => $model->tieneHijos,
 							'tieneHijosMenores' => $model->tieneHijos,
 							'tieneMascota' => $model->tieneMascotas,
-							
+							'aceptaPolitica' => 1,
 					));
 					
 					if($restClientSII->status()==200 ) { // guardo con exito
@@ -393,14 +436,15 @@ class RegistroController extends Controller{
 							'fechaNacimiento' => $model->fechaNacimiento,
 							'IdProfesion' => $model->profesion,
 							'idOcupacion' => $model->ocupacion,
+							'tieneHijos' => $model->tieneHijos,
 							'tieneHijosMenores' => $model->tieneHijos,
 							'tieneMascota' => $model->tieneMascotas,
 					));
 					
 					if($restClientSII->status()==200 ) {
-					
+						$this->redirect(CController::createUrl('bienvenida'));
+						Yii::app()->end();
 					}
-					exit();
 				}
 			}
 				
@@ -456,6 +500,10 @@ class RegistroController extends Controller{
 			$mensaje = str_replace(" ", "%20", $mensaje);
 			$response = $elibom->sendMessage($telefono, $mensaje);
 			
+			if($tipo != 1 && $correo != ""){
+				$this->enviarCodigoVerificacion($nombre,$codigoVerificacion->idCodigo,$correo);
+			}
+			
 			echo CJSON::encode(array('result' => 'ok', 'response' => 'Se ha enviado un codigo a tu celular'));
 			Yii::app()->end();
 		}
@@ -464,6 +512,13 @@ class RegistroController extends Controller{
 		Yii::app()->end();
 	}
 	
+	public function actionBienvenida(){
+		if($this->isMobile){
+			$this->render('bienvenida');
+		}else{
+			$this->render('d_bienvenida');
+		}
+	}
 
 	public function actionAjaxCompleteCiudad($term = null, $id = null){
 		$username = Yii::app()->params->clienteFiel['usuario'];

@@ -9,15 +9,18 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name='author' content='La Rebaja Virtual'>
     <?php  if(isset($this->metaTags) && !empty($this->metaTags)):?>
-        <?php echo $this->metaTags ?> 
+        <?php echo $this->metaTags ?>
     <?php else: ?>
         <meta name="description" content="Pide tus domicilios de farmacia y drogueria de manera rapida y segura. La Rebaja Drogueria despacha tus domicilios con nuestra planta propia de mensajeros. Compra seguro."/>
     <?php endif;?>
     <?php Yii::app()->clientScript->registerCoreScript('jquery'); ?>
     <script>requestUrl = "<?php echo Yii::app()->request->baseUrl; ?>";</script>
     <?php Yii::app()->getClientScript()->registerCssFile(Yii::app()->request->baseUrl . "/css/clientefiel.css?"); ?>
+    <?php Yii::app()->getClientScript()->registerJsFile(Yii::app()->request->baseUrl . "/js/clientefiel.js?"); ?>
 </head>
 <body>
+    <div data-role="page" id="main-page" data-theme="a">
+            <div data-role="header" data-theme="h">
     <nav class="nav">
         <img class="img img-responsive clientefiel-logo" src="<?php echo Yii::app()->request->baseUrl; ?>/images/clientefiel/clientefiel.png" alt="">
         <img class="img img-responsive lrv-logo" src="<?php echo Yii::app()->request->baseUrl; ?>/images/clientefiel/lrv.png" alt="">
@@ -27,7 +30,7 @@
         <img class="img img-responsive banner-image" src="<?php echo Yii::app()->request->baseUrl; ?>/images/clientefiel/banner-clientefiel-movil.png" alt="">
         <h3 class="banner-text" align="right">El programa que te da 10% de descuento <br> <span class="emphasis">en todas tus compras*</span></h3>
         <div class="banner-link-container">
-            <a href="#modalCondiciones" data-toggle="modal" data-target="#modalCondiciones" class="banner-link">* Aplica según términos y condiciones del programa Cliente Fiel</a>
+            <a href="#dialog-condiciones" data-toggle="modal" data-target="#modalCondiciones" class="banner-link">* Aplica según términos y condiciones del programa Cliente Fiel</a>
         </div>
     </div>
 
@@ -52,5 +55,8 @@
             </div>
         </div>
     </footer>
+</div></div>
+    <?php // echo CHtml::link('Ver condiciones', "#dialog-condiciones", array('class' => 'c_olv_pass', 'data-transition' => 'flip')); ?>
+    <?php  $this->renderPartial('/sitio/modalCondiciones'); ?>
 </body>
 </html>
