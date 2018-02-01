@@ -153,6 +153,7 @@ class RegistroController extends ControllerCliente{
 			}
 			
 		} catch (Exception $e){
+			print_r($e->getMessage());exit();
 			// not implemented yet
 		}
 		
@@ -184,7 +185,6 @@ class RegistroController extends ControllerCliente{
 		), true, true);
 			
 		$htmlCorreo = PlantillaCorreo::getContenido('bienvenidaClienteFiel',$contenidoCorreo);
-			echo $email;exit();
 		try {
 			sendHtmlEmail($email, $asuntoCorreo, $htmlCorreo);
 		} catch (Exception $ce) {
@@ -369,9 +369,10 @@ class RegistroController extends ControllerCliente{
 							'fechaNacimiento' => $model->fechaNacimiento,
 							'IdProfesion' => $model->profesion,
 							'idOcupacion' => $model->ocupacion,
+							'tieneHijos' => $model->tieneHijos,
 							'tieneHijosMenores' => $model->tieneHijos,
 							'tieneMascota' => $model->tieneMascotas,
-							
+							'aceptaPolitica' => 1,
 					));
 					
 					if($restClientSII->status()==200 ) { // guardo con exito
@@ -432,6 +433,7 @@ class RegistroController extends ControllerCliente{
 							'fechaNacimiento' => $model->fechaNacimiento,
 							'IdProfesion' => $model->profesion,
 							'idOcupacion' => $model->ocupacion,
+							'tieneHijos' => $model->tieneHijos,
 							'tieneHijosMenores' => $model->tieneHijos,
 							'tieneMascota' => $model->tieneMascotas,
 					));
