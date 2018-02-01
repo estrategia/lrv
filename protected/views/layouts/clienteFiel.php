@@ -16,11 +16,14 @@
     <?php Yii::app()->clientScript->registerCoreScript('jquery'); ?>
     <script>requestUrl = "<?php echo Yii::app()->request->baseUrl; ?>";</script>
     <?php Yii::app()->getClientScript()->registerCssFile(Yii::app()->request->baseUrl . "/css/clientefiel.css?"); ?>
-    <?php Yii::app()->getClientScript()->registerJsFile(Yii::app()->request->baseUrl . "/js/clientefiel.js?"); ?>
+    <?php Yii::app()->getClientScript()->registerScriptFile(Yii::app()->request->baseUrl . "/js/clientefiel.js?"); ?>
 </head>
 <body>
+
     <div data-role="page" id="main-page" data-theme="a">
+
             <div data-role="header" data-theme="h">
+
     <nav class="nav">
         <img class="img img-responsive clientefiel-logo" src="<?php echo Yii::app()->request->baseUrl; ?>/images/clientefiel/clientefiel.png" alt="">
         <img class="img img-responsive lrv-logo" src="<?php echo Yii::app()->request->baseUrl; ?>/images/clientefiel/lrv.png" alt="">
@@ -35,8 +38,8 @@
     </div>
 
     <div class="buttons-section">
-        <a href="" class="navigation-button">¿Cómo funciona?</a>
-        <a href="" class="navigation-button">Regístrate</a>
+     <!--    <a href="" class="navigation-button">¿Cómo funciona?</a>
+        <a href="" class="navigation-button">Regístrate</a> -->
     </div>
 
     <div class="content">
@@ -55,7 +58,9 @@
             </div>
         </div>
     </footer>
+
 </div></div>
+
     <?php // echo CHtml::link('Ver condiciones', "#dialog-condiciones", array('class' => 'c_olv_pass', 'data-transition' => 'flip')); ?>
     <?php  $this->renderPartial('/sitio/modalCondiciones'); ?>
 </body>

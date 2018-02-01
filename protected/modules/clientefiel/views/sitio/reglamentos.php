@@ -2,7 +2,12 @@
   <div class="row-flex" style="justify-content: center;">
     <div data-role="boton-concursos" data-id="1" class="btn btn-flat active">Henkel -Happy New Look</div>
     <div data-role="boton-concursos" data-id="2" class="btn btn-flat">Alimentos Lacteos Niños</div>
-
+    <div data-role="boton-concursos" data-id="3" class="btn btn-flat">Productos Lavante</div>
+    <div data-role="boton-concursos" data-id="4" class="btn btn-flat">Obsequio OSTER -Rubbermaid</div>
+    <div data-role="boton-concursos" data-id="5" class="btn btn-flat">Umbrella</div>
+    <div data-role="boton-concursos" data-id="6" class="btn btn-flat">Marca CERO</div>
+    <div data-role="boton-concursos" data-id="7" class="btn btn-flat"> Metamucil y Vick </div>
+    <div data-role="boton-concursos" data-id="8" class="btn btn-flat"> Cuídate en Casa </div>
   </div>
   <hr>
   <div class="row-flex" style="padding:0 20px;" data-role="reglamento-concurso" data-id="1">

@@ -5,6 +5,7 @@ class SitioController extends ControllerCliente
 
 	public function actionIndex()
 	{
+		$this->menuActivo = 'index';
 		if($this->isMobile){
 			$this->render('index');
 		}else{
@@ -13,6 +14,7 @@ class SitioController extends ControllerCliente
 	}
 
 	public function actionGanadores(){
+		$this->menuActivo = 'ganadores';
 		if($this->isMobile){
 			$this->render('ganadores');
 		}else{
@@ -21,6 +23,7 @@ class SitioController extends ControllerCliente
 	}
 
 	public function actionReglamentos(){
+		$this->menuActivo = 'concursos';
 		if($this->isMobile){
 			$this->render('reglamentos');
 		}else{

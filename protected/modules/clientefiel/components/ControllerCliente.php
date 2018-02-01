@@ -6,6 +6,8 @@
  */
 class ControllerCliente extends Controller {
 
+    public $menuActivo = 'index';
+
     public function init() {
        parent::init();
     }
