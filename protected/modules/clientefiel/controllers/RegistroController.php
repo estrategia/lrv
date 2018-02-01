@@ -412,9 +412,9 @@ class RegistroController extends ControllerCliente{
 					));
 					
 					if($restClientSII->status()==200 ) {
-					
+						$this->redirect(CController::createUrl('bienvenida'));
+						Yii::app()->end();
 					}
-					exit();
 				}
 			}
 				
@@ -478,6 +478,13 @@ class RegistroController extends ControllerCliente{
 		Yii::app()->end();
 	}
 	
+	public function actionBienvenida(){
+		if($this->isMobile){
+			$this->render('bienvenida');
+		}else{
+			$this->render('d_bienvenida');
+		}
+	}
 
 	public function actionAjaxCompleteCiudad($term = null, $id = null){
 		$username = Yii::app()->params->clienteFiel['usuario'];
