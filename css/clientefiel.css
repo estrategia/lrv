@@ -433,32 +433,35 @@ img {
   background-color: #ECEBE6;
 }
 
+.reglamentos {
+  padding: 2%;
+}
+
 .reglamentos .btn.btn-flat {
-  margin: 3px 10px;
+  margin: 10px 10px;
+  padding: 2%;
 }
 
-.contenedor-flex.sombra.reglamentos {
-  padding: 30px 20px !important;
+.reglamentos hr {
+  display: block;
+  height: 1px;
+  border: 0;
+  border-top: 1px solid #ccc;
+  margin: 1em 0;
+  padding: 0; 
 }
 
-.reglamentos hr {border-top: 1px solid #666666;}
-
-.reglamentos .row-flex .column {
-  width: 50%;
-  padding: 0 6px;
+.reglamentos ul {
+  padding-left: 15px;
 }
+
 .title-red {
   font-weight: bold;
-color: #EE3E27;
-font-size: 19px;
-width: 100%;
-margin-bottom: 20px;
-}
-
-.scroll {
-  max-height: 270px;
-  overflow: auto;
-  padding: 15px;
+  color: #EE3E27;
+  font-size: 1.2rem;
+  width: 100%;
+  margin-bottom: 20px;
+  text-align: center;
 }
 
 .mensaje-bienvenida {
@@ -479,6 +482,76 @@ margin-bottom: 20px;
 .hidden {
   display: none;
 }
+
+.menu ul {
+  list-style: none;
+  display: flex;
+  flex-flow: column;
+  /*align-items: center;*/
+  /*justify-content: center;*/
+}
+
+.menu-button {
+  position: absolute;
+  top: 40px;
+  left: 10px;
+}
+
+.menu hr {
+  display: block;
+  height: 1px;
+  border: 0;
+  border-top: 1px solid #ccc;
+  margin: 1em 0;
+  padding: 0; 
+}
+
+.menu-button div{
+  border: none;
+  background-color: #EE3E27;
+  width: 25px;
+  height: 4px;
+  margin: 4px 0;
+  border-radius: 2px;
+}
+
+.botones-menu {
+  margin: auto;
+  max-width: 90%;
+  display: flex;
+  flex-flow: column;
+  justify-content: center;
+}
+
+.menu a {
+  color: #EE3E27 !important;
+  text-decoration: none;
+  padding-top: 1rem;
+  padding-bottom: 1rem;
+  margin-top: 10px;
+  margin-bottom: 10px;
+  /*padding-left: auto;*/
+  text-align: center;
+  height: 20px;
+  border: 1px solid #EE3E27;
+  border-radius: 5px;
+}
+
+.menu a.active {
+  color: white !important;
+  background-color: #EE3E27;
+}
+
+.reglamentos p {
+  text-align: justify;
+  font-size: 0.9rem;
+}
+
+.reglamentos li.header {
+  list-style: none;
+  font-weight: bold;
+}
+
 /*.form {
   display: flex;
   align-items: flex-start;

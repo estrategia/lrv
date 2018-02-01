@@ -24,11 +24,17 @@
 
             <div data-role="header" data-theme="h">
 
+</div>
     <nav class="nav">
+        <a href="#panel-01" class="menu-button">
+            <div></div>
+            <div></div>
+            <div></div>
+        </a>
         <img class="img img-responsive clientefiel-logo" src="<?php echo Yii::app()->request->baseUrl; ?>/images/clientefiel/clientefiel.png" alt="">
         <img class="img img-responsive lrv-logo" src="<?php echo Yii::app()->request->baseUrl; ?>/images/clientefiel/lrv.png" alt="">
     </nav>
-
+    
     <div class="banner">
         <img class="img img-responsive banner-image" src="<?php echo Yii::app()->request->baseUrl; ?>/images/clientefiel/banner-clientefiel-movil.png" alt="">
         <h3 class="banner-text" align="right">El programa que te da 10% de descuento <br> <span class="emphasis">en todas tus compras*</span></h3>
@@ -58,9 +64,17 @@
             </div>
         </div>
     </footer>
-
-</div></div>
-
+</div>
+    <div class="panel left menu" data-role="panel" data-position="left" data-display="overlay" id="panel-01">
+        <div class="botones-menu">
+            <a data-ajax="false" class="<?php echo $this->menuActivo == 'index' ? 'active' : ''  ?>" href="<?php echo Yii::app()->createUrl('clientefiel/sitio/index') ?>">¿Comó funciona?</a>
+            <a data-ajax="false" class="<?php echo $this->menuActivo == 'concursos' ? 'active' : ''  ?>" href="<?php echo Yii::app()->createUrl('clientefiel/sitio/reglamentos') ?>">Concursos</a>
+            <hr>
+            <a href="<?php echo Yii::app()->createUrl('clientefiel/registro/realizarRegistro') ?>" data-ajax="false">Cuenta</a>
+            <hr>
+            <a href="#panel-01" data-rel="back">Cerrar</a>
+        </div>
+    </div>
     <?php // echo CHtml::link('Ver condiciones', "#dialog-condiciones", array('class' => 'c_olv_pass', 'data-transition' => 'flip')); ?>
     <?php  $this->renderPartial('/sitio/modalCondiciones'); ?>
 </body>
