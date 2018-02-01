@@ -6,22 +6,7 @@
 <div class="row">
   <div class="col-md-9">
     <div class="bg-gr">
-
-      <div class="table table-bordered tabla-carro <?= Yii::app()->shoppingCart->isUnit() > 0 ? '':'display-none'?>">
-
-
-      <!-- <table class=""> -->
-          <!--<thead class="cabecera-tabla">
-         <tr>
-            <th  style="width: 27%;">Producto</th>
-            <th  style="width: 25%;">Cantidad</th>
-            <th  style="width: 15%;">Antes</th>
-            <th>Ahorro</th>
-            <th>Ahora</th>
-            <th>Subtotal</th>
-          </tr>
-        </thead> -->
-        <!-- <tbody> -->
+      <div class="<?= Yii::app()->shoppingCart->isUnit() > 0 ? '':'display-none'?>">
           <?php foreach (Yii::app()->shoppingCart->getPositions() as $position): ?>
           <?php if (!$position->hasDelivery() && $position->getShipping() == 0): ?>
           <?php
@@ -47,9 +32,6 @@
           <?php else: $listPositionDelivery[] = $position ?>
           <?php endif; ?>
           <?php endforeach; ?>
-        <!-- </tbody>
-      </table> -->
-
     </div>
 
       <!-- Productos con suscripcion -->

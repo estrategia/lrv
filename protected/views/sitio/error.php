@@ -12,6 +12,3 @@
         <a href="<?php echo $this->createUrl('/sitio/inicio') ?>"><img class="ico" src="<?php echo Yii::app()->request->baseUrl; ?>/images/iconos/volver.png"><span class="volver">Inicio</span></a>
     </div>
 </div>
-
-
-

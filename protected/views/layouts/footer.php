@@ -3,7 +3,7 @@
     <a href="#" class="ui-btn ui-btn-inline ui-icon-yt ui-btn-icon-notext ui-corner-all ui-shadow ui-nodisc-icon ui-alt-icon">YouTube</a>
     <a href="#" class="ui-btn ui-btn-inline ui-icon-fb ui-btn-icon-notext ui-corner-all ui-shadow ui-nodisc-icon ui-alt-icon">Facebook</a>
 
-    <div class="cont_call">                        
+    <div class="cont_call">
         <p>
             <strong>Call Center</strong> 01 8000 939 900
             <br>
@@ -26,4 +26,3 @@
 </div>
 
 <div class="barraf"></div>
-

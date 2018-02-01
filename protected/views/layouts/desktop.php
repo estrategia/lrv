@@ -124,7 +124,7 @@ header("Pragma: no-cache");
                   	</div>
                 <?php endforeach; ?>
                 </div>
-                
+
                 <div class="col-md-6 col-lg-6">
 
                 </div>
@@ -237,7 +237,7 @@ header("Pragma: no-cache");
 		<?php endif; ?>
     <footer>
       <div class="container-fluid">
-        <div class="row pre-footer">
+        <div class="row pre-footer info-footer">
           <div class="col-xs-12">
             <p>Las promociones y actividades destacadas en www.larebajavirtual.com cuentan con las siguientes condiciones generales: -Aplica a máximo 4 unidades por referencia, por compra. Sujeto a disponibilidad de productos en el punto de venta. Descuento no acumulable con otras ofertas y/o promociones. Descuento válido a nivel nacional en www.larebajavirtual.com Los precios ofrecidos en www.larebajavirtual.com son diferentes a los de los puntos de venta y pueden variar según la ciudad definida para la entrega o recogida del pedido. Si la compra se hace por servicio a domicilio, este tendrá un costo adicional dependiendo de la ciudad. Si por su ubicación geográfica en determinado territorio no es posible entregar el pedido, Copservir Ltda., se puede negar a la aceptación de la oferta de compra. Los productos entregados presentan las mismas características que él o (los) productos exhibidos en la presente publicidad. Conozca reglamento en www.clientefiel.co</p>
           </div>
@@ -303,7 +303,7 @@ header("Pragma: no-cache");
         </div>
         <div class="row">
           <div class="col-xs-12">
-            <p align="center">
+            <p class="legal-footer" align="center">
               Cooperativa Multiactiva &nbsp;de Servicios Solidarios Copservir  Ltda | NIT &nbsp;830.011.670-3 | LA REBAJA DROGUERIA | 01 8000 93 99  00 | Calle 13 No. 42 - 10 Bogotá, Colombia | <a href="mailto:infolrv@copservir.com">infolrv@copservir.com</a>  Colombia © 2015 <a href="http://www.larebajavirtual.com">www.larebajavirtual.com</a> | <a target="_blank" href="http://www.sic.gov.co/es/">SIC (Súper intendencia de industria y comercio)</a>
             </p>
           </div>

@@ -16,13 +16,13 @@ header("Pragma: no-cache");
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <meta name='author' content='La Rebaja Virtual'>
         <?php  if(isset($this->metaTags) && !empty($this->metaTags)):?>
-            <?php echo $this->metaTags ?> 
+            <?php echo $this->metaTags ?>
         <?php else: ?>
             <meta name="description" content="Pide tus domicilios de farmacia y drogueria de manera rapida y segura. La Rebaja Drogueria despacha tus domicilios con nuestra planta propia de mensajeros. Compra seguro."/>
         <?php endif;?>
         <?php Yii::app()->clientScript->registerCoreScript('jquery'); ?>
         <script>requestUrl = "<?php echo Yii::app()->request->baseUrl; ?>"; gmapKey = "<?php echo Yii::app()->params['google']['llaveMapa']; ?>"; tipoEntrega = {presencial:<?=Yii::app()->params->entrega['tipo']['presencial']?>,domicilio:<?=Yii::app()->params->entrega['tipo']['domicilio']?>}; var lat = 4.704009; var lng = -74.042832;</script>
-        <link rel="shortcut icon" href="<?php echo Yii::app()->request->baseUrl; ?>/images/favicon_16.ico" type="image/x-icon" />  
+        <link rel="shortcut icon" href="<?php echo Yii::app()->request->baseUrl; ?>/images/favicon_16.ico" type="image/x-icon" />
         <title><?php echo CHtml::encode($this->pageTitle); ?></title>
 
         <?php Yii::app()->getClientScript()->registerCssFile(Yii::app()->request->baseUrl . "/css/main-desktop.css?" . Yii::app()->params->fechaActualizacion["css"]); ?>
@@ -58,7 +58,7 @@ header("Pragma: no-cache");
                                     <form method="get" action="<?php echo CController::createUrl('/catalogo/buscar') ?>">
                                         <div class="row">
                                             <div class="col-xs-7 content-search">
-                                                <input type="text" class="form-control" placeholder="Escriba el nombre del producto"  autocomplete="off" value="" id="busqueda" name="busqueda" > 
+                                                <input type="text" class="form-control" placeholder="Escriba el nombre del producto"  autocomplete="off" value="" id="busqueda" name="busqueda" >
                                             </div>
                                             <div class="col-xs-5 content-category">
                                                 <div class="controls">
@@ -72,7 +72,7 @@ header("Pragma: no-cache");
                                                                 <input type="checkbox" name="categoriasBuscador[<?php echo $categoria->idCategoriaTienda ?>]" id="categoriasBuscador_<?php echo $categoria->idCategoriaTienda ?>" value="<?php echo $categoria->idCategoriaTienda ?>">
                                                                 <label for="categoriasBuscador_<?php echo $categoria->idCategoriaTienda ?>" class="clst_check"><span></span> <img src="<?php echo Yii::app()->request->baseUrl; ?>/images/menu/desktop/<?php echo $categoria->rutaImagen ?>" alt="" class="data-label"><?php echo $categoria->nombreCategoriaTienda ?></label>
                                                             </li>
-                                                        <?php endforeach; ?>     
+                                                        <?php endforeach; ?>
                                                     </ul>
 
                                                 </div>
@@ -80,7 +80,7 @@ header("Pragma: no-cache");
                                         </div>
                                     </form>
                                 </div>
-                                <div class="col-xs-4">	
+                                <div class="col-xs-4">
                                     <?php if (Yii::app()->user->isGuest): ?>
                                         <ul class="user">
                                             <li><a href="<?= Yii::app()->request->baseUrl; ?>/usuario/autenticar/opcion/inicio" ><img class="ico-user" src="<?php echo Yii::app()->request->baseUrl; ?>/images/desktop/ico-iniciar-sesion.png" alt=""> Iniciar Sesión</a></li>
@@ -90,9 +90,9 @@ header("Pragma: no-cache");
                                     <?php else: ?>
                                         <ul class="user login_in">
                                             <li>
-                                                <a href="<?= Yii::app()->request->baseUrl; ?>/usuario/" class="">Hola <?php echo Yii::app()->user->shortName; ?> (Mi cuenta)</a> 
+                                                <a href="<?= Yii::app()->request->baseUrl; ?>/usuario/" class="">Hola <?php echo Yii::app()->user->shortName; ?> (Mi cuenta)</a>
                                                 <br>
-                                                <a href="<?= Yii::app()->request->baseUrl; ?>/usuario/salir" class=""><span class="glyphicon glyphicon-log-out"></span> Cerrar sesi&oacute;n</a> 
+                                                <a href="<?= Yii::app()->request->baseUrl; ?>/usuario/salir" class=""><span class="glyphicon glyphicon-log-out"></span> Cerrar sesi&oacute;n</a>
                                             </li>
                                         </ul>
                                     <?php endif; ?>
@@ -149,7 +149,7 @@ header("Pragma: no-cache");
                                                                 <?php endfor; ?>
                                                                 <?php if (count($subcategoria->listCategoriasHijasMenu) > 5): ?>
                                                                     <li class='title-viewmore_category'><?php echo CHtml::link("Ver más...", CController::createUrl('/catalogo/division', array('division' => $subcategoria->idCategoriaTienda))); ?></li>
-                                                            <?php endif; ?>        
+                                                            <?php endif; ?>
                                                             </div>
             <?php if ($cpunte == 3 && count($categoria->listCategoriasHijas) != 3): ?>
                                                             </div>
@@ -179,7 +179,7 @@ header("Pragma: no-cache");
                     </ul>
                 </nav>
             </div>
-            
+
             <?php $this->renderPartial('//layouts/_d_menuMicrositio');?>
             <!--fin menu-->
 
@@ -208,7 +208,7 @@ header("Pragma: no-cache");
             <div id="main-content">
 				<?php echo $content; ?>
             </div>
-            
+
             <?php if (CodigoEspecial::hasState()): ?>
 				<div class="container-fluid">
                 	<div class="row">
@@ -222,7 +222,7 @@ header("Pragma: no-cache");
 						        	</tr>
 						            <?php endforeach; ?>
 								</tbody>
-							</table>	
+							</table>
 						</div>
 					</div>
           		</div>
@@ -237,16 +237,16 @@ header("Pragma: no-cache");
             -->
             <!--fin banner footer-->
             <!--footer-->
-            <footer>	
-                <div class="container-fluid">	
+            <footer>
+                <div class="container-fluid">
                     <div class="row">
-                        <div class="col-xs-12" style="padding-top:20px;">	
+                        <div class="col-xs-12" style="padding-top:20px;">
                             <div class="col-xs-3">
-                                <div class="titulo-footer">	
+                                <div class="titulo-footer">
                                     <img src="<?php echo Yii::app()->request->baseUrl; ?>/images/desktop/informacion-y-servicios.png" alt="">
                                     <strong style="margin-left:10px;">Información</strong><br><strong class="title-footer2"> y servicios</strong>
                                 </div>
-                                <ul>	
+                                <ul>
                                     <li><a href="<?php echo $this->createUrl('/contenido/corporativo', array('tipo' => 'horario')) ?>">Horarios de atención</a></li>
                                     <li><a href="<?php echo $this->createUrl('/contenido/corporativo', array('tipo' => 'politerminos')) ?>">Políticas y términos de uso</a></li>
                                     <li><a target="_blank" href="http://www.credirebaja.com/">Tarjeta crediRebaja</a></li>
@@ -254,10 +254,10 @@ header("Pragma: no-cache");
                             </div>
                             <div class="col-xs-3">
                                 <div class="titulo-footer">
-                                    <img src="<?php echo Yii::app()->request->baseUrl; ?>/images/desktop/cliente-fiel.png" alt="">	
+                                    <img src="<?php echo Yii::app()->request->baseUrl; ?>/images/desktop/cliente-fiel.png" alt="">
                                     <strong style="margin-left:10px;">Club</strong><br><strong class="title-footer2">cliente fiel</strong>
                                 </div>
-                                <ul>	
+                                <ul>
                                     <li><a target="_blank" href="http://www.copservir.com/clubclientefiel/index.php?option=com_content&view=category&layout=blog&id=78&Itemid=464">Informaci&oacute;n del programa</a></li>
                                     <li><a target="_blank" href="http://www.copservir.com/clubclientefiel/index.php?option=com_content&view=category&layout=blog&id=78&Itemid=464&pest=2">Beneficios del programa</a></li>
                                     <li><a target="_blank" href="http://www.copservir.com/clubclientefiel/index.php?option=com_content&view=category&layout=blog&id=78&Itemid=464&pest=6">Términos y condiciones</a></li>
@@ -265,11 +265,11 @@ header("Pragma: no-cache");
                                 </ul>
                             </div>
                             <div class="col-xs-3">
-                                <div class="titulo-footer">	
+                                <div class="titulo-footer">
                                     <img src="<?php echo Yii::app()->request->baseUrl; ?>/images/desktop/ico-actividad-comercial.png" alt="">
                                     <strong style="margin-left:10px;">Actividades</strong><br><strong class="title-footer2">comerciales</strong>
                                 </div>
-                                <ul>	
+                                <ul>
                                     <li><a target="_blank" href="http://www.copservir.com/clubclientefiel/index.php?option=com_content&view=featured&Itemid=444">Políticas y condiciones</a></li>
                                     <li><a target="_blank" href="http://www.copservir.com/clubclientefiel/index.php?option=com_content&view=category&layout=blog&id=85&Itemid=476">Ganadores de campañas</a></li>
                                     <li><a href="<?php echo $this->createUrl('/contenido/corporativo', array('tipo' => 'polidescuento')) ?>">Politicas días de descuento 1,10,15 y 25</a></li>
@@ -277,7 +277,7 @@ header("Pragma: no-cache");
                             </div>
                             <div class="col-xs-3">
                                 <div class="titulo-footer-last">
-                                    <img src="<?php echo Yii::app()->request->baseUrl; ?>/images/desktop/ico-contactanos.png" alt="">	
+                                    <img src="<?php echo Yii::app()->request->baseUrl; ?>/images/desktop/ico-contactanos.png" alt="">
                                     <strong>Contactanos</strong>
                                 </div>
                                 <ul>
@@ -287,13 +287,13 @@ header("Pragma: no-cache");
                             </div>
                         </div>
                         <div class="col-xs-12"><div class="space-1"></div></div>
-                        <div class="col-xs-12">	
+                        <div class="col-xs-12">
                             <p align="center">
-                                Cooperativa Multiactiva &nbsp;de Servicios Solidarios Copservir  Ltda | NIT &nbsp;830.011.670-3 | LA REBAJA DROGUERIA | 01 8000 93 99  00 
+                                Cooperativa Multiactiva &nbsp;de Servicios Solidarios Copservir  Ltda | NIT &nbsp;830.011.670-3 | LA REBAJA DROGUERIA | 01 8000 93 99  00
                                 <br>
                                 Calle 13 No. 42 - 10 Bogotá, Colombia | <a href="mailto:infolrv@copservir.com">infolrv@copservir.com</a>
                                 Colombia © 2015 <a href="http://www.larebajavirtual.com">www.larebajavirtual.com</a>
-                                <br> 
+                                <br>
                                 <a target="_blank" href="http://www.sic.gov.co/es/">SIC (Súper intendencia de industria y comercio)</a>
                             </p>
                         </div>
