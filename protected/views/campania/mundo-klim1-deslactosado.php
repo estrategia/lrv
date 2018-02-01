@@ -118,7 +118,7 @@
             </p>
             <div class="section-compra" style="flex-direction: column;">
               <div class="precios" style="margin: 20px auto 0;">
-                <p class="precioproductos-antes">ANTES: <?= ($klim1Deslactosado == null) ? "$00.000" : Yii::app()->numberFormatter->format(Yii::app()->params->formatoMoneda['patron'], $klim1Deslactosado["u-a"], Yii::app()->params->formatoMoneda['moneda']) ?></p>
+              <!--  <p class="precioproductos-antes">ANTES: <?= ($klim1Deslactosado == null) ? "$00.000" : Yii::app()->numberFormatter->format(Yii::app()->params->formatoMoneda['patron'], $klim1Deslactosado["u-a"], Yii::app()->params->formatoMoneda['moneda']) ?></p> -->
                 <p class="precioproductos">AHORA: <?= ($klim1Deslactosado == null) ? "$00.000" : Yii::app()->numberFormatter->format(Yii::app()->params->formatoMoneda['patron'], $klim1Deslactosado["u"], Yii::app()->params->formatoMoneda['moneda']) ?></p>
               </div>
               <a data-ajax="false" href="<?php echo CController::createUrl('/catalogo/producto', array('producto' => 118997 )) ?>">
@@ -230,7 +230,7 @@
         </p>
         <div class="section-compra">
           <div class="precios">
-            <p class="precioproductos-antes">ANTES: <?= ($klim1Deslactosado == null) ? "$00.000" : Yii::app()->numberFormatter->format(Yii::app()->params->formatoMoneda['patron'], $klim1Deslactosado["u-a"], Yii::app()->params->formatoMoneda['moneda']) ?></p>
+          <!--  <p class="precioproductos-antes">ANTES: <?= ($klim1Deslactosado == null) ? "$00.000" : Yii::app()->numberFormatter->format(Yii::app()->params->formatoMoneda['patron'], $klim1Deslactosado["u-a"], Yii::app()->params->formatoMoneda['moneda']) ?></p>-->
             <p class="precioproductos">AHORA: <?= ($klim1Deslactosado == null) ? "$00.000" : Yii::app()->numberFormatter->format(Yii::app()->params->formatoMoneda['patron'], $klim1Deslactosado["u"], Yii::app()->params->formatoMoneda['moneda']) ?></p>
           </div>
           <a href="<?php echo CController::createUrl('/catalogo/producto', array('producto' => 118997 )) ?>">
