@@ -9,13 +9,14 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name='author' content='La Rebaja Virtual'>
     <?php  if(isset($this->metaTags) && !empty($this->metaTags)):?>
-        <?php echo $this->metaTags ?> 
+        <?php echo $this->metaTags ?>
     <?php else: ?>
         <meta name="description" content="Pide tus domicilios de farmacia y drogueria de manera rapida y segura. La Rebaja Drogueria despacha tus domicilios con nuestra planta propia de mensajeros. Compra seguro."/>
     <?php endif;?>
     <?php Yii::app()->clientScript->registerCoreScript('jquery'); ?>
     <script>requestUrl = "<?php echo Yii::app()->request->baseUrl; ?>";</script>
     <?php Yii::app()->getClientScript()->registerCssFile(Yii::app()->request->baseUrl . "/css/clientefiel.css?"); ?>
+    <?php Yii::app()->getClientScript()->registerJsFile(Yii::app()->request->baseUrl . "/js/clientefiel.js?"); ?>
 </head>
 <body>
     <nav class="nav">

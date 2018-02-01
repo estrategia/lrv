@@ -7,7 +7,7 @@ En ese momento quedara habilitado el descuento y puedes empezar a disfrutarlo.</
     <p><span class="counter"></span>Para acceder al descuento de forma permanente deberás cumplir con la condición de realizar compras acumuladas
 en el mes por un valor mínimo de $50.000. Estas compras pueden ser en una o varias facturas. Lo importante
 es que se cumpla con esta condición cada mes.</p>
-    
+
     <p><span class="counter"></span>En caso de no cumplir con la condición del mínimo de compra durante un mes, para el mes siguiente se perderá
 este privilegio del descuento. Pero, si deseas volver a tener el descuento exclusivo del 10% en tus compras deberás
 cumplir con la condición explicada en el punto anterior y en el mes siguiente se activará.</p>
