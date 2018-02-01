@@ -1,6 +1,6 @@
 <?php
 
-class RegistroController extends ControllerCliente{
+class RegistroController extends Controller{
 	
 	
 	public function actionIndex(){
@@ -218,8 +218,7 @@ class RegistroController extends ControllerCliente{
 	
 	
 	public function actionRealizarRegistro(){
-		
-		Yii::import('ext.select2.Select2');
+	    Yii::import('ext.select2.Select2');
 		
 		if(isset(Yii::app()->session[Yii::app()->params->clienteFiel['sesion']])){
 			$model = Yii::app()->session[Yii::app()->params->clienteFiel['sesion']];
@@ -228,13 +227,40 @@ class RegistroController extends ControllerCliente{
 			Yii::app()->end();
 		}
 		
-		$params[] = array();
-		$username = Yii::app()->params->clienteFiel['usuario'];
-		$password = Yii::app()->params->clienteFiel['password'];
-		$token = "$username:$password";
-		$token = base64_encode( $token );
 		$restURL = Yii::app()->params->clienteFiel['url'];
+		$listCiudad = array();
+		$listProfesion = array();
+		$listOcupacion = array();
 		
+		// cliente SII
+		$restClientDatos = new RESTClient ();
+		$restClientDatos->initialize ( array (
+		    'server' => $restURL,
+		) );
+		
+		$listCiudad = $restClientDatos->get('ciudad/list');
+		
+		if($restClientDatos->status() == 200) {
+		    $listCiudad = CJSON::decode($listCiudad);
+		}
+		
+		$listProfesion = $restClientDatos->get('profesion/list');
+		
+		if($restClientDatos->status() == 200) {
+		    $listProfesion = CJSON::decode($listProfesion);
+		    $listOcupacion = $listProfesion['ocupaciones'];
+		    $listProfesion = $listProfesion['profesiones'];
+		}
+		
+		$params[] = array();
+		$params['listCiudad'] = $listCiudad;
+		$params['listProfesion'] = $listProfesion;
+		$params['listOcupacion'] = $listOcupacion;
+		//$username = Yii::app()->params->clienteFiel['usuario'];
+		//$password = Yii::app()->params->clienteFiel['password'];
+		//$token = "$username:$password";
+		//$token = base64_encode( $token );
+		//$restURL = Yii::app()->params->clienteFiel['url'];
 		
 		$usuario = Usuario::model()->findByPk($model->cedula);
 		
@@ -247,7 +273,7 @@ class RegistroController extends ControllerCliente{
 		// Buscar para ver si existe el cliente
 		
 		$response = $restClientSII->get('cliente/ver', array(
-				'numeroDocumento' => $model->cedula,
+            'numeroDocumento' => $model->cedula,
 		));
 			
 		if($restClientSII->status()==200) {
@@ -274,7 +300,6 @@ class RegistroController extends ControllerCliente{
 				$params['modelUsuario'] = new UsuarioForm();
 			}
 		}
-		
 		
 		if($_POST){
 			$model->attributes = $_POST['RegistroClienteFielForm'];
@@ -427,7 +452,7 @@ class RegistroController extends ControllerCliente{
 		
 		if($codigoVerificacion->save()){
 			$telefono = $celular;
-			$mensaje = "El codigo de verificacion es ".$codigoVerificacion->idCodigo;
+			$mensaje = "La Rebaja te informa el código de verificacion: ".$codigoVerificacion->idCodigo;
 			$mensaje = str_replace(" ", "%20", $mensaje);
 			$response = $elibom->sendMessage($telefono, $mensaje);
 			
