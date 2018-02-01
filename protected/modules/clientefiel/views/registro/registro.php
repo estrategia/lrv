@@ -98,7 +98,8 @@ $form = $this->beginWidget ( 'CActiveForm', array (
 	        <?php echo $form->labelEx($model, 'profesion', array('style' => 'display:block;')); ?>
 	        <?php echo $form->dropDownList($model, 'profesion', CHtml::listData(ProfesionCliente::listData(), 'codigoProfesion', 'nombreProfesion'), array('class'=>'form-control', 'prompt' => $model->getAttributeLabel('profesion'), 'encode' => false)); ?>
 	        <?php echo $form->error($model, 'profesion', array("class" => "text-danger")); ?>
-	    </div>
+	     </div>
+	     
 	
 		<div class="ui-field-container">
 	        <?php echo $form->labelEx($model,'tieneHijos'); ?>
