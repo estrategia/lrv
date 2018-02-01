@@ -44,11 +44,14 @@ class RegistroController extends ControllerCliente{
 		try {
 			
 			$usuario = Usuario::model()->findByPK($cedula);
-			
+			$model->clienteInterno = false;
 			// consultar si es asociado
 			
 			$asociado = self::callWSUsuarioInterno($cedula);
 	
+			if($asociado){
+				$model->clienteInterno = true;
+			}
 			if($usuario == null){
 				$model->cedula = $cedula;
 				$model->scenario = "registro";
@@ -366,10 +369,12 @@ class RegistroController extends ControllerCliente{
 						
 						if($usuario){
 							// actualizar usuario con el perfil de cliente fiel
-							$usuario->codigoPerfil = Yii::app()->params->clienteFiel['codigoPerfilActivo'];
+							if(!$model->clienteInterno){
+								$usuario->codigoPerfil = Yii::app()->params->clienteFiel['codigoPerfilActivo'];
+							}
 							$usuario->esClienteFiel = 1;
 							
-							
+							$this->enviarCorreoBienvenida($usuario,$usuario->correoElectronico);
 							if($usuario->save()){
 								$this->redirect(CController::createUrl('bienvenida'));
 							}
@@ -380,14 +385,19 @@ class RegistroController extends ControllerCliente{
 							
 							$usuario = new Usuario();
 							$usuario->apellido = $model->apellido;
-							$usuario->codigoPerfil = Yii::app()->params->clienteFiel['codigoPerfilActivo'];
-							$usuario->correoElectronico;
+							if($model->clienteInterno){
+								$usuario->codigoPerfil = Yii::app()->params->perfil['asociado'];
+							}else{
+								$usuario->codigoPerfil = Yii::app()->params->clienteFiel['codigoPerfilActivo'];
+							}
+							$usuario->correoElectronico = $model->correoElectronico;
 							$usuario->esClienteFiel = 1;
 							$usuario->identificacionUsuario = $model->cedula;
 							$usuario->nombre = $model->nombre;
 							
 							$usuario->clave = md5($params['modelUsuario']->clave);
 							$usuario->save();
+							$this->enviarCorreoBienvenida($usuario,$usuario->correoElectronico);
 						//	Yii::app()->session[Yii::app()->params->clienteFiel['sesionUsuario']] = $usuario;
 						//	$this->redirect(CController::createUrl('clave'));
 							$this->redirect(CController::createUrl('bienvenida'));
@@ -438,7 +448,7 @@ class RegistroController extends ControllerCliente{
 	public function actionEnvioVerificacion(){
 		$cedula = $_POST['cedula'];
 		$tipo = $_POST['tipo'];
-		
+		$correo = $nombre =  null;
 		if($tipo == 1){
 			$celular = $_POST['celular'];
 		}else{
@@ -458,6 +468,8 @@ class RegistroController extends ControllerCliente{
 					));
 			
 			$celular = $result[0]->C_CELULAR;
+			$correo = $result[0]->C_CORREO_MAIN;
+			$nombre = $result[0]->NAME;
 		}
 		
 		$sql = "update t_CodigoVerificacion set estado = 0 WHERE numeroDocumento = $cedula";
