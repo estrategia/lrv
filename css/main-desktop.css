@@ -257,3 +257,8 @@ ul.yiiPager .selected a { background: transparent; color: #EE3E27 !important; fo
 .row-producto-carrito-compras.p-unidad .column-descripcion .fila-sup {padding-bottom: 0px;}
 
 /* ----- ERROR 404 ----- */
+.info-404 {background: #F2F2F2; max-width: 700px; margin: 40px auto; padding: 40px; color: #666666; font-family: HelveticaNeueLTStd-Lt; font-size: 15px;}
+.info-404 hr {border-top: 1px solid #808184;}
+.info-404 .glyphicon {color: #EE3E27;font-size: 35px;}
+.info-404 .btn {margin-top: 20px;}
+.info-404 h1 {  color: #EE3E27;  font-family: HelveticaNeueLTStd-Bd; }
