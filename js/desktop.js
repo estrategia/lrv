@@ -2701,11 +2701,6 @@ $(document).on('change', "input[data-role='validar-cantidad-unidad']", function(
     $("#cantidad-producto-unidad-" + codigoProducto + "-" + id).val(nro);
 });
 
-$(document).on('click',"a[data-type='return-false']"), function(){
-	alert("hola");
-	return false;
-}
-
 $(document).on('click', "button[data-role='aumentar-cantidad']", function() {
     var codigoProducto = $(this).attr('data-producto');
     var valorUnidad = $(this).attr('data-precio');

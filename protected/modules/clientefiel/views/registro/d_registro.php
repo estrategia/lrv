@@ -3,7 +3,7 @@
 $form = $this->beginWidget ( 'CActiveForm', array (
 		'enableClientValidation' => true,
 		'htmlOptions' => array (
-				'id' => "form-registro",
+				'id' => "form-registro-clientefiel",
 				'class' => "" 
 		),
 		'errorMessageCssClass' => 'has-error',
@@ -85,16 +85,17 @@ $form = $this->beginWidget ( 'CActiveForm', array (
 		</div>
 
 		<div class="form-input">
-	        <?php  echo Select2::activeDropDownList($model, 'ciudad', $listCiudad, array('prompt' => 'Seleccione ciudad ...', 'style' => 'width: 100%;')) ?>
+	        <?php echo Select2::activeDropDownList($model, 'ciudad', $listCiudad, array('prompt' => 'Seleccione ciudad ...', 'style' => 'width: 100%;')) ?>
 	        <?php echo $form->error($model, 'ciudad', array("class" => "text-danger")); ?>
 	    </div>
+	    
 		<div class="form-input">
-	        <?php  echo Select2::activeDropDownList($model, 'profesion', $listProfesion, array('prompt' => 'Seleccione profesi&oacute;n ...', 'style' => 'width: 100%;')) ?>
+	        <?php echo Select2::activeDropDownList($model, 'profesion', $listProfesion, array('prompt' => 'Seleccione profesi&oacute;n ...', 'style' => 'width: 100%;')) ?>
 	        <?php echo $form->error($model, 'profesion', array("class" => "text-danger")); ?>
 	    </div>
 	    
 	    <div class="form-input">
-	        <?php  echo Select2::activeDropDownList($model, 'ocupacion', $listOcupacion, array('prompt' => 'Seleccione ocupac&oacute;n ...', 'style' => 'width: 100%;')) ?>
+	        <?php echo Select2::activeDropDownList($model, 'ocupacion', $listOcupacion, array('prompt' => 'Seleccione ocupac&oacute;n ...', 'style' => 'width: 100%;')) ?>
 	        <?php echo $form->error($model, 'ocupacion', array("class" => "text-danger")); ?>
 	    </div>
 
