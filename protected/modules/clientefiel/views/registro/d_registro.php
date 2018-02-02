@@ -4,15 +4,15 @@ $form = $this->beginWidget ( 'CActiveForm', array (
 		'enableClientValidation' => true,
 		'htmlOptions' => array (
 				'id' => "form-registro-clientefiel",
-				'class' => "" 
+				'class' => ""
 		),
 		'errorMessageCssClass' => 'has-error',
 		'clientOptions' => array (
 				'validateOnSubmit' => true,
 				'validateOnChange' => true,
 				'errorCssClass' => 'has-error',
-				'successCssClass' => 'has-success' 
-		) 
+				'successCssClass' => 'has-success'
+		)
 ) );
 ?>
 <div class="form">
@@ -20,7 +20,7 @@ $form = $this->beginWidget ( 'CActiveForm', array (
 		</b></h4>
 </div>
 <div class="form">
-	
+
 	<div class="form-section">
 		<div class="form-input">
 		    <?php echo $form->textField($model, 'cedula', array('maxlength' => 50, 'placeholder' => $model->getAttributeLabel('cedula'))); ?>
@@ -56,7 +56,7 @@ $form = $this->beginWidget ( 'CActiveForm', array (
 		 	<?php echo $form->dropDownList($model,'genero',Yii::app()->params->generos, ['empty' => 'Genero']) ?>
 	        <?php echo $form->error($model, 'genero',  array("class" => "text-danger")); ?>
 		</div>
-		        
+
 	</div>
 
 	<div class="form-section">
@@ -72,12 +72,12 @@ $form = $this->beginWidget ( 'CActiveForm', array (
 						'dateFormat' => 'yy-mm-dd',
 						"changeYear" => true,
 						"changeMonth" => true,
-						"yearRange" => "1900:2015" 
+						"yearRange" => "1900:2015"
 						),
 					'htmlOptions' => array (
 						'size' => '10',
 						'maxlength' => '10',
-						'placeholder' => 'Fecha de Nacimiento' 
+						'placeholder' => 'Fecha de Nacimiento'
 					)
 				));
 			?>
@@ -85,25 +85,25 @@ $form = $this->beginWidget ( 'CActiveForm', array (
 		</div>
 
 		<div class="form-input">
-	        <?php echo Select2::activeDropDownList($model, 'ciudad', $listCiudad, array('prompt' => 'Seleccione ciudad ...', 'style' => 'width: 100%;')) ?>
+	        <?php // echo Select2::activeDropDownList($model, 'ciudad', $listCiudad, array('prompt' => 'Seleccione ciudad ...', 'style' => 'width: 100%;')) ?>
 	        <?php echo $form->error($model, 'ciudad', array("class" => "text-danger")); ?>
 	    </div>
-	    
+
 		<div class="form-input">
-	        <?php echo Select2::activeDropDownList($model, 'profesion', $listProfesion, array('prompt' => 'Seleccione profesi&oacute;n ...', 'style' => 'width: 100%;')) ?>
+	        <?php //echo Select2::activeDropDownList($model, 'profesion', $listProfesion, array('prompt' => 'Seleccione profesi&oacute;n ...', 'style' => 'width: 100%;')) ?>
 	        <?php echo $form->error($model, 'profesion', array("class" => "text-danger")); ?>
 	    </div>
-	    
+
 	    <div class="form-input">
-	        <?php echo Select2::activeDropDownList($model, 'ocupacion', $listOcupacion, array('prompt' => 'Seleccione ocupac&oacute;n ...', 'style' => 'width: 100%;')) ?>
+	        <?php // echo Select2::activeDropDownList($model, 'ocupacion', $listOcupacion, array('prompt' => 'Seleccione ocupac&oacute;n ...', 'style' => 'width: 100%;')) ?>
 	        <?php echo $form->error($model, 'ocupacion', array("class" => "text-danger")); ?>
 	    </div>
 
 	    <div class="form-input">
-		        <?php echo $form->dropDownList($model,'tieneHijos', ['1'=>'Si', '0'=>'No'], ['empty' => 'Tiene Hijos']); ?>
+		        <?php // echo $form->dropDownList($model,'tieneHijos', ['1'=>'Si', '0'=>'No'], ['empty' => 'Tiene Hijos']); ?>
 		        <?php echo $form->error($model,'tieneHijos',  array("class" => "text-danger")); ?>
 		    </div>
-		    
+
 	    <div class="form-input">
 	    	<?php echo $form->dropDownList($model,'tieneMascotas', ['1'=>'Si', '0'=>'No'], ['empty' => 'Tiene Mascotas']); ?>
 	        <?php echo $form->error($model,'tieneMascotas',  array("class" => "text-danger")); ?>
@@ -113,7 +113,7 @@ $form = $this->beginWidget ( 'CActiveForm', array (
 <?php if(isset($modelUsuario)):?>
 	<div class="form">
 		<div class="form-section">
-			<h4>Escribe una contrase&ntilde;a de m&iacute;nimo 5 caracteres y &uacute;sala para ingresar a 
+			<h4>Escribe una contrase&ntilde;a de m&iacute;nimo 5 caracteres y &uacute;sala para ingresar a
 nuestro programa Cliente fiel y  realizar las compras que desees desde nuestra tienda virtual.	</h4>
 		</div>
 	</div>
@@ -123,29 +123,28 @@ nuestro programa Cliente fiel y  realizar las compras que desees desde nuestra t
 	            <?php echo $form->passwordField($modelUsuario, 'clave', array('placeholder' => $modelUsuario->getAttributeLabel('clave'))); ?>
 	            <?php echo $form->error($modelUsuario, 'clave', array("class" => "text-danger")); ?>
 		   </div>
-		</div>		
+		</div>
 		<div class="form-section">
 		   <div class="form-input">
 	            <?php echo $form->passwordField($modelUsuario, 'claveConfirmar', array('placeholder' => $modelUsuario->getAttributeLabel('claveConfirmar'))); ?>
 	            <?php echo $form->error($modelUsuario, 'claveConfirmar', array("class" => "text-danger")); ?>
 		   </div>
-		</div>		
+		</div>
 	</div>
-	
+
 <?php endif;?>
 
 <div class="terms-conditions">
-	<h4> <b>Acepto los términos y condiciones</b></h4>
+<span><b>Acepto los términos y condiciones</b></span>
 	<?php if ($model->getScenario()) : ?>
 	    <?php echo $form->checkBox($model, 'condiciones'); ?>
 	    <?php echo $form->error($model, 'condiciones', array("class" => "text-danger")); ?>
+
 		<div class="form-input">
 	        <?php CHtml::link('Ver condiciones', "#dialog-condiciones", array('class' => 'c_olv_pass', 'data-transition' => 'flip', 'data-toggle' => "modal", 'data-target' => "#modalTerminos")); ?>
 	    </div>
 	<?php endif; ?>
 </div>
-
-
 <div class="form-action">
 	<?php if ($model->getScenario()): ?>
 	    <input class='button-form' type="submit" data-enhanced="true" value="Guardar">

@@ -374,7 +374,7 @@ return array(
         	'descuentos' => array(50,51,52,53,57,58,63,64,70,71), // new
         	'bonos' => array(54,55,56), // new
         	'descuentosClienteInterno' => array(57,58),
-        	'bonosClienteInterno' => array(56),    
+        	'bonosClienteInterno' => array(56),
         	'beneficioCedula' => 54,
             'beneficiosSuscripcion' => array(63,64),
         	'tipoBonoFormaPago' => array(
@@ -397,7 +397,7 @@ return array(
         'swobligaCli' => array(
             0 => 'Todos',
             2 => 'Cliente fiel',
-        	3 => 'Cliente interno'	
+        	3 => 'Cliente interno'
         ),
         'porcentajeMaximo' => 80,
         'configuracion' => array(
@@ -433,15 +433,15 @@ return array(
         'patron' => "¤#,##0;(¤#,##0)",
         'moneda' => '$'
     ),
-	'codigoSeguridadCRM' => 'EiS0-CoPserv1r-12#54'	
-	,	
+	'codigoSeguridadCRM' => 'EiS0-CoPserv1r-12#54'
+	,
     'webServiceUrl' => array(
         'serverGeo' => 'http://www.copservir.com/webService/serverGeo.php',
         'serverLRV' => 'http://www.copservir.com/webService/serverLRV.php',
         'crmLrv' => "http://www.copservir.com/webService/crmLrv.php",
         'remisionPos' => "http://www.copservir.com/webService/serverLRV.php",
         'remisionPosECommerce' => "http://www.copservir.com/webService/Pos/RemisionPosEcommerce.php",
-        'persona' => 'http://localhost/siicop/wsMultiportal/persona',
+        'persona' => 'http://192.168.1.15/siicop/wsMultiportal/persona',
         //console
         'sincronizarBeneficiosSIICOP' => 'http://localhost/siicop/beneficios/sweb/wslrv',
        // 'sincronizarBeneficiosSIICOP' => 'http://localhost/siicop/beneficios/sweb/wslrv',
@@ -550,7 +550,7 @@ return array(
         	'codigoFORCO' => 1,
             'formaPagoBonos' => 8,
         	'vigenciaForco' => 1,
-        	'keyBonos' => 'larebajavirtual.com', 	
+        	'keyBonos' => 'larebajavirtual.com',
         	'tipoBonoFORCO' => 1,
         ),
         'reactivacionBono' => array(
