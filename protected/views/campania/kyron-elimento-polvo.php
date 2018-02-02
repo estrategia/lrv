@@ -70,7 +70,7 @@ $this->metaTags = "<meta http-equiv='X-UA-Compatible' content='IE=edge'>
     <img class="brand-new" src="<?= Yii::app()->request->baseUrl ?>/images/contenido/kyron/alimento-en-polvo-adulto/nuevo.png" alt="Nuevo">
     <div class="bg-gray">
       <img class="product-m" src="<?= Yii::app()->request->baseUrl ?>/images/contenido/kyron/alimento-en-polvo-adulto/quinua.png" alt="Quinua">
-      <a href="<?php echo CController::createUrl('/catalogo/producto', array('producto' => 106704)) ?>" data-ajax="false"><img class="btn-compra" src="<?= Yii::app()->request->baseUrl ?>/images/contenido/kyron/compra-online.png" alt="Compra Online"></a>
+      <a href="<?php echo CController::createUrl('/contenido/ver', array('tipo' => 'grupo', 'contenido' => 6172)) ?>"><img class="btn-compra" src="<?= Yii::app()->request->baseUrl ?>/images/contenido/kyron/compra-online.png" alt="Compra Online"></a>
       <span class="flavor">FRUTOS  ROJOS – VAINILLA</span>
       <h2 class="quinua">ENERGOLD CON QUINUA</h2>
       <span class="sub-title-quinua">Aporte de aminoácidos útiles para el organismo.</span>
@@ -121,7 +121,7 @@ $this->metaTags = "<meta http-equiv='X-UA-Compatible' content='IE=edge'>
     <img class="brand-new" src="<?= Yii::app()->request->baseUrl ?>/images/contenido/kyron/alimento-en-polvo-adulto/nuevo.png" alt="Nuevo">
     <div class="bg-gray">
       <img class="product-m" src="<?= Yii::app()->request->baseUrl ?>/images/contenido/kyron/alimento-en-polvo-adulto/diabeticos.png" alt="Diabeticos">
-      <a href="<?php echo CController::createUrl('/catalogo/producto', array('producto' => 100882)) ?>" data-ajax="false">
+      <a href="<?php echo CController::createUrl('/contenido/ver', array('tipo' => 'grupo', 'contenido' => 6174)) ?>">
         <img class="btn-compra" src="<?= Yii::app()->request->baseUrl ?>/images/contenido/kyron/compra-online.png" alt="Compra Online">
       </a>
       <span class="flavor-diabeticos">FRESA – VAINILLA</span>
@@ -148,7 +148,7 @@ $this->metaTags = "<meta http-equiv='X-UA-Compatible' content='IE=edge'>
   <div class="">
     <div class="bg-gray">
       <img class="product-m" src="<?= Yii::app()->request->baseUrl ?>/images/contenido/kyron/alimento-en-polvo-adulto/plus.png" alt="Plus">
-      <a href="<?php echo CController::createUrl('/catalogo/producto', array('producto' => 100890)) ?>" data-ajax="false">
+      <a href="<?php echo CController::createUrl('/contenido/ver', array('tipo' => 'grupo', 'contenido' => 6176)) ?>">
         <img class="btn-compra" src="<?= Yii::app()->request->baseUrl ?>/images/contenido/kyron/compra-online.png" alt="Compra Online">
       </a>
       <span class="flavor-diabeticos" style="color: #931914;">FRUTOS ROJOS - VAINILLA CANELA</span>
@@ -171,7 +171,7 @@ $this->metaTags = "<meta http-equiv='X-UA-Compatible' content='IE=edge'>
   <div class="">
     <div class="bg-gray">
       <img class="product-m" src="<?= Yii::app()->request->baseUrl ?>/images/contenido/kyron/alimento-en-polvo-adulto/fibra.png" alt="Fibra">
-      <a href="<?php echo CController::createUrl('/catalogo/producto', array('producto' => 100876)) ?>" data-ajax="false">
+      <a href="<?php echo CController::createUrl('/contenido/ver', array('tipo' => 'grupo', 'contenido' => 6178)) ?>">
         <img class="btn-compra" src="<?= Yii::app()->request->baseUrl ?>/images/contenido/kyron/compra-online.png" alt="Compra Online">
       </a>
       <span class="flavor-diabeticos" style="color: #487D2F;">FRESA – NARANJA</span>
@@ -195,7 +195,7 @@ $this->metaTags = "<meta http-equiv='X-UA-Compatible' content='IE=edge'>
   <div class="">
     <div class="bg-gray">
       <img class="product-m" src="<?= Yii::app()->request->baseUrl ?>/images/contenido/kyron/alimento-en-polvo-adulto/calcio.png" alt="Calcio">
-      <a href="<?php echo CController::createUrl('/catalogo/producto', array('producto' => 116180)) ?>" data-ajax="false">
+      <a href="<?php echo CController::createUrl('/contenido/ver', array('tipo' => 'grupo', 'contenido' => 6180)) ?>">
         <img class="btn-compra" src="<?= Yii::app()->request->baseUrl ?>/images/contenido/kyron/compra-online.png" alt="Compra Online">
       </a>
       <span class="flavor-diabeticos" style="color: #2180C2;">FRESA – VAINILLA</span>
@@ -218,7 +218,7 @@ $this->metaTags = "<meta http-equiv='X-UA-Compatible' content='IE=edge'>
   <div class="">
     <div class="bg-gray">
       <img class="product-m" src="<?= Yii::app()->request->baseUrl ?>/images/contenido/kyron/alimento-en-polvo-adulto/nutricion-total.png" alt="Nutrición Total">
-      <a href="<?php echo CController::createUrl('/catalogo/producto', array('producto' => 100875)) ?>" data-ajax="false">
+      <a href="<?php echo CController::createUrl('/contenido/ver', array('tipo' => 'grupo', 'contenido' => 6182)) ?>">
         <img class="btn-compra" src="<?= Yii::app()->request->baseUrl ?>/images/contenido/kyron/compra-online.png" alt="Compra Online">
       </a>
       <span class="flavor-diabeticos" style="color: #20934E;">FRESA – VAINILLA</span>
@@ -275,7 +275,7 @@ $this->metaTags = "<meta http-equiv='X-UA-Compatible' content='IE=edge'>
       <div class="bg-gray">
         <img class="brand-new" style="margin-top: -25px;" src="<?= Yii::app()->request->baseUrl ?>/images/contenido/kyron/alimento-en-polvo-adulto/nuevo.png" alt="Nuevo">
           <img class="product-m" src="<?= Yii::app()->request->baseUrl ?>/images/contenido/kyron/alimento-en-polvo-adulto/quinua.png" alt="Quinua">
-          <a href="<?php echo CController::createUrl('/catalogo/producto', array('producto' => 106704)) ?>" data-ajax="false">
+          <a href="<?php echo CController::createUrl('/contenido/ver', array('tipo' => 'grupo', 'contenido' => 6172)) ?>">
             <img class="btn-compra" style="width: 50%;" src="<?= Yii::app()->request->baseUrl ?>/images/contenido/kyron/compra-online.png" alt="Compra Online">
           </a>
           <span class="flavor">FRUTOS  ROJOS – VAINILLA</span>
@@ -336,7 +336,7 @@ $this->metaTags = "<meta http-equiv='X-UA-Compatible' content='IE=edge'>
       <div class="bg-gray">
         <img class="brand-new" style="margin-top: -25px;"  src="<?= Yii::app()->request->baseUrl ?>/images/contenido/kyron/alimento-en-polvo-adulto/nuevo.png" alt="Nuevo">
         <img class="product-m" src="<?= Yii::app()->request->baseUrl ?>/images/contenido/kyron/alimento-en-polvo-adulto/diabeticos.png" alt="Diabeticos">
-        <a href="<?php echo CController::createUrl('/catalogo/producto', array('producto' => 100882)) ?>" data-ajax="false">
+        <a href="<?php echo CController::createUrl('/contenido/ver', array('tipo' => 'grupo', 'contenido' => 6174)) ?>">
           <img class="btn-compra" style="width: 50%;" src="<?= Yii::app()->request->baseUrl ?>/images/contenido/kyron/compra-online.png" alt="Compra Online">
         </a>
         <span class="flavor-diabeticos">FRESA – VAINILLA</span>
@@ -371,7 +371,7 @@ $this->metaTags = "<meta http-equiv='X-UA-Compatible' content='IE=edge'>
   <div class="row" style="background-color: #F8F8F8;padding: 25px 5px;margin-bottom: 50px;">
     <div class="col-sm-3 col-md-3">
       <img class="product-m" src="<?= Yii::app()->request->baseUrl ?>/images/contenido/kyron/alimento-en-polvo-adulto/plus.png" alt="Plus">
-      <a href="<?php echo CController::createUrl('/catalogo/producto', array('producto' => 100890)) ?>" data-ajax="false">
+      <a href="<?php echo CController::createUrl('/contenido/ver', array('tipo' => 'grupo', 'contenido' => 6176)) ?>">
         <img class="btn-compra" src="<?= Yii::app()->request->baseUrl ?>/images/contenido/kyron/compra-online.png" alt="Compra Online">
       </a>
       <span class="flavor-diabeticos" style="color: #931914;">FRUTOS ROJOS - VAINILLA CANELA</span>
@@ -396,7 +396,7 @@ $this->metaTags = "<meta http-equiv='X-UA-Compatible' content='IE=edge'>
     </div>
     <div class="col-sm-3 col-md-3">
       <img class="product-m" src="<?= Yii::app()->request->baseUrl ?>/images/contenido/kyron/alimento-en-polvo-adulto/fibra.png" alt="Fibra">
-      <a href="<?php echo CController::createUrl('/catalogo/producto', array('producto' => 100876)) ?>" data-ajax="false">
+      <a href="<?php echo CController::createUrl('/contenido/ver', array('tipo' => 'grupo', 'contenido' => 6178)) ?>">
         <img class="btn-compra" src="<?= Yii::app()->request->baseUrl ?>/images/contenido/kyron/compra-online.png" alt="Compra Online">
       </a>
       <span class="flavor-diabeticos" style="color: #487D2F;">FRESA – NARANJA</span>
@@ -422,7 +422,7 @@ $this->metaTags = "<meta http-equiv='X-UA-Compatible' content='IE=edge'>
     </div>
     <div class="col-sm-3 col-md-3">
       <img class="product-m" src="<?= Yii::app()->request->baseUrl ?>/images/contenido/kyron/alimento-en-polvo-adulto/calcio.png" alt="Calcio">
-      <a href="<?php echo CController::createUrl('/catalogo/producto', array('producto' => 116180)) ?>" data-ajax="false">
+      <a href="<?php echo CController::createUrl('/contenido/ver', array('tipo' => 'grupo', 'contenido' => 6180)) ?>">
         <img class="btn-compra" src="<?= Yii::app()->request->baseUrl ?>/images/contenido/kyron/compra-online.png" alt="Compra Online">
       </a>
       <span class="flavor-diabeticos" style="color: #2180C2;">FRESA – VAINILLA</span>
@@ -447,7 +447,7 @@ $this->metaTags = "<meta http-equiv='X-UA-Compatible' content='IE=edge'>
     </div>
     <div class="col-sm-3 col-md-3">
       <img class="product-m" src="<?= Yii::app()->request->baseUrl ?>/images/contenido/kyron/alimento-en-polvo-adulto/nutricion-total.png" alt="Nutrición Total">
-      <a href="<?php echo CController::createUrl('/catalogo/producto', array('producto' => 100875)) ?>" data-ajax="false">
+      <a href="<?php echo CController::createUrl('/contenido/ver', array('tipo' => 'grupo', 'contenido' => 6182)) ?>">
         <img class="btn-compra" src="<?= Yii::app()->request->baseUrl ?>/images/contenido/kyron/compra-online.png" alt="Compra Online">
       </a>
       <span class="flavor-diabeticos" style="color: #20934E;">FRESA – VAINILLA</span>

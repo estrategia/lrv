@@ -32,7 +32,7 @@
     .info-producto {padding: 30px 40px; background: #fff; border: 6px solid #00A3D5; border-radius: 30px; display: flex; flex-direction: row; flex-wrap: wrap; justify-content: space-between; width: 100%; max-width: 1000px; margin: 15px auto;}
     .info-producto .img-producto {width:40%;}
     .info-producto .txt-producto {width:60%;}
-    .info-producto .img-producto img {width:80%; margin: 25px auto 0;display:block;}
+    .info-producto .img-producto img {width:100%; margin: 25px auto 0;display:block;}
     .bg-amarillo {background-color:#F2D611; padding: 15px 0;margin-top: 80px;}
     .content-products {display: flex;flex-direction: row;flex-wrap: wrap;justify-content: space-between;width:100%; max-width: 1000px; margin: 0 auto;}
     .btn-compra-banner {width: 100%; max-width: 1000px; margin: -50px auto 0; position: relative;}
@@ -99,7 +99,7 @@
           <img style="width: 55%;" src="<?= Yii::app()->request->baseUrl ?>/images/contenido/mundo-klim/klim-fortigrow/klim-fortigrow.png" alt="Comprar Klim fortiprotect">
         </div>
         <div class="txt-producto"  style="width:100%;">
-          <h1 class="title-producto" style="text-align: center; font-size: 25px;">KLIM<sup>&reg;</sup> FORTIGROW</h1>
+          <h1 class="title-producto" style="text-align: center; font-size: 25px;">KLIM<sup>&reg;</sup> FORTIGROW<sup>&reg;</sup></h1>
           <h2 class="subtitle-producto" style="text-align: center; font-size: 14px;">POTENCIALIZA EL DESARROLLO DE LOS NIÑOS EN EDAD ESCOLAR</h2>
           <p class="main-txt" style="text-align: center; font-size: 17px;">
           Niños pilos y preparados para crecer. <br>
@@ -196,7 +196,7 @@
         <img src="<?= Yii::app()->request->baseUrl ?>/images/contenido/mundo-klim/klim-fortigrow/klim-fortigrow.png" alt="Comprar Klim fortiprotect">
       </div>
       <div class="txt-producto">
-        <h1 class="title-producto">KLIM<sup>&reg;</sup> FORTIGROW</h1>
+        <h1 class="title-producto">KLIM<sup>&reg;</sup> FORTIGROW<sup>&reg;</sup></h1>
         <h2 class="subtitle-producto">POTENCIALIZA EL DESARROLLO DE LOS NIÑOS <br> EN EDAD ESCOLAR</h2>
         <p class="main-txt">
         Niños pilos y preparados para crecer. <br>

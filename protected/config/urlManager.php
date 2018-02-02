@@ -140,6 +140,12 @@ return array(
         'mundo-klim3-fortilearn' => 'publicidad/contenido/nombre/mundo-klim3-fortilearn',
         'mundo-klim-fortigrow' => 'publicidad/contenido/nombre/mundo-klim-fortigrow',
         'promocion-tinte-happy-new-look' => 'publicidad/contenido/nombre/henkel',
+        'genfar-kids' => 'publicidad/contenido/nombre/genfar-kids',
+        'mundo-genfar-kids-acetaminofen' => 'publicidad/contenido/nombre/mundo-buabua',
+        'mundo-genfar-kids-ibuprofeno' => 'publicidad/contenido/nombre/bruubruu',
+        'mundo-genfar-kids-hedera-helix' => 'publicidad/contenido/nombre/cofcof',
+        'mundo-genfar-kids-cetirizina' => 'publicidad/contenido/nombre/achuu',
+        'mundo-genfar-kids-calamina' => 'publicidad/contenido/nombre/auch',
          // Fin links campañas
 
         // REST patterns

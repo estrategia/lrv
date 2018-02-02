@@ -56,7 +56,7 @@ class RegistroController extends ControllerCliente{
 			if($usuario == null){
 				$model->cedula = $cedula;
 				$model->scenario = "registro";
-				$model->solicitarVerificacion = true;
+				//$model->solicitarVerificacion = true;
 				$model->verificacionValidada = true;
 				Yii::app()->session[Yii::app()->params->clienteFiel['sesion']] = $model;
 				// Se debe redireccionar para continuar el registro
@@ -65,7 +65,7 @@ class RegistroController extends ControllerCliente{
 			} else if($usuario->esClienteFiel){
 				$model->cedula = $cedula;
 				$model->scenario = "actualizar";
-				$model->solicitarVerificacion = false;
+			//	$model->solicitarVerificacion = false;
 				
 				// consultar y enviar a la verificacion por celular y correo electronico
 				
@@ -123,7 +123,7 @@ class RegistroController extends ControllerCliente{
 						}
 					}else{
 						$model->scenario = "registro";
-						$model->solicitarVerificacion = true;
+					//	$model->solicitarVerificacion = true;
 						$model->verificacionValidada = false;
 						Yii::app()->session[Yii::app()->params->clienteFiel['sesion']] = $model;
 						// Se debe redireccionar para continuar el registro
@@ -142,7 +142,7 @@ class RegistroController extends ControllerCliente{
 				
 			}else{
 				$model->scenario = "registro";
-				$model->solicitarVerificacion = true;
+				//$model->solicitarVerificacion = true;
 				$model->verificacionValidada = true;
 				$clientSugar = new SoapClient(null, array(
 						'location' => Yii::app()->params->webServiceUrl['crmLrv'],
@@ -175,7 +175,7 @@ class RegistroController extends ControllerCliente{
 					$model->ciudad = $result[0]->C_CIUDAD;
 					$model->genero = $result[0]->C_SEXO == 'M'?Yii::app()->params->genero['valor']['masculino']:Yii::app()->params->genero['valor']['femenino'];
 				
-					$model->solicitarVerificacion = false;
+			//		$model->solicitarVerificacion = false;
 					$model->verificacionValidada = false;
 					Yii::app()->session[Yii::app()->params->clienteFiel['sesion']] = $model;
 				
@@ -220,7 +220,7 @@ class RegistroController extends ControllerCliente{
 					}
 				
 				}else{
-					$model->solicitarVerificacion = true;
+				//	$model->solicitarVerificacion = true;
 					Yii::app()->session[Yii::app()->params->clienteFiel['sesion']] = $model;
 					$this->redirect(CController::createUrl('realizarRegistro', array()));
 				}
@@ -465,6 +465,8 @@ class RegistroController extends ControllerCliente{
 			$model->fechaNacimiento = $data['fechaNacimiento'];
 			$model->ciudad = $data['IdCiudad'];
 			$model->genero = $data['IdSexo'];
+			$model->profesion = $data['IdProfesion'];
+			$model->ocupacion = $data['IdOcupacion'];
 			
 			$model->scenario = 'actualizar';
 		} else {
@@ -554,6 +556,7 @@ class RegistroController extends ControllerCliente{
 							'tieneHijosMenores' => $model->tieneHijos,
 							'tieneMascota' => $model->tieneMascotas,
 					));
+					
 					if($restClientSII->status()==200 ) {
 						$this->limpiarVariables();
 						$this->redirect(CController::createUrl('bienvenida'));
