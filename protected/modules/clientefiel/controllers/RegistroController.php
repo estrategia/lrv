@@ -366,7 +366,6 @@ class RegistroController extends ControllerCliente{
 			Yii::app()->end();
 		}
 		
-		
 		if(!$model->verificacionValidada){
 			$this->redirect(CController::createUrl('index'));
 			Yii::app()->end();
@@ -383,23 +382,11 @@ class RegistroController extends ControllerCliente{
 		    'server' => $restURL,
 		) );
 		
-		//descomentar
 		$listCiudad = $restClientDatos->get('ciudad/list');
 		if($restClientDatos->status() == 200) {
 		    $listCiudad = CJSON::decode($listCiudad);
 		}
 		
-		//comentar
-		/*
-		$listCiudad2 = $restClientDatos->get('ciudad/index', array('term'=>'a'));
-		if($restClientDatos->status() == 200) {
-		    $listCiudad2 = CJSON::decode($listCiudad2);
-		    foreach ($listCiudad2 as $dataRow) {
-		        $listCiudad[$dataRow['value']] = $dataRow['label'];
-		    }
-		}
-		*/
-		//descomentar
 		$listProfesion = $restClientDatos->get('profesion/list');
 		if($restClientDatos->status() == 200) {
 		    $listProfesion = CJSON::decode($listProfesion);
@@ -407,34 +394,10 @@ class RegistroController extends ControllerCliente{
 		    $listProfesion = $listProfesion['profesiones'];
 		}
 		
-		//comentar
-		/*
-		$listProfesion2 = $restClientDatos->get('profesion/index', array('term'=>'a', 'tipo'=>1));
-		if($restClientDatos->status() == 200) {
-		    $listProfesion2 = CJSON::decode($listProfesion2);
-		    foreach ($listProfesion2 as $dataRow) {
-		        $listProfesion[$dataRow['value']] = $dataRow['label'];
-		    }
-		}
-		
-		//comentar
-		$listOcupacion2 = $restClientDatos->get('profesion/index', array('term'=>'a', 'tipo'=>3));
-		if($restClientDatos->status() == 200) {
-		    $listOcupacion2 = CJSON::decode($listOcupacion2);
-		    foreach ($listOcupacion2 as $dataRow) {
-		        $listOcupacion[$dataRow['value']] = $dataRow['label'];
-		    }
-		}
-		*/
 		$params[] = array();
 		$params['listCiudad'] = $listCiudad;
 		$params['listProfesion'] = $listProfesion;
 		$params['listOcupacion'] = $listOcupacion;
-		//$username = Yii::app()->params->clienteFiel['usuario'];
-		//$password = Yii::app()->params->clienteFiel['password'];
-		//$token = "$username:$password";
-		//$token = base64_encode( $token );
-		//$restURL = Yii::app()->params->clienteFiel['url'];
 		
 		$usuario = Usuario::model()->findByPk($model->cedula);
 		
@@ -449,7 +412,7 @@ class RegistroController extends ControllerCliente{
 		$response = $restClientSII->get('cliente/ver', array(
             'numeroDocumento' => $model->cedula,
 		));
-			
+	    
 		if($restClientSII->status()==200) {
 			$model->scenario = 'actualizar';
 			$response = json_decode( preg_replace('/[\x00-\x1F\x80-\xFF]/', '', $response), true );
@@ -500,12 +463,8 @@ class RegistroController extends ControllerCliente{
 			// si guarda
 		
 			if(!$error){
-				
 				// solicitar un nuevo codigo de verificacion por correo
-				
-				
 				if($model->scenario == 'registro'){
-
 					Yii::app()->session[Yii::app()->params->clienteFiel['sesion']] = $model;
 					
 					try{

@@ -64,7 +64,7 @@ $form = $this->beginWidget ( 'CActiveForm', array (
 		<div class="form-input">
 		    <?php
 				$this->widget ( 'zii.widgets.jui.CJuiDatePicker', array (
-						'model' => $model,
+                        'model' => $model,
 						'attribute' => 'fechaNacimiento',
 						'language' => 'es',
 						'options' => array (
@@ -114,7 +114,7 @@ $form = $this->beginWidget ( 'CActiveForm', array (
 	<div class="form">
 		<div class="form-section">
 			<h4>Escribe una contrase&ntilde;a de m&iacute;nimo 5 caracteres y &uacute;sala para ingresar a 
-nuestro programa Cliente fiel y  realizar las compras que desees desde nuestra tienda virtual.	</h4>
+			nuestro programa Cliente fiel y  realizar las compras que desees desde nuestra tienda virtual.	</h4>
 		</div>
 	</div>
 	<div class="form">
@@ -139,11 +139,10 @@ nuestro programa Cliente fiel y  realizar las compras que desees desde nuestra t
 	<?php if ($model->getScenario()) : ?>
 	    <?php echo $form->checkBox($model, 'condiciones'); ?>
 	    <?php echo $form->error($model, 'condiciones', array("class" => "text-danger")); ?>
-		<div class="form-input">
-	        <?php CHtml::link('Ver condiciones', "#dialog-condiciones", array('class' => 'c_olv_pass', 'data-transition' => 'flip', 'data-toggle' => "modal", 'data-target' => "#modalTerminos")); ?>
-	    </div>
+		
 	<?php endif; ?>
-</div>
+</div>     
+                
 
 
 <div class="form-action">
