@@ -48,7 +48,7 @@
     .precioproductos-antes{font-family:VAGRoundedStd-Bold; color:#474747;margin: 0 auto;font-size: 19px;text-align: center; }
     .precioproductos-antes span::before {content: ''; width: 75px; height: 3px; background-color: #D60203; position: absolute; margin-top: 11px;}
     .precioproductos{font-family:VAGRoundedStd-Bold; color: #D60203;margin: 0 auto;font-size: 22px;text-align: center; }
-    .txt-footer {  text-align: center;    font-family:HelveticaNeueLTStd-Roman;color: #414a35;margin-top: 72px;font-size: 15px;}
+    .txt-footer {  text-align: center;    font-family:FrutigerLTStd-Roman;color: #414a35;margin-top: 72px;font-size: 15px;}
     .owl-pagination {margin-top: 35px;}
     @media only screen and (max-width: 1920px) and (min-width: 1700px)  {
       .btn-compra-banner {margin-top: -92px;}
@@ -145,16 +145,16 @@ img.img-responsive.producto-contenido-m{
     padding-top: 42%;
 }
 
-.titulolengueta{font-family: Frutiger LT Std;margin-bottom: 0px;font-size: 19px;text-align: center;font-weight: bold;
+.titulolengueta{font-family: FrutigerLTStd-Roman;margin-bottom: 0px;font-size: 19px;text-align: center;font-weight: bold;
     color: #802F7D;
 }
 
-.titulosecundariolengueta{font-size: 15px;margin-top: 0px;font-family: Frutiger LT Std;text-align: center;color: #802F7D;
+.titulosecundariolengueta{font-size: 15px;margin-top: 0px;font-family: FrutigerLTStd-Roman;text-align: center;color: #802F7D;
 }
 
-.descripcionlengueta{font-family: Frutiger LT Std;text-align: center;color: #5B5B5F;}
+.descripcionlengueta{font-family: FrutigerLTStd-Roman;text-align: center;color: #5B5B5F;}
 
-.vermasinformacion{font-family: Frutiger LT Std;    font-weight: bold;text-align: center;color: red;text-decoration: underline;}
+.vermasinformacion{font-family: FrutigerLTStd-Roman;    font-weight: bold;text-align: center;color: red;text-decoration: underline;}
 
 
   </style>
@@ -164,7 +164,7 @@ img.img-responsive.producto-contenido-m{
 <?php if ($this->isMobile): ?>
 <img class="img-responsive-m" src="<?= Yii::app()->request->baseUrl ?>/images/contenido/genfar-kids/home/banner.jpg" alt="genfar kids">
 <div class="iconofrase-m">
-  <img class="img-responsive" src="<?= Yii::app()->request->baseUrl ?>/images/contenido/genfar-kids/home/Una-linea-especial Home.png" alt="genfar kids">
+  <img class="img-responsive" src="<?= Yii::app()->request->baseUrl ?>/images/contenido/genfar-kids/home/una-linea-especial-home.png" alt="genfar kids">
 <h1 class="intro-txt-m"> PARA LOS QUE TANTO QUIERES</h1>
 
 
@@ -172,10 +172,10 @@ img.img-responsive.producto-contenido-m{
 <section class="row-productos">
   <div id="owl-productodetalle-inicio" class="owl-carousel owl-theme owl-productodetalle">
     <div class="item" style="margin: 0 30px;">
-      <img class="img-responsive cabecera-lengueta-m" src="<?= Yii::app()->request->baseUrl ?>/images/contenido/genfar-kids/home/titulo-Dolor-y-Fiebre-O+.png" alt="genfar kids">
+      <img class="img-responsive cabecera-lengueta-m" src="<?= Yii::app()->request->baseUrl ?>/images/contenido/genfar-kids/home/titulo-dolor-y-fiebre-o.png" alt="genfar kids">
       <div class="distribucionlengueta">
         <div class="contenedor-de-lengueta-m">
-          <img class="img-responsive producto-contenido-m" src="<?= Yii::app()->request->baseUrl ?>/images/contenido/genfar-kids/home/Pack-Dolor-y-fiebre-O+.png" alt="genfar kids">
+          <img class="img-responsive producto-contenido-m" src="<?= Yii::app()->request->baseUrl ?>/images/contenido/genfar-kids/home/pack-dolor-y-fiebre-o.png" alt="genfar kids">
           <!---aqui debe seguir con el texto-->
           <h1 class="titulolengueta">DOLOR Y FIEBRE 0+</h1>
           <h4 class="titulosecundariolengueta">Acetaminofén</h4>
@@ -184,7 +184,7 @@ img.img-responsive.producto-contenido-m{
             <a data-ajax="false" href="<?= Yii::app()->request->baseUrl ?>/mundo-genfar-kids-acetaminofen">
                 <h5 class="vermasinformacion">Ver más información </h5>
             </a>
-         <a data-ajax="false" href="<?php echo CController::createUrl('/contenido/ver', array('tipo' => 'grupo', 'contenido' => 119430)) ?>">
+         <a data-ajax="false" href="<?php echo CController::createUrl('/catalogo/producto', array('producto' => 119430 )) ?>">
            <img width="200" style="margin:0 auto;display:block;width: 130px;" src="<?= Yii::app()->request->baseUrl ?>/images/contenido/gelicart/btn-comprar.png" alt="">
          </a>
         </div>
@@ -192,10 +192,10 @@ img.img-responsive.producto-contenido-m{
     </div>
     <div class="item" style="margin: 0 30px;">
       <div class="item lengueta">
-        <img class="img-responsive cabecera-lengueta-m" src="<?= Yii::app()->request->baseUrl ?>/images/contenido/genfar-kids/home/titulo-Fiebre.png" alt="genfar kids">
+        <img class="img-responsive cabecera-lengueta-m" src="<?= Yii::app()->request->baseUrl ?>/images/contenido/genfar-kids/home/titulo-fiebre.png" alt="genfar kids">
         <div class="distribucionlengueta">
           <div class="contenedor-de-lengueta-m" style="border: 2.5px solid #ff7351;">
-            <img class="img-responsive producto-contenido-m" src="<?= Yii::app()->request->baseUrl ?>/images/contenido/genfar-kids/home/Pack-Fiebre.png" alt="genfar kids">
+            <img class="img-responsive producto-contenido-m" src="<?= Yii::app()->request->baseUrl ?>/images/contenido/genfar-kids/home/pack-fiebre.png" alt="genfar kids">
             <!---aqui debe seguir con el texto-->
             <h1 class="titulolengueta" style="color:#FF7354;">FIEBRE FUERTE</h1>
             <h4 class="titulosecundariolengueta" style="color:#FF7354;">Ibuprofeno</h4>
@@ -211,10 +211,10 @@ img.img-responsive.producto-contenido-m{
       </div>
     </div>
     <div class="item" style="margin: 0 30px;">
-      <img class="img-responsive cabecera-lengueta-m" src="<?= Yii::app()->request->baseUrl ?>/images/contenido/genfar-kids/home/titulo-Tos.png" alt="genfar kids">
+      <img class="img-responsive cabecera-lengueta-m" src="<?= Yii::app()->request->baseUrl ?>/images/contenido/genfar-kids/home/titulo-tos.png" alt="genfar kids">
       <div class="distribucionlengueta">
         <div class="contenedor-de-lengueta-m" style="    border: 2.5px solid #00d3d8;">
-          <img class="img-responsive producto-contenido-m" src="<?= Yii::app()->request->baseUrl ?>/images/contenido/genfar-kids/home/Pack-Tos.png" alt="genfar kids">
+          <img class="img-responsive producto-contenido-m" src="<?= Yii::app()->request->baseUrl ?>/images/contenido/genfar-kids/home/pack-tos.png" alt="genfar kids">
           <!---aqui debe seguir con el texto-->
           <h1 class="titulolengueta" style="color:#00A2DC;">TOS</h1>
           <h4 class="titulosecundariolengueta" style="color:#00A2DC;">Hedera Helix</h4>
@@ -229,10 +229,10 @@ img.img-responsive.producto-contenido-m{
       </div>
     </div>
     <div class="item" style="margin: 0 30px;">
-      <img class="img-responsive cabecera-lengueta-m" src="<?= Yii::app()->request->baseUrl ?>/images/contenido/genfar-kids/home/titulo-Alergia.png" alt="genfar kids">
+      <img class="img-responsive cabecera-lengueta-m" src="<?= Yii::app()->request->baseUrl ?>/images/contenido/genfar-kids/home/titulo-alergia.png" alt="genfar kids">
       <div class="distribucionlengueta">
         <div class="contenedor-de-lengueta-m" style="    border: 2.5px solid #ff4e72;">
-          <img class="img-responsive producto-contenido-m" src="<?= Yii::app()->request->baseUrl ?>/images/contenido/genfar-kids/home/Pack-Alergia.png" alt="genfar kids">
+          <img class="img-responsive producto-contenido-m" src="<?= Yii::app()->request->baseUrl ?>/images/contenido/genfar-kids/home/pack-alergia.png" alt="genfar kids">
           <!---aqui debe seguir con el texto-->
           <h1 class="titulolengueta" style="color:#FF4F70;">ALERGIAS</h1>
           <h4 class="titulosecundariolengueta" style="color:#FF4F70;">Cetirizina Jarabe</h4>
@@ -247,10 +247,10 @@ img.img-responsive.producto-contenido-m{
       </div>
     </div>
     <div class="item" style="margin: 0 30px;">
-      <img class="img-responsive cabecera-lengueta-m" src="<?= Yii::app()->request->baseUrl ?>/images/contenido/genfar-kids/home/titulo-Cicatriz.png" alt="genfar kids">
+      <img class="img-responsive cabecera-lengueta-m" src="<?= Yii::app()->request->baseUrl ?>/images/contenido/genfar-kids/home/titulo-cicatriz.png" alt="genfar kids">
       <div class="distribucionlengueta">
         <div class="contenedor-de-lengueta-m" style="    border: 2.5px solid #6fbe34;">
-          <img class="img-responsive producto-contenido-m" style="width: 170px;margin: 13% auto;" src="<?= Yii::app()->request->baseUrl ?>/images/contenido/genfar-kids/home/Pack-Cicatriz.png" alt="genfar kids">
+          <img class="img-responsive producto-contenido-m" style="width: 170px;margin: 13% auto;" src="<?= Yii::app()->request->baseUrl ?>/images/contenido/genfar-kids/home/pack-cicatriz.png" alt="genfar kids">
           <!---aqui debe seguir con el texto-->
           <h1 class="titulolengueta" style="color:#55AA2E;padding-top: 10%;">CICATRIZ</h1>
           <h4 class="titulosecundariolengueta" style="color:#55AA2E;">Calamina + óxido de Zinc</h4>
@@ -299,13 +299,13 @@ img.img-responsive.producto-contenido-m{
   <div class="barrablanca"><img class="img-responsive" src="<?= Yii::app()->request->baseUrl ?>/images/contenido/genfar-kids/home/sanofi-logo.jpg" alt="genfar kids">
 </div>
 <img class="img-responsive" src="<?= Yii::app()->request->baseUrl ?>/images/contenido/genfar-kids/home/banner.jpg" alt="genfar kids">
-<div class="btn-compra-banner">
+<!-- <div class="btn-compra-banner">
   <a href="<?php echo CController::createUrl('/contenido/ver', array('tipo' => 'grupo', 'contenido' => 6298)) ?>">
     <img src="<?= Yii::app()->request->baseUrl ?>/images/contenido/mundo-klim/btn-compra.png" alt="Comprar">
   </a>
-</div>
+</div> -->
 <div class="iconofrase">
-  <img class="img-responsive" src="<?= Yii::app()->request->baseUrl ?>/images/contenido/genfar-kids/home/Una-linea-especial Home.png" alt="genfar kids">
+  <img class="img-responsive" src="<?= Yii::app()->request->baseUrl ?>/images/contenido/genfar-kids/home/una-linea-especial-home.png" alt="genfar kids">
 <h1 class="intro-txt"> PARA LOS QUE TANTO QUIERES</h1>
 
 
@@ -315,10 +315,10 @@ img.img-responsive.producto-contenido-m{
 <!-- seccion del dolor y fiebre-->
     <div class="column">
       <div class="item lengueta">
-        <img class="img-responsive cabecera-lengueta" src="<?= Yii::app()->request->baseUrl ?>/images/contenido/genfar-kids/home/titulo-Dolor-y-Fiebre-O+.png" alt="genfar kids">
+        <img class="img-responsive cabecera-lengueta" src="<?= Yii::app()->request->baseUrl ?>/images/contenido/genfar-kids/home/titulo-dolor-y-fiebre-o.png" alt="genfar kids">
         <div class="distribucionlengueta">
           <div class="contenedor-de-lengueta">
-            <img class="img-responsive producto-contenido" src="<?= Yii::app()->request->baseUrl ?>/images/contenido/genfar-kids/home/Pack-Dolor-y-fiebre-O+.png" alt="genfar kids">
+            <img class="img-responsive producto-contenido" src="<?= Yii::app()->request->baseUrl ?>/images/contenido/genfar-kids/home/pack-dolor-y-fiebre-o.png" alt="genfar kids">
             <!---aqui debe seguir con el texto-->
             <h1 class="titulolengueta">DOLOR Y FIEBRE 0+</h1>
             <h4 class="titulosecundariolengueta">Acetaminofén</h4>
@@ -327,7 +327,7 @@ img.img-responsive.producto-contenido-m{
               <a data-ajax="false" href="<?= Yii::app()->request->baseUrl ?>/mundo-genfar-kids-acetaminofen">
                   <h5 class="vermasinformacion">Ver más información </h5>
               </a>
-           <a data-ajax="false" href="<?php echo CController::createUrl('/contenido/ver', array('tipo' => 'grupo', 'contenido' => 119430)) ?>">
+           <a data-ajax="false" href="<?php echo CController::createUrl('/catalogo/producto', array('producto' => 119430 )) ?>">
              <img width="200" style="margin:0 auto;display:block;width: 130px;" src="<?= Yii::app()->request->baseUrl ?>/images/contenido/gelicart/btn-comprar.png" alt="">
            </a>
           </div>
@@ -337,10 +337,10 @@ img.img-responsive.producto-contenido-m{
   <!--seccion de la fiebre-->
     <div class="column">
       <div class="item lengueta">
-        <img class="img-responsive cabecera-lengueta" src="<?= Yii::app()->request->baseUrl ?>/images/contenido/genfar-kids/home/titulo-Fiebre.png" alt="genfar kids">
+        <img class="img-responsive cabecera-lengueta" src="<?= Yii::app()->request->baseUrl ?>/images/contenido/genfar-kids/home/titulo-fiebre.png" alt="genfar kids">
         <div class="distribucionlengueta">
           <div class="contenedor-de-lengueta" style="border: 2.5px solid #ff7351;">
-            <img class="img-responsive producto-contenido" src="<?= Yii::app()->request->baseUrl ?>/images/contenido/genfar-kids/home/Pack-Fiebre.png" alt="genfar kids">
+            <img class="img-responsive producto-contenido" src="<?= Yii::app()->request->baseUrl ?>/images/contenido/genfar-kids/home/pack-fiebre.png" alt="genfar kids">
             <!---aqui debe seguir con el texto-->
             <h1 class="titulolengueta" style="color:#FF7354;">FIEBRE FUERTE</h1>
             <h4 class="titulosecundariolengueta" style="color:#FF7354;">Ibuprofeno</h4>
@@ -358,10 +358,10 @@ img.img-responsive.producto-contenido-m{
   <!--seccion de la TOS-->
   <div class="column">
     <div class="item lengueta">
-      <img class="img-responsive cabecera-lengueta" src="<?= Yii::app()->request->baseUrl ?>/images/contenido/genfar-kids/home/titulo-Tos.png" alt="genfar kids">
+      <img class="img-responsive cabecera-lengueta" src="<?= Yii::app()->request->baseUrl ?>/images/contenido/genfar-kids/home/titulo-tos.png" alt="genfar kids">
       <div class="distribucionlengueta">
         <div class="contenedor-de-lengueta" style="    border: 2.5px solid #00d3d8;">
-          <img class="img-responsive producto-contenido" src="<?= Yii::app()->request->baseUrl ?>/images/contenido/genfar-kids/home/Pack-Tos.png" alt="genfar kids">
+          <img class="img-responsive producto-contenido" src="<?= Yii::app()->request->baseUrl ?>/images/contenido/genfar-kids/home/pack-tos.png" alt="genfar kids">
           <!---aqui debe seguir con el texto-->
           <h1 class="titulolengueta" style="color:#00A2DC;">TOS</h1>
           <h4 class="titulosecundariolengueta" style="color:#00A2DC;">Hedera Helix</h4>
@@ -379,10 +379,10 @@ img.img-responsive.producto-contenido-m{
   <!-- seccion de alergia-->
   <div class="column">
     <div class="item lengueta">
-      <img class="img-responsive cabecera-lengueta" src="<?= Yii::app()->request->baseUrl ?>/images/contenido/genfar-kids/home/titulo-Alergia.png" alt="genfar kids">
+      <img class="img-responsive cabecera-lengueta" src="<?= Yii::app()->request->baseUrl ?>/images/contenido/genfar-kids/home/titulo-alergia.png" alt="genfar kids">
       <div class="distribucionlengueta">
         <div class="contenedor-de-lengueta" style="    border: 2.5px solid #ff4e72;">
-          <img class="img-responsive producto-contenido" src="<?= Yii::app()->request->baseUrl ?>/images/contenido/genfar-kids/home/Pack-Alergia.png" alt="genfar kids">
+          <img class="img-responsive producto-contenido" src="<?= Yii::app()->request->baseUrl ?>/images/contenido/genfar-kids/home/pack-alergia.png" alt="genfar kids">
           <!---aqui debe seguir con el texto-->
           <h1 class="titulolengueta" style="color:#FF4F70;">ALERGIAS</h1>
           <h4 class="titulosecundariolengueta" style="color:#FF4F70;">Cetirizina Jarabe</h4>
@@ -400,10 +400,10 @@ img.img-responsive.producto-contenido-m{
 <!-- seccion cicatriz-->
   <div class="column">
     <div class="item lengueta">
-      <img class="img-responsive cabecera-lengueta" src="<?= Yii::app()->request->baseUrl ?>/images/contenido/genfar-kids/home/titulo-Cicatriz.png" alt="genfar kids">
+      <img class="img-responsive cabecera-lengueta" src="<?= Yii::app()->request->baseUrl ?>/images/contenido/genfar-kids/home/titulo-cicatriz.png" alt="genfar kids">
       <div class="distribucionlengueta">
         <div class="contenedor-de-lengueta" style="    border: 2.5px solid #6fbe34;">
-          <img class="img-responsive producto-contenido" style="width: 201px;margin: 29% auto;" src="<?= Yii::app()->request->baseUrl ?>/images/contenido/genfar-kids/home/Pack-Cicatriz.png" alt="genfar kids">
+          <img class="img-responsive producto-contenido" style="width: 201px;margin: 29% auto;" src="<?= Yii::app()->request->baseUrl ?>/images/contenido/genfar-kids/home/pack-cicatriz.png" alt="genfar kids">
           <!---aqui debe seguir con el texto-->
           <h1 class="titulolengueta" style="color:#55AA2E;padding-top: 10%;">CICATRIZ</h1>
           <h4 class="titulosecundariolengueta" style="color:#55AA2E;">Calamina + óxido de Zinc</h4>
