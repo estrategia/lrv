@@ -499,3 +499,7 @@ margin-bottom: 20px;
 @media (min-width: 1350px) and (max-width: 1920) {
   .banner-text {font-size: 4rem;right: 35%;}
 }
+
+.check-conditions {
+	display: inline-flex;
+}
