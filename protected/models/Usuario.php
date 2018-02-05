@@ -134,8 +134,8 @@ class Usuario extends CActiveRecord {
     }
 
     public function beforeSave() {
-        if ($this->isNewRecord) {
-            $this->esClienteFiel = 1;
+        if ($this->isNewRecord && $this->esClienteFiel != 1 ) {
+            $this->esClienteFiel = 0;
         }
         return parent::beforeSave();
     }

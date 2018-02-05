@@ -33,7 +33,7 @@ class ElibomClient
             'password' => $this->token,
             'recipient' => $to,
             'messagedata' => $message,
-            'longMessage' => false,
+          //  'longMessage' => false,
         );
         
         $response = $restClient->get(null, $params);

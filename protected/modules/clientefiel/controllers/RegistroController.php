@@ -8,6 +8,7 @@ class RegistroController extends ControllerCliente{
 			$cedula = Yii::app()->user->name;
 			$this->verificarUsuario($cedula);
 			
+			
 		} else {
 			
 			$modelCedula = new CedulaForm();
@@ -88,48 +89,54 @@ class RegistroController extends ControllerCliente{
 						$data = $response['data'];
 						$model->telefonoCelular = $data['celular'];
 						$model->correoElectronico = $data['email'];
-						$sql = "update t_CodigoVerificacion set estado = 0 WHERE numeroDocumento = $cedula";
-						Yii::app()->db->createCommand($sql)->execute();
 						
-						$codigoVerificacion = new CodigoVerificacion();
-						$codigoVerificacion->numeroTelefono = $model->telefonoCelular;
-						$codigoVerificacion->numeroDocumento = $cedula;
-						
-						$elibom = new ElibomClient(Yii::app()->params['elibom']['url'], Yii::app()->params['elibom']['usuario'], Yii::app()->params['elibom']['password']);
-						
-						if($codigoVerificacion->save()){
-							$telefono = $codigoVerificacion->numeroTelefono;
-							$mensaje = "La Rebaja te informa el código de verificacion: ".$codigoVerificacion->idCodigo;
-							$mensaje = str_replace(" ", "%20", $mensaje);
-							$response = $elibom->sendMessage($telefono, $mensaje);
+						if($model->telefonoCelular != "" || $model->correoElectronico != ""){
+							$sql = "update t_CodigoVerificacion set estado = 0 WHERE numeroDocumento = $cedula";
+							Yii::app()->db->createCommand($sql)->execute();
+							
+							$codigoVerificacion = new CodigoVerificacion();
+							$codigoVerificacion->numeroTelefono = $model->telefonoCelular;
+							$codigoVerificacion->numeroDocumento = $cedula;
+							
+							$elibom = new ElibomClient(Yii::app()->params['elibom']['url'], Yii::app()->params['elibom']['usuario'], Yii::app()->params['elibom']['password']);
+							
+							if($codigoVerificacion->save()){
+								$telefono = $codigoVerificacion->numeroTelefono;
+								$mensaje = "La Rebaja te informa el código de verificacion: ".$codigoVerificacion->idCodigo;
+								$mensaje = str_replace(" ", "%20", $mensaje);
+								$response = $elibom->sendMessage($telefono, $mensaje);
+									
+								// Se envia correo electr�nico al n�mero
+									
+								if($response['action'] == 'sendmessage') {
+									Yii::log("Error enviando numero telefono $telefono codigo Verificacion  \n" , CLogger::LEVEL_INFO, 'application');
+								}
+									
+								$this->enviarCodigoVerificacion($model->nombre,$codigoVerificacion->idCodigo,$model->correoElectronico);
+									
+								$modelCedula = new VerificacionForm();
+								$modelCedula->cedula = $cedula;
+									
+								Yii::app()->session[Yii::app()->params->clienteFiel['sesionVerificacion']] = $modelCedula;
 								
-							// Se envia correo electr�nico al n�mero
+								$model->verificacionValidada = false;
+								Yii::app()->session[Yii::app()->params->clienteFiel['sesion']] = $model;
 								
-							if($response['action'] == 'sendmessage') {
-								Yii::log("Error enviando numero telefono $telefono codigo Verificacion  \n" , CLogger::LEVEL_INFO, 'application');
+								$this->redirect(CController::createUrl('codigoVerificacion'));
+								Yii::app()->end();
 							}
-								
-							$this->enviarCodigoVerificacion($model->nombre,$codigoVerificacion->idCodigo,$model->correoElectronico);
-								
-							$modelCedula = new VerificacionForm();
-							$modelCedula->cedula = $cedula;
-								
-							Yii::app()->session[Yii::app()->params->clienteFiel['sesionVerificacion']] = $modelCedula;
-							
-							$model->verificacionValidada = false;
-							Yii::app()->session[Yii::app()->params->clienteFiel['sesion']] = $model;
-							
-							$this->redirect(CController::createUrl('codigoVerificacion'));
 						}
-					}else{
+					
+					
 						$model->scenario = "registro";
 					//	$model->solicitarVerificacion = true;
-						$model->verificacionValidada = false;
+						$model->verificacionValidada = true;
 						Yii::app()->session[Yii::app()->params->clienteFiel['sesion']] = $model;
 						// Se debe redireccionar para continuar el registro
 						$this->redirect(CController::createUrl('realizarRegistro', array()));
 						Yii::app()->end();
 					}
+					
 					// inactivar los demas codigos de verificaion del usuario para evitar fraudes
 				
 					
@@ -183,37 +190,47 @@ class RegistroController extends ControllerCliente{
 						
 						// inactivar los demas codigos de verificaion del usuario para evitar fraudes
 						
-						$sql = "update t_CodigoVerificacion set estado = 0 WHERE numeroDocumento = $cedula";
-						Yii::app()->db->createCommand($sql)->execute();
-						
-						$codigoVerificacion = new CodigoVerificacion();
-						$codigoVerificacion->numeroTelefono = $model->telefonoCelular;
-						$codigoVerificacion->numeroDocumento = $cedula;
-						
-						
-						$elibom = new ElibomClient(Yii::app()->params['elibom']['url'], Yii::app()->params['elibom']['usuario'], Yii::app()->params['elibom']['password']);
-				
-						if($codigoVerificacion->save()){
-							$telefono = $codigoVerificacion->numeroTelefono;
-							$mensaje = "La Rebaja te informa el código de verificacion: ".$codigoVerificacion->idCodigo;
-							$mensaje = str_replace(" ", "%20", $mensaje);
-							$response = $elibom->sendMessage($telefono, $mensaje);
+						if($model->telefonoCelular != "" || $model->correoElectronico != ""){
+							$sql = "update t_CodigoVerificacion set estado = 0 WHERE numeroDocumento = $cedula";
+							Yii::app()->db->createCommand($sql)->execute();
 							
-							// Se envia correo electr�nico al n�mero
+							$codigoVerificacion = new CodigoVerificacion();
+							$codigoVerificacion->numeroTelefono = $model->telefonoCelular;
+							$codigoVerificacion->numeroDocumento = $cedula;
 							
-							if($response['action'] == 'sendmessage') {
-								Yii::log("Error enviando numero telefono $telefono codigo Verificacion  \n" , CLogger::LEVEL_INFO, 'application');
+							
+							$elibom = new ElibomClient(Yii::app()->params['elibom']['url'], Yii::app()->params['elibom']['usuario'], Yii::app()->params['elibom']['password']);
+					
+							if($codigoVerificacion->save()){
+								$telefono = $codigoVerificacion->numeroTelefono;
+								$mensaje = "La Rebaja te informa el código de verificacion: ".$codigoVerificacion->idCodigo;
+								$mensaje = str_replace(" ", "%20", $mensaje);
+								
+								
+								$response = $elibom->sendMessage($telefono, $mensaje);
+								
+								// Se envia correo electr�nico al n�mero
+								
+								if($response['action'] == 'sendmessage') {
+									Yii::log("Error enviando numero telefono $telefono codigo Verificacion  \n" , CLogger::LEVEL_INFO, 'application');
+								}
+								
+								$this->enviarCodigoVerificacion($model->nombre,$codigoVerificacion->idCodigo,$model->correoElectronico);
+								
+								$modelCedula = new VerificacionForm();
+								$modelCedula->cedula = $cedula;
+								
+								Yii::app()->session[Yii::app()->params->clienteFiel['sesionVerificacion']] = $modelCedula;
+								$this->redirect(CController::createUrl('codigoVerificacion'));
 							}
+						}else{
 							
-							$this->enviarCodigoVerificacion($model->nombre,$codigoVerificacion->idCodigo,$model->correoElectronico);
-							
-							$modelCedula = new VerificacionForm();
-							$modelCedula->cedula = $cedula;
-							
-							Yii::app()->session[Yii::app()->params->clienteFiel['sesionVerificacion']] = $modelCedula;
-							$this->redirect(CController::createUrl('codigoVerificacion'));
+							$model->verificacionValidada = true;
+							Yii::app()->session[Yii::app()->params->clienteFiel['sesion']] = $model;
+							// Se debe redireccionar para continuar el registro
+							$this->redirect(CController::createUrl('realizarRegistro', array()));
+							Yii::app()->end();
 						}
-				
 					}catch(Exception $e){
 						echo $e->getMessage();
 						exit();
@@ -785,16 +802,15 @@ class RegistroController extends ControllerCliente{
 		
 			if($usuario){
 				// actualizar usuario con el perfil de cliente fiel
-				if(!$model->clienteInterno){
+				if($usuario->codigoPerfil == 1){
 					$usuario->codigoPerfil = Yii::app()->params->clienteFiel['codigoPerfilActivo'];
 				}
 				$usuario->esClienteFiel = 1;
 					
-					
 				if($usuario->save()){
-		
 					$this->enviarCorreoBienvenida($usuario,$usuario->correoElectronico);
 					$this->limpiarVariables();
+					$this->cerrarSesion();
 					$this->redirect(CController::createUrl('bienvenida'));
 				}
 					
@@ -826,6 +842,7 @@ class RegistroController extends ControllerCliente{
 					
 				$this->enviarCorreoBienvenida($usuario,$usuario->correoElectronico);
 				$this->limpiarVariables();
+				$this->cerrarSesion();
 				$this->redirect(CController::createUrl('bienvenida'));
 				Yii::app()->end();
 			}
@@ -838,5 +855,20 @@ class RegistroController extends ControllerCliente{
 	public function limpiarVariables(){
 		unset(Yii::app()->session[Yii::app()->params->clienteFiel['sesion']]);
 		unset(Yii::app()->session[Yii::app()->params->clienteFiel['sesionVerificacion']]);
+		
+	}
+	
+	private function cerrarSesion(){
+		
+		if(!Yii::app()->user->isGuest){
+			$sessions = Yii::app()->params->sesion;
+			foreach ($sessions as $sesion) {
+				unset(Yii::app()->session[$sesion]);
+				_deleteCookie($sesion);
+			}
+			
+			Yii::app()->user->logout();
+		}
+		
 	}
 }

@@ -134,14 +134,15 @@ nuestro programa Cliente fiel y  realizar las compras que desees desde nuestra t
 <?php endif;?>
 
 <div class="terms-conditions">
-	<h4> <b>Acepto los términos y condiciones</b></h4>
-	<?php if ($model->getScenario()) : ?>
-	    <?php echo $form->checkBox($model, 'condiciones'); ?>
-	    <?php echo $form->error($model, 'condiciones', array("class" => "text-danger")); ?>
-		<div class="form-input">
-	        <?php CHtml::link('Ver condiciones', "#dialog-condiciones", array('class' => 'c_olv_pass', 'data-transition' => 'flip', 'data-toggle' => "modal", 'data-target' => "#modalTerminos")); ?>
-	    </div>
-	<?php endif; ?>
+	<div class="check-conditions">
+		<h4> <b>Acepto los términos y condiciones</b> </h4>
+	</div>
+   	<?php echo $form->checkBox($model, 'condiciones'); ?>
+	<?php echo $form->error($model, 'condiciones', array("class" => "text-danger")); ?>
+	<div class="form-input">
+	   <a href="#modalCondiciones" data-toggle="modal" data-target="#modalCondiciones" class="">* Ver condiciones</a>
+	</div>
+
 </div>
 
 

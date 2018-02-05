@@ -3,7 +3,8 @@ $form = $this->beginWidget ( 'CActiveForm', array (
 		'enableClientValidation' => true,
 		'htmlOptions' => array (
 				'id' => "form-registro",
-				'class' => "" 
+				'class' => "",
+				'data-ajax' => "false"
 		),
 		'errorMessageCssClass' => 'has-error',
 		'clientOptions' => array (

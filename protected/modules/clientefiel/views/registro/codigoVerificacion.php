@@ -4,7 +4,8 @@ $form = $this->beginWidget ( 'CActiveForm', array (
 		'enableClientValidation' => true,
 		'htmlOptions' => array (
 				'id' => "form-registro",
-				'class' => "" 
+				'class' => "" ,
+				'data-ajax' => "false"
 		),
 		'errorMessageCssClass' => 'has-error',
 		'clientOptions' => array (
@@ -26,7 +27,7 @@ $form = $this->beginWidget ( 'CActiveForm', array (
 <fieldset>
 	<div class="ui-field-container">
 	      <?php echo $form->labelEx($model, 'codigoVerificacion'); ?>
-	      <?php echo $form->textField($model, 'codigoVerificacion', array('maxlength' => 50, 'placeholder' => $model->getAttributeLabel('codigoVerificacion'), 'class' => 'form-control')); ?>
+	      <?php echo $form->textField($model, 'codigoVerificacion', array('maxlength' => 50, 'placeholder' => "Codigo de Verificacion", 'class' => 'form-control')); ?>
 	      <?php echo $form->error($model, 'codigoVerificacion', array("class" => "text-danger")); ?>
 	</div>
 </fieldset>
@@ -38,7 +39,11 @@ o comun&iacute;cate con nuestra l&iacute;nea de atenci&oacute;n o escr&iacute;be
 <?php endif;?>
 	
 <?php if($paso == 2):?>
-  	<a class='btn btn-primary' href='<?php echo CController::createUrl('realizarRegistro')?>'> Regresar </a>
+  	<a class='ui-input-btn ui-btn ui-corner-all ui-shadow ui-btn-r' data-ajax='false' href='<?php echo CController::createUrl('realizarRegistro')?>'> Regresar </a>
 <?php endif;?>
+<div class="ui-input-btn ui-btn ui-corner-all ui-shadow ui-btn-r submit">
+	Continuar
+   	<input class='' type="submit" data-enhanced="true" value="Continuar" data-ajax='false'/>
+</div>
 	
 <?php $this->endWidget(); ?>

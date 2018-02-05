@@ -4,14 +4,16 @@ $form = $this->beginWidget ( 'CActiveForm', array (
 		'enableClientValidation' => true,
 		'htmlOptions' => array (
 				'id' => "form-registro",
-				'class' => "" 
+				'class' => "",
+				'data-ajax' => "false"
 		),
 		'errorMessageCssClass' => 'has-error',
 		'clientOptions' => array (
 				'validateOnSubmit' => true,
 				'validateOnChange' => true,
 				'errorCssClass' => 'has-error',
-				'successCssClass' => 'has-success' 
+				'successCssClass' => 'has-success' ,
+				'data-ajax' => false,
 		) 
 ) );
 ?>
@@ -27,6 +29,13 @@ $form = $this->beginWidget ( 'CActiveForm', array (
 	                    <?php echo $form->textField($model, 'cedula', array('maxlength' => 50, 'placeholder' => $model->getAttributeLabel('cedula'), 'class' => 'form-control')); ?>
 	                    <?php echo $form->error($model, 'cedula', array("class" => "text-danger")); ?>
 	                </div>
+	                
+	                <div class="ui-input-btn ui-btn ui-corner-all ui-shadow ui-btn-r submit">
+		    			Continuar
+		        		<input class='' type="submit" data-enhanced="true" value="Continuar" data-ajax='false'/>
+		        	</div>
+		   
+	</div>
 </fieldset>
 </div>
 
