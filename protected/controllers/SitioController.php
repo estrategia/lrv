@@ -34,7 +34,7 @@ class SitioController extends Controller {
         }
         Yii::app()->end();
     }
-    
+
     public function actionIndexCopia() {
     	if ($this->isMobile) {
     		$this->contenidosInicioMovil();
@@ -52,7 +52,7 @@ class SitioController extends Controller {
     private function contenidosInicioMovil(){
     	if(Yii::app()->user->isGuest){
     		$objContenido = ContenidoInicio::getContenidoNoAutenticado();
-    		 
+
     		if($objContenido){
     			$this->render('d_indexContenidos', array(
     					'contenido' => $objContenido->contenidoMovil
@@ -60,44 +60,44 @@ class SitioController extends Controller {
     			Yii::app()->end();
     		}
     	}else{
-    		 
+
     		// Cumpleanos
-    		 
+
     		$objContenido = ContenidoInicio::getContenidoCumpleanhos(Yii::app()->session[Yii::app()->params->usuario['sesion']]);
-    		
+
     		if($objContenido){
     			$this->render('d_indexContenidos', array(
     					'contenido' => $objContenido->contenidoMovil
     			));
     			Yii::app()->end();
     		}
-    		 
+
     		// No vuelve a ingresar
-    		 
+
     		$objContenido = ContenidoInicio::getContenidoUsuarioNoIngresa(Yii::app()->session[Yii::app()->params->usuario['sesion']]);
-    		 
+
     		if($objContenido){
     			$this->render('d_indexContenidos', array(
     					'contenido' => $objContenido->contenidoMovil
     			));
     			Yii::app()->end();
     		}
-    		 
+
     		// No compra
-    		 
+
     		$objContenido = ContenidoInicio::getContenidoSinCompras(Yii::app()->session[Yii::app()->params->usuario['sesion']]);
-    		 
+
     		if($objContenido){
     			$this->render('d_indexContenidos', array(
     					'contenido' => $objContenido->contenidoMovil
     			));
     			Yii::app()->end();
     		}
-    		 
+
     		// No tiene listas
-    		 
+
     		$objContenido = ContenidoInicio::getContenidoSinListas(Yii::app()->session[Yii::app()->params->usuario['sesion']]);
-    		 
+
     		if($objContenido){
     			$this->render('d_indexContenidos', array(
     					'contenido' => $objContenido->contenidoMovil
@@ -106,11 +106,11 @@ class SitioController extends Controller {
     		}
     	}
     }
-    
+
     private function contenidosInicioDesktop(){
     	if (Yii::app()->user->isGuest){
     		$objContenido = ContenidoInicio::getContenidoNoAutenticado();
-    	
+
     		if($objContenido){
     			$this->render('d_indexContenidos', array(
     					'contenido' => $objContenido->contenido
@@ -118,50 +118,50 @@ class SitioController extends Controller {
     			Yii::app()->end();
     		}
     	} else {
-    	
+
     		// Cumpleanos
     		$objContenido = ContenidoInicio::getContenidoCumpleanhos(Yii::app()->session[Yii::app()->params->usuario['sesion']]);
-    		
+
     		if($objContenido){
     			$this->render('d_indexContenidos', array(
     					'contenido' => $objContenido->contenido
     			));
     			Yii::app()->end();
     		}
-    	
+
     		// No vuelve a ingresar
-    	
+
     		$objContenidoNoIngresa = ContenidoInicio::getContenidoUsuarioNoIngresa(Yii::app()->session[Yii::app()->params->usuario['sesion']]);
-    	
+
     		if($objContenidoNoIngresa){
     			$this->render('d_indexContenidos', array(
     					'contenido' => $objContenidoNoIngresa->contenido
     			));
     			Yii::app()->end();
     		}
-    	
+
     		// No compra
-    	
+
     		$objContenido = ContenidoInicio::getContenidoSinCompras(Yii::app()->session[Yii::app()->params->usuario['sesion']]);
-    	
+
     		if($objContenido){
     			$this->render('d_indexContenidos', array(
     					'contenido' => $objContenido->contenido
     			));
     			Yii::app()->end();
     		}
-    	
+
     		// No tiene listas
-    	
+
     		$objContenido = ContenidoInicio::getContenidoSinListas(Yii::app()->session[Yii::app()->params->usuario['sesion']]);
-    	
+
     		if($objContenido){
     			$this->render('d_indexContenidos', array(
     					'contenido' => $objContenido->contenido
     			));
     			Yii::app()->end();
     		}
-    	
+
     	}
     }
 
@@ -211,7 +211,7 @@ class SitioController extends Controller {
                 )
             ));
         }
-        
+
         //CVarDumper::dump(Yii::app()->session[Yii::app()->params->sesion['redireccionUbicacion']]);
         //si no fue redireccionado por sessionfilter, se redirecciona a la pagina anterior
         if (!isset(Yii::app()->session[Yii::app()->params->sesion['redireccionUbicacion']]) || Yii::app()->session[Yii::app()->params->sesion['redireccionUbicacion']] == null) {
@@ -504,10 +504,10 @@ class SitioController extends Controller {
             echo CJSON::encode(array('result' => 'error', 'response' => 'Solicitud invalida.'));
             Yii::app()->end();
         }
-		
+
         $barrio = Yii::app()->getRequest()->getPost('barrio');
         $ciudad = Yii::app()->getRequest()->getPost('ciudad');
-		
+
         if ($barrio === null || $ciudad == null) {
             echo CJSON::encode(array('result' => 'error', 'response' => 'Solicitud invalida.'));
             Yii::app()->end();
@@ -523,19 +523,19 @@ class SitioController extends Controller {
         );
         $result = $client->__soapCall("LRVConsultarBarrio", $params);
         //Yii::log(CVarDumper::dumpAsString($result), CLogger::LEVEL_INFO, 'error');
-        
+
         if($result[0]->RESPUESTA==0){
         	echo CJSON::encode(array('result' => 'error', 'response' => $result[0]->DESCRIPCION));
         	Yii::app()->end();
         }
-        
+
         $nPdv = count($result[0]->PDV);
-        
+
         if($nPdv<=0){
         	echo CJSON::encode(array('result' => 'error', 'response' => "No se detecta ubicaci&oacute;n para el barrio \"$barrio\" "));
         	Yii::app()->end();
         }
-        
+
         // if($nPdv==1){
         // 	$idComercial = $result[0]->PDV[0]->IDCOMERCIAL;
         // 	// $pdv = PuntoVenta::model()->find("idComercial=:idComercial", array(':idComercial'=>$idComercial));
@@ -557,20 +557,20 @@ class SitioController extends Controller {
         // 			'sector' => $objSectorCiudad->codigoSector
         // 		)
         // 	));
-        	
+
         // 	Yii::app()->end();
         // }
-        
+
         $listBarrios = array();
         foreach($result[0]->PDV as $pdv){
         	$listBarrios[$pdv->NOMBREBARRIO] = array("ciudad"=> $pdv->CODIGOCIUDAD , "sector"=>$pdv->IDSECTORLRV);
         }
-        
+
         if(empty($listBarrios)){
         	echo CJSON::encode(array('result' => 'error', 'response' => "No se detectan barrios"));
         	Yii::app()->end();
         }
-        
+
         echo CJSON::encode(array(
         	'result' => 'ok',
         	'responseHTML' => $this->renderPartial($this->isMobile ? "_ubicacionBarrios" : "_d_ubicacionBarrios", array('listBarrios' => $listBarrios), true)
@@ -598,7 +598,7 @@ class SitioController extends Controller {
                 }
             }
         }
-        
+
         $listModulos = ModulosConfigurados::getModulosBanner($this->objSectorCiudad, Yii::app()->shoppingCart->getCodigoPerfil(), UbicacionModulos::UBICACION_MOVIL_INICIO);
 
         $this->render('inicio', array(
@@ -652,6 +652,28 @@ class SitioController extends Controller {
         }
 
         $this->render('promocion', array('promocion' => $promocion, 'listaItems' => $listaItems));
+    }
+
+    public function actionConcursos()
+    {
+      if ($this->isMobile) {
+          $this->layout = 'concursos';
+          $this->render('concursos');
+      } else {
+        $this->layout = '_d_concursos';
+        $this->render('d_concursos');
+      }
+    }
+
+    public function actionGanadores()
+    {
+      if ($this->isMobile) {
+          $this->layout = 'concursos';
+          $this->render('ganadores');
+      } else {
+        $this->layout = '_d_concursos';
+        $this->render('d_ganadores');
+      }
     }
 
     /**

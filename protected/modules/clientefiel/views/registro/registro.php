@@ -2,7 +2,7 @@
 $form = $this->beginWidget ( 'CActiveForm', array (
 		'enableClientValidation' => true,
 		'htmlOptions' => array (
-				'id' => "form-registro",
+				'id' => "form-registro-clientefielo",
 				'class' => "",
 				'data-ajax' => "false"
 		),

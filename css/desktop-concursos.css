@@ -84,14 +84,11 @@ a:hover.banner-link {
 }
 
 .content {
-  margin-top: 40px;
+  margin-top: 20px;
 }
 
 .footer {
-  bottom: 0;
-  left: 0;
-  width: 100%;
-  height: 230px;
+margin-top: 50px;
 }
 
 .footer-logos {
@@ -320,8 +317,33 @@ a:hover.banner-link {
 /*----------------- Menu superior -----------------*/
 
 .menu-principal {
-  background-color: #ECEBE6;
-  /* margin-top: 28px; */
+  border-top: solid 20px #ECEBE6;
+}
+
+.menu-principal .btn.btn-flat{
+  border: 2px solid #ECEBE6;
+color: #1A1A1A;
+border-radius: 8px;
+background-color: #ECEBE6;
+}
+
+
+.menu-principal .btn.btn-flat a{
+color: #1A1A1A;
+}
+
+.menu-principal .btn.btn-flat a:hover{text-decoration: none;}
+
+.menu-principal .contenedor-flex {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  justify-content: center;
+  align-items: center;
+}
+
+.menu-principal .contenedor-flex .btn {
+  margin: 25px 20px;
 }
 
 .row-flex {
@@ -352,17 +374,6 @@ a:hover.banner-link {
   align-items: center;
 }
 
-.row-flex .column:first-child .item {
-  padding: 15px 30px;
-  border-right: 1px solid #8C8C8B;
-  margin: 10px 0;
-}
-
-.row-flex .column:last-child {
-  width: 20%;
-  align-items: center;
-  display: flex;
-}
 
 .btn-primary {
   background: #EE3E27;
@@ -498,10 +509,26 @@ margin-bottom: 20px;
   position: relative;
 }
 
+.seccion-ganadores .seccion-meses{
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  justify-content: center;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 50px;
+}
+
+.seccion-ganadores .seccion-meses .btn {
+  padding: 10px 20px;
+  width: 30%;
+}
+
 .contenedor-flex.txt-banner {
   padding: 7% 0;
   position: relative;
 }
+
 
 @media (min-width: 1280px) and (max-width: 1300px) {
   .banner-link {bottom: -10px;}
@@ -511,8 +538,4 @@ margin-bottom: 20px;
 @media (min-width: 1920px) and (max-width: 3000px) {
   .banner-link {bottom: 10px;}
   .banner-text {font-size: 4rem;}
-}
-
-.check-conditions {
-	display: inline-flex;
 }

@@ -38,57 +38,50 @@ class RegistroClienteFielForm extends CFormModel {
      */
     public function rules() {
         return array(
-             
-            array('cedula,nombre, apellido, correoElectronico, fechaNacimiento, ciudad, genero, 
-            		fechaNacimiento, tieneHijos,  tieneMascotas, telefonoFijo, telefonoCelular', 
-            		'required', 'message' => '{attribute} no puede estar vacío'),
-             array('condiciones', 'required', 'message' => 'Aceptar términos y condiciones'),
-         //    array('cedula', 'numerical','integerOnly' => true),
-         //    array('cedula', 'length', 'min'=>5, 'max'=>12),
-             array('correoElectronico', 'email', 'allowEmpty' => false),
-             array('fechaNacimiento', 'date', 'format' => 'yyyy-M-d', 'allowEmpty' => true),
-             array('genero', 'in', 'range' => array(1, 2),  'allowEmpty' => true),
-            
-              array('cedula, nombre, apellido, correoElectronico', 'length', 'max' => 50),
-            array('profesion', 'validarProfesion'),
-            
-             array('cedula,nombre, apellido, correoElectronico, fechaNacimiento, genero, fechaNacimiento, tieneHijos, 
-              	  tieneMascotas, telefonoFijo, telefonoCelular, codigoVerificacion, ocupacion','safe'),
-
-              array('correoElectronico', 'validarCorreo' ),
-        		
-        	//  array('solicitarVerificacion', 'validarCodigo' ),
+            array('cedula,nombre, apellido, correoElectronico, fechaNacimiento, ciudad, genero, fechaNacimiento, tieneHijos, 
+                    tieneMascotas, telefonoFijo, telefonoCelular, profesion, ocupacion', 
+                    'required', 'message' => '{attribute} no puede estar vacío'),
+            array('condiciones', 'required', 'message' => 'Aceptar términos y condiciones'),
+            //array('cedula', 'numerical','integerOnly' => true),
+            //array('cedula', 'length', 'min'=>5, 'max'=>12),
+            array('correoElectronico', 'email', 'allowEmpty' => false),
+            array('fechaNacimiento', 'date', 'format' => 'yyyy-M-d', 'allowEmpty' => true),
+            array('genero', 'in', 'range' => array(1, 2),  'allowEmpty' => true),
+            array('cedula, nombre, apellido, correoElectronico', 'length', 'max' => 50),
+            array('cedula,nombre, apellido, correoElectronico, fechaNacimiento, genero, fechaNacimiento, tieneHijos, 
+                    tieneMascotas, telefonoFijo, telefonoCelular, codigoVerificacion, ocupacion','safe'),
+            array('correoElectronico', 'validarCorreo' ),
+            //array('solicitarVerificacion', 'validarCodigo' ),
         );
     }
     
     
     public function validarCodigo(){
-    	if(!$this->hasErrors()){
-    		if($this->solicitarVerificacion){
-    			if(empty($this->codigoVerificacion) || $this->codigoVerificacion == ""){
-    				$this->addError('codigoVerificacion', 'El codigo no puede estar vac�o');
-    				return false;
-    			}
+        if(!$this->hasErrors()){
+            if($this->solicitarVerificacion){
+                if(empty($this->codigoVerificacion) || $this->codigoVerificacion == ""){
+                    $this->addError('codigoVerificacion', 'El codigo no puede estar vac&iacute;o');
+        				return false;
+        			}
     			
-    			$codigoVerificacion = CodigoVerificacion::model()->find(array(
-    					'condition' => 'numeroDocumento =:documento AND idCodigo=:codigo AND estado =:estado',
-    					'params' => array(
-    							'documento' => $this->cedula,
-    							'codigo' => $this->codigoVerificacion,
-    							'estado' => 1
-    					)
-    			));
-    		//	print_r($this->codigoVerificacion);exit();
-    			if($codigoVerificacion){
-    				// codigo verificado satisfactoriamente
-    				$codigoVerificacion->estado = 0;
-    				$codigoVerificacion->save();
-    			}else{
-    				$this->addError('codigoVerificacion', "El c&oacute;digo no es correcto");
-    			}
-    			
-    		}
-    	}
+                $codigoVerificacion = CodigoVerificacion::model()->find(array(
+                    'condition' => 'numeroDocumento =:documento AND idCodigo=:codigo AND estado =:estado',
+                        'params' => array(
+                            'documento' => $this->cedula,
+                            'codigo' => $this->codigoVerificacion,
+                            'estado' => 1
+                        )
+                ));
+                //print_r($this->codigoVerificacion);exit();
+                if($codigoVerificacion){
+                    // codigo verificado satisfactoriamente
+                    $codigoVerificacion->estado = 0;
+                    $codigoVerificacion->save();
+                }else{
+                    $this->addError('codigoVerificacion', "El c&oacute;digo no es correcto");
+                }
+            }
+        }
     }
     
     public function getSubmitName(){
@@ -117,14 +110,14 @@ class RegistroClienteFielForm extends CFormModel {
     }
     
     public function getContentClass(){
-    	$clase = "ui-content";
-    	$escenario = $this->getScenario();
+        $clase = "ui-content";
+        $escenario = $this->getScenario();
     	 
-    	if($escenario == "registro"){
-    		$clase = "";
-    	}
-    	 
-    	return $clase;
+        	if($escenario == "registro"){
+        		$clase = "";
+        	}
+          
+        return $clase;
     }
     
     /**

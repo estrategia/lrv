@@ -20,15 +20,17 @@
 </head>
 <body>
     <nav class="nav">
-      <div class="contenedor-flex ">
+      <div class="contenedor-flex">
         <img class="img img-responsive clientefiel-logo" src="<?php echo Yii::app()->request->baseUrl; ?>/images/clientefiel/clientefiel.png" alt="">
         <img class="img img-responsive lrv-logo" src="<?php echo Yii::app()->request->baseUrl; ?>/images/clientefiel/lrv.png" alt="">
       </div>
     </nav>
+
     <div class="banner">
-        <img class="img img-responsive banner-image" src="<?php echo Yii::app()->request->baseUrl; ?>/images/clientefiel/banner-clientefiel.png" alt="">
-        <h3 class="banner-text" align="right">El programa que te da 10% de descuento <br> <span class="emphasis">en todas tus compras*</span></h3>
+      <div class="contenedor-flex txt-banner">
+        <h3 class="banner-text">El programa que te da 10% de descuento <br> <span class="emphasis">en todas tus compras*</span></h3>
         <a href="#modalCondiciones" data-toggle="modal" data-target="#modalCondiciones" class="banner-link">* Aplica según términos y condiciones del programa Cliente Fiel</a>
+      </div>
     </div>
 
     <div class="menu-principal">
@@ -41,7 +43,7 @@
             <!-- <div class="item <?php echo $this->menuActivo == 'ganadores' ? 'active' : ''  ?>"">
               <a href="<?php echo Yii::app()->createUrl('clientefiel/sitio/ganadores') ?>">Ganadores del mes</a>
             </div> -->
-            <div class="item <?php echo $this->menuActivo == 'concursos' ? 'active' : ''  ?>"">
+            <div class="item <?php echo $this->menuActivo == 'concursos' ? 'active' : ''  ?>">
               <a href="<?php echo Yii::app()->createUrl('clientefiel/sitio/reglamentos') ?>">Concursos</a>
             </div>
           </div>
