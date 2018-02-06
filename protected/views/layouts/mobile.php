@@ -103,8 +103,8 @@ header("Pragma: no-cache");
 			            <?php endforeach; ?>
 			        </tbody>
 			    </table>
-        	</div>
-        	<?php endif; ?>
+        		</div>
+        		<?php endif; ?>
 
             <div data-role="panel" id="panel-menu-ppal" data-display="overlay" data-position="right" data-position-fixed="false">
                 <?php $this->renderPartial('//sitio/menu'); ?>

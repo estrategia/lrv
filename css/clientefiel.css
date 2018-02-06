@@ -19,6 +19,30 @@ img {
     border: 0;
 }
 
+.center{
+    text-align: center;
+}
+
+.left{
+    text-align: left;
+}
+
+.right{
+    text-align: right;
+}
+
+img.center, .ui-alt-icon.center, ui-icon-center, a.ui-icon-center {
+    display: block;
+    margin-left: auto;
+    margin-right: auto
+}
+
+.center-div{
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+}
+
 .red-background {
   background-color: #EE3E27;
 }
@@ -295,8 +319,8 @@ img {
   text-align: center;
 }
 
-.conditions-section-modal p {
-  text-align: justify;
+.justify, .justify p{
+    text-align: justify;
 }
 
 .conditions-section-modal .emphasis {
@@ -676,4 +700,25 @@ img {
 
 /*----------------- realizarRegistro -----------------*/
 
+
+.ui-body-c form{ background-color: #f4f4f4; border:1px solid #e4e4e4; }
+.ui-body-c .ui-input-text input, .ui-input-password input{
+    border: 1px solid #e4e4e4;
+    color: #111;
+    /* border-radius: .6em;
+     webkit-border-radius: .6em;
+     padding-left: .8em;*/
+}
+.ui-body-c, .ui-page-theme-c .ui-body-inherit, html .ui-bar-c .ui-body-inherit, html .ui-body-c .ui-body-inherit, html body .ui-group-theme-c .ui-body-inherit, html .ui-panel-page-container-c{
+    border: 0;
+    color: #333;
+    /*text-shadow: 0 1px 0 #f3f3f3;*/
+    text-shadow:none;
+}
+
+.c_form_rgs fieldset .has-error, from .has-error, .has-error{
+    font-weight: 100;
+    color: #cc0000;
+    text-shadow:none;
+}
 

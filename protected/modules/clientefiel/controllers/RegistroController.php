@@ -367,7 +367,7 @@ class RegistroController extends ControllerCliente{
 			Yii::app()->end();
 		}
 
-		$model = new RegistroClienteFielForm();
+		//$model = new RegistroClienteFielForm();
 		
 		if(!$model->verificacionValidada){
 			$this->redirect(CController::createUrl('index'));
