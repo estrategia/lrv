@@ -512,3 +512,7 @@ margin-bottom: 20px;
   .banner-link {bottom: 10px;}
   .banner-text {font-size: 4rem;}
 }
+
+.check-conditions {
+	display: inline-flex;
+}

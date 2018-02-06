@@ -34,6 +34,7 @@ class ElibomClient
             'recipient' => $to,
             'messagedata' => $message,
             //'longMessage' => false,
+
         );
         
         $response = $restClient->get(null, $params);

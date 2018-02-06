@@ -85,22 +85,22 @@ $form = $this->beginWidget ( 'CActiveForm', array (
 		</div>
 
 		<div class="form-input">
-	        <?php // echo Select2::activeDropDownList($model, 'ciudad', $listCiudad, array('prompt' => 'Seleccione ciudad ...', 'style' => 'width: 100%;')) ?>
+	        <?php echo Select2::activeDropDownList($model, 'ciudad', $listCiudad, array('prompt' => 'Seleccione ciudad ...', 'style' => 'width: 100%;')) ?>
 	        <?php echo $form->error($model, 'ciudad', array("class" => "text-danger")); ?>
 	    </div>
 
 		<div class="form-input">
-	        <?php //echo Select2::activeDropDownList($model, 'profesion', $listProfesion, array('prompt' => 'Seleccione profesi&oacute;n ...', 'style' => 'width: 100%;')) ?>
+	        <?php echo Select2::activeDropDownList($model, 'profesion', $listProfesion, array('prompt' => 'Seleccione profesi&oacute;n ...', 'style' => 'width: 100%;')) ?>
 	        <?php echo $form->error($model, 'profesion', array("class" => "text-danger")); ?>
 	    </div>
 
 	    <div class="form-input">
-	        <?php // echo Select2::activeDropDownList($model, 'ocupacion', $listOcupacion, array('prompt' => 'Seleccione ocupac&oacute;n ...', 'style' => 'width: 100%;')) ?>
+	        <?php echo Select2::activeDropDownList($model, 'ocupacion', $listOcupacion, array('prompt' => 'Seleccione ocupac&oacute;n ...', 'style' => 'width: 100%;')) ?>
 	        <?php echo $form->error($model, 'ocupacion', array("class" => "text-danger")); ?>
 	    </div>
 
 	    <div class="form-input">
-		        <?php // echo $form->dropDownList($model,'tieneHijos', ['1'=>'Si', '0'=>'No'], ['empty' => 'Tiene Hijos']); ?>
+		        <?php echo $form->dropDownList($model,'tieneHijos', ['1'=>'Si', '0'=>'No'], ['empty' => 'Tiene Hijos']); ?>
 		        <?php echo $form->error($model,'tieneHijos',  array("class" => "text-danger")); ?>
 		    </div>
 
@@ -135,15 +135,15 @@ $form = $this->beginWidget ( 'CActiveForm', array (
 <?php endif;?>
 
 <div class="terms-conditions">
-<span><b>Acepto los términos y condiciones</b></span>
-	<?php if ($model->getScenario()) : ?>
-	    <?php echo $form->checkBox($model, 'condiciones'); ?>
-	    <?php echo $form->error($model, 'condiciones', array("class" => "text-danger")); ?>
-		
-		<div class="form-input">
-	        <?php CHtml::link('Ver condiciones', "#dialog-condiciones", array('class' => 'c_olv_pass', 'data-transition' => 'flip', 'data-toggle' => "modal", 'data-target' => "#modalTerminos")); ?>
-	    </div>
-	<?php endif; ?>
+	<div class="check-conditions">
+		<h4> <b>Acepto los términos y condiciones</b> </h4>
+	</div>
+   	<?php echo $form->checkBox($model, 'condiciones'); ?>
+	<?php echo $form->error($model, 'condiciones', array("class" => "text-danger")); ?>
+	<div class="form-input">
+	   <a href="#modalCondiciones" data-toggle="modal" data-target="#modalCondiciones" class="">* Ver condiciones</a>
+	</div>
+
 </div>
 
 <div class="form-action">
