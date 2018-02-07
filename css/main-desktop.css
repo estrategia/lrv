@@ -1,9 +1,9 @@
 /*
+Version: lrv. 2.0
 Name: La laRebajaVirtual
-Author's: Eiso S.A.S.
+Domain: www.larebajavirtual.com
+Author's: Eiso S.A.S. -  Andrés F. Patiño
 Author URI: http://eiso.com.co
-Version: 2.0
-Text Domain: www.larebajavirtual.com
 */
 
 /* ----- Fuente principal ----- */
@@ -19,7 +19,7 @@ Text Domain: www.larebajavirtual.com
 /* ----- Layaout Principal HEADER - FOOTER ----- */
 a:hover, a:active, a:focus {outline: none; text-decoration: none;}
 body {font-family: 'HelveticaNeueLTStd-Roman', sans-serif;font-size: 10pt;}
-header .header {background: #EBEAE6; padding: 5px 0 4px;}
+header .header {background: #eceae6; padding: 5px 0 4px;}
 header nav a {color: #666666;}
 header nav a:hover, header nav a:active, header nav a:focus {color: #EE3E27 !important;}
 .logo {width: 130px;margin-top: 5px;}
@@ -50,7 +50,7 @@ header nav a:hover, header nav a:active, header nav a:focus {color: #EE3E27 !imp
 .subcategory-link a {display: block;}
 .subcategory-link a:hover {text-decoration:underline;}
 .user.login_in .glyphicon  {color:#EE3E27;}
-header .line-divider {background-color: #EBEAE6 !important;}
+header .line-divider {background-color: #eceae6 !important;}
 .menu-mundos {margin-top: 56px; box-shadow: 0 1px 2px 0 rgba(0,0,0,.12); display: flex; padding: 15px 20px;}
 .menu-mundos .first {border-right: 2px solid #ee3e27;width: 15%;}
 .menu-mundos .second {width: 85%;}
@@ -78,17 +78,17 @@ footer .legal-footer {font-size: 10px !important;}
 
 /* -----  Dropdown carrito producto header ----- */
 .minicar .dropdown-menu {overflow: hidden;border-radius: 6px; width: 240px; z-index: 10000; margin-top: 8px; padding: 0; box-shadow: 0 1px 2px 0 rgba(0,0,0,.12);}
-.minicar .dropdown-menu .top { border-radius: 5px 0 0; color: #EE3E25; font-size: 12px; text-align: center; padding: 9px 0; border-bottom: 1px solid #EBEAE6;}
+.minicar .dropdown-menu .top { border-radius: 5px 0 0; color: #EE3E25; font-size: 12px; text-align: center; padding: 9px 0; border-bottom: 1px solid #eceae6;}
 .minicar .dropdown-menu li .carro-descripcion.sin-productos {color: #666666; padding: 10px 5px 0; text-align: center; font-size: 12px; margin-bottom: 12px;}
 .minicar .scroll { overflow-y: auto; overflow-x: hidden; height: 176px;}
-.minicar li.subtotal {font-size: 15px; text-align: center; background-color: #EBEAE6; padding-top: 10px;}
+.minicar li.subtotal {font-size: 15px; text-align: center; background-color: #eceae6; padding-top: 10px;}
 .carro-descripcion {color: #777777;font-size: 12px;line-height: 17px;text-align: left;}
 .carro-descripcion a {color: #666666;}
 .carro-descripcion span {color: #EE3E27;font-size: 14px;font-weight: bold;}
 .carro-descripcion strong {letter-spacing: 1px; font-family: HelveticaNeueLTStd-Lt; font-size: 10px; line-height: 15px; display: inline-block;}
 .subtotal strong {font-family: HelveticaNeueLTStd-Bd; font-weight: initial; font-size: 19px;}
 .dropdown-menu .divider {height: 1px; margin: 0; overflow: hidden; background-color: #e5e5e5;}
-.dropdown-menu .row.btn-pagar {text-align: center; padding: 2px 7px; padding: 8px 7px; background-color: #EBEAE6;}
+.dropdown-menu .row.btn-pagar {text-align: center; padding: 2px 7px; padding: 8px 7px; background-color: #eceae6;}
 .btn-primary {background: #EE3E27; border: 1px solid #EE3E27 !important;font-family: HelveticaNeueLTStd-Roman;font-size: 13px;color: #fff !important; border-radius: 15px; padding: 5px 30px; margin-top: 5px;}
 .btn-primary:hover {background: #EE3E27; color: #fff !important;}
 .btn-primary:focus {background: #EE3E27 !important; border: 1px solid #EE3E27 !important;}
@@ -135,7 +135,7 @@ footer .legal-footer {font-size: 10px !important;}
 .mi-cuenta .link-registro {font-family: HelveticaNeueLTStd-Lt; color: #999999;text-align: center;font-size: 16px;}
 .mi-cuenta .link-registro a {color: #3A3A3A; text-decoration: underline;}
 .mi-cuenta .descripcion {color: #EE3E27; text-align: center; margin-bottom: 20px;}
-.modal-header {background-color: #EBEAE6; color: #666666;}
+.modal-header {background-color: #eceae6; color: #666666;}
 .modal-body a {color: #EE3E27; text-decoration: underline;}
 .btn-lg {padding: 5px 70px;}
 input[type="checkbox"]{display: none;}
@@ -179,7 +179,7 @@ input[type="checkbox"]:checked + label:before {content: url('../images/desktop/c
 .grid-view table.items tr.even:hover {background: #fff;}
 .grid-view table.items tr.odd {background: #fff;border-bottom: 2px solid #F5F5F3;}
 .grid-view table.items tr.odd:hover {background: #fff;}
-.grid-view tr > .center {background-color: #EBEAE6; margin-bottom: 15px;}
+.grid-view tr > .center {background-color: #eceae6; margin-bottom: 15px;}
 .grid-view tr.odd td:last-child {padding: 8px 18px;}
 .grid-view tr.even td:last-child {padding: 8px 18px;}
 ul.yiiPager{font-size: 14px; margin-top: 15px; display: block;}
@@ -255,6 +255,20 @@ ul.yiiPager .selected a { background: transparent; color: #EE3E27 !important; fo
 .row-producto-carrito-compras .column-descripcion .entrega-especial {margin-top: 15px;}
 .row-producto-carrito-compras .column-descripcion .entrega-especial span {color: #EE3E27; border: 1px solid #EE3E27; padding: 5px 12px;}
 .row-producto-carrito-compras.p-unidad .column-descripcion .fila-sup {padding-bottom: 0px;}
+
+/* ----- RESULTADO DE BÚSQUEDA ----- */
+
+/* -- Filtro -- */
+.title-filtro {font-family: HelveticaNeueLTStd-Bd; font-size: 18px;}
+.menu-categorias .panel-heading {background: #EBEAE5; color: #818282; border-radius: 0px !important;}
+#collapse-categorias- ul {padding: 0; list-style-type: none;}
+#collapse-categorias- ul li label{color: #3A3A3C;font-size: 12px;}
+.slider-selection {background-color: #EE3E27; background-image: none !important;}
+.slider-handle {background-color: #EE3E27 !important; background-image: none !important;width: 15px; height: 15px; top: 3px;}
+.slider.slider-horizontal {width: 100% !important; margin-bottom: 15px;}
+#collapse-precio- { color: #999999;}
+.search-priced {width: 45%; border-radius: 10px; border: 1px solid #999999; text-align: center; color: #999999; padding: 4px;}
+
 
 /* ----- ERROR 404 ----- */
 .info-404 {background: #F2F2F2; max-width: 700px; margin: 40px auto; padding: 40px; color: #666666; font-family: HelveticaNeueLTStd-Lt; font-size: 15px;}

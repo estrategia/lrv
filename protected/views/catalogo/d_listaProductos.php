@@ -1,13 +1,10 @@
 <?php $cantidadItems = isset($cantidadItems) ? $cantidadItems : 4 ?>
-<div class="space-1"></div>
-<div class="container-fluid">
+<div class="container-fluid" style="margin-top:25px;">
     <div class="row">
-        <!-- Menu de ordenamiento -->
 
-        <!-- Menu de filtros -->
         <?php if (isset($formFiltro) || isset($formOrdenamiento)): ?>
             <div class="col-md-2 menu-categorias cat-collapsables">
-                <h3>Filtrar por:</h3>
+                <p class="title-filtro"><span  style="font-size: 14px;" class="glyphicon glyphicon-triangle-bottom"></span> Filtrar por:</p>
                 <?php if (isset($formFiltro)): ?>
                     <div class="panel-group" id="accordion-filtros" role="tablist" aria-multiselectable="true">
                         <?php $this->renderPartial('_d_formFiltro', array('formFiltro' => $formFiltro, 'tipoBusqueda' => $tipoBusqueda)); ?>
@@ -16,13 +13,13 @@
             </div>
         <?php endif; ?>
 
-        <div class="col-md-<?php echo (isset($formFiltro) || isset($formOrdenamiento)) ? "10" : "12" ?> side" <?php echo (empty($this->breadcrumbs) ? "" : "style='margin-top:-45px;'") ?>>
+        <div class="col-md-<?php echo (isset($formFiltro) || isset($formOrdenamiento)) ? "10" : "12" ?> side" <?php echo (empty($this->breadcrumbs) ? "" : "") ?>>
             <div class="row">
                 <div class="col-md-12">
                     <?php if ($imagenBusqueda != null): ?>
                         <p align="center"><img alt="lo sentimos no se han encontrado resultados" src="<?php echo Yii::app()->request->baseUrl . $imagenBusqueda; ?>" class="ajustada"></p>
                     <?php else: ?>
-                        <?php if ($dataprovider != null /* && !empty($dataprovider->getData()) */): ?> 
+                        <?php if ($dataprovider != null /* && !empty($dataprovider->getData()) */): ?>
                             <div class="option-list">
                                 Productos por página
                                 <select name="items-page" class="form-control ciudades" id="items-page" onchange="actualizarNumerosPagina()">
@@ -30,7 +27,7 @@
                                         <option value="<?php echo $pagina ?>" <?php echo (($dataprovider != null && $dataprovider->getPagination()->getPageSize() == $pagina) ? "selected" : "") ?>><?php echo $pagina ?></option>
                                     <?php endforeach; ?>
                                 </select>
-                            </div>  
+                            </div>
                             <div class="btn-group viewsList">
                                 <button class="btn-white btn" data-role="tipovista-listaproductos" data-active="true" data-type="cuadricula" type="button"><span  class="glyphicon glyphicon-th" alt="Cuadricula"></span></button>
                                 <button class="btn-white btn" data-role="tipovista-listaproductos" data-active="false" data-type="lineal" type="button"><span  class="glyphicon glyphicon-th-list" alt="Cuadricula"></span></button>
@@ -39,14 +36,14 @@
                             <?php if (isset($formOrdenamiento)): ?>
                                 <?php $this->renderPartial('_d_formOrdenamiento', array('formOrdenamiento' => $formOrdenamiento, 'objSectorCiudad' => $objSectorCiudad)); ?>
                             <?php endif; ?>
-                        <?php endif; ?>   
-                    <?php endif; ?> 
+                        <?php endif; ?>
+                    <?php endif; ?>
                     <div class="clear"></div>
                 </div>
             </div>
             <br/>
 
-            <?php if ($dataprovider != null): ?> 
+            <?php if ($dataprovider != null): ?>
                 <?php if ($listCombos != null): ?>
                     <div id="slide-combos" class="owl-carousel slide-productos">
                         <?php foreach ($listCombos as $objCombo): ?>
