@@ -1,5 +1,5 @@
 <?php if (!empty($formFiltro->listMarcas)): ?>
-    <div class="panel panel-default">
+    <div class="">
         <div class="panel-heading" role="tab" id="heading-marcas">
             <h4 class="panel-title">
                 <a role="button" data-toggle="collapse" data-parent="#accordion-filtros" href="#collapse-marcas" aria-expanded="true" aria-controls="collapse-marcas" style="background:none;">

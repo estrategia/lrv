@@ -260,15 +260,36 @@ ul.yiiPager .selected a { background: transparent; color: #EE3E27 !important; fo
 
 /* -- Filtro -- */
 .title-filtro {font-family: HelveticaNeueLTStd-Bd; font-size: 18px;}
-.menu-categorias .panel-heading {background: #EBEAE5; color: #818282; border-radius: 0px !important;}
-#collapse-categorias- ul {padding: 0; list-style-type: none;}
-#collapse-categorias- ul li label{color: #3A3A3C;font-size: 12px;}
+.menu-categorias .panel-heading {background: #EBEAE5; color: #818282 !important; border-radius: 0px !important;}
+.panel-body ul {padding: 0; list-style-type: none;}
+.panel-body ul li label{color: #676767;font-size: 12px;}
 .slider-selection {background-color: #EE3E27; background-image: none !important;}
 .slider-handle {background-color: #EE3E27 !important; background-image: none !important;width: 15px; height: 15px; top: 3px;}
 .slider.slider-horizontal {width: 100% !important; margin-bottom: 15px;}
 #collapse-precio- { color: #999999;}
 .search-priced {width: 45%; border-radius: 10px; border: 1px solid #999999; text-align: center; color: #999999; padding: 4px;}
-
+.center .panel-title {color: #676767 !important; font-size: 16px; margin-bottom: 7px;}
+/*Ordenamiento*/
+.option-list {float: right;}
+.btn-group.viewsList {border-right: 1px solid #a3a3a3; float: right; margin-right: 10px;}
+.option-list {float: right;}
+.ordering_item {margin-right: 10px;}
+/*listado de productos*/
+.listaProductos .items.items4 {display: flex; flex-direction: row; flex-wrap: wrap; justify-content: left;}
+.listaProductos .items.items4 li {width: 25%;position: relative;}
+.col-md-10.side {border-left: 2px solid #C0C0C2;}
+.listaProductos {margin-top: 25px;}
+.listaProductos .border-dotted {border: 1px; border-style: hidden dashed dashed hidden; border-color:#C0C0C2; list-style-type: none;}
+.listaProductos .border-dotted:nth-child(4n+0) {border-style: hidden hidden dashed hidden;}
+.listaProductos .content-product {padding: 20px;}
+.listaProductos .border-dotted .chispa-productos  {top: 15px; left: 15px;}
+.iconos_right {margin-right: -5px; position: absolute; right: 15px; top: 0;}
+.iconos_right .itm_ico {display: block; height: 30px; width: 30px;}
+.fraccion_text {background: #fff; color: #F79421; font-size: 9px; text-align: center; border: 3px solid #F79421;}
+.fraccion_text > span { color: #F79421 !important; display: block; font-size: 20px; font-weight: bold; line-height: 15px; margin-top: 4px;}
+.btnComparar.itm_ico { background: #2E64FE; color: #fff; text-align: center;}
+.product-prom {margin: 0 auto;}
+.noimagenProduct {max-width: 150px; min-width: 150px;}
 
 /* ----- ERROR 404 ----- */
 .info-404 {background: #F2F2F2; max-width: 700px; margin: 40px auto; padding: 40px; color: #666666; font-family: HelveticaNeueLTStd-Lt; font-size: 15px;}

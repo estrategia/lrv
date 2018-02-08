@@ -14,8 +14,8 @@
         <?php endif; ?>
 
         <div class="col-md-<?php echo (isset($formFiltro) || isset($formOrdenamiento)) ? "10" : "12" ?> side" <?php echo (empty($this->breadcrumbs) ? "" : "") ?>>
-            <div class="row">
-                <div class="col-md-12">
+
+                <div class="row-flex" style="justify-content: right;">
                     <?php if ($imagenBusqueda != null): ?>
                         <p align="center"><img alt="lo sentimos no se han encontrado resultados" src="<?php echo Yii::app()->request->baseUrl . $imagenBusqueda; ?>" class="ajustada"></p>
                     <?php else: ?>
@@ -40,8 +40,8 @@
                     <?php endif; ?>
                     <div class="clear"></div>
                 </div>
-            </div>
-            <br/>
+
+
 
             <?php if ($dataprovider != null): ?>
                 <?php if ($listCombos != null): ?>
@@ -66,7 +66,7 @@
                             'dataProvider' => $dataprovider,
                             //'template' => "{items}\n{pager}",
                             //'summaryText' => "{start} - {end} из {count}",
-                            'template' => "{summary}<ul class='listaProductos'>{items}</ul><div class='clear'></div>{pager}",
+                            'template' => "{summary}<ul class='listaProductos'>{items}</ul>{pager}",
                             'itemsCssClass' => "items items$cantidadItems",
                             'itemView' => '_d_productoElemento',
                             'beforeAjaxUpdate' => new CJavaScriptExpression("function() {Loading.show();}"),
