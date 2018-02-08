@@ -11,7 +11,7 @@
     <?php else: ?>
         <?php $vista = "busqueda" ?>
     <li class="border-dotted" >
-    <span class="chispa-productos ">-17%</span>
+    <span class="chispa-productos ">-89%</span>
     <?php endif; ?>
 
     <div class="content-product">
@@ -35,7 +35,7 @@
 
 
         <div class="content_product">
-            <div class="">
+            <div class="nombre-product">
                 <a href="<?php echo CController::createUrl('/catalogo/producto', array('producto' => $data->codigoProducto, 'descripcion' => $data->getCadenaUrl())) ?>" title="<?php echo $data->descripcionProducto ?>">
                     <div class="descripcion-grid text-truncate">
                         <?php echo $data->descripcionProducto ?>
@@ -52,10 +52,44 @@
                 <div class="descripcion-lineal" style="display:none">
                     <?php echo $data->presentacionProducto ?>
                 </div>
+
+
+                <!-- Precio del producto -->
+                <?php if ($objPrecio->inicializado()): ?>
+                    <?php if ($data->mostrarAhorroVirtual == 1 && $objPrecio->getAhorro(Precio::PRECIO_UNIDAD) > 0 && $this->objSectorCiudad->objCiudad->excentoImpuestos != 1): ?>
+                        <div class="prices_status">
+                            <table style="margin: 10px 0; width: 100%; margin-bottom: 10px;">
+                                <tr>
+                                    <td valing="middle">
+                                        <div style="line-height: 15px;">
+                                            <span class="antes">Antes: <span class="strike"> <?php echo Yii::app()->numberFormatter->format(Yii::app()->params->formatoMoneda['patron'], $objPrecio->getPrecio(Precio::PRECIO_UNIDAD, false), Yii::app()->params->formatoMoneda['moneda']); ?></span></span> <br>
+                                            <span class="ahorro">Ahorro: <span><?php echo Yii::app()->numberFormatter->format(Yii::app()->params->formatoMoneda['patron'], $objPrecio->getAhorro(Precio::PRECIO_UNIDAD), Yii::app()->params->formatoMoneda['moneda']); ?></span></span>
+                                        </div>
+                                    </td>
+                                    <td valign="middle">
+                                        <div class="price">
+                                            <?php echo Yii::app()->numberFormatter->format(Yii::app()->params->formatoMoneda['patron'], $objPrecio->getPrecio(Precio::PRECIO_UNIDAD), Yii::app()->params->formatoMoneda['moneda']); ?>
+                                        </div>
+                                    </td>
+                                </tr>
+                            </table>
+                        </div>
+                    <?php else: ?>
+                        <div class="price text-center" style="margin-top:20px"><?php echo Yii::app()->numberFormatter->format(Yii::app()->params->formatoMoneda['patron'], $objPrecio->getPrecio(Precio::PRECIO_UNIDAD), Yii::app()->params->formatoMoneda['moneda']); ?> </div>
+                    <?php endif; ?>
+                    <?php if ($objPrecio->getFlete() > 0): ?>
+                        <p>Flete: <span> <?php echo Yii::app()->numberFormatter->format(Yii::app()->params->formatoMoneda['patron'], $objPrecio->getFlete(), Yii::app()->params->formatoMoneda['moneda']); ?>]</span></p>
+                    <?php endif; ?>
+                    <?php if ($objPrecio->tieneTiempoEntrega()): ?>
+                        <p> Tiempo de entrega: <span> Entre <?php echo $objPrecio->getTiempoEntrega('start') ?> y <?php echo $objPrecio->getTiempoEntrega('end') ?> d&iacute;as</span></p>
+                    <?php endif; ?>
+                <?php endif; ?>
+
+
                 <?php // CVarDumper::dump($objPrecio,10,true) ?>
                 <?php $suscripcion = $objPrecio->getSuscripcion() ?>
                 <?php if($objPrecio->conSuscripcion() && $suscripcion == null): ?>
-                    <a href="<?php echo CController::createUrl('/suscripciones/suscribirse', array('codigoProducto' => $data->codigoProducto)) ?>" class="btn btn-default btn-block btn-sm">Suscribete y ahorra</a>
+                    <a href="<?php echo CController::createUrl('/suscripciones/suscribirse', array('codigoProducto' => $data->codigoProducto)) ?>" class="btn-suscribete-ahorra">Suscribete y ahorra</a>
                 <?php elseif($objPrecio->getSuscripcion() != null): ?>
                     <?php $mensaje = "Ahorro por suscripción: $". $objPrecio->getAhorroUnidadSuscripcion() . " Descuento por suscripción: " . $suscripcion->descuentoProducto . "% Cantidad maxima: " . $suscripcion->cantidadDisponiblePeriodoActual . " unidades" ?>
                     <a class=" btn btn-default btn-block btn-sm" href="#" onclick="return false" data-toggle="popover" data-trigger="focus" data-placement="bottom" data-content="<?php echo $mensaje ?>">
@@ -67,37 +101,7 @@
 
             </div>
 
-            <!-- Precio del producto -->
-            <?php if ($objPrecio->inicializado()): ?>
-                <?php if ($data->mostrarAhorroVirtual == 1 && $objPrecio->getAhorro(Precio::PRECIO_UNIDAD) > 0 && $this->objSectorCiudad->objCiudad->excentoImpuestos != 1): ?>
-                    <div class="prices_status">
-                        <table style="margin-top: 15px; width: 100%;">
-                            <tr>
-                                <td valing="middle">
 
-                                    <p>
-                                        Antes: <span class="strike2"> <?php echo Yii::app()->numberFormatter->format(Yii::app()->params->formatoMoneda['patron'], $objPrecio->getPrecio(Precio::PRECIO_UNIDAD, false), Yii::app()->params->formatoMoneda['moneda']); ?></span><br/>
-                                        Ahorro: <span><?php echo Yii::app()->numberFormatter->format(Yii::app()->params->formatoMoneda['patron'], $objPrecio->getAhorro(Precio::PRECIO_UNIDAD), Yii::app()->params->formatoMoneda['moneda']); ?></span>
-                                    </p>
-                                </td>
-                                <td valign="middle" align="right">
-                                    <div class="price">
-                                        <?php echo Yii::app()->numberFormatter->format(Yii::app()->params->formatoMoneda['patron'], $objPrecio->getPrecio(Precio::PRECIO_UNIDAD), Yii::app()->params->formatoMoneda['moneda']); ?>
-                                    </div>
-                                </td>
-                            </tr>
-                        </table>
-                    </div>
-                <?php else: ?>
-                    <div class="price text-center" style="margin-top:20px"><?php echo Yii::app()->numberFormatter->format(Yii::app()->params->formatoMoneda['patron'], $objPrecio->getPrecio(Precio::PRECIO_UNIDAD), Yii::app()->params->formatoMoneda['moneda']); ?> </div>
-                <?php endif; ?>
-                <?php if ($objPrecio->getFlete() > 0): ?>
-                    <p>Flete: <span> <?php echo Yii::app()->numberFormatter->format(Yii::app()->params->formatoMoneda['patron'], $objPrecio->getFlete(), Yii::app()->params->formatoMoneda['moneda']); ?>]</span></p>
-                <?php endif; ?>
-                <?php if ($objPrecio->tieneTiempoEntrega()): ?>
-                    <p> Tiempo de entrega: <span> Entre <?php echo $objPrecio->getTiempoEntrega('start') ?> y <?php echo $objPrecio->getTiempoEntrega('end') ?> d&iacute;as</span></p>
-                <?php endif; ?>
-            <?php endif; ?>
 
        </div>
 
@@ -107,35 +111,25 @@
         <?php elseif ($data->ventaVirtual == 1 && $objPrecio->inicializado() && $vista != 'slider'): ?>
 
         	<?php if ($data->fraccionado == 1): ?>
-        	 <div class="botones-list">
-                <div class="row">
-                    <div class="col-xs-6  btn-producto">
-                    	<?php echo CHtml::link('<div class="btn btn-primary btn-block btn-xs">Añadir Unidades</div>', CController::createUrl('/catalogo/producto', array('producto' => $data->codigoProducto, 'descripcion' => $data->getCadenaUrl())), array()); ?>
-                    </div>
-                    <div class="col-xs-6  btn-producto">
-                    	<?php echo CHtml::link('<div class="btn btn-primary btn-block btn-xs ">Añadir Fracciones</div>', CController::createUrl('/catalogo/producto', array('producto' => $data->codigoProducto, 'descripcion' => $data->getCadenaUrl())), array()); ?>
-                    </div>
-                 </div>
-             </div>
+        	 <div class="botones-fraccionados">
+             <div class="botones"><?php echo CHtml::link('Unidades', CController::createUrl('/catalogo/producto', array('producto' => $data->codigoProducto, 'descripcion' => $data->getCadenaUrl())), array()); ?></div>
+             <div class="botones"><?php echo CHtml::link('Fracciones', CController::createUrl('/catalogo/producto', array('producto' => $data->codigoProducto, 'descripcion' => $data->getCadenaUrl())), array()); ?></div>
+           </div>
         	<?php else:?>
             <div class="botones-list">
                 <div class="row">
                     <div class="col-xs-6 not_padding">
                         <div class="group-botones-cantidad">
-                            <button class="btn btn-default btn-xs" data-role="disminuir-cantidad" data-id="<?php echo $idUnico ?>" id="disminuir-unidad-<?php echo $data->codigoProducto ?>" data-producto="<?php echo $data->codigoProducto ?>" data-precio="<?= $objPrecio->getPrecio(Precio::PRECIO_UNIDAD) ?>" type="button"><span class="glyphicon glyphicon-minus"></span></button>
-
-                            <div class="ressete btn-xs">
-                                <input id="cantidad-producto-unidad-<?php echo $data->codigoProducto ?>-<?php echo $idUnico ?>" data-id="<?php echo $idUnico ?>"  class="increment" type="text" data-role="validar-cantidad-unidad"  data-producto="<?php echo $data->codigoProducto ?>" data-precio="<?= $objPrecio->getPrecio(Precio::PRECIO_UNIDAD) ?>" maxlength="3" value="1" data-total="700"/>
-                            </div>
-                            <button class="btn btn-default btn-xs" data-role="aumentar-cantidad" data-id="<?php echo $idUnico ?>"  id="aumentar-unidad-<?php echo $data->codigoProducto ?>" data-producto="<?php echo $data->codigoProducto ?>" data-precio="<?= $objPrecio->getPrecio(Precio::PRECIO_UNIDAD) ?>" type="button"><span class="glyphicon glyphicon-plus"></span></button>
-
+                            <button data-role="disminuir-cantidad" data-id="<?php echo $idUnico ?>" id="disminuir-unidad-<?php echo $data->codigoProducto ?>" data-producto="<?php echo $data->codigoProducto ?>" data-precio="<?= $objPrecio->getPrecio(Precio::PRECIO_UNIDAD) ?>" type="button">-</button>
+                            <input style="width:35px;" class="increment btn-xs" id="cantidad-producto-unidad-<?php echo $data->codigoProducto ?>-<?php echo $idUnico ?>" data-id="<?php echo $idUnico ?>"  class="increment" type="text" data-role="validar-cantidad-unidad"  data-producto="<?php echo $data->codigoProducto ?>" data-precio="<?= $objPrecio->getPrecio(Precio::PRECIO_UNIDAD) ?>" maxlength="3" value="1" data-total="700"/>
+                            <button data-role="aumentar-cantidad" data-id="<?php echo $idUnico ?>"  id="aumentar-unidad-<?php echo $data->codigoProducto ?>" data-producto="<?php echo $data->codigoProducto ?>" data-precio="<?= $objPrecio->getPrecio(Precio::PRECIO_UNIDAD) ?>" type="button">+</button>
                         </div>
                     </div>
                     <div class="col-xs-6 not_padding">
                     <?php if($this->objSectorCiudad->esDefecto()): ?>
-                    	<?php echo CHtml::link('<div class="btn btn-primary btn-block btn-xs">Añadir <img src="' . Yii::app()->baseUrl . '/images/desktop/button-carrito.png" alt=""></div>', CController::createUrl('/sitio/ubicacion'), array()); ?>
+                    	<?php echo CHtml::link('<div style="margin: 0;padding: 0px 17px;" class="btn btn-primary btn-block btn-xs">Añadir <img style="margin-top: -5px; margin-left: 5px;" src="' . Yii::app()->baseUrl . '/images/desktop/button-carrito.png" alt=""></div>', CController::createUrl('/sitio/ubicacion'), array()); ?>
                     <?php else: ?>
-                    	<?php echo CHtml::link('<div class="btn btn-primary btn-block btn-xs">Añadir <img src="' . Yii::app()->baseUrl . '/images/desktop/button-carrito.png" alt=""></div>', '#', array('data-producto' => $data->codigoProducto, 'data-cargar' => 1, 'data-id' => $idUnico)); ?>
+                    	<?php echo CHtml::link('<div style="margin: 0;padding: 0px 17px;" class="btn btn-primary btn-block btn-xs">Añadir <img style="margin-top: -5px; margin-left: 5px;" src="' . Yii::app()->baseUrl . '/images/desktop/button-carrito.png" alt=""></div>', '#', array('data-producto' => $data->codigoProducto, 'data-cargar' => 1, 'data-id' => $idUnico)); ?>
                     <?php endif;?>
                     </div>
                 </div>
@@ -163,11 +157,11 @@
         <?php if ($vista != 'slider'): ?>
             <div class="iconos_right">
 
-
+              <div class="ico-puntos">4.5 <span class="glyphicon glyphicon-star"></span></div>
 
                 <!-- producto agregado -->
                 <a href="" class="itm_ico clst_slct_prod<?php echo (Yii::app()->shoppingCart->contains($data->codigoProducto) ? " active" : "") ?>" id="icono-producto-agregado-<?php echo $data->codigoProducto ?>">
-                    <img src="<?php echo Yii::app()->request->baseUrl ?>/images/desktop/icon_seleccionado.png">
+                    <img width="20" src="<?php echo Yii::app()->request->baseUrl ?>/images/desktop/icon_seleccionado.png">
                 </a>
                 <!-- puntos agregado -->
                 <?php if ($objPrecio->tienePuntos()): ?>
@@ -200,7 +194,7 @@
                 <?php else: ?>
                     <?php if ($data->ventaVirtual == 1): ?>
                         <div class="btnComparar itm_ico">
-                            <?php echo CHtml::link('<img src="'.Yii::app()->request->baseUrl .'/images/desktop/icono-comparar.png">', '#', array('data-producto' => $data->codigoProducto, 'data-role' => 'comparar', 'title' => 'Comparar')); ?>
+                            <?php echo CHtml::link('<img width="20" src="'.Yii::app()->request->baseUrl .'/images/desktop/icono-comparar.png">', '#', array('data-producto' => $data->codigoProducto, 'data-role' => 'comparar', 'title' => 'Comparar')); ?>
                         </div>
                     <?php endif; ?>
                 <?php endif; ?>

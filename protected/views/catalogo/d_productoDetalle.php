@@ -1,10 +1,54 @@
 <?php $this->pageTitle = Yii::app()->name . " - " . $objProducto->descripcionProducto; ?>
-
 <?php $idUnico = uniqid() ?>
-<section class="product_detail">
-    <div class="container">
-        <div class="row">
-            <div class="col-md-6">
+
+<section class="detalle-producto">
+  <div class="container-fluid">
+    <div class="row">
+      <div class="col-md-2 side-categorias">
+          <p class="title-categorias"><span style="font-size: 16px;" class="glyphicon glyphicon-triangle-bottom"></span> Naturales</p>
+          <div class="category">
+            <div class="title"><span class="glyphicon glyphicon-menu-right active"></span> Adelgazante y Depresores</div>
+          </div>
+          <div class="category">
+            <div class="title"><span class="glyphicon glyphicon-menu-right"></span> Digestión y Estómago</div>
+            <ul>
+              <li>Antiácidos y antiulcerosos</li>
+              <li>Hepatoprotectores</li>
+              <li>Laxante</li>
+            </ul>
+          </div>
+          <div class="category">
+            <div class="title"><span class="glyphicon glyphicon-menu-right"></span> Vitaminas y minerales</div>
+            <ul>
+              <li>Multivitaminicos</li>
+              <li>Vitaminas</li>
+            </ul>
+          </div>
+          <div class="category">
+            <div class="title"><span class="glyphicon glyphicon-menu-right"></span>Sistema Nervioso</div>
+            <ul>
+              <li>Ansiedad y Depresión</li>
+              <li>Insomnio</li>
+            </ul>
+          </div>
+          <div class="category">
+            <div class="title"><span class="glyphicon glyphicon-menu-right"></span>Resfriado y tos</div>
+          </div>
+          <div class="category">
+            <div class="title"><span class="glyphicon glyphicon-menu-right"></span>Sistema Circulatorio</div>
+          </div>
+          <div class="category">
+            <div class="title"><span class="glyphicon glyphicon-menu-right"></span>Inflamación y Dolor</div>
+            <ul>
+              <li>Antiespasmodico</li>
+              <li>Antimigrañoso</li>
+              <li>Dolor de cabeza y general</li>
+              <li>Muscular</li>
+            </ul>
+          </div>
+      </div>
+
+      <div class="col-md-5">
                 <?php $listImagenes = $objProducto->listImagenesGrandes() ?>
                 <?php if (empty($listImagenes)): ?>
                     <div class="item"><img class='img-responsive' src="<?php echo Yii::app()->request->baseUrl . Yii::app()->params->producto['noImagen']['grande']; ?>" alt="<?php echo $objProducto->descripcionProducto ?>" title="<?php echo $objProducto->descripcionProducto ?>"></div>
@@ -33,7 +77,7 @@
                 <?php endif; ?>
             </div>
 
-            <div class="col-md-6 content-txt2 border-left">
+      <div class="col-md-5">
                 <div class="descripciones">
                     <div style="height: auto; overflow: hidden;">
 
@@ -220,16 +264,16 @@
                     <?php endif; ?>
                 </div>
             </div>
-        </div>
+
     </div>
-</section>
-<!--descripcion-->
-<section>
-    <br/>
+
+  </div>
 </section>
 
+
+<!-- Omitido en el nuevo diseño -->
 <?php if ($objProducto->ventaVirtual == 0): ?>
-    <section>
+    <!-- <section>
         <div class='container'>
             <div class='row line-bottom2'>
                 <div class='col-md-12'>
@@ -253,9 +297,8 @@
                 </div>
             </div>
         </div>
-    </section>
+    </section> -->
 <?php endif; ?>
-
 
 <section>
     <div class="container">
