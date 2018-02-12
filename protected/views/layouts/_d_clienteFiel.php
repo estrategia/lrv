@@ -44,7 +44,7 @@
               <a href="<?php echo Yii::app()->createUrl('clientefiel/sitio/ganadores') ?>">Ganadores del mes</a>
             </div> -->
             <div class="item <?php echo $this->menuActivo == 'concursos' ? 'active' : ''  ?>">
-              <a href="<?php echo Yii::app()->createUrl('clientefiel/sitio/reglamentos') ?>">Concursos</a>
+              <a href="<?php echo Yii::app()->createUrl('sitio/reglamentos') ?>">Concursos</a>
             </div>
           </div>
           <div class="column">
