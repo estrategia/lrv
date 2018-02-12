@@ -28,8 +28,8 @@
                     <div></div>
                     <div></div>
                 </a> -->
-                <img class="img img-responsive clientefiel-logo" src="<?php echo Yii::app()->request->baseUrl; ?>/images/clientefiel/clientefiel.png" alt="">
-                <img class="img img-responsive lrv-logo" src="<?php echo Yii::app()->request->baseUrl; ?>/images/clientefiel/lrv.png" alt="">
+                <a title="Cliente Fiel - La Rebaja Virtual" href="<?php echo $this->createUrl('/clientefiel') ?>" data-ajax=false><img class="img img-responsive clientefiel-logo" src="<?php echo Yii::app()->request->baseUrl; ?>/images/clientefiel/clientefiel.png" alt=""></a>
+                <a class="lrv-logo" title="Drogueria - La Rebaja Virtual" href="<?php echo $this->createUrl('/') ?>" data-ajax=false><img class="img img-responsive lrv-logo" src="<?php echo Yii::app()->request->baseUrl; ?>/images/clientefiel/lrv.png" alt=""></a>
             </nav>
 		</div>
 		
@@ -55,7 +55,7 @@
         
         <div data-role="footer">
 			<div class="footer-logos">
-                <img class="img img-responsive logos" src="<?php echo Yii::app()->request->baseUrl; ?>/images/clientefiel/copservir.png" alt="">
+				<img class="img img-responsive logos" src="<?php echo Yii::app()->request->baseUrl; ?>/images/clientefiel/copservir.png" alt="">
             </div>
             <div class="footer-section">
                 <div class="red-background">
@@ -65,8 +65,6 @@
                 </div>
             </div>
 		</div>
-
-            
 	</div>
     
     <?php $this->renderPartial('/sitio/modalCondiciones'); ?>

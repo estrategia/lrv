@@ -32,13 +32,13 @@ $form = $this->beginWidget('CActiveForm', array(
 </fieldset>
 
 <?php if($paso == 1):?>
-<div class="ui-input-btn ui-btn ui-corner-all ui-shadow ui-btn-a">
+<div class="ui-input-btn ui-btn ui-corner-all ui-shadow ui-btn-r">
 	Continuar
 	<input type="submit" data-enhanced="true" value="Continuar">
 </div>
 
 	&#191; A&uacute;n no recibes tu c&oacute;digo?,
-	<a class='button-form' data-role='enviar-mensaje-verificacion' data-tipo='2' data-cedula='<?php echo $model->cedula?>' type="button" data-enhanced="true" href="#">Enviar de nuevo</a>
+	<a class='ui-btn ui-corner-all ui-shadow ui-btn-r' data-role='enviar-mensaje-verificacion' data-tipo='2' data-cedula='<?php echo $model->cedula?>' type="button" data-enhanced="true" href="#">Enviar de nuevo</a>
 	o comun&iacute;cate con nuestra l&iacute;nea de atenci&oacute;n o escr&iacute;benos a nuestro chat.
 <?php endif;?>
 

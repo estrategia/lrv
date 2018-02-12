@@ -36,7 +36,7 @@
 
     <div class="buttons-section">
         <a href="<?php echo Yii::app()->createUrl('/sitio/ganadores') ?>" data-ajax="false" class="navigation-button">Ganadores del mes</a>
-        <a href="<?php echo Yii::app()->createUrl('/sitio/reglamentos') ?>" data-ajax="false" class="navigation-button">Concursos</a>
+        <a href="<?php echo Yii::app()->createUrl('/sitio/reglamentos') ?>" data-ajax="false" class="navigation-button">Reglamentos</a>
      <!--    <a href="" class="navigation-button">¿Cómo funciona?</a>
         <a href="" class="navigation-button">Regístrate</a> -->
     </div>
