@@ -35,23 +35,13 @@
 
     <div class="menu-principal">
       <div class="contenedor-flex">
-        <div class="row-flex">
-          <div class="column">
-            <div class="item <?php echo $this->menuActivo == 'index' ? 'active' : ''  ?>">
+        <div class="row-flex menu">
+            <div class="btn btn-primary btn-lg ">
               <a href="<?php echo Yii::app()->createUrl('clientefiel/sitio/index') ?>">¿Comó funciona?</a>
             </div>
-            <!-- <div class="item <?php echo $this->menuActivo == 'ganadores' ? 'active' : ''  ?>"">
-              <a href="<?php echo Yii::app()->createUrl('clientefiel/sitio/ganadores') ?>">Ganadores del mes</a>
-            </div> -->
-            <div class="item <?php echo $this->menuActivo == 'concursos' ? 'active' : ''  ?>">
-              <a href="<?php echo Yii::app()->createUrl('clientefiel/sitio/reglamentos') ?>">Concursos</a>
+            <div class="btn btn-flat btn-lg " type="button" name="button">
+                <a href="<?php echo Yii::app()->createUrl('clientefiel/registro/realizarRegistro') ?>">Regístrate</a>
             </div>
-          </div>
-          <div class="column">
-            <div class="btn btn-primary btn-lg btn-block" type="button" name="button">
-                <a href="<?php echo Yii::app()->createUrl('clientefiel/registro/realizarRegistro') ?>">Tu cuenta</a>
-            </div>
-          </div>
         </div>
       </div>
     </div>
