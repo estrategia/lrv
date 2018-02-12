@@ -81,8 +81,8 @@ $this->metaTags = "
 <?php if ($this->isMobile): ?>
 <a data-ajax="false" href="<?php echo CController::createUrl('/catalogo/producto', array('producto' => 65388)) ?>"><img class="img-responsive-m" src="<?= Yii::app()->request->baseUrl ?>/images/contenido/nan-optipro/banner-recetas-mobile.jpg"></a>
 <div style="background-color: #013D9F;padding: 15px;margin-top: -6px;">
-  <div class="video" id="video-receta1"><iframe  width="560" height="315" src="https://www.youtube.com/embed/T0mduoevXjY?rel=0&amp;showinfo=0" frameborder="0" allowfullscreen></iframe></div>
-  <div class="video hide" id="video-receta2"><iframe  width="560" height="315" src="https://www.youtube.com/embed/yCbVoCRm1Ww?rel=0&amp;showinfo=0" frameborder="0" allowfullscreen></iframe></div>
+  <div class="video" id="video-receta1"><iframe  width="560" height="315" src="https://www.youtube.com/embed/45aHJF0P1bc?rel=0&amp;showinfo=0" frameborder="0" allowfullscreen></iframe></div>
+  <div class="video hide" id="video-receta2"><iframe  width="560" height="315" src="https://www.youtube.com/embed/qbDZjUkZtNw?rel=0&amp;showinfo=0" frameborder="0" allowfullscreen></iframe></div>
   <div class="video hide" id="video-receta3" ><iframe width="560" height="315" src="https://www.youtube.com/embed/7ajz8NtX6Zc?rel=0&amp;showinfo=0" frameborder="0" allowfullscreen></iframe></div>
   <div id="paginador">
     <a id="receta1">1</a>
@@ -134,10 +134,10 @@ $this->metaTags = "
         <div class="row">
           <div class="col-md-9" style="padding-right:0px;">
             <div class="video" id="video-receta1">
-              <iframe  width="560" height="315" src="https://www.youtube.com/embed/T0mduoevXjY?rel=0&amp;showinfo=0" frameborder="0" allowfullscreen></iframe>
+              <iframe  width="560" height="315" src="https://www.youtube.com/embed/45aHJF0P1bc?rel=0&amp;showinfo=0" frameborder="0" allowfullscreen></iframe>
             </div>
             <div class="video hide" id="video-receta2">
-              <iframe  width="560" height="315" src="https://www.youtube.com/embed/yCbVoCRm1Ww?rel=0&amp;showinfo=0" frameborder="0" allowfullscreen></iframe>
+              <iframe  width="560" height="315" src="https://www.youtube.com/embed/qbDZjUkZtNw?rel=0&amp;showinfo=0" frameborder="0" allowfullscreen></iframe>
           </div>
             <div class="video hide" id="video-receta3" >
               <iframe width="560" height="315" src="https://www.youtube.com/embed/7ajz8NtX6Zc?rel=0&amp;showinfo=0" frameborder="0" allowfullscreen></iframe>
