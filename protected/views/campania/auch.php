@@ -147,6 +147,15 @@ img.img-responsive.producto-contenido-m{
 
 .vermasinformacion{font-family: FrutigerLTStd-Roman;    font-weight: bold;text-align: center;color: red;text-decoration: underline;}
 
+.close-button {overflow: hidden;}
+.modal-body {padding: 0;}
+.modal-content {background-color: transparent !important;box-shadow: none !important; border: none !important;}
+.bmd-modalContent {box-shadow: none; background-color: transparent; border: 0;}
+.bmd-modalContent .close {font-size: 30px; line-height: 30px; padding: 7px 4px 7px 13px; text-shadow: none; opacity: .7; color:#fff;}
+.bmd-modalContent .close span {display: block;}
+.bmd-modalContent .close:hover, .bmd-modalContent .close:focus {opacity: 1; outline: none;}
+.bmd-modalContent iframe {display: block; margin: 0 auto;}
+
 /*--------estilos personales de esta pagina ----------*/
 
 h4.tamano-h4 {
@@ -276,7 +285,9 @@ margin: 37px auto;
       </a>
     </div>
     <div class="contenedor-videom">
-    <img class="img-responsive" src="<?= Yii::app()->request->baseUrl ?>/images/contenido/genfar-kids/auchhh/video-auchhhh.png" alt="genfar kids">
+      <a href="#" class="bmd-modalButton" data-toggle="modal" data-bmdsrc="https://www.youtube.com/embed/YfG2SYBRDes?rel=0&amp;controls=0&amp;showinfo=0" data-bmdwidth="800" data-bmdheight="400" data-target="#myModal" data-bmdvideofullscreen="true">
+        <img class="img-responsive" src="<?= Yii::app()->request->baseUrl ?>/images/contenido/genfar-kids/Auchhh/Video-Auchhhh.png" alt="genfar kids">
+    </a>
     </div>
 
     <img class="img-responsive fondo-publicidadm" src="<?= Yii::app()->request->baseUrl ?>/images/contenido/genfar-kids/auchhh/fondo-producto.jpg" alt="genfar kids">
@@ -421,7 +432,9 @@ margin: 37px auto;
     </a>
     </div>
     <div class="contenedor-video">
-    <img class="img-responsive" src="<?= Yii::app()->request->baseUrl ?>/images/contenido/genfar-kids/auchhh/video-auchhhh.png" alt="genfar kids">
+      <a href="#" class="bmd-modalButton" data-toggle="modal" data-bmdsrc="https://www.youtube.com/embed/YfG2SYBRDes?rel=0&amp;controls=0&amp;showinfo=0" data-bmdwidth="800" data-bmdheight="400" data-target="#myModal" data-bmdvideofullscreen="true">
+        <img class="img-responsive" src="<?= Yii::app()->request->baseUrl ?>/images/contenido/genfar-kids/Auchhh/Video-Auchhhh.png" alt="genfar kids">
+    </a>
     </div>
 
   </div>
@@ -554,5 +567,24 @@ margin: 37px auto;
     </div>
   </div>
 </section>
+<!--Fin versión escritorio -->
+<!--Modal-->
+<div class="modal fade" id="myModal">
+  <div class="modal-dialog">
+    <div class="modal-content bmd-modalContent">
+      <div class="modal-body">
+          <div class="close-button">
+           <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+          </div>
+        <div class="embed-responsive embed-responsive-16by9">
+          <iframe class="embed-responsive-item" frameborder="0"></iframe>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<script type="text/javascript">
+  !function(t){t.fn.bmdIframe=function(a){var d=this,e=t.extend({classBtn:".bmd-modalButton",defaultW:800,defaultH:400},a);return t(e.classBtn).on("click",function(a){var i=t(this).attr("data-bmdVideoFullscreen")||!1,n={src:t(this).attr("data-bmdSrc"),height:t(this).attr("data-bmdHeight")||e.defaultH,width:t(this).attr("data-bmdWidth")||e.defaultW};i&&(n.allowfullscreen=""),t(d).find("iframe").attr(n)}),this.on("hidden.bs.modal",function(){t(this).find("iframe").html("").attr("src","")}),this}}(jQuery),jQuery(document).ready(function(){jQuery("#myModal").bmdIframe()});
+</script>
 <!--Fin versión escritorio -->
 <?php endif; ?>

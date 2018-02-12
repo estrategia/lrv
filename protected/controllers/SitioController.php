@@ -654,7 +654,7 @@ class SitioController extends Controller {
         $this->render('promocion', array('promocion' => $promocion, 'listaItems' => $listaItems));
     }
 
-    public function actionConcursos()
+    public function actionReglamentos()
     {
       if ($this->isMobile) {
           $this->layout = 'concursos';

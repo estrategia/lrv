@@ -127,7 +127,6 @@
         <img width="130" src="<?= Yii::app()->request->baseUrl ?>/images/contenido/mundo-klim/klim-fortiprotect/klim-fortiprotect-1700g.png" alt="Comprar Klim fortiprotect">
         <h3 class="name">KLIM<sup>&reg;</sup> 1+ MIEL PREBIO</h3>
         <span class="cantidad">LATA X 1700 GRS</span>
-        <p class="precio-antes"><?= ($klim1_1700gr == null) ? "$00.000" : Yii::app()->numberFormatter->format(Yii::app()->params->formatoMoneda['patron'], $klim1_1700gr["u-a"], Yii::app()->params->formatoMoneda['moneda']) ?> </p>
         <p class="precio"><?= ($klim1_1700gr == null) ? "$00.000" : Yii::app()->numberFormatter->format(Yii::app()->params->formatoMoneda['patron'], $klim1_1700gr["u"], Yii::app()->params->formatoMoneda['moneda']) ?> </p>
         <a data-ajax="false" href="<?php echo CController::createUrl('/catalogo/producto', array('producto' => 39646)) ?>">
           <img width="200" style="margin-top: 15px;" src="<?= Yii::app()->request->baseUrl ?>/images/contenido/mundo-klim/btn-compra.png" alt="Comprar Klim fortiprotect">
@@ -137,7 +136,6 @@
         <img width="130" src="<?= Yii::app()->request->baseUrl ?>/images/contenido/mundo-klim/klim-fortiprotect/klim-fortiprotect-500g.png" alt="Comprar Klim fortiprotect">
         <h3 class="name">KLIM<sup>&reg;</sup> 1+</h3>
         <span class="cantidad">DOY PACK X 500 GRS</span>
-        <p class="precio-antes"><?= ($klim1_500gr == null) ? "$00.000" : Yii::app()->numberFormatter->format(Yii::app()->params->formatoMoneda['patron'], $klim1_500gr["u-a"], Yii::app()->params->formatoMoneda['moneda']) ?> </p>
         <p class="precio"><?= ($klim1_500gr == null) ? "$00.000" : Yii::app()->numberFormatter->format(Yii::app()->params->formatoMoneda['patron'], $klim1_500gr["u"], Yii::app()->params->formatoMoneda['moneda']) ?> </p>
         <a data-ajax="false" href="<?php echo CController::createUrl('/catalogo/producto', array('producto' => 53059)) ?>">
           <img width="200" style="margin-top: 15px;" src="<?= Yii::app()->request->baseUrl ?>/images/contenido/mundo-klim/btn-compra.png" alt="Comprar Klim fortiprotect">
@@ -147,7 +145,6 @@
         <img width="130" src="<?= Yii::app()->request->baseUrl ?>/images/contenido/mundo-klim/klim-fortiprotect/klim-fortiprotect-1000g.png" alt="Comprar Klim fortiprotect">
         <h3 class="name">KLIM<sup>&reg;</sup> 1+ PREBIO</h3>
         <span class="cantidad">BOLSA X 1000 GRS</span>
-        <p class="precio-antes"><?= ($klim1_1000gr == null) ? "$00.000" : Yii::app()->numberFormatter->format(Yii::app()->params->formatoMoneda['patron'], $klim1_1000gr["u-a"], Yii::app()->params->formatoMoneda['moneda']) ?> </p>
         <p class="precio"><?= ($klim1_1000gr == null) ? "$00.000" : Yii::app()->numberFormatter->format(Yii::app()->params->formatoMoneda['patron'], $klim1_1000gr["u"], Yii::app()->params->formatoMoneda['moneda']) ?> </p>
         <a data-ajax="false" href="<?php echo CController::createUrl('/catalogo/producto', array('producto' => 97337)) ?>">
           <img width="200" style="margin-top: 15px;" src="<?= Yii::app()->request->baseUrl ?>/images/contenido/mundo-klim/btn-compra.png" alt="Comprar Klim fortiprotect">
@@ -156,7 +153,7 @@
     </div>
   </section>
   <div class="video">
-    <iframe width="560" height="315" src="https://www.youtube.com/embed/xrHTcWo4iko?rel=0&amp;showinfo=0" frameborder="0" allow="autoplay; encrypted-media" allowfullscreen></iframe>
+    <iframe width="560" height="315" src="https://www.youtube.com/embed/aypod9UgV08?rel=0&amp;controls=0&amp;showinfo=0 " frameborder="0" allow="autoplay; encrypted-media" allowfullscreen></iframe>
   </div>
   <h3 class="title-section-video" style="font-size: 30px; text-align: center; line-height: 15px;">Conoce todos los productos KLIM<sup>&reg;</sup> <br>
     <a data-ajax="false"  href="<?= Yii::app()->request->baseUrl ?>/mundo-klim" style="text-decoration: none;"><span style="font-size: 20px; display: block; width: 76px; margin: 22px auto 0; padding: 10px 30px;">aquí</span></a>
@@ -258,7 +255,6 @@
         <img width="200" src="<?= Yii::app()->request->baseUrl ?>/images/contenido/mundo-klim/klim-fortiprotect/klim-fortiprotect-500g.png" alt="Comprar Klim fortiprotect">
         <h3 class="name">KLIM<sup>&reg;</sup> 1+</h3>
         <span class="cantidad">DOY PACK X 500 GRS</span>
-        <p class="precio-antes"><?= ($klim1_500gr == null) ? "$00.000" : Yii::app()->numberFormatter->format(Yii::app()->params->formatoMoneda['patron'], $klim1_500gr["u-a"], Yii::app()->params->formatoMoneda['moneda']) ?> </p>
         <p class="precio"><?= ($klim1_500gr == null) ? "$00.000" : Yii::app()->numberFormatter->format(Yii::app()->params->formatoMoneda['patron'], $klim1_500gr["u"], Yii::app()->params->formatoMoneda['moneda']) ?> </p>
         <a href="<?php echo CController::createUrl('/catalogo/producto', array('producto' => 53059)) ?>">
           <img width="200" src="<?= Yii::app()->request->baseUrl ?>/images/contenido/mundo-klim/btn-compra.png" alt="Comprar Klim fortiprotect">
@@ -269,7 +265,6 @@
         <img width="200" src="<?= Yii::app()->request->baseUrl ?>/images/contenido/mundo-klim/klim-fortiprotect/klim-fortiprotect-1000g.png" alt="Comprar Klim fortiprotect">
         <h3 class="name">KLIM<sup>&reg;</sup> 1+ PREBIO</h3>
         <span class="cantidad">BOLSA X 1000 GRS</span>
-        <p class="precio-antes"><?= ($klim1_1000gr == null) ? "$00.000" : Yii::app()->numberFormatter->format(Yii::app()->params->formatoMoneda['patron'], $klim1_1000gr["u-a"], Yii::app()->params->formatoMoneda['moneda']) ?> </p>
         <p class="precio"><?= ($klim1_1000gr == null) ? "$00.000" : Yii::app()->numberFormatter->format(Yii::app()->params->formatoMoneda['patron'], $klim1_1000gr["u"], Yii::app()->params->formatoMoneda['moneda']) ?> </p>
         <a href="<?php echo CController::createUrl('/catalogo/producto', array('producto' => 97337)) ?>">
           <img width="200" src="<?= Yii::app()->request->baseUrl ?>/images/contenido/mundo-klim/btn-compra.png" alt="Comprar Klim fortiprotect">
@@ -280,7 +275,6 @@
         <img width="200" src="<?= Yii::app()->request->baseUrl ?>/images/contenido/mundo-klim/klim-fortiprotect/klim-fortiprotect-1700g.png" alt="Comprar Klim fortiprotect">
         <h3 class="name">KLIM<sup>&reg;</sup> 1+ MIEL PREBIO</h3>
         <span class="cantidad">LATA X 1700 GRS</span>
-        <p class="precio-antes"><?= ($klim1_1700gr == null) ? "$00.000" : Yii::app()->numberFormatter->format(Yii::app()->params->formatoMoneda['patron'], $klim1_1700gr["u-a"], Yii::app()->params->formatoMoneda['moneda']) ?> </p>
         <p class="precio"><?= ($klim1_1700gr == null) ? "$00.000" : Yii::app()->numberFormatter->format(Yii::app()->params->formatoMoneda['patron'], $klim1_1700gr["u"], Yii::app()->params->formatoMoneda['moneda']) ?> </p>
         <a href="<?php echo CController::createUrl('/catalogo/producto', array('producto' => 39646)) ?>">
           <img width="200" src="<?= Yii::app()->request->baseUrl ?>/images/contenido/mundo-klim/btn-compra.png" alt="Comprar Klim fortiprotect">
@@ -289,7 +283,7 @@
     </div>
   </section>
   <section class="content-products">
-    <a href="#" class="bmd-modalButton"  data-toggle="modal" data-bmdSrc="https://www.youtube.com/embed/xrHTcWo4iko?rel=0&amp;showinfo=0" data-bmdWidth="800" data-bmdHeight="400" data-target="#myModal"  data-bmdVideoFullscreen="true">
+    <a href="#" class="bmd-modalButton"  data-toggle="modal" data-bmdSrc="https://www.youtube.com/embed/aypod9UgV08?rel=0&amp;controls=0&amp;showinfo=0" data-bmdWidth="800" data-bmdHeight="400" data-target="#myModal"  data-bmdVideoFullscreen="true">
       <img class="img-recetas" src="<?= Yii::app()->request->baseUrl ?>/images/contenido/mundo-klim/klim-fortiprotect/recetas.png" alt="Recetas Klim fortiprotect">
     </a>
     <h3 class="title-section-video">Conoce todos los productos KLIM<sup>&reg;</sup> <a href="<?= Yii::app()->request->baseUrl ?>/mundo-klim"><span>aquí</span></a> </h3>
