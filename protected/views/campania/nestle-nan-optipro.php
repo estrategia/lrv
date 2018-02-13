@@ -69,7 +69,7 @@ $this->metaTags = "
     <img style="width: 150px;margin: 0 auto 10px;display: block;" src="<?= Yii::app()->request->baseUrl ?>/images/contenido/nan-optipro/nan-optipro3.png">
     <p class="precio-antes">ANTES: <?= ($nan == null) ? "--" : Yii::app()->numberFormatter->format(Yii::app()->params->formatoMoneda['patron'], $nan["u-a"], Yii::app()->params->formatoMoneda['moneda']) ?></p>
     <p class="precio">AHORA: <?= ($nan == null) ? "--" : Yii::app()->numberFormatter->format(Yii::app()->params->formatoMoneda['patron'], $nan["u"], Yii::app()->params->formatoMoneda['moneda']) ?></p>
-    <a data-ajax="false" href="<?php echo CController::createUrl('/catalogo/producto', array('producto' => 65388)) ?>">
+    <a data-ajax="false" href="<?php echo CController::createUrl('/contenido/ver', array('tipo' => 'grupo', 'contenido' => 6170)) ?>">
       <img style="width: 190px;margin: 0 auto;display: block;" src="<?= Yii::app()->request->baseUrl ?>/images/contenido/nan-optipro/btn-comprar.png">
     </a>
   </div>
@@ -124,7 +124,7 @@ $this->metaTags = "
         <img class="img-responsive producto" src="<?= Yii::app()->request->baseUrl ?>/images/contenido/nan-optipro/nan-optipro3.png">
         <p class="precio-antes">ANTES: <?= ($nan == null) ? "--" : Yii::app()->numberFormatter->format(Yii::app()->params->formatoMoneda['patron'], $nan["u-a"], Yii::app()->params->formatoMoneda['moneda']) ?></p>
         <p class="precio">AHORA: <?= ($nan == null) ? "--" : Yii::app()->numberFormatter->format(Yii::app()->params->formatoMoneda['patron'], $nan["u"], Yii::app()->params->formatoMoneda['moneda']) ?></p>
-        <a href="<?php echo CController::createUrl('/catalogo/producto', array('producto' => 65388)) ?>"><img class="img-responsive btn-compra" src="<?= Yii::app()->request->baseUrl ?>/images/contenido/nan-optipro/btn-comprar.png"></a>
+        <a href="<?php echo CController::createUrl('/contenido/ver', array('tipo' => 'grupo', 'contenido' => 6170)) ?>"><img class="img-responsive btn-compra" src="<?= Yii::app()->request->baseUrl ?>/images/contenido/nan-optipro/btn-comprar.png"></a>
       </div>
     </div>
   </div>
