@@ -20,12 +20,12 @@
 </head>
 <body>
     <nav class="nav">
-      <div class="contenedor-flex">
+      <div class="contenedor-flex" style="display: flex; justify-content: center;">
       	<a title="Cliente Fiel - La Rebaja Virtual" href="<?php echo $this->createUrl('/clientefiel') ?>"><img class="img img-responsive clientefiel-logo" src="<?php echo Yii::app()->request->baseUrl; ?>/images/clientefiel/clientefiel.png" alt=""></a>
       	<a title="Drogueria - La Rebaja Virtual" href="<?php echo $this->createUrl('/') ?>"><img class="img img-responsive lrv-logo" src="<?php echo Yii::app()->request->baseUrl; ?>/images/clientefiel/lrv.png" alt=""></a>
       </div>
     </nav>
-	
+
     <div class="banner">
       <div class="contenedor-flex txt-banner">
         <h3 class="banner-text">El programa que te da 10% de descuento <br> <span class="emphasis">en todas tus compras*</span></h3>
@@ -36,12 +36,19 @@
     <div class="menu-principal">
       <div class="contenedor-flex">
         <div class="row-flex menu">
-            <div class="btn <?= ($this->menuActivo == 'index') ? 'btn-flat' : 'btn-primary' ?> btn-lg ">
-              <a href="<?php echo Yii::app()->createUrl('clientefiel/sitio/index') ?>">¿Comó funciona?</a>
-            </div>
-            <div class="btn <?= ($this->menuActivo == 'cuenta') ? 'btn-flat' : 'btn-primary' ?> btn-lg " type="button" name="button">
-                <a href="<?php echo Yii::app()->createUrl('clientefiel/registro/realizarRegistro') ?>">Regístrate</a>
-            </div>
+          <div class="">
+            <a href="<?php echo Yii::app()->createUrl('clientefiel/sitio/index') ?>">
+              <img class="img-responsive" width="400" src="<?php echo Yii::app()->request->baseUrl; ?>/images/clientefiel/boton-funciona.png" alt="Como funciona">
+            </a>
+          </div>
+
+          <div class="">
+            <a href="<?php echo Yii::app()->createUrl('clientefiel/registro/realizarRegistro') ?>">
+              <img class="img-responsive" width="400" src="<?php echo Yii::app()->request->baseUrl; ?>/images/clientefiel/boton-registrate.png" alt="Registrarse">
+            </a>
+          </div>
+
+
         </div>
       </div>
     </div>

@@ -120,7 +120,7 @@
   <section class="primera-seccion" style="height: initial;">
     <h1 style="font-size:35px; line-height: 42px;">Dispositivos para Profesionales de la Salud</h1>
     <p style="width: 90%;margin-bottom: 25px;color:#8B8B8B;text-align:center;">
-      Nuestro amplio portafolio de soluciones para profesionales de la salud, facilita la calidad en el servicio y favorece el cuidado de la salud en lo usuarios. La marca GMD brinda innovación, variedad de colores, variedad de productos, dentro de estos podemos encontrar fonendoscopios, tensiómetros, kit de órganos y sentidos, termómetros, martillos, linternas, entre otros.
+      Nuestro amplio portafolio de soluciones para profesionales de la salud, facilita la calidad en el servicio y favorece el cuidado de la salud en lo usuarios. La marca GMD brinda innovación, variedad de colores y variedad de productos, dentro de estos podemos encontrar fonendoscopios, tensiómetros, kit de órganos y sentidos, termómetros, martillos, linternas, entre otros.
     </p>
   </section>
   <div class="megacontainer">
@@ -385,7 +385,7 @@
   <img class="img-responsive banner" src="<?= Yii::app()->request->baseUrl ?>/images/contenido/impormedical/img_banner_ppal.jpg" alt="Para eliminar las imperfecciones">
   <section class="primera-seccion">
     <h1>Dispositivos para Profesionales de la Salud</h1>
-    <p>Nuestro amplio portafolio de soluciones para profesionales de la salud, facilita la calidad en el servicio y favorece el cuidado de la salud en lo usuarios. La marca GMD brinda innovación, variedad de colores, variedad de productos, dentro de estos podemos encontrar fonendoscopios, tensiómetros, kit de órganos y sentidos, termómetros, martillos, linternas, entre otros. </p>
+    <p>Nuestro amplio portafolio de soluciones para profesionales de la salud, facilita la calidad en el servicio y favorece el cuidado de la salud en lo usuarios. La marca GMD brinda innovación, variedad de colores y variedad de productos, dentro de estos podemos encontrar fonendoscopios, tensiómetros, kit de órganos y sentidos, termómetros, martillos, linternas, entre otros.</p>
   </section>
   <div class="megacontainer">
     <div class="contenedor-flex">
@@ -421,19 +421,21 @@
         </div>
         <div class="second-column">
           <h3>Kit de Tensiómetro + Fonendoscopio Rappaport GMD</h3>
-          <p>Es un instrumento de diagnóstico para la medición de la presión arterial y auscultaciones en general</p>
-          <p>Diseño y colores innovadores en presentación de estuche para fácil transporte y almacenamiento</p>
+          <ul>
+            <li>Es un instrumento de diagnóstico para la medición de la presión arterial y auscultaciones en general.</li>
+            <li>Diseño y colores innovadores en presentación de estuche para fácil transporte y almacenamiento.</li>
+          </ul>
           <div class="contenedor-colores">
-            <h4 style="Color:#444444;">Colores  Disponibles:</h4>
+            <h4 style="color:#444444;margin: 25px 0 0;font-size:15px;">Colores disponibles:</h4>
             <div class="cuadros-colores">
               <div class="item">
                 <div class="color-ceruleo"></div>
-                <span class="letradeloscolores">Azul Cerúleo</span>
+                <span class="letradeloscolores">Azul cerúleo</span>
               </div>
             </div>
             <div class="section-compra">
               <div class="column columna-precio"><h2>$00000</h2></div>
-              <div class="column columna-boton"><a href="#"><button class="boton-compra">Compra</button></a></div>
+              <div class="column columna-boton"><a href="#"><button class="boton-compra">Comprar</button></a></div>
             </div>
           </div>
         </div>
@@ -506,7 +508,7 @@
             <h4 class="centradotitulo"> Linterna de Diagnóstico GMD <br> &nbsp;</h4>
             <div class="div-flex">
               <div class="colum1">
-                <span class="textocolorproducto">Descripción: <br> Incorpora tecnología luz LED </span>
+                <span class="textocolorproducto">Descripción: <br> Incorpora tecnología luz LED <br> &nbsp;</span>
               </div>
               <div class="column2">
                 <div class="div-colores">
@@ -529,7 +531,7 @@
             <h4 class="centradotitulo"> Kit de Órganos y Sentidos con Fibra Óptica GMD</h4>
             <div class="div-flex">
               <div class="colum1">
-                <span class="textocolorproducto">Descripción: <br> Dos bases, dos cabezales</span>
+                <span class="textocolorproducto">Descripción: <br> Dos bases, dos cabezales <br> &nbsp;</span>
               </div>
               <div class="column2">
                 <div class="div-colores">
@@ -561,7 +563,7 @@
             <div class="div-flex">
               <div class="colum1">
                 <span class="textocolorproducto">Modelos:</span><br>
-                <span class="textocolorproducto">Rana, Oso, Flex II, Tempo II </span>
+                <span class="textocolorproducto">Rana, Oso, Flex II, Tempo II  <br> &nbsp;</span>
               </div>
 
             </div>
@@ -584,13 +586,15 @@
         </div>
         <div class="second-column">
           <h3>Sistema de Disección GMD </h3>
-          <p> Es un instrumento quirúrgico que contiene todos los elementos necesarios para llevar acabo estudios o procedimientos pequeños a nivel de anatomía o procedimientos incisivos</p>
-          <p>Todos sus piezas están fabricadas en acero inoxidable </p>
-          <p> Práctico estuche con cremallera   </p>
+          <ul>
+            <li> Es un instrumento quirúrgico que contiene todos los elementos necesarios para llevar acabo estudios o procedimientos pequeños a nivel de anatomía o procedimientos incisivos.</li>
+            <li>Todos sus piezas están fabricadas en acero inoxidable.</li>
+            <li> Práctico estuche con cremallera.</li>
+          </ul>
           <div class="contenedor-colores">
             <div class="section-compra">
               <div class="column columna-precio"><h2>$00000</h2></div>
-              <div class="column columna-boton"><a href="#"><button class="boton-compra">Compra</button></a></div>
+              <div class="column columna-boton"><a href="#"><button class="boton-compra">Comprar</button></a></div>
             </div>
           </div>
         </div>
@@ -624,13 +628,15 @@
         </div>
         <div class="second-column">
           <h3>Tijeras GMD </h3>
-          <p>Tijera trauma corta todo.</p>
-          <p>Utilizada principlamente en hospitales, clínicas, atención proehospitarlia, enfermería y primeros auxilios - Es un equipo indispensable en botiquines.</p>
-          <p> Es un equipo indispensable en botiquines y maletines de primeros auxilios. </p>
+          <ul>
+            <li>Tijera trauma corta todo.</li>
+            <li>Utilizada principlamente en hospitales, clínicas, atención prehospitarlia, enfermería y primeros auxilios.</li>
+            <li>Es un equipo indispensable en botiquines y maletines de primeros auxilios. </li>
+          </ul>
           <div class="contenedor-colores">
             <div class="section-compra">
               <div class="column columna-precio"><h2>$00000</h2></div>
-              <div class="column columna-boton"><a href="#"><button class="boton-compra">Compra</button></a></div>
+              <div class="column columna-boton"><a href="#"><button class="boton-compra">Comprar</button></a></div>
             </div>
           </div>
         </div>
@@ -664,13 +670,15 @@
       </div>
     </div>
     <div class="info-footer">
-      <div class="column footertexto">
-        <h1>¿Controlas la Presión con Exactitud?</h1>
-        <p style="color:#828282;font-size: 21px;">Conoce más sobre los productos de Control y Prevención <a href="#" style="color:#F2672A; text-decoration:underline;">aquí</a>  </p>
-      </div>
-      <div class="column footerimagen">
-        <img class="img-responsive" src="<?= Yii::app()->request->baseUrl ?>/images/contenido/impormedical/img_banner_prevencion.jpg" alt="Para eliminar las imperfecciones">
-      </div>
+      <a href="<?php echo CController::createUrl('/catalogo/producto', array('producto' => 117764)) ?> " style="color:inherit;">
+        <div class="column footertexto">
+          <h1>¿Controlas la Presión con Exactitud?</h1>
+          <p style="color:#828282;font-size: 21px;">Conoce más sobre los productos de Control y Prevención <a href="#" style="color:#F2672A; text-decoration:underline;">aquí</a>  </p>
+        </div>
+        <div class="column footerimagen">
+          <img class="img-responsive" src="<?= Yii::app()->request->baseUrl ?>/images/contenido/impormedical/img_banner_prevencion.jpg" alt="Para eliminar las imperfecciones">
+        </div>
+      </a>
     </div>
     <div class="contacto">
       <img class="img-responsive banner-footer" src="<?= Yii::app()->request->baseUrl ?>/images/contenido/impormedical/img_iconos_footer.png" alt="Para eliminar las imperfecciones">

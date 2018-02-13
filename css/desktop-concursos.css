@@ -29,13 +29,15 @@ a:hover, a:active, a:focus {
   height: 70px;
 }
 
-.nav .lrv-logo {
-  height: 30px;
-  align-self: flex-end;
-  margin-left: auto;
-  margin-bottom: 10px;
+.bg-header {
+  background-image: url('../images/bg-header.png');
+  padding: 20px;
+background-size: cover;
 }
 
+.lrv-logo {
+  width: 180px;
+}
 
 .banner-text {
   top: 200px;
