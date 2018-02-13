@@ -26,24 +26,17 @@
 
 </div>
     <nav class="nav">
-        <a href="#panel-01" class="menu-button">
-            <div></div>
-            <div></div>
-            <div></div>
-        </a>
-        <img class="img img-responsive clientefiel-logo" src="<?php echo Yii::app()->request->baseUrl; ?>/images/clientefiel/clientefiel.png" alt="">
+        <!-- <img class="img img-responsive" src="<?php echo Yii::app()->request->baseUrl; ?>/images/barra-sup-ganadores-movil.png" alt=""> -->
         <img class="img img-responsive lrv-logo" src="<?php echo Yii::app()->request->baseUrl; ?>/images/clientefiel/lrv.png" alt="">
     </nav>
 
     <div class="banner">
-        <img class="img img-responsive banner-image" src="<?php echo Yii::app()->request->baseUrl; ?>/images/clientefiel/banner-clientefiel-movil.png" alt="">
-        <h3 class="banner-text" align="right">El programa que te da 10% de descuento <br> <span class="emphasis">en todas tus compras*</span></h3>
-        <div class="banner-link-container">
-            <a href="#dialog-condiciones" data-toggle="modal" data-target="#modalCondiciones" class="banner-link">* Aplica según términos y condiciones del programa Cliente Fiel</a>
-        </div>
+        <img class="img img-responsive banner-image" src="<?php echo Yii::app()->request->baseUrl; ?>/images/banner-ganadores-movil.png" alt="">
     </div>
 
     <div class="buttons-section">
+        <a href="<?php echo Yii::app()->createUrl('/sitio/ganadores') ?>" data-ajax="false" class="navigation-button">Ganadores del mes</a>
+        <a href="<?php echo Yii::app()->createUrl('/sitio/reglamentos') ?>" data-ajax="false" class="navigation-button">Reglamentos</a>
      <!--    <a href="" class="navigation-button">¿Cómo funciona?</a>
         <a href="" class="navigation-button">Regístrate</a> -->
     </div>

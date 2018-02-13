@@ -1,5 +1,5 @@
 <div data-role='page' id='dialog-condiciones' data-dialog='true'>
-	<div data-role='main' class='ui-content'>
+	<div data-role='main' class='ui-content conditions-section-modal'>
 		<div class="justify">
 			<h4 class="emphasis center">Términos y Condiciones</h4>
 

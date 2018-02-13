@@ -3,6 +3,7 @@
 * {
   font-family: Helvetica;
   color: #676767;
+  font-weight: normal;
 }
 
 .img-responsive {
@@ -191,12 +192,18 @@ img.center, .ui-alt-icon.center, ui-icon-center, a.ui-icon-center {
   color: white !important;
 }
 
+.navigation-button.active{
+  color: #EE3E27 !important;
+  background-color: white;
+  border: 1px solid #EE3E27;
+}
+
 .content {
-  margin: auto;
+  margin: 5% auto;
   max-width: 90%;
-  -webkit-box-shadow: 0px 0px 8px 1px rgba(209,209,209,1);
+/*  -webkit-box-shadow: 0px 0px 8px 1px rgba(209,209,209,1);
   -moz-box-shadow: 0px 0px 8px 1px rgba(209,209,209,1);
-  box-shadow: 0px 0px 8px 1px rgba(209,209,209,1);
+  box-shadow: 0px 0px 8px 1px rgba(209,209,209,1);*/
 }
 
 .footer {
@@ -212,6 +219,7 @@ img.center, .ui-alt-icon.center, ui-icon-center, a.ui-icon-center {
   align-items: center;
   justify-content: space-around;
   height: 70px;
+  background-color: white;
 }
 
 .footer-logos .logos {
@@ -259,6 +267,7 @@ img.center, .ui-alt-icon.center, ui-icon-center, a.ui-icon-center {
   align-items: flex-start;
   justify-content: center;
   counter-reset: instruction;
+  background-color: white;
 }
 
 .instructions-section p {
@@ -321,6 +330,10 @@ img.center, .ui-alt-icon.center, ui-icon-center, a.ui-icon-center {
 
 .justify, .justify p{
     text-align: justify;
+}
+
+.conditions-section-modal {
+  background-color: white;
 }
 
 .conditions-section-modal .emphasis {
@@ -563,7 +576,7 @@ img.center, .ui-alt-icon.center, ui-icon-center, a.ui-icon-center {
 
 .menu a.active {
   color: white !important;
-  background-color: #EE3E27;
+  background-color: #EE3E27 !important;
 }
 
 .reglamentos p {
@@ -576,6 +589,9 @@ img.center, .ui-alt-icon.center, ui-icon-center, a.ui-icon-center {
   font-weight: bold;
 }
 
+#main-content .ui-content {
+  padding: 0px;
+}
 /*.form {
   display: flex;
   align-items: flex-start;
@@ -722,3 +738,103 @@ img.center, .ui-alt-icon.center, ui-icon-center, a.ui-icon-center {
     text-shadow:none;
 }
 
+/* TEMA ROJO */
+
+/* Button up */
+.ui-page-theme-r .ui-btn,
+html .ui-bar-r .ui-btn,
+html .ui-body-r .ui-btn,
+html body .ui-group-theme-r .ui-btn,
+html head + body .ui-btn.ui-btn-r,
+/* Button visited */
+.ui-page-theme-r .ui-btn:visited,
+html .ui-bar-r .ui-btn:visited,
+html .ui-body-r .ui-btn:visited,
+html body .ui-group-theme-r .ui-btn:visited,
+html head + body .ui-btn.ui-btn-r:visited {
+    background-color: #EE3E27; /*{r-bup-background-color}*/;
+    border-color: #f75454; /*{r-bup-border}*/;
+    color: #ffffff; /*{r-bup-color}*/;
+    text-shadow: none; /*{r-bup-shadow-x}*/ /*1px*/ /*{r-bup-shadow-y}*/ /*0*/ /*{r-bup-shadow-radius}*/ /*#444444*/ /*{r-bup-shadow-color}*//*;*/
+    box-shadow: none;
+    /*  border-radius: .6em;*/
+}
+/* Button hover */
+.ui-page-theme-r .ui-btn:hover,
+html .ui-bar-r .ui-btn:hover,
+html .ui-body-r .ui-btn:hover,
+html body .ui-group-theme-r .ui-btn:hover,
+html head + body .ui-btn.ui-btn-r:hover {
+    background-color: #cb4545; /*{r-bhover-background-color}*/;
+    border-color: #FF6060; /*{r-bhover-border}*/;
+    color: #ffffff; /*{r-bhover-color}*/;
+    text-shadow: none; /*{r-bup-shadow-x}*/ /*1px*/ /*{r-bup-shadow-y}*/ /*0*/ /*{r-bup-shadow-radius}*/ /*#444444*/ /*{r-bup-shadow-color}*//*;*/
+    box-shadow: none;
+}
+/* Button down */
+.ui-page-theme-r .ui-btn:active,
+html .ui-bar-r .ui-btn:active,
+html .ui-body-r .ui-btn:active,
+html body .ui-group-theme-r .ui-btn:active,
+html head + body .ui-btn.ui-btn-r:active {
+    background-color: #cb4545; /*{r-bdown-background-color}*/;
+    border-color: #6f2525; /*{r-bdown-border}*/;
+    color: #ffffff; /*{r-bdown-color}*/;
+    text-shadow: none; /*{r-bup-shadow-x}*/ /*1px*/ /*{r-bup-shadow-y}*/ /*0*/ /*{r-bup-shadow-radius}*/ /*#444444*/ /*{r-bup-shadow-color}*//*;*/
+}
+/* Active button */
+.ui-page-theme-r .ui-btn.ui-btn-active,
+html .ui-bar-r .ui-btn.ui-btn-active,
+html .ui-body-r .ui-btn.ui-btn-active,
+html body .ui-group-theme-r .ui-btn.ui-btn-active,
+html head + body .ui-btn.ui-btn-r.ui-btn-active,
+/* Active checkbox icon */
+.ui-page-theme-r .ui-checkbox-on:after,
+html .ui-bar-r .ui-checkbox-on:after,
+html .ui-body-r .ui-checkbox-on:after,
+html body .ui-group-theme-r .ui-checkbox-on:after,
+.ui-btn.ui-checkbox-on.ui-btn-r:after,
+/* Active flipswitch background */
+.ui-page-theme-r .ui-flipswitch-active,
+html .ui-bar-r .ui-flipswitch-active,
+html .ui-body-r .ui-flipswitch-active,
+html body .ui-group-theme-r .ui-flipswitch-active,
+html body .ui-flipswitch.ui-bar-r.ui-flipswitch-active,
+/* Active slider track */
+.ui-page-theme-r .ui-slider-track .ui-btn-active,
+html .ui-bar-r .ui-slider-track .ui-btn-active,
+html .ui-body-r .ui-slider-track .ui-btn-active,
+html body .ui-group-theme-r .ui-slider-track .ui-btn-active,
+html body div.ui-slider-track.ui-body-r .ui-btn-active {
+    /*background-color: #3388cc;*/ /*{r-active-background-color};*/
+    /*border-color: #3388cc;*/ /*{r-active-border};*/
+    color: #ffffff; /*{r-active-color}*/;
+    text-shadow: none; /*{r-bup-shadow-x}*/ /*1px*/ /*{r-bup-shadow-y}*/ /*0*/ /*{r-bup-shadow-radius}*/ /*#005599*/ /*{r-bup-shadow-color}*//*;*/
+    background-color: #ffd66d !important;
+    border-color: #ffd66d !important;
+}
+/* Active radio button icon */
+.ui-page-theme-r .ui-radio-on:after,
+html .ui-bar-r .ui-radio-on:after,
+html .ui-body-r .ui-radio-on:after,
+html body .ui-group-theme-r .ui-radio-on:after,
+.ui-btn.ui-radio-on.ui-btn-r:after {
+    border-color: #3388cc; /*{r-active-background-color}*/;
+}
+/* Focus */
+.ui-page-theme-r .ui-btn:focus,
+html .ui-bar-r .ui-btn:focus,
+html .ui-body-r .ui-btn:focus,
+html body .ui-group-theme-r .ui-btn:focus,
+html head + body .ui-btn.ui-btn-r:focus,
+/* Focus buttons and text inputs with div wrap */
+.ui-page-theme-r .ui-focus,
+html .ui-bar-r .ui-focus,
+html .ui-body-r .ui-focus,
+html body .ui-group-theme-r .ui-focus,
+html head + body .ui-btn-r.ui-focus,
+html head + body .ui-body-r.ui-focus {
+    -webkit-box-shadow: 0 0 12px #ffd66d; /*#3388cc*/ /*{r-active-background-color}*/
+    -moz-box-shadow: 0 0 12px #ffd66d;/*#3388cc *//*{r-active-background-color}*/
+    box-shadow: 0 0 12px #ffd66d;/*#3388cc *//*{r-active-background-color}*/
+}

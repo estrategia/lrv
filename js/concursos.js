@@ -1,15 +1,5 @@
 $( document ).ready(function() {
 
-  $('.owl-carousel-premios').owlCarousel({
-    loop:true,
-    items:3,
-    pagination : false,
-     mouseDrag : false,
-    navigationText : ["<span class='glyphicon glyphicon-chevron-left'></span>","<span class='glyphicon glyphicon-chevron-right'></span>"],
-     navigation : true
-  })
-
-
   $( 'div[data-role="boton-ganadores"]' ).click(function() {
     var boton = $(this);
     var idTabla = boton.attr('data-id');
@@ -29,6 +19,5 @@ $( document ).ready(function() {
     $('div[data-role="reglamento-concurso"]').addClass('hidden');
     $(selector).removeClass('hidden');
   });
-
 
 });

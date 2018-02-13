@@ -26,7 +26,7 @@
 <div class="menu-principal">
   <div class="contenedor-flex">
       <div class="btn btn-primary btn-lg" style="padding: 10px 55px;">
-        <a href="http://localhost/lrv/sitio/concursos">Concursos</a>
+        <a href="http://localhost/lrv/sitio/reglamentos">Reglamentos</a>
       </div>
       <div class="btn btn-flat btn-lg">
         <a href="http://localhost/lrv/sitio/ganadores">Ganadores</a>
