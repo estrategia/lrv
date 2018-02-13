@@ -1,7 +1,7 @@
 <?php if ($position->getObjProducto()->fraccionado == 1): ?>
     <tr>
         <td rowspan="2"  style="text-align:center">
-            <a href="<?php echo CController::createUrl('catalogo/producto', array('producto' => $position->getObjProducto()->codigoProducto, 'descripcion' => $position->getObjProducto()->getCadenaUrl())) ?>">
+            <a href="<?php echo CController::createUrl('/puntoventa/venta/ventaasistida/catalogo/producto', array('producto' => $position->getObjProducto()->codigoProducto, 'descripcion' => $position->getObjProducto()->getCadenaUrl())) ?>">
                 <img class="img-responsive img-table" src="<?php echo Yii::app()->request->baseUrl . $position->getObjProducto()->rutaImagen() ?>" title="<?php echo $position->getObjProducto()->descripcionProducto ?>"> 
             </a>
             <div style="color:#ED1C24;text-align: center;"><?php echo $position->getObjProducto()->descripcionProducto ?></div>
@@ -96,7 +96,7 @@
 <?php else: ?>
     <tr>
         <td align="center">
-            <a href="<?php echo CController::createUrl('/catalogo/producto', array('producto' => $position->getObjProducto()->codigoProducto, 'descripcion' => $position->getObjProducto()->getCadenaUrl())) ?>">
+            <a href="<?php echo CController::createUrl('/puntoventa/venta/ventaasistida/catalogo/producto', array('producto' => $position->getObjProducto()->codigoProducto, 'descripcion' => $position->getObjProducto()->getCadenaUrl())) ?>">
                 <img class="img-responsive img-table" src="<?php echo Yii::app()->request->baseUrl . $position->getObjProducto()->rutaImagen() ?>" title="<?php echo $position->getObjProducto()->descripcionProducto ?>"> 
             </a>
             <div style="color:#ED1C24;text-align: center;"><?php echo $position->getObjProducto()->descripcionProducto ?></div>

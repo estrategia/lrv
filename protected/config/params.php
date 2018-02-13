@@ -441,7 +441,7 @@ return array(
         'crmLrv' => "http://www.copservir.com/webService/crmLrv.php",
         'remisionPos' => "http://www.copservir.com/webService/serverLRV.php",
         'remisionPosECommerce' => "http://www.copservir.com/webService/Pos/RemisionPosEcommerce.php",
-        'persona' => 'http://192.168.1.15/siicop/wsMultiportal/persona',
+        'persona' => 'http://localhost/siicop/wsMultiportal/persona',
         //console
         'sincronizarBeneficiosSIICOP' => 'http://localhost/siicop/beneficios/sweb/wslrv',
        // 'sincronizarBeneficiosSIICOP' => 'http://localhost/siicop/beneficios/sweb/wslrv',
@@ -474,7 +474,7 @@ return array(
             'pdv' => 'larebaja.online.puntoventa.pdv',
         	'tipoEntrega' => 'larebaja.online.puntoventa.tipoentrega',
             'pdvDestino' => 'larebaja.online.puntoventa.pdvdestino',
-            'formPedidoBusqueda' => 'larebaja.online.puntoventa.formpedidobusqueda'
+            
         ),
         'perfil' => 3
     ) // new

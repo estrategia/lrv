@@ -168,15 +168,16 @@ class CatalogoController extends ControllerEntregaNacional {
 
         	$puntosVenta = $client->__soapCall("LRVConsultarSaldoMovilNEW", array(
         			'productos' => $productosBusqueda,
-        			'ciudad' => $this->objPuntoVentaDestino->codigoCiudad,
-        			'sector' => $this->objPuntoVentaDestino->idSectorLRV
+        			'ciudad' => $this->objPuntoVentaDestino->codigoCiudad,//76001,
+        			'sector' => $this->objPuntoVentaDestino->idSectorLRV,//23
         	));
         	 
+        	
         	$puntoVenta = null;
         	if (!empty($puntosVenta)) {
         		if($puntosVenta[0] == 1){
 	        		foreach ($puntosVenta[1] as $pdv) {
-	        			if ($pdv[1] == $this->objPuntoVentaDestino->idComercial) {
+	        			if ($pdv[1] == $this->objPuntoVentaDestino->idComercial) {//true
 		        			$puntoVenta = $pdv;
 		        			break;
 	        			}
@@ -406,14 +407,14 @@ class CatalogoController extends ControllerEntregaNacional {
         
         	$puntosVenta = $client->__soapCall("LRVConsultarSaldoMovilNEW", array(
         			'productos' => $productosBusqueda,
-        			'ciudad' => $this->objPuntoVentaDestino->codigoCiudad,
-        			'sector' => $this->objPuntoVentaDestino->idSectorLRV
+        			'ciudad' => $this->objPuntoVentaDestino->codigoCiudad,//76001
+        			'sector' => $this->objPuntoVentaDestino->idSectorLRV,//23
         	));
         
         	$puntoVenta = null;
         
         	foreach ($puntosVenta[1] as $pdv) {
-        		if ($pdv[1] == $this->objPuntoVentaDestino->idComercial) {
+        		if ($pdv[1] == $this->objPuntoVentaDestino->idComercial) {//true
 	        		$puntoVenta = $pdv;
 	        		break;
         		}
@@ -501,7 +502,6 @@ class CatalogoController extends ControllerEntregaNacional {
                 )
             ));
 
-           
             $this->render('d_productoDetalle', array(
                 'objProducto' => $objProducto,
                 'objPrecio' => new PrecioProducto($objProducto, $objSectorCiudad, $codigoPerfil),
