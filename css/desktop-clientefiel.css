@@ -30,10 +30,9 @@ a:hover, a:active, a:focus {
 }
 
 .nav .lrv-logo {
-  height: 30px;
-  align-self: flex-end;
-  margin-left: auto;
-  margin-bottom: 10px;
+  height: 50px;
+  margin-left: 50px;
+  margin-top: 10px;
 }
 
 
@@ -320,8 +319,6 @@ a:hover.banner-link {
 /*----------------- Menu superior -----------------*/
 
 .menu-principal {
-  background-color: #ECEBE6;
-  /* margin-top: 28px; */
 }
 
 .row-flex {
@@ -342,7 +339,15 @@ a:hover.banner-link {
   background-color: #D8D6CF;
 }
 
-.row-flex .column:first-child {
+.row-flex.menu {
+  justify-content: space-around;
+  align-items: center;
+  padding: 20px 0 0;
+}
+
+.row-flex.menu .btn-primary {margin: 0 15px;}
+
+/* .row-flex .column:first-child {
   width: 80%;
   display: flex;
   flex-direction: row;
@@ -362,7 +367,7 @@ a:hover.banner-link {
   width: 20%;
   align-items: center;
   display: flex;
-}
+} */
 
 .btn-primary {
   background: #EE3E27;
@@ -439,11 +444,14 @@ a:hover.banner-link {
   font-size: 26px !important;
 }
 
-.btn.btn-flat.active {
-    box-shadow: none;
-    background-color: #EE3E27;
-    color: #fff;
+.btn.btn-flat a {
+    color: #EE3E27;
 }
+
+.btn.btn-flat:hover a {
+    text-decoration: none !important;
+}
+
 
 .contenedor-flex.sombra .table-striped > tbody > tr:nth-of-type(2n+1) {
   background-color: #ECEBE6;

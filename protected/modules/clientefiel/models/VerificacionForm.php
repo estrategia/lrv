@@ -45,7 +45,7 @@ class VerificacionForm extends CFormModel {
         return array(
         	
         	'cedula' => 'Cedula',
-            'codigoVerificacion' => 'Digite el c&oacute;digo de verificaci&oacute;n',
+            'codigoVerificacion' => 'C&oacute;digo de verificaci&oacute;n',
         );
     }
     

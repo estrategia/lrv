@@ -20,9 +20,9 @@
 </head>
 <body>
     <nav class="nav">
-      <div class="contenedor-flex">
-        <img class="img img-responsive clientefiel-logo" src="<?php echo Yii::app()->request->baseUrl; ?>/images/clientefiel/clientefiel.png" alt="">
-        <img class="img img-responsive lrv-logo" src="<?php echo Yii::app()->request->baseUrl; ?>/images/clientefiel/lrv.png" alt="">
+      <div class="contenedor-flex" style="display: flex; justify-content: center;">
+      	<a title="Cliente Fiel - La Rebaja Virtual" href="<?php echo $this->createUrl('/clientefiel') ?>"><img class="img img-responsive clientefiel-logo" src="<?php echo Yii::app()->request->baseUrl; ?>/images/clientefiel/clientefiel.png" alt=""></a>
+      	<a title="Drogueria - La Rebaja Virtual" href="<?php echo $this->createUrl('/') ?>"><img class="img img-responsive lrv-logo" src="<?php echo Yii::app()->request->baseUrl; ?>/images/clientefiel/lrv.png" alt=""></a>
       </div>
     </nav>
 
@@ -35,23 +35,20 @@
 
     <div class="menu-principal">
       <div class="contenedor-flex">
-        <div class="row-flex">
-          <div class="column">
-            <div class="item <?php echo $this->menuActivo == 'index' ? 'active' : ''  ?>">
-              <a href="<?php echo Yii::app()->createUrl('clientefiel/sitio/index') ?>">¿Comó funciona?</a>
-            </div>
-            <!-- <div class="item <?php echo $this->menuActivo == 'ganadores' ? 'active' : ''  ?>"">
-              <a href="<?php echo Yii::app()->createUrl('clientefiel/sitio/ganadores') ?>">Ganadores del mes</a>
-            </div> -->
-            <div class="item <?php echo $this->menuActivo == 'concursos' ? 'active' : ''  ?>">
-              <a href="<?php echo Yii::app()->createUrl('clientefiel/sitio/reglamentos') ?>">Concursos</a>
-            </div>
+        <div class="row-flex menu">
+          <div class="">
+            <a href="<?php echo Yii::app()->createUrl('clientefiel/sitio/index') ?>">
+              <img class="img-responsive" width="400" src="<?php echo Yii::app()->request->baseUrl; ?>/images/clientefiel/boton-funciona.png" alt="Como funciona">
+            </a>
           </div>
-          <div class="column">
-            <div class="btn btn-primary btn-lg btn-block" type="button" name="button">
-                <a href="<?php echo Yii::app()->createUrl('clientefiel/registro/realizarRegistro') ?>">Tu cuenta</a>
-            </div>
+
+          <div class="">
+            <a href="<?php echo Yii::app()->createUrl('clientefiel/registro/realizarRegistro') ?>">
+              <img class="img-responsive" width="400" src="<?php echo Yii::app()->request->baseUrl; ?>/images/clientefiel/boton-registrate.png" alt="Registrarse">
+            </a>
           </div>
+
+
         </div>
       </div>
     </div>

@@ -119,7 +119,7 @@
 <?php else: ?>
 <img class="img-responsive" src="<?= Yii::app()->request->baseUrl ?>/images/contenido/mundo-klim/home/banner.png" alt="Nestle klim">
 <div class="btn-compra-banner">
-  <a href="<?= Yii::app()->request->baseUrl ?>/catalogo/buscar?busqueda=klim">
+  <a href="<?php echo CController::createUrl('/contenido/ver', array('tipo' => 'grupo', 'contenido' => 6452)) ?>">
     <img src="<?= Yii::app()->request->baseUrl ?>/images/contenido/mundo-klim/btn-compra.png" alt="Comprar">
   </a>
 </div>

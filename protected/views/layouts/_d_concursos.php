@@ -20,17 +20,21 @@
 </head>
 <body>
 
-<img class="img-responsive" src="<?php echo Yii::app()->request->baseUrl; ?>/images/barra-sup-ganadores.png">
+<div class="bg-header">
+  <a title="Drogueria - La Rebaja Virtual" href="<?php echo $this->createUrl('/') ?>">
+    <img class="lrv-logo" src="<?php echo Yii::app()->request->baseUrl; ?>/images/clientefiel/lrv.png" alt="">
+  </a>
+</div>
 <img class="img-responsive" src="<?php echo Yii::app()->request->baseUrl; ?>/images/banner-ganadores.png">
 
 <div class="menu-principal">
-  <div class="contenedor-flex">
-      <div class="btn btn-primary btn-lg">
-        <a href="http://localhost/lrv/sitio/ganadores">Ganadores del mes</a>
-      </div>
-      <div class="btn btn-flat btn-lg" style="padding: 10px 55px;">
-        <a href="http://localhost/lrv/sitio/concursos">Concursos</a>
-      </div>
+  <div class="contenedor-flex" style="justify-content: space-around; align-items: center; padding: 20px 0 0;">
+    <a href="<?php echo Yii::app()->createUrl('/sitio/reglamentos') ?>">
+      <img width="400" src="<?php echo Yii::app()->request->baseUrl; ?>/images/btn-reglamentos.png" alt="">
+    </a>
+    <a href="<?php echo Yii::app()->createUrl('/sitio/ganadores') ?>">
+      <img width="400" src="<?php echo Yii::app()->request->baseUrl; ?>/images/btn-ganadores.png" alt="">
+    </a>
   </div>
 </div>
 

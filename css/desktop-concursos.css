@@ -29,13 +29,15 @@ a:hover, a:active, a:focus {
   height: 70px;
 }
 
-.nav .lrv-logo {
-  height: 30px;
-  align-self: flex-end;
-  margin-left: auto;
-  margin-bottom: 10px;
+.bg-header {
+  background-image: url('../images/bg-header.png');
+  padding: 20px;
+background-size: cover;
 }
 
+.lrv-logo {
+  width: 180px;
+}
 
 .banner-text {
   top: 200px;
@@ -321,15 +323,15 @@ margin-top: 50px;
 }
 
 .menu-principal .btn.btn-flat{
-  border: 2px solid #ECEBE6;
-color: #1A1A1A;
-border-radius: 8px;
-background-color: #ECEBE6;
+  border: 2px solid #EE3E27;
+  color: #EE3E27;
+  border-radius: 8px;
+  background-color: #fff;
 }
 
 
 .menu-principal .btn.btn-flat a{
-color: #1A1A1A;
+color: #EE3E27;
 }
 
 .menu-principal .btn.btn-flat a:hover{text-decoration: none;}

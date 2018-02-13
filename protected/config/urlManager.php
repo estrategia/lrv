@@ -146,6 +146,7 @@ return array(
         'mundo-genfar-kids-hedera-helix' => 'publicidad/contenido/nombre/cofcof',
         'mundo-genfar-kids-cetirizina' => 'publicidad/contenido/nombre/achuu',
         'mundo-genfar-kids-calamina' => 'publicidad/contenido/nombre/auch',
+        'impormedical' => 'publicidad/contenido/nombre/impormedical',
          // Fin links campañas
 
         // REST patterns
