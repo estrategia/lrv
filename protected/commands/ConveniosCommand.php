@@ -31,6 +31,10 @@ class ConveniosCommand extends CConsoleCommand{
 					$sqlVerificar = "SELECT * FROM m_Usuario WHERE identificacionUsuario = ".$datos[1];
 					
 					$result =  Yii::app()->db->createCommand($sqlVerificar)->queryRow(); 
+					
+					// validacion pendiente para determinar el perfil de mayor porcentaje
+					
+					
 					if($result){
 						if($datos[6] != $result['codigoPerfil']){ // si son diferentes para evitar duplicidad de informacion
 							$queryUpdate .= "UPDATE m_Usuario SET codigoPerfil = ".$datos[6].
