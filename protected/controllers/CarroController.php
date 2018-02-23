@@ -1814,11 +1814,12 @@ class CarroController extends Controller {
             Yii::app()->session[Yii::app()->params->sesion['carroPagarForm']] = $modelPago;
         }
 
-        if ($modelPago->tipoEntrega == null) {
+        //si no se ha seleccionado tipo de entrega y hay productos de entrega normal en el carro
+        if ($modelPago->tipoEntrega == null && Yii::app()->shoppingCart->hasInternalProductos()) {
             $modelPago->tipoEntrega = Yii::app()->params->entrega['tipo']['domicilio'];
             Yii::app()->session[Yii::app()->params->sesion['carroPagarForm']] = $modelPago;
         }
-
+        
         //verificar si tiene domicilio
         if (!$modelPago->tieneDomicilio($this->objSectorCiudad)) {
             $modelPago->tipoEntrega = Yii::app()->params->entrega['tipo']['presencial'];
@@ -1973,13 +1974,13 @@ class CarroController extends Controller {
                             ':sector' => $this->objSectorCiudad->codigoSector
                         )
                     );
-
+                    
                     if (isset(Yii::app()->session[Yii::app()->params->sesion['direccionEntrega']]) && Yii::app()->session[Yii::app()->params->sesion['direccionEntrega']] != null) {
                         //$criteriaDireccion['condition'] .= " AND idDireccionDespacho=:direccion";
                         //$criteriaDireccion['params'][':direccion'] = Yii::app()->session[Yii::app()->params->sesion['direccionEntrega']];
                         $modelPago->idDireccionDespacho = Yii::app()->session[Yii::app()->params->sesion['direccionEntrega']];
                     }
-
+                    
                     $listDirecciones = DireccionesDespacho::model()->findAll($criteriaDireccion);
                     $params['parametros']['listDirecciones'] = $listDirecciones;
                     $params['parametros']['listHorarios'] = $modelPago->listDataHoras();
@@ -1989,7 +1990,7 @@ class CarroController extends Controller {
                     $modelPago->consultarBono(Yii::app()->shoppingCart->getTotalCost());
                     Yii::app()->session[Yii::app()->params->sesion['carroPagarForm']] = $modelPago;
                     $params['parametros']['listFormaPago'] = $listFormaPago;
-
+                    
                     break;
                 case Yii::app()->params->pagar['pasosDesktop'][2]:
                     $objDireccion = DireccionesDespacho::model()->findByPk($modelPago->idDireccionDespacho);
@@ -4256,13 +4257,22 @@ class CarroController extends Controller {
         echo "<br/>";
         echo "costo total: " . Yii::app()->shoppingCart->getTotalCost();
         echo "<br/>";
-        // echo "tiempo: " . Yii::app()->shoppingCart->getDelivery();
+        //echo "tiempo: " . Yii::app()->shoppingCart->getDelivery();
         //echo "<br/>";
         echo "servicio: " . Yii::app()->shoppingCart->getShipping();
         echo "<br/>";
-        // echo "Tiene Productos de tienda: " . Yii::app()->shoppingCart->hasShopProducts();
-        var_dump(Yii::app()->shoppingCart->hasShopProducts());
+        echo "Tiene Productos de tienda: " . CVarDumper::dumpAsString(Yii::app()->shoppingCart->hasShopProducts());
+        // var_dump(Yii::app()->shoppingCart->hasShopProducts());
         echo "<br/>";
+        
+        echo "Tiene Productos externos: " . CVarDumper::dumpAsString(Yii::app()->shoppingCart->hasExternalProducts(true));
+        echo "<br/>";
+        echo "Tiene Productos internos: " . CVarDumper::dumpAsString(Yii::app()->shoppingCart->hasInternalProductos(true));
+        echo "<br/>";
+        echo "Tiene Productos mixtos: " . CVarDumper::dumpAsString(Yii::app()->shoppingCart->hasMixedProducts());
+        echo "<br/>";
+        
+        
 
 
         echo "<br/>";
@@ -4270,6 +4280,7 @@ class CarroController extends Controller {
 
         $positions = Yii::app()->shoppingCart->getPositions();
         foreach ($positions as $position) {
+            echo "------------------------------------<br/>";
             // var_dump($position);exit();
             //CVarDumper::dump($position,3,true);exit();
             echo "Id: " . $position->getId();
@@ -4302,7 +4313,15 @@ class CarroController extends Controller {
             echo "<br/>";
             echo "Tiempo entrega: " . $position->getDelivery();
             echo "<br/>";
-
+            echo "Inventario: " . CVarDumper::dumpAsString($position->isInventoryProduct());
+            echo "<br/>";
+            
+            if($position->objProducto)
+            {
+                echo "Producto: <br> ";
+                CVarDumper::dump($position->objProducto->getAttributes(),10,true);
+                echo "<br/>";
+            }
 
             echo "Beneficios: <br/>";
             print_r($position->getBeneficios());
@@ -4312,11 +4331,11 @@ class CarroController extends Controller {
                 echo "Es producto<br/>";
             }
 
-            echo "<br/>";
+            echo "------------------------------------<br/>";
         }
     }
     
-    /*public function actionForm($limpiar = false) {
+    public function actionForm($limpiar = false) {
         $modelPago = null;
 
         if (isset(Yii::app()->session[Yii::app()->params->sesion['carroPagarForm']]) && Yii::app()->session[Yii::app()->params->sesion['carroPagarForm']] != null)
@@ -4335,7 +4354,7 @@ class CarroController extends Controller {
             Yii::app()->session[Yii::app()->params->sesion['carroPagarForm']] = null;
             //unset(Yii::app()->session[Yii::app()->params->sesion['carroPagarForm']]);
         }
-    }*/
+    }
     
     public function actionAdicionarFormula() {
         $array = array();

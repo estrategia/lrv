@@ -184,6 +184,11 @@ class EShoppingCart extends CMap {
     public function getDeliveryStored() {
         return $this->deliveryStored;
     }
+    
+    public function getTotalShipping()
+    {
+        return $this->shipping + $this->getExtraShipping();
+    }
 
     public function setCodigoPerfil($codigoPerfil) {
         if($this->codigoPerfil != $codigoPerfil && $codigoPerfil!==null){
@@ -193,15 +198,6 @@ class EShoppingCart extends CMap {
             //$this->saveStateAttributes();
         }
         $this->saveStateAttributes();
-    }
-    
-    public function hasInventoryProducts(){
-        foreach ($this as $position) {
-            if ($position->isInventoryProduct()) {
-                return true;
-            }
-        }
-        return false;
     }
     
     public function setCalcularUnidades(){
@@ -1012,7 +1008,7 @@ class EShoppingCart extends CMap {
     	parent::clear();
     }
     
-    public function getMixedCount()
+    public function getExternalProductsCount()
     {
         $count = 0;
         foreach ($this as $position) {
@@ -1025,7 +1021,40 @@ class EShoppingCart extends CMap {
 
     public function hasShopProducts()
     {
-        return $this->getCount() != $this->getMixedCount();
+        return $this->getCount() != $this->getExternalProductsCount();
     }
     
+    public function hasInventoryProducts(){
+        foreach ($this as $position) {
+            if ($position->isInventoryProduct()) {
+                return true;
+            }
+        }
+        return false;
+    }
+    
+    public function hasExternalProducts($only = false)
+    {
+        if ($only)
+        {
+            return ($this->getExternalProductsCount() > 0) && !$this->hasInternalProductos(true);
+        }
+        
+        return $this->getExternalProductsCount() > 0;
+    }
+    
+    public function hasInternalProductos($only = false)
+    {
+        if($only)
+        {
+            return ($this->getItemsCountNormal() > 0) && !$this->hasExternalProducts();
+        }
+        
+        return $this->getItemsCountNormal() > 0;
+    }
+    
+    public function hasMixedProducts()
+    {
+        return $this->hasInternalProductos(true) && $this->hasExternalProducts(true);
+    }
 }

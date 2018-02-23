@@ -1,72 +1,46 @@
 <div class="container desplegables">
     <div class="row">
         <div class="col-md-12">
-            <h3 class="text-center title-desp">Confirmación del pedido</h3>
+            Resumen
+            
             <div class="row confirm">
                 <div class="" style="margin-top:20px;">
-                    <div class="col-md-4">
+                              
+                		<div class="col-md-2">
+                        <p>Subtotal:</p>
+                        <p>Envío:</p>
+                    </div>
+                    
+                    <div class="col-md-2">
+                        <p><?php echo Yii::app()->numberFormatter->format(Yii::app()->params->formatoMoneda['patron'], Yii::app()->shoppingCart->getCost(), Yii::app()->params->formatoMoneda['moneda']); ?></p>
+                        <p><?php echo Yii::app()->numberFormatter->format(Yii::app()->params->formatoMoneda['patron'], Yii::app()->shoppingCart->getTotalShipping(), Yii::app()->params->formatoMoneda['moneda']); ?></p>
+                    </div>
+                    
+                    <div class="col-md-3">
+                    		Total a pagar: 
+                        <p><?php echo Yii::app()->numberFormatter->format(Yii::app()->params->formatoMoneda['patron'], Yii::app()->shoppingCart->getTotalCostClient(), Yii::app()->params->formatoMoneda['moneda']); ?></p>
+                    </div>
+                		
+                    <div class="col-md-2">
                         <?php if ($objDireccion !== null): ?>
                             <p>Dirección de despacho:</p>
                         <?php endif; ?>
-
                         <p>Forma de pago:</p>
-                        <?php if ($modelPago->fechaEntrega != null && !empty($modelPago->fechaEntrega)): ?>
-                            <p class="rojo">Datos de entrega:</p>
-                        <?php endif; ?>
 
                     </div>
-                    <div class="col-md-6">
+                    <div class="col-md-2">
                         <?php if ($objDireccion !== null): ?>
                             <p><?php echo $objDireccion->descripcion ?></p>
                         <?php endif; ?>
                         <p><?php echo $objFormaPago->formaPago ?></p>
 
-                        <?php if ($modelPago->fechaEntrega != null && !empty($modelPago->fechaEntrega)): ?>
-                            <p class="rojo"><?php echo $modelPago->fechaEntrega ?></p>
-                        <?php endif; ?>
                     </div>
-                </div>
 
-                <div class="col-md-12" style="margin-top:20px;">
-                    <div class="row">
-                        <div class="col-md-4">
-                            <p>Subtotal:</p>
-                            <p>Envío:</p>
-                            <?php if (Yii::app()->shoppingCart->getExtraShipping() > 0): ?>
-                                <p>Flete adicional:</p>
-                            <?php endif; ?>
-                            <?php if (Yii::app()->shoppingCart->getBono() > 0): ?>
-                                <p>Bono:</p>
-                            <?php endif; ?>
-                            <?php if (Yii::app()->shoppingCart->getObjCiudad()->excentoImpuestos == 0 && Yii::app()->shoppingCart->getTaxPrice() > 0): ?>
-                                <p>Impuesto incluidos:</p>
-                            <?php endif; ?>
-
-                            <?php if (Yii::app()->shoppingCart->getDiscountPrice(true) > 0): ?>
-                                <p class="rojo">Su ahorro:</p>
-                            <?php endif; ?>
-                        </div>
-                        <div class="col-md-6">
-                            <p><?php echo Yii::app()->numberFormatter->format(Yii::app()->params->formatoMoneda['patron'], Yii::app()->shoppingCart->getCost(), Yii::app()->params->formatoMoneda['moneda']); ?></p>
-                            <p><?php echo Yii::app()->numberFormatter->format(Yii::app()->params->formatoMoneda['patron'], Yii::app()->shoppingCart->getShipping(), Yii::app()->params->formatoMoneda['moneda']); ?></p>
-                            <?php if (Yii::app()->shoppingCart->getExtraShipping() > 0): ?>
-                                <p><?php echo Yii::app()->numberFormatter->format(Yii::app()->params->formatoMoneda['patron'], Yii::app()->shoppingCart->getExtraShipping(), Yii::app()->params->formatoMoneda['moneda']); ?></p>
-                            <?php endif; ?>
-                            <?php if (Yii::app()->shoppingCart->getBono() > 0): ?>
-                                <p><?php echo Yii::app()->numberFormatter->format(Yii::app()->params->formatoMoneda['patron'], Yii::app()->shoppingCart->getBono(), Yii::app()->params->formatoMoneda['moneda']); ?></p>
-                            <?php endif; ?>
-                            <?php if (Yii::app()->shoppingCart->getObjCiudad()->excentoImpuestos == 0 && Yii::app()->shoppingCart->getTaxPrice() > 0): ?>
-                                <p><?php echo Yii::app()->numberFormatter->format(Yii::app()->params->formatoMoneda['patron'], Yii::app()->shoppingCart->getTaxPrice(), Yii::app()->params->formatoMoneda['moneda']) ?></p>
-                            <?php endif; ?>
-                            <?php if (Yii::app()->shoppingCart->getDiscountPrice(true) > 0): ?>
-                                <p class="rojo"><?php echo Yii::app()->numberFormatter->format(Yii::app()->params->formatoMoneda['patron'], Yii::app()->shoppingCart->getDiscountPrice(true), Yii::app()->params->formatoMoneda['moneda']) ?></p>
-                            <?php endif; ?>
-                        </div>
-                    </div>
                 </div>
             </div>
 
-            <?php
+
+			<?php
             $form = $this->beginWidget('CActiveForm', array(
                 'id' => 'form-pago-confirmacion',
                 'enableClientValidation' => true,
@@ -84,14 +58,15 @@
                 ))
             );
             ?>
-
+			
             <fieldset>
                 <?php if (empty($modelPago->listCodigoEspecial)): ?>
-                    <?php echo $form->hiddenField($modelPago, 'confirmacion'); ?>
+                		<?php echo $form->hiddenField($modelPago, 'confirmacion'); ?>
                     <?php echo $form->error($modelPago, 'confirmacion', array('class' => 'text-danger')); ?>
                 <?php else: ?>
                     <div class="space-2"></div>
                     <div class="coment confirmacioncompra">
+                    		<p>Terminos y condiciones</p>
                         <table data-role="table" class="ui-responsive">
                             <thead>
                                 <tr>
@@ -128,9 +103,6 @@
 
             <div style="margin-top:40px;">
                 <div class="row" style="background-color:#fff;">
-                    <div class="col-sm-6 col-md-offset-3">
-                        <p class="text-center" style="margin-top:20px;color:#A4A4A4;font-size:20px;">TOTAL A PAGAR: <?php echo Yii::app()->numberFormatter->format(Yii::app()->params->formatoMoneda['patron'], Yii::app()->shoppingCart->getTotalCostClient(), Yii::app()->params->formatoMoneda['moneda']) ?></p>
-                    </div>
                     <div class="col-sm-6 col-md-offset-3">
                         <button class="adicionar" style="width:100%;margin-bottom:26px;" id="btn-carropagar-siguiente" data-origin="<?php echo $paso ?>" data-redirect="finalizar">Finalizar compra</button>
                     </div>

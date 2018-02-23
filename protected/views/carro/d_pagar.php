@@ -1,3 +1,7 @@
+<div class="text-center orange">
+    <h1 class="text-bold">Informaci&oacute;n de tu pedido</h1>
+</div>
+
 <?php $mensajes = Yii::app()->user->getFlashes(); ?>
 <?php if ($mensajes): ?>
     <ul class="messages">

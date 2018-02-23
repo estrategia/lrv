@@ -53,9 +53,17 @@ class FormaPagoForm extends CFormModel {
      */
     public function rules() {
         $rules = array();
-        $rules[] = array('tipoEntrega', 'required', 'message' => '{attribute} no puede estar vacío');
-        $rules[] = array('tipoEntrega', 'in', 'range' => Yii::app()->params->entrega['listaTipos'], 'allowEmpty' => false);
-        $rules[] = array('tipoEntrega', 'tipoEntregaValidate');
+        
+        if(Yii::app()->shoppingCart->hasExternalProducts(true)) {
+            $rules[] = array('tipoEntrega, fechaEntrega', 'safe');
+        } else {
+            $rules[] = array('tipoEntrega', 'required', 'message' => '{attribute} no puede estar vacío');
+            $rules[] = array('tipoEntrega', 'in', 'range' => Yii::app()->params->entrega['listaTipos'], 'allowEmpty' => false);
+            $rules[] = array('tipoEntrega', 'tipoEntregaValidate');
+            
+            $rules[] = array('fechaEntrega', 'required', 'on' => 'entrega, informacion, finalizar', 'message' => '{attribute} no puede estar vacío');
+            $rules[] = array('fechaEntrega', 'fechaValidate', 'on' => 'entrega, informacion, finalizar');
+        }
         
         if ($this->pagoInvitado) {
             $rules[] = array('identificacionUsuario', 'required', 'on' => 'despacho, informacion, finalizar', 'message' => '{attribute} no puede estar vacío');
@@ -97,7 +105,7 @@ class FormaPagoForm extends CFormModel {
             $rules[] = array('nombre, direccion, barrio, extension, celular, correoElectronico', 'safe');
             //$rules[] = array('idDireccionDespacho', 'required', 'on' => 'despacho, informacion, finalizar', 'message' => '{attribute} no puede estar vacío');
 
-            if ($this->tipoEntrega == Yii::app()->params->entrega['tipo']['domicilio']) {
+            if ($this->tipoEntrega == Yii::app()->params->entrega['tipo']['domicilio'] || Yii::app()->shoppingCart->hasExternalProducts(true)) {
                 $rules[] = array('idDireccionDespacho', 'required', 'on' => 'despacho, informacion, finalizar', 'message' => '{attribute} no puede estar vacío');
                 $rules[] = array('idDireccionDespacho', 'direccionValidate', 'on' => 'despacho, informacion, finalizar');
             } else if ($this->tipoEntrega == Yii::app()->params->entrega['tipo']['presencial']) {
@@ -110,9 +118,7 @@ class FormaPagoForm extends CFormModel {
             }
         }
 
-        $rules[] = array('fechaEntrega', 'required', 'on' => 'entrega, informacion, finalizar', 'message' => '{attribute} no puede estar vacío');
         $rules[] = array('comentario', 'length', 'max' => 250, 'on' => 'entrega, informacion, finalizar');
-        $rules[] = array('fechaEntrega', 'fechaValidate', 'on' => 'entrega, informacion, finalizar');
         $rules[] = array('idFormaPago', 'required', 'on' => 'pago, informacion, finalizar', 'message' => 'Seleccionar forma de pago');
         $rules[] = array('numeroTarjeta, cuotasTarjeta', 'safe');
         $rules[] = array('comentario, numeroTarjeta, cuotasTarjeta', 'default', 'value' => null);
@@ -1031,21 +1037,21 @@ class FormaPagoForm extends CFormModel {
 
     public function fechaValidate($attribute, $params) {
         if ($this->fechaEntrega != null) {
-        	if(Yii::app()->shoppingCart->getItemsCountNormal() > 0){
-	            $listHoras = $this->listDataHoras();
-	            $valido = false;
-	
-	            foreach ($listHoras as $hora) {
-	                if ($hora['fecha'] == $this->fechaEntrega) {
-	                    $valido = true;
-	                    break;
-	                }
-	            }
-	
-	            if (!$valido) {
-	                $this->addError('fechaEntrega', $this->getAttributeLabel('fechaEntrega') . " no disponible");
-	            }
-        	}
+            	if(Yii::app()->shoppingCart->getItemsCountNormal() > 0){
+    	            $listHoras = $this->listDataHoras();
+    	            $valido = false;
+    	
+    	            foreach ($listHoras as $hora) {
+    	                if ($hora['fecha'] == $this->fechaEntrega) {
+    	                    $valido = true;
+    	                    break;
+    	                }
+    	            }
+    	
+    	            if (!$valido) {
+    	                $this->addError('fechaEntrega', $this->getAttributeLabel('fechaEntrega') . " no disponible");
+    	            }
+            	}
         }
     }
 
